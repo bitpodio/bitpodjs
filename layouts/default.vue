@@ -3,7 +3,7 @@
     <v-navigation-drawer
       v-model="drawer"
       :mini-variant="miniVariant"
-      :clipped= "clipped"
+      :clipped="clipped"
       fixed
       app
     >

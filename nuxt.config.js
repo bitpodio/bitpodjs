@@ -37,8 +37,7 @@ export default {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: [
-  ],
+  plugins: [],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
@@ -49,9 +48,9 @@ export default {
    */
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
-    // '@nuxtjs/eslint-module',
+    '@nuxtjs/eslint-module',
     // Doc: https://github.com/nuxt-community/stylelint-module
-    // '@nuxtjs/stylelint-module',
+    '@nuxtjs/stylelint-module',
     '@nuxtjs/vuetify',
   ],
   /*
@@ -60,7 +59,7 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    "@nuxtjs/apollo"
+    '@nuxtjs/apollo',
   ],
   /*
    ** Axios module configuration
@@ -90,7 +89,7 @@ export default {
           secondary: colors.grey.darken1,
           accent: colors.shades.black,
           error: colors.red.accent3,
-        }
+        },
       },
     },
   },
@@ -103,25 +102,27 @@ export default {
   vue: {
     config: {
       productionTip: true,
-      devtools: true
-    }
+      devtools: true,
+    },
   },
   apollo: {
     clientConfigs: {
       default: {
-        httpEndpoint:"https://event.test.bitpod.io/svc/graphql",
+        httpEndpoint: 'https://event.test.bitpod.io/svc/graphql',
         httpLinkOptions: {
           credentials: 'same-origin',
-          headers:{
-            Authorization:  "Bearer " + "eyJhbGciOiJSUzI1NiIsImtpZCI6IjhEMkE0MTczM0QwN0JBNkU2RTYwNTZFRUJDRThDRkQyMDc0NThCMDUiLCJ0eXAiOiJKV1QiLCJ4NXQiOiJqU3BCY3owSHVtNXVZRmJ1dk9qUDBnZEZpd1UifQ.eyJuYmYiOjE1OTQ3OTg1MzIsImV4cCI6MTU5NDg4NDkzMiwiaXNzIjoiaHR0cHM6Ly9sb2dpbi5iaXRwb2QuaW8vYXV0aCIsImF1ZCI6WyJodHRwczovL2xvZ2luLmJpdHBvZC5pby9hdXRoL3Jlc291cmNlcyIsIlNoYXJlZCIsIk5vdGlmaWNhdGlvbiJdLCJjbGllbnRfaWQiOiI2ZDJiOTg4YzQ2NWY0NzZhMDhhZWZjNDg5ZWYyYjIxMThmZTU4MDc2Iiwic3ViIjoiamFnYW5uYXRoQGJpdHBvZC5pbyIsImF1dGhfdGltZSI6MTU5NDcxMjcyNiwiaWRwIjoibG9jYWwiLCJzY29wZSI6WyJOb3RpZmljYXRpb24iLCJvcGVuaWQiLCJwcm9maWxlIiwiZW1haWwiLCJiYWFzIiwib2ZmbGluZV9hY2Nlc3MiLCJub3RpZmljYXRpb24iXSwiYW1yIjpbInB3ZCJdfQ.Bz39sOpkwKHzX4SzcqaBQuhA_0kbY5vrcshnUVP64FIB9qA8XcEh8oZBilfkVY7xMEBee5HQ_0OJM9jncgaSxhkHtT1YPceXcBP-nn6ZtLc9ws-lzDKyUXGI7paEERHxjGMFe8c7FrQHFxoAc-uvef9ToBBh7S38Oftb_vznrpwIXYUJ1whG64qhELh2xSTWOvtvH73wm_Mwy-lZTKF1HvnHnT6sqCx8o2AXrYngJcp-ByIEh6rda0dJzPB_pS8LeENJDSNBqiq2637FbZoDZDRIEzpnTA_KryNQsYckYDmie_ZZOpS9l3XaYJwO9pQunc8jq_udKXiARmxo7uk2gQ" 
-          }
-        }
+          headers: {
+            Authorization:
+              'Bearer ' +
+              'eyJhbGciOiJSUzI1NiIsImtpZCI6IjhEMkE0MTczM0QwN0JBNkU2RTYwNTZFRUJDRThDRkQyMDc0NThCMDUiLCJ0eXAiOiJKV1QiLCJ4NXQiOiJqU3BCY3owSHVtNXVZRmJ1dk9qUDBnZEZpd1UifQ.eyJuYmYiOjE1OTQ3OTg1MzIsImV4cCI6MTU5NDg4NDkzMiwiaXNzIjoiaHR0cHM6Ly9sb2dpbi5iaXRwb2QuaW8vYXV0aCIsImF1ZCI6WyJodHRwczovL2xvZ2luLmJpdHBvZC5pby9hdXRoL3Jlc291cmNlcyIsIlNoYXJlZCIsIk5vdGlmaWNhdGlvbiJdLCJjbGllbnRfaWQiOiI2ZDJiOTg4YzQ2NWY0NzZhMDhhZWZjNDg5ZWYyYjIxMThmZTU4MDc2Iiwic3ViIjoiamFnYW5uYXRoQGJpdHBvZC5pbyIsImF1dGhfdGltZSI6MTU5NDcxMjcyNiwiaWRwIjoibG9jYWwiLCJzY29wZSI6WyJOb3RpZmljYXRpb24iLCJvcGVuaWQiLCJwcm9maWxlIiwiZW1haWwiLCJiYWFzIiwib2ZmbGluZV9hY2Nlc3MiLCJub3RpZmljYXRpb24iXSwiYW1yIjpbInB3ZCJdfQ.Bz39sOpkwKHzX4SzcqaBQuhA_0kbY5vrcshnUVP64FIB9qA8XcEh8oZBilfkVY7xMEBee5HQ_0OJM9jncgaSxhkHtT1YPceXcBP-nn6ZtLc9ws-lzDKyUXGI7paEERHxjGMFe8c7FrQHFxoAc-uvef9ToBBh7S38Oftb_vznrpwIXYUJ1whG64qhELh2xSTWOvtvH73wm_Mwy-lZTKF1HvnHnT6sqCx8o2AXrYngJcp-ByIEh6rda0dJzPB_pS8LeENJDSNBqiq2637FbZoDZDRIEzpnTA_KryNQsYckYDmie_ZZOpS9l3XaYJwO9pQunc8jq_udKXiARmxo7uk2gQ',
+          },
+        },
       },
       // default:{
       //   httpEndpoint:"https://event.test.bitpod.io/svc/graphql",
       //   // wsEndpoint: process.env.WS_ENDPOINT
       // }
-    }
+    },
   },
   devtools: true,
 }
