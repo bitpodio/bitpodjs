@@ -25,7 +25,7 @@
     >
       <!--<template v-slot:header.name="{ header }">
                     {{ header.text.toUpperCase() }} test
-                </template>-->
+      </template>-->
       <!-- <template slot="header" slot-scope="props">
                     <tr>
                         <th>
@@ -47,10 +47,10 @@
                         test
                         </th>
                     </tr>
-                    </template> -->
+      </template>-->
       <!-- <template v-slot:top>
                 <v-switch v-model="singleSelect" label="Single select" class="pa-3"></v-switch>
-                </template> -->
+      </template>-->
     </v-data-table>
   </div>
 </template>
@@ -98,7 +98,16 @@ function getOrderQuery(sortBy, sortDesc) {
 function buildSearchQueryVariables() {}
 
 export default {
-  props: ['content', 'viewName'],
+  props: {
+    content: {
+      type: Object,
+      required: true,
+    },
+    viewName: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     const headers = getTableHeader(this.content, this.viewName)
     return {
@@ -133,10 +142,7 @@ export default {
   //   },
   // },
   methods: {
-    updatePagination(pagination) {
-      debugger
-      console.log('update:pagination', pagination)
-    },
+    updatePagination(pagination) {},
   },
   apollo: {
     tableData: {
