@@ -1,7 +1,12 @@
 <template>
   <div>
     <div>
-      <span @click="onFilterClick">filter</span>
+      <FieldsFilter
+        :is-filter-applied="isFilterApplied"
+        :fields="filterableFields"
+        :filter-fields="filterFields"
+        @update-filter="onUpdateFilter"
+      />
     </div>
     <div class="grid-search-section">
       <v-text-field
@@ -60,7 +65,10 @@
 
 <script>
 import gql from 'graphql-tag'
+import addDays from 'date-fns/addDays'
+import format from 'date-fns/format'
 // import { axiosWrapper } from '../api/axios.js'
+import FieldsFilter from './FieldsFilter.vue'
 import EventFind from '~/config/apps/event/gql/eventlist.gql'
 
 function getTableHeader(content, viewName) {
@@ -95,7 +103,21 @@ function getTableHeader(content, viewName) {
 
 function formatResult(content, viewName, data, modelName) {
   let { edges } = data[modelName][`${modelName}Find`]
-  edges = edges.map(({ node }) => node)
+  const view = content.Views[viewName]
+  const fields = view.Fields
+  edges = edges.map(({ node }) => {
+    const formattedRecord = {}
+    for (const field in node) {
+      const { type } = fields[field] || {}
+      debugger
+      if (type === 'date')
+        formattedRecord[field] = format(new Date(node[field]), 'PPp')
+      else formattedRecord[field] = node[field]
+    }
+    // const result = format(new Date(2014, 1, 11), 'MM/dd/yyyy')
+    return formattedRecord
+    // return format(new Date(2014, 1, 11), 'PPp')
+  })
   // formatData(content, viewName, edges)
   return edges
 }
@@ -133,7 +155,50 @@ function buildSearchQueryVariables(content, viewName, search) {
   return where
 }
 
+function buildQueryVariables({ content, viewName, search, filterFields }) {
+  const filterColumns = filterFields
+  const and = []
+  const view = content.Views[viewName]
+  const fields = view.Fields
+  for (const field in filterColumns) {
+    const filterValues = filterColumns[field]
+    const or = []
+    const { type } = fields[field] || {}
+    if (type === 'string') {
+      filterValues.forEach((filterValue) => {
+        or.push({ [field]: { like: filterValue, options: 'i' } })
+      })
+    } else if (type === 'number') {
+      filterValues.forEach((filterValue) => {
+        or.push({ [field]: { eq: filterValue } })
+      })
+    } else if (type === 'date') {
+      let and = []
+      filterValues.forEach((filterValue) => {
+        and = [
+          { [field]: { gte: new Date(filterValue) } },
+          { [field]: { lt: addDays(new Date(filterValue), 1) } },
+        ]
+        or.push({ and })
+      })
+    }
+    if (or.length > 0) {
+      and.push({ or })
+    }
+  }
+  if (search) {
+    const serachQuery = buildSearchQueryVariables(content, viewName, search)
+    and.push(serachQuery)
+  }
+  console.log(filterColumns)
+  debugger
+  return { and }
+}
+
 export default {
+  components: {
+    FieldsFilter,
+  },
   props: {
     content: {
       type: Object,
@@ -162,7 +227,14 @@ export default {
       totalCount: 0,
       options: {},
       isFilterApplied: false,
+      filterFields: {},
     }
+  },
+  computed: {
+    filterableFields() {
+      const view = this.content.Views[this.viewName]
+      return view.Fields
+    },
   },
   beforeDestroy() {
     // Perform the teardown procedure for someLeakyProperty.
@@ -186,6 +258,10 @@ export default {
     onFilterClick(e) {
       this.isFilterApplied = true
     },
+    onUpdateFilter(value, filterFields) {
+      this.isFilterApplied = value
+      this.filterFields = { ...filterFields }
+    },
   },
   apollo: {
     tableData: {
@@ -194,14 +270,21 @@ export default {
       `,
       variables() {
         // Use vue reactive properties here
-        const { content, viewName, search } = this
+        debugger
+        const { content, viewName, search, filterFields } = this
         const sortBy = this.options.sortBy
         const sortDesc = this.options.sortDesc
         // let {,} = ;
         const order = getOrderQuery(content, viewName, sortBy, sortDesc)
-        const where = search
-          ? buildSearchQueryVariables(content, viewName, search)
-          : {}
+        const where =
+          this.isFilterApplied || search
+            ? buildQueryVariables({
+                content,
+                viewName,
+                search,
+                filterFields,
+              })
+            : {}
         const skip = (this.options.page - 1) * this.options.itemsPerPage
         const limit = this.options.itemsPerPage
         return {
