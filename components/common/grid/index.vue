@@ -1,22 +1,24 @@
 <template>
   <div>
-    <div>
-      <FieldsFilter
-        :is-filter-applied="isFilterApplied"
-        :fields="filterableFields"
-        :filter-fields="filterFields"
-        @update-filter="onUpdateFilter"
-      />
-    </div>
-    <div class="grid-search-section">
-      <v-text-field
-        v-model="search"
-        append-icon="mdi-magnify"
-        label="Search"
-        single-line
-        hide-details
-        class="grid-search-input"
-      ></v-text-field>
+    <div class="grid-actions-container">
+      <div>
+        <FieldsFilter
+          :is-filter-applied="isFilterApplied"
+          :fields="filterableFields"
+          :filter-rules="filterRules"
+          @update-filter="onUpdateFilter"
+        />
+      </div>
+      <div class="grid-search-section">
+        <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Search"
+          single-line
+          hide-details
+          class="grid-search-input"
+        ></v-text-field>
+      </div>
     </div>
     <v-data-table
       v-model="selected"
@@ -109,7 +111,7 @@ function formatResult(content, viewName, data, modelName) {
     const formattedRecord = {}
     for (const field in node) {
       const { type } = fields[field] || {}
-      debugger
+
       if (type === 'date')
         formattedRecord[field] = format(new Date(node[field]), 'PPp')
       else formattedRecord[field] = node[field]
@@ -191,7 +193,7 @@ function buildQueryVariables({ content, viewName, search, filterFields }) {
     and.push(serachQuery)
   }
   console.log(filterColumns)
-  debugger
+
   return { and }
 }
 
@@ -228,6 +230,7 @@ export default {
       options: {},
       isFilterApplied: false,
       filterFields: {},
+      filterRules: [],
     }
   },
   computed: {
@@ -270,7 +273,7 @@ export default {
       `,
       variables() {
         // Use vue reactive properties here
-        debugger
+
         const { content, viewName, search, filterFields } = this
         const sortBy = this.options.sortBy
         const sortDesc = this.options.sortDesc
@@ -344,5 +347,9 @@ export default {
   display: flex;
   max-width: 150px;
   padding: 0 10px;
+}
+.grid-actions-container {
+  display: flex;
+  justify-content: flex-end;
 }
 </style>

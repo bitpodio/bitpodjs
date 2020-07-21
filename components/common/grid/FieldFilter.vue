@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>{{ fieldCaption }}</div>
-    <div v-if="fieldType === 'date'">
+    <!-- <div v-if="fieldType === 'date'">
       <v-menu
         v-model="menu2"
         :close-on-content-click="false"
@@ -41,13 +41,58 @@
         type="text"
         @keyup.enter="onFilterInput"
       ></v-text-field>
-    </div>
+    </div> -->
 
-    <div v-for="filterValue in filterValues" :key="filterValue">
+    <!-- <div v-for="filterValue in filterValues" :key="filterValue">
       <span>{{ filterValue }}</span>
       <span @click="deleteFieldFilter(filterValue)"
         ><v-icon right>mdi-close</v-icon></span
       >
+    </div> -->
+    <div class="d-flex">
+      <v-select :items="fieldsList" label="select"></v-select>
+      <v-select :items="stringFilterOptions" label="select"></v-select>
+      <div v-if="fieldType === 'date'">
+        <v-menu
+          v-model="menu2"
+          :close-on-content-click="false"
+          :nudge-right="40"
+          transition="scale-transition"
+          offset-y
+          min-width="290px"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-text-field
+              label="Enter Date"
+              readonly
+              v-bind="attrs"
+              v-on="on"
+            ></v-text-field>
+          </template>
+          <v-date-picker
+            v-model="date"
+            show-current="true"
+            @change="onCalendarChange"
+            @input="menu2 = false"
+          ></v-date-picker>
+        </v-menu>
+      </div>
+      <div v-else-if="fieldType === 'number'">
+        <v-text-field
+          v-model="textFieldInput"
+          label="Enter a value"
+          type="number"
+          @keyup.enter="onFilterInput"
+        ></v-text-field>
+      </div>
+      <div v-else>
+        <v-text-field
+          v-model="textFieldInput"
+          label="Enter a value"
+          type="text"
+          @keyup.enter="onFilterInput"
+        ></v-text-field>
+      </div>
     </div>
   </div>
 </template>
@@ -55,19 +100,11 @@
 <script>
 export default {
   props: {
-    filterValues: {
-      type: Set,
-      required: true,
-    },
-    fieldName: {
-      type: String,
-      required: true,
-    },
-    fields: {
+    filterRule: {
       type: Object,
       required: true,
     },
-    filterFields: {
+    fields: {
       type: Object,
       required: true,
     },
@@ -79,16 +116,38 @@ export default {
       date: new Date().toISOString().substr(0, 10),
       textFieldInput: null,
       values: this.filterValues,
+      stringOperatorOptions: {
+        Is: 'is',
+        'Is not': 'isNot',
+        Contains: 'contains',
+        'Does not contain': 'notContains',
+        'Starts with': 'startsWith',
+        'Ends with': 'endsWith',
+        'Is empty': 'isEmpty',
+        'Is not empty': 'isNotEmpty',
+      },
+      items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
     }
   },
   computed: {
     fieldCaption() {
-      const { caption } = this.fields[this.fieldName] || {}
-      return caption
+      //   const  = this.fields[this.fieldName] || {}
+      return ''
     },
     fieldType() {
-      const { type } = this.fields[this.fieldName] || {}
+      const { type } = this.fields[this.filterRule.field] || {}
       return type
+    },
+    stringFilterOptions() {
+      return Object.keys(this.stringOperatorOptions)
+    },
+    fieldsList() {
+      const fieldsList = []
+      for (const fieldName in this.fields) {
+        const { caption } = this.fields[fieldName] || {}
+        fieldsList.push(caption)
+      }
+      return fieldsList
     },
   },
   watch: {
@@ -99,22 +158,20 @@ export default {
   },
   methods: {
     onCalendarChange(value) {
-      debugger
       //   const { fieldName } = this
       this.setInputValue(value)
-      this.date = new Date().toISOString().substr(0, 10)
+      //   this.date = new Date().toISOString().substr(0, 10)
     },
     onFilterInput() {
-      debugger
       this.setInputValue(this.textFieldInput)
-      this.textFieldInput = null
     },
     setInputValue(value) {
       if (value) {
-        const fieldFilterValues = this.values
-        fieldFilterValues.add(value)
-        this.values = new Set(fieldFilterValues)
-        this.$emit('setFieldValues', this.fieldName, this.values)
+        // const fieldFilterValues = this.values
+        // fieldFilterValues.add(value)
+        // this.values = new Set(fieldFilterValues)
+        // this.$emit('setFieldValues', this.fieldName, this.values)
+        this.filterRule.value = value
       }
     },
     deleteFieldFilter(filterValue) {

@@ -1,5 +1,5 @@
 <template>
-  <div class="text-center">
+  <!-- <div class="text-center">
     <v-dialog v-model="dialog" width="500">
       <template v-slot:activator="{ on, attrs }">
         <v-btn color="lighten-2" dark v-bind="attrs" v-on="on">
@@ -56,6 +56,36 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+  </div> -->
+  <div class="text-center">
+    <v-menu
+      v-model="menu"
+      :close-on-content-click="false"
+      :nudge-width="400"
+      offset-x
+    >
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn color="indigo" dark v-bind="attrs" v-on="on">
+          filter
+        </v-btn>
+      </template>
+
+      <v-card class="filter-dialog-content">
+        <div>Filter</div>
+        <v-divider></v-divider>
+        <div class="filter-fields-container">
+          <div v-for="filterRule of filterRules" :key="filterRule">
+            <FieldFilter :filter-rule="filterRule" :fields="fields" />
+          </div>
+          <div @click="onAddFilter">+ Add a filter</div>
+        </div>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn text @click="menu = false">Cancel</v-btn>
+          <v-btn color="primary" text @click="menu = false">Apply</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-menu>
   </div>
 </template>
 
@@ -70,8 +100,8 @@ export default {
       type: Object,
       required: true,
     },
-    filterFields: {
-      type: Object,
+    filterRules: {
+      type: Array,
       required: true,
     },
     isFilterApplied: {
@@ -87,21 +117,14 @@ export default {
       },
       date: new Date().toISOString().substr(0, 10),
       menu2: false,
+      fav: true,
+      menu: false,
+      message: false,
+      hints: true,
     }
-  },
-  computed: {
-    fieldsList() {
-      const fieldsList = []
-      for (const fieldName in this.fields) {
-        const { caption } = this.fields[fieldName] || {}
-        fieldsList.push(caption)
-      }
-      return fieldsList
-    },
   },
   methods: {
     onFieldNameClick(fieldDetails, fieldName) {
-      debugger
       this.filterFields[fieldName] = new Set([])
       this.filterFields = { ...this.filterFields }
     },
@@ -118,17 +141,25 @@ export default {
       this.filterFields = { ...this.filterFields }
       //   this.filterValues = new Set(filterValues)
     },
+    onAddFilter() {
+      const fieldName = Object.keys(this.fields)[0]
+      this.filterRules = [
+        ...this.filterRules,
+        { field: fieldName, operator: 'contains', value: '' },
+      ]
+    },
   },
 }
 </script>
 <style scoped>
 .filter-fields-container {
   display: flex;
+  flex-direction: column;
 }
 .filter-fields-container > div {
   padding: 0 10px;
 }
 .filter-dialog-content {
-  min-height: 50vh;
+  padding: 10px;
 }
 </style>
