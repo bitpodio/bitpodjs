@@ -27,12 +27,24 @@ export default {
         content: process.env.npm_package_description || '',
       },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '~/assets/logo.png' },
+      {
+        rel: 'stylesheet',
+        href:
+          'https://res.cloudinary.com/mytestlogo/raw/upload/v1573628681/Icons/style.css',
+      },
+      {
+        rel: 'stylesheet',
+        href:
+          'https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap',
+      },
+    ],
   },
   /*
    ** Global CSS
    */
-  css: [],
+  css: ['~/assets/styles/main.css'],
   /*
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
