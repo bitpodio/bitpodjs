@@ -20,7 +20,7 @@
       :server-items-length="tableData.total"
       item-key="id"
       show-select
-      class="elevation-1"
+      class="elevation-0"
       @update:pagination="updatePagination"
     >
       <!--<template v-slot:header.name="{ header }">

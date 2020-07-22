@@ -35,14 +35,7 @@
                 </v-list-item-title>
               </v-list-item-content>
             </template>
-            <v-list-item
-              v-for="(child, i) in item.children"
-              :key="i"
-              link
-              :to="item.to"
-              router
-              exact
-            >
+            <v-list-item v-for="(child, i) in item.children" :key="i" link>
               <v-list-item-action v-if="child.icon" class="nav-icon">
                 <v-icon>{{ child.icon }}</v-icon>
               </v-list-item-action>
@@ -84,8 +77,7 @@
               width="30"
             ></v-img>
           </span>
-          <span class="mx-2 app-name">|</span>
-          <span class="app-name">Event</span>
+          <span class="app-name mx-2">Event</span>
         </v-toolbar-title>
       </div>
       <v-spacer></v-spacer>
@@ -176,17 +168,17 @@ export default {
     dialog: false,
     drawer: null,
     items: [
-      { icon: 'mdi-contacts', text: 'Eventboard' },
+      { icon: 'mdi-contacts', text: 'Eventboard', route: '/home' },
       { heading: 'Event' },
-      { icon: 'mdi-history', text: 'Events', to: '/event' },
-      { icon: 'mdi-content-copy', text: 'Registarions' },
+      { icon: 'mdi-history', text: 'Events', route: '/bitpodpage1' },
+      { icon: 'mdi-content-copy', text: 'Registarions', route: '/bitpodpage2' },
       { heading: 'Promotions' },
-      { icon: 'mdi-cog', text: 'Discount Code' },
+      { icon: 'mdi-cog', text: 'Discount Code', route: '/bitpodpage1' },
       { heading: 'Members' },
-      { icon: 'mdi-message', text: 'Members' },
-      { icon: 'mdi-contacts', text: 'Contacts' },
+      { icon: 'mdi-message', text: 'Members', route: '/bitpodpage1' },
+      { icon: 'mdi-contacts', text: 'Contacts', route: '/bitpodpage2' },
       { heading: 'Task' },
-      { icon: 'mdi-cellphone-link', text: 'My Task' },
+      { icon: 'mdi-cellphone-link', text: 'My Task', route: '/bitpodpage1' },
     ],
   }),
 }

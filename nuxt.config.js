@@ -101,6 +101,7 @@ export default {
           secondary: colors.grey.darken1,
           accent: colors.shades.black,
           error: colors.red.accent3,
+          greybg: '#f5f5f5',
         },
       },
     },
@@ -126,7 +127,7 @@ export default {
           headers: {
             Authorization:
               'Bearer ' +
-              'eyJhbGciOiJSUzI1NiIsImtpZCI6IjhEMkE0MTczM0QwN0JBNkU2RTYwNTZFRUJDRThDRkQyMDc0NThCMDUiLCJ0eXAiOiJKV1QiLCJ4NXQiOiJqU3BCY3owSHVtNXVZRmJ1dk9qUDBnZEZpd1UifQ.eyJuYmYiOjE1OTQ3OTg1MzIsImV4cCI6MTU5NDg4NDkzMiwiaXNzIjoiaHR0cHM6Ly9sb2dpbi5iaXRwb2QuaW8vYXV0aCIsImF1ZCI6WyJodHRwczovL2xvZ2luLmJpdHBvZC5pby9hdXRoL3Jlc291cmNlcyIsIlNoYXJlZCIsIk5vdGlmaWNhdGlvbiJdLCJjbGllbnRfaWQiOiI2ZDJiOTg4YzQ2NWY0NzZhMDhhZWZjNDg5ZWYyYjIxMThmZTU4MDc2Iiwic3ViIjoiamFnYW5uYXRoQGJpdHBvZC5pbyIsImF1dGhfdGltZSI6MTU5NDcxMjcyNiwiaWRwIjoibG9jYWwiLCJzY29wZSI6WyJOb3RpZmljYXRpb24iLCJvcGVuaWQiLCJwcm9maWxlIiwiZW1haWwiLCJiYWFzIiwib2ZmbGluZV9hY2Nlc3MiLCJub3RpZmljYXRpb24iXSwiYW1yIjpbInB3ZCJdfQ.Bz39sOpkwKHzX4SzcqaBQuhA_0kbY5vrcshnUVP64FIB9qA8XcEh8oZBilfkVY7xMEBee5HQ_0OJM9jncgaSxhkHtT1YPceXcBP-nn6ZtLc9ws-lzDKyUXGI7paEERHxjGMFe8c7FrQHFxoAc-uvef9ToBBh7S38Oftb_vznrpwIXYUJ1whG64qhELh2xSTWOvtvH73wm_Mwy-lZTKF1HvnHnT6sqCx8o2AXrYngJcp-ByIEh6rda0dJzPB_pS8LeENJDSNBqiq2637FbZoDZDRIEzpnTA_KryNQsYckYDmie_ZZOpS9l3XaYJwO9pQunc8jq_udKXiARmxo7uk2gQ',
+              'eyJhbGciOiJSUzI1NiIsImtpZCI6IjhEMkE0MTczM0QwN0JBNkU2RTYwNTZFRUJDRThDRkQyMDc0NThCMDUiLCJ0eXAiOiJKV1QiLCJ4NXQiOiJqU3BCY3owSHVtNXVZRmJ1dk9qUDBnZEZpd1UifQ.eyJuYmYiOjE1OTUzOTU2NDYsImV4cCI6MTU5NTQ4MjA0NiwiaXNzIjoiaHR0cHM6Ly9sb2dpbi5iaXRwb2QuaW8vYXV0aCIsImF1ZCI6WyJodHRwczovL2xvZ2luLmJpdHBvZC5pby9hdXRoL3Jlc291cmNlcyIsIlNoYXJlZCIsIk5vdGlmaWNhdGlvbiJdLCJjbGllbnRfaWQiOiI2ZDJiOTg4YzQ2NWY0NzZhMDhhZWZjNDg5ZWYyYjIxMThmZTU4MDc2Iiwic3ViIjoicmlzaGlrZXNoQGJpdHBvZC5pbyIsImF1dGhfdGltZSI6MTU5NTMwOTgzOCwiaWRwIjoibG9jYWwiLCJzY29wZSI6WyJOb3RpZmljYXRpb24iLCJvcGVuaWQiLCJwcm9maWxlIiwiZW1haWwiLCJiYWFzIiwib2ZmbGluZV9hY2Nlc3MiLCJub3RpZmljYXRpb24iXSwiYW1yIjpbInB3ZCJdfQ.rnNMNH5hRQwRki_btdKe9XbA0STnuizfR9pQuW-g-qogVJaG8-PvzppPwF_ziKwZJ0FG4WCWMMwqsyvdqllh0qrEqefWv_a1dasy98XcTcIMiAGbLmwJbEDPCujFdaXIQnwGQsyGTgx6XgffpqYz4FVcaVhkYylYnGfiQNOUcg5eDkRx0YI3YOqoDoQm8PQ_QoRWDjnYZhbPP7vv7LabmeY43nCLC-qSAnamMSx2Mkw1fU8KTr1Fn_BLJzMJbmVHNIw_u0e4o7OPI0qgaMNWdlglmJgKqh8yFVh1GripBGcXZnL-diI_7KY0IxUvcf7XB_IfwP2L-6qyi9YmBxD50A',
           },
         },
       },
