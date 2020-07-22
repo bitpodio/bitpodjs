@@ -74,15 +74,22 @@
         <div>Filter</div>
         <v-divider></v-divider>
         <div class="filter-fields-container">
-          <div v-for="filterRule of filterRules" :key="filterRule">
-            <FieldFilter :filter-rule="filterRule" :fields="fields" />
+          <div
+            v-for="[index, filterRule] of filterRules.entries()"
+            :key="filterRule"
+          >
+            <FieldFilter
+              :filter-rule="filterRule"
+              :fields="fields"
+              :index="index"
+            />
           </div>
           <div @click="onAddFilter">+ Add a filter</div>
         </div>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn text @click="menu = false">Cancel</v-btn>
-          <v-btn color="primary" text @click="menu = false">Apply</v-btn>
+          <v-btn color="primary" text @click="onApply">Apply</v-btn>
         </v-card-actions>
       </v-card>
     </v-menu>
@@ -133,8 +140,9 @@ export default {
       return caption
     },
     onApply() {
-      this.dialog = false
-      this.$emit('update-filter', true, this.filterFields)
+      this.menu = false
+      const { filterRules } = this
+      this.$emit('update-filter', true, filterRules)
     },
     setFieldValues(fieldName, filterValues) {
       this.filterFields[fieldName] = filterValues
@@ -155,9 +163,6 @@ export default {
 .filter-fields-container {
   display: flex;
   flex-direction: column;
-}
-.filter-fields-container > div {
-  padding: 0 10px;
 }
 .filter-dialog-content {
   padding: 10px;

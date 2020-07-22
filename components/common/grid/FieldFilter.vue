@@ -49,9 +49,37 @@
         ><v-icon right>mdi-close</v-icon></span
       >
     </div> -->
-    <div class="d-flex">
-      <v-select :items="fieldsList" label="select"></v-select>
-      <v-select :items="stringFilterOptions" label="select"></v-select>
+    <div class="d-flex align-center">
+      <div v-if="index === 0">
+        Where
+      </div>
+      <div v-else-if="index === 1">
+        <v-select
+          v-model="selectedConditionOperator"
+          :items="conditionOperator"
+          label="select"
+          single-line
+        ></v-select>
+      </div>
+      <div v-else>
+        {{ selectedConditionOperator }}
+      </div>
+      <v-select
+        v-model="filterRule.field"
+        :items="fieldsList"
+        item-text="text"
+        item-value="value"
+        label="Field"
+        single-line
+      ></v-select>
+      <v-select
+        v-model="filterRule.operator"
+        :items="stringFilterOptions"
+        item-text="text"
+        item-value="value"
+        label="Operator"
+        single-line
+      ></v-select>
       <div v-if="fieldType === 'date'">
         <v-menu
           v-model="menu2"
@@ -70,7 +98,7 @@
             ></v-text-field>
           </template>
           <v-date-picker
-            v-model="date"
+            v-model="filterRule.value"
             show-current="true"
             @change="onCalendarChange"
             @input="menu2 = false"
@@ -79,7 +107,7 @@
       </div>
       <div v-else-if="fieldType === 'number'">
         <v-text-field
-          v-model="textFieldInput"
+          v-model="filterRule.value"
           label="Enter a value"
           type="number"
           @keyup.enter="onFilterInput"
@@ -87,7 +115,7 @@
       </div>
       <div v-else>
         <v-text-field
-          v-model="textFieldInput"
+          v-model="filterRule.value"
           label="Enter a value"
           type="text"
           @keyup.enter="onFilterInput"
@@ -106,6 +134,10 @@ export default {
     },
     fields: {
       type: Object,
+      required: true,
+    },
+    index: {
+      type: Number,
       required: true,
     },
   },
@@ -127,6 +159,8 @@ export default {
         'Is not empty': 'isNotEmpty',
       },
       items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
+      conditionOperator: ['and', 'or'],
+      selectedConditionOperator: 'and',
     }
   },
   computed: {
@@ -139,13 +173,23 @@ export default {
       return type
     },
     stringFilterOptions() {
-      return Object.keys(this.stringOperatorOptions)
+      const stringFilterList = []
+      for (const key in this.stringOperatorOptions) {
+        stringFilterList.push({
+          value: this.stringOperatorOptions[key],
+          text: key,
+        })
+      }
+      return stringFilterList
     },
     fieldsList() {
       const fieldsList = []
       for (const fieldName in this.fields) {
         const { caption } = this.fields[fieldName] || {}
-        fieldsList.push(caption)
+        fieldsList.push({
+          text: caption,
+          value: fieldName,
+        })
       }
       return fieldsList
     },

@@ -2,22 +2,26 @@
   <div>
     <div class="grid-actions-container">
       <div>
-        <FieldsFilter
-          :is-filter-applied="isFilterApplied"
-          :fields="filterableFields"
-          :filter-rules="filterRules"
-          @update-filter="onUpdateFilter"
-        />
+        <slot name="filter">
+          <FieldsFilter
+            :is-filter-applied="isFilterApplied"
+            :fields="filterableFields"
+            :filter-rules="filterRules"
+            @update-filter="onUpdateFilter"
+          />
+        </slot>
       </div>
       <div class="grid-search-section">
-        <v-text-field
-          v-model="search"
-          append-icon="mdi-magnify"
-          label="Search"
-          single-line
-          hide-details
-          class="grid-search-input"
-        ></v-text-field>
+        <slot name="search">
+          <v-text-field
+            v-model="search"
+            append-icon="mdi-magnify"
+            label="Search"
+            single-line
+            hide-details
+            class="grid-search-input"
+          ></v-text-field>
+        </slot>
       </div>
     </div>
     <v-data-table
@@ -111,9 +115,11 @@ function formatResult(content, viewName, data, modelName) {
     const formattedRecord = {}
     for (const field in node) {
       const { type } = fields[field] || {}
-
+      const fieldValue = node[field]
       if (type === 'date')
-        formattedRecord[field] = format(new Date(node[field]), 'PPp')
+        formattedRecord[field] = fieldValue
+          ? format(new Date(fieldValue), 'PPp')
+          : ''
       else formattedRecord[field] = node[field]
     }
     // const result = format(new Date(2014, 1, 11), 'MM/dd/yyyy')
@@ -157,36 +163,73 @@ function buildSearchQueryVariables(content, viewName, search) {
   return where
 }
 
-function buildQueryVariables({ content, viewName, search, filterFields }) {
-  const filterColumns = filterFields
+function buildQueryVariables({ content, viewName, search, filterRules }) {
+  const filterColumns = filterRules
   const and = []
   const view = content.Views[viewName]
   const fields = view.Fields
-  for (const field in filterColumns) {
-    const filterValues = filterColumns[field]
-    const or = []
+  const or = []
+  for (const rule of filterRules) {
+    // const filterValues = filterRules[field]
+    const { field, value, operator } = rule
     const { type } = fields[field] || {}
+    let ruleFilter = {}
     if (type === 'string') {
-      filterValues.forEach((filterValue) => {
-        or.push({ [field]: { like: filterValue, options: 'i' } })
-      })
+      // filterValues.forEach((filterValue) => {
+      //   Is: 'is',
+      // 'Is not': 'isNot',
+      // Contains: 'contains',
+      // 'Does not contain': 'notContains',
+      // 'Starts with': 'startsWith',
+      // 'Ends with': 'endsWith',
+      // 'Is empty': 'isEmpty',
+      // 'Is not empty': 'isNotEmpty',
+      switch (operator) {
+        case 'is':
+          ruleFilter = value
+          break
+        case 'isNot':
+          ruleFilter = { neq: value }
+          break
+        case 'contains':
+          ruleFilter = { like: value, options: 'i' }
+          break
+        case 'notContains':
+          ruleFilter = { nlike: value, options: 'i' }
+          break
+        case 'startsWith':
+          // ruleFilter = { like: `${value}%`, options: 'i' }
+          ruleFilter = { regexp: `^${value}` }
+          break
+        case 'endsWith':
+          ruleFilter = { regexp: `${value}$` }
+          break
+        case 'isEmpty':
+          ruleFilter = null
+          break
+        case 'isNotEmpty':
+          ruleFilter = { neq: null }
+          break
+      }
+      or.push({ [field]: ruleFilter })
+      // })
     } else if (type === 'number') {
-      filterValues.forEach((filterValue) => {
-        or.push({ [field]: { eq: filterValue } })
-      })
+      // filterValues.forEach((filterValue) => {
+      or.push({ [field]: { eq: value } })
+      // })
     } else if (type === 'date') {
-      let and = []
-      filterValues.forEach((filterValue) => {
-        and = [
-          { [field]: { gte: new Date(filterValue) } },
-          { [field]: { lt: addDays(new Date(filterValue), 1) } },
-        ]
-        or.push({ and })
-      })
+      // let and = []
+      // filterValues.forEach((filterValue) => {
+      const and = [
+        { [field]: { gte: new Date(value) } },
+        { [field]: { lt: addDays(new Date(value), 1) } },
+      ]
+      or.push({ and })
+      // })
     }
-    if (or.length > 0) {
-      and.push({ or })
-    }
+  }
+  if (or.length > 0) {
+    and.push({ or })
   }
   if (search) {
     const serachQuery = buildSearchQueryVariables(content, viewName, search)
@@ -261,9 +304,9 @@ export default {
     onFilterClick(e) {
       this.isFilterApplied = true
     },
-    onUpdateFilter(value, filterFields) {
+    onUpdateFilter(value, filterRules) {
       this.isFilterApplied = value
-      this.filterFields = { ...filterFields }
+      this.filterRules = [...filterRules]
     },
   },
   apollo: {
@@ -274,7 +317,7 @@ export default {
       variables() {
         // Use vue reactive properties here
 
-        const { content, viewName, search, filterFields } = this
+        const { content, viewName, search, filterRules } = this
         const sortBy = this.options.sortBy
         const sortDesc = this.options.sortDesc
         // let {,} = ;
@@ -285,7 +328,7 @@ export default {
                 content,
                 viewName,
                 search,
-                filterFields,
+                filterRules,
               })
             : {}
         const skip = (this.options.page - 1) * this.options.itemsPerPage
