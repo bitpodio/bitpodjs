@@ -728,6 +728,7 @@ export default {
             filterEnable: true,
             hidden: false,
             editable: true,
+            type: 'string',
           },
           '_VenueAddress.State': {
             displayOrder: 9,
@@ -735,6 +736,7 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '140px',
+            type: 'string',
           },
           Privacy: {
             displayOrder: 4,
@@ -742,6 +744,7 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '130px',
+            type: 'string',
           },
           EndDate: {
             displayOrder: 3,
@@ -749,6 +752,7 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '130px',
+            type: 'date',
           },
           '_VenueAddress.Country': {
             displayOrder: 11,
@@ -756,6 +760,7 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '130px',
+            type: 'string',
           },
           StartDate: {
             displayOrder: 2,
@@ -763,6 +768,7 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '130px',
+            type: 'date',
           },
           Currency: {
             displayOrder: 12,
@@ -770,6 +776,7 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '130px',
+            type: 'string',
           },
           '_VenueAddress.City': {
             displayOrder: 8,
@@ -777,6 +784,7 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '130px',
+            type: 'string',
           },
           createdDate: {
             displayOrder: 13,
@@ -784,6 +792,7 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '160px',
+            type: 'date',
           },
           Title: {
             displayOrder: 1,
@@ -791,6 +800,7 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
+            type: 'string',
           },
           Tags: {
             displayOrder: 5,
@@ -798,6 +808,7 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
+            type: 'array',
           },
           VenueName: {
             displayOrder: 6,
@@ -805,6 +816,7 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '180px',
+            type: 'string',
           },
           '_VenueAddress.AddressLine': {
             displayOrder: 7,
@@ -812,6 +824,7 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '180px',
+            type: 'string',
           },
         },
         InlineEditing: true,
