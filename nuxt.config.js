@@ -95,6 +95,7 @@ export default {
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,
           success: colors.green.accent3,
+          boxview: '#1e1e1e',
         },
         light: {
           primary: colors.purple,
@@ -102,6 +103,7 @@ export default {
           accent: colors.shades.black,
           error: colors.red.accent3,
           greybg: '#f5f5f5',
+          boxview: '#ffffff',
         },
       },
     },
