@@ -1,0 +1,12 @@
+query($filters: JSON, $where: JSON) {
+  Registration {
+    RegistrationFind(filter: $filters) {
+      edges {
+        node {
+            key
+            value
+        }
+      }
+    }
+  }
+}

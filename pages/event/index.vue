@@ -2,8 +2,8 @@
   <v-layout column justify-center align-center>
     <v-flex xs12 sm12 md12>
       <Grid
-        :content="content.EventsManagement"
-        view-name="All Events"
+        :content="content.Registrations"
+        view-name="Registrations"
         search=""
       />
     </v-flex>

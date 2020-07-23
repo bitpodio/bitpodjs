@@ -1,62 +1,4 @@
 <template>
-  <!-- <div class="text-center">
-    <v-dialog v-model="dialog" width="500">
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn color="lighten-2" dark v-bind="attrs" v-on="on">
-          Filter
-        </v-btn>
-      </template>
-
-      <v-card>
-        <v-card-title class="headline grey lighten-2" primary-title>
-          Filters
-        </v-card-title>
-        <div class="filter-dialog-content">
-          <v-menu top :close-on-click="closeOnClick">
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn v-bind="attrs" v-on="on">
-                Select Field
-              </v-btn>
-            </template>
-
-            <v-list>
-              <v-list-item
-                v-for="(fieldDetails, fieldName) in fields"
-                :key="fieldName"
-                @click="onFieldNameClick(fieldDetails, fieldName)"
-              >
-                <v-list-item-title>{{
-                  fieldDetails.caption
-                }}</v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-
-          <v-divider></v-divider>
-          <div class="filter-fields-container">
-            <div
-              v-for="(filterValues, fieldName) in filterFields"
-              :key="fieldName"
-            >
-              <FieldFilter
-                :filter-values="filterValues"
-                :field-name="fieldName"
-                :fields="fields"
-                :filter-fields="filterFields"
-                @setFieldValues="setFieldValues"
-              />
-            </div>
-          </div>
-        </div>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="onApply">
-            Apply
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </div> -->
   <div class="text-center">
     <v-menu
       v-model="menu"
@@ -84,7 +26,8 @@
               :index="index"
             />
           </div>
-          <div @click="onAddFilter">+ Add a filter</div>
+          <v-spacer></v-spacer>
+          <v-btn text @click="onAddFilter">+ Add a filter</v-btn>
         </div>
         <v-card-actions>
           <v-spacer></v-spacer>

@@ -73,13 +73,20 @@
 import gql from 'graphql-tag'
 import addDays from 'date-fns/addDays'
 import format from 'date-fns/format'
+import startOfToday from 'date-fns/startOfToday'
+import endOfToday from 'date-fns/endOfToday'
+import startOfTomorrow from 'date-fns/startOfTomorrow'
+import endOfTomorrow from 'date-fns/endOfTomorrow'
+import startOfYesterday from 'date-fns/startOfYesterday'
+import endOfYesterday from 'date-fns/endOfYesterday'
+import startOfDay from 'date-fns/startOfDay'
+import endOfDay from 'date-fns/endOfDay'
 // import { axiosWrapper } from '../api/axios.js'
 import FieldsFilter from './FieldsFilter.vue'
-import EventFind from '~/config/apps/event/gql/eventlist.gql'
+import RegistrationFind from '~/config/apps/event/gql/registrationList.gql'
 
 function getTableHeader(content, viewName) {
-  const view = content.Views[viewName]
-  const fields = view.Fields
+  const fields = getGridFields(content, viewName)
 
   const headers = []
   for (const fieldName in fields) {
@@ -96,21 +103,14 @@ function getTableHeader(content, viewName) {
   return headers
 }
 
-// function formatData(content, viewName, data) {
-//   const view = content.Views[viewName]
-//   let fields = view.Fields
-//   fields = Object.keys(fields)
-//   return data.map((record) => {
-//     return fields.map((field) => {
-
-//     })
-//   })
-// }
+function getGridFields(content, viewName) {
+  const view = content.views[viewName]
+  return view.fields
+}
 
 function formatResult(content, viewName, data, modelName) {
   let { edges } = data[modelName][`${modelName}Find`]
-  const view = content.Views[viewName]
-  const fields = view.Fields
+  const fields = getGridFields(content, viewName)
   edges = edges.map(({ node }) => {
     const formattedRecord = {}
     for (const field in node) {
@@ -138,7 +138,7 @@ function formatCountData(data, modelName) {
 function getOrderQuery(content, viewName, sortBy, sortDesc) {
   // let {sortBy,sortDesc} = option;
   if (!(sortBy && sortBy.length)) {
-    const view = content.Views[viewName]
+    const view = content.views[viewName]
     const defaultSort = view.DefaultSort
     return defaultSort || ''
   }
@@ -146,8 +146,7 @@ function getOrderQuery(content, viewName, sortBy, sortDesc) {
 }
 
 function buildSearchQueryVariables(content, viewName, search) {
-  const view = content.Views[viewName]
-  const fields = view.Fields
+  const fields = getGridFields(content, viewName)
 
   let where = {}
   const or = []
@@ -163,70 +162,121 @@ function buildSearchQueryVariables(content, viewName, search) {
   return where
 }
 
+function getDateBeforeQuerybyDays(field, days) {
+  const and = [
+    { [field]: { gte: startOfDay(addDays(new Date(), -days)) } },
+    { [field]: { lte: endOfToday() } },
+  ]
+  return { and }
+}
+
+function getDateAfterQuerybyDays(field, days) {
+  const and = [
+    { [field]: { gte: startOfToday() } },
+    { [field]: { lte: endOfDay(addDays(new Date(), days)) } },
+  ]
+  return { and }
+}
+
+function getOperatorQuery(field, operator, value) {
+  let ruleFilter = {}
+  switch (operator) {
+    case 'is':
+      ruleFilter = { [field]: value }
+      break
+    case 'isNot':
+      ruleFilter = { [field]: { neq: value } }
+      break
+    case 'contains':
+      ruleFilter = { [field]: { like: value, options: 'i' } }
+      break
+    case 'notContains':
+      ruleFilter = { [field]: { nlike: value, options: 'i' } }
+      break
+    case 'startsWith':
+      ruleFilter = { [field]: { regexp: `^${value}` } }
+      break
+    case 'endsWith':
+      ruleFilter = { [field]: { regexp: `${value}$` } }
+      break
+    case 'gt':
+    case 'lt':
+    case 'gte':
+    case 'lte':
+      ruleFilter = { [field]: { [operator]: value } }
+      break
+    case 'today': {
+      const and = [
+        { [field]: { gte: startOfToday() } },
+        { [field]: { lt: endOfToday() } },
+      ]
+      ruleFilter = { and }
+      break
+    }
+    case 'tomorrow': {
+      const and = [
+        { [field]: { gte: startOfTomorrow() } },
+        { [field]: { lt: endOfTomorrow() } },
+      ]
+      ruleFilter = { and }
+      break
+    }
+    case 'yesterday': {
+      const and = [
+        { [field]: { gte: startOfYesterday() } },
+        { [field]: { lt: endOfYesterday() } },
+      ]
+      ruleFilter = { and }
+      break
+    }
+    case 'pastWeek': {
+      ruleFilter = getDateBeforeQuerybyDays(field, 7)
+      break
+    }
+    case 'pastMonth':
+      ruleFilter = getDateBeforeQuerybyDays(field, 30)
+      break
+    case 'pastYear':
+      ruleFilter = getDateBeforeQuerybyDays(field, 365)
+      break
+    case 'nextWeek':
+      ruleFilter = getDateAfterQuerybyDays(field, 7)
+      break
+    case 'nextMonth':
+      ruleFilter = getDateAfterQuerybyDays(field, 30)
+      break
+    case 'nextYear':
+      ruleFilter = getDateAfterQuerybyDays(field, 365)
+      break
+    case 'exactDate': {
+      const and = [
+        { [field]: { gte: new Date(value) } },
+        { [field]: { lt: startOfDay(addDays(new Date(), 1)) } },
+      ]
+      ruleFilter = { and }
+      break
+    }
+    case 'isEmpty':
+      ruleFilter = { [field]: null }
+      break
+    case 'isNotEmpty':
+      ruleFilter = { [field]: { neq: null } }
+      break
+  }
+  return ruleFilter
+}
+
 function buildQueryVariables({ content, viewName, search, filterRules }) {
   const filterColumns = filterRules
   const and = []
-  const view = content.Views[viewName]
-  const fields = view.Fields
+  // const fields = getGridFields(content, viewName)
   const or = []
   for (const rule of filterRules) {
     // const filterValues = filterRules[field]
     const { field, value, operator } = rule
-    const { type } = fields[field] || {}
-    let ruleFilter = {}
-    if (type === 'string') {
-      // filterValues.forEach((filterValue) => {
-      //   Is: 'is',
-      // 'Is not': 'isNot',
-      // Contains: 'contains',
-      // 'Does not contain': 'notContains',
-      // 'Starts with': 'startsWith',
-      // 'Ends with': 'endsWith',
-      // 'Is empty': 'isEmpty',
-      // 'Is not empty': 'isNotEmpty',
-      switch (operator) {
-        case 'is':
-          ruleFilter = value
-          break
-        case 'isNot':
-          ruleFilter = { neq: value }
-          break
-        case 'contains':
-          ruleFilter = { like: value, options: 'i' }
-          break
-        case 'notContains':
-          ruleFilter = { nlike: value, options: 'i' }
-          break
-        case 'startsWith':
-          // ruleFilter = { like: `${value}%`, options: 'i' }
-          ruleFilter = { regexp: `^${value}` }
-          break
-        case 'endsWith':
-          ruleFilter = { regexp: `${value}$` }
-          break
-        case 'isEmpty':
-          ruleFilter = null
-          break
-        case 'isNotEmpty':
-          ruleFilter = { neq: null }
-          break
-      }
-      or.push({ [field]: ruleFilter })
-      // })
-    } else if (type === 'number') {
-      // filterValues.forEach((filterValue) => {
-      or.push({ [field]: { eq: value } })
-      // })
-    } else if (type === 'date') {
-      // let and = []
-      // filterValues.forEach((filterValue) => {
-      const and = [
-        { [field]: { gte: new Date(value) } },
-        { [field]: { lt: addDays(new Date(value), 1) } },
-      ]
-      or.push({ and })
-      // })
-    }
+    // const { type } = fields[field] || {}
+    const ruleFilter = getOperatorQuery(field, operator, value)
+    or.push(ruleFilter)
   }
   if (or.length > 0) {
     and.push({ or })
@@ -278,27 +328,10 @@ export default {
   },
   computed: {
     filterableFields() {
-      const view = this.content.Views[this.viewName]
-      return view.Fields
+      const fields = getGridFields(this.content, this.viewName)
+      return fields
     },
   },
-  beforeDestroy() {
-    // Perform the teardown procedure for someLeakyProperty.
-    // (In this case, effectively nothing)
-  },
-  // watch: {
-  //   options: {
-  //     handler () {
-  //         console.log(this);
-  //         let page = this.options.page
-  //         let pageSize = this.options.itemsPerPage
-  //         this.limit = pageSize;
-  //         this.skip = (page - 1) * pageSize;
-  //     //  let {}
-  //     },
-  //     deep: true,
-  //   },
-  // },
   methods: {
     updatePagination(pagination) {},
     onFilterClick(e) {
@@ -312,7 +345,7 @@ export default {
   apollo: {
     tableData: {
       query: gql`
-        ${EventFind}
+        ${RegistrationFind}
       `,
       variables() {
         // Use vue reactive properties here
@@ -339,13 +372,11 @@ export default {
         }
       },
       update(data) {
-        console.log(data)
-        // The returned value will update
-        // the vue property 'pingMessage'
         const { content, viewName } = this
+        const modelName = content.general.name
         const tableData = {
-          items: formatResult(content, viewName, data, 'Event'),
-          total: formatCountData(data, 'Event'),
+          items: formatResult(content, viewName, data, modelName),
+          total: formatCountData(data, modelName),
         }
         return tableData
       },
