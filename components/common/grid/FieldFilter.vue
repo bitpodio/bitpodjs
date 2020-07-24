@@ -70,7 +70,11 @@
           <v-checkbox v-model="filterRule.value"></v-checkbox>
         </div>
         <div v-else-if="fieldType === 'lookup'">
-          <Lookup />
+          <Lookup
+            v-model="filterRule.value"
+            :field="fieldDetails"
+            :field-name="filterRule.field"
+          />
         </div>
         <div v-else>
           <v-text-field
@@ -218,6 +222,9 @@ export default {
         })
       }
       return fieldsList
+    },
+    fieldDetails() {
+      return this.fields[this.filterRule.field] || {}
     },
   },
   methods: {

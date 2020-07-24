@@ -1,10 +1,11 @@
-query($filters: JSON, $where: JSON) {
-  Registration {
-    RegistrationFind(filter: $filters) {
+query($filters: JSON) {
+  GeneralConfiguration {
+    GeneralConfigurationFind(filter: $filters) {
       edges {
         node {
-            key
-            value
+          id
+          value
+          key
         }
       }
     }

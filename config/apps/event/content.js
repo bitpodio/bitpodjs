@@ -1231,6 +1231,20 @@ export default {
             columnWidth: '100px',
             type: 'lookup',
             query: registrationStatusOptions,
+            modelName: 'GeneralConfiguration',
+            itemText: 'value',
+            itemValue: 'key',
+            filter: { type: 'RegistrationStatus' },
+            // items: [
+            //   {
+            //     text: 'Success Payment',
+            //     value: 'Success',
+            //   },
+            //   {
+            //     text: 'Pending Payment',
+            //     value: 'Pending',
+            //   },
+            // ],
           },
           RegistrationId: {
             displayOrder: 6,

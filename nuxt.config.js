@@ -98,6 +98,23 @@ export default {
    ** See https://nuxtjs.org/api/configuration-build/
    eyJhbGciOiJSUzI1NiIsImtpZCI6IjhEMkE0MTczM0QwN0JBNkU2RTYwNTZFRUJDRThDRkQyMDc0NThCMDUiLCJ0eXAiOiJKV1QiLCJ4NXQiOiJqU3BCY3owSHVtNXVZRmJ1dk9qUDBnZEZpd1UifQ.eyJuYmYiOjE1OTQ3MTI3MjksImV4cCI6MTU5NDc5OTEyOSwiaXNzIjoiaHR0cHM6Ly9sb2dpbi5iaXRwb2QuaW8vYXV0aCIsImF1ZCI6WyJodHRwczovL2xvZ2luLmJpdHBvZC5pby9hdXRoL3Jlc291cmNlcyIsIlNoYXJlZCIsIk5vdGlmaWNhdGlvbiJdLCJjbGllbnRfaWQiOiI2ZDJiOTg4YzQ2NWY0NzZhMDhhZWZjNDg5ZWYyYjIxMThmZTU4MDc2Iiwic3ViIjoiamFnYW5uYXRoQGJpdHBvZC5pbyIsImF1dGhfdGltZSI6MTU5NDcxMjcyNiwiaWRwIjoibG9jYWwiLCJzY29wZSI6WyJOb3RpZmljYXRpb24iLCJvcGVuaWQiLCJwcm9maWxlIiwiZW1haWwiLCJiYWFzIiwib2ZmbGluZV9hY2Nlc3MiLCJub3RpZmljYXRpb24iLCJub3RpZmljYXRpb24iLCJiYWFzIiwib2ZmbGluZV9hY2Nlc3MiLCJub3RpZmljYXRpb24iLCJiYWFzIiwib2ZmbGluZV9hY2Nlc3MiLCJub3RpZmljYXRpb24iLCJvZmZsaW5lX2FjY2VzcyJdLCJhbXIiOlsicHdkIl19.Pflb0QawGDCMCWslWthbHosaSnN1Yor7yI5zWRmlkSJKuYlajdC_yS1gsxAAyQvEcch4gcjd7zL8LooA5l5Z7jZmeymMVv538NR6Z4ZT09XqHBb8DvNgiGvSvVM0jlpluOKfHP5W0-5rThygnBEtPXknRTMn-2P4gmSdOOmMPzUtAKIt2ir-iGXtu5P35FYqyt4qvF7I7BKFQdtw8H-9IdpRveW0sP-M4P8rPdgI8OPFPYYbaXfbDVEavExdBBb09ybKyeCvgdRo7OnBMsBszE0zf2OSapKIvDjloYxc5dWxKsmLfb6g6NnnavOxw0LbdnymI3GCCTstmTcP4oK7xQ
    */
+  // extend(config, { isClient }) {
+  //   config.module.rules.push({
+  //     test: /\.vue$/,
+  //     use: [
+  //       {
+  //         loader: 'vue-loader',
+  //         options: {
+  //           transpileOptions: {
+  //             transforms: {
+  //               dangerousTaggedTemplateString: true,
+  //             },
+  //           },
+  //         },
+  //       },
+  //     ],
+  //   })
+  // },
   build: {},
   vue: {
     config: {
@@ -114,7 +131,7 @@ export default {
           headers: {
             Authorization:
               'Bearer ' +
-              'eyJhbGciOiJSUzI1NiIsImtpZCI6IjhEMkE0MTczM0QwN0JBNkU2RTYwNTZFRUJDRThDRkQyMDc0NThCMDUiLCJ0eXAiOiJKV1QiLCJ4NXQiOiJqU3BCY3owSHVtNXVZRmJ1dk9qUDBnZEZpd1UifQ.eyJuYmYiOjE1OTU1MDkzNTUsImV4cCI6MTU5NTU5NTc1NSwiaXNzIjoiaHR0cHM6Ly9sb2dpbi5iaXRwb2QuaW8vYXV0aCIsImF1ZCI6WyJodHRwczovL2xvZ2luLmJpdHBvZC5pby9hdXRoL3Jlc291cmNlcyIsIlNoYXJlZCIsIk5vdGlmaWNhdGlvbiJdLCJjbGllbnRfaWQiOiI2ZDJiOTg4YzQ2NWY0NzZhMDhhZWZjNDg5ZWYyYjIxMThmZTU4MDc2Iiwic3ViIjoiamFnYW5uYXRoQGJpdHBvZC5pbyIsImF1dGhfdGltZSI6MTU5NTUwOTM1NCwiaWRwIjoibG9jYWwiLCJzY29wZSI6WyJOb3RpZmljYXRpb24iLCJvcGVuaWQiLCJwcm9maWxlIiwiZW1haWwiLCJiYWFzIiwib2ZmbGluZV9hY2Nlc3MiLCJub3RpZmljYXRpb24iLCJub3RpZmljYXRpb24iLCJiYWFzIiwib2ZmbGluZV9hY2Nlc3MiLCJub3RpZmljYXRpb24iLCJiYWFzIiwib2ZmbGluZV9hY2Nlc3MiLCJub3RpZmljYXRpb24iLCJvZmZsaW5lX2FjY2VzcyJdLCJhbXIiOlsicHdkIl19.vdiyLpVMpKe4HgTMTn9yqn3vIPQOX6V3e86sHo2tn4v6fNgDzFL5Z7D3QK-awQrnTnPL8o1Hx3BLKVVmMT6fj-OjFCNGMQ1atd09PaQkSrL6BhgMM3UEBGRPzr9pT6cu1kgy2XC5-gONpIro6qfEQzp8xXoy1hpfwwsQNrmS-Kfl8kf_x0Sc2pGsXn86y0MsH_JYqxV2f_rGH10eCCDIBbii3wV4A-oLpajboPPytTxEvoJ8-TA7fO_00i1Xl1ib71q-gzDl7NM6KfHN8211Sm80DD35h6-rGF1aDFj_iKwu84MvvUpzmyHhEy1icDSHNrzac7VW3cCksSmjiDdUNg',
+              'eyJhbGciOiJSUzI1NiIsImtpZCI6IjhEMkE0MTczM0QwN0JBNkU2RTYwNTZFRUJDRThDRkQyMDc0NThCMDUiLCJ0eXAiOiJKV1QiLCJ4NXQiOiJqU3BCY3owSHVtNXVZRmJ1dk9qUDBnZEZpd1UifQ.eyJuYmYiOjE1OTU1OTUxNjMsImV4cCI6MTU5NTY4MTU2MywiaXNzIjoiaHR0cHM6Ly9sb2dpbi5iaXRwb2QuaW8vYXV0aCIsImF1ZCI6WyJodHRwczovL2xvZ2luLmJpdHBvZC5pby9hdXRoL3Jlc291cmNlcyIsIlNoYXJlZCIsIk5vdGlmaWNhdGlvbiJdLCJjbGllbnRfaWQiOiI2ZDJiOTg4YzQ2NWY0NzZhMDhhZWZjNDg5ZWYyYjIxMThmZTU4MDc2Iiwic3ViIjoiamFnYW5uYXRoQGJpdHBvZC5pbyIsImF1dGhfdGltZSI6MTU5NTUwOTM1NCwiaWRwIjoibG9jYWwiLCJzY29wZSI6WyJOb3RpZmljYXRpb24iLCJvcGVuaWQiLCJwcm9maWxlIiwiZW1haWwiLCJiYWFzIiwib2ZmbGluZV9hY2Nlc3MiLCJub3RpZmljYXRpb24iXSwiYW1yIjpbInB3ZCJdfQ.AkxncNXwWrrBFc2tjJbokZ_Hcnxm8QFYk_BBVg31pnAgNacObiCkroJDXTVGkuUcLvuQk4Ki0Cs_yAB1IXLwYpKsg2SMEjb2GkfnuVnd36VB6BWEe7sQFlB90kO64Oqa8JrZOmOWXPag-JZwefI5Nu0Vfj_rLmIn2mtjJ7NcdfyFUZ_-j0KL_ha0irDFdd_Id3kfutMbc_gC4yDPnrWMSDlVFmzFeueljqpU3VxOR482RX-uB2FGTm_puqkWVTTRlpqaX_X21cNVCJ4yLih8DpLQFSsuns5FAIwqqJu5sC5RZVTcz8bWWiLh1ILFD_gZu4Gl11zNt1XczQWFwa6JBA',
           },
         },
       },
