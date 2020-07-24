@@ -16,17 +16,17 @@
           <template v-slot:activator="{ on, attrs }">
             <v-btn
               v-bind="attrs"
-              v-on="on"
               color="blue darken-2"
               dark
               class="ma-3 block wd-full"
+              v-on="on"
             >
               Create Event
             </v-btn>
           </template>
 
           <v-list>
-            <v-list-item @click="dialog = !dialog">
+            <v-list-item @click="dialog1 = !dialog1">
               <v-list-item-title>Single Event</v-list-item-title>
             </v-list-item>
             <v-list-item @click="dialog = !dialog">
@@ -82,62 +82,217 @@
         </template>
       </v-list>
     </v-navigation-drawer>
-    <v-dialog v-model="dialog" width="800px">
+
+    <v-dialog v-model="dialog1" persistent max-width="850px">
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn color="primary" dark v-bind="attrs" v-on="on">
+          Open Dialog
+        </v-btn>
+      </template>
       <v-card>
-        <v-card-title class="grey darken-5">
-          Create Event
+        <v-card-title>
+          <span class="headline">New Event</span>
         </v-card-title>
-        <v-container>
-          <v-row class="mx-2">
-            <v-col class="align-center justify-space-between" cols="12">
-              <v-row align="center" class="mr-0">
-                <v-avatar size="40px" class="mx-3">
-                  <img
-                    src="//ssl.gstatic.com/s2/oz/images/sge/grey_silhouette.png"
-                    alt=""
-                  />
-                </v-avatar>
-                <v-text-field placeholder="Name"></v-text-field>
-              </v-row>
+        <v-card-text>
+          <v-row>
+            <v-col cols="12">
+              <v-text-field label="Event Name*" required></v-text-field>
             </v-col>
-            <v-col cols="6">
-              <v-text-field
-                prepend-icon="mdi-account-card-details-outline"
-                placeholder="Company"
-              ></v-text-field>
+            <v-col cols="12" sm="6" md="4">
+              <v-dialog
+                ref="dialog"
+                v-model="modal"
+                :return-value.sync="date"
+                persistent
+                width="290px"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-text-field
+                    v-model="date"
+                    label="Start Date"
+                    append-icon="fa-calendar"
+                    readonly
+                    v-bind="attrs"
+                    v-on="on"
+                  ></v-text-field>
+                </template>
+                <v-date-picker v-model="date" scrollable>
+                  <v-spacer></v-spacer>
+                  <v-btn text color="primary" @click="modal = false"
+                    >Cancel</v-btn
+                  >
+                  <v-btn text color="primary" @click="$refs.dialog.save(date)"
+                    >OK</v-btn
+                  >
+                </v-date-picker>
+              </v-dialog>
             </v-col>
-            <v-col cols="6">
-              <v-text-field placeholder="Job title"></v-text-field>
+            <v-col cols="12" sm="6" md="4">
+              <v-menu
+                v-model="menu2"
+                :close-on-content-click="false"
+                :nudge-right="40"
+                transition="scale-transition"
+                offset-y
+                min-width="290px"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-text-field
+                    v-model="date"
+                    label="End Date"
+                    append-icon="fa-calendar"
+                    readonly
+                    v-bind="attrs"
+                    v-on="on"
+                  ></v-text-field>
+                </template>
+                <v-date-picker
+                  v-model="date"
+                  @input="menu2 = false"
+                ></v-date-picker>
+              </v-menu>
+            </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <v-select
+                :items="['0-17', '18-29', '30-54', '54+']"
+                label="Timezone*"
+                required
+              ></v-select>
             </v-col>
             <v-col cols="12">
-              <v-text-field
-                prepend-icon="mdi-mail"
-                placeholder="Email"
-              ></v-text-field>
+              <v-textarea
+                clearable
+                clear-icon="fa-close"
+                label="Description"
+                value=""
+              ></v-textarea>
             </v-col>
-            <v-col cols="12">
+            <v-col cols="12" sm="6" md="6">
               <v-text-field
-                type="tel"
-                prepend-icon="mdi-phone"
-                placeholder="(000) 000 - 0000"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                prepend-icon="mdi-text"
-                placeholder="Notes"
+                label="Event Link*"
+                hint="https://bitpod-event.test.bitpod.io/e/"
+                persistent-hint
+                required
               ></v-text-field>
             </v-col>
           </v-row>
-        </v-container>
+          <small>*indicates required field</small>
+        </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn text color="primary" @click="dialog = false">Cancel</v-btn>
-          <v-btn text @click="dialog = false">Save</v-btn>
+          <v-btn color="blue darken-1" text @click="dialog1 = false"
+            >Close</v-btn
+          >
+          <v-btn color="blue darken-1" text @click="dialog1 = false"
+            >Save</v-btn
+          >
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-app-bar app flat>
+
+    <v-dialog v-model="dialog" fullscreen transition="dialog-bottom-transition">
+      <v-card>
+        <v-toolbar dark color="primary">
+          <v-btn icon dark @click="dialog = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+          <v-toolbar-title>New Event</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-toolbar-items>
+            <v-btn dark text @click="dialog = false">Save</v-btn>
+          </v-toolbar-items>
+        </v-toolbar>
+        <v-card-text>
+          <v-container>
+            <v-row>
+              <v-col cols="12">
+                <v-text-field label="Event Name*" required></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-dialog
+                  ref="dialog"
+                  v-model="modal"
+                  :return-value.sync="date"
+                  persistent
+                  width="290px"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                      v-model="date"
+                      label="Start Date"
+                      append-icon="fa-calendar"
+                      readonly
+                      v-bind="attrs"
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-date-picker v-model="date" scrollable>
+                    <v-spacer></v-spacer>
+                    <v-btn text color="primary" @click="modal = false"
+                      >Cancel</v-btn
+                    >
+                    <v-btn text color="primary" @click="$refs.dialog.save(date)"
+                      >OK</v-btn
+                    >
+                  </v-date-picker>
+                </v-dialog>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-menu
+                  v-model="menu2"
+                  :close-on-content-click="false"
+                  :nudge-right="40"
+                  transition="scale-transition"
+                  offset-y
+                  min-width="290px"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-text-field
+                      v-model="date"
+                      label="End Date"
+                      append-icon="fa-calendar"
+                      readonly
+                      v-bind="attrs"
+                      v-on="on"
+                    ></v-text-field>
+                  </template>
+                  <v-date-picker
+                    v-model="date"
+                    @input="menu2 = false"
+                  ></v-date-picker>
+                </v-menu>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-select
+                  :items="['0-17', '18-29', '30-54', '54+']"
+                  label="Timezone*"
+                  required
+                ></v-select>
+              </v-col>
+              <v-col cols="12">
+                <v-textarea
+                  clearable
+                  clear-icon="fa-close"
+                  label="Description"
+                  value=""
+                ></v-textarea>
+              </v-col>
+              <v-col cols="12" sm="6" md="6">
+                <v-text-field
+                  label="Event Link*"
+                  hint="https://bitpod-event.test.bitpod.io/e/"
+                  persistent-hint
+                  required
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-container>
+          <small>*indicates required field</small>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
+
+    <v-app-bar app flat class="greybg">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title class="pl-0">Event</v-toolbar-title>
       <v-spacer></v-spacer>
@@ -178,8 +333,16 @@ export default {
     source: String,
   },
   data: () => ({
+    date: new Date().toISOString().substr(0, 10),
+    menu: false,
+    modal: false,
+    menu2: false,
     drawer: true,
+    dialog1: false,
     dialog: false,
+    notifications: false,
+    sound: true,
+    tabs: null,
     items: [
       { icon: 'mdi-contacts', text: 'Eventboard', route: '/home' },
       { heading: 'Event' },

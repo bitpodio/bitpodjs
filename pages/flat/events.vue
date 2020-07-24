@@ -6,52 +6,7 @@
         <v-chip class="my-2" label>
           Aug 20, 2020 5:36 PM - Aug 24, 2020 5:36 PM
         </v-chip>
-        <v-flex my-3>
-          <div class="dashboard-tile">
-            <div class="dashboard-icon success">
-              <i class="fa fa-user-check" aria-hidden="true"></i>
-            </div>
-            <div class="dashboard-info grey lighten-4">
-              <div class="dashboard-value">
-                1
-              </div>
-              <div class="dashboard-label">Total Registration</div>
-            </div>
-          </div>
-          <div class="dashboard-tile">
-            <div class="dashboard-icon error">
-              <i class="fa fa-user-x" aria-hidden="true"></i>
-            </div>
-            <div class="dashboard-info grey lighten-4">
-              <div class="dashboard-value">
-                1
-              </div>
-              <div class="dashboard-label">Abandoned Registration</div>
-            </div>
-          </div>
-          <div class="dashboard-tile">
-            <div class="dashboard-icon warning">
-              <i class="fa fa fa-banknote" aria-hidden="true"></i>
-            </div>
-            <div class="dashboard-info grey lighten-4">
-              <div class="dashboard-value">
-                $ 3.00
-              </div>
-              <div class="dashboard-label">Revenue</div>
-            </div>
-          </div>
-          <div class="dashboard-tile">
-            <div class="dashboard-icon primary">
-              <i class="fa fa-calendar2" aria-hidden="true"></i>
-            </div>
-            <div class="dashboard-info grey lighten-4">
-              <div class="dashboard-value">
-                29 Days
-              </div>
-              <div class="dashboard-label">Opens in</div>
-            </div>
-          </div>
-        </v-flex>
+        <Cardtiles />
         <v-flex>
           <p class="blue--text">
             <i class="fa fa-map-marker" aria-hidden="true"></i>
@@ -107,7 +62,7 @@
       </div>
     </v-flex>
     <v-flex column xs12 sm4 md4 lg4>
-      <div class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
+      <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
         <h2 class="body-1">Event Information</h2>
         <v-divider></v-divider>
         <v-flex my-3>
@@ -131,7 +86,7 @@
         </v-flex>
       </div>
 
-      <div class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
+      <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
         <h2 class="body-1">SEO Details</h2>
         <v-divider></v-divider>
         <v-flex my-3>
@@ -148,7 +103,7 @@
         </v-flex>
       </div>
 
-      <div class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
+      <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
         <h2 class="body-1">Event Settings</h2>
         <v-divider></v-divider>
         <v-flex my-3>
@@ -179,10 +134,12 @@
 <script>
 import Grid from '~/components/common/grid'
 import content from '~/config/apps/event/content'
+import Cardtiles from '~/components/cardtiles'
 export default {
   layout: 'flatlayout',
   components: {
     Grid,
+    Cardtiles,
   },
   data() {
     return {
@@ -192,60 +149,3 @@ export default {
   created() {},
 }
 </script>
-
-<style scoped>
-.dashboard-tile {
-  display: inline-flex;
-  flex-direction: row;
-  min-width: 200px;
-  max-width: 200px;
-  height: 60px;
-  border-radius: 12px;
-  margin: 10px;
-  margin-left: 0;
-  margin-top: 0;
-}
-.dashboard-icon {
-  color: #fff;
-  display: inline-flex;
-  align-items: center;
-  border-radius: 4px 0 0 4px;
-  width: 100px;
-  max-width: 100px;
-  box-sizing: border-box;
-  justify-content: center;
-}
-.dashboard-info {
-  width: 150px;
-  background: #f2f2f2;
-  background: #fff;
-  display: inline-flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 10px;
-  border-radius: 0 4px 4px 0;
-}
-.dashboard-icon .fa {
-  font-size: 24px;
-  color: #fff;
-}
-.dashboard-value {
-  font-size: 20px;
-  color: #333;
-  min-height: 28px;
-}
-.dashboard-label {
-  color: #666;
-  font-size: 12px;
-  max-width: 105px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  width: 105px;
-  white-space: nowrap;
-  line-height: 12px;
-}
-.section-title {
-  font-size: 18px;
-  font-weight: 400;
-}
-</style>
