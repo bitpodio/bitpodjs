@@ -4,10 +4,9 @@
       <div>
         <slot name="filter">
           <FieldsFilter
+            v-model="filterRules"
             :is-filter-applied="isFilterApplied"
             :fields="filterableFields"
-            :filter-rules="filterRules"
-            @update-filter="onUpdateFilter"
           />
         </slot>
       </div>
@@ -337,10 +336,6 @@ export default {
     onFilterClick(e) {
       this.isFilterApplied = true
     },
-    onUpdateFilter(value, filterRules) {
-      this.isFilterApplied = value
-      this.filterRules = [...filterRules]
-    },
   },
   apollo: {
     tableData: {
@@ -356,7 +351,7 @@ export default {
         // let {,} = ;
         const order = getOrderQuery(content, viewName, sortBy, sortDesc)
         const where =
-          this.isFilterApplied || search
+          this.filterRules.length > 0 || search
             ? buildQueryVariables({
                 content,
                 viewName,

@@ -17,8 +17,8 @@
         <v-divider></v-divider>
         <div class="filter-fields-container">
           <div
-            v-for="[index, filterRule] of filterRules.entries()"
-            :key="filterRule"
+            v-for="[index, filterRule] of value.entries()"
+            :key="index + filterRule.field + filterRule.value"
           >
             <FieldFilter
               :filter-rule="filterRule"
@@ -50,16 +50,17 @@ export default {
       type: Object,
       required: true,
     },
-    filterRules: {
-      type: Array,
-      required: true,
-    },
     isFilterApplied: {
       type: Boolean,
       required: true,
     },
+    value: {
+      type: Array,
+      default: () => {},
+    },
   },
   data() {
+    debugger
     return {
       dialog: false,
       filterInputSearchValues: {
@@ -84,18 +85,17 @@ export default {
     },
     onApply() {
       this.menu = false
-      const { filterRules } = this
-      this.$emit('update-filter', true, filterRules)
+      const { value } = this
+      this.$emit('input', value)
     },
     setFieldValues(fieldName, filterValues) {
       this.filterFields[fieldName] = filterValues
       this.filterFields = { ...this.filterFields }
-      //   this.filterValues = new Set(filterValues)
     },
     onAddFilter() {
       const fieldName = Object.keys(this.fields)[0]
-      this.filterRules = [
-        ...this.filterRules,
+      this.value = [
+        ...this.value,
         { field: fieldName, operator: 'contains', value: '' },
       ]
     },
