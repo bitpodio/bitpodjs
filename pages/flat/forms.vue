@@ -25,7 +25,7 @@
       </v-menu>
     </div>
 
-    <v-dialog v-model="dialog1" persistent slide-form>
+    <v-dialog v-model="dialog1" persistent content-class="slide-form">
       <v-card>
         <v-toolbar dark color="accent">
           <v-toolbar-title>New Event</v-toolbar-title>
@@ -35,7 +35,7 @@
           </v-btn>
         </v-toolbar>
         <v-card flat>
-          <v-tabs v-model="tabs" center-active class="ml-md-4 ml-sm-4">
+          <v-tabs v-model="tabs" center-active class="pl-md-4 pl-sm-4">
             <v-tabs-slider></v-tabs-slider>
             <v-tab
               href="#mobile-tabs-5-1"
@@ -353,11 +353,12 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .slide-form {
   position: fixed !important;
   right: 0 !important;
   bottom: 0 !important;
   width: calc(100% - 300px) !important;
+  max-height: calc(100% - 100px) !important;
 }
 </style>
