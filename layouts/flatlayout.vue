@@ -96,7 +96,11 @@
         <v-card-text>
           <v-row>
             <v-col cols="12">
-              <v-text-field label="Event Name*" required></v-text-field>
+              <v-text-field
+                label="Event Name*"
+                required
+                outlined
+              ></v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="4">
               <v-dialog
@@ -109,6 +113,7 @@
                 <template v-slot:activator="{ on, attrs }">
                   <v-text-field
                     v-model="date"
+                    outlined
                     label="Start Date"
                     append-icon="fa-calendar"
                     readonly
@@ -139,6 +144,7 @@
                 <template v-slot:activator="{ on, attrs }">
                   <v-text-field
                     v-model="date"
+                    outlined
                     label="End Date"
                     append-icon="fa-calendar"
                     readonly
@@ -157,12 +163,14 @@
                 :items="['0-17', '18-29', '30-54', '54+']"
                 label="Timezone*"
                 required
+                outlined
               ></v-select>
             </v-col>
             <v-col cols="12">
               <v-textarea
                 clearable
-                clear-icon="fa-close"
+                outlined
+                clear-icon="fa fa-close"
                 label="Description"
                 value=""
               ></v-textarea>
@@ -172,6 +180,7 @@
                 label="Event Link*"
                 hint="https://bitpod-event.test.bitpod.io/e/"
                 persistent-hint
+                outlined
                 required
               ></v-text-field>
             </v-col>
