@@ -37,6 +37,14 @@
       </v-btn> -->
       <v-toolbar-title v-text="title" />
       <v-spacer />
+
+      <template v-if="$auth.$state.loggedIn">
+        <v-avatar color="indigo" size="40"> </v-avatar>
+        <v-btn @click="$auth.logout()">Logout</v-btn>
+      </template>
+      <template v-else>
+        <v-btn to="/login">Login</v-btn>
+      </template>
       <v-btn icon @click.stop="rightDrawer = !rightDrawer">
         <v-icon>mdi-menu</v-icon>
       </v-btn>
@@ -65,6 +73,8 @@
 </template>
 
 <script>
+import get from 'lodash.get'
+
 export default {
   data() {
     return {
@@ -93,6 +103,16 @@ export default {
       rightDrawer: false,
       title: 'Bitpod.js',
     }
+  },
+  computed: {
+    picture() {
+      return (
+        get(this.$auth.user, 'picture') ||
+        get(this.$auth.user, 'picture.data.url') ||
+        get(this.$auth.user, 'avatar_url') ||
+        get(this.$auth.user.data, 'name')
+      )
+    },
   },
 }
 </script>
