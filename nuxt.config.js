@@ -154,6 +154,12 @@ export default {
     strategies: {
       bitpod: {
         scheme: 'oauth2',
+        BITPOD_TOKEN_ENDPOINT_URL:
+          process.env.BITPOD_TOKEN_ENDPOINT_URL ||
+          'https://id.bitpod.io/auth/connect/token',
+        BITPOD_USERINFO_ENDPOINT_URL:
+          process.env.BITPOD__USERINFO_ENDPOINT_URL ||
+          'https://id.bitpod.io/auth/connect/userinfo',
         endpoints: {
           authorization:
             process.env.BITPOD_AUTH_URL ||

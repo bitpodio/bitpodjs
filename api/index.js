@@ -1,15 +1,16 @@
 const express = require('express')
-const params = new URLSearchParams()
 import axios from 'axios'
 import nuxtconfig from '../nuxt.config'
 const urlParser = require('url')
-
 const app = express()
 
+const tokenEndpointUrl =
+  nuxtconfig.auth.strategies.bitpod.BITPOD_TOKEN_ENDPOINT_URL
+const UserinfoEndpointUrl =
+  nuxtconfig.auth.strategies.bitpod.BITPOD_USERINFO_ENDPOINT_URL
+
 app.post('/connect/token', async (req, res) => {
-  const tokenEndpointUrl =
-    process.env.BITPOD_TOKEN_ENDPOINT_URL ||
-    'https://id.bitpod.io/auth/connect/token'
+  const params = new URLSearchParams()
   const urlQuery = req.headers.referer
   const parsedQuery = urlParser.parse(urlQuery, true, true)
   const code = parsedQuery.query.code
@@ -21,11 +22,6 @@ app.post('/connect/token', async (req, res) => {
   params.append('redirect_uri', nuxtconfig.auth.strategies.bitpod.redirectUri)
 
   const tokenResponse = await axios.post(tokenEndpointUrl, params)
-  params.delete('client_id', nuxtconfig.auth.strategies.bitpod.clientId)
-  params.delete('client_secret', nuxtconfig.auth.strategies.bitpod.clientSecret)
-  params.delete('grant_type', 'authorization_code')
-  params.delete('code', code)
-  params.delete('redirect_uri', nuxtconfig.auth.strategies.bitpod.redirectUri)
 
   res.json({
     token_type: 'bearer',
@@ -35,9 +31,6 @@ app.post('/connect/token', async (req, res) => {
 })
 
 app.get('/connect/userinfo', async (req, res) => {
-  const UserinfoEndpointUrl =
-    process.env.BITPOD__USERINFO_ENDPOINT_URL ||
-    'https://id.bitpod.io/auth/connect/userinfo'
   var config = {
     headers: {
       Authorization: req.headers.authorization,
