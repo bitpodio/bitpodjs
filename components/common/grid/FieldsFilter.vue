@@ -7,7 +7,12 @@
       offset-x
     >
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="indigo" dark v-bind="attrs" v-on="on">
+        <v-btn
+          text
+          :color="value.length > 0 ? 'blue' : 'black'"
+          v-bind="attrs"
+          v-on="on"
+        >
           filter
         </v-btn>
       </template>
@@ -19,12 +24,29 @@
           <div
             v-for="[index, filterRule] of value.entries()"
             :key="index + filterRule.field + filterRule.value"
+            class="filter-rule-item"
           >
             <FieldFilter
               :filter-rule="filterRule"
               :fields="fields"
               :index="index"
             />
+            <v-menu bottom left>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn icon v-bind="attrs" v-on="on">
+                  <v-icon>mdi-dots-vertical</v-icon>
+                </v-btn>
+              </template>
+
+              <v-list>
+                <v-list-item @click="onRuleDelete(index)">
+                  <v-list-item-title>Delete</v-list-item-title>
+                </v-list-item>
+                <v-list-item @click="onRuleDuplicate(index)">
+                  <v-list-item-title>Duplicate</v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </v-menu>
           </div>
           <v-spacer></v-spacer>
           <v-btn text @click="onAddFilter">+ Add a filter</v-btn>
@@ -60,7 +82,6 @@ export default {
     },
   },
   data() {
-    debugger
     return {
       dialog: false,
       filterInputSearchValues: {
@@ -99,6 +120,12 @@ export default {
         { field: fieldName, operator: 'contains', value: '' },
       ]
     },
+    onRuleDelete(index) {
+      this.value = this.value.filter((_, i) => i !== index)
+    },
+    onRuleDuplicate(index) {
+      this.value = [...this.value, { ...this.value[index] }]
+    },
   },
 }
 </script>
@@ -109,5 +136,9 @@ export default {
 }
 .filter-dialog-content {
   padding: 10px;
+}
+.filter-rule-item {
+  display: flex;
+  align-items: center;
 }
 </style>

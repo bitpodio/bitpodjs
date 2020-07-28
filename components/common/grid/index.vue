@@ -37,7 +37,7 @@
       @update:pagination="updatePagination"
     >
       <!--<template v-slot:header.name="{ header }">
-                    {{ header.text.toUpperCase() }} test
+                    {{ header.text.toUpperCase() }}
       </template>-->
       <!-- <template slot="header" slot-scope="props">
                     <tr>
@@ -82,7 +82,7 @@ import startOfDay from 'date-fns/startOfDay'
 import endOfDay from 'date-fns/endOfDay'
 // import { axiosWrapper } from '../api/axios.js'
 import FieldsFilter from './FieldsFilter.vue'
-import RegistrationFind from '~/config/apps/event/gql/registrationList.gql'
+// import RegistrationFind from '~/config/apps/event/gql/registrationList.gql'
 
 function getTableHeader(content, viewName) {
   const fields = getGridFields(content, viewName)
@@ -105,6 +105,15 @@ function getTableHeader(content, viewName) {
 function getGridFields(content, viewName) {
   const view = content.views[viewName]
   return view.fields
+}
+
+function getViewDataSource(content, viewName) {
+  const view = content.views[viewName]
+  return view.dataSource
+}
+
+function getViewQuery(content, viewName) {
+  return getViewDataSource(content, viewName).query
 }
 
 function formatResult(content, viewName, data, modelName) {
@@ -266,14 +275,12 @@ function getOperatorQuery(field, operator, value) {
 }
 
 function buildQueryVariables({ content, viewName, search, filterRules }) {
-  const filterColumns = filterRules
+  // const filterColumns = filterRules
   const and = []
   // const fields = getGridFields(content, viewName)
   const or = []
   for (const rule of filterRules) {
-    // const filterValues = filterRules[field]
     const { field, value, operator } = rule
-    // const { type } = fields[field] || {}
     const ruleFilter = getOperatorQuery(field, operator, value)
     or.push(ruleFilter)
   }
@@ -284,8 +291,12 @@ function buildQueryVariables({ content, viewName, search, filterRules }) {
     const serachQuery = buildSearchQueryVariables(content, viewName, search)
     and.push(serachQuery)
   }
-  console.log(filterColumns)
-
+  debugger
+  const viewDataSource = getViewDataSource(content, viewName)
+  const contentFilter = viewDataSource.filter
+  if (contentFilter) {
+    and.push(contentFilter.where)
+  }
   return { and }
 }
 
@@ -339,26 +350,24 @@ export default {
   },
   apollo: {
     tableData: {
-      query: gql`
-        ${RegistrationFind}
-      `,
+      query() {
+        return gql`
+          ${getViewQuery(this.content, this.viewName)}
+        `
+      },
       variables() {
         // Use vue reactive properties here
 
         const { content, viewName, search, filterRules } = this
         const sortBy = this.options.sortBy
         const sortDesc = this.options.sortDesc
-        // let {,} = ;
         const order = getOrderQuery(content, viewName, sortBy, sortDesc)
-        const where =
-          this.filterRules.length > 0 || search
-            ? buildQueryVariables({
-                content,
-                viewName,
-                search,
-                filterRules,
-              })
-            : {}
+        const where = buildQueryVariables({
+          content,
+          viewName,
+          search,
+          filterRules,
+        })
         const skip = (this.options.page - 1) * this.options.itemsPerPage
         const limit = this.options.itemsPerPage
         return {

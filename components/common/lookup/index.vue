@@ -15,7 +15,9 @@
 <script>
 import gql from 'graphql-tag'
 
-function formatResult(data, modelName) {
+function formatResult(data) {
+  debugger
+  const [modelName] = Object.getOwnPropertyNames(data)
   const { edges } = data[modelName][`${modelName}Find`]
   return edges.map(({ node }) => node)
 }
@@ -34,27 +36,31 @@ export default {
       type: String,
       required: true,
     },
+    value: {
+      type: String,
+      required: true,
+    },
   },
   data() {
     return {
-      items: this.field.items || [],
+      items: this.field.dataSource.items || [],
       isLoading: false,
-      itemText: this.field.itemText || 'text',
-      itemValue: this.field.itemValue || 'value',
+      itemText: this.field.dataSource.itemText || 'text',
+      itemValue: this.field.dataSource.itemValue || 'value',
     }
   },
   async mounted() {
     if (!this.field.items) {
-      const where = this.field.filter || {}
+      const where = this.field.dataSource.filter || {}
       const result = await this.$apollo.query({
         query: gql`
-          ${this.field.query}
+          ${this.field.dataSource.query}
         `,
         variables: {
           filters: { where },
         },
       })
-      this.items = formatResult(result.data, this.field.modelName)
+      this.items = formatResult(result.data)
     }
   },
   methods: {
