@@ -39,7 +39,11 @@
       <v-spacer />
 
       <template v-if="$auth.$state.loggedIn">
-        <v-avatar color="indigo" size="40"> </v-avatar>
+        <v-avatar color="indigo" size="30">
+          <span class="white--text headline">{{
+            $auth.user.data.name[0]
+          }}</span>
+        </v-avatar>
         <v-btn @click="$auth.logout()">Logout</v-btn>
       </template>
       <template v-else>
@@ -73,8 +77,6 @@
 </template>
 
 <script>
-import get from 'lodash.get'
-
 export default {
   data() {
     return {
@@ -102,17 +104,8 @@ export default {
       right: true,
       rightDrawer: false,
       title: 'Bitpod.js',
+      name: '',
     }
-  },
-  computed: {
-    picture() {
-      return (
-        get(this.$auth.user, 'picture') ||
-        get(this.$auth.user, 'picture.data.url') ||
-        get(this.$auth.user, 'avatar_url') ||
-        get(this.$auth.user.data, 'name')
-      )
-    },
   },
 }
 </script>
