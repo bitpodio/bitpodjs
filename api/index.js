@@ -2,6 +2,8 @@ const express = require('express')
 const params = new URLSearchParams()
 import axios from 'axios'
 import nuxtconfig from '../nuxt.config'
+const urlParser = require('url')
+
 const app = express()
 
 console.log('Middleware Server connected.....')
@@ -11,8 +13,9 @@ app.post('/connect/token', async (req, res) => {
     process.env.BITPOD_TOKEN_ENDPOINT_URL ||
     'https://id.bitpod.io/auth/connect/token'
   console.log('Got POST request in contex /connect/token')
-  const url = req.headers.referer
-  const code = url.split('?')[1].split('&')[0].split('=')[1]
+  const urlQuery = req.headers.referer
+  const parsedQuery = urlParser.parse(urlQuery, true, true)
+  const code = parsedQuery.query.code
   console.log('Succesffully retrieved the code value from url', code)
 
   params.append('client_id', nuxtconfig.auth.strategies.bitpod.clientId)
