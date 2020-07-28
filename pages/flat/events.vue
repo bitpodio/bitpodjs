@@ -48,7 +48,9 @@
             <span class="white--text body-2">M</span>
           </v-avatar>
           <v-subheader class="d-inline-flex pl-1"
-            ><span>Created this event 1 day ago.</span></v-subheader
+            ><span class="pl-1"
+              >Created this event 1 day ago.</span
+            ></v-subheader
           >
         </v-flex>
       </div>
@@ -66,19 +68,19 @@
         <h2 class="body-1">Event Information</h2>
         <v-divider></v-divider>
         <v-flex my-3>
-          <div class="body-2">Organizer</div>
+          <div class="body-2 text--secondary">Organizer</div>
           <div class="body-1">Rishikesh Belhekar</div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2">Event Manager</div>
-          <div class="body-1">Rishikesh Belhekar</div>
+          <div class="body-2 text--secondary">Event Manager</div>
+          <div class="body-1 text--primary">Rishikesh Belhekar</div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2">Tags</div>
+          <div class="body-2 text--secondary">Tags</div>
           <div class="body-1">-</div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2">Description</div>
+          <div class="body-2 text--secondary">Description</div>
           <div class="body-1">
             Event information may be out of date due to the coronavirus
             (COVID-19). Confirm details with event organisers.
@@ -90,15 +92,15 @@
         <h2 class="body-1">SEO Details</h2>
         <v-divider></v-divider>
         <v-flex my-3>
-          <div class="body-2">SEO Title</div>
+          <div class="body-2 text--secondary">SEO Title</div>
           <div class="body-1">gf-tickets</div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2">SEO Description</div>
+          <div class="body-2 text--secondary">SEO Description</div>
           <div class="body-1">Confirm details with event organisers</div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2">SEO Keywords</div>
+          <div class="body-2 text--secondary">SEO Keywords</div>
           <div class="body-1">Event, OnlineEvenet</div>
         </v-flex>
       </div>
@@ -107,23 +109,23 @@
         <h2 class="body-1">Event Settings</h2>
         <v-divider></v-divider>
         <v-flex my-3>
-          <div class="body-2">Privacy</div>
+          <div class="body-2 text--secondary">Privacy</div>
           <div class="body-1">Public</div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2">Currency</div>
+          <div class="body-2 text--secondary">Currency</div>
           <div class="body-1">-</div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2">GL Account Code</div>
+          <div class="body-2 text--secondary">GL Account Code</div>
           <div class="body-1">asddeee</div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2">Cost Center</div>
+          <div class="body-2 text--secondary">Cost Center</div>
           <div class="body-1">-</div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2">Business Type</div>
+          <div class="body-2 text--secondary">Business Type</div>
           <div class="body-1">Single</div>
         </v-flex>
       </div>
