@@ -274,7 +274,13 @@ function getOperatorQuery(field, operator, value) {
   return ruleFilter
 }
 
-function buildQueryVariables({ content, viewName, search, filterRules }) {
+function buildQueryVariables({
+  content,
+  viewName,
+  search,
+  filterRules,
+  filter,
+}) {
   // const filterColumns = filterRules
   const and = []
   // const fields = getGridFields(content, viewName)
@@ -293,7 +299,7 @@ function buildQueryVariables({ content, viewName, search, filterRules }) {
   }
   debugger
   const viewDataSource = getViewDataSource(content, viewName)
-  const contentFilter = viewDataSource.filter
+  const contentFilter = filter || viewDataSource.filter
   if (contentFilter) {
     and.push(contentFilter.where)
   }
@@ -316,6 +322,10 @@ export default {
     search: {
       type: String,
       required: true,
+    },
+    filter: {
+      type: Object,
+      default: () => null,
     },
   },
   data() {
@@ -367,6 +377,7 @@ export default {
           viewName,
           search,
           filterRules,
+          filter: this.filter,
         })
         const skip = (this.options.page - 1) * this.options.itemsPerPage
         const limit = this.options.itemsPerPage
