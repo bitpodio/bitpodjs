@@ -24,6 +24,7 @@ export default {
     Grid,
   },
   data() {
+    debugger
     return {
       field: content.Registrations.views.Registrations.fields.Status,
       fieldName: 'Status',
@@ -31,7 +32,7 @@ export default {
       content,
       filter: {
         where: {
-          Status: 'Success',
+          Status: this.value,
         },
       },
     }

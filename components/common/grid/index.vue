@@ -36,39 +36,28 @@
       class="elevation-1"
       @update:pagination="updatePagination"
     >
-      <!--<template v-slot:header.name="{ header }">
-                    {{ header.text.toUpperCase() }}
-      </template>-->
-      <!-- <template slot="header" slot-scope="props">
-                    <tr>
-                        <th>
-                        <v-checkbox
-                            :input-value="props.all"
-                            :indeterminate="props.indeterminate"
-                            primary
-                            hide-details
-                            @click.native="toggleAll"
-                        ></v-checkbox>
-                        </th>
-                        <th
-                        v-for="header in props.headers"
-                        :key="header.text"
-                        :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
-                        @click="changeSort(header.value)"
-                        >
-                        <v-icon small>arrow_upward</v-icon>
-                        test
-                        </th>
-                    </tr>
-      </template>-->
-      <!-- <template v-slot:top>
-                <v-switch v-model="singleSelect" label="Single select" class="pa-3"></v-switch>
-      </template>-->
+      <template
+        v-for="column in headers"
+        v-slot:[`item.${column.value}`]="props"
+      >
+        <div v-if="!!column.template" :key="column">
+          <component
+            :is="column.template.file"
+            :item="props.item"
+            :value="props.value"
+            :params="column.template.params"
+          />
+        </div>
+        <div v-else :key="column">
+          {{ props.value }}
+        </div>
+      </template>
     </v-data-table>
   </div>
 </template>
 
 <script>
+// import Vue from 'vue'
 import gql from 'graphql-tag'
 import addDays from 'date-fns/addDays'
 import format from 'date-fns/format'
@@ -89,13 +78,16 @@ function getTableHeader(content, viewName) {
 
   const headers = []
   for (const fieldName in fields) {
-    const { caption, sortEnable, displayOrder, columnWidth } = fields[fieldName]
+    const { caption, sortEnable, displayOrder, columnWidth, template } = fields[
+      fieldName
+    ]
     headers.push({
       text: caption,
       value: fieldName,
       sortable: sortEnable,
       width: columnWidth,
       displayOrder,
+      template,
     })
   }
   headers.sort((col1, col2) => col1.displayOrder - col2.displayOrder)
@@ -297,7 +289,6 @@ function buildQueryVariables({
     const serachQuery = buildSearchQueryVariables(content, viewName, search)
     and.push(serachQuery)
   }
-  debugger
   const viewDataSource = getViewDataSource(content, viewName)
   const contentFilter = filter || viewDataSource.filter
   if (contentFilter) {
@@ -351,6 +342,34 @@ export default {
       const fields = getGridFields(this.content, this.viewName)
       return fields
     },
+  },
+  // created(){
+  //
+  //     axiosWrapper('/Events')
+  //     .then(({data})=>{
+  //         this.items = data;
+  //     })
+  // }
+  // async mounted() {
+  //     let result = await this.$apollo.query({
+  //         query: gql`${EventFind}`,
+  //         variables:{
+  //             filters: {where:{}}, where:{}
+  //         }
+  //     });
+  //     console.log(result)
+  //     this.items = formatResult(result.data,"Event")
+  // }
+  mounted() {
+    // const { selected, headers, tableData, options } = this
+    // const ComponentClass = Vue.extend(DataTable)
+    // const instance = new ComponentClass({
+    //   propsData: { selected, headers, tableData, options },
+    // })
+    // // instance.$slots.default = ['Click me!']
+    // instance.$mount() // pass nothing
+    // //         console.log(this.$refs)
+    // this.$refs.container && this.$refs.container.appendChild(instance.$el)
   },
   methods: {
     updatePagination(pagination) {},
@@ -407,23 +426,6 @@ export default {
       // pollInterval:0
     },
   },
-  // created(){
-  //
-  //     axiosWrapper('/Events')
-  //     .then(({data})=>{
-  //         this.items = data;
-  //     })
-  // }
-  // async mounted() {
-  //     let result = await this.$apollo.query({
-  //         query: gql`${EventFind}`,
-  //         variables:{
-  //             filters: {where:{}}, where:{}
-  //         }
-  //     });
-  //     console.log(result)
-  //     this.items = formatResult(result.data,"Event")
-  // }
 }
 </script>
 

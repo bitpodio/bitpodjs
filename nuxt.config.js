@@ -131,7 +131,7 @@ export default {
           headers: {
             Authorization:
               'Bearer ' +
-              'eyJhbGciOiJSUzI1NiIsImtpZCI6IjhEMkE0MTczM0QwN0JBNkU2RTYwNTZFRUJDRThDRkQyMDc0NThCMDUiLCJ0eXAiOiJKV1QiLCJ4NXQiOiJqU3BCY3owSHVtNXVZRmJ1dk9qUDBnZEZpd1UifQ.eyJuYmYiOjE1OTU1OTUxNjMsImV4cCI6MTU5NTY4MTU2MywiaXNzIjoiaHR0cHM6Ly9sb2dpbi5iaXRwb2QuaW8vYXV0aCIsImF1ZCI6WyJodHRwczovL2xvZ2luLmJpdHBvZC5pby9hdXRoL3Jlc291cmNlcyIsIlNoYXJlZCIsIk5vdGlmaWNhdGlvbiJdLCJjbGllbnRfaWQiOiI2ZDJiOTg4YzQ2NWY0NzZhMDhhZWZjNDg5ZWYyYjIxMThmZTU4MDc2Iiwic3ViIjoiamFnYW5uYXRoQGJpdHBvZC5pbyIsImF1dGhfdGltZSI6MTU5NTUwOTM1NCwiaWRwIjoibG9jYWwiLCJzY29wZSI6WyJOb3RpZmljYXRpb24iLCJvcGVuaWQiLCJwcm9maWxlIiwiZW1haWwiLCJiYWFzIiwib2ZmbGluZV9hY2Nlc3MiLCJub3RpZmljYXRpb24iXSwiYW1yIjpbInB3ZCJdfQ.AkxncNXwWrrBFc2tjJbokZ_Hcnxm8QFYk_BBVg31pnAgNacObiCkroJDXTVGkuUcLvuQk4Ki0Cs_yAB1IXLwYpKsg2SMEjb2GkfnuVnd36VB6BWEe7sQFlB90kO64Oqa8JrZOmOWXPag-JZwefI5Nu0Vfj_rLmIn2mtjJ7NcdfyFUZ_-j0KL_ha0irDFdd_Id3kfutMbc_gC4yDPnrWMSDlVFmzFeueljqpU3VxOR482RX-uB2FGTm_puqkWVTTRlpqaX_X21cNVCJ4yLih8DpLQFSsuns5FAIwqqJu5sC5RZVTcz8bWWiLh1ILFD_gZu4Gl11zNt1XczQWFwa6JBA',
+              'eyJhbGciOiJSUzI1NiIsImtpZCI6IjhEMkE0MTczM0QwN0JBNkU2RTYwNTZFRUJDRThDRkQyMDc0NThCMDUiLCJ0eXAiOiJKV1QiLCJ4NXQiOiJqU3BCY3owSHVtNXVZRmJ1dk9qUDBnZEZpd1UifQ.eyJuYmYiOjE1OTU4NjczMDYsImV4cCI6MTU5NTk1MzcwNiwiaXNzIjoiaHR0cHM6Ly9sb2dpbi5iaXRwb2QuaW8vYXV0aCIsImF1ZCI6WyJodHRwczovL2xvZ2luLmJpdHBvZC5pby9hdXRoL3Jlc291cmNlcyIsIlNoYXJlZCIsIk5vdGlmaWNhdGlvbiJdLCJjbGllbnRfaWQiOiI2ZDJiOTg4YzQ2NWY0NzZhMDhhZWZjNDg5ZWYyYjIxMThmZTU4MDc2Iiwic3ViIjoiamFnYW5uYXRoQGJpdHBvZC5pbyIsImF1dGhfdGltZSI6MTU5NTc4MTUwMSwiaWRwIjoibG9jYWwiLCJzY29wZSI6WyJOb3RpZmljYXRpb24iLCJvcGVuaWQiLCJwcm9maWxlIiwiZW1haWwiLCJiYWFzIiwib2ZmbGluZV9hY2Nlc3MiLCJub3RpZmljYXRpb24iXSwiYW1yIjpbInB3ZCJdfQ.K1JtPtcGaUKabEbelo4nGHS8cOOn1MfNTRUeMvm1DOlRrT9oKyAWSqLcDKQvueV0kIz9YsHv7zq4yx3HEdfsWVh_RRtTnwi-_itzU5OgHCb2eqsCa3oJ-e1_l6dalaTyI-XP5Dg0TB3857DH4qpEk7jL3USntJREWkXBvUFx1f_tkgnAqAAtjrAlJM9sLpaI5SQRnSTgAgF6q4oOd5gWwyahPRXiXuPWQOlqj2A2r51GRkD4swpkiCOkYnbN-8PdeMXm9W0apHD2UIF3_NGmi1Qh8Yq7PmbG7TGsWx0dWhyCtbShz1jO3W_IdZ4ESomti5fcUmjZ--jWe_jnGfDDcg',
           },
         },
       },
@@ -139,6 +139,13 @@ export default {
       //   httpEndpoint:"https://event.test.bitpod.io/svc/graphql",
       //   // wsEndpoint: process.env.WS_ENDPOINT
       // }
+    },
+    defaultOptions: {
+      // See 'apollo' definition
+      // For example: default query options
+      $query: {
+        fetchPolicy: 'network-only',
+      },
     },
   },
   devtools: true,

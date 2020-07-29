@@ -1,6 +1,9 @@
+import statusTemplate from '../../common/templates/edit.vue'
 import registrationStatusOptions from './gql/registrationStatusOptions.gql'
+import registrationList from './gql/registrationList.gql'
+import eventList from './gql/eventlist.gql'
 
-export default {
+export default (ctx) => ({
   EventsManagement: {
     Actions: {
       'Embeded Actions': '',
@@ -18,9 +21,9 @@ export default {
       Type: 'List',
       URL: 'Event',
     },
-    General: {
-      Caption: 'Events',
-      Name: 'Event',
+    general: {
+      caption: 'Events',
+      name: 'Event',
     },
     Permissions: {
       Groups: '',
@@ -54,7 +57,7 @@ export default {
         LinkedinURL: '',
       },
     },
-    Views: {
+    views: {
       'Seat Layout': {
         Default: 'true',
         DataSource: {
@@ -719,8 +722,7 @@ export default {
         Title: 'Recurring Event',
       },
       'All Events': {
-        DefaultSort: 'createdDate DESC',
-        Fields: {
+        fields: {
           '_VenueAddress.PostalCode': {
             displayOrder: 10,
             caption: 'Postal Code',
@@ -829,11 +831,50 @@ export default {
             type: 'string',
           },
         },
-        InlineEditing: true,
-        DialogEditing: true,
+        inlineEditing: true,
+        DdialogEditing: true,
         Query: '',
         QueryType: 'axios',
         Title: 'All Events',
+        dataSource: {
+          query: eventList,
+          filter: {
+            where: {
+              or: [
+                {
+                  and: [
+                    {
+                      or: [
+                        { StartDate: { lte: new Date() } },
+                        { StartDate: { gte: new Date() } },
+                        { StartDate: { exists: false } },
+                        { StartDate: null },
+                        // { userId: }
+                      ],
+                    },
+                    {
+                      or: [
+                        { StartDate: { gte: new Date() } },
+                        {
+                          StartDate: {
+                            exists: false,
+                          },
+                        },
+                        {
+                          StartDate: null,
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  Status: 'Not ready',
+                },
+              ],
+            },
+          },
+          defaultSort: 'createdDate DESC',
+        },
       },
       Event: {
         Fields: {
@@ -1230,11 +1271,19 @@ export default {
             sortEnable: true,
             columnWidth: '100px',
             type: 'lookup',
-            query: registrationStatusOptions,
-            modelName: 'GeneralConfiguration',
-            itemText: 'value',
-            itemValue: 'key',
-            filter: { type: 'RegistrationStatus' },
+            dataSource: {
+              query: registrationStatusOptions,
+              itemText: 'value',
+              itemValue: 'key',
+              filter: { type: 'RegistrationStatus' },
+            },
+            template: {
+              file: statusTemplate,
+              params: {
+                // eslint-disable-next-line no-template-curly-in-string
+                route: '/event',
+              },
+            },
             // items: [
             //   {
             //     text: 'Success Payment',
@@ -1295,8 +1344,12 @@ export default {
             type: 'checkbox',
           },
         },
-        query:
-          'query($filters: JSON, $where: JSON) {\n  Registration {\n    RegistrationFind(filter: $filters) {\n      edges {\n        node {\n          id\n          Email\n          EventName\n          FirstName\n  TotalAmount  TicketQuantity    CompanyName    FullName\n          LastName\n          _Comment {\n            Notes\n            id\n          }\n          Category\n          _QuestionResponse {\n            Answer\n            id\n          }\n          PaymentMethod\n          CheckIn\n          Phone\n          RegistrationId\n          Status\n          createdDate\n          EventList{\n            _VenueAddress{\n              id\n              City\n              State\n              PostalCode\n              AddressLine\n              Country\n            }\n          }\n        }\n      }\n    }\n    RegistrationCount(where: $where)\n  }\n}\n',
+        dataSource: {
+          query: registrationList,
+          filter: {
+            where: { Status: 'Failed' },
+          },
+        },
         title: 'Registrations',
       },
       'Abandoned Registrations': {
@@ -1491,4 +1544,4 @@ export default {
       },
     },
   },
-}
+})

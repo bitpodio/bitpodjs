@@ -17,8 +17,10 @@ export default {
     Grid,
   },
   data() {
+    debugger
+    // console.log(`content() = ${JSON.stringify(content())}`)
     return {
-      content,
+      content: content(),
     }
   },
   created() {},
