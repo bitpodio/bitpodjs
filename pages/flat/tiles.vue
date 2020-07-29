@@ -6,8 +6,19 @@
           <v-card class="elevation-1">
             <v-img
               src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+              lazy-src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+              aspect-ratio="1"
               class="tile-img"
-            ></v-img>
+            >
+              <template v-slot:placeholder>
+                <v-row class="fill-height ma-0" align="center" justify="center">
+                  <v-progress-circular
+                    indeterminate
+                    color="grey lighten-5"
+                  ></v-progress-circular>
+                </v-row>
+              </template>
+            </v-img>
             <div class="text--secondary px-4 pt-4 mb-n4">
               Mon, Aug 10, 2020 6:15 PM
             </div>
@@ -33,8 +44,19 @@
           <v-card class="elevation-1">
             <v-img
               src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+              lazy-src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
+              aspect-ratio="1"
               class="tile-img"
-            ></v-img>
+            >
+              <template v-slot:placeholder>
+                <v-row class="fill-height ma-0" align="center" justify="center">
+                  <v-progress-circular
+                    indeterminate
+                    color="grey lighten-5"
+                  ></v-progress-circular>
+                </v-row>
+              </template>
+            </v-img>
             <div class="text--secondary px-4 pt-4 mb-n4">
               Mon, Aug 10, 2020 6:15 PM
             </div>
@@ -57,8 +79,19 @@
           <v-card class="elevation-1">
             <v-img
               src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
+              lazy-src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
+              aspect-ratio="1"
               class="tile-img"
-            ></v-img>
+            >
+              <template v-slot:placeholder>
+                <v-row class="fill-height ma-0" align="center" justify="center">
+                  <v-progress-circular
+                    indeterminate
+                    color="grey lighten-5"
+                  ></v-progress-circular>
+                </v-row>
+              </template>
+            </v-img>
             <div class="text--secondary px-4 pt-4 mb-n4">
               Mon, Aug 10, 2020 6:15 PM
             </div>

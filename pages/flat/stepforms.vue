@@ -193,7 +193,67 @@
                 Setup event tickets and price, you can also set tickets validity
                 so early birds can be offered better pricing.
               </p>
-              <v-btn class="ma-2" outlined color="indigo">Add Tickets</v-btn>
+              <v-btn class="ma-2" outlined color="indigo" @click="addNewRow1"
+                >Add Tickets</v-btn
+              >
+              <v-simple-table>
+                <template v-slot:default>
+                  <thead>
+                    <tr>
+                      <th class="text-left">Title</th>
+                      <th class="text-left">Type</th>
+                      <th class="text-left">Price</th>
+                      <th class="text-left">Start Date</th>
+                      <th class="text-left">End Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      v-for="(invoice_product, k) in invoice_products"
+                      :key="k"
+                    >
+                      <td class="pa-2 pb-0">
+                        <v-text-field
+                          v-model="invoice_product.product_no"
+                          label="Title"
+                          outlined
+                        ></v-text-field>
+                      </td>
+                      <td class="pa-2 pb-0">
+                        <v-select
+                          v-model="invoice_product.product_price"
+                          :items="['Free', 'Paid', 'Donation']"
+                          label="Type"
+                          outlined
+                        ></v-select>
+                      </td>
+                      <td class="pa-2 pb-0">
+                        <v-text-field
+                          v-model="invoice_product.product_qty"
+                          label="price"
+                          outlined
+                          value=""
+                          prefix="$"
+                        ></v-text-field>
+                      </td>
+                      <td class="pa-2 pb-0">
+                        <v-text-field
+                          v-model="invoice_product.product_no"
+                          label="Start Date"
+                          outlined
+                        ></v-text-field>
+                      </td>
+                      <td class="pa-2 pb-0">
+                        <v-text-field
+                          v-model="invoice_product.product_no"
+                          label="End Date"
+                          outlined
+                        ></v-text-field>
+                      </td>
+                    </tr>
+                  </tbody>
+                </template>
+              </v-simple-table>
             </v-card>
             <v-btn color="primary" @click="e13 = 1">Continue</v-btn>
             <v-btn text>Cancel</v-btn>
@@ -505,6 +565,67 @@
         </v-stepper-items>
       </v-stepper>
     </v-dialog>
+
+    <div>
+      <v-btn class="ma-2" outlined color="indigo" @click="addNewRow1"
+        >Add Tickets</v-btn
+      >
+      <v-simple-table>
+        <template v-slot:default>
+          <thead>
+            <tr>
+              <th class="text-left">Title</th>
+              <th class="text-left">Type</th>
+              <th class="text-left">Price</th>
+              <th class="text-left">Start Date</th>
+              <th class="text-left">End Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(invoice_product, k) in invoice_products" :key="k">
+              <td class="pa-2 pb-0">
+                <v-text-field
+                  v-model="invoice_product.product_no"
+                  label="Title"
+                  outlined
+                ></v-text-field>
+              </td>
+              <td class="pa-2 pb-0">
+                <v-select
+                  v-model="invoice_product.product_price"
+                  :items="['Free', 'Paid', 'Donation']"
+                  label="Type"
+                  outlined
+                ></v-select>
+              </td>
+              <td class="pa-2 pb-0">
+                <v-text-field
+                  v-model="invoice_product.product_qty"
+                  label="price"
+                  outlined
+                  value=""
+                  prefix="$"
+                ></v-text-field>
+              </td>
+              <td class="pa-2 pb-0">
+                <v-text-field
+                  v-model="invoice_product.product_no"
+                  label="Start Date"
+                  outlined
+                ></v-text-field>
+              </td>
+              <td class="pa-2 pb-0">
+                <v-text-field
+                  v-model="invoice_product.product_no"
+                  label="End Date"
+                  outlined
+                ></v-text-field>
+              </td>
+            </tr>
+          </tbody>
+        </template>
+      </v-simple-table>
+    </div>
   </v-flex>
 </template>
 
@@ -520,6 +641,7 @@ export default {
     e13: 2,
     e1: 1,
     modal: false,
+    show: false,
     menu2: false,
     drawer: true,
     dialog1: false,
@@ -528,12 +650,31 @@ export default {
     notifications: false,
     sound: true,
     tabs: null,
-    text:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    invoice_products: [
+      {
+        product_no: '',
+        product_name: '',
+        product_price: '',
+        product_qty: '',
+        line_total: 0,
+      },
+    ],
   }),
   methods: {
-    method() {
-      // Perform an action
+    addNewRow() {
+      this.desserts.push({
+        name: '',
+        calories: '',
+      })
+    },
+    addNewRow1() {
+      this.invoice_products.push({
+        product_no: '',
+        product_name: '',
+        product_price: '',
+        product_qty: '',
+        line_total: 0,
+      })
     },
   },
 }
