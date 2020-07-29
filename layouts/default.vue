@@ -37,6 +37,18 @@
       </v-btn> -->
       <v-toolbar-title v-text="title" />
       <v-spacer />
+
+      <template v-if="$auth.$state.loggedIn">
+        <v-avatar color="indigo" size="30">
+          <span class="white--text headline">{{
+            $auth.user.data.name[0]
+          }}</span>
+        </v-avatar>
+        <v-btn @click="$auth.logout()">Logout</v-btn>
+      </template>
+      <template v-else>
+        <v-btn to="/login">Login</v-btn>
+      </template>
       <v-btn icon @click.stop="rightDrawer = !rightDrawer">
         <v-icon>mdi-menu</v-icon>
       </v-btn>
@@ -92,6 +104,7 @@ export default {
       right: true,
       rightDrawer: false,
       title: 'Bitpod.js',
+      name: '',
     }
   },
 }
