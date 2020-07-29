@@ -29,6 +29,8 @@ export default {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
+
+  serverMiddleware: ['~/api/index.js'],
   /*
    ** Global CSS
    */
@@ -60,6 +62,7 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/apollo',
+    '@nuxtjs/auth-next',
   ],
   /*
    ** Axios module configuration
@@ -145,6 +148,45 @@ export default {
       // For example: default query options
       $query: {
         fetchPolicy: 'network-only',
+      },
+    },
+  },
+
+  auth: {
+    redirect: {
+      login: '/login',
+      callback: '/callback',
+      home: '/event',
+    },
+    strategies: {
+      bitpod: {
+        scheme: 'oauth2',
+        BITPOD_TOKEN_ENDPOINT_URL:
+          process.env.BITPOD_TOKEN_ENDPOINT_URL ||
+          'https://id.bitpod.io/auth/connect/token',
+        BITPOD_USERINFO_ENDPOINT_URL:
+          process.env.BITPOD__USERINFO_ENDPOINT_URL ||
+          'https://id.bitpod.io/auth/connect/userinfo',
+        endpoints: {
+          authorization:
+            process.env.BITPOD_AUTH_URL ||
+            'https://id.bitpod.io/auth/connect/authorize',
+          token: 'api/connect/token',
+          userInfo: 'api/connect/userinfo',
+        },
+        responseType: 'code',
+        grantType: 'authorization_code',
+        redirectUri:
+          process.env.REDIRECT_URI || 'http://localhost:3000/callback',
+        scope: ['notification', 'offline_access', 'openid', 'profile', 'email'],
+        clientId:
+          process.env.BITPOD_EVENT_CLIENTID || `5F1FE3FD7D5EA2C873CF840E `,
+        clientSecret:
+          process.env.BITPOD_EVENT_CLIENTSECRET ||
+          `a6db3acdb2a840cda1ff656f5871ee66`,
+        tokenType: 'Bearer',
+        tokenKey: 'access_token',
+        refreshTokenKey: 'refresh_token',
       },
     },
   },

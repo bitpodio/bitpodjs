@@ -9,10 +9,19 @@
 <script>
 import Grid from '~/components/common/grid'
 // import Grid from '~/components/common/test';
-// import content from '~/config/apps/event/content'
+import content from '~/config/apps/event/content'
 export default {
+  middleware: ['auth'],
   components: {
     Grid,
+  },
+  data() {
+    return {
+      content,
+    }
+  },
+  state() {
+    return this.$auth.state
   },
   created() {},
 }
