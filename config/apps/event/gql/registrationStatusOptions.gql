@@ -1,0 +1,13 @@
+query($filters: JSON) {
+  GeneralConfiguration {
+    GeneralConfigurationFind(filter: $filters) {
+      edges {
+        node {
+          id
+          value
+          key
+        }
+      }
+    }
+  }
+}

@@ -2,22 +2,25 @@
   <div>
     <div class="grid-actions-container">
       <div>
-        <FieldsFilter
-          :is-filter-applied="isFilterApplied"
-          :fields="filterableFields"
-          :filter-rules="filterRules"
-          @update-filter="onUpdateFilter"
-        />
+        <slot name="filter">
+          <FieldsFilter
+            v-model="filterRules"
+            :is-filter-applied="isFilterApplied"
+            :fields="filterableFields"
+          />
+        </slot>
       </div>
       <div class="grid-search-section">
-        <v-text-field
-          v-model="search"
-          append-icon="mdi-magnify"
-          label="Search"
-          single-line
-          hide-details
-          class="grid-search-input"
-        ></v-text-field>
+        <slot name="search">
+          <v-text-field
+            v-model="search"
+            append-icon="mdi-magnify"
+            label="Search"
+            single-line
+            hide-details
+            class="grid-search-input"
+          ></v-text-field>
+        </slot>
       </div>
     </div>
     <v-data-table
@@ -33,87 +36,90 @@
       class="elevation-0"
       @update:pagination="updatePagination"
     >
-      <!--<template v-slot:header.name="{ header }">
-                    {{ header.text.toUpperCase() }} test
-      </template>-->
-      <!-- <template slot="header" slot-scope="props">
-                    <tr>
-                        <th>
-                        <v-checkbox
-                            :input-value="props.all"
-                            :indeterminate="props.indeterminate"
-                            primary
-                            hide-details
-                            @click.native="toggleAll"
-                        ></v-checkbox>
-                        </th>
-                        <th
-                        v-for="header in props.headers"
-                        :key="header.text"
-                        :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
-                        @click="changeSort(header.value)"
-                        >
-                        <v-icon small>arrow_upward</v-icon>
-                        test
-                        </th>
-                    </tr>
-      </template>-->
-      <!-- <template v-slot:top>
-                <v-switch v-model="singleSelect" label="Single select" class="pa-3"></v-switch>
-      </template>-->
+      <template
+        v-for="column in headers"
+        v-slot:[`item.${column.value}`]="props"
+      >
+        <div v-if="!!column.template" :key="column">
+          <component
+            :is="column.template.file"
+            :item="props.item"
+            :value="props.value"
+            :params="column.template.params"
+          />
+        </div>
+        <div v-else :key="column">
+          {{ props.value }}
+        </div>
+      </template>
     </v-data-table>
   </div>
 </template>
 
 <script>
+// import Vue from 'vue'
 import gql from 'graphql-tag'
 import addDays from 'date-fns/addDays'
 import format from 'date-fns/format'
+import startOfToday from 'date-fns/startOfToday'
+import endOfToday from 'date-fns/endOfToday'
+import startOfTomorrow from 'date-fns/startOfTomorrow'
+import endOfTomorrow from 'date-fns/endOfTomorrow'
+import startOfYesterday from 'date-fns/startOfYesterday'
+import endOfYesterday from 'date-fns/endOfYesterday'
+import startOfDay from 'date-fns/startOfDay'
+import endOfDay from 'date-fns/endOfDay'
 // import { axiosWrapper } from '../api/axios.js'
 import FieldsFilter from './FieldsFilter.vue'
-import EventFind from '~/config/apps/event/gql/eventlist.gql'
+// import RegistrationFind from '~/config/apps/event/gql/registrationList.gql'
 
 function getTableHeader(content, viewName) {
-  const view = content.Views[viewName]
-  const fields = view.Fields
+  const fields = getGridFields(content, viewName)
 
   const headers = []
   for (const fieldName in fields) {
-    const { caption, sortEnable, displayOrder, columnWidth } = fields[fieldName]
+    const { caption, sortEnable, displayOrder, columnWidth, template } = fields[
+      fieldName
+    ]
     headers.push({
       text: caption,
       value: fieldName,
       sortable: sortEnable,
       width: columnWidth,
       displayOrder,
+      template,
     })
   }
   headers.sort((col1, col2) => col1.displayOrder - col2.displayOrder)
   return headers
 }
 
-// function formatData(content, viewName, data) {
-//   const view = content.Views[viewName]
-//   let fields = view.Fields
-//   fields = Object.keys(fields)
-//   return data.map((record) => {
-//     return fields.map((field) => {
+function getGridFields(content, viewName) {
+  const view = content.views[viewName]
+  return view.fields
+}
 
-//     })
-//   })
-// }
+function getViewDataSource(content, viewName) {
+  const view = content.views[viewName]
+  return view.dataSource
+}
+
+function getViewQuery(content, viewName) {
+  return getViewDataSource(content, viewName).query
+}
 
 function formatResult(content, viewName, data, modelName) {
   let { edges } = data[modelName][`${modelName}Find`]
-  const view = content.Views[viewName]
-  const fields = view.Fields
+  const fields = getGridFields(content, viewName)
   edges = edges.map(({ node }) => {
     const formattedRecord = {}
     for (const field in node) {
       const { type } = fields[field] || {}
-
+      const fieldValue = node[field]
       if (type === 'date')
-        formattedRecord[field] = format(new Date(node[field]), 'PPp')
+        formattedRecord[field] = fieldValue
+          ? format(new Date(fieldValue), 'PPp')
+          : ''
       else formattedRecord[field] = node[field]
     }
     // const result = format(new Date(2014, 1, 11), 'MM/dd/yyyy')
@@ -132,7 +138,7 @@ function formatCountData(data, modelName) {
 function getOrderQuery(content, viewName, sortBy, sortDesc) {
   // let {sortBy,sortDesc} = option;
   if (!(sortBy && sortBy.length)) {
-    const view = content.Views[viewName]
+    const view = content.views[viewName]
     const defaultSort = view.DefaultSort
     return defaultSort || ''
   }
@@ -140,8 +146,7 @@ function getOrderQuery(content, viewName, sortBy, sortDesc) {
 }
 
 function buildSearchQueryVariables(content, viewName, search) {
-  const view = content.Views[viewName]
-  const fields = view.Fields
+  const fields = getGridFields(content, viewName)
 
   let where = {}
   const or = []
@@ -157,43 +162,138 @@ function buildSearchQueryVariables(content, viewName, search) {
   return where
 }
 
-function buildQueryVariables({ content, viewName, search, filterFields }) {
-  const filterColumns = filterFields
+function getDateBeforeQuerybyDays(field, days) {
+  const and = [
+    { [field]: { gte: startOfDay(addDays(new Date(), -days)) } },
+    { [field]: { lte: endOfToday() } },
+  ]
+  return { and }
+}
+
+function getDateAfterQuerybyDays(field, days) {
+  const and = [
+    { [field]: { gte: startOfToday() } },
+    { [field]: { lte: endOfDay(addDays(new Date(), days)) } },
+  ]
+  return { and }
+}
+
+function getOperatorQuery(field, operator, value) {
+  let ruleFilter = {}
+  switch (operator) {
+    case 'is':
+      ruleFilter = { [field]: value }
+      break
+    case 'isNot':
+      ruleFilter = { [field]: { neq: value } }
+      break
+    case 'contains':
+      ruleFilter = { [field]: { like: value, options: 'i' } }
+      break
+    case 'notContains':
+      ruleFilter = { [field]: { nlike: value, options: 'i' } }
+      break
+    case 'startsWith':
+      ruleFilter = { [field]: { regexp: `^${value}` } }
+      break
+    case 'endsWith':
+      ruleFilter = { [field]: { regexp: `${value}$` } }
+      break
+    case 'gt':
+    case 'lt':
+    case 'gte':
+    case 'lte':
+      ruleFilter = { [field]: { [operator]: value } }
+      break
+    case 'today': {
+      const and = [
+        { [field]: { gte: startOfToday() } },
+        { [field]: { lt: endOfToday() } },
+      ]
+      ruleFilter = { and }
+      break
+    }
+    case 'tomorrow': {
+      const and = [
+        { [field]: { gte: startOfTomorrow() } },
+        { [field]: { lt: endOfTomorrow() } },
+      ]
+      ruleFilter = { and }
+      break
+    }
+    case 'yesterday': {
+      const and = [
+        { [field]: { gte: startOfYesterday() } },
+        { [field]: { lt: endOfYesterday() } },
+      ]
+      ruleFilter = { and }
+      break
+    }
+    case 'pastWeek': {
+      ruleFilter = getDateBeforeQuerybyDays(field, 7)
+      break
+    }
+    case 'pastMonth':
+      ruleFilter = getDateBeforeQuerybyDays(field, 30)
+      break
+    case 'pastYear':
+      ruleFilter = getDateBeforeQuerybyDays(field, 365)
+      break
+    case 'nextWeek':
+      ruleFilter = getDateAfterQuerybyDays(field, 7)
+      break
+    case 'nextMonth':
+      ruleFilter = getDateAfterQuerybyDays(field, 30)
+      break
+    case 'nextYear':
+      ruleFilter = getDateAfterQuerybyDays(field, 365)
+      break
+    case 'exactDate': {
+      const and = [
+        { [field]: { gte: new Date(value) } },
+        { [field]: { lt: startOfDay(addDays(new Date(), 1)) } },
+      ]
+      ruleFilter = { and }
+      break
+    }
+    case 'isEmpty':
+      ruleFilter = { [field]: null }
+      break
+    case 'isNotEmpty':
+      ruleFilter = { [field]: { neq: null } }
+      break
+  }
+  return ruleFilter
+}
+
+function buildQueryVariables({
+  content,
+  viewName,
+  search,
+  filterRules,
+  filter,
+}) {
+  // const filterColumns = filterRules
   const and = []
-  const view = content.Views[viewName]
-  const fields = view.Fields
-  for (const field in filterColumns) {
-    const filterValues = filterColumns[field]
-    const or = []
-    const { type } = fields[field] || {}
-    if (type === 'string') {
-      filterValues.forEach((filterValue) => {
-        or.push({ [field]: { like: filterValue, options: 'i' } })
-      })
-    } else if (type === 'number') {
-      filterValues.forEach((filterValue) => {
-        or.push({ [field]: { eq: filterValue } })
-      })
-    } else if (type === 'date') {
-      let and = []
-      filterValues.forEach((filterValue) => {
-        and = [
-          { [field]: { gte: new Date(filterValue) } },
-          { [field]: { lt: addDays(new Date(filterValue), 1) } },
-        ]
-        or.push({ and })
-      })
-    }
-    if (or.length > 0) {
-      and.push({ or })
-    }
+  // const fields = getGridFields(content, viewName)
+  const or = []
+  for (const rule of filterRules) {
+    const { field, value, operator } = rule
+    const ruleFilter = getOperatorQuery(field, operator, value)
+    or.push(ruleFilter)
+  }
+  if (or.length > 0) {
+    and.push({ or })
   }
   if (search) {
     const serachQuery = buildSearchQueryVariables(content, viewName, search)
     and.push(serachQuery)
   }
-  console.log(filterColumns)
-
+  const viewDataSource = getViewDataSource(content, viewName)
+  const contentFilter = filter || viewDataSource.filter
+  if (contentFilter) {
+    and.push(contentFilter.where)
+  }
   return { and }
 }
 
@@ -213,6 +313,10 @@ export default {
     search: {
       type: String,
       required: true,
+    },
+    filter: {
+      type: Object,
+      default: () => null,
     },
   },
   data() {
@@ -235,87 +339,8 @@ export default {
   },
   computed: {
     filterableFields() {
-      const view = this.content.Views[this.viewName]
-      return view.Fields
-    },
-  },
-  beforeDestroy() {
-    // Perform the teardown procedure for someLeakyProperty.
-    // (In this case, effectively nothing)
-  },
-  // watch: {
-  //   options: {
-  //     handler () {
-  //         console.log(this);
-  //         let page = this.options.page
-  //         let pageSize = this.options.itemsPerPage
-  //         this.limit = pageSize;
-  //         this.skip = (page - 1) * pageSize;
-  //     //  let {}
-  //     },
-  //     deep: true,
-  //   },
-  // },
-  methods: {
-    updatePagination(pagination) {},
-    onFilterClick(e) {
-      this.isFilterApplied = true
-    },
-    onUpdateFilter(value, filterFields) {
-      this.isFilterApplied = value
-      this.filterFields = { ...filterFields }
-    },
-  },
-  apollo: {
-    tableData: {
-      query: gql`
-        ${EventFind}
-      `,
-      variables() {
-        // Use vue reactive properties here
-
-        const { content, viewName, search, filterFields } = this
-        const sortBy = this.options.sortBy
-        const sortDesc = this.options.sortDesc
-        // let {,} = ;
-        const order = getOrderQuery(content, viewName, sortBy, sortDesc)
-        const where =
-          this.isFilterApplied || search
-            ? buildQueryVariables({
-                content,
-                viewName,
-                search,
-                filterFields,
-              })
-            : {}
-        const skip = (this.options.page - 1) * this.options.itemsPerPage
-        const limit = this.options.itemsPerPage
-        return {
-          filters: { limit, skip, order, where },
-          where,
-        }
-      },
-      update(data) {
-        console.log(data)
-        // The returned value will update
-        // the vue property 'pingMessage'
-        const { content, viewName } = this
-        const tableData = {
-          items: formatResult(content, viewName, data, 'Event'),
-          total: formatCountData(data, 'Event'),
-        }
-        return tableData
-      },
-      // Optional result hook
-      result({ data, loading, networkStatus }) {
-        console.log('We got some result!')
-      },
-      error(error) {
-        console.error("We've got an error!", error)
-      },
-      prefetch: false,
-      loadingKey: 'loading',
-      // pollInterval:0
+      const fields = getGridFields(this.content, this.viewName)
+      return fields
     },
   },
   // created(){
@@ -335,6 +360,72 @@ export default {
   //     console.log(result)
   //     this.items = formatResult(result.data,"Event")
   // }
+  mounted() {
+    // const { selected, headers, tableData, options } = this
+    // const ComponentClass = Vue.extend(DataTable)
+    // const instance = new ComponentClass({
+    //   propsData: { selected, headers, tableData, options },
+    // })
+    // // instance.$slots.default = ['Click me!']
+    // instance.$mount() // pass nothing
+    // //         console.log(this.$refs)
+    // this.$refs.container && this.$refs.container.appendChild(instance.$el)
+  },
+  methods: {
+    updatePagination(pagination) {},
+    onFilterClick(e) {
+      this.isFilterApplied = true
+    },
+  },
+  apollo: {
+    tableData: {
+      query() {
+        return gql`
+          ${getViewQuery(this.content, this.viewName)}
+        `
+      },
+      variables() {
+        // Use vue reactive properties here
+
+        const { content, viewName, search, filterRules } = this
+        const sortBy = this.options.sortBy
+        const sortDesc = this.options.sortDesc
+        const order = getOrderQuery(content, viewName, sortBy, sortDesc)
+        const where = buildQueryVariables({
+          content,
+          viewName,
+          search,
+          filterRules,
+          filter: this.filter,
+        })
+        const skip = (this.options.page - 1) * this.options.itemsPerPage
+        const limit = this.options.itemsPerPage
+        return {
+          filters: { limit, skip, order, where },
+          where,
+        }
+      },
+      update(data) {
+        const { content, viewName } = this
+        const modelName = content.general.name
+        const tableData = {
+          items: formatResult(content, viewName, data, modelName),
+          total: formatCountData(data, modelName),
+        }
+        return tableData
+      },
+      // Optional result hook
+      result({ data, loading, networkStatus }) {
+        console.log('We got some result!')
+      },
+      error(error) {
+        console.error("We've got an error!", error)
+      },
+      prefetch: false,
+      loadingKey: 'loading',
+      // pollInterval:0
+    },
+  },
 }
 </script>
 

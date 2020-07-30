@@ -1,4 +1,9 @@
-export default {
+import statusTemplate from '../../common/templates/edit.vue'
+import registrationStatusOptions from './gql/registrationStatusOptions.gql'
+import registrationList from './gql/registrationList.gql'
+import eventList from './gql/eventlist.gql'
+
+export default (ctx) => ({
   EventsManagement: {
     Actions: {
       'Embeded Actions': '',
@@ -16,9 +21,9 @@ export default {
       Type: 'List',
       URL: 'Event',
     },
-    General: {
-      Caption: 'Events',
-      Name: 'Event',
+    general: {
+      caption: 'Events',
+      name: 'Event',
     },
     Permissions: {
       Groups: '',
@@ -52,7 +57,7 @@ export default {
         LinkedinURL: '',
       },
     },
-    Views: {
+    views: {
       'Seat Layout': {
         Default: 'true',
         DataSource: {
@@ -717,8 +722,7 @@ export default {
         Title: 'Recurring Event',
       },
       'All Events': {
-        DefaultSort: 'createdDate DESC',
-        Fields: {
+        fields: {
           '_VenueAddress.PostalCode': {
             displayOrder: 10,
             caption: 'Postal Code',
@@ -728,7 +732,7 @@ export default {
             filterEnable: true,
             hidden: false,
             editable: true,
-            type: 'string',
+            type: 'number',
           },
           '_VenueAddress.State': {
             displayOrder: 9,
@@ -827,11 +831,50 @@ export default {
             type: 'string',
           },
         },
-        InlineEditing: true,
-        DialogEditing: true,
+        inlineEditing: true,
+        DdialogEditing: true,
         Query: '',
         QueryType: 'axios',
         Title: 'All Events',
+        dataSource: {
+          query: eventList,
+          filter: {
+            where: {
+              or: [
+                {
+                  and: [
+                    {
+                      or: [
+                        { StartDate: { lte: new Date() } },
+                        { StartDate: { gte: new Date() } },
+                        { StartDate: { exists: false } },
+                        { StartDate: null },
+                        // { userId: }
+                      ],
+                    },
+                    {
+                      or: [
+                        { StartDate: { gte: new Date() } },
+                        {
+                          StartDate: {
+                            exists: false,
+                          },
+                        },
+                        {
+                          StartDate: null,
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  Status: 'Not ready',
+                },
+              ],
+            },
+          },
+          defaultSort: 'createdDate DESC',
+        },
       },
       Event: {
         Fields: {
@@ -1114,4 +1157,391 @@ export default {
       },
     },
   },
-}
+  Registrations: {
+    actions: {
+      'Embeded Actions': '',
+      'General Actions': ['Create Registration'],
+      'Selected Item Action': [],
+    },
+    child: {},
+    dataSource: {
+      FormID: 'EventsAdvSearch',
+      'Key Field': '',
+      'Parent key field': '',
+      Type: 'List',
+      URL: 'Registration',
+    },
+    general: {
+      caption: 'Registrations',
+      name: 'Registration',
+    },
+    permissions: {
+      Groups: '',
+    },
+    ui: {
+      MobileViewTemplate: {
+        isActive: true,
+        templateName: 'Event_Registation_Mobile',
+      },
+      TemplateActions: {},
+      Checkbox: 'True',
+      'Card View Template': 'VisitingCard0',
+      Width: '50%',
+      Height: '',
+      TemplateHelpers: {},
+      'Display Order': '',
+      'Map View Template': '',
+      'List View Template': '',
+      'Detail View': 'tab',
+      Column: '',
+      'Tile View': 'now',
+      'App Type': 'View',
+      Templates: {
+        VisitingCard0: 'Registrations_Card_View',
+        Status:
+          '<div title="{{Status}}"><style>.reg-status {\n                  font-size: 10px;\n                            display: inline-block;\n                            color: #fff;\n                            margin-right: 5px;\n                            margin-bottom: 0px;\n                            padding: 3px 10px !important;\n                            border-radius: 20px !important;\n                            text-transform: capitalize;\n                        }\n                      .reg-success {\n                                      background-color: #0cb14b;\n                    }\n                      .reg-fail {\n                                      background-color: #f25955;\n                    }\n                      .reg-refund {\n                                      background-color: #3fa5ff;\n                    }\n                    .reg-parefund {\n                                      background-color: #b9b9b9;\n                    }\n                      .reg-parrefund {\n                                      background-color: #f4b400;\n                    }</style><div class="reg-status {{getStatusColor Status}}"> {{getCapitalResult Status}} </div></div>',
+        SyncStatus:
+          '<div><i class="{{ShowSyncField SFRegistrationId}}" style="{{getColor SFRegistrationId}}" onclick="invokeAction(\'changeSyncStatus\',this)" node={{node.id}}> </i></div>',
+        CheckIn:
+          '<style>\n    .checkin-btn {\ncolor: #fff;\npadding: 3px 10px !important;\n    background-color: #3fa5ff !important;;\nfont-size: 12px;\nborder-radius: 2px;\ncursor: pointer;\n}\n.check-label {\n        color: #1a73e8;\nfont-size: 13px;\n}\n</style>\n{{#ifStatus Status}}\n<div title="CheckIn">\n    {{#if CheckIn}}<span class="check-label">\n        <i class="fa fa-check" style="color: #1a73e8;margin-top:3px;" node={{node.id}}> </i>Checked in </span>\n    <span class="check-label">{{date_diff CheckIn}}</span>\n    {{else}}\n    <span onclick="invokeAction(\'CheckIn\',this)" class="checkin-btn">Check in</span>\n    {{/if}}\n</div>\n{{else}} <div style="height: 100%;" title=""></div>{{/ifStatus}}',
+        FullName:
+          '<div onclick="invokeAction(\'goToDetails\', this)" data-action="edit" data-bind="ID={{id}}" style="cursor: pointer;color: #1a73e8;"> {{FullName}} </div>',
+      },
+      decorator: {
+        Attachment: '',
+        LinkedinURL: '',
+      },
+    },
+    views: {
+      Registrations: {
+        actions: {
+          'Embeded Actions': '',
+          'General Actions': [],
+          'Selected Item Action': [
+            'Resend Confirmation Email',
+            'Edit Registration',
+            'Delete Registration',
+          ],
+        },
+        ui: {
+          Pagination: 'pageWithNumber',
+          'List Details View Template': 'Registrations_Details_View_Template',
+        },
+        default: true,
+        search: true,
+        defaultSort: 'createdDate DESC',
+        fields: {
+          EventName: {
+            displayOrder: 6,
+            caption: 'EventName',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'string',
+          },
+          PaymentMethod: {
+            displayOrder: 10,
+            caption: 'PaymentMethod',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          CompanyName: {
+            displayOrder: 4,
+            caption: 'Organization',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'dropdown',
+            options: ['Success', 'Pending'],
+          },
+          Phone: {
+            displayOrder: 5,
+            caption: 'Phone',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '100px',
+            type: 'string',
+          },
+          Status: {
+            displayOrder: 9,
+            caption: 'Status',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '100px',
+            type: 'lookup',
+            dataSource: {
+              query: registrationStatusOptions,
+              itemText: 'value',
+              itemValue: 'key',
+              filter: { type: 'RegistrationStatus' },
+            },
+            template: {
+              file: statusTemplate,
+              params: {
+                // eslint-disable-next-line no-template-curly-in-string
+                route: '/event',
+              },
+            },
+            // items: [
+            //   {
+            //     text: 'Success Payment',
+            //     value: 'Success',
+            //   },
+            //   {
+            //     text: 'Pending Payment',
+            //     value: 'Pending',
+            //   },
+            // ],
+          },
+          RegistrationId: {
+            displayOrder: 6,
+            caption: 'RegistrationId',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'string',
+          },
+          createdDate: {
+            displayOrder: 11,
+            caption: 'createdDate',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'date',
+          },
+          TicketQuantity: {
+            displayOrder: 9,
+            caption: 'Attendees',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '130px',
+            type: 'number',
+          },
+          FullName: {
+            displayOrder: 2,
+            caption: 'Full Name',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          TotalAmount: {
+            displayOrder: 8,
+            caption: 'TotalAmount',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'number',
+          },
+          Email: {
+            displayOrder: 3,
+            caption: 'Email',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '130px',
+            type: 'checkbox',
+          },
+        },
+        dataSource: {
+          query: registrationList,
+          filter: {
+            where: { Status: 'Failed' },
+          },
+        },
+        title: 'Registrations',
+      },
+      'Abandoned Registrations': {
+        UI: {
+          Pagination: 'pageWithNumber',
+          'List Details View Template': 'Registrations_Details_View_Template',
+        },
+        Search: true,
+        Actions: {
+          'Embeded Actions': '',
+          'General Actions': [],
+          'Selected Item Action': ['Delete Registration'],
+        },
+        FilterRule: '  { "where":{"Status":"Failed"} }    ',
+        DefaultSort: 'createdDate DESC',
+        Fields: {
+          EventName: {
+            displayOrder: 6,
+            caption: 'EventName',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+          },
+          PaymentMethod: {
+            displayOrder: 10,
+            caption: 'PaymentMethod',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+          },
+          CompanyName: {
+            displayOrder: 4,
+            caption: 'Organization',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+          },
+          Phone: {
+            displayOrder: 5,
+            caption: 'Phone',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '100px',
+          },
+          Status: {
+            displayOrder: 9,
+            caption: 'Status',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '100px',
+          },
+          createdDate: {
+            displayOrder: 11,
+            caption: 'createdDate',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+          },
+          TicketQuantity: {
+            displayOrder: 9,
+            caption: 'Attendees',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '130px',
+          },
+          FullName: {
+            displayOrder: 2,
+            caption: 'Full Name',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+          },
+          TotalAmount: {
+            displayOrder: 8,
+            caption: 'TotalAmount',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+          },
+          Email: {
+            displayOrder: 3,
+            caption: 'Email',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '130px',
+          },
+        },
+        Query:
+          'query($filters: JSON, $where: JSON) {\n  Registration {\n    RegistrationFind(filter: $filters) {\n      edges {\n        node {\n          id\n          Email\n          EventName\n          FirstName\n  TotalAmount  TicketQuantity    CompanyName    FullName\n          LastName\n          _Comment {\n            Notes\n            id\n          }\n          Category\n          _QuestionResponse {\n            Answer\n            id\n          }\n          PaymentMethod\n          CheckIn\n          Phone\n          RegistrationId\n          Status\n          createdDate\n          EventList{\n            _VenueAddress{\n              id\n              City\n              State\n              PostalCode\n              AddressLine\n              Country\n            }\n          }\n        }\n      }\n    }\n    RegistrationCount(where: $where)\n  }\n}\n',
+        Title: 'Abandoned Registrations',
+      },
+      Registration: {
+        DefaultSort: 'createdDate DESC',
+        DataSource: {
+          FormID: 'RegistrationDetailForm',
+          Aggregation: '',
+          'Default view': '',
+          Params: {
+            id: {
+              type: 'string',
+              mapwith: 'id',
+            },
+          },
+          'Key Field': '',
+          'Sharepoint Action': 'Edit',
+          Type: 'Form',
+          URL: 'OfferCode',
+        },
+        Fields: {
+          LastName: {
+            displayOrder: 3,
+            caption: 'LastName',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+          },
+          EventName: {
+            displayOrder: 6,
+            caption: 'EventName',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+          },
+          PaymentMethod: {
+            displayOrder: 10,
+            caption: 'PaymentMethod',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '100px',
+          },
+          Phone: {
+            displayOrder: 5,
+            caption: 'Phone',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '100px',
+          },
+          Status: {
+            displayOrder: 9,
+            caption: 'Status',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '100px',
+          },
+          RegistrationId: {
+            displayOrder: 1,
+            caption: 'RegistrationId',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+          },
+          createdDate: {
+            displayOrder: 11,
+            caption: 'createdDate',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+          },
+          TicketQuantity: {
+            displayOrder: 7,
+            caption: 'TicketQuantity',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '130px',
+          },
+          FirstName: {
+            displayOrder: 2,
+            caption: 'FirstName',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+          },
+          TotalAmount: {
+            displayOrder: 8,
+            caption: 'TotalAmount',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '100px',
+          },
+          Email: {
+            displayOrder: 4,
+            caption: 'Email',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '130px',
+          },
+        },
+        Query: '',
+        Visible: false,
+        type: 'Form',
+        Title: 'Registration',
+      },
+    },
+  },
+})

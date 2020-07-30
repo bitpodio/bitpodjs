@@ -41,6 +41,8 @@ export default {
       },
     ],
   },
+
+  serverMiddleware: ['~/api/index.js'],
   /*
    ** Global CSS
    */
@@ -72,6 +74,7 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/apollo',
+    '@nuxtjs/auth-next',
   ],
   /*
    ** Axios module configuration
@@ -114,6 +117,23 @@ export default {
    ** See https://nuxtjs.org/api/configuration-build/
    eyJhbGciOiJSUzI1NiIsImtpZCI6IjhEMkE0MTczM0QwN0JBNkU2RTYwNTZFRUJDRThDRkQyMDc0NThCMDUiLCJ0eXAiOiJKV1QiLCJ4NXQiOiJqU3BCY3owSHVtNXVZRmJ1dk9qUDBnZEZpd1UifQ.eyJuYmYiOjE1OTQ3MTI3MjksImV4cCI6MTU5NDc5OTEyOSwiaXNzIjoiaHR0cHM6Ly9sb2dpbi5iaXRwb2QuaW8vYXV0aCIsImF1ZCI6WyJodHRwczovL2xvZ2luLmJpdHBvZC5pby9hdXRoL3Jlc291cmNlcyIsIlNoYXJlZCIsIk5vdGlmaWNhdGlvbiJdLCJjbGllbnRfaWQiOiI2ZDJiOTg4YzQ2NWY0NzZhMDhhZWZjNDg5ZWYyYjIxMThmZTU4MDc2Iiwic3ViIjoiamFnYW5uYXRoQGJpdHBvZC5pbyIsImF1dGhfdGltZSI6MTU5NDcxMjcyNiwiaWRwIjoibG9jYWwiLCJzY29wZSI6WyJOb3RpZmljYXRpb24iLCJvcGVuaWQiLCJwcm9maWxlIiwiZW1haWwiLCJiYWFzIiwib2ZmbGluZV9hY2Nlc3MiLCJub3RpZmljYXRpb24iLCJub3RpZmljYXRpb24iLCJiYWFzIiwib2ZmbGluZV9hY2Nlc3MiLCJub3RpZmljYXRpb24iLCJiYWFzIiwib2ZmbGluZV9hY2Nlc3MiLCJub3RpZmljYXRpb24iLCJvZmZsaW5lX2FjY2VzcyJdLCJhbXIiOlsicHdkIl19.Pflb0QawGDCMCWslWthbHosaSnN1Yor7yI5zWRmlkSJKuYlajdC_yS1gsxAAyQvEcch4gcjd7zL8LooA5l5Z7jZmeymMVv538NR6Z4ZT09XqHBb8DvNgiGvSvVM0jlpluOKfHP5W0-5rThygnBEtPXknRTMn-2P4gmSdOOmMPzUtAKIt2ir-iGXtu5P35FYqyt4qvF7I7BKFQdtw8H-9IdpRveW0sP-M4P8rPdgI8OPFPYYbaXfbDVEavExdBBb09ybKyeCvgdRo7OnBMsBszE0zf2OSapKIvDjloYxc5dWxKsmLfb6g6NnnavOxw0LbdnymI3GCCTstmTcP4oK7xQ
    */
+  // extend(config, { isClient }) {
+  //   config.module.rules.push({
+  //     test: /\.vue$/,
+  //     use: [
+  //       {
+  //         loader: 'vue-loader',
+  //         options: {
+  //           transpileOptions: {
+  //             transforms: {
+  //               dangerousTaggedTemplateString: true,
+  //             },
+  //           },
+  //         },
+  //       },
+  //     ],
+  //   })
+  // },
   build: {},
   vue: {
     config: {
@@ -138,6 +158,52 @@ export default {
       //   httpEndpoint:"https://event.test.bitpod.io/svc/graphql",
       //   // wsEndpoint: process.env.WS_ENDPOINT
       // }
+    },
+    defaultOptions: {
+      // See 'apollo' definition
+      // For example: default query options
+      $query: {
+        fetchPolicy: 'network-only',
+      },
+    },
+  },
+
+  auth: {
+    redirect: {
+      login: '/login',
+      callback: '/callback',
+      home: '/event',
+    },
+    strategies: {
+      bitpod: {
+        scheme: 'oauth2',
+        BITPOD_TOKEN_ENDPOINT_URL:
+          process.env.BITPOD_TOKEN_ENDPOINT_URL ||
+          'https://id.bitpod.io/auth/connect/token',
+        BITPOD_USERINFO_ENDPOINT_URL:
+          process.env.BITPOD__USERINFO_ENDPOINT_URL ||
+          'https://id.bitpod.io/auth/connect/userinfo',
+        endpoints: {
+          authorization:
+            process.env.BITPOD_AUTH_URL ||
+            'https://id.bitpod.io/auth/connect/authorize',
+          token: 'api/connect/token',
+          userInfo: 'api/connect/userinfo',
+        },
+        responseType: 'code',
+        grantType: 'authorization_code',
+        redirectUri:
+          process.env.REDIRECT_URI || 'http://localhost:3000/callback',
+        scope: ['notification', 'offline_access', 'openid', 'profile', 'email'],
+        clientId:
+          process.env.BITPOD_EVENT_CLIENTID || `5F1FE3FD7D5EA2C873CF840E `,
+        clientSecret:
+          process.env.BITPOD_EVENT_CLIENTSECRET ||
+          `a6db3acdb2a840cda1ff656f5871ee66`,
+        tokenType: 'Bearer',
+        tokenKey: 'access_token',
+        refreshTokenKey: 'refresh_token',
+      },
     },
   },
   devtools: true,

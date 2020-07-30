@@ -1,62 +1,4 @@
 <template>
-  <!-- <div class="text-center">
-    <v-dialog v-model="dialog" width="500">
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn color="lighten-2" dark v-bind="attrs" v-on="on">
-          Filter
-        </v-btn>
-      </template>
-
-      <v-card>
-        <v-card-title class="headline grey lighten-2" primary-title>
-          Filters
-        </v-card-title>
-        <div class="filter-dialog-content">
-          <v-menu top :close-on-click="closeOnClick">
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn v-bind="attrs" v-on="on">
-                Select Field
-              </v-btn>
-            </template>
-
-            <v-list>
-              <v-list-item
-                v-for="(fieldDetails, fieldName) in fields"
-                :key="fieldName"
-                @click="onFieldNameClick(fieldDetails, fieldName)"
-              >
-                <v-list-item-title>{{
-                  fieldDetails.caption
-                }}</v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-
-          <v-divider></v-divider>
-          <div class="filter-fields-container">
-            <div
-              v-for="(filterValues, fieldName) in filterFields"
-              :key="fieldName"
-            >
-              <FieldFilter
-                :filter-values="filterValues"
-                :field-name="fieldName"
-                :fields="fields"
-                :filter-fields="filterFields"
-                @setFieldValues="setFieldValues"
-              />
-            </div>
-          </div>
-        </div>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="onApply">
-            Apply
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </div> -->
   <div class="text-center">
     <v-menu
       v-model="menu"
@@ -65,7 +7,12 @@
       offset-x
     >
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="indigo" dark v-bind="attrs" v-on="on">
+        <v-btn
+          text
+          :color="value.length > 0 ? 'blue' : 'black'"
+          v-bind="attrs"
+          v-on="on"
+        >
           filter
         </v-btn>
       </template>
@@ -74,15 +21,40 @@
         <div>Filter</div>
         <v-divider></v-divider>
         <div class="filter-fields-container">
-          <div v-for="filterRule of filterRules" :key="filterRule">
-            <FieldFilter :filter-rule="filterRule" :fields="fields" />
+          <div
+            v-for="[index, filterRule] of value.entries()"
+            :key="index + filterRule.field + filterRule.value"
+            class="filter-rule-item"
+          >
+            <FieldFilter
+              :filter-rule="filterRule"
+              :fields="fields"
+              :index="index"
+            />
+            <v-menu bottom left>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn icon v-bind="attrs" v-on="on">
+                  <v-icon>mdi-dots-vertical</v-icon>
+                </v-btn>
+              </template>
+
+              <v-list>
+                <v-list-item @click="onRuleDelete(index)">
+                  <v-list-item-title>Delete</v-list-item-title>
+                </v-list-item>
+                <v-list-item @click="onRuleDuplicate(index)">
+                  <v-list-item-title>Duplicate</v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </v-menu>
           </div>
-          <div @click="onAddFilter">+ Add a filter</div>
+          <v-spacer></v-spacer>
+          <v-btn text @click="onAddFilter">+ Add a filter</v-btn>
         </div>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn text @click="menu = false">Cancel</v-btn>
-          <v-btn color="primary" text @click="menu = false">Apply</v-btn>
+          <v-btn color="primary" text @click="onApply">Apply</v-btn>
         </v-card-actions>
       </v-card>
     </v-menu>
@@ -100,13 +72,13 @@ export default {
       type: Object,
       required: true,
     },
-    filterRules: {
-      type: Array,
-      required: true,
-    },
     isFilterApplied: {
       type: Boolean,
       required: true,
+    },
+    value: {
+      type: Array,
+      default: () => {},
     },
   },
   data() {
@@ -133,20 +105,26 @@ export default {
       return caption
     },
     onApply() {
-      this.dialog = false
-      this.$emit('update-filter', true, this.filterFields)
+      this.menu = false
+      const { value } = this
+      this.$emit('input', value)
     },
     setFieldValues(fieldName, filterValues) {
       this.filterFields[fieldName] = filterValues
       this.filterFields = { ...this.filterFields }
-      //   this.filterValues = new Set(filterValues)
     },
     onAddFilter() {
       const fieldName = Object.keys(this.fields)[0]
-      this.filterRules = [
-        ...this.filterRules,
+      this.value = [
+        ...this.value,
         { field: fieldName, operator: 'contains', value: '' },
       ]
+    },
+    onRuleDelete(index) {
+      this.value = this.value.filter((_, i) => i !== index)
+    },
+    onRuleDuplicate(index) {
+      this.value = [...this.value, { ...this.value[index] }]
     },
   },
 }
@@ -156,10 +134,11 @@ export default {
   display: flex;
   flex-direction: column;
 }
-.filter-fields-container > div {
-  padding: 0 10px;
-}
 .filter-dialog-content {
   padding: 10px;
+}
+.filter-rule-item {
+  display: flex;
+  align-items: center;
 }
 </style>
