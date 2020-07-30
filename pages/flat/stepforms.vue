@@ -255,8 +255,7 @@
                 </template>
               </v-simple-table>
             </v-card>
-            <v-btn color="primary" @click="e13 = 1">Continue</v-btn>
-            <v-btn text>Cancel</v-btn>
+            <v-btn color="primary" @click="e13 = 1">Back</v-btn>
           </v-stepper-content>
         </v-stepper>
 

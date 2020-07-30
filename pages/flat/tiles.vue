@@ -84,6 +84,9 @@
             </v-card-subtitle>
             <v-divider></v-divider>
             <v-card-actions>
+              <v-chip class="ma-1" small>
+                Recurring event
+              </v-chip>
               <v-spacer></v-spacer>
               <v-menu>
                 <template v-slot:activator="{ on, attrs }">
@@ -132,6 +135,9 @@
             <v-card-subtitle>
               Pune India
             </v-card-subtitle>
+            <v-chip class="ma-1" small>
+              Online event
+            </v-chip>
             <v-divider></v-divider>
             <v-card-actions>
               <v-spacer></v-spacer>
