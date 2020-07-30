@@ -35,7 +35,22 @@
               </v-chip>
 
               <v-spacer></v-spacer>
-              <v-icon class="my-1">mdi-dots-vertical</v-icon>
+              <v-menu>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn icon small v-bind="attrs" v-on="on">
+                    <v-icon>mdi-dots-vertical</v-icon>
+                  </v-btn>
+                </template>
+
+                <v-list>
+                  <v-list-item @click="method">
+                    <v-list-item-title>Preview</v-list-item-title>
+                  </v-list-item>
+                  <v-list-item @click="method">
+                    <v-list-item-title>Edit</v-list-item-title>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
             </v-card-actions>
           </v-card>
         </v-col>
@@ -70,7 +85,22 @@
             <v-divider></v-divider>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-icon class="my-1">mdi-dots-vertical</v-icon>
+              <v-menu>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn icon small v-bind="attrs" v-on="on">
+                    <v-icon>mdi-dots-vertical</v-icon>
+                  </v-btn>
+                </template>
+
+                <v-list>
+                  <v-list-item @click="method">
+                    <v-list-item-title>Preview</v-list-item-title>
+                  </v-list-item>
+                  <v-list-item @click="method">
+                    <v-list-item-title>Edit</v-list-item-title>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
             </v-card-actions>
           </v-card>
         </v-col>
