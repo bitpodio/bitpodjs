@@ -31,33 +31,80 @@
       :loading="loading === 1"
       :options.sync="options"
       :server-items-length="tableData.total"
+      :hide-default-header="hideDefaultHeader"
+      :hide-default-footer="hideDefaultFooter"
+      :show-expand="showExpand"
+      :single-expand="singleExpand"
       item-key="id"
-      show-select
+      :show-select="showSelect"
       class="elevation-1"
       @update:pagination="updatePagination"
     >
+      <template v-if="!!slotTemplates.item" v-slot:item="props">
+        <component
+          :is="slotTemplates.item || null"
+          :item="props.item"
+          :headers="props.headers"
+          :is-selected="props.isSelected"
+          :context="context"
+          :items="tableData.items"
+          :content="content"
+        />
+      </template>
       <template
-        v-for="column in headers"
+        v-for="(column, index) in headers"
         v-slot:[`item.${column.value}`]="props"
       >
-        <div v-if="!!column.template" :key="column">
-          <component
-            :is="column.template.file"
-            :item="props.item"
-            :value="props.value"
-            :params="column.template.params"
-          />
-        </div>
-        <div v-else :key="column">
-          {{ props.value }}
-        </div>
+        <component
+          :is="component[index] || null"
+          :key="column.value"
+          :item="props.item"
+          :value="props.value"
+          :context="context"
+          :items="tableData.items"
+          :content="content"
+        />
+      </template>
+      <template
+        v-if="!!slotTemplates['expanded-item']"
+        v-slot:expanded-item="props"
+      >
+        <component
+          :is="slotTemplates['expanded-item'] || null"
+          :item="props.item"
+          :headers="props.headers"
+        />
+      </template>
+      <template v-if="!!slotTemplates.body" v-slot:body="props">
+        <component
+          :is="slotTemplates.body || null"
+          :pagination="props.pagination"
+          :items="props.items"
+          :options="props.options"
+          :expand="props.expand"
+          :select="props.select"
+        />
+      </template>
+      <template v-if="!!slotTemplates.header" v-slot:header="props">
+        <component
+          :is="slotTemplates.header || null"
+          :props="props.props"
+          :on="props.on"
+        />
+      </template>
+      <template v-if="!!slotTemplates.footer" v-slot:footer="props">
+        <component
+          :is="slotTemplates.footer || null"
+          :props="props.props"
+          :on="props.on"
+          :headers="props.headers"
+        />
       </template>
     </v-data-table>
   </div>
 </template>
 
 <script>
-// import Vue from 'vue'
 import gql from 'graphql-tag'
 import addDays from 'date-fns/addDays'
 import format from 'date-fns/format'
@@ -71,7 +118,14 @@ import startOfDay from 'date-fns/startOfDay'
 import endOfDay from 'date-fns/endOfDay'
 // import { axiosWrapper } from '../api/axios.js'
 import FieldsFilter from './FieldsFilter.vue'
-// import RegistrationFind from '~/config/apps/event/gql/registrationList.gql'
+
+const DEFAULT_GRID_PROPS = {
+  hideDefaultHeader: false,
+  hideDefaultFooter: false,
+  showExpand: false,
+  singleExpand: false,
+  showSelect: false,
+}
 
 function getTableHeader(content, viewName) {
   const fields = getGridFields(content, viewName)
@@ -108,6 +162,11 @@ function getViewQuery(content, viewName) {
   return getViewDataSource(content, viewName).query
 }
 
+function getGridTemplateInfo(content, viewName) {
+  const view = content.views[viewName]
+  return view.template || {}
+}
+
 function formatResult(content, viewName, data, modelName) {
   let { edges } = data[modelName][`${modelName}Find`]
   const fields = getGridFields(content, viewName)
@@ -122,11 +181,8 @@ function formatResult(content, viewName, data, modelName) {
           : ''
       else formattedRecord[field] = node[field]
     }
-    // const result = format(new Date(2014, 1, 11), 'MM/dd/yyyy')
     return formattedRecord
-    // return format(new Date(2014, 1, 11), 'PPp')
   })
-  // formatData(content, viewName, edges)
   return edges
 }
 
@@ -297,6 +353,11 @@ function buildQueryVariables({
   return { and }
 }
 
+function getGridsProps(content, viewName) {
+  const view = content.views[viewName]
+  return { ...DEFAULT_GRID_PROPS, ...view.ui }
+}
+
 export default {
   components: {
     FieldsFilter,
@@ -321,6 +382,7 @@ export default {
   },
   data() {
     const headers = getTableHeader(this.content, this.viewName)
+    const gridProps = getGridsProps(this.content, this.viewName)
     return {
       singleSelect: false,
       selected: [],
@@ -335,12 +397,32 @@ export default {
       isFilterApplied: false,
       filterFields: {},
       filterRules: [],
+      component: [],
+      slotTemplates: {},
+      hideDefaultHeader: gridProps.hideDefaultHeader,
+      hideDefaultFooter: gridProps.hideDefaultFooter,
+      showExpand: gridProps.showExpand,
+      singleExpand: gridProps.singleExpand,
+      showSelect: gridProps.showSelect,
     }
   },
   computed: {
     filterableFields() {
       const fields = getGridFields(this.content, this.viewName)
       return fields
+    },
+    context() {
+      return getGridTemplateInfo(this.content, this.viewName).context || {}
+    },
+    loader() {
+      return (templateFolderName, index) => () =>
+        import(
+          `~/config/templates/grids/${templateFolderName}/column-${index}.vue`
+        )
+    },
+    slotTemplateLoader() {
+      return (templateFolderName, fileName) => () =>
+        import(`~/config/templates/grids/${templateFolderName}/${fileName}.vue`)
     },
   },
   // created(){
@@ -361,20 +443,42 @@ export default {
   //     this.items = formatResult(result.data,"Event")
   // }
   mounted() {
-    // const { selected, headers, tableData, options } = this
-    // const ComponentClass = Vue.extend(DataTable)
-    // const instance = new ComponentClass({
-    //   propsData: { selected, headers, tableData, options },
-    // })
-    // // instance.$slots.default = ['Click me!']
-    // instance.$mount() // pass nothing
-    // //         console.log(this.$refs)
-    // this.$refs.container && this.$refs.container.appendChild(instance.$el)
+    const templateInfo = getGridTemplateInfo(this.content, this.viewName)
+    const templateFolderName = templateInfo.name
+    this.headers.forEach(async (column, index) => {
+      try {
+        try {
+          await this.loader(templateFolderName, column.value)()
+          this.component[index] = () =>
+            this.loader(templateFolderName, column.value)()
+        } catch (e) {
+          await this.loader(templateFolderName, index)()
+          this.component[index] = () => this.loader(templateFolderName, index)()
+        }
+      } catch (e) {
+        this.component[index] = () =>
+          import(`~/config/common/templates/grid/column.vue`)
+      }
+    })
+    this.loadNamedSlotTemplate(templateFolderName, 'item')
+    this.loadNamedSlotTemplate(templateFolderName, 'body')
+    this.loadNamedSlotTemplate(templateFolderName, 'header')
+    this.loadNamedSlotTemplate(templateFolderName, 'footer')
+    this.loadNamedSlotTemplate(templateFolderName, 'expanded-item')
   },
   methods: {
     updatePagination(pagination) {},
     onFilterClick(e) {
       this.isFilterApplied = true
+    },
+    async loadNamedSlotTemplate(templateFolderName, slotName) {
+      try {
+        await this.slotTemplateLoader(templateFolderName, slotName)()
+        this.slotTemplates[slotName] = () =>
+          this.slotTemplateLoader(templateFolderName, slotName)()
+      } catch (e) {
+        this.slotTemplates[slotName] = null
+      }
     },
   },
   apollo: {

@@ -1,4 +1,3 @@
-import statusTemplate from '../../common/templates/edit.vue'
 import registrationStatusOptions from './gql/registrationStatusOptions.gql'
 import registrationList from './gql/registrationList.gql'
 import eventList from './gql/eventlist.gql'
@@ -1224,12 +1223,15 @@ export default (ctx) => ({
           ],
         },
         ui: {
-          Pagination: 'pageWithNumber',
-          'List Details View Template': 'Registrations_Details_View_Template',
+          hideDefaultHeader: false,
+          hideDefaultFooter: false,
+          showExpand: true,
+          singleExpand: false,
+          showSelect: false,
+          hideFilter: false,
+          hideSearch: true,
         },
         default: true,
-        search: true,
-        defaultSort: 'createdDate DESC',
         fields: {
           EventName: {
             displayOrder: 6,
@@ -1277,13 +1279,13 @@ export default (ctx) => ({
               itemValue: 'key',
               filter: { type: 'RegistrationStatus' },
             },
-            template: {
-              file: statusTemplate,
-              params: {
-                // eslint-disable-next-line no-template-curly-in-string
-                route: '/event',
-              },
-            },
+            // template: {
+            //   name: 'issue-grid',
+            //   params: {
+            //     // eslint-disable-next-line no-template-curly-in-string
+            //     route: '/event',
+            //   },
+            // },
             // items: [
             //   {
             //     text: 'Success Payment',
@@ -1343,12 +1345,27 @@ export default (ctx) => ({
             columnWidth: '130px',
             type: 'checkbox',
           },
+          action: {
+            displayOrder: 11,
+            caption: 'Action',
+            searchEnable: false,
+            sortEnable: false,
+            columnWidth: '130px',
+            type: 'action',
+          },
+        },
+        template: {
+          name: 'link-grid',
+          context: {
+            basePath: '/event',
+          },
         },
         dataSource: {
           query: registrationList,
           filter: {
             where: { Status: 'Failed' },
           },
+          defaultSort: 'createdDate DESC',
         },
         title: 'Registrations',
       },

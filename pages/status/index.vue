@@ -24,7 +24,6 @@ export default {
     Grid,
   },
   data() {
-    debugger
     return {
       field: content.Registrations.views.Registrations.fields.Status,
       fieldName: 'Status',

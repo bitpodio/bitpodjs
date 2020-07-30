@@ -16,7 +16,6 @@
 import gql from 'graphql-tag'
 
 function formatResult(data) {
-  debugger
   const [modelName] = Object.getOwnPropertyNames(data)
   const { edges } = data[modelName][`${modelName}Find`]
   return edges.map(({ node }) => node)
