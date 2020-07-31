@@ -1,11 +1,8 @@
 import qs from 'querystring';
 export default function (req, res, next) {
-  // req is the Node.js http request object
-  console.log(req.url)
 
-  //  let state = /[?&]+state=(\w+)[&]?/gi.exec(req.url)[1];
   let query = qs.parse(req.url.substring(2));
-  if (!query.CBVerified) {
+  if (!query.cbVerified) {
     let { state } = query;
     let stateObject;
     if (state) {
@@ -18,9 +15,8 @@ export default function (req, res, next) {
         return next();
       }
       let {host, oldState} = stateObject;
-      query.CBVerified = true;
+      query.cbVerified = true;
       query.state = oldState;
-      console.log("redirecting to ",`https://${host}/callback?${qs.encode(query)}`);
       res.writeHead(301, { Location: `https://${host}/callback?${qs.encode(query)}` });
       return res.end();
     }

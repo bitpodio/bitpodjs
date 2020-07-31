@@ -169,7 +169,7 @@ export default {
         BITPOD_USERINFO_ENDPOINT_URL:
           process.env.BITPOD__USERINFO_ENDPOINT_URL ||
           'https://id.bitpod.io/auth/connect/userinfo',
-        AUTHORIZATION_ENDPOINT_URL: process.env.AUTHORIZATION_ENDPOINT_URL
+          authorization: process.env.AUTHORIZATION_ENDPOINT_URL
           || 'https://id.bitpod.io/auth/connect/authorize',
         endpoints: {
           authorization: '/authorize',
