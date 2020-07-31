@@ -169,10 +169,10 @@ export default {
         BITPOD_USERINFO_ENDPOINT_URL:
           process.env.BITPOD__USERINFO_ENDPOINT_URL ||
           'https://id.bitpod.io/auth/connect/userinfo',
+        AUTHORIZATION_ENDPOINT_URL: process.env.AUTHORIZATION_ENDPOINT_URL
+          || 'https://id.bitpod.io/auth/connect/authorize',
         endpoints: {
           authorization: '/authorize',
-          // process.env.BITPOD_AUTH_URL ||
-          // 'https://id.bitpod.io/auth/connect/authorize',
           token: 'api/connect/token',
           userInfo: 'api/connect/userinfo',
         },
