@@ -150,4 +150,16 @@ export default {
 .filter-btn {
   width: fit-content;
 }
+@media (max-width: 600px) {
+  .filter-rule-item {
+    background: transparent;
+    padding: 5px;
+    margin-bottom: 20px;
+    border-radius: 0;
+    border-bottom: 1px solid #ccc;
+  }
+  .filter-fields-container .filter-rule-item:last-child {
+    border-bottom: none;
+  }
+}
 </style>

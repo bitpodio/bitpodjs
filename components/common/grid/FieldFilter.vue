@@ -41,7 +41,10 @@
         dense
         class="pr-3 filter-field"
       ></v-select>
-      <div v-if="!nonInputOperators.includes(filterRule.operator)" class="pr-3">
+      <div
+        v-if="!nonInputOperators.includes(filterRule.operator)"
+        class="pr-3 filter-value"
+      >
         <div v-if="fieldType === 'date'">
           <v-menu
             v-model="menu2"
@@ -278,5 +281,13 @@ export default {
 .filter-or {
   max-width: 90px;
   min-width: 90px;
+}
+@media (max-width: 600px) {
+  .filter-or,
+  .filter-field,
+  .filter-value {
+    max-width: 80vw;
+    min-width: 80vw;
+  }
 }
 </style>
