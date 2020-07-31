@@ -3,7 +3,7 @@
     <v-menu
       v-model="menu"
       :close-on-content-click="false"
-      :nudge-width="400"
+      :nudge-width="500"
       offset-x
     >
       <template v-slot:activator="{ on, attrs }">
@@ -18,8 +18,11 @@
       </template>
 
       <v-card class="filter-dialog-content">
-        <div>Filter</div>
-        <v-divider></v-divider>
+        <div class="mb-2">
+          <span class="text--primary body-1">
+            <v-icon class="pr-1">mdi-filter-outline</v-icon> Filter</span
+          >
+        </div>
         <div class="filter-fields-container">
           <div
             v-for="[index, filterRule] of value.entries()"
@@ -40,16 +43,20 @@
 
               <v-list>
                 <v-list-item @click="onRuleDelete(index)">
+                  <v-icon class="pr-2">mdi-delete</v-icon>
                   <v-list-item-title>Delete</v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="onRuleDuplicate(index)">
+                  <v-icon class="pr-2">mdi-content-copy</v-icon>
                   <v-list-item-title>Duplicate</v-list-item-title>
                 </v-list-item>
               </v-list>
             </v-menu>
           </div>
           <v-spacer></v-spacer>
-          <v-btn text @click="onAddFilter">+ Add a filter</v-btn>
+          <v-btn text color="primary" class="filter-btn" @click="onAddFilter"
+            >+ Add a filter</v-btn
+          >
         </div>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -139,6 +146,8 @@ export default {
 }
 .filter-rule-item {
   display: flex;
-  align-items: center;
+}
+.filter-btn {
+  width: fit-content;
 }
 </style>

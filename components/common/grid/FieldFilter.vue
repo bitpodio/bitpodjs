@@ -1,18 +1,22 @@
 <template>
   <div>
-    <div class="d-flex align-center">
-      <div v-if="index === 0">
+    <div
+      class="d-flex align-start flex-wrap flex-sm-wrap flex-xl-nowrap flex-md-nowrap"
+    >
+      <div v-if="index === 0" class="pr-3 pt-3 filter-or">
         Where
       </div>
-      <div v-else-if="index === 1">
+      <div v-else-if="index === 1" class="pr-3 filter-or">
         <v-select
           v-model="selectedConditionOperator"
           :items="conditionOperator"
           label="select"
           single-line
+          outlined
+          dense
         ></v-select>
       </div>
-      <div v-else>
+      <div v-else class="pr-3 pt-3 filter-or">
         {{ selectedConditionOperator }}
       </div>
       <v-select
@@ -22,6 +26,9 @@
         item-value="value"
         label="Field"
         single-line
+        outlined
+        dense
+        class="pr-3 filter-field"
       ></v-select>
       <v-select
         v-model="filterRule.operator"
@@ -30,8 +37,11 @@
         item-value="value"
         label="Operator"
         single-line
+        outlined
+        dense
+        class="pr-3 filter-field"
       ></v-select>
-      <div v-if="!nonInputOperators.includes(filterRule.operator)">
+      <div v-if="!nonInputOperators.includes(filterRule.operator)" class="pr-3">
         <div v-if="fieldType === 'date'">
           <v-menu
             v-model="menu2"
@@ -39,6 +49,8 @@
             :nudge-right="40"
             transition="scale-transition"
             offset-y
+            outlined
+            dense
             min-width="290px"
           >
             <template v-slot:activator="{ on, attrs }">
@@ -47,12 +59,16 @@
                 label="Enter Date"
                 readonly
                 v-bind="attrs"
+                outlined
+                dense
                 v-on="on"
               ></v-text-field>
             </template>
             <v-date-picker
               v-model="date"
               show-current="true"
+              outlined
+              dense
               @change="onCalendarChange"
               @input="menu2 = false"
             ></v-date-picker>
@@ -63,6 +79,8 @@
             v-model="filterRule.value"
             label="Enter a value"
             type="number"
+            dense
+            outlined
             @keyup.enter="onFilterInput"
           ></v-text-field>
         </div>
@@ -81,6 +99,8 @@
             v-model="filterRule.value"
             label="Enter a value"
             type="text"
+            outlined
+            dense
             @keyup.enter="onFilterInput"
           ></v-text-field>
         </div>
@@ -249,3 +269,14 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.filter-field {
+  max-width: 170px;
+  min-width: 170px;
+}
+.filter-or {
+  max-width: 90px;
+  min-width: 90px;
+}
+</style>

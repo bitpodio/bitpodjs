@@ -42,7 +42,7 @@
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </v-toolbar>
-        <v-stepper v-model="e13" vertical class="elevation-0">
+        <v-stepper v-model="e13" vertical class="elevation-0 stepper-box">
           <v-stepper-step step="1" complete>
             Basic Info
           </v-stepper-step>
@@ -148,7 +148,6 @@
                   ></v-text-field>
                 </v-col>
               </v-row>
-              <small>*indicates required field</small>
             </v-card>
             <v-btn color="primary" @click="e13 = 2">Continue</v-btn>
             <v-btn text>Cancel</v-btn>
@@ -368,7 +367,6 @@
               </v-col>
             </v-row>
           </v-container>
-          <small>*indicates required field</small>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -401,7 +399,7 @@
           <v-stepper-step step="3">Tickets</v-stepper-step>
         </v-stepper-header>
 
-        <v-stepper-items>
+        <v-stepper-items class="stepper-box">
           <v-stepper-content step="1">
             <v-card flat>
               <p>
@@ -503,7 +501,6 @@
                   ></v-text-field>
                 </v-col>
               </v-row>
-              <small>*indicates required field</small>
             </v-card>
 
             <v-btn color="primary" @click="e1 = 2">
@@ -552,14 +549,70 @@
                 Setup event tickets and price, you can also set tickets validity
                 so early birds can be offered better pricing.
               </p>
-              <v-btn class="ma-2" outlined color="indigo">Add Tickets</v-btn>
+              <v-btn class="ma-2" outlined color="indigo" @click="addNewRow1"
+                >Add Tickets</v-btn
+              >
+              <v-simple-table>
+                <template v-slot:default>
+                  <thead>
+                    <tr>
+                      <th class="text-left">Title</th>
+                      <th class="text-left">Type</th>
+                      <th class="text-left">Price</th>
+                      <th class="text-left">Start Date</th>
+                      <th class="text-left">End Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      v-for="(invoice_product, k) in invoice_products"
+                      :key="k"
+                    >
+                      <td class="pa-2 pb-0">
+                        <v-text-field
+                          v-model="invoice_product.product_no"
+                          label="Title"
+                          outlined
+                        ></v-text-field>
+                      </td>
+                      <td class="pa-2 pb-0">
+                        <v-select
+                          v-model="invoice_product.product_price"
+                          :items="['Free', 'Paid', 'Donation']"
+                          label="Type"
+                          outlined
+                        ></v-select>
+                      </td>
+                      <td class="pa-2 pb-0">
+                        <v-text-field
+                          v-model="invoice_product.product_qty"
+                          label="price"
+                          outlined
+                          value=""
+                          prefix="$"
+                        ></v-text-field>
+                      </td>
+                      <td class="pa-2 pb-0">
+                        <v-text-field
+                          v-model="invoice_product.product_no"
+                          label="Start Date"
+                          outlined
+                        ></v-text-field>
+                      </td>
+                      <td class="pa-2 pb-0">
+                        <v-text-field
+                          v-model="invoice_product.product_no"
+                          label="End Date"
+                          outlined
+                        ></v-text-field>
+                      </td>
+                    </tr>
+                  </tbody>
+                </template>
+              </v-simple-table>
             </v-card>
-
-            <v-btn color="primary" @click="e1 = 1">
-              Continue
-            </v-btn>
-
-            <v-btn text>Cancel</v-btn>
+            <v-btn color="primary" @click="e1 = 1">Back</v-btn>
+            <v-btn color="primary" @click="stepform = false">Save</v-btn>
           </v-stepper-content>
         </v-stepper-items>
       </v-stepper>
@@ -686,6 +739,9 @@ export default {
   bottom: 0 !important;
   width: calc(100% - 300px) !important;
   max-height: calc(100% - 100px) !important;
+}
+.stepper-box {
+  min-height: 650px;
 }
 @media (max-width: 600px) {
   .slide-form {
