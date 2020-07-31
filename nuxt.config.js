@@ -29,8 +29,6 @@ export default {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
-
-  serverMiddleware: ['~/api/index.js'],
   /*
    ** Global CSS
    */
@@ -151,7 +149,11 @@ export default {
       },
     },
   },
-
+  serverMiddleware: [
+    '~/api/index.js',
+    { path: '/callback', handler: '~/api/callback.js' },
+    { path: '/authorize', handler: '~/api/authorize.js' }
+  ],
   auth: {
     redirect: {
       login: '/login',
@@ -168,9 +170,9 @@ export default {
           process.env.BITPOD__USERINFO_ENDPOINT_URL ||
           'https://id.bitpod.io/auth/connect/userinfo',
         endpoints: {
-          authorization:
-            process.env.BITPOD_AUTH_URL ||
-            'https://id.bitpod.io/auth/connect/authorize',
+          authorization: '/authorize',
+          // process.env.BITPOD_AUTH_URL ||
+          // 'https://id.bitpod.io/auth/connect/authorize',
           token: 'api/connect/token',
           userInfo: 'api/connect/userinfo',
         },
