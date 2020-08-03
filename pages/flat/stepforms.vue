@@ -744,7 +744,7 @@
           </v-row>
         </v-card-text>
         <v-divider></v-divider>
-        <v-card-actions class="pl-2">
+        <v-card-actions class="pl-4">
           <v-btn color="primary" depressed @click="registrations = false"
             >Save</v-btn
           >
