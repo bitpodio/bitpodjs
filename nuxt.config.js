@@ -1,5 +1,5 @@
 import colors from 'vuetify/es5/util/colors'
-
+console.log('REDIRECT_URI+++', process.env.REDIRECT_URI)
 export default {
   /*
    ** Nuxt rendering mode
@@ -29,8 +29,6 @@ export default {
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
-
-  serverMiddleware: ['~/api/index.js'],
   /*
    ** Global CSS
    */
@@ -151,7 +149,11 @@ export default {
       },
     },
   },
-
+  serverMiddleware: [
+    '~/api/index.js',
+    { path: '/callback', handler: '~/api/callback.js' },
+    { path: '/authorize', handler: '~/api/authorize.js' },
+  ],
   auth: {
     redirect: {
       login: '/login',
@@ -168,17 +170,17 @@ export default {
         BITPOD_USERINFO_ENDPOINT_URL:
           process.env.BITPOD__USERINFO_ENDPOINT_URL ||
           'https://login.bitpod.io/auth/connect/userinfo',
+        authorization:
+          process.env.AUTHORIZATION_ENDPOINT_URL ||
+          'https://login.bitpod.io/auth/connect/authorize',
         endpoints: {
-          authorization:
-            process.env.BITPOD_AUTH_URL ||
-            'https://login.bitpod.io/auth/connect/authorize',
+          authorization: '/authorize',
           token: 'api/connect/token',
           userInfo: 'api/connect/userinfo',
         },
         responseType: 'code',
         grantType: 'authorization_code',
-        redirectUri:
-          process.env.REDIRECT_URI || 'http://localhost:3000/callback',
+        redirectUri: process.env.REDIRECT_URI,
         scope: ['notification', 'offline_access', 'openid', 'profile', 'email'],
         clientId:
           process.env.BITPOD_EVENT_CLIENTID || `5F1ED0F95B78182ED39E7DF0`,
