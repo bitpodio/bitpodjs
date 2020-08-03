@@ -1,5 +1,6 @@
 <template>
   <div>
+    <div><GridAction :content="content" :view-name="viewName" /></div>
     <div class="grid-actions-container">
       <div>
         <slot name="filter">
@@ -118,6 +119,7 @@ import startOfDay from 'date-fns/startOfDay'
 import endOfDay from 'date-fns/endOfDay'
 // import { axiosWrapper } from '../api/axios.js'
 import FieldsFilter from './FieldsFilter.vue'
+import GridAction from '~/config/common/templates/grid/actions/grid.vue'
 
 const DEFAULT_GRID_PROPS = {
   hideDefaultHeader: false,
@@ -132,17 +134,24 @@ function getTableHeader(content, viewName) {
 
   const headers = []
   for (const fieldName in fields) {
-    const { caption, sortEnable, displayOrder, columnWidth, template } = fields[
-      fieldName
-    ]
-    headers.push({
-      text: caption,
-      value: fieldName,
-      sortable: sortEnable,
-      width: columnWidth,
+    const {
+      caption,
+      sortEnable,
       displayOrder,
+      columnWidth,
       template,
-    })
+      hidden = false,
+    } = fields[fieldName]
+    if (!hidden) {
+      headers.push({
+        text: caption,
+        value: fieldName,
+        sortable: sortEnable,
+        width: columnWidth,
+        displayOrder,
+        template,
+      })
+    }
   }
   headers.sort((col1, col2) => col1.displayOrder - col2.displayOrder)
   return headers
@@ -168,6 +177,7 @@ function getGridTemplateInfo(content, viewName) {
 }
 
 function formatResult(content, viewName, data, modelName) {
+  if (!data[modelName]) return []
   let { edges } = data[modelName][`${modelName}Find`]
   const fields = getGridFields(content, viewName)
   edges = edges.map(({ node }) => {
@@ -193,9 +203,10 @@ function formatCountData(data, modelName) {
 
 function getOrderQuery(content, viewName, sortBy, sortDesc) {
   // let {sortBy,sortDesc} = option;
+  debugger
   if (!(sortBy && sortBy.length)) {
     const view = content.views[viewName]
-    const defaultSort = view.DefaultSort
+    const defaultSort = view.defaultSort
     return defaultSort || ''
   }
   return `${sortBy && sortBy[0]} ${sortDesc && sortDesc[0] ? 'DESC' : 'ASC'}`
@@ -361,6 +372,7 @@ function getGridsProps(content, viewName) {
 export default {
   components: {
     FieldsFilter,
+    GridAction,
   },
   props: {
     content: {
@@ -512,10 +524,13 @@ export default {
       update(data) {
         const { content, viewName } = this
         const modelName = content.general.name
-        const tableData = {
-          items: formatResult(content, viewName, data, modelName),
-          total: formatCountData(data, modelName),
-        }
+        const tableData =
+          Object.keys(data).length > 0
+            ? {
+                items: formatResult(content, viewName, data, modelName),
+                total: formatCountData(data, modelName),
+              }
+            : {}
         return tableData
       },
       // Optional result hook

@@ -1214,18 +1214,50 @@ export default (ctx) => ({
     views: {
       Registrations: {
         actions: {
-          'Embeded Actions': '',
-          'General Actions': [],
-          'Selected Item Action': [
-            'Resend Confirmation Email',
-            'Edit Registration',
-            'Delete Registration',
-          ],
+          row: [],
+          grid: {
+            collapseAfter: 2,
+            items: [
+              {
+                caption: 'create',
+                icon: 'fa fa-plus',
+                tooltip: '',
+                items: [
+                  {
+                    caption: 'create Simple Event',
+                    name: 'createEvent',
+                    type: '',
+                  },
+                  {
+                    caption: 'create Recurring Event',
+                  },
+                  {
+                    caption: 'Seat Designer',
+                    type: 'link',
+                  },
+                ],
+              },
+              {
+                caption: 'Emails',
+              },
+            ],
+          },
+          rowSelect: {
+            items: [
+              {
+                caption: 'edit',
+                icon: 'fa fa-plus',
+                tooltip: '',
+              },
+              {},
+              'Delete Registration',
+            ],
+          },
         },
         ui: {
           hideDefaultHeader: false,
           hideDefaultFooter: false,
-          showExpand: true,
+          showExpand: false,
           singleExpand: false,
           showSelect: false,
           hideFilter: false,
@@ -1304,6 +1336,9 @@ export default (ctx) => ({
             sortEnable: true,
             columnWidth: '180px',
             type: 'string',
+            inlineEdit: false,
+            newForm: false,
+            editForm: false,
           },
           createdDate: {
             displayOrder: 11,
@@ -1312,6 +1347,9 @@ export default (ctx) => ({
             sortEnable: true,
             columnWidth: '150px',
             type: 'date',
+            inlineEdit: false,
+            newForm: false,
+            editForm: false,
           },
           TicketQuantity: {
             displayOrder: 9,
@@ -1328,6 +1366,9 @@ export default (ctx) => ({
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            inlineEdit: false,
+            newForm: false,
+            editForm: false,
           },
           TotalAmount: {
             displayOrder: 8,
@@ -1352,6 +1393,24 @@ export default (ctx) => ({
             sortEnable: false,
             columnWidth: '130px',
             type: 'action',
+            inlineEdit: false,
+            newForm: false,
+            editForm: false,
+            condtion: ({ item, items, index }) => {
+              return true
+            },
+          },
+          FirstName: {
+            displayOrder: 2,
+            caption: 'First Name',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: false,
           },
         },
         template: {
@@ -1363,11 +1422,12 @@ export default (ctx) => ({
         dataSource: {
           query: registrationList,
           filter: {
-            where: { Status: 'Failed' },
+            where: { Status: 'Pending' },
           },
           defaultSort: 'createdDate DESC',
         },
         title: 'Registrations',
+        defaultSort: 'createdDate DESC',
       },
       'Abandoned Registrations': {
         UI: {
@@ -1456,7 +1516,7 @@ export default (ctx) => ({
         },
         Query:
           'query($filters: JSON, $where: JSON) {\n  Registration {\n    RegistrationFind(filter: $filters) {\n      edges {\n        node {\n          id\n          Email\n          EventName\n          FirstName\n  TotalAmount  TicketQuantity    CompanyName    FullName\n          LastName\n          _Comment {\n            Notes\n            id\n          }\n          Category\n          _QuestionResponse {\n            Answer\n            id\n          }\n          PaymentMethod\n          CheckIn\n          Phone\n          RegistrationId\n          Status\n          createdDate\n          EventList{\n            _VenueAddress{\n              id\n              City\n              State\n              PostalCode\n              AddressLine\n              Country\n            }\n          }\n        }\n      }\n    }\n    RegistrationCount(where: $where)\n  }\n}\n',
-        Title: 'Abandoned Registrations',
+        title: 'Abandoned Registrations',
       },
       Registration: {
         DefaultSort: 'createdDate DESC',
@@ -1555,9 +1615,9 @@ export default (ctx) => ({
           },
         },
         Query: '',
-        Visible: false,
+        visible: false,
         type: 'Form',
-        Title: 'Registration',
+        title: 'Registration',
       },
     },
   },

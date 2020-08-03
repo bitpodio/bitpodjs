@@ -129,14 +129,14 @@ export default {
     clientConfigs: {
       default: {
         httpEndpoint: 'https://event.test.bitpod.io/svc/graphql',
-        httpLinkOptions: {
-          credentials: 'same-origin',
-          headers: {
-            Authorization:
-              'Bearer ' +
-              'eyJhbGciOiJSUzI1NiIsImtpZCI6IjhEMkE0MTczM0QwN0JBNkU2RTYwNTZFRUJDRThDRkQyMDc0NThCMDUiLCJ0eXAiOiJKV1QiLCJ4NXQiOiJqU3BCY3owSHVtNXVZRmJ1dk9qUDBnZEZpd1UifQ.eyJuYmYiOjE1OTU4NjczMDYsImV4cCI6MTU5NTk1MzcwNiwiaXNzIjoiaHR0cHM6Ly9sb2dpbi5iaXRwb2QuaW8vYXV0aCIsImF1ZCI6WyJodHRwczovL2xvZ2luLmJpdHBvZC5pby9hdXRoL3Jlc291cmNlcyIsIlNoYXJlZCIsIk5vdGlmaWNhdGlvbiJdLCJjbGllbnRfaWQiOiI2ZDJiOTg4YzQ2NWY0NzZhMDhhZWZjNDg5ZWYyYjIxMThmZTU4MDc2Iiwic3ViIjoiamFnYW5uYXRoQGJpdHBvZC5pbyIsImF1dGhfdGltZSI6MTU5NTc4MTUwMSwiaWRwIjoibG9jYWwiLCJzY29wZSI6WyJOb3RpZmljYXRpb24iLCJvcGVuaWQiLCJwcm9maWxlIiwiZW1haWwiLCJiYWFzIiwib2ZmbGluZV9hY2Nlc3MiLCJub3RpZmljYXRpb24iXSwiYW1yIjpbInB3ZCJdfQ.K1JtPtcGaUKabEbelo4nGHS8cOOn1MfNTRUeMvm1DOlRrT9oKyAWSqLcDKQvueV0kIz9YsHv7zq4yx3HEdfsWVh_RRtTnwi-_itzU5OgHCb2eqsCa3oJ-e1_l6dalaTyI-XP5Dg0TB3857DH4qpEk7jL3USntJREWkXBvUFx1f_tkgnAqAAtjrAlJM9sLpaI5SQRnSTgAgF6q4oOd5gWwyahPRXiXuPWQOlqj2A2r51GRkD4swpkiCOkYnbN-8PdeMXm9W0apHD2UIF3_NGmi1Qh8Yq7PmbG7TGsWx0dWhyCtbShz1jO3W_IdZ4ESomti5fcUmjZ--jWe_jnGfDDcg',
-          },
-        },
+        // httpLinkOptions: {
+        //   credentials: 'same-origin',
+        //   headers: {
+        //     Authorization:
+        //       'Bearer ' +
+        //       'eyJhbGciOiJSUzI1NiIsImtpZCI6IjhEMkE0MTczM0QwN0JBNkU2RTYwNTZFRUJDRThDRkQyMDc0NThCMDUiLCJ0eXAiOiJKV1QiLCJ4NXQiOiJqU3BCY3owSHVtNXVZRmJ1dk9qUDBnZEZpd1UifQ.eyJuYmYiOjE1OTYwOTIzMDgsImV4cCI6MTU5NjE3ODcwOCwiaXNzIjoiaHR0cHM6Ly9sb2dpbi5iaXRwb2QuaW8vYXV0aCIsImF1ZCI6WyJodHRwczovL2xvZ2luLmJpdHBvZC5pby9hdXRoL3Jlc291cmNlcyIsIlNoYXJlZCIsIk5vdGlmaWNhdGlvbiJdLCJjbGllbnRfaWQiOiI2ZDJiOTg4YzQ2NWY0NzZhMDhhZWZjNDg5ZWYyYjIxMThmZTU4MDc2Iiwic3ViIjoiamFnYW5uYXRoQGJpdHBvZC5pbyIsImF1dGhfdGltZSI6MTU5NjA5MjMwNywiaWRwIjoibG9jYWwiLCJzY29wZSI6WyJOb3RpZmljYXRpb24iLCJvcGVuaWQiLCJwcm9maWxlIiwiZW1haWwiLCJiYWFzIiwib2ZmbGluZV9hY2Nlc3MiLCJub3RpZmljYXRpb24iLCJub3RpZmljYXRpb24iLCJiYWFzIiwib2ZmbGluZV9hY2Nlc3MiLCJub3RpZmljYXRpb24iLCJiYWFzIiwib2ZmbGluZV9hY2Nlc3MiLCJub3RpZmljYXRpb24iLCJvZmZsaW5lX2FjY2VzcyJdLCJhbXIiOlsicHdkIl19.ZBOLiLq1mobr2iryNx7DoG1glPdXrhVOGj4cJD3DRhZKsV7iUQTDZUlHDhWDixf7AMG5kDhcHuWOY1j7AdDWY0yQwwVcNzeQS2Yh7o7d-4uFRVTqLE5U_oj3Ghwf27OSlQ0sMeedIyHihgcCpaNSGhcovwIlQ_m-OnYXDxwc_5PwfFX92R2_M3mHlouUIzJANuxsIvPWrTJ5Z8QiQRLuN4dKRlJam1ylyuo3lfJ8rk0sSqyHSJ-uoL7zzptLprxnidO3K60bTDbkd13v3-eevS1mgSJxCLq0sF1U5WSxvagWNtJIM4iLQKkK7Ub8LBZ2E3GDFfMWeuRrNVFUFGn2nQ',
+        //   },
+        // },
       },
       // default:{
       //   httpEndpoint:"https://event.test.bitpod.io/svc/graphql",
@@ -159,18 +159,19 @@ export default {
       home: '/event',
     },
     strategies: {
+      // https://login.bitpod.io/auth/account
       bitpod: {
         scheme: 'oauth2',
         BITPOD_TOKEN_ENDPOINT_URL:
           process.env.BITPOD_TOKEN_ENDPOINT_URL ||
-          'https://id.bitpod.io/auth/connect/token',
+          'https://login.bitpod.io/auth/connect/token',
         BITPOD_USERINFO_ENDPOINT_URL:
           process.env.BITPOD__USERINFO_ENDPOINT_URL ||
-          'https://id.bitpod.io/auth/connect/userinfo',
+          'https://login.bitpod.io/auth/connect/userinfo',
         endpoints: {
           authorization:
             process.env.BITPOD_AUTH_URL ||
-            'https://id.bitpod.io/auth/connect/authorize',
+            'https://login.bitpod.io/auth/connect/authorize',
           token: 'api/connect/token',
           userInfo: 'api/connect/userinfo',
         },
@@ -180,10 +181,10 @@ export default {
           process.env.REDIRECT_URI || 'http://localhost:3000/callback',
         scope: ['notification', 'offline_access', 'openid', 'profile', 'email'],
         clientId:
-          process.env.BITPOD_EVENT_CLIENTID || `5F1FE3FD7D5EA2C873CF840E `,
+          process.env.BITPOD_EVENT_CLIENTID || `5F1ED0F95B78182ED39E7DF0`,
         clientSecret:
           process.env.BITPOD_EVENT_CLIENTSECRET ||
-          `a6db3acdb2a840cda1ff656f5871ee66`,
+          `34389e794e294bc2afb1223b4298b9c9`,
         tokenType: 'Bearer',
         tokenKey: 'access_token',
         refreshTokenKey: 'refresh_token',
