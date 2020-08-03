@@ -1,28 +1,45 @@
 <template>
   <v-layout column justify-center align-center>
     <v-flex xs12 sm12 md12>
-      <Grid view-name="Registrations" content-name="Registrations" search="" />
+      <div>
+        <ViewDropdown :content="content['Registrations']" />
+      </div>
+      <Grid
+        view-name="Registrations"
+        :content="content['Registrations']"
+        search=""
+      />
     </v-flex>
   </v-layout>
 </template>
 
 <script>
+import ViewDropdown from '~/components/common/viewDropdown'
 import Grid from '~/components/common/grid'
 // import Grid from '~/components/common/test';
 import content from '~/config/apps/event/content'
+
 export default {
   middleware: ['auth'],
   components: {
     Grid,
+    ViewDropdown,
   },
   data() {
     return {
-      content,
+      content: content(),
+    }
+  },
+  async created() {
+    debugger
+    if (!this.$apolloHelpers.getToken()) {
+      let token = this.$auth.strategy.token.get()
+      token = token.split(' ')[1]
+      await this.$apolloHelpers.onLogin(token, undefined, { expires: 7 })
     }
   },
   state() {
     return this.$auth.state
   },
-  created() {},
 }
 </script>

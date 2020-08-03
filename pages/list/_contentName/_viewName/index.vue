@@ -13,11 +13,11 @@
 import Grid from '~/components/common/grid'
 import content from '~/config/apps/event/content'
 export default {
+  middleware: ['auth'],
   components: {
     Grid,
   },
   data() {
-    debugger
     // console.log(`content() = ${JSON.stringify(content())}`)
     return {
       content: content(),

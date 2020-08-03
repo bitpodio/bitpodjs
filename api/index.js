@@ -12,6 +12,7 @@ const UserinfoEndpointUrl =
 app.post('/connect/token', async (req, res) => {
   const params = new URLSearchParams()
   const urlQuery = req.headers.referer
+  // eslint-disable-next-line node/no-deprecated-api
   const parsedQuery = urlParser.parse(urlQuery, true, true)
   const code = parsedQuery.query.code
 

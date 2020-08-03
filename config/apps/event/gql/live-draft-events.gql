@@ -1,0 +1,81 @@
+query($filters: JSON, $where: JSON) {
+  Event {
+    EventFind(filter: $filters) {
+      edges {
+        node {
+          id
+          SendCalendar
+          NotifyOrganizer
+          WebinarLink
+          JoiningInstruction
+          showTimezone
+          UniqLink
+          isRefundable
+          RegistrationSiteTemplate
+          ShowAttendeeForm
+          CapturePoint
+          AutoUpdateSEOElements
+          SEOTitle
+          SEOKeywords
+          SEODesc
+          CancellationPolicy
+          CostCenter
+          Currency
+          Description
+          EndDate
+          EventCountdown
+          EventManager
+          IsOnlineEvent
+          LegalEntity
+          MaxNoRegistrations
+          Message
+          MinDaysCancelling
+          Organizer
+          Privacy
+          Project
+          ProjectCode
+          SalesforceEventId
+          SeatReservation
+          SessionTimingConflict
+          ShowRemainingTickets
+          StartDate
+          Status
+          SyncStatus
+          Tags
+          Timezone
+          Title
+          UpdateQuestion
+          VenueName
+          BusinessType
+          Duration
+          BufferBefore
+          BufferAfter
+          LocationType
+          ScheduledType
+          RollingDays
+          Frequency
+          MinimumSchedulingNotice
+          AvailableEndHour
+          MySpeakers
+          _VenueAddress {
+            id
+            State
+            PostalCode
+            LatLng {
+              lat
+              lng
+            }
+            Country
+            City
+            AddressLine
+            createdDate
+            createdBy
+            modifiedDate
+            modifiedBy
+          }
+        }
+      }
+    }
+    EventCount(where: $where)
+  }
+}

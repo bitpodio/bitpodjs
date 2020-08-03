@@ -7,8 +7,6 @@
       :item-value="itemValue"
       :loading="isLoading"
       single-line
-      outlined
-      dense
       @change="onChange"
     ></v-autocomplete>
   </div>
