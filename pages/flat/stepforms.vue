@@ -19,7 +19,10 @@
             <v-list-item-title>Vertical Form</v-list-item-title>
           </v-list-item>
           <v-list-item @click="stepform = !stepform">
-            <v-list-item-title>Step Form</v-list-item-title>
+            <v-list-item-title>Single Event</v-list-item-title>
+          </v-list-item>
+          <v-list-item @click="registrations = !registrations">
+            <v-list-item-title>New Registrations</v-list-item-title>
           </v-list-item>
           <v-list-item @click="dialog = !dialog">
             <v-list-item-title>Full Size</v-list-item-title>
@@ -374,10 +377,10 @@
     <v-dialog
       v-model="stepform"
       persistent
-      content-class="slide-form"
+      content-class="slide-form-default"
       transition="dialog-bottom-transition"
     >
-      <v-toolbar dark color="accent">
+      <v-toolbar dark app color="accent">
         <v-toolbar-title>New Event</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn icon dark @click="stepform = false">
@@ -618,66 +621,136 @@
       </v-stepper>
     </v-dialog>
 
-    <div>
-      <v-btn class="ma-2" outlined color="indigo" @click="addNewRow1"
-        >Add Tickets</v-btn
-      >
-      <v-simple-table>
-        <template v-slot:default>
-          <thead>
-            <tr>
-              <th class="text-left">Title</th>
-              <th class="text-left">Type</th>
-              <th class="text-left">Price</th>
-              <th class="text-left">Start Date</th>
-              <th class="text-left">End Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(invoice_product, k) in invoice_products" :key="k">
-              <td class="pa-2 pb-0">
-                <v-text-field
-                  v-model="invoice_product.product_no"
-                  label="Title"
-                  outlined
-                ></v-text-field>
-              </td>
-              <td class="pa-2 pb-0">
-                <v-select
-                  v-model="invoice_product.product_price"
-                  :items="['Free', 'Paid', 'Donation']"
-                  label="Type"
-                  outlined
-                ></v-select>
-              </td>
-              <td class="pa-2 pb-0">
-                <v-text-field
-                  v-model="invoice_product.product_qty"
-                  label="price"
-                  outlined
-                  value=""
-                  prefix="$"
-                ></v-text-field>
-              </td>
-              <td class="pa-2 pb-0">
-                <v-text-field
-                  v-model="invoice_product.product_no"
-                  label="Start Date"
-                  outlined
-                ></v-text-field>
-              </td>
-              <td class="pa-2 pb-0">
-                <v-text-field
-                  v-model="invoice_product.product_no"
-                  label="End Date"
-                  outlined
-                ></v-text-field>
-              </td>
-            </tr>
-          </tbody>
-        </template>
-      </v-simple-table>
-    </div>
+    <v-dialog
+      v-model="registrations"
+      persistent
+      scrollable
+      content-class="slide-form-default"
+      transition="dialog-bottom-transition"
+    >
+      <v-card>
+        <v-toolbar dense dark fixed color="accent">
+          <v-toolbar-title class="body-1">New Registration</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-btn icon dark @click="registrations = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </v-toolbar>
+        <v-divider></v-divider>
+        <v-card-text>
+          <v-row>
+            <v-col cols="12" sm="6" md="6" class="mt-2">
+              <v-text-field
+                label="First Name*"
+                required
+                outlined
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="6" md="6" class="mt-2">
+              <v-text-field label="Last Name*" required outlined></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="6" md="6">
+              <v-text-field label="Phone*" required outlined></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="6" md="6">
+              <v-text-field label="Email*" required outlined></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="6" md="6">
+              <v-text-field label="Organization" outlined></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="6" md="6">
+              <v-select
+                :items="['Success', 'Pending', 'Failed', 'Cancelled']"
+                label="Status*"
+                required
+                outlined
+              ></v-select>
+            </v-col>
+            <v-col cols="12" sm="12" md="12">
+              <p class="body-1">
+                Physical Address
+              </p>
+            </v-col>
+            <v-col cols="12" sm="6" md="6">
+              <v-text-field label="Address" outlined></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="6" md="6">
+              <v-text-field label="City" outlined></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="6" md="6">
+              <v-text-field label="State" outlined></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="6" md="6">
+              <v-text-field label="Zip" outlined></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="6" md="6">
+              <v-autocomplete
+                ref="country"
+                v-model="country"
+                :rules="[() => !!country || 'This field is required']"
+                :items="countries"
+                label="Country"
+                placeholder="Select..."
+                outlined
+                required
+              ></v-autocomplete>
+            </v-col>
+            <v-col cols="12" sm="6" md="6">
+              <v-select
+                :items="[
+                  'Event Name 1',
+                  'Event Name 2',
+                  'Event Name 3',
+                  'Event Name 4',
+                ]"
+                label="Event*"
+                required
+                outlined
+              ></v-select>
+            </v-col>
+            <v-col cols="12" sm="6" md="6">
+              <v-select
+                :items="['General Tickets', 'Gold Tickets', 'Silver Tickets']"
+                label="Tickets*"
+                required
+                outlined
+              ></v-select>
+            </v-col>
+            <v-col cols="12" sm="6" md="6">
+              <v-text-field
+                v-model="number"
+                type="number"
+                label="Ticket Quantity*"
+                required
+                outlined
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="6" md="6">
+              <v-select
+                :items="['Session1', 'Session2', 'Session3', 'Session4']"
+                label="Session*"
+                required
+                outlined
+              ></v-select>
+            </v-col>
+            <v-col cols="12" sm="6" md="6">
+              <v-select
+                :items="['Group', 'Free', 'paid']"
+                label="Registration Type*"
+                required
+                outlined
+              ></v-select>
+            </v-col>
+          </v-row>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions class="pl-2">
+          <v-btn color="primary" depressed @click="registrations = false"
+            >Save</v-btn
+          >
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-flex>
 </template>
 
@@ -689,6 +762,214 @@ export default {
   },
   data: () => ({
     date: new Date().toISOString().substr(0, 10),
+    countries: [
+      'Afghanistan',
+      'Albania',
+      'Algeria',
+      'Andorra',
+      'Angola',
+      'Anguilla',
+      'Antigua &amp; Barbuda',
+      'Argentina',
+      'Armenia',
+      'Aruba',
+      'Australia',
+      'Austria',
+      'Azerbaijan',
+      'Bahamas',
+      'Bahrain',
+      'Bangladesh',
+      'Barbados',
+      'Belarus',
+      'Belgium',
+      'Belize',
+      'Benin',
+      'Bermuda',
+      'Bhutan',
+      'Bolivia',
+      'Bosnia &amp; Herzegovina',
+      'Botswana',
+      'Brazil',
+      'British Virgin Islands',
+      'Brunei',
+      'Bulgaria',
+      'Burkina Faso',
+      'Burundi',
+      'Cambodia',
+      'Cameroon',
+      'Cape Verde',
+      'Cayman Islands',
+      'Chad',
+      'Chile',
+      'China',
+      'Colombia',
+      'Congo',
+      'Cook Islands',
+      'Costa Rica',
+      'Cote D Ivoire',
+      'Croatia',
+      'Cruise Ship',
+      'Cuba',
+      'Cyprus',
+      'Czech Republic',
+      'Denmark',
+      'Djibouti',
+      'Dominica',
+      'Dominican Republic',
+      'Ecuador',
+      'Egypt',
+      'El Salvador',
+      'Equatorial Guinea',
+      'Estonia',
+      'Ethiopia',
+      'Falkland Islands',
+      'Faroe Islands',
+      'Fiji',
+      'Finland',
+      'France',
+      'French Polynesia',
+      'French West Indies',
+      'Gabon',
+      'Gambia',
+      'Georgia',
+      'Germany',
+      'Ghana',
+      'Gibraltar',
+      'Greece',
+      'Greenland',
+      'Grenada',
+      'Guam',
+      'Guatemala',
+      'Guernsey',
+      'Guinea',
+      'Guinea Bissau',
+      'Guyana',
+      'Haiti',
+      'Honduras',
+      'Hong Kong',
+      'Hungary',
+      'Iceland',
+      'India',
+      'Indonesia',
+      'Iran',
+      'Iraq',
+      'Ireland',
+      'Isle of Man',
+      'Israel',
+      'Italy',
+      'Jamaica',
+      'Japan',
+      'Jersey',
+      'Jordan',
+      'Kazakhstan',
+      'Kenya',
+      'Kuwait',
+      'Kyrgyz Republic',
+      'Laos',
+      'Latvia',
+      'Lebanon',
+      'Lesotho',
+      'Liberia',
+      'Libya',
+      'Liechtenstein',
+      'Lithuania',
+      'Luxembourg',
+      'Macau',
+      'Macedonia',
+      'Madagascar',
+      'Malawi',
+      'Malaysia',
+      'Maldives',
+      'Mali',
+      'Malta',
+      'Mauritania',
+      'Mauritius',
+      'Mexico',
+      'Moldova',
+      'Monaco',
+      'Mongolia',
+      'Montenegro',
+      'Montserrat',
+      'Morocco',
+      'Mozambique',
+      'Namibia',
+      'Nepal',
+      'Netherlands',
+      'Netherlands Antilles',
+      'New Caledonia',
+      'New Zealand',
+      'Nicaragua',
+      'Niger',
+      'Nigeria',
+      'Norway',
+      'Oman',
+      'Pakistan',
+      'Palestine',
+      'Panama',
+      'Papua New Guinea',
+      'Paraguay',
+      'Peru',
+      'Philippines',
+      'Poland',
+      'Portugal',
+      'Puerto Rico',
+      'Qatar',
+      'Reunion',
+      'Romania',
+      'Russia',
+      'Rwanda',
+      'Saint Pierre &amp; Miquelon',
+      'Samoa',
+      'San Marino',
+      'Satellite',
+      'Saudi Arabia',
+      'Senegal',
+      'Serbia',
+      'Seychelles',
+      'Sierra Leone',
+      'Singapore',
+      'Slovakia',
+      'Slovenia',
+      'South Africa',
+      'South Korea',
+      'Spain',
+      'Sri Lanka',
+      'St Kitts &amp; Nevis',
+      'St Lucia',
+      'St Vincent',
+      'St. Lucia',
+      'Sudan',
+      'Suriname',
+      'Swaziland',
+      'Sweden',
+      'Switzerland',
+      'Syria',
+      'Taiwan',
+      'Tajikistan',
+      'Tanzania',
+      'Thailand',
+      "Timor L'Este",
+      'Togo',
+      'Tonga',
+      'Trinidad &amp; Tobago',
+      'Tunisia',
+      'Turkey',
+      'Turkmenistan',
+      'Turks &amp; Caicos',
+      'Uganda',
+      'Ukraine',
+      'United Arab Emirates',
+      'United Kingdom',
+      'United States',
+      'Uruguay',
+      'Uzbekistan',
+      'Venezuela',
+      'Vietnam',
+      'Virgin Islands (US)',
+      'Yemen',
+      'Zambia',
+      'Zimbabwe',
+    ],
     menu: false,
     e13: 2,
     e1: 1,
@@ -698,6 +979,7 @@ export default {
     drawer: true,
     dialog1: false,
     stepform: false,
+    registrations: false,
     dialog: false,
     notifications: false,
     sound: true,
@@ -743,8 +1025,15 @@ export default {
 .stepper-box {
   min-height: 650px;
 }
+.slide-form-default {
+  position: fixed !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 50% !important;
+}
 @media (max-width: 600px) {
-  .slide-form {
+  .slide-form,
+  .slide-form-default {
     width: 100% !important;
     position: unset !important;
   }
