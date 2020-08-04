@@ -120,6 +120,7 @@ import endOfDay from 'date-fns/endOfDay'
 // import { axiosWrapper } from '../api/axios.js'
 import FieldsFilter from './FieldsFilter.vue'
 import GridAction from '~/config/common/templates/grid/actions/grid.vue'
+import contentFactory from '~/config/apps/event/content'
 
 const DEFAULT_GRID_PROPS = {
   hideDefaultHeader: false,
@@ -199,6 +200,11 @@ function formatResult(content, viewName, data, modelName) {
 function formatCountData(data, modelName) {
   const count = data[modelName][`${modelName}Count`]
   return count
+}
+
+function getContentByName(ctx, contentName) {
+  const contents = contentFactory(ctx)
+  return contents[contentName]
 }
 
 function getOrderQuery(content, viewName, sortBy, sortDesc) {
@@ -334,13 +340,15 @@ function getOperatorQuery(field, operator, value) {
 }
 
 function buildQueryVariables({
-  content,
   viewName,
   search,
   filterRules,
   filter,
+  contentName,
+  ctx,
 }) {
   // const filterColumns = filterRules
+  const content = getContentByName(ctx, contentName)
   const and = []
   // const fields = getGridFields(content, viewName)
   const or = []
@@ -375,27 +383,29 @@ export default {
     GridAction,
   },
   props: {
-    content: {
-      type: Object,
-      required: true,
-    },
     viewName: {
       type: String,
       required: true,
     },
     search: {
       type: String,
-      required: true,
+      default: '',
     },
     filter: {
       type: Object,
       default: () => null,
     },
+    contentName: {
+      type: String,
+      required: true,
+    },
   },
   data() {
-    const headers = getTableHeader(this.content, this.viewName)
-    const gridProps = getGridsProps(this.content, this.viewName)
+    const content = getContentByName(this, this.contentName)
+    const headers = getTableHeader(content, this.viewName)
+    const gridProps = getGridsProps(content, this.viewName)
     return {
+      content,
       singleSelect: false,
       selected: [],
       headers,
@@ -503,16 +513,17 @@ export default {
       variables() {
         // Use vue reactive properties here
 
-        const { content, viewName, search, filterRules } = this
+        const { content, viewName, search, filterRules, contentName } = this
         const sortBy = this.options.sortBy
         const sortDesc = this.options.sortDesc
         const order = getOrderQuery(content, viewName, sortBy, sortDesc)
         const where = buildQueryVariables({
-          content,
           viewName,
           search,
           filterRules,
           filter: this.filter,
+          contentName,
+          ctx: this,
         })
         const skip = (this.options.page - 1) * this.options.itemsPerPage
         const limit = this.options.itemsPerPage

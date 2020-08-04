@@ -21,14 +21,29 @@
 //     )
 //   }
 // }
-const importTemplate = (filePath) => import(filePath)
+import { templateLoaderMixin } from '~/utility'
+// const importTemplate = (filePath) => import(filePath)
+
+// function loadTemplate(templatePath) {
+//   return () => import(`~/config/templates/grids/${templatePath}`)
+// }
 
 function getGridTemplateInfo(content, viewName) {
   const view = content.views[viewName]
   return view.template || {}
 }
 
+// const templateLoaderMixin = {
+//   computed: {
+//     templateLoader() {
+//       return (templateFolderName) =>
+//         loadTemplate(`${templateFolderName}/actions/grid/new-item.vue`)
+//     },
+//   },
+// }
+
 export default {
+  mixins: [templateLoaderMixin],
   props: ['content', 'viewName'],
   data() {
     return {
@@ -36,18 +51,16 @@ export default {
     }
   },
   computed: {
-    slotTemplateLoader() {
-      return (templateFolderName) => () =>
-        import(
-          `~/config/templates/grids/${templateFolderName}/actions/grid/new-item.vue`
-        )
-    },
+    // templateLoader() {
+    //   return (templateFolderName) =>
+    //     loadTemplate(`${templateFolderName}/actions/grid/new-item.vue`)
+    // },
   },
-  mounted() {
+  async mounted() {
     debugger
     const templateInfo = getGridTemplateInfo(this.content, this.viewName)
     const templateFolderName = templateInfo.name
-    this.loadNamedSlotTemplate(templateFolderName)
+    this.newItemTemplate = await this.loadTemplate(templateFolderName)
     // try {
     //   this.newItemTemplate = await importTemplate(
     //     `~/config/templates/grids/${templateFolderName}/new-item.vue`
@@ -59,17 +72,16 @@ export default {
     // }
   },
   methods: {
-    async loadNamedSlotTemplate(templateFolderName) {
-      try {
-        await this.slotTemplateLoader(templateFolderName)()
-        this.newItemTemplate = () =>
-          this.slotTemplateLoader(templateFolderName)()
-      } catch (e) {
-        this.newItemTemplate = importTemplate(
-          `~/config/common/templates/grid/column.vue`
-        )
-      }
-    },
+    // async loadNamedSlotTemplate(templateFolderName) {
+    //   try {
+    //     await this.templateLoader(templateFolderName)()
+    //     this.newItemTemplate = () => this.templateLoader(templateFolderName)()
+    //   } catch (e) {
+    //     this.newItemTemplate = importTemplate(
+    //       `~/config/common/templates/grid/column.vue`
+    //     )
+    //   }
+    // },
   },
 }
 </script>

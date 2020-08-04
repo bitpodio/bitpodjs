@@ -4,11 +4,7 @@
       <div>
         <ViewDropdown :content="content['Registrations']" />
       </div>
-      <Grid
-        view-name="Registrations"
-        :content="content['Registrations']"
-        search=""
-      />
+      <Grid view-name="Registrations" search="" content-name="Registrations" />
     </v-flex>
   </v-layout>
 </template>
@@ -27,7 +23,7 @@ export default {
   },
   data() {
     return {
-      content: content(),
+      content: content(this),
     }
   },
   async created() {

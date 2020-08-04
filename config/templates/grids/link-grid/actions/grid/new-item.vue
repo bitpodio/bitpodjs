@@ -19,18 +19,13 @@
                 cols="12"
                 sm="6"
               >
-                <!-- <TextField /> -->
                 <component
-                  :is="formControl || null"
+                  :is="formControl(field) || null"
+                  v-model="formData[field.fieldName]"
                   :field="field"
+                  :field-name="field.fieldName"
                   :content="content"
                 />
-                <!-- <v-text-field
-                  v-model="formData[field.fieldName]"
-                  :label="field.caption"
-                  required
-                  dense
-                ></v-text-field> -->
               </v-col>
             </v-row>
           </v-container>
@@ -53,13 +48,13 @@ import gql from 'graphql-tag'
 // import TextField from '../../../../../../components/form/text-field.vue'
 // import TextField from '~/components/form/text-field.vue'
 import TextField from '~/components/common/form/text-field.vue'
-import Lookup from '~/components/common/form/text-field.vue'
-import Checkbox from '~/components/common/form/text-field.vue'
+import Lookup from '~/components/common/form/lookup.vue'
+import Checkbox from '~/components/common/form/checkbox.vue'
+
 function getGridFields(content, viewName) {
   const view = content.views[viewName]
   const fields = view.fields
   const editableFields = []
-  debugger
   for (const fieldName in fields) {
     const field = fields[fieldName]
     const newFormField = field.newForm === undefined ? true : field.newForm
@@ -77,7 +72,7 @@ function getGridFields(content, viewName) {
 }
 
 function buildMutationCreateQuery(modelName) {
-  return `mutation($Inputs : ${modelName} CreateInput!){ ${modelName} { ${modelName} Create(input:$Inputs){ clientMutationId obj{ id } } } }`
+  return `mutation($Inputs : ${modelName}CreateInput!){ ${modelName} { ${modelName}Create(input:$Inputs){ clientMutationId obj{ id } } } }`
 }
 
 export default {
@@ -93,12 +88,10 @@ export default {
       fields,
       formData: {},
       dialog: false,
-      formControl: 'TextField',
     }
   },
   methods: {
     async onSave() {
-      debugger
       this.dialog = false
       const modelName = 'Registration'
       const newItemMutation = buildMutationCreateQuery(modelName)
@@ -113,6 +106,17 @@ export default {
         },
       })
       console.log(userCreated)
+    },
+    formControl(field) {
+      switch (field.type) {
+        case 'string':
+        case 'number':
+          return 'TextField'
+        case 'lookup':
+          return 'Lookup'
+        case 'checkbox':
+          return 'Checkbox'
+      }
     },
   },
 }
