@@ -11,26 +11,26 @@
 //     )
 //   }
 // }
-
+import MissingComponent from './missing-component.vue'
 function importTemplate(templatePath) {
-  return () => import(`~/config/templates/grids/${templatePath}`)
+  return () => import(`~/config/${templatePath}`)
 }
 
 export const templateLoaderMixin = {
   computed: {
     templateLoader() {
-      return (templateFolderName) =>
-        importTemplate(`${templateFolderName}/actions/grid/new-item.vue`)
+      return (gridTemplatePath) => importTemplate(`${gridTemplatePath}`)
     },
   },
   methods: {
-    async loadTemplate(templateFolderName) {
-      try {
-        await this.templateLoader(templateFolderName)()
-        return () => this.templateLoader(templateFolderName)()
-      } catch (e) {
-        return importTemplate(`column.vue`)
+    async loadTemplate(templatePaths, returnErrorIfNotFound = true) {
+      for (const templatePath of templatePaths) {
+        try {
+          await this.templateLoader(templatePath)()
+          return () => this.templateLoader(templatePath)()
+        } catch {}
       }
+      return returnErrorIfNotFound && MissingComponent
     },
   },
 }

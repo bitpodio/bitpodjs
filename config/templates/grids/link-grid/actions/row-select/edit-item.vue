@@ -3,19 +3,19 @@
     <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{ on, attrs }">
         <v-btn color="primary" dark v-bind="attrs" v-on="on">
-          New Item
+          Edit Item
         </v-btn>
       </template>
       <v-card>
         <v-card-title>
-          <span class="headline">New Item</span>
+          <span class="headline">Edit Item</span>
         </v-card-title>
         <v-card-text>
           <v-container>
             <v-row>
               <v-col
                 v-for="field in fields"
-                :key="field.fieldName"
+                :key="`${field.fieldName}${updateCount}`"
                 cols="12"
                 sm="6"
               >
@@ -71,8 +71,8 @@ function getGridFields(content, viewName) {
   return editableFields
 }
 
-function buildMutationCreateQuery(modelName) {
-  return `mutation($Inputs : ${modelName}CreateInput!){ ${modelName} { ${modelName}Create(input:$Inputs){ clientMutationId obj{ id } } } }`
+function buildMutationUpsertQuery(modelName) {
+  return `mutation($Inputs : ${modelName}UpsertWithWhereInput!){ ${modelName}{ ${modelName}UpsertWithWhere(input:$Inputs){ clientMutationId obj{ id } } } }`
 }
 
 export default {
@@ -82,25 +82,43 @@ export default {
     Checkbox,
   },
   //   mixins: [myMixin],
-  props: ['content', 'viewName'],
+  props: ['content', 'viewName', 'item'],
   data() {
     const fields = getGridFields(this.content, this.viewName)
     return {
       fields,
-      formData: {},
+      formData: this.item,
       dialog: false,
+      updateCount: 0,
     }
+  },
+  computed: {
+    editData() {
+      return this.item
+    },
+  },
+  watch: {
+    item(newValue, oldValue) {
+      this.updateCount = this.updateCount + 1
+      this.formData = newValue
+    },
+  },
+  beforeUpdate() {
+    console.log('update called')
   },
   methods: {
     async onSave() {
       this.dialog = false
       const modelName = 'Registration'
-      const newItemMutation = buildMutationCreateQuery(modelName)
-      this.formData.TotalAmount = parseInt(this.formData.TotalAmount)
+      const where = {
+        id: this.formData.id,
+      }
+      const editItemMutation = buildMutationUpsertQuery(modelName)
       const userCreated = await this.$apollo.mutate({
-        mutation: gql(newItemMutation),
+        mutation: gql(editItemMutation),
         variables: {
           Inputs: {
+            where,
             data: this.formData,
             clientMutationId: `${modelName} list item updated successfully.`,
           },

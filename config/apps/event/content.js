@@ -1,6 +1,7 @@
 import registrationStatusOptions from './gql/registrationStatusOptions.gql'
 import registrationList from './gql/registrationList.gql'
 import eventList from './gql/eventlist.gql'
+// import { getItems } from './rest'
 
 export default (ctx) => ({
   EventsManagement: {
@@ -1546,11 +1547,13 @@ export default (ctx) => ({
           },
         },
         dataSource: {
-          query: registrationList,
+          query: registrationList, // getItems('users'),
           filter: {
             where: { Status: 'Pending' },
           },
           defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          // newItem: ,
         },
         title: 'Registrations',
         defaultSort: 'createdDate DESC',
