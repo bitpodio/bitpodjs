@@ -1,6 +1,8 @@
 import registrationStatusOptions from './gql/registrationStatusOptions.gql'
 import registrationList from './gql/registrationList.gql'
 import eventList from './gql/eventlist.gql'
+import memberList from './gql/memberlist.gql'
+import contactList from './gql/contactlist.gql'
 
 export default (ctx) => ({
   EventsManagement: {
@@ -1744,6 +1746,278 @@ export default (ctx) => ({
         visible: false,
         type: 'Form',
         title: 'Registration',
+      },
+    },
+  },
+  EventCustomers: {
+    action: {
+      'Embeded Actions': '',
+      'General Actions': ['Add EventCustomer'],
+      'Selected Item Action': ['Edit EventCustomer', 'Delete EventCustomer'],
+    },
+    child: {},
+    dataSource: {
+      Aggregation: '',
+      'Default view': '',
+      'Key Field': '',
+      'Parent key field': '',
+      Type: 'List',
+      URL: 'Customer',
+    },
+    general: {
+      caption: 'Members',
+      name: 'Customer',
+    },
+    permissions: {
+      Groups: [],
+      Type: '',
+    },
+    ui: {
+      'Card View Template': 'VisitingCard0',
+      Width: '50 %',
+      Height: '',
+      TemplateHelpers: {},
+      'Display Order': '',
+      'Map View Template': '',
+      'List View Template': '',
+      'Detail View': '',
+      Column: '',
+      'Tile View': '',
+      'App Type': 'View',
+      Templates: {
+        VisitingCard0: 'CommerceCustomers_Card_View',
+      },
+      decorator: {
+        'Field icon': {
+          CallPreference: 'fa fa-check|fa fa-times',
+          EmailSubscription: 'fa fa-check|fa fa-times',
+        },
+      },
+    },
+    views: {
+      Members: {
+        ui: {
+          hideDefaultHeader: false,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: false,
+          hideFilter: false,
+          hideSearch: true,
+        },
+        fields: {
+          FirstName: {
+            displayOrder: 2,
+            caption: 'FirstName',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          LastName: {
+            displayOrder: 3,
+            caption: 'LastName',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          Email: {
+            displayOrder: 4,
+            caption: 'Email',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '130px',
+            type: 'string',
+          },
+          BusinessNumber: {
+            displayOrder: 5,
+            caption: 'BusinessNumber',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '130px',
+            type: 'string',
+          },
+          createdDate: {
+            displayOrder: 6,
+            caption: 'createdDate',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '130px',
+            type: 'date',
+          },
+          createdBy: {
+            displayOrder: 6,
+            caption: 'createdBy',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '130px',
+            type: 'string',
+          },
+        },
+        template: {
+          name: 'link-grid',
+          context: {
+            basePath: '/event',
+          },
+        },
+        dataSource: {
+          query: memberList,
+          filter: {
+            limit: '10',
+            order: 'createdDate DESC',
+            skip: '0',
+            where: {},
+          },
+          defaultSort: 'createdDate DESC',
+          default: true,
+        },
+        title: 'Members',
+        defaultSort: 'createdDate DESC',
+        default: true,
+      },
+    },
+  },
+  Contacts: {
+    action: {
+      'Embeded Actions': '',
+      'General Actions': [
+        'Add Contacts',
+        'Import Contact',
+        'ContactInvitationHistory',
+        'ContactInvitationHistory',
+      ],
+      'Selected Item Action': [
+        'Edit Contacts',
+        'delete Contact',
+        'ContactProfilePic',
+      ],
+    },
+    child: {},
+    dataSouce: {
+      Aggregation: '',
+      'Default view': '',
+      'Key Field': '',
+      'Parent key field': '',
+      Type: 'List',
+      URL: 'Contact',
+    },
+    general: {
+      caption: 'Contacts',
+      name: 'Contact',
+    },
+    permissions: {
+      groups: '',
+    },
+    ui: {
+      checkbox: true,
+      'Card View Template': '',
+      width: '',
+      height: '',
+      TemplateHelpers: {},
+      'Display Order': '',
+      'Map View Template': '',
+      'List View Template': '',
+      Column: '',
+      'Tile View': 'now',
+      'App Type': 'View',
+      Templates: {
+        FullName:
+          '<div onclick="invokeAction(\'goToDetails\', this)" data-action="edit" data-bind="ID={{id}}" style="cursor: pointer;color: blue;"> {{FullName}} </div>',
+      },
+      decorator: {
+        Attachment: '',
+        'Field icon': {
+          isActive: 'fa fa-check|fa fa-times',
+          isEarning: 'fa fa-check|fa fa-times',
+        },
+        LinkedinURL: '',
+      },
+    },
+    views: {
+      Contacts: {
+        title: 'Contacts',
+        default: true,
+        defaultSort: 'createdDate DESC',
+        ui: {
+          'List Details View Template': 'Salescontact_Details_View_Template',
+          pagination: 'pageWithNumber',
+        },
+        fields: {
+          Organization: {
+            displayOrder: 4,
+            caption: 'Organization',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+          },
+          createdDate: {
+            displayOrder: 7,
+            caption: 'createdDate',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+          },
+          Country: {
+            displayOrder: 5,
+            caption: 'Country',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+          },
+          CellPhone: {
+            displayOrder: 5,
+            caption: 'Phone',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+          },
+          FullName: {
+            displayOrder: 1,
+            caption: 'FullName',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+          },
+          Type: {
+            displayOrder: 6,
+            caption: 'Type',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+          },
+          Email: {
+            displayOrder: 2,
+            caption: 'Email',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+          },
+          Job: {
+            displayOrder: 3,
+            caption: 'Job',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+          },
+        },
+        template: {
+          name: 'link-grid',
+          context: {
+            basePath: '/event',
+          },
+        },
+        dataSource: {
+          query: contactList,
+          filter: {
+            limit: '10',
+            order: 'createdDate DESC',
+            skip: '0',
+            where: {},
+          },
+          defaultSort: 'createdDate DESC',
+          default: true,
+        },
       },
     },
   },
