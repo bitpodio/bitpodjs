@@ -50,38 +50,15 @@ export default {
       newItemTemplate: null,
     }
   },
-  computed: {
-    // templateLoader() {
-    //   return (templateFolderName) =>
-    //     loadTemplate(`${templateFolderName}/actions/grid/new-item.vue`)
-    // },
-  },
+  computed: {},
   async mounted() {
-    debugger
     const templateInfo = getGridTemplateInfo(this.content, this.viewName)
     const templateFolderName = templateInfo.name
-    this.newItemTemplate = await this.loadTemplate(templateFolderName)
-    // try {
-    //   this.newItemTemplate = await importTemplate(
-    //     `~/config/templates/grids/${templateFolderName}/new-item.vue`
-    //   )
-    // } catch (e) {
-    //   this.newItemTemplate = importTemplate(
-    //     `~/config/common/templates/grid/column.vue`
-    //   )
-    // }
+    this.newItemTemplate = await this.loadTemplate([
+      `templates/grids/${templateFolderName}/actions/grid/new-item.vue`,
+      `common/templates/grid/actions/grid/new-item.vue`,
+    ])
   },
-  methods: {
-    // async loadNamedSlotTemplate(templateFolderName) {
-    //   try {
-    //     await this.templateLoader(templateFolderName)()
-    //     this.newItemTemplate = () => this.templateLoader(templateFolderName)()
-    //   } catch (e) {
-    //     this.newItemTemplate = importTemplate(
-    //       `~/config/common/templates/grid/column.vue`
-    //     )
-    //   }
-    // },
-  },
+  methods: {},
 }
 </script>
