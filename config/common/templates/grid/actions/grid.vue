@@ -21,55 +21,44 @@
 //     )
 //   }
 // }
-const importTemplate = (filePath) => import(filePath)
+import { templateLoaderMixin } from '~/utility'
+// const importTemplate = (filePath) => import(filePath)
+
+// function loadTemplate(templatePath) {
+//   return () => import(`~/config/templates/grids/${templatePath}`)
+// }
 
 function getGridTemplateInfo(content, viewName) {
   const view = content.views[viewName]
   return view.template || {}
 }
 
+// const templateLoaderMixin = {
+//   computed: {
+//     templateLoader() {
+//       return (templateFolderName) =>
+//         loadTemplate(`${templateFolderName}/actions/grid/new-item.vue`)
+//     },
+//   },
+// }
+
 export default {
+  mixins: [templateLoaderMixin],
   props: ['content', 'viewName'],
   data() {
     return {
       newItemTemplate: null,
     }
   },
-  computed: {
-    slotTemplateLoader() {
-      return (templateFolderName) => () =>
-        import(
-          `~/config/templates/grids/${templateFolderName}/actions/grid/new-item.vue`
-        )
-    },
-  },
-  mounted() {
-    debugger
+  computed: {},
+  async mounted() {
     const templateInfo = getGridTemplateInfo(this.content, this.viewName)
     const templateFolderName = templateInfo.name
-    this.loadNamedSlotTemplate(templateFolderName)
-    // try {
-    //   this.newItemTemplate = await importTemplate(
-    //     `~/config/templates/grids/${templateFolderName}/new-item.vue`
-    //   )
-    // } catch (e) {
-    //   this.newItemTemplate = importTemplate(
-    //     `~/config/common/templates/grid/column.vue`
-    //   )
-    // }
+    this.newItemTemplate = await this.loadTemplate([
+      `templates/grids/${templateFolderName}/actions/grid/new-item.vue`,
+      `common/templates/grid/actions/grid/new-item.vue`,
+    ])
   },
-  methods: {
-    async loadNamedSlotTemplate(templateFolderName) {
-      try {
-        await this.slotTemplateLoader(templateFolderName)()
-        this.newItemTemplate = () =>
-          this.slotTemplateLoader(templateFolderName)()
-      } catch (e) {
-        this.newItemTemplate = importTemplate(
-          `~/config/common/templates/grid/column.vue`
-        )
-      }
-    },
-  },
+  methods: {},
 }
 </script>

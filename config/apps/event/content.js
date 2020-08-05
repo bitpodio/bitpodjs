@@ -1,6 +1,7 @@
 import registrationStatusOptions from './gql/registrationStatusOptions.gql'
 import registrationList from './gql/registrationList.gql'
 import eventList from './gql/eventlist.gql'
+// import { getItems } from './rest'
 
 export default (ctx) => ({
   EventsManagement: {
@@ -1154,6 +1155,133 @@ export default (ctx) => ({
         type: 'Form',
         DefaultSort: 'createdDate DESC',
       },
+      'my-events': {
+        fields: {
+          '_VenueAddress.PostalCode': {
+            displayOrder: 10,
+            caption: 'Postal Code',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '160px',
+            filterEnable: true,
+            hidden: false,
+            editable: true,
+            type: 'number',
+          },
+          '_VenueAddress.State': {
+            displayOrder: 9,
+            caption: 'State',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '140px',
+            type: 'string',
+          },
+          Privacy: {
+            displayOrder: 4,
+            caption: 'Privacy',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '130px',
+            type: 'string',
+          },
+          EndDate: {
+            displayOrder: 3,
+            caption: 'EndDate',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '130px',
+            type: 'date',
+          },
+          '_VenueAddress.Country': {
+            displayOrder: 11,
+            caption: 'Country',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '130px',
+            type: 'string',
+          },
+          StartDate: {
+            displayOrder: 2,
+            caption: 'Start Date',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '130px',
+            type: 'date',
+          },
+          Currency: {
+            displayOrder: 12,
+            caption: 'Currency',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '130px',
+            type: 'string',
+          },
+          '_VenueAddress.City': {
+            displayOrder: 8,
+            caption: 'City',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '130px',
+            type: 'string',
+          },
+          createdDate: {
+            displayOrder: 13,
+            caption: 'createdDate',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '160px',
+            type: 'date',
+          },
+          Title: {
+            displayOrder: 1,
+            caption: 'Title',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          Tags: {
+            displayOrder: 5,
+            caption: 'Tags',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'array',
+          },
+          VenueName: {
+            displayOrder: 6,
+            caption: 'Venue',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'string',
+          },
+          '_VenueAddress.AddressLine': {
+            displayOrder: 7,
+            caption: 'Address',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'string',
+          },
+        },
+        inlineEditing: true,
+        DdialogEditing: true,
+        Title: 'My Events',
+        dataSource: {
+          query: eventList,
+          filter: {
+            where: {
+              or: [
+                {
+                  createdBy: ctx.$auth.$state.user.data.email,
+                },
+              ],
+            },
+          },
+          defaultSort: 'createdDate DESC',
+        },
+      },
     },
   },
   Registrations: {
@@ -1287,8 +1415,7 @@ export default (ctx) => ({
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
-            type: 'dropdown',
-            options: ['Success', 'Pending'],
+            type: 'string',
           },
           Phone: {
             displayOrder: 5,
@@ -1384,7 +1511,7 @@ export default (ctx) => ({
             searchEnable: true,
             sortEnable: true,
             columnWidth: '130px',
-            type: 'checkbox',
+            type: 'string',
           },
           action: {
             displayOrder: 11,
@@ -1420,11 +1547,13 @@ export default (ctx) => ({
           },
         },
         dataSource: {
-          query: registrationList,
+          query: registrationList, // getItems('users'),
           filter: {
             where: { Status: 'Pending' },
           },
           defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          // newItem: ,
         },
         title: 'Registrations',
         defaultSort: 'createdDate DESC',

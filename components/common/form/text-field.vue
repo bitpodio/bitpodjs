@@ -1,8 +1,8 @@
 <template>
   <v-text-field
-    v-model="value"
-    label="Enter a value"
-    type="text"
+    v-model="textInput"
+    :label="field.caption"
+    :type="fieldControlType"
     @keyup="onKeyup"
   ></v-text-field>
 </template>
@@ -10,14 +10,29 @@
 <script>
 // import {  } from "module";
 export default {
-  props: ['value'],
+  props: ['value', 'field'],
   data() {
     return {
-      value1: '',
+      textInput: this.value,
     }
   },
+  computed: {
+    fieldControlType() {
+      switch (this.field.type) {
+        case 'string':
+          return 'text'
+      }
+      return this.field.type
+    },
+  },
   methods: {
-    onKeyup() {},
+    onKeyup() {
+      const value =
+        this.field.type === 'number'
+          ? parseFloat(this.textInput)
+          : this.textInput
+      this.$emit('input', value)
+    },
   },
 }
 </script>

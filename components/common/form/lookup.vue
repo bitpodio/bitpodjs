@@ -6,7 +6,7 @@
       :item-text="itemText"
       :item-value="itemValue"
       :loading="isLoading"
-      single-line
+      :label="field.caption"
       @change="onChange"
     ></v-autocomplete>
   </div>

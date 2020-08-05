@@ -4,11 +4,7 @@
       <div>
         <ViewDropdown :content="content['Registrations']" />
       </div>
-      <Grid
-        view-name="Registrations"
-        :content="content['Registrations']"
-        search=""
-      />
+      <Grid view-name="Registrations" search="" content-name="Registrations" />
     </v-flex>
   </v-layout>
 </template>
@@ -27,11 +23,10 @@ export default {
   },
   data() {
     return {
-      content: content(),
+      content: content(this),
     }
   },
   async created() {
-    debugger
     if (!this.$apolloHelpers.getToken()) {
       let token = this.$auth.strategy.token.get()
       token = token.split(' ')[1]

@@ -1,6 +1,20 @@
 <template>
   <div>
-    <div><GridAction :content="content" :view-name="viewName" /></div>
+    <div>
+      <component
+        :is="actionTemplates['grid'] || null"
+        :content="content"
+        :view-name="viewName"
+      />
+      <template v-if="!!selectedItem">
+        <component
+          :is="actionTemplates['row-select'] || null"
+          :content="content"
+          :view-name="viewName"
+          :item="selectedItem"
+        />
+      </template>
+    </div>
     <div class="grid-actions-container">
       <div>
         <slot name="filter">
@@ -40,6 +54,7 @@
       class="elevation-0"
       :show-select="showSelect"
       @update:pagination="updatePagination"
+      @click:row="onRowClick"
     >
       <template v-if="!!slotTemplates.item" v-slot:item="props">
         <component
@@ -119,7 +134,8 @@ import startOfDay from 'date-fns/startOfDay'
 import endOfDay from 'date-fns/endOfDay'
 // import { axiosWrapper } from '../api/axios.js'
 import FieldsFilter from './FieldsFilter.vue'
-import GridAction from '~/config/common/templates/grid/actions/grid.vue'
+import contentFactory from '~/config/apps/event/content'
+import { templateLoaderMixin } from '~/utility'
 
 const DEFAULT_GRID_PROPS = {
   hideDefaultHeader: false,
@@ -128,6 +144,8 @@ const DEFAULT_GRID_PROPS = {
   singleExpand: false,
   showSelect: false,
 }
+const ACTION_TYPES = ['grid', 'row', 'row-select']
+const TEMPLATE_SLOTS = ['item', 'body', 'header', 'footer', 'expanded-item']
 
 function getTableHeader(content, viewName) {
   const fields = getGridFields(content, viewName)
@@ -191,6 +209,7 @@ function formatResult(content, viewName, data, modelName) {
           : ''
       else formattedRecord[field] = node[field]
     }
+    formattedRecord.id = getIdFromAtob(node.id)
     return formattedRecord
   })
   return edges
@@ -201,9 +220,13 @@ function formatCountData(data, modelName) {
   return count
 }
 
+function getContentByName(ctx, contentName) {
+  const contents = contentFactory(ctx)
+  return contents[contentName]
+}
+
 function getOrderQuery(content, viewName, sortBy, sortDesc) {
   // let {sortBy,sortDesc} = option;
-  debugger
   if (!(sortBy && sortBy.length)) {
     const view = content.views[viewName]
     const defaultSort = view.defaultSort
@@ -334,13 +357,15 @@ function getOperatorQuery(field, operator, value) {
 }
 
 function buildQueryVariables({
-  content,
   viewName,
   search,
   filterRules,
   filter,
+  contentName,
+  ctx,
 }) {
   // const filterColumns = filterRules
+  const content = getContentByName(ctx, contentName)
   const and = []
   // const fields = getGridFields(content, viewName)
   const or = []
@@ -369,33 +394,39 @@ function getGridsProps(content, viewName) {
   return { ...DEFAULT_GRID_PROPS, ...view.ui }
 }
 
+function getIdFromAtob(encodedId) {
+  return encodedId ? atob(encodedId).split(':')[1] : ''
+}
+
 export default {
   components: {
     FieldsFilter,
-    GridAction,
   },
+  mixins: [templateLoaderMixin], //, apolloMixin, axiosMixin],
   props: {
-    content: {
-      type: Object,
-      required: true,
-    },
     viewName: {
       type: String,
       required: true,
     },
     search: {
       type: String,
-      required: true,
+      default: '',
     },
     filter: {
       type: Object,
       default: () => null,
     },
+    contentName: {
+      type: String,
+      required: true,
+    },
   },
   data() {
-    const headers = getTableHeader(this.content, this.viewName)
-    const gridProps = getGridsProps(this.content, this.viewName)
+    const content = getContentByName(this, this.contentName)
+    const headers = getTableHeader(content, this.viewName)
+    const gridProps = getGridsProps(content, this.viewName)
     return {
+      content,
       singleSelect: false,
       selected: [],
       headers,
@@ -416,6 +447,8 @@ export default {
       showExpand: gridProps.showExpand,
       singleExpand: gridProps.singleExpand,
       showSelect: gridProps.showSelect,
+      selectedItem: '',
+      actionTemplates: [],
     }
   },
   computed: {
@@ -426,24 +459,14 @@ export default {
     context() {
       return getGridTemplateInfo(this.content, this.viewName).context || {}
     },
-    loader() {
-      return (templateFolderName, index) => () =>
-        import(
-          `~/config/templates/grids/${templateFolderName}/column-${index}.vue`
-        )
-    },
-    slotTemplateLoader() {
-      return (templateFolderName, fileName) => () =>
-        import(`~/config/templates/grids/${templateFolderName}/${fileName}.vue`)
-    },
   },
-  // created(){
-  //
-  //     axiosWrapper('/Events')
-  //     .then(({data})=>{
-  //         this.items = data;
-  //     })
-  // }
+  created() {
+    console.log('in created')
+    // axiosWrapper('/Events')
+    // .then(({data})=>{
+    //     this.items = data;
+    // })
+  },
   // async mounted() {
   //     let result = await this.$apollo.query({
   //         query: gql`${EventFind}`,
@@ -458,39 +481,33 @@ export default {
     const templateInfo = getGridTemplateInfo(this.content, this.viewName)
     const templateFolderName = templateInfo.name
     this.headers.forEach(async (column, index) => {
-      try {
-        try {
-          await this.loader(templateFolderName, column.value)()
-          this.component[index] = () =>
-            this.loader(templateFolderName, column.value)()
-        } catch (e) {
-          await this.loader(templateFolderName, index)()
-          this.component[index] = () => this.loader(templateFolderName, index)()
-        }
-      } catch (e) {
-        this.component[index] = () =>
-          import(`~/config/common/templates/grid/column.vue`)
-      }
+      this.component[index] = await this.loadTemplate([
+        `templates/grids/${templateFolderName}/column-${column.value}.vue`,
+        `templates/grids/${templateFolderName}/column-${index}.vue`,
+        `common/templates/grid/column.vue`,
+      ])
     })
-    this.loadNamedSlotTemplate(templateFolderName, 'item')
-    this.loadNamedSlotTemplate(templateFolderName, 'body')
-    this.loadNamedSlotTemplate(templateFolderName, 'header')
-    this.loadNamedSlotTemplate(templateFolderName, 'footer')
-    this.loadNamedSlotTemplate(templateFolderName, 'expanded-item')
+    TEMPLATE_SLOTS.forEach(async (slot) => {
+      this.slotTemplates[slot] = await this.loadTemplate(
+        [`templates/grids/${templateFolderName}/${slot}.vue`],
+        false
+      )
+    })
+    ACTION_TYPES.forEach(async (actionType) => {
+      this.actionTemplates[actionType] = await this.loadTemplate([
+        `templates/grids/${templateFolderName}/actions/${actionType}.vue`,
+        `common/templates/grid/actions/${actionType}.vue`,
+      ])
+    })
   },
   methods: {
     updatePagination(pagination) {},
     onFilterClick(e) {
       this.isFilterApplied = true
     },
-    async loadNamedSlotTemplate(templateFolderName, slotName) {
-      try {
-        await this.slotTemplateLoader(templateFolderName, slotName)()
-        this.slotTemplates[slotName] = () =>
-          this.slotTemplateLoader(templateFolderName, slotName)()
-      } catch (e) {
-        this.slotTemplates[slotName] = null
-      }
+    onRowClick(item, props) {
+      console.log(`props=${props} item=${item}  `)
+      this.selectedItem = item
     },
   },
   apollo: {
@@ -499,20 +516,22 @@ export default {
         return gql`
           ${getViewQuery(this.content, this.viewName)}
         `
+        // return null
       },
       variables() {
         // Use vue reactive properties here
 
-        const { content, viewName, search, filterRules } = this
+        const { content, viewName, search, filterRules, contentName } = this
         const sortBy = this.options.sortBy
         const sortDesc = this.options.sortDesc
         const order = getOrderQuery(content, viewName, sortBy, sortDesc)
         const where = buildQueryVariables({
-          content,
           viewName,
           search,
           filterRules,
           filter: this.filter,
+          contentName,
+          ctx: this,
         })
         const skip = (this.options.page - 1) * this.options.itemsPerPage
         const limit = this.options.itemsPerPage
@@ -542,9 +561,20 @@ export default {
       },
       prefetch: false,
       loadingKey: 'loading',
-      // pollInterval:0
+      skip: false,
+      pollInterval: 0,
     },
   },
+  // axios: {
+  //   tableData: {
+  //     query(){
+
+  //     },
+  //     update(){
+
+  //     }
+  //   }
+  // },
 }
 </script>
 

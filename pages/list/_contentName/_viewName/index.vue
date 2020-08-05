@@ -4,6 +4,7 @@
       <Grid
         :content="content[$route.params.contentName]"
         :view-name="$route.params.viewName"
+        :content-name="$route.params.contentName"
       />
     </v-flex>
   </v-layout>
@@ -13,14 +14,14 @@
 import Grid from '~/components/common/grid'
 import content from '~/config/apps/event/content'
 export default {
-  middleware: ['auth'],
+  // middleware: ['auth'],
   components: {
     Grid,
   },
   data() {
     // console.log(`content() = ${JSON.stringify(content())}`)
     return {
-      content: content(),
+      content: content(this),
     }
   },
   created() {},
