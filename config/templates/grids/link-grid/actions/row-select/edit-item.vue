@@ -75,6 +75,12 @@ function buildMutationUpsertQuery(modelName) {
   return `mutation($Inputs : ${modelName}UpsertWithWhereInput!){ ${modelName}{ ${modelName}UpsertWithWhere(input:$Inputs){ clientMutationId obj{ id } } } }`
 }
 
+function getModelName(content, viewName) {
+  const view = content.views[viewName]
+  const dataSource = view.dataSource
+  return dataSource.model
+}
+
 export default {
   components: {
     TextField,
@@ -109,7 +115,7 @@ export default {
   methods: {
     async onSave() {
       this.dialog = false
-      const modelName = 'Registration'
+      const modelName = getModelName(this.content, this.viewName)
       const where = {
         id: this.formData.id,
       }

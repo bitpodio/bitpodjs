@@ -1547,16 +1547,16 @@ export default (ctx) => ({
           },
         },
         dataSource: {
-          query: registrationList, // getItems('users'),
+          query: registrationList,
           filter: {
             where: { Status: 'Pending' },
           },
           defaultSort: 'createdDate DESC',
           type: 'graphql',
+          model: 'Registration',
           // newItem: ,
         },
         title: 'Registrations',
-        defaultSort: 'createdDate DESC',
       },
       'Abandoned Registrations': {
         UI: {
