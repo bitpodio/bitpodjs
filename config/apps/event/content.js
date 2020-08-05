@@ -3,7 +3,7 @@ import registrationList from './gql/registrationList.gql'
 import eventList from './gql/eventlist.gql'
 import memberList from './gql/memberlist.gql'
 import contactList from './gql/contactlist.gql'
-// import { getItems } from './rest'
+// import { getItems  } from './rest'
 
 export default (ctx) => ({
   EventsManagement: {
