@@ -629,7 +629,7 @@
       transition="dialog-bottom-transition"
     >
       <v-card>
-        <v-toolbar dense dark fixed color="accent">
+        <v-toolbar dense flat dark fixed color="accent">
           <v-toolbar-title class="body-1">New Registration</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-btn icon dark @click="registrations = false">
