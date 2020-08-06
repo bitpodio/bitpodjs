@@ -228,8 +228,7 @@ function getContentByName(ctx, contentName) {
 function getOrderQuery(content, viewName, sortBy, sortDesc) {
   // let {sortBy,sortDesc} = option;
   if (!(sortBy && sortBy.length)) {
-    const view = content.views[viewName]
-    const defaultSort = view.defaultSort
+    const defaultSort = getViewDataSource(content, viewName).defaultSort
     return defaultSort || ''
   }
   return `${sortBy && sortBy[0]} ${sortDesc && sortDesc[0] ? 'DESC' : 'ASC'}`

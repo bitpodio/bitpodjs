@@ -10,12 +10,12 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn color="primary" dark v-bind="attrs" v-on="on">
-          Default New Item
+          New Item
         </v-btn>
       </template>
       <v-card>
         <v-card-title>
-          <span class="headline">Default New Item</span>
+          <span class="headline">New Item</span>
         </v-card-title>
         <v-card-text>
           <v-container>
@@ -82,6 +82,12 @@ function buildMutationCreateQuery(modelName) {
   return `mutation($Inputs : ${modelName}CreateInput!){ ${modelName} { ${modelName}Create(input:$Inputs){ clientMutationId obj{ id } } } }`
 }
 
+function getModelName(content, viewName) {
+  const view = content.views[viewName]
+  const dataSource = view.dataSource
+  return dataSource.model
+}
+
 export default {
   components: {
     TextField,
@@ -100,7 +106,7 @@ export default {
   methods: {
     async onSave() {
       this.dialog = false
-      const modelName = 'Registration'
+      const modelName = getModelName(this.content, this.viewName)
       const newItemMutation = buildMutationCreateQuery(modelName)
       this.formData.TotalAmount = parseInt(this.formData.TotalAmount)
       const userCreated = await this.$apollo.mutate({
