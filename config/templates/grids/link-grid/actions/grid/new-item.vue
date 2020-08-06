@@ -45,7 +45,7 @@
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions class="pl-4">
-          <v-btn color="primary" depressed @click="onSave = false">Save</v-btn>
+          <v-btn color="primary" depressed @click="onSave">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
