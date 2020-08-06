@@ -99,6 +99,11 @@ export default {
           title: 'Event',
           to: '/event',
         },
+        {
+          icon: 'mdi-chart-bubble',
+          title: 'Discount Code',
+          to: '/list/DiscountCodes/Discount Codes',
+        },
       ],
       miniVariant: false,
       right: true,

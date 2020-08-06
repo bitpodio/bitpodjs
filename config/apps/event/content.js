@@ -1,5 +1,6 @@
 import registrationStatusOptions from './gql/registrationStatusOptions.gql'
 import registrationList from './gql/registrationList.gql'
+import discountCodes from './gql/discountCodes.gql'
 import eventList from './gql/eventlist.gql'
 // import { getItems } from './rest'
 
@@ -1747,6 +1748,197 @@ export default (ctx) => ({
         visible: false,
         type: 'Form',
         title: 'Registration',
+      },
+    },
+  },
+  DiscountCodes: {
+    actions: {
+      'Embeded Actions': '',
+      'General Actions': ['Create Registration'],
+      'Selected Item Action': [],
+    },
+    child: {},
+    dataSource: {
+      FormID: 'EventsAdvSearch',
+      'Key Field': '',
+      'Parent key field': '',
+      Type: 'List',
+      URL: 'Offercode',
+    },
+    general: {
+      caption: 'OfferCodes',
+      name: 'OfferCode',
+    },
+    permissions: {
+      Groups: '',
+    },
+    ui: {
+      MobileViewTemplate: {
+        isActive: true,
+        templateName: 'Event_Registation_Mobile',
+      },
+      TemplateActions: {},
+      Checkbox: 'True',
+      'Card View Template': 'VisitingCard0',
+      Width: '50%',
+      Height: '',
+      TemplateHelpers: {},
+      'Display Order': '',
+      'Map View Template': '',
+      'List View Template': '',
+      'Detail View': 'tab',
+      Column: '',
+      'Tile View': 'now',
+      'App Type': 'View',
+      Templates: {
+        VisitingCard0: 'Registrations_Card_View',
+        Status:
+          '<div title="{{Status}}"><style>.reg-status {\n                  font-size: 10px;\n                            display: inline-block;\n                            color: #fff;\n                            margin-right: 5px;\n                            margin-bottom: 0px;\n                            padding: 3px 10px !important;\n                            border-radius: 20px !important;\n                            text-transform: capitalize;\n                        }\n                      .reg-success {\n                                      background-color: #0cb14b;\n                    }\n                      .reg-fail {\n                                      background-color: #f25955;\n                    }\n                      .reg-refund {\n                                      background-color: #3fa5ff;\n                    }\n                    .reg-parefund {\n                                      background-color: #b9b9b9;\n                    }\n                      .reg-parrefund {\n                                      background-color: #f4b400;\n                    }</style><div class="reg-status {{getStatusColor Status}}"> {{getCapitalResult Status}} </div></div>',
+        SyncStatus:
+          '<div><i class="{{ShowSyncField SFRegistrationId}}" style="{{getColor SFRegistrationId}}" onclick="invokeAction(\'changeSyncStatus\',this)" node={{node.id}}> </i></div>',
+        CheckIn:
+          '<style>\n    .checkin-btn {\ncolor: #fff;\npadding: 3px 10px !important;\n    background-color: #3fa5ff !important;;\nfont-size: 12px;\nborder-radius: 2px;\ncursor: pointer;\n}\n.check-label {\n        color: #1a73e8;\nfont-size: 13px;\n}\n</style>\n{{#ifStatus Status}}\n<div title="CheckIn">\n    {{#if CheckIn}}<span class="check-label">\n        <i class="fa fa-check" style="color: #1a73e8;margin-top:3px;" node={{node.id}}> </i>Checked in </span>\n    <span class="check-label">{{date_diff CheckIn}}</span>\n    {{else}}\n    <span onclick="invokeAction(\'CheckIn\',this)" class="checkin-btn">Check in</span>\n    {{/if}}\n</div>\n{{else}} <div style="height: 100%;" title=""></div>{{/ifStatus}}',
+        FullName:
+          '<div onclick="invokeAction(\'goToDetails\', this)" data-action="edit" data-bind="ID={{id}}" style="cursor: pointer;color: #1a73e8;"> {{FullName}} </div>',
+      },
+      decorator: {
+        Attachment: '',
+        LinkedinURL: '',
+      },
+    },
+    views: {
+      'Discount Codes': {
+        default: true,
+        defaultSort: 'createdDate DESC',
+        fields: {
+          currentUsageCount: {
+            displayOrder: 9,
+            caption: 'currentUsageCount',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '160px',
+            type: 'number',
+          },
+          codeTitle: {
+            displayOrder: 1,
+            caption: 'Code',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'string',
+          },
+          isActive: {
+            displayOrder: 4,
+            caption: 'isActive',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '120px',
+            type: 'string',
+          },
+          validTill: {
+            displayOrder: 7,
+            caption: 'validTill',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '140px',
+            type: 'string',
+          },
+          maxUsageCount: {
+            displayOrder: 8,
+            caption: 'maxUsageCount',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '160px',
+            type: 'number',
+          },
+          offerValue: {
+            displayOrder: 5,
+            caption: 'offerValue',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '130px',
+            type: 'string',
+          },
+          minApplicableOrderAmount: {
+            displayOrder: 6,
+            caption: 'minApplicableOrderAmount',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '160px',
+            type: 'number',
+          },
+          createdDate: {
+            displayOrder: 10,
+            caption: 'createdDate',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'date',
+          },
+          isPercent: {
+            displayOrder: 3,
+            caption: 'isPercent',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '130px',
+            type: 'string',
+          },
+        },
+        template: {
+          name: 'link-grid',
+          context: {
+            basePath: '/DiscountCodes',
+          },
+        },
+        dataSource: {
+          query: discountCodes, // getItems('users'),
+          filter: {
+            limit: '10',
+            order: 'createdDate DESC',
+            skip: '0',
+            where: {},
+          },
+          defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          // newItem: ,
+        },
+        title: 'Discount Codes',
+        model: 'OfferCode',
+      },
+      'Discount Code': {
+        DefaultSort: 'createdDate DESC',
+        DataSource: {
+          FormID: 'EventDiscountCodes',
+          Aggregation: '',
+          'Default view': '',
+          Params: {
+            id: {
+              type: 'string',
+              mapwith: 'id',
+            },
+          },
+          'Key Field': '',
+          'Sharepoint Action': 'Edit',
+          Type: 'Form',
+          URL: 'OfferCode',
+        },
+        Fields: [
+          'codeTitle',
+          'description',
+          'isPercent',
+          'isActive',
+          'offerValue',
+          'minApplicableOrderAmount',
+          'validTill',
+          'createdAt',
+          'maxUsageCount',
+          'applicableOn',
+          'currentUsageCount',
+        ],
+        Query: '',
+        Visible: false,
+        type: 'Form',
+        Title: 'Discount Code',
       },
     },
   },

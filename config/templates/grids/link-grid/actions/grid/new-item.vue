@@ -1,15 +1,28 @@
 <template>
   <v-row justify="center">
-    <v-dialog v-model="dialog" persistent max-width="600px">
+    <v-dialog
+      v-model="dialog"
+      persistent
+      scrollable
+      content-class="slide-form-default"
+      transition="dialog-bottom-transition"
+    >
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="primary" dark v-bind="attrs" v-on="on">
-          New Item
-        </v-btn>
+        <v-flex xs12 sm12 md12 mx-3>
+          <v-btn color="primary" dark v-bind="attrs" v-on="on">
+            New Item
+          </v-btn>
+        </v-flex>
       </template>
       <v-card>
-        <v-card-title>
-          <span class="headline">New Item</span>
-        </v-card-title>
+        <v-toolbar dense flat dark fixed color="accent">
+          <v-toolbar-title class="body-1">New Item</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-btn icon dark @click="dialog = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </v-toolbar>
+        <v-divider></v-divider>
         <v-card-text>
           <v-container>
             <v-row>
@@ -29,14 +42,10 @@
               </v-col>
             </v-row>
           </v-container>
-          <small>*indicates required field</small>
         </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="dialog = false"
-            >Close</v-btn
-          >
-          <v-btn color="blue darken-1" text @click="onSave">Save</v-btn>
+        <v-divider></v-divider>
+        <v-card-actions class="pl-4">
+          <v-btn color="primary" depressed @click="onSave = false">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -121,3 +130,29 @@ export default {
   },
 }
 </script>
+
+<style>
+.slide-form {
+  position: fixed !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: calc(100% - 300px) !important;
+  max-height: calc(100% - 100px) !important;
+}
+.stepper-box {
+  min-height: 650px;
+}
+.slide-form-default {
+  position: fixed !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 50% !important;
+}
+@media (max-width: 600px) {
+  .slide-form,
+  .slide-form-default {
+    width: 100% !important;
+    position: unset !important;
+  }
+}
+</style>
