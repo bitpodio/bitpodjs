@@ -88,25 +88,20 @@ export default {
     Checkbox,
   },
   //   mixins: [myMixin],
-  props: ['content', 'viewName', 'item'],
+  props: ['content', 'viewName', 'items'],
   data() {
     const fields = getGridFields(this.content, this.viewName)
     return {
       fields,
-      formData: this.item,
+      formData: this.item[0],
       dialog: false,
       updateCount: 0,
     }
   },
-  computed: {
-    editData() {
-      return this.item
-    },
-  },
   watch: {
     item(newValue, oldValue) {
       this.updateCount = this.updateCount + 1
-      this.formData = newValue
+      this.formData = newValue[0]
     },
   },
   beforeUpdate() {

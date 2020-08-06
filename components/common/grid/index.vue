@@ -6,12 +6,12 @@
         :content="content"
         :view-name="viewName"
       />
-      <template v-if="!!selectedItem">
+      <template v-if="!!selectedItems">
         <component
           :is="actionTemplates['row-select'] || null"
           :content="content"
           :view-name="viewName"
-          :item="selectedItem"
+          :items="selectedItems"
         />
       </template>
     </div>
@@ -55,6 +55,7 @@
       class="elevation-1"
       @update:pagination="updatePagination"
       @click:row="onRowClick"
+      @input="onItemSelected"
     >
       <template v-if="!!slotTemplates.item" v-slot:item="props">
         <component
@@ -446,7 +447,7 @@ export default {
       showExpand: gridProps.showExpand,
       singleExpand: gridProps.singleExpand,
       showSelect: gridProps.showSelect,
-      selectedItem: '',
+      selectedItems: [],
       actionTemplates: [],
     }
   },
@@ -506,7 +507,11 @@ export default {
     },
     onRowClick(item, props) {
       console.log(`props=${props} item=${item}  `)
-      this.selectedItem = item
+      this.selectedItems = [item]
+    },
+    onItemSelected(items) {
+      console.log(`onItemSelected = ${items}`)
+      this.selectedItems = items
     },
   },
   apollo: {

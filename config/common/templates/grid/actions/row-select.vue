@@ -4,13 +4,13 @@
       :is="rowSelectTemplates['edit-item'] || null"
       :content="content"
       :view-name="viewName"
-      :item="item"
+      :items="items"
     />
     <component
       :is="rowSelectTemplates['delete-item'] || null"
       :content="content"
       :view-name="viewName"
-      :item="item"
+      :items="items"
     />
     test
     <!-- <EditItem :content="content" :item="item" />
@@ -28,7 +28,7 @@ function getGridTemplateInfo(content, viewName) {
 
 export default {
   mixins: [templateLoaderMixin],
-  props: ['content', 'viewName', 'item'],
+  props: ['content', 'viewName', 'items'],
   data() {
     return {
       rowSelectTemplates: {},

@@ -21,7 +21,7 @@ function getModelName(content, viewName) {
 
 export default {
   //   mixins: [myMixin],
-  props: ['content', 'viewName', 'item'],
+  props: ['content', 'viewName', 'items'],
   data() {
     return {
       dialog: false,
@@ -40,7 +40,7 @@ export default {
         mutation: gql(deleteItemMutation),
         variables: {
           Inputs: {
-            id: this.item.id,
+            id: this.item[0].id,
             clientMutationId: `${modelName} list item updated successfully.`,
           },
         },
