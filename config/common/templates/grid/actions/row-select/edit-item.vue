@@ -93,13 +93,13 @@ export default {
     const fields = getGridFields(this.content, this.viewName)
     return {
       fields,
-      formData: this.item[0],
+      formData: this.items[0],
       dialog: false,
       updateCount: 0,
     }
   },
   watch: {
-    item(newValue, oldValue) {
+    items(newValue, oldValue) {
       this.updateCount = this.updateCount + 1
       this.formData = newValue[0]
     },

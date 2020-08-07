@@ -10,7 +10,7 @@
 import gql from 'graphql-tag'
 
 function buildMutationDeleteQuery(modelName) {
-  return `mutation($Inputs: ${modelName}DeleteByIdInput!){ ${modelName} { ${modelName}DeleteById(input:$Inputs){ clientMutationId } } }`
+  return `mutation($Inputs: ${modelName}DestroyAllInput!){ ${modelName} { ${modelName}DestroyAll(input:$Inputs){ clientMutationId } } }`
 }
 
 function getModelName(content, viewName) {
@@ -33,6 +33,7 @@ export default {
   },
   methods: {
     async onDelete() {
+      debugger
       this.dialog = false
       const modelName = getModelName(this.content, this.viewName)
       const deleteItemMutation = buildMutationDeleteQuery(modelName)
@@ -40,7 +41,11 @@ export default {
         mutation: gql(deleteItemMutation),
         variables: {
           Inputs: {
-            id: this.item[0].id,
+            where: {
+              id: {
+                inq: ['5f2c09ed427821000ae9c52a', '5f2c09ed427821000ae9c52c'],
+              },
+            }, // this.item[0].id,
             clientMutationId: `${modelName} list item updated successfully.`,
           },
         },

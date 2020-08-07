@@ -12,9 +12,6 @@
       :view-name="viewName"
       :items="items"
     />
-    test
-    <!-- <EditItem :content="content" :item="item" />
-    <DeleteItem :content="content" :item="item" /> -->
   </div>
 </template>
 <script>

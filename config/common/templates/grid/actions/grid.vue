@@ -8,39 +8,12 @@
   </div>
 </template>
 <script>
-// import importTemplate from '~/utility/helper.js'
-
-// export async function importTemplate(templateFolderName, fileName) {
-//   try {
-//     this.newItemTemplate = await importFile(
-//       `~/config/templates/grids/${templateFolderName}/new-item.vue`
-//     )
-//   } catch (e) {
-//     this.newItemTemplate = importFile(
-//       `~/config/common/templates/grid/column.vue`
-//     )
-//   }
-// }
 import { templateLoaderMixin } from '~/utility'
-// const importTemplate = (filePath) => import(filePath)
-
-// function loadTemplate(templatePath) {
-//   return () => import(`~/config/templates/grids/${templatePath}`)
-// }
 
 function getGridTemplateInfo(content, viewName) {
   const view = content.views[viewName]
   return view.template || {}
 }
-
-// const templateLoaderMixin = {
-//   computed: {
-//     templateLoader() {
-//       return (templateFolderName) =>
-//         loadTemplate(`${templateFolderName}/actions/grid/new-item.vue`)
-//     },
-//   },
-// }
 
 export default {
   mixins: [templateLoaderMixin],
