@@ -1907,7 +1907,7 @@ export default (ctx) => ({
           hideDefaultFooter: false,
           showExpand: false,
           singleExpand: false,
-          showSelect: false,
+          showSelect: true,
           hideFilter: false,
           hideSearch: true,
         },

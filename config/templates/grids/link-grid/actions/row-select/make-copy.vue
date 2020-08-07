@@ -9,7 +9,7 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn color="primary" dark v-bind="attrs" v-on="on">
-          Edit Item
+          Make a Copy
         </v-btn>
       </template>
       <v-card>
