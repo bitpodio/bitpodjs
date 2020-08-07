@@ -1813,7 +1813,7 @@ export default (ctx) => ({
         fields: {
           currentUsageCount: {
             displayOrder: 9,
-            caption: 'currentUsageCount',
+            caption: 'Current Usage Count',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '160px',
@@ -1901,6 +1901,15 @@ export default (ctx) => ({
           defaultSort: 'createdDate DESC',
           type: 'graphql',
           // newItem: ,
+        },
+        ui: {
+          hideDefaultHeader: false,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: false,
+          hideFilter: false,
+          hideSearch: true,
         },
         title: 'Discount Codes',
         model: 'OfferCode',
