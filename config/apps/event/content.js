@@ -1885,7 +1885,7 @@ export default (ctx) => ({
           },
         },
         template: {
-          name: 'link-grid',
+          name: 'discount-grid',
           context: {
             basePath: '/DiscountCodes',
           },
