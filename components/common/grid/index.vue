@@ -6,17 +6,17 @@
         :content="content"
         :view-name="viewName"
       />
-      <template v-if="!!selectedItem">
+      <template v-if="selectedItems.length > 0">
         <component
           :is="actionTemplates['row-select'] || null"
           :content="content"
           :view-name="viewName"
-          :item="selectedItem"
+          :items="selectedItems"
         />
       </template>
     </div>
     <div class="grid-actions-container">
-      <div>
+      <div v-if="hideFilter">
         <slot name="filter">
           <FieldsFilter
             v-model="filterRules"
@@ -25,7 +25,7 @@
           />
         </slot>
       </div>
-      <div class="grid-search-section">
+      <div v-if="hideSearch" class="grid-search-section">
         <slot name="search">
           <v-text-field
             v-model="search"
@@ -55,6 +55,7 @@
       :show-select="showSelect"
       @update:pagination="updatePagination"
       @click:row="onRowClick"
+      @input="onItemSelected"
     >
       <template v-if="!!slotTemplates.item" v-slot:item="props">
         <component
@@ -143,6 +144,8 @@ const DEFAULT_GRID_PROPS = {
   showExpand: false,
   singleExpand: false,
   showSelect: false,
+  hideFilter: false,
+  hideSearch: false,
 }
 const ACTION_TYPES = ['grid', 'row', 'row-select']
 const TEMPLATE_SLOTS = ['item', 'body', 'header', 'footer', 'expanded-item']
@@ -446,7 +449,9 @@ export default {
       showExpand: gridProps.showExpand,
       singleExpand: gridProps.singleExpand,
       showSelect: gridProps.showSelect,
-      selectedItem: '',
+      hideFilter: gridProps.hideFilter,
+      hideSearch: gridProps.hideSearch,
+      selectedItems: [],
       actionTemplates: [],
     }
   },
@@ -458,6 +463,18 @@ export default {
     context() {
       return getGridTemplateInfo(this.content, this.viewName).context || {}
     },
+    _components() {
+      return {
+        newItem: {
+          locations: [
+            `templates/grids/${this.templateFolderName}/actions/grid/new-item.vue`,
+            `common/templates/grid/actions/grid/new-item.vue`,
+          ],
+        },
+      }
+    },
+
+    // _components() {},
   },
   created() {
     console.log('in created')
@@ -477,25 +494,23 @@ export default {
   //     this.items = formatResult(result.data,"Event")
   // }
   mounted() {
-    const templateInfo = getGridTemplateInfo(this.content, this.viewName)
-    const templateFolderName = templateInfo.name
     this.headers.forEach(async (column, index) => {
       this.component[index] = await this.loadTemplate([
-        `templates/grids/${templateFolderName}/column-${column.value}.vue`,
-        `templates/grids/${templateFolderName}/column-${index}.vue`,
+        `templates/grids/${this.templateFolderName}/column-${column.value}.vue`,
+        `templates/grids/${this.templateFolderName}/column-${index}.vue`,
         `common/templates/grid/column.vue`,
       ])
     })
     TEMPLATE_SLOTS.forEach(async (slot) => {
       this.slotTemplates[slot] = await this.loadTemplate(
-        [`templates/grids/${templateFolderName}/${slot}.vue`],
+        [`templates/grids/${this.templateFolderName}/${slot}.vue`],
         false
       )
     })
     ACTION_TYPES.forEach(async (actionType) => {
       this.actionTemplates[actionType] = await this.loadTemplate([
-        `templates/grids/${templateFolderName}/actions/${actionType}.vue`,
-        `common/templates/grid/actions/${actionType}.vue`,
+        `templates/grids/${this.templateFolderName}/actions/${actionType}/index.vue`,
+        `common/templates/grid/actions/${actionType}/index.vue`,
       ])
     })
   },
@@ -506,7 +521,13 @@ export default {
     },
     onRowClick(item, props) {
       console.log(`props=${props} item=${item}  `)
-      this.selectedItem = item
+      if (!this.showSelect) {
+        this.selectedItems = [item]
+      }
+    },
+    onItemSelected(items) {
+      console.log(`onItemSelected = ${items}`)
+      this.selectedItems = items
     },
   },
   apollo: {

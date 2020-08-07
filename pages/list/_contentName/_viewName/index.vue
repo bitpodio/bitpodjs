@@ -1,5 +1,8 @@
 <template>
   <v-layout column justify-center align-center>
+    <!-- <div>
+      <ViewDropdown :content="content[$route.params.contentName]" />
+    </div> -->
     <v-flex xs12 sm12 md12>
       <Grid
         :content="content[$route.params.contentName]"

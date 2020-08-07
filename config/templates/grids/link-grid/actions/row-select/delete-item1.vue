@@ -3,6 +3,15 @@
     <v-btn color="primary" dark @click="onDelete">
       Delete
     </v-btn>
+    <v-snackbar v-model="snackbar" timeout="2000" top="true">
+      Item deleted successfully.
+
+      <template v-slot:action="{ attrs }">
+        <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 
@@ -21,11 +30,12 @@ function getModelName(content, viewName) {
 
 export default {
   //   mixins: [myMixin],
-  props: ['content', 'viewName', 'item'],
+  props: ['content', 'viewName', 'items'],
   data() {
     return {
       dialog: false,
       updateCount: 0,
+      snackbar: false,
     }
   },
   beforeUpdate() {
@@ -40,11 +50,12 @@ export default {
         mutation: gql(deleteItemMutation),
         variables: {
           Inputs: {
-            id: this.item.id,
-            clientMutationId: `${modelName} list item updated successfully.`,
+            id: this.items[0].id,
+            clientMutationId: `${modelName} list item deleted successfully.`,
           },
         },
       })
+      this.snackbar = true
       console.log(userDeleted)
     },
   },
