@@ -508,9 +508,10 @@ export default {
         false
       )
     })
+    const templateName = this.templateFolderName
     ACTION_TYPES.forEach(async (actionType) => {
       this.actionTemplates[actionType] = await this.loadTemplate([
-        `templates/grids/${this.templateFolderName}/actions/${actionType}/index.vue`,
+        `templates/grids/${templateName}/actions/${actionType}/index.vue`,
         `common/templates/grid/actions/${actionType}/index.vue`,
       ])
     })
