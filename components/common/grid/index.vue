@@ -490,6 +490,7 @@ export default {
   //             filters: {where:{}}, where:{}
   //         }
   //     });
+  //
   //     console.log(result)
   //     this.items = formatResult(result.data,"Event")
   // }
