@@ -1387,10 +1387,10 @@ export default (ctx) => ({
         ui: {
           hideDefaultHeader: false,
           hideDefaultFooter: false,
-          showExpand: false,
-          singleExpand: false,
-          showSelect: false,
-          hideFilter: false,
+          showExpand: true,
+          singleExpand: true,
+          showSelect: true,
+          hideFilter: true,
           hideSearch: true,
         },
         default: true,
@@ -1857,11 +1857,22 @@ export default (ctx) => ({
             columnWidth: '130px',
             type: 'string',
           },
+          action: {
+            displayOrder: 11,
+            caption: 'Action',
+            searchEnable: false,
+            sortEnable: false,
+            columnWidth: '130px',
+            type: 'action',
+            inlineEdit: false,
+            newForm: false,
+            editForm: false,
+          },
         },
         template: {
           name: 'link-grid',
           context: {
-            basePath: '/event',
+            basePath: '/EventCustomers',
           },
         },
         dataSource: {
@@ -1872,8 +1883,9 @@ export default (ctx) => ({
             skip: '0',
             where: {},
           },
+          type: 'graphql',
+          model: 'Customer',
           defaultSort: 'createdDate DESC',
-          default: true,
         },
         title: 'Members',
         defaultSort: 'createdDate DESC',
@@ -1939,12 +1951,16 @@ export default (ctx) => ({
     },
     views: {
       Contacts: {
-        title: 'Contacts',
-        default: true,
-        defaultSort: 'createdDate DESC',
         ui: {
           'List Details View Template': 'Salescontact_Details_View_Template',
           pagination: 'pageWithNumber',
+          hideDefaultHeader: false,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: true,
+          hideFilter: false,
+          hideSearch: false,
         },
         fields: {
           Organization: {
@@ -1953,6 +1969,7 @@ export default (ctx) => ({
             searchEnable: true,
             sortEnable: true,
             columnWidth: '180px',
+            type: 'string',
           },
           createdDate: {
             displayOrder: 7,
@@ -1960,6 +1977,7 @@ export default (ctx) => ({
             searchEnable: true,
             sortEnable: true,
             columnWidth: '180px',
+            type: 'date',
           },
           Country: {
             displayOrder: 5,
@@ -1967,6 +1985,7 @@ export default (ctx) => ({
             searchEnable: true,
             sortEnable: true,
             columnWidth: '180px',
+            type: 'string',
           },
           CellPhone: {
             displayOrder: 5,
@@ -1974,6 +1993,7 @@ export default (ctx) => ({
             searchEnable: true,
             sortEnable: true,
             columnWidth: '180px',
+            type: 'number',
           },
           FullName: {
             displayOrder: 1,
@@ -1981,6 +2001,7 @@ export default (ctx) => ({
             searchEnable: true,
             sortEnable: true,
             columnWidth: '180px',
+            type: 'string',
           },
           Type: {
             displayOrder: 6,
@@ -1988,6 +2009,7 @@ export default (ctx) => ({
             searchEnable: true,
             sortEnable: true,
             columnWidth: '180px',
+            type: 'string',
           },
           Email: {
             displayOrder: 2,
@@ -1995,6 +2017,7 @@ export default (ctx) => ({
             searchEnable: true,
             sortEnable: true,
             columnWidth: '180px',
+            type: 'string',
           },
           Job: {
             displayOrder: 3,
@@ -2002,12 +2025,24 @@ export default (ctx) => ({
             searchEnable: true,
             sortEnable: true,
             columnWidth: '180px',
+            type: 'string',
+          },
+          action: {
+            displayOrder: 11,
+            caption: 'Action',
+            searchEnable: false,
+            sortEnable: false,
+            columnWidth: '130px',
+            type: 'action',
+            inlineEdit: true,
+            newForm: false,
+            editForm: false,
           },
         },
         template: {
           name: 'link-grid',
           context: {
-            basePath: '/event',
+            basePath: '/Contacts',
           },
         },
         dataSource: {
@@ -2018,9 +2053,13 @@ export default (ctx) => ({
             skip: '0',
             where: {},
           },
+          type: 'graphql',
+          model: 'Contact',
           defaultSort: 'createdDate DESC',
-          default: true,
         },
+        default: true,
+        title: 'Contacts',
+        defaultSort: 'createdDate DESC',
       },
     },
   },
