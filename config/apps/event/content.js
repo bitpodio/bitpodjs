@@ -1751,6 +1751,7 @@ export default (ctx) => ({
       },
     },
   },
+
   DiscountCodes: {
     actions: {
       'Embeded Actions': '',
@@ -1817,7 +1818,7 @@ export default (ctx) => ({
             searchEnable: true,
             sortEnable: true,
             columnWidth: '160px',
-            type: 'number',
+            // type: 'number',
           },
           codeTitle: {
             displayOrder: 1,
@@ -1825,7 +1826,7 @@ export default (ctx) => ({
             searchEnable: true,
             sortEnable: true,
             columnWidth: '180px',
-            type: 'string',
+            // type: 'string',
           },
           isActive: {
             displayOrder: 4,
@@ -1833,7 +1834,7 @@ export default (ctx) => ({
             searchEnable: true,
             sortEnable: true,
             columnWidth: '120px',
-            type: 'string',
+            // type: 'string',
           },
           validTill: {
             displayOrder: 7,
@@ -1841,7 +1842,7 @@ export default (ctx) => ({
             searchEnable: true,
             sortEnable: true,
             columnWidth: '140px',
-            type: 'string',
+            // type: 'string',
           },
           maxUsageCount: {
             displayOrder: 8,
@@ -1849,7 +1850,7 @@ export default (ctx) => ({
             searchEnable: true,
             sortEnable: true,
             columnWidth: '160px',
-            type: 'number',
+            // type: 'number',
           },
           offerValue: {
             displayOrder: 5,
@@ -1857,7 +1858,7 @@ export default (ctx) => ({
             searchEnable: true,
             sortEnable: true,
             columnWidth: '130px',
-            type: 'string',
+            // type: 'string',
           },
           minApplicableOrderAmount: {
             displayOrder: 6,
@@ -1865,7 +1866,7 @@ export default (ctx) => ({
             searchEnable: true,
             sortEnable: true,
             columnWidth: '160px',
-            type: 'number',
+            // type: 'number',
           },
           createdDate: {
             displayOrder: 10,
@@ -1881,7 +1882,7 @@ export default (ctx) => ({
             searchEnable: true,
             sortEnable: true,
             columnWidth: '130px',
-            type: 'string',
+            // type: 'string',
           },
         },
         template: {
