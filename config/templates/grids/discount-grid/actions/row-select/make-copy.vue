@@ -1,5 +1,5 @@
 <template>
-  <v-row justify="center">
+  <v-col class="px-0">
     <v-dialog
       v-model="dialog"
       persistent
@@ -7,8 +7,8 @@
       transition="dialog-bottom-transition"
     >
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="primary" dark v-bind="attrs" v-on="on">
-          New Registration
+        <v-btn text small v-bind="attrs" v-on="on">
+          <v-icon left>mdi-plus</v-icon> New Registration
         </v-btn>
       </template>
       <v-card>
@@ -134,7 +134,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-  </v-row>
+  </v-col>
 </template>
 
 <script>

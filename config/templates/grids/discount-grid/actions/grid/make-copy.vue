@@ -1,5 +1,5 @@
 <template>
-  <v-row justify="center">
+  <v-col class="px-0">
     <v-dialog
       v-model="dialog"
       persistent
@@ -7,8 +7,8 @@
       transition="dialog-bottom-transition"
     >
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="primary" dark v-bind="attrs" v-on="on">
-          Make Copy
+        <v-btn text small v-bind="attrs" v-on="on">
+          <v-icon left>mdi-content-copy</v-icon>Make Copy
         </v-btn>
       </template>
       <v-card>
@@ -38,7 +38,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-  </v-row>
+  </v-col>
 </template>
 
 <script>
@@ -59,7 +59,6 @@ export default {
   },
   methods: {
     async onSave(event) {
-      alert('asdasdad')
       console.log('Saving the data')
       this.dialog = false
       const modelName = 'OfferCode'
@@ -73,7 +72,7 @@ export default {
           },
         },
       })
-      console.log('asdasdasdasd', userCreated)
+      console.log('Form data added', userCreated)
     },
   },
 }

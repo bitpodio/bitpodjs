@@ -1,9 +1,9 @@
 <template>
-  <div>
-    <v-btn color="primary" dark @click="onDelete">
-      Delete
+  <v-col class="px-0">
+    <v-btn text small v-bind="attrs" v-on="on" @click="onDelete">
+      <v-icon left>mdi-delete</v-icon>Delete
     </v-btn>
-  </div>
+  </v-col>
 </template>
 
 <script>

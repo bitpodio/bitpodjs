@@ -1,21 +1,22 @@
 <template>
   <div>
-    <div>
-      <component
-        :is="actionTemplates['grid'] || null"
-        :content="content"
-        :view-name="viewName"
-      />
-      <template v-if="selectedItems.length > 0">
+    <div class="grid-actions-container">
+      <div class="d-flex">
+        <template v-if="selectedItems.length > 0">
+          <component
+            :is="actionTemplates['row-select'] || null"
+            :content="content"
+            :view-name="viewName"
+            :items="selectedItems"
+            class="d-flex"
+          />
+        </template>
         <component
-          :is="actionTemplates['row-select'] || null"
+          :is="actionTemplates['grid'] || null"
           :content="content"
           :view-name="viewName"
-          :items="selectedItems"
         />
-      </template>
-    </div>
-    <div class="grid-actions-container">
+      </div>
       <div v-if="hideFilter">
         <slot name="filter">
           <FieldsFilter
@@ -80,6 +81,7 @@
           :context="context"
           :items="tableData.items"
           :content="content"
+          type="number"
         />
       </template>
       <template

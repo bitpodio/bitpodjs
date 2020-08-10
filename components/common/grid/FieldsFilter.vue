@@ -1,5 +1,5 @@
 <template>
-  <div class="text-center">
+  <v-col class="text-center px-0">
     <v-menu
       v-model="menu"
       :close-on-content-click="false"
@@ -9,11 +9,12 @@
       <template v-slot:activator="{ on, attrs }">
         <v-btn
           text
-          :color="value.length > 0 ? 'blue' : 'black'"
+          small
+          :color="value.length > 0 ? 'blue' : 'text--primary'"
           v-bind="attrs"
           v-on="on"
         >
-          filter
+          <v-icon left> mdi-filter-outline</v-icon> Filter
         </v-btn>
       </template>
 
@@ -65,7 +66,7 @@
         </v-card-actions>
       </v-card>
     </v-menu>
-  </div>
+  </v-col>
 </template>
 
 <script>
