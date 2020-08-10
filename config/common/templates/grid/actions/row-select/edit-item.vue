@@ -71,16 +71,6 @@ function getGridFields(content, viewName) {
   return editableFields
 }
 
-function buildMutationUpsertQuery(modelName) {
-  return `mutation($Inputs : ${modelName}UpsertWithWhereInput!){ ${modelName}{ ${modelName}UpsertWithWhere(input:$Inputs){ clientMutationId obj{ id } } } }`
-}
-
-function getModelName(content, viewName) {
-  const view = content.views[viewName]
-  const dataSource = view.dataSource
-  return dataSource.model
-}
-
 export default {
   components: {
     TextField,
@@ -88,7 +78,7 @@ export default {
     Checkbox,
   },
   //   mixins: [myMixin],
-  props: ['content', 'viewName', 'items'],
+  props: ['content', 'viewName', 'items', 'onUpdateItem'],
   data() {
     const fields = getGridFields(this.content, this.viewName)
     return {
@@ -109,22 +99,8 @@ export default {
   },
   methods: {
     async onSave() {
+      const userCreated = await this.onUpdateItem(this.formData)
       this.dialog = false
-      const modelName = getModelName(this.content, this.viewName)
-      const where = {
-        id: this.formData.id,
-      }
-      const editItemMutation = buildMutationUpsertQuery(modelName)
-      const userCreated = await this.$apollo.mutate({
-        mutation: gql(editItemMutation),
-        variables: {
-          Inputs: {
-            where,
-            data: this.formData,
-            clientMutationId: `${modelName} list item updated successfully.`,
-          },
-        },
-      })
       console.log(userCreated)
     },
     formControl(field) {

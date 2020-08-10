@@ -1,6 +1,11 @@
 <template>
   <div>
-    <component :is="newItem || null" :content="content" :view-name="viewName" />
+    <component
+      :is="newItem || null"
+      :content="content"
+      :view-name="viewName"
+      :on-new-item-save="onNewItemSave"
+    />
   </div>
 </template>
 <script>
@@ -8,7 +13,7 @@ import { templateLoaderMixin } from '~/utility'
 
 export default {
   mixins: [templateLoaderMixin],
-  props: ['content', 'viewName'],
+  props: ['content', 'viewName', 'onNewItemSave'],
   data() {
     return {
       newItem: null,

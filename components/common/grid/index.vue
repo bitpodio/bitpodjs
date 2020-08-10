@@ -5,6 +5,7 @@
         :is="actionTemplates['grid'] || null"
         :content="content"
         :view-name="viewName"
+        :on-new-item-save="onNewItemSave"
       />
       <template v-if="selectedItems.length > 0">
         <component
@@ -12,11 +13,13 @@
           :content="content"
           :view-name="viewName"
           :items="selectedItems"
+          :on-update-item="onUpdateItem"
+          :on-delete-item="onDeleteItem"
         />
       </template>
     </div>
     <div class="grid-actions-container">
-      <div v-if="hideFilter">
+      <div v-if="!hideFilter">
         <slot name="filter">
           <FieldsFilter
             v-model="filterRules"
@@ -25,7 +28,7 @@
           />
         </slot>
       </div>
-      <div v-if="hideSearch" class="grid-search-section">
+      <div v-if="!hideSearch" class="grid-search-section">
         <slot name="search">
           <v-text-field
             v-model="search"
@@ -400,6 +403,24 @@ function getIdFromAtob(encodedId) {
   return encodedId ? atob(encodedId).split(':')[1] : ''
 }
 
+function buildMutationCreateQuery(modelName) {
+  return `mutation($Inputs : ${modelName}CreateInput!){ ${modelName} { ${modelName}Create(input:$Inputs){ clientMutationId obj{ id } } } }`
+}
+
+function getModelName(content, viewName) {
+  const view = content.views[viewName]
+  const dataSource = view.dataSource
+  return dataSource.model
+}
+
+function buildMutationDeleteQuery(modelName) {
+  return `mutation($Inputs: ${modelName}DestroyAllInput!){ ${modelName} { ${modelName}DestroyAll(input:$Inputs){ clientMutationId } } }`
+}
+
+function buildMutationUpsertQuery(modelName) {
+  return `mutation($Inputs : ${modelName}UpsertWithWhereInput!){ ${modelName}{ ${modelName}UpsertWithWhere(input:$Inputs){ clientMutationId obj{ id } } } }`
+}
+
 export default {
   components: {
     FieldsFilter,
@@ -453,6 +474,7 @@ export default {
       hideSearch: gridProps.hideSearch,
       selectedItems: [],
       actionTemplates: [],
+      triggerChange: 0,
     }
   },
   computed: {
@@ -478,10 +500,6 @@ export default {
   },
   created() {
     console.log('in created')
-    // axiosWrapper('/Events')
-    // .then(({data})=>{
-    //     this.items = data;
-    // })
   },
   // async mounted() {
   //     let result = await this.$apollo.query({
@@ -530,6 +548,62 @@ export default {
     onItemSelected(items) {
       console.log(`onItemSelected = ${items}`)
       this.selectedItems = items
+    },
+    async onNewItemSave(data) {
+      debugger
+      const modelName = getModelName(this.content, this.viewName)
+      const newItemMutation = buildMutationCreateQuery(modelName)
+      const userCreated = await this.$apollo.mutate({
+        mutation: gql(newItemMutation),
+        variables: {
+          Inputs: {
+            data,
+            clientMutationId: `${modelName} list item updated successfully.`,
+          },
+        },
+      })
+      this.$apollo.queries.tableData.refresh()
+      console.log(userCreated)
+    },
+    async onUpdateItem(data) {
+      debugger
+      const modelName = getModelName(this.content, this.viewName)
+      const where = {
+        id: data.id,
+      }
+      const editItemMutation = buildMutationUpsertQuery(modelName)
+      const userCreated = await this.$apollo.mutate({
+        mutation: gql(editItemMutation),
+        variables: {
+          Inputs: {
+            where,
+            data,
+            clientMutationId: `${modelName} list item updated successfully.`,
+          },
+        },
+      })
+      this.$apollo.queries.tableData.refresh()
+      console.log(userCreated)
+    },
+    async onDeleteItem(ids) {
+      console.log(ids)
+      const modelName = getModelName(this.content, this.viewName)
+      const deleteItemMutation = buildMutationDeleteQuery(modelName)
+      const userDeleted = await this.$apollo.mutate({
+        mutation: gql(deleteItemMutation),
+        variables: {
+          Inputs: {
+            where: {
+              id: {
+                inq: ids,
+              },
+            },
+            clientMutationId: `${modelName} list item updated successfully.`,
+          },
+        },
+      })
+      this.$apollo.queries.tableData.refresh()
+      console.log(userDeleted)
     },
   },
   apollo: {
