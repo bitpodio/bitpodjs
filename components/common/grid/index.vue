@@ -345,8 +345,8 @@ function getOperatorQuery(field, operator, value) {
       break
     case 'exactDate': {
       const and = [
-        { [field]: { gte: new Date(value) } },
-        { [field]: { lt: startOfDay(addDays(new Date(), 1)) } },
+        { [field]: { gte: startOfDay(new Date(value)) } },
+        { [field]: { lte: endOfDay(new Date(value)) } },
       ]
       ruleFilter = { and }
       break
