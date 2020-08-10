@@ -51,12 +51,10 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
-// import TextField from '../../../../../../components/form/text-field.vue'
-// import TextField from '~/components/form/text-field.vue'
 import TextField from '~/components/common/form/text-field.vue'
 import Lookup from '~/components/common/form/lookup.vue'
 import Checkbox from '~/components/common/form/checkbox.vue'
+import CustomDate from '~/components/common/form/date.vue'
 
 function getGridFields(content, viewName) {
   const view = content.views[viewName]
@@ -78,23 +76,14 @@ function getGridFields(content, viewName) {
   return editableFields
 }
 
-function buildMutationCreateQuery(modelName) {
-  return `mutation($Inputs : ${modelName}CreateInput!){ ${modelName} { ${modelName}Create(input:$Inputs){ clientMutationId obj{ id } } } }`
-}
-
-function getModelName(content, viewName) {
-  const view = content.views[viewName]
-  const dataSource = view.dataSource
-  return dataSource.model
-}
-
 export default {
   components: {
     TextField,
     Lookup,
     Checkbox,
+    CustomDate,
   },
-  props: ['content', 'viewName'],
+  props: ['content', 'viewName', 'onNewItemSave'],
   data() {
     const fields = getGridFields(this.content, this.viewName)
     return {
@@ -105,30 +94,21 @@ export default {
   },
   methods: {
     async onSave() {
+      const result = await this.onNewItemSave(this.formData)
+      console.log(result)
       this.dialog = false
-      const modelName = getModelName(this.content, this.viewName)
-      const newItemMutation = buildMutationCreateQuery(modelName)
-      this.formData.TotalAmount = parseInt(this.formData.TotalAmount)
-      const userCreated = await this.$apollo.mutate({
-        mutation: gql(newItemMutation),
-        variables: {
-          Inputs: {
-            data: this.formData,
-            clientMutationId: `${modelName} list item updated successfully.`,
-          },
-        },
-      })
-      console.log(userCreated)
     },
     formControl(field) {
       switch (field.type) {
-        case 'string':
-        case 'number':
-          return 'TextField'
         case 'lookup':
           return 'Lookup'
         case 'checkbox':
           return 'Checkbox'
+        case 'date':
+          return 'CustomDate'
+        case 'string':
+        case 'number':
+          return 'TextField'
       }
     },
   },

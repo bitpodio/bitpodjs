@@ -26,7 +26,7 @@
           />
         </slot>
       </div>
-      <div v-if="hideSearch" class="grid-search-section">
+      <div v-if="!hideSearch" class="grid-search-section">
         <slot name="search">
           <v-text-field
             v-model="search"
@@ -344,8 +344,8 @@ function getOperatorQuery(field, operator, value) {
       break
     case 'exactDate': {
       const and = [
-        { [field]: { gte: new Date(value) } },
-        { [field]: { lt: startOfDay(addDays(new Date(), 1)) } },
+        { [field]: { gte: startOfDay(new Date(value)) } },
+        { [field]: { lte: endOfDay(new Date(value)) } },
       ]
       ruleFilter = { and }
       break
@@ -390,7 +390,7 @@ function buildQueryVariables({
   if (contentFilter) {
     and.push(contentFilter.where)
   }
-  return { and }
+  return and.length > 0 ? { and } : {}
 }
 
 function getGridsProps(content, viewName) {
@@ -400,6 +400,24 @@ function getGridsProps(content, viewName) {
 
 function getIdFromAtob(encodedId) {
   return encodedId ? atob(encodedId).split(':')[1] : ''
+}
+
+function buildMutationCreateQuery(modelName) {
+  return `mutation($Inputs : ${modelName}CreateInput!){ ${modelName} { ${modelName}Create(input:$Inputs){ clientMutationId obj{ id } } } }`
+}
+
+function getModelName(content, viewName) {
+  const view = content.views[viewName]
+  const dataSource = view.dataSource
+  return dataSource.model
+}
+
+function buildMutationDeleteQuery(modelName) {
+  return `mutation($Inputs: ${modelName}DestroyAllInput!){ ${modelName} { ${modelName}DestroyAll(input:$Inputs){ clientMutationId } } }`
+}
+
+function buildMutationUpsertQuery(modelName) {
+  return `mutation($Inputs : ${modelName}UpsertWithWhereInput!){ ${modelName}{ ${modelName}UpsertWithWhere(input:$Inputs){ clientMutationId obj{ id } } } }`
 }
 
 export default {
@@ -455,6 +473,7 @@ export default {
       hideSearch: gridProps.hideSearch,
       selectedItems: [],
       actionTemplates: [],
+      triggerChange: 0,
     }
   },
   computed: {
@@ -480,10 +499,6 @@ export default {
   },
   created() {
     console.log('in created')
-    // axiosWrapper('/Events')
-    // .then(({data})=>{
-    //     this.items = data;
-    // })
   },
   // async mounted() {
   //     let result = await this.$apollo.query({
@@ -492,6 +507,7 @@ export default {
   //             filters: {where:{}}, where:{}
   //         }
   //     });
+  //
   //     console.log(result)
   //     this.items = formatResult(result.data,"Event")
   // }
@@ -509,9 +525,10 @@ export default {
         false
       )
     })
+    const templateName = this.templateFolderName
     ACTION_TYPES.forEach(async (actionType) => {
       this.actionTemplates[actionType] = await this.loadTemplate([
-        `templates/grids/${this.templateFolderName}/actions/${actionType}/index.vue`,
+        `templates/grids/${templateName}/actions/${actionType}/index.vue`,
         `common/templates/grid/actions/${actionType}/index.vue`,
       ])
     })
@@ -531,6 +548,62 @@ export default {
       console.log(`onItemSelected = ${items}`)
       this.selectedItems = items
     },
+    async onNewItemSave(data) {
+      debugger
+      const modelName = getModelName(this.content, this.viewName)
+      const newItemMutation = buildMutationCreateQuery(modelName)
+      const userCreated = await this.$apollo.mutate({
+        mutation: gql(newItemMutation),
+        variables: {
+          Inputs: {
+            data,
+            clientMutationId: `${modelName} list item updated successfully.`,
+          },
+        },
+      })
+      this.$apollo.queries.tableData.refresh()
+      console.log(userCreated)
+    },
+    async onUpdateItem(data) {
+      debugger
+      const modelName = getModelName(this.content, this.viewName)
+      const where = {
+        id: data.id,
+      }
+      const editItemMutation = buildMutationUpsertQuery(modelName)
+      const userCreated = await this.$apollo.mutate({
+        mutation: gql(editItemMutation),
+        variables: {
+          Inputs: {
+            where,
+            data,
+            clientMutationId: `${modelName} list item updated successfully.`,
+          },
+        },
+      })
+      this.$apollo.queries.tableData.refresh()
+      console.log(userCreated)
+    },
+    async onDeleteItem(ids) {
+      console.log(ids)
+      const modelName = getModelName(this.content, this.viewName)
+      const deleteItemMutation = buildMutationDeleteQuery(modelName)
+      const userDeleted = await this.$apollo.mutate({
+        mutation: gql(deleteItemMutation),
+        variables: {
+          Inputs: {
+            where: {
+              id: {
+                inq: ids,
+              },
+            },
+            clientMutationId: `${modelName} list item updated successfully.`,
+          },
+        },
+      })
+      this.$apollo.queries.tableData.refresh()
+      console.log(userDeleted)
+    },
   },
   apollo: {
     tableData: {
@@ -542,7 +615,6 @@ export default {
       },
       variables() {
         // Use vue reactive properties here
-
         const { content, viewName, search, filterRules, contentName } = this
         const sortBy = this.options.sortBy
         const sortDesc = this.options.sortDesc
@@ -556,7 +628,8 @@ export default {
           ctx: this,
         })
         const skip = (this.options.page - 1) * this.options.itemsPerPage
-        const limit = this.options.itemsPerPage
+        const limit =
+          this.options.itemsPerPage === -1 ? 0 : this.options.itemsPerPage
         return {
           filters: { limit, skip, order, where },
           where,

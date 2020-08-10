@@ -5,12 +5,14 @@
       :content="content"
       :view-name="viewName"
       :items="items"
+      :on-update-item="onUpdateItem"
     />
     <component
       :is="deleteItem || null"
       :content="content"
       :view-name="viewName"
       :items="items"
+      :on-delete-item="onDeleteItem"
     />
   </div>
 </template>
@@ -19,7 +21,7 @@ import { templateLoaderMixin } from '~/utility'
 
 export default {
   mixins: [templateLoaderMixin],
-  props: ['content', 'viewName', 'items'],
+  props: ['content', 'viewName', 'items', 'onUpdateItem', 'onDeleteItem'],
   data() {
     return {
       editItem: null,
