@@ -10,7 +10,7 @@
     <template v-slot:activator="{ on, attrs }">
       <v-text-field
         v-model="date"
-        label="Enter Date"
+        :label="field.caption"
         readonly
         v-bind="attrs"
         v-on="on"
@@ -24,3 +24,19 @@
     ></v-date-picker>
   </v-menu>
 </template>
+
+<script>
+export default {
+  props: ['value', 'field'],
+  data() {
+    return {
+      date: new Date().toISOString().substr(0, 10),
+    }
+  },
+  methods: {
+    onCalendarChange() {
+      this.$emit('input', this.date)
+    },
+  },
+}
+</script>

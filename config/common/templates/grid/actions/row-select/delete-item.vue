@@ -37,15 +37,16 @@ export default {
       this.dialog = false
       const modelName = getModelName(this.content, this.viewName)
       const deleteItemMutation = buildMutationDeleteQuery(modelName)
+      const ids = this.items.map(({ id }) => id)
       const userDeleted = await this.$apollo.mutate({
         mutation: gql(deleteItemMutation),
         variables: {
           Inputs: {
             where: {
               id: {
-                inq: ['5f2c09ed427821000ae9c52a', '5f2c09ed427821000ae9c52c'],
+                inq: ids,
               },
-            }, // this.item[0].id,
+            },
             clientMutationId: `${modelName} list item updated successfully.`,
           },
         },
