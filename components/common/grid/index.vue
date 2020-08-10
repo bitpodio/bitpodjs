@@ -388,7 +388,7 @@ function buildQueryVariables({
   if (contentFilter) {
     and.push(contentFilter.where)
   }
-  return { and }
+  return and.length > 0 ? { and } : {}
 }
 
 function getGridsProps(content, viewName) {
@@ -542,7 +542,6 @@ export default {
       },
       variables() {
         // Use vue reactive properties here
-
         const { content, viewName, search, filterRules, contentName } = this
         const sortBy = this.options.sortBy
         const sortDesc = this.options.sortDesc
@@ -556,7 +555,8 @@ export default {
           ctx: this,
         })
         const skip = (this.options.page - 1) * this.options.itemsPerPage
-        const limit = this.options.itemsPerPage
+        const limit =
+          this.options.itemsPerPage === -1 ? 0 : this.options.itemsPerPage
         return {
           filters: { limit, skip, order, where },
           where,

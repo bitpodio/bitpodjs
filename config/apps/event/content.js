@@ -1475,7 +1475,7 @@ export default (ctx) => ({
             columnWidth: '150px',
             type: 'date',
             inlineEdit: false,
-            newForm: false,
+            newForm: true,
             editForm: false,
           },
           TicketQuantity: {
@@ -1548,9 +1548,6 @@ export default (ctx) => ({
         },
         dataSource: {
           query: registrationList,
-          filter: {
-            where: { Status: 'Pending' },
-          },
           defaultSort: 'createdDate DESC',
           type: 'graphql',
           model: 'Registration',
