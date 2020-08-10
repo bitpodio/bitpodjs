@@ -22,7 +22,7 @@
       <div v-if="!hideFilter">
         <slot name="filter">
           <FieldsFilter
-            v-model="filterRules"
+            v-model="filters"
             :is-filter-applied="isFilterApplied"
             :fields="filterableFields"
           />
@@ -364,23 +364,24 @@ function getOperatorQuery(field, operator, value) {
 function buildQueryVariables({
   viewName,
   search,
-  filterRules,
+  filters,
   filter,
   contentName,
   ctx,
 }) {
   // const filterColumns = filterRules
+  const { rules: filterRules, ruleCondition } = filters
   const content = getContentByName(ctx, contentName)
   const and = []
   // const fields = getGridFields(content, viewName)
-  const or = []
+  const condition = []
   for (const rule of filterRules) {
     const { field, value, operator } = rule
     const ruleFilter = getOperatorQuery(field, operator, value)
-    or.push(ruleFilter)
+    condition.push(ruleFilter)
   }
-  if (or.length > 0) {
-    and.push({ or })
+  if (condition.length > 0) {
+    and.push({ [ruleCondition]: condition })
   }
   if (search) {
     const serachQuery = buildSearchQueryVariables(content, viewName, search)
@@ -462,7 +463,7 @@ export default {
       options: {},
       isFilterApplied: false,
       filterFields: {},
-      filterRules: [],
+      filters: { rules: [], ruleCondition: 'and' },
       component: [],
       slotTemplates: {},
       hideDefaultHeader: gridProps.hideDefaultHeader,
@@ -479,6 +480,7 @@ export default {
   },
   computed: {
     filterableFields() {
+      debugger
       const fields = getGridFields(this.content, this.viewName)
       return fields
     },
@@ -616,14 +618,14 @@ export default {
       },
       variables() {
         // Use vue reactive properties here
-        const { content, viewName, search, filterRules, contentName } = this
+        const { content, viewName, search, filters, contentName } = this
         const sortBy = this.options.sortBy
         const sortDesc = this.options.sortDesc
         const order = getOrderQuery(content, viewName, sortBy, sortDesc)
         const where = buildQueryVariables({
           viewName,
           search,
-          filterRules,
+          filters,
           filter: this.filter,
           contentName,
           ctx: this,

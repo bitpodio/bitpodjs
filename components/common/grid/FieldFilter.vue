@@ -8,6 +8,7 @@
         <v-select
           v-model="selectedConditionOperator"
           :items="conditionOperator"
+          @change="onRuleConditionChange"
           label="select"
           single-line
         ></v-select>
@@ -18,6 +19,7 @@
       <v-select
         v-model="filterRule.field"
         :items="fieldsList"
+        @change="onFieldChange"
         item-text="text"
         item-value="value"
         label="Field"
@@ -108,6 +110,10 @@ export default {
       type: Number,
       required: true,
     },
+    ruleCondition: {
+      type: String,
+      required: true,
+    },
   },
   data() {
     return {
@@ -162,7 +168,7 @@ export default {
       },
       items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
       conditionOperator: ['and', 'or'],
-      selectedConditionOperator: 'and',
+      selectedConditionOperator: this.ruleCondition,
       nonInputOperators: [
         'isEmpty',
         'isNotEmpty',
@@ -245,6 +251,12 @@ export default {
       fieldFilterValues.delete(filterValue)
       this.filterFields[fieldName] = new Set(fieldFilterValues)
       this.$emit('deleteFieldFilter', fieldName, this.values)
+    },
+    onRuleConditionChange() {
+      this.$emit('onRuleConditionChange', this.selectedConditionOperator)
+    },
+    onFieldChange() {
+      this.filterRule.value = ''
     },
   },
 }

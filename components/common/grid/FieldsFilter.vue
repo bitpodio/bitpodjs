@@ -9,7 +9,7 @@
       <template v-slot:activator="{ on, attrs }">
         <v-btn
           text
-          :color="value.length > 0 ? 'blue' : 'black'"
+          :color="rules.length > 0 ? 'blue' : 'black'"
           v-bind="attrs"
           v-on="on"
         >
@@ -22,14 +22,16 @@
         <v-divider></v-divider>
         <div class="filter-fields-container">
           <div
-            v-for="[index, filterRule] of value.entries()"
-            :key="index + filterRule.field + filterRule.value"
+            v-for="[index, filterRule] of rules.entries()"
+            :key="index + filterRule.field + ruleCondition"
             class="filter-rule-item"
           >
             <FieldFilter
               :filter-rule="filterRule"
               :fields="fields"
               :index="index"
+              :rule-condition="ruleCondition"
+              @onRuleConditionChange="onRuleConditionChange"
             />
             <v-menu bottom left>
               <template v-slot:activator="{ on, attrs }">
@@ -77,22 +79,21 @@ export default {
       required: true,
     },
     value: {
-      type: Array,
+      type: Object,
       default: () => {},
     },
   },
   data() {
     return {
       dialog: false,
-      filterInputSearchValues: {
-        Title: new Date().toISOString().substr(0, 10),
-      },
       date: new Date().toISOString().substr(0, 10),
       menu2: false,
       fav: true,
       menu: false,
       message: false,
       hints: true,
+      rules: [...this.value.rules] || [],
+      ruleCondition: this.value.ruleCondition,
     }
   },
   methods: {
@@ -106,8 +107,8 @@ export default {
     },
     onApply() {
       this.menu = false
-      const { value } = this
-      this.$emit('input', value)
+      const { rules, ruleCondition } = this
+      this.$emit('input', { rules, ruleCondition })
     },
     setFieldValues(fieldName, filterValues) {
       this.filterFields[fieldName] = filterValues
@@ -115,16 +116,19 @@ export default {
     },
     onAddFilter() {
       const fieldName = Object.keys(this.fields)[0]
-      this.value = [
-        ...this.value,
+      this.rules = [
+        ...this.rules,
         { field: fieldName, operator: 'contains', value: '' },
       ]
     },
     onRuleDelete(index) {
-      this.value = this.value.filter((_, i) => i !== index)
+      this.rules = this.rules.filter((_, i) => i !== index)
     },
     onRuleDuplicate(index) {
-      this.value = [...this.value, { ...this.value[index] }]
+      this.rules = [...this.rules, { ...this.rules[index] }]
+    },
+    onRuleConditionChange(condition) {
+      this.ruleCondition = condition
     },
   },
 }
