@@ -35,9 +35,10 @@
             v-model="search"
             append-icon="mdi-magnify"
             label="Search"
-            single-line
             hide-details
-            class="grid-search-input"
+            class="grid-search-input ml-2"
+            outlined
+            dense
           ></v-text-field>
         </slot>
       </div>
@@ -689,5 +690,6 @@ export default {
 .grid-actions-container {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
 }
 </style>

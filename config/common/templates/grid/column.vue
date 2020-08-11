@@ -1,5 +1,5 @@
 <template>
-  <div :class="{ 'text-right': isNumber }">
+  <div :class="columnClass[type]">
     {{ value }}
   </div>
 </template>
@@ -9,10 +9,20 @@ export default {
   props: ['item', 'value', 'context', 'type'],
   data() {
     return {
-      items: [],
+      columnClass: {
+        number: 'type-number',
+        date: 'type-date',
+        checkbox: 'type-checkbox',
+      },
       isNumber: this.type === 'number',
       // isNumber: true,
     }
   },
 }
 </script>
+
+<style scoped>
+.type-number {
+  text-align: right;
+}
+</style>

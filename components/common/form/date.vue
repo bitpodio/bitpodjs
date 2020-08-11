@@ -13,6 +13,7 @@
         :label="field.caption"
         readonly
         v-bind="attrs"
+        outlined
         v-on="on"
       ></v-text-field>
     </template>

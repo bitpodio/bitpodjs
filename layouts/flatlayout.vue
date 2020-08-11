@@ -360,7 +360,7 @@ export default {
       { heading: 'Promotions' },
       { icon: 'mdi-cog', text: 'Discount Code', route: '/bitpodpage1' },
       { heading: 'Members' },
-      { icon: 'mdi-message', text: 'Members', route: '/bitpodpage1' },
+      { icon: 'mdi-message', text: 'Members', route: '/event' },
       { icon: 'mdi-contacts', text: 'Contacts', route: '/bitpodpage2' },
       { heading: 'Task' },
       { icon: 'mdi-cellphone-link', text: 'My Task', route: '/bitpodpage1' },

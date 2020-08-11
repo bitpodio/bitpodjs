@@ -7,6 +7,7 @@
       :item-value="itemValue"
       :loading="isLoading"
       :label="field.caption"
+      outlined
       @change="onChange"
     ></v-autocomplete>
   </div>
