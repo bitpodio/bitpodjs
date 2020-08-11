@@ -1,8 +1,8 @@
 <template>
   <v-layout column justify-center align-center>
-    <!-- <div>
+    <div>
       <ViewDropdown :content="content[$route.params.contentName]" />
-    </div> -->
+    </div>
     <v-flex xs12 sm12 md12>
       <Grid
         :content="content[$route.params.contentName]"
@@ -16,10 +16,12 @@
 <script>
 import Grid from '~/components/common/grid'
 import content from '~/config/apps/event/content'
+import ViewDropdown from '~/components/common/viewDropdown'
 export default {
   // middleware: ['auth'],
   components: {
     Grid,
+    ViewDropdown,
   },
   data() {
     // console.log(`content() = ${JSON.stringify(content())}`)

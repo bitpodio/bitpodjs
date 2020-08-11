@@ -7,6 +7,8 @@
             :is="actionTemplates['row-select'] || null"
             :content="content"
             :view-name="viewName"
+            :on-update-item="onUpdateItem"
+            :on-delete-item="onDeleteItem"
             :items="selectedItems"
             class="d-flex"
           />
@@ -15,6 +17,7 @@
           :is="actionTemplates['grid'] || null"
           :content="content"
           :view-name="viewName"
+          :on-new-item-save="onNewItemSave"
         />
       </div>
       <div v-if="hideFilter">
