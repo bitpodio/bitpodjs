@@ -14,7 +14,6 @@
 <script>
 import ViewDropdown from '~/components/common/viewDropdown'
 import Grid from '~/components/common/grid'
-// import Grid from '~/components/common/test';
 import content from '~/config/apps/event/content'
 
 export default {

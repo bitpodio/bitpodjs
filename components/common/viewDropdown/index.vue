@@ -9,26 +9,42 @@
       </template>
 
       <v-list>
-        <v-list-item
-          v-for="view in viewList"
-          :key="view.value"
-          @click="onViewChange(value)"
-        >
-          <v-list-item-title>{{ view.caption }}</v-list-item-title>
+        <v-list-item v-for="view in viewList" :key="view.value">
+          <NuxtLink :to="view.path">
+            {{ view.caption }}
+          </NuxtLink>
         </v-list-item>
       </v-list>
     </v-menu>
   </div>
 </template>
 <script>
-function getContentViews(content) {
+function getViewPath(viewKey, view, contentName) {
+  const { type = 'list' } = view
+  let path = ''
+  switch (type) {
+    case 'path':
+      path = view.path
+      break
+    case 'card':
+    case 'list':
+      path = `/${type}/${contentName}/${viewKey}`
+      break
+  }
+  return path
+}
+
+function getContentViews(content, contentName) {
   const views = content.views
   const viewList = []
   for (const [viewKey, view] of Object.entries(views)) {
-    viewList.push({
-      caption: view.title,
-      value: viewKey,
-    })
+    if (!(view.visible === false)) {
+      viewList.push({
+        caption: view.title,
+        value: viewKey,
+        path: getViewPath(viewKey, view, contentName),
+      })
+    }
   }
   return viewList
 }
@@ -38,17 +54,24 @@ export default {
       type: Object,
       required: true,
     },
+    contentName: {
+      type: String,
+      required: true,
+    },
+    viewName: {
+      type: String,
+      required: true,
+    },
   },
   data() {
     return {
-      viewList: getContentViews(this.content),
-      viewName: 'Registrations',
+      viewList: getContentViews(this.content, this.contentName),
     }
   },
   computed: {
     viewCaption() {
       const views = this.content.views
-      return views[this.viewName] ? views[this.viewName].title : 'Registrations'
+      return views[this.viewName] ? views[this.viewName].title : ''
     },
   },
   methods: {

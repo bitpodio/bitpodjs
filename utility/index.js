@@ -3,46 +3,6 @@ export function importTemplate(templatePath) {
   return () => import(`~/config/${templatePath}`)
 }
 
-// export function mixin(options) {
-//   return {
-//     computed: {
-//       templateLoader() {
-//         return (gridTemplatePath) => importTemplate(`${gridTemplatePath}`)
-//       },
-//     },
-//     methods: {
-//       async loadTemplate(templatePaths, returnErrorIfNotFound = true) {
-//         for (const templatePath of templatePaths) {
-//           try {
-//             await this.templateLoader(templatePath)()
-//             return () => this.templateLoader(templatePath)()
-//           } catch {}
-//         }
-//         return returnErrorIfNotFound && MissingComponent
-//       },
-//     },
-//   }
-// }
-
-// export const templateLoaderMixin = {
-//   computed: {
-//     templateLoader() {
-//       return (gridTemplatePath) => importTemplate(`${gridTemplatePath}`)
-//     },
-//   },
-//   methods: {
-//     async loadTemplate(templatePaths, returnErrorIfNotFound = true) {
-//       for (const templatePath of templatePaths) {
-//         try {
-//           await this.templateLoader(templatePath)()
-//           return () => this.templateLoader(templatePath)()
-//         } catch {}
-//       }
-//       return returnErrorIfNotFound && MissingComponent
-//     },
-//   },
-// }
-
 export const templateLoaderMixin = {
   computed: {
     templateLoader() {
@@ -66,8 +26,6 @@ export const templateLoaderMixin = {
     },
   },
   async mounted() {
-    debugger
-    console.log('templateLoaderMixin mounted', this._components)
     if (this._components)
       for (const templateName in this._components) {
         const { locations, returnErrorIfNotFound = true } = this._components[

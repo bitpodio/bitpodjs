@@ -92,7 +92,7 @@
 </template>
 
 <script>
-import Lookup from '../lookup'
+import Lookup from '../form/lookup.vue'
 export default {
   components: {
     Lookup,

@@ -74,7 +74,6 @@ export default {
     Lookup,
     Checkbox,
   },
-  //   mixins: [myMixin],
   props: ['content', 'viewName', 'items', 'onUpdateItem'],
   data() {
     const fields = getGridFields(this.content, this.viewName)

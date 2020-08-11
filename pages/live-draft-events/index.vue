@@ -81,7 +81,6 @@ export default {
         `
       },
       variables() {
-        // Use vue reactive properties here
         const where = {}
         const skip = 0
         const limit = 10
@@ -95,7 +94,6 @@ export default {
         const { edges } = data[modelName][`${modelName}Find`]
         return edges.map(({ node }) => node)
       },
-      // Optional result hook
       result({ data, loading, networkStatus }) {
         console.log('We got some result!')
       },
@@ -104,7 +102,6 @@ export default {
       },
       prefetch: false,
       loadingKey: 'loading',
-      // pollInterval:0
     },
   },
 }

@@ -45,8 +45,6 @@
 
 <script>
 import gql from 'graphql-tag'
-// import TextField from '../../../../../../components/form/text-field.vue'
-// import TextField from '~/components/form/text-field.vue'
 import TextField from '~/components/common/form/text-field.vue'
 import Lookup from '~/components/common/form/lookup.vue'
 import Checkbox from '~/components/common/form/checkbox.vue'
@@ -87,7 +85,6 @@ export default {
     Lookup,
     Checkbox,
   },
-  //   mixins: [myMixin],
   props: ['content', 'viewName', 'items'],
   data() {
     const fields = getGridFields(this.content, this.viewName)

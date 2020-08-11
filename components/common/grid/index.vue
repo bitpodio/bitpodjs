@@ -136,7 +136,6 @@ import startOfYesterday from 'date-fns/startOfYesterday'
 import endOfYesterday from 'date-fns/endOfYesterday'
 import startOfDay from 'date-fns/startOfDay'
 import endOfDay from 'date-fns/endOfDay'
-// import { axiosWrapper } from '../api/axios.js'
 import FieldsFilter from './FieldsFilter.vue'
 import contentFactory from '~/config/apps/event/content'
 import { templateLoaderMixin } from '~/utility'
@@ -232,7 +231,6 @@ function getContentByName(ctx, contentName) {
 }
 
 function getOrderQuery(content, viewName, sortBy, sortDesc) {
-  // let {sortBy,sortDesc} = option;
   if (!(sortBy && sortBy.length)) {
     const defaultSort = getViewDataSource(content, viewName).defaultSort
     return defaultSort || ''
@@ -369,11 +367,9 @@ function buildQueryVariables({
   contentName,
   ctx,
 }) {
-  // const filterColumns = filterRules
   const { rules: filterRules, ruleCondition } = filters
   const content = getContentByName(ctx, contentName)
   const and = []
-  // const fields = getGridFields(content, viewName)
   const condition = []
   for (const rule of filterRules) {
     const { field, value, operator } = rule
@@ -426,7 +422,7 @@ export default {
   components: {
     FieldsFilter,
   },
-  mixins: [templateLoaderMixin], //, apolloMixin, axiosMixin],
+  mixins: [templateLoaderMixin],
   props: {
     viewName: {
       type: String,
@@ -487,33 +483,10 @@ export default {
     context() {
       return getGridTemplateInfo(this.content, this.viewName).context || {}
     },
-    _components() {
-      return {
-        newItem: {
-          locations: [
-            `templates/grids/${this.templateFolderName}/actions/grid/new-item.vue`,
-            `common/templates/grid/actions/grid/new-item.vue`,
-          ],
-        },
-      }
-    },
-
-    // _components() {},
   },
   created() {
     console.log('in created')
   },
-  // async mounted() {
-  //     let result = await this.$apollo.query({
-  //         query: gql`${EventFind}`,
-  //         variables:{
-  //             filters: {where:{}}, where:{}
-  //         }
-  //     });
-  //
-  //     console.log(result)
-  //     this.items = formatResult(result.data,"Event")
-  // }
   mounted() {
     this.headers.forEach(async (column, index) => {
       this.component[index] = await this.loadTemplate([
@@ -542,13 +515,11 @@ export default {
       this.isFilterApplied = true
     },
     onRowClick(item, props) {
-      console.log(`props=${props} item=${item}  `)
       if (!this.showSelect) {
         this.selectedItems = [item]
       }
     },
     onItemSelected(items) {
-      console.log(`onItemSelected = ${items}`)
       this.selectedItems = items
     },
     async onNewItemSave(data) {
@@ -614,7 +585,6 @@ export default {
         return gql`
           ${getViewQuery(this.content, this.viewName)}
         `
-        // return null
       },
       variables() {
         // Use vue reactive properties here
@@ -650,7 +620,6 @@ export default {
             : {}
         return tableData
       },
-      // Optional result hook
       result({ data, loading, networkStatus }) {
         console.log('We got some result!')
       },

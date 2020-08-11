@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import Lookup from '~/components/common/lookup'
+import Lookup from '~/components/common/form/lookup.vue'
 import content from '~/config/apps/event/content'
 import Grid from '~/components/common/grid'
 export default {
