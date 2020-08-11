@@ -1,7 +1,7 @@
 <template>
   <div>
     <span>{{ viewCaption }}</span>
-    <v-menu bottom right>
+    <v-menu offset-y transition="slide-y-transition" bottom>
       <template v-slot:activator="{ on, attrs }">
         <v-btn icon v-bind="attrs" v-on="on">
           <v-icon>mdi-chevron-down</v-icon>
@@ -10,7 +10,7 @@
 
       <v-list>
         <v-list-item v-for="view in viewList" :key="view.value">
-          <NuxtLink :to="view.path">
+          <NuxtLink :to="view.path" class="text-decoration-none text--primary">
             {{ view.caption }}
           </NuxtLink>
         </v-list-item>

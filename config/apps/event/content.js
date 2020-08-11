@@ -1999,7 +1999,7 @@ export default (ctx) => ({
           'currentUsageCount',
         ],
         Query: '',
-        Visible: false,
+        visible: false,
         type: 'Form',
         Title: 'Discount Code',
       },
