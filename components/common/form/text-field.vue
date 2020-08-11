@@ -9,7 +9,6 @@
 </template>
 
 <script>
-// import {  } from "module";
 export default {
   props: ['value', 'field'],
   data() {

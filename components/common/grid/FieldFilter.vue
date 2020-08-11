@@ -14,6 +14,7 @@
           single-line
           outlined
           dense
+          @change="onRuleConditionChange"
         ></v-select>
       </div>
       <div v-else class="pr-3 pt-3 filter-or">
@@ -29,6 +30,7 @@
         outlined
         dense
         class="pr-3 filter-field"
+        @change="onFieldChange"
       ></v-select>
       <v-select
         v-model="filterRule.operator"
@@ -113,7 +115,7 @@
 </template>
 
 <script>
-import Lookup from '../lookup'
+import Lookup from '../form/lookup.vue'
 export default {
   components: {
     Lookup,
@@ -129,6 +131,10 @@ export default {
     },
     index: {
       type: Number,
+      required: true,
+    },
+    ruleCondition: {
+      type: String,
       required: true,
     },
   },
@@ -185,7 +191,7 @@ export default {
       },
       items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
       conditionOperator: ['and', 'or'],
-      selectedConditionOperator: 'and',
+      selectedConditionOperator: this.ruleCondition,
       nonInputOperators: [
         'isEmpty',
         'isNotEmpty',
@@ -268,6 +274,12 @@ export default {
       fieldFilterValues.delete(filterValue)
       this.filterFields[fieldName] = new Set(fieldFilterValues)
       this.$emit('deleteFieldFilter', fieldName, this.values)
+    },
+    onRuleConditionChange() {
+      this.$emit('onRuleConditionChange', this.selectedConditionOperator)
+    },
+    onFieldChange() {
+      this.filterRule.value = ''
     },
   },
 }

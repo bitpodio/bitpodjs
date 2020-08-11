@@ -8,7 +8,6 @@
 
 <script>
 export default {
-  //   mixins: [myMixin],
   props: ['content', 'viewName', 'items', 'onDeleteItem'],
   data() {
     return {
@@ -16,12 +15,8 @@ export default {
       updateCount: 0,
     }
   },
-  beforeUpdate() {
-    console.log('update called')
-  },
   methods: {
     async onDelete() {
-      debugger
       const ids = this.items.map(({ id }) => id)
       const userDeleted = await this.onDeleteItem(ids)
       console.log(userDeleted)

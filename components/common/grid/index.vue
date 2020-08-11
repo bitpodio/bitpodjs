@@ -23,7 +23,7 @@
       <div v-if="hideFilter">
         <slot name="filter">
           <FieldsFilter
-            v-model="filterRules"
+            v-model="filters"
             :is-filter-applied="isFilterApplied"
             :fields="filterableFields"
           />
@@ -139,7 +139,6 @@ import startOfYesterday from 'date-fns/startOfYesterday'
 import endOfYesterday from 'date-fns/endOfYesterday'
 import startOfDay from 'date-fns/startOfDay'
 import endOfDay from 'date-fns/endOfDay'
-// import { axiosWrapper } from '../api/axios.js'
 import FieldsFilter from './FieldsFilter.vue'
 import contentFactory from '~/config/apps/event/content'
 import { templateLoaderMixin } from '~/utility'
@@ -235,7 +234,6 @@ function getContentByName(ctx, contentName) {
 }
 
 function getOrderQuery(content, viewName, sortBy, sortDesc) {
-  // let {sortBy,sortDesc} = option;
   if (!(sortBy && sortBy.length)) {
     const defaultSort = getViewDataSource(content, viewName).defaultSort
     return defaultSort || ''
@@ -367,23 +365,22 @@ function getOperatorQuery(field, operator, value) {
 function buildQueryVariables({
   viewName,
   search,
-  filterRules,
+  filters,
   filter,
   contentName,
   ctx,
 }) {
-  // const filterColumns = filterRules
+  const { rules: filterRules, ruleCondition } = filters
   const content = getContentByName(ctx, contentName)
   const and = []
-  // const fields = getGridFields(content, viewName)
-  const or = []
+  const condition = []
   for (const rule of filterRules) {
     const { field, value, operator } = rule
     const ruleFilter = getOperatorQuery(field, operator, value)
-    or.push(ruleFilter)
+    condition.push(ruleFilter)
   }
-  if (or.length > 0) {
-    and.push({ or })
+  if (condition.length > 0) {
+    and.push({ [ruleCondition]: condition })
   }
   if (search) {
     const serachQuery = buildSearchQueryVariables(content, viewName, search)
@@ -428,7 +425,7 @@ export default {
   components: {
     FieldsFilter,
   },
-  mixins: [templateLoaderMixin], //, apolloMixin, axiosMixin],
+  mixins: [templateLoaderMixin],
   props: {
     viewName: {
       type: String,
@@ -465,7 +462,7 @@ export default {
       options: {},
       isFilterApplied: false,
       filterFields: {},
-      filterRules: [],
+      filters: { rules: [], ruleCondition: 'and' },
       component: [],
       slotTemplates: {},
       hideDefaultHeader: gridProps.hideDefaultHeader,
@@ -482,39 +479,17 @@ export default {
   },
   computed: {
     filterableFields() {
+      debugger
       const fields = getGridFields(this.content, this.viewName)
       return fields
     },
     context() {
       return getGridTemplateInfo(this.content, this.viewName).context || {}
     },
-    _components() {
-      return {
-        newItem: {
-          locations: [
-            `templates/grids/${this.templateFolderName}/actions/grid/new-item.vue`,
-            `common/templates/grid/actions/grid/new-item.vue`,
-          ],
-        },
-      }
-    },
-
-    // _components() {},
   },
   created() {
     console.log('in created')
   },
-  // async mounted() {
-  //     let result = await this.$apollo.query({
-  //         query: gql`${EventFind}`,
-  //         variables:{
-  //             filters: {where:{}}, where:{}
-  //         }
-  //     });
-  //
-  //     console.log(result)
-  //     this.items = formatResult(result.data,"Event")
-  // }
   mounted() {
     this.headers.forEach(async (column, index) => {
       this.component[index] = await this.loadTemplate([
@@ -543,13 +518,11 @@ export default {
       this.isFilterApplied = true
     },
     onRowClick(item, props) {
-      console.log(`props=${props} item=${item}  `)
       if (!this.showSelect) {
         this.selectedItems = [item]
       }
     },
     onItemSelected(items) {
-      console.log(`onItemSelected = ${items}`)
       this.selectedItems = items
     },
     async onNewItemSave(data) {
@@ -615,18 +588,17 @@ export default {
         return gql`
           ${getViewQuery(this.content, this.viewName)}
         `
-        // return null
       },
       variables() {
         // Use vue reactive properties here
-        const { content, viewName, search, filterRules, contentName } = this
+        const { content, viewName, search, filters, contentName } = this
         const sortBy = this.options.sortBy
         const sortDesc = this.options.sortDesc
         const order = getOrderQuery(content, viewName, sortBy, sortDesc)
         const where = buildQueryVariables({
           viewName,
           search,
-          filterRules,
+          filters,
           filter: this.filter,
           contentName,
           ctx: this,
@@ -651,7 +623,6 @@ export default {
             : {}
         return tableData
       },
-      // Optional result hook
       result({ data, loading, networkStatus }) {
         console.log('We got some result!')
       },

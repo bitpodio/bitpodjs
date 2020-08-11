@@ -6,6 +6,9 @@ export default {
    ** See https://nuxtjs.org/api/configuration-mode
    */
   mode: 'universal',
+  router: {
+    base: process.env.PUBLIC_PATH || '/',
+  },
   /*
    ** Nuxt target
    ** See https://nuxtjs.org/api/configuration-target

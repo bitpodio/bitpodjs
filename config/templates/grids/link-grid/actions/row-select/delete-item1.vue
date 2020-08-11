@@ -29,7 +29,6 @@ function getModelName(content, viewName) {
 }
 
 export default {
-  //   mixins: [myMixin],
   props: ['content', 'viewName', 'items'],
   data() {
     return {

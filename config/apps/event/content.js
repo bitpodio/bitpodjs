@@ -1342,47 +1342,6 @@ export default (ctx) => ({
     },
     views: {
       Registrations: {
-        actions: {
-          row: [],
-          grid: {
-            collapseAfter: 2,
-            items: [
-              {
-                caption: 'create',
-                icon: 'fa fa-plus',
-                tooltip: '',
-                items: [
-                  {
-                    caption: 'create Simple Event',
-                    name: 'createEvent',
-                    type: '',
-                  },
-                  {
-                    caption: 'create Recurring Event',
-                  },
-                  {
-                    caption: 'Seat Designer',
-                    type: 'link',
-                  },
-                ],
-              },
-              {
-                caption: 'Emails',
-              },
-            ],
-          },
-          rowSelect: {
-            items: [
-              {
-                caption: 'edit',
-                icon: 'fa fa-plus',
-                tooltip: '',
-              },
-              {},
-              'Delete Registration',
-            ],
-          },
-        },
         ui: {
           hideDefaultHeader: false,
           hideDefaultFooter: false,
@@ -1555,27 +1514,30 @@ export default (ctx) => ({
           // newItem: ,
         },
         title: 'Registrations',
+        type: 'list',
+        // type: 'card',
+        // type: 'calendar',
+        // type: 'path',
+        // path: '/event-dashboard/abc'
       },
-      'Abandoned Registrations': {
-        UI: {
-          Pagination: 'pageWithNumber',
-          'List Details View Template': 'Registrations_Details_View_Template',
+      'abandoned-registrations': {
+        ui: {
+          hideDefaultHeader: false,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: true,
+          hideFilter: false,
+          hideSearch: false,
         },
-        Search: true,
-        Actions: {
-          'Embeded Actions': '',
-          'General Actions': [],
-          'Selected Item Action': ['Delete Registration'],
-        },
-        FilterRule: '  { "where":{"Status":"Failed"} }    ',
-        DefaultSort: 'createdDate DESC',
-        Fields: {
+        fields: {
           EventName: {
             displayOrder: 6,
             caption: 'EventName',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '180px',
+            type: 'string',
           },
           PaymentMethod: {
             displayOrder: 10,
@@ -1583,6 +1545,7 @@ export default (ctx) => ({
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
+            type: 'string',
           },
           CompanyName: {
             displayOrder: 4,
@@ -1590,6 +1553,7 @@ export default (ctx) => ({
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
+            type: 'string',
           },
           Phone: {
             displayOrder: 5,
@@ -1597,6 +1561,7 @@ export default (ctx) => ({
             searchEnable: true,
             sortEnable: true,
             columnWidth: '100px',
+            type: 'string',
           },
           Status: {
             displayOrder: 9,
@@ -1604,6 +1569,41 @@ export default (ctx) => ({
             searchEnable: true,
             sortEnable: true,
             columnWidth: '100px',
+            type: 'lookup',
+            dataSource: {
+              query: registrationStatusOptions,
+              itemText: 'value',
+              itemValue: 'key',
+              filter: { type: 'RegistrationStatus' },
+            },
+            // template: {
+            //   name: 'issue-grid',
+            //   params: {
+            //     // eslint-disable-next-line no-template-curly-in-string
+            //     route: '/event',
+            //   },
+            // },
+            // items: [
+            //   {
+            //     text: 'Success Payment',
+            //     value: 'Success',
+            //   },
+            //   {
+            //     text: 'Pending Payment',
+            //     value: 'Pending',
+            //   },
+            // ],
+          },
+          RegistrationId: {
+            displayOrder: 6,
+            caption: 'RegistrationId',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'string',
+            inlineEdit: false,
+            newForm: false,
+            editForm: false,
           },
           createdDate: {
             displayOrder: 11,
@@ -1611,6 +1611,10 @@ export default (ctx) => ({
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
+            type: 'date',
+            inlineEdit: false,
+            newForm: true,
+            editForm: false,
           },
           TicketQuantity: {
             displayOrder: 9,
@@ -1618,6 +1622,7 @@ export default (ctx) => ({
             searchEnable: true,
             sortEnable: true,
             columnWidth: '130px',
+            type: 'number',
           },
           FullName: {
             displayOrder: 2,
@@ -1625,6 +1630,10 @@ export default (ctx) => ({
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
+            type: 'string',
+            inlineEdit: false,
+            newForm: false,
+            editForm: false,
           },
           TotalAmount: {
             displayOrder: 8,
@@ -1632,6 +1641,7 @@ export default (ctx) => ({
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
+            type: 'number',
           },
           Email: {
             displayOrder: 3,
@@ -1639,11 +1649,57 @@ export default (ctx) => ({
             searchEnable: true,
             sortEnable: true,
             columnWidth: '130px',
+            type: 'string',
+          },
+          action: {
+            displayOrder: 11,
+            caption: 'Action',
+            searchEnable: false,
+            sortEnable: false,
+            columnWidth: '130px',
+            type: 'action',
+            inlineEdit: false,
+            newForm: false,
+            editForm: false,
+            condtion: ({ item, items, index }) => {
+              return true
+            },
+          },
+          FirstName: {
+            displayOrder: 2,
+            caption: 'First Name',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: false,
           },
         },
-        Query:
-          'query($filters: JSON, $where: JSON) {\n  Registration {\n    RegistrationFind(filter: $filters) {\n      edges {\n        node {\n          id\n          Email\n          EventName\n          FirstName\n  TotalAmount  TicketQuantity    CompanyName    FullName\n          LastName\n          _Comment {\n            Notes\n            id\n          }\n          Category\n          _QuestionResponse {\n            Answer\n            id\n          }\n          PaymentMethod\n          CheckIn\n          Phone\n          RegistrationId\n          Status\n          createdDate\n          EventList{\n            _VenueAddress{\n              id\n              City\n              State\n              PostalCode\n              AddressLine\n              Country\n            }\n          }\n        }\n      }\n    }\n    RegistrationCount(where: $where)\n  }\n}\n',
+        template: {
+          name: 'link-grid',
+          context: {
+            basePath: '/event',
+          },
+        },
+        dataSource: {
+          query: registrationList,
+          defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          filter: {
+            where: { Status: 'Failed' },
+          },
+          model: 'Registration',
+          // newItem: ,
+        },
         title: 'Abandoned Registrations',
+        type: 'list',
+        // type: 'card',
+        // type: 'calendar',
+        // type: 'path',
+        // path: '/event-dashboard/abc'
       },
       Registration: {
         DefaultSort: 'createdDate DESC',
