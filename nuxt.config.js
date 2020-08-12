@@ -177,7 +177,7 @@ export default {
     redirect: {
       login: '/login',
       callback: '/callback',
-      home: '/event',
+      home: '/flat/tiles',
     },
     strategies: {
       // https://login.bitpod.io/auth/account

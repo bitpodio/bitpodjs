@@ -381,7 +381,9 @@
         </v-menu>
       </div>
       <div v-else>
-        <v-btn to="/login">Login</v-btn>
+        <v-btn class="ma-2" outlined color="primary" to="/login">
+          Logout
+        </v-btn>
       </div>
     </v-app-bar>
 
@@ -418,11 +420,11 @@ export default {
     account: false,
     message: false,
     items: [
-      { icon: 'mdi-contacts', text: 'Eventboard', to: '/' },
+      { icon: 'mdi-view-dashboard', text: 'Eventboard', to: '/' },
       { heading: 'Event' },
-      { icon: 'mdi-history', text: 'Events', to: '/flat/tiles' },
+      { icon: 'mdi-calendar-text', text: 'Events', to: '/flat/tiles' },
       {
-        icon: 'mdi-content-copy',
+        icon: 'mdi-account-plus',
         text: 'Registarions',
         to: '/list/Registrations/Registrations',
       },
@@ -433,8 +435,8 @@ export default {
         to: '/list/DiscountCodes/Discount Codes',
       },
       { heading: 'Members' },
-      { icon: 'mdi-message', text: 'Members', to: '/members' },
-      { icon: 'mdi-contacts', text: 'Contacts', to: '' },
+      { icon: 'mdi-account-multiple-outline', text: 'Members', to: '/members' },
+      { icon: 'mdi-account-box-outline', text: 'Contacts', to: '' },
       { heading: 'Task' },
       { icon: 'mdi-cellphone-link', text: 'My Task', to: '' },
     ],
