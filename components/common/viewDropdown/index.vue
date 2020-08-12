@@ -38,7 +38,7 @@ function getContentViews(content, contentName) {
   const views = content.views
   const viewList = []
   for (const [viewKey, view] of Object.entries(views)) {
-    if (!(view.visible === false)) {
+    if (view.visible !== false) {
       viewList.push({
         caption: view.title,
         value: viewKey,
