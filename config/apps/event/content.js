@@ -2,6 +2,8 @@ import registrationStatusOptions from './gql/registrationStatusOptions.gql'
 import registrationList from './gql/registrationList.gql'
 import discountCodes from './gql/discountCodes.gql'
 import eventList from './gql/eventlist.gql'
+import contactList from './gql/contactList.gql'
+import memberList from './gql/memberList.gql'
 // import { getItems } from './rest'
 
 export default (ctx) => ({

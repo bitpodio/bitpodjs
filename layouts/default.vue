@@ -435,8 +435,16 @@ export default {
         to: '/list/DiscountCodes/Discount Codes',
       },
       { heading: 'Members' },
-      { icon: 'mdi-account-multiple-outline', text: 'Members', to: '/members' },
-      { icon: 'mdi-account-box-outline', text: 'Contacts', to: '' },
+      {
+        icon: 'mdi-account-multiple-outline',
+        text: 'Members',
+        to: '/list/EventCustomers/Members',
+      },
+      {
+        icon: 'mdi-account-box-outline',
+        text: 'Contacts',
+        to: '/list/Contacts/Contacts',
+      },
       { heading: 'Task' },
       { icon: 'mdi-cellphone-link', text: 'My Task', to: '' },
     ],
