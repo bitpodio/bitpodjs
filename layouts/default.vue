@@ -373,7 +373,7 @@
                   color="primary"
                   @click="$auth.logout()"
                 >
-                  Logout
+                  Login
                 </v-btn>
               </v-list-item>
             </v-list>
