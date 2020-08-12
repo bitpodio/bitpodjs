@@ -58,7 +58,14 @@
                 </v-list-item-title>
               </v-list-item-content>
             </template>
-            <v-list-item v-for="(child, i) in item.children" :key="i" link>
+            <v-list-item
+              v-for="(child, i) in item.children"
+              :key="i"
+              link
+              :to="item.to"
+              router
+              exact
+            >
               <v-list-item-action v-if="child.icon" class="nav-icon">
                 <v-icon>{{ child.icon }}</v-icon>
               </v-list-item-action>
@@ -69,7 +76,7 @@
               </v-list-item-content>
             </v-list-item>
           </v-list-group>
-          <v-list-item v-else :key="item.text" link>
+          <v-list-item v-else :key="item.text" link :to="item.to" router exact>
             <v-list-item-action class="nav-icon">
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-action>
@@ -317,9 +324,60 @@
       <v-btn icon>
         <v-icon>mdi-bell</v-icon>
       </v-btn>
-      <v-btn icon>
-        <v-icon>mdi-account</v-icon>
-      </v-btn>
+      <v-menu
+        v-model="account"
+        :close-on-content-click="false"
+        :nudge-width="180"
+        offset-y
+        transition="slide-y-transition"
+        bottom
+      >
+        <!-- <template v-slot:activator="{ on, attrs }">
+          <v-btn icon v-bind="attrs" v-on="on">
+            <v-icon>mdi-account</v-icon>
+          </v-btn>
+        </template> -->
+        <template v-if="$auth.$state.loggedIn" v-slot:activator="{ on, attrs }">
+          <v-avatar color="primary ml-1" size="30" v-bind="attrs" v-on="on">
+            <span class="white--text">{{ $auth.user.data.name[0] }}</span>
+          </v-avatar>
+        </template>
+        <template v-else>
+          <v-btn to="/login">Login</v-btn>
+        </template>
+        <v-card>
+          <v-list>
+            <v-list-item>
+              <v-list-item-avatar>
+                <img
+                  src="https://cdn.vuetifyjs.com/images/john.jpg"
+                  alt="Rishi"
+                />
+              </v-list-item-avatar>
+
+              <v-list-item-content>
+                <v-list-item-title>Rishi Belhekar</v-list-item-title>
+                <v-list-item-subtitle>rishikesh@bitpod.io</v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+
+          <v-divider></v-divider>
+
+          <v-list>
+            <v-list-item class="text-center justify-center">
+              <v-btn
+                class="ma-2"
+                outlined
+                color="primary"
+                @click="$auth.logout()"
+              >
+                Logout
+              </v-btn>
+            </v-list-item>
+          </v-list>
+        </v-card>
+      </v-menu>
     </v-app-bar>
 
     <v-main class="greybg">
@@ -352,18 +410,28 @@ export default {
     notifications: false,
     sound: true,
     tabs: null,
+    account: false,
+    message: false,
     items: [
-      { icon: 'mdi-contacts', text: 'Eventboard', route: '/home' },
+      { icon: 'mdi-contacts', text: 'Eventboard', to: '/' },
       { heading: 'Event' },
-      { icon: 'mdi-history', text: 'Events', route: '/bitpodpage1' },
-      { icon: 'mdi-content-copy', text: 'Registarions', route: '/bitpodpage2' },
+      { icon: 'mdi-history', text: 'Events', to: '/flat/tiles' },
+      {
+        icon: 'mdi-content-copy',
+        text: 'Registarions',
+        to: '/list/Registrations/Registrations',
+      },
       { heading: 'Promotions' },
-      { icon: 'mdi-cog', text: 'Discount Code', route: '/bitpodpage1' },
+      {
+        icon: 'mdi-cog',
+        text: 'Discount Code',
+        to: '/list/DiscountCodes/Discount Codes',
+      },
       { heading: 'Members' },
-      { icon: 'mdi-message', text: 'Members', route: '/event' },
-      { icon: 'mdi-contacts', text: 'Contacts', route: '/bitpodpage2' },
+      { icon: 'mdi-message', text: 'Members', to: '/members' },
+      { icon: 'mdi-contacts', text: 'Contacts', to: '' },
       { heading: 'Task' },
-      { icon: 'mdi-cellphone-link', text: 'My Task', route: '/bitpodpage1' },
+      { icon: 'mdi-cellphone-link', text: 'My Task', to: '' },
     ],
   }),
   methods: {
