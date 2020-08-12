@@ -123,8 +123,8 @@ export default {
   },
   serverMiddleware: [
     '~/api/index.js',
-    { path: `${process.env.PUBLIC_PATH}/callback`, handler: '~/api/callback.js' },
-    { path: `${process.env.PUBLIC_PATH}/authorize`, handler: '~/api/authorize.js' },
+    { path: `/callback`, handler: '~/api/callback.js' },
+    { path: `/authorize`, handler: '~/api/authorize.js' },
   ],
   auth: {
     redirect: {
