@@ -1,126 +1,133 @@
 <template>
   <div>
-    <div>
-      <component
-        :is="actionTemplates['grid'] || null"
-        :content="content"
-        :view-name="viewName"
-        :on-new-item-save="onNewItemSave"
-      />
-      <template v-if="selectedItems.length > 0">
+    <template v-if="!!errorMsg">
+      <div>{{ errorMsg }}</div>
+    </template>
+    <template v-if="!errorMsg">
+      <div>
         <component
-          :is="actionTemplates['row-select'] || null"
+          :is="actionTemplates['grid'] || null"
           :content="content"
           :view-name="viewName"
-          :items="selectedItems"
-          :on-update-item="onUpdateItem"
-          :on-delete-item="onDeleteItem"
+          :on-new-item-save="onNewItemSave"
+          :refresh="refresh"
         />
-      </template>
-    </div>
-    <div class="grid-actions-container">
-      <div v-if="!hideFilter">
-        <slot name="filter">
-          <FieldsFilter
-            v-model="filters"
-            :is-filter-applied="isFilterApplied"
-            :fields="filterableFields"
+        <template v-if="selectedItems.length > 0">
+          <component
+            :is="actionTemplates['row-select'] || null"
+            :content="content"
+            :view-name="viewName"
+            :items="selectedItems"
+            :on-update-item="onUpdateItem"
+            :on-delete-item="onDeleteItem"
+            :refresh="refresh"
           />
-        </slot>
+        </template>
       </div>
-      <div v-if="!hideSearch" class="grid-search-section">
-        <slot name="search">
-          <v-text-field
-            v-model="search"
-            append-icon="mdi-magnify"
-            label="Search"
-            single-line
-            hide-details
-            class="grid-search-input"
-          ></v-text-field>
-        </slot>
+      <div class="grid-actions-container">
+        <div v-if="!hideFilter">
+          <slot name="filter">
+            <FieldsFilter
+              v-model="filters"
+              :is-filter-applied="isFilterApplied"
+              :fields="filterableFields"
+            />
+          </slot>
+        </div>
+        <div v-if="!hideSearch" class="grid-search-section">
+          <slot name="search">
+            <v-text-field
+              v-model="search"
+              append-icon="mdi-magnify"
+              label="Search"
+              single-line
+              hide-details
+              class="grid-search-input"
+            ></v-text-field>
+          </slot>
+        </div>
       </div>
-    </div>
-    <v-data-table
-      v-model="selected"
-      :headers="headers"
-      :items="tableData.items"
-      :single-select="singleSelect"
-      :loading="loading === 1"
-      :options.sync="options"
-      :server-items-length="tableData.total"
-      :hide-default-header="hideDefaultHeader"
-      :hide-default-footer="hideDefaultFooter"
-      :show-expand="showExpand"
-      :single-expand="singleExpand"
-      item-key="id"
-      :show-select="showSelect"
-      class="elevation-1"
-      @update:pagination="updatePagination"
-      @click:row="onRowClick"
-      @input="onItemSelected"
-    >
-      <template v-if="!!slotTemplates.item" v-slot:item="props">
-        <component
-          :is="slotTemplates.item || null"
-          :item="props.item"
-          :headers="props.headers"
-          :is-selected="props.isSelected"
-          :context="context"
-          :items="tableData.items"
-          :content="content"
-        />
-      </template>
-      <template
-        v-for="(column, index) in headers"
-        v-slot:[`item.${column.value}`]="props"
+      <v-data-table
+        v-model="selected"
+        :headers="headers"
+        :items="tableData.items"
+        :single-select="singleSelect"
+        :loading="loading === 1"
+        :options.sync="options"
+        :server-items-length="tableData.total"
+        :hide-default-header="hideDefaultHeader"
+        :hide-default-footer="hideDefaultFooter"
+        :show-expand="showExpand"
+        :single-expand="singleExpand"
+        item-key="id"
+        :show-select="showSelect"
+        class="elevation-1"
+        @update:pagination="updatePagination"
+        @click:row="onRowClick"
+        @input="onItemSelected"
       >
-        <component
-          :is="component[index] || null"
-          :key="column.value"
-          :item="props.item"
-          :value="props.value"
-          :context="context"
-          :items="tableData.items"
-          :content="content"
-        />
-      </template>
-      <template
-        v-if="!!slotTemplates['expanded-item']"
-        v-slot:expanded-item="props"
-      >
-        <component
-          :is="slotTemplates['expanded-item'] || null"
-          :item="props.item"
-          :headers="props.headers"
-        />
-      </template>
-      <template v-if="!!slotTemplates.body" v-slot:body="props">
-        <component
-          :is="slotTemplates.body || null"
-          :pagination="props.pagination"
-          :items="props.items"
-          :options="props.options"
-          :expand="props.expand"
-          :select="props.select"
-        />
-      </template>
-      <template v-if="!!slotTemplates.header" v-slot:header="props">
-        <component
-          :is="slotTemplates.header || null"
-          :props="props.props"
-          :on="props.on"
-        />
-      </template>
-      <template v-if="!!slotTemplates.footer" v-slot:footer="props">
-        <component
-          :is="slotTemplates.footer || null"
-          :props="props.props"
-          :on="props.on"
-          :headers="props.headers"
-        />
-      </template>
-    </v-data-table>
+        <template v-if="!!slotTemplates.item" v-slot:item="props">
+          <component
+            :is="slotTemplates.item || null"
+            :item="props.item"
+            :headers="props.headers"
+            :is-selected="props.isSelected"
+            :context="context"
+            :items="tableData.items"
+            :content="content"
+          />
+        </template>
+        <template
+          v-for="(column, index) in headers"
+          v-slot:[`item.${column.value}`]="props"
+        >
+          <component
+            :is="component[index] || null"
+            :key="column.value"
+            :item="props.item"
+            :value="props.value"
+            :context="context"
+            :items="tableData.items"
+            :content="content"
+          />
+        </template>
+        <template
+          v-if="!!slotTemplates['expanded-item']"
+          v-slot:expanded-item="props"
+        >
+          <component
+            :is="slotTemplates['expanded-item'] || null"
+            :item="props.item"
+            :headers="props.headers"
+          />
+        </template>
+        <template v-if="!!slotTemplates.body" v-slot:body="props">
+          <component
+            :is="slotTemplates.body || null"
+            :pagination="props.pagination"
+            :items="props.items"
+            :options="props.options"
+            :expand="props.expand"
+            :select="props.select"
+          />
+        </template>
+        <template v-if="!!slotTemplates.header" v-slot:header="props">
+          <component
+            :is="slotTemplates.header || null"
+            :props="props.props"
+            :on="props.on"
+          />
+        </template>
+        <template v-if="!!slotTemplates.footer" v-slot:footer="props">
+          <component
+            :is="slotTemplates.footer || null"
+            :props="props.props"
+            :on="props.on"
+            :headers="props.headers"
+          />
+        </template>
+      </v-data-table>
+    </template>
   </div>
 </template>
 
@@ -418,6 +425,66 @@ function buildMutationUpsertQuery(modelName) {
   return `mutation($Inputs : ${modelName}UpsertWithWhereInput!){ ${modelName}{ ${modelName}UpsertWithWhere(input:$Inputs){ clientMutationId obj{ id } } } }`
 }
 
+function has(obj, property) {
+  return Object.prototype.hasOwnProperty.call(obj, property)
+}
+
+const get = (o, p) => p.reduce((xs, x) => (xs && xs[x] ? xs[x] : null), o)
+
+function APIErrorMsg(err) {
+  console.error(err)
+  const isGraphqlRequest = has(err, 'graphQLErrors') // && err.hasOwnProperty('graphQLErrors')
+  if (!navigator.onLine) {
+    return 'There is no Internet connection'
+  }
+  if (isGraphqlRequest) {
+    return getGQLAPIErrorMsg(err)
+  }
+  const statusCode = get(err, ['status']) || get(err, ['response', 'status'])
+  const msg =
+    get(err, ['response', 'body', 'error', 'message']) ||
+    get(err, ['response', 'data', 'error', 'message'])
+  return getAPIErrorMessage(statusCode, msg)
+}
+function getGQLAPIErrorMsg(err) {
+  const networkError = get(err, ['networkError'])
+  let statusCode =
+    get(networkError, ['result', 'error', 'statusCode']) ||
+    get(networkError, ['statusCode'])
+  let msg =
+    get(networkError, ['result', 'error', 'message']) ||
+    get(networkError, ['message'])
+  const graphQLErrors = get(err, ['graphQLErrors'])
+  if (graphQLErrors && graphQLErrors.length > 0) {
+    msg = get(graphQLErrors, ['0', 'message'])
+    switch (msg) {
+      case 'Access denied':
+        statusCode = 401
+        break
+    }
+  }
+  return getAPIErrorMessage(statusCode, msg)
+}
+
+function getAPIErrorMessage(statusCode, msg) {
+  let userErrorMsg = 'Something went wrong'
+  switch (statusCode) {
+    case 401:
+      if (msg === 'jwt expired')
+        userErrorMsg = 'Session Expired. please refresh page.'
+      if (msg === 'Access denied' || msg === 'Authorization Required')
+        userErrorMsg = 'Access not granted, contact support to request access.'
+      break
+    case 404:
+      userErrorMsg = 'Resource not found'
+      break
+    case 502:
+      userErrorMsg = 'Service unavailable'
+      break
+  }
+  return userErrorMsg
+}
+
 export default {
   components: {
     FieldsFilter,
@@ -472,6 +539,7 @@ export default {
       selectedItems: [],
       actionTemplates: [],
       triggerChange: 0,
+      errorMsg: '',
     }
   },
   computed: {
@@ -482,6 +550,9 @@ export default {
     },
     context() {
       return getGridTemplateInfo(this.content, this.viewName).context || {}
+    },
+    errorMessage() {
+      return 'Something Went Wrong'
     },
   },
   created() {
@@ -523,7 +594,6 @@ export default {
       this.selectedItems = items
     },
     async onNewItemSave(data) {
-      debugger
       const modelName = getModelName(this.content, this.viewName)
       const newItemMutation = buildMutationCreateQuery(modelName)
       const userCreated = await this.$apollo.mutate({
@@ -536,7 +606,7 @@ export default {
         },
       })
       this.$apollo.queries.tableData.refresh()
-      console.log(userCreated)
+      return userCreated
     },
     async onUpdateItem(data) {
       debugger
@@ -578,6 +648,9 @@ export default {
       this.$apollo.queries.tableData.refresh()
       console.log(userDeleted)
     },
+    refresh() {
+      this.$apollo.queries.tableData.refresh()
+    },
   },
   apollo: {
     tableData: {
@@ -587,7 +660,6 @@ export default {
         `
       },
       variables() {
-        // Use vue reactive properties here
         const { content, viewName, search, filters, contentName } = this
         const sortBy = this.options.sortBy
         const sortDesc = this.options.sortDesc
@@ -600,9 +672,10 @@ export default {
           contentName,
           ctx: this,
         })
-        const skip = (this.options.page - 1) * this.options.itemsPerPage
-        const limit =
-          this.options.itemsPerPage === -1 ? 0 : this.options.itemsPerPage
+        const page = this.options.page || 1
+        const itemsPerPage = this.options.itemsPerPage || 10
+        const skip = (page - 1) * (itemsPerPage || 10)
+        const limit = itemsPerPage === -1 ? 0 : itemsPerPage
         return {
           filters: { limit, skip, order, where },
           where,
@@ -624,6 +697,8 @@ export default {
         console.log('We got some result!')
       },
       error(error) {
+        this.errorMsg = APIErrorMsg(error)
+        this.loading = 0
         console.error("We've got an error!", error)
       },
       prefetch: false,
