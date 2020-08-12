@@ -1,6 +1,6 @@
 <template>
   <div>
-    <customItem1 :onNewItemSave="onNewItemSave" :refresh="refresh" />
+    <customItem1 :on-new-item-save="onNewItemSave" :refresh="refresh" />
   </div>
 </template>
 

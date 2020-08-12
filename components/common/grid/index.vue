@@ -1,9 +1,11 @@
 <template>
   <div>
-    <template v-if="!!errorMsg">
-      <div>{{ errorMsg }}</div>
+    <template v-if="!!error">
+      <div>
+        <component :is="errorTemplate || null" :error="error" />
+      </div>
     </template>
-    <template v-if="!errorMsg">
+    <div v-if="!error" :key="error">
       <div>
         <component
           :is="actionTemplates['grid'] || null"
@@ -127,7 +129,7 @@
           />
         </template>
       </v-data-table>
-    </template>
+    </div>
   </div>
 </template>
 
@@ -425,66 +427,6 @@ function buildMutationUpsertQuery(modelName) {
   return `mutation($Inputs : ${modelName}UpsertWithWhereInput!){ ${modelName}{ ${modelName}UpsertWithWhere(input:$Inputs){ clientMutationId obj{ id } } } }`
 }
 
-function has(obj, property) {
-  return Object.prototype.hasOwnProperty.call(obj, property)
-}
-
-const get = (o, p) => p.reduce((xs, x) => (xs && xs[x] ? xs[x] : null), o)
-
-function APIErrorMsg(err) {
-  console.error(err)
-  const isGraphqlRequest = has(err, 'graphQLErrors') // && err.hasOwnProperty('graphQLErrors')
-  if (!navigator.onLine) {
-    return 'There is no Internet connection'
-  }
-  if (isGraphqlRequest) {
-    return getGQLAPIErrorMsg(err)
-  }
-  const statusCode = get(err, ['status']) || get(err, ['response', 'status'])
-  const msg =
-    get(err, ['response', 'body', 'error', 'message']) ||
-    get(err, ['response', 'data', 'error', 'message'])
-  return getAPIErrorMessage(statusCode, msg)
-}
-function getGQLAPIErrorMsg(err) {
-  const networkError = get(err, ['networkError'])
-  let statusCode =
-    get(networkError, ['result', 'error', 'statusCode']) ||
-    get(networkError, ['statusCode'])
-  let msg =
-    get(networkError, ['result', 'error', 'message']) ||
-    get(networkError, ['message'])
-  const graphQLErrors = get(err, ['graphQLErrors'])
-  if (graphQLErrors && graphQLErrors.length > 0) {
-    msg = get(graphQLErrors, ['0', 'message'])
-    switch (msg) {
-      case 'Access denied':
-        statusCode = 401
-        break
-    }
-  }
-  return getAPIErrorMessage(statusCode, msg)
-}
-
-function getAPIErrorMessage(statusCode, msg) {
-  let userErrorMsg = 'Something went wrong'
-  switch (statusCode) {
-    case 401:
-      if (msg === 'jwt expired')
-        userErrorMsg = 'Session Expired. please refresh page.'
-      if (msg === 'Access denied' || msg === 'Authorization Required')
-        userErrorMsg = 'Access not granted, contact support to request access.'
-      break
-    case 404:
-      userErrorMsg = 'Resource not found'
-      break
-    case 502:
-      userErrorMsg = 'Service unavailable'
-      break
-  }
-  return userErrorMsg
-}
-
 export default {
   components: {
     FieldsFilter,
@@ -539,20 +481,27 @@ export default {
       selectedItems: [],
       actionTemplates: [],
       triggerChange: 0,
-      errorMsg: '',
+      error: '',
+      errorTemplate: null,
     }
   },
   computed: {
     filterableFields() {
-      debugger
       const fields = getGridFields(this.content, this.viewName)
       return fields
     },
     context() {
       return getGridTemplateInfo(this.content, this.viewName).context || {}
     },
-    errorMessage() {
-      return 'Something Went Wrong'
+    _components() {
+      return {
+        errorTemplate: {
+          locations: [
+            `templates/grids/${this.templateFolderName}/error.vue`,
+            `common/templates/grid/error.vue`,
+          ],
+        },
+      }
     },
   },
   mounted() {
@@ -606,7 +555,6 @@ export default {
       return userCreated
     },
     async onUpdateItem(data) {
-      debugger
       const modelName = getModelName(this.content, this.viewName)
       const where = {
         id: data.id,
@@ -687,11 +635,12 @@ export default {
                 total: formatCountData(data, modelName),
               }
             : {}
+        if (Object.keys(data).length > 0) this.error = ''
         return tableData
       },
       result({ data, loading, networkStatus }) {},
       error(error) {
-        this.errorMsg = APIErrorMsg(error)
+        this.error = error
         this.loading = 0
       },
       prefetch: false,

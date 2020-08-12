@@ -42,10 +42,10 @@
           <v-row>
             <v-col cols="12" sm="6" md="6" class="mt-2">
               <v-text-field
+                v-model="FormData.FirstName"
                 label="First Name*"
                 required
                 outlined
-                v-model="FormData.FirstName"
               ></v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="6" class="mt-2">
@@ -98,6 +98,7 @@ function buildMutationCreateQuery(modelName) {
 }
 
 export default {
+  props: ['onNewItemSave', 'refresh'],
   data() {
     return {
       registrations: false,
@@ -111,7 +112,6 @@ export default {
       },
     }
   },
-  props: ['onNewItemSave', 'refresh'],
   methods: {
     async onSave(event) {
       try {
