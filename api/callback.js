@@ -17,7 +17,7 @@ export default function (req, res, next) {
       query.cbVerified = true
       query.state = oldState
       res.writeHead(301, {
-        Location: `http://${host}/callback?${qs.encode(query)}`,
+        Location: `http://${host}${process.env.PUBLIC_PATH}/callback?${qs.encode(query)}`,
       })
       return res.end()
     }
