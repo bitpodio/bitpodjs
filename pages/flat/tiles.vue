@@ -186,7 +186,8 @@
               </template>
             </v-img>
             <div class="text--secondary px-4 pt-4 mb-n4">
-              {{ item.StartDate }}
+              Mon, Aug 10, 2020 6:15 PM
+              <!-- {{ item.StartDate }} -->
             </div>
             <v-card-title class="text-truncate d-block">
               {{ item.Title }}
