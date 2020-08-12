@@ -18,8 +18,7 @@ export default {
   methods: {
     async onDelete() {
       const ids = this.items.map(({ id }) => id)
-      const userDeleted = await this.onDeleteItem(ids)
-      console.log(userDeleted)
+      await this.onDeleteItem(ids)
     },
   },
 }

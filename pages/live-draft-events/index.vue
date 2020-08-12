@@ -94,9 +94,7 @@ export default {
         const { edges } = data[modelName][`${modelName}Find`]
         return edges.map(({ node }) => node)
       },
-      result({ data, loading, networkStatus }) {
-        console.log('We got some result!')
-      },
+      result({ data, loading, networkStatus }) {},
       error(error) {
         console.error("We've got an error!", error)
       },

@@ -87,8 +87,7 @@ export default {
   },
   methods: {
     async onSave() {
-      const result = await this.onNewItemSave(this.formData)
-      console.log(result)
+      await this.onNewItemSave(this.formData)
       this.dialog = false
     },
     formControl(field) {

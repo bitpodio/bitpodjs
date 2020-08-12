@@ -555,9 +555,6 @@ export default {
       return 'Something Went Wrong'
     },
   },
-  created() {
-    console.log('in created')
-  },
   mounted() {
     this.headers.forEach(async (column, index) => {
       this.component[index] = await this.loadTemplate([
@@ -615,7 +612,7 @@ export default {
         id: data.id,
       }
       const editItemMutation = buildMutationUpsertQuery(modelName)
-      const userCreated = await this.$apollo.mutate({
+      const itemUpdated = await this.$apollo.mutate({
         mutation: gql(editItemMutation),
         variables: {
           Inputs: {
@@ -626,13 +623,12 @@ export default {
         },
       })
       this.$apollo.queries.tableData.refresh()
-      console.log(userCreated)
+      return itemUpdated
     },
     async onDeleteItem(ids) {
-      console.log(ids)
       const modelName = getModelName(this.content, this.viewName)
       const deleteItemMutation = buildMutationDeleteQuery(modelName)
-      const userDeleted = await this.$apollo.mutate({
+      const itemDeleted = await this.$apollo.mutate({
         mutation: gql(deleteItemMutation),
         variables: {
           Inputs: {
@@ -646,7 +642,7 @@ export default {
         },
       })
       this.$apollo.queries.tableData.refresh()
-      console.log(userDeleted)
+      return itemDeleted
     },
     refresh() {
       this.$apollo.queries.tableData.refresh()
@@ -693,13 +689,10 @@ export default {
             : {}
         return tableData
       },
-      result({ data, loading, networkStatus }) {
-        console.log('We got some result!')
-      },
+      result({ data, loading, networkStatus }) {},
       error(error) {
         this.errorMsg = APIErrorMsg(error)
         this.loading = 0
-        console.error("We've got an error!", error)
       },
       prefetch: false,
       loadingKey: 'loading',

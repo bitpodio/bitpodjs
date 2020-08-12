@@ -16,18 +16,6 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
-
-function buildMutationDeleteQuery(modelName) {
-  return `mutation($Inputs: ${modelName}DeleteByIdInput!){ ${modelName} { ${modelName}DeleteById(input:$Inputs){ clientMutationId } } }`
-}
-
-function getModelName(content, viewName) {
-  const view = content.views[viewName]
-  const dataSource = view.dataSource
-  return dataSource.model
-}
-
 export default {
   props: ['content', 'viewName', 'items'],
   data() {
@@ -37,25 +25,9 @@ export default {
       snackbar: false,
     }
   },
-  beforeUpdate() {
-    console.log('update called')
-  },
   methods: {
-    async onDelete() {
+    onDelete() {
       this.dialog = false
-      const modelName = getModelName(this.content, this.viewName)
-      const deleteItemMutation = buildMutationDeleteQuery(modelName)
-      const userDeleted = await this.$apollo.mutate({
-        mutation: gql(deleteItemMutation),
-        variables: {
-          Inputs: {
-            id: this.items[0].id,
-            clientMutationId: `${modelName} list item deleted successfully.`,
-          },
-        },
-      })
-      this.snackbar = true
-      console.log(userDeleted)
     },
   },
 }

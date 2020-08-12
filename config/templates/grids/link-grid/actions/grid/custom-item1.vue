@@ -120,11 +120,10 @@ export default {
       } catch {}
     },
     async onCustomSave(event) {
-      console.log('Saving the data')
       this.registrations = false
       const modelName = 'Contact'
       const newItemMutation = buildMutationCreateQuery(modelName)
-      const userCreated = await this.$apollo.mutate({
+      await this.$apollo.mutate({
         mutation: gql(newItemMutation),
         variables: {
           Inputs: {
@@ -134,7 +133,6 @@ export default {
         },
       })
       this.refresh()
-      console.log('asdasdasdasd', userCreated)
     },
   },
 }
