@@ -373,7 +373,7 @@
                   color="primary"
                   @click="$auth.logout()"
                 >
-                  Login
+                  Logout
                 </v-btn>
               </v-list-item>
             </v-list>
@@ -382,7 +382,7 @@
       </div>
       <div v-else>
         <v-btn class="ma-2" outlined color="primary" to="/login">
-          Logout
+          Login
         </v-btn>
       </div>
     </v-app-bar>
