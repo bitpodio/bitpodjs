@@ -5,6 +5,9 @@ export default {
    ** See https://nuxtjs.org/api/configuration-mode
    */
   mode: 'universal',
+  router: {
+    base: process.env.PUBLIC_PATH || '/'
+  },
   /*
    ** Nuxt target
    ** See https://nuxtjs.org/api/configuration-target
@@ -120,8 +123,8 @@ export default {
   },
   serverMiddleware: [
     '~/api/index.js',
-    { path: '/callback', handler: '~/api/callback.js' },
-    { path: '/authorize', handler: '~/api/authorize.js' },
+    { path: `${process.env.PUBLIC_PATH}/callback`, handler: '~/api/callback.js' },
+    { path: `${process.env.PUBLIC_PATH}/authorize`, handler: '~/api/authorize.js' },
   ],
   auth: {
     redirect: {
@@ -142,7 +145,7 @@ export default {
           process.env.AUTHORIZATION_ENDPOINT_URL ||
           'https://login.bitpod.io/auth/connect/authorize',
         endpoints: {
-          authorization: '/authorize',
+          authorization: `${process.env.PUBLIC_PATH}/authorize`,
           token: 'api/connect/token',
           userInfo: 'api/connect/userinfo',
         },
