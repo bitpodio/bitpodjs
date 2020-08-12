@@ -130,7 +130,7 @@ export default {
     redirect: {
       login: '/login',
       callback: '/callback',
-      home: '/event',
+      home: `${process.env.PUBLIC_PATH}/event`,
     },
     strategies: {
       bitpod: {
