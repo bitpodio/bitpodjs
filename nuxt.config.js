@@ -1,14 +1,10 @@
 import colors from 'vuetify/es5/util/colors'
-console.log('REDIRECT_URI+++', process.env.REDIRECT_URI)
 export default {
   /*
    ** Nuxt rendering mode
    ** See https://nuxtjs.org/api/configuration-mode
    */
   mode: 'universal',
-  router: {
-    base: process.env.PUBLIC_PATH || '/',
-  },
   /*
    ** Nuxt target
    ** See https://nuxtjs.org/api/configuration-target
@@ -116,25 +112,7 @@ export default {
   /*
    ** Build configuration
    ** See https://nuxtjs.org/api/configuration-build/
-   eyJhbGciOiJSUzI1NiIsImtpZCI6IjhEMkE0MTczM0QwN0JBNkU2RTYwNTZFRUJDRThDRkQyMDc0NThCMDUiLCJ0eXAiOiJKV1QiLCJ4NXQiOiJqU3BCY3owSHVtNXVZRmJ1dk9qUDBnZEZpd1UifQ.eyJuYmYiOjE1OTQ3MTI3MjksImV4cCI6MTU5NDc5OTEyOSwiaXNzIjoiaHR0cHM6Ly9sb2dpbi5iaXRwb2QuaW8vYXV0aCIsImF1ZCI6WyJodHRwczovL2xvZ2luLmJpdHBvZC5pby9hdXRoL3Jlc291cmNlcyIsIlNoYXJlZCIsIk5vdGlmaWNhdGlvbiJdLCJjbGllbnRfaWQiOiI2ZDJiOTg4YzQ2NWY0NzZhMDhhZWZjNDg5ZWYyYjIxMThmZTU4MDc2Iiwic3ViIjoiamFnYW5uYXRoQGJpdHBvZC5pbyIsImF1dGhfdGltZSI6MTU5NDcxMjcyNiwiaWRwIjoibG9jYWwiLCJzY29wZSI6WyJOb3RpZmljYXRpb24iLCJvcGVuaWQiLCJwcm9maWxlIiwiZW1haWwiLCJiYWFzIiwib2ZmbGluZV9hY2Nlc3MiLCJub3RpZmljYXRpb24iLCJub3RpZmljYXRpb24iLCJiYWFzIiwib2ZmbGluZV9hY2Nlc3MiLCJub3RpZmljYXRpb24iLCJiYWFzIiwib2ZmbGluZV9hY2Nlc3MiLCJub3RpZmljYXRpb24iLCJvZmZsaW5lX2FjY2VzcyJdLCJhbXIiOlsicHdkIl19.Pflb0QawGDCMCWslWthbHosaSnN1Yor7yI5zWRmlkSJKuYlajdC_yS1gsxAAyQvEcch4gcjd7zL8LooA5l5Z7jZmeymMVv538NR6Z4ZT09XqHBb8DvNgiGvSvVM0jlpluOKfHP5W0-5rThygnBEtPXknRTMn-2P4gmSdOOmMPzUtAKIt2ir-iGXtu5P35FYqyt4qvF7I7BKFQdtw8H-9IdpRveW0sP-M4P8rPdgI8OPFPYYbaXfbDVEavExdBBb09ybKyeCvgdRo7OnBMsBszE0zf2OSapKIvDjloYxc5dWxKsmLfb6g6NnnavOxw0LbdnymI3GCCTstmTcP4oK7xQ
    */
-  // extend(config, { isClient }) {
-  //   config.module.rules.push({
-  //     test: /\.vue$/,
-  //     use: [
-  //       {
-  //         loader: 'vue-loader',
-  //         options: {
-  //           transpileOptions: {
-  //             transforms: {
-  //               dangerousTaggedTemplateString: true,
-  //             },
-  //           },
-  //         },
-  //       },
-  //     ],
-  //   })
-  // },
   build: {},
   vue: {
     config: {
@@ -146,19 +124,8 @@ export default {
     clientConfigs: {
       default: {
         httpEndpoint: 'https://event.test.bitpod.io/svc/graphql',
-        // httpLinkOptions: {
-        //   credentials: 'same-origin',
-        //   headers: {
-        //     Authorization:
-        //       'Bearer ' +
-        //       'eyJhbGciOiJSUzI1NiIsImtpZCI6IjhEMkE0MTczM0QwN0JBNkU2RTYwNTZFRUJDRThDRkQyMDc0NThCMDUiLCJ0eXAiOiJKV1QiLCJ4NXQiOiJqU3BCY3owSHVtNXVZRmJ1dk9qUDBnZEZpd1UifQ.eyJuYmYiOjE1OTYwOTIzMDgsImV4cCI6MTU5NjE3ODcwOCwiaXNzIjoiaHR0cHM6Ly9sb2dpbi5iaXRwb2QuaW8vYXV0aCIsImF1ZCI6WyJodHRwczovL2xvZ2luLmJpdHBvZC5pby9hdXRoL3Jlc291cmNlcyIsIlNoYXJlZCIsIk5vdGlmaWNhdGlvbiJdLCJjbGllbnRfaWQiOiI2ZDJiOTg4YzQ2NWY0NzZhMDhhZWZjNDg5ZWYyYjIxMThmZTU4MDc2Iiwic3ViIjoiamFnYW5uYXRoQGJpdHBvZC5pbyIsImF1dGhfdGltZSI6MTU5NjA5MjMwNywiaWRwIjoibG9jYWwiLCJzY29wZSI6WyJOb3RpZmljYXRpb24iLCJvcGVuaWQiLCJwcm9maWxlIiwiZW1haWwiLCJiYWFzIiwib2ZmbGluZV9hY2Nlc3MiLCJub3RpZmljYXRpb24iLCJub3RpZmljYXRpb24iLCJiYWFzIiwib2ZmbGluZV9hY2Nlc3MiLCJub3RpZmljYXRpb24iLCJiYWFzIiwib2ZmbGluZV9hY2Nlc3MiLCJub3RpZmljYXRpb24iLCJvZmZsaW5lX2FjY2VzcyJdLCJhbXIiOlsicHdkIl19.ZBOLiLq1mobr2iryNx7DoG1glPdXrhVOGj4cJD3DRhZKsV7iUQTDZUlHDhWDixf7AMG5kDhcHuWOY1j7AdDWY0yQwwVcNzeQS2Yh7o7d-4uFRVTqLE5U_oj3Ghwf27OSlQ0sMeedIyHihgcCpaNSGhcovwIlQ_m-OnYXDxwc_5PwfFX92R2_M3mHlouUIzJANuxsIvPWrTJ5Z8QiQRLuN4dKRlJam1ylyuo3lfJ8rk0sSqyHSJ-uoL7zzptLprxnidO3K60bTDbkd13v3-eevS1mgSJxCLq0sF1U5WSxvagWNtJIM4iLQKkK7Ub8LBZ2E3GDFfMWeuRrNVFUFGn2nQ',
-        //   },
-        // },
+        // browserHttpEndpoint: '/svc/graphql',
       },
-      // default:{
-      //   httpEndpoint:"https://event.test.bitpod.io/svc/graphql",
-      //   // wsEndpoint: process.env.WS_ENDPOINT
-      // }
     },
     defaultOptions: {
       // See 'apollo' definition
@@ -180,7 +147,6 @@ export default {
       home: '/flat/tiles',
     },
     strategies: {
-      // https://login.bitpod.io/auth/account
       bitpod: {
         scheme: 'oauth2',
         BITPOD_TOKEN_ENDPOINT_URL:

@@ -5,6 +5,7 @@ import eventList from './gql/eventlist.gql'
 import contactList from './gql/contactList.gql'
 import memberList from './gql/memberList.gql'
 // import { getItems } from './rest'
+import { getData } from './rest'
 
 export default (ctx) => ({
   EventsManagement: {
@@ -1474,6 +1475,19 @@ export default (ctx) => ({
             sortEnable: true,
             columnWidth: '130px',
             type: 'string',
+            readonly(value, data) {
+              const firstName = data.FirstName
+              return firstName && firstName.length <= 5
+            },
+            rules: [
+              (v) => {
+                return !!v || 'E-mail is required'
+              },
+              function (value, data) {
+                console.log(value, data)
+                return /.+@.+\..+/.test(value) || 'E-mail must be valid'
+              },
+            ],
           },
           action: {
             displayOrder: 11,
@@ -1500,6 +1514,17 @@ export default (ctx) => ({
             inlineEdit: true,
             newForm: true,
             editForm: false,
+            rules: [
+              (v) => {
+                return !!v || 'FirstName is required'
+              },
+              (v) => {
+                return (
+                  (v && v.length <= 10) ||
+                  'Name must be less than 10 characters'
+                )
+              },
+            ],
           },
         },
         template: {
@@ -1509,11 +1534,13 @@ export default (ctx) => ({
           },
         },
         dataSource: {
-          query: registrationList,
-          defaultSort: 'createdDate DESC',
-          type: 'graphql',
-          model: 'Registration',
-          // newItem: ,
+          // query: registrationList,
+          // defaultSort: 'createdDate DESC',
+          // type: 'graphql',
+          // model: 'Registration',
+          // end of gql
+          type: 'rest',
+          getData: getData('Registration'),
         },
         title: 'Registrations',
         type: 'list',

@@ -109,9 +109,6 @@ export default {
       this.formData = newValue[0]
     },
   },
-  beforeUpdate() {
-    console.log('update called')
-  },
   methods: {
     async onSave() {
       this.dialog = false
@@ -120,7 +117,7 @@ export default {
         id: this.formData.id,
       }
       const editItemMutation = buildMutationUpsertQuery(modelName)
-      const userCreated = await this.$apollo.mutate({
+      await this.$apollo.mutate({
         mutation: gql(editItemMutation),
         variables: {
           Inputs: {
@@ -130,7 +127,6 @@ export default {
           },
         },
       })
-      console.log(userCreated)
     },
     formControl(field) {
       switch (field.type) {

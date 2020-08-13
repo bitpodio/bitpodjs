@@ -19,22 +19,26 @@
         </v-card-title>
         <v-card-text>
           <v-container>
-            <v-row>
-              <v-col
-                v-for="field in fields"
-                :key="field.fieldName"
-                cols="12"
-                sm="6"
-              >
-                <component
-                  :is="formControl(field) || null"
-                  v-model="formData[field.fieldName]"
-                  :field="field"
-                  :field-name="field.fieldName"
-                  :content="content"
-                />
-              </v-col>
-            </v-row>
+            <v-form ref="form" v-model="valid" :lazy-validation="lazy">
+              <v-row>
+                <v-col
+                  v-for="field in fields"
+                  :key="field.fieldName"
+                  cols="12"
+                  sm="6"
+                >
+                  <component
+                    :is="formControl(field) || null"
+                    v-model="formData[field.fieldName]"
+                    :field="field"
+                    :rules="rulesArray(field)"
+                    :readonly="readonly[field.fieldName]"
+                    :field-name="field.fieldName"
+                    :content="content"
+                  />
+                </v-col>
+              </v-row>
+            </v-form>
           </v-container>
           <small>*indicates required field</small>
         </v-card-text>
@@ -43,7 +47,9 @@
           <v-btn color="blue darken-1" text @click="dialog = false"
             >Close</v-btn
           >
-          <v-btn color="blue darken-1" text @click="onSave">Save</v-btn>
+          <v-btn :disabled="!valid" color="blue darken-1" text @click="onSave"
+            >Save</v-btn
+          >
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -55,6 +61,7 @@ import TextField from '~/components/common/form/text-field.vue'
 import Lookup from '~/components/common/form/lookup.vue'
 import Checkbox from '~/components/common/form/checkbox.vue'
 import CustomDate from '~/components/common/form/date.vue'
+import { formValidationMixin } from '~/utility'
 
 function getGridFields(content, viewName) {
   const view = content.views[viewName]
@@ -83,6 +90,7 @@ export default {
     Checkbox,
     CustomDate,
   },
+  mixins: [formValidationMixin],
   props: ['content', 'viewName', 'onNewItemSave'],
   data() {
     const fields = getGridFields(this.content, this.viewName)
@@ -90,12 +98,14 @@ export default {
       fields,
       formData: {},
       dialog: false,
+      valid: true,
+      lazy: false,
     }
   },
   methods: {
     async onSave() {
-      const result = await this.onNewItemSave(this.formData)
-      console.log(result)
+      this.$refs.form.validate()
+      await this.onNewItemSave(this.formData)
       this.dialog = false
     },
     formControl(field) {
@@ -110,6 +120,9 @@ export default {
         case 'number':
           return 'TextField'
       }
+    },
+    validate() {
+      this.$refs.form.validate()
     },
   },
 }

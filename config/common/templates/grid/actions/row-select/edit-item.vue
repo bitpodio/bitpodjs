@@ -90,14 +90,10 @@ export default {
       this.formData = newValue[0]
     },
   },
-  beforeUpdate() {
-    console.log('update called')
-  },
   methods: {
     async onSave() {
-      const userCreated = await this.onUpdateItem(this.formData)
+      await this.onUpdateItem(this.formData)
       this.dialog = false
-      console.log(userCreated)
     },
     formControl(field) {
       switch (field.type) {

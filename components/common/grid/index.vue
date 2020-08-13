@@ -1,129 +1,161 @@
 <template>
   <div>
-    <div class="grid-actions-container">
-      <div class="d-flex">
-        <template v-if="selectedItems.length > 0">
+    <template v-if="!!error">
+      <div>
+        <component :is="errorTemplate || null" :error="error" />
+      </div>
+    </template>
+    <div v-if="!error" :key="error">
+      <div class="grid-actions-container">
+        <div class="d-flex">
+          <template v-if="selectedItems.length > 0">
+            <component
+              :is="actionTemplates['row-select'] || null"
+              :content="content"
+              :view-name="viewName"
+              :on-update-item="onUpdateItem"
+              :on-delete-item="onDeleteItem"
+              :items="selectedItems"
+              class="d-flex"
+            />
+          </template>
           <component
-            :is="actionTemplates['row-select'] || null"
+            :is="actionTemplates['grid'] || null"
             :content="content"
             :view-name="viewName"
-            :on-update-item="onUpdateItem"
-            :on-delete-item="onDeleteItem"
-            :items="selectedItems"
-            class="d-flex"
+            :on-new-item-save="onNewItemSave"
+          />
+        </div>
+        <div v-if="hideFilter">
+          <slot name="filter">
+            <FieldsFilter
+              v-model="filters"
+              :is-filter-applied="isFilterApplied"
+              :fields="filterableFields"
+            />
+          </slot>
+        </div>
+        <div v-if="!hideSearch" class="grid-search-section">
+          <slot name="search">
+            <v-text-field
+              v-model="search"
+              append-icon="mdi-magnify"
+              label="Search"
+              hide-details
+              class="grid-search-input ml-2"
+              outlined
+              dense
+            ></v-text-field>
+          </slot>
+        </div>
+      </div>
+      <v-data-table
+        v-model="selected"
+        :headers="headers"
+        :items="tableData.items"
+        :single-select="singleSelect"
+        :loading="loading === 1"
+        :options.sync="options"
+        :server-items-length="tableData.total"
+        :hide-default-header="hideDefaultHeader"
+        :hide-default-footer="hideDefaultFooter"
+        :show-expand="showExpand"
+        :single-expand="singleExpand"
+        item-key="id"
+        class="elevation-0"
+        :show-select="showSelect"
+        @update:pagination="updatePagination"
+        @click:row="onRowClick"
+        @input="onItemSelected"
+      >
+        <template v-if="!!slotTemplates.item" v-slot:item="props">
+          <component
+            :is="slotTemplates.item || null"
+            :item="props.item"
+            :headers="props.headers"
+            :is-selected="props.isSelected"
+            :context="context"
+            :items="tableData.items"
+            :content="content"
           />
         </template>
-        <component
-          :is="actionTemplates['grid'] || null"
-          :content="content"
-          :view-name="viewName"
-          :on-new-item-save="onNewItemSave"
-        />
-      </div>
-      <div v-if="hideFilter">
-        <slot name="filter">
-          <FieldsFilter
-            v-model="filters"
-            :is-filter-applied="isFilterApplied"
-            :fields="filterableFields"
+        <template
+          v-for="(column, index) in headers"
+          v-slot:[`item.${column.value}`]="props"
+        >
+          <component
+            :is="component[index] || null"
+            :key="column.value"
+            :item="props.item"
+            :value="props.value"
+            :context="context"
+            :items="tableData.items"
+            :content="content"
+            type="number"
           />
-        </slot>
-      </div>
-      <div v-if="!hideSearch" class="grid-search-section">
-        <slot name="search">
-          <v-text-field
-            v-model="search"
-            append-icon="mdi-magnify"
-            label="Search"
-            hide-details
-            class="grid-search-input ml-2"
-            outlined
-            dense
-          ></v-text-field>
-        </slot>
-      </div>
+        </template>
+        <template v-if="!!slotTemplates.item" v-slot:item="props">
+          <component
+            :is="slotTemplates.item || null"
+            :item="props.item"
+            :headers="props.headers"
+            :is-selected="props.isSelected"
+            :context="context"
+            :items="tableData.items"
+            :content="content"
+          />
+        </template>
+        <template
+          v-for="(column, index) in headers"
+          v-slot:[`item.${column.value}`]="props"
+        >
+          <component
+            :is="component[index] || null"
+            :key="column.value"
+            :item="props.item"
+            :value="props.value"
+            :context="context"
+            :items="tableData.items"
+            :content="content"
+          />
+        </template>
+        <template
+          v-if="!!slotTemplates['expanded-item']"
+          v-slot:expanded-item="props"
+        >
+          <component
+            :is="slotTemplates['expanded-item'] || null"
+            :item="props.item"
+            :headers="props.headers"
+          />
+        </template>
+        <template v-if="!!slotTemplates.body" v-slot:body="props">
+          <component
+            :is="slotTemplates.body || null"
+            :pagination="props.pagination"
+            :items="props.items"
+            :options="props.options"
+            :expand="props.expand"
+            :select="props.select"
+          />
+        </template>
+        <template v-if="!!slotTemplates.header" v-slot:header="props">
+          <component
+            :is="slotTemplates.header || null"
+            :props="props.props"
+            :on="props.on"
+          />
+        </template>
+        <template v-if="!!slotTemplates.footer" v-slot:footer="props">
+          <component
+            :is="slotTemplates.footer || null"
+            :props="props.props"
+            :on="props.on"
+            :headers="props.headers"
+          />
+        </template>
+      </v-data-table>
     </div>
-    <v-data-table
-      v-model="selected"
-      :headers="headers"
-      :items="tableData.items"
-      :single-select="singleSelect"
-      :loading="loading === 1"
-      :options.sync="options"
-      :server-items-length="tableData.total"
-      :hide-default-header="hideDefaultHeader"
-      :hide-default-footer="hideDefaultFooter"
-      :show-expand="showExpand"
-      :single-expand="singleExpand"
-      item-key="id"
-      class="elevation-0"
-      :show-select="showSelect"
-      @update:pagination="updatePagination"
-      @click:row="onRowClick"
-      @input="onItemSelected"
-    >
-      <template v-if="!!slotTemplates.item" v-slot:item="props">
-        <component
-          :is="slotTemplates.item || null"
-          :item="props.item"
-          :headers="props.headers"
-          :is-selected="props.isSelected"
-          :context="context"
-          :items="tableData.items"
-          :content="content"
-        />
-      </template>
-      <template
-        v-for="(column, index) in headers"
-        v-slot:[`item.${column.value}`]="props"
-      >
-        <component
-          :is="component[index] || null"
-          :key="column.value"
-          :item="props.item"
-          :value="props.value"
-          :context="context"
-          :items="tableData.items"
-          :content="content"
-          type="number"
-        />
-      </template>
-      <template
-        v-if="!!slotTemplates['expanded-item']"
-        v-slot:expanded-item="props"
-      >
-        <component
-          :is="slotTemplates['expanded-item'] || null"
-          :item="props.item"
-          :headers="props.headers"
-        />
-      </template>
-      <template v-if="!!slotTemplates.body" v-slot:body="props">
-        <component
-          :is="slotTemplates.body || null"
-          :pagination="props.pagination"
-          :items="props.items"
-          :options="props.options"
-          :expand="props.expand"
-          :select="props.select"
-        />
-      </template>
-      <template v-if="!!slotTemplates.header" v-slot:header="props">
-        <component
-          :is="slotTemplates.header || null"
-          :props="props.props"
-          :on="props.on"
-        />
-      </template>
-      <template v-if="!!slotTemplates.footer" v-slot:footer="props">
-        <component
-          :is="slotTemplates.footer || null"
-          :props="props.props"
-          :on="props.on"
-          :headers="props.headers"
-        />
-      </template>
-    </v-data-table>
   </div>
 </template>
 
@@ -475,20 +507,28 @@ export default {
       selectedItems: [],
       actionTemplates: [],
       triggerChange: 0,
+      error: '',
+      errorTemplate: null,
     }
   },
   computed: {
     filterableFields() {
-      debugger
       const fields = getGridFields(this.content, this.viewName)
       return fields
     },
     context() {
       return getGridTemplateInfo(this.content, this.viewName).context || {}
     },
-  },
-  created() {
-    console.log('in created')
+    _components() {
+      return {
+        errorTemplate: {
+          locations: [
+            `templates/grids/${this.templateFolderName}/error.vue`,
+            `common/templates/grid/error.vue`,
+          ],
+        },
+      }
+    },
   },
   mounted() {
     this.headers.forEach(async (column, index) => {
@@ -512,6 +552,16 @@ export default {
       ])
     })
   },
+  async created() {
+    const dataSource = getViewDataSource(this.content, this.viewName)
+    const dataSourceType = dataSource.type || 'graphql'
+    if (dataSourceType === 'graphql') {
+      this.$apollo.queries.tableData.skip = false
+    } else {
+      this.tableData = await dataSource.getData.call(this, this.options)
+    }
+  },
+
   methods: {
     updatePagination(pagination) {},
     onFilterClick(e) {
@@ -526,7 +576,6 @@ export default {
       this.selectedItems = items
     },
     async onNewItemSave(data) {
-      debugger
       const modelName = getModelName(this.content, this.viewName)
       const newItemMutation = buildMutationCreateQuery(modelName)
       const userCreated = await this.$apollo.mutate({
@@ -539,16 +588,15 @@ export default {
         },
       })
       this.$apollo.queries.tableData.refresh()
-      console.log(userCreated)
+      return userCreated
     },
     async onUpdateItem(data) {
-      debugger
       const modelName = getModelName(this.content, this.viewName)
       const where = {
         id: data.id,
       }
       const editItemMutation = buildMutationUpsertQuery(modelName)
-      const userCreated = await this.$apollo.mutate({
+      const itemUpdated = await this.$apollo.mutate({
         mutation: gql(editItemMutation),
         variables: {
           Inputs: {
@@ -559,13 +607,12 @@ export default {
         },
       })
       this.$apollo.queries.tableData.refresh()
-      console.log(userCreated)
+      return itemUpdated
     },
     async onDeleteItem(ids) {
-      console.log(ids)
       const modelName = getModelName(this.content, this.viewName)
       const deleteItemMutation = buildMutationDeleteQuery(modelName)
-      const userDeleted = await this.$apollo.mutate({
+      const itemDeleted = await this.$apollo.mutate({
         mutation: gql(deleteItemMutation),
         variables: {
           Inputs: {
@@ -579,7 +626,10 @@ export default {
         },
       })
       this.$apollo.queries.tableData.refresh()
-      console.log(userDeleted)
+      return itemDeleted
+    },
+    refresh() {
+      this.$apollo.queries.tableData.refresh()
     },
   },
   apollo: {
@@ -590,7 +640,6 @@ export default {
         `
       },
       variables() {
-        // Use vue reactive properties here
         const { content, viewName, search, filters, contentName } = this
         const sortBy = this.options.sortBy
         const sortDesc = this.options.sortDesc
@@ -603,9 +652,10 @@ export default {
           contentName,
           ctx: this,
         })
-        const skip = (this.options.page - 1) * this.options.itemsPerPage
-        const limit =
-          this.options.itemsPerPage === -1 ? 0 : this.options.itemsPerPage
+        const page = this.options.page || 1
+        const itemsPerPage = this.options.itemsPerPage || 10
+        const skip = (page - 1) * (itemsPerPage || 10)
+        const limit = itemsPerPage === -1 ? 0 : itemsPerPage
         return {
           filters: { limit, skip, order, where },
           where,
@@ -621,17 +671,17 @@ export default {
                 total: formatCountData(data, modelName),
               }
             : {}
+        if (Object.keys(data).length > 0) this.error = ''
         return tableData
       },
-      result({ data, loading, networkStatus }) {
-        console.log('We got some result!')
-      },
+      result({ data, loading, networkStatus }) {},
       error(error) {
-        console.error("We've got an error!", error)
+        this.error = error
+        this.loading = 0
       },
       prefetch: false,
       loadingKey: 'loading',
-      skip: false,
+      skip: true,
       pollInterval: 0,
     },
   },

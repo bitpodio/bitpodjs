@@ -9,7 +9,6 @@
     </v-flex>
     <v-flex xs12 sm12 md12>
       <Grid
-        :content="content[$route.params.contentName]"
         :view-name="$route.params.viewName"
         :content-name="$route.params.contentName"
       />
