@@ -16,8 +16,11 @@ export default function (req, res, next) {
       const { host, oldState } = stateObject
       query.cbVerified = true
       query.state = oldState
+      console.log(`################### 
+      ########################################
+      https://${host}${process.env.PUBLIC_PATH}/callback?${qs.encode(query)}`);
       res.writeHead(301, {
-        Location: `http://${host}${process.env.PUBLIC_PATH}/callback?${qs.encode(query)}`,
+        Location: `https://${host}${process.env.PUBLIC_PATH}/callback?${qs.encode(query)}`,
       })
       return res.end()
     }

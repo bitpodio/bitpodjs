@@ -152,7 +152,8 @@ export default {
         responseType: 'code',
         grantType: 'authorization_code',
         redirectUri:
-          process.env.REDIRECT_URI || 'http://localhost:3000/callback',
+          process.env.REDIRECT_URI,
+         // process.env.REDIRECT_URI || 'http://localhost:3000/callback',
         scope: ['notification', 'offline_access', 'openid', 'profile', 'email'],
         clientId:
           process.env.BITPOD_EVENT_CLIENTID || `5F1ED0F95B78182ED39E7DF0`,
