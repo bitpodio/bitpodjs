@@ -145,6 +145,7 @@ export default {
       login: '/login',
       callback: '/callback',
       home: '/event',
+      logout: '/',
     },
     strategies: {
       bitpod: {

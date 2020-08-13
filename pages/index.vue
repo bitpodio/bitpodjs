@@ -6,7 +6,13 @@
           Login
         </v-card-title>
         <v-card-text class="justify-center text-center">
-          <v-btn class="ma-2" tile outlined x-large @click="loginBitpod">
+          <v-btn
+            class="ma-2 grey--text darken-2"
+            tile
+            outlined
+            large
+            @click="loginBitpod"
+          >
             <v-avatar>
               <img
                 src="https://res.cloudinary.com/mytestlogo/image/upload/v1578310772/logo/logo-favicon.png"
@@ -15,7 +21,7 @@
             Sign in with Bitpod
           </v-btn>
           <v-flex justify-center align-center d-flex class="ma-2">or</v-flex>
-          <v-btn class="ma-2" tile outlined x-large>
+          <v-btn class="ma-2 grey--text darken-2" tile outlined large>
             <v-avatar>
               <img
                 src="https://res.cloudinary.com/mytestlogo/platformbar/google.png"
@@ -31,13 +37,9 @@
 </template>
 
 <script>
-// import Logo from '~/components/Logo.vue'
-// import VuetifyLogo from '~/components/VuetifyLogo.vue'
-
 export default {
   layout: 'logoutlayout',
   components: {},
-  middleware: ['auth'],
   methods: {
     async loginBitpod() {
       return await this.$auth.loginWith('bitpod')
