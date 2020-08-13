@@ -24,7 +24,7 @@ app.post('/connect/token', async (req, res) => {
       nuxtconfig.auth.strategies.bitpod.clientSecret
     )
     try {
-      const tokenResponse = await axios.post(tokenEndpointUrl, params)
+      const tokenResponse = await axios.post(tokenEndPointUrl, params)
       res.json({
         token_type: 'bearer',
         access_token: tokenResponse.data.access_token,
@@ -45,7 +45,7 @@ app.post('/connect/token', async (req, res) => {
     params.append('code', code)
     params.append('redirect_uri', nuxtconfig.auth.strategies.bitpod.redirectUri)
     try {
-      const tokenResponse = await axios.post(tokenEndpointUrl, params)
+      const tokenResponse = await axios.post(tokenEndPointUrl, params)
       res.json({
         token_type: 'bearer',
         access_token: tokenResponse.data.access_token,
@@ -64,7 +64,7 @@ app.get('/connect/userinfo', async (req, res) => {
     },
   }
   try {
-    const userResponse = await axios.get(UserinfoEndpointUrl, config)
+    const userResponse = await axios.get(userInfoEndPointUrl, config)
     res.json({
       status: 200,
       data: userResponse.data,
