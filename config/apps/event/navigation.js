@@ -46,5 +46,25 @@ export default {
         Tooltip: 'Events',
       },
     },
+    Members: {
+      Content: {
+        Contents: content.Members,
+      },
+      General: {
+        Caption: 'Members',
+        Description: '',
+        Type: 'List',
+      },
+      Permissions: {
+        Groups: '',
+      },
+      UI: {
+        Icon: 'fa fa-users',
+        'Icon Background Color': 'rgb(0, 0, 255)',
+        Order: 3,
+        Templates: '',
+        Tooltip: 'Members',
+      },
+    },
   },
 }

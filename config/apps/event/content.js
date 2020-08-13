@@ -1,6 +1,7 @@
 import registrationStatusOptions from './gql/registrationStatusOptions.gql'
 import registrationList from './gql/registrationList.gql'
 import eventList from './gql/eventlist.gql'
+import memberList from './gql/memberlist.gql'
 // import { getItems } from './rest'
 
 export default (ctx) => ({
@@ -1348,7 +1349,7 @@ export default (ctx) => ({
           singleExpand: false,
           showSelect: true,
           hideFilter: false,
-          hideSearch: true,
+          hideSearch: false,
         },
         default: true,
         fields: {
@@ -1800,6 +1801,147 @@ export default (ctx) => ({
         visible: false,
         type: 'Form',
         title: 'Registration',
+      },
+    },
+  },
+  EventCustomers: {
+    action: {
+      'Embeded Actions': '',
+      'General Actions': ['Add EventCustomer'],
+      'Selected Item Action': ['Edit EventCustomer', 'Delete EventCustomer'],
+    },
+    child: {},
+    dataSource: {
+      Aggregation: '',
+      'Default view': '',
+      'Key Field': '',
+      'Parent key field': '',
+      Type: 'List',
+      URL: 'Customer',
+    },
+    general: {
+      caption: 'Members',
+      name: 'Customer',
+    },
+    permissions: {
+      Groups: [],
+      Type: '',
+    },
+    ui: {
+      'Card View Template': 'VisitingCard0',
+      Width: '50 %',
+      Height: '',
+      TemplateHelpers: {},
+      'Display Order': '',
+      'Map View Template': '',
+      'List View Template': '',
+      'Detail View': '',
+      Column: '',
+      'Tile View': '',
+      'App Type': 'View',
+      Templates: {
+        VisitingCard0: 'CommerceCustomers_Card_View',
+      },
+      decorator: {
+        'Field icon': {
+          CallPreference: 'fa fa-check|fa fa-times',
+          EmailSubscription: 'fa fa-check|fa fa-times',
+        },
+      },
+    },
+    views: {
+      Members: {
+        ui: {
+          hideDefaultHeader: false,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: true,
+          hideFilter: false,
+          hideSearch: true,
+        },
+        fields: {
+          FirstName: {
+            displayOrder: 2,
+            caption: 'FirstName',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          LastName: {
+            displayOrder: 3,
+            caption: 'LastName',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          Email: {
+            displayOrder: 4,
+            caption: 'Email',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '130px',
+            type: 'string',
+          },
+          BusinessNumber: {
+            displayOrder: 5,
+            caption: 'BusinessNumber',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '130px',
+            type: 'string',
+          },
+          createdDate: {
+            displayOrder: 6,
+            caption: 'createdDate',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '130px',
+            type: 'date',
+          },
+          createdBy: {
+            displayOrder: 6,
+            caption: 'createdBy',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '130px',
+            type: 'string',
+          },
+          action: {
+            displayOrder: 11,
+            caption: 'Action',
+            searchEnable: false,
+            sortEnable: false,
+            columnWidth: '130px',
+            type: 'action',
+            inlineEdit: false,
+            newForm: false,
+            editForm: false,
+          },
+        },
+        template: {
+          name: 'link-grid',
+          context: {
+            basePath: '/EventCustomers',
+          },
+        },
+        dataSource: {
+          query: memberList,
+          filter: {
+            limit: '10',
+            order: 'createdDate DESC',
+            skip: '0',
+            where: {},
+          },
+          type: 'graphql',
+          model: 'Customer',
+          defaultSort: 'createdDate DESC',
+        },
+        title: 'Members',
+        defaultSort: 'createdDate DESC',
+        default: true,
       },
     },
   },
