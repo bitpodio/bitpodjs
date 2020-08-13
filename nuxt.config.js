@@ -144,7 +144,7 @@ export default {
     redirect: {
       login: '/login',
       callback: '/callback',
-      home: '/flat/tiles',
+      home: '/event',
     },
     strategies: {
       bitpod: {

@@ -3,7 +3,6 @@
     <v-dialog
       v-model="dialog"
       persistent
-      max-width="600px"
       scrollable
       content-class="slide-form-default"
       transition="dialog-bottom-transition"
@@ -14,9 +13,14 @@
         </v-btn>
       </template>
       <v-card>
-        <v-card-title>
-          <span class="headline">New Item</span>
-        </v-card-title>
+        <v-toolbar dense flat dark fixed color="accent">
+          <v-toolbar-title class="body-1">New Item</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-btn icon dark @click="dialog = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </v-toolbar>
+        <v-divider></v-divider>
         <v-card-text>
           <v-container>
             <v-form ref="form" v-model="valid" :lazy-validation="lazy">
@@ -40,16 +44,10 @@
               </v-row>
             </v-form>
           </v-container>
-          <small>*indicates required field</small>
         </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="dialog = false"
-            >Close</v-btn
-          >
-          <v-btn :disabled="!valid" color="blue darken-1" text @click="onSave"
-            >Save</v-btn
-          >
+        <v-divider></v-divider>
+        <v-card-actions class="pl-4">
+          <v-btn color="primary" depressed @click="onSave">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
