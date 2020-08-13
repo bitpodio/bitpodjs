@@ -108,6 +108,7 @@ export default {
     clientConfigs: {
       default: {
         httpEndpoint: 'https://event.test.bitpod.io/svc/graphql',
+        // browserHttpEndpoint: '/svc/graphql',
       },
     },
     defaultOptions: {

@@ -526,6 +526,15 @@ export default {
       ])
     })
   },
+  async created() {
+    const dataSource = getViewDataSource(this.content, this.viewName)
+    const dataSourceType = dataSource.type || 'graphql'
+    if (dataSourceType === 'graphql') {
+      this.$apollo.queries.tableData.skip = false
+    } else {
+      this.tableData = await dataSource.getData.call(this, this.options)
+    }
+  },
   methods: {
     updatePagination(pagination) {},
     onFilterClick(e) {
@@ -645,7 +654,7 @@ export default {
       },
       prefetch: false,
       loadingKey: 'loading',
-      skip: false,
+      skip: true,
       pollInterval: 0,
     },
   },
