@@ -1,6 +1,5 @@
 import axios from 'axios'
 import nuxtconfig from '../nuxt.config'
-const urlParser = require('url')
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
@@ -17,19 +16,23 @@ app.post('/connect/token', async (req, res) => {
 
   if (req.body.refresh_token) {
     const refreshToken = req.body.refresh_token
-    const data = {
-      grant_type: 'refresh_token',
-      refresh_token: refreshToken,
-      client_id: nuxtconfig.auth.strategies.bitpod.clientId,
-      client_secret: nuxtconfig.auth.strategies.bitpod.clientSecret,
+    params.append('grant_type', 'refresh_token')
+    params.append('refresh_token', refreshToken)
+    params.append('client_id', nuxtconfig.auth.strategies.bitpod.clientId)
+    params.append(
+      'client_secret',
+      nuxtconfig.auth.strategies.bitpod.clientSecret
+    )
+    try {
+      const tokenResponse = await axios.post(tokenEndpointUrl, params)
+      res.json({
+        token_type: 'bearer',
+        access_token: tokenResponse.data.access_token,
+        refresh_token: tokenResponse.data.refresh_token,
+      })
+    } catch (error) {
+      return res.status(403).send({ error: 'Bad Request' })
     }
-    const tokenResponse = await axios.post(tokenEndpointUrl, data)
-
-    res.json({
-      token_type: 'bearer',
-      access_token: tokenResponse.data.access_token,
-      refresh_token: tokenResponse.data.refresh_token,
-    })
   } else {
     const code = req.body.code
 
@@ -41,14 +44,16 @@ app.post('/connect/token', async (req, res) => {
     params.append('grant_type', 'authorization_code')
     params.append('code', code)
     params.append('redirect_uri', nuxtconfig.auth.strategies.bitpod.redirectUri)
-
-    const tokenResponse = await axios.post(tokenEndpointUrl, params)
-
-    res.json({
-      token_type: 'bearer',
-      access_token: tokenResponse.data.access_token,
-      refresh_token: tokenResponse.data.refresh_token,
-    })
+    try {
+      const tokenResponse = await axios.post(tokenEndpointUrl, params)
+      res.json({
+        token_type: 'bearer',
+        access_token: tokenResponse.data.access_token,
+        refresh_token: tokenResponse.data.refresh_token,
+      })
+    } catch (error) {
+      return res.status(403).send({ error: 'Bad Request' })
+    }
   }
 })
 
@@ -58,12 +63,15 @@ app.get('/connect/userinfo', async (req, res) => {
       Authorization: req.headers.authorization,
     },
   }
-  const userResponse = await axios.get(UserinfoEndpointUrl, config)
-
-  res.json({
-    Status: 200,
-    data: userResponse.data,
-  })
+  try {
+    const userResponse = await axios.get(UserinfoEndpointUrl, config)
+    res.json({
+      status: 200,
+      data: userResponse.data,
+    })
+  } catch (error) {
+    return res.status(400).send({ error: 'Not Found' })
+  }
 })
 
 module.exports = {
