@@ -230,7 +230,6 @@
 import gql from 'graphql-tag'
 import liveDraftEventsQuery from '~/config/apps/event/gql/live-draft-events.gql'
 export default {
-  layout: 'flatlayout',
   data() {
     return {
       items: [],

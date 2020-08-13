@@ -327,7 +327,7 @@
       <div v-if="$auth.$state.loggedIn">
         <v-menu
           v-model="account"
-          :close-on-content-click="true"
+          :close-on-content-click="false"
           :nudge-width="180"
           offset-y
           transition="slide-y-transition"
@@ -362,7 +362,13 @@
                 </v-list-item-content>
               </v-list-item>
             </v-list>
-
+            <v-divider></v-divider>
+            <v-list-item>
+              <v-list-item-action>
+                <v-switch v-model="message" color="primary"></v-switch>
+              </v-list-item-action>
+              <v-list-item-title>Notification</v-list-item-title>
+            </v-list-item>
             <v-divider></v-divider>
 
             <v-list>
