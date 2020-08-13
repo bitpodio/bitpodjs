@@ -7,7 +7,7 @@
         </v-card-title>
         <v-card-text class="justify-center text-center">
           <v-btn
-            class="ma-2 grey--text darken-2"
+            class="ma-2 grey--text text-darken-3"
             tile
             outlined
             large
@@ -21,7 +21,7 @@
             Sign in with Bitpod
           </v-btn>
           <v-flex justify-center align-center d-flex class="ma-2">or</v-flex>
-          <v-btn class="ma-2 grey--text darken-2" tile outlined large>
+          <v-btn class="ma-2 grey--text text-darken-3" tile outlined large>
             <v-avatar>
               <img
                 src="https://res.cloudinary.com/mytestlogo/platformbar/google.png"
