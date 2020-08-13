@@ -47,3 +47,38 @@ export function getGridTemplateInfo(content, viewName) {
 export function getGridTemplateName(content, viewName) {
   return getGridTemplateInfo(content, viewName).name
 }
+
+export const formValidationMixin = {
+  computed: {
+    readonly() {
+      return this.calculatePropValue('readonly')
+    },
+    disabled() {
+      return this.calculatePropValue('disabled')
+    },
+  },
+  methods: {
+    rulesArray(field) {
+      const { rules = [] } = field
+      return rules.map((ruleFunction) => {
+        return (value) => {
+          return ruleFunction(value, this.formData)
+        }
+      })
+    },
+    calculatePropValue(propName) {
+      const propFields = {}
+      for (const field of this.fields) {
+        if (
+          field[propName] &&
+          field[propName](this.formData[field.fieldName], this.formData)
+        ) {
+          propFields[field.fieldName] = true
+        } else {
+          propFields[field.fieldName] = false
+        }
+      }
+      return propFields
+    },
+  },
+}

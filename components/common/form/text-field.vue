@@ -3,13 +3,15 @@
     v-model="textInput"
     :label="field.caption"
     :type="fieldControlType"
+    :rules="rules"
+    :readonly="readonly"
     @keyup="onKeyup"
   ></v-text-field>
 </template>
 
 <script>
 export default {
-  props: ['value', 'field'],
+  props: ['value', 'field', 'rules', 'readonly'],
   data() {
     return {
       textInput: this.value,

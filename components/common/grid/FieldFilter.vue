@@ -8,9 +8,9 @@
         <v-select
           v-model="selectedConditionOperator"
           :items="conditionOperator"
-          @change="onRuleConditionChange"
           label="select"
           single-line
+          @change="onRuleConditionChange"
         ></v-select>
       </div>
       <div v-else>
@@ -19,11 +19,11 @@
       <v-select
         v-model="filterRule.field"
         :items="fieldsList"
-        @change="onFieldChange"
         item-text="text"
         item-value="value"
         label="Field"
         single-line
+        @change="onFieldChange"
       ></v-select>
       <v-select
         v-model="filterRule.operator"

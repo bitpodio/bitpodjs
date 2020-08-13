@@ -108,6 +108,7 @@ export default {
     clientConfigs: {
       default: {
         httpEndpoint: 'https://event.test.bitpod.io/svc/graphql',
+        // browserHttpEndpoint: '/svc/graphql',
       },
     },
     defaultOptions: {
@@ -132,10 +133,10 @@ export default {
     strategies: {
       bitpod: {
         scheme: 'oauth2',
-        BITPOD_TOKEN_ENDPOINT_URL:
+        bitpodTokenEndPointUrl:
           process.env.BITPOD_TOKEN_ENDPOINT_URL ||
           'https://login.bitpod.io/auth/connect/token',
-        BITPOD_USERINFO_ENDPOINT_URL:
+        bitpodUserInfoEndPointUrl:
           process.env.BITPOD__USERINFO_ENDPOINT_URL ||
           'https://login.bitpod.io/auth/connect/userinfo',
         authorization:

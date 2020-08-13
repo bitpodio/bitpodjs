@@ -11,6 +11,7 @@ export default function (req, res, next) {
       } catch (err) {
         console.error('state is not a valid json')
         console.error('State : ', decodedState)
+        console.error('Url : ', req.url)
         return next()
       }
       const { host, oldState } = stateObject

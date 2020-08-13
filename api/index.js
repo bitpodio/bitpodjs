@@ -6,10 +6,10 @@ const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-const tokenEndpointUrl =
-  nuxtconfig.auth.strategies.bitpod.BITPOD_TOKEN_ENDPOINT_URL
-const UserinfoEndpointUrl =
-  nuxtconfig.auth.strategies.bitpod.BITPOD_USERINFO_ENDPOINT_URL
+const tokenEndPointUrl =
+  nuxtconfig.auth.strategies.bitpod.bitpodTokenEndPointUrl
+const userInfoEndPointUrl =
+  nuxtconfig.auth.strategies.bitpod.bitpodUserInfoEndPointUrl
 
 app.post('/connect/token', async (req, res) => {
   const params = new URLSearchParams()
