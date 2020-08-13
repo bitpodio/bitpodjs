@@ -31,7 +31,7 @@ app.post('/connect/token', async (req, res) => {
         refresh_token: tokenResponse.data.refresh_token,
       })
     } catch (error) {
-      return res.status(403).send({ error: 'Bad Request' })
+      return res.status(400).send({ error: 'Bad Request' })
     }
   } else {
     const code = req.body.code
@@ -52,7 +52,7 @@ app.post('/connect/token', async (req, res) => {
         refresh_token: tokenResponse.data.refresh_token,
       })
     } catch (error) {
-      return res.status(403).send({ error: 'Bad Request' })
+      return res.status(400).send({ error: 'Bad Request' })
     }
   }
 })
@@ -70,7 +70,7 @@ app.get('/connect/userinfo', async (req, res) => {
       data: userResponse.data,
     })
   } catch (error) {
-    return res.status(400).send({ error: 'Not Found' })
+    return res.status(404).send({ error: 'Not Found' })
   }
 })
 
