@@ -1996,7 +1996,7 @@ export default (ctx) => ({
             searchEnable: true,
             sortEnable: true,
             columnWidth: '120px',
-            // type: 'string',
+            type: 'string',
           },
           validTill: {
             displayOrder: 7,
@@ -2012,7 +2012,7 @@ export default (ctx) => ({
             searchEnable: true,
             sortEnable: true,
             columnWidth: '180px',
-            // type: 'number',
+            type: 'string',
           },
           offerValue: {
             displayOrder: 5,
@@ -2020,7 +2020,7 @@ export default (ctx) => ({
             searchEnable: true,
             sortEnable: true,
             columnWidth: '130px',
-            // type: 'string',
+            type: 'string',
           },
           minApplicableOrderAmount: {
             displayOrder: 6,
@@ -2028,7 +2028,7 @@ export default (ctx) => ({
             searchEnable: true,
             sortEnable: true,
             columnWidth: '220px',
-            // type: 'number',
+            type: 'string',
           },
           createdDate: {
             displayOrder: 10,
@@ -2044,7 +2044,7 @@ export default (ctx) => ({
             searchEnable: true,
             sortEnable: true,
             columnWidth: '130px',
-            // type: 'string',
+            type: 'string',
           },
         },
         template: {
