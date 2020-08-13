@@ -5,6 +5,8 @@
         <ViewDropdown :content="content['Registrations']" />
       </div>
       <Grid view-name="Registrations" search="" content-name="Registrations" />
+      <Grid view-name="Registrations" search="" content-name="Registrations" />
+      <Grid view-name="Registrations" search="" content-name="Registrations" />
     </v-flex>
   </v-layout>
 </template>

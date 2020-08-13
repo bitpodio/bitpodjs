@@ -1,5 +1,4 @@
 import colors from 'vuetify/es5/util/colors'
-
 export default {
   /*
    ** Nuxt rendering mode
@@ -37,7 +36,7 @@ export default {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: [],
+  plugins: ['~/plugins/eventBus.js'],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
@@ -60,6 +59,7 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/apollo',
+    '@nuxtjs/auth-next',
   ],
   /*
    ** Axios module configuration
@@ -96,7 +96,6 @@ export default {
   /*
    ** Build configuration
    ** See https://nuxtjs.org/api/configuration-build/
-   eyJhbGciOiJSUzI1NiIsImtpZCI6IjhEMkE0MTczM0QwN0JBNkU2RTYwNTZFRUJDRThDRkQyMDc0NThCMDUiLCJ0eXAiOiJKV1QiLCJ4NXQiOiJqU3BCY3owSHVtNXVZRmJ1dk9qUDBnZEZpd1UifQ.eyJuYmYiOjE1OTQ3MTI3MjksImV4cCI6MTU5NDc5OTEyOSwiaXNzIjoiaHR0cHM6Ly9sb2dpbi5iaXRwb2QuaW8vYXV0aCIsImF1ZCI6WyJodHRwczovL2xvZ2luLmJpdHBvZC5pby9hdXRoL3Jlc291cmNlcyIsIlNoYXJlZCIsIk5vdGlmaWNhdGlvbiJdLCJjbGllbnRfaWQiOiI2ZDJiOTg4YzQ2NWY0NzZhMDhhZWZjNDg5ZWYyYjIxMThmZTU4MDc2Iiwic3ViIjoiamFnYW5uYXRoQGJpdHBvZC5pbyIsImF1dGhfdGltZSI6MTU5NDcxMjcyNiwiaWRwIjoibG9jYWwiLCJzY29wZSI6WyJOb3RpZmljYXRpb24iLCJvcGVuaWQiLCJwcm9maWxlIiwiZW1haWwiLCJiYWFzIiwib2ZmbGluZV9hY2Nlc3MiLCJub3RpZmljYXRpb24iLCJub3RpZmljYXRpb24iLCJiYWFzIiwib2ZmbGluZV9hY2Nlc3MiLCJub3RpZmljYXRpb24iLCJiYWFzIiwib2ZmbGluZV9hY2Nlc3MiLCJub3RpZmljYXRpb24iLCJvZmZsaW5lX2FjY2VzcyJdLCJhbXIiOlsicHdkIl19.Pflb0QawGDCMCWslWthbHosaSnN1Yor7yI5zWRmlkSJKuYlajdC_yS1gsxAAyQvEcch4gcjd7zL8LooA5l5Z7jZmeymMVv538NR6Z4ZT09XqHBb8DvNgiGvSvVM0jlpluOKfHP5W0-5rThygnBEtPXknRTMn-2P4gmSdOOmMPzUtAKIt2ir-iGXtu5P35FYqyt4qvF7I7BKFQdtw8H-9IdpRveW0sP-M4P8rPdgI8OPFPYYbaXfbDVEavExdBBb09ybKyeCvgdRo7OnBMsBszE0zf2OSapKIvDjloYxc5dWxKsmLfb6g6NnnavOxw0LbdnymI3GCCTstmTcP4oK7xQ
    */
   build: {},
   vue: {
@@ -109,19 +108,59 @@ export default {
     clientConfigs: {
       default: {
         httpEndpoint: 'https://event.test.bitpod.io/svc/graphql',
-        httpLinkOptions: {
-          credentials: 'same-origin',
-          headers: {
-            Authorization:
-              'Bearer ' +
-              'eyJhbGciOiJSUzI1NiIsImtpZCI6IjhEMkE0MTczM0QwN0JBNkU2RTYwNTZFRUJDRThDRkQyMDc0NThCMDUiLCJ0eXAiOiJKV1QiLCJ4NXQiOiJqU3BCY3owSHVtNXVZRmJ1dk9qUDBnZEZpd1UifQ.eyJuYmYiOjE1OTUyMjA1ODMsImV4cCI6MTU5NTMwNjk4MywiaXNzIjoiaHR0cHM6Ly9sb2dpbi5iaXRwb2QuaW8vYXV0aCIsImF1ZCI6WyJodHRwczovL2xvZ2luLmJpdHBvZC5pby9hdXRoL3Jlc291cmNlcyIsIlNoYXJlZCIsIk5vdGlmaWNhdGlvbiJdLCJjbGllbnRfaWQiOiI2ZDJiOTg4YzQ2NWY0NzZhMDhhZWZjNDg5ZWYyYjIxMThmZTU4MDc2Iiwic3ViIjoiamFnYW5uYXRoQGJpdHBvZC5pbyIsImF1dGhfdGltZSI6MTU5NTEzNDc3NCwiaWRwIjoibG9jYWwiLCJzY29wZSI6WyJOb3RpZmljYXRpb24iLCJvcGVuaWQiLCJwcm9maWxlIiwiZW1haWwiLCJiYWFzIiwib2ZmbGluZV9hY2Nlc3MiLCJub3RpZmljYXRpb24iXSwiYW1yIjpbInB3ZCJdfQ.J7iq8VVWijARMAWfum6aneOKesIPwVwp3-7RUYW_D6OQWmNKm0GdgbeWnZnf0HMq4XHCSTCQ_WFLIRGLPDPExSqtWdFWXXTEbTdDPHdE0AWmceCD8Uqo_BPxbfQkIZ8dx3pYIXVWqGAZIaJ1nvlhPmOr4TkfxN8i5sdnGH4XpM39LS3zpy9lBvrh_eIsXj5Y6MQPFoQRLBpIGBLnD8S9vNugY3edGcG-nVZxTcygqSKTcddPr1RoJfULlhfFZ2KAKBc9kLMbe2WA2fIBLZSv24jLC2YosolWScRJ_MnKm9YGc69LA2TSIk1QgRXM10pS8Y9DufZQd89IcUW6V-1_hA',
-          },
-        },
+        // browserHttpEndpoint: '/svc/graphql',
       },
-      // default:{
-      //   httpEndpoint:"https://event.test.bitpod.io/svc/graphql",
-      //   // wsEndpoint: process.env.WS_ENDPOINT
-      // }
+    },
+    defaultOptions: {
+      // See 'apollo' definition
+      // For example: default query options
+      $query: {
+        fetchPolicy: 'network-only',
+      },
+    },
+  },
+  serverMiddleware: [
+    '~/api/index.js',
+    { path: '/callback', handler: '~/api/callback.js' },
+    { path: '/authorize', handler: '~/api/authorize.js' },
+  ],
+  auth: {
+    redirect: {
+      login: '/login',
+      callback: '/callback',
+      home: '/event',
+    },
+    strategies: {
+      bitpod: {
+        scheme: 'oauth2',
+        bitpodTokenEndPointUrl:
+          process.env.BITPOD_TOKEN_ENDPOINT_URL ||
+          'https://login.bitpod.io/auth/connect/token',
+        bitpodUserInfoEndPointUrl:
+          process.env.BITPOD__USERINFO_ENDPOINT_URL ||
+          'https://login.bitpod.io/auth/connect/userinfo',
+        authorization:
+          process.env.AUTHORIZATION_ENDPOINT_URL ||
+          'https://login.bitpod.io/auth/connect/authorize',
+        endpoints: {
+          authorization: '/authorize',
+          token: 'api/connect/token',
+          userInfo: 'api/connect/userinfo',
+        },
+        responseType: 'code',
+        grantType: 'authorization_code',
+        redirectUri:
+          process.env.REDIRECT_URI || 'http://localhost:3000/callback',
+        scope: ['notification', 'offline_access', 'openid', 'profile', 'email'],
+        clientId:
+          process.env.BITPOD_EVENT_CLIENTID || `5F1ED0F95B78182ED39E7DF0`,
+        clientSecret:
+          process.env.BITPOD_EVENT_CLIENTSECRET ||
+          `34389e794e294bc2afb1223b4298b9c9`,
+        tokenType: 'Bearer',
+        tokenKey: 'access_token',
+        refreshTokenKey: 'refresh_token',
+      },
     },
   },
   devtools: true,

@@ -1,67 +1,135 @@
 <template>
   <div>
-    <div class="grid-actions-container">
+    <template v-if="!!error">
       <div>
-        <FieldsFilter
-          :is-filter-applied="isFilterApplied"
-          :fields="filterableFields"
-          :filter-rules="filterRules"
-          @update-filter="onUpdateFilter"
+        <component :is="errorTemplate || null" :error="error" />
+      </div>
+    </template>
+    <div v-if="!error" :key="error">
+      <div>
+        <component
+          :is="actionTemplates['grid'] || null"
+          :content="content"
+          :view-name="viewName"
+          :on-new-item-save="onNewItemSave"
+          :refresh="refresh"
         />
+        <template v-if="selectedItems.length > 0">
+          <component
+            :is="actionTemplates['row-select'] || null"
+            :content="content"
+            :view-name="viewName"
+            :items="selectedItems"
+            :on-update-item="onUpdateItem"
+            :on-delete-item="onDeleteItem"
+            :refresh="refresh"
+          />
+        </template>
       </div>
-      <div class="grid-search-section">
-        <v-text-field
-          v-model="search"
-          append-icon="mdi-magnify"
-          label="Search"
-          single-line
-          hide-details
-          class="grid-search-input"
-        ></v-text-field>
+      <div class="grid-actions-container">
+        <div v-if="!hideFilter">
+          <slot name="filter">
+            <FieldsFilter
+              v-model="filters"
+              :is-filter-applied="isFilterApplied"
+              :fields="filterableFields"
+            />
+          </slot>
+        </div>
+        <div v-if="!hideSearch" class="grid-search-section">
+          <slot name="search">
+            <v-text-field
+              v-model="search"
+              append-icon="mdi-magnify"
+              label="Search"
+              single-line
+              hide-details
+              class="grid-search-input"
+            ></v-text-field>
+          </slot>
+        </div>
       </div>
+      <v-data-table
+        v-model="selected"
+        :headers="headers"
+        :items="tableData.items"
+        :single-select="singleSelect"
+        :loading="loading === 1"
+        :options.sync="options"
+        :server-items-length="tableData.total"
+        :hide-default-header="hideDefaultHeader"
+        :hide-default-footer="hideDefaultFooter"
+        :show-expand="showExpand"
+        :single-expand="singleExpand"
+        item-key="id"
+        :show-select="showSelect"
+        class="elevation-1"
+        @update:pagination="updatePagination"
+        @click:row="onRowClick"
+        @input="onItemSelected"
+      >
+        <template v-if="!!slotTemplates.item" v-slot:item="props">
+          <component
+            :is="slotTemplates.item || null"
+            :item="props.item"
+            :headers="props.headers"
+            :is-selected="props.isSelected"
+            :context="context"
+            :items="tableData.items"
+            :content="content"
+          />
+        </template>
+        <template
+          v-for="(column, index) in headers"
+          v-slot:[`item.${column.value}`]="props"
+        >
+          <component
+            :is="component[index] || null"
+            :key="column.value"
+            :item="props.item"
+            :value="props.value"
+            :context="context"
+            :items="tableData.items"
+            :content="content"
+          />
+        </template>
+        <template
+          v-if="!!slotTemplates['expanded-item']"
+          v-slot:expanded-item="props"
+        >
+          <component
+            :is="slotTemplates['expanded-item'] || null"
+            :item="props.item"
+            :headers="props.headers"
+          />
+        </template>
+        <template v-if="!!slotTemplates.body" v-slot:body="props">
+          <component
+            :is="slotTemplates.body || null"
+            :pagination="props.pagination"
+            :items="props.items"
+            :options="props.options"
+            :expand="props.expand"
+            :select="props.select"
+          />
+        </template>
+        <template v-if="!!slotTemplates.header" v-slot:header="props">
+          <component
+            :is="slotTemplates.header || null"
+            :props="props.props"
+            :on="props.on"
+          />
+        </template>
+        <template v-if="!!slotTemplates.footer" v-slot:footer="props">
+          <component
+            :is="slotTemplates.footer || null"
+            :props="props.props"
+            :on="props.on"
+            :headers="props.headers"
+          />
+        </template>
+      </v-data-table>
     </div>
-    <v-data-table
-      v-model="selected"
-      :headers="headers"
-      :items="tableData.items"
-      :single-select="singleSelect"
-      :loading="loading === 1"
-      :options.sync="options"
-      :server-items-length="tableData.total"
-      item-key="id"
-      show-select
-      class="elevation-1"
-      @update:pagination="updatePagination"
-    >
-      <!--<template v-slot:header.name="{ header }">
-                    {{ header.text.toUpperCase() }} test
-      </template>-->
-      <!-- <template slot="header" slot-scope="props">
-                    <tr>
-                        <th>
-                        <v-checkbox
-                            :input-value="props.all"
-                            :indeterminate="props.indeterminate"
-                            primary
-                            hide-details
-                            @click.native="toggleAll"
-                        ></v-checkbox>
-                        </th>
-                        <th
-                        v-for="header in props.headers"
-                        :key="header.text"
-                        :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
-                        @click="changeSort(header.value)"
-                        >
-                        <v-icon small>arrow_upward</v-icon>
-                        test
-                        </th>
-                    </tr>
-      </template>-->
-      <!-- <template v-slot:top>
-                <v-switch v-model="singleSelect" label="Single select" class="pa-3"></v-switch>
-      </template>-->
-    </v-data-table>
   </div>
 </template>
 
@@ -69,58 +137,95 @@
 import gql from 'graphql-tag'
 import addDays from 'date-fns/addDays'
 import format from 'date-fns/format'
-// import { axiosWrapper } from '../api/axios.js'
+import startOfToday from 'date-fns/startOfToday'
+import endOfToday from 'date-fns/endOfToday'
+import startOfTomorrow from 'date-fns/startOfTomorrow'
+import endOfTomorrow from 'date-fns/endOfTomorrow'
+import startOfYesterday from 'date-fns/startOfYesterday'
+import endOfYesterday from 'date-fns/endOfYesterday'
+import startOfDay from 'date-fns/startOfDay'
+import endOfDay from 'date-fns/endOfDay'
 import FieldsFilter from './FieldsFilter.vue'
-import EventFind from '~/config/apps/event/gql/eventlist.gql'
+import contentFactory from '~/config/apps/event/content'
+import { templateLoaderMixin } from '~/utility'
+
+const DEFAULT_GRID_PROPS = {
+  hideDefaultHeader: false,
+  hideDefaultFooter: false,
+  showExpand: false,
+  singleExpand: false,
+  showSelect: false,
+  hideFilter: false,
+  hideSearch: false,
+}
+const ACTION_TYPES = ['grid', 'row', 'row-select']
+const TEMPLATE_SLOTS = ['item', 'body', 'header', 'footer', 'expanded-item']
 
 function getTableHeader(content, viewName) {
-  const view = content.Views[viewName]
-  const fields = view.Fields
+  const fields = getGridFields(content, viewName)
 
   const headers = []
   for (const fieldName in fields) {
-    const { caption, sortEnable, displayOrder, columnWidth } = fields[fieldName]
-    headers.push({
-      text: caption,
-      value: fieldName,
-      sortable: sortEnable,
-      width: columnWidth,
+    const {
+      caption,
+      sortEnable,
       displayOrder,
-    })
+      columnWidth,
+      template,
+      hidden = false,
+    } = fields[fieldName]
+    if (!hidden) {
+      headers.push({
+        text: caption,
+        value: fieldName,
+        sortable: sortEnable,
+        width: columnWidth,
+        displayOrder,
+        template,
+      })
+    }
   }
   headers.sort((col1, col2) => col1.displayOrder - col2.displayOrder)
   return headers
 }
 
-// function formatData(content, viewName, data) {
-//   const view = content.Views[viewName]
-//   let fields = view.Fields
-//   fields = Object.keys(fields)
-//   return data.map((record) => {
-//     return fields.map((field) => {
+function getGridFields(content, viewName) {
+  const view = content.views[viewName]
+  return view.fields
+}
 
-//     })
-//   })
-// }
+function getViewDataSource(content, viewName) {
+  const view = content.views[viewName]
+  return view.dataSource
+}
+
+function getViewQuery(content, viewName) {
+  return getViewDataSource(content, viewName).query
+}
+
+function getGridTemplateInfo(content, viewName) {
+  const view = content.views[viewName]
+  return view.template || {}
+}
 
 function formatResult(content, viewName, data, modelName) {
+  if (!data[modelName]) return []
   let { edges } = data[modelName][`${modelName}Find`]
-  const view = content.Views[viewName]
-  const fields = view.Fields
+  const fields = getGridFields(content, viewName)
   edges = edges.map(({ node }) => {
     const formattedRecord = {}
     for (const field in node) {
       const { type } = fields[field] || {}
-
+      const fieldValue = node[field]
       if (type === 'date')
-        formattedRecord[field] = format(new Date(node[field]), 'PPp')
+        formattedRecord[field] = fieldValue
+          ? format(new Date(fieldValue), 'PPp')
+          : ''
       else formattedRecord[field] = node[field]
     }
-    // const result = format(new Date(2014, 1, 11), 'MM/dd/yyyy')
+    formattedRecord.id = getIdFromAtob(node.id)
     return formattedRecord
-    // return format(new Date(2014, 1, 11), 'PPp')
   })
-  // formatData(content, viewName, edges)
   return edges
 }
 
@@ -129,19 +234,21 @@ function formatCountData(data, modelName) {
   return count
 }
 
+function getContentByName(ctx, contentName) {
+  const contents = contentFactory(ctx)
+  return contents[contentName]
+}
+
 function getOrderQuery(content, viewName, sortBy, sortDesc) {
-  // let {sortBy,sortDesc} = option;
   if (!(sortBy && sortBy.length)) {
-    const view = content.Views[viewName]
-    const defaultSort = view.DefaultSort
+    const defaultSort = getViewDataSource(content, viewName).defaultSort
     return defaultSort || ''
   }
   return `${sortBy && sortBy[0]} ${sortDesc && sortDesc[0] ? 'DESC' : 'ASC'}`
 }
 
 function buildSearchQueryVariables(content, viewName, search) {
-  const view = content.Views[viewName]
-  const fields = view.Fields
+  const fields = getGridFields(content, viewName)
 
   let where = {}
   const or = []
@@ -157,67 +264,198 @@ function buildSearchQueryVariables(content, viewName, search) {
   return where
 }
 
-function buildQueryVariables({ content, viewName, search, filterFields }) {
-  const filterColumns = filterFields
+function getDateBeforeQuerybyDays(field, days) {
+  const and = [
+    { [field]: { gte: startOfDay(addDays(new Date(), -days)) } },
+    { [field]: { lte: endOfToday() } },
+  ]
+  return { and }
+}
+
+function getDateAfterQuerybyDays(field, days) {
+  const and = [
+    { [field]: { gte: startOfToday() } },
+    { [field]: { lte: endOfDay(addDays(new Date(), days)) } },
+  ]
+  return { and }
+}
+
+function getOperatorQuery(field, operator, value) {
+  let ruleFilter = {}
+  switch (operator) {
+    case 'is':
+      ruleFilter = { [field]: value }
+      break
+    case 'isNot':
+      ruleFilter = { [field]: { neq: value } }
+      break
+    case 'contains':
+      ruleFilter = { [field]: { like: value, options: 'i' } }
+      break
+    case 'notContains':
+      ruleFilter = { [field]: { nlike: value, options: 'i' } }
+      break
+    case 'startsWith':
+      ruleFilter = { [field]: { regexp: `^${value}` } }
+      break
+    case 'endsWith':
+      ruleFilter = { [field]: { regexp: `${value}$` } }
+      break
+    case 'gt':
+    case 'lt':
+    case 'gte':
+    case 'lte':
+      ruleFilter = { [field]: { [operator]: value } }
+      break
+    case 'today': {
+      const and = [
+        { [field]: { gte: startOfToday() } },
+        { [field]: { lt: endOfToday() } },
+      ]
+      ruleFilter = { and }
+      break
+    }
+    case 'tomorrow': {
+      const and = [
+        { [field]: { gte: startOfTomorrow() } },
+        { [field]: { lt: endOfTomorrow() } },
+      ]
+      ruleFilter = { and }
+      break
+    }
+    case 'yesterday': {
+      const and = [
+        { [field]: { gte: startOfYesterday() } },
+        { [field]: { lt: endOfYesterday() } },
+      ]
+      ruleFilter = { and }
+      break
+    }
+    case 'pastWeek': {
+      ruleFilter = getDateBeforeQuerybyDays(field, 7)
+      break
+    }
+    case 'pastMonth':
+      ruleFilter = getDateBeforeQuerybyDays(field, 30)
+      break
+    case 'pastYear':
+      ruleFilter = getDateBeforeQuerybyDays(field, 365)
+      break
+    case 'nextWeek':
+      ruleFilter = getDateAfterQuerybyDays(field, 7)
+      break
+    case 'nextMonth':
+      ruleFilter = getDateAfterQuerybyDays(field, 30)
+      break
+    case 'nextYear':
+      ruleFilter = getDateAfterQuerybyDays(field, 365)
+      break
+    case 'exactDate': {
+      const and = [
+        { [field]: { gte: startOfDay(new Date(value)) } },
+        { [field]: { lte: endOfDay(new Date(value)) } },
+      ]
+      ruleFilter = { and }
+      break
+    }
+    case 'isEmpty':
+      ruleFilter = { [field]: null }
+      break
+    case 'isNotEmpty':
+      ruleFilter = { [field]: { neq: null } }
+      break
+  }
+  return ruleFilter
+}
+
+function buildQueryVariables({
+  viewName,
+  search,
+  filters,
+  filter,
+  contentName,
+  ctx,
+}) {
+  const { rules: filterRules, ruleCondition } = filters
+  const content = getContentByName(ctx, contentName)
   const and = []
-  const view = content.Views[viewName]
-  const fields = view.Fields
-  for (const field in filterColumns) {
-    const filterValues = filterColumns[field]
-    const or = []
-    const { type } = fields[field] || {}
-    if (type === 'string') {
-      filterValues.forEach((filterValue) => {
-        or.push({ [field]: { like: filterValue, options: 'i' } })
-      })
-    } else if (type === 'number') {
-      filterValues.forEach((filterValue) => {
-        or.push({ [field]: { eq: filterValue } })
-      })
-    } else if (type === 'date') {
-      let and = []
-      filterValues.forEach((filterValue) => {
-        and = [
-          { [field]: { gte: new Date(filterValue) } },
-          { [field]: { lt: addDays(new Date(filterValue), 1) } },
-        ]
-        or.push({ and })
-      })
-    }
-    if (or.length > 0) {
-      and.push({ or })
-    }
+  const condition = []
+  for (const rule of filterRules) {
+    const { field, value, operator } = rule
+    const ruleFilter = getOperatorQuery(field, operator, value)
+    condition.push(ruleFilter)
+  }
+  if (condition.length > 0) {
+    and.push({ [ruleCondition]: condition })
   }
   if (search) {
     const serachQuery = buildSearchQueryVariables(content, viewName, search)
     and.push(serachQuery)
   }
-  console.log(filterColumns)
+  const viewDataSource = getViewDataSource(content, viewName)
+  const contentFilter = filter || viewDataSource.filter
+  if (contentFilter) {
+    and.push(contentFilter.where)
+  }
+  return and.length > 0 ? { and } : {}
+}
 
-  return { and }
+function getGridsProps(content, viewName) {
+  const view = content.views[viewName]
+  return { ...DEFAULT_GRID_PROPS, ...view.ui }
+}
+
+function getIdFromAtob(encodedId) {
+  return encodedId ? atob(encodedId).split(':')[1] : ''
+}
+
+function buildMutationCreateQuery(modelName) {
+  return `mutation($Inputs : ${modelName}CreateInput!){ ${modelName} { ${modelName}Create(input:$Inputs){ clientMutationId obj{ id } } } }`
+}
+
+function getModelName(content, viewName) {
+  const view = content.views[viewName]
+  const dataSource = view.dataSource
+  return dataSource.model
+}
+
+function buildMutationDeleteQuery(modelName) {
+  return `mutation($Inputs: ${modelName}DestroyAllInput!){ ${modelName} { ${modelName}DestroyAll(input:$Inputs){ clientMutationId } } }`
+}
+
+function buildMutationUpsertQuery(modelName) {
+  return `mutation($Inputs : ${modelName}UpsertWithWhereInput!){ ${modelName}{ ${modelName}UpsertWithWhere(input:$Inputs){ clientMutationId obj{ id } } } }`
 }
 
 export default {
   components: {
     FieldsFilter,
   },
+  mixins: [templateLoaderMixin],
   props: {
-    content: {
-      type: Object,
-      required: true,
-    },
     viewName: {
       type: String,
       required: true,
     },
     search: {
       type: String,
+      default: '',
+    },
+    filter: {
+      type: Object,
+      default: () => null,
+    },
+    contentName: {
+      type: String,
       required: true,
     },
   },
   data() {
-    const headers = getTableHeader(this.content, this.viewName)
+    const content = getContentByName(this, this.contentName)
+    const headers = getTableHeader(content, this.viewName)
+    const gridProps = getGridsProps(content, this.viewName)
     return {
+      content,
       singleSelect: false,
       selected: [],
       headers,
@@ -230,111 +468,206 @@ export default {
       options: {},
       isFilterApplied: false,
       filterFields: {},
-      filterRules: [],
+      filters: { rules: [], ruleCondition: 'and' },
+      component: [],
+      slotTemplates: {},
+      hideDefaultHeader: gridProps.hideDefaultHeader,
+      hideDefaultFooter: gridProps.hideDefaultFooter,
+      showExpand: gridProps.showExpand,
+      singleExpand: gridProps.singleExpand,
+      showSelect: gridProps.showSelect,
+      hideFilter: gridProps.hideFilter,
+      hideSearch: gridProps.hideSearch,
+      selectedItems: [],
+      actionTemplates: [],
+      triggerChange: 0,
+      error: '',
+      errorTemplate: null,
     }
   },
   computed: {
     filterableFields() {
-      const view = this.content.Views[this.viewName]
-      return view.Fields
+      const fields = getGridFields(this.content, this.viewName)
+      return fields
+    },
+    context() {
+      return getGridTemplateInfo(this.content, this.viewName).context || {}
+    },
+    _components() {
+      return {
+        errorTemplate: {
+          locations: [
+            `templates/grids/${this.templateFolderName}/error.vue`,
+            `common/templates/grid/error.vue`,
+          ],
+        },
+      }
     },
   },
-  beforeDestroy() {
-    // Perform the teardown procedure for someLeakyProperty.
-    // (In this case, effectively nothing)
+  mounted() {
+    this.headers.forEach(async (column, index) => {
+      this.component[index] = await this.loadTemplate([
+        `templates/grids/${this.templateFolderName}/column-${column.value}.vue`,
+        `templates/grids/${this.templateFolderName}/column-${index}.vue`,
+        `common/templates/grid/column.vue`,
+      ])
+    })
+    TEMPLATE_SLOTS.forEach(async (slot) => {
+      this.slotTemplates[slot] = await this.loadTemplate(
+        [`templates/grids/${this.templateFolderName}/${slot}.vue`],
+        false
+      )
+    })
+    const templateName = this.templateFolderName
+    ACTION_TYPES.forEach(async (actionType) => {
+      this.actionTemplates[actionType] = await this.loadTemplate([
+        `templates/grids/${templateName}/actions/${actionType}/index.vue`,
+        `common/templates/grid/actions/${actionType}/index.vue`,
+      ])
+    })
   },
-  // watch: {
-  //   options: {
-  //     handler () {
-  //         console.log(this);
-  //         let page = this.options.page
-  //         let pageSize = this.options.itemsPerPage
-  //         this.limit = pageSize;
-  //         this.skip = (page - 1) * pageSize;
-  //     //  let {}
-  //     },
-  //     deep: true,
-  //   },
-  // },
+  async created() {
+    const dataSource = getViewDataSource(this.content, this.viewName)
+    const dataSourceType = dataSource.type || 'graphql'
+    if (dataSourceType === 'graphql') {
+      this.$apollo.queries.tableData.skip = false
+    } else {
+      this.tableData = await dataSource.getData.call(this, this.options)
+    }
+  },
   methods: {
     updatePagination(pagination) {},
     onFilterClick(e) {
       this.isFilterApplied = true
     },
-    onUpdateFilter(value, filterFields) {
-      this.isFilterApplied = value
-      this.filterFields = { ...filterFields }
+    onRowClick(item, props) {
+      if (!this.showSelect) {
+        this.selectedItems = [item]
+      }
+    },
+    onItemSelected(items) {
+      this.selectedItems = items
+    },
+    async onNewItemSave(data) {
+      const modelName = getModelName(this.content, this.viewName)
+      const newItemMutation = buildMutationCreateQuery(modelName)
+      const userCreated = await this.$apollo.mutate({
+        mutation: gql(newItemMutation),
+        variables: {
+          Inputs: {
+            data,
+            clientMutationId: `${modelName} list item updated successfully.`,
+          },
+        },
+      })
+      this.$apollo.queries.tableData.refresh()
+      return userCreated
+    },
+    async onUpdateItem(data) {
+      const modelName = getModelName(this.content, this.viewName)
+      const where = {
+        id: data.id,
+      }
+      const editItemMutation = buildMutationUpsertQuery(modelName)
+      const itemUpdated = await this.$apollo.mutate({
+        mutation: gql(editItemMutation),
+        variables: {
+          Inputs: {
+            where,
+            data,
+            clientMutationId: `${modelName} list item updated successfully.`,
+          },
+        },
+      })
+      this.$apollo.queries.tableData.refresh()
+      return itemUpdated
+    },
+    async onDeleteItem(ids) {
+      const modelName = getModelName(this.content, this.viewName)
+      const deleteItemMutation = buildMutationDeleteQuery(modelName)
+      const itemDeleted = await this.$apollo.mutate({
+        mutation: gql(deleteItemMutation),
+        variables: {
+          Inputs: {
+            where: {
+              id: {
+                inq: ids,
+              },
+            },
+            clientMutationId: `${modelName} list item updated successfully.`,
+          },
+        },
+      })
+      this.$apollo.queries.tableData.refresh()
+      return itemDeleted
+    },
+    refresh() {
+      this.$apollo.queries.tableData.refresh()
     },
   },
   apollo: {
     tableData: {
-      query: gql`
-        ${EventFind}
-      `,
+      query() {
+        return gql`
+          ${getViewQuery(this.content, this.viewName)}
+        `
+      },
       variables() {
-        // Use vue reactive properties here
-
-        const { content, viewName, search, filterFields } = this
+        const { content, viewName, search, filters, contentName } = this
         const sortBy = this.options.sortBy
         const sortDesc = this.options.sortDesc
-        // let {,} = ;
         const order = getOrderQuery(content, viewName, sortBy, sortDesc)
-        const where =
-          this.isFilterApplied || search
-            ? buildQueryVariables({
-                content,
-                viewName,
-                search,
-                filterFields,
-              })
-            : {}
-        const skip = (this.options.page - 1) * this.options.itemsPerPage
-        const limit = this.options.itemsPerPage
+        const where = buildQueryVariables({
+          viewName,
+          search,
+          filters,
+          filter: this.filter,
+          contentName,
+          ctx: this,
+        })
+        const page = this.options.page || 1
+        const itemsPerPage = this.options.itemsPerPage || 10
+        const skip = (page - 1) * (itemsPerPage || 10)
+        const limit = itemsPerPage === -1 ? 0 : itemsPerPage
         return {
           filters: { limit, skip, order, where },
           where,
         }
       },
       update(data) {
-        console.log(data)
-        // The returned value will update
-        // the vue property 'pingMessage'
         const { content, viewName } = this
-        const tableData = {
-          items: formatResult(content, viewName, data, 'Event'),
-          total: formatCountData(data, 'Event'),
-        }
+        const modelName = content.general.name
+        const tableData =
+          Object.keys(data).length > 0
+            ? {
+                items: formatResult(content, viewName, data, modelName),
+                total: formatCountData(data, modelName),
+              }
+            : {}
+        if (Object.keys(data).length > 0) this.error = ''
         return tableData
       },
-      // Optional result hook
-      result({ data, loading, networkStatus }) {
-        console.log('We got some result!')
-      },
+      result({ data, loading, networkStatus }) {},
       error(error) {
-        console.error("We've got an error!", error)
+        this.error = error
+        this.loading = 0
       },
       prefetch: false,
       loadingKey: 'loading',
-      // pollInterval:0
+      skip: true,
+      pollInterval: 0,
     },
   },
-  // created(){
-  //
-  //     axiosWrapper('/Events')
-  //     .then(({data})=>{
-  //         this.items = data;
-  //     })
-  // }
-  // async mounted() {
-  //     let result = await this.$apollo.query({
-  //         query: gql`${EventFind}`,
-  //         variables:{
-  //             filters: {where:{}}, where:{}
-  //         }
-  //     });
-  //     console.log(result)
-  //     this.items = formatResult(result.data,"Event")
-  // }
+  // axios: {
+  //   tableData: {
+  //     query(){
+
+  //     },
+  //     update(){
+
+  //     }
+  //   }
+  // },
 }
 </script>
 

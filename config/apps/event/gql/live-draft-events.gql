@@ -4,8 +4,6 @@ query($filters: JSON, $where: JSON) {
       edges {
         node {
           id
-          createdDate
-          createdBy
           SendCalendar
           NotifyOrganizer
           WebinarLink

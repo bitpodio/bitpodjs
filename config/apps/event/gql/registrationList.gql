@@ -1,0 +1,45 @@
+query($filters: JSON, $where: JSON) {
+  Registration {
+    RegistrationFind(filter: $filters) {
+      edges {
+        node {
+          id
+          Email
+          EventName
+          FirstName
+          TotalAmount
+          TicketQuantity
+          CompanyName
+          FullName
+          LastName
+          _Comment {
+            Notes
+            id
+          }
+          Category
+          _QuestionResponse {
+            Answer
+            id
+          }
+          PaymentMethod
+          CheckIn
+          Phone
+          RegistrationId
+          Status
+          createdDate
+          EventList {
+            _VenueAddress {
+              id
+              City
+              State
+              PostalCode
+              AddressLine
+              Country
+            }
+          }
+        }
+      }
+    }
+    RegistrationCount(where: $where)
+  }
+}

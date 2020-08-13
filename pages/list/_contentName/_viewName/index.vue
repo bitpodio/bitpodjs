@@ -1,9 +1,16 @@
 <template>
   <v-layout column justify-center align-center>
-    <v-flex xs12 sm12 md12>
-      <Grid
+    <div>
+      <ViewDropdown
         :content="content[$route.params.contentName]"
         :view-name="$route.params.viewName"
+        :content-name="$route.params.contentName"
+      />
+    </div>
+    <v-flex xs12 sm12 md12>
+      <Grid
+        :view-name="$route.params.viewName"
+        :content-name="$route.params.contentName"
       />
     </v-flex>
   </v-layout>
@@ -12,13 +19,15 @@
 <script>
 import Grid from '~/components/common/grid'
 import content from '~/config/apps/event/content'
+import ViewDropdown from '~/components/common/viewDropdown'
 export default {
   components: {
     Grid,
+    ViewDropdown,
   },
   data() {
     return {
-      content,
+      content: content(this),
     }
   },
   created() {},
