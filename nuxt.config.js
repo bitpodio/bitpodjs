@@ -68,7 +68,9 @@ export default {
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
-  axios: {},
+  axios: {
+    baseURL: 'https://event.test.bitpod.io/nuxt/' // Used as fallback if no runtime config is provided
+  },
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
