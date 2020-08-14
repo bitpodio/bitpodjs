@@ -21,6 +21,7 @@ import Grid from '~/components/common/grid'
 import content from '~/config/apps/event/content'
 import ViewDropdown from '~/components/common/viewDropdown'
 export default {
+  middleware: ['auth'],
   components: {
     Grid,
     ViewDropdown,

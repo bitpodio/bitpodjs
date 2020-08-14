@@ -809,7 +809,6 @@ export default (ctx) => ({
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
-            cssClasses: 'col-12 col-md-6',
           },
           Tags: {
             displayOrder: 5,
@@ -1371,6 +1370,7 @@ export default (ctx) => ({
             sortEnable: true,
             columnWidth: '180px',
             type: 'string',
+            cssClasses: 'col-12 col-md-6',
           },
           PaymentMethod: {
             displayOrder: 10,

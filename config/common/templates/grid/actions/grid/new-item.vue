@@ -28,10 +28,8 @@
                 <v-col
                   v-for="field in fields"
                   :key="field.fieldName"
-                  cols="12"
-                  md="12"
+                  :class="field.cssClasses || 'col-12 col-md-6'"
                 >
-                  <!-- :class="field.cssClasses || 'xs12 sm6 md6 lg8'" -->
                   <component
                     :is="formControl(field) || null"
                     v-model="formData[field.fieldName]"
