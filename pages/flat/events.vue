@@ -57,10 +57,10 @@
       <div class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
         <h2 class="body-1">Attendees</h2>
         <v-divider></v-divider>
-        <Grid :content="content.EventsManagement" view-name="All Events" />
+        <!-- <Grid :content="content.EventsManagement" view-name="All Events" /> -->
       </div>
       <div class="xs12 sm12 md12 boxview pa-4 mr-2 mb-2">
-        <Grid :content="content.EventsManagement" view-name="All Events" />
+        <!-- <Grid :content="content.EventsManagement" view-name="All Events" /> -->
       </div>
     </v-flex>
     <v-flex column xs12 sm4 md4 lg4>
@@ -134,18 +134,18 @@
 </template>
 
 <script>
-import Grid from '~/components/common/grid'
-import content from '~/config/apps/event/content'
+// import Grid from '~/components/common/grid'
+// import content from '~/config/apps/event/content'
 import Cardtiles from '~/components/cardtiles'
 export default {
   layout: 'flatlayout',
   components: {
-    Grid,
+    // Grid,
     Cardtiles,
   },
   data() {
     return {
-      content,
+      // content,
     }
   },
   created() {},
