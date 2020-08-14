@@ -59,11 +59,10 @@ export default {
   },
   methods: {
     async onSave(event) {
-      console.log('Saving the data')
       this.dialog = false
       const modelName = 'OfferCode'
       const newItemMutation = buildMutationCreateQuery(modelName)
-      const userCreated = await this.$apollo.mutate({
+      await this.$apollo.mutate({
         mutation: gql(newItemMutation),
         variables: {
           Inputs: {
@@ -72,7 +71,6 @@ export default {
           },
         },
       })
-      console.log('Form data added', userCreated)
     },
   },
 }

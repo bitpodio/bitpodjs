@@ -259,9 +259,7 @@ export default {
         return edges.map(({ node }) => node)
       },
       // Optional result hook
-      result({ data, loading, networkStatus }) {
-        console.log('We got some result!')
-      },
+      result({ data, loading, networkStatus }) {},
       error(error) {
         console.error("We've got an error!", error)
       },

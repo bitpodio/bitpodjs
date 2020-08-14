@@ -14,8 +14,6 @@ export default {
         date: 'type-date',
         checkbox: 'type-checkbox',
       },
-      isNumber: this.type === 'number',
-      // isNumber: true,
     }
   },
 }

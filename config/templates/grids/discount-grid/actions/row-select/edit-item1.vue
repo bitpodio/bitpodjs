@@ -53,8 +53,6 @@
 
 <script>
 import gql from 'graphql-tag'
-// import TextField from '../../../../../../components/form/text-field.vue'
-// import TextField from '~/components/form/text-field.vue'
 import TextField from '~/components/common/form/text-field.vue'
 import Lookup from '~/components/common/form/lookup.vue'
 import Checkbox from '~/components/common/form/checkbox.vue'
@@ -95,7 +93,6 @@ export default {
     Lookup,
     Checkbox,
   },
-  //   mixins: [myMixin],
   props: ['content', 'viewName', 'items'],
   data() {
     const fields = getGridFields(this.content, this.viewName)
@@ -112,9 +109,6 @@ export default {
       this.formData = newValue[0]
     },
   },
-  beforeUpdate() {
-    console.log('update called')
-  },
   methods: {
     async onSave() {
       this.dialog = false
@@ -123,7 +117,7 @@ export default {
         id: this.formData.id,
       }
       const editItemMutation = buildMutationUpsertQuery(modelName)
-      const userCreated = await this.$apollo.mutate({
+      await this.$apollo.mutate({
         mutation: gql(editItemMutation),
         variables: {
           Inputs: {
@@ -133,7 +127,6 @@ export default {
           },
         },
       })
-      console.log(userCreated)
     },
     formControl(field) {
       switch (field.type) {

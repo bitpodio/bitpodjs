@@ -38,15 +38,12 @@ export default {
       snackbar: false,
     }
   },
-  beforeUpdate() {
-    console.log('update called')
-  },
   methods: {
     async onDelete() {
       this.dialog = false
       const modelName = getModelName(this.content, this.viewName)
       const deleteItemMutation = buildMutationDeleteQuery(modelName)
-      const userDeleted = await this.$apollo.mutate({
+      await this.$apollo.mutate({
         mutation: gql(deleteItemMutation),
         variables: {
           Inputs: {
@@ -56,7 +53,6 @@ export default {
         },
       })
       this.snackbar = true
-      console.log(userDeleted)
     },
   },
 }

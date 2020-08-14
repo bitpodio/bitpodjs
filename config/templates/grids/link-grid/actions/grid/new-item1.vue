@@ -109,7 +109,7 @@ export default {
       const modelName = getModelName(this.content, this.viewName)
       const newItemMutation = buildMutationCreateQuery(modelName)
       this.formData.TotalAmount = parseInt(this.formData.TotalAmount)
-      const userCreated = await this.$apollo.mutate({
+      await this.$apollo.mutate({
         mutation: gql(newItemMutation),
         variables: {
           Inputs: {
@@ -118,7 +118,6 @@ export default {
           },
         },
       })
-      console.log(userCreated)
     },
     formControl(field) {
       switch (field.type) {

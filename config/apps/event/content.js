@@ -1497,7 +1497,6 @@ export default (ctx) => ({
                 return !!v || 'E-mail is required'
               },
               function (value, data) {
-                console.log(value, data)
                 return /.+@.+\..+/.test(value) || 'E-mail must be valid'
               },
             ],
