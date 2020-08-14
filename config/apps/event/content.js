@@ -1370,7 +1370,7 @@ export default (ctx) => ({
             sortEnable: true,
             columnWidth: '180px',
             type: 'string',
-            cssClasses: 'col-12 col-md-6',
+            cssClasses: 'col-12 col-md-12',
           },
           PaymentMethod: {
             displayOrder: 10,
