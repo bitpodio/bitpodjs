@@ -50,7 +50,7 @@
         </div>
       </div>
       <v-data-table
-        v-model="selected"
+        v-model="selectedItems"
         :headers="headers"
         :items="tableData.items"
         :single-select="singleSelect"
@@ -64,7 +64,7 @@
         item-key="id"
         class="elevation-0"
         :show-select="showSelect"
-        @update:pagination="updatePagination"
+        @update:options="updatePagination"
         @click:row="onRowClick"
         @input="onItemSelected"
       >
@@ -172,8 +172,7 @@ import endOfYesterday from 'date-fns/endOfYesterday'
 import startOfDay from 'date-fns/startOfDay'
 import endOfDay from 'date-fns/endOfDay'
 import FieldsFilter from './FieldsFilter.vue'
-import contentFactory from '~/config/apps/event/content'
-import { templateLoaderMixin } from '~/utility'
+import { templateLoaderMixin, getContentByName } from '~/utility'
 
 const DEFAULT_GRID_PROPS = {
   hideDefaultHeader: false,
@@ -258,11 +257,6 @@ function formatResult(content, viewName, data, modelName) {
 function formatCountData(data, modelName) {
   const count = data[modelName][`${modelName}Count`]
   return count
-}
-
-function getContentByName(ctx, contentName) {
-  const contents = contentFactory(ctx)
-  return contents[contentName]
 }
 
 function getOrderQuery(content, viewName, sortBy, sortDesc) {
@@ -483,7 +477,6 @@ export default {
     return {
       content,
       singleSelect: false,
-      selected: [],
       headers,
       tableData: {
         items: [],
@@ -530,6 +523,16 @@ export default {
       }
     },
   },
+  watch: {
+    filters() {
+      // call rest
+      this.loadRestData()
+    },
+    search() {
+      // call rest
+      this.loadRestData()
+    },
+  },
   mounted() {
     this.headers.forEach(async (column, index) => {
       this.component[index] = await this.loadTemplate([
@@ -552,18 +555,20 @@ export default {
       ])
     })
   },
-  async created() {
+  created() {
     const dataSource = getViewDataSource(this.content, this.viewName)
     const dataSourceType = dataSource.type || 'graphql'
     if (dataSourceType === 'graphql') {
       this.$apollo.queries.tableData.skip = false
-    } else {
-      this.tableData = await dataSource.getData.call(this, this.options)
     }
+    this.loadRestData()
   },
 
   methods: {
-    updatePagination(pagination) {},
+    updatePagination(pagination) {
+      // call rest
+      this.loadRestData()
+    },
     onFilterClick(e) {
       this.isFilterApplied = true
     },
@@ -629,7 +634,28 @@ export default {
       return itemDeleted
     },
     refresh() {
-      this.$apollo.queries.tableData.refresh()
+      const dataSource = getViewDataSource(this.content, this.viewName)
+      const dataSourceType = dataSource.type || 'graphql'
+      if (dataSourceType === 'graphql') {
+        this.$apollo.queries.tableData.refresh()
+      }
+      if (dataSourceType === 'rest') {
+        this.loadRestData()
+      }
+      this.selectedItems = []
+    },
+    async loadRestData() {
+      const dataSource = getViewDataSource(this.content, this.viewName)
+      const dataSourceType = dataSource.type || 'graphql'
+      if (dataSourceType === 'rest') {
+        const { search, filters } = this
+        const options = {
+          ...this.options,
+          search,
+          filters,
+        }
+        this.tableData = await dataSource.getData.call(this, options)
+      }
     },
   },
   apollo: {

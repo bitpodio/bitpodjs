@@ -29,14 +29,16 @@
                   v-for="field in fields"
                   :key="field.fieldName"
                   cols="12"
-                  sm="6"
+                  md="12"
                 >
+                  <!-- :class="field.cssClasses || 'xs12 sm6 md6 lg8'" -->
                   <component
                     :is="formControl(field) || null"
                     v-model="formData[field.fieldName]"
                     :field="field"
                     :rules="rulesArray(field)"
                     :readonly="readonly[field.fieldName]"
+                    :filter="filter[field.fieldName]"
                     :field-name="field.fieldName"
                     :content="content"
                   />
@@ -59,6 +61,8 @@ import TextField from '~/components/common/form/text-field.vue'
 import Lookup from '~/components/common/form/lookup.vue'
 import Checkbox from '~/components/common/form/checkbox.vue'
 import CustomDate from '~/components/common/form/date.vue'
+import File from '~/components/common/form/file.vue'
+import RichText from '~/components/common/form/richtext.vue'
 import { formValidationMixin } from '~/utility'
 
 function getGridFields(content, viewName) {
@@ -87,6 +91,8 @@ export default {
     Lookup,
     Checkbox,
     CustomDate,
+    File,
+    RichText,
   },
   mixins: [formValidationMixin],
   props: ['content', 'viewName', 'onNewItemSave'],
@@ -114,9 +120,13 @@ export default {
           return 'Checkbox'
         case 'date':
           return 'CustomDate'
+        case 'file':
+          return 'File'
         case 'string':
         case 'number':
           return 'TextField'
+        case 'richtext':
+          return 'RichText'
       }
     },
     validate() {

@@ -1847,6 +1847,11 @@
     semver "^7.3.2"
     tsutils "^3.17.1"
 
+"@ungap/global-this@^0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@ungap/global-this/-/global-this-0.3.1.tgz#e37e005301c64484a61eed90305210bf078a4bc5"
+  integrity sha512-6gxLxSsXmt3XcC2p0mRjeHOtZemfs/IswAyWJZU0b8UvCQAegRpjSrQK0Y+u3OQQ3V0ZYQkHVCV9V3dxnlJ5Zw==
+
 "@vue/babel-helper-vue-jsx-merge-props@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@vue/babel-helper-vue-jsx-merge-props/-/babel-helper-vue-jsx-merge-props-1.0.0.tgz#048fe579958da408fb7a8b2a3ec050b50a661040"
@@ -2833,6 +2838,11 @@ atob@^2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
+
+autobind-decorator@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/autobind-decorator/-/autobind-decorator-2.4.0.tgz#ea9e1c98708cf3b5b356f7cf9f10f265ff18239c"
+  integrity sha512-OGYhWUO72V6DafbF8PM8rm3EPbfuyMZcJhtm5/n26IDwO18pohE4eNazLoCGhPiXOCD0gEGmrbU3849QvM8bbw==
 
 autoprefixer@^9.6.1, autoprefixer@^9.8.0:
   version "9.8.5"
@@ -6844,6 +6854,21 @@ jiti@^0.1.11:
   version "0.1.11"
   resolved "https://registry.yarnpkg.com/jiti/-/jiti-0.1.11.tgz#8b27b92e4c0866b3c8c91945c55a99a1db17a782"
   integrity sha512-zSPegl+ageMLSYcq1uAZa6V56pX2GbNl/eU3Or7PFHu10a2YhLAXj5fnHJGd6cHZTalSR8zXGH8WmyuyufMhLA==
+
+jodit-vue@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/jodit-vue/-/jodit-vue-2.2.1.tgz#845886ebfb338d5231c57798331c285f9a2fd86f"
+  integrity sha512-bNyMJhkv3lRm/yzveKvJUPXKZik4hpTad1/vED9FEzZmuDart2f9NYLQ0P1ZiYKsOGEMHvx5gNjBMD2W6G+Lpg==
+  dependencies:
+    "@ungap/global-this" "^0.3.1"
+    jodit "^3.2.46"
+
+jodit@^3.2.46:
+  version "3.4.23"
+  resolved "https://registry.yarnpkg.com/jodit/-/jodit-3.4.23.tgz#f0771ab20bfdc617c06f99966f62114add0a14fa"
+  integrity sha512-rJ7SUZsSDRicYfABZt+LS2fDXRnMPE4JR6RxRN74YMts+iiwwPhKgmddh3QJZ012+iYyH38UqpxSdciVUkzcVw==
+  dependencies:
+    autobind-decorator "^2.4.0"
 
 js-cookie@^2.2.1:
   version "2.2.1"
