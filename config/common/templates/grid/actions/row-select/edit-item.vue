@@ -17,7 +17,7 @@
                 v-for="field in fields"
                 :key="`${field.fieldName}${updateCount}`"
                 cols="12"
-                sm="6"
+                sm="12"
               >
                 <component
                   :is="formControl(field) || null"
@@ -47,6 +47,7 @@
 import TextField from '~/components/common/form/text-field.vue'
 import Lookup from '~/components/common/form/lookup.vue'
 import Checkbox from '~/components/common/form/checkbox.vue'
+import RichText from '~/components/common/form/richtext.vue'
 
 function getGridFields(content, viewName) {
   const view = content.views[viewName]
@@ -73,6 +74,7 @@ export default {
     TextField,
     Lookup,
     Checkbox,
+    RichText,
   },
   props: ['content', 'viewName', 'items', 'onUpdateItem'],
   data() {
@@ -104,6 +106,8 @@ export default {
           return 'Lookup'
         case 'checkbox':
           return 'Checkbox'
+        case 'richtext':
+          return 'RichText'
       }
     },
   },

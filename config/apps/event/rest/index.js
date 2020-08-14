@@ -1,6 +1,10 @@
 export function getData(modelName) {
   return async function query(options) {
-    debugger
+    // options contains sort, pagination, search, filters data
+    // 1. sort
+    // 2. pagination
+    // 3. search
+    // 4. filters
     const res = await this.$axios.$get(
       `https://event.test.bitpod.io/svc/api/${modelName}s?filter={"limit":"10"}`
     )

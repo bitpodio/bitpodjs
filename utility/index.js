@@ -1,4 +1,6 @@
 import MissingComponent from './missing-component.vue'
+import contentFactory from '~/config/apps/event/content'
+
 export function importTemplate(templatePath) {
   return () => import(`~/config/${templatePath}`)
 }
@@ -56,6 +58,15 @@ export const formValidationMixin = {
     disabled() {
       return this.calculatePropValue('disabled')
     },
+    filter() {
+      const propFields = {}
+      for (const field of this.fields) {
+        propFields[field.fieldName] = field.dataSource
+          ? field.dataSource.filter.call(this, this.formData)
+          : {}
+      }
+      return propFields
+    },
   },
   methods: {
     rulesArray(field) {
@@ -81,4 +92,25 @@ export const formValidationMixin = {
       return propFields
     },
   },
+}
+
+export function formatResult(data, modelName) {
+  if (!data[modelName]) return []
+  let { edges } = data[modelName][`${modelName}Find`]
+  edges = edges.map(({ node }) => node)
+  return edges
+}
+
+export function getContentByName(ctx, contentName) {
+  const contents = contentFactory(ctx)
+  return contents[contentName]
+}
+
+function getViewDataSource(content, viewName) {
+  const view = content.views[viewName]
+  return view.dataSource
+}
+
+export function getViewQuery(content, viewName) {
+  return getViewDataSource(content, viewName).query
 }

@@ -1,7 +1,8 @@
 import registrationStatusOptions from './gql/registrationStatusOptions.gql'
 import registrationList from './gql/registrationList.gql'
 import eventList from './gql/eventlist.gql'
-import { getData } from './rest'
+// import { getData } from './rest'
+// import { getBPMNData } from './rest/bpmn.js'
 
 export default (ctx) => ({
   EventsManagement: {
@@ -805,6 +806,7 @@ export default (ctx) => ({
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            cssClasses: 'xs12 sm8 md8 lg8',
           },
           Tags: {
             displayOrder: 5,
@@ -830,6 +832,13 @@ export default (ctx) => ({
             columnWidth: '180px',
             type: 'string',
           },
+          // Images: {
+          //   displayOrder: 1,
+          //   caption: 'Images',
+          //   hidden: true,
+          //   columnWidth: '150px',
+          //   type: 'file',
+          // },
         },
         inlineEditing: true,
         DdialogEditing: true,
@@ -1374,7 +1383,7 @@ export default (ctx) => ({
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
-            type: 'string',
+            type: 'richtext',
           },
           Phone: {
             displayOrder: 5,
@@ -1395,7 +1404,12 @@ export default (ctx) => ({
               query: registrationStatusOptions,
               itemText: 'value',
               itemValue: 'key',
-              filter: { type: 'RegistrationStatus' },
+              filter(data) {
+                debugger
+                return {
+                  type: data.EventName,
+                }
+              },
             },
             // template: {
             //   name: 'issue-grid',
@@ -1522,6 +1536,13 @@ export default (ctx) => ({
               },
             ],
           },
+          // Images: {
+          //   displayOrder: 1,
+          //   caption: 'Images',
+          //   hidden: true,
+          //   columnWidth: '150px',
+          //   type: 'file',
+          // },
         },
         template: {
           name: 'link-grid',
@@ -1530,13 +1551,13 @@ export default (ctx) => ({
           },
         },
         dataSource: {
-          // query: registrationList,
-          // defaultSort: 'createdDate DESC',
-          // type: 'graphql',
-          // model: 'Registration',
+          query: registrationList,
+          defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          model: 'Registration',
           // end of gql
-          type: 'rest',
-          getData: getData('Registration'),
+          // type: 'rest',
+          // getData: getData('Registration'),
         },
         title: 'Registrations',
         type: 'list',

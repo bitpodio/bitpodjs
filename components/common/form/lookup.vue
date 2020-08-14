@@ -39,6 +39,10 @@ export default {
       type: String,
       required: true,
     },
+    filter: {
+      type: Object,
+      default: () => {},
+    },
   },
   data() {
     return {
@@ -48,23 +52,34 @@ export default {
       itemValue: this.field.dataSource.itemValue || 'value',
     }
   },
-  async mounted() {
-    if (!this.field.items) {
-      const where = this.field.dataSource.filter || {}
-      const result = await this.$apollo.query({
-        query: gql`
-          ${this.field.dataSource.query}
-        `,
-        variables: {
-          filters: { where },
-        },
-      })
-      this.items = formatResult(result.data)
-    }
+  watch: {
+    filter(newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.loadItems()
+      }
+    },
+  },
+  mounted() {
+    this.loadItems()
   },
   methods: {
     onChange() {
       this.$emit('change', this.value)
+    },
+    async loadItems() {
+      if (!this.field.items) {
+        const where =
+          this.filter || this.field.dataSource.filter.call(this) || {}
+        const result = await this.$apollo.query({
+          query: gql`
+            ${this.field.dataSource.query}
+          `,
+          variables: {
+            filters: { where },
+          },
+        })
+        this.items = formatResult(result.data)
+      }
     },
   },
 }
