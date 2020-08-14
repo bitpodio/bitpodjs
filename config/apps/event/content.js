@@ -809,7 +809,7 @@ export default (ctx) => ({
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
-            cssClasses: 'xs12 sm8 md8 lg8',
+            cssClasses: 'col-12 col-md-6',
           },
           Tags: {
             displayOrder: 5,
