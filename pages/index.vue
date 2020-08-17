@@ -1,95 +1,59 @@
 <template>
   <v-layout column justify-center align-center>
-    <v-flex xs12 sm8 md6>
-      <div class="text-center">
-        <logo />
-        <vuetify-logo />
-      </div>
-      <v-card>
-        <v-card-title class="headline">
-          Welcome to the Vuetify + Nuxt.js template
+    <v-flex xs12 sm8 md6 class="login-box">
+      <v-card class="elevation-0">
+        <v-card-title class="headline justify-center">
+          Login
         </v-card-title>
-        <v-card-text>
-          <p>
-            Vuetify is a progressive Material Design component framework for
-            Vue.js. It was designed to empower developers to create amazing
-            applications.
-          </p>
-          <p>
-            For more information on Vuetify, check out the
-            <a
-              href="https://vuetifyjs.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              documentation </a
-            >.
-          </p>
-          <p>
-            If you have questions, please join the official
-            <a
-              href="https://chat.vuetifyjs.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="chat"
-            >
-              discord </a
-            >.
-          </p>
-          <p>
-            Find a bug? Report it on the github
-            <a
-              href="https://github.com/vuetifyjs/vuetify/issues"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="contribute"
-            >
-              issue board </a
-            >.
-          </p>
-          <p>
-            Thank you for developing with Vuetify and I look forward to bringing
-            more exciting features in the future.
-          </p>
-          <div class="text-xs-right">
-            <em><small>&mdash; John Leider</small></em>
-          </div>
-          <hr class="my-3" />
-          <a
-            href="https://nuxtjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
+        <v-card-text class="justify-center text-center">
+          <v-btn
+            class="ma-2 grey--text text-darken-3"
+            tile
+            outlined
+            large
+            @click="loginBitpod"
           >
-            Nuxt Documentation
-          </a>
-          <br />
-          <a
-            href="https://github.com/nuxt/nuxt.js"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt GitHub
-          </a>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
-          <v-btn color="primary" nuxt to="/inspire">
-            Continue
+            <v-avatar>
+              <img
+                src="https://res.cloudinary.com/mytestlogo/image/upload/v1578310772/logo/logo-favicon.png"
+              />
+            </v-avatar>
+            Sign in with Bitpod
           </v-btn>
-        </v-card-actions>
+          <v-flex justify-center align-center d-flex class="ma-2">or</v-flex>
+          <v-btn class="ma-2 grey--text text-darken-3" tile outlined large>
+            <v-avatar>
+              <img
+                src="https://res.cloudinary.com/mytestlogo/platformbar/google.png"
+                class="login-google"
+              />
+            </v-avatar>
+            Sign in with Google
+          </v-btn>
+        </v-card-text>
       </v-card>
     </v-flex>
   </v-layout>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-import VuetifyLogo from '~/components/VuetifyLogo.vue'
-
 export default {
-  components: {
-    Logo,
-    VuetifyLogo,
+  layout: 'logoutlayout',
+  components: {},
+  methods: {
+    async loginBitpod() {
+      return await this.$auth.loginWith('bitpod')
+    },
   },
 }
 </script>
+
+<style scoped>
+.login-box {
+  min-width: 450px;
+}
+.login-google {
+  width: 30px;
+  height: auto;
+}
+</style>

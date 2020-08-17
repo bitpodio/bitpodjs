@@ -6,28 +6,27 @@
       </div>
     </template>
     <div v-if="!error" :key="error">
-      <div>
-        <component
-          :is="actionTemplates['grid'] || null"
-          :content="content"
-          :view-name="viewName"
-          :on-new-item-save="onNewItemSave"
-          :refresh="refresh"
-        />
-        <template v-if="selectedItems.length > 0">
+      <div class="grid-actions-container">
+        <div class="d-flex">
+          <template v-if="selectedItems.length > 0">
+            <component
+              :is="actionTemplates['row-select'] || null"
+              :content="content"
+              :view-name="viewName"
+              :on-update-item="onUpdateItem"
+              :on-delete-item="onDeleteItem"
+              :items="selectedItems"
+              class="d-flex"
+            />
+          </template>
           <component
-            :is="actionTemplates['row-select'] || null"
+            :is="actionTemplates['grid'] || null"
             :content="content"
             :view-name="viewName"
-            :items="selectedItems"
-            :on-update-item="onUpdateItem"
-            :on-delete-item="onDeleteItem"
-            :refresh="refresh"
+            :on-new-item-save="onNewItemSave"
           />
-        </template>
-      </div>
-      <div class="grid-actions-container">
-        <div v-if="!hideFilter">
+        </div>
+        <div v-if="hideFilter">
           <slot name="filter">
             <FieldsFilter
               v-model="filters"
@@ -42,9 +41,10 @@
               v-model="search"
               append-icon="mdi-magnify"
               label="Search"
-              single-line
               hide-details
-              class="grid-search-input"
+              class="grid-search-input ml-2"
+              outlined
+              dense
             ></v-text-field>
           </slot>
         </div>
@@ -62,12 +62,38 @@
         :show-expand="showExpand"
         :single-expand="singleExpand"
         item-key="id"
+        class="elevation-0"
         :show-select="showSelect"
-        class="elevation-1"
         @update:options="updatePagination"
         @click:row="onRowClick"
         @input="onItemSelected"
       >
+        <template v-if="!!slotTemplates.item" v-slot:item="props">
+          <component
+            :is="slotTemplates.item || null"
+            :item="props.item"
+            :headers="props.headers"
+            :is-selected="props.isSelected"
+            :context="context"
+            :items="tableData.items"
+            :content="content"
+          />
+        </template>
+        <template
+          v-for="(column, index) in headers"
+          v-slot:[`item.${column.value}`]="props"
+        >
+          <component
+            :is="component[index] || null"
+            :key="column.value"
+            :item="props.item"
+            :value="props.value"
+            :context="context"
+            :items="tableData.items"
+            :content="content"
+            type="number"
+          />
+        </template>
         <template v-if="!!slotTemplates.item" v-slot:item="props">
           <component
             :is="slotTemplates.item || null"
@@ -537,6 +563,7 @@ export default {
     }
     this.loadRestData()
   },
+
   methods: {
     updatePagination(pagination) {
       // call rest
@@ -710,5 +737,6 @@ export default {
 .grid-actions-container {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
 }
 </style>

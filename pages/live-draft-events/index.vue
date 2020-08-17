@@ -1,6 +1,6 @@
 <template>
   <div>
-    live & drfts events
+    Live & Draft Events
     <v-row>
       <v-col
         v-for="item in items"

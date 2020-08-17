@@ -3,6 +3,7 @@
     v-model="textInput"
     :label="field.caption"
     :type="fieldControlType"
+    outlined
     :rules="rules"
     :readonly="readonly"
     @keyup="onKeyup"

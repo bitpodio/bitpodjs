@@ -1,15 +1,26 @@
 <template>
-  <v-row justify="center">
-    <v-dialog v-model="dialog" persistent max-width="600px">
+  <v-col class="px-0">
+    <v-dialog
+      v-model="dialog"
+      persistent
+      scrollable
+      content-class="slide-form-default"
+      transition="dialog-bottom-transition"
+    >
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="primary" dark v-bind="attrs" v-on="on">
-          New Item
+        <v-btn text small v-bind="attrs" v-on="on">
+          <v-icon left>mdi-plus</v-icon> New Item
         </v-btn>
       </template>
       <v-card>
-        <v-card-title>
-          <span class="headline">New Item</span>
-        </v-card-title>
+        <v-toolbar dense flat dark fixed color="accent">
+          <v-toolbar-title class="body-1">New Item</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-btn icon dark @click="dialog = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </v-toolbar>
+        <v-divider></v-divider>
         <v-card-text>
           <v-container>
             <v-form ref="form" v-model="valid" :lazy-validation="lazy">
@@ -17,10 +28,8 @@
                 <v-col
                   v-for="field in fields"
                   :key="field.fieldName"
-                  cols="12"
-                  md="12"
+                  :class="field.cssClasses || 'col-12 col-md-6'"
                 >
-                  <!-- :class="field.cssClasses || 'xs12 sm6 md6 lg8'" -->
                   <component
                     :is="formControl(field) || null"
                     v-model="formData[field.fieldName]"
@@ -35,20 +44,14 @@
               </v-row>
             </v-form>
           </v-container>
-          <small>*indicates required field</small>
         </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="dialog = false"
-            >Close</v-btn
-          >
-          <v-btn :disabled="!valid" color="blue darken-1" text @click="onSave"
-            >Save</v-btn
-          >
+        <v-divider></v-divider>
+        <v-card-actions class="pl-4">
+          <v-btn color="primary" depressed @click="onSave">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
-  </v-row>
+  </v-col>
 </template>
 
 <script>

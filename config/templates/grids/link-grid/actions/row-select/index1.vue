@@ -1,3 +1,5 @@
 <template>
-  <div>link-grid select</div>
+  <div>
+    <div>Make a copy</div>
+  </div>
 </template>

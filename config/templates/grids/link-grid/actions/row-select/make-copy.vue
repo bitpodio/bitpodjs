@@ -9,7 +9,7 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn color="primary" dark v-bind="attrs" v-on="on">
-          Edit Item
+          Make a Copy
         </v-btn>
       </template>
       <v-card>
@@ -93,20 +93,25 @@ export default {
     Lookup,
     Checkbox,
   },
-  props: ['content', 'viewName', 'items'],
+  props: ['content', 'viewName', 'item'],
   data() {
     const fields = getGridFields(this.content, this.viewName)
     return {
       fields,
-      formData: this.items[0],
+      formData: this.item,
       dialog: false,
       updateCount: 0,
     }
   },
+  computed: {
+    editData() {
+      return this.item
+    },
+  },
   watch: {
     item(newValue, oldValue) {
       this.updateCount = this.updateCount + 1
-      this.formData = newValue[0]
+      this.formData = newValue
     },
   },
   methods: {

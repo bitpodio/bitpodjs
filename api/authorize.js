@@ -6,6 +6,7 @@ export default function (req, res, next) {
   if (!referer) {
     return next()
   }
+  // eslint-disable-next-line node/no-deprecated-api
   const host = url.parse(referer).host
   const query = qs.parse(req.url.substring(2))
   const oldState = query.state

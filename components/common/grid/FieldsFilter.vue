@@ -1,25 +1,29 @@
 <template>
-  <div class="text-center">
+  <v-col class="text-center px-0">
     <v-menu
       v-model="menu"
       :close-on-content-click="false"
-      :nudge-width="400"
+      :nudge-width="500"
       offset-x
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn
           text
-          :color="rules.length > 0 ? 'blue' : 'black'"
+          small
+          :color="value.length > 0 ? 'blue' : 'text--primary'"
           v-bind="attrs"
           v-on="on"
         >
-          filter
+          <v-icon left> mdi-filter-outline</v-icon> Filter
         </v-btn>
       </template>
 
       <v-card class="filter-dialog-content">
-        <div>Filter</div>
-        <v-divider></v-divider>
+        <div class="mb-2">
+          <span class="text--primary body-1">
+            <v-icon class="pr-1">mdi-filter-outline</v-icon> Filter</span
+          >
+        </div>
         <div class="filter-fields-container">
           <div
             v-for="[index, filterRule] of rules.entries()"
@@ -42,16 +46,20 @@
 
               <v-list>
                 <v-list-item @click="onRuleDelete(index)">
+                  <v-icon class="pr-2">mdi-delete</v-icon>
                   <v-list-item-title>Delete</v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="onRuleDuplicate(index)">
+                  <v-icon class="pr-2">mdi-content-copy</v-icon>
                   <v-list-item-title>Duplicate</v-list-item-title>
                 </v-list-item>
               </v-list>
             </v-menu>
           </div>
           <v-spacer></v-spacer>
-          <v-btn text @click="onAddFilter">+ Add a filter</v-btn>
+          <v-btn text color="primary" class="filter-btn" @click="onAddFilter"
+            >+ Add a filter</v-btn
+          >
         </div>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -60,7 +68,7 @@
         </v-card-actions>
       </v-card>
     </v-menu>
-  </div>
+  </v-col>
 </template>
 
 <script>
@@ -143,6 +151,20 @@ export default {
 }
 .filter-rule-item {
   display: flex;
-  align-items: center;
+}
+.filter-btn {
+  width: fit-content;
+}
+@media (max-width: 600px) {
+  .filter-rule-item {
+    background: transparent;
+    padding: 5px;
+    margin-bottom: 20px;
+    border-radius: 0;
+    border-bottom: 1px solid #ccc;
+  }
+  .filter-fields-container .filter-rule-item:last-child {
+    border-bottom: none;
+  }
 }
 </style>

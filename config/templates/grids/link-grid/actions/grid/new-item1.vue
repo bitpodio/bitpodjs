@@ -8,13 +8,15 @@
       transition="dialog-bottom-transition"
     >
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="primary" dark v-bind="attrs" v-on="on">
-          Edit Item
-        </v-btn>
+        <v-flex xs12 sm12 md12 mx-3>
+          <v-btn color="primary" dark v-bind="attrs" v-on="on">
+            New Item
+          </v-btn>
+        </v-flex>
       </template>
       <v-card>
         <v-toolbar dense flat dark fixed color="accent">
-          <v-toolbar-title class="body-1">Edit Item</v-toolbar-title>
+          <v-toolbar-title class="body-1">New Item</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-btn icon dark @click="dialog = false">
             <v-icon>mdi-close</v-icon>
@@ -26,7 +28,7 @@
             <v-row>
               <v-col
                 v-for="field in fields"
-                :key="`${field.fieldName}${updateCount}`"
+                :key="field.fieldName"
                 cols="12"
                 sm="6"
               >
@@ -40,7 +42,6 @@
               </v-col>
             </v-row>
           </v-container>
-          <small>*indicates required field</small>
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions class="pl-4">
@@ -77,8 +78,8 @@ function getGridFields(content, viewName) {
   return editableFields
 }
 
-function buildMutationUpsertQuery(modelName) {
-  return `mutation($Inputs : ${modelName}UpsertWithWhereInput!){ ${modelName}{ ${modelName}UpsertWithWhere(input:$Inputs){ clientMutationId obj{ id } } } }`
+function buildMutationCreateQuery(modelName) {
+  return `mutation($Inputs : ${modelName}CreateInput!){ ${modelName} { ${modelName}Create(input:$Inputs){ clientMutationId obj{ id } } } }`
 }
 
 function getModelName(content, viewName) {
@@ -93,35 +94,25 @@ export default {
     Lookup,
     Checkbox,
   },
-  props: ['content', 'viewName', 'items'],
+  props: ['content', 'viewName'],
   data() {
     const fields = getGridFields(this.content, this.viewName)
     return {
       fields,
-      formData: this.items[0],
+      formData: {},
       dialog: false,
-      updateCount: 0,
     }
-  },
-  watch: {
-    item(newValue, oldValue) {
-      this.updateCount = this.updateCount + 1
-      this.formData = newValue[0]
-    },
   },
   methods: {
     async onSave() {
       this.dialog = false
       const modelName = getModelName(this.content, this.viewName)
-      const where = {
-        id: this.formData.id,
-      }
-      const editItemMutation = buildMutationUpsertQuery(modelName)
+      const newItemMutation = buildMutationCreateQuery(modelName)
+      this.formData.TotalAmount = parseInt(this.formData.TotalAmount)
       await this.$apollo.mutate({
-        mutation: gql(editItemMutation),
+        mutation: gql(newItemMutation),
         variables: {
           Inputs: {
-            where,
             data: this.formData,
             clientMutationId: `${modelName} list item updated successfully.`,
           },
@@ -142,3 +133,29 @@ export default {
   },
 }
 </script>
+
+<style>
+.slide-form {
+  position: fixed !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: calc(100% - 300px) !important;
+  max-height: calc(100% - 100px) !important;
+}
+.stepper-box {
+  min-height: 650px;
+}
+.slide-form-default {
+  position: fixed !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 50% !important;
+}
+@media (max-width: 600px) {
+  .slide-form,
+  .slide-form-default {
+    width: 100% !important;
+    position: unset !important;
+  }
+}
+</style>

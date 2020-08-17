@@ -6,8 +6,9 @@
       :item-text="itemText"
       :item-value="itemValue"
       :loading="isLoading"
-      :label="field.caption"
+      single-line
       outlined
+      dense
       @change="onChange"
     ></v-autocomplete>
   </div>
@@ -40,10 +41,6 @@ export default {
       type: String,
       required: true,
     },
-    filter: {
-      type: Object,
-      default: () => {},
-    },
   },
   data() {
     return {
@@ -53,34 +50,23 @@ export default {
       itemValue: this.field.dataSource.itemValue || 'value',
     }
   },
-  watch: {
-    filter(newVal, oldVal) {
-      if (newVal !== oldVal) {
-        this.loadItems()
-      }
-    },
-  },
-  mounted() {
-    this.loadItems()
+  async mounted() {
+    if (!this.field.items) {
+      const where = this.field.dataSource.filter || {}
+      const result = await this.$apollo.query({
+        query: gql`
+          ${this.field.dataSource.query}
+        `,
+        variables: {
+          filters: { where },
+        },
+      })
+      this.items = formatResult(result.data)
+    }
   },
   methods: {
     onChange() {
       this.$emit('change', this.value)
-    },
-    async loadItems() {
-      if (!this.field.items) {
-        const where =
-          this.filter || this.field.dataSource.filter.call(this) || {}
-        const result = await this.$apollo.query({
-          query: gql`
-            ${this.field.dataSource.query}
-          `,
-          variables: {
-            filters: { where },
-          },
-        })
-        this.items = formatResult(result.data)
-      }
     },
   },
 }
