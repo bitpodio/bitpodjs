@@ -136,7 +136,7 @@
 <script>
 // import Grid from '~/components/common/grid'
 // import content from '~/config/apps/event/content'
-import Cardtiles from '~/components/cardtiles'
+import Cardtiles from '~/components/Cardtiles.vue'
 export default {
   layout: 'flatlayout',
   components: {
