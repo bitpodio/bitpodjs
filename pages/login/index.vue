@@ -37,7 +37,10 @@ export default {
   middleware: ['auth'],
   methods: {
     async loginBitpod() {
-      return await this.$auth.loginWith('bitpod')
+      await this.$auth.loginWith('bitpod')
+      let token = this.$auth.strategy.token.get()
+      token = token.split(' ')[1]
+      await this.$apolloHelpers.onLogin(token)
     },
   },
 }

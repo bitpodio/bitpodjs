@@ -29,7 +29,7 @@ export default {
     if (!this.$apolloHelpers.getToken()) {
       let token = this.$auth.strategy.token.get()
       token = token.split(' ')[1]
-      await this.$apolloHelpers.onLogin(token, undefined, { expires: 7 })
+      await this.$apolloHelpers.onLogin(token)
     }
   },
   state() {

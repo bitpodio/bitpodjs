@@ -373,12 +373,7 @@
 
             <v-list>
               <v-list-item class="text-center justify-center">
-                <v-btn
-                  class="ma-2"
-                  outlined
-                  color="primary"
-                  @click="$auth.logout()"
-                >
+                <v-btn class="ma-2" outlined color="primary" @click="onLogout">
                   Logout
                 </v-btn>
               </v-list-item>
@@ -456,8 +451,9 @@ export default {
     ],
   }),
   methods: {
-    method() {
-      // Perform an action
+    async onLogout() {
+      this.$auth.logout()
+      await this.$apolloHelpers.onLogout()
     },
   },
 }
