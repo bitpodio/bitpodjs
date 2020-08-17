@@ -1536,13 +1536,13 @@ export default (ctx) => ({
               },
             ],
           },
-          // Images: {
-          //   displayOrder: 1,
-          //   caption: 'Images',
-          //   hidden: true,
-          //   columnWidth: '150px',
-          //   type: 'file',
-          // },
+          Images: {
+            displayOrder: 1,
+            caption: 'Images',
+            hidden: true,
+            columnWidth: '150px',
+            type: 'file',
+          },
         },
         template: {
           name: 'link-grid',

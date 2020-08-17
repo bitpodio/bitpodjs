@@ -4,6 +4,7 @@
       multiple
       :label="field.caption"
       @change="onChange"
+      :chips="true"
     ></v-file-input>
   </div>
 </template>
@@ -19,6 +20,7 @@ export default {
     async onChange(files) {
       const fileUploadPromises = files.map((file) => this.uploadFile(file))
       const attachmentResp = await Promise.all(fileUploadPromises)
+      debugger
       this.fileIds = attachmentResp.map(({ data }) => data.id)
       this.$emit('input', this.fileIds)
     },
