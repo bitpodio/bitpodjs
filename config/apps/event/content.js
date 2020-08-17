@@ -1568,6 +1568,228 @@ export default (ctx) => ({
         // type: 'path',
         // path: '/event-dashboard/abc'
       },
+      eventRegistrations: {
+        ui: {
+          hideDefaultHeader: false,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: true,
+          hideFilter: false,
+          hideSearch: true,
+        },
+        default: true,
+        fields: {
+          EventName: {
+            displayOrder: 6,
+            caption: 'EventName',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'string',
+            cssClasses: 'col-12 col-md-12',
+          },
+          PaymentMethod: {
+            displayOrder: 10,
+            caption: 'PaymentMethod',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          CompanyName: {
+            displayOrder: 4,
+            caption: 'Organization',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'richtext',
+          },
+          Phone: {
+            displayOrder: 5,
+            caption: 'Phone',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '100px',
+            type: 'string',
+          },
+          Status: {
+            displayOrder: 9,
+            caption: 'Status',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '100px',
+            type: 'lookup',
+            dataSource: {
+              query: registrationStatusOptions,
+              itemText: 'value',
+              itemValue: 'key',
+              filter(data) {
+                debugger
+                return {
+                  type: data.EventName,
+                }
+              },
+            },
+            // template: {
+            //   name: 'issue-grid',
+            //   params: {
+            //     // eslint-disable-next-line no-template-curly-in-string
+            //     route: '/event',
+            //   },
+            // },
+            // items: [
+            //   {
+            //     text: 'Success Payment',
+            //     value: 'Success',
+            //   },
+            //   {
+            //     text: 'Pending Payment',
+            //     value: 'Pending',
+            //   },
+            // ],
+          },
+          RegistrationId: {
+            displayOrder: 6,
+            caption: 'RegistrationId',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'string',
+            inlineEdit: false,
+            newForm: false,
+            editForm: false,
+          },
+          createdDate: {
+            displayOrder: 11,
+            caption: 'createdDate',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'date',
+            inlineEdit: false,
+            newForm: true,
+            editForm: false,
+          },
+          TicketQuantity: {
+            displayOrder: 9,
+            caption: 'Attendees',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '130px',
+            type: 'number',
+          },
+          FullName: {
+            displayOrder: 2,
+            caption: 'Full Name',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            inlineEdit: false,
+            newForm: false,
+            editForm: false,
+          },
+          TotalAmount: {
+            displayOrder: 8,
+            caption: 'TotalAmount',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'number',
+          },
+          Email: {
+            displayOrder: 3,
+            caption: 'Email',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '130px',
+            type: 'string',
+            readonly(value, data) {
+              const firstName = data.FirstName
+              return firstName && firstName.length <= 5
+            },
+            rules: [
+              (v) => {
+                return !!v || 'E-mail is required'
+              },
+              function (value, data) {
+                return /.+@.+\..+/.test(value) || 'E-mail must be valid'
+              },
+            ],
+          },
+          action: {
+            displayOrder: 11,
+            caption: 'Action',
+            searchEnable: false,
+            sortEnable: false,
+            columnWidth: '130px',
+            type: 'action',
+            inlineEdit: false,
+            newForm: false,
+            editForm: false,
+            condtion: ({ item, items, index }) => {
+              return true
+            },
+          },
+          FirstName: {
+            displayOrder: 2,
+            caption: 'First Name',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: false,
+            rules: [
+              (v) => {
+                return !!v || 'FirstName is required'
+              },
+              (v) => {
+                return (
+                  (v && v.length <= 10) ||
+                  'Name must be less than 10 characters'
+                )
+              },
+            ],
+          },
+          // Images: {
+          //   displayOrder: 1,
+          //   caption: 'Images',
+          //   hidden: true,
+          //   columnWidth: '150px',
+          //   type: 'file',
+          // },
+        },
+        template: {
+          name: 'link-grid',
+          context: {
+            basePath: '/event',
+          },
+        },
+        dataSource: {
+          query: registrationList,
+          defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          model: 'Registration',
+          filter: {
+            where: {
+              EventId: ctx.$route.params.id,
+            },
+          },
+          // end of gql
+          // type: 'rest',
+          // getData: getData('Registration'),
+        },
+        title: 'Registrations',
+        type: 'list',
+        // type: 'card',
+        // type: 'calendar',
+        // type: 'path',
+        // path: '/event-dashboard/abc'
+      },
       'abandoned-registrations': {
         ui: {
           hideDefaultHeader: false,
