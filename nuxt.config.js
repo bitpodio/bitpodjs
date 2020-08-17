@@ -26,12 +26,24 @@ export default {
         content: process.env.npm_package_description || '',
       },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '~/assets/logo.png' },
+      {
+        rel: 'stylesheet',
+        href:
+          'https://res.cloudinary.com/mytestlogo/raw/upload/v1573628681/Icons/style.css',
+      },
+      {
+        rel: 'stylesheet',
+        href:
+          'https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap',
+      },
+    ],
   },
   /*
    ** Global CSS
    */
-  css: [],
+  css: ['~/assets/styles/main.css'],
   /*
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
@@ -83,12 +95,16 @@ export default {
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,
           success: colors.green.accent3,
+          boxview: '#1e1e1e',
+          greybg: '#000000',
         },
         light: {
-          primary: colors.purple,
+          primary: colors.blue.darken2,
           secondary: colors.grey.darken1,
           accent: colors.shades.black,
           error: colors.red.accent3,
+          greybg: '#f5f5f5',
+          boxview: '#ffffff',
         },
       },
     },
@@ -129,6 +145,7 @@ export default {
       login: '/login',
       callback: '/callback',
       home: '/event',
+      logout: '/',
     },
     strategies: {
       bitpod: {
