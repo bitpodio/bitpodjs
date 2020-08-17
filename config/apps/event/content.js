@@ -1295,6 +1295,7 @@ export default (ctx) => ({
       },
     },
   },
+
   Registrations: {
     actions: {
       'Embeded Actions': '',
@@ -1547,9 +1548,9 @@ export default (ctx) => ({
           // },
         },
         template: {
-          name: 'link-grid',
+          name: 'registration-grid',
           context: {
-            basePath: '/event',
+            basePath: '/registration',
           },
         },
         dataSource: {
@@ -1764,9 +1765,9 @@ export default (ctx) => ({
           // },
         },
         template: {
-          name: 'link-grid',
+          name: 'registration-grid',
           context: {
-            basePath: '/event',
+            basePath: '/registration',
           },
         },
         dataSource: {
@@ -1949,9 +1950,9 @@ export default (ctx) => ({
           },
         },
         template: {
-          name: 'link-grid',
+          name: 'registration-grid',
           context: {
-            basePath: '/event',
+            basePath: '/registration',
           },
         },
         dataSource: {
@@ -1987,6 +1988,12 @@ export default (ctx) => ({
           'Sharepoint Action': 'Edit',
           Type: 'Form',
           URL: 'OfferCode',
+        },
+        template: {
+          name: 'registration-grid',
+          context: {
+            basePath: '/registration',
+          },
         },
         Fields: {
           LastName: {
@@ -2488,6 +2495,7 @@ export default (ctx) => ({
       },
     },
   },
+
   Contacts: {
     action: {
       'Embeded Actions': '',

@@ -1,6 +1,6 @@
 <template>
   <div>
-    Title {{ data.event.Title }} Category {{ data.badge.Category }}
+    Title {{ data.event.Email }} Category {{ data.badge.Category }}
     <div>Registration</div>
     <Grid view-name="eventRegistrations" content-name="Registrations" />
   </div>
