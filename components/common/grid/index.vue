@@ -116,6 +116,7 @@
             :value="props.value"
             :context="context"
             :items="tableData.items"
+            :column="column"
             :content="content"
           />
         </template>
