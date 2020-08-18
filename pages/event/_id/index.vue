@@ -1,6 +1,7 @@
 <template>
   <div>
-    Title {{ data.event.Email }} Category {{ data.badge.Category }}
+    Title {{ data.event.Email }} Category {{ data.badge.Category }} Revenue
+    {{ data.eventSummary.Revenue }}
     <div>Registration</div>
     <Grid view-name="registrationSessions" content-name="Registrations" />
   </div>
@@ -20,6 +21,7 @@ export default {
       data: {
         event: {},
         badge: {},
+        eventSummary: {},
       },
     }
   },
@@ -42,14 +44,17 @@ export default {
               EventId: this.$route.params.id,
             },
           },
+          eventId: this.$route.params.id,
         }
       },
       update(data) {
         const event = formatGQLResult(data, 'Event')
         const badge = formatGQLResult(data, 'Badge')
+        const eventSummary = data.Event.EventGetEventSummery
         return {
           event: event.length > 0 ? event[0] : {},
           badge: badge.length > 0 ? badge[0] : {},
+          eventSummary,
         }
       },
       result({ data, loading, networkStatus }) {},
