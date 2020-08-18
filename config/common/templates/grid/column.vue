@@ -6,8 +6,9 @@
 
 <script>
 export default {
-  props: ['item', 'value', 'context', 'type'],
+  props: ['item', 'value', 'context', 'type', 'column'],
   data() {
+    debugger
     return {
       columnClass: {
         number: 'type-number',

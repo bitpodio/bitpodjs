@@ -2,7 +2,7 @@
   <div>
     Title {{ data.event.Email }} Category {{ data.badge.Category }}
     <div>Registration</div>
-    <Grid view-name="eventRegistrations" content-name="Registrations" />
+    <Grid view-name="registrationSessions" content-name="Registrations" />
   </div>
 </template>
 <script>

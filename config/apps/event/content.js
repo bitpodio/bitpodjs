@@ -4,7 +4,7 @@ import discountCodes from './gql/discountCodes.gql'
 import eventList from './gql/eventlist.gql'
 import contactList from './gql/contactList.gql'
 import memberList from './gql/memberList.gql'
-// import { getData } from './rest'
+import { getData } from './rest'
 // import { getBPMNData } from './rest/bpmn.js'
 
 export default (ctx) => ({
@@ -1783,6 +1783,97 @@ export default (ctx) => ({
           // end of gql
           // type: 'rest',
           // getData: getData('Registration'),
+        },
+        title: 'Registrations',
+        type: 'list',
+        // type: 'card',
+        // type: 'calendar',
+        // type: 'path',
+        // path: '/event-dashboard/abc'
+      },
+      registrationSessions: {
+        ui: {
+          hideDefaultHeader: false,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: true,
+          hideFilter: false,
+          hideSearch: true,
+        },
+        default: true,
+        fields: {
+          Name: {
+            displayOrder: 1,
+            caption: 'Name',
+            searchEnable: false,
+            sortEnable: false,
+            columnWidth: '150px',
+          },
+          StartTime: {
+            displayOrder: 2,
+            caption: 'StartTime',
+            searchEnable: false,
+            sortEnable: false,
+            columnWidth: '130px',
+          },
+          EndTime: {
+            displayOrder: 3,
+            caption: 'EndTime',
+            searchEnable: false,
+            sortEnable: false,
+            columnWidth: '130px',
+          },
+          StartDate: {
+            displayOrder: 4,
+            caption: 'StartDate',
+            searchEnable: false,
+            sortEnable: false,
+            columnWidth: '130px',
+          },
+          EndDate: {
+            displayOrder: 5,
+            caption: 'EndDate',
+            searchEnable: false,
+            sortEnable: false,
+            columnWidth: '130px',
+          },
+          Type: {
+            displayOrder: 6,
+            caption: 'Type',
+            searchEnable: false,
+            sortEnable: false,
+            columnWidth: '100px',
+          },
+          Location: {
+            displayOrder: 7,
+            caption: 'Location',
+            searchEnable: false,
+            sortEnable: false,
+            columnWidth: '180px',
+          },
+        },
+        template: {
+          name: 'registration-grid',
+          context: {
+            basePath: '/registration',
+          },
+        },
+        dataSource: {
+          // query: registrationList,
+          // defaultSort: 'createdDate DESC',
+          // type: 'graphql',
+          // model: 'Registration',
+          // filter: {
+          //   where: {
+          //     EventId: ctx.$route.params.id,
+          //   },
+          // },
+          // end of gql
+          type: 'rest',
+          getData: getData(
+            `/Registrations/${ctx.$route.params.id}/SessionListId`
+          ),
         },
         title: 'Registrations',
         type: 'list',
