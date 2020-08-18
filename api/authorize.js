@@ -8,6 +8,7 @@ export default function (req, res, next) {
   }
   // eslint-disable-next-line node/no-deprecated-api
   const host = url.parse(referer).host
+  //parsing the url to get the query parameters and get the info from which provider the request is being made
   const query = qs.parse(req.url.substring(2).replace('?', '&'))
   const oldState = query.state
   query.state = Buffer.from(JSON.stringify({ host, oldState })).toString(

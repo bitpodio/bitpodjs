@@ -458,7 +458,6 @@ export default {
   },
   async created() {
     if (!this.$apolloHelpers.getToken()) {
-      debugger
       let token = this.$auth.strategy.token.get()
       if (token) {
         token = token.split(' ')[1]

@@ -19,7 +19,7 @@ function getTokenUserInfoUrl(ob) {
       userInfoUrl = nuxtconfig.auth.strategies.bitpod.userInfoEndPointUrl
       break
     default:
-      console.log('Sorry no provider added')
+      console.log(`No provider added in the key: ${provider}`)
   }
   const urls = {
     tokenEndPointUrl: tokenUrl,
@@ -31,19 +31,19 @@ function getTokenUserInfoUrl(ob) {
 app.post('/connect/token', async (req, res) => {
   const params = new URLSearchParams()
   const urls = getTokenUserInfoUrl(req.query)
-
+  params.append(
+    'client_id',
+    nuxtconfig.auth.strategies[req.query.provider].clientId
+  )
+  params.append(
+    'client_secret',
+    nuxtconfig.auth.strategies[req.query.provider].clientSecret
+  )
   if (req.body.refresh_token) {
     const refreshToken = req.body.refresh_token
     params.append('grant_type', 'refresh_token')
     params.append('refresh_token', refreshToken)
-    params.append(
-      'client_id',
-      nuxtconfig.auth.strategies[req.query.provider].clientId
-    )
-    params.append(
-      'client_secret',
-      nuxtconfig.auth.strategies[req.query.provider].clientSecret
-    )
+
     try {
       const tokenResponse = await axios.post(urls.tokenEndPointUrl, params)
       if (req.query.provider === 'google') {
@@ -64,15 +64,6 @@ app.post('/connect/token', async (req, res) => {
     }
   } else {
     const code = req.body.code
-
-    params.append(
-      'client_id',
-      nuxtconfig.auth.strategies[req.query.provider].clientId
-    )
-    params.append(
-      'client_secret',
-      nuxtconfig.auth.strategies[req.query.provider].clientSecret
-    )
     params.append('grant_type', 'authorization_code')
     params.append('code', code)
     params.append(
@@ -101,6 +92,7 @@ app.post('/connect/token', async (req, res) => {
 })
 
 app.get('/connect/userinfo', async (req, res) => {
+  let userData
   const urls = getTokenUserInfoUrl(req.query)
   const config = {
     headers: {
@@ -114,17 +106,15 @@ app.get('/connect/userinfo', async (req, res) => {
           urls.userInfoEndPointUrl
         }?id_token=${req.headers.authorization.replace('Bearer ', '')}`
       )
-      res.json({
-        status: 200,
-        data: userResponse.data,
-      })
+      userData = userResponse.data
     } else {
       const userResponse = await axios.get(urls.userInfoEndPointUrl, config)
-      res.json({
-        status: 200,
-        data: userResponse.data,
-      })
+      userData = userResponse.data
     }
+    res.json({
+      status: 200,
+      data: userData,
+    })
   } catch (error) {
     return res.status(404).send({ error: 'Not Found' })
   }
