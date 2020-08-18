@@ -1,5 +1,9 @@
 <template>
-  <div :class="columnClass[type]" :style="{ maxWidth: myComputedHeight }">
+  <div
+    :class="columnClass[type]"
+    class="text-truncate"
+    :style="{ maxWidth: myComputedHeight }"
+  >
     {{ value }}
   </div>
 </template>
@@ -8,7 +12,6 @@
 export default {
   props: ['item', 'value', 'context', 'type', 'column'],
   data() {
-    debugger
     return {
       columnClass: {
         number: 'type-number',

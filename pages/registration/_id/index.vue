@@ -50,7 +50,7 @@
         <v-divider></v-divider>
         <v-flex class="d-flex flex-row align-center">
           <v-avatar color="warning" size="24" class="d-inline-flex">
-            <span class="white--text body-2">{{
+            <span class="white--text body-2 name-initial">{{
               data.registration.FirstName
             }}</span>
           </v-avatar>
@@ -60,9 +60,14 @@
         </v-flex>
       </div>
       <div class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
-        <h2 class="body-1">Attendees</h2>
+        <h2 class="body-1">Sessions</h2>
         <v-divider></v-divider>
         <Grid view-name="registrationSessions" content-name="Registrations" />
+      </div>
+      <div class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
+        <h2 class="body-1">Attendees</h2>
+        <v-divider></v-divider>
+        <Grid view-name="registrationAttendees" content-name="Registrations" />
       </div>
       <div class="xs12 sm12 md12 boxview pa-4 mr-2 mb-2">
         <!-- <Grid :content="content.EventsManagement" view-name="All Events" /> -->
@@ -194,10 +199,17 @@ export default {
 
 <style scoped>
 .Twitter {
-  font-size: 0;
+  font-size: 0 !important;
+  text-transform: capitalize !important;
 }
-
 .Twitter::first-letter {
-  font-size: 12px;
+  font-size: 24px !important;
+}
+.name-initial {
+  font-size: 0 !important;
+  text-transform: capitalize !important;
+}
+.name-initial::first-letter {
+  font-size: 14px !important;
 }
 </style>
