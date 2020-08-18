@@ -8,15 +8,16 @@ export default function (req, res, next) {
   }
   // eslint-disable-next-line node/no-deprecated-api
   const host = url.parse(referer).host
-  const query = qs.parse(req.url.substring(2))
+  const query = qs.parse(req.url.substring(2).replace('?', '&'))
   const oldState = query.state
   query.state = Buffer.from(JSON.stringify({ host, oldState })).toString(
     'base64'
   )
+  const authorizationUrl =
+    nuxtconfig.auth.strategies[query.provider].authorization
+  delete query.provider
   res.writeHead(301, {
-    Location: `${nuxtconfig.auth.strategies.bitpod.authorization}?${qs.encode(
-      query
-    )}`,
+    Location: `${authorizationUrl}?${qs.encode(query)}`,
   })
   return res.end()
 }
