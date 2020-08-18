@@ -19,7 +19,7 @@ export default {
   },
   computed: {
     myComputedHeight() {
-      return '150px'
+      return this.column.width
     },
   },
 }
