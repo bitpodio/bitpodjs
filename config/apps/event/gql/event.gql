@@ -1,4 +1,4 @@
-query($filters: JSON, $badgeFilter: JSON) {
+query($filters: JSON, $badgeFilter: JSON, $eventId: String) {
   Event {
     EventFind(filter: $filters) {
       edges {
@@ -78,6 +78,7 @@ query($filters: JSON, $badgeFilter: JSON) {
         }
       }
     }
+    EventGetEventSummery(id: $eventId)
   }
   Badge {
     BadgeFind(filter: $badgeFilter) {
