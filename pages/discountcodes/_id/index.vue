@@ -79,7 +79,7 @@
           </v-col>
           <v-col class="col-md-6 col-12">
             <div class="body-2 text--secondary">Valid Till</div>
-            <div class="body-1">{{ data.discount.validTill }}</div>
+            <div class="body-1">{{ formatField(data.discount.validTill) }}</div>
           </v-col>
           <v-col class="col-md-6 col-12">
             <div class="body-2 text--secondary">Created By</div>
@@ -87,7 +87,9 @@
           </v-col>
           <v-col class="col-md-6 col-12">
             <div class="body-2 text--secondary">Created Date</div>
-            <div class="body-1">{{ data.discount.createdDate }}</div>
+            <div class="body-1">
+              {{ formatDate(data.discount.createdDate) }}
+            </div>
           </v-col>
           <v-col class="col-md-6 col-12">
             <div class="body-2 text--secondary">Description</div>
@@ -101,9 +103,11 @@
 
 <script>
 import gql from 'graphql-tag'
+import format from 'date-fns/format'
 import Grid from '~/components/common/grid'
 import discount from '~/config/apps/event/gql/discount.gql'
 import { formatGQLResult } from '~/utility/gql.js'
+
 export default {
   components: {
     Grid,
@@ -115,6 +119,14 @@ export default {
         discount: {},
       },
     }
+  },
+  methods: {
+    formatDate(date) {
+      return date ? format(new Date(date), 'PPp') : ''
+    },
+    formatField(fieldValue) {
+      return fieldValue || '-'
+    },
   },
   apollo: {
     data: {

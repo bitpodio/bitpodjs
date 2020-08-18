@@ -1,6 +1,6 @@
 <template>
   <div
-    :class="columnClass[type]"
+    :class="columnClass[column.type]"
     class="text-truncate"
     :style="{ maxWidth: myComputedHeight }"
   >

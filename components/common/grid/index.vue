@@ -91,7 +91,6 @@
             :context="context"
             :items="tableData.items"
             :content="content"
-            type="number"
           />
         </template>
         <template v-if="!!slotTemplates.item" v-slot:item="props">
@@ -199,10 +198,12 @@ function getTableHeader(content, viewName) {
       columnWidth,
       template,
       hidden = false,
+      type,
     } = fields[fieldName]
     if (!hidden) {
       headers.push({
         text: caption,
+        type,
         value: fieldName,
         sortable: sortEnable,
         width: columnWidth,
