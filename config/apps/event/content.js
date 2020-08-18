@@ -2307,9 +2307,9 @@ export default (ctx) => ({
           },
         },
         template: {
-          name: 'discount-grid',
+          name: 'link-grid',
           context: {
-            basePath: '/DiscountCodes',
+            basePath: '/discountcodes',
           },
         },
         dataSource: {
@@ -2414,8 +2414,9 @@ export default (ctx) => ({
           },
         },
         template: {
+          name: 'link-grid',
           context: {
-            basePath: '/DiscountCodes',
+            basePath: '/discountcodes',
           },
         },
         dataSource: {
@@ -2689,9 +2690,9 @@ export default (ctx) => ({
             columnWidth: '180px',
             type: 'number',
           },
-          FullName: {
+          FirstName: {
             displayOrder: 1,
-            caption: 'FullName',
+            caption: 'First Name',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '180px',
@@ -2734,9 +2735,9 @@ export default (ctx) => ({
           },
         },
         template: {
-          name: 'contact-grid',
+          name: 'link-grid',
           context: {
-            basePath: '/Contacts',
+            basePath: '/contacts',
           },
         },
         dataSource: {
