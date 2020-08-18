@@ -2,28 +2,60 @@
   <v-flex d-flex flex-md-row flex-lg-row flex-column>
     <v-flex column xs12 sm8 md8 lg8>
       <div class="xs12 sm8 md8 lg8 boxview pa-4 mr-2 mb-2">
-        <h1>{{ data.registration.FirstName }}</h1>
-        <v-chip class="my-2" label>
-          Aug 20, 2020 5:36 PM - Aug 24, 2020 5:36 PM
-        </v-chip>
-        <v-flex>
-          <p class="blue--text">
-            <i class="fa fa-map-marker" aria-hidden="true"></i>
-            <a class="blue--text"
-              >gf, Indira Gandhi International Airport New Delhi Delhi India
-              110037</a
-            >
-          </p>
-        </v-flex>
+        <v-row>
+          <v-col class="col-md-6 col-12 pt-0">
+            <v-card class="elevation-0">
+              <v-list>
+                <v-list-item class="pl-0">
+                  <v-list-item-avatar size="62">
+                    <v-avatar
+                      color="primary"
+                      size="62"
+                      v-bind="attrs"
+                      v-on="on"
+                    >
+                      <span class="white--text headline Twitter">{{
+                        data.registration.FirstName
+                      }}</span>
+                    </v-avatar>
+                  </v-list-item-avatar>
+
+                  <v-list-item-content>
+                    <v-list-item-title>
+                      <h2>{{ data.registration.FirstName }}</h2>
+                    </v-list-item-title>
+                    <v-list-item-subtitle>{{
+                      data.registration.Status
+                    }}</v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list>
+            </v-card>
+          </v-col>
+          <v-col class="col-md-6 col-12 pt-0">
+            <div class="text-truncate my-3">
+              <v-icon class="mr-2">mdi-email-outline</v-icon>
+              {{ data.registration.Email }}
+            </div>
+            <div class="text-truncate my-3">
+              <v-icon class="mr-2">mdi-cellphone-iphone</v-icon>
+              {{ data.registration.Phone }}
+            </div>
+            <div class="text-truncate my-3">
+              <v-icon class="mr-2">mdi-map-marker-outline</v-icon>
+              {{ data.registration.Country }}
+            </div>
+          </v-col>
+        </v-row>
         <v-divider></v-divider>
         <v-flex class="d-flex flex-row align-center">
           <v-avatar color="warning" size="24" class="d-inline-flex">
-            <span class="white--text body-2">M</span>
+            <span class="white--text body-2">{{
+              data.registration.FirstName
+            }}</span>
           </v-avatar>
           <v-subheader class="d-inline-flex pl-1"
-            ><span class="pl-1"
-              >Created this event 1 day ago.</span
-            ></v-subheader
+            ><span class="pl-1">Registered 1 day ago.</span></v-subheader
           >
         </v-flex>
       </div>
@@ -41,45 +73,46 @@
         <h2 class="body-1">Event Information</h2>
         <v-divider></v-divider>
         <v-flex my-3>
-          <div class="body-2 text--secondary">Organizer</div>
-          <div class="body-1">Rishikesh Belhekar</div>
+          <div class="body-2 text--secondary">Event Name</div>
+          <div class="body-1">{{ data.registration.EventName }}</div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">Event Manager</div>
-          <div class="body-1 text--primary">Rishikesh Belhekar</div>
+          <div class="body-2 text--secondary">Start Date</div>
+          <div class="body-1 text--primary"></div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">Tags</div>
+          <div class="body-2 text--secondary">End Date</div>
           <div class="body-1">-</div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">Description</div>
-          <div class="body-1">
-            Event information may be out of date due to the coronavirus
-            (COVID-19). Confirm details with event organisers.
-          </div>
+          <div class="body-2 text--secondary">Address</div>
+          <div class="body-1">City, Country</div>
         </v-flex>
       </div>
 
       <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
-        <h2 class="body-1">SEO Details</h2>
+        <h2 class="body-1">Payment Details</h2>
         <v-divider></v-divider>
         <v-flex my-3>
-          <div class="body-2 text--secondary">SEO Title</div>
-          <div class="body-1">gf-tickets</div>
+          <div class="body-2 text--secondary">Card Type</div>
+          <div class="body-1">brand</div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">SEO Description</div>
-          <div class="body-1">Confirm details with event organisers</div>
+          <div class="body-2 text--secondary">Name on Card</div>
+          <div class="body-1">CardHolderName</div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">SEO Keywords</div>
-          <div class="body-1">Event, OnlineEvenet</div>
+          <div class="body-2 text--secondary">Card Number (Last 4 Digit)</div>
+          <div class="body-1">CardNumber</div>
+        </v-flex>
+        <v-flex my-3>
+          <div class="body-2 text--secondary">Transaction Id</div>
+          <div class="body-1">_CustomerPayment.id</div>
         </v-flex>
       </div>
 
       <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
-        <h2 class="body-1">Event Settings</h2>
+        <h2 class="body-1">Survey Questions</h2>
         <v-divider></v-divider>
         <v-flex my-3>
           <div class="body-2 text--secondary">Privacy</div>
@@ -158,3 +191,13 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.Twitter {
+  font-size: 0;
+}
+
+.Twitter::first-letter {
+  font-size: 12px;
+}
+</style>

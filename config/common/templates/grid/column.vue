@@ -1,5 +1,5 @@
 <template>
-  <div :class="columnClass[type]">
+  <div :class="columnClass[type]" :style="{ maxWidth: myComputedHeight }">
     {{ value }}
   </div>
 </template>
@@ -16,6 +16,11 @@ export default {
         checkbox: 'type-checkbox',
       },
     }
+  },
+  computed: {
+    myComputedHeight() {
+      return '150px'
+    },
   },
 }
 </script>
