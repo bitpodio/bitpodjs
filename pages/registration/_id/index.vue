@@ -3,7 +3,7 @@
     <v-flex column xs12 sm8 md8 lg8>
       <div class="xs12 sm8 md8 lg8 boxview pa-4 mr-2 mb-2">
         <v-row>
-          <v-col class="col-md-6 col-12">
+          <v-col class="col-md-6 col-12 pt-0">
             <v-card class="elevation-0">
               <v-list>
                 <v-list-item class="pl-0">
@@ -14,7 +14,7 @@
                       v-bind="attrs"
                       v-on="on"
                     >
-                      <span class="white--text headline">{{
+                      <span class="white--text headline Twitter">{{
                         data.registration.FirstName
                       }}</span>
                     </v-avatar>
@@ -32,22 +32,21 @@
               </v-list>
             </v-card>
           </v-col>
-          <v-col class="col-md-6 col-12">
-            <div class="text-truncate">
+          <v-col class="col-md-6 col-12 pt-0">
+            <div class="text-truncate my-3">
               <v-icon class="mr-2">mdi-email-outline</v-icon>
               {{ data.registration.Email }}
             </div>
+            <div class="text-truncate my-3">
+              <v-icon class="mr-2">mdi-cellphone-iphone</v-icon>
+              {{ data.registration.Phone }}
+            </div>
+            <div class="text-truncate my-3">
+              <v-icon class="mr-2">mdi-map-marker-outline</v-icon>
+              {{ data.registration.Country }}
+            </div>
           </v-col>
         </v-row>
-        <v-flex>
-          <p class="blue--text">
-            <i class="fa fa-map-marker" aria-hidden="true"></i>
-            <a class="blue--text"
-              >gf, Indira Gandhi International Airport New Delhi Delhi India
-              110037</a
-            >
-          </p>
-        </v-flex>
         <v-divider></v-divider>
         <v-flex class="d-flex flex-row align-center">
           <v-avatar color="warning" size="24" class="d-inline-flex">
@@ -87,7 +86,7 @@
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">Address</div>
-          <div class="body-1"></div>
+          <div class="body-1">City, Country</div>
         </v-flex>
       </div>
 
@@ -96,19 +95,19 @@
         <v-divider></v-divider>
         <v-flex my-3>
           <div class="body-2 text--secondary">Card Type</div>
-          <div class="body-1"></div>
+          <div class="body-1">brand</div>
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">Name on Card</div>
-          <div class="body-1"></div>
+          <div class="body-1">CardHolderName</div>
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">Card Number (Last 4 Digit)</div>
-          <div class="body-1"></div>
+          <div class="body-1">CardNumber</div>
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">Transaction Id</div>
-          <div class="body-1"></div>
+          <div class="body-1">_CustomerPayment.id</div>
         </v-flex>
       </div>
 
@@ -192,3 +191,13 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.Twitter {
+  font-size: 0;
+}
+
+.Twitter::first-letter {
+  font-size: 12px;
+}
+</style>
