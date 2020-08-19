@@ -727,6 +727,14 @@ export default (ctx) => ({
       },
       'All Events': {
         fields: {
+          Images: {
+            displayOrder: 1,
+            caption: 'Images',
+            // hidden: true,
+            columnWidth: '150px',
+            type: 'file',
+            cssClasses: 'col-12 col-md-12',
+          },
           '_VenueAddress.PostalCode': {
             displayOrder: 10,
             caption: 'Postal Code',
@@ -842,11 +850,26 @@ export default (ctx) => ({
           //   type: 'file',
           // },
         },
+        ui: {
+          hideDefaultHeader: false,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: true,
+          hideFilter: false,
+          hideSearch: true,
+        },
         inlineEditing: true,
         DdialogEditing: true,
         Query: '',
         QueryType: 'axios',
         Title: 'All Events',
+        template: {
+          name: 'link-grid',
+          context: {
+            basePath: '/event',
+          },
+        },
         dataSource: {
           query: eventList,
           filter: {
@@ -885,6 +908,7 @@ export default (ctx) => ({
             },
           },
           defaultSort: 'createdDate DESC',
+          model: 'Event',
         },
       },
       Event: {
@@ -1364,7 +1388,7 @@ export default (ctx) => ({
         default: true,
         fields: {
           EventName: {
-            displayOrder: 6,
+            displayOrder: 5,
             caption: 'EventName',
             searchEnable: true,
             sortEnable: true,
@@ -1387,9 +1411,10 @@ export default (ctx) => ({
             sortEnable: true,
             columnWidth: '150px',
             type: 'richtext',
+            cssClasses: 'col-12 col-md-12',
           },
           Phone: {
-            displayOrder: 5,
+            displayOrder: 6,
             caption: 'Phone',
             searchEnable: true,
             sortEnable: true,
@@ -1541,9 +1566,10 @@ export default (ctx) => ({
           Images: {
             displayOrder: 1,
             caption: 'Images',
-            hidden: true,
+            // hidden: true,
             columnWidth: '150px',
             type: 'file',
+            cssClasses: 'col-12 col-md-12',
           },
         },
         template: {

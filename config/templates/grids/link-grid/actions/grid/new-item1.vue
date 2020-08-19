@@ -57,6 +57,7 @@ import gql from 'graphql-tag'
 import TextField from '~/components/common/form/text-field.vue'
 import Lookup from '~/components/common/form/lookup.vue'
 import Checkbox from '~/components/common/form/checkbox.vue'
+import File from '~/components/common/form/file.vue'
 
 function getGridFields(content, viewName) {
   const view = content.views[viewName]
@@ -93,6 +94,7 @@ export default {
     TextField,
     Lookup,
     Checkbox,
+    File,
   },
   props: ['content', 'viewName'],
   data() {
@@ -128,6 +130,8 @@ export default {
           return 'Lookup'
         case 'checkbox':
           return 'Checkbox'
+        case 'file':
+          return 'File'
       }
     },
   },

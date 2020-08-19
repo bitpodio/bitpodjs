@@ -53,6 +53,7 @@
 import TextField from '~/components/common/form/text-field.vue'
 import Lookup from '~/components/common/form/lookup.vue'
 import Checkbox from '~/components/common/form/checkbox.vue'
+import File from '~/components/common/form/file.vue'
 import RichText from '~/components/common/form/richtext.vue'
 
 function getGridFields(content, viewName) {
@@ -80,6 +81,7 @@ export default {
     TextField,
     Lookup,
     Checkbox,
+    File,
     RichText,
   },
   props: ['content', 'viewName', 'items', 'onUpdateItem'],
@@ -94,12 +96,14 @@ export default {
   },
   watch: {
     items(newValue, oldValue) {
+      debugger
       this.updateCount = this.updateCount + 1
       this.formData = newValue[0]
     },
   },
   methods: {
     async onSave() {
+      debugger
       await this.onUpdateItem(this.formData)
       this.dialog = false
     },
@@ -112,6 +116,8 @@ export default {
           return 'Lookup'
         case 'checkbox':
           return 'Checkbox'
+        case 'file':
+          return 'File'
         case 'richtext':
           return 'RichText'
       }
