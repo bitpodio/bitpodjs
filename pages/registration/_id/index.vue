@@ -14,7 +14,7 @@
                       v-bind="attrs"
                       v-on="on"
                     >
-                      <span class="white--text headline Twitter">{{
+                      <span class="white--text Twitter">{{
                         data.registration.FirstName
                       }}</span>
                     </v-avatar>
@@ -50,12 +50,15 @@
         <v-divider></v-divider>
         <v-flex class="d-flex flex-row align-center">
           <v-avatar color="warning" size="24" class="d-inline-flex">
-            <span class="white--text body-2 name-initial">{{
+            <span class="white--text name-initial">{{
               data.registration.FirstName
             }}</span>
           </v-avatar>
           <v-subheader class="d-inline-flex pl-1"
-            ><span class="pl-1">Registered 1 day ago.</span></v-subheader
+            ><span class="pl-1"
+              >Registered on
+              {{ formatDate(data.registration.createdDate) }}.</span
+            ></v-subheader
           >
         </v-flex>
       </div>
@@ -70,7 +73,9 @@
         <Grid view-name="registrationAttendees" content-name="Registrations" />
       </div>
       <div class="xs12 sm12 md12 boxview pa-4 mr-2 mb-2">
-        <!-- <Grid :content="content.EventsManagement" view-name="All Events" /> -->
+        <h2 class="body-1">Emails</h2>
+        <v-divider></v-divider>
+        <Grid view-name="registrationEmails" content-name="Registrations" />
       </div>
     </v-flex>
     <v-flex column xs12 sm4 md4 lg4>
@@ -79,19 +84,27 @@
         <v-divider></v-divider>
         <v-flex my-3>
           <div class="body-2 text--secondary">Event Name</div>
-          <div class="body-1">{{ data.registration.EventName }}</div>
+          <div class="body-1">
+            {{ formatField(data.registration.EventName) }}
+          </div>
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">Start Date</div>
-          <div class="body-1 text--primary"></div>
+          <div class="body-1 text--primary">
+            {{ formatField(data.registration.BookingDate) }}
+          </div>
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">End Date</div>
-          <div class="body-1">-</div>
+          <div class="body-1">
+            {{ formatField(data.registration.ExpiryYear) }}
+          </div>
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">Address</div>
-          <div class="body-1">City, Country</div>
+          <div class="body-1">
+            -
+          </div>
         </v-flex>
       </div>
 
@@ -100,45 +113,53 @@
         <v-divider></v-divider>
         <v-flex my-3>
           <div class="body-2 text--secondary">Card Type</div>
-          <div class="body-1">brand</div>
+          <div class="body-1">
+            {{
+              formatField(
+                data.registration._CustomerPayment &&
+                  data.registration._CustomerPayment.brand
+              )
+            }}
+          </div>
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">Name on Card</div>
-          <div class="body-1">CardHolderName</div>
+          <div class="body-1">
+            {{
+              formatField(
+                data.registration._CustomerPayment &&
+                  data.registration._CustomerPayment.card_holder_name
+              )
+            }}
+          </div>
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">Card Number (Last 4 Digit)</div>
-          <div class="body-1">CardNumber</div>
+          <div class="body-1">
+            {{
+              formatField(
+                data.registration._CustomerPayment &&
+                  data.registration._CustomerPayment.last4
+              )
+            }}
+          </div>
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">Transaction Id</div>
-          <div class="body-1">_CustomerPayment.id</div>
+          <div class="body-1">
+            {{
+              formatField(
+                data.registration._CustomerPayment &&
+                  data.registration._CustomerPayment.id
+              )
+            }}
+          </div>
         </v-flex>
       </div>
 
       <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
         <h2 class="body-1">Survey Questions</h2>
         <v-divider></v-divider>
-        <v-flex my-3>
-          <div class="body-2 text--secondary">Privacy</div>
-          <div class="body-1">Public</div>
-        </v-flex>
-        <v-flex my-3>
-          <div class="body-2 text--secondary">Currency</div>
-          <div class="body-1">-</div>
-        </v-flex>
-        <v-flex my-3>
-          <div class="body-2 text--secondary">GL Account Code</div>
-          <div class="body-1">asddeee</div>
-        </v-flex>
-        <v-flex my-3>
-          <div class="body-2 text--secondary">Cost Center</div>
-          <div class="body-1">-</div>
-        </v-flex>
-        <v-flex my-3>
-          <div class="body-2 text--secondary">Business Type</div>
-          <div class="body-1">Single</div>
-        </v-flex>
       </div>
     </v-flex>
   </v-flex>
@@ -146,6 +167,7 @@
 
 <script>
 import gql from 'graphql-tag'
+import format from 'date-fns/format'
 import Grid from '~/components/common/grid'
 import registration from '~/config/apps/event/gql/registration.gql'
 import { formatGQLResult } from '~/utility/gql.js'
@@ -160,6 +182,14 @@ export default {
         registration: {},
       },
     }
+  },
+  methods: {
+    formatDate(date) {
+      return date ? format(new Date(date), 'PPp') : ''
+    },
+    formatField(fieldValue) {
+      return fieldValue || '-'
+    },
   },
   apollo: {
     data: {
@@ -196,20 +226,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-.Twitter {
-  font-size: 0 !important;
-  text-transform: capitalize !important;
-}
-.Twitter::first-letter {
-  font-size: 24px !important;
-}
-.name-initial {
-  font-size: 0 !important;
-  text-transform: capitalize !important;
-}
-.name-initial::first-letter {
-  font-size: 14px !important;
-}
-</style>

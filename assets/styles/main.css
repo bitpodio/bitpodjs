@@ -39,6 +39,22 @@ body {
   bottom: 0 !important;
   width: 50% !important;
 }
+.Twitter {
+  font-size: 0 !important;
+  text-transform: capitalize !important;
+  padding-top: 3px !important;
+}
+.Twitter::first-letter {
+  font-size: 24px !important;
+}
+.name-initial {
+  font-size: 0 !important;
+  text-transform: capitalize !important;
+  padding-top: 3px !important;
+}
+.name-initial::first-letter {
+  font-size: 14px !important;
+}
 @media (max-width: 600px) {
   .slide-form,
   .slide-form-default {
