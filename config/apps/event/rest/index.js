@@ -1,3 +1,4 @@
+import nuxtconfig from '~/nuxt.config'
 import { getOrderQuery, buildQueryVariables } from '~/utility'
 
 export function getData(modelName) {
@@ -29,15 +30,15 @@ export function getData(modelName) {
     const filter = { limit, skip, order, where }
 
     const resPromise = this.$axios.$get(
-      `https://event.test.bitpod.io/svc/api/${modelName}s?filter=${JSON.stringify(
-        filter
-      )}`
+      `${
+        nuxtconfig.router.bitpodHostUrl
+      }/svc/api/${modelName}s?filter=${JSON.stringify(filter)}`
     )
     // to get record count
     const recCountPromise = this.$axios.$get(
-      `https://event.test.bitpod.io/svc/api/${modelName}s/count?where=${JSON.stringify(
-        where
-      )}`
+      `${
+        nuxtconfig.router.bitpodHostUrl
+      }/svc/api/${modelName}s/count?where=${JSON.stringify(where)}`
     )
     // to execute parallel call
     const [res, recCount] = await Promise.all([resPromise, recCountPromise])

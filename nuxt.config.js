@@ -14,6 +14,9 @@ export default {
    ** Headers of the page
    ** See https://nuxtjs.org/api/configuration-head
    */
+  router: {
+    bitpodHostUrl: process.env.bitpodHostUrl || 'https://event.test.bitpod.io',
+  },
   head: {
     titleTemplate: '%s - ' + process.env.npm_package_name,
     title: process.env.npm_package_name || '',
