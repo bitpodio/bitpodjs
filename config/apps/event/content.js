@@ -1425,11 +1425,6 @@ export default (ctx) => ({
   },
 
   Registrations: {
-    actions: {
-      'Embeded Actions': '',
-      'General Actions': [],
-      'Selected Item Action': [],
-    },
     child: {},
     dataSource: {
       FormID: 'EventsAdvSearch',
