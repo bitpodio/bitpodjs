@@ -1427,7 +1427,7 @@ export default (ctx) => ({
   Registrations: {
     actions: {
       'Embeded Actions': '',
-      'General Actions': ['Create Registration'],
+      'General Actions': [],
       'Selected Item Action': [],
     },
     child: {},
