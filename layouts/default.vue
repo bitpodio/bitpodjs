@@ -453,6 +453,11 @@ export default {
       },
       { heading: 'Task' },
       { icon: 'mdi-cellphone-link', text: 'My Task', to: '' },
+      {
+        icon: 'mdi-chart-bubble',
+        text: 'Activities',
+        to: '/list/Activities/Activities',
+      },
     ],
   }),
   methods: {
