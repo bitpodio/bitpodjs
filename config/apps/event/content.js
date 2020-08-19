@@ -1286,7 +1286,7 @@ export default (ctx) => ({
           defaultSort: 'createdDate DESC',
         },
       },
-      'all-evnts': {
+      'all-events': {
         ui: {
           hideDefaultHeader: false,
           hideDefaultFooter: false,
@@ -3074,6 +3074,181 @@ export default (ctx) => ({
         default: true,
         title: 'Contacts',
         defaultSort: 'createdDate DESC',
+      },
+      contactRegistration: {
+        ui: {
+          hideDefaultHeader: false,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: true,
+          hideFilter: false,
+          hideSearch: true,
+        },
+        default: true,
+        fields: {
+          Phone: {
+            displayOrder: 4,
+            caption: 'Phone',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '100px',
+          },
+          Status: {
+            displayOrder: 6,
+            caption: 'Status',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '100px',
+          },
+          EventName: {
+            displayOrder: 3,
+            caption: 'Event',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+          },
+          Email: {
+            displayOrder: 2,
+            caption: 'Email',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+          },
+          createdDate: {
+            displayOrder: 7,
+            caption: 'created Date ',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+          },
+          FullName: {
+            displayOrder: 1,
+            caption: 'Name',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+          },
+          TotalAmount: {
+            displayOrder: 5,
+            caption: 'Amount',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '105px',
+          },
+        },
+        template: {
+          name: 'link-grid',
+          context: {
+            basePath: '/contact',
+          },
+        },
+        dataSource: {
+          type: 'rest',
+          getData: getData(
+            `/Registrations/${ctx.$route.params.id}/SessionListId`
+          ),
+        },
+        title: 'Sessions',
+        type: 'list',
+      },
+      contactInvites: {
+        ui: {
+          hideDefaultHeader: false,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: true,
+          hideFilter: false,
+          hideSearch: true,
+        },
+        default: true,
+        fields: {
+          Delivered: {
+            displayOrder: 6,
+            caption: 'Delivered',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+          },
+          Click: {
+            displayOrder: 5,
+            caption: 'Click',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '100px',
+          },
+          Open: {
+            displayOrder: 5,
+            caption: 'Open',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '100px',
+          },
+          isRegistered: {
+            displayOrder: 3,
+            caption: 'Registered',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '125px',
+          },
+          Unsubscribed: {
+            displayOrder: 6,
+            caption: 'Unsubscribed',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '170px',
+          },
+          createdDate: {
+            displayOrder: 1,
+            caption: 'Date',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+          },
+          Sent: {
+            displayOrder: 4,
+            caption: 'Sent/Bounce',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '135px',
+          },
+          Event: {
+            displayOrder: 3,
+            caption: 'Event',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+          },
+          CampaignName: {
+            displayOrder: 3,
+            caption: 'Campaign Name',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+          },
+          SpamReport: {
+            displayOrder: 6,
+            caption: 'Spam',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '100px',
+          },
+        },
+        template: {
+          name: 'link-grid',
+          context: {
+            basePath: '/contact',
+          },
+        },
+        dataSource: {
+          type: 'rest',
+          getData: getData(
+            `/Registrations/${ctx.$route.params.id}/SessionListId`
+          ),
+        },
+        title: 'Invites',
+        type: 'list',
       },
     },
   },
