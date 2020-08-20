@@ -1,0 +1,25 @@
+query ($filters: JSON, $where: JSON) { 
+    Attendee { 
+        AttendeeFind(filter: $filters) { 
+            edges { 
+                node {
+                    FirstName 
+                    Status 
+                    FullName  
+                    TicketName 
+                    TicketAmount 
+                    SeatNumber 
+                    CompanyName 
+                    CheckIn 
+                    LastName 
+                    Email  
+                    id 
+                    createdDate 
+                    createdBy 
+                    modifiedDate 
+                }
+            } 
+        } 
+        AttendeeCount(where: $where) 
+    } 
+}
