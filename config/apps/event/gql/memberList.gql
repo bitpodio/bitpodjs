@@ -16,6 +16,8 @@ query($filters: JSON, $where: JSON) {
           ContactNumber
           BusinessNumber
           Approved
+          createdDate
+          createdBy
           _BillingAddress {
             id
             State

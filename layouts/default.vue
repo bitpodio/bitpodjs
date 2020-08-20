@@ -431,11 +431,11 @@ export default {
       {
         icon: 'mdi-calendar-text',
         text: 'Events',
-        to: '/list/EventsManagement/all-events',
+        to: '/list/Event/All Events',
       },
       {
         icon: 'mdi-account-plus',
-        text: 'Registarions',
+        text: 'Registrations',
         to: '/list/Registrations/Registrations',
       },
       { heading: 'Promotions' },
