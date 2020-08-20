@@ -1,0 +1,23 @@
+query ($filters: JSON, $where: JSON) { 
+    RegistrationForm { 
+        RegistrationFormFind(filter: $filters) { 
+            edges { 
+                node {
+                    modifiedBy 
+                    showAttendeeField 
+                    Question  
+                    isRequired 
+                    DisplayOrder 
+                    SyncStatus 
+                    isShowField 
+                    Label 
+                    isAttendeeField 
+                    ControlType  
+                    isRegistrationField 
+                    id 
+                } 
+            } 
+        } 
+        RegistrationFormCount(where: $where)  
+    } 
+}

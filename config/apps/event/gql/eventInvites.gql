@@ -1,0 +1,43 @@
+query ($filters: JSON, $where: JSON) {
+    EmailAnalytic {
+        EmailAnalyticFind(filter: $filters) {
+            edges {
+                node {
+                    id
+                    Open
+                    Sent
+                    Bounce
+                    isRegistered      
+                    Deleted
+                    Delivered
+                    Click  
+                    SpamReport      
+                    Unsubscribed
+                    orgId
+                    ContactId
+                    getContact {
+                        id
+                        LastName
+                        FullName
+                        FirstName
+                        Email
+                        __typename
+                    }
+                    CRMActivityId
+                    createdDate
+                    createdBy
+                    modifiedDate
+                    getCRMActivityId{ 
+                        Title
+                    }      
+                    modifiedBy
+                    __typename
+                }
+                __typename
+            }
+            __typename
+        }
+        EmailAnalyticCount(where: $where)
+        __typename
+    }
+}

@@ -4,7 +4,13 @@ import discountCodes from './gql/discountCodes.gql'
 import eventList from './gql/eventlist.gql'
 import contactList from './gql/contactList.gql'
 import memberList from './gql/memberList.gql'
-// import eventAttendees from './gql/eventAttendees.gql'
+import eventAttendees from './gql/eventAttendees.gql'
+import eventInvites from './gql/eventInvites.gql'
+import eventTickets from './gql/eventTickets.gql'
+import eventDiscountCodes from './gql/eventDiscountCodes.gql'
+import eventSession from './gql/eventSession.gql'
+import eventTasks from './gql/eventTasks.gql'
+import eventRegistrationForm from './gql/eventRegistrationForm.gql'
 import { getData } from './rest'
 // import { getBPMNData } from './rest/bpmn.js'
 
@@ -356,7 +362,7 @@ export default (ctx) => ({
             columnWidth: '150px',
             type: 'string',
           },
-          RegisterBy: {
+          'registration.FullName': {
             displayOrder: 3,
             caption: 'Register By',
             searchEnable: true,
@@ -380,7 +386,7 @@ export default (ctx) => ({
             columnWidth: '150px',
             type: 'string',
           },
-          Ticket: {
+          'attendeeTicket.Code': {
             displayOrder: 6,
             caption: 'Ticket',
             searchEnable: true,
@@ -444,8 +450,17 @@ export default (ctx) => ({
           },
         },
         dataSource: {
-          type: 'rest',
-          getData: getData(`/Events/${ctx.$route.params.id}/Attende`),
+          query: eventAttendees,
+          defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          model: 'Attendee',
+          filter: {
+            where: {
+              EventId: ctx.$route.params.id,
+            },
+          },
+          // type: 'rest',
+          // getData: getData(`/Events/${ctx.$route.params.id}/Attende`),
         },
         title: 'eventAttendees',
         type: 'list',
@@ -534,8 +549,17 @@ export default (ctx) => ({
           },
         },
         dataSource: {
-          type: 'rest',
-          getData: getData(`/Events/${ctx.$route.params.id}/RegistrationList`),
+          query: registrationList,
+          defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          model: 'Registration',
+          filter: {
+            where: {
+              EventId: ctx.$route.params.id,
+            },
+          },
+          // type: 'rest',
+          // getData: getData(`/Events/${ctx.$route.params.id}/RegistrationList`),
         },
         title: 'eventRegistrations',
         type: 'list',
@@ -552,7 +576,7 @@ export default (ctx) => ({
         },
         hidden: true,
         fields: {
-          ContactId: {
+          'getContact.FullName': {
             displayOrder: 2,
             caption: 'Name',
             searchEnable: true,
@@ -568,7 +592,7 @@ export default (ctx) => ({
             columnWidth: '150px',
             type: 'string',
           },
-          Email: {
+          'getContact.Email': {
             displayOrder: 4,
             caption: 'Email',
             searchEnable: true,
@@ -640,8 +664,17 @@ export default (ctx) => ({
           },
         },
         dataSource: {
-          type: 'rest',
-          getData: getData(`/Events/${ctx.$route.params.id}/invites`),
+          query: eventInvites,
+          defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          model: 'EmailAnalytic',
+          filter: {
+            where: {
+              EventId: ctx.$route.params.id,
+            },
+          },
+          // type: 'rest',
+          // getData: getData(`/Events/${ctx.$route.params.id}/invites`),
         },
         title: 'eventInvites',
         type: 'list',
@@ -722,8 +755,17 @@ export default (ctx) => ({
           },
         },
         dataSource: {
-          type: 'rest',
-          getData: getData(`/Events/${ctx.$route.params.id}/getTickets`),
+          query: eventTickets,
+          defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          model: 'Ticket',
+          filter: {
+            where: {
+              Events: ctx.$route.params.id,
+            },
+          },
+          // type: 'rest',
+          // getData: getData(`/Events/${ctx.$route.params.id}/getTickets`),
         },
         title: 'eventTickets',
         type: 'list',
@@ -780,8 +822,17 @@ export default (ctx) => ({
           },
         },
         dataSource: {
-          type: 'rest',
-          getData: getData(`/Events/${ctx.$route.params.id}/getOfferCode`),
+          query: eventDiscountCodes,
+          defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          model: 'OfferCode',
+          filter: {
+            where: {
+              EventId: ctx.$route.params.id,
+            },
+          },
+          // type: 'rest',
+          // getData: getData(`/Events/${ctx.$route.params.id}/getOfferCode`),
         },
         title: 'eventDiscountCodes',
         type: 'list',
@@ -936,8 +987,17 @@ export default (ctx) => ({
           },
         },
         dataSource: {
-          type: 'rest',
-          getData: getData(`/Events/${ctx.$route.params.id}/getSession`),
+          query: eventSession,
+          defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          model: 'Session',
+          filter: {
+            where: {
+              EventId: ctx.$route.params.id,
+            },
+          },
+          // type: 'rest',
+          // getData: getData(`/Events/${ctx.$route.params.id}/getSession`),
         },
         title: 'eventSession',
         type: 'list',
@@ -1124,8 +1184,17 @@ export default (ctx) => ({
           },
         },
         dataSource: {
-          type: 'rest',
-          getData: getData(`/Events/${ctx.$route.params.id}/crmactivity`),
+          query: eventTasks,
+          defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          model: 'CRMActivity',
+          filter: {
+            where: {
+              EventId: ctx.$route.params.id,
+            },
+          },
+          // type: 'rest',
+          // getData: getData(`/Events/${ctx.$route.params.id}/crmactivity`),
         },
         title: 'eventTasks',
         type: 'list',
@@ -1198,8 +1267,15 @@ export default (ctx) => ({
           },
         },
         dataSource: {
-          type: 'rest',
-          getData: getData(`/Events/${ctx.$route.params.id}/RegistrationForm`),
+          query: eventRegistrationForm,
+          defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          model: 'RegistrationForm',
+          filter: {
+            where: {},
+          },
+          // type: 'rest',
+          // getData: getData(`/Events/${ctx.$route.params.id}/RegistrationForm`),
         },
         title: 'eventRegistrationForm',
         type: 'list',
