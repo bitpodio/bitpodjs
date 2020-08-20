@@ -3,7 +3,7 @@
     <v-flex xs12 sm8 md6 class="login-box">
       <v-card class="elevation-0">
         <v-card-title class="headline justify-center">
-          Login
+          Click here to Login
         </v-card-title>
         <v-card-text class="justify-center text-center">
           <v-btn
