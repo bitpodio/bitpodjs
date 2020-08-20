@@ -81,7 +81,7 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: `https://${process.env.PUBLIC_DOMAIN}/${process.env.PUBLIC_PATH}`
+    baseURL: `https://${process.env.PUBLIC_DOMAIN}${process.env.PUBLIC_PATH}`
   },
   /*
    ** vuetify module configuration
