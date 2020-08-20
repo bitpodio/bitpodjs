@@ -49,11 +49,23 @@
         </v-row>
         <v-divider></v-divider>
         <v-flex class="d-flex flex-row align-center">
-          <v-avatar color="warning" size="24" class="d-inline-flex">
-            <span class="white--text name-initial">{{
-              data.registration.FirstName
-            }}</span>
-          </v-avatar>
+          <v-tooltip top>
+            <template v-slot:activator="{ on, attrs }">
+              <v-avatar
+                color="warning"
+                size="24"
+                class="d-inline-flex"
+                dark
+                v-bind="attrs"
+                v-on="on"
+              >
+                <span class="white--text name-initial">{{
+                  data.registration.FirstName
+                }}</span>
+              </v-avatar>
+            </template>
+            <span>{{ data.registration.FirstName }}</span>
+          </v-tooltip>
           <v-subheader class="d-inline-flex pl-1"
             ><span class="pl-1"
               >Registered on
@@ -63,24 +75,33 @@
         </v-flex>
       </div>
       <div class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
-        <h2 class="body-1">Sessions</h2>
+        <h2 class="body-1 pb-2">
+          <i class="fa fa-black-board pr-1" aria-hidden="true"></i> Sessions
+        </h2>
         <v-divider></v-divider>
         <Grid view-name="registrationSessions" content-name="Registrations" />
       </div>
       <div class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
-        <h2 class="body-1">Attendees</h2>
+        <h2 class="body-1 pb-2">
+          <i class="fa fa-user-plus pr-1" aria-hidden="true"></i>Attendees
+        </h2>
         <v-divider></v-divider>
         <Grid view-name="registrationAttendees" content-name="Registrations" />
       </div>
       <div class="xs12 sm12 md12 boxview pa-4 mr-2 mb-2">
-        <h2 class="body-1">Emails</h2>
+        <h2 class="body-1 pb-2">
+          <i class="fa fa-envelope1 pr-1" aria-hidden="true"></i> Emails
+        </h2>
         <v-divider></v-divider>
         <Grid view-name="registrationEmails" content-name="Registrations" />
       </div>
     </v-flex>
     <v-flex column xs12 sm4 md4 lg4>
       <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
-        <h2 class="body-1">Event Information</h2>
+        <h2 class="body-1 pb-1">
+          <i class="fa fa-info-circle pr-1" aria-hidden="true"></i> Event
+          Information
+        </h2>
         <v-divider></v-divider>
         <v-flex my-3>
           <div class="body-2 text--secondary">Event Name</div>
@@ -109,7 +130,9 @@
       </div>
 
       <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
-        <h2 class="body-1">Payment Details</h2>
+        <h2 class="body-1 pb-1">
+          <i class="fa fa-banknote pr-1" aria-hidden="true"></i> Payment Details
+        </h2>
         <v-divider></v-divider>
         <v-flex my-3>
           <div class="body-2 text--secondary">Card Type</div>
@@ -158,7 +181,10 @@
       </div>
 
       <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
-        <h2 class="body-1">Survey Questions</h2>
+        <h2 class="body-1 pb-1">
+          <i class="fa fa-question-circle pr-1" aria-hidden="true"></i> Survey
+          Questions
+        </h2>
         <v-divider></v-divider>
       </div>
     </v-flex>
