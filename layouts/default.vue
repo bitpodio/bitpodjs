@@ -428,7 +428,11 @@ export default {
     items: [
       { icon: 'mdi-view-dashboard', text: 'Eventboard', to: '/' },
       { heading: 'Event' },
-      { icon: 'mdi-calendar-text', text: 'Events', to: '/flat/tiles' },
+      {
+        icon: 'mdi-calendar-text',
+        text: 'Events',
+        to: '/list/EventsManagement/all-events',
+      },
       {
         icon: 'mdi-account-plus',
         text: 'Registarions',
