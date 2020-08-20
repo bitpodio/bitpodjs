@@ -428,10 +428,14 @@ export default {
     items: [
       { icon: 'mdi-view-dashboard', text: 'Eventboard', to: '/' },
       { heading: 'Event' },
-      { icon: 'mdi-calendar-text', text: 'Events', to: '/flat/tiles' },
+      {
+        icon: 'mdi-calendar-text',
+        text: 'Events',
+        to: '/list/Event/All Events',
+      },
       {
         icon: 'mdi-account-plus',
-        text: 'Registarions',
+        text: 'Registrations',
         to: '/list/Registrations/Registrations',
       },
       { heading: 'Promotions' },
