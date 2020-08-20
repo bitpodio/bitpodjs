@@ -338,6 +338,7 @@ export default (ctx) => ({
           hideFilter: false,
           hideSearch: true,
         },
+        hidden: true,
         fields: {
           FullName: {
             displayOrder: 2,
@@ -443,17 +444,8 @@ export default (ctx) => ({
           },
         },
         dataSource: {
-          // query: eventAttendees,
-          // defaultSort: 'createdDate DESC',
-          // type: 'graphql',
-          // model: 'Attendee',
-          // filter: {
-          //   where: {
-          //     EventId: '5f2d27c3c3d182000a618e41',
-          //   },
-          // },
           type: 'rest',
-          getData: getData(`/Events/5f2d27c3c3d182000a618e41/Attende`),
+          getData: getData(`/Events/${ctx.$route.params.id}/Attende`),
         },
         title: 'eventAttendees',
         type: 'list',
@@ -468,6 +460,7 @@ export default (ctx) => ({
           hideFilter: false,
           hideSearch: true,
         },
+        hidden: true,
         fields: {
           FullName: {
             displayOrder: 2,
@@ -542,7 +535,7 @@ export default (ctx) => ({
         },
         dataSource: {
           type: 'rest',
-          getData: getData(`/Events/5f086b5da19f1c000ad213af/RegistrationList`),
+          getData: getData(`/Events/${ctx.$route.params.id}/RegistrationList`),
         },
         title: 'eventRegistrations',
         type: 'list',
@@ -557,6 +550,7 @@ export default (ctx) => ({
           hideFilter: false,
           hideSearch: true,
         },
+        hidden: true,
         fields: {
           ContactId: {
             displayOrder: 2,
@@ -647,7 +641,7 @@ export default (ctx) => ({
         },
         dataSource: {
           type: 'rest',
-          getData: getData(`/Events/5f2d27c3c3d182000a618e41/invites`),
+          getData: getData(`/Events/${ctx.$route.params.id}/invites`),
         },
         title: 'eventInvites',
         type: 'list',
@@ -662,6 +656,7 @@ export default (ctx) => ({
           hideFilter: false,
           hideSearch: true,
         },
+        hidden: true,
         fields: {
           Code: {
             displayOrder: 2,
@@ -728,7 +723,7 @@ export default (ctx) => ({
         },
         dataSource: {
           type: 'rest',
-          getData: getData(`/Events/5f2d27c3c3d182000a618e41/getTickets`),
+          getData: getData(`/Events/${ctx.$route.params.id}/getTickets`),
         },
         title: 'eventTickets',
         type: 'list',
@@ -743,6 +738,7 @@ export default (ctx) => ({
           hideFilter: false,
           hideSearch: true,
         },
+        hidden: true,
         fields: {
           codeTitle: {
             displayOrder: 2,
@@ -785,7 +781,7 @@ export default (ctx) => ({
         },
         dataSource: {
           type: 'rest',
-          getData: getData(`/Events/5f2d27c3c3d182000a618e41/getOfferCode`),
+          getData: getData(`/Events/${ctx.$route.params.id}/getOfferCode`),
         },
         title: 'eventDiscountCodes',
         type: 'list',
@@ -800,6 +796,7 @@ export default (ctx) => ({
           hideFilter: false,
           hideSearch: true,
         },
+        hidden: true,
         fields: {
           Question: {
             displayOrder: 2,
@@ -850,7 +847,7 @@ export default (ctx) => ({
         },
         dataSource: {
           type: 'rest',
-          getData: getData(`/Events/5f2d27c3c3d182000a618e41/Survey`),
+          getData: getData(`/Events/${ctx.$route.params.id}/Survey`),
         },
         title: 'eventRegistrationQuestion',
         type: 'list',
@@ -865,6 +862,7 @@ export default (ctx) => ({
           hideFilter: false,
           hideSearch: true,
         },
+        hidden: true,
         fields: {
           Name: {
             displayOrder: 2,
@@ -939,7 +937,7 @@ export default (ctx) => ({
         },
         dataSource: {
           type: 'rest',
-          getData: getData(`/Events/5f2d27c3c3d182000a618e41/getSession`),
+          getData: getData(`/Events/${ctx.$route.params.id}/getSession`),
         },
         title: 'eventSession',
         type: 'list',
@@ -954,6 +952,7 @@ export default (ctx) => ({
           hideFilter: false,
           hideSearch: true,
         },
+        hidden: true,
         fields: {
           Title: {
             displayOrder: 2,
@@ -1020,7 +1019,7 @@ export default (ctx) => ({
         },
         dataSource: {
           type: 'rest',
-          getData: getData(`/Events/5f2d27c3c3d182000a618e41/EventSpeakers`),
+          getData: getData(`/Events/${ctx.$route.params.id}/EventSpeakers`),
         },
         title: 'eventSpeakers',
         type: 'list',
@@ -1035,6 +1034,7 @@ export default (ctx) => ({
           hideFilter: false,
           hideSearch: true,
         },
+        hidden: true,
         fields: {
           Title: {
             displayOrder: 2,
@@ -1125,7 +1125,7 @@ export default (ctx) => ({
         },
         dataSource: {
           type: 'rest',
-          getData: getData(`/Events/5f2d27c3c3d182000a618e41/crmactivity`),
+          getData: getData(`/Events/${ctx.$route.params.id}/crmactivity`),
         },
         title: 'eventTasks',
         type: 'list',
@@ -1140,6 +1140,7 @@ export default (ctx) => ({
           hideFilter: false,
           hideSearch: true,
         },
+        hidden: true,
         fields: {
           Label: {
             displayOrder: 2,
@@ -1198,7 +1199,7 @@ export default (ctx) => ({
         },
         dataSource: {
           type: 'rest',
-          getData: getData(`/Events/5f2d27c3c3d182000a618e41/RegistrationForm`),
+          getData: getData(`/Events/${ctx.$route.params.id}/RegistrationForm`),
         },
         title: 'eventRegistrationForm',
         type: 'list',
