@@ -111,13 +111,16 @@
 
             <v-divider></v-divider>
 
-            <v-stepper-step step="4" complete class="text-center align-center"
+            <v-stepper-step
+              step="4"
+              complete="true"
+              class="text-center align-center"
               >Open for regsitarion</v-stepper-step
             >
 
             <v-divider></v-divider>
 
-            <v-stepper-step step="4" complete>Sold out</v-stepper-step>
+            <v-stepper-step step="4">Sold out</v-stepper-step>
 
             <v-divider></v-divider>
 
