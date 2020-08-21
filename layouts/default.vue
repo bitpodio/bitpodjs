@@ -454,12 +454,6 @@ export default {
       { icon: 'mdi-cellphone-link', text: 'My Task', to: '' },
     ],
   }),
-  methods: {
-    async onLogout() {
-      this.$auth.logout()
-      await this.$apolloHelpers.onLogout()
-    },
-  },
   async created() {
     if (!this.$apolloHelpers.getToken()) {
       let token = this.$auth.strategy.token.get()
@@ -468,6 +462,12 @@ export default {
       }
       await this.$apolloHelpers.onLogin(token, undefined, { expires: 7 })
     }
+  },
+  methods: {
+    async onLogout() {
+      this.$auth.logout()
+      await this.$apolloHelpers.onLogout()
+    },
   },
 }
 </script>

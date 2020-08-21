@@ -1,5 +1,5 @@
 import colors from 'vuetify/es5/util/colors'
-const basePath = process.env.PUBLIC_PATH || '';
+const basePath = process.env.PUBLIC_PATH || ''
 export default {
   /*
    ** Nuxt rendering mode
@@ -7,7 +7,7 @@ export default {
    */
   mode: 'universal',
   router: {
-    base: basePath || '/'
+    base: basePath || '/',
   },
   /*
    ** Nuxt target
@@ -82,7 +82,8 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`
+    // baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
+    baseURL: `http://localhost:3000${basePath}`,
   },
   /*
    ** vuetify module configuration
