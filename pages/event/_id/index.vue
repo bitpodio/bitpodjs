@@ -328,7 +328,7 @@
           <div class="body-1">{{ formatField(data.event.UniqLink) }}</div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">Cancelation Policyk</div>
+          <div class="body-2 text--secondary">Cancelation Policy</div>
           <div class="body-1">
             {{ formatField(data.event.CancellationPolicy) }}
           </div>
