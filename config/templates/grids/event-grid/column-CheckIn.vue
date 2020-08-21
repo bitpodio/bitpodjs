@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-chip class="ma-2" small color="green" text-color="white">
+    <v-chip class="ma-2" small color="blue" text-color="white">
       {{ value }}
     </v-chip>
   </div>

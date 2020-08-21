@@ -377,7 +377,7 @@
     <v-dialog
       v-model="stepform"
       persistent
-      content-class="slide-form-default"
+      content-class="slide-form"
       transition="dialog-bottom-transition"
     >
       <v-toolbar dark app color="accent">

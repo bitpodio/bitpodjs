@@ -1,13 +1,12 @@
-export function getData(modelName) {
+export function getData(path) {
+  const URL = `https://event.test.bitpod.io/svc/api`
   return async function query(options) {
     // options contains sort, pagination, search, filters data
     // 1. sort
     // 2. pagination
     // 3. search
     // 4. filters
-    const res = await this.$axios.$get(
-      `https://event.test.bitpod.io/svc/api/${modelName}s?filter={"limit":"10"}`
-    )
+    const res = await this.$axios.$get(`${URL}${path}?filter={"limit":"10"}`)
     return { items: res, total: 10 }
   }
 }
