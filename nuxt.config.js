@@ -1,4 +1,5 @@
 import colors from 'vuetify/es5/util/colors'
+const basePath = process.env.PUBLIC_PATH || ''
 export default {
   /*
    ** Nuxt rendering mode
@@ -6,7 +7,7 @@ export default {
    */
   mode: 'universal',
   router: {
-    base: process.env.PUBLIC_PATH || '/'
+    base: basePath || '/',
   },
   /*
    ** Nuxt target
@@ -85,7 +86,9 @@ export default {
   axios: {
     apiEndpoint: '/svc/api/',
     backendBaseUrl: process.env.PUBLIC_DOMAIN || '',
-    baseURL: `https://${process.env.PUBLIC_DOMAIN}${process.env.PUBLIC_PATH}`
+    baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
+    // use below locally and comment above
+    // baseURL: `http://localhost:3000${basePath}`,
   },
 
   publicRuntimeConfig: {
@@ -160,7 +163,7 @@ export default {
     redirect: {
       login: '/login',
       callback: '/callback',
-      home: `${process.env.PUBLIC_PATH}/event`,
+      home: `${basePath}/event`,
       logout: '/',
     },
     strategies: {
@@ -176,7 +179,7 @@ export default {
           process.env.BITPOD_AUTHORIZATION_ENDPOINT_URL ||
           'https://login.bitpod.io/auth/connect/authorize',
         endpoints: {
-          authorization: `${process.env.PUBLIC_PATH}/authorize?provider=bitpod`,
+          authorization: `${basePath}/authorize?provider=bitpod`,
           token: 'api/connect/token?provider=bitpod',
           userInfo: 'api/connect/userinfo?provider=bitpod',
         },
@@ -206,7 +209,7 @@ export default {
           process.env.GOOGLE_AUTHORIZATION_ENDPOINT_URL ||
           'https://accounts.google.com/o/oauth2/auth',
         endpoints: {
-          authorization: `${process.env.PUBLIC_PATH}/authorize?provider=google`,
+          authorization: `${basePath}/authorize?provider=google`,
           token: 'api/connect/token?provider=google',
           userInfo: 'api/connect/userinfo?provider=google',
         },

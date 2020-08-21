@@ -1,0 +1,33 @@
+query ($filters: JSON, $where: JSON) { 
+    Ticket { 
+        TicketFind(filter: $filters) { 
+            edges { 
+                node { 
+                    ValidateQty 
+                    TicketCount 
+                    AvailableCount 
+                    CheckGroupDiscount 
+                    EndDate 
+                    SyncStatus 
+                    Code 
+                    StartDate 
+                    Currency 
+                    Amount 
+                    Type 
+                    id 
+                    Description 
+                    Group 
+                    Attendee 
+                    createdDate 
+                    createdBy 
+                    modifiedDate 
+                    __typename 
+                } 
+                __typename 
+            } 
+            __typename 
+        } 
+        TicketCount(where: $where) 
+        __typename 
+    } 
+}
