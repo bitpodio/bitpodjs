@@ -654,7 +654,7 @@ export default (ctx) => ({
           },
         },
         template: {
-          name: 'link-grid',
+          name: 'event-grid',
           context: {
             basePath: '/event',
           },
@@ -1695,197 +1695,6 @@ export default (ctx) => ({
         title: 'Abandoned Registrations',
         type: 'list',
       },
-      eventRegistrations: {
-        ui: {
-          hideDefaultHeader: false,
-          hideDefaultFooter: false,
-          showExpand: false,
-          singleExpand: false,
-          showSelect: true,
-          hideFilter: false,
-          hideSearch: true,
-        },
-        hidden: true,
-        fields: {
-          EventName: {
-            displayOrder: 6,
-            caption: 'EventName',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '180px',
-            type: 'string',
-            cssClasses: 'col-12 col-md-12',
-          },
-          PaymentMethod: {
-            displayOrder: 10,
-            caption: 'PaymentMethod',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
-          },
-          CompanyName: {
-            displayOrder: 4,
-            caption: 'Organization',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'richtext',
-          },
-          Phone: {
-            displayOrder: 5,
-            caption: 'Phone',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '100px',
-            type: 'string',
-          },
-          Status: {
-            displayOrder: 9,
-            caption: 'Status',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '100px',
-            type: 'lookup',
-            dataSource: {
-              query: registrationStatusOptions,
-              itemText: 'value',
-              itemValue: 'key',
-              filter(data) {
-                debugger
-                return {
-                  type: data.EventName,
-                }
-              },
-            },
-          },
-          RegistrationId: {
-            displayOrder: 6,
-            caption: 'RegistrationId',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '180px',
-            type: 'string',
-            inlineEdit: false,
-            newForm: false,
-            editForm: false,
-          },
-          createdDate: {
-            displayOrder: 11,
-            caption: 'createdDate',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'date',
-            inlineEdit: false,
-            newForm: true,
-            editForm: false,
-          },
-          TicketQuantity: {
-            displayOrder: 9,
-            caption: 'Attendees',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '130px',
-            type: 'number',
-          },
-          FullName: {
-            displayOrder: 2,
-            caption: 'Full Name',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
-            inlineEdit: false,
-            newForm: false,
-            editForm: false,
-          },
-          TotalAmount: {
-            displayOrder: 8,
-            caption: 'TotalAmount',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'number',
-          },
-          Email: {
-            displayOrder: 3,
-            caption: 'Email',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '130px',
-            type: 'string',
-            readonly(value, data) {
-              const firstName = data.FirstName
-              return firstName && firstName.length <= 5
-            },
-            rules: [
-              (v) => {
-                return !!v || 'E-mail is required'
-              },
-              function (value, data) {
-                return /.+@.+\..+/.test(value) || 'E-mail must be valid'
-              },
-            ],
-          },
-          action: {
-            displayOrder: 11,
-            caption: 'Action',
-            searchEnable: false,
-            sortEnable: false,
-            columnWidth: '130px',
-            type: 'action',
-            inlineEdit: false,
-            newForm: false,
-            editForm: false,
-            condtion: ({ item, items, index }) => {
-              return true
-            },
-          },
-          FirstName: {
-            displayOrder: 2,
-            caption: 'First Name',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
-            hidden: true,
-            inlineEdit: true,
-            newForm: true,
-            editForm: false,
-            rules: [
-              (v) => {
-                return !!v || 'FirstName is required'
-              },
-              (v) => {
-                return (
-                  (v && v.length <= 10) ||
-                  'Name must be less than 10 characters'
-                )
-              },
-            ],
-          },
-        },
-        template: {
-          name: 'registration-grid',
-          context: {
-            basePath: '/registration',
-          },
-        },
-        dataSource: {
-          query: registrationList,
-          defaultSort: 'createdDate DESC',
-          type: 'graphql',
-          model: 'Registration',
-          filter: {
-            where: {
-              EventId: ctx.$route.params.id,
-            },
-          },
-        },
-        title: 'Registrations',
-        type: 'list',
-      },
       registrationSessions: {
         ui: {
           hideDefaultHeader: false,
@@ -2054,8 +1863,17 @@ export default (ctx) => ({
           },
         },
         dataSource: {
-          type: 'rest',
-          getData: getData(`/Registrations/${ctx.$route.params.id}/attendee`),
+          query: eventAttendees,
+          defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          model: 'Attendee',
+          filter: {
+            where: {
+              RegistrationId: ctx.$route.params.id,
+            },
+          },
+          // type: 'rest',
+          // getData: getData(`/Registrations/${ctx.$route.params.id}/attendee`),
         },
         title: 'Registrations',
         type: 'list',
@@ -2102,6 +1920,7 @@ export default (ctx) => ({
             searchEnable: true,
             sortEnable: true,
             columnWidth: '130px',
+            type: 'string',
           },
           TemplateName: {
             displayOrder: 8,
@@ -2109,6 +1928,7 @@ export default (ctx) => ({
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
+            type: 'string',
           },
           createdBy: {
             displayOrder: 7,
@@ -2116,6 +1936,7 @@ export default (ctx) => ({
             searchEnable: true,
             sortEnable: true,
             columnWidth: '130px',
+            type: 'string',
           },
           createdDate: {
             displayOrder: 6,
@@ -2123,6 +1944,7 @@ export default (ctx) => ({
             searchEnable: true,
             sortEnable: true,
             columnWidth: '130px',
+            type: 'date',
           },
           DueDate: {
             displayOrder: 5,
@@ -2130,6 +1952,7 @@ export default (ctx) => ({
             searchEnable: true,
             sortEnable: true,
             columnWidth: '130px',
+            type: 'date',
           },
         },
         template: {
@@ -2139,120 +1962,22 @@ export default (ctx) => ({
           },
         },
         dataSource: {
-          type: 'rest',
-          getData: getData(
-            `/Registrations/${ctx.$route.params.id}/SessionListId`
-          ),
+          query: eventTasks,
+          defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          model: 'CRMActivity',
+          filter: {
+            where: {
+              Registrations: ctx.$route.params.id,
+            },
+          },
+          // type: 'rest',
+          // getData: getData(
+          //   `/Registrations/${ctx.$route.params.id}/SessionListId`
+          // ),
         },
         title: 'Emails',
         type: 'list',
-      },
-      Registration: {
-        DefaultSort: 'createdDate DESC',
-        DataSource: {
-          FormID: 'RegistrationDetailForm',
-          Aggregation: '',
-          'Default view': '',
-          Params: {
-            id: {
-              type: 'string',
-              mapwith: 'id',
-            },
-          },
-          'Key Field': '',
-          'Sharepoint Action': 'Edit',
-          Type: 'Form',
-          URL: 'OfferCode',
-        },
-        template: {
-          name: 'registration-grid',
-          context: {
-            basePath: '/registration',
-          },
-        },
-        Fields: {
-          LastName: {
-            displayOrder: 3,
-            caption: 'LastName',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-          },
-          EventName: {
-            displayOrder: 6,
-            caption: 'EventName',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '180px',
-          },
-          PaymentMethod: {
-            displayOrder: 10,
-            caption: 'PaymentMethod',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '100px',
-          },
-          Phone: {
-            displayOrder: 5,
-            caption: 'Phone',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '100px',
-          },
-          Status: {
-            displayOrder: 9,
-            caption: 'Status',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '100px',
-          },
-          RegistrationId: {
-            displayOrder: 1,
-            caption: 'RegistrationId',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-          },
-          createdDate: {
-            displayOrder: 11,
-            caption: 'createdDate',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-          },
-          TicketQuantity: {
-            displayOrder: 7,
-            caption: 'TicketQuantity',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '130px',
-          },
-          FirstName: {
-            displayOrder: 2,
-            caption: 'FirstName',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-          },
-          TotalAmount: {
-            displayOrder: 8,
-            caption: 'TotalAmount',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '100px',
-          },
-          Email: {
-            displayOrder: 4,
-            caption: 'Email',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '130px',
-          },
-        },
-        Query: '',
-        hidden: true,
-        type: 'Form',
-        title: 'Registration',
       },
     },
   },
@@ -2419,77 +2144,51 @@ export default (ctx) => ({
         title: 'Discount Codes',
         model: 'OfferCode',
       },
-      'Discount Code': {
-        default: true,
-        defaultSort: 'createdDate DESC',
+      discountMembers: {
         fields: {
-          currentUsageCount: {
-            displayOrder: 9,
-            caption: 'Current Usage Count',
+          FirstName: {
+            displayOrder: 2,
+            caption: 'First Name',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '220px',
-            type: 'number',
+            type: 'string',
           },
-          codeTitle: {
-            displayOrder: 1,
-            caption: 'Code',
+          LastName: {
+            displayOrder: 3,
+            caption: 'Last Name',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '180px',
             type: 'string',
           },
-          isActive: {
+          Email: {
             displayOrder: 4,
-            caption: 'Active',
+            caption: 'Email',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '120px',
             type: 'string',
           },
-          validTill: {
-            displayOrder: 7,
-            caption: 'Valid Till',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '180px',
-            type: 'date',
-          },
-          maxUsageCount: {
-            displayOrder: 8,
-            caption: 'Max Usage Count',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '180px',
-            type: 'string',
-          },
-          offerValue: {
+          BusinessNumber: {
             displayOrder: 5,
-            caption: 'Offer Value',
+            caption: 'Business Number',
             searchEnable: true,
             sortEnable: true,
-            columnWidth: '130px',
-            type: 'string',
-          },
-          minApplicableOrderAmount: {
-            displayOrder: 6,
-            caption: 'Min Applicable Amount',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '220px',
+            columnWidth: '180px',
             type: 'string',
           },
           createdDate: {
-            displayOrder: 10,
+            displayOrder: 6,
             caption: 'Created Date',
             searchEnable: true,
             sortEnable: true,
-            columnWidth: '250px',
+            columnWidth: '180px',
             type: 'date',
           },
-          isPercent: {
-            displayOrder: 3,
-            caption: 'Percent',
+          Action: {
+            displayOrder: 7,
+            caption: 'Action',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '130px',
@@ -2497,21 +2196,14 @@ export default (ctx) => ({
           },
         },
         template: {
-          name: 'link-grid',
+          name: 'discount-grid',
           context: {
             basePath: '/discountcodes',
           },
         },
         dataSource: {
-          query: discountCodes,
-          filter: {
-            limit: '5',
-            order: 'createdDate DESC',
-            skip: '0',
-            where: {},
-          },
-          defaultSort: 'createdDate DESC',
-          type: 'graphql',
+          type: 'rest',
+          getData: getData(`/OfferCodes/${ctx.$route.params.id}/getMember`),
         },
         ui: {
           hideDefaultHeader: false,
@@ -2522,8 +2214,9 @@ export default (ctx) => ({
           hideFilter: true,
           hideSearch: false,
         },
-        title: 'Discount Code',
-        model: 'OfferCode',
+        hidden: true,
+        title: 'discountMembers',
+        type: 'list',
       },
     },
   },
@@ -2942,54 +2635,61 @@ export default (ctx) => ({
         },
         default: true,
         fields: {
-          Phone: {
-            displayOrder: 4,
-            caption: 'Phone',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '100px',
-          },
-          Status: {
-            displayOrder: 6,
-            caption: 'Status',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '100px',
-          },
-          EventName: {
-            displayOrder: 3,
-            caption: 'Event',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '180px',
-          },
-          Email: {
-            displayOrder: 2,
-            caption: 'Email',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '180px',
-          },
-          createdDate: {
-            displayOrder: 7,
-            caption: 'created Date ',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-          },
           FullName: {
-            displayOrder: 1,
+            displayOrder: 2,
             caption: 'Name',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
+            type: 'string',
+          },
+          Email: {
+            displayOrder: 3,
+            caption: 'Email',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'string',
+          },
+          EventName: {
+            displayOrder: 4,
+            caption: 'Event',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'string',
+          },
+          Phone: {
+            displayOrder: 5,
+            caption: 'Phone',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '100px',
+            type: 'string',
           },
           TotalAmount: {
-            displayOrder: 5,
+            displayOrder: 6,
             caption: 'Amount',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '105px',
+            type: 'string',
+          },
+          Status: {
+            displayOrder: 7,
+            caption: 'Status',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '100px',
+            type: 'string',
+          },
+          createdDate: {
+            displayOrder: 8,
+            caption: 'Created Date ',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'date',
           },
         },
         template: {
@@ -2999,12 +2699,21 @@ export default (ctx) => ({
           },
         },
         dataSource: {
-          type: 'rest',
-          getData: getData(
-            `/Registrations/${ctx.$route.params.id}/SessionListId`
-          ),
+          query: registrationList,
+          defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          model: 'Registration',
+          filter: {
+            where: {
+              Email: ctx.$route.params.Email,
+            },
+          },
+          // type: 'rest',
+          // getData: getData(
+          //   `/Registrations/${ctx.$route.params.id}/SessionListId`
+          // ),
         },
-        title: 'Sessions',
+        title: 'contactRegistration',
         type: 'list',
       },
       contactInvites: {
@@ -3017,28 +2726,14 @@ export default (ctx) => ({
           hideFilter: false,
           hideSearch: true,
         },
-        default: true,
         fields: {
-          Delivered: {
-            displayOrder: 6,
-            caption: 'Delivered',
+          createdDate: {
+            displayOrder: 2,
+            caption: 'Date',
             searchEnable: true,
             sortEnable: true,
-            columnWidth: '150px',
-          },
-          Click: {
-            displayOrder: 5,
-            caption: 'Click',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '100px',
-          },
-          Open: {
-            displayOrder: 5,
-            caption: 'Open',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '100px',
+            columnWidth: '180px',
+            type: 'date',
           },
           isRegistered: {
             displayOrder: 3,
@@ -3046,48 +2741,155 @@ export default (ctx) => ({
             searchEnable: true,
             sortEnable: true,
             columnWidth: '125px',
+            type: 'string',
           },
-          Unsubscribed: {
-            displayOrder: 6,
-            caption: 'Unsubscribed',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '170px',
-          },
-          createdDate: {
-            displayOrder: 1,
-            caption: 'Date',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '180px',
-          },
-          Sent: {
+          'event.Title': {
             displayOrder: 4,
-            caption: 'Sent/Bounce',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '135px',
-          },
-          Event: {
-            displayOrder: 3,
             caption: 'Event',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '180px',
+            type: 'string',
           },
-          CampaignName: {
-            displayOrder: 3,
+          'getCRMActivityId.Title': {
+            displayOrder: 5,
             caption: 'Campaign Name',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
+            type: 'string',
+          },
+          Sent: {
+            displayOrder: 6,
+            caption: 'Sent/Bounce',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '135px',
+            type: 'string',
+          },
+          Click: {
+            displayOrder: 7,
+            caption: 'Click',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '100px',
+            type: 'string',
+          },
+          Open: {
+            displayOrder: 8,
+            caption: 'Open',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '100px',
+            type: 'string',
+          },
+          Delivered: {
+            displayOrder: 9,
+            caption: 'Delivered',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          Unsubscribed: {
+            displayOrder: 10,
+            caption: 'Unsubscribed',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '170px',
+            type: 'string',
           },
           SpamReport: {
-            displayOrder: 6,
+            displayOrder: 11,
             caption: 'Spam',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '100px',
+            type: 'string',
+          },
+        },
+        template: {
+          name: 'contact-grid',
+          context: {
+            basePath: '/contact',
+          },
+        },
+        dataSource: {
+          query: eventInvites,
+          defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          model: 'EmailAnalytic',
+          filter: {
+            where: {
+              ContactId: ctx.$route.params.id,
+            },
+          },
+          // type: 'rest',
+          // getData: getData(
+          //   `/Registrations/${ctx.$route.params.id}/SessionListId`
+          // ),
+        },
+        title: 'Invites',
+        type: 'list',
+      },
+      contactEmails: {
+        ui: {
+          hideDefaultHeader: false,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: true,
+          hideFilter: false,
+          hideSearch: true,
+        },
+        fields: {
+          Title: {
+            displayOrder: 2,
+            caption: 'Title',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'strig',
+          },
+          Status: {
+            displayOrder: 3,
+            caption: 'Status',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '125px',
+            type: 'string',
+          },
+          createdBy: {
+            displayOrder: 4,
+            caption: 'Created By',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'string',
+          },
+          createdDate: {
+            displayOrder: 5,
+            caption: 'Created Date',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'date',
+          },
+          DueDate: {
+            displayOrder: 6,
+            caption: 'Due Date',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '135px',
+            type: 'date',
+          },
+          TemplateName: {
+            displayOrder: 7,
+            caption: 'Template Name',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '100px',
+            type: 'string',
           },
         },
         template: {
@@ -3097,12 +2899,21 @@ export default (ctx) => ({
           },
         },
         dataSource: {
-          type: 'rest',
-          getData: getData(
-            `/Registrations/${ctx.$route.params.id}/SessionListId`
-          ),
+          query: eventTasks,
+          defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          model: 'CRMActivity',
+          filter: {
+            where: {
+              ContactId: ctx.$route.params.id,
+            },
+          },
+          // type: 'rest',
+          // getData: getData(
+          //   `/Registrations/${ctx.$route.params.id}/SessionListId`
+          // ),
         },
-        title: 'Invites',
+        title: 'contactEmails',
         type: 'list',
       },
     },

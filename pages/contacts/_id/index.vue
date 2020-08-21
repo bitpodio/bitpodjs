@@ -68,7 +68,7 @@
       <div class="xs12 sm12 md12 boxview pa-4 mr-2 mb-2">
         <h2 class="body-1">Emails</h2>
         <v-divider></v-divider>
-        <Grid view-name="contactRegistration" content-name="Contacts" />
+        <Grid view-name="contactEmails" content-name="Contacts" />
       </div>
     </v-flex>
     <v-flex column xs12 sm4 md4 lg4>

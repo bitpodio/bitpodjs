@@ -236,6 +236,7 @@ function getGridTemplateInfo(content, viewName) {
 }
 
 function formatResult(content, viewName, data, modelName) {
+  debugger
   if (!data[modelName]) return []
   let { edges } = data[modelName][`${modelName}Find`]
   const fields = getGridFields(content, viewName)

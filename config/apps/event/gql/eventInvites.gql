@@ -27,6 +27,11 @@ query ($filters: JSON, $where: JSON) {
                     createdDate
                     createdBy
                     modifiedDate
+                    event {
+                        id
+                        Title
+                        __typename
+                    }
                     getCRMActivityId{ 
                         Title
                     }      

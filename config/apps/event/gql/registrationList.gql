@@ -12,6 +12,7 @@ query($filters: JSON, $where: JSON) {
           CompanyName
           FullName
           LastName
+          SessionId
           _Comment {
             Notes
             id
