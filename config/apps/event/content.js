@@ -1375,7 +1375,6 @@ export default (ctx) => ({
               itemText: 'value',
               itemValue: 'key',
               filter(data) {
-                debugger
                 return {
                   type: data.EventName,
                 }
@@ -1563,7 +1562,6 @@ export default (ctx) => ({
               itemText: 'value',
               itemValue: 'key',
               filter(data) {
-                debugger
                 return {
                   type: data.EventName,
                 }
@@ -1752,7 +1750,6 @@ export default (ctx) => ({
               itemText: 'value',
               itemValue: 'key',
               filter(data) {
-                debugger
                 return {
                   type: data.EventName,
                 }
