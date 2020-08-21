@@ -459,8 +459,6 @@ export default (ctx) => ({
               EventId: ctx.$route.params.id,
             },
           },
-          // type: 'rest',
-          // getData: getData(`/Events/${ctx.$route.params.id}/Attende`),
         },
         title: 'eventAttendees',
         type: 'list',
@@ -558,8 +556,6 @@ export default (ctx) => ({
               EventId: ctx.$route.params.id,
             },
           },
-          // type: 'rest',
-          // getData: getData(`/Events/${ctx.$route.params.id}/RegistrationList`),
         },
         title: 'eventRegistrations',
         type: 'list',
@@ -673,8 +669,6 @@ export default (ctx) => ({
               EventId: ctx.$route.params.id,
             },
           },
-          // type: 'rest',
-          // getData: getData(`/Events/${ctx.$route.params.id}/invites`),
         },
         title: 'eventInvites',
         type: 'list',
@@ -764,8 +758,6 @@ export default (ctx) => ({
               Events: ctx.$route.params.id,
             },
           },
-          // type: 'rest',
-          // getData: getData(`/Events/${ctx.$route.params.id}/getTickets`),
         },
         title: 'eventTickets',
         type: 'list',
@@ -831,8 +823,6 @@ export default (ctx) => ({
               EventId: ctx.$route.params.id,
             },
           },
-          // type: 'rest',
-          // getData: getData(`/Events/${ctx.$route.params.id}/getOfferCode`),
         },
         title: 'eventDiscountCodes',
         type: 'list',
@@ -996,8 +986,6 @@ export default (ctx) => ({
               EventId: ctx.$route.params.id,
             },
           },
-          // type: 'rest',
-          // getData: getData(`/Events/${ctx.$route.params.id}/getSession`),
         },
         title: 'eventSession',
         type: 'list',
@@ -1193,8 +1181,6 @@ export default (ctx) => ({
               EventId: ctx.$route.params.id,
             },
           },
-          // type: 'rest',
-          // getData: getData(`/Events/${ctx.$route.params.id}/crmactivity`),
         },
         title: 'eventTasks',
         type: 'list',
@@ -1274,8 +1260,6 @@ export default (ctx) => ({
           filter: {
             where: {},
           },
-          // type: 'rest',
-          // getData: getData(`/Events/${ctx.$route.params.id}/RegistrationForm`),
         },
         title: 'eventRegistrationForm',
         type: 'list',
@@ -1397,23 +1381,6 @@ export default (ctx) => ({
                 }
               },
             },
-            // template: {
-            //   name: 'issue-grid',
-            //   params: {
-            //     // eslint-disable-next-line no-template-curly-in-string
-            //     route: '/event',
-            //   },
-            // },
-            // items: [
-            //   {
-            //     text: 'Success Payment',
-            //     value: 'Success',
-            //   },
-            //   {
-            //     text: 'Pending Payment',
-            //     value: 'Pending',
-            //   },
-            // ],
           },
           RegistrationId: {
             displayOrder: 6,
@@ -1521,13 +1488,6 @@ export default (ctx) => ({
               },
             ],
           },
-          // Images: {
-          //   displayOrder: 1,
-          //   caption: 'Images',
-          //   hidden: true,
-          //   columnWidth: '150px',
-          //   type: 'file',
-          // },
         },
         template: {
           name: 'registration-grid',
@@ -1543,16 +1503,9 @@ export default (ctx) => ({
           filter: {
             where: {},
           },
-          // end of gql
-          // type: 'rest',
-          // getData: getData('Registration'),
         },
         title: 'Registrations',
         type: 'list',
-        // type: 'card',
-        // type: 'calendar',
-        // type: 'path',
-        // path: '/event-dashboard/abc'
       },
       'Abandoned Registrations': {
         ui: {
@@ -1616,23 +1569,6 @@ export default (ctx) => ({
                 }
               },
             },
-            // template: {
-            //   name: 'issue-grid',
-            //   params: {
-            //     // eslint-disable-next-line no-template-curly-in-string
-            //     route: '/event',
-            //   },
-            // },
-            // items: [
-            //   {
-            //     text: 'Success Payment',
-            //     value: 'Success',
-            //   },
-            //   {
-            //     text: 'Pending Payment',
-            //     value: 'Pending',
-            //   },
-            // ],
           },
           RegistrationId: {
             displayOrder: 6,
@@ -1740,13 +1676,6 @@ export default (ctx) => ({
               },
             ],
           },
-          // Images: {
-          //   displayOrder: 1,
-          //   caption: 'Images',
-          //   hidden: true,
-          //   columnWidth: '150px',
-          //   type: 'file',
-          // },
         },
         template: {
           name: 'registration-grid',
@@ -1762,16 +1691,9 @@ export default (ctx) => ({
           filter: {
             where: { Status: 'Failed' },
           },
-          // end of gql
-          // type: 'rest',
-          // getData: getData('Registration'),
         },
         title: 'Abandoned Registrations',
         type: 'list',
-        // type: 'card',
-        // type: 'calendar',
-        // type: 'path',
-        // path: '/event-dashboard/abc'
       },
       eventRegistrations: {
         ui: {
@@ -1836,23 +1758,6 @@ export default (ctx) => ({
                 }
               },
             },
-            // template: {
-            //   name: 'issue-grid',
-            //   params: {
-            //     // eslint-disable-next-line no-template-curly-in-string
-            //     route: '/event',
-            //   },
-            // },
-            // items: [
-            //   {
-            //     text: 'Success Payment',
-            //     value: 'Success',
-            //   },
-            //   {
-            //     text: 'Pending Payment',
-            //     value: 'Pending',
-            //   },
-            // ],
           },
           RegistrationId: {
             displayOrder: 6,
@@ -1960,13 +1865,6 @@ export default (ctx) => ({
               },
             ],
           },
-          // Images: {
-          //   displayOrder: 1,
-          //   caption: 'Images',
-          //   hidden: true,
-          //   columnWidth: '150px',
-          //   type: 'file',
-          // },
         },
         template: {
           name: 'registration-grid',
@@ -1984,16 +1882,9 @@ export default (ctx) => ({
               EventId: ctx.$route.params.id,
             },
           },
-          // end of gql
-          // type: 'rest',
-          // getData: getData('Registration'),
         },
         title: 'Registrations',
         type: 'list',
-        // type: 'card',
-        // type: 'calendar',
-        // type: 'path',
-        // path: '/event-dashboard/abc'
       },
       registrationSessions: {
         ui: {
@@ -2071,16 +1962,6 @@ export default (ctx) => ({
           },
         },
         dataSource: {
-          // query: registrationList,
-          // defaultSort: 'createdDate DESC',
-          // type: 'graphql',
-          // model: 'Registration',
-          // filter: {
-          //   where: {
-          //     EventId: ctx.$route.params.id,
-          //   },
-          // },
-          // end of gql
           type: 'rest',
           getData: getData(
             `/Registrations/${ctx.$route.params.id}/SessionListId`
@@ -2088,10 +1969,6 @@ export default (ctx) => ({
         },
         title: 'Sessions',
         type: 'list',
-        // type: 'card',
-        // type: 'calendar',
-        // type: 'path',
-        // path: '/event-dashboard/abc'
       },
       registrationAttendees: {
         ui: {
@@ -2177,13 +2054,6 @@ export default (ctx) => ({
           },
         },
         dataSource: {
-          // query: registrationAttendee,
-          // defaultSort: 'createdDate DESC',
-          // type: 'graphql',
-          // model: 'Attendee',
-          // filter: {
-          //   where: { RegistrationId: ctx.$route.params.id },
-          // },
           type: 'rest',
           getData: getData(`/Registrations/${ctx.$route.params.id}/attendee`),
         },
@@ -2527,7 +2397,7 @@ export default (ctx) => ({
           },
         },
         dataSource: {
-          query: discountCodes, // getItems('users'),
+          query: discountCodes, 
           filter: {
             limit: '10',
             order: 'createdDate DESC',
@@ -2536,7 +2406,6 @@ export default (ctx) => ({
           },
           defaultSort: 'createdDate DESC',
           type: 'graphql',
-          // newItem: ,
         },
         ui: {
           hideDefaultHeader: false,
@@ -2634,7 +2503,7 @@ export default (ctx) => ({
           },
         },
         dataSource: {
-          query: discountCodes, // getItems('users'),
+          query: discountCodes, 
           filter: {
             limit: '5',
             order: 'createdDate DESC',
@@ -2643,7 +2512,6 @@ export default (ctx) => ({
           },
           defaultSort: 'createdDate DESC',
           type: 'graphql',
-          // newItem: ,
         },
         ui: {
           hideDefaultHeader: false,
