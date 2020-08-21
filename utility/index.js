@@ -94,13 +94,6 @@ export const formValidationMixin = {
   },
 }
 
-export function formatResult(data, modelName) {
-  if (!data[modelName]) return []
-  let { edges } = data[modelName][`${modelName}Find`]
-  edges = edges.map(({ node }) => node)
-  return edges
-}
-
 export function getContentByName(ctx, contentName) {
   const contents = contentFactory(ctx)
   return contents[contentName]

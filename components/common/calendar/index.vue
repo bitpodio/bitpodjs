@@ -55,7 +55,8 @@
 
 <script>
 import gql from 'graphql-tag'
-import { formatResult, getContentByName, getViewQuery } from '~/utility'
+import { getContentByName, getViewQuery } from '~/utility'
+import { formatGQLResult } from '~/utility/gql.js'
 
 export default {
   props: {
@@ -141,7 +142,7 @@ export default {
       update(data) {
         const { content } = this
         const modelName = content.general.name
-        const tableData = formatResult(data, modelName)
+        const tableData = formatGQLResult(data, modelName)
         this.events = this.formattedEvents(tableData)
         return tableData
       },
