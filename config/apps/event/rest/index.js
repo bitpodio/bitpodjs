@@ -26,19 +26,17 @@ export function getData(modelName) {
       contentName,
       ctx: this,
     })
-
     const filter = { limit, skip, order, where }
-
     const resPromise = this.$axios.$get(
-      `${
-        nuxtconfig.router.bitpodHostUrl
-      }/svc/api/${modelName}s?filter=${JSON.stringify(filter)}`
+      `https://${nuxtconfig.axios.backendBaseUrl}${
+        nuxtconfig.axios.apiEndpoint
+      }${modelName}s?filter=${JSON.stringify(filter)}`
     )
     // to get record count
     const recCountPromise = this.$axios.$get(
-      `${
-        nuxtconfig.router.bitpodHostUrl
-      }/svc/api/${modelName}s/count?where=${JSON.stringify(where)}`
+      `https://${nuxtconfig.axios.backendBaseUrl}${
+        nuxtconfig.axios.apiEndpoint
+      }${modelName}s/count?where=${JSON.stringify(where)}`
     )
     // to execute parallel call
     const [res, recCount] = await Promise.all([resPromise, recCountPromise])
