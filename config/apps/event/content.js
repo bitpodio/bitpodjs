@@ -2397,7 +2397,7 @@ export default (ctx) => ({
           },
         },
         dataSource: {
-          query: discountCodes, 
+          query: discountCodes,
           filter: {
             limit: '10',
             order: 'createdDate DESC',
@@ -2503,7 +2503,7 @@ export default (ctx) => ({
           },
         },
         dataSource: {
-          query: discountCodes, 
+          query: discountCodes,
           filter: {
             limit: '5',
             order: 'createdDate DESC',
