@@ -9,6 +9,5 @@
 <script>
 export default {
   props: ['item', 'value', 'context'],
-  computed: {},
 }
 </script>

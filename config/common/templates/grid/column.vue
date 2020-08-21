@@ -2,7 +2,7 @@
   <div
     :class="columnClass[column.type]"
     class="text-truncate"
-    :style="{ maxWidth: myComputedHeight }"
+    :style="{ maxWidth: this.column.width }"
   >
     {{ value }}
   </div>
@@ -19,11 +19,6 @@ export default {
         checkbox: 'type-checkbox',
       },
     }
-  },
-  computed: {
-    myComputedHeight() {
-      return this.column.width
-    },
   },
 }
 </script>

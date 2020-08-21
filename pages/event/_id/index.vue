@@ -237,6 +237,12 @@
         <v-divider></v-divider>
         <Grid view-name="eventRegistrationForm" content-name="Event" />
       </div>
+      <div class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
+        <h2 class="body-1 pb-2">
+          <i class="fa fa-image pr-1" aria-hidden="true"></i> Image Gallery
+        </h2>
+        <v-divider></v-divider>
+      </div>
     </v-flex>
     <v-flex column xs12 sm4 md4 lg4>
       <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
@@ -328,7 +334,7 @@
           <div class="body-1">{{ formatField(data.event.UniqLink) }}</div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">Cancelation Policyk</div>
+          <div class="body-2 text--secondary">Cancelation Policy</div>
           <div class="body-1">
             {{ formatField(data.event.CancellationPolicy) }}
           </div>

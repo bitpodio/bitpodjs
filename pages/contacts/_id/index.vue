@@ -14,7 +14,7 @@
                       v-bind="attrs"
                       v-on="on"
                     >
-                      <span class="white--text headline Twitter">{{
+                      <span class="white--text Twitter">{{
                         data.contact.FirstName
                       }}</span>
                     </v-avatar>
@@ -56,24 +56,33 @@
         </v-row>
       </div>
       <div class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
-        <h2 class="body-1">Registrations</h2>
+        <h2 class="body-1 pb-2">
+          <i class="fa fa-user-plus pr-1" aria-hidden="true"></i>Registrations
+        </h2>
         <v-divider></v-divider>
         <Grid view-name="contactRegistration" content-name="Contacts" />
       </div>
       <div class="xs12 sm12 md12 boxview pa-4 mr-2 mb-2">
-        <h2 class="body-1">Invites</h2>
+        <h2 class="body-1 pb-2">
+          <i class="fa fa-file pr-1" aria-hidden="true"></i> Invites
+        </h2>
         <v-divider></v-divider>
         <Grid view-name="contactInvites" content-name="Contacts" />
       </div>
       <div class="xs12 sm12 md12 boxview pa-4 mr-2 mb-2">
-        <h2 class="body-1">Emails</h2>
+        <h2 class="body-1 pb-2">
+          <i class="fa fa-envelope1 pr-1" aria-hidden="true"></i> Emails
+        </h2>
         <v-divider></v-divider>
         <Grid view-name="contactEmails" content-name="Contacts" />
       </div>
     </v-flex>
     <v-flex column xs12 sm4 md4 lg4>
       <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
-        <h2 class="body-1">Contact Information</h2>
+        <h2 class="body-1 pb-1">
+          <i class="fa fa-info-circle pr-1" aria-hidden="true"></i> Contact
+          Information
+        </h2>
         <v-divider></v-divider>
         <v-row>
           <v-col class="col-md-6 col-12">
@@ -128,7 +137,10 @@
       </div>
 
       <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
-        <h2 class="body-1">Address Information</h2>
+        <h2 class="body-1 pb-1">
+          <i class="fa fa-location pr-1" aria-hidden="true"></i> Address
+          Information
+        </h2>
         <v-divider></v-divider>
         <v-row>
           <v-col class="col-md-6 col-12">
