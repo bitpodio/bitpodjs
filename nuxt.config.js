@@ -93,6 +93,7 @@ export default {
       browserBaseURL: process.env.BROWSER_BASE_URL,
       backendBaseUrl: process.env.PUBLIC_DOMAIN,
     },
+  },
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
