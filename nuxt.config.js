@@ -5,6 +5,9 @@ export default {
    ** See https://nuxtjs.org/api/configuration-mode
    */
   mode: 'universal',
+  router: {
+    base: process.env.PUBLIC_PATH || '/'
+  },
   /*
    ** Nuxt target
    ** See https://nuxtjs.org/api/configuration-target
@@ -77,7 +80,9 @@ export default {
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
-  axios: {},
+  axios: {
+    baseURL: `https://${process.env.PUBLIC_DOMAIN}${process.env.PUBLIC_PATH}`
+  },
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
@@ -144,7 +149,7 @@ export default {
     redirect: {
       login: '/login',
       callback: '/callback',
-      home: '/event',
+      home: `${process.env.PUBLIC_PATH}/event`,
       logout: '/',
     },
     strategies: {
@@ -160,7 +165,7 @@ export default {
           process.env.BITPOD_AUTHORIZATION_ENDPOINT_URL ||
           'https://login.bitpod.io/auth/connect/authorize',
         endpoints: {
-          authorization: '/authorize?provider=bitpod',
+          authorization: `${process.env.PUBLIC_PATH}/authorize?provider=bitpod`,
           token: 'api/connect/token?provider=bitpod',
           userInfo: 'api/connect/userinfo?provider=bitpod',
         },
@@ -190,7 +195,7 @@ export default {
           process.env.GOOGLE_AUTHORIZATION_ENDPOINT_URL ||
           'https://accounts.google.com/o/oauth2/auth',
         endpoints: {
-          authorization: '/authorize?provider=google',
+          authorization: `${process.env.PUBLIC_PATH}/authorize?provider=google`,
           token: 'api/connect/token?provider=google',
           userInfo: 'api/connect/userinfo?provider=google',
         },
