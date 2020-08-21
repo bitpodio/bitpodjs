@@ -17,9 +17,24 @@ query ($filters: JSON, $where: JSON) {
                     createdDate 
                     createdBy 
                     modifiedDate 
-                }
+                    regType{ 
+                        Name 
+                    } 
+                    registration{
+                        id 
+                        FullName 
+                    }  
+                    attendeeTicket{
+                        id 
+                        Code
+                    } 
+                    __typename 
+                } 
+                __typename 
             } 
+            __typename 
         } 
         AttendeeCount(where: $where) 
+        __typename 
     } 
 }

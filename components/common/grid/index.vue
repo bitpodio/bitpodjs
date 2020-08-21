@@ -691,7 +691,8 @@ export default {
       },
       update(data) {
         const { content, viewName } = this
-        const modelName = content.general.name
+        const modelName =
+          getModelName(content, viewName) || content.general.name
         const tableData =
           Object.keys(data).length > 0
             ? {

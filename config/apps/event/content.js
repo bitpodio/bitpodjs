@@ -4,7 +4,13 @@ import discountCodes from './gql/discountCodes.gql'
 import eventList from './gql/eventlist.gql'
 import contactList from './gql/contactList.gql'
 import memberList from './gql/memberList.gql'
-// import eventAttendees from './gql/eventAttendees.gql'
+import eventAttendees from './gql/eventAttendees.gql'
+import eventInvites from './gql/eventInvites.gql'
+import eventTickets from './gql/eventTickets.gql'
+import eventDiscountCodes from './gql/eventDiscountCodes.gql'
+import eventSession from './gql/eventSession.gql'
+import eventTasks from './gql/eventTasks.gql'
+import eventRegistrationForm from './gql/eventRegistrationForm.gql'
 import { getData } from './rest'
 // import { getBPMNData } from './rest/bpmn.js'
 
@@ -356,7 +362,7 @@ export default (ctx) => ({
             columnWidth: '150px',
             type: 'string',
           },
-          RegisterBy: {
+          'registration.FullName': {
             displayOrder: 3,
             caption: 'Register By',
             searchEnable: true,
@@ -380,7 +386,7 @@ export default (ctx) => ({
             columnWidth: '150px',
             type: 'string',
           },
-          Ticket: {
+          'attendeeTicket.Code': {
             displayOrder: 6,
             caption: 'Ticket',
             searchEnable: true,
@@ -444,8 +450,15 @@ export default (ctx) => ({
           },
         },
         dataSource: {
-          type: 'rest',
-          getData: getData(`/Events/${ctx.$route.params.id}/Attende`),
+          query: eventAttendees,
+          defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          model: 'Attendee',
+          filter: {
+            where: {
+              EventId: ctx.$route.params.id,
+            },
+          },
         },
         title: 'eventAttendees',
         type: 'list',
@@ -534,8 +547,15 @@ export default (ctx) => ({
           },
         },
         dataSource: {
-          type: 'rest',
-          getData: getData(`/Events/${ctx.$route.params.id}/RegistrationList`),
+          query: registrationList,
+          defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          model: 'Registration',
+          filter: {
+            where: {
+              EventId: ctx.$route.params.id,
+            },
+          },
         },
         title: 'eventRegistrations',
         type: 'list',
@@ -552,7 +572,7 @@ export default (ctx) => ({
         },
         hidden: true,
         fields: {
-          ContactId: {
+          'getContact.FullName': {
             displayOrder: 2,
             caption: 'Name',
             searchEnable: true,
@@ -568,7 +588,7 @@ export default (ctx) => ({
             columnWidth: '150px',
             type: 'string',
           },
-          Email: {
+          'getContact.Email': {
             displayOrder: 4,
             caption: 'Email',
             searchEnable: true,
@@ -640,8 +660,15 @@ export default (ctx) => ({
           },
         },
         dataSource: {
-          type: 'rest',
-          getData: getData(`/Events/${ctx.$route.params.id}/invites`),
+          query: eventInvites,
+          defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          model: 'EmailAnalytic',
+          filter: {
+            where: {
+              EventId: ctx.$route.params.id,
+            },
+          },
         },
         title: 'eventInvites',
         type: 'list',
@@ -722,8 +749,15 @@ export default (ctx) => ({
           },
         },
         dataSource: {
-          type: 'rest',
-          getData: getData(`/Events/${ctx.$route.params.id}/getTickets`),
+          query: eventTickets,
+          defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          model: 'Ticket',
+          filter: {
+            where: {
+              Events: ctx.$route.params.id,
+            },
+          },
         },
         title: 'eventTickets',
         type: 'list',
@@ -780,8 +814,15 @@ export default (ctx) => ({
           },
         },
         dataSource: {
-          type: 'rest',
-          getData: getData(`/Events/${ctx.$route.params.id}/getOfferCode`),
+          query: eventDiscountCodes,
+          defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          model: 'OfferCode',
+          filter: {
+            where: {
+              EventId: ctx.$route.params.id,
+            },
+          },
         },
         title: 'eventDiscountCodes',
         type: 'list',
@@ -936,8 +977,15 @@ export default (ctx) => ({
           },
         },
         dataSource: {
-          type: 'rest',
-          getData: getData(`/Events/${ctx.$route.params.id}/getSession`),
+          query: eventSession,
+          defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          model: 'Session',
+          filter: {
+            where: {
+              EventId: ctx.$route.params.id,
+            },
+          },
         },
         title: 'eventSession',
         type: 'list',
@@ -1124,8 +1172,15 @@ export default (ctx) => ({
           },
         },
         dataSource: {
-          type: 'rest',
-          getData: getData(`/Events/${ctx.$route.params.id}/crmactivity`),
+          query: eventTasks,
+          defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          model: 'CRMActivity',
+          filter: {
+            where: {
+              EventId: ctx.$route.params.id,
+            },
+          },
         },
         title: 'eventTasks',
         type: 'list',
@@ -1198,8 +1253,13 @@ export default (ctx) => ({
           },
         },
         dataSource: {
-          type: 'rest',
-          getData: getData(`/Events/${ctx.$route.params.id}/RegistrationForm`),
+          query: eventRegistrationForm,
+          defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          model: 'RegistrationForm',
+          filter: {
+            where: {},
+          },
         },
         title: 'eventRegistrationForm',
         type: 'list',
@@ -1321,23 +1381,6 @@ export default (ctx) => ({
                 }
               },
             },
-            // template: {
-            //   name: 'issue-grid',
-            //   params: {
-            //     // eslint-disable-next-line no-template-curly-in-string
-            //     route: '/event',
-            //   },
-            // },
-            // items: [
-            //   {
-            //     text: 'Success Payment',
-            //     value: 'Success',
-            //   },
-            //   {
-            //     text: 'Pending Payment',
-            //     value: 'Pending',
-            //   },
-            // ],
           },
           RegistrationId: {
             displayOrder: 6,
@@ -1445,13 +1488,6 @@ export default (ctx) => ({
               },
             ],
           },
-          // Images: {
-          //   displayOrder: 1,
-          //   caption: 'Images',
-          //   hidden: true,
-          //   columnWidth: '150px',
-          //   type: 'file',
-          // },
         },
         template: {
           name: 'registration-grid',
@@ -1467,16 +1503,9 @@ export default (ctx) => ({
           filter: {
             where: {},
           },
-          // end of gql
-          // type: 'rest',
-          // getData: getData('Registration'),
         },
         title: 'Registrations',
         type: 'list',
-        // type: 'card',
-        // type: 'calendar',
-        // type: 'path',
-        // path: '/event-dashboard/abc'
       },
       'Abandoned Registrations': {
         ui: {
@@ -1540,23 +1569,6 @@ export default (ctx) => ({
                 }
               },
             },
-            // template: {
-            //   name: 'issue-grid',
-            //   params: {
-            //     // eslint-disable-next-line no-template-curly-in-string
-            //     route: '/event',
-            //   },
-            // },
-            // items: [
-            //   {
-            //     text: 'Success Payment',
-            //     value: 'Success',
-            //   },
-            //   {
-            //     text: 'Pending Payment',
-            //     value: 'Pending',
-            //   },
-            // ],
           },
           RegistrationId: {
             displayOrder: 6,
@@ -1664,13 +1676,6 @@ export default (ctx) => ({
               },
             ],
           },
-          // Images: {
-          //   displayOrder: 1,
-          //   caption: 'Images',
-          //   hidden: true,
-          //   columnWidth: '150px',
-          //   type: 'file',
-          // },
         },
         template: {
           name: 'registration-grid',
@@ -1686,16 +1691,9 @@ export default (ctx) => ({
           filter: {
             where: { Status: 'Failed' },
           },
-          // end of gql
-          // type: 'rest',
-          // getData: getData('Registration'),
         },
         title: 'Abandoned Registrations',
         type: 'list',
-        // type: 'card',
-        // type: 'calendar',
-        // type: 'path',
-        // path: '/event-dashboard/abc'
       },
       eventRegistrations: {
         ui: {
@@ -1760,23 +1758,6 @@ export default (ctx) => ({
                 }
               },
             },
-            // template: {
-            //   name: 'issue-grid',
-            //   params: {
-            //     // eslint-disable-next-line no-template-curly-in-string
-            //     route: '/event',
-            //   },
-            // },
-            // items: [
-            //   {
-            //     text: 'Success Payment',
-            //     value: 'Success',
-            //   },
-            //   {
-            //     text: 'Pending Payment',
-            //     value: 'Pending',
-            //   },
-            // ],
           },
           RegistrationId: {
             displayOrder: 6,
@@ -1884,13 +1865,6 @@ export default (ctx) => ({
               },
             ],
           },
-          // Images: {
-          //   displayOrder: 1,
-          //   caption: 'Images',
-          //   hidden: true,
-          //   columnWidth: '150px',
-          //   type: 'file',
-          // },
         },
         template: {
           name: 'registration-grid',
@@ -1908,16 +1882,9 @@ export default (ctx) => ({
               EventId: ctx.$route.params.id,
             },
           },
-          // end of gql
-          // type: 'rest',
-          // getData: getData('Registration'),
         },
         title: 'Registrations',
         type: 'list',
-        // type: 'card',
-        // type: 'calendar',
-        // type: 'path',
-        // path: '/event-dashboard/abc'
       },
       registrationSessions: {
         ui: {
@@ -1995,16 +1962,6 @@ export default (ctx) => ({
           },
         },
         dataSource: {
-          // query: registrationList,
-          // defaultSort: 'createdDate DESC',
-          // type: 'graphql',
-          // model: 'Registration',
-          // filter: {
-          //   where: {
-          //     EventId: ctx.$route.params.id,
-          //   },
-          // },
-          // end of gql
           type: 'rest',
           getData: getData(
             `/Registrations/${ctx.$route.params.id}/SessionListId`
@@ -2012,10 +1969,6 @@ export default (ctx) => ({
         },
         title: 'Sessions',
         type: 'list',
-        // type: 'card',
-        // type: 'calendar',
-        // type: 'path',
-        // path: '/event-dashboard/abc'
       },
       registrationAttendees: {
         ui: {
@@ -2101,13 +2054,6 @@ export default (ctx) => ({
           },
         },
         dataSource: {
-          // query: registrationAttendee,
-          // defaultSort: 'createdDate DESC',
-          // type: 'graphql',
-          // model: 'Attendee',
-          // filter: {
-          //   where: { RegistrationId: ctx.$route.params.id },
-          // },
           type: 'rest',
           getData: getData(`/Registrations/${ctx.$route.params.id}/attendee`),
         },
@@ -2451,7 +2397,7 @@ export default (ctx) => ({
           },
         },
         dataSource: {
-          query: discountCodes, // getItems('users'),
+          query: discountCodes,
           filter: {
             limit: '10',
             order: 'createdDate DESC',
@@ -2460,7 +2406,6 @@ export default (ctx) => ({
           },
           defaultSort: 'createdDate DESC',
           type: 'graphql',
-          // newItem: ,
         },
         ui: {
           hideDefaultHeader: false,
@@ -2558,7 +2503,7 @@ export default (ctx) => ({
           },
         },
         dataSource: {
-          query: discountCodes, // getItems('users'),
+          query: discountCodes,
           filter: {
             limit: '5',
             order: 'createdDate DESC',
@@ -2567,7 +2512,6 @@ export default (ctx) => ({
           },
           defaultSort: 'createdDate DESC',
           type: 'graphql',
-          // newItem: ,
         },
         ui: {
           hideDefaultHeader: false,
