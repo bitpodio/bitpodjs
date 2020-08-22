@@ -14,7 +14,7 @@ import eventRegistrationForm from './gql/eventRegistrationForm.gql'
 import { getData } from './rest'
 // import { getBPMNData } from './rest/bpmn.js'
 
-export default (ctx) => ({
+export default {
   Event: {
     Actions: {
       'Embeded Actions': '',
@@ -454,10 +454,12 @@ export default (ctx) => ({
           defaultSort: 'createdDate DESC',
           type: 'graphql',
           model: 'Attendee',
-          filter: {
-            where: {
-              EventId: ctx.$route.params.id,
-            },
+          filter(ctx) {
+            return {
+              where: {
+                EventId: ctx.$route.params.id,
+              },
+            }
           },
         },
         title: 'eventAttendees',
@@ -551,10 +553,12 @@ export default (ctx) => ({
           defaultSort: 'createdDate DESC',
           type: 'graphql',
           model: 'Registration',
-          filter: {
-            where: {
-              EventId: ctx.$route.params.id,
-            },
+          filter(ctx) {
+            return {
+              where: {
+                EventId: ctx.$route.params.id,
+              },
+            }
           },
         },
         title: 'eventRegistrations',
@@ -664,10 +668,12 @@ export default (ctx) => ({
           defaultSort: 'createdDate DESC',
           type: 'graphql',
           model: 'EmailAnalytic',
-          filter: {
-            where: {
-              EventId: ctx.$route.params.id,
-            },
+          filter(ctx) {
+            return {
+              where: {
+                EventId: ctx.$route.params.id,
+              },
+            }
           },
         },
         title: 'eventInvites',
@@ -753,10 +759,12 @@ export default (ctx) => ({
           defaultSort: 'createdDate DESC',
           type: 'graphql',
           model: 'Ticket',
-          filter: {
-            where: {
-              Events: ctx.$route.params.id,
-            },
+          filter(ctx) {
+            return {
+              where: {
+                Events: ctx.$route.params.id,
+              },
+            }
           },
         },
         title: 'eventTickets',
@@ -818,10 +826,12 @@ export default (ctx) => ({
           defaultSort: 'createdDate DESC',
           type: 'graphql',
           model: 'OfferCode',
-          filter: {
-            where: {
-              EventId: ctx.$route.params.id,
-            },
+          filter(ctx) {
+            return {
+              where: {
+                EventId: ctx.$route.params.id,
+              },
+            }
           },
         },
         title: 'eventDiscountCodes',
@@ -888,7 +898,7 @@ export default (ctx) => ({
         },
         dataSource: {
           type: 'rest',
-          getData: getData(`/Events/${ctx.$route.params.id}/Survey`),
+          getData: (ctx) => getData(`/Events/${ctx.$route.params.id}/Survey`),
         },
         title: 'eventRegistrationQuestion',
         type: 'list',
@@ -981,10 +991,12 @@ export default (ctx) => ({
           defaultSort: 'createdDate DESC',
           type: 'graphql',
           model: 'Session',
-          filter: {
-            where: {
-              EventId: ctx.$route.params.id,
-            },
+          filter(ctx) {
+            return {
+              where: {
+                EventId: ctx.$route.params.id,
+              },
+            }
           },
         },
         title: 'eventSession',
@@ -1067,7 +1079,8 @@ export default (ctx) => ({
         },
         dataSource: {
           type: 'rest',
-          getData: getData(`/Events/${ctx.$route.params.id}/EventSpeakers`),
+          getData: (ctx) =>
+            getData(`/Events/${ctx.$route.params.id}/EventSpeakers`),
         },
         title: 'eventSpeakers',
         type: 'list',
@@ -1176,10 +1189,12 @@ export default (ctx) => ({
           defaultSort: 'createdDate DESC',
           type: 'graphql',
           model: 'CRMActivity',
-          filter: {
-            where: {
-              EventId: ctx.$route.params.id,
-            },
+          filter(ctx) {
+            return {
+              where: {
+                EventId: ctx.$route.params.id,
+              },
+            }
           },
         },
         title: 'eventTasks',
@@ -1874,10 +1889,12 @@ export default (ctx) => ({
           defaultSort: 'createdDate DESC',
           type: 'graphql',
           model: 'Registration',
-          filter: {
-            where: {
-              EventId: ctx.$route.params.id,
-            },
+          filter(ctx) {
+            return {
+              where: {
+                EventId: ctx.$route.params.id,
+              },
+            }
           },
         },
         title: 'Registrations',
@@ -1960,9 +1977,8 @@ export default (ctx) => ({
         },
         dataSource: {
           type: 'rest',
-          getData: getData(
-            `/Registrations/${ctx.$route.params.id}/SessionListId`
-          ),
+          getData: (ctx) =>
+            getData(`/Registrations/${ctx.$route.params.id}/SessionListId`),
         },
         title: 'Sessions',
         type: 'list',
@@ -2052,7 +2068,8 @@ export default (ctx) => ({
         },
         dataSource: {
           type: 'rest',
-          getData: getData(`/Registrations/${ctx.$route.params.id}/attendee`),
+          getData: (ctx) =>
+            getData(`/Registrations/${ctx.$route.params.id}/attendee`),
         },
         title: 'Registrations',
         type: 'list',
@@ -2137,9 +2154,8 @@ export default (ctx) => ({
         },
         dataSource: {
           type: 'rest',
-          getData: getData(
-            `/Registrations/${ctx.$route.params.id}/SessionListId`
-          ),
+          getData: (ctx) =>
+            getData(`/Registrations/${ctx.$route.params.id}/SessionListId`),
         },
         title: 'Emails',
         type: 'list',
@@ -2997,9 +3013,8 @@ export default (ctx) => ({
         },
         dataSource: {
           type: 'rest',
-          getData: getData(
-            `/Registrations/${ctx.$route.params.id}/SessionListId`
-          ),
+          getData: (ctx) =>
+            getData(`/Registrations/${ctx.$route.params.id}/SessionListId`),
         },
         title: 'Sessions',
         type: 'list',
@@ -3095,13 +3110,12 @@ export default (ctx) => ({
         },
         dataSource: {
           type: 'rest',
-          getData: getData(
-            `/Registrations/${ctx.$route.params.id}/SessionListId`
-          ),
+          getData: (ctx) =>
+            getData(`/Registrations/${ctx.$route.params.id}/SessionListId`),
         },
         title: 'Invites',
         type: 'list',
       },
     },
   },
-})
+}

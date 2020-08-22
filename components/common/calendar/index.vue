@@ -55,7 +55,7 @@
 
 <script>
 import gql from 'graphql-tag'
-import { getContentByName, getViewQuery } from '~/utility'
+import { getViewQuery } from '~/utility'
 import { formatGQLResult } from '~/utility/gql.js'
 
 export default {
@@ -64,15 +64,13 @@ export default {
       type: String,
       required: true,
     },
-    contentName: {
-      type: String,
+    content: {
+      type: Object,
       required: true,
     },
   },
   data() {
-    const content = getContentByName(this, this.contentName)
     return {
-      content,
       type: 'month',
       types: ['month', 'week', 'day', '4day'],
       mode: 'stack',
