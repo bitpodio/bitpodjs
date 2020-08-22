@@ -74,21 +74,22 @@
           >
         </v-flex>
       </div>
-      <div class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
+      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
         <h2 class="body-1 pb-2">
           <i class="fa fa-black-board pr-1" aria-hidden="true"></i> Sessions
         </h2>
         <v-divider></v-divider>
+        <!-- <Grid view-name="registrationSessions" :content="content" :filter="filter" /> -->
         <Grid view-name="registrationSessions" :content="content" />
       </div>
-      <div class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
+      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
         <h2 class="body-1 pb-2">
           <i class="fa fa-user-plus pr-1" aria-hidden="true"></i>Attendees
         </h2>
         <v-divider></v-divider>
         <Grid view-name="registrationAttendees" :content="content" />
       </div>
-      <div class="xs12 sm12 md12 boxview pa-4 mr-2 mb-2">
+      <div v-if="content" class="xs12 sm12 md12 boxview pa-4 mr-2 mb-2">
         <h2 class="body-1 pb-2">
           <i class="fa fa-envelope1 pr-1" aria-hidden="true"></i> Emails
         </h2>
@@ -210,6 +211,18 @@ export default {
         registration: {},
       },
     }
+  },
+  computed: {
+    content() {
+      return this.contents ? this.contents.Registrations : null
+    },
+    // filter() {
+    //   return {
+    //     where: {
+    //       Email: this.contact.Email,
+    //     },
+    //   }
+    // },
   },
   methods: {
     formatDate(date) {
