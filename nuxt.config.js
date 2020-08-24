@@ -150,7 +150,7 @@ export default {
     redirect: {
       login: '/login',
       callback: '/callback',
-      home: `${basePath}/event`,
+      home: `${basePath}/apps/event/list/Event/All Events`,
       logout: '/',
     },
     strategies: {
