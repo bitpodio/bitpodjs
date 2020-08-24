@@ -1886,9 +1886,6 @@ export default {
               },
             }
           },
-          // type: 'rest',
-          // getData: (ctx) =>
-          //   getData(`/Registrations/${ctx.$route.params.id}/attendee`),
         },
         title: 'Registrations',
         type: 'list',
@@ -1988,9 +1985,6 @@ export default {
               },
             }
           },
-          // type: 'rest',
-          // getData: (ctx) =>
-          //   getData(`/Registrations/${ctx.$route.params.id}/SessionListId`),
         },
         title: 'Emails',
         type: 'list',
@@ -2080,7 +2074,7 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '120px',
-            // type: 'string',
+            type: 'string',
           },
           validTill: {
             displayOrder: 7,
@@ -2096,7 +2090,7 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '180px',
-            // type: 'number',
+            type: 'number',
           },
           offerValue: {
             displayOrder: 5,
@@ -2104,7 +2098,7 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '130px',
-            // type: 'string',
+            type: 'string',
           },
           minApplicableOrderAmount: {
             displayOrder: 6,
@@ -2112,7 +2106,7 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '220px',
-            // type: 'number',
+            type: 'number',
           },
           createdDate: {
             displayOrder: 10,
@@ -2128,7 +2122,7 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '130px',
-            // type: 'string',
+            type: 'string',
           },
         },
         template: {
@@ -2378,7 +2372,10 @@ export default {
           },
         },
         template: {
-          name: 'link-grid',
+          name: '',
+          context: {
+            basePath: '/contacts',
+          },
         },
         dataSource: {
           query: memberList,
@@ -2787,6 +2784,7 @@ export default {
             type: 'string',
           },
         },
+        hidden: true,
         template: {
           name: 'link-grid',
           context: {
@@ -2805,10 +2803,6 @@ export default {
               },
             }
           },
-          // type: 'rest',
-          // getData: getData(
-          //   `/Registrations/${ctx.$route.params.id}/SessionListId`
-          // ),
         },
         title: 'Invites',
         type: 'list',
@@ -2823,6 +2817,7 @@ export default {
           hideFilter: false,
           hideSearch: true,
         },
+        hidden: true,
         fields: {
           Title: {
             displayOrder: 2,
@@ -2891,10 +2886,6 @@ export default {
               },
             }
           },
-          // type: 'rest',
-          // getData: getData(
-          //   `/Registrations/${ctx.$route.params.id}/SessionListId`
-          // ),
         },
         title: 'contactEmails',
         type: 'list',

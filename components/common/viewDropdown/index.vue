@@ -28,7 +28,7 @@ function getViewPath(viewKey, view, contentName) {
       break
     case 'card':
     case 'list':
-      path = `/${type}/${contentName}/${viewKey}`
+      path = `${viewKey}`
       break
   }
   return path
