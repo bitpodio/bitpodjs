@@ -156,16 +156,16 @@
 
 <script>
 export default {
-  data() {
-    return {
-      tabs: null,
-    }
-  },
   props: {
     // eslint-disable-next-line vue/require-prop-types
     sitesetting: {
       default: false,
     },
+  },
+  data() {
+    return {
+      tabs: null,
+    }
   },
   methods: {
     close() {

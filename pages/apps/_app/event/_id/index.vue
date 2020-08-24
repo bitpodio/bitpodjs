@@ -308,9 +308,15 @@
       </div>
 
       <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
-        <h2 class="body-1 pb-1">
-          <i class="fa fa-id-badge pr-1" aria-hidden="true"></i> Badge
-        </h2>
+        <v-flex class="d-flex justify-center align-center pb-2">
+          <h2 class="body-1 pb-1">
+            <i class="fa fa-id-badge pr-1" aria-hidden="true"></i> Badge
+          </h2>
+          <v-spacer></v-spacer>
+          <v-btn text small @click="newbadge = true">
+            <v-icon left>mdi-plus</v-icon>Create
+          </v-btn>
+        </v-flex>
         <v-divider></v-divider>
         <v-flex my-3 d-flex justify-center align-center>
           <div v-html="data.badge.Template" />
@@ -492,6 +498,7 @@
     <editSeoForm :seoform.sync="seoform" />
     <editEventSetting :eventsetting.sync="eventsetting" />
     <editSiteSetting :sitesetting.sync="sitesetting" />
+    <newBadgeForm :newbadge.sync="newbadge" />
   </v-flex>
 </template>
 <script>
@@ -502,6 +509,7 @@ import editSeoForm from './editSeoForm.vue'
 import editEventForm from './editEventForm.vue'
 import editEventSetting from './editEventSetting.vue'
 import editSiteSetting from './editSiteSetting.vue'
+import newBadgeForm from './newBadgeForm.vue'
 import Grid from '~/components/common/grid'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
@@ -514,6 +522,7 @@ export default {
     editEventForm,
     editEventSetting,
     editSiteSetting,
+    newBadgeForm,
   },
   mixins: [configLoaderMixin],
   data() {
@@ -523,6 +532,7 @@ export default {
       seoform: false,
       eventsetting: false,
       sitesetting: false,
+      newbadge: false,
       data: {
         event: {},
         badge: {},
