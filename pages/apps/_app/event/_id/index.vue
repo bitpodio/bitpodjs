@@ -439,10 +439,16 @@
       </div>
 
       <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
-        <h2 class="body-1 pb-1">
-          <i class="fa fa-settings pr-1" aria-hidden="true"></i>
-          Registration Page Settings
-        </h2>
+        <v-flex class="d-flex justify-center align-center pb-2">
+          <h2 class="body-1 pb-1">
+            <i class="fa fa-settings pr-1" aria-hidden="true"></i>
+            Registration Page Settings
+          </h2>
+          <v-spacer></v-spacer>
+          <v-btn text small @click="sitesetting = true">
+            <v-icon left>mdi-pencil</v-icon>Edit
+          </v-btn>
+        </v-flex>
         <v-divider></v-divider>
         <v-flex my-3>
           <div class="body-2 text--secondary">Registration Site Template</div>
@@ -485,6 +491,7 @@
     <editEventForm :eventform.sync="eventform" />
     <editSeoForm :seoform.sync="seoform" />
     <editEventSetting :eventsetting.sync="eventsetting" />
+    <editSiteSetting :sitesetting.sync="sitesetting" />
   </v-flex>
 </template>
 <script>
@@ -494,6 +501,7 @@ import format from 'date-fns/format'
 import editSeoForm from './editSeoForm.vue'
 import editEventForm from './editEventForm.vue'
 import editEventSetting from './editEventSetting.vue'
+import editSiteSetting from './editSiteSetting.vue'
 import Grid from '~/components/common/grid'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
@@ -505,6 +513,7 @@ export default {
     editSeoForm,
     editEventForm,
     editEventSetting,
+    editSiteSetting,
   },
   mixins: [configLoaderMixin],
   data() {
@@ -513,6 +522,7 @@ export default {
       eventform: false,
       seoform: false,
       eventsetting: false,
+      sitesetting: false,
       data: {
         event: {},
         badge: {},
