@@ -280,7 +280,7 @@
             Information
           </h2>
           <v-spacer></v-spacer>
-          <v-btn text small @click.stop="dialog1 = true">
+          <v-btn text small @click.stop="eventform = true">
             <v-icon left>mdi-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
@@ -323,7 +323,7 @@
             <i class="fa fa-tag pr-1" aria-hidden="true"></i> SEO Details
           </h2>
           <v-spacer></v-spacer>
-          <v-btn text small @click="formdialog = !formdialog">
+          <v-btn text small @click="seoform = true">
             <v-icon left>mdi-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
@@ -345,9 +345,16 @@
       </div>
 
       <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
-        <h2 class="body-1 pb-1">
-          <i class="fa fa-settings pr-1" aria-hidden="true"></i> Event Settings
-        </h2>
+        <v-flex class="d-flex justify-center align-center pb-2">
+          <h2 class="body-1 pb-1">
+            <i class="fa fa-settings pr-1" aria-hidden="true"></i> Event
+            Settings
+          </h2>
+          <v-spacer></v-spacer>
+          <v-btn text small @click="eventsetting = true">
+            <v-icon left>mdi-pencil</v-icon>Edit
+          </v-btn>
+        </v-flex>
         <v-divider></v-divider>
         <v-flex my-3>
           <div class="body-2 text--secondary">Privacy</div>
@@ -475,22 +482,18 @@
         </v-flex>
       </div>
     </v-flex>
-    <div><editSeoForm /></div>
-    <!-- <v-dialog
-      v-model="dialog1"
-      persistent
-      content-class="slide-form-default"
-      transition="dialog-bottom-transition"
-    >
-      <editEventForm />
-    </v-dialog> -->
+    <editEventForm :eventform.sync="eventform" />
+    <editSeoForm :seoform.sync="seoform" />
+    <editEventSetting :eventsetting.sync="eventsetting" />
   </v-flex>
 </template>
 <script>
 import gql from 'graphql-tag'
 import format from 'date-fns/format'
+// import editSeoForm from './editSeoForm.vue'
 import editSeoForm from './editSeoForm.vue'
-// import editEventForm from './editEventForm.vue'
+import editEventForm from './editEventForm.vue'
+import editEventSetting from './editEventSetting.vue'
 import Grid from '~/components/common/grid'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
@@ -500,16 +503,16 @@ export default {
   components: {
     Grid,
     editSeoForm,
-    // editEventForm,
+    editEventForm,
+    editEventSetting,
   },
   mixins: [configLoaderMixin],
   data() {
     return {
       loading: 0,
-      formdialog: false,
-      dialog1: false,
-      showScheduleForm: false,
-      editeventform: false,
+      eventform: false,
+      seoform: false,
+      eventsetting: false,
       data: {
         event: {},
         badge: {},
