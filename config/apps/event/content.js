@@ -842,49 +842,31 @@ export default (ctx) => ({
           //   type: 'file',
           // },
         },
+        ui: {
+          hideDefaultHeader: false,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: true,
+          hideFilter: false,
+          hideSearch: true,
+        },
         inlineEditing: true,
         DdialogEditing: true,
         Query: '',
         QueryType: 'axios',
         Title: 'All Events',
+        template: {
+          name: 'link-grid',
+          context: {
+            basePath: '/event',
+          },
+        },
         dataSource: {
           query: eventList,
-          filter: {
-            where: {
-              or: [
-                {
-                  and: [
-                    {
-                      or: [
-                        { StartDate: { lte: new Date() } },
-                        { StartDate: { gte: new Date() } },
-                        { StartDate: { exists: false } },
-                        { StartDate: null },
-                        // { userId: }
-                      ],
-                    },
-                    {
-                      or: [
-                        { StartDate: { gte: new Date() } },
-                        {
-                          StartDate: {
-                            exists: false,
-                          },
-                        },
-                        {
-                          StartDate: null,
-                        },
-                      ],
-                    },
-                  ],
-                },
-                {
-                  Status: 'Not ready',
-                },
-              ],
-            },
-          },
           defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          model: 'Event',
         },
       },
       Event: {
