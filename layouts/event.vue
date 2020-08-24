@@ -9,7 +9,7 @@
             width="30"
           ></v-img>
         </span>
-        <span d-inline-flex align-center class="mx-2">Event</span>
+        <span d-inline-flex align-center class="mx-2">Event Layout</span>
       </v-toolbar-title>
       <div class="text-center">
         <v-menu>
@@ -426,29 +426,29 @@ export default {
       {
         icon: 'mdi-calendar-text',
         text: 'Events',
-        to: '/event/list/Event/All Events',
+        to: '/apps/event/list/Event/All Events',
       },
       {
         icon: 'mdi-account-plus',
         text: 'Registrations',
-        to: '/event/list/Registrations/Registrations',
+        to: '/apps/event/list/Registrations/Registrations',
       },
       { heading: 'Promotions' },
       {
         icon: 'mdi-cog',
         text: 'Discount Code',
-        to: '/list/DiscountCodes/Discount Codes',
+        to: '/apps/event/list/DiscountCodes/Discount Codes',
       },
       { heading: 'Members' },
       {
         icon: 'mdi-account-multiple-outline',
         text: 'Members',
-        to: '/list/EventCustomers/Members',
+        to: '/apps/event/list/EventCustomers/Members',
       },
       {
         icon: 'mdi-account-box-outline',
         text: 'Contacts',
-        to: '/list/Contacts/Contacts',
+        to: '/apps/event/list/Contacts/Contacts',
       },
       { heading: 'Task' },
       { icon: 'mdi-cellphone-link', text: 'My Task', to: '' },
