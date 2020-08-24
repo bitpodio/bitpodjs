@@ -15,7 +15,7 @@
             Sign in with Bitpod
           </v-btn>
           <v-flex justify-center align-center d-flex class="ma-2">or</v-flex>
-          <v-btn class="ma-2" tile outlined x-large>
+          <v-btn class="ma-2" tile outlined x-large @click="loginGoogle">
             <v-avatar>
               <img
                 src="https://res.cloudinary.com/mytestlogo/platformbar/google.png"
@@ -36,6 +36,9 @@ export default {
   components: {},
   middleware: ['auth'],
   methods: {
+    async loginGoogle() {
+      return await this.$auth.loginWith('google')
+    },
     async loginBitpod() {
       return await this.$auth.loginWith('bitpod')
     },

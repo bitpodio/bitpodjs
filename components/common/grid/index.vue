@@ -91,7 +91,6 @@
             :context="context"
             :items="tableData.items"
             :content="content"
-            type="number"
           />
         </template>
         <template v-if="!!slotTemplates.item" v-slot:item="props">
@@ -116,6 +115,7 @@
             :value="props.value"
             :context="context"
             :items="tableData.items"
+            :column="column"
             :content="content"
           />
         </template>
@@ -172,7 +172,7 @@ import endOfYesterday from 'date-fns/endOfYesterday'
 import startOfDay from 'date-fns/startOfDay'
 import endOfDay from 'date-fns/endOfDay'
 import FieldsFilter from './FieldsFilter.vue'
-import { templateLoaderMixin, getContentByName } from '~/utility'
+import { templateLoaderMixin } from '~/utility'
 
 const DEFAULT_GRID_PROPS = {
   hideDefaultHeader: false,
@@ -198,10 +198,12 @@ function getTableHeader(content, viewName) {
       columnWidth,
       template,
       hidden = false,
+      type,
     } = fields[fieldName]
     if (!hidden) {
       headers.push({
         text: caption,
+        type,
         value: fieldName,
         sortable: sortEnable,
         width: columnWidth,
@@ -388,16 +390,19 @@ function getOperatorQuery(field, operator, value) {
   return ruleFilter
 }
 
+function computeViewFilter(filter, ctx) {
+  return filter && (filter instanceof Function ? filter.call(ctx, ctx) : filter)
+}
+
 function buildQueryVariables({
   viewName,
   search,
   filters,
   filter,
-  contentName,
+  content,
   ctx,
 }) {
   const { rules: filterRules, ruleCondition } = filters
-  const content = getContentByName(ctx, contentName)
   const and = []
   const condition = []
   for (const rule of filterRules) {
@@ -413,7 +418,8 @@ function buildQueryVariables({
     and.push(serachQuery)
   }
   const viewDataSource = getViewDataSource(content, viewName)
-  const contentFilter = filter || viewDataSource.filter
+  const contentFilter = filter || computeViewFilter(viewDataSource.filter, ctx)
+
   if (contentFilter) {
     and.push(contentFilter.where)
   }
@@ -465,17 +471,15 @@ export default {
       type: Object,
       default: () => null,
     },
-    contentName: {
-      type: String,
+    content: {
+      type: Object,
       required: true,
     },
   },
   data() {
-    const content = getContentByName(this, this.contentName)
-    const headers = getTableHeader(content, this.viewName)
-    const gridProps = getGridsProps(content, this.viewName)
+    const headers = getTableHeader(this.content, this.viewName)
+    const gridProps = getGridsProps(this.content, this.viewName)
     return {
-      content,
       singleSelect: false,
       headers,
       tableData: {
@@ -654,7 +658,8 @@ export default {
           search,
           filters,
         }
-        this.tableData = await dataSource.getData.call(this, options)
+        const getDataFunc = dataSource.getData.call(this, this)
+        this.tableData = await getDataFunc.call(this, options)
       }
     },
   },
@@ -666,7 +671,7 @@ export default {
         `
       },
       variables() {
-        const { content, viewName, search, filters, contentName } = this
+        const { content, viewName, search, filters } = this
         const sortBy = this.options.sortBy
         const sortDesc = this.options.sortDesc
         const order = getOrderQuery(content, viewName, sortBy, sortDesc)
@@ -675,7 +680,7 @@ export default {
           search,
           filters,
           filter: this.filter,
-          contentName,
+          content,
           ctx: this,
         })
         const page = this.options.page || 1
@@ -689,7 +694,8 @@ export default {
       },
       update(data) {
         const { content, viewName } = this
-        const modelName = content.general.name
+        const modelName =
+          getModelName(content, viewName) || content.general.name
         const tableData =
           Object.keys(data).length > 0
             ? {

@@ -1,4 +1,5 @@
 import qs from 'querystring'
+import nuxtconfig from '../nuxt.config'
 export default function (req, res, next) {
   const query = qs.parse(req.url.substring(2))
   if (!query.cbVerified) {
@@ -18,7 +19,9 @@ export default function (req, res, next) {
       query.cbVerified = true
       query.state = oldState
       res.writeHead(301, {
-        Location: `http://${host}/callback?${qs.encode(query)}`,
+        Location: `http://${host}${nuxtconfig.router.base}callback?${qs.encode(
+          query
+        )}`,
       })
       return res.end()
     }

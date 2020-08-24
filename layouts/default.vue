@@ -373,12 +373,7 @@
 
             <v-list>
               <v-list-item class="text-center justify-center">
-                <v-btn
-                  class="ma-2"
-                  outlined
-                  color="primary"
-                  @click="$auth.logout()"
-                >
+                <v-btn class="ma-2" outlined color="primary" @click="onLogout">
                   Logout
                 </v-btn>
               </v-list-item>
@@ -428,11 +423,15 @@ export default {
     items: [
       { icon: 'mdi-view-dashboard', text: 'Eventboard', to: '/' },
       { heading: 'Event' },
-      { icon: 'mdi-calendar-text', text: 'Events', to: '/flat/tiles' },
+      {
+        icon: 'mdi-calendar-text',
+        text: 'Events',
+        to: '/event/list/Event/All Events',
+      },
       {
         icon: 'mdi-account-plus',
-        text: 'Registarions',
-        to: '/list/Registrations/Registrations',
+        text: 'Registrations',
+        to: '/event/list/Registrations/Registrations',
       },
       { heading: 'Promotions' },
       {
@@ -455,9 +454,19 @@ export default {
       { icon: 'mdi-cellphone-link', text: 'My Task', to: '' },
     ],
   }),
+  async created() {
+    if (!this.$apolloHelpers.getToken()) {
+      let token = this.$auth.strategy.token.get()
+      if (token) {
+        token = token.split(' ')[1]
+      }
+      await this.$apolloHelpers.onLogin(token, undefined, { expires: 7 })
+    }
+  },
   methods: {
-    method() {
-      // Perform an action
+    async onLogout() {
+      this.$auth.logout()
+      await this.$apolloHelpers.onLogout()
     },
   },
 }

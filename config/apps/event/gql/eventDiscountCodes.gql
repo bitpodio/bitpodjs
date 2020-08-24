@@ -1,0 +1,26 @@
+query ($filters: JSON, $where: JSON) { 
+    OfferCode{ 
+        OfferCodeFind(filter: $filters) { 
+            edges { 
+                node { 
+                    id 
+                    codeTitle 
+                    offerValue 
+                    hasValidity 
+                    validTill 
+                    isActive 
+                    isMaxOfferValueCheck 
+                    isPercent 
+                    createdDate 
+                    createdBy 
+                    modifiedDate 
+                    __typename 
+                } 
+                __typename 
+            }
+        __typename 
+        } 
+        OfferCodeCount(where: $where) 
+        __typename
+    } 
+}

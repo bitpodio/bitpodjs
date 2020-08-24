@@ -1,5 +1,4 @@
 import MissingComponent from './missing-component.vue'
-import contentFactory from '~/config/apps/event/content'
 
 export function importTemplate(templatePath) {
   return () => import(`~/config/${templatePath}`)
@@ -94,15 +93,8 @@ export const formValidationMixin = {
   },
 }
 
-export function formatResult(data, modelName) {
-  if (!data[modelName]) return []
-  let { edges } = data[modelName][`${modelName}Find`]
-  edges = edges.map(({ node }) => node)
-  return edges
-}
-
 export function getContentByName(ctx, contentName) {
-  const contents = contentFactory(ctx)
+  const contents = ctx.contentFactory(ctx)
   return contents[contentName]
 }
 
@@ -113,4 +105,21 @@ function getViewDataSource(content, viewName) {
 
 export function getViewQuery(content, viewName) {
   return getViewDataSource(content, viewName).query
+}
+
+export const configLoaderMixin = {
+  layout(context) {
+    return context.route.params.app || 'default'
+  },
+  data() {
+    return {
+      contents: null,
+    }
+  },
+  async mounted() {
+    const contentFactory = await import(
+      `~/config/apps/${this.$route.params.app}/content`
+    )
+    this.contents = contentFactory.default
+  },
 }

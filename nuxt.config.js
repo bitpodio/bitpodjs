@@ -1,10 +1,14 @@
 import colors from 'vuetify/es5/util/colors'
+const basePath = process.env.PUBLIC_PATH || ''
 export default {
   /*
    ** Nuxt rendering mode
    ** See https://nuxtjs.org/api/configuration-mode
    */
   mode: 'universal',
+  router: {
+    base: basePath || '/',
+  },
   /*
    ** Nuxt target
    ** See https://nuxtjs.org/api/configuration-target
@@ -77,7 +81,9 @@ export default {
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
-  axios: {},
+  axios: {
+    baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
+  },
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
@@ -146,25 +152,25 @@ export default {
     redirect: {
       login: '/login',
       callback: '/callback',
-      home: '/event',
+      home: `${basePath}/apps/event/list/Event/All Events`,
       logout: '/',
     },
     strategies: {
       bitpod: {
         scheme: 'oauth2',
-        bitpodTokenEndPointUrl:
+        tokenEndPointUrl:
           process.env.BITPOD_TOKEN_ENDPOINT_URL ||
           'https://login.bitpod.io/auth/connect/token',
-        bitpodUserInfoEndPointUrl:
+        userInfoEndPointUrl:
           process.env.BITPOD__USERINFO_ENDPOINT_URL ||
           'https://login.bitpod.io/auth/connect/userinfo',
         authorization:
-          process.env.AUTHORIZATION_ENDPOINT_URL ||
+          process.env.BITPOD_AUTHORIZATION_ENDPOINT_URL ||
           'https://login.bitpod.io/auth/connect/authorize',
         endpoints: {
-          authorization: '/authorize',
-          token: 'api/connect/token',
-          userInfo: 'api/connect/userinfo',
+          authorization: `${basePath}/authorize?provider=bitpod`,
+          token: 'api/connect/token?provider=bitpod',
+          userInfo: 'api/connect/userinfo?provider=bitpod',
         },
         responseType: 'code',
         grantType: 'authorization_code',
@@ -180,7 +186,40 @@ export default {
         tokenKey: 'access_token',
         refreshTokenKey: 'refresh_token',
       },
+      google: {
+        scheme: 'oauth2',
+        tokenEndPointUrl:
+          process.env.GOOGLE_TOKEN_ENDPOINT_URL ||
+          'https://oauth2.googleapis.com/token',
+        userInfoEndPointUrl:
+          process.env.GOOGLE__USERINFO_ENDPOINT_URL ||
+          'https://oauth2.googleapis.com/tokeninfo',
+        authorization:
+          process.env.GOOGLE_AUTHORIZATION_ENDPOINT_URL ||
+          'https://accounts.google.com/o/oauth2/auth',
+        endpoints: {
+          authorization: `${basePath}/authorize?provider=google`,
+          token: 'api/connect/token?provider=google',
+          userInfo: 'api/connect/userinfo?provider=google',
+        },
+        accessType: 'offline',
+        prompt: 'consent',
+        responseType: 'code',
+        grantType: 'authorization_code',
+        redirectUri:
+          process.env.REDIRECT_URI || 'http://localhost:3000/callback',
+        scope: ['openid', 'profile', 'email'],
+        clientId:
+          process.env.GOOGLE_EVENT_CLIENTID ||
+          `49928390950-pmu4l73fu6mpcim2gdnerqf62k6oppqt.apps.googleusercontent.com`,
+        clientSecret:
+          process.env.GOOGLE_EVENT_CLIENTSECRET || `2lhT6LeqTR1sx5pxyPLZoA0_`,
+        tokenType: 'Bearer',
+        tokenKey: 'access_token',
+        refreshTokenKey: 'refresh_token',
+        codeChallengeMethod: '',
+      },
     },
+    devtools: true,
   },
-  devtools: true,
 }

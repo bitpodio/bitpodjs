@@ -28,7 +28,7 @@ function getViewPath(viewKey, view, contentName) {
       break
     case 'card':
     case 'list':
-      path = `/${type}/${contentName}/${viewKey}`
+      path = `${viewKey}`
       break
   }
   return path
@@ -38,7 +38,7 @@ function getContentViews(content, contentName) {
   const views = content.views
   const viewList = []
   for (const [viewKey, view] of Object.entries(views)) {
-    if (view.visible !== false) {
+    if (view.hidden !== true) {
       viewList.push({
         caption: view.title,
         value: viewKey,
