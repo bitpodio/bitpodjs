@@ -5,11 +5,12 @@
 </template>
 
 <script>
+debugger
 export default {
   props: ['item', 'value', 'context'],
   computed: {
     route() {
-      return `${this.context.basePath}/${this.item.id}`
+      return `/apps/event${this.context.basePath}/${this.item.id}`
     },
   },
 }

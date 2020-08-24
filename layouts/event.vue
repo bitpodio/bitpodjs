@@ -437,18 +437,18 @@ export default {
       {
         icon: 'mdi-cog',
         text: 'Discount Code',
-        to: '/apps/list/DiscountCodes/Discount Codes',
+        to: '/apps/event/list/DiscountCodes/Discount Codes',
       },
       { heading: 'Members' },
       {
         icon: 'mdi-account-multiple-outline',
         text: 'Members',
-        to: '/apps/list/EventCustomers/Members',
+        to: '/apps/event/list/EventCustomers/Members',
       },
       {
         icon: 'mdi-account-box-outline',
         text: 'Contacts',
-        to: '/event/list/Contacts/Contacts',
+        to: '/apps/event/list/Contacts/Contacts',
       },
       { heading: 'Task' },
       { icon: 'mdi-cellphone-link', text: 'My Task', to: '' },
