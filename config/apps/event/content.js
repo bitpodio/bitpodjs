@@ -658,7 +658,7 @@ export default {
           },
         },
         template: {
-          name: 'link-grid',
+          name: 'event-grid',
           context: {
             basePath: '/event',
           },
@@ -2786,7 +2786,7 @@ export default {
         },
         hidden: true,
         template: {
-          name: 'link-grid',
+          name: 'contact-grid',
           context: {
             basePath: '/contact',
           },
