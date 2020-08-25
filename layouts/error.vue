@@ -13,9 +13,8 @@
 </template>
 
 <script>
-import { configLoaderMixin } from '~/utility'
 export default {
-  mixins: [configLoaderMixin],
+  layout: 'event',
   props: {
     error: {
       type: Object,

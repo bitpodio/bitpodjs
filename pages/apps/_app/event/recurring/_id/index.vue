@@ -262,7 +262,8 @@
         <v-flex my-3>
           <div class="body-2 text--secondary">Description</div>
           <div class="body-1">
-            {{ formatField(data.event.Description) }}
+            {
+            <div v-html="formatField(data.event.Description)" />
           </div>
         </v-flex>
       </div>
@@ -442,19 +443,13 @@
         </v-flex>
       </div>
     </v-flex>
-    <!-- <editEventForm :eventform.sync="eventform" />
     <editSeoForm :seoform.sync="seoform" />
-    <editEventSetting :eventsetting.sync="eventsetting" />
-    <editSiteSetting :sitesetting.sync="sitesetting" /> -->
   </v-flex>
 </template>
 <script>
 import gql from 'graphql-tag'
 import format from 'date-fns/format'
-// import editSeoForm from '../event/editSeoForm.vue'
-// import editEventForm from '../editEventForm.vue'
-// import editEventSetting from '../editEventSetting.vue'
-// import editSiteSetting from '../editSiteSetting.vue'
+import editSeoForm from '~/pages/apps/_app/event/_id/editSeoForm.vue'
 import Grid from '~/components/common/grid'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
@@ -464,10 +459,7 @@ export default {
   layout: 'event',
   components: {
     Grid,
-    // editSeoForm,
-    // editEventForm,
-    // editEventSetting,
-    // editSiteSetting,
+    editSeoForm,
   },
   mixins: [configLoaderMixin],
   data() {

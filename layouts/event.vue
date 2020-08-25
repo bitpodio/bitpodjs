@@ -18,6 +18,7 @@
               v-bind="attrs"
               color="blue darken-2"
               dark
+              depressed
               class="ma-3 block wd-full"
               v-on="on"
             >

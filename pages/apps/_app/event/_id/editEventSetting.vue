@@ -8,16 +8,28 @@
       transition="dialog-bottom-transition"
     >
       <v-card>
-        <v-toolbar dense flat dark fixed color="accent">
-          <v-toolbar-title class="body-1">Edit Event Settings</v-toolbar-title>
+        <v-card-title class="px-15">
+          <span class="headline"></span>
           <v-spacer></v-spacer>
-          <v-btn icon dark @click.native="close">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </v-toolbar>
-        <v-divider></v-divider>
-        <v-card-text>
+          <div>
+            <v-btn text large color="primary" depressed @click.native="close"
+              ><v-icon left>mdi-check</v-icon>Save</v-btn
+            >
+            <v-btn class="mr-2" outlined color="primary"
+              ><v-icon left>mdi-check</v-icon>Save</v-btn
+            >
+          </div>
+          <div>
+            <v-btn icon depressed @click.native="close">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </div>
+        </v-card-title>
+        <v-card-text class="px-15 pt-4 px-xs-2">
           <v-row>
+            <v-col cols="12">
+              <h1 class="mb-3 black--text">Edit Event Settings</h1>
+            </v-col>
             <v-col cols="12" sm="6" md="6">
               <v-select
                 :items="['Public', 'Private']"
@@ -96,12 +108,6 @@
             </v-col>
           </v-row>
         </v-card-text>
-        <v-divider></v-divider>
-        <v-card-actions class="pl-4">
-          <v-btn color="primary" depressed @click="formdialog = false"
-            >Save</v-btn
-          >
-        </v-card-actions>
       </v-card>
     </v-dialog>
   </v-layout>

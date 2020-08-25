@@ -305,7 +305,7 @@
         <v-flex my-3>
           <div class="body-2 text--secondary">Description</div>
           <div class="body-1">
-            {{ formatField(data.event.Description) }}
+            <div v-html="formatField(data.event.Description)" />
           </div>
         </v-flex>
       </div>
@@ -530,6 +530,7 @@ export default {
   data() {
     return {
       loading: 0,
+      allowSpaces: false,
       eventform: false,
       seoform: false,
       eventsetting: false,
