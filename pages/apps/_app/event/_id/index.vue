@@ -501,7 +501,6 @@
     <editSeoForm :seoform.sync="seoform" />
     <editEventSetting :eventsetting.sync="eventsetting" />
     <editSiteSetting :sitesetting.sync="sitesetting" />
-    <!-- <newBadgesForm :newbadge.sync="newbadge" /> -->
   </v-flex>
 </template>
 <script>
@@ -511,7 +510,6 @@ import editSeoForm from './editSeoForm.vue'
 import editEventForm from './editEventForm.vue'
 import editEventSetting from './editEventSetting.vue'
 import editSiteSetting from './editSiteSetting.vue'
-// import newBadgesForm from './newBadge.vue'
 import Grid from '~/components/common/grid'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
@@ -524,7 +522,6 @@ export default {
     editEventForm,
     editEventSetting,
     editSiteSetting,
-    // newBadgesForm,
   },
   mixins: [configLoaderMixin],
   data() {
@@ -535,7 +532,6 @@ export default {
       seoform: false,
       eventsetting: false,
       sitesetting: false,
-      newBadgesForm: false,
       data: {
         event: {},
         badge: {},
