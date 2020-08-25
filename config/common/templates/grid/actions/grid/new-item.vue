@@ -117,6 +117,7 @@ export default {
         case 'checkbox':
           return 'Checkbox'
         case 'date':
+        case 'datetime':
           return 'CustomDate'
         case 'file':
           return 'File'

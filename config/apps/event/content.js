@@ -99,7 +99,7 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
-            type: 'date',
+            type: 'datetime',
           },
           Privacy: {
             displayOrder: 4,
