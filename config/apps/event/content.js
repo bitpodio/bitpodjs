@@ -83,7 +83,7 @@ export default {
             caption: 'Title',
             searchEnable: true,
             sortEnable: true,
-            columnWidth: '150px',
+            columnWidth: '250px',
             type: 'string',
           },
           StartDate: {
@@ -215,7 +215,7 @@ export default {
             caption: 'Title',
             searchEnable: true,
             sortEnable: true,
-            columnWidth: '150px',
+            columnWidth: '250px',
             type: 'string',
           },
           StartDate: {
