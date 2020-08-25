@@ -9,7 +9,7 @@
             width="30"
           ></v-img>
         </span>
-        <span d-inline-flex align-center class="mx-2">Event Layout</span>
+        <span d-inline-flex align-center class="mx-2">Event</span>
       </v-toolbar-title>
       <div class="text-center">
         <v-menu>

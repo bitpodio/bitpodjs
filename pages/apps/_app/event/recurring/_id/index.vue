@@ -34,39 +34,9 @@
             </v-list>
           </v-menu>
         </v-flex>
-        <v-chip class="my-2" label>
-          {{ formatDate(data.event.StartDate) }} -
-          {{ formatDate(data.event.EndDate) }}
+        <v-chip class="my-2">
+          Recurring Event
         </v-chip>
-        <v-flex>
-          <p class="blue--text">
-            <i class="fa fa-map-marker" aria-hidden="true"></i>
-            <a class="blue--text">
-              {{ data.event.VenueName }}
-              {{
-                formatField(
-                  data.event._VenueAddress &&
-                    data.event._VenueAddress.AddressLine
-                )
-              }}
-              {{
-                formatField(
-                  data.event._VenueAddress && data.event._VenueAddress.City
-                )
-              }}
-              {{
-                formatField(
-                  data.event._VenueAddress && data.event._VenueAddress.State
-                )
-              }}
-              {{
-                formatField(
-                  data.event._VenueAddress && data.event._VenueAddress.Country
-                )
-              }}
-            </a>
-          </p>
-        </v-flex>
 
         <v-flex d-flex flex-md-row flex-lg-row flex-column my-2>
           <div
@@ -105,29 +75,15 @@
             class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
           >
             <div
-              class="pa-2 warning d-flex justify-center align-center event-tile-left"
+              class="pa-2 primary d-flex justify-center align-center event-tile-left"
             >
-              <i class="fa fa fa-banknote" aria-hidden="true"></i>
+              <i class="fa fa-black-board" aria-hidden="true"></i>
             </div>
             <div class="d-flex flex-column pa-2 event-tile-right greybg">
               <div class="event-tile-value text-truncate">
-                {{ data.eventSummary.Revenue }}
+                {{ data.eventSummary.TotalSession }}
               </div>
-              <div class="caption text-truncate">Revenue</div>
-            </div>
-          </div>
-
-          <div
-            class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
-          >
-            <div
-              class="pa-2 primary d-flex justify-center align-center event-tile-left"
-            >
-              <i class="fa fa-calendar2" aria-hidden="true"></i>
-            </div>
-            <div class="d-flex flex-column pa-2 event-tile-right greybg">
-              <div class="event-tile-value text-truncate">10 Days</div>
-              <div class="caption text-truncate">Opens in</div>
+              <div class="caption text-truncate">Total Sessions</div>
             </div>
           </div>
         </v-flex>
@@ -198,6 +154,14 @@
       </div>
       <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
         <h2 class="body-1 pb-2">
+          <i class="fa fa-black-board pr-1" aria-hidden="true"></i>Recurring
+          Sessions
+        </h2>
+        <v-divider></v-divider>
+        <Grid view-name="eventRecurringSession" :content="content" />
+      </div>
+      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
+        <h2 class="body-1 pb-2">
           <i class="fa fa-users pr-1" aria-hidden="true"></i>Attendees
         </h2>
         <v-divider></v-divider>
@@ -238,13 +202,6 @@
         </h2>
         <v-divider></v-divider>
         <Grid view-name="eventRegistrationQuestion" :content="content" />
-      </div>
-      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
-        <h2 class="body-1 pb-2">
-          <i class="fa fa-black-board pr-1" aria-hidden="true"></i> Sessions
-        </h2>
-        <v-divider></v-divider>
-        <Grid view-name="eventSession" :content="content" />
       </div>
       <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
         <h2 class="body-1 pb-2">
@@ -307,22 +264,6 @@
           <div class="body-1">
             {{ formatField(data.event.Description) }}
           </div>
-        </v-flex>
-      </div>
-
-      <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
-        <v-flex class="d-flex justify-center align-center pb-2">
-          <h2 class="body-1 pb-1">
-            <i class="fa fa-id-badge pr-1" aria-hidden="true"></i> Badge
-          </h2>
-          <v-spacer></v-spacer>
-          <v-btn text small @click="newbadge = true">
-            <v-icon left>mdi-plus</v-icon>Create
-          </v-btn>
-        </v-flex>
-        <v-divider></v-divider>
-        <v-flex my-3 d-flex justify-center align-center>
-          <div v-html="data.badge.Template" />
         </v-flex>
       </div>
 
@@ -497,34 +438,32 @@
         </v-flex>
       </div>
     </v-flex>
-    <editEventForm :eventform.sync="eventform" />
+    <!-- <editEventForm :eventform.sync="eventform" />
     <editSeoForm :seoform.sync="seoform" />
     <editEventSetting :eventsetting.sync="eventsetting" />
-    <editSiteSetting :sitesetting.sync="sitesetting" />
-    <newBadgeForm :newbadge.sync="newbadge" />
+    <editSiteSetting :sitesetting.sync="sitesetting" /> -->
   </v-flex>
 </template>
 <script>
 import gql from 'graphql-tag'
 import format from 'date-fns/format'
-import editSeoForm from './editSeoForm.vue'
-import editEventForm from './editEventForm.vue'
-import editEventSetting from './editEventSetting.vue'
-import editSiteSetting from './editSiteSetting.vue'
-import newBadgeForm from './newBadgeForm.vue'
+// import editSeoForm from '../event/editSeoForm.vue'
+// import editEventForm from '../editEventForm.vue'
+// import editEventSetting from '../editEventSetting.vue'
+// import editSiteSetting from '../editSiteSetting.vue'
 import Grid from '~/components/common/grid'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin } from '~/utility'
 
 export default {
+  layout: 'event',
   components: {
     Grid,
-    editSeoForm,
-    editEventForm,
-    editEventSetting,
-    editSiteSetting,
-    newBadgeForm,
+    // editSeoForm,
+    // editEventForm,
+    // editEventSetting,
+    // editSiteSetting,
   },
   mixins: [configLoaderMixin],
   data() {
