@@ -328,9 +328,6 @@
 <script>
 export default {
   layout: 'flatlayout',
-  props: {
-    // source: String,
-  },
   data: () => ({
     date: new Date().toISOString().substr(0, 10),
     menu: false,
