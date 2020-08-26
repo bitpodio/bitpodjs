@@ -820,7 +820,6 @@ export default {
               itemText: 'Name',
               itemValue: 'id',
               filter(data) {
-                debugger
                 return {
                   EventId: this.$route.params.id,
                 }
@@ -885,7 +884,6 @@ export default {
             editForm: true,
             rules: [
               (v) => {
-                debugger
                 return !!v || 'End Date is required'
               },
             ],
@@ -930,7 +928,6 @@ export default {
             editForm: true,
             rules: [
               (v) => {
-                debugger
                 return !!v || 'EventId is required'
               },
             ],
@@ -948,7 +945,6 @@ export default {
           type: 'graphql',
           model: 'Ticket',
           filter(ctx) {
-            debugger
             return {
               where: {
                 Events: ctx.$route.params.id,
@@ -1648,17 +1644,6 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
-            // rules: [
-            //   (v) => {
-            //     return !!v || 'FirstName is required'
-            //   },
-            //   (v) => {
-            //     return (
-            //       (v && v.length <= 10) ||
-            //       'Name must be less than 10 characters'
-            //     )
-            //   },
-            // ],
           },
           LastName: {
             displayOrder: 1,
@@ -1671,17 +1656,6 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
-            // rules: [
-            //   (v) => {
-            //     return !!v || 'FirstName is required'
-            //   },
-            //   (v) => {
-            //     return (
-            //       (v && v.length <= 10) ||
-            //       'Name must be less than 10 characters'
-            //     )
-            //   },
-            // ],
           },
           PaymentMethod: {
             displayOrder: 10,
@@ -1729,18 +1703,6 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
-            // readonly(value, data) {
-            //   const firstName = data.FirstName
-            //   return firstName && firstName.length <= 5
-            // },
-            // rules: [
-            //   (v) => {
-            //     return !!v || 'E-mail is required'
-            //   },
-            //   function (value, data) {
-            //     return /.+@.+\..+/.test(value) || 'E-mail must be valid'
-            //   },
-            // ],
           },
           '_CurrentAddress.AddressLine': {
             caption: 'Address',
@@ -1811,9 +1773,6 @@ export default {
             editForm: true,
             dataSource: {
               query: eventNames,
-              // defaultSort: 'createdDate DESC',
-              // type: 'graphql',
-              // model: 'Event',
               itemText: 'Title',
               itemValue: 'id',
               filter(data) {
@@ -1925,12 +1884,6 @@ export default {
               query: eventTickets,
               itemText: 'Code',
               itemValue: 'id',
-              filter(data) {
-                debugger
-                return {
-                  // EventId: getIdFromAtob(data.EventName),
-                }
-              },
             },
           },
         },
