@@ -172,7 +172,7 @@ import endOfYesterday from 'date-fns/endOfYesterday'
 import startOfDay from 'date-fns/startOfDay'
 import endOfDay from 'date-fns/endOfDay'
 import FieldsFilter from './FieldsFilter.vue'
-import { templateLoaderMixin, getContentByName } from '~/utility'
+import { templateLoaderMixin } from '~/utility'
 
 const DEFAULT_GRID_PROPS = {
   hideDefaultHeader: false,
@@ -244,7 +244,7 @@ function formatResult(content, viewName, data, modelName) {
     for (const field in node) {
       const { type } = fields[field] || {}
       const fieldValue = node[field]
-      if (type === 'date')
+      if (type === 'date' || type === 'datetime')
         formattedRecord[field] = fieldValue
           ? format(new Date(fieldValue), 'PPp')
           : ''
@@ -390,16 +390,19 @@ function getOperatorQuery(field, operator, value) {
   return ruleFilter
 }
 
+function computeViewFilter(filter, ctx) {
+  return filter && (filter instanceof Function ? filter.call(ctx, ctx) : filter)
+}
+
 function buildQueryVariables({
   viewName,
   search,
   filters,
   filter,
-  contentName,
+  content,
   ctx,
 }) {
   const { rules: filterRules, ruleCondition } = filters
-  const content = getContentByName(ctx, contentName)
   const and = []
   const condition = []
   for (const rule of filterRules) {
@@ -415,7 +418,8 @@ function buildQueryVariables({
     and.push(serachQuery)
   }
   const viewDataSource = getViewDataSource(content, viewName)
-  const contentFilter = filter || viewDataSource.filter
+  const contentFilter = filter || computeViewFilter(viewDataSource.filter, ctx)
+
   if (contentFilter) {
     and.push(contentFilter.where)
   }
@@ -467,17 +471,15 @@ export default {
       type: Object,
       default: () => null,
     },
-    contentName: {
-      type: String,
+    content: {
+      type: Object,
       required: true,
     },
   },
   data() {
-    const content = getContentByName(this, this.contentName)
-    const headers = getTableHeader(content, this.viewName)
-    const gridProps = getGridsProps(content, this.viewName)
+    const headers = getTableHeader(this.content, this.viewName)
+    const gridProps = getGridsProps(this.content, this.viewName)
     return {
-      content,
       singleSelect: false,
       headers,
       tableData: {
@@ -656,7 +658,8 @@ export default {
           search,
           filters,
         }
-        this.tableData = await dataSource.getData.call(this, options)
+        const getDataFunc = dataSource.getData.call(this, this)
+        this.tableData = await getDataFunc.call(this, options)
       }
     },
   },
@@ -668,7 +671,7 @@ export default {
         `
       },
       variables() {
-        const { content, viewName, search, filters, contentName } = this
+        const { content, viewName, search, filters } = this
         const sortBy = this.options.sortBy
         const sortDesc = this.options.sortDesc
         const order = getOrderQuery(content, viewName, sortBy, sortDesc)
@@ -677,7 +680,7 @@ export default {
           search,
           filters,
           filter: this.filter,
-          contentName,
+          content,
           ctx: this,
         })
         const page = this.options.page || 1

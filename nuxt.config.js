@@ -58,7 +58,7 @@ export default {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: ['~/plugins/eventBus.js', '@/plugins/v-datetime-picker'],
+  plugins: ['~/plugins/eventBus.js', '~/plugins/date-time-picker.js'],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
@@ -88,8 +88,7 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: `http://localhost:3000${basePath}`,
-    // baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
+    baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
   },
   /*
    ** vuetify module configuration
@@ -157,7 +156,7 @@ export default {
     redirect: {
       login: '/login',
       callback: '/callback',
-      home: `${basePath}/event`,
+      home: `${basePath}/apps/event/list/Event/All Events`,
       logout: '/',
     },
     strategies: {
