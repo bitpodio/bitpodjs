@@ -498,19 +498,25 @@
           <v-row>
             <v-col cols="12">
               <v-text-field
+                v-model="formData.Title"
                 label="Event Name*"
                 required
                 outlined
               ></v-text-field>
             </v-col>
-            <v-col cols="12">
+            <!-- <v-col cols="12">
               <v-textarea
+                v-model="formData.Description"
                 clearable
                 outlined
                 clear-icon="fa fa-close"
                 label="Description"
                 value=""
-              ></v-textarea>
+                >{{ formatField(data.event.Description) }}</v-textarea
+              >
+            </v-col> -->
+            <v-col cols="12">
+              <RichText v-model="formData.Description" label="Description" />
             </v-col>
             <v-col cols="12" sm="6" md="4">
               <v-dialog
@@ -522,7 +528,7 @@
               >
                 <template v-slot:activator="{ on, attrs }">
                   <v-text-field
-                    v-model="date"
+                    v-model="formData.StartDate"
                     outlined
                     label="Start Date"
                     append-icon="fa-calendar"
@@ -536,7 +542,10 @@
                   <v-btn text color="primary" @click="modal = false"
                     >Cancel</v-btn
                   >
-                  <v-btn text color="primary" @click="$refs.dialog.save(date)"
+                  <v-btn
+                    text
+                    color="primary"
+                    @click="$refs.dialog.save(formData.StartDate)"
                     >OK</v-btn
                   >
                 </v-date-picker>
@@ -553,11 +562,10 @@
               >
                 <template v-slot:activator="{ on, attrs }">
                   <v-text-field
-                    v-model="date"
+                    v-model="formData.EndDate"
                     outlined
                     label="End Date"
                     append-icon="fa-calendar"
-                    readonly
                     v-bind="attrs"
                     v-on="on"
                   ></v-text-field>
@@ -570,7 +578,8 @@
             </v-col>
             <v-col cols="12" sm="6" md="4">
               <v-select
-                :items="['0-17', '18-29', '30-54', '54+']"
+                v-model="formData.Timezone"
+                :items="['kolkata', 'New Delhi']"
                 label="Timezone*"
                 required
                 outlined
@@ -578,6 +587,7 @@
             </v-col>
             <v-col cols="12" sm="6" md="4">
               <v-text-field
+                v-model="formData.Organizer"
                 label="Event organizer *"
                 outlined
                 required
@@ -585,18 +595,78 @@
             </v-col>
             <v-col cols="12" sm="6" md="4">
               <v-text-field
+                v-model="formData.EventManager"
                 label="Event Manager/Team Email *"
                 outlined
                 required
               ></v-text-field>
             </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <v-select
+                v-model="formData.Tags"
+                :items="['Music', 'Economic']"
+                label="Tags*"
+                outlined
+              ></v-select>
+            </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <!-- <v-text-field
+                v-model="formData._VenueAddress.AddressLine"
+                label="Venue Address*"
+                outlined
+                required
+              ></v-text-field> -->
+              <no-ssr>
+                <vue-google-autocomplete
+                  id="map"
+                  ref="address"
+                  classname="form-control"
+                  placeholder="Address"
+                  @placechanged="getAddressData"
+                >
+                </vue-google-autocomplete>
+              </no-ssr>
+            </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <v-text-field
+                v-model="formData.VenueName"
+                label="Venue Name *"
+                outlined
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <v-text-field
+                v-model="VenueAddress.City"
+                label="City *"
+                outlined
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <v-text-field
+                v-model="VenueAddress.State"
+                label="State*"
+                outlined
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <v-text-field
+                v-model="VenueAddress.Country"
+                label="Country*"
+                outlined
+              ></v-text-field>
+            </v-col>
+            <!-- <v-col cols="12" sm="6" md="4">
+              <v-text-field
+                v-model="formData._VenueAddress.PostalCode"
+                label="Zip Code*"
+                outlined
+              ></v-text-field>
+            </v-col> -->
           </v-row>
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions class="pl-4">
-          <v-btn color="primary" depressed @click="editeventform = false"
-            >Save</v-btn
-          >
+          <v-btn color="primary" depressed @click="onSave">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -627,23 +697,32 @@
             </v-col>
             <v-col cols="12">
               <v-text-field
+                v-model="formData.SEOTitle"
                 label="Part which goes into URL"
                 outlined
               ></v-text-field>
             </v-col>
             <v-col cols="12">
-              <v-text-field label="Meta Description" outlined> </v-text-field>
+              <v-text-field
+                v-model="formData.SEODesc"
+                label="Meta Description"
+                outlined
+              >
+              </v-text-field>
             </v-col>
             <v-col cols="12">
-              <v-text-field label="Meta Keywords" outlined> </v-text-field>
+              <v-text-field
+                v-model="formData.SEOKeywords"
+                label="Meta Keywords"
+                outlined
+              >
+              </v-text-field>
             </v-col>
           </v-row>
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions class="pl-4">
-          <v-btn color="primary" depressed @click="editseoform = false"
-            >Save</v-btn
-          >
+          <v-btn color="primary" depressed @click="onSave">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -652,14 +731,21 @@
 <script>
 import gql from 'graphql-tag'
 import format from 'date-fns/format'
+// import loadRestData from '~/components/common/grid'
+// import VueGoogleAutocomplete from 'vue-google-autocomplete'
 import Grid from '~/components/common/grid'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin } from '~/utility'
-
+import RichText from '~/components/common/form/richtext.vue'
+// import { formatDistance } from 'date-fns'
+// import eventTags from '~/config/apps/event/gql/'
 export default {
   components: {
     Grid,
+    RichText,
+    VueGoogleAutocomplete: () => import('vue-google-autocomplete'),
+    // VueGoogleAutocomplete,
   },
   mixins: [configLoaderMixin],
   data() {
@@ -668,24 +754,96 @@ export default {
       editeventform: false,
       editseoform: false,
       allowSpaces: false,
+      // EndDate: '',
+      // StartDate: '',
+      address: '',
+      // date: '',
       data: {
         event: {},
         badge: {},
         eventSummary: {},
       },
+      formData: {
+        // AutoUpdateSEOElements: this.allowSpaces,
+        // SEOTitle: '',
+        // SEODesc: '',
+        // SEOKeywords: '',
+        // Title: '',
+        // Description: '',
+        // EndDate: '',
+        // Timezone: '',
+        // Organizer: '',
+        // EventManager: '',
+      },
+      VenueAddress: {},
     }
   },
   computed: {
     content() {
       return this.contents ? this.contents.Event : null
     },
+    // StartDate1() {
+    //   debugger
+    //   return format(new Date(this.StartDate), 'PPp')
+    // },
   },
+
+  // mounted() {
+  //   // To demonstrate functionality of exposed component functions
+  //   // Here we make focus on the user input
+  //   this.$refs.address.focus()
+  // },
   methods: {
+    getAddressData(addressData, placeResultData, id) {
+      debugger
+      this.address = addressData
+      console.log('==addressData==', addressData)
+      this.VenueAddress.AddressLine =
+        addressData.route + ', ' + addressData.administrative_area_level_1
+      this.formData.VenueName = addressData.route
+      this.VenueAddress.Country = addressData.country
+      this.VenueAddress.City = addressData.locality
+      this.VenueAddress.State = addressData.locality
+      // this.formData.LatLng.lat = parseInt(addressData.latitude)
+      // this.formData.LatLng.lng = parseInt(addressData.longitude)
+    },
     formatDate(date) {
-      return date ? format(new Date(date), 'PPp') : ''
+      return date ? format(new Date(date), 'PPpp') : ''
     },
     formatField(fieldValue) {
       return fieldValue || '-'
+    },
+    formatDatePicker(date) {
+      return date ? format(new Date(date), 'PP') : ''
+    },
+    onSave() {
+      debugger
+      console.log('asdasdasdfdg', this.formData)
+      console.log('asdasdasd')
+      Object.assign({}, this.formData, { _VenueAddress: this.VenueAddress })
+      delete this.formData.VenueAddress
+      delete this.formData._VenueAddress.LatLng
+      console.log('======FormData', this.formData)
+      // this.formData._VenueAddress = ''
+      // delete this.formData._VenueAddress
+      this.$axios
+        .$patch(
+          `https://event.test.bitpod.io/svc/api/Events/${this.$route.params.id}`,
+          {
+            ...this.formData,
+          }
+        )
+        .then((res) => {
+          this.editseoform = false
+          this.editeventform = false
+          // this.data.event.id = this.$route.params.id
+          // this.formData.id = this.$route.params.id
+          return (this.data.event = res)
+        })
+        .catch((e) => {
+          console.log('error', e)
+        })
+      // this.loadRestData()
     },
   },
   apollo: {
@@ -714,6 +872,33 @@ export default {
         const event = formatGQLResult(data, 'Event')
         const badge = formatGQLResult(data, 'Badge')
         const eventSummary = data.Event.EventGetEventSummery
+        if (event.length > 0) {
+          debugger
+          event[0].StartDate = this.formatDatePicker(event[0].StartDate)
+          event[0].EndDate = this.formatDatePicker(event[0].EndDate)
+        }
+        debugger
+        this.formData = event.length > 0 ? event[0] : {}
+        this.formData.id = this.$route.params.id
+        console.log('====VenueAddress', event._VenueAddress)
+        console.log('====VenueAddress1', this.formData._VenueAddress)
+        // this.formData._VenueAddress =
+        //   this.formData._VenueAddress != null ? this.formData._VenueAddress : ''
+        this.VenueAddress =
+          this.formData._VenueAddress != null ? this.formData._VenueAddress : ''
+        console.log('====FormData', this.formData)
+        // console.log('====FormData', this.formData.VenueAddress.AddressLine)
+        // console.log('====FormData', this.formData.VenueAddress.City)
+        // if (this.formData._VenueAddress) {
+        //   this.formData._VenueAddress.AddressLine = this.formData._VenueAddress.AddressLine
+        //   this.formData._VenueAddress.Country = this.formData._VenueAddress.Country
+        //   this.formData._VenueAddress.City = this.formData._VenueAddress.City
+        //   this.formData._VenueAddress.State = this.formData._VenueAddress.State
+        // } else {
+        //   this.formData._VenueAddress = ''
+        // }
+        // this.StartDate = this.formData.StartDate
+        // this.date = this.formData.StartDate
         return {
           event: event.length > 0 ? event[0] : {},
           badge: badge.length > 0 ? badge[0] : {},
@@ -757,5 +942,11 @@ export default {
 }
 .event-tile-value {
   font-size: 20px;
+}
+.form-control {
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: 100%;
+  border-radius: 5px;
 }
 </style>

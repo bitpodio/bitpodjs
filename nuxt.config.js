@@ -43,6 +43,12 @@ export default {
           'https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap',
       },
     ],
+    script: [
+      {
+        src:
+          'https://maps.googleapis.com/maps/api/js?key=AIzaSyCPS6SZlor8qxfpul-dKyN6566XG2R5dFM&libraries=places ',
+      },
+    ],
   },
   /*
    ** Global CSS
@@ -82,7 +88,7 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
+    baseURL: `http://localhost:3000${basePath}`,
   },
   /*
    ** vuetify module configuration
