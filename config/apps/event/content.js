@@ -85,6 +85,14 @@ export default {
             columnWidth: '150px',
             type: 'string',
           },
+          Timezone: {
+            displayOrder: 3,
+            caption: 'Timezone',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'timezone',
+          },
           StartDate: {
             displayOrder: 3,
             caption: 'Start Date',
@@ -99,7 +107,7 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
-            type: 'date',
+            type: 'datetime',
           },
           Privacy: {
             displayOrder: 4,
