@@ -274,7 +274,7 @@
             <i class="fa fa-tag pr-1" aria-hidden="true"></i> SEO Details
           </h2>
           <v-spacer></v-spacer>
-          <v-btn text small @click="seoform = true">
+          <v-btn text small @click="seoForm = true">
             <v-icon left>mdi-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
@@ -443,7 +443,7 @@
         </v-flex>
       </div>
     </v-flex>
-    <editSeoForm :seoform.sync="seoform" />
+    <editSeoForm :seoForm.sync="seoForm" />
   </v-flex>
 </template>
 <script>
@@ -465,11 +465,7 @@ export default {
   data() {
     return {
       loading: 0,
-      eventform: false,
-      seoform: false,
-      eventsetting: false,
-      sitesetting: false,
-      newbadge: false,
+      seoForm: false,
       data: {
         event: {},
         badge: {},

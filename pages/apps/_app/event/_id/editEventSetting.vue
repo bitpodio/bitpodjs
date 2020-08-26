@@ -1,7 +1,7 @@
 <template>
   <v-layout>
     <v-dialog
-      v-model="eventsetting"
+      v-model="eventSetting"
       persistent
       scrollable
       content-class="slide-form-default"
@@ -116,13 +116,13 @@
 <script>
 export default {
   props: {
-    eventsetting: {
+    eventSetting: {
       default: false,
     },
   },
   methods: {
     close() {
-      this.$emit('update:eventsetting', false)
+      this.$emit('update:eventSetting', false)
     },
   },
 }

@@ -1,7 +1,7 @@
 <template>
   <v-layout>
     <v-dialog
-      v-model="sitesetting"
+      v-model="siteSetting"
       persistent
       scrollable
       content-class="slide-form-default"
@@ -157,8 +157,7 @@
 <script>
 export default {
   props: {
-    // eslint-disable-next-line vue/require-prop-types
-    sitesetting: {
+    siteSetting: {
       default: false,
     },
   },
@@ -169,7 +168,7 @@ export default {
   },
   methods: {
     close() {
-      this.$emit('update:sitesetting', false)
+      this.$emit('update:siteSetting', false)
     },
   },
 }

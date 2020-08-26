@@ -1,7 +1,7 @@
 <template>
   <v-layout>
     <v-dialog
-      v-model="newbadge"
+      v-model="newBadge"
       persistent
       scrollable
       content-class="slide-form-default"
@@ -66,9 +66,9 @@
 <script>
 export default {
   props: {
-    // eslint-disable-next-line vue/require-prop-types
-    newbadge: {
+    newBadge: {
       default: false,
+      allowSpaces: false,
     },
   },
   data() {
@@ -78,7 +78,7 @@ export default {
   },
   methods: {
     close() {
-      this.$emit('update:newbadge', false)
+      this.$emit('update:newBadge', false)
     },
   },
 }

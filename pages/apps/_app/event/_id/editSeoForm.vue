@@ -1,7 +1,7 @@
 <template>
   <v-layout>
     <v-dialog
-      v-model="seoform"
+      v-model="seoForm"
       persistent
       scrollable
       content-class="slide-form-default"
@@ -50,13 +50,13 @@
 <script>
 export default {
   props: {
-    seoform: {
+    seoForm: {
       default: false,
     },
   },
   methods: {
     close() {
-      this.$emit('update:seoform', false)
+      this.$emit('update:seoForm', false)
     },
   },
 }

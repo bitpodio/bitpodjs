@@ -283,7 +283,7 @@
             Information
           </h2>
           <v-spacer></v-spacer>
-          <v-btn text small @click.stop="eventform = true">
+          <v-btn text small @click.stop="eventForm = true">
             <v-icon left>mdi-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
@@ -332,7 +332,7 @@
             <i class="fa fa-tag pr-1" aria-hidden="true"></i> SEO Details
           </h2>
           <v-spacer></v-spacer>
-          <v-btn text small @click="seoform = true">
+          <v-btn text small @click="seoForm = true">
             <v-icon left>mdi-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
@@ -360,7 +360,7 @@
             Settings
           </h2>
           <v-spacer></v-spacer>
-          <v-btn text small @click="eventsetting = true">
+          <v-btn text small @click="eventSetting = true">
             <v-icon left>mdi-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
@@ -454,7 +454,7 @@
             Registration Page Settings
           </h2>
           <v-spacer></v-spacer>
-          <v-btn text small @click="sitesetting = true">
+          <v-btn text small @click="siteSetting = true">
             <v-icon left>mdi-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
@@ -497,10 +497,10 @@
         </v-flex>
       </div>
     </v-flex>
-    <editEventForm :eventform.sync="eventform" />
-    <editSeoForm :seoform.sync="seoform" />
-    <editEventSetting :eventsetting.sync="eventsetting" />
-    <editSiteSetting :sitesetting.sync="sitesetting" />
+    <editEventForm :eventForm.sync="eventForm" />
+    <editSeoForm :seoForm.sync="seoForm" />
+    <editEventSetting :eventSetting.sync="eventSetting" />
+    <editSiteSetting :siteSetting.sync="siteSetting" />
   </v-flex>
 </template>
 <script>
@@ -528,10 +528,10 @@ export default {
     return {
       loading: 0,
       allowSpaces: false,
-      eventform: false,
-      seoform: false,
-      eventsetting: false,
-      sitesetting: false,
+      eventForm: false,
+      seoForm: false,
+      eventSetting: false,
+      siteSetting: false,
       data: {
         event: {},
         badge: {},
