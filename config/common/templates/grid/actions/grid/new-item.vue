@@ -61,7 +61,9 @@ import Checkbox from '~/components/common/form/checkbox.vue'
 import CustomDate from '~/components/common/form/date.vue'
 import File from '~/components/common/form/file.vue'
 import RichText from '~/components/common/form/richtext.vue'
+import Timezone from '~/components/common/form/timezone'
 import { formValidationMixin } from '~/utility'
+import { formatTimezoneDateFieldsData } from '~/utility/form'
 
 function getGridFields(content, viewName) {
   const view = content.views[viewName]
@@ -91,6 +93,7 @@ export default {
     CustomDate,
     File,
     RichText,
+    Timezone,
   },
   mixins: [formValidationMixin],
   props: ['content', 'viewName', 'onNewItemSave'],
@@ -107,7 +110,8 @@ export default {
   methods: {
     async onSave() {
       this.$refs.form.validate()
-      await this.onNewItemSave(this.formData)
+      const formData = formatTimezoneDateFieldsData(this.formData, this.fields)
+      await this.onNewItemSave(formData)
       this.dialog = false
     },
     formControl(field) {
@@ -117,6 +121,7 @@ export default {
         case 'checkbox':
           return 'Checkbox'
         case 'date':
+        case 'datetime':
           return 'CustomDate'
         case 'file':
           return 'File'
@@ -125,6 +130,8 @@ export default {
           return 'TextField'
         case 'richtext':
           return 'RichText'
+        case 'timezone':
+          return 'Timezone'
       }
     },
     validate() {
