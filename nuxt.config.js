@@ -1,5 +1,5 @@
 import colors from 'vuetify/es5/util/colors'
-const basePath = process.env.PUBLIC_PATH || '';
+const basePath = process.env.PUBLIC_PATH || ''
 export default {
   /*
    ** Nuxt rendering mode
@@ -7,7 +7,7 @@ export default {
    */
   mode: 'universal',
   router: {
-    base: basePath || '/'
+    base: basePath || '/',
   },
   /*
    ** Nuxt target
@@ -43,6 +43,12 @@ export default {
           'https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap',
       },
     ],
+    script: [
+      {
+        src:
+          'https://maps.googleapis.com/maps/api/js?key=AIzaSyCPS6SZlor8qxfpul-dKyN6566XG2R5dFM&libraries=places ',
+      },
+    ],
   },
   /*
    ** Global CSS
@@ -52,7 +58,7 @@ export default {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: ['~/plugins/eventBus.js'],
+  plugins: ['~/plugins/eventBus.js', '@/plugins/v-datetime-picker'],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
@@ -82,7 +88,8 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`
+    baseURL: `http://localhost:3000${basePath}`,
+    // baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
   },
   /*
    ** vuetify module configuration
