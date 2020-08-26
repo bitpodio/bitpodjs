@@ -9,6 +9,7 @@ import eventInvites from './gql/eventInvites.gql'
 import eventTickets from './gql/eventTickets.gql'
 import eventDiscountCodes from './gql/eventDiscountCodes.gql'
 import eventSession from './gql/eventSession.gql'
+import eventRecurringSession from './gql/eventRecurringSession.gql'
 import eventTasks from './gql/eventTasks.gql'
 import eventRegistrationForm from './gql/eventRegistrationForm.gql'
 import { getData } from './rest'
@@ -82,7 +83,7 @@ export default {
             caption: 'Title',
             searchEnable: true,
             sortEnable: true,
-            columnWidth: '150px',
+            columnWidth: '250px',
             type: 'string',
           },
           Timezone: {
@@ -191,7 +192,7 @@ export default {
           },
         },
         template: {
-          name: 'link-grid',
+          name: 'event-grid',
           context: {
             basePath: '/event',
           },
@@ -222,7 +223,7 @@ export default {
             caption: 'Title',
             searchEnable: true,
             sortEnable: true,
-            columnWidth: '150px',
+            columnWidth: '250px',
             type: 'string',
           },
           StartDate: {
@@ -323,7 +324,7 @@ export default {
           },
         },
         template: {
-          name: 'link-grid',
+          name: 'event-grid',
           context: {
             basePath: '/event',
           },
@@ -1285,6 +1286,105 @@ export default {
           },
         },
         title: 'eventRegistrationForm',
+        type: 'list',
+      },
+      eventRecurringSession: {
+        ui: {
+          hideDefaultHeader: false,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: true,
+          hideFilter: false,
+          hideSearch: true,
+        },
+        hidden: true,
+        fields: {
+          Name: {
+            displayOrder: 1,
+            caption: 'Name',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          ScheduledType: {
+            displayOrder: 2,
+            caption: 'ScheduledType',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '250px',
+            type: 'string',
+          },
+          StartTime: {
+            displayOrder: 3,
+            caption: 'StartTime',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '130px',
+            type: 'string',
+          },
+          EndTime: {
+            displayOrder: 4,
+            caption: 'EndTime',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '130px',
+            type: 'string',
+          },
+          Type: {
+            displayOrder: 4,
+            caption: 'Type',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '100px',
+            type: 'string',
+          },
+          SeatReservation: {
+            displayOrder: 6,
+            caption: 'Seat Reservation',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          TicketName: {
+            displayOrder: 7,
+            caption: 'Tickets',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '200px',
+            type: 'string',
+          },
+          isActive: {
+            displayOrder: 8,
+            caption: 'Active',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '100px',
+            type: 'string',
+          },
+        },
+        template: {
+          name: 'recurring-grid',
+          context: {
+            basePath: '/event',
+          },
+        },
+        dataSource: {
+          query: eventRecurringSession,
+          defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          model: 'Session',
+          filter(ctx) {
+            return {
+              where: {
+                EventId: ctx.$route.params.id,
+              },
+            }
+          },
+        },
+        title: 'Recurring Session',
         type: 'list',
       },
     },
