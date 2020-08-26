@@ -20,7 +20,6 @@ import { getIdFromAtob } from '~/utility'
 function formatResult(data) {
   const [modelName] = Object.getOwnPropertyNames(data)
   const { edges } = data[modelName][`${modelName}Find`]
-  debugger
   return edges.map(({ node: { id, ...rest } }) => {
     return { id: getIdFromAtob(id), ...rest }
   })
