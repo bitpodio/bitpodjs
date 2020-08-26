@@ -724,9 +724,21 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
+            required: true,
+            rules: [
+              (v) => {
+                return !!v || 'Title is required'
+              },
+              (v) => {
+                return (
+                  (v && v.length <= 10) ||
+                  'Title must be less than 10 characters'
+                )
+              },
+            ],
           },
           Amount: {
-            displayOrder: 3,
+            displayOrder: 4,
             caption: 'Amount',
             searchEnable: true,
             sortEnable: true,
@@ -737,9 +749,13 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
+            readonly(value, data) {
+              const type = data.Type
+              return type === 'Free' || type === ''
+            },
           },
           Type: {
-            displayOrder: 4,
+            displayOrder: 3,
             caption: 'Type',
             searchEnable: true,
             sortEnable: true,
@@ -843,12 +859,17 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
-            type: 'date',
+            type: 'datetime',
             cssClasses: 'col-6 col-md-6',
             hidden: false,
             inlineEdit: true,
             newForm: true,
             editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Start Date is required'
+              },
+            ],
           },
           EndDate: {
             displayOrder: 8,
@@ -856,12 +877,18 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
-            type: 'date',
+            type: 'datetime',
             cssClasses: 'col-6 col-md-6',
             hidden: false,
             inlineEdit: true,
             newForm: true,
             editForm: true,
+            rules: [
+              (v) => {
+                debugger
+                return !!v || 'End Date is required'
+              },
+            ],
           },
           ValidateQty: {
             displayOrder: 8,
@@ -901,6 +928,12 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
+            rules: [
+              (v) => {
+                debugger
+                return !!v || 'EventId is required'
+              },
+            ],
           },
         },
         template: {
@@ -1381,7 +1414,15 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
-            type: 'date',
+            type: 'datetime',
+          },
+          Timezone: {
+            displayOrder: 7,
+            caption: 'Timezone',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'timezone',
           },
           createdDate: {
             displayOrder: 8,
@@ -1414,6 +1455,19 @@ export default {
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+          },
+          EventId: {
+            displayOrder: 12,
+            caption: 'EventId',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            cssClasses: 'col-6 col-md-6',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
           },
         },
         template: {
@@ -2495,7 +2549,7 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '180px',
-            type: 'date',
+            type: 'datetime',
             cssClasses: 'col-6 col-md-6',
             inlineEdit: true,
             newForm: true,
