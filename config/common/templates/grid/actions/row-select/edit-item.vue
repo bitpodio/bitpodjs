@@ -26,8 +26,7 @@
               <v-col
                 v-for="field in fields"
                 :key="`${field.fieldName}${updateCount}`"
-                cols="12"
-                sm="12"
+                :class="field.cssClasses || 'col-12 col-md-6'"
               >
                 <component
                   :is="formControl(field) || null"

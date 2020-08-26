@@ -15,11 +15,14 @@
 
 <script>
 import gql from 'graphql-tag'
+import { getIdFromAtob } from '~/utility'
 
 function formatResult(data) {
   const [modelName] = Object.getOwnPropertyNames(data)
   const { edges } = data[modelName][`${modelName}Find`]
-  return edges.map(({ node }) => node)
+  return edges.map(({ node: { id, ...rest } }) => {
+    return { id: getIdFromAtob(id), ...rest }
+  })
 }
 
 export default {
