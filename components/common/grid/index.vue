@@ -245,7 +245,7 @@ function formatResult(content, viewName, data, modelName) {
     for (const field in node) {
       const { type } = fields[field] || {}
       const fieldValue = node[field]
-      if (type === 'date')
+      if (type === 'date' || type === 'datetime')
         formattedRecord[field] = fieldValue
           ? format(new Date(fieldValue), 'PPp')
           : ''
