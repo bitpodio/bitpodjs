@@ -236,6 +236,7 @@ function getGridTemplateInfo(content, viewName) {
 }
 
 function formatResult(content, viewName, data, modelName) {
+  debugger
   if (!data[modelName]) return []
   let { edges } = data[modelName][`${modelName}Find`]
   const fields = getGridFields(content, viewName)
@@ -436,6 +437,7 @@ function getIdFromAtob(encodedId) {
 }
 
 function buildMutationCreateQuery(modelName) {
+  debugger
   return `mutation($Inputs : ${modelName}CreateInput!){ ${modelName} { ${modelName}Create(input:$Inputs){ clientMutationId obj{ id } } } }`
 }
 
@@ -585,6 +587,7 @@ export default {
       this.selectedItems = items
     },
     async onNewItemSave(data) {
+      debugger
       const modelName = getModelName(this.content, this.viewName)
       const newItemMutation = buildMutationCreateQuery(modelName)
       const userCreated = await this.$apollo.mutate({
