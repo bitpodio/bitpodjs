@@ -13,40 +13,43 @@
         </v-btn>
       </template>
       <v-card>
-        <v-toolbar dense flat dark fixed color="accent">
-          <v-toolbar-title class="body-1">New Item</v-toolbar-title>
+        <v-card-title
+          class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
+        >
+          <h2 class="black--text pt-10 pb-9">New Item</h2>
           <v-spacer></v-spacer>
-          <v-btn icon dark @click="dialog = false">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </v-toolbar>
-        <v-divider></v-divider>
-        <v-card-text>
-          <v-container>
-            <v-form ref="form" v-model="valid" :lazy-validation="lazy">
-              <v-row>
-                <v-col
-                  v-for="field in fields"
-                  :key="field.fieldName"
-                  :class="field.cssClasses || 'col-12 col-md-6'"
-                >
-                  <component
-                    :is="formControl(field) || null"
-                    v-model="formData[field.fieldName]"
-                    :field="field"
-                    :rules="rulesArray(field)"
-                    :readonly="readonly[field.fieldName]"
-                    :filter="filter[field.fieldName]"
-                    :field-name="field.fieldName"
-                    :content="content"
-                  />
-                </v-col>
-              </v-row>
-            </v-form>
-          </v-container>
+          <div>
+            <v-btn icon @click="dialog = false">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </div>
+        </v-card-title>
+        <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
+          <v-form ref="form" v-model="valid" :lazy-validation="lazy">
+            <v-row>
+              <v-col
+                v-for="field in fields"
+                :key="field.fieldName"
+                :class="field.cssClasses || 'col-12 col-md-6'"
+              >
+                <component
+                  :is="formControl(field) || null"
+                  v-model="formData[field.fieldName]"
+                  :field="field"
+                  :rules="rulesArray(field)"
+                  :readonly="readonly[field.fieldName]"
+                  :filter="filter[field.fieldName]"
+                  :field-name="field.fieldName"
+                  :content="content"
+                />
+              </v-col>
+            </v-row>
+          </v-form>
         </v-card-text>
         <v-divider></v-divider>
-        <v-card-actions class="pl-4">
+        <v-card-actions
+          class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
+        >
           <v-btn color="primary" depressed @click="onSave">Save</v-btn>
         </v-card-actions>
       </v-card>

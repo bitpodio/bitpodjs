@@ -257,12 +257,20 @@
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">Tags</div>
-          <div class="body-1">{{ formatField(data.event.Tags) }}</div>
+          <div class="body-1">
+            <v-chip
+              v-for="Tags in data.event.Tags"
+              :key="Tags"
+              small
+              class="ma-1"
+            >
+              {{ Tags }}
+            </v-chip>
+          </div>
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">Description</div>
           <div class="body-1">
-            {
             <div v-html="formatField(data.event.Description)" />
           </div>
         </v-flex>
@@ -302,7 +310,7 @@
             Settings
           </h2>
           <v-spacer></v-spacer>
-          <v-btn text small @click="eventsetting = true">
+          <v-btn text small @click="formdialog1 = true">
             <v-icon left>mdi-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
