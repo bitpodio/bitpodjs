@@ -33,7 +33,8 @@
         </v-flex>
         <v-chip class="my-2" label>
           {{ formatDate(data.event.StartDate) }} -
-          {{ formatDate(data.event.EndDate) }}
+          {{ formatDate(data.event.EndDate) }} -
+          {{ formatField(data.event.Timezone) }}
         </v-chip>
         <v-flex>
           <p class="blue--text">
@@ -297,7 +298,10 @@
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">Tags</div>
-          <div class="body-1">{{ formatField(data.event.Tags) }}</div>
+          <!-- <div class="body-1">{{ formatField(data.event.Tags) }}</div> -->
+          <div>
+            <span v-for="tag in data.event.Tags" :key="tag">#{{ tag }}</span>
+          </div>
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">Description</div>
@@ -475,36 +479,37 @@
         </v-flex>
       </div>
     </v-flex>
-
-    <v-dialog
-      v-model="editeventform"
-      persistent
-      scrollable
-      content-class="slide-form-default"
-      transition="dialog-bottom-transition"
-    >
-      <v-card>
-        <v-toolbar dense flat dark fixed color="accent">
-          <v-toolbar-title class="body-1"
-            >Edit Event Information</v-toolbar-title
-          >
-          <v-spacer></v-spacer>
-          <v-btn icon dark @click="editeventform = false">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </v-toolbar>
-        <v-divider></v-divider>
-        <v-card-text>
-          <v-row>
-            <v-col cols="12">
-              <v-text-field
-                v-model="formData.Title"
-                label="Event Name*"
-                required
-                outlined
-              ></v-text-field>
-            </v-col>
-            <!-- <v-col cols="12">
+    <v-form ref="form" v-model="valid">
+      <v-dialog
+        v-model="editeventform"
+        persistent
+        scrollable
+        content-class="slide-form-default"
+        transition="dialog-bottom-transition"
+      >
+        <v-card>
+          <v-toolbar dense flat dark fixed color="accent">
+            <v-toolbar-title class="body-1"
+              >Edit Event Information</v-toolbar-title
+            >
+            <v-spacer></v-spacer>
+            <v-btn icon dark @click="editeventform = false">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </v-toolbar>
+          <v-divider></v-divider>
+          <v-card-text>
+            <v-row>
+              <v-col cols="12">
+                <v-text-field
+                  v-model="formData.Title"
+                  label="Title *"
+                  :rules="nameRules"
+                  required
+                  outlined
+                ></v-text-field>
+              </v-col>
+              <!-- <v-col cols="12">
               <v-textarea
                 v-model="formData.Description"
                 clearable
@@ -515,162 +520,162 @@
                 >{{ formatField(data.event.Description) }}</v-textarea
               >
             </v-col> -->
-            <v-col cols="12">
-              <RichText v-model="formData.Description" label="Description" />
-            </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <v-dialog
-                ref="dialog"
-                v-model="modal"
-                :return-value.sync="date"
-                persistent
-                width="290px"
-              >
-                <template v-slot:activator="{ on, attrs }">
-                  <v-text-field
+              <v-col cols="12">
+                <RichText v-model="formData.Description" label="Description" />
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <div class="custom-date-time-picker">
+                  <v-datetime-picker
                     v-model="formData.StartDate"
-                    outlined
-                    label="Start Date"
-                    append-icon="fa-calendar"
-                    readonly
-                    v-bind="attrs"
-                    v-on="on"
-                  ></v-text-field>
-                </template>
-                <v-date-picker v-model="date" scrollable>
-                  <v-spacer></v-spacer>
-                  <v-btn text color="primary" @click="modal = false"
-                    >Cancel</v-btn
+                    label="Start Date *"
+                    :text-field-props="textFieldProps"
+                    @input="changeStartDate($event)"
                   >
-                  <v-btn
-                    text
-                    color="primary"
-                    @click="$refs.dialog.save(formData.StartDate)"
-                    >OK</v-btn
+                    <template slot="dateIcon">
+                      <v-icon>fas fa-calendar</v-icon>
+                    </template>
+                    <template slot="timeIcon">
+                      <v-icon>fas fa-clock</v-icon>
+                    </template>
+                  </v-datetime-picker>
+                  <span
+                    v-show="startdateMessage !== ''"
+                    class="error-message"
+                    >{{ startdateMessage }}</span
                   >
-                </v-date-picker>
-              </v-dialog>
-            </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <v-menu
-                v-model="menu2"
-                :close-on-content-click="false"
-                :nudge-right="40"
-                transition="scale-transition"
-                offset-y
-                min-width="290px"
-              >
-                <template v-slot:activator="{ on, attrs }">
-                  <v-text-field
-                    v-model="formData.EndDate"
-                    outlined
-                    label="End Date"
-                    append-icon="fa-calendar"
-                    v-bind="attrs"
-                    v-on="on"
-                  ></v-text-field>
-                </template>
-                <v-date-picker
-                  v-model="date"
-                  @input="menu2 = false"
-                ></v-date-picker>
-              </v-menu>
-            </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <v-select
-                v-model="formData.Timezone"
-                :items="['kolkata', 'New Delhi']"
-                label="Timezone*"
-                required
-                outlined
-              ></v-select>
-            </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <v-text-field
-                v-model="formData.Organizer"
-                label="Event organizer *"
-                outlined
-                required
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <v-text-field
-                v-model="formData.EventManager"
-                label="Event Manager/Team Email *"
-                outlined
-                required
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <v-select
-                v-model="formData.Tags"
-                :items="['Music', 'Economic']"
+                </div>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-datetime-picker
+                  v-model="formData.EndDate"
+                  label="End Date *"
+                  :text-field-props="textFieldProps"
+                  @input="changeEndDate($event)"
+                >
+                  <template slot="dateIcon">
+                    <v-icon>fas fa-calendar</v-icon>
+                  </template>
+                  <template slot="timeIcon">
+                    <v-icon>fas fa-clock</v-icon>
+                  </template>
+                </v-datetime-picker>
+                <span v-show="enddateMessage !== ''" class="error-message">{{
+                  enddateMessage
+                }}</span>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <Timezone
+                  v-model="formData.Timezone"
+                  :rules="[
+                    () => !!formData.Timezone || 'This field is required',
+                  ]"
+                  :field="timezonefield"
+                />
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                  v-model="formData.Organizer"
+                  label="Event organizer *"
+                  :rules="nameRules"
+                  outlined
+                  required
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4">
+                <v-text-field
+                  v-model="formData.EventManager"
+                  label="Event Manager/Team Email *"
+                  :rules="emailRules"
+                  outlined
+                  required
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <!-- <v-select
+                v-model="getTags"
+                :items="tags"
+                multiple
+                chips
                 label="Tags*"
                 outlined
-              ></v-select>
-            </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <!-- <v-text-field
+              ></v-select> -->
+                <v-select
+                  v-model="tags"
+                  :items="tagsDropdown"
+                  label="Tags"
+                  multiple
+                  chips
+                  persistent-hint
+                ></v-select>
+              </v-col>
+              <v-col cols="12">
+                <!-- <v-text-field
                 v-model="formData._VenueAddress.AddressLine"
                 label="Venue Address*"
                 outlined
                 required
               ></v-text-field> -->
-              <no-ssr>
-                <vue-google-autocomplete
-                  id="map"
-                  ref="address"
-                  classname="form-control"
-                  placeholder="Address"
-                  @placechanged="getAddressData"
-                >
-                </vue-google-autocomplete>
-              </no-ssr>
-            </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <v-text-field
-                v-model="formData.VenueName"
-                label="Venue Name *"
-                outlined
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <v-text-field
-                v-model="VenueAddress.City"
-                label="City *"
-                outlined
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <v-text-field
-                v-model="VenueAddress.State"
-                label="State*"
-                outlined
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <v-text-field
-                v-model="VenueAddress.Country"
-                label="Country*"
-                outlined
-              ></v-text-field>
-            </v-col>
-            <!-- <v-col cols="12" sm="6" md="4">
-              <v-text-field
-                v-model="formData._VenueAddress.PostalCode"
-                label="Zip Code*"
-                outlined
-              ></v-text-field>
-            </v-col> -->
-          </v-row>
-        </v-card-text>
-        <v-divider></v-divider>
-        <v-card-actions class="pl-4">
-          <v-btn color="primary" depressed @click="onSave">Save</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-
+                <no-ssr>
+                  <vue-google-autocomplete
+                    id="map"
+                    ref="address"
+                    v-model="VenueAddress.AddressLine"
+                    outlined
+                    label="Venue Address"
+                    classname="form-control"
+                    placeholder="Address"
+                    @placechanged="getAddressData"
+                  >
+                  </vue-google-autocomplete>
+                </no-ssr>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  v-model="formData.VenueName"
+                  :rules="namerules"
+                  label="Venue Name *"
+                  outlined
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  v-model="VenueAddress.City"
+                  label="City *"
+                  outlined
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  v-model="VenueAddress.State"
+                  label="State*"
+                  outlined
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  v-model="VenueAddress.Country"
+                  label="Country*"
+                  outlined
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  v-model="VenueAddress.PostalCode"
+                  label="Zip Code*"
+                  outlined
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-card-text>
+          <v-divider></v-divider>
+          <v-card-actions class="pl-4">
+            <v-btn :disabled="!valid" color="primary" depressed @click="onSave"
+              >Save</v-btn
+            >
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-form>
     <v-dialog
       v-model="editseoform"
       persistent
@@ -731,50 +736,66 @@
 <script>
 import gql from 'graphql-tag'
 import format from 'date-fns/format'
-// import loadRestData from '~/components/common/grid'
-// import VueGoogleAutocomplete from 'vue-google-autocomplete'
 import Grid from '~/components/common/grid'
 import event from '~/config/apps/event/gql/event.gql'
+import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin } from '~/utility'
 import RichText from '~/components/common/form/richtext.vue'
-// import { formatDistance } from 'date-fns'
-// import eventTags from '~/config/apps/event/gql/'
+// import CustomDate from '~/components/common/form/date.vue'
+import Timezone from '~/components/common/form/timezone'
+
 export default {
   components: {
     Grid,
     RichText,
     VueGoogleAutocomplete: () => import('vue-google-autocomplete'),
-    // VueGoogleAutocomplete,
+    // CustomDate,
+    Timezone,
   },
   mixins: [configLoaderMixin],
+  props: ['value', 'field'],
   data() {
     return {
       loading: 0,
+      // datetime: '',
+      valid: true,
       editeventform: false,
       editseoform: false,
       allowSpaces: false,
-      // EndDate: '',
-      // StartDate: '',
       address: '',
-      // date: '',
+      startdateMessage: '',
+      enddateMessage: '',
+      tags: [],
+      tagsDropdown: [],
+      nameRules: [(v) => !!v || 'Name is required'],
+      emailRules: [
+        (v) => !!v || 'E-mail is required',
+        (v) => /.+@.+/.test(v) || 'E-mail must be valid',
+      ],
+      textFieldProps: {
+        appendIcon: 'fa-calendar',
+        outlined: true,
+      },
       data: {
         event: {},
         badge: {},
         eventSummary: {},
       },
-      formData: {
-        // AutoUpdateSEOElements: this.allowSpaces,
-        // SEOTitle: '',
-        // SEODesc: '',
-        // SEOKeywords: '',
-        // Title: '',
-        // Description: '',
-        // EndDate: '',
-        // Timezone: '',
-        // Organizer: '',
-        // EventManager: '',
+      startDatefield: {
+        caption: 'StartDate',
+        type: 'datetime',
       },
+      endDatefield: {
+        caption: 'EndDate',
+        type: 'datetime',
+      },
+      timezonefield: {
+        caption: 'Timezone',
+        type: 'Timezone',
+        // fieldName: 'formData.Timezone',
+      },
+      formData: {},
       VenueAddress: {},
     }
   },
@@ -782,17 +803,17 @@ export default {
     content() {
       return this.contents ? this.contents.Event : null
     },
-    // StartDate1() {
-    //   debugger
-    //   return format(new Date(this.StartDate), 'PPp')
-    // },
   },
-
-  // mounted() {
-  //   // To demonstrate functionality of exposed component functions
-  //   // Here we make focus on the user input
-  //   this.$refs.address.focus()
-  // },
+  mounted() {
+    this.getTags()
+      .then((res) => {
+        this.tagsDropdown = res.map((i) => i.value)
+        return res
+      })
+      .catch((e) => {
+        console.log('ee', e)
+      })
+  },
   methods: {
     getAddressData(addressData, placeResultData, id) {
       debugger
@@ -816,16 +837,32 @@ export default {
     formatDatePicker(date) {
       return date ? format(new Date(date), 'PP') : ''
     },
+    changeStartDate() {
+      debugger
+      if (this.formData.StartDate === null)
+        this.startdateMessage = 'This field is required'
+      else if (this.formData.StartDate > this.formData.EndDate)
+        this.startdateMessage = 'Start date should not be greater than End date'
+      else this.startdateMessage = ''
+    },
+    changeEndDate() {
+      debugger
+      if (this.formData.EndDate === null)
+        this.enddateMessage = 'This field is required'
+      else if (this.formData.StartDate > this.formData.EndDate)
+        this.startdateMessage = 'Start date should not be greater than End date'
+      else this.enddateMessage = null
+    },
     onSave() {
       debugger
+      console.log('====e666', this.tags)
+      this.formData.Tags = this.tags
       console.log('asdasdasdfdg', this.formData)
       console.log('asdasdasd')
       Object.assign({}, this.formData, { _VenueAddress: this.VenueAddress })
       delete this.formData.VenueAddress
       delete this.formData._VenueAddress.LatLng
       console.log('======FormData', this.formData)
-      // this.formData._VenueAddress = ''
-      // delete this.formData._VenueAddress
       this.$axios
         .$patch(
           `https://event.test.bitpod.io/svc/api/Events/${this.$route.params.id}`,
@@ -844,6 +881,39 @@ export default {
           console.log('error', e)
         })
       // this.loadRestData()
+    },
+    getTags() {
+      return this.$apollo
+        .query({
+          query: gql`
+            ${generalconfiguration}
+          `,
+          variables: {
+            filters: {
+              where: {
+                type: 'EventTags',
+              },
+            },
+          },
+        })
+        .then((result) => {
+          console.log('result====', result)
+          const generalConfig = formatGQLResult(
+            result.data,
+            'GeneralConfiguration'
+          )
+          console.log('====res', generalConfig)
+          return generalConfig
+        })
+        .catch((e) => {
+          console.log(e)
+        })
+    },
+    dateValidation() {
+      debugger
+      this.errorMessage =
+        this.formData.EndDate === null ? 'this is error' : this.formData.EndDate
+      return this.errorMessage
     },
   },
   apollo: {
@@ -872,20 +942,20 @@ export default {
         const event = formatGQLResult(data, 'Event')
         const badge = formatGQLResult(data, 'Badge')
         const eventSummary = data.Event.EventGetEventSummery
-        if (event.length > 0) {
-          debugger
-          event[0].StartDate = this.formatDatePicker(event[0].StartDate)
-          event[0].EndDate = this.formatDatePicker(event[0].EndDate)
-        }
         debugger
         this.formData = event.length > 0 ? event[0] : {}
         this.formData.id = this.$route.params.id
+        this.tags = this.formData.Tags
+        this.formData.StartDate = new Date(this.formData.StartDate)
+        this.formData.EndDate = new Date(this.formData.EndDate)
+        console.log('====VenueAddress444', this.datetime)
+        console.log('====VenueAddress333', this.tags)
         console.log('====VenueAddress', event._VenueAddress)
         console.log('====VenueAddress1', this.formData._VenueAddress)
         // this.formData._VenueAddress =
         //   this.formData._VenueAddress != null ? this.formData._VenueAddress : ''
         this.VenueAddress =
-          this.formData._VenueAddress != null ? this.formData._VenueAddress : ''
+          this.formData._VenueAddress != null ? this.formData._VenueAddress : {}
         console.log('====FormData', this.formData)
         // console.log('====FormData', this.formData.VenueAddress.AddressLine)
         // console.log('====FormData', this.formData.VenueAddress.City)
@@ -948,5 +1018,13 @@ export default {
   padding: 10px;
   width: 100%;
   border-radius: 5px;
+}
+.v-picker {
+  border-radius: 0;
+}
+.error-message {
+  color: red;
+  padding: 10px;
+  font-size: 12px;
 }
 </style>
