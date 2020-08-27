@@ -615,7 +615,7 @@ export default {
           },
         },
       })
-      this.$apollo.queries.tableData.refresh()
+      this.refresh()
       return itemUpdated
     },
     async onDeleteItem(ids) {
@@ -634,7 +634,7 @@ export default {
           },
         },
       })
-      this.$apollo.queries.tableData.refresh()
+      this.refresh()
       return itemDeleted
     },
     refresh() {

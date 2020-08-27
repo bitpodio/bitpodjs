@@ -47,7 +47,9 @@
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions class="pl-4">
-          <v-btn color="primary" depressed @click="onSave">Save</v-btn>
+          <v-btn color="primary" :disabled="!valid" depressed @click="onSave"
+            >Save</v-btn
+          >
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -55,47 +57,16 @@
 </template>
 
 <script>
-import TextField from '~/components/common/form/text-field.vue'
-import Lookup from '~/components/common/form/lookup.vue'
-import Checkbox from '~/components/common/form/checkbox.vue'
-import CustomDate from '~/components/common/form/date.vue'
-import File from '~/components/common/form/file.vue'
-import RichText from '~/components/common/form/richtext.vue'
-import Timezone from '~/components/common/form/timezone'
 import { formValidationMixin } from '~/utility'
-import { formatTimezoneDateFieldsData } from '~/utility/form'
-
-function getGridFields(content, viewName) {
-  const view = content.views[viewName]
-  const fields = view.fields
-  const editableFields = []
-  for (const fieldName in fields) {
-    const field = fields[fieldName]
-    const newFormField = field.newForm === undefined ? true : field.newForm
-    if (newFormField) {
-      editableFields.push({
-        ...field,
-        fieldName,
-      })
-    }
-  }
-  editableFields.sort(
-    (field1, field2) => field1.displayOrder - field2.displayOrder
-  )
-  return editableFields
-}
+import {
+  formatTimezoneDateFieldsData,
+  getGridFields,
+  getMutationObject,
+  formControlsMixin,
+} from '~/utility/form'
 
 export default {
-  components: {
-    TextField,
-    Lookup,
-    Checkbox,
-    CustomDate,
-    File,
-    RichText,
-    Timezone,
-  },
-  mixins: [formValidationMixin],
+  mixins: [formControlsMixin, formValidationMixin],
   props: ['content', 'viewName', 'onNewItemSave'],
   data() {
     const fields = getGridFields(this.content, this.viewName)
@@ -110,32 +81,20 @@ export default {
   methods: {
     async onSave() {
       this.$refs.form.validate()
-      const formData = formatTimezoneDateFieldsData(this.formData, this.fields)
-      await this.onNewItemSave(formData)
-      this.dialog = false
-    },
-    formControl(field) {
-      switch (field.type) {
-        case 'lookup':
-          return 'Lookup'
-        case 'checkbox':
-          return 'Checkbox'
-        case 'date':
-        case 'datetime':
-          return 'CustomDate'
-        case 'file':
-          return 'File'
-        case 'string':
-        case 'number':
-          return 'TextField'
-        case 'richtext':
-          return 'RichText'
-        case 'timezone':
-          return 'Timezone'
+      if (this.valid) {
+        const formData = formatTimezoneDateFieldsData(
+          this.formData,
+          this.fields
+        )
+        const mutationObject = getMutationObject(
+          this.content,
+          this.viewName,
+          this
+        )
+        const newItemFormData = { ...mutationObject.new, ...formData }
+        await this.onNewItemSave(newItemFormData)
+        this.dialog = false
       }
-    },
-    validate() {
-      this.$refs.form.validate()
     },
   },
 }

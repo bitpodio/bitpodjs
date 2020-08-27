@@ -22,26 +22,33 @@
         </v-toolbar>
         <v-card-text>
           <v-container>
-            <v-row>
-              <v-col
-                v-for="field in fields"
-                :key="`${field.fieldName}${updateCount}`"
-                :class="field.cssClasses || 'col-12 col-md-6'"
-              >
-                <component
-                  :is="formControl(field) || null"
-                  v-model="formData[field.fieldName]"
-                  :field="field"
-                  :field-name="field.fieldName"
-                  :content="content"
-                />
-              </v-col>
-            </v-row>
+            <v-form ref="form" v-model="valid" :lazy-validation="lazy">
+              <v-row>
+                <v-col
+                  v-for="field in fields"
+                  :key="`${field.fieldName}${updateCount}`"
+                  :class="field.cssClasses || 'col-12 col-md-6'"
+                >
+                  <component
+                    :is="formControl(field) || null"
+                    v-model="formData[field.fieldName]"
+                    :field="field"
+                    :rules="rulesArray(field)"
+                    :readonly="readonly[field.fieldName]"
+                    :filter="filter[field.fieldName]"
+                    :field-name="field.fieldName"
+                    :content="content"
+                  />
+                </v-col>
+              </v-row>
+            </v-form>
           </v-container>
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions class="pl-4">
-          <v-btn color="primary" depressed @click="onSave">Save</v-btn>
+          <v-btn color="primary" :disabled="!valid" depressed @click="onSave"
+            >Save</v-btn
+          >
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -49,38 +56,16 @@
 </template>
 
 <script>
-import TextField from '~/components/common/form/text-field.vue'
-import Lookup from '~/components/common/form/lookup.vue'
-import Checkbox from '~/components/common/form/checkbox.vue'
-import RichText from '~/components/common/form/richtext.vue'
-
-function getGridFields(content, viewName) {
-  const view = content.views[viewName]
-  const fields = view.fields
-  const editableFields = []
-  for (const fieldName in fields) {
-    const field = fields[fieldName]
-    const newFormField = field.newForm === undefined ? true : field.newForm
-    if (newFormField) {
-      editableFields.push({
-        ...field,
-        fieldName,
-      })
-    }
-  }
-  editableFields.sort(
-    (field1, field2) => field1.displayOrder - field2.displayOrder
-  )
-  return editableFields
-}
+import { formValidationMixin } from '~/utility'
+import {
+  formatTimezoneDateFieldsData,
+  getGridFields,
+  getMutationObject,
+  formControlsMixin,
+} from '~/utility/form'
 
 export default {
-  components: {
-    TextField,
-    Lookup,
-    Checkbox,
-    RichText,
-  },
+  mixins: [formControlsMixin, formValidationMixin],
   props: ['content', 'viewName', 'items', 'onUpdateItem'],
   data() {
     const fields = getGridFields(this.content, this.viewName)
@@ -89,6 +74,8 @@ export default {
       formData: this.items[0],
       dialog: false,
       updateCount: 0,
+      valid: true,
+      lazy: false,
     }
   },
   watch: {
@@ -99,20 +86,20 @@ export default {
   },
   methods: {
     async onSave() {
-      await this.onUpdateItem(this.formData)
-      this.dialog = false
-    },
-    formControl(field) {
-      switch (field.type) {
-        case 'string':
-        case 'number':
-          return 'TextField'
-        case 'lookup':
-          return 'Lookup'
-        case 'checkbox':
-          return 'Checkbox'
-        case 'richtext':
-          return 'RichText'
+      this.$refs.form.validate()
+      if (this.valid) {
+        const formData = formatTimezoneDateFieldsData(
+          this.formData,
+          this.fields
+        )
+        const mutationObject = getMutationObject(
+          this.content,
+          this.viewName,
+          this
+        )
+        const newEditFormData = { ...mutationObject.edit, ...formData }
+        await this.onUpdateItem(newEditFormData)
+        this.dialog = false
       }
     },
   },
