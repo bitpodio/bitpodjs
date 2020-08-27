@@ -55,6 +55,12 @@ body {
 .name-initial::first-letter {
   font-size: 14px !important;
 }
+.fs-18 {
+  font-size: 18px;
+}
+.fs-30 {
+  font-size: 30px !important;
+}
 @media (max-width: 600px) {
   .slide-form,
   .slide-form-default {

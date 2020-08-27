@@ -1,7 +1,7 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer v-model="drawer" app>
-      <v-toolbar-title class="ml-0 pl-3 logo-ds d-flex align-center">
+    <v-navigation-drawer v-model="drawer" app class="nav-bar">
+      <v-toolbar-title class="ml-0 pl-3 px-2 py-2 logo-ds d-flex align-center">
         <span class="hidden-sm-and-down bitpod-logo logo-ds">
           <v-img
             src="https://res.cloudinary.com/mytestlogo/image/upload/v1578310772/logo/logo-favicon.png"
@@ -10,6 +10,13 @@
           ></v-img>
         </span>
         <span d-inline-flex align-center class="mx-2">Event</span>
+        <v-spacer></v-spacer>
+        <div v-if="drawer === true">
+          <v-app-bar-nav-icon
+            class="nav-drawer"
+            @click.stop="drawer = !drawer"
+          ></v-app-bar-nav-icon>
+        </div>
       </v-toolbar-title>
       <div class="text-center">
         <v-menu>
@@ -310,8 +317,17 @@
     </v-dialog>
 
     <v-app-bar app flat class="greybg">
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title class="pl-0">Event</v-toolbar-title>
+      <div
+        v-if="drawer === false"
+        class="ml-xs-0"
+        :class="drawer ? '' : 'ml-md-n4 mr-md-2'"
+      >
+        <v-app-bar-nav-icon
+          :ripple="false"
+          @click.stop="drawer = !drawer"
+        ></v-app-bar-nav-icon>
+      </div>
+      <v-toolbar-title class="pl-0 ml-n2">Event </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn class="ma-2" tile outlined>
         UPGARDE
@@ -405,9 +421,6 @@
 
 <script>
 export default {
-  props: {
-    source: String,
-  },
   data: () => ({
     date: new Date().toISOString().substr(0, 10),
     menu: false,
@@ -422,37 +435,37 @@ export default {
     account: false,
     message: false,
     items: [
-      { icon: 'mdi-view-dashboard', text: 'Eventboard', to: '/' },
+      { icon: 'fa fa-tachometer', text: 'Eventboard', to: '/' },
       { heading: 'Event' },
       {
-        icon: 'mdi-calendar-text',
+        icon: 'fa fa-calendar',
         text: 'Events',
         to: '/apps/event/list/Event/All Events',
       },
       {
-        icon: 'mdi-account-plus',
+        icon: 'fa fa-user-plus',
         text: 'Registrations',
         to: '/apps/event/list/Registrations/Registrations',
       },
       { heading: 'Promotions' },
       {
-        icon: 'mdi-cog',
+        icon: 'fa fa-building',
         text: 'Discount Code',
         to: '/apps/event/list/DiscountCodes/Discount Codes',
       },
       { heading: 'Members' },
       {
-        icon: 'mdi-account-multiple-outline',
+        icon: 'fa fa-users',
         text: 'Members',
         to: '/apps/event/list/EventCustomers/Members',
       },
       {
-        icon: 'mdi-account-box-outline',
+        icon: 'fa fa-address-book-o',
         text: 'Contacts',
         to: '/apps/event/list/Contacts/Contacts',
       },
       { heading: 'Task' },
-      { icon: 'mdi-cellphone-link', text: 'My Task', to: '' },
+      { icon: 'fa fa-tasks', text: 'My Task', to: '' },
     ],
   }),
   async created() {
@@ -490,5 +503,14 @@ export default {
 .app-name {
   font-size: 24px;
   font-weight: 300;
+}
+.nav-drawer {
+  display: none;
+}
+.nav-bar:hover .nav-drawer {
+  display: block;
+}
+.nav-bar .fa {
+  font-size: 20px;
 }
 </style>
