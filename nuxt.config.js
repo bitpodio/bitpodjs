@@ -82,13 +82,21 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/apollo',
     '@nuxtjs/auth-next',
+    [
+      'nuxt-gmaps',
+      {
+        key: 'AIzaSyCPS6SZlor8qxfpul-dKyN6566XG2R5dFM',
+        // you can use libraries: ['places']
+      },
+    ],
   ],
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
+    // baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
+    baseURL: `http://localhost:3000${basePath}`,
   },
   /*
    ** vuetify module configuration
