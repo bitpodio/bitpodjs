@@ -1,0 +1,16 @@
+query($filters: JSON) {
+  RegistrationType {
+    RegistrationTypeFind(filter: $filters) {
+      edges {
+        node {
+            id
+            Name
+            isDefault
+            ColorCode
+            MaxQuantityAllowed
+            EventId
+        }
+      }
+    }
+  }
+}

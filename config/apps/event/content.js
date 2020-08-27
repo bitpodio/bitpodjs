@@ -2,6 +2,7 @@ import registrationStatusOptions from './gql/registrationStatusOptions.gql'
 import registrationList from './gql/registrationList.gql'
 import discountCodes from './gql/discountCodes.gql'
 import eventList from './gql/eventlist.gql'
+import eventNames from './gql/eventNames.gql'
 import contactList from './gql/contactList.gql'
 import memberList from './gql/memberList.gql'
 import eventAttendees from './gql/eventAttendees.gql'
@@ -9,8 +10,10 @@ import eventInvites from './gql/eventInvites.gql'
 import eventTickets from './gql/eventTickets.gql'
 import eventDiscountCodes from './gql/eventDiscountCodes.gql'
 import eventSession from './gql/eventSession.gql'
+import eventRecurringSession from './gql/eventRecurringSession.gql'
 import eventTasks from './gql/eventTasks.gql'
 import eventRegistrationForm from './gql/eventRegistrationForm.gql'
+import registrationType from './gql/registrationType.gql'
 import { getData } from './rest'
 // import { getBPMNData } from './rest/bpmn.js'
 
@@ -82,7 +85,7 @@ export default {
             caption: 'Title',
             searchEnable: true,
             sortEnable: true,
-            columnWidth: '150px',
+            columnWidth: '250px',
             type: 'string',
           },
           Timezone: {
@@ -191,7 +194,7 @@ export default {
           },
         },
         template: {
-          name: 'link-grid',
+          name: 'event-grid',
           context: {
             basePath: '/event',
           },
@@ -222,7 +225,7 @@ export default {
             caption: 'Title',
             searchEnable: true,
             sortEnable: true,
-            columnWidth: '150px',
+            columnWidth: '250px',
             type: 'string',
           },
           StartDate: {
@@ -323,7 +326,7 @@ export default {
           },
         },
         template: {
-          name: 'link-grid',
+          name: 'event-grid',
           context: {
             basePath: '/event',
           },
@@ -549,6 +552,17 @@ export default {
             columnWidth: '150px',
             type: 'date',
           },
+          EventId: {
+            displayOrder: 9,
+            caption: 'EventId',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            newForm: true,
+            editForm: true,
+            hidden: true,
+          },
         },
         template: {
           name: 'event-grid',
@@ -666,7 +680,7 @@ export default {
           },
         },
         template: {
-          name: 'link-grid',
+          name: 'event-grid',
           context: {
             basePath: '/event',
           },
@@ -706,22 +720,63 @@ export default {
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            cssClasses: 'col-12 col-md-12',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            required: true,
+            rules: [
+              (v) => {
+                return !!v || 'Title is required'
+              },
+              (v) => {
+                return (
+                  (v && v.length <= 10) ||
+                  'Title must be less than 10 characters'
+                )
+              },
+            ],
           },
           Amount: {
-            displayOrder: 3,
+            displayOrder: 4,
             caption: 'Amount',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
-            type: 'string',
+            type: 'number',
+            cssClasses: 'col-6 col-md-6',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            readonly(value, data) {
+              const type = data.Type
+              return type === 'Free' || type === ''
+            },
           },
           Type: {
-            displayOrder: 4,
+            displayOrder: 3,
             caption: 'Type',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
-            type: 'string',
+            type: 'lookup',
+            cssClasses: 'col-6 col-md-6',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            dataSource: {
+              query: registrationStatusOptions,
+              itemText: 'value',
+              itemValue: 'key',
+              filter(data) {
+                return {
+                  type: 'TicketType',
+                }
+              },
+            },
           },
           TicketCount: {
             displayOrder: 5,
@@ -729,7 +784,61 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
+            type: 'number',
+            cssClasses: 'col-6 col-md-6',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+          },
+          Group: {
+            displayOrder: 5,
+            caption: 'Group Name',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
             type: 'string',
+            cssClasses: 'col-6 col-md-6',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+          },
+          Attendee: {
+            displayOrder: 5,
+            caption: 'Registration Type',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'lookup',
+            cssClasses: 'col-6 col-md-6',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            dataSource: {
+              query: registrationType,
+              itemText: 'Name',
+              itemValue: 'id',
+              filter(data) {
+                return {
+                  EventId: this.$route.params.id,
+                }
+              },
+            },
+          },
+          DisplayOrder: {
+            displayOrder: 6,
+            caption: 'Display Order',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'number',
+            cssClasses: 'col-6 col-md-6',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
           },
           AvailableCount: {
             displayOrder: 6,
@@ -738,6 +847,11 @@ export default {
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            cssClasses: 'col-6 col-md-6',
+            hidden: false,
+            inlineEdit: true,
+            newForm: false,
+            editForm: false,
           },
           StartDate: {
             displayOrder: 7,
@@ -745,7 +859,17 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
-            type: 'date',
+            type: 'datetime',
+            cssClasses: 'col-6 col-md-6',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Start Date is required'
+              },
+            ],
           },
           EndDate: {
             displayOrder: 8,
@@ -753,7 +877,61 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
-            type: 'date',
+            type: 'datetime',
+            cssClasses: 'col-6 col-md-6',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'End Date is required'
+              },
+            ],
+          },
+          ValidateQty: {
+            displayOrder: 8,
+            caption: 'Validate Quantity',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'checkbox',
+            cssClasses: 'col-6 col-md-6',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+          },
+          CheckGroupDiscount: {
+            displayOrder: 8,
+            caption: 'Check Group Discount',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'checkbox',
+            cssClasses: 'col-6 col-md-6',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+          },
+          Events: {
+            displayOrder: 8,
+            caption: 'EventId',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            cssClasses: 'col-6 col-md-6',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'EventId is required'
+              },
+            ],
           },
         },
         template: {
@@ -797,6 +975,35 @@ export default {
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            cssClasses: 'col-12 col-md-12',
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+          },
+          maxUsageCount: {
+            displayOrder: 2,
+            caption: 'Max Usage Count',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'number',
+            cssClasses: 'col-6 col-md-6',
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            hidden: true,
+          },
+          minApplicableOrderAmount: {
+            displayOrder: 2,
+            caption: 'Min Applicable Amount',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '220px',
+            type: 'number',
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            hidden: true,
           },
           offerValue: {
             displayOrder: 3,
@@ -804,7 +1011,12 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
-            type: 'string',
+            type: 'number',
+            cssClasses: 'col-6 col-md-6',
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            hidden: true,
           },
           validTill: {
             displayOrder: 4,
@@ -813,6 +1025,11 @@ export default {
             sortEnable: true,
             columnWidth: '150px',
             type: 'date',
+            cssClasses: 'col-6 col-md-6',
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            hidden: true,
           },
           isActive: {
             displayOrder: 5,
@@ -820,7 +1037,50 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
+            type: 'checkbox',
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            hidden: false,
+          },
+          maxApplicableAmount: {
+            displayOrder: 5,
+            caption: 'Max Applicable Amount',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'number',
+            cssClasses: 'col-6 col-md-6',
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            hidden: true,
+          },
+          Description: {
+            displayOrder: 5,
+            caption: 'Description',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'richtext',
+            hidden: true,
+            cssClasses: 'col-12 col-md-12',
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+          },
+          EventId: {
+            displayOrder: 8,
+            caption: 'EventId',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
             type: 'string',
+            cssClasses: 'col-6 col-md-6',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
           },
         },
         template: {
@@ -1151,7 +1411,15 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
-            type: 'date',
+            type: 'datetime',
+          },
+          Timezone: {
+            displayOrder: 7,
+            caption: 'Timezone',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'timezone',
           },
           createdDate: {
             displayOrder: 8,
@@ -1184,6 +1452,19 @@ export default {
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+          },
+          EventId: {
+            displayOrder: 12,
+            caption: 'EventId',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            cssClasses: 'col-6 col-md-6',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
           },
         },
         template: {
@@ -1287,6 +1568,105 @@ export default {
         title: 'eventRegistrationForm',
         type: 'list',
       },
+      eventRecurringSession: {
+        ui: {
+          hideDefaultHeader: false,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: true,
+          hideFilter: false,
+          hideSearch: true,
+        },
+        hidden: true,
+        fields: {
+          Name: {
+            displayOrder: 1,
+            caption: 'Name',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          ScheduledType: {
+            displayOrder: 2,
+            caption: 'ScheduledType',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '250px',
+            type: 'string',
+          },
+          StartTime: {
+            displayOrder: 3,
+            caption: 'StartTime',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '130px',
+            type: 'string',
+          },
+          EndTime: {
+            displayOrder: 4,
+            caption: 'EndTime',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '130px',
+            type: 'string',
+          },
+          Type: {
+            displayOrder: 4,
+            caption: 'Type',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '100px',
+            type: 'string',
+          },
+          SeatReservation: {
+            displayOrder: 6,
+            caption: 'Seat Reservation',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          TicketName: {
+            displayOrder: 7,
+            caption: 'Tickets',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '200px',
+            type: 'string',
+          },
+          isActive: {
+            displayOrder: 8,
+            caption: 'Active',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '100px',
+            type: 'string',
+          },
+        },
+        template: {
+          name: 'recurring-grid',
+          context: {
+            basePath: '/event',
+          },
+        },
+        dataSource: {
+          query: eventRecurringSession,
+          defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          model: 'Session',
+          filter(ctx) {
+            return {
+              where: {
+                EventId: ctx.$route.params.id,
+              },
+            }
+          },
+        },
+        title: 'Recurring Session',
+        type: 'list',
+      },
     },
   },
 
@@ -1353,14 +1733,29 @@ export default {
         },
         default: true,
         fields: {
-          EventName: {
-            displayOrder: 6,
-            caption: 'EventName',
+          FirstName: {
+            displayOrder: 1,
+            caption: 'First Name',
             searchEnable: true,
             sortEnable: true,
-            columnWidth: '180px',
+            columnWidth: '150px',
             type: 'string',
-            cssClasses: 'col-12 col-md-12',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+          },
+          LastName: {
+            displayOrder: 1,
+            caption: 'Last Name',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
           },
           PaymentMethod: {
             displayOrder: 10,
@@ -1369,6 +1764,9 @@ export default {
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            inlineEdit: false,
+            newForm: false,
+            editForm: false,
           },
           CompanyName: {
             displayOrder: 4,
@@ -1376,7 +1774,11 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
-            type: 'richtext',
+            type: 'string',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
           },
           Phone: {
             displayOrder: 5,
@@ -1385,6 +1787,100 @@ export default {
             sortEnable: true,
             columnWidth: '100px',
             type: 'string',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+          },
+          Email: {
+            displayOrder: 3,
+            caption: 'Email',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '130px',
+            type: 'string',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+          },
+          '_CurrentAddress.AddressLine': {
+            caption: 'Address',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            inlineEdit: false,
+            newForm: true,
+            editForm: true,
+            hidden: true,
+          },
+          '_CurrentAddress.City': {
+            caption: 'City',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            inlineEdit: false,
+            newForm: true,
+            editForm: true,
+            hidden: true,
+          },
+          '_CurrentAddress.State': {
+            caption: 'State',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            inlineEdit: false,
+            newForm: true,
+            editForm: true,
+            hidden: true,
+          },
+          '_CurrentAddress.PostalCode': {
+            caption: 'Zip',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            inlineEdit: false,
+            newForm: true,
+            editForm: true,
+            hidden: true,
+          },
+          '_CurrentAddress.Country': {
+            caption: 'Country',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            inlineEdit: false,
+            newForm: true,
+            editForm: true,
+            hidden: true,
+          },
+          EventName: {
+            displayOrder: 6,
+            caption: 'Event Name',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'lookup',
+            cssClasses: 'col-12 col-md-12',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            dataSource: {
+              query: eventNames,
+              itemText: 'Title',
+              itemValue: 'id',
+              filter(data) {
+                return {
+                  Status: `Open for registration`,
+                }
+              },
+            },
           },
           Status: {
             displayOrder: 9,
@@ -1393,13 +1889,17 @@ export default {
             sortEnable: true,
             columnWidth: '100px',
             type: 'lookup',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
             dataSource: {
               query: registrationStatusOptions,
               itemText: 'value',
               itemValue: 'key',
               filter(data) {
                 return {
-                  type: data.EventName,
+                  type: 'RegistrationStatus',
                 }
               },
             },
@@ -1423,7 +1923,7 @@ export default {
             columnWidth: '150px',
             type: 'date',
             inlineEdit: false,
-            newForm: true,
+            newForm: false,
             editForm: false,
           },
           TicketQuantity: {
@@ -1452,26 +1952,9 @@ export default {
             sortEnable: true,
             columnWidth: '150px',
             type: 'number',
-          },
-          Email: {
-            displayOrder: 3,
-            caption: 'Email',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '130px',
-            type: 'string',
-            readonly(value, data) {
-              const firstName = data.FirstName
-              return firstName && firstName.length <= 5
-            },
-            rules: [
-              (v) => {
-                return !!v || 'E-mail is required'
-              },
-              function (value, data) {
-                return /.+@.+\..+/.test(value) || 'E-mail must be valid'
-              },
-            ],
+            inlineEdit: false,
+            newForm: false,
+            editForm: false,
           },
           action: {
             displayOrder: 11,
@@ -1487,28 +1970,21 @@ export default {
               return true
             },
           },
-          FirstName: {
-            displayOrder: 2,
-            caption: 'First Name',
+          TicketId: {
+            caption: 'Tickets',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
-            type: 'string',
-            hidden: true,
-            inlineEdit: true,
+            type: 'lookup',
+            inlineEdit: false,
             newForm: true,
-            editForm: false,
-            rules: [
-              (v) => {
-                return !!v || 'FirstName is required'
-              },
-              (v) => {
-                return (
-                  (v && v.length <= 10) ||
-                  'Name must be less than 10 characters'
-                )
-              },
-            ],
+            editForm: true,
+            hidden: true,
+            dataSource: {
+              query: eventTickets,
+              itemText: 'Code',
+              itemValue: 'id',
+            },
           },
         },
         template: {
@@ -2067,6 +2543,9 @@ export default {
             sortEnable: true,
             columnWidth: '220px',
             type: 'number',
+            inlineEdit: false,
+            newForm: false,
+            editForm: false,
           },
           codeTitle: {
             displayOrder: 1,
@@ -2075,6 +2554,23 @@ export default {
             sortEnable: true,
             columnWidth: '180px',
             type: 'string',
+            cssClasses: 'col-12 col-md-12',
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+          },
+          Description: {
+            displayOrder: 2,
+            caption: 'Description',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'richtext',
+            hidden: true,
+            cssClasses: 'col-12 col-md-12',
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
           },
           isActive: {
             displayOrder: 4,
@@ -2082,7 +2578,23 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '120px',
-            type: 'string',
+            type: 'checkbox',
+            cssClasses: 'col-6 col-md-6',
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+          },
+          isPercent: {
+            displayOrder: 3,
+            caption: 'Percent',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '130px',
+            type: 'checkbox',
+            cssClasses: 'col-6 col-md-6',
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
           },
           validTill: {
             displayOrder: 7,
@@ -2090,7 +2602,24 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '180px',
-            type: 'date',
+            type: 'datetime',
+            cssClasses: 'col-6 col-md-6',
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+          },
+          maxApplicableAmount: {
+            displayOrder: 8,
+            caption: 'Max Applicable Amount',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'number',
+            cssClasses: 'col-6 col-md-6',
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            hidden: true,
           },
           maxUsageCount: {
             displayOrder: 8,
@@ -2099,6 +2628,10 @@ export default {
             sortEnable: true,
             columnWidth: '180px',
             type: 'number',
+            cssClasses: 'col-6 col-md-6',
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
           },
           offerValue: {
             displayOrder: 5,
@@ -2106,7 +2639,7 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '130px',
-            type: 'string',
+            type: 'number',
           },
           minApplicableOrderAmount: {
             displayOrder: 6,
@@ -2123,14 +2656,35 @@ export default {
             sortEnable: true,
             columnWidth: '250px',
             type: 'date',
+            cssClasses: 'col-12 col-md-12',
+            inlineEdit: false,
+            newForm: false,
+            editForm: false,
           },
-          isPercent: {
-            displayOrder: 3,
-            caption: 'Percent',
+          EventId: {
+            caption: 'Event',
             searchEnable: true,
             sortEnable: true,
-            columnWidth: '130px',
-            type: 'string',
+            columnWidth: '180px',
+            type: 'lookup',
+            cssClasses: 'col-6 col-md-6',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            dataSource: {
+              query: eventNames,
+              defaultSort: 'createdDate DESC',
+              type: 'graphql',
+              model: 'Event',
+              itemText: 'Title',
+              itemValue: 'id',
+              filter(data) {
+                return {
+                  Status: `Open for registration`,
+                }
+              },
+            },
           },
         },
         template: {
@@ -2141,6 +2695,7 @@ export default {
         },
         dataSource: {
           query: discountCodes,
+          model: 'OfferCode',
           filter: {
             limit: '10',
             order: 'createdDate DESC',
@@ -2794,7 +3349,7 @@ export default {
         },
         hidden: true,
         template: {
-          name: 'link-grid',
+          name: 'contact-grid',
           context: {
             basePath: '/contact',
           },
