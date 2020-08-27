@@ -1,0 +1,12 @@
+query($filters: JSON) {
+  Event {
+    EventFind(filter: $filters) {
+      edges {
+        node {
+          id
+          Title
+        }
+      }
+    }
+  }
+}

@@ -123,3 +123,7 @@ export const configLoaderMixin = {
     this.contents = contentFactory.default
   },
 }
+
+export function getIdFromAtob(encodedId) {
+  return encodedId ? atob(encodedId).split(':')[1] : ''
+}

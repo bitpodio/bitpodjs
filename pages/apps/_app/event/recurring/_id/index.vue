@@ -34,40 +34,9 @@
             </v-list>
           </v-menu>
         </v-flex>
-        <v-chip class="my-2" label>
-          {{ formatDate(data.event.StartDate) }} -
-          {{ formatDate(data.event.EndDate) }} -
-          {{ formatField(data.event.Timezone) }}
+        <v-chip class="my-2">
+          Recurring Event
         </v-chip>
-        <v-flex>
-          <p class="blue--text">
-            <i class="fa fa-map-marker" aria-hidden="true"></i>
-            <a class="blue--text">
-              {{ data.event.VenueName }}
-              {{
-                formatField(
-                  data.event._VenueAddress &&
-                    data.event._VenueAddress.AddressLine
-                )
-              }}
-              {{
-                formatField(
-                  data.event._VenueAddress && data.event._VenueAddress.City
-                )
-              }}
-              {{
-                formatField(
-                  data.event._VenueAddress && data.event._VenueAddress.State
-                )
-              }}
-              {{
-                formatField(
-                  data.event._VenueAddress && data.event._VenueAddress.Country
-                )
-              }}
-            </a>
-          </p>
-        </v-flex>
 
         <v-flex d-flex flex-md-row flex-lg-row flex-column my-2>
           <div
@@ -106,29 +75,15 @@
             class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
           >
             <div
-              class="pa-2 warning d-flex justify-center align-center event-tile-left"
+              class="pa-2 primary d-flex justify-center align-center event-tile-left"
             >
-              <i class="fa fa fa-banknote" aria-hidden="true"></i>
+              <i class="fa fa-black-board" aria-hidden="true"></i>
             </div>
             <div class="d-flex flex-column pa-2 event-tile-right greybg">
               <div class="event-tile-value text-truncate">
-                {{ data.eventSummary.Revenue }}
+                {{ data.eventSummary.TotalSession }}
               </div>
-              <div class="caption text-truncate">Revenue</div>
-            </div>
-          </div>
-
-          <div
-            class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
-          >
-            <div
-              class="pa-2 primary d-flex justify-center align-center event-tile-left"
-            >
-              <i class="fa fa-calendar2" aria-hidden="true"></i>
-            </div>
-            <div class="d-flex flex-column pa-2 event-tile-right greybg">
-              <div class="event-tile-value text-truncate">10 Days</div>
-              <div class="caption text-truncate">Opens in</div>
+              <div class="caption text-truncate">Total Sessions</div>
             </div>
           </div>
         </v-flex>
@@ -199,6 +154,14 @@
       </div>
       <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
         <h2 class="body-1 pb-2">
+          <i class="fa fa-black-board pr-1" aria-hidden="true"></i>Recurring
+          Sessions
+        </h2>
+        <v-divider></v-divider>
+        <Grid view-name="eventRecurringSession" :content="content" />
+      </div>
+      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
+        <h2 class="body-1 pb-2">
           <i class="fa fa-users pr-1" aria-hidden="true"></i>Attendees
         </h2>
         <v-divider></v-divider>
@@ -242,13 +205,6 @@
       </div>
       <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
         <h2 class="body-1 pb-2">
-          <i class="fa fa-black-board pr-1" aria-hidden="true"></i> Sessions
-        </h2>
-        <v-divider></v-divider>
-        <Grid view-name="eventSession" :content="content" />
-      </div>
-      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
-        <h2 class="body-1 pb-2">
           <i class="fa fa-mic pr-1" aria-hidden="true"></i> Speakers
         </h2>
         <v-divider></v-divider>
@@ -284,7 +240,7 @@
             Information
           </h2>
           <v-spacer></v-spacer>
-          <v-btn text small @click.stop="eventForm = true">
+          <v-btn text small @click.stop="eventform = true">
             <v-icon left>mdi-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
@@ -301,32 +257,14 @@
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">Tags</div>
-          <!-- <div class="body-1">{{ formatField(data.event.Tags) }}</div> -->
-          <div>
-            <span v-for="tag in data.event.Tags" :key="tag">#{{ tag }}</span>
-          </div>
+          <div class="body-1">{{ formatField(data.event.Tags) }}</div>
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">Description</div>
           <div class="body-1">
+            {
             <div v-html="formatField(data.event.Description)" />
           </div>
-        </v-flex>
-      </div>
-
-      <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
-        <v-flex class="d-flex justify-center align-center pb-2">
-          <h2 class="body-1 pb-1">
-            <i class="fa fa-id-badge pr-1" aria-hidden="true"></i> Badge
-          </h2>
-          <v-spacer></v-spacer>
-          <v-btn text small @click="newbadge = true">
-            <v-icon left>mdi-plus</v-icon>Create
-          </v-btn>
-        </v-flex>
-        <v-divider></v-divider>
-        <v-flex my-3 d-flex justify-center align-center>
-          <div v-html="data.badge.Template" />
         </v-flex>
       </div>
 
@@ -364,7 +302,7 @@
             Settings
           </h2>
           <v-spacer></v-spacer>
-          <v-btn text small @click="eventSetting = true">
+          <v-btn text small @click="eventsetting = true">
             <v-icon left>mdi-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
@@ -391,6 +329,10 @@
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">Event Link</div>
+          <div class="body-1">{{ formatField(data.event.UniqLink) }}</div>
+        </v-flex>
+        <v-flex my-3>
+          <div class="body-2 text--secondary">Session Link</div>
           <div class="body-1">{{ formatField(data.event.UniqLink) }}</div>
         </v-flex>
         <v-flex my-3>
@@ -458,7 +400,7 @@
             Registration Page Settings
           </h2>
           <v-spacer></v-spacer>
-          <v-btn text small @click="siteSetting = true">
+          <v-btn text small @click="sitesetting = true">
             <v-icon left>mdi-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
@@ -501,89 +443,34 @@
         </v-flex>
       </div>
     </v-flex>
-    <editEventForm :eventForm.sync="eventForm" />
     <editSeoForm :seoForm.sync="seoForm" />
-    <editEventSetting :eventSetting.sync="eventSetting" />
-    <editSiteSetting :siteSetting.sync="siteSetting" />
   </v-flex>
 </template>
 <script>
 import gql from 'graphql-tag'
 import format from 'date-fns/format'
-import editSeoForm from './editSeoForm.vue'
-import editEventForm from './editEventForm.vue'
-import editEventSetting from './editEventSetting.vue'
-import editSiteSetting from './editSiteSetting.vue'
+import editSeoForm from '~/pages/apps/_app/event/_id/editSeoForm.vue'
 import Grid from '~/components/common/grid'
 import event from '~/config/apps/event/gql/event.gql'
-import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin } from '~/utility'
-import RichText from '~/components/common/form/richtext.vue'
-// import CustomDate from '~/components/common/form/date.vue'
-import Timezone from '~/components/common/form/timezone'
 
 export default {
+  layout: 'event',
   components: {
     Grid,
-    RichText,
-    VueGoogleAutocomplete: () => import('vue-google-autocomplete'),
-    // CustomDate,
-    Timezone,
     editSeoForm,
-    editEventForm,
-    editEventSetting,
-    editSiteSetting,
   },
   mixins: [configLoaderMixin],
-  props: ['value', 'field'],
   data() {
     return {
       loading: 0,
-      // datetime: '',
-      valid: true,
-      editeventform: false,
-      editseoform: false,
-      allowSpaces: false,
-      address: '',
-      startdateMessage: '',
-      enddateMessage: '',
-      tags: [],
-      tagsDropdown: [],
-      nameRules: [(v) => !!v || 'Name is required'],
-      emailRules: [
-        (v) => !!v || 'E-mail is required',
-        (v) => /.+@.+/.test(v) || 'E-mail must be valid',
-      ],
-      textFieldProps: {
-        appendIcon: 'fa-calendar',
-        outlined: true,
-      },
-      allowSpaces: false,
-      eventForm: false,
       seoForm: false,
-      eventSetting: false,
-      siteSetting: false,
       data: {
         event: {},
         badge: {},
         eventSummary: {},
       },
-      startDatefield: {
-        caption: 'StartDate',
-        type: 'datetime',
-      },
-      endDatefield: {
-        caption: 'EndDate',
-        type: 'datetime',
-      },
-      timezonefield: {
-        caption: 'Timezone',
-        type: 'Timezone',
-        // fieldName: 'formData.Timezone',
-      },
-      formData: {},
-      VenueAddress: {},
     }
   },
   computed: {
@@ -591,116 +478,12 @@ export default {
       return this.contents ? this.contents.Event : null
     },
   },
-  mounted() {
-    this.getTags()
-      .then((res) => {
-        this.tagsDropdown = res.map((i) => i.value)
-        return res
-      })
-      .catch((e) => {
-        console.log('ee', e)
-      })
-  },
   methods: {
-    getAddressData(addressData, placeResultData, id) {
-      debugger
-      this.address = addressData
-      console.log('==addressData==', addressData)
-      this.VenueAddress.AddressLine =
-        addressData.route + ', ' + addressData.administrative_area_level_1
-      this.formData.VenueName = addressData.route
-      this.VenueAddress.Country = addressData.country
-      this.VenueAddress.City = addressData.locality
-      this.VenueAddress.State = addressData.locality
-      // this.formData.LatLng.lat = parseInt(addressData.latitude)
-      // this.formData.LatLng.lng = parseInt(addressData.longitude)
-    },
     formatDate(date) {
-      return date ? format(new Date(date), 'PPpp') : ''
+      return date ? format(new Date(date), 'PPp') : ''
     },
     formatField(fieldValue) {
       return fieldValue || '-'
-    },
-    formatDatePicker(date) {
-      return date ? format(new Date(date), 'PP') : ''
-    },
-    changeStartDate() {
-      debugger
-      if (this.formData.StartDate === null)
-        this.startdateMessage = 'This field is required'
-      else if (this.formData.StartDate > this.formData.EndDate)
-        this.startdateMessage = 'Start date should not be greater than End date'
-      else this.startdateMessage = ''
-    },
-    changeEndDate() {
-      debugger
-      if (this.formData.EndDate === null)
-        this.enddateMessage = 'This field is required'
-      else if (this.formData.StartDate > this.formData.EndDate)
-        this.startdateMessage = 'Start date should not be greater than End date'
-      else this.enddateMessage = null
-    },
-    onSave() {
-      debugger
-      console.log('====e666', this.tags)
-      this.formData.Tags = this.tags
-      console.log('asdasdasdfdg', this.formData)
-      console.log('asdasdasd')
-      Object.assign({}, this.formData, { _VenueAddress: this.VenueAddress })
-      delete this.formData.VenueAddress
-      delete this.formData._VenueAddress.LatLng
-      console.log('======FormData', this.formData)
-      this.$axios
-        .$patch(
-          `https://event.test.bitpod.io/svc/api/Events/${this.$route.params.id}`,
-          {
-            ...this.formData,
-          }
-        )
-        .then((res) => {
-          this.editseoform = false
-          this.editeventform = false
-          // this.data.event.id = this.$route.params.id
-          // this.formData.id = this.$route.params.id
-          return (this.data.event = res)
-        })
-        .catch((e) => {
-          console.log('error', e)
-        })
-      // this.loadRestData()
-    },
-    getTags() {
-      return this.$apollo
-        .query({
-          query: gql`
-            ${generalconfiguration}
-          `,
-          variables: {
-            filters: {
-              where: {
-                type: 'EventTags',
-              },
-            },
-          },
-        })
-        .then((result) => {
-          console.log('result====', result)
-          const generalConfig = formatGQLResult(
-            result.data,
-            'GeneralConfiguration'
-          )
-          console.log('====res', generalConfig)
-          return generalConfig
-        })
-        .catch((e) => {
-          console.log(e)
-        })
-    },
-    dateValidation() {
-      debugger
-      this.errorMessage =
-        this.formData.EndDate === null ? 'this is error' : this.formData.EndDate
-      return this.errorMessage
     },
   },
   apollo: {
@@ -729,33 +512,6 @@ export default {
         const event = formatGQLResult(data, 'Event')
         const badge = formatGQLResult(data, 'Badge')
         const eventSummary = data.Event.EventGetEventSummery
-        debugger
-        this.formData = event.length > 0 ? event[0] : {}
-        this.formData.id = this.$route.params.id
-        this.tags = this.formData.Tags
-        this.formData.StartDate = new Date(this.formData.StartDate)
-        this.formData.EndDate = new Date(this.formData.EndDate)
-        console.log('====VenueAddress444', this.datetime)
-        console.log('====VenueAddress333', this.tags)
-        console.log('====VenueAddress', event._VenueAddress)
-        console.log('====VenueAddress1', this.formData._VenueAddress)
-        // this.formData._VenueAddress =
-        //   this.formData._VenueAddress != null ? this.formData._VenueAddress : ''
-        this.VenueAddress =
-          this.formData._VenueAddress != null ? this.formData._VenueAddress : {}
-        console.log('====FormData', this.formData)
-        // console.log('====FormData', this.formData.VenueAddress.AddressLine)
-        // console.log('====FormData', this.formData.VenueAddress.City)
-        // if (this.formData._VenueAddress) {
-        //   this.formData._VenueAddress.AddressLine = this.formData._VenueAddress.AddressLine
-        //   this.formData._VenueAddress.Country = this.formData._VenueAddress.Country
-        //   this.formData._VenueAddress.City = this.formData._VenueAddress.City
-        //   this.formData._VenueAddress.State = this.formData._VenueAddress.State
-        // } else {
-        //   this.formData._VenueAddress = ''
-        // }
-        // this.StartDate = this.formData.StartDate
-        // this.date = this.formData.StartDate
         return {
           event: event.length > 0 ? event[0] : {},
           badge: badge.length > 0 ? badge[0] : {},
@@ -799,19 +555,5 @@ export default {
 }
 .event-tile-value {
   font-size: 20px;
-}
-.form-control {
-  border: 1px solid #ccc;
-  padding: 10px;
-  width: 100%;
-  border-radius: 5px;
-}
-.v-picker {
-  border-radius: 0;
-}
-.error-message {
-  color: red;
-  padding: 10px;
-  font-size: 12px;
 }
 </style>
