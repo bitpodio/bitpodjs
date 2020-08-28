@@ -952,6 +952,14 @@ export default {
               },
             }
           },
+          mutation(ctx) {
+            return {
+              new: {
+                Events: ctx.$route.params.id,
+              },
+              edit: {},
+            }
+          },
         },
         title: 'eventTickets',
         type: 'list',
