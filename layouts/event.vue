@@ -335,9 +335,107 @@
       <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
         <v-icon>mdi-invert-colors</v-icon>
       </v-btn>
-      <v-btn icon>
-        <v-icon>mdi-apps</v-icon>
-      </v-btn>
+      <v-menu
+        offset-y
+        :nudge-width="250"
+        transition="slide-y-transition"
+        bottom
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn icon v-bind="attrs" v-on="on">
+            <v-icon>mdi-apps</v-icon>
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item>
+            <v-list-item-title class="d-flex flex-wrap app-container">
+              <nuxt-link
+                to="/apps/event/list/Event/All Events"
+                class="text-decoration-none"
+              >
+                <v-flex
+                  class="d-flex justify-center align-center flex-column app-view"
+                >
+                  <v-flex class="d-flex justify-center align-center">
+                    <i
+                      class="fa fa-calendar fs-36 success--text"
+                      aria-hidden="true"
+                    ></i>
+                  </v-flex>
+                  <v-flex
+                    ><div class="pa-1 caption text--primary">
+                      Event
+                    </div></v-flex
+                  >
+                </v-flex>
+              </nuxt-link>
+              <v-flex
+                class="d-flex justify-center align-center flex-column app-view"
+              >
+                <v-flex class="d-flex justify-center align-center">
+                  <i
+                    class="fa fa-cogs fs-36 primary--text"
+                    aria-hidden="true"
+                  ></i>
+                </v-flex>
+                <v-flex
+                  ><div class="pa-1 caption text--primary">
+                    Administration
+                  </div></v-flex
+                >
+              </v-flex>
+              <v-flex
+                class="d-flex justify-center align-center flex-column app-view"
+              >
+                <v-flex class="d-flex justify-center align-center">
+                  <i
+                    class="fa fa-help-circle fs-36 warning--text"
+                    aria-hidden="true"
+                  ></i>
+                </v-flex>
+                <v-flex
+                  ><div class="pa-1 caption text--primary">
+                    Help Center
+                  </div></v-flex
+                >
+              </v-flex>
+              <a
+                href="https://dev-survey.bitpod.io/"
+                class="text-decoration-none"
+                target="_blank"
+              >
+                <v-flex
+                  class="d-flex justify-center align-center flex-column app-view"
+                >
+                  <v-flex class="d-flex justify-center align-center">
+                    <v-img src="https://survey.bitpod.io/favicon.ico"></v-img>
+                  </v-flex>
+                  <v-flex
+                    ><div class="pa-1 caption text--primary">
+                      Survey
+                    </div></v-flex
+                  >
+                </v-flex>
+              </a>
+              <v-flex
+                class="d-flex justify-center align-center flex-column app-view"
+              >
+                <v-flex class="d-flex justify-center align-center">
+                  <i
+                    class="fa fa-grid-alt fs-36 primary--text"
+                    aria-hidden="true"
+                  ></i>
+                </v-flex>
+                <v-flex
+                  ><div class="pa-1 caption text--primary">
+                    Seat Map
+                  </div></v-flex
+                >
+              </v-flex>
+            </v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
       <v-btn icon>
         <v-icon>mdi-bell</v-icon>
       </v-btn>
@@ -485,32 +583,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-.bitpod-logo img {
-  max-width: 130px;
-}
-.wd-full {
-  width: -webkit-fill-available;
-}
-.nav-title {
-  font-size: 14px !important;
-  font-weight: 400 !important;
-}
-.nav-subheader {
-  font-size: 14px !important;
-}
-.app-name {
-  font-size: 24px;
-  font-weight: 300;
-}
-.nav-drawer {
-  display: none;
-}
-.nav-bar:hover .nav-drawer {
-  display: block;
-}
-.nav-bar .fa {
-  font-size: 20px;
-}
-</style>

@@ -61,6 +61,50 @@ body {
 .fs-30 {
   font-size: 30px !important;
 }
+.bitpod-logo img {
+  max-width: 130px;
+}
+.wd-full {
+  width: -webkit-fill-available;
+}
+.nav-title {
+  font-size: 14px !important;
+  font-weight: 400 !important;
+}
+.nav-subheader {
+  font-size: 14px !important;
+}
+.app-name {
+  font-size: 24px;
+  font-weight: 300;
+}
+.nav-drawer {
+  display: none;
+}
+.nav-bar:hover .nav-drawer {
+  display: block;
+}
+.nav-bar .fa {
+  font-size: 20px;
+}
+.fs-36 {
+  font-size: 36px !important;
+}
+.app-container {
+  max-width: 300px;
+}
+.app-view {
+  min-width: 90px !important;
+  max-width: 90px !important;
+  min-height: 90px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  padding-top: 10px;
+}
+.app-view:hover {
+  background-color: #f6fafe;
+}
 @media (max-width: 600px) {
   .slide-form,
   .slide-form-default {
