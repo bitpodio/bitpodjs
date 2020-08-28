@@ -12,9 +12,9 @@ import eventDiscountCodes from './gql/eventDiscountCodes.gql'
 import eventSession from './gql/eventSession.gql'
 import eventRecurringSession from './gql/eventRecurringSession.gql'
 import eventTasks from './gql/eventTasks.gql'
-import eventRegistrationForm from './gql/eventRegistrationForm.gql'
 import registrationType from './gql/registrationType.gql'
 import { getData } from './rest'
+import eventSpeakers from './gql/eventSpeakers.gql'
 // import { getBPMNData } from './rest/bpmn.js'
 
 export default {
@@ -102,7 +102,7 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
-            type: 'date',
+            type: 'datetime',
           },
           EndDate: {
             displayOrder: 3,
@@ -194,7 +194,7 @@ export default {
           },
         },
         template: {
-          name: 'event-grid',
+          name: 'link-grid',
           context: {
             basePath: '/event',
           },
@@ -234,7 +234,7 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
-            type: 'date',
+            type: 'datetime',
           },
           EndDate: {
             displayOrder: 3,
@@ -242,7 +242,7 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
-            type: 'date',
+            type: 'datetime',
           },
           Privacy: {
             displayOrder: 4,
@@ -1024,7 +1024,7 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
-            type: 'date',
+            type: 'datetime',
             cssClasses: 'col-6 col-md-6',
             inlineEdit: true,
             newForm: true,
@@ -1190,6 +1190,24 @@ export default {
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            cssClasses: 'col-12 col-md-12',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+          },
+          Description: {
+            displayOrder: 2,
+            caption: 'Description',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'richtext',
+            cssClasses: 'col-12 col-md-12',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
           },
           StartDate: {
             displayOrder: 3,
@@ -1197,7 +1215,12 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
-            type: 'date',
+            type: 'datetime',
+            cssClasses: 'col-6 col-md-6',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
           },
           EndDate: {
             displayOrder: 4,
@@ -1205,7 +1228,12 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
-            type: 'date',
+            type: 'datetime',
+            cssClasses: 'col-6 col-md-6',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
           },
           Timezone: {
             displayOrder: 5,
@@ -1213,7 +1241,12 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
-            type: 'string',
+            type: 'timezone',
+            cssClasses: 'col-6 col-md-6',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
           },
           Type: {
             displayOrder: 6,
@@ -1221,7 +1254,22 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
-            type: 'string',
+            type: 'lookup',
+            cssClasses: 'col-6 col-md-6',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            dataSource: {
+              query: registrationStatusOptions,
+              itemText: 'value',
+              itemValue: 'key',
+              filter(data) {
+                return {
+                  type: 'SessionType',
+                }
+              },
+            },
           },
           Speaker: {
             displayOrder: 7,
@@ -1229,7 +1277,23 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
-            type: 'string',
+            type: 'lookup',
+            cssClasses: 'col-6 col-md-6',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            dataSource: {
+              query: eventSpeakers,
+              itemText: 'EventSpeakers.edges.node.FirstName',
+              itemValue: 'EventSpeakers.edges.node.id',
+              filter(data) {
+                debugger
+                return {
+                  id: this.$route.params.id,
+                }
+              },
+            },
           },
           Location: {
             displayOrder: 8,
@@ -1238,6 +1302,11 @@ export default {
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            cssClasses: 'col-6 col-md-6',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
           },
           TicketName: {
             displayOrder: 9,
@@ -1245,11 +1314,62 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
+            type: 'lookup',
+            cssClasses: 'col-6 col-md-6',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            dataSource: {
+              query: eventTickets,
+              itemText: 'Code',
+              itemValue: 'id',
+              filter(data) {
+                return {
+                  Events: this.$route.params.id,
+                }
+              },
+            },
+          },
+          SessionTicket: {
+            displayOrder: 9,
+            caption: 'SessionTicket',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'lookup',
+            cssClasses: 'col-6 col-md-6',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            dataSource: {
+              query: eventTickets,
+              itemText: 'Code',
+              itemValue: 'id',
+              filter(data) {
+                return {
+                  Events: this.$route.params.id,
+                }
+              },
+            },
+          },
+          EventId: {
+            displayOrder: 8,
+            caption: 'EventId',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
             type: 'string',
+            cssClasses: 'col-6 col-md-6',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
           },
         },
         template: {
-          name: 'event-grid',
+          name: 'eventSession-grid',
           context: {
             basePath: '/event',
           },
@@ -1372,22 +1492,11 @@ export default {
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
-          },
-          Status: {
-            displayOrder: 3,
-            caption: 'Status',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
-          },
-          Action: {
-            displayOrder: 4,
-            caption: 'Wait For',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
+            cssClasses: 'col-12 col-md-12',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
           },
           Category: {
             displayOrder: 5,
@@ -1395,7 +1504,68 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
-            type: 'string',
+            type: 'lookup',
+            cssClasses: 'col-6 col-md-6',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            dataSource: {
+              query: registrationStatusOptions,
+              itemText: 'value',
+              itemValue: 'key',
+              filter(data) {
+                return {
+                  type: 'Event_TaskCategory',
+                }
+              },
+            },
+          },
+          Status: {
+            displayOrder: 3,
+            caption: 'Status',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'lookup',
+            cssClasses: 'col-6 col-md-6',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            dataSource: {
+              query: registrationStatusOptions,
+              itemText: 'value',
+              itemValue: 'key',
+              filter(data) {
+                return {
+                  type: 'Event_TaskStatus',
+                }
+              },
+            },
+          },
+          Action: {
+            displayOrder: 4,
+            caption: 'Wait For',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'lookup',
+            cssClasses: 'col-6 col-md-6',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            dataSource: {
+              query: registrationStatusOptions,
+              itemText: 'value',
+              itemValue: 'key',
+              filter(data) {
+                return {
+                  type: 'Event_TaskAction',
+                }
+              },
+            },
           },
           Type: {
             displayOrder: 6,
@@ -1404,6 +1574,10 @@ export default {
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            hidden: false,
+            inlineEdit: true,
+            newForm: false,
+            editForm: false,
           },
           DueDate: {
             displayOrder: 7,
@@ -1412,6 +1586,10 @@ export default {
             sortEnable: true,
             columnWidth: '150px',
             type: 'datetime',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
           },
           Timezone: {
             displayOrder: 7,
@@ -1420,6 +1598,10 @@ export default {
             sortEnable: true,
             columnWidth: '150px',
             type: 'timezone',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
           },
           createdDate: {
             displayOrder: 8,
@@ -1428,6 +1610,10 @@ export default {
             sortEnable: true,
             columnWidth: '150px',
             type: 'date',
+            hidden: false,
+            inlineEdit: true,
+            newForm: false,
+            editForm: false,
           },
           createdBy: {
             displayOrder: 9,
@@ -1436,6 +1622,10 @@ export default {
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            hidden: false,
+            inlineEdit: true,
+            newForm: false,
+            editForm: false,
           },
           TemplateName: {
             displayOrder: 10,
@@ -1444,6 +1634,10 @@ export default {
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            hidden: false,
+            inlineEdit: true,
+            newForm: false,
+            editForm: false,
           },
           Edit: {
             displayOrder: 11,
@@ -1452,6 +1646,10 @@ export default {
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            hidden: false,
+            inlineEdit: true,
+            newForm: false,
+            editForm: false,
           },
           EventId: {
             displayOrder: 12,
@@ -1557,13 +1755,9 @@ export default {
           },
         },
         dataSource: {
-          query: eventRegistrationForm,
-          defaultSort: 'createdDate DESC',
-          type: 'graphql',
-          model: 'RegistrationForm',
-          filter: {
-            where: {},
-          },
+          type: 'rest',
+          getData: (ctx) =>
+            getData(`/Events/${ctx.$route.params.id}/RegistrationForm`),
         },
         title: 'eventRegistrationForm',
         type: 'list',
@@ -1731,7 +1925,7 @@ export default {
           hideFilter: true,
           hideSearch: false,
         },
-        default: true,
+        default: false,
         fields: {
           FirstName: {
             displayOrder: 1,
@@ -1875,7 +2069,7 @@ export default {
               query: eventNames,
               itemText: 'Title',
               itemValue: 'id',
-              filter(data) {
+              filter(ctx) {
                 return {
                   Status: `Open for registration`,
                 }
@@ -1897,7 +2091,7 @@ export default {
               query: registrationStatusOptions,
               itemText: 'value',
               itemValue: 'key',
-              filter(data) {
+              filter(ctx) {
                 return {
                   type: 'RegistrationStatus',
                 }
@@ -1945,47 +2139,6 @@ export default {
             newForm: false,
             editForm: false,
           },
-          TotalAmount: {
-            displayOrder: 8,
-            caption: 'TotalAmount',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'number',
-            inlineEdit: false,
-            newForm: false,
-            editForm: false,
-          },
-          action: {
-            displayOrder: 11,
-            caption: 'Action',
-            searchEnable: false,
-            sortEnable: false,
-            columnWidth: '130px',
-            type: 'action',
-            inlineEdit: false,
-            newForm: false,
-            editForm: false,
-            condtion: ({ item, items, index }) => {
-              return true
-            },
-          },
-          TicketId: {
-            caption: 'Tickets',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'lookup',
-            inlineEdit: false,
-            newForm: true,
-            editForm: true,
-            hidden: true,
-            dataSource: {
-              query: eventTickets,
-              itemText: 'Code',
-              itemValue: 'id',
-            },
-          },
         },
         template: {
           name: 'registration-grid',
@@ -1998,9 +2151,6 @@ export default {
           defaultSort: 'createdDate DESC',
           type: 'graphql',
           model: 'Registration',
-          filter: {
-            where: {},
-          },
         },
         title: 'Registrations',
         type: 'list',
@@ -2234,7 +2384,7 @@ export default {
             searchEnable: false,
             sortEnable: false,
             columnWidth: '130px',
-            type: 'Date',
+            type: 'datetime',
           },
           EndDate: {
             displayOrder: 5,
@@ -2242,7 +2392,7 @@ export default {
             searchEnable: false,
             sortEnable: false,
             columnWidth: '130px',
-            type: 'date',
+            type: 'datetime',
           },
           Type: {
             displayOrder: 6,
@@ -2448,7 +2598,7 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '130px',
-            type: 'date',
+            type: 'datetime',
           },
         },
         template: {
@@ -3420,7 +3570,7 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '135px',
-            type: 'date',
+            type: 'datetime',
           },
           TemplateName: {
             displayOrder: 7,

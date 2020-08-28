@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <div>{{ field.caption }}</div>
     <jodit-editor v-model="content" />
   </div>
 </template>

@@ -1,8 +1,14 @@
 <template>
   <div>
-    <v-chip class="ma-2" small color="green" text-color="white">
-      {{ value }}
-    </v-chip>
+    <v-chip
+      v-for="value in value"
+      :key="value"
+      class="ma-2"
+      small
+      color="green"
+      text-color="white"
+      >{{ value }}</v-chip
+    >
   </div>
 </template>
 

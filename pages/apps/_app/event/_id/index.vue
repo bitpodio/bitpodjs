@@ -497,10 +497,10 @@
         </v-flex>
       </div>
     </v-flex>
-    <editEventForm :eventForm.sync="eventForm" />
-    <editSeoForm :seoForm.sync="seoForm" />
-    <editEventSetting :eventSetting.sync="eventSetting" />
-    <editSiteSetting :siteSetting.sync="siteSetting" />
+    <editEventForm :event-form.sync="eventForm" />
+    <editSeoForm :seo-form.sync="seoForm" />
+    <editEventSetting :event-setting.sync="eventSetting" />
+    <editSiteSetting :site-setting.sync="siteSetting" />
   </v-flex>
 </template>
 <script>

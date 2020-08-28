@@ -53,6 +53,11 @@ import TextField from '~/components/common/form/text-field.vue'
 import Lookup from '~/components/common/form/lookup.vue'
 import Checkbox from '~/components/common/form/checkbox.vue'
 import RichText from '~/components/common/form/richtext.vue'
+import CustomDate from '~/components/common/form/date.vue'
+import File from '~/components/common/form/file.vue'
+import Timezone from '~/components/common/form/timezone'
+import { formValidationMixin } from '~/utility'
+import { formatTimezoneDateFieldsData } from '~/utility/form'
 
 function getGridFields(content, viewName) {
   const view = content.views[viewName]
@@ -80,7 +85,11 @@ export default {
     Lookup,
     Checkbox,
     RichText,
+    Timezone,
+    CustomDate,
+    File,
   },
+  mixins: [formValidationMixin],
   props: ['content', 'viewName', 'items', 'onUpdateItem'],
   data() {
     const fields = getGridFields(this.content, this.viewName)
@@ -99,20 +108,29 @@ export default {
   },
   methods: {
     async onSave() {
-      await this.onUpdateItem(this.formData)
+      this.$refs.form.validate()
+      const formData = formatTimezoneDateFieldsData(this.formData, this.fields)
+      await this.onUpdateItem(formData)
       this.dialog = false
     },
     formControl(field) {
       switch (field.type) {
-        case 'string':
-        case 'number':
-          return 'TextField'
         case 'lookup':
           return 'Lookup'
         case 'checkbox':
           return 'Checkbox'
+        case 'date':
+        case 'datetime':
+          return 'CustomDate'
+        case 'file':
+          return 'File'
+        case 'string':
+        case 'number':
+          return 'TextField'
         case 'richtext':
           return 'RichText'
+        case 'timezone':
+          return 'Timezone'
       }
     },
   },
