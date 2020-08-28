@@ -96,7 +96,7 @@
           @click.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
       </div>
-      <v-toolbar-title class="pl-0 ml-n2">Event </v-toolbar-title>
+      <v-toolbar-title class="pl-0 ml-n2">Administration </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn class="ma-2" tile outlined>
         UPGARDE
