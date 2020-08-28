@@ -79,10 +79,10 @@ body {
   font-weight: 300;
 }
 .nav-drawer {
-  display: none;
+  display: none !important;
 }
 .nav-bar:hover .nav-drawer {
-  display: block;
+  display: block !important;
 }
 .nav-bar .fa {
   font-size: 20px;
