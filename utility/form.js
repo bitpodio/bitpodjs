@@ -27,7 +27,7 @@ export function formatTimezoneDateFieldsData(formData, fields) {
       ? zonedTimeToUtc(fieldData, selectedTimezone)
       : fieldData
   }
-  return newFormData
+  return { ...formData, ...newFormData }
 }
 export function getGridFields(content, viewName, isEditForm) {
   const view = content.views[viewName]
