@@ -29,14 +29,16 @@ export function formatTimezoneDateFieldsData(formData, fields) {
   }
   return newFormData
 }
-export function getGridFields(content, viewName) {
+export function getGridFields(content, viewName, isEditForm) {
   const view = content.views[viewName]
   const fields = view.fields
   const editableFields = []
   for (const fieldName in fields) {
     const field = fields[fieldName]
-    const newFormField = field.newForm === undefined ? true : field.newForm
-    if (newFormField) {
+    const showAttribute = isEditForm ? 'editForm' : 'newForm'
+    const isFormField =
+      field[showAttribute] === undefined ? true : field[showAttribute]
+    if (isFormField) {
       editableFields.push({
         ...field,
         fieldName,

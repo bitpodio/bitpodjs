@@ -758,6 +758,7 @@ export default {
           Type: {
             displayOrder: 3,
             caption: 'Type',
+            label: 'Ticket Type',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
@@ -811,6 +812,7 @@ export default {
             sortEnable: true,
             columnWidth: '150px',
             type: 'lookup',
+            multiple: true,
             cssClasses: 'col-6 col-md-6',
             hidden: true,
             inlineEdit: true,
