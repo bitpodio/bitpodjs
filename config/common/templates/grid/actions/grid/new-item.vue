@@ -65,14 +65,28 @@ import {
   formControlsMixin,
 } from '~/utility/form'
 
+function getFormDefaultValues(content, viewName) {
+  const view = content.views[viewName]
+  const fields = view.fields
+  const intialFormData = {}
+  for (const fieldName in fields) {
+    const field = fields[fieldName]
+    const defaultVal =
+      typeof field.default === 'undefined' ? null : field.default
+    intialFormData[fieldName] = defaultVal
+  }
+  return intialFormData
+}
+
 export default {
   mixins: [formControlsMixin, formValidationMixin],
   props: ['content', 'viewName', 'onNewItemSave'],
   data() {
     const fields = getGridFields(this.content, this.viewName)
+    const intialFormData = getFormDefaultValues(this.content, this.viewName)
     return {
       fields,
-      formData: {},
+      formData: intialFormData,
       dialog: false,
       valid: true,
       lazy: false,

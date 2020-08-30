@@ -6,6 +6,7 @@
       item-text="label"
       item-value="tzCode"
       :label="field.caption"
+      :rules="rules"
       outlined
       @change="onChange"
     ></v-autocomplete>
@@ -32,12 +33,19 @@ export default {
       type: String,
       required: true,
     },
+    rules: {
+      type: Array,
+      default: () => [],
+    },
   },
   data() {
     return {
       items: timezoneList || [],
       timezone: this.value || Intl.DateTimeFormat().resolvedOptions().timeZone,
     }
+  },
+  mounted() {
+    this.onChange()
   },
   methods: {
     onChange() {

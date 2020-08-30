@@ -7,6 +7,8 @@
       :item-value="itemValue"
       :loading="isLoading"
       :label="field.caption"
+      :multiple="field.multiple"
+      :rules="rules"
       outlined
       @change="onChange"
     ></v-autocomplete>
@@ -46,6 +48,10 @@ export default {
     filter: {
       type: Object,
       default: () => {},
+    },
+    rules: {
+      type: Array,
+      default: () => [],
     },
   },
   data() {
