@@ -56,7 +56,7 @@ export default {
         appendIcon: 'fa-calendar',
         outlined: true,
       },
-      dateTime: '',
+      dateTime: new Date(),
     }
   },
   computed: {
