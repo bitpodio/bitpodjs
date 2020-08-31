@@ -7,6 +7,10 @@
       :item-value="itemValue"
       :loading="isLoading"
       :label="field.caption"
+<<<<<<< HEAD
+=======
+      :multiple="field.multiple"
+>>>>>>> f74bbdca12fbf37a7a6118dc9a920d4cdb7fa1af
       :rules="rules"
       outlined
       @change="onChange"
@@ -48,7 +52,14 @@ export default {
       type: Object,
       default: () => {},
     },
+<<<<<<< HEAD
     rules: {},
+=======
+    rules: {
+      type: Array,
+      default: () => [],
+    },
+>>>>>>> f74bbdca12fbf37a7a6118dc9a920d4cdb7fa1af
   },
   data() {
     return {

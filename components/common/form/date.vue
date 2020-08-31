@@ -2,7 +2,7 @@
   <div class="custom-date-time-picker">
     <div v-if="isDateTime">
       <v-datetime-picker
-        v-model="dateTime"
+        v-model="date"
         :label="field.caption"
         :text-field-props="textFieldProps"
         @input="onCalendarChange"
@@ -27,6 +27,7 @@
           <v-text-field
             v-model="date"
             :label="field.caption"
+            :rules="rules"
             readonly
             outlined
             v-bind="attrs"
@@ -47,16 +48,25 @@
 
 <script>
 export default {
-  props: ['value', 'field'],
+  props: ['value', 'field', 'rules'],
   data() {
+    const dateTime = this.value || new Date()
+    const date =
+      this.field.type === 'datetime'
+        ? new Date(dateTime)
+        : new Date(dateTime).toISOString().substr(0, 10)
     return {
-      date: new Date().toISOString().substr(0, 10),
+      date,
       modal: false,
       textFieldProps: {
         appendIcon: 'fa-calendar',
         outlined: true,
+        rules: this.rules,
       },
+<<<<<<< HEAD
       dateTime: '',
+=======
+>>>>>>> f74bbdca12fbf37a7a6118dc9a920d4cdb7fa1af
     }
   },
   computed: {
@@ -64,10 +74,12 @@ export default {
       return this.field.type === 'datetime'
     },
   },
+  mounted() {
+    this.onCalendarChange()
+  },
   methods: {
     onCalendarChange() {
-      const date = this.isDateTime ? this.dateTime : this.date
-      this.$emit('input', date)
+      this.$emit('input', this.date)
     },
   },
 }

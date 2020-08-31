@@ -3,13 +3,14 @@
     <v-file-input
       multiple
       :label="field.caption"
+      :rules="rules"
       @change="onChange"
     ></v-file-input>
   </div>
 </template>
 <script>
 export default {
-  props: ['value', 'field'],
+  props: ['value', 'field', 'rules'],
   data() {
     return {
       fileIds: this.value,

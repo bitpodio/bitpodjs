@@ -686,6 +686,7 @@ export default {
             newForm: true,
             editForm: true,
             required: true,
+            default: 'code50',
             rules: [
               (v) => {
                 return !!v || 'Title is required'
@@ -704,6 +705,7 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
+<<<<<<< HEAD
             rules: [
               (v, data) => {
                 debugger
@@ -716,10 +718,18 @@ export default {
                 )
               },
             ],
+=======
+            default: 100,
+            readonly(value, data) {
+              const type = data.Type
+              return type === 'Free' || type === ''
+            },
+>>>>>>> f74bbdca12fbf37a7a6118dc9a920d4cdb7fa1af
           },
           Type: {
             displayOrder: 3,
             caption: 'Type',
+            label: 'Ticket Type',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
@@ -729,6 +739,7 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
+            default: 'Paid',
             dataSource: {
               query: registrationStatusOptions,
               itemText: 'value',
@@ -778,6 +789,7 @@ export default {
             sortEnable: true,
             columnWidth: '150px',
             type: 'lookup',
+            multiple: true,
             cssClasses: 'col-6 col-md-6',
             hidden: true,
             inlineEdit: true,
