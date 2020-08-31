@@ -184,7 +184,24 @@
                   class="d-flex justify-center align-center flex-column app-view"
                 >
                   <v-flex class="d-flex justify-center align-center">
-                    <v-img src="https://survey.bitpod.io/favicon.ico"></v-img>
+                    <!-- <v-img src="https://survey.bitpod.io/favicon.ico"></v-img> -->
+                    <v-img
+                      src="https://survey.bitpod.io/favicon.ico"
+                      lazy-src="https://survey.bitpod.io/favicon.ico"
+                    >
+                      <template v-slot:placeholder>
+                        <v-row
+                          class="fill-height ma-0"
+                          align="center"
+                          justify="center"
+                        >
+                          <v-progress-circular
+                            indeterminate
+                            color="grey lighten-5"
+                          ></v-progress-circular>
+                        </v-row>
+                      </template>
+                    </v-img>
                   </v-flex>
                   <v-flex
                     ><div class="pa-1 caption text--primary">
@@ -315,7 +332,7 @@ export default {
       {
         icon: 'fa fa-network',
         text: 'Organization',
-        to: '/apps/admin/list/Event/All Events',
+        to: '/apps/admin/list/event/organizationdetails',
       },
       {
         icon: 'fa fa-cog',
@@ -325,17 +342,17 @@ export default {
       {
         icon: 'fa fa-file',
         text: 'Invite Templates',
-        to: '',
+        to: '/apps/admin/list/marketingtemplates/templates',
       },
       {
         icon: 'fa fa-grid-alt',
         text: 'Seat Maps',
-        to: '',
+        to: '/apps/admin/list/seatmaps/seatmaps',
       },
       {
         icon: 'fa fa-id-badge',
         text: 'Badges Templates',
-        to: '',
+        to: '/apps/admin/list/badge/badge',
       },
       {
         icon: 'fa fa-file-text-o',

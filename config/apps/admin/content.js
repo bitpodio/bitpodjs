@@ -1,151 +1,13 @@
-import eventList from './gql/eventlist.gql'
 import registrationForm from './gql/registrationForm.gql'
 import organizationDetails from './gql/organizationDetails.gql'
+import badgeList from './gql/badgeList.gql'
+import seatmapsList from './gql/seatmapsList.gql'
+import marketingTemplates from './gql/marketingTemplates.gql'
 // import { getBPMNData } from './rest/bpmn.js'
 
 export default {
-  Event: {
+  event: {
     views: {
-      'All Events': {
-        ui: {
-          hideDefaultHeader: false,
-          hideDefaultFooter: false,
-          showExpand: false,
-          singleExpand: false,
-          showSelect: true,
-          hideFilter: false,
-          hideSearch: true,
-        },
-        default: false,
-        fields: {
-          Title: {
-            displayOrder: 2,
-            caption: 'Title',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '250px',
-            type: 'string',
-          },
-          Timezone: {
-            displayOrder: 3,
-            caption: 'Timezone',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'timezone',
-          },
-          StartDate: {
-            displayOrder: 3,
-            caption: 'Start Date',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'date',
-          },
-          EndDate: {
-            displayOrder: 3,
-            caption: 'End Date',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'datetime',
-          },
-          Privacy: {
-            displayOrder: 4,
-            caption: 'Privacy',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
-          },
-          Tags: {
-            displayOrder: 5,
-            caption: 'Tags',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
-          },
-          VenueName: {
-            displayOrder: 6,
-            caption: 'Venue',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
-          },
-          '_VenueAddress.AddressLine': {
-            displayOrder: 7,
-            caption: 'Address',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
-          },
-          '_VenueAddress.City': {
-            displayOrder: 8,
-            caption: 'City',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
-          },
-          '_VenueAddress.State': {
-            displayOrder: 9,
-            caption: 'State',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
-          },
-          '_VenueAddress.PostalCode': {
-            displayOrder: 10,
-            caption: 'Postal Code',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
-          },
-          '_VenueAddress.Country': {
-            displayOrder: 11,
-            caption: 'Country',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
-          },
-          Currency: {
-            displayOrder: 12,
-            caption: 'Currency',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
-          },
-          createdDate: {
-            displayOrder: 13,
-            caption: 'Created Date',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'date',
-          },
-        },
-        template: {
-          name: 'event-grid',
-          context: {
-            basePath: '/event',
-          },
-        },
-        dataSource: {
-          query: eventList,
-          defaultSort: 'createdDate DESC',
-          type: 'graphql',
-          model: 'Event',
-        },
-        title: 'All Events',
-        type: 'list',
-      },
       organizationdetails: {
         ui: {
           hideDefaultHeader: false,
@@ -274,7 +136,7 @@ export default {
         template: {
           name: 'event-grid',
           context: {
-            basePath: '/event',
+            basePath: '/organizationdetails',
           },
         },
         dataSource: {
@@ -371,6 +233,259 @@ export default {
           },
         },
         title: 'Registration Form',
+        type: 'list',
+      },
+    },
+  },
+
+  badge: {
+    views: {
+      badge: {
+        ui: {
+          hideDefaultHeader: false,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: true,
+          hideFilter: false,
+          hideSearch: true,
+        },
+        default: false,
+        fields: {
+          Size: {
+            displayOrder: 1,
+            caption: 'Size',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '250px',
+            type: 'string',
+          },
+          Type: {
+            displayOrder: 2,
+            caption: 'Type',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '250px',
+            type: 'string',
+          },
+          Category: {
+            displayOrder: 3,
+            caption: 'Category',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          Default: {
+            displayOrder: 4,
+            caption: 'Default',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          Template: {
+            displayOrder: 5,
+            caption: 'Template',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          DisplayOrder: {
+            displayOrder: 6,
+            caption: 'Display Order',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'number',
+          },
+        },
+        template: {
+          name: 'link-grid',
+          context: {
+            basePath: '/badge',
+          },
+        },
+        dataSource: {
+          query: badgeList,
+          defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          model: 'Badge',
+          filter: {
+            limit: '10',
+            order: 'createdDate DESC',
+            skip: '0',
+            where: {},
+          },
+        },
+        title: 'Badge',
+        type: 'list',
+      },
+    },
+  },
+
+  seatmaps: {
+    views: {
+      seatmaps: {
+        ui: {
+          hideDefaultHeader: false,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: true,
+          hideFilter: false,
+          hideSearch: true,
+        },
+        default: false,
+        fields: {
+          Name: {
+            displayOrder: 1,
+            caption: 'Name',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '250px',
+            type: 'string',
+          },
+          ImageUrl: {
+            displayOrder: 2,
+            caption: 'Image Url',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '250px',
+            type: 'string',
+          },
+          createdDate: {
+            displayOrder: 3,
+            caption: 'Date',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'date',
+          },
+          createdBy: {
+            displayOrder: 4,
+            caption: 'Created By',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+        },
+        template: {
+          name: 'link-grid',
+          context: {
+            basePath: '/seatmaps',
+          },
+        },
+        dataSource: {
+          query: seatmapsList,
+          defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          model: 'SeatMap',
+          filter: {
+            limit: '10',
+            order: 'createdDate DESC',
+            skip: '0',
+            where: {},
+          },
+        },
+        title: 'Seat Maps',
+        type: 'list',
+      },
+    },
+  },
+
+  marketingtemplates: {
+    views: {
+      templates: {
+        ui: {
+          hideDefaultHeader: false,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: true,
+          hideFilter: false,
+          hideSearch: true,
+        },
+        default: false,
+        fields: {
+          Name: {
+            displayOrder: 1,
+            caption: 'Name',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '250px',
+            type: 'string',
+          },
+          Type: {
+            displayOrder: 2,
+            caption: 'Type',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '250px',
+            type: 'string',
+          },
+          ImageUrl: {
+            displayOrder: 3,
+            caption: 'Image Url',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '250px',
+            type: 'string',
+          },
+          Body: {
+            displayOrder: 4,
+            caption: 'Body',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '250px',
+            type: 'string',
+          },
+          Category: {
+            displayOrder: 5,
+            caption: 'Category',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '250px',
+            type: 'string',
+          },
+          createdDate: {
+            displayOrder: 6,
+            caption: 'Date',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'date',
+          },
+          createdBy: {
+            displayOrder: 7,
+            caption: 'Created By',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+        },
+        template: {
+          name: 'link-grid',
+          context: {
+            basePath: '/templates',
+          },
+        },
+        dataSource: {
+          query: marketingTemplates,
+          defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          model: 'MarketingTemplate',
+          filter: {
+            limit: '10',
+            order: 'createdDate DESC',
+            skip: '0',
+            where: {},
+          },
+        },
+        title: 'Templates',
         type: 'list',
       },
     },
