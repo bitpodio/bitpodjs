@@ -105,6 +105,10 @@ body {
 .app-view:hover {
   background-color: #f6fafe;
 }
+.boxview h2.body-1,
+.boxview h2 > .fa {
+  color: #3fa5ff !important;
+}
 @media (max-width: 600px) {
   .slide-form,
   .slide-form-default {

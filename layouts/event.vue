@@ -370,7 +370,7 @@
                 </v-flex>
               </nuxt-link>
               <nuxt-link
-                to="/apps/admin/list/registrationformdetails/registration form"
+                to="/apps/admin/organization/5cfe026f6ab042000c530105"
                 class="text-decoration-none"
               >
                 <v-flex

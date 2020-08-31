@@ -139,7 +139,7 @@
                 </v-flex>
               </nuxt-link>
               <nuxt-link
-                to="/apps/admin/list/registrationformdetails/registration form"
+                to="/apps/admin/organization/5cfe026f6ab042000c530105"
                 class="text-decoration-none"
               >
                 <v-flex
@@ -334,12 +334,12 @@ export default {
       {
         icon: 'fa fa-network',
         text: 'Organization',
-        to: '/apps/admin/list/event/organizationdetails',
+        to: '/apps/admin/organization/5cfe026f6ab042000c530105',
       },
       {
         icon: 'fa fa-cog',
         text: 'Lookups',
-        to: '/apps/event/event/recurring/5f4751d8e32257000a0f8f6e',
+        to: '',
       },
       {
         icon: 'fa fa-file',
