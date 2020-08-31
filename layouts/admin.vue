@@ -188,6 +188,8 @@
                     <v-img
                       src="https://survey.bitpod.io/favicon.ico"
                       lazy-src="https://survey.bitpod.io/favicon.ico"
+                      max-height="36"
+                      aspect-ratio="1"
                     >
                       <template v-slot:placeholder>
                         <v-row
@@ -337,7 +339,7 @@ export default {
       {
         icon: 'fa fa-cog',
         text: 'Lookups',
-        to: '',
+        to: '/apps/event/event/recurring/5f4751d8e32257000a0f8f6e',
       },
       {
         icon: 'fa fa-file',
