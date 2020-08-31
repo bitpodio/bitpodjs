@@ -1,10 +1,11 @@
 module.exports = Object.freeze({
   FIELD_REQUIRED: 'This field is required',
-  ANOTHER_CONSTANT: 'another value',
 
   // Event messages
   EVENT_START_DATE: 'Event start date should not be less than current date',
   EVENT_START_END_DATE: 'Event start date should not be greater than end date',
+  UNIQUE_LINK_FORMAT: 'Lower case alphanumeric letters only',
+  UNIQUE_LINK_DUPLICATE: 'This link has already been taken',
 
   // Ticket Messages
   VALID_TICKET_MSG:
