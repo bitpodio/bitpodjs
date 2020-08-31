@@ -35,8 +35,8 @@
           </v-menu>
         </v-flex>
         <v-chip class="my-2" label>
-          {{ formatDate(data.event.StartDate) }} -
-          {{ formatDate(data.event.EndDate) }} -
+          {{ formatedDate(data.event.StartDate, data.event.Timezone) }} -
+          {{ formatedDate(data.event.EndDate, data.event.Timezone) }} -
           {{ formatField(data.event.Timezone) }}
         </v-chip>
         <v-flex>
@@ -510,26 +510,19 @@
 <script>
 import gql from 'graphql-tag'
 import format from 'date-fns/format'
+import { utcToZonedTime } from 'date-fns-tz'
 import editSeoForm from './editSeoForm.vue'
 import editEventForm from './editEventForm.vue'
 import editEventSetting from './editEventSetting.vue'
 import editSiteSetting from './editSiteSetting.vue'
 import Grid from '~/components/common/grid'
 import event from '~/config/apps/event/gql/event.gql'
-import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin } from '~/utility'
-import RichText from '~/components/common/form/richtext.vue'
-// import CustomDate from '~/components/common/form/date.vue'
-import Timezone from '~/components/common/form/timezone'
 
 export default {
   components: {
     Grid,
-    RichText,
-    VueGoogleAutocomplete: () => import('vue-google-autocomplete'),
-    // CustomDate,
-    Timezone,
     editSeoForm,
     editEventForm,
     editEventSetting,
@@ -540,26 +533,8 @@ export default {
   data() {
     return {
       loading: 0,
-      // datetime: '',
-      valid: true,
       editeventform: false,
       editseoform: false,
-      allowSpaces: false,
-      address: '',
-      startdateMessage: '',
-      enddateMessage: '',
-      tags: [],
-      tagsDropdown: [],
-      nameRules: [(v) => !!v || 'Name is required'],
-      emailRules: [
-        (v) => !!v || 'E-mail is required',
-        (v) => /.+@.+/.test(v) || 'E-mail must be valid',
-      ],
-      textFieldProps: {
-        appendIcon: 'fa-calendar',
-        outlined: true,
-      },
-      allowSpaces: false,
       eventForm: false,
       seoForm: false,
       eventSetting: false,
@@ -569,21 +544,6 @@ export default {
         badge: {},
         eventSummary: {},
       },
-      startDatefield: {
-        caption: 'StartDate',
-        type: 'datetime',
-      },
-      endDatefield: {
-        caption: 'EndDate',
-        type: 'datetime',
-      },
-      timezonefield: {
-        caption: 'Timezone',
-        type: 'Timezone',
-        // fieldName: 'formData.Timezone',
-      },
-      formData: {},
-      VenueAddress: {},
     }
   },
   computed: {
@@ -591,116 +551,24 @@ export default {
       return this.contents ? this.contents.Event : null
     },
   },
-  mounted() {
-    this.getTags()
-      .then((res) => {
-        this.tagsDropdown = res.map((i) => i.value)
-        return res
-      })
-      .catch((e) => {
-        console.log('ee', e)
-      })
-  },
   methods: {
-    getAddressData(addressData, placeResultData, id) {
-      debugger
-      this.address = addressData
-      console.log('==addressData==', addressData)
-      this.VenueAddress.AddressLine =
-        addressData.route + ', ' + addressData.administrative_area_level_1
-      this.formData.VenueName = addressData.route
-      this.VenueAddress.Country = addressData.country
-      this.VenueAddress.City = addressData.locality
-      this.VenueAddress.State = addressData.locality
-      // this.formData.LatLng.lat = parseInt(addressData.latitude)
-      // this.formData.LatLng.lng = parseInt(addressData.longitude)
-    },
     formatDate(date) {
       return date ? format(new Date(date), 'PPpp') : ''
+    },
+    formatedDate(date, timezone) {
+      if (date) {
+        const formattedDate = new Date(date)
+        const zonedDate = utcToZonedTime(formattedDate, timezone)
+        const pattern = 'PPpp'
+        const output = format(zonedDate, pattern, { timezone })
+        return output
+      }
     },
     formatField(fieldValue) {
       return fieldValue || '-'
     },
     formatDatePicker(date) {
       return date ? format(new Date(date), 'PP') : ''
-    },
-    changeStartDate() {
-      debugger
-      if (this.formData.StartDate === null)
-        this.startdateMessage = 'This field is required'
-      else if (this.formData.StartDate > this.formData.EndDate)
-        this.startdateMessage = 'Start date should not be greater than End date'
-      else this.startdateMessage = ''
-    },
-    changeEndDate() {
-      debugger
-      if (this.formData.EndDate === null)
-        this.enddateMessage = 'This field is required'
-      else if (this.formData.StartDate > this.formData.EndDate)
-        this.startdateMessage = 'Start date should not be greater than End date'
-      else this.enddateMessage = null
-    },
-    onSave() {
-      debugger
-      console.log('====e666', this.tags)
-      this.formData.Tags = this.tags
-      console.log('asdasdasdfdg', this.formData)
-      console.log('asdasdasd')
-      Object.assign({}, this.formData, { _VenueAddress: this.VenueAddress })
-      delete this.formData.VenueAddress
-      delete this.formData._VenueAddress.LatLng
-      console.log('======FormData', this.formData)
-      this.$axios
-        .$patch(
-          `https://event.test.bitpod.io/svc/api/Events/${this.$route.params.id}`,
-          {
-            ...this.formData,
-          }
-        )
-        .then((res) => {
-          this.editseoform = false
-          this.editeventform = false
-          // this.data.event.id = this.$route.params.id
-          // this.formData.id = this.$route.params.id
-          return (this.data.event = res)
-        })
-        .catch((e) => {
-          console.log('error', e)
-        })
-      // this.loadRestData()
-    },
-    getTags() {
-      return this.$apollo
-        .query({
-          query: gql`
-            ${generalconfiguration}
-          `,
-          variables: {
-            filters: {
-              where: {
-                type: 'EventTags',
-              },
-            },
-          },
-        })
-        .then((result) => {
-          console.log('result====', result)
-          const generalConfig = formatGQLResult(
-            result.data,
-            'GeneralConfiguration'
-          )
-          console.log('====res', generalConfig)
-          return generalConfig
-        })
-        .catch((e) => {
-          console.log(e)
-        })
-    },
-    dateValidation() {
-      debugger
-      this.errorMessage =
-        this.formData.EndDate === null ? 'this is error' : this.formData.EndDate
-      return this.errorMessage
     },
   },
   apollo: {
@@ -729,33 +597,6 @@ export default {
         const event = formatGQLResult(data, 'Event')
         const badge = formatGQLResult(data, 'Badge')
         const eventSummary = data.Event.EventGetEventSummery
-        debugger
-        this.formData = event.length > 0 ? event[0] : {}
-        this.formData.id = this.$route.params.id
-        this.tags = this.formData.Tags
-        this.formData.StartDate = new Date(this.formData.StartDate)
-        this.formData.EndDate = new Date(this.formData.EndDate)
-        console.log('====VenueAddress444', this.datetime)
-        console.log('====VenueAddress333', this.tags)
-        console.log('====VenueAddress', event._VenueAddress)
-        console.log('====VenueAddress1', this.formData._VenueAddress)
-        // this.formData._VenueAddress =
-        //   this.formData._VenueAddress != null ? this.formData._VenueAddress : ''
-        this.VenueAddress =
-          this.formData._VenueAddress != null ? this.formData._VenueAddress : {}
-        console.log('====FormData', this.formData)
-        // console.log('====FormData', this.formData.VenueAddress.AddressLine)
-        // console.log('====FormData', this.formData.VenueAddress.City)
-        // if (this.formData._VenueAddress) {
-        //   this.formData._VenueAddress.AddressLine = this.formData._VenueAddress.AddressLine
-        //   this.formData._VenueAddress.Country = this.formData._VenueAddress.Country
-        //   this.formData._VenueAddress.City = this.formData._VenueAddress.City
-        //   this.formData._VenueAddress.State = this.formData._VenueAddress.State
-        // } else {
-        //   this.formData._VenueAddress = ''
-        // }
-        // this.StartDate = this.formData.StartDate
-        // this.date = this.formData.StartDate
         return {
           event: event.length > 0 ? event[0] : {},
           badge: badge.length > 0 ? badge[0] : {},
