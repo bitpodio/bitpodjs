@@ -7,6 +7,7 @@
       :item-value="itemValue"
       :loading="isLoading"
       :label="field.caption"
+      :rules="rules"
       outlined
       @change="onChange"
     ></v-autocomplete>
@@ -47,6 +48,7 @@ export default {
       type: Object,
       default: () => {},
     },
+    rules: {},
   },
   data() {
     return {

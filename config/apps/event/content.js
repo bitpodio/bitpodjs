@@ -19,53 +19,13 @@ import eventSpeakers from './gql/eventSpeakers.gql'
 
 export default {
   Event: {
-    Actions: {
-      'Embeded Actions': '',
-      'General Actions': [],
-      'Selected Item Action': ['Delete EventManagement'],
-    },
-    Child: {},
     DataSource: {
-      'Key Field': '',
-      'Parent key field': '',
       Type: 'List',
       URL: 'Event',
     },
     general: {
       caption: 'Events',
       name: 'Event',
-    },
-    Permissions: {
-      Groups: '',
-    },
-    UI: {
-      TemplateActions: {},
-      'Card View Template': 'VisitingCard0',
-      Width: '50%',
-      Height: '',
-      TemplateHelpers: {},
-      IsEditable: 'No',
-      'Display Order': '',
-      'Map View Template': '',
-      'Calendar View Template': 'calendarEvent',
-      'List View Template': '',
-      'Detail View': 'tab',
-      Column: '',
-      'Tile View': '',
-      Templates: {
-        calendarEvent:
-          '<style>\n    .cal-content{\n        color: white;\n        display: flex;\n        flex-direction: row;\n        justify-content: space-between;\n    }\n     .cal-content i{\n          color: white;\n     }\n    .cal-content.Event{\n        background: green;\n    }\n    .cal-content{\n        padding: 0 2px;\n     }\n    .fc-day-grid-event{\n        padding: 0;\n        border: 0;\n    }\n</style>\n<div class="cal-content {{node.__typename}}">\n    <span class="fc-title">\n        {{title}}\n    </span>\n   <span class="cal-del-act" onClick="invokeAction(\'deleteEvent\',\'{{node.id}}\',\'{{node.__typename}}\')">\n        <i class="fa fa-trash" title="delete event"></i>\n    </span>\n</div>\n',
-        EndDate: '<div>{{#if EndDate}}{{getdateTime EndDate}}{{/if}}</div>',
-        StartDate:
-          '<div>{{#if StartDate}}{{getdateTime StartDate}}{{/if}}</div>',
-        VisitingCard0: 'EventMangment_Card_View',
-        Title:
-          '<div onclick="invokeAction(\'goToDetails\', this)" businessType="{{BusinessType}}" data-action="edit" data-bind="ID={{id}}" style="cursor: pointer;color: #1a73e8;"> {{Title}} </div>',
-      },
-      decorator: {
-        Attachment: '',
-        LinkedinURL: '',
-      },
     },
     views: {
       'All Events': {
@@ -194,7 +154,7 @@ export default {
           },
         },
         template: {
-          name: 'link-grid',
+          name: 'allEvents-grid',
           context: {
             basePath: '/event',
           },
@@ -326,7 +286,7 @@ export default {
           },
         },
         template: {
-          name: 'event-grid',
+          name: 'pastEvents-grid',
           context: {
             basePath: '/event',
           },
@@ -722,19 +682,13 @@ export default {
             type: 'string',
             cssClasses: 'col-12 col-md-12',
             hidden: false,
-            inlineEdit: true,
+            inlineEdit: false,
             newForm: true,
             editForm: true,
             required: true,
             rules: [
               (v) => {
                 return !!v || 'Title is required'
-              },
-              (v) => {
-                return (
-                  (v && v.length <= 10) ||
-                  'Title must be less than 10 characters'
-                )
               },
             ],
           },
@@ -750,10 +704,18 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
-            readonly(value, data) {
-              const type = data.Type
-              return type === 'Free' || type === ''
-            },
+            rules: [
+              (v, data) => {
+                debugger
+                const type = data.Type
+                return (
+                  type === 'Paid' ||
+                  type === 'Donation' ||
+                  !!v ||
+                  'Amount is required'
+                )
+              },
+            ],
           },
           Type: {
             displayOrder: 3,
@@ -777,6 +739,11 @@ export default {
                 }
               },
             },
+            rules: [
+              (v) => {
+                return !!v || 'Type is required'
+              },
+            ],
           },
           TicketCount: {
             displayOrder: 5,
@@ -865,11 +832,6 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
-            rules: [
-              (v) => {
-                return !!v || 'Start Date is required'
-              },
-            ],
           },
           EndDate: {
             displayOrder: 8,
@@ -883,11 +845,6 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
-            rules: [
-              (v) => {
-                return !!v || 'End Date is required'
-              },
-            ],
           },
           ValidateQty: {
             displayOrder: 8,
@@ -914,24 +871,6 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
-          },
-          Events: {
-            displayOrder: 8,
-            caption: 'EventId',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
-            cssClasses: 'col-6 col-md-6',
-            hidden: true,
-            inlineEdit: true,
-            newForm: true,
-            editForm: true,
-            rules: [
-              (v) => {
-                return !!v || 'EventId is required'
-              },
-            ],
           },
         },
         template: {
@@ -1296,7 +1235,6 @@ export default {
               itemText: 'EventSpeakers.edges.node.FirstName',
               itemValue: 'EventSpeakers.edges.node.id',
               filter(data) {
-                debugger
                 return {
                   id: this.$route.params.id,
                 }
