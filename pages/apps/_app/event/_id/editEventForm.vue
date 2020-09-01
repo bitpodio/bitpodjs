@@ -38,7 +38,6 @@
                   v-model="formData.StartDate"
                   label="Start Date *"
                   :text-field-props="textFieldProps"
-                  @input="changeStartDate($event)"
                 >
                   <template slot="dateIcon">
                     <v-icon>fas fa-calendar</v-icon>
@@ -57,7 +56,6 @@
                 v-model="formData.EndDate"
                 label="End Date *"
                 :text-field-props="textFieldProps"
-                @input="changeEndDate($event)"
               >
                 <template slot="dateIcon">
                   <v-icon>fas fa-calendar</v-icon>
@@ -70,7 +68,7 @@
                 startdateMessage
               }}</span>
             </v-col>
-            <v-col cols="12" sm="6" md="4">
+            <v-col class="d-flex" cols="12" sm="6" md="4">
               <Timezone
                 v-model="formData.Timezone"
                 :rules="[() => !!formData.Timezone || 'This field is required']"
@@ -123,7 +121,7 @@
             <v-col cols="12">
               <v-text-field
                 v-model="formData.VenueName"
-                :rules="namerules"
+                :rules="nameRules"
                 label="Venue Name *"
                 outlined
               ></v-text-field>
@@ -170,7 +168,6 @@
 </template>
 <script>
 import gql from 'graphql-tag'
-import format from 'date-fns/format'
 import { utcToZonedTime } from 'date-fns-tz'
 import event from '~/config/apps/event/gql/event.gql'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
@@ -194,9 +191,7 @@ export default {
   data() {
     return {
       loading: 0,
-      backupTz: '',
       valid: true,
-      address: '',
       startdateMessage: '',
       enddateMessage: '',
       tags: [],
@@ -206,10 +201,6 @@ export default {
         (v) => !!v || 'E-mail is required',
         (v) => /.+@.+/.test(v) || 'E-mail must be valid',
       ],
-      // textFieldProps: {
-      //   appendIcon: 'fa-calendar',
-      //   outlined: true,
-      // },
       allowSpaces: false,
       data: {
         event: {},
@@ -219,7 +210,6 @@ export default {
       timezonefield: {
         caption: 'Timezone',
         type: 'Timezone',
-        // fieldName: 'formData.Timezone',
       },
       formData: {},
       VenueAddress: {},
@@ -259,7 +249,6 @@ export default {
               startdateMessage = strings.EVENT_START_DATE
             else startdateMessage = ''
             return startdateMessage || true
-            // return startdateMessage.length ? startdateMessage : true
           },
         ],
       }
@@ -283,8 +272,6 @@ export default {
       this.$apollo.queries.data.refresh()
     },
     getAddressData(addressData, placeResultData, id) {
-      this.address = addressData
-      console.log('==addressData==', addressData)
       this.VenueAddress.AddressLine =
         addressData.route + ', ' + addressData.administrative_area_level_1
       this.formData.VenueName = addressData.route
@@ -294,68 +281,25 @@ export default {
       // this.formData.LatLng.lat = parseInt(addressData.latitude)
       // this.formData.LatLng.lng = parseInt(addressData.longitude)
     },
-    formatDate(date) {
-      return date ? format(new Date(date), 'PPpp') : ''
-    },
-    formatField(fieldValue) {
-      return fieldValue || '-'
-    },
-    formatDatePicker(date) {
-      return date ? format(new Date(date), 'PP') : ''
-    },
-    formatedDate(date, timezone) {
-      debugger
+    getZonedDateTime(date, timezone) {
       if (date) {
-        debugger
         const formattedDate = new Date(date)
-        // const timezone = 'America/New_York'
         const zonedDate = utcToZonedTime(formattedDate, timezone)
-        // zonedDate could be used to initialize a date picker or display the formatted local date/time
-
-        // Set the output to "1.9.2018 18:01:36.386 GMT+02:00 (CEST)"
-        // const pattern = 'PPpp' // 'd.M.YYYY HH:mm:ss.SSS [GMT]Z (z)'
-        // const output = format(zonedDate, pattern, { timezone })
         return zonedDate
       }
-      // return date ? format(zonedDate, 'PPpp', { timezone }) : ''
-    },
-    changeStartDate() {
-      if (this.formData.StartDate === null)
-        this.startdateMessage = 'This field is required'
-      else if (this.formData.StartDate > this.formData.EndDate)
-        this.startdateMessage = 'Start date should not be greater than End date'
-      else this.startdateMessage = ''
-    },
-    changeEndDate() {
-      if (this.formData.EndDate === null)
-        this.enddateMessage = 'This field is required'
-      else if (this.formData.StartDate > this.formData.EndDate)
-        this.startdateMessage = 'End date should not be less than End date'
-      else this.enddateMessage = null
     },
     onSave() {
-      console.log('====e666', this.tags)
       this.formData.Tags = this.tags
-      console.log('asdasdasdfdg', this.formData)
-      console.log('asdasdasd')
-      console.log('======FormData11=======', this.formData)
       const convertedEventRecord = formatTimezoneDateFieldsData(
         this.formData,
         this.fields
       )
-
       this.formData.StartDate = convertedEventRecord.StartDate
-
       this.formData.EndDate = convertedEventRecord.EndDate
-
       this.formData.Timezone = convertedEventRecord.Timezone
-
-      console.log('Modeified111 =====', this.formData)
-
       Object.assign({}, this.formData, { _VenueAddress: this.VenueAddress })
       delete this.formData.VenueAddress
       delete this.formData._VenueAddress.LatLng
-      console.log('======FormData', this.formData)
       this.$axios
         .$patch(
           `https://event.test.bitpod.io/svc/api/Events/${this.$route.params.id}`,
@@ -387,7 +331,6 @@ export default {
           },
         })
         .then((result) => {
-          console.log('result====', result)
           const generalConfig = formatGQLResult(
             result.data,
             'GeneralConfiguration'
@@ -398,11 +341,6 @@ export default {
         .catch((e) => {
           console.log(e)
         })
-    },
-    dateValidation() {
-      this.errorMessage =
-        this.formData.EndDate === null ? 'this is error' : this.formData.EndDate
-      return this.errorMessage
     },
   },
   apollo: {
@@ -429,31 +367,21 @@ export default {
       },
       update(data) {
         const event = formatGQLResult(data, 'Event')
-        const badge = formatGQLResult(data, 'Badge')
-        const eventSummary = data.Event.EventGetEventSummery
         this.formData = event.length > 0 ? { ...event[0] } : {}
         this.formData.id = this.$route.params.id
         this.tags = this.formData.Tags
-        debugger
-        this.formData.StartDate = this.formatedDate(
+        this.formData.StartDate = this.getZonedDateTime(
           this.formData.StartDate,
           this.formData.Timezone
         )
-        this.formData.EndDate = this.formatedDate(
+        this.formData.EndDate = this.getZonedDateTime(
           this.formData.EndDate,
           this.formData.Timezone
         )
-        console.log('====VenueAddress444', this.datetime)
-        console.log('====VenueAddress333', this.tags)
-        console.log('====VenueAddress', event._VenueAddress)
-        console.log('====VenueAddress1', this.formData._VenueAddress)
         this.VenueAddress =
           this.formData._VenueAddress != null ? this.formData._VenueAddress : {}
-        console.log('====FormData', this.formData)
         return {
           event: event.length > 0 ? event[0] : {},
-          badge: badge.length > 0 ? badge[0] : {},
-          eventSummary,
         }
       },
       result({ data, loading, networkStatus }) {},
