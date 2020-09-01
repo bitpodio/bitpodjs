@@ -63,6 +63,7 @@ import {
   getGridFields,
   getMutationObject,
   formControlsMixin,
+  buildEmbededFieldData,
 } from '~/utility/form'
 
 function getFormDefaultValues(content, viewName) {
@@ -105,7 +106,8 @@ export default {
           this.viewName,
           this
         )
-        const newItemFormData = { ...mutationObject.new, ...formData }
+        const newFormData = buildEmbededFieldData(formData)
+        const newItemFormData = { ...mutationObject.new, ...newFormData }
         await this.onNewItemSave(newItemFormData)
         this.dialog = false
       }

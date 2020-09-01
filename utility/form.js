@@ -6,6 +6,7 @@ import CustomDate from '~/components/common/form/date.vue'
 import File from '~/components/common/form/file.vue'
 import RichText from '~/components/common/form/richtext.vue'
 import Timezone from '~/components/common/form/timezone'
+import { _set, isPlainObject } from '~/utility/object'
 
 const FORM_DATE_CONTROLS = ['date', 'datetime']
 
@@ -56,6 +57,34 @@ export function getMutationObject(content, viewName, ctx) {
   const mutation =
     view.dataSource.mutation && view.dataSource.mutation.call(ctx, ctx)
   return mutation || { new: {}, edit: {} }
+}
+
+export function buildEmbededFieldData(formData) {
+  const newFormData = {}
+  for (const field in formData) {
+    _set(newFormData, field, formData[field])
+  }
+  return newFormData
+}
+
+function flattenObject(obj, prefix) {
+  let newObj = {}
+  for (const field in obj) {
+    const value = obj[field]
+    if (isPlainObject(value)) {
+      const embedObj = flattenObject(value, `${field}.`)
+      newObj = { ...newObj, ...embedObj }
+    } else {
+      newObj[`${prefix}${field}`] = value
+    }
+  }
+  return newObj
+}
+
+export function generateFormData(result) {
+  const formData = flattenObject(result, '')
+  delete formData.__typename
+  return formData
 }
 
 export const formControlsMixin = {
