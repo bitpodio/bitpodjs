@@ -338,7 +338,7 @@
             v-slot:activator="{ on, attrs }"
           >
             <v-avatar color="primary ml-2" size="30" v-bind="attrs" v-on="on">
-              <span class="white--text">{{ $auth.user.data.name[0] }}</span>
+              <!-- <span class="white--text">{{ $auth.user.data.name[0] }}</span> -->
             </v-avatar>
           </template>
           <v-card>
@@ -346,19 +346,19 @@
               <v-list-item>
                 <v-list-item-avatar>
                   <v-avatar color="primary" size="48" v-bind="attrs" v-on="on">
-                    <span class="white--text headline">{{
+                    <!-- <span class="white--text headline">{{
                       $auth.user.data.name[0]
-                    }}</span>
+                    }}</span> -->
                   </v-avatar>
                 </v-list-item-avatar>
 
                 <v-list-item-content>
-                  <v-list-item-title>{{
+                  <!-- <v-list-item-title>{{
                     $auth.user.data.name
                   }}</v-list-item-title>
                   <v-list-item-subtitle>{{
                     $auth.user.data.email
-                  }}</v-list-item-subtitle>
+                  }}</v-list-item-subtitle> -->
                 </v-list-item-content>
               </v-list-item>
             </v-list>
@@ -459,12 +459,6 @@ export default {
       },
     ],
   }),
-  methods: {
-    async onLogout() {
-      this.$auth.logout()
-      await this.$apolloHelpers.onLogout()
-    },
-  },
   async created() {
     if (!this.$apolloHelpers.getToken()) {
       let token = this.$auth.strategy.token.get()
@@ -473,6 +467,12 @@ export default {
       }
       await this.$apolloHelpers.onLogin(token, undefined, { expires: 7 })
     }
+  },
+  methods: {
+    async onLogout() {
+      this.$auth.logout()
+      await this.$apolloHelpers.onLogout()
+    },
   },
 }
 </script>

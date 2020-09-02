@@ -1,5 +1,6 @@
-import nuxtconfig from '~/nuxt.config'
+// import nuxtconfig from '~/nuxt.config'
 import { getOrderQuery, buildQueryVariables } from '~/utility'
+import { getApiUrl } from '~/utility/index.js'
 
 export function getData(modelName) {
   return async function query(options) {
@@ -27,16 +28,14 @@ export function getData(modelName) {
       ctx: this,
     })
     const filter = { limit, skip, order, where }
+    const apiUrl = getApiUrl()
+    console.log('==apiUrl==', apiUrl)
     const resPromise = this.$axios.$get(
-      `https://${nuxtconfig.axios.backendBaseUrl}${
-        nuxtconfig.axios.apiEndpoint
-      }${modelName}s?filter=${JSON.stringify(filter)}`
+      `${apiUrl}${modelName}s?filter=${JSON.stringify(filter)}`
     )
     // to get record count
     const recCountPromise = this.$axios.$get(
-      `https://${nuxtconfig.axios.backendBaseUrl}${
-        nuxtconfig.axios.apiEndpoint
-      }${modelName}s/count?where=${JSON.stringify(where)}`
+      `${apiUrl}${modelName}s/count?where=${JSON.stringify(where)}`
     )
     // to execute parallel call
     const [res, recCount] = await Promise.all([resPromise, recCountPromise])
