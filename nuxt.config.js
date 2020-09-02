@@ -95,8 +95,17 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
+    apiEndpoint: '/svc/api/',
+    backendBaseUrl: process.env.PUBLIC_DOMAIN || '',
     // baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
     baseURL: `http://localhost:3000${basePath}`,
+  },
+
+  publicRuntimeConfig: {
+    axios: {
+      browserBaseURL: process.env.BROWSER_BASE_URL,
+      backendBaseUrl: process.env.PUBLIC_DOMAIN,
+    },
   },
   /*
    ** vuetify module configuration

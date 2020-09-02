@@ -4,7 +4,8 @@
       <v-toolbar dark app color="accent">
         <v-toolbar-title>New Event</v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn icon dark @click="onFormClose">
+        <!-- <v-btn icon dark @click="onFormClose"> -->
+        <v-btn icon dark @click="closeForm">
           <v-icon>mdi-close</v-icon>
         </v-btn>
       </v-toolbar>
@@ -79,19 +80,11 @@
                   ></Timezone>
                 </v-col>
                 <v-col cols="12">
-                  <v-textarea
+                  <RichText
                     v-model="eventData.Description"
-                    clearable
-                    outlined
-                    clear-icon="fa fa-close"
                     label="Description"
-                    value
-                  ></v-textarea>
-                  <!-- <Richtext
-                  v-model="eventData.Description"
-                  label="Description"
-                ></Richtext> -->
-                </v-col>
+                  ></RichText> </v-col
+                ><br />
                 <v-col cols="12" sm="6" md="6">
                   <v-text-field
                     v-model="eventData.UniqLink"
@@ -101,7 +94,7 @@
                     outlined
                     required
                     :error-messages="uniqueLinkValidationMsg"
-                    @change="changeUniqueLink($event)"
+                    @keydown="changeUniqueLink($event)"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -133,12 +126,12 @@
                     ></v-text-field>
                   </v-col>
                   <v-col v-if="isOnlineEvent" cols="12">
-                    <v-text-field
+                    <v-textarea
                       v-model="eventData.JoiningInstruction"
                       label="Additional online event joining instructions, URL, phone etc."
                       outlined
                       required
-                    ></v-text-field>
+                    ></v-textarea>
                   </v-col>
 
                   <v-col v-if="isVenue" cols="12">
@@ -233,7 +226,7 @@
           </v-stepper-content>
 
           <v-stepper-content step="3">
-            <v-card flat>
+            <v-card v-if="isTicket" flat>
               <p>
                 Setup event tickets and price, you can also set tickets validity
                 so early birds can be offered better pricing.
@@ -324,9 +317,38 @@
                   </tbody>
                 </template>
               </v-simple-table>
+              <v-btn color="primary" @click="e1 = 2">Prev</v-btn>
+              <v-btn color="primary" @click="saveRecord">Save</v-btn>
             </v-card>
-            <v-btn color="primary" @click="e1 = 2">Prev</v-btn>
-            <v-btn color="primary" @click="saveRecord">Save</v-btn>
+            <v-card v-else flat>
+              <div v-if="!isEventPublish" class="flex">
+                <div>EVENT HAS BEEN CREATED.</div>
+                <div>
+                  Event goers can only register after you publish it. We
+                  recommend you click view button to verify your event page and
+                  if everything looks as expected then PUBLISH it. You can also
+                  use events link from left panel to edit or publish this event
+                  any time you like.
+                </div>
+                <div>
+                  <v-btn color="primary" @click="viewRegistration">View</v-btn>
+                  <v-btn color="primary" @click="eventPublish">Publish</v-btn>
+                  <v-btn color="primary" @click="onFormClose">Close</v-btn>
+                </div>
+              </div>
+              <div v-if="isEventPublish" class="flex">
+                <div>YOUR EVENT HAS BEEN PUBLISHED.</div>
+                <div>
+                  Now it is open for registrations, you can click on view to
+                  fetch the event landing page URL, which you can share with
+                  others, so they can register.
+                </div>
+                <div>
+                  <v-btn color="primary" @click="viewRegistration">View</v-btn>
+                  <v-btn color="primary" @click="onFormClose">Close</v-btn>
+                </div>
+              </div>
+            </v-card>
           </v-stepper-content>
         </v-stepper-items>
       </v-stepper>
@@ -345,10 +367,14 @@ import Lookup from '~/components/common/form/lookup.vue'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import Timezone from '~/components/common/form/timezone'
 import eventCount from '~/config/apps/event/gql/eventCount.gql'
+import organizationInfo from '~/config/apps/event/gql/organizationInfo.gql'
+import { formatGQLResult } from '~/utility/gql.js'
+import nuxtconfig from '~/nuxt.config'
 export default {
   components: {
     // CustomDate,
-    // Richtext,
+    RichText: () =>
+      process.client ? import('~/components/common/form/richtext.vue') : false,
     Lookup,
     Timezone,
     VueGoogleAutocomplete: () => import('vue-google-autocomplete'),
@@ -358,10 +384,13 @@ export default {
   },
   data: () => {
     const currentDatetime = new Date(new Date().setSeconds(0))
+    // const eventId = ''
     return {
       rules: [(v) => !!v || 'This field is required'],
       valid: true,
       lazy: false,
+      isTicket: true,
+      isEventPublish: false,
       startdateMessage: '',
       enddateMessage: '',
       requiredRules: [(v) => !!v || 'This field is required'],
@@ -371,6 +400,7 @@ export default {
       locationsVisibleOnMap: '',
       circleOptions: {},
       locations: [],
+      // eId: '',
       pins: {
         selected:
           'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAHUSURBVHgB5VU7SwNBEJ7LmZBgMC+UdKKx0MZCG2srwcbCB2glpFDQ3to/IegvSAIWPrBJIySlipUKKqYLaHJ3iWIelzu/DTk8j71H7MQPltmZnflmZ3b3juivQ3BzCIfDI4FAYBvTRV3XR7tBglCCOIP9oFwuv/46QSwWWwfZIaaDNi7vGOlqtZqhfhPE4/EViAy5V6ljE8uVSuXYc4JkMjncarUeMR0ib5Db7fZEvV6vWBd8PG+Q73LIFYyj3lAsa1G/37/D4+JWgPbcQkybd9jpdGYVRXlmSiQSSYmieMWmhgMuwI0kSTPkpQJgzKJnDfJuKYryBJH7sVNBSPGI7BKoFl3n+GguMY4JHiz6GtoybiisRczmEtPFAM+Ifl6i5DmTKYqeX+Nssj19lUz9N2J4XNxDTiQSkwi4oz6ADU3hLdxb7dwW9RyL5B0FHrltAgZUsEce4eRrmwB3ugCRJ3fk4VvsOwEDHtcWxKeDy4emaWmHdRKdFpvNphQKhdhFmOet42D3sftTJw7X/wHgw/U8h1ywkJ/gYJeI/wi/g8kdmqqqG5Alk62Er+emG7nXBFSr1aroNSNknwOVzZnNS6xIHtFoNF6CweAbpheyLOfo3+ALfrSuzJ1F8EsAAAAASUVORK5CYII=',
@@ -433,8 +463,8 @@ export default {
         WebinarLink: '',
         BusinessType: 'Single',
         Privacy: 'Public',
-        Currency: 'INR',
-        Status: 'Open for registration',
+        Currency: '',
+        Status: 'Not ready',
         LocationType: 'Venue',
         VenueName: '',
         _VenueAddress: {},
@@ -531,6 +561,38 @@ export default {
     },
   },
   methods: {
+    closeForm() {
+      this.onFormClose()
+      this.e1 = 1
+    },
+    buildMutationUpsertQuery(modelName) {
+      return `mutation($Inputs : ${modelName}UpsertWithWhereInput!){ ${modelName}{ ${modelName}UpsertWithWhere(input:$Inputs){ clientMutationId obj{ id } } } }`
+    },
+    viewRegistration() {
+      window.open(
+        'https://bitpod-event.test.bitpod.io/e/' + this.eventData.UniqLink,
+        '_blank'
+      )
+    },
+    async eventPublish() {
+      const eventStatus = { Status: 'Open for registration' }
+      this.isEventPublish = true
+      const modelName = 'Event'
+      const where = {
+        id: this.eventId,
+      }
+      const editItemMutation = this.buildMutationUpsertQuery(modelName)
+      await this.$apollo.mutate({
+        mutation: gql(editItemMutation),
+        variables: {
+          Inputs: {
+            where,
+            data: eventStatus,
+            clientMutationId: `${modelName} list item updated successfully.`,
+          },
+        },
+      })
+    },
     isPriceDisabled(index) {
       return this.tickets[index].Type === 'Free'
     },
@@ -566,17 +628,16 @@ export default {
         outlined: true,
         rules: [
           (v) => {
-            const StartDate = v && new Date(v)
-            const { EndDate } = this.tickets[index]
+            const EndDate = v && new Date(v)
+            const { StartDate } = this.tickets[index]
             let startdateMessage = ''
             if (!StartDate) startdateMessage = 'This field is required'
             else if (StartDate && EndDate && StartDate > EndDate)
               startdateMessage =
                 'Start date should not be greater than End date'
-            else if (new Date(StartDate.setSeconds(1)) < this.currentDatetime) {
-              startdateMessage =
-                'Start date should not be less than Current date'
-            } else if (new Date(EndDate) > this.eventData.StartDate) {
+            else if (new Date(EndDate) < this.currentDatetime) {
+              startdateMessage = 'End date should not be less than Current date'
+            } else if (new Date(EndDate) > this.eventData.EndDate) {
               startdateMessage =
                 'Ticket end date should be less than event end date.'
             } else startdateMessage = ''
@@ -656,12 +717,28 @@ export default {
         this.eventData.EndDate = convertedEventRecord.EndDate
         this.eventData.EventManager = this.$auth.$state.user.data.email
         this.eventData.Organizer = this.$auth.$state.user.data.name
+        console.log('===nuxtconfig=apiEndpoint=', nuxtconfig.axios.apiEndpoint)
+        console.log(
+          '===nuxtconfig=backendBaseUrl=',
+          nuxtconfig.axios.backendBaseUrl
+        )
+        let apiURL = ''
+        if (window.location.origin.includes('localhost')) {
+          apiURL = `https://${nuxtconfig.axios.backendBaseUrl}${nuxtconfig.axios.apiEndpoint}`
+        } else {
+          apiURL = nuxtconfig.axios.apiEndpoint
+        }
+        console.log('===apiURL=', apiURL)
         this.$axios
           .$post(`https://event.test.bitpod.io/svc/api/Events`, {
             ...this.eventData,
           })
           .then((res) => {
             console.log('=res===', res)
+            this.eventId = res.id
+            // this.eId = res.id
+            console.log('=this.eventId===', this.eventId)
+            // console.log('=this.eId===', this.eId)
             const ticketList = []
 
             this.tickets.forEach(function (ticket) {
@@ -674,7 +751,8 @@ export default {
             return this.$axios
               .$post(`https://event.test.bitpod.io/svc/api/Tickets`, ticketList)
               .then((ticketres) => {
-                this.onFormClose()
+                // this.onFormClose()
+                this.isTicket = false
                 return ticketres
               })
               .catch((e) => {
@@ -689,13 +767,15 @@ export default {
     getAddressData(addressData, placeResultData, id) {
       console.log('==addressData==', addressData)
       this.venueAddress.AddressLine =
-        addressData.route + ', ' + addressData.administrative_area_level_1
-      this.eventData.VenueName = addressData.route
-      this.venueAddress.Country = addressData.country
-      this.venueAddress.City = addressData.locality
-      this.venueAddress.State = addressData.administrative_area_level_1
-      this.venueAddress.LatLng.lat = addressData.latitude
-      this.venueAddress.LatLng.lng = addressData.longitude
+        addressData.route ||
+        '' + ', ' + addressData.administrative_area_level_1 ||
+        ''
+      this.eventData.VenueName = addressData.route || ''
+      this.venueAddress.Country = addressData.country || ''
+      this.venueAddress.City = addressData.locality || ''
+      this.venueAddress.State = addressData.administrative_area_level_1 || ''
+      this.venueAddress.LatLng.lat = addressData.latitude || ''
+      this.venueAddress.LatLng.lng = addressData.longitude || ''
       const latlng = {}
       latlng.lat = addressData.latitude
       latlng.lng = addressData.longitude
@@ -715,11 +795,13 @@ export default {
     changeEventName(value) {
       this.verifyUniqueLink(value)
     },
-    changeUniqueLink(value) {
-      this.verifyUniqueLink(value)
+    changeUniqueLink(event) {
+      this.verifyUniqueLink(event.currentTarget.value)
     },
     verifyUniqueLink(value) {
       value = value.toLowerCase().replace(/\s/g, '')
+      value = value.trim()
+      this.eventData.UniqLink = value
       const regex = RegExp(/^[0-9a-zA-Z]+$/)
       if (regex.test(value)) {
         if (isNaN(value)) {
@@ -767,6 +849,30 @@ export default {
         EndDate: addDays(addMonths(new Date(), 1), -1),
         TicketCount: 100,
       })
+    },
+  },
+
+  apollo: {
+    data: {
+      query() {
+        return gql`
+          ${organizationInfo}
+        `
+      },
+      variables() {
+        return {
+          filters: {
+            where: {},
+          },
+        }
+      },
+      update(data) {
+        const OrganizationInfo = formatGQLResult(data, 'OrganizationInfo')
+        this.eventData.Currency = OrganizationInfo[0].Currency
+      },
+      error(error) {
+        this.error = error
+      },
     },
   },
 }

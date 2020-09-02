@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <jodit-editor v-model="content" />
+    <client-only>
+      <JoditEditor v-model="content" />
+    </client-only>
   </div>
 </template>
 
