@@ -890,21 +890,21 @@ export default {
             type: 'string',
           },
         },
-        template: {
-          name: 'event-grid',
-          context: {
-            basePath: '/event',
-          },
-        },
-        ui: {
-          hideDefaultHeader: false,
-          hideDefaultFooter: false,
-          showExpand: false,
-          singleExpand: false,
-          showSelect: true,
-          hideFilter: false,
-          hideSearch: true,
-        },
+        // template: {
+        //   name: 'event-grid',
+        //   context: {
+        //     basePath: '/event',
+        //   },
+        // },
+        // ui: {
+        //   hideDefaultHeader: false,
+        //   hideDefaultFooter: false,
+        //   showExpand: false,
+        //   singleExpand: false,
+        //   showSelect: true,
+        //   hideFilter: false,
+        //   hideSearch: true,
+        // },
         inlineEditing: true,
         DdialogEditing: true,
         Query: '',
@@ -921,9 +921,9 @@ export default {
           defaultSort: 'createdDate DESC',
           type: 'graphql',
           model: 'Event',
-        // dataSource: {
-        //   type: 'rest',
-        //   getData: (ctx) => getData(`/Events/${ctx.$route.params.id}/Survey`),
+          // dataSource: {
+          //   type: 'rest',
+          //   getData: (ctx) => getData(`/Events/${ctx.$route.params.id}/Survey`),
         },
         title: 'eventRegistrationQuestion',
         type: 'list',

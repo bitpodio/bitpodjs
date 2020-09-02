@@ -61,26 +61,27 @@ import interactionPlugin from '@fullcalendar/interaction'
 import TextField from '../form/text-field.vue'
 import Lookup from '../form/lookup.vue'
 import Checkbox from '../form/checkbox.vue'
-import { formatResult, getContentByName, getViewQuery } from '~/utility'
-function getGridFields(content, viewName) {
-  const view = content.views[viewName]
-  const fields = view.fields
-  const editableFields = []
-  for (const fieldName in fields) {
-    const field = fields[fieldName]
-    const newFormField = field.newForm === undefined ? true : field.newForm
-    if (newFormField) {
-      editableFields.push({
-        ...field,
-        fieldName,
-      })
-    }
-  }
-  editableFields.sort(
-    (field1, field2) => field1.displayOrder - field2.displayOrder
-  )
-  return editableFields
-}
+// import { formatResult, getContentByName, getViewQuery } from '~/utility'
+import { getViewQuery } from '~/utility'
+// function getGridFields(content, viewName) {
+//   const view = content.views[viewName]
+//   const fields = view.fields
+//   const editableFields = []
+//   for (const fieldName in fields) {
+//     const field = fields[fieldName]
+//     const newFormField = field.newForm === undefined ? true : field.newForm
+//     if (newFormField) {
+//       editableFields.push({
+//         ...field,
+//         fieldName,
+//       })
+//     }
+//   }
+//   editableFields.sort(
+//     (field1, field2) => field1.displayOrder - field2.displayOrder
+//   )
+//   return editableFields
+// }
 function buildMutationUpsertQuery(modelName) {
   return `mutation($Inputs : ${modelName}UpsertWithWhereInput!){ ${modelName}{ ${modelName}UpsertWithWhere(input:$Inputs){ clientMutationId obj{ id } } } }`
 }
@@ -108,14 +109,14 @@ export default {
     },
   },
   data() {
-    const content = getContentByName(this, this.contentName)
-    const fields = getGridFields(
-      getContentByName(this, this.contentName),
-      this.viewName
-    )
+    // const content = getContentByName(this, this.contentName)
+    // const fields = getGridFields(
+    //   getContentByName(this, this.contentName),
+    //   this.viewName
+    // )
     return {
-      content,
-      fields,
+      // content,
+      // fields,
       showDialog: false,
       dialog: false,
       //   selectedEvent: [],
@@ -229,9 +230,10 @@ export default {
         }
       },
       update(data) {
-        const { content } = this
-        const modelName = content.general.name
-        const tableData = formatResult(data, modelName)
+        // const { content } = this
+        // const modelName = content.general.name
+        // const tableData = formatResult(data, modelName)
+        const tableData = data
         this.formData = tableData ? tableData[1] : []
         this.calendarOptions.events = this.formattedEvents(tableData)
         return tableData
