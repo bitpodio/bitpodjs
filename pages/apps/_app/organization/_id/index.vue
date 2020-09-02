@@ -260,7 +260,6 @@ export default {
   },
   mixins: [configLoaderMixin],
   data() {
-    debugger
     return {
       loading: 0,
       data: {
