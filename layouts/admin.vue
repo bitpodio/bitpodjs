@@ -365,17 +365,17 @@ export default {
       {
         icon: 'fa fa-shield',
         text: 'Roles',
-        to: '',
+        to: '/apps/admin/list/userroles/userroles',
       },
       {
         icon: 'fa fa-users',
         text: 'Users',
-        to: '',
+        to: '/apps/admin/list/users/users',
       },
       {
         icon: 'fa fa-key',
         text: 'Access Keys',
-        to: '',
+        to: '/apps/admin/list/accesskey/accesskey',
       },
     ],
   }),
