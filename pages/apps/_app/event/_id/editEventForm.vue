@@ -112,45 +112,49 @@
                   outlined
                   label="Venue Address"
                   classname="form-control"
-                  placeholder="Address"
+                  :rules="[addressValidation]"
+                  placeholder="Venue Address *"
                   @placechanged="getAddressData"
+                  @change="addressChanged"
                 >
                 </vue-google-autocomplete>
+                <span style="color: red;" v-if="errorAlert.message != ''">{{
+                  errorAlert.message
+                }}</span>
               </no-ssr>
             </v-col>
             <v-col cols="12">
               <v-text-field
                 v-model="formData.VenueName"
-                :rules="nameRules"
-                label="Venue Name *"
+                label="Venue Name"
                 outlined
               ></v-text-field>
             </v-col>
             <v-col cols="12">
               <v-text-field
                 v-model="VenueAddress.City"
-                label="City *"
+                label="City"
                 outlined
               ></v-text-field>
             </v-col>
             <v-col cols="12">
               <v-text-field
                 v-model="VenueAddress.State"
-                label="State*"
+                label="State"
                 outlined
               ></v-text-field>
             </v-col>
             <v-col cols="12">
               <v-text-field
                 v-model="VenueAddress.Country"
-                label="Country*"
+                label="Country"
                 outlined
               ></v-text-field>
             </v-col>
             <v-col cols="12">
               <v-text-field
                 v-model="VenueAddress.PostalCode"
-                label="Zip Code*"
+                label="Zip Code"
                 outlined
               ></v-text-field>
             </v-col>
@@ -158,7 +162,11 @@
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions class="pl-4">
-          <v-btn :disabled="!valid" color="primary" depressed @click="onSave"
+          <v-btn
+            :disabled="!valid || !this.addressLine"
+            color="primary"
+            depressed
+            @click="onSave"
             >Save</v-btn
           >
         </v-card-actions>
@@ -195,8 +203,14 @@ export default {
       startdateMessage: '',
       enddateMessage: '',
       tags: [],
+      addressLine: '',
       tagsDropdown: [],
-      nameRules: [(v) => !!v || 'Name is required'],
+      nameRules: [(v) => !!v || 'This field is required'],
+      addressRules: [(v) => !!v || 'This is required'],
+      errorAlert: {
+        message: '',
+        visible: false,
+      },
       emailRules: [
         (v) => !!v || 'E-mail is required',
         (v) => /.+@.+/.test(v) || 'E-mail must be valid',
@@ -253,6 +267,15 @@ export default {
         ],
       }
     },
+    addressValidation() {
+      if (this.addressLine === '') {
+        const message = 'This field is required *'
+        this.setErrorAlert(true, message)
+        return message
+      }
+      this.setErrorAlert(false, '')
+      return true
+    },
   },
   mounted() {
     this.getTags()
@@ -265,6 +288,13 @@ export default {
       })
   },
   methods: {
+    setErrorAlert(visible, message) {
+      this.errorAlert.visible = visible
+      this.errorAlert.message = message
+    },
+    addressChanged(data) {
+      this.addressLine = data
+    },
     close() {
       this.$emit('update:eventForm', false)
     },
@@ -370,6 +400,7 @@ export default {
         this.formData = event.length > 0 ? { ...event[0] } : {}
         this.formData.id = this.$route.params.id
         this.tags = this.formData.Tags
+        this.addressLine = this.formData._VenueAddress.AddressLine
         this.formData.StartDate = this.getZonedDateTime(
           this.formData.StartDate,
           this.formData.Timezone
