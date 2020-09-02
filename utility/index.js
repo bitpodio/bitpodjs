@@ -1,4 +1,5 @@
 import MissingComponent from './missing-component.vue'
+import nuxtconfig from '~/nuxt.config'
 
 export function importTemplate(templatePath) {
   return () => import(`~/config/${templatePath}`)
@@ -38,6 +39,18 @@ export const templateLoaderMixin = {
         )
       }
   },
+}
+
+export function getApiUrl() {
+  let apiURL = ''
+  if (window.location.origin.includes('localhost')) {
+    apiURL = `https://${nuxtconfig.axios.backendBaseUrl}${nuxtconfig.axios.apiEndpoint}`
+  } else {
+    apiURL = nuxtconfig.axios.apiEndpoint
+  }
+  console.log('===nuxtconfig.axios.apiEndpoint=', nuxtconfig.axios.apiEndpoint)
+  console.log('===apiURL=', apiURL)
+  return apiURL
 }
 
 export function getGridTemplateInfo(content, viewName) {

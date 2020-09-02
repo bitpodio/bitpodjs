@@ -1,5 +1,6 @@
 import colors from 'vuetify/es5/util/colors'
 const basePath = process.env.PUBLIC_PATH || ''
+console.log('=nuxtconfig.js=PUBLIC_DOMAIN==', process.env.PUBLIC_DOMAIN)
 export default {
   /*
    ** Nuxt rendering mode
@@ -73,6 +74,7 @@ export default {
     // Doc: https://github.com/nuxt-community/stylelint-module
     '@nuxtjs/stylelint-module',
     '@nuxtjs/vuetify',
+    '@nuxtjs/dotenv',
   ],
   /*
    ** Nuxt.js modules

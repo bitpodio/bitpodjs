@@ -5,7 +5,7 @@
         <v-toolbar-title>New Event</v-toolbar-title>
         <v-spacer></v-spacer>
         <!-- <v-btn icon dark @click="onFormClose"> -->
-        <v-btn icon dark @click="closeForm">
+        <v-btn icon dark @click="close">
           <v-icon>mdi-close</v-icon>
         </v-btn>
       </v-toolbar>
@@ -82,6 +82,7 @@
                 <v-col cols="12">
                   <RichText
                     v-model="eventData.Description"
+                    class="mb-3"
                     label="Description"
                   ></RichText> </v-col
                 ><br />
@@ -94,7 +95,7 @@
                     outlined
                     required
                     :error-messages="uniqueLinkValidationMsg"
-                    @keydown="changeUniqueLink($event)"
+                    @keyup="changeUniqueLink($event)"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -139,9 +140,12 @@
                       <vue-google-autocomplete
                         id="map"
                         ref="venueAddress.AddressLine"
+                        v-model="venueAddress.AddressLine"
                         class="form-control"
                         placeholder="Address*"
+                        :required="true"
                         @placechanged="getAddressData"
+                        @change="changeAddressData($event)"
                       ></vue-google-autocomplete>
                     </no-ssr>
                   </v-col>
@@ -320,8 +324,9 @@
               <v-btn color="primary" @click="e1 = 2">Prev</v-btn>
               <v-btn color="primary" @click="saveRecord">Save</v-btn>
             </v-card>
-            <v-card v-else flat>
+            <v-card v-else flat class="text-center">
               <div v-if="!isEventPublish" class="flex">
+                <div><i class="fa fa-calendar" aria-hidden="true"></i></div>
                 <div>EVENT HAS BEEN CREATED.</div>
                 <div>
                   Event goers can only register after you publish it. We
@@ -333,10 +338,11 @@
                 <div>
                   <v-btn color="primary" @click="viewRegistration">View</v-btn>
                   <v-btn color="primary" @click="eventPublish">Publish</v-btn>
-                  <v-btn color="primary" @click="onFormClose">Close</v-btn>
+                  <v-btn color="primary" @click="closeForm">Close</v-btn>
                 </div>
               </div>
               <div v-if="isEventPublish" class="flex">
+                <div><i class="fa fa-calendar" aria-hidden="true"></i></div>
                 <div>YOUR EVENT HAS BEEN PUBLISHED.</div>
                 <div>
                   Now it is open for registrations, you can click on view to
@@ -345,7 +351,7 @@
                 </div>
                 <div>
                   <v-btn color="primary" @click="viewRegistration">View</v-btn>
-                  <v-btn color="primary" @click="onFormClose">Close</v-btn>
+                  <v-btn color="primary" @click="closeForm">Close</v-btn>
                 </div>
               </div>
             </v-card>
@@ -361,6 +367,7 @@ import addDays from 'date-fns/addDays'
 import gql from 'graphql-tag'
 import strings from '../strings.js'
 import { formatTimezoneDateFieldsData } from '~/utility/form.js'
+import { getApiUrl } from '~/utility/index.js'
 // import CustomDate from '~/components/common/form/date.vue'
 // import Richtext from '~/components/common/form/richtext.vue'
 import Lookup from '~/components/common/form/lookup.vue'
@@ -369,7 +376,7 @@ import Timezone from '~/components/common/form/timezone'
 import eventCount from '~/config/apps/event/gql/eventCount.gql'
 import organizationInfo from '~/config/apps/event/gql/organizationInfo.gql'
 import { formatGQLResult } from '~/utility/gql.js'
-import nuxtconfig from '~/nuxt.config'
+// import nuxtconfig from '~/nuxt.config'
 export default {
   components: {
     // CustomDate,
@@ -386,7 +393,8 @@ export default {
     const currentDatetime = new Date(new Date().setSeconds(0))
     // const eventId = ''
     return {
-      rules: [(v) => !!v || 'This field is required'],
+      // rules: [(v) => !!v || 'This field is required'],
+      rules: [(v) => 'This field is required'],
       valid: true,
       lazy: false,
       isTicket: true,
@@ -503,7 +511,7 @@ export default {
           Type: 'Free',
           Amount: 0,
           StartDate: currentDatetime,
-          EndDate: addDays(addMonths(currentDatetime, 1), -1),
+          EndDate: addDays(addMonths(new Date(), 1), 3),
           TicketCount: 100,
         },
       ],
@@ -561,18 +569,43 @@ export default {
     },
   },
   methods: {
+    close() {
+      this.onFormClose()
+      this.isEventPublish = false
+      this.e1 = 1
+      this.resetForm()
+    },
     closeForm() {
       this.onFormClose()
+      this.isEventPublish = false
       this.e1 = 1
+      this.$router.push('/apps/event/event/' + this.eventId)
+      this.resetForm()
+    },
+    resetForm() {
+      this.eventData.Title = ''
+      this.eventData.UniqLink = ''
+      this.eventData.Description = ''
+      // debugger
+      this.venueAddress.AddressLine = ''
+      this.eventData.VenueName = ''
+      this.venueAddress.Country = ''
+      this.venueAddress.City = ''
+      this.venueAddress.State = ''
+      this.venueAddress.LatLng.lat = ''
+      this.venueAddress.LatLng.lng = ''
+      this.isMap = false
+      // debugger
+      if (this.tickets.length > 1)
+        this.tickets.splice(1, this.tickets.length - 1)
     },
     buildMutationUpsertQuery(modelName) {
       return `mutation($Inputs : ${modelName}UpsertWithWhereInput!){ ${modelName}{ ${modelName}UpsertWithWhere(input:$Inputs){ clientMutationId obj{ id } } } }`
     },
     viewRegistration() {
-      window.open(
-        'https://bitpod-event.test.bitpod.io/e/' + this.eventData.UniqLink,
-        '_blank'
-      )
+      const baseUrl = window.location.origin
+      console.log('==baseUrl==', baseUrl)
+      window.open(`${baseUrl}${this.eventData.UniqLink}`, '_blank')
     },
     async eventPublish() {
       const eventStatus = { Status: 'Open for registration' }
@@ -631,6 +664,7 @@ export default {
             const EndDate = v && new Date(v)
             const { StartDate } = this.tickets[index]
             let startdateMessage = ''
+            // debugger
             if (!StartDate) startdateMessage = 'This field is required'
             else if (StartDate && EndDate && StartDate > EndDate)
               startdateMessage =
@@ -676,7 +710,7 @@ export default {
         this.e1 = value
       } else if (value === 3) {
         if (
-          LocationType === 'Venue' ||
+          (LocationType === 'Venue' && this.venueAddress.AddressLine !== '') ||
           (LocationType === 'Online Event' && WebinarLink !== '')
         ) {
           this.e1 = value
@@ -717,28 +751,18 @@ export default {
         this.eventData.EndDate = convertedEventRecord.EndDate
         this.eventData.EventManager = this.$auth.$state.user.data.email
         this.eventData.Organizer = this.$auth.$state.user.data.name
-        console.log('===nuxtconfig=apiEndpoint=', nuxtconfig.axios.apiEndpoint)
-        console.log(
-          '===nuxtconfig=backendBaseUrl=',
-          nuxtconfig.axios.backendBaseUrl
-        )
-        let apiURL = ''
-        if (window.location.origin.includes('localhost')) {
-          apiURL = `https://${nuxtconfig.axios.backendBaseUrl}${nuxtconfig.axios.apiEndpoint}`
-        } else {
-          apiURL = nuxtconfig.axios.apiEndpoint
-        }
-        console.log('===apiURL=', apiURL)
+       
+        console.log('===getApiUrl=', getApiUrl())
+        // debugger
+        const baseUrl = getApiUrl()
         this.$axios
-          .$post(`https://event.test.bitpod.io/svc/api/Events`, {
+          .$post(`${baseUrl}Events`, {
             ...this.eventData,
           })
           .then((res) => {
             console.log('=res===', res)
             this.eventId = res.id
-            // this.eId = res.id
             console.log('=this.eventId===', this.eventId)
-            // console.log('=this.eId===', this.eId)
             const ticketList = []
 
             this.tickets.forEach(function (ticket) {
@@ -749,7 +773,7 @@ export default {
             })
             console.log('=ticketList===', ticketList)
             return this.$axios
-              .$post(`https://event.test.bitpod.io/svc/api/Tickets`, ticketList)
+              .$post(`${baseUrl}Tickets`, ticketList)
               .then((ticketres) => {
                 // this.onFormClose()
                 this.isTicket = false
@@ -764,6 +788,13 @@ export default {
           })
       }
     },
+    changeAddressData(value) {
+      // debugger
+      this.venueAddress.AddressLine = value
+    },
+    // updateAddressData() {
+    //   debugger
+    // },
     getAddressData(addressData, placeResultData, id) {
       console.log('==addressData==', addressData)
       this.venueAddress.AddressLine =
@@ -796,9 +827,12 @@ export default {
       this.verifyUniqueLink(value)
     },
     changeUniqueLink(event) {
+      // debugger
+      // this.verifyUniqueLink(value)
       this.verifyUniqueLink(event.currentTarget.value)
     },
     verifyUniqueLink(value) {
+      // debugger
       value = value.toLowerCase().replace(/\s/g, '')
       value = value.trim()
       this.eventData.UniqLink = value
@@ -837,6 +871,7 @@ export default {
       if (value === 'Online Event') {
         this.isVenue = false
         this.isOnlineEvent = true
+        this.isMap = false
       }
     },
     addTicketRow() {
