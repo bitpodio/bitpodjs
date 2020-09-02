@@ -63,10 +63,6 @@ export default {
         outlined: true,
         rules: this.rules,
       },
-<<<<<<< HEAD
-      dateTime: '',
-=======
->>>>>>> f74bbdca12fbf37a7a6118dc9a920d4cdb7fa1af
     }
   },
   computed: {

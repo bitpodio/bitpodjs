@@ -16,7 +16,6 @@ import registrationType from './gql/registrationType.gql'
 import { getData } from './rest'
 import eventSpeakers from './gql/eventSpeakers.gql'
 // import { getBPMNData } from './rest/bpmn.js'
-
 export default {
   Event: {
     DataSource: {
@@ -36,7 +35,7 @@ export default {
           singleExpand: false,
           showSelect: true,
           hideFilter: false,
-          hideSearch: true,
+          hideSearch: false,
         },
         default: false,
         fields: {
@@ -686,7 +685,7 @@ export default {
             newForm: true,
             editForm: true,
             required: true,
-            default: 'code50',
+            default: 'General admission',
             rules: [
               (v) => {
                 return !!v || 'Title is required'
@@ -705,26 +704,11 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
-<<<<<<< HEAD
-            rules: [
-              (v, data) => {
-                debugger
-                const type = data.Type
-                return (
-                  type === 'Paid' ||
-                  type === 'Donation' ||
-                  !!v ||
-                  'Amount is required'
-                )
-              },
-            ],
-=======
-            default: 100,
+            default: 0,
             readonly(value, data) {
               const type = data.Type
               return type === 'Free' || type === ''
             },
->>>>>>> f74bbdca12fbf37a7a6118dc9a920d4cdb7fa1af
           },
           Type: {
             displayOrder: 3,
@@ -739,7 +723,7 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
-            default: 'Paid',
+            default: 'Free',
             dataSource: {
               query: registrationStatusOptions,
               itemText: 'value',
@@ -844,6 +828,17 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Start is required'
+              },
+              (v, data) => {
+                return (
+                  (!!v && data.EndDate > new Date(v)) ||
+                  'Start Date should be less than End Date'
+                )
+              },
+            ],
           },
           EndDate: {
             displayOrder: 8,
@@ -857,6 +852,17 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'EndDate is required'
+              },
+              (v, data) => {
+                return (
+                  (!!v && data.StartDate < new Date(v)) ||
+                  'EndDate should be greater than StartDate'
+                )
+              },
+            ],
           },
           ValidateQty: {
             displayOrder: 8,
@@ -886,7 +892,7 @@ export default {
           },
         },
         template: {
-          name: 'event-grid',
+          name: 'eventTickets-grid',
           context: {
             basePath: '/event',
           },
@@ -969,13 +975,13 @@ export default {
             caption: 'Amount',
             searchEnable: true,
             sortEnable: true,
-            columnWidth: '150px',
+            columnWidth: '120px',
             type: 'number',
             cssClasses: 'col-6 col-md-6',
             inlineEdit: true,
             newForm: true,
             editForm: true,
-            hidden: true,
+            hidden: false,
           },
           validTill: {
             displayOrder: 4,
@@ -998,9 +1004,21 @@ export default {
             columnWidth: '150px',
             type: 'checkbox',
             inlineEdit: true,
+            newForm: false,
+            editForm: false,
+            hidden: false,
+          },
+          isPercent: {
+            displayOrder: 5,
+            caption: 'Is Percent',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'checkbox',
+            inlineEdit: true,
             newForm: true,
             editForm: true,
-            hidden: false,
+            hidden: true,
           },
           maxApplicableAmount: {
             displayOrder: 5,
@@ -1028,19 +1046,6 @@ export default {
             newForm: true,
             editForm: true,
           },
-          EventId: {
-            displayOrder: 8,
-            caption: 'EventId',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
-            cssClasses: 'col-6 col-md-6',
-            hidden: true,
-            inlineEdit: true,
-            newForm: true,
-            editForm: true,
-          },
         },
         template: {
           name: 'event-grid',
@@ -1058,6 +1063,14 @@ export default {
               where: {
                 EventId: ctx.$route.params.id,
               },
+            }
+          },
+          mutation(ctx) {
+            return {
+              new: {
+                EventId: ctx.$route.params.id,
+              },
+              edit: {},
             }
           },
         },
@@ -1154,6 +1167,11 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Name is required'
+              },
+            ],
           },
           Description: {
             displayOrder: 2,
@@ -1180,6 +1198,17 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Start is required'
+              },
+              (v, data) => {
+                return (
+                  (!!v && data.EndDate > new Date(v)) ||
+                  'Start Date should be less than End Date'
+                )
+              },
+            ],
           },
           EndDate: {
             displayOrder: 4,
@@ -1193,6 +1222,17 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'EndDate is required'
+              },
+              (v, data) => {
+                return (
+                  (!!v && data.StartDate < new Date(v)) ||
+                  'EndDate should be greater than StartDate'
+                )
+              },
+            ],
           },
           Timezone: {
             displayOrder: 5,
@@ -1229,6 +1269,11 @@ export default {
                 }
               },
             },
+            rules: [
+              (v) => {
+                return !!v || 'Type is required'
+              },
+            ],
           },
           Speaker: {
             displayOrder: 7,
@@ -1242,10 +1287,11 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
+            multiple: true,
             dataSource: {
               query: eventSpeakers,
-              itemText: 'EventSpeakers.edges.node.FirstName',
-              itemValue: 'EventSpeakers.edges.node.id',
+              itemText: 'EventSpeakers.edges[0].node.FirstName',
+              itemValue: 'EventSpeakers.edges[0].node.id',
               filter(data) {
                 return {
                   id: this.$route.params.id,
@@ -1266,36 +1312,14 @@ export default {
             newForm: true,
             editForm: true,
           },
-          TicketName: {
-            displayOrder: 9,
-            caption: 'Tickets',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'lookup',
-            cssClasses: 'col-6 col-md-6',
-            hidden: false,
-            inlineEdit: true,
-            newForm: true,
-            editForm: true,
-            dataSource: {
-              query: eventTickets,
-              itemText: 'Code',
-              itemValue: 'id',
-              filter(data) {
-                return {
-                  Events: this.$route.params.id,
-                }
-              },
-            },
-          },
           SessionTicket: {
             displayOrder: 9,
-            caption: 'SessionTicket',
+            caption: 'Ticket',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
             type: 'lookup',
+            multiple: true,
             cssClasses: 'col-6 col-md-6',
             hidden: true,
             inlineEdit: true,
@@ -1311,19 +1335,24 @@ export default {
                 }
               },
             },
+            rules: [
+              (v) => {
+                return !!v || 'Tickets is required'
+              },
+            ],
           },
-          EventId: {
-            displayOrder: 8,
-            caption: 'EventId',
+          TicketName: {
+            displayOrder: 9,
+            caption: 'Ticket',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
             cssClasses: 'col-6 col-md-6',
-            hidden: true,
+            hidden: false,
             inlineEdit: true,
-            newForm: true,
-            editForm: true,
+            newForm: false,
+            editForm: false,
           },
         },
         template: {
@@ -1340,6 +1369,16 @@ export default {
           filter(ctx) {
             return {
               where: {
+                EventId: ctx.$route.params.id,
+              },
+            }
+          },
+          mutation(ctx, data) {
+            return {
+              new: {
+                EventId: ctx.$route.params.id,
+              },
+              edit: {
                 EventId: ctx.$route.params.id,
               },
             }
@@ -1418,7 +1457,7 @@ export default {
           },
         },
         template: {
-          name: 'link-grid',
+          name: 'event-grid',
           context: {
             basePath: '/event',
           },

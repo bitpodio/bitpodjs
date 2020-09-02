@@ -16,10 +16,13 @@ export default {
 </script>
 
 <style scoped>
-.v-chip.Personal {
+.v-chip.Free {
   background: #0cb14b;
 }
-.v-chip.Group {
+.v-chip.Paid {
+  background: orange;
+}
+.v-chip.Donation {
   background: orange;
 }
 </style>

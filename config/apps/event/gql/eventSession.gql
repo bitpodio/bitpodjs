@@ -12,11 +12,12 @@ query ($filters: JSON, $where: JSON) {
                     EndDate 
                     Type 
                     TicketName 
-                    EventId 
+                    EventId
+                    SessionTicket 
                     SyncStatus 
                     createdDate 
                     createdBy 
-                    modifiedDate 
+                    modifiedDate
                 } 
             } 
         } 
