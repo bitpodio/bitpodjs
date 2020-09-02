@@ -15,7 +15,7 @@ export default {
   target: 'server',
   /*
    ** Headers of the page
-   ** See https://nuxtjs.org/api/configuration-head
+   ** See https://nuxtjs.org/api/configuration-head 
    */
   head: {
     titleTemplate: '%s - ' + process.env.npm_package_name,
