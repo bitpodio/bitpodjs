@@ -6,7 +6,7 @@
       :item-text="itemText"
       :item-value="itemValue"
       :loading="isLoading"
-      :label="field.caption"
+      :label="fieldCaption"
       :multiple="field.multiple"
       :rules="rules"
       outlined
@@ -18,6 +18,7 @@
 <script>
 import gql from 'graphql-tag'
 import { getIdFromAtob } from '~/utility'
+import { formFieldMixin } from '~/utility/form-control'
 
 function formatResult(data) {
   const [modelName] = Object.getOwnPropertyNames(data)
@@ -28,6 +29,7 @@ function formatResult(data) {
 }
 
 export default {
+  mixins: [formFieldMixin],
   model: {
     prop: 'value',
     event: 'change',

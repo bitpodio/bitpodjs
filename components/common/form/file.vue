@@ -2,14 +2,16 @@
   <div>
     <v-file-input
       multiple
-      :label="field.caption"
+      :label="fieldCaption"
       :rules="rules"
       @change="onChange"
     ></v-file-input>
   </div>
 </template>
 <script>
+import { formFieldMixin } from '~/utility/form-control'
 export default {
+  mixins: [formFieldMixin],
   props: ['value', 'field', 'rules'],
   data() {
     return {
