@@ -463,14 +463,9 @@ export default {
         title: 'Badge',
         type: 'list',
       },
-    },
-  },
-
-  seatmaps: {
-    views: {
-      seatmaps: {
+      badges: {
         ui: {
-          hideDefaultHeader: false,
+          hideDefaultHeader: true,
           hideDefaultFooter: false,
           showExpand: false,
           singleExpand: false,
@@ -480,50 +475,66 @@ export default {
         },
         default: false,
         fields: {
-          Name: {
+          Size: {
             displayOrder: 1,
-            caption: 'Name',
+            caption: 'Size',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '250px',
             type: 'string',
           },
-          ImageUrl: {
+          Type: {
             displayOrder: 2,
-            caption: 'Image Url',
+            caption: 'Type',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '250px',
             type: 'string',
           },
-          createdDate: {
+          Category: {
             displayOrder: 3,
-            caption: 'Date',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'date',
-          },
-          createdBy: {
-            displayOrder: 4,
-            caption: 'Created By',
+            caption: 'Category',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+          },
+          Default: {
+            displayOrder: 4,
+            caption: 'Default',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          Template: {
+            displayOrder: 5,
+            caption: 'Template',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          DisplayOrder: {
+            displayOrder: 6,
+            caption: 'Display Order',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'number',
           },
         },
         template: {
-          name: 'link-grid',
+          name: 'badge-grid',
           context: {
-            basePath: '/seatmaps',
+            basePath: '/badge',
           },
         },
         dataSource: {
-          query: seatmapsList,
+          query: badgeList,
           defaultSort: 'createdDate DESC',
           type: 'graphql',
-          model: 'SeatMap',
+          model: 'Badge',
           filter: {
             limit: '10',
             order: 'createdDate DESC',
@@ -531,10 +542,15 @@ export default {
             where: {},
           },
         },
-        title: 'Seat Maps',
+        title: 'Id Card Badge',
         type: 'list',
       },
-      seatmap: {
+    },
+  },
+
+  seatmaps: {
+    views: {
+      seatmaps: {
         ui: {
           hideDefaultHeader: true,
           hideDefaultFooter: true,
@@ -591,7 +607,7 @@ export default {
           type: 'graphql',
           model: 'SeatMap',
           filter: {
-            limit: '10',
+            limit: '100',
             order: 'createdDate DESC',
             skip: '0',
             where: {},
@@ -605,9 +621,9 @@ export default {
 
   marketingtemplates: {
     views: {
-      templates: {
+      template: {
         ui: {
-          hideDefaultHeader: false,
+          hideDefaultHeader: true,
           hideDefaultFooter: false,
           showExpand: false,
           singleExpand: false,
@@ -675,7 +691,7 @@ export default {
           },
         },
         template: {
-          name: 'link-grid',
+          name: 'invitetemplate-grid',
           context: {
             basePath: '/templates',
           },
@@ -693,6 +709,97 @@ export default {
           },
         },
         title: 'Templates',
+        type: 'list',
+      },
+      mytemplate: {
+        ui: {
+          hideDefaultHeader: true,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: true,
+          hideFilter: false,
+          hideSearch: true,
+        },
+        default: false,
+        fields: {
+          Name: {
+            displayOrder: 1,
+            caption: 'Name',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '250px',
+            type: 'string',
+          },
+          Type: {
+            displayOrder: 2,
+            caption: 'Type',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '250px',
+            type: 'string',
+          },
+          ImageUrl: {
+            displayOrder: 3,
+            caption: 'Image Url',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '250px',
+            type: 'string',
+          },
+          Body: {
+            displayOrder: 4,
+            caption: 'Body',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '250px',
+            type: 'string',
+          },
+          Category: {
+            displayOrder: 5,
+            caption: 'Category',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '250px',
+            type: 'string',
+          },
+          createdDate: {
+            displayOrder: 6,
+            caption: 'Date',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'date',
+          },
+          createdBy: {
+            displayOrder: 7,
+            caption: 'Created By',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+        },
+        template: {
+          name: 'mytemplate-grid',
+          context: {
+            basePath: '/templates',
+          },
+        },
+        dataSource: {
+          query: marketingTemplates,
+          defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          model: 'MarketingTemplate',
+          filter(ctx) {
+            return {
+              where: {
+                createdBy: ctx.$auth.$state.user.data.email,
+              },
+            }
+          },
+        },
+        title: 'My Templates',
         type: 'list',
       },
     },

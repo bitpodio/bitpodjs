@@ -344,7 +344,7 @@ export default {
       {
         icon: 'fa fa-file',
         text: 'Invite Templates',
-        to: '/apps/admin/list/marketingtemplates/templates',
+        to: '/apps/admin/list/marketingtemplates/template',
       },
       {
         icon: 'fa fa-grid-alt',
