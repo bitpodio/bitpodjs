@@ -1,15 +1,17 @@
 import registrationForm from './gql/registrationForm.gql'
-import organizationDetails from './gql/organizationDetails.gql'
-import organization from './gql/organization.gql'
+// import organizationDetails from './gql/organizationDetails.gql'
+// import organization from './gql/organization.gql'
 import badgeList from './gql/badgeList.gql'
 import seatmapsList from './gql/seatmapsList.gql'
 import marketingTemplates from './gql/marketingTemplates.gql'
+import businessUnit from './gql/businessUnit.gql'
+import { getData } from '~/config/apps/event/rest/index.js'
 // import { getBPMNData } from './rest/bpmn.js'
 
 export default {
   organization: {
     views: {
-      organizationdetails: {
+      organizationBusinessUnit: {
         ui: {
           hideDefaultHeader: false,
           hideDefaultFooter: false,
@@ -22,116 +24,60 @@ export default {
         default: false,
         fields: {
           Name: {
-            displayOrder: 1,
-            caption: 'Title',
+            displayOrder: 2,
+            caption: 'Name',
             searchEnable: true,
             sortEnable: true,
-            columnWidth: '250px',
+            columnWidth: '180px',
             type: 'string',
           },
-          Timezone: {
+          'child.Name': {
             displayOrder: 3,
-            caption: 'Timezone',
+            caption: 'Parent BU',
             searchEnable: true,
             sortEnable: true,
-            columnWidth: '150px',
-            type: 'timezone',
-          },
-          StartDate: {
-            displayOrder: 3,
-            caption: 'Start Date',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'date',
-          },
-          EndDate: {
-            displayOrder: 3,
-            caption: 'End Date',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'datetime',
-          },
-          Privacy: {
-            displayOrder: 4,
-            caption: 'Privacy',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
+            columnWidth: '180px',
             type: 'string',
           },
-          Tags: {
+          'contacts.FullName': {
+            displayOrder: 3,
+            caption: 'Primary Contact',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'string',
+          },
+          '_CurrentAddress.AddressLine': {
             displayOrder: 5,
-            caption: 'Tags',
+            caption: 'Address Line',
             searchEnable: true,
             sortEnable: true,
-            columnWidth: '150px',
+            columnWidth: '160px',
             type: 'string',
           },
-          VenueName: {
+          '_CurrentAddress.Country': {
             displayOrder: 6,
-            caption: 'Venue',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
-          },
-          '_VenueAddress.AddressLine': {
-            displayOrder: 7,
-            caption: 'Address',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
-          },
-          '_VenueAddress.City': {
-            displayOrder: 8,
-            caption: 'City',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
-          },
-          '_VenueAddress.State': {
-            displayOrder: 9,
-            caption: 'State',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
-          },
-          '_VenueAddress.PostalCode': {
-            displayOrder: 10,
-            caption: 'Postal Code',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
-          },
-          '_VenueAddress.Country': {
-            displayOrder: 11,
             caption: 'Country',
             searchEnable: true,
             sortEnable: true,
-            columnWidth: '150px',
+            columnWidth: '130px',
             type: 'string',
           },
-          Currency: {
-            displayOrder: 12,
-            caption: 'Currency',
+          Email: {
+            displayOrder: 7,
+            caption: 'Email',
             searchEnable: true,
             sortEnable: true,
-            columnWidth: '150px',
+            columnWidth: '130px',
             type: 'string',
           },
-          createdDate: {
-            displayOrder: 13,
-            caption: 'Created Date',
+          Phone: {
+            displayOrder: 8,
+            caption: 'Phone',
             searchEnable: true,
             sortEnable: true,
-            columnWidth: '150px',
-            type: 'date',
+            columnWidth: '130px',
+            type: 'string',
           },
         },
         template: {
@@ -141,15 +87,21 @@ export default {
           },
         },
         dataSource: {
-          query: organizationDetails,
+          query: businessUnit,
           defaultSort: 'createdDate DESC',
           type: 'graphql',
-          model: 'OrganizationInfo',
+          model: 'Location',
+          filter(ctx) {
+            debugger
+            return {
+              where: {},
+            }
+          },
         },
-        title: 'Organization',
+        title: 'organizationBusinessUnit',
         type: 'list',
       },
-      organization: {
+      organizationProductSubscription: {
         ui: {
           hideDefaultHeader: false,
           hideDefaultFooter: false,
@@ -161,117 +113,61 @@ export default {
         },
         default: false,
         fields: {
-          Name: {
-            displayOrder: 1,
-            caption: 'Title',
+          'SubProduct.DisplayName': {
+            displayOrder: 2,
+            caption: 'Product',
             searchEnable: true,
             sortEnable: true,
-            columnWidth: '250px',
+            columnWidth: '200px',
             type: 'string',
-          },
-          Timezone: {
-            displayOrder: 3,
-            caption: 'Timezone',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'timezone',
           },
           StartDate: {
             displayOrder: 3,
             caption: 'Start Date',
             searchEnable: true,
             sortEnable: true,
-            columnWidth: '150px',
-            type: 'date',
+            columnWidth: '180px',
+            type: 'datetime',
           },
           EndDate: {
-            displayOrder: 3,
+            displayOrder: 4,
             caption: 'End Date',
             searchEnable: true,
             sortEnable: true,
-            columnWidth: '150px',
+            columnWidth: '180px',
             type: 'datetime',
           },
-          Privacy: {
-            displayOrder: 4,
-            caption: 'Privacy',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
-          },
-          Tags: {
+          Cost: {
             displayOrder: 5,
-            caption: 'Tags',
+            caption: 'Price',
             searchEnable: true,
             sortEnable: true,
-            columnWidth: '150px',
+            columnWidth: '130px',
             type: 'string',
           },
-          VenueName: {
+          Unit: {
             displayOrder: 6,
-            caption: 'Venue',
+            caption: 'Unit',
             searchEnable: true,
             sortEnable: true,
-            columnWidth: '150px',
+            columnWidth: '120px',
             type: 'string',
           },
-          '_VenueAddress.AddressLine': {
+          isActive: {
             displayOrder: 7,
-            caption: 'Address',
+            caption: 'Active',
             searchEnable: true,
             sortEnable: true,
-            columnWidth: '150px',
+            columnWidth: '120px',
             type: 'string',
           },
-          '_VenueAddress.City': {
+          AutoRenew: {
             displayOrder: 8,
-            caption: 'City',
+            caption: 'Auto Renew',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
-          },
-          '_VenueAddress.State': {
-            displayOrder: 9,
-            caption: 'State',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
-          },
-          '_VenueAddress.PostalCode': {
-            displayOrder: 10,
-            caption: 'Postal Code',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
-          },
-          '_VenueAddress.Country': {
-            displayOrder: 11,
-            caption: 'Country',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
-          },
-          Currency: {
-            displayOrder: 12,
-            caption: 'Currency',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
-          },
-          createdDate: {
-            displayOrder: 13,
-            caption: 'Created Date',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'date',
           },
         },
         template: {
@@ -281,12 +177,167 @@ export default {
           },
         },
         dataSource: {
-          query: organization,
-          defaultSort: 'createdDate DESC',
-          type: 'graphql',
-          model: 'OrganizationInfo',
+          type: 'rest',
+          getData: (ctx) => getData(`/OrganizationInfos/getSubscription`),
         },
-        title: 'Organization',
+        title: 'organizationProductSubscription',
+        type: 'list',
+      },
+      organizationTasks: {
+        ui: {
+          hideDefaultHeader: false,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: true,
+          hideFilter: false,
+          hideSearch: true,
+        },
+        default: false,
+        fields: {
+          Title: {
+            displayOrder: 2,
+            caption: 'Title',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'string',
+          },
+          Status: {
+            displayOrder: 3,
+            caption: 'Status',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'string',
+          },
+          Action: {
+            displayOrder: 4,
+            caption: 'Wait For',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'string',
+          },
+          Category: {
+            displayOrder: 5,
+            caption: 'Category',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'string',
+          },
+          Type: {
+            displayOrder: 6,
+            caption: 'Type',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'string',
+          },
+          TemplateName: {
+            displayOrder: 7,
+            caption: 'Template Name',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'string',
+          },
+          createdBy: {
+            displayOrder: 8,
+            caption: 'Created By',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'datetime',
+          },
+          createdDate: {
+            displayOrder: 9,
+            caption: 'Created Date',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'datetime',
+          },
+          DueDate: {
+            displayOrder: 10,
+            caption: 'Due Date',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'datetime',
+          },
+        },
+        template: {
+          name: 'link-grid',
+          context: {
+            basePath: '/organization',
+          },
+        },
+        dataSource: {
+          type: 'rest',
+          getData: (ctx) =>
+            getData(`/CRMACTIVITIES?filter={"where":{"Type":"Template"}}`),
+        },
+        title: 'organizationProductSubscription',
+        type: 'list',
+      },
+      organizationIntegration: {
+        ui: {
+          hideDefaultHeader: false,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: true,
+          hideFilter: false,
+          hideSearch: true,
+        },
+        default: false,
+        fields: {
+          'MetaData.Category': {
+            displayOrder: 2,
+            caption: 'Category',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'string',
+          },
+          ServiceId: {
+            displayOrder: 3,
+            caption: 'App Name',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'string',
+          },
+          Status: {
+            displayOrder: 4,
+            caption: 'Status',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'string',
+          },
+          Action: {
+            displayOrder: 5,
+            caption: 'Action',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'string',
+          },
+        },
+        template: {
+          name: 'link-grid',
+          context: {
+            basePath: '/organization',
+          },
+        },
+        dataSource: {
+          type: 'rest',
+          getData: (ctx) => getData(`/OrganizationInfos/getMyConnections`),
+        },
+        title: 'organizationIntegration',
         type: 'list',
       },
     },
@@ -367,7 +418,6 @@ export default {
           type: 'graphql',
           model: 'RegistrationForm',
           filter: {
-            limit: '10',
             order: 'createdDate DESC',
             skip: '0',
             where: {},
@@ -800,6 +850,167 @@ export default {
           },
         },
         title: 'My Templates',
+        type: 'list',
+      },
+    },
+  },
+
+  userroles: {
+    views: {
+      userroles: {
+        ui: {
+          hideDefaultHeader: false,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: false,
+          hideFilter: false,
+          hideSearch: true,
+        },
+        default: true,
+        fields: {
+          id: {
+            displayOrder: 2,
+            caption: 'Id',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '250px',
+            type: 'string',
+          },
+          name: {
+            displayOrder: 3,
+            caption: 'Name',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+        },
+        template: {
+          name: 'link-grid',
+          context: {
+            basePath: '/organization',
+          },
+        },
+        dataSource: {
+          type: 'rest',
+          getData: (ctx) => getData(`/OrganizationInfos/roles`),
+        },
+        title: 'userroles',
+        type: 'list',
+      },
+    },
+  },
+
+  users: {
+    views: {
+      users: {
+        ui: {
+          hideDefaultHeader: false,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: false,
+          hideFilter: false,
+          hideSearch: true,
+        },
+        default: true,
+        fields: {
+          name: {
+            displayOrder: 2,
+            caption: 'Name',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          id: {
+            displayOrder: 3,
+            caption: 'Username',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          email: {
+            displayOrder: 4,
+            caption: 'Email',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          'rolemappings[0].roleId': {
+            displayOrder: 5,
+            caption: 'Roles',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+        },
+        template: {
+          name: 'link-grid',
+          context: {
+            basePath: '/organization',
+          },
+        },
+        dataSource: {
+          type: 'rest',
+          getData: (ctx) =>
+            getData(
+              `/Organizations/1/Users?filter={"include":{"rolemappings":"role"}}`
+            ),
+        },
+        title: 'userroles',
+        type: 'list',
+      },
+    },
+  },
+
+  accesskey: {
+    views: {
+      accesskey: {
+        ui: {
+          hideDefaultHeader: false,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: false,
+          hideFilter: false,
+          hideSearch: true,
+        },
+        default: true,
+        fields: {
+          accesskey: {
+            displayOrder: 2,
+            caption: 'Access Key',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '200px',
+            type: 'string',
+          },
+          accesssecret: {
+            displayOrder: 3,
+            caption: 'Access Secret',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '200px',
+            type: 'string',
+          },
+        },
+        template: {
+          name: 'link-grid',
+          context: {
+            basePath: '/organization',
+          },
+        },
+        dataSource: {
+          type: 'rest',
+          getData: (ctx) =>
+            getData(`/Users/${ctx.$auth.$state.user.data.email}/AccessKey`),
+        },
+        title: 'accesskey',
         type: 'list',
       },
     },

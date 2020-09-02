@@ -42,28 +42,28 @@
           <i class="fa fa-user-plus pr-1" aria-hidden="true"></i>Business Units
         </h2>
         <v-divider></v-divider>
-        <Grid view-name="organizationdetails" :content="content" />
+        <Grid view-name="organizationBusinessUnit" :content="content" />
       </div>
       <div v-if="content" class="xs12 sm12 md12 boxview pa-4 mr-2 mb-2">
         <h2 class="body-1 pb-2">
           <i class="fa fa-server pr-1" aria-hidden="true"></i> Subscriptions
         </h2>
         <v-divider></v-divider>
-        <Grid view-name="organizationdetails" :content="content" />
+        <Grid view-name="organizationProductSubscription" :content="content" />
       </div>
       <div v-if="content" class="xs12 sm12 md12 boxview pa-4 mr-2 mb-2">
         <h2 class="body-1 pb-2">
           <i class="fa fa-external-link pr-1" aria-hidden="true"></i> Tasks
         </h2>
         <v-divider></v-divider>
-        <Grid view-name="organizationdetails" :content="content" />
+        <Grid view-name="organizationTasks" :content="content" />
       </div>
       <div v-if="content" class="xs12 sm12 md12 boxview pa-4 mr-2 mb-2">
         <h2 class="body-1 pb-2">
           <i class="fa fa-link1 pr-1" aria-hidden="true"></i> Integrations
         </h2>
         <v-divider></v-divider>
-        <Grid view-name="organizationdetails" :content="content" />
+        <Grid view-name="organizationIntegration" :content="content" />
       </div>
       <div class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
         <h2 class="body-1 pb-2">
@@ -260,6 +260,7 @@ export default {
   },
   mixins: [configLoaderMixin],
   data() {
+    debugger
     return {
       loading: 0,
       data: {
