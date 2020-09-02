@@ -15,3 +15,11 @@ export function getData(path) {
 // }
 
 export const getAllUsers = getData.bind(null, 'users')
+
+export function getLookupData(path) {
+  const URL = `https://event.test.bitpod.io/svc/api`
+  return async function query(field) {
+    const res = await this.$axios.$get(`${URL}${path}`)
+    return res
+  }
+}

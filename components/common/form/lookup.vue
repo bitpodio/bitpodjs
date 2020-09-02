@@ -78,17 +78,23 @@ export default {
     },
     async loadItems() {
       if (!this.field.items) {
-        const where =
-          this.filter || this.field.dataSource.filter.call(this) || {}
-        const result = await this.$apollo.query({
-          query: gql`
-            ${this.field.dataSource.query}
-          `,
-          variables: {
-            filters: { where },
-          },
-        })
-        this.items = formatResult(result.data)
+        const dataSourceType = this.field.dataSource.type || 'graphql'
+        if (dataSourceType === 'rest') {
+          const getDataFunc = this.field.dataSource.getData.call(this, this)
+          this.items = await getDataFunc.call(this)
+        } else {
+          const where =
+            this.filter || this.field.dataSource.filter.call(this) || {}
+          const result = await this.$apollo.query({
+            query: gql`
+              ${this.field.dataSource.query}
+            `,
+            variables: {
+              filters: { where },
+            },
+          })
+          this.items = formatResult(result.data)
+        }
       }
     },
   },

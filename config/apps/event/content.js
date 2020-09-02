@@ -14,8 +14,7 @@ import eventRecurringSession from './gql/eventRecurringSession.gql'
 import eventTasks from './gql/eventTasks.gql'
 import eventRegistrationForm from './gql/eventRegistrationForm.gql'
 import registrationType from './gql/registrationType.gql'
-import { getData } from './rest'
-// import { getBPMNData } from './rest/bpmn.js'
+import { getData, getLookupData } from './rest'
 
 export default {
   Event: {
@@ -1907,13 +1906,18 @@ export default {
             newForm: true,
             editForm: true,
             dataSource: {
-              query: registrationStatusOptions,
+              type: 'rest',
               itemText: 'value',
               itemValue: 'key',
-              filter(data) {
-                return {
-                  type: 'RegistrationStatus',
+              getData: (ctx) => {
+                let filter = {
+                  where: {
+                    type: 'RegistrationStatus',
+                  },
                 }
+                filter = JSON.stringify(filter)
+                const path = `/GeneralConfigurations?filter=${filter}`
+                return getLookupData(path)
               },
             },
           },
