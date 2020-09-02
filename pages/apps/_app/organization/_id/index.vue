@@ -49,7 +49,11 @@
           <i class="fa fa-server pr-1" aria-hidden="true"></i> Subscriptions
         </h2>
         <v-divider></v-divider>
-        <Grid view-name="organizationProductSubscription" :content="content" />
+        <Grid
+          view-name="organizationProductSubscription"
+          :content="content"
+          class="mt-11"
+        />
       </div>
       <div v-if="content" class="xs12 sm12 md12 boxview pa-4 mr-2 mb-2">
         <h2 class="body-1 pb-2">
