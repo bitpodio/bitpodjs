@@ -15,7 +15,6 @@ import eventTasks from './gql/eventTasks.gql'
 import eventRegistrationForm from './gql/eventRegistrationForm.gql'
 import registrationType from './gql/registrationType.gql'
 import { getData, getLookupData } from './rest'
-// import { getBPMNData } from './rest/bpmn.js'
 
 export default {
   Event: {
@@ -1906,16 +1905,6 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
-            // dataSource: {
-            //   query: registrationStatusOptions,
-            //   itemText: 'value',
-            //   itemValue: 'key',
-            //   filter(data) {
-            //     return {
-            //       type: 'RegistrationStatus',
-            //     }
-            //   },
-            // },
             dataSource: {
               type: 'rest',
               itemText: 'value',
