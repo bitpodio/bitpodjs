@@ -47,7 +47,7 @@
                   <v-datetime-picker
                     v-model="eventData.StartDate"
                     label="Start Date*"
-                    :text-field-props="textFieldProps"
+                    :text-field-props="eventStartdateProps"
                   >
                     <template slot="dateIcon">
                       <v-icon>fas fa-calendar</v-icon>
@@ -116,6 +116,11 @@
                       outlined
                       @change="changeLocation($event)"
                     ></v-select>
+                    <!-- <Lookup
+                      v-model="eventData.LocationType"
+                      :field="TypeProps"
+                      @change="changeLocation($event)"
+                    /> -->
                   </v-col>
                   <v-col v-if="isOnlineEvent" cols="12">
                     <v-text-field
@@ -145,6 +150,7 @@
                         placeholder="Address*"
                         :required="true"
                         @placechanged="getAddressData"
+                        @blur="getAddressData2"
                         @change="changeAddressData($event)"
                         @no-results-found="noLocationFound"
                       ></vue-google-autocomplete>
@@ -281,7 +287,7 @@
                         <v-datetime-picker
                           v-model="ticket.StartDate"
                           label="Start Date*"
-                          :text-field-props="textFieldProps2(k)"
+                          :text-field-props="ticketStartdateProps(k)"
                         >
                           <template slot="dateIcon">
                             <v-icon>fas fa-calendar</v-icon>
@@ -400,15 +406,15 @@ export default {
     // const eventId = ''
     return {
       // rules: [(v) => !!v || 'This field is required'],
-      rules: [(v) => 'This field is required'],
+      // rules: [(v) => 'This field is required'],
       valid: true,
       lazy: false,
       isSaveButtonDisabled: false,
       isTicket: true,
       isEventCreate: false,
       isEventPublish: false,
-      startdateMessage: '',
-      enddateMessage: '',
+      // startdateMessage: '',
+      // enddateMessage: '',
       requiredRules: [(v) => !!v || 'This field is required'],
       uniquelinkRules: [(v) => !!v || 'Lower case alphanumeric letters only'],
       isMap: false,
@@ -529,7 +535,7 @@ export default {
     gMapCenter() {
       return { lat: this.locations[0].lat, lng: this.locations[0].lng }
     },
-    textFieldProps() {
+    eventStartdateProps() {
       return {
         appendIcon: 'fa-calendar',
         outlined: true,
@@ -646,7 +652,7 @@ export default {
     deleteTicket(index) {
       if (this.tickets.length > 1) this.tickets.splice(index, 1)
     },
-    textFieldProps2(index) {
+    ticketStartdateProps(index) {
       return {
         appendIcon: 'fa-calendar',
         outlined: true,
@@ -655,7 +661,8 @@ export default {
             const StartDate = v && new Date(v)
             const { EndDate } = this.tickets[index]
             let startdateMessage = ''
-            // debugger
+            console.log('==this.currentDatetime==', this.currentDatetime)
+            debugger
             if (!StartDate) startdateMessage = 'This field is required'
             else if (StartDate && EndDate && StartDate > EndDate)
               startdateMessage =
@@ -809,8 +816,19 @@ export default {
       // debugger
       this.venueAddress.AddressLine = value
     },
-    noLocationFound() {
-      // debugger
+    noLocationFound(addressData, placeResultData, id) {
+      console.log('==noLocationFound==')
+      console.log('=noLocationFound=addressData=', addressData)
+      console.log('==noLocationFound==placeResultData=', placeResultData)
+      console.log('=noLocationFound=id==', id)
+      debugger
+    },
+    getAddressData2(addressData, placeResultData, id) {
+      console.log('==onblur==')
+      console.log('==onblur==addressData=', addressData)
+      console.log('==onblur==placeResultData=', placeResultData)
+      console.log('==id==', id)
+      debugger
     },
     getAddressData(addressData, placeResultData, id) {
       console.log('==addressData==', addressData)
