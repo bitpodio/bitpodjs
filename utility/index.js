@@ -61,7 +61,9 @@ export const formValidationMixin = {
       const propFields = {}
       for (const field of this.fields) {
         propFields[field.fieldName] = field.dataSource
-          ? field.dataSource.filter.call(this, this.formData)
+          ? field.dataSource.filter
+            ? field.dataSource.filter.call(this, this.formData)
+            : {}
           : {}
       }
       return propFields
@@ -122,4 +124,8 @@ export const configLoaderMixin = {
     )
     this.contents = contentFactory.default
   },
+}
+
+export function getIdFromAtob(encodedId) {
+  return encodedId ? atob(encodedId).split(':')[1] : ''
 }
