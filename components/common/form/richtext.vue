@@ -1,8 +1,6 @@
 <template>
   <div id="app">
-    <client-only>
-      <JoditEditor v-model="content" />
-    </client-only>
+    <jodit-editor v-model="content" :config="config" />
   </div>
 </template>
 
@@ -19,6 +17,9 @@ export default {
   data() {
     return {
       content: this.value || '',
+      config: {
+        placeholder: '',
+      },
     }
   },
   watch: {
