@@ -23,10 +23,7 @@
       >
         <v-card
           :elevation="hover ? 1 : 0"
-          class="ma-3 ml-0 mt-0 d-flex justify-center align-center"
-          height="125"
-          max-width="155"
-          width="155"
+          class="ma-3 ml-0 mt-0 d-flex justify-center align-center seat-maps"
         >
           <v-card-text class="font-weight-medium text-center subtitle-1">
             <i class="fa fa-grid-alt fs-36 warning--text"></i>
@@ -43,3 +40,11 @@ export default {
   props: ['items'],
 }
 </script>
+
+<style scoped>
+.seat-maps {
+  height: 125px;
+  width: 155px;
+  max-width: 155px;
+}
+</style>
