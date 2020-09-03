@@ -9,7 +9,7 @@ export default {
   props: ['item', 'value', 'context'],
   computed: {
     route() {
-      return `/apps/event/list/Event/All Events`
+      return `/apps/event/recurringcalendar/${this.$props.item.id}`
     },
   },
 }
