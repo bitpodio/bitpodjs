@@ -150,17 +150,22 @@
                         placeholder="Address*"
                         :required="true"
                         @placechanged="getAddressData"
-                        @blur="getAddressData2"
                         @change="changeAddressData($event)"
-                        @no-results-found="noLocationFound"
                       ></vue-google-autocomplete>
                     </no-ssr>
+                    <div
+                      v-show="addresslineMessage !== ''"
+                      class="error-message"
+                    >
+                      {{ addresslineMessage }}
+                    </div>
                   </v-col>
                   <v-col v-if="isVenue" cols="12">
                     <v-text-field
                       v-model="eventData.VenueName"
                       label="Venue Name"
                       outlined
+                      @change="changeAddress()"
                     ></v-text-field>
                   </v-col>
                   <v-col v-if="isVenue" cols="12">
@@ -168,6 +173,7 @@
                       v-model="venueAddress.City"
                       label="City"
                       outlined
+                      @change="changeAddress()"
                     ></v-text-field>
                   </v-col>
                   <v-col v-if="isVenue" cols="12">
@@ -175,6 +181,7 @@
                       v-model="venueAddress.State"
                       label="State"
                       outlined
+                      @change="changeAddress()"
                     ></v-text-field>
                   </v-col>
                   <v-col v-if="isVenue" cols="12">
@@ -182,6 +189,7 @@
                       v-model="venueAddress.Country"
                       label="Country"
                       outlined
+                      @change="changeAddress()"
                     ></v-text-field>
                   </v-col>
                   <v-col v-if="isVenue" cols="12">
@@ -287,7 +295,7 @@
                         <v-datetime-picker
                           v-model="ticket.StartDate"
                           label="Start Date*"
-                          :text-field-props="ticketStartdateProps(k)"
+                          :text-field-props="ticketStartdateProps(k, ticket)"
                         >
                           <template slot="dateIcon">
                             <v-icon>fas fa-calendar</v-icon>
@@ -434,7 +442,7 @@ import Timezone from '~/components/common/form/timezone'
 import eventCount from '~/config/apps/event/gql/eventCount.gql'
 import organizationInfo from '~/config/apps/event/gql/organizationInfo.gql'
 import { formatGQLResult } from '~/utility/gql.js'
-// import nuxtconfig from '~/nuxt.config'
+import nuxtconfig from '~/nuxt.config'
 export default {
   components: {
     // CustomDate,
@@ -456,6 +464,7 @@ export default {
       valid: true,
       lazy: false,
       isSaveButtonDisabled: false,
+      addresslineMessage: '',
       isTicket: true,
       isEventCreate: false,
       isEventPublish: false,
@@ -631,15 +640,15 @@ export default {
   methods: {
     close() {
       this.onFormClose()
-      this.isEventPublish = false
-      this.isEventCreate = false
+      // this.isEventPublish = false
+      // this.isEventCreate = false
       this.e1 = 1
       // this.resetForm()
     },
     closeForm() {
       this.onFormClose()
-      this.isEventPublish = false
-      this.isEventCreate = false
+      // this.isEventPublish = false
+      // this.isEventCreate = false
       this.e1 = 1
       this.$router.push('/apps/event/event/' + this.eventId)
       // this.resetForm()
@@ -698,7 +707,7 @@ export default {
     deleteTicket(index) {
       if (this.tickets.length > 1) this.tickets.splice(index, 1)
     },
-    ticketStartdateProps(index) {
+    ticketStartdateProps(index, ticket) {
       return {
         appendIcon: 'fa-calendar',
         outlined: true,
@@ -707,13 +716,14 @@ export default {
             const StartDate = v && new Date(v)
             const { EndDate } = this.tickets[index]
             let startdateMessage = ''
-            console.log('==this.currentDatetime==', this.currentDatetime)
-            debugger
-            if (!StartDate) startdateMessage = 'This field is required'
+            if (!StartDate && this.tickets[index].StartDate === null)
+              startdateMessage = strings.FIELD_REQUIRED
             else if (StartDate && EndDate && StartDate > EndDate)
-              startdateMessage =
-                'Start date should not be greater than End date'
-            else if (new Date(StartDate.setSeconds(1)) < this.currentDatetime) {
+              startdateMessage = strings.TICKET_START_DT_MSG
+            else if (
+              StartDate &&
+              new Date(StartDate.setSeconds(1)) < this.currentDatetime
+            ) {
               startdateMessage =
                 'Start date should not be less than Current date'
             } else startdateMessage = ''
@@ -731,19 +741,18 @@ export default {
           (v) => {
             const EndDate = v && new Date(v)
             const { StartDate } = this.tickets[index]
-            let startdateMessage = ''
-            // debugger
-            if (!StartDate) startdateMessage = 'This field is required'
+            let enddateMessage = ''
+
+            if (!EndDate) enddateMessage = strings.FIELD_REQUIRED
             else if (StartDate && EndDate && StartDate > EndDate)
-              startdateMessage =
-                'Start date should not be greater than End date'
+              enddateMessage = 'Start date should not be greater than End date'
             else if (new Date(EndDate) < this.currentDatetime) {
-              startdateMessage = 'End date should not be less than Current date'
+              enddateMessage = 'End date should not be less than Current date'
             } else if (new Date(EndDate) > this.eventData.EndDate) {
-              startdateMessage =
+              enddateMessage =
                 'Ticket end date should be less than event end date.'
-            } else startdateMessage = ''
-            return startdateMessage || true
+            } else enddateMessage = ''
+            return enddateMessage || true
             // return startdateMessage.length ? startdateMessage : true
           },
         ],
@@ -778,10 +787,17 @@ export default {
         this.e1 = value
       } else if (value === 3) {
         if (
-          (LocationType === 'Venue' && this.venueAddress.AddressLine !== '') ||
+          (LocationType === 'Venue' &&
+            this.$refs['venueAddress.AddressLine'].$data.autocompleteText !==
+              '') ||
           (LocationType === 'Online Event' && WebinarLink !== '')
         ) {
           this.e1 = value
+          this.addresslineMessage = ''
+        } else if (
+          this.$refs['venueAddress.AddressLine'].$data.autocompleteText === ''
+        ) {
+          this.addresslineMessage = 'This field is required'
         }
       }
     },
@@ -822,7 +838,6 @@ export default {
         this.eventData.Organizer = this.$auth.$state.user.data.name
 
         console.log('===getApiUrl=', getApiUrl())
-        // debugger
         const baseUrl = getApiUrl()
         this.$axios
           .$post(`${baseUrl}Events`, {
@@ -859,22 +874,50 @@ export default {
       }
     },
     changeAddressData(value) {
-      // debugger
-      this.venueAddress.AddressLine = value
+      if (value === '') this.addresslineMessage = 'This field is required'
+      else this.addresslineMessage = ''
     },
-    noLocationFound(addressData, placeResultData, id) {
-      console.log('==noLocationFound==')
-      console.log('=noLocationFound=addressData=', addressData)
-      console.log('==noLocationFound==placeResultData=', placeResultData)
-      console.log('=noLocationFound=id==', id)
-      debugger
-    },
-    getAddressData2(addressData, placeResultData, id) {
-      console.log('==onblur==')
-      console.log('==onblur==addressData=', addressData)
-      console.log('==onblur==placeResultData=', placeResultData)
-      console.log('==id==', id)
-      debugger
+    changeAddress() {
+      const { City, State, Country, PostalCode } = this.venueAddress
+      const VenueName = this.eventData.VenueName
+      const AddressLine = this.$refs['venueAddress.AddressLine'].$data
+        .autocompleteText
+      if (
+        AddressLine !== '' &&
+        VenueName !== '' &&
+        (City !== '' || State !== '' || Country !== '')
+      ) {
+        console.log('=address request===')
+        const addressObj = `${AddressLine},${VenueName},${City},${State},${Country},${PostalCode}`
+        // const key = 'AIzaSyCPS6SZlor8qxfpul-dKyN6566XG2R5dFM'
+        const key = nuxtconfig.generalConfig.googleMapKey
+        const customAxiosInstance = this.$axios.create({
+          headers: {},
+        })
+        customAxiosInstance.setToken(false)
+        customAxiosInstance
+          .get(
+            `https://maps.googleapis.com/maps/api/geocode/json?address=${addressObj}&key=${key}`
+          )
+          .then((res) => {
+            console.log('=address res===', res)
+
+            const latlng = {}
+            latlng.lat = res.data.results[0].geometry.location.lat
+            latlng.lng = res.data.results[0].geometry.location.lng
+
+            const newLocations = []
+            newLocations[0] = latlng
+
+            this.locations = newLocations
+            this.isMap = true
+            this.returnToCenter()
+            return res
+          })
+          .catch((e) => {
+            console.log('error', e)
+          })
+      }
     },
     getAddressData(addressData, placeResultData, id) {
       console.log('==addressData==', addressData)
@@ -908,12 +951,10 @@ export default {
       this.verifyUniqueLink(value)
     },
     changeUniqueLink(event) {
-      // debugger
       // this.verifyUniqueLink(value)
       this.verifyUniqueLink(event.currentTarget.value)
     },
     verifyUniqueLink(value) {
-      // debugger
       value = value.toLowerCase().replace(/\s/g, '')
       value = value.trim()
       this.eventData.UniqLink = value
@@ -1012,5 +1053,11 @@ export default {
 .vs-notification {
   box-shadow: 0 1px 2px 0 hsla(0, 0%, 0%, 0.25) !important;
   padding: 20px;
+}
+.error-message {
+  color: red;
+  padding: 10px;
+  padding-top: 0;
+  font-size: 12px;
 }
 </style>

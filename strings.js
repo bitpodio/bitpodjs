@@ -8,8 +8,6 @@ module.exports = Object.freeze({
   UNIQUE_LINK_DUPLICATE: 'This link has already been taken',
 
   // Ticket Messages
-  VALID_TICKET_MSG:
-    'Please add valid tickets, check event end date with ticket end date',
   EVENT_TICKET_END_DT_MSG:
     'Event end date should not be less than ticket enddate',
   TICKET_START_DT_MSG: 'Ticket start date should not be greater than end date',

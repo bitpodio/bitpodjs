@@ -245,4 +245,7 @@ export default {
     },
     devtools: true,
   },
+  generalConfig: {
+    googleMapKey: 'AIzaSyCPS6SZlor8qxfpul-dKyN6566XG2R5dFM',
+  },
 }
