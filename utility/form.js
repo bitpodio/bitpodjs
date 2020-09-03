@@ -46,9 +46,13 @@ export function getGridFields(content, viewName, isEditForm) {
       })
     }
   }
-  editableFields.sort(
-    (field1, field2) => field1.displayOrder - field2.displayOrder
-  )
+  editableFields.sort((field1, field2) => {
+    const field1DisplayOrder =
+      (field1.form && field1.form.displayOrder) || field1.displayOrder
+    const field2DisplayOrder =
+      (field2.form && field2.form.displayOrder) || field2.displayOrder
+    return field1DisplayOrder - field2DisplayOrder
+  })
   return editableFields
 }
 

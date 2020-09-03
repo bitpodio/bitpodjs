@@ -1,7 +1,7 @@
 <template>
   <v-text-field
     v-model="textInput"
-    :label="field.caption"
+    :label="fieldCaption"
     :type="fieldControlType"
     outlined
     :rules="rules"
@@ -11,7 +11,9 @@
 </template>
 
 <script>
+import { formFieldMixin } from '~/utility/form-control'
 export default {
+  mixins: [formFieldMixin],
   props: ['value', 'field', 'rules', 'readonly'],
   data() {
     return {

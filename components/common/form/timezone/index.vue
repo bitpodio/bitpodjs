@@ -15,7 +15,9 @@
 
 <script>
 import { timezoneList } from './timezone-list'
+import { formFieldMixin } from '~/utility/form-control'
 export default {
+  mixins: [formFieldMixin],
   model: {
     prop: 'value',
     event: 'change',
