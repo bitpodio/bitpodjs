@@ -323,10 +323,15 @@
                 </template>
               </v-simple-table>
               <v-btn color="primary" @click="e1 = 2">Prev</v-btn>
-              <v-btn color="primary" @click="saveRecord">Save</v-btn>
+              <v-btn
+                color="primary"
+                :disabled="isSaveButtonDisabled"
+                @click="saveRecord"
+                >Save</v-btn
+              >
             </v-card>
             <v-card v-else flat class="text-center">
-              <div v-if="!isEventPublish" class="flex">
+              <div v-if="isEventCreate" class="flex">
                 <div><i class="fa fa-calendar" aria-hidden="true"></i></div>
                 <div>EVENT HAS BEEN CREATED.</div>
                 <div>
@@ -398,7 +403,9 @@ export default {
       rules: [(v) => 'This field is required'],
       valid: true,
       lazy: false,
+      isSaveButtonDisabled: false,
       isTicket: true,
+      isEventCreate: false,
       isEventPublish: false,
       startdateMessage: '',
       enddateMessage: '',
@@ -573,33 +580,33 @@ export default {
     close() {
       this.onFormClose()
       this.isEventPublish = false
+      this.isEventCreate = false
       this.e1 = 1
-      this.resetForm()
+      // this.resetForm()
     },
     closeForm() {
       this.onFormClose()
       this.isEventPublish = false
+      this.isEventCreate = false
       this.e1 = 1
       this.$router.push('/apps/event/event/' + this.eventId)
-      this.resetForm()
+      // this.resetForm()
     },
-    resetForm() {
-      this.eventData.Title = ''
-      this.eventData.UniqLink = ''
-      this.eventData.Description = ''
-      // debugger
-      this.venueAddress.AddressLine = ''
-      this.eventData.VenueName = ''
-      this.venueAddress.Country = ''
-      this.venueAddress.City = ''
-      this.venueAddress.State = ''
-      this.venueAddress.LatLng.lat = ''
-      this.venueAddress.LatLng.lng = ''
-      this.isMap = false
-      // debugger
-      if (this.tickets.length > 1)
-        this.tickets.splice(1, this.tickets.length - 1)
-    },
+    // resetForm() {
+    // this.eventData.Title = ''
+    // this.eventData.UniqLink = ''
+    // this.eventData.Description = ''
+    // this.venueAddress.AddressLine = ''
+    // this.eventData.VenueName = ''
+    // this.venueAddress.Country = ''
+    // this.venueAddress.City = ''
+    // this.venueAddress.State = ''
+    // this.venueAddress.LatLng.lat = ''
+    // this.venueAddress.LatLng.lng = ''
+    // this.isMap = false
+    // if (this.tickets.length > 1)
+    //   this.tickets.splice(1, this.tickets.length - 1)
+    // },
     buildMutationUpsertQuery(modelName) {
       return `mutation($Inputs : ${modelName}UpsertWithWhereInput!){ ${modelName}{ ${modelName}UpsertWithWhere(input:$Inputs){ clientMutationId obj{ id } } } }`
     },
@@ -613,6 +620,7 @@ export default {
     async eventPublish() {
       const eventStatus = { Status: 'Open for registration' }
       this.isEventPublish = true
+      this.isEventCreate = false
       const modelName = 'Event'
       const where = {
         id: this.eventId,
@@ -630,7 +638,10 @@ export default {
       })
     },
     isPriceDisabled(index) {
-      return this.tickets[index].Type === 'Free'
+      if (this.tickets[index].Type === 'Free') {
+        this.tickets[index].Amount = 0
+        return true
+      } else return false
     },
     deleteTicket(index) {
       if (this.tickets.length > 1) this.tickets.splice(index, 1)
@@ -734,6 +745,7 @@ export default {
     },
 
     saveRecord() {
+      this.isSaveButtonDisabled = true
       console.log('==saveRecord==')
       console.log('==this.tickets==', this.tickets)
       const { Code, Type, StartDate, EndDate } = this.tickets
@@ -781,6 +793,7 @@ export default {
               .then((ticketres) => {
                 // this.onFormClose()
                 this.isTicket = false
+                this.isEventCreate = true
                 return ticketres
               })
               .catch((e) => {
