@@ -146,6 +146,7 @@
                         :required="true"
                         @placechanged="getAddressData"
                         @change="changeAddressData($event)"
+                        @no-results-found="noLocationFound"
                       ></vue-google-autocomplete>
                     </no-ssr>
                   </v-col>
@@ -603,9 +604,11 @@ export default {
       return `mutation($Inputs : ${modelName}UpsertWithWhereInput!){ ${modelName}{ ${modelName}UpsertWithWhere(input:$Inputs){ clientMutationId obj{ id } } } }`
     },
     viewRegistration() {
-      const baseUrl = window.location.origin
-      console.log('==baseUrl==', baseUrl)
-      window.open(`${baseUrl}${this.eventData.UniqLink}`, '_blank')
+      // const baseUrl = window.location.origin
+      const baseUrl = getApiUrl()
+      const regUrl = baseUrl.replace('svc/api', 'e')
+      console.log('==regUrl==', regUrl)
+      window.open(`${regUrl}${this.eventData.UniqLink}`, '_blank')
     },
     async eventPublish() {
       const eventStatus = { Status: 'Open for registration' }
@@ -641,6 +644,7 @@ export default {
             const StartDate = v && new Date(v)
             const { EndDate } = this.tickets[index]
             let startdateMessage = ''
+            // debugger
             if (!StartDate) startdateMessage = 'This field is required'
             else if (StartDate && EndDate && StartDate > EndDate)
               startdateMessage =
@@ -751,7 +755,7 @@ export default {
         this.eventData.EndDate = convertedEventRecord.EndDate
         this.eventData.EventManager = this.$auth.$state.user.data.email
         this.eventData.Organizer = this.$auth.$state.user.data.name
-       
+
         console.log('===getApiUrl=', getApiUrl())
         // debugger
         const baseUrl = getApiUrl()
@@ -792,9 +796,9 @@ export default {
       // debugger
       this.venueAddress.AddressLine = value
     },
-    // updateAddressData() {
-    //   debugger
-    // },
+    noLocationFound() {
+      // debugger
+    },
     getAddressData(addressData, placeResultData, id) {
       console.log('==addressData==', addressData)
       this.venueAddress.AddressLine =

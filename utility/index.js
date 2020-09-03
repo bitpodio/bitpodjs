@@ -46,7 +46,7 @@ export function getApiUrl() {
   if (window.location.origin.includes('localhost')) {
     apiURL = `https://${nuxtconfig.axios.backendBaseUrl}${nuxtconfig.axios.apiEndpoint}`
   } else {
-    apiURL = nuxtconfig.axios.apiEndpoint
+    apiURL = `${window.location.origin}${nuxtconfig.axios.apiEndpoint}`
   }
   console.log('===nuxtconfig.axios.apiEndpoint=', nuxtconfig.axios.apiEndpoint)
   console.log('===apiURL=', apiURL)
