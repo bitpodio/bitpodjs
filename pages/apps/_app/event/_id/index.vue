@@ -43,26 +43,31 @@
           <p class="blue--text">
             <i class="fa fa-map-marker" aria-hidden="true"></i>
             <a class="blue--text">
-              {{ data.event.VenueName }}
               {{
-                formatField(
+                formatAddressField(
                   data.event._VenueAddress &&
                     data.event._VenueAddress.AddressLine
                 )
               }}
               {{
-                formatField(
+                formatAddressField(
                   data.event._VenueAddress && data.event._VenueAddress.City
                 )
-              }}
+              }},
               {{
-                formatField(
+                formatAddressField(
                   data.event._VenueAddress && data.event._VenueAddress.State
                 )
-              }}
+              }},
               {{
-                formatField(
+                formatAddressField(
                   data.event._VenueAddress && data.event._VenueAddress.Country
+                )
+              }},
+              {{
+                formatAddressField(
+                  data.event._VenueAddress &&
+                    data.event._VenueAddress.PostalCode
                 )
               }}
             </a>
@@ -301,7 +306,6 @@
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">Tags</div>
-          <!-- <div class="body-1">{{ formatField(data.event.Tags) }}</div> -->
           <div>
             <span v-for="tag in data.event.Tags" :key="tag">#{{ tag }}</span>
           </div>
@@ -566,6 +570,9 @@ export default {
     },
     formatField(fieldValue) {
       return fieldValue || '-'
+    },
+    formatAddressField(fieldValue) {
+      return fieldValue || ' '
     },
   },
   apollo: {

@@ -30,6 +30,7 @@
               ></v-text-field>
             </v-col>
             <v-col cols="12">
+              <span>Description</span>
               <RichText v-model="formData.Description" label="Description" />
             </v-col>
             <v-col cols="12" sm="6" md="4">
@@ -213,7 +214,10 @@ export default {
       },
       emailRules: [
         (v) => !!v || 'E-mail is required',
-        (v) => /.+@.+/.test(v) || 'E-mail must be valid',
+        (v) =>
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+            v
+          ),
       ],
       allowSpaces: false,
       data: {
@@ -302,12 +306,18 @@ export default {
       this.$apollo.queries.data.refresh()
     },
     getAddressData(addressData, placeResultData, id) {
-      this.VenueAddress.AddressLine =
-        addressData.route + ', ' + addressData.administrative_area_level_1
+      debugger
+      this.VenueAddress.AddressLine = addressData.route
       this.formData.VenueName = addressData.route
       this.VenueAddress.Country = addressData.country
       this.VenueAddress.City = addressData.locality
-      this.VenueAddress.State = addressData.locality
+      const venue = placeResultData.address_components.find(
+        (i) =>
+          addressData.administrative_area_level_1 &&
+          i.short_name === addressData.administrative_area_level_1
+      )
+      this.VenueAddress.State = venue ? venue.long_name : ''
+      this.VenueAddress.PostalCode = addressData.postal_code || ''
       // this.formData.LatLng.lat = parseInt(addressData.latitude)
       // this.formData.LatLng.lng = parseInt(addressData.longitude)
     },
