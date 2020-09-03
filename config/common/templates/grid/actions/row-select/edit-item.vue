@@ -62,6 +62,8 @@ import {
   getGridFields,
   getMutationObject,
   formControlsMixin,
+  generateFormData,
+  buildEmbededFieldData,
 } from '~/utility/form'
 
 export default {
@@ -71,7 +73,7 @@ export default {
     const fields = getGridFields(this.content, this.viewName, true)
     return {
       fields,
-      formData: this.items[0],
+      formData: generateFormData(this.items[0]),
       dialog: false,
       updateCount: 0,
       valid: true,
@@ -81,7 +83,7 @@ export default {
   watch: {
     items(newValue, oldValue) {
       this.updateCount = this.updateCount + 1
-      this.formData = newValue[0]
+      this.formData = generateFormData(newValue[0])
     },
   },
   methods: {
@@ -97,7 +99,8 @@ export default {
           this.viewName,
           this
         )
-        const newEditFormData = { ...mutationObject.edit, ...formData }
+        const newFormData = buildEmbededFieldData(formData)
+        const newEditFormData = { ...mutationObject.edit, ...newFormData }
         await this.onUpdateItem(newEditFormData)
         this.dialog = false
       }

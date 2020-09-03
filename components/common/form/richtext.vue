@@ -1,7 +1,6 @@
 <template>
   <div id="app">
-    <div>{{ field.caption }}</div>
-    <jodit-editor v-model="content" />
+    <jodit-editor v-model="content" :config="config" />
   </div>
 </template>
 
@@ -16,6 +15,9 @@ export default {
   data() {
     return {
       content: this.value || '',
+      config: {
+        placeholder: '',
+      },
     }
   },
   watch: {
