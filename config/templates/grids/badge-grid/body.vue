@@ -1,15 +1,12 @@
 <template>
   <v-flex class="d-flex flex-wrap greybg pa-0 justify-center justify-md-start">
-    <v-hover
+    <v-card
       v-for="item in items"
       :key="item.id"
-      v-slot:default="{ hover }"
-      open-delay="200"
+      class="ma-3 ml-0 mt-0 greybg elevation-0 badge-view"
     >
-      <v-card :elevation="hover ? 1 : 0" class="ma-3 ml-0 mt-0">
-        <div v-html="item.Template" />
-      </v-card>
-    </v-hover>
+      <div v-html="item.Template" />
+    </v-card>
   </v-flex>
 </template>
 
@@ -19,9 +16,11 @@ export default {
 }
 </script>
 
-<style scoped>
-.invite-card {
-  width: 220px;
-  max-width: 220px;
+<style>
+.badge-view > div > div {
+  background: #fff;
+  margin: 0 !important;
+  padding: 0px !important;
+  padding-top: 2px !important;
 }
 </style>

@@ -81,7 +81,6 @@ export default {
           },
         },
         template: {
-          name: 'link-grid',
           context: {
             basePath: '/organization',
           },
@@ -170,7 +169,6 @@ export default {
           },
         },
         template: {
-          name: 'link-grid',
           context: {
             basePath: '/organization',
           },
@@ -268,7 +266,6 @@ export default {
           },
         },
         template: {
-          name: 'link-grid',
           context: {
             basePath: '/organization',
           },
@@ -327,7 +324,6 @@ export default {
           },
         },
         template: {
-          name: 'link-grid',
           context: {
             basePath: '/organization',
           },
@@ -432,90 +428,8 @@ export default {
     views: {
       badge: {
         ui: {
-          hideDefaultHeader: false,
-          hideDefaultFooter: false,
-          showExpand: false,
-          singleExpand: false,
-          showSelect: true,
-          hideFilter: false,
-          hideSearch: true,
-        },
-        default: false,
-        fields: {
-          Size: {
-            displayOrder: 1,
-            caption: 'Size',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '250px',
-            type: 'string',
-          },
-          Type: {
-            displayOrder: 2,
-            caption: 'Type',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '250px',
-            type: 'string',
-          },
-          Category: {
-            displayOrder: 3,
-            caption: 'Category',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
-          },
-          Default: {
-            displayOrder: 4,
-            caption: 'Default',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
-          },
-          Template: {
-            displayOrder: 5,
-            caption: 'Template',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
-          },
-          DisplayOrder: {
-            displayOrder: 6,
-            caption: 'Display Order',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'number',
-          },
-        },
-        template: {
-          name: 'link-grid',
-          context: {
-            basePath: '/badge',
-          },
-        },
-        dataSource: {
-          query: badgeList,
-          defaultSort: 'createdDate DESC',
-          type: 'graphql',
-          model: 'Badge',
-          filter: {
-            limit: '10',
-            order: 'createdDate DESC',
-            skip: '0',
-            where: {},
-          },
-        },
-        title: 'Badge',
-        type: 'list',
-      },
-      badges: {
-        ui: {
           hideDefaultHeader: true,
-          hideDefaultFooter: false,
+          hideDefaultFooter: true,
           showExpand: false,
           singleExpand: false,
           showSelect: true,
@@ -585,13 +499,12 @@ export default {
           type: 'graphql',
           model: 'Badge',
           filter: {
-            limit: '10',
             order: 'createdDate DESC',
             skip: '0',
-            where: {},
+            where: { EventId: { exists: false } },
           },
         },
-        title: 'Id Card Badge',
+        title: 'Badge',
         type: 'list',
       },
     },
@@ -673,7 +586,7 @@ export default {
       template: {
         ui: {
           hideDefaultHeader: true,
-          hideDefaultFooter: false,
+          hideDefaultFooter: true,
           showExpand: false,
           singleExpand: false,
           showSelect: true,
@@ -751,7 +664,6 @@ export default {
           type: 'graphql',
           model: 'MarketingTemplate',
           filter: {
-            limit: '10',
             order: 'createdDate DESC',
             skip: '0',
             where: {},
@@ -763,7 +675,7 @@ export default {
       mytemplate: {
         ui: {
           hideDefaultHeader: true,
-          hideDefaultFooter: false,
+          hideDefaultFooter: true,
           showExpand: false,
           singleExpand: false,
           showSelect: true,
@@ -886,7 +798,6 @@ export default {
           },
         },
         template: {
-          name: 'link-grid',
           context: {
             basePath: '/organization',
           },
@@ -895,7 +806,7 @@ export default {
           type: 'rest',
           getData: (ctx) => getData(`/OrganizationInfos/roles`),
         },
-        title: 'userroles',
+        title: 'Roles',
         type: 'list',
       },
     },
@@ -949,7 +860,6 @@ export default {
           },
         },
         template: {
-          name: 'link-grid',
           context: {
             basePath: '/organization',
           },
@@ -961,7 +871,7 @@ export default {
               `/Organizations/1/Users?filter={"include":{"rolemappings":"role"}}`
             ),
         },
-        title: 'userroles',
+        title: 'Users',
         type: 'list',
       },
     },
@@ -999,7 +909,6 @@ export default {
           },
         },
         template: {
-          name: 'link-grid',
           context: {
             basePath: '/organization',
           },
@@ -1009,7 +918,7 @@ export default {
           getData: (ctx) =>
             getData(`/Users/${ctx.$auth.$state.user.data.email}/AccessKey`),
         },
-        title: 'accesskey',
+        title: 'Access keys',
         type: 'list',
       },
     },
