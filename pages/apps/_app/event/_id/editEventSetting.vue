@@ -17,14 +17,11 @@
         </v-toolbar>
         <v-divider></v-divider>
         <v-card-text>
-          <!-- <v-card-text class="px-15 pt-4 px-xs-2"> -->
           <v-row>
-            <!-- <v-col cols="12">
-              <h1 class="mb-3 black--text">Edit Event Settings</h1>
-            </v-col> -->
             <v-col cols="12" sm="6" md="6">
               <v-select
-                :items="['Public', 'Private']"
+                v-model="privacy"
+                :items="eventPrivacyDropdown"
                 label="Privacy*"
                 required
                 outlined
@@ -32,17 +29,26 @@
             </v-col>
             <v-col cols="12" sm="6" md="6">
               <v-select
-                :items="['INR', 'EUR', 'AUD']"
+                v-model="currency"
+                :items="currencyDropdown"
                 label="Currency*"
                 required
                 outlined
               ></v-select>
             </v-col>
             <v-col cols="12" sm="6" md="6">
-              <v-text-field label="GL Account Code" outlined></v-text-field>
+              <v-text-field
+                v-model="formData.ProjectCode"
+                label="GL Account Code"
+                outlined
+              ></v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="6">
-              <v-text-field label="Cost Center" outlined></v-text-field>
+              <v-text-field
+                v-model="formData.CostCenter"
+                label="Cost Center"
+                outlined
+              ></v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="6">
               <v-text-field
@@ -54,53 +60,57 @@
                 required
               ></v-text-field>
             </v-col>
-            <v-col cols="12" sm="6" md="6"></v-col>
             <v-col cols="12">
-              <v-textarea
-                clearable
-                outlined
-                clear-icon="fa fa-close"
-                label="Cancelation Policy"
-                value=""
-              ></v-textarea>
+              <span>Cancellation Policy</span>
+              <RichText
+                v-model="formData.CancellationPolicy"
+                label="Cancellation Policy"
+                placeholder="Description"
+              />
             </v-col>
             <v-col cols="12" sm="6" md="6" class="py-0">
               <v-checkbox
-                v-model="allowSpaces"
+                v-model="formData.isRefundable"
                 label=" Allow Cancelation"
                 class="ma-0"
               ></v-checkbox>
             </v-col>
             <v-col cols="12" sm="6" md="6" class="py-0">
               <v-checkbox
-                v-model="allowSpaces"
+                v-model="formData.ShowAttendeeForm"
                 label=" Show attendee form for each ticket"
                 class="ma-0"
               ></v-checkbox>
             </v-col>
             <v-col cols="12" sm="6" md="6" class="py-0">
               <v-checkbox
-                v-model="allowSpaces"
+                v-model="formData.SessionTimingConflict"
                 label=" Session Timing Conflict"
                 class="ma-0"
               ></v-checkbox>
             </v-col>
             <v-col cols="12" sm="6" md="6" class="py-0">
               <v-checkbox
-                v-model="allowSpaces"
+                v-model="formData.ShowRemainingTickets"
                 label=" Show Remaining Tickets"
                 class="ma-0"
               ></v-checkbox>
             </v-col>
             <v-col cols="12" sm="6" md="6" class="py-0">
               <v-checkbox
-                v-model="allowSpaces"
+                v-model="formData.NotifyOrganizer"
                 label=" Notify event organizer when someone registers"
                 class="ma-0"
               ></v-checkbox>
             </v-col>
           </v-row>
         </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions class="pl-4">
+          <v-btn :disabled="!valid" color="primary" depressed @click="onSave"
+            >Save</v-btn
+          >
+        </v-card-actions>
       </v-card>
     </v-dialog>
   </v-form>
@@ -109,7 +119,7 @@
 <script>
 import gql from 'graphql-tag'
 import event from '~/config/apps/event/gql/event.gql'
-// import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
+import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 export default {
   props: {
@@ -117,20 +127,95 @@ export default {
       default: false,
     },
   },
+  components: {
+    RichText: () =>
+      process.client ? import('~/components/common/form/richtext.vue') : false,
+    // RichText,
+  },
   data() {
     return {
       valid: true,
-      tags: [],
-      tagsDropdown: [],
+      privacy: [],
+      eventPrivacyDropdown: [],
+      currencyDropdown: [],
+      currency: [],
       data: {
         event: {},
       },
       formData: {},
     }
   },
+  mounted() {
+    this.getDropDownData('EventPrivacy')
+      .then((res) => {
+        this.eventPrivacyDropdown = res.map((i) => i.value)
+        return res
+      })
+      .catch((e) => {
+        console.log('Error', e)
+      })
+    this.getDropDownData('Currency')
+      .then((res) => {
+        this.currencyDropdown = res.map((i) => i.value)
+        return res
+      })
+      .catch((e) => {
+        console.log('Error', e)
+      })
+  },
   methods: {
     close() {
       this.$emit('update:eventSetting', false)
+    },
+    refresh() {
+      this.$apollo.queries.data.refresh()
+    },
+    onSave() {
+      this.formData.Currency = this.currency
+      this.formData.Privacy = this.privacy
+      delete this.formData._VenueAddress
+      this.$axios
+        .$patch(
+          `https://event.test.bitpod.io/svc/api/Events/${this.$route.params.id}`,
+          {
+            ...this.formData,
+          }
+        )
+        .then((res) => {
+          this.close()
+          this.refresh()
+          return (this.data.event = res)
+        })
+        .catch((e) => {
+          console.log('error', e)
+        })
+    },
+
+    getDropDownData(filterType) {
+      return this.$apollo
+        .query({
+          query: gql`
+            ${generalconfiguration}
+          `,
+          variables: {
+            filters: {
+              where: {
+                type: filterType,
+              },
+            },
+          },
+        })
+        .then((result) => {
+          const generalConfig = formatGQLResult(
+            result.data,
+            'GeneralConfiguration'
+          )
+          console.log('====res', generalConfig)
+          return generalConfig
+        })
+        .catch((e) => {
+          console.log(e)
+        })
     },
   },
   apollo: {
@@ -154,6 +239,9 @@ export default {
         debugger
         const event = formatGQLResult(data, 'Event')
         this.formData = event.length > 0 ? { ...event[0] } : {}
+        this.formData.id = this.$route.params.id
+        this.currency = this.formData.Currency
+        this.privacy = this.formData.Privacy
         return {
           event: event.length > 0 ? event[0] : {},
         }
