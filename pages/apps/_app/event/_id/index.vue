@@ -42,6 +42,19 @@
         <v-flex>
           <p class="blue--text">
             <i class="fa fa-map-marker" aria-hidden="true"></i>
+            <a
+              v-if="
+                data &&
+                data.event &&
+                data.event._VenueAddress &&
+                !data.event._VenueAddress.AddressLine.includes(
+                  data.event.VenueName
+                )
+              "
+              class="blue--text"
+            >
+              {{ formatAddressField(data.event.VenueName) }}
+            </a>
             <a class="blue--text">
               {{
                 formatAddressField(
@@ -53,17 +66,17 @@
                 formatAddressField(
                   data.event._VenueAddress && data.event._VenueAddress.City
                 )
-              }},
+              }}
               {{
                 formatAddressField(
                   data.event._VenueAddress && data.event._VenueAddress.State
                 )
-              }},
+              }}
               {{
                 formatAddressField(
                   data.event._VenueAddress && data.event._VenueAddress.Country
                 )
-              }},
+              }}
               {{
                 formatAddressField(
                   data.event._VenueAddress &&

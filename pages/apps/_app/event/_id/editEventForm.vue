@@ -129,6 +129,7 @@
                 v-model="formData.VenueName"
                 label="Venue Name"
                 outlined
+                @change="changeVenueName"
               ></v-text-field>
             </v-col>
             <v-col cols="12">
@@ -136,6 +137,7 @@
                 v-model="VenueAddress.City"
                 label="City"
                 outlined
+                @change="changeCity"
               ></v-text-field>
             </v-col>
             <v-col cols="12">
@@ -143,6 +145,7 @@
                 v-model="VenueAddress.State"
                 label="State"
                 outlined
+                @change="changeState"
               ></v-text-field>
             </v-col>
             <v-col cols="12">
@@ -150,6 +153,7 @@
                 v-model="VenueAddress.Country"
                 label="Country"
                 outlined
+                @change="changeCountry"
               ></v-text-field>
             </v-col>
             <v-col cols="12">
@@ -157,6 +161,7 @@
                 v-model="VenueAddress.PostalCode"
                 label="Zip Code"
                 outlined
+                @change="changeZipCode"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -298,6 +303,22 @@ export default {
     },
     addressChanged(data) {
       this.addressLine = data
+      this.VenueAddress.AddressLine = data
+    },
+    changeVenueName(data) {
+      this.formData.VenueName = data
+    },
+    changeCity(data) {
+      this.VenueAddress.City = data
+    },
+    changeState(data) {
+      this.VenueAddress.State = data
+    },
+    changeCountry(data) {
+      this.VenueAddress.Country = data
+    },
+    changeZipCode(data) {
+      this.VenueAddress.PostalCode = data
     },
     close() {
       this.$emit('update:eventForm', false)
@@ -306,7 +327,6 @@ export default {
       this.$apollo.queries.data.refresh()
     },
     getAddressData(addressData, placeResultData, id) {
-      debugger
       this.VenueAddress.AddressLine = addressData.route
       this.formData.VenueName = addressData.route
       this.VenueAddress.Country = addressData.country
