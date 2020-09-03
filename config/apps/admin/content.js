@@ -1,12 +1,9 @@
 import registrationForm from './gql/registrationForm.gql'
-// import organizationDetails from './gql/organizationDetails.gql'
-// import organization from './gql/organization.gql'
 import badgeList from './gql/badgeList.gql'
 import seatmapsList from './gql/seatmapsList.gql'
 import marketingTemplates from './gql/marketingTemplates.gql'
 import businessUnit from './gql/businessUnit.gql'
 import { getData } from '~/config/apps/event/rest/index.js'
-// import { getBPMNData } from './rest/bpmn.js'
 
 export default {
   organization: {

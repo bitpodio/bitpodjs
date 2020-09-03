@@ -2,7 +2,7 @@
   <v-app id="inspire">
     <v-navigation-drawer v-model="drawer" app class="nav-bar">
       <v-toolbar-title class="ml-0 pl-3 px-2 py-2 logo-ds d-flex align-center">
-        <span class="hidden-sm-and-down bitpod-logo logo-ds">
+        <span class="bitpod-logo logo-ds">
           <v-img
             src="https://res.cloudinary.com/mytestlogo/image/upload/v1578310772/logo/logo-favicon.png"
             height="50"
