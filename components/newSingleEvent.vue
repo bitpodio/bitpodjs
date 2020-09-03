@@ -330,34 +330,80 @@
                 >Save</v-btn
               >
             </v-card>
-            <v-card v-else flat class="text-center">
+            <v-card
+              v-else
+              outlined
+              class="text-center elevation-2 vs-notification"
+            >
               <div v-if="isEventCreate" class="flex">
-                <div><i class="fa fa-calendar" aria-hidden="true"></i></div>
-                <div>EVENT HAS BEEN CREATED.</div>
-                <div>
+                <div class="py-2">
+                  <i
+                    class="fa fa-calendar fs-icon primary white--text"
+                    aria-hidden="true"
+                  ></i>
+                </div>
+                <div class="pb-2 text-uppercase">
+                  <span class="text-uppercase Body 1" style="font-size: 20px;"
+                    >EVENT HAS BEEN CREATED.</span
+                  >
+                </div>
+                <div class="pb-3 text--primary">
                   Event goers can only register after you publish it. We
                   recommend you click view button to verify your event page and
-                  if everything looks as expected then PUBLISH it. You can also
-                  use events link from left panel to edit or publish this event
-                  any time you like.
+                  if everything looks as expected then PUBLISH it.
+                  <br />
+                  You can also use events link from left panel to edit or
+                  publish this event any time you like.
                 </div>
-                <div>
-                  <v-btn color="primary" @click="viewRegistration">View</v-btn>
-                  <v-btn color="primary" @click="eventPublish">Publish</v-btn>
-                  <v-btn color="primary" @click="closeForm">Close</v-btn>
+                <div class="pb-2">
+                  <v-btn
+                    depressed
+                    color="primary"
+                    class="ma-1"
+                    @click="viewRegistration"
+                    ><v-icon left>mdi-eye-outline</v-icon>View</v-btn
+                  >
+                  <v-btn
+                    outlined
+                    color="primary"
+                    class="ma-1"
+                    @click="eventPublish"
+                  >
+                    <v-icon left>mdi-rotate-315 mdi-send</v-icon> Publish</v-btn
+                  >
+                  <v-btn text color="primary" class="ma-1" @click="closeForm"
+                    >Close</v-btn
+                  >
                 </div>
               </div>
               <div v-if="isEventPublish" class="flex">
-                <div><i class="fa fa-calendar" aria-hidden="true"></i></div>
-                <div>YOUR EVENT HAS BEEN PUBLISHED.</div>
-                <div>
+                <div class="py-2">
+                  <i
+                    class="fa fa-calendar fs-icon primary white--text"
+                    aria-hidden="true"
+                  ></i>
+                </div>
+                <div class="pb-2">
+                  <span class="text-uppercase Body 1" style="font-size: 20px;">
+                    YOUR EVENT HAS BEEN PUBLISHED.</span
+                  >
+                </div>
+                <div class="pb-2 text--primary">
                   Now it is open for registrations, you can click on view to
                   fetch the event landing page URL, which you can share with
                   others, so they can register.
                 </div>
-                <div>
-                  <v-btn color="primary" @click="viewRegistration">View</v-btn>
-                  <v-btn color="primary" @click="closeForm">Close</v-btn>
+                <div class="pb-2">
+                  <v-btn
+                    depressed
+                    color="primary"
+                    class="ma-1"
+                    @click="viewRegistration"
+                    ><v-icon left>mdi-eye-outline</v-icon>View</v-btn
+                  >
+                  <v-btn text color="primary" class="ma-1" @click="closeForm"
+                    >Close</v-btn
+                  >
                 </div>
               </div>
             </v-card>
@@ -938,5 +984,15 @@ export default {
 }
 .v-picker {
   border-radius: 0;
+}
+.fs-icon {
+  font-size: 20px;
+  padding: 15px;
+  display: inline-flex;
+  border-radius: 50%;
+}
+.vs-notification {
+  box-shadow: 0 1px 2px 0 hsla(0, 0%, 0%, 0.25) !important;
+  padding: 20px;
 }
 </style>
