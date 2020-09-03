@@ -1,6 +1,6 @@
 <template>
   <v-app id="inspire">
-    <v-app-bar app flat class="greybg">
+    <v-app-bar app flat>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <span class="bitpod-logo logo-ds">
         <v-img
@@ -17,7 +17,7 @@
       </v-btn>
     </v-app-bar>
 
-    <v-main class="greybg">
+    <v-main>
       <v-container fluid>
         <v-row>
           <v-col>

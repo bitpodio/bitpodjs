@@ -1,16 +1,17 @@
 <template>
-  <v-layout column justify-center align-center>
+  <v-layout column justify-center align-center class="login-view">
     <v-flex xs12 sm8 md6 class="login-box">
-      <v-card class="elevation-0">
+      <v-card class="elevation-0 login-type">
         <v-card-title class="headline justify-center">
           Login
         </v-card-title>
-        <v-card-text class="justify-center text-center">
+        <v-card-text class="justify-center text-center pa-6 pt-0">
           <v-btn
-            class="ma-2 grey--text text-darken-3"
+            class="mb-3 grey--text text-darken-3"
             tile
             outlined
             large
+            block
             @click="loginBitpod"
           >
             <v-avatar>
@@ -21,7 +22,14 @@
             Sign in with Bitpod
           </v-btn>
           <v-flex justify-center align-center d-flex class="ma-2">or</v-flex>
-          <v-btn class="ma-2 grey--text text-darken-3" tile outlined large>
+          <v-btn
+            block
+            class="mt-3 grey--text text-darken-3"
+            tile
+            outlined
+            large
+            color="grey"
+          >
             <v-avatar>
               <img
                 src="https://res.cloudinary.com/mytestlogo/platformbar/google.png"
@@ -55,5 +63,11 @@ export default {
 .login-google {
   width: 30px;
   height: auto;
+}
+.login-view {
+  height: calc(100vh - 120px);
+}
+.login-type {
+  border: 1px solid #ddd;
 }
 </style>

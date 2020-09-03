@@ -82,8 +82,11 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
+    // baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
+    baseURL: `http://localhost:3000${basePath}`,
   },
+  cdnUri: 'https://res.cloudinary.com/mytestlogo/image/upload/',
+
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
