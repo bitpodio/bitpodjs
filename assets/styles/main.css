@@ -109,6 +109,10 @@ body {
 .boxview h2 > .fa {
   color: #3fa5ff !important;
 }
+.survey-img {
+  max-width: 36px !important;
+  max-height: 36px !important;
+}
 @media (max-width: 600px) {
   .slide-form,
   .slide-form-default {

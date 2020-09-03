@@ -415,7 +415,10 @@
                   class="d-flex justify-center align-center flex-column app-view"
                 >
                   <v-flex class="d-flex justify-center align-center">
-                    <v-img src="https://survey.bitpod.io/favicon.ico"></v-img>
+                    <v-img
+                      src="https://survey.bitpod.io/favicon.ico"
+                      class="survey-img"
+                    ></v-img>
                   </v-flex>
                   <v-flex
                     ><div class="pa-1 caption text--primary">
