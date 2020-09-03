@@ -183,6 +183,7 @@
 <script>
 import gql from 'graphql-tag'
 import { utcToZonedTime } from 'date-fns-tz'
+import nuxtconfig from '../../../../../nuxt.config'
 import event from '~/config/apps/event/gql/event.gql'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import { formatGQLResult } from '~/utility/gql.js'
@@ -293,7 +294,7 @@ export default {
         return res
       })
       .catch((e) => {
-        console.log('ee', e)
+        console.log('Error', e)
       })
   },
   methods: {
@@ -338,8 +339,6 @@ export default {
       )
       this.VenueAddress.State = venue ? venue.long_name : ''
       this.VenueAddress.PostalCode = addressData.postal_code || ''
-      // this.formData.LatLng.lat = parseInt(addressData.latitude)
-      // this.formData.LatLng.lng = parseInt(addressData.longitude)
     },
     getZonedDateTime(date, timezone) {
       if (date) {
@@ -349,6 +348,7 @@ export default {
       }
     },
     onSave() {
+      const eventUrl = `https://${nuxtconfig.axios.eventUrl}/svc/api/Events/${this.$route.params.id}`
       this.formData.Tags = this.tags
       const convertedEventRecord = formatTimezoneDateFieldsData(
         this.formData,
@@ -361,12 +361,9 @@ export default {
       delete this.formData.VenueAddress
       delete this.formData._VenueAddress.LatLng
       this.$axios
-        .$patch(
-          `https://event.test.bitpod.io/svc/api/Events/${this.$route.params.id}`,
-          {
-            ...this.formData,
-          }
-        )
+        .$patch(eventUrl, {
+          ...this.formData,
+        })
         .then((res) => {
           this.close()
           this.refresh()
@@ -395,11 +392,10 @@ export default {
             result.data,
             'GeneralConfiguration'
           )
-          console.log('====res', generalConfig)
           return generalConfig
         })
         .catch((e) => {
-          console.log(e)
+          console.log('Error', e)
         })
     },
   },

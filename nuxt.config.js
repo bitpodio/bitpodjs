@@ -88,9 +88,13 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    // baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
-    baseURL: `http://localhost:3000${basePath}`,
+    baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
+    eventUrl: process.env.GETEVENTURL || 'event.test.bitpod.io',
   },
+
+  // baseUrl: {
+  //   eventUrl: 'event.test.bitpod.io',
+  // },
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
