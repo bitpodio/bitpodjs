@@ -443,7 +443,7 @@
         </v-flex>
       </div>
     </v-flex>
-    <editSeoForm :seoForm.sync="seoForm" />
+    <editSeoForm :seo-form.sync="seoForm" />
   </v-flex>
 </template>
 <script>

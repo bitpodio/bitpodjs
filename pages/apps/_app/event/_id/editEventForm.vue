@@ -186,16 +186,16 @@ import Timezone from '~/components/common/form/timezone'
 import { formatTimezoneDateFieldsData } from '~/utility/form.js'
 
 export default {
-  props: {
-    eventForm: {
-      default: false,
-    },
-  },
   components: {
     RichText: () =>
       process.client ? import('~/components/common/form/richtext.vue') : false,
     VueGoogleAutocomplete: () => import('vue-google-autocomplete'),
     Timezone,
+  },
+  props: {
+    eventForm: {
+      default: false,
+    },
   },
   data() {
     return {
