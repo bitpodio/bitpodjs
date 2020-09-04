@@ -86,7 +86,8 @@ export default {
     baseURL: `http://localhost:3000${basePath}`,
   },
   publicRuntimeConfig: {
-    cdnUri: 'https://res.cloudinary.com/mytestlogo/image/upload/',
+    cdnUri:
+      'https://res.cloudinary.com/mytestlogo/image/upload/bitpodjs/images/',
   },
   /*
    ** vuetify module configuration

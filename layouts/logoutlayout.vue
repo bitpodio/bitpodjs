@@ -4,7 +4,7 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <span class="bitpod-logo logo-ds">
         <v-img
-          src="https://res.cloudinary.com/mytestlogo/image/upload/bitpodjs/images/bitpod-logo-blk2.svg"
+          :src="$config.cdnUri + 'bitpod-logo-blk2.svg'"
           class="logo-full"
         ></v-img>
       </span>

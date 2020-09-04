@@ -15,9 +15,7 @@
             @click="loginBitpod"
           >
             <v-avatar>
-              <img
-                src="https://res.cloudinary.com/mytestlogo/image/upload/v1578310772/logo/logo-favicon.png"
-              />
+              <img :src="$config.cdnUri + 'logo-favicon.png'" />
             </v-avatar>
             Sign in with Bitpod
           </v-btn>
@@ -31,10 +29,7 @@
             color="grey"
           >
             <v-avatar>
-              <img
-                src="https://res.cloudinary.com/mytestlogo/platformbar/google.png"
-                class="login-google"
-              />
+              <img :src="$config.cdnUri + 'google.png'" class="login-google" />
             </v-avatar>
             Sign in with Google
           </v-btn>

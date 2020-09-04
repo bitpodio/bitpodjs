@@ -18,7 +18,7 @@
           >
             <template v-slot:placeholder>
               <v-img
-                src="https://res.cloudinary.com/mytestlogo/image/upload/v1571132783/invitee-image.png"
+                :src="$config.cdnUri + 'invitee-image.png'"
                 class="grey lighten-2"
                 min-height="200"
                 max-height="200"
@@ -29,7 +29,7 @@
         </div>
         <div v-else class="pa-1">
           <v-img
-            src="https://res.cloudinary.com/mytestlogo/image/upload/v1571132783/invitee-image.png"
+            :src="$config.cdnUri + 'invitee-image.png'"
             class="grey lighten-2"
             min-height="200"
             max-height="200"

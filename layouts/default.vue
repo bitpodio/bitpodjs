@@ -4,7 +4,7 @@
       <v-toolbar-title class="ml-0 pl-3 logo-ds d-flex align-center">
         <span class="hidden-sm-and-down bitpod-logo logo-ds">
           <v-img
-            src="https://res.cloudinary.com/mytestlogo/image/upload/v1578310772/logo/logo-favicon.png"
+            :src="$config.cdnUri + 'logo-favicon.png'"
             height="50"
             width="30"
           ></v-img>
