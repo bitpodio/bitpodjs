@@ -55,6 +55,9 @@
                 v-model="formData.UniqLink"
                 label="Event Link*"
                 hint="https://bitpod-event.test.bitpod.io/e/"
+                :rules="linkRules"
+                :error-messages="uniqueLinkMessage"
+                @input="checkUniqueLink"
                 persistent-hint
                 outlined
                 required
@@ -119,6 +122,7 @@
 <script>
 import gql from 'graphql-tag'
 import event from '~/config/apps/event/gql/event.gql'
+import eventCount from '~/config/apps/event/gql/eventCount.gql'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 export default {
@@ -130,7 +134,6 @@ export default {
   components: {
     RichText: () =>
       process.client ? import('~/components/common/form/richtext.vue') : false,
-    // RichText,
   },
   data() {
     return {
@@ -142,7 +145,13 @@ export default {
       data: {
         event: {},
       },
+      isInalidEventLink: false,
       formData: {},
+      uniqueLinkMessage: '',
+      linkRules: [
+        (v) => !!v || 'This field is required',
+        (v) => /^[a-z0-9]+$/i.test(v) || 'Lower case alphanumeric letters only',
+      ],
     }
   },
   mounted() {
@@ -190,7 +199,6 @@ export default {
           console.log('error', e)
         })
     },
-
     getDropDownData(filterType) {
       return this.$apollo
         .query({
@@ -216,6 +224,24 @@ export default {
         .catch((e) => {
           console.log(e)
         })
+    },
+    async checkUniqueLink() {
+      const where = { UniqLink: this.formData.UniqLink }
+      const result = await this.$apollo.query({
+        query: gql`
+          ${eventCount}
+        `,
+        variables: {
+          where,
+        },
+      })
+      if (result.data.Event.EventCount > 0) {
+        this.isInalidEventLink = true
+        this.uniqueLinkMessage = 'This is already taken'
+      } else {
+        this.isInalidEventLink = false
+        this.uniqueLinkMessage = ''
+      }
     },
   },
   apollo: {

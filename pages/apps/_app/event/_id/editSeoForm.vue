@@ -20,27 +20,38 @@
           <v-row>
             <v-col>
               <v-checkbox
-                v-model="allowSpaces"
+                v-model="formData.AutoUpdateSEOElements"
                 label=" SEO elements are auto derived from event elements when event is created or edited. Check this if you want to Turn off auto update"
               ></v-checkbox>
             </v-col>
             <v-col cols="12">
               <v-text-field
+                v-model="seoTitle"
                 label="Part which goes into URL"
                 outlined
               ></v-text-field>
             </v-col>
             <v-col cols="12">
-              <v-text-field label="Meta Description" outlined> </v-text-field>
+              <v-text-field
+                v-model="formData.SEODesc"
+                label="Meta Description"
+                outlined
+              >
+              </v-text-field>
             </v-col>
             <v-col cols="12">
-              <v-text-field label="Meta Keywords" outlined> </v-text-field>
+              <v-text-field
+                v-model="formData.SEOKeywords"
+                label="Meta Keywords"
+                outlined
+              >
+              </v-text-field>
             </v-col>
           </v-row>
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions class="pl-4">
-          <v-btn color="primary" depressed @click.native="close">Save</v-btn>
+          <v-btn color="primary" depressed @click.native="onSave">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -48,15 +59,90 @@
 </template>
 
 <script>
+import gql from 'graphql-tag'
+import event from '~/config/apps/event/gql/event.gql'
+import { formatGQLResult } from '~/utility/gql.js'
+
 export default {
   props: {
     seoForm: {
       default: false,
     },
   },
+  data() {
+    return {
+      data: {
+        event: {},
+      },
+      seoTitle: '',
+      formData: {},
+    }
+  },
   methods: {
     close() {
       this.$emit('update:seoForm', false)
+    },
+    refresh() {
+      this.$apollo.queries.data.refresh()
+    },
+    onSave() {
+      delete this.formData._VenueAddress
+      console.log('=====111', this.seoTitle)
+      this.formData.SEOTitle = this.seoTitle
+      this.$axios
+        .$patch(
+          `https://event.test.bitpod.io/svc/api/Events/${this.$route.params.id}`,
+          {
+            ...this.formData,
+          }
+        )
+        .then((res) => {
+          this.close()
+          this.refresh()
+          return (this.data.event = res)
+        })
+        .catch((e) => {
+          console.log('error', e)
+        })
+    },
+  },
+  apollo: {
+    data: {
+      query() {
+        return gql`
+          ${event}
+        `
+      },
+      variables() {
+        return {
+          filters: {
+            where: {
+              id: this.$route.params.id,
+            },
+          },
+          eventId: this.$route.params.id,
+        }
+      },
+      update(data) {
+        debugger
+        const event = formatGQLResult(data, 'Event')
+        this.formData = event.length > 0 ? { ...event[0] } : {}
+        this.formData.id = this.$route.params.id
+        this.seoTitle = this.formData.SEOTitle
+        console.log('====222', this.formData.SEOTitle)
+        return {
+          event: event.length > 0 ? event[0] : {},
+        }
+      },
+      result({ data, loading, networkStatus }) {},
+      error(error) {
+        this.error = error
+        this.loading = 0
+      },
+      prefetch: false,
+      loadingKey: 'loading',
+      skip: false,
+      pollInterval: 0,
     },
   },
 }
