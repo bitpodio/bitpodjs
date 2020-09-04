@@ -84,6 +84,10 @@ export default {
   axios: {
     baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
   },
+  publicRuntimeConfig: {
+    cdnUri:
+      'https://res.cloudinary.com/mytestlogo/image/upload/bitpodjs/images/',
+  },
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
