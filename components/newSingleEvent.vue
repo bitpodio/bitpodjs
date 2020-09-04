@@ -704,7 +704,8 @@ export default {
             const { StartDate } = this.tickets[index]
             let enddateMessage = ''
 
-            if (!EndDate) enddateMessage = strings.FIELD_REQUIRED
+            if (!EndDate && this.tickets[index].EndDate === null)
+              enddateMessage = strings.FIELD_REQUIRED
             else if (StartDate && EndDate && StartDate > EndDate)
               enddateMessage = strings.TICKET_START_DT_MSG
             else if (new Date(EndDate) < this.currentDatetime) {
@@ -841,8 +842,7 @@ export default {
         .autocompleteText
       if (
         AddressLine !== '' &&
-        VenueName !== '' &&
-        (City !== '' || State !== '' || Country !== '')
+        (VenueName !== '' || City !== '' || State !== '' || Country !== '')
       ) {
         console.log('=address request===')
         const addressObj = `${AddressLine},${VenueName},${City},${State},${Country},${PostalCode}`
