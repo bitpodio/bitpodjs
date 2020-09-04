@@ -29,7 +29,7 @@ export function getData(modelName) {
     })
     const filter = { limit, skip, order, where }
     const apiUrl = getApiUrl()
-    console.log('==apiUrl==', apiUrl)
+    
     const resPromise = this.$axios.$get(
       `${apiUrl}${modelName}s?filter=${JSON.stringify(filter)}`
     )

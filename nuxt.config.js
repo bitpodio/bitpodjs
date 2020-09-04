@@ -86,9 +86,9 @@ export default {
   axios: {
     apiEndpoint: '/svc/api/',
     backendBaseUrl: process.env.PUBLIC_DOMAIN || '',
-    // baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
+    baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
     // use below locally and comment above
-    baseURL: `http://localhost:3000${basePath}`,
+    // baseURL: `http://localhost:3000${basePath}`,
   },
 
   publicRuntimeConfig: {
