@@ -41,4 +41,9 @@ export default {
 .logo-full {
   max-width: 110px !important;
 }
+@media screen and (max-width: 600px) {
+  .login-box {
+    min-width: fit-content !important;
+  }
+}
 </style>
