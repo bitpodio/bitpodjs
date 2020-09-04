@@ -88,7 +88,7 @@
     <v-app-bar app flat class="greybg">
       <div
         v-if="drawer === false"
-        class="ml-xs-0"
+        class="ml-xs-0 d-none d-sm-flex"
         :class="drawer ? '' : 'ml-md-n4 mr-md-2'"
       >
         <v-app-bar-nav-icon
@@ -96,9 +96,12 @@
           @click.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
       </div>
+      <div class="d-flex d-sm-none ml-n3">
+        <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      </div>
       <v-toolbar-title class="pl-0 ml-n2">Administration </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn class="ma-2" tile outlined>
+      <v-btn class="ma-2 d-none d-sm-flex" tile outlined>
         UPGARDE
       </v-btn>
       <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
@@ -305,7 +308,7 @@ export default {
     menu: false,
     modal: false,
     menu2: false,
-    drawer: true,
+    drawer: null,
     dialog1: false,
     dialog: false,
     notifications: false,
