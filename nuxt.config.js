@@ -46,8 +46,7 @@ export default {
     ],
     script: [
       {
-        src:
-          'https://maps.googleapis.com/maps/api/js?key=AIzaSyCPS6SZlor8qxfpul-dKyN6566XG2R5dFM&libraries=places ',
+        src: `${process.env.GOOGLE_API}?key=${process.env.GOOGLE_API_KEY}&libraries=places`,
       },
     ],
   },
@@ -87,7 +86,7 @@ export default {
     [
       'nuxt-gmaps',
       {
-        key: 'AIzaSyCPS6SZlor8qxfpul-dKyN6566XG2R5dFM',
+        key: process.env.GOOGLE_API_KEY,
         // you can use libraries: ['places']
       },
     ],
@@ -111,7 +110,7 @@ export default {
     cdnUri:
       'https://res.cloudinary.com/mytestlogo/image/upload/bitpodjs/images/',
   },
- 
+
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
@@ -249,6 +248,6 @@ export default {
     devtools: true,
   },
   generalConfig: {
-    googleMapKey: 'AIzaSyCPS6SZlor8qxfpul-dKyN6566XG2R5dFM',
+    googleMapKey: process.env.GOOGLE_API_KEY,
   },
 }

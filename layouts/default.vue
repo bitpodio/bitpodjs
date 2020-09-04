@@ -308,8 +308,6 @@ export default {
     source: String,
   },
   data: () => ({
-    e13: 2,
-    e1: 1,
     date: new Date().toISOString().substr(0, 10),
     startDate: addMonths(new Date(), 1).toISOString().substr(0, 10),
     endDate: addDays(addMonths(new Date(), 1), 4).toISOString().substr(0, 10),
@@ -347,7 +345,7 @@ export default {
       { heading: 'Members' },
       {
         icon: 'mdi-account-multiple-outline',
-        // text: 'Members',
+        text: 'Members',
         to: '/list/EventCustomers/Members',
       },
       {

@@ -8,13 +8,15 @@
           <v-icon>mdi-close</v-icon>
         </v-btn>
       </v-toolbar>
-      <v-stepper v-model="e1">
+      <v-stepper v-model="stepNumber">
         <v-stepper-header class="elevation-0">
-          <v-stepper-step :complete="e1 > 1" step="1"
+          <v-stepper-step :complete="stepNumber > 1" step="1"
             >Basic Info</v-stepper-step
           >
           <v-divider></v-divider>
-          <v-stepper-step :complete="e1 > 2" step="2">Location</v-stepper-step>
+          <v-stepper-step :complete="stepNumber > 2" step="2"
+            >Location</v-stepper-step
+          >
           <v-divider></v-divider>
 
           <v-stepper-step step="3">Tickets</v-stepper-step>
@@ -43,7 +45,7 @@
                   <v-datetime-picker
                     v-model="eventData.StartDate"
                     label="Start Date*"
-                    :text-field-props="eventStartdateProps"
+                    :text-field-props="eventStartDateProps"
                   >
                     <template slot="dateIcon">
                       <v-icon>fas fa-calendar</v-icon>
@@ -58,7 +60,7 @@
                     v-model="eventData.EndDate"
                     :rules="requiredRules"
                     label="End Date*"
-                    :text-field-props="eventEnddateProps"
+                    :text-field-props="eventEndDateProps"
                   >
                     <template slot="dateIcon">
                       <v-icon>fas fa-calendar</v-icon>
@@ -142,7 +144,7 @@
                         id="map"
                         ref="venueAddress.AddressLine"
                         v-model="venueAddress.AddressLine"
-                        class="form-control"
+                        class="form-control pa-3 d-block rounded"
                         placeholder="Address*"
                         :required="true"
                         @placechanged="getAddressData"
@@ -151,7 +153,7 @@
                     </no-ssr>
                     <div
                       v-show="addresslineMessage !== ''"
-                      class="error-message"
+                      class="red--text pa-3 pt-0 body-1"
                     >
                       {{ addresslineMessage }}
                     </div>
@@ -236,7 +238,7 @@
               </v-row>
             </v-card>
 
-            <v-btn color="primary" @click="e1 = 1">Prev</v-btn>
+            <v-btn color="primary" @click="stepNumber = 1">Prev</v-btn>
             <v-btn color="primary" @click="next(3)">Next</v-btn>
           </v-stepper-content>
 
@@ -291,7 +293,7 @@
                         <v-datetime-picker
                           v-model="ticket.StartDate"
                           label="Start Date*"
-                          :text-field-props="ticketStartdateProps(k, ticket)"
+                          :text-field-props="ticketStartDateProps(k)"
                         >
                           <template slot="dateIcon">
                             <v-icon>fas fa-calendar</v-icon>
@@ -305,7 +307,7 @@
                         <v-datetime-picker
                           v-model="ticket.EndDate"
                           label="End Date*"
-                          :text-field-props="ticketEnddateProps(k)"
+                          :text-field-props="ticketEndDateProps(k)"
                         >
                           <template slot="dateIcon">
                             <v-icon>fas fa-calendar</v-icon>
@@ -332,7 +334,7 @@
                   </tbody>
                 </template>
               </v-simple-table>
-              <v-btn color="primary" @click="e1 = 2">Prev</v-btn>
+              <v-btn color="primary" @click="stepNumber = 2">Prev</v-btn>
               <v-btn
                 color="primary"
                 :disabled="isSaveButtonDisabled"
@@ -343,12 +345,12 @@
             <v-card
               v-else
               outlined
-              class="text-center elevation-2 vs-notification"
+              class="text-center elevation-2 vs-notification pa-5"
             >
               <div v-if="isEventCreate" class="flex">
                 <div class="py-2">
                   <i
-                    class="fa fa-calendar fs-icon primary white--text"
+                    class="fa fa-calendar pa-4 d-inline-flex rounded-circle body-1 primary white--text"
                     aria-hidden="true"
                   ></i>
                 </div>
@@ -389,7 +391,7 @@
               <div v-if="isEventPublish" class="flex">
                 <div class="py-2">
                   <i
-                    class="fa fa-calendar fs-icon primary white--text"
+                    class="fa fa-calendar pa-4 d-inline-flex rounded-circle body-1 primary white--text"
                     aria-hidden="true"
                   ></i>
                 </div>
@@ -545,8 +547,8 @@ export default {
         lat: 0.0,
         lng: 0.0,
       },
-      e13: 2,
-      e1: 1,
+      // e13: 2,
+      stepNumber: 1,
       datetime: new Date().toISOString().substr(0, 10),
       date: new Date().toISOString().substr(0, 10),
       menu: false,
@@ -577,7 +579,7 @@ export default {
     gMapCenter() {
       return { lat: this.locations[0].lat, lng: this.locations[0].lng }
     },
-    eventStartdateProps() {
+    eventStartDateProps() {
       return {
         appendIcon: 'fa-calendar',
         outlined: true,
@@ -585,19 +587,19 @@ export default {
           (v) => {
             const StartDate = v && new Date(v)
             const { EndDate } = this.eventData
-            let startdateMessage = ''
-            if (!StartDate) startdateMessage = strings.FIELD_REQUIRED
+            let startDateMessage = ''
+            if (!StartDate) startDateMessage = strings.FIELD_REQUIRED
             else if (StartDate && EndDate && StartDate > EndDate)
-              startdateMessage = strings.EVENT_START_END_DATE
+              startDateMessage = strings.EVENT_START_END_DATE
             else if (StartDate < new Date())
-              startdateMessage = strings.EVENT_START_DATE
-            else startdateMessage = ''
-            return startdateMessage || true
+              startDateMessage = strings.EVENT_START_DATE
+            else startDateMessage = ''
+            return startDateMessage || true
           },
         ],
       }
     },
-    eventEnddateProps() {
+    eventEndDateProps() {
       return {
         appendIcon: 'fa-calendar',
         outlined: true,
@@ -605,14 +607,14 @@ export default {
           (v) => {
             const EndDate = v && new Date(v)
             const { StartDate } = this.eventData
-            let enddateMessage = ''
-            if (!EndDate) enddateMessage = strings.FIELD_REQUIRED
+            let endDateMessage = ''
+            if (!EndDate) endDateMessage = strings.FIELD_REQUIRED
             else if (StartDate && EndDate && StartDate > EndDate)
-              enddateMessage = strings.EVENT_START_END_DATE
+              endDateMessage = strings.EVENT_START_END_DATE
             else if (EndDate < new Date())
-              enddateMessage = strings.EVENT_END_DATE
-            else enddateMessage = ''
-            return enddateMessage || true
+              endDateMessage = strings.EVENT_END_DATE
+            else endDateMessage = ''
+            return endDateMessage || true
           },
         ],
       }
@@ -625,11 +627,11 @@ export default {
   methods: {
     close() {
       this.onFormClose()
-      this.e1 = 1
+      this.stepNumber = 1
     },
     closeForm() {
       this.onFormClose()
-      this.e1 = 1
+      this.stepNumber = 1
       this.$router.push('/apps/event/event/' + this.eventId)
     },
 
@@ -668,9 +670,11 @@ export default {
       } else return false
     },
     deleteTicket(index) {
-      if (this.tickets.length > 1) this.tickets.splice(index, 1)
+      if (this.tickets.length > 1) {
+        this.tickets.splice(index, 1)
+      }
     },
-    ticketStartdateProps(index, ticket) {
+    ticketStartDateProps(index) {
       return {
         appendIcon: 'fa-calendar',
         outlined: true,
@@ -678,23 +682,23 @@ export default {
           (v) => {
             const StartDate = v && new Date(v)
             const { EndDate } = this.tickets[index]
-            let startdateMessage = ''
+            let startDateMessage = ''
             if (!StartDate && this.tickets[index].StartDate === null)
-              startdateMessage = strings.FIELD_REQUIRED
+              startDateMessage = strings.FIELD_REQUIRED
             else if (StartDate && EndDate && StartDate > EndDate)
-              startdateMessage = strings.TICKET_START_DT_MSG
+              startDateMessage = strings.TICKET_START_DT_MSG
             else if (
               StartDate &&
               new Date(StartDate.setSeconds(1)) < this.currentDatetime
             ) {
-              startdateMessage = strings.TICKET_START_DT_CURRENT_DT
-            } else startdateMessage = ''
-            return startdateMessage || true
+              startDateMessage = strings.TICKET_START_DT_CURRENT_DT
+            } else startDateMessage = ''
+            return startDateMessage || true
           },
         ],
       }
     },
-    ticketEnddateProps(index) {
+    ticketEndDateProps(index) {
       return {
         appendIcon: 'fa-calendar',
         outlined: true,
@@ -702,18 +706,18 @@ export default {
           (v) => {
             const EndDate = v && new Date(v)
             const { StartDate } = this.tickets[index]
-            let enddateMessage = ''
+            let endDateMessage = ''
 
             if (!EndDate && this.tickets[index].EndDate === null)
-              enddateMessage = strings.FIELD_REQUIRED
+              endDateMessage = strings.FIELD_REQUIRED
             else if (StartDate && EndDate && StartDate > EndDate)
-              enddateMessage = strings.TICKET_START_DT_MSG
+              endDateMessage = strings.TICKET_START_DT_MSG
             else if (new Date(EndDate) < this.currentDatetime) {
-              enddateMessage = strings.TICKET_END_DT_CURRENT_DT
+              endDateMessage = strings.TICKET_END_DT_CURRENT_DT
             } else if (new Date(EndDate) > this.eventData.EndDate) {
-              enddateMessage = strings.TICKET_END_DT_MSG
-            } else enddateMessage = ''
-            return enddateMessage || true
+              endDateMessage = strings.TICKET_END_DT_MSG
+            } else endDateMessage = ''
+            return endDateMessage || true
           },
         ],
       }
@@ -744,7 +748,7 @@ export default {
         EndDate >= new Date() &&
         this.isInalidEventLink === false
       ) {
-        this.e1 = value
+        this.stepNumber = value
       } else if (value === 3) {
         if (
           (LocationType === 'Venue' &&
@@ -752,7 +756,7 @@ export default {
               '') ||
           (LocationType === 'Online Event' && WebinarLink !== '')
         ) {
-          this.e1 = value
+          this.stepNumber = value
           this.addresslineMessage = ''
         } else if (
           this.$refs['venueAddress.AddressLine'].$data.autocompleteText === ''
@@ -774,7 +778,7 @@ export default {
     },
 
     saveRecord() {
-      this.isSaveButtonDisabled = true      
+      this.isSaveButtonDisabled = true
       const { Code, Type, StartDate, EndDate } = this.tickets
       this.$refs.form.validate()
       if (
@@ -794,13 +798,13 @@ export default {
         this.eventData.EndDate = convertedEventRecord.EndDate
         this.eventData.EventManager = this.$auth.$state.user.data.email
         this.eventData.Organizer = this.$auth.$state.user.data.name
-        
+
         const baseUrl = getApiUrl()
         this.$axios
           .$post(`${baseUrl}Events`, {
             ...this.eventData,
           })
-          .then((res) => {            
+          .then((res) => {
             this.eventId = res.id
 
             const ticketList = []
@@ -829,8 +833,7 @@ export default {
       }
     },
     changeAddressData(value) {
-      if (value === '') this.addresslineMessage = 'This field is required'
-      else this.addresslineMessage = ''
+      this.addresslineMessage = value === '' ? strings.FIELD_REQUIRED : ''
     },
     changeAddress() {
       const { City, State, Country, PostalCode } = this.venueAddress
@@ -841,7 +844,6 @@ export default {
         AddressLine !== '' &&
         (VenueName !== '' || City !== '' || State !== '' || Country !== '')
       ) {
-        
         const addressObj = `${AddressLine},${VenueName},${City},${State},${Country},${PostalCode}`
         const key = nuxtconfig.generalConfig.googleMapKey
         const customAxiosInstance = this.$axios.create({
@@ -852,7 +854,7 @@ export default {
           .get(
             `https://maps.googleapis.com/maps/api/geocode/json?address=${addressObj}&key=${key}`
           )
-          .then((res) => {            
+          .then((res) => {
             this.venueAddress.AddressLine = AddressLine || ''
             this.eventData.VenueName = VenueName || ''
             this.venueAddress.Country = Country || ''
@@ -877,7 +879,7 @@ export default {
           })
       }
     },
-    getAddressData(addressData, placeResultData, id) {      
+    getAddressData(addressData, placeResultData, id) {
       this.venueAddress.AddressLine =
         addressData.route ||
         '' + ', ' + addressData.administrative_area_level_1 ||
@@ -993,27 +995,9 @@ export default {
 <style scoped>
 .form-control {
   border: 1px solid #ccc;
-  padding: 10px;
   width: 100%;
-  border-radius: 5px;
-}
-.v-picker {
-  border-radius: 0;
-}
-.fs-icon {
-  font-size: 20px;
-  padding: 15px;
-  display: inline-flex;
-  border-radius: 50%;
 }
 .vs-notification {
   box-shadow: 0 1px 2px 0 hsla(0, 0%, 0%, 0.25) !important;
-  padding: 20px;
-}
-.error-message {
-  color: red;
-  padding: 10px;
-  padding-top: 0;
-  font-size: 12px;
 }
 </style>
