@@ -52,7 +52,6 @@
               <v-card-actions>
                 <div class="text-truncate text-capitalize">
                   {{ item.Name }}
-                  <p>{{ $config.cdnUri }}</p>
                 </div>
 
                 <v-spacer></v-spacer>
