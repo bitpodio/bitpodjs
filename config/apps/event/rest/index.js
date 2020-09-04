@@ -6,8 +6,8 @@ export function getData(path) {
     // 2. pagination
     // 3. search
     // 4. filters
-    const res = await this.$axios.$get(`${URL}${path}?filter={"limit":"10"}`)
-    return { items: res, total: 10 }
+    const res = await this.$axios.$get(`${URL}${path}`)
+    return { items: res }
   }
 }
 // export async function getAllUsers(options){
@@ -15,3 +15,11 @@ export function getData(path) {
 // }
 
 export const getAllUsers = getData.bind(null, 'users')
+
+export function getLookupData(path) {
+  const URL = `https://event.test.bitpod.io/svc/api`
+  return async function query(field) {
+    const res = await this.$axios.$get(`${URL}${path}`)
+    return res
+  }
+}

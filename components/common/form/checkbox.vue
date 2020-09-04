@@ -1,13 +1,15 @@
 <template>
   <v-checkbox
     v-model="checkboxValue"
-    :label="field.caption"
+    :label="fieldCaption"
     :rules="rules"
     @click="onCheckboxClick"
   ></v-checkbox>
 </template>
 <script>
+import { formFieldMixin } from '~/utility/form-control'
 export default {
+  mixins: [formFieldMixin],
   props: ['value', 'field', 'rules'],
   data() {
     return {

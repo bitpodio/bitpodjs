@@ -9,7 +9,7 @@
     >
       <v-card>
         <v-toolbar dense flat dark fixed color="accent">
-          <v-toolbar-title class="body-1">Edit Seo Details</v-toolbar-title>
+          <v-toolbar-title class="body-1">Edit Seo Details </v-toolbar-title>
           <v-spacer></v-spacer>
           <v-btn icon dark @click.native="close">
             <v-icon>mdi-close</v-icon>

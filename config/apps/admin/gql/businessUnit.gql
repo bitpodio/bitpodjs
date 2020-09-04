@@ -1,0 +1,56 @@
+query ($filters: JSON, $where: JSON) {  
+    Location {    
+        LocationFind(filter: $filters) {      
+            edges {        
+                node {          
+                    id    
+                    Default      
+                    Phone          
+                    Email          
+                    Description    
+                    LayoutId      
+                    Name          
+                    orgId          
+                    PrimeContactId          
+                    contacts {              
+                        id            
+                        FullName          
+                    }          
+                    ParentId          
+                    child {           
+                        id            
+                        Name          
+                    }          
+                    OrganizationId          
+                    _CurrentAddress {            
+                        id            
+                        State            
+                        PostalCode            
+                        LatLng {              
+                            lat              
+                            lng              
+                            __typename            
+                        }            
+                        Country            
+                        City            
+                        AddressLine            
+                        createdDate            
+                        createdBy            
+                        modifiedDate            
+                        modifiedBy            
+                        __typename          
+                    }          
+                    createdDate          
+                    createdBy          
+                    modifiedDate          
+                    modifiedBy          
+                    __typename        
+                }        
+                __typename      
+            }      
+            __typename    
+        }    
+    LocationCount(where: $where)    
+    __typename  
+}
+}

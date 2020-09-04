@@ -14,8 +14,7 @@ import eventRecurringSession from './gql/eventRecurringSession.gql'
 import eventTasks from './gql/eventTasks.gql'
 import eventRegistrationForm from './gql/eventRegistrationForm.gql'
 import registrationType from './gql/registrationType.gql'
-import { getData } from './rest'
-// import { getBPMNData } from './rest/bpmn.js'
+import { getData, getLookupData } from './rest'
 
 export default {
   Event: {
@@ -1749,6 +1748,10 @@ export default {
           FirstName: {
             displayOrder: 1,
             caption: 'First Name',
+            form: {
+              caption: 'First Name*',
+              displayOrder: 15,
+            },
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
@@ -1761,6 +1764,10 @@ export default {
           LastName: {
             displayOrder: 1,
             caption: 'Last Name',
+            form: {
+              caption: 'Last Name*',
+              displayOrder: 14,
+            },
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
@@ -1773,6 +1780,10 @@ export default {
           PaymentMethod: {
             displayOrder: 10,
             caption: 'PaymentMethod',
+            form: {
+              caption: 'PaymentMethod*',
+              displayOrder: 13,
+            },
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
@@ -1784,6 +1795,10 @@ export default {
           CompanyName: {
             displayOrder: 4,
             caption: 'Organization',
+            form: {
+              caption: 'Organization*',
+              displayOrder: 12,
+            },
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
@@ -1796,6 +1811,10 @@ export default {
           Phone: {
             displayOrder: 5,
             caption: 'Phone',
+            form: {
+              caption: 'Phone*',
+              displayOrder: 11,
+            },
             searchEnable: true,
             sortEnable: true,
             columnWidth: '100px',
@@ -1808,6 +1827,10 @@ export default {
           Email: {
             displayOrder: 3,
             caption: 'Email',
+            form: {
+              caption: 'Email*',
+              displayOrder: 10,
+            },
             searchEnable: true,
             sortEnable: true,
             columnWidth: '130px',
@@ -1820,6 +1843,10 @@ export default {
           '_CurrentAddress.AddressLine': {
             caption: 'Address',
             searchEnable: true,
+            form: {
+              caption: 'Address*',
+              displayOrder: 9,
+            },
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
@@ -1831,6 +1858,10 @@ export default {
           '_CurrentAddress.City': {
             caption: 'City',
             searchEnable: true,
+            form: {
+              caption: 'City*',
+              displayOrder: 8,
+            },
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
@@ -1841,6 +1872,10 @@ export default {
           },
           '_CurrentAddress.State': {
             caption: 'State',
+            form: {
+              caption: 'State*',
+              displayOrder: 7,
+            },
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
@@ -1852,6 +1887,10 @@ export default {
           },
           '_CurrentAddress.PostalCode': {
             caption: 'Zip',
+            form: {
+              caption: 'PostalCode *',
+              displayOrder: 6,
+            },
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
@@ -1863,6 +1902,10 @@ export default {
           },
           '_CurrentAddress.Country': {
             caption: 'Country',
+            form: {
+              caption: 'Country *',
+              displayOrder: 5,
+            },
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
@@ -1875,6 +1918,10 @@ export default {
           EventName: {
             displayOrder: 6,
             caption: 'Event Name',
+            form: {
+              caption: 'EventName *',
+              displayOrder: 4,
+            },
             searchEnable: true,
             sortEnable: true,
             columnWidth: '180px',
@@ -1898,6 +1945,10 @@ export default {
           Status: {
             displayOrder: 9,
             caption: 'Status',
+            form: {
+              caption: 'Status*',
+              displayOrder: 3,
+            },
             searchEnable: true,
             sortEnable: true,
             columnWidth: '100px',
@@ -1907,13 +1958,18 @@ export default {
             newForm: true,
             editForm: true,
             dataSource: {
-              query: registrationStatusOptions,
+              type: 'rest',
               itemText: 'value',
               itemValue: 'key',
-              filter(data) {
-                return {
-                  type: 'RegistrationStatus',
+              getData: (ctx) => {
+                let filter = {
+                  where: {
+                    type: 'RegistrationStatus',
+                  },
                 }
+                filter = JSON.stringify(filter)
+                const path = `/GeneralConfigurations?filter=${filter}`
+                return getLookupData(path)
               },
             },
           },
@@ -1942,6 +1998,10 @@ export default {
           TicketQuantity: {
             displayOrder: 9,
             caption: 'Attendees',
+            form: {
+              caption: 'Attendees*',
+              displayOrder: -1,
+            },
             searchEnable: true,
             sortEnable: true,
             columnWidth: '130px',
@@ -1986,6 +2046,10 @@ export default {
           TicketId: {
             caption: 'Tickets',
             searchEnable: true,
+            form: {
+              caption: 'Tickets*',
+              displayOrder: 1,
+            },
             sortEnable: true,
             columnWidth: '150px',
             type: 'lookup',
