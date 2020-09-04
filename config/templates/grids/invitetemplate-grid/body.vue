@@ -30,7 +30,7 @@
                 >
                   <template v-slot:placeholder>
                     <v-img
-                      :src="cdnUrl + 'invitee-image.png'"
+                      :src="$config.cdnUri + 'invitee-image.png'"
                       class="grey lighten-2"
                       min-height="200"
                       max-height="200"
@@ -41,7 +41,7 @@
               </div>
               <div v-else class="pa-1">
                 <v-img
-                  :src="cdnUrl + 'invitee-image.png'"
+                  :src="$config.cdnUri + 'invitee-image.png'"
                   class="grey lighten-2"
                   min-height="200"
                   max-height="200"
@@ -50,7 +50,10 @@
               </div>
               <v-divider></v-divider>
               <v-card-actions>
-                <div class="text-truncate text-capitalize">{{ item.Name }}</div>
+                <div class="text-truncate text-capitalize">
+                  {{ item.Name }}
+                  <p>{{ $config.cdnUri }}</p>
+                </div>
 
                 <v-spacer></v-spacer>
 
@@ -113,7 +116,7 @@
                 >
                   <template v-slot:placeholder>
                     <v-img
-                      src="https://res.cloudinary.com/mytestlogo/image/upload/v1571132783/invitee-image.png"
+                      :src="$config.cdnUri + 'invitee-image.png'"
                       class="grey lighten-2"
                       min-height="200"
                       max-height="200"
@@ -124,7 +127,7 @@
               </div>
               <div v-else class="pa-1">
                 <v-img
-                  src="https://res.cloudinary.com/mytestlogo/image/upload/v1571132783/invitee-image.png"
+                  :src="$config.cdnUri + 'invitee-image.png'"
                   class="grey lighten-2"
                   min-height="200"
                   max-height="200"
@@ -169,14 +172,8 @@
 </template>
 
 <script>
-import nuxtconfig from '~/nuxt.config'
 export default {
   props: ['items'],
-  computed: {
-    cdnUrl() {
-      return nuxtconfig.cdnUri
-    },
-  },
 }
 </script>
 

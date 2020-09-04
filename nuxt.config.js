@@ -85,8 +85,9 @@ export default {
     // baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
     baseURL: `http://localhost:3000${basePath}`,
   },
-  cdnUri: 'https://res.cloudinary.com/mytestlogo/image/upload/',
-
+  publicRuntimeConfig: {
+    cdnUri: 'https://res.cloudinary.com/mytestlogo/image/upload/',
+  },
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
