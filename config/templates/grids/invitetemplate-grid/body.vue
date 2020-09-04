@@ -30,7 +30,7 @@
                 >
                   <template v-slot:placeholder>
                     <v-img
-                      :src="imgurl + 'invitee-image.png'"
+                      :src="cdnUrl + 'invitee-image.png'"
                       class="grey lighten-2"
                       min-height="200"
                       max-height="200"
@@ -41,7 +41,7 @@
               </div>
               <div v-else class="pa-1">
                 <v-img
-                  :src="imgurl + 'invitee-image.png'"
+                  :src="cdnUrl + 'invitee-image.png'"
                   class="grey lighten-2"
                   min-height="200"
                   max-height="200"
@@ -173,7 +173,7 @@ import nuxtconfig from '~/nuxt.config'
 export default {
   props: ['items'],
   computed: {
-    imgurl() {
+    cdnUrl() {
       return nuxtconfig.cdnUri
     },
   },
