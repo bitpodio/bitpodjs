@@ -459,7 +459,7 @@ export default {
       isEventCreate: false,
       isEventPublish: false,
       requiredRules: [(v) => !!v || 'This field is required'],
-      uniquelinkRules: [(v) => !!v || 'Lower case alphanumeric letters only'],
+      // uniquelinkRules: [(v) => !!v || 'Lower case alphanumeric letters only'],
       isMap: false,
       currentLocation: {},
       locationsVisibleOnMap: '',
@@ -606,7 +606,7 @@ export default {
             const EndDate = v && new Date(v)
             const { StartDate } = this.eventData
             let enddateMessage = ''
-            if (!StartDate) enddateMessage = strings.FIELD_REQUIRED
+            if (!EndDate) enddateMessage = strings.FIELD_REQUIRED
             else if (StartDate && EndDate && StartDate > EndDate)
               enddateMessage = strings.EVENT_START_END_DATE
             else if (EndDate < new Date())
@@ -687,8 +687,7 @@ export default {
               StartDate &&
               new Date(StartDate.setSeconds(1)) < this.currentDatetime
             ) {
-              startdateMessage =
-                'Start date should not be less than Current date'
+              startdateMessage = strings.TICKET_START_DT_CURRENT_DT
             } else startdateMessage = ''
             return startdateMessage || true
           },
@@ -707,12 +706,11 @@ export default {
 
             if (!EndDate) enddateMessage = strings.FIELD_REQUIRED
             else if (StartDate && EndDate && StartDate > EndDate)
-              enddateMessage = 'Start date should not be greater than End date'
+              enddateMessage = strings.TICKET_START_DT_MSG
             else if (new Date(EndDate) < this.currentDatetime) {
-              enddateMessage = 'End date should not be less than Current date'
+              enddateMessage = strings.TICKET_END_DT_CURRENT_DT
             } else if (new Date(EndDate) > this.eventData.EndDate) {
-              enddateMessage =
-                'Ticket end date should be less than event end date.'
+              enddateMessage = strings.TICKET_END_DT_MSG
             } else enddateMessage = ''
             return enddateMessage || true
           },
@@ -758,7 +756,7 @@ export default {
         } else if (
           this.$refs['venueAddress.AddressLine'].$data.autocompleteText === ''
         ) {
-          this.addresslineMessage = 'This field is required'
+          this.addresslineMessage = strings.FIELD_REQUIRED
         }
       }
     },
@@ -777,7 +775,6 @@ export default {
     saveRecord() {
       this.isSaveButtonDisabled = true
       console.log('==saveRecord==')
-      console.log('==this.tickets==', this.tickets)
       const { Code, Type, StartDate, EndDate } = this.tickets
       this.$refs.form.validate()
       if (
@@ -788,7 +785,7 @@ export default {
       ) {
         if (this.venueAddress.AddressLine !== '')
           this.eventData._VenueAddress = this.venueAddress
-        console.log('= before timezone=', JSON.stringify(this.eventData))
+
         const convertedEventRecord = formatTimezoneDateFieldsData(
           this.eventData,
           this.fields
@@ -807,7 +804,7 @@ export default {
           .then((res) => {
             console.log('=res===', res)
             this.eventId = res.id
-            console.log('=this.eventId===', this.eventId)
+
             const ticketList = []
 
             this.tickets.forEach(function (ticket) {
@@ -816,11 +813,10 @@ export default {
               ticket.TicketCount = parseInt(ticket.TicketCount)
               ticketList.push(ticket)
             })
-            console.log('=ticketList===', ticketList)
+
             return this.$axios
               .$post(`${baseUrl}Tickets`, ticketList)
               .then((ticketres) => {
-                // this.onFormClose()
                 this.isTicket = false
                 this.isEventCreate = true
                 return ticketres
