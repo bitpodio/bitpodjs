@@ -5,7 +5,7 @@
         <span class="bitpod-logo logo-ds">
           <v-img
             :src="$config.cdnUri + 'logo-favicon.png'"
-            height="40"
+            height="50"
             width="30"
           ></v-img>
         </span>
