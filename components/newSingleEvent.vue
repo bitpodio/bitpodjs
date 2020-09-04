@@ -774,8 +774,7 @@ export default {
     },
 
     saveRecord() {
-      this.isSaveButtonDisabled = true
-      console.log('==saveRecord==')
+      this.isSaveButtonDisabled = true      
       const { Code, Type, StartDate, EndDate } = this.tickets
       this.$refs.form.validate()
       if (
@@ -795,15 +794,13 @@ export default {
         this.eventData.EndDate = convertedEventRecord.EndDate
         this.eventData.EventManager = this.$auth.$state.user.data.email
         this.eventData.Organizer = this.$auth.$state.user.data.name
-
-        console.log('===getApiUrl=', getApiUrl())
+        
         const baseUrl = getApiUrl()
         this.$axios
           .$post(`${baseUrl}Events`, {
             ...this.eventData,
           })
-          .then((res) => {
-            console.log('=res===', res)
+          .then((res) => {            
             this.eventId = res.id
 
             const ticketList = []
@@ -844,7 +841,7 @@ export default {
         AddressLine !== '' &&
         (VenueName !== '' || City !== '' || State !== '' || Country !== '')
       ) {
-        console.log('=address request===')
+        
         const addressObj = `${AddressLine},${VenueName},${City},${State},${Country},${PostalCode}`
         const key = nuxtconfig.generalConfig.googleMapKey
         const customAxiosInstance = this.$axios.create({
@@ -855,8 +852,7 @@ export default {
           .get(
             `https://maps.googleapis.com/maps/api/geocode/json?address=${addressObj}&key=${key}`
           )
-          .then((res) => {
-            console.log('=address res===', res)
+          .then((res) => {            
             this.venueAddress.AddressLine = AddressLine || ''
             this.eventData.VenueName = VenueName || ''
             this.venueAddress.Country = Country || ''
@@ -881,8 +877,7 @@ export default {
           })
       }
     },
-    getAddressData(addressData, placeResultData, id) {
-      console.log('==addressData==', addressData)
+    getAddressData(addressData, placeResultData, id) {      
       this.venueAddress.AddressLine =
         addressData.route ||
         '' + ', ' + addressData.administrative_area_level_1 ||

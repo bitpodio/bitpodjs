@@ -1,6 +1,6 @@
 import colors from 'vuetify/es5/util/colors'
 const basePath = process.env.PUBLIC_PATH || ''
-console.log('=nuxtconfig.js=PUBLIC_DOMAIN==', process.env.PUBLIC_DOMAIN)
+
 export default {
   /*
    ** Nuxt rendering mode
@@ -99,8 +99,8 @@ export default {
   axios: {
     apiEndpoint: '/svc/api/',
     backendBaseUrl: process.env.PUBLIC_DOMAIN || '',
-    // baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
-    baseURL: `http://localhost:3000${basePath}`,
+    baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
+    // baseURL: `http://localhost:3000${basePath}`,
   },
 
   publicRuntimeConfig: {
@@ -108,11 +108,10 @@ export default {
       browserBaseURL: process.env.BROWSER_BASE_URL,
       backendBaseUrl: process.env.PUBLIC_DOMAIN,
     },
-  },
-  publicRuntimeConfig: {
     cdnUri:
       'https://res.cloudinary.com/mytestlogo/image/upload/bitpodjs/images/',
   },
+ 
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
