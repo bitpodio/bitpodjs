@@ -1,0 +1,22 @@
+query($filters: JSON) {
+  RegistrationForm {
+    RegistrationFormFind(filter: $filters) {
+      edges {
+        node {
+          id
+          Label
+          DisplayOrder
+          ControlType
+          isShowField
+          showAttendeeField
+          isAttendeeField
+          isRequired
+          createdDate
+          createdBy
+          modifiedDate
+          modifiedBy
+        }
+      }
+    }
+  }
+}

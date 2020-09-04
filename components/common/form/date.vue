@@ -1,39 +1,79 @@
 <template>
-  <v-menu
-    v-model="menu2"
-    :close-on-content-click="false"
-    :nudge-right="40"
-    transition="scale-transition"
-    offset-y
-    min-width="290px"
-  >
-    <template v-slot:activator="{ on, attrs }">
-      <v-text-field
+  <div class="custom-date-time-picker">
+    <div v-if="isDateTime">
+      <v-datetime-picker
         v-model="date"
-        :label="field.caption"
-        readonly
-        v-bind="attrs"
-        outlined
-        v-on="on"
-      ></v-text-field>
-    </template>
-    <v-date-picker
-      v-model="date"
-      show-current="true"
-      @change="onCalendarChange"
-      @input="menu2 = false"
-    ></v-date-picker>
-  </v-menu>
+        :label="fieldCaption"
+        :text-field-props="textFieldProps"
+        @input="onCalendarChange"
+      >
+        <template slot="dateIcon">
+          <v-icon>fas fa-calendar</v-icon>
+        </template>
+        <template slot="timeIcon">
+          <v-icon>fas fa-clock</v-icon>
+        </template>
+      </v-datetime-picker>
+    </div>
+    <div v-else>
+      <v-dialog
+        ref="dialog"
+        v-model="modal"
+        :return-value.sync="date"
+        persistent
+        width="290px"
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-text-field
+            v-model="date"
+            :label="fieldCaption"
+            :rules="rules"
+            readonly
+            outlined
+            v-bind="attrs"
+            v-on="on"
+          ></v-text-field>
+        </template>
+        <v-date-picker v-model="date" scrollable @change="onCalendarChange">
+          <v-spacer></v-spacer>
+          <v-btn text color="primary" @click="modal = false">Cancel</v-btn>
+          <v-btn text color="primary" @click="$refs.dialog.save(date)"
+            >OK</v-btn
+          >
+        </v-date-picker>
+      </v-dialog>
+    </div>
+  </div>
 </template>
 
 <script>
+import { formFieldMixin } from '~/utility/form-control'
 export default {
-  props: ['value', 'field'],
+  mixins: [formFieldMixin],
+  props: ['value', 'field', 'rules'],
   data() {
+    const dateTime = this.value || new Date()
+    const date =
+      this.field.type === 'datetime'
+        ? new Date(dateTime)
+        : new Date(dateTime).toISOString().substr(0, 10)
     return {
-      date: new Date().toISOString().substr(0, 10),
-      menu2: false,
+      date,
+      modal: false,
+      textFieldProps: {
+        appendIcon: 'fa-calendar',
+        outlined: true,
+        rules: this.rules,
+      },
     }
+  },
+  computed: {
+    isDateTime() {
+      return this.field.type === 'datetime'
+    },
+  },
+  mounted() {
+    this.onCalendarChange()
   },
   methods: {
     onCalendarChange() {
@@ -42,3 +82,8 @@ export default {
   },
 }
 </script>
+<style>
+.v-picker {
+  border-radius: 0;
+}
+</style>

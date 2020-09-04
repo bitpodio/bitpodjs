@@ -52,7 +52,7 @@ export default {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: ['~/plugins/eventBus.js'],
+  plugins: ['~/plugins/eventBus.js', '~/plugins/date-time-picker.js'],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
@@ -86,9 +86,9 @@ export default {
   axios: {
     apiEndpoint: '/svc/api/',
     backendBaseUrl: process.env.PUBLIC_DOMAIN || '',
-    baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
+    // baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
     // use below locally and comment above
-    // baseURL: `http://localhost:3000${basePath}`,
+    baseURL: `http://localhost:3000${basePath}`,
   },
 
   publicRuntimeConfig: {
@@ -96,6 +96,8 @@ export default {
       browserBaseURL: process.env.BROWSER_BASE_URL,
       backendBaseUrl: process.env.PUBLIC_DOMAIN,
     },
+    cdnUri:
+      'https://res.cloudinary.com/mytestlogo/image/upload/bitpodjs/images/',
   },
   /*
    ** vuetify module configuration
@@ -107,7 +109,7 @@ export default {
       light: true,
       themes: {
         dark: {
-          primary: colors.blue.darken2,
+          primary: '#1a73e8',
           accent: colors.grey.darken3,
           secondary: colors.amber.darken3,
           info: colors.teal.lighten1,
@@ -118,7 +120,7 @@ export default {
           greybg: '#000000',
         },
         light: {
-          primary: colors.blue.darken2,
+          primary: '#1a73e8',
           secondary: colors.grey.darken1,
           accent: colors.shades.black,
           error: colors.red.accent3,
@@ -132,7 +134,9 @@ export default {
    ** Build configuration
    ** See https://nuxtjs.org/api/configuration-build/
    */
-  build: {},
+  build: {
+    transpile: /@fullcalendar.*/, // transpile ESM modules within all fullcalendar packages
+  },
   vue: {
     config: {
       productionTip: true,
@@ -163,7 +167,7 @@ export default {
     redirect: {
       login: '/login',
       callback: '/callback',
-      home: `${basePath}/event`,
+      home: `${basePath}/apps/event/list/Event/All Events`,
       logout: '/',
     },
     strategies: {

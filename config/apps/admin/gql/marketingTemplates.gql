@@ -1,0 +1,33 @@
+query($filters: JSON, $where: JSON) {
+  MarketingTemplate {
+    MarketingTemplateFind(filter: $filters) {
+      edges {
+        node {
+          id
+          Default
+          ReplyTo
+          ImageURL
+          Type
+          Category
+          Name
+          Subject
+          FromName
+          FromEmail
+          Body
+          orgId
+          Documents
+          Image
+          createdDate
+          createdBy
+          modifiedDate
+          modifiedBy
+          __typename
+        }
+        __typename
+      }
+      __typename
+    }
+    MarketingTemplateCount(where: $where)
+    __typename
+  }
+}

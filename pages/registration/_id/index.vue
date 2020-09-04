@@ -79,21 +79,21 @@
           <i class="fa fa-black-board pr-1" aria-hidden="true"></i> Sessions
         </h2>
         <v-divider></v-divider>
-        <Grid view-name="registrationSessions" content-name="Registrations" />
+        <Grid view-name="registrationSessions" :content="content" />
       </div>
       <div class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
         <h2 class="body-1 pb-2">
           <i class="fa fa-user-plus pr-1" aria-hidden="true"></i>Attendees
         </h2>
         <v-divider></v-divider>
-        <Grid view-name="registrationAttendees" content-name="Registrations" />
+        <Grid view-name="registrationAttendees" :content="content" />
       </div>
       <div class="xs12 sm12 md12 boxview pa-4 mr-2 mb-2">
         <h2 class="body-1 pb-2">
           <i class="fa fa-envelope1 pr-1" aria-hidden="true"></i> Emails
         </h2>
         <v-divider></v-divider>
-        <Grid view-name="registrationEmails" content-name="Registrations" />
+        <Grid view-name="registrationEmails" :content="content" />
       </div>
     </v-flex>
     <v-flex column xs12 sm4 md4 lg4>
@@ -197,10 +197,12 @@ import format from 'date-fns/format'
 import Grid from '~/components/common/grid'
 import registration from '~/config/apps/event/gql/registration.gql'
 import { formatGQLResult } from '~/utility/gql.js'
+import { configLoaderMixin } from '~/utility'
 export default {
   components: {
     Grid,
   },
+  mixins: [configLoaderMixin],
   data() {
     return {
       loading: 0,

@@ -8,8 +8,8 @@ import endOfYesterday from 'date-fns/endOfYesterday'
 import startOfDay from 'date-fns/startOfDay'
 import endOfDay from 'date-fns/endOfDay'
 import MissingComponent from './missing-component.vue'
-import contentFactory from '~/config/apps/event/content'
 import nuxtconfig from '~/nuxt.config'
+
 export function importTemplate(templatePath) {
   return () => import(`~/config/${templatePath}`)
 }
@@ -83,7 +83,9 @@ export const formValidationMixin = {
       const propFields = {}
       for (const field of this.fields) {
         propFields[field.fieldName] = field.dataSource
-          ? field.dataSource.filter.call(this, this.formData)
+          ? field.dataSource.filter
+            ? field.dataSource.filter.call(this, this.formData)
+            : {}
           : {}
       }
       return propFields
@@ -116,7 +118,7 @@ export const formValidationMixin = {
 }
 
 export function getContentByName(ctx, contentName) {
-  const contents = contentFactory(ctx)
+  const contents = ctx.contentFactory(ctx)
   return contents[contentName]
 }
 
@@ -138,16 +140,19 @@ export function getOrderQuery(content, viewName, sortBy, sortDesc) {
   return `${sortBy && sortBy[0]} ${sortDesc && sortDesc[0] ? 'DESC' : 'ASC'}`
 }
 
+function computeViewFilter(filter, ctx) {
+  return filter && (filter instanceof Function ? filter.call(ctx, ctx) : filter)
+}
+
 export function buildQueryVariables({
   viewName,
   search,
   filters,
   filter,
-  contentName,
+  content,
   ctx,
 }) {
   const { rules: filterRules, ruleCondition } = filters
-  const content = getContentByName(ctx, contentName)
   const and = []
   const condition = []
   for (const rule of filterRules) {
@@ -163,7 +168,8 @@ export function buildQueryVariables({
     and.push(serachQuery)
   }
   const viewDataSource = getViewDataSource(content, viewName)
-  const contentFilter = filter || viewDataSource.filter
+  const contentFilter = filter || computeViewFilter(viewDataSource.filter, ctx)
+
   if (contentFilter) {
     and.push(contentFilter.where)
   }
@@ -293,4 +299,25 @@ function getDateAfterQuerybyDays(field, days) {
     { [field]: { lte: endOfDay(addDays(new Date(), days)) } },
   ]
   return { and }
+}
+
+export const configLoaderMixin = {
+  layout(context) {
+    return context.route.params.app || 'default'
+  },
+  data() {
+    return {
+      contents: null,
+    }
+  },
+  async mounted() {
+    const contentFactory = await import(
+      `~/config/apps/${this.$route.params.app}/content`
+    )
+    this.contents = contentFactory.default
+  },
+}
+
+export function getIdFromAtob(encodedId) {
+  return encodedId ? atob(encodedId).split(':')[1] : ''
 }

@@ -13,7 +13,7 @@ export function getData(modelName) {
     const limit = itemsPerPage === -1 ? 0 : itemsPerPage
 
     // sort
-    const { content, viewName, contentName } = this
+    const { content, viewName } = this
     const sortBy = options.sortBy
     const sortDesc = options.sortDesc
     const order = getOrderQuery(content, viewName, sortBy, sortDesc)
@@ -24,7 +24,7 @@ export function getData(modelName) {
       search: options.search,
       filters: options.filters,
       filter: this.filter,
-      contentName,
+      content,
       ctx: this,
     })
     const filter = { limit, skip, order, where }
@@ -48,3 +48,11 @@ export function getData(modelName) {
 // }
 
 export const getAllUsers = getData.bind(null, 'users')
+
+export function getLookupData(path) {
+  const URL = `https://event.test.bitpod.io/svc/api`
+  return async function query(field) {
+    const res = await this.$axios.$get(`${URL}${path}`)
+    return res
+  }
+}
