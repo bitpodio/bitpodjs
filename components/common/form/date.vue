@@ -2,8 +2,8 @@
   <div class="custom-date-time-picker">
     <div v-if="isDateTime">
       <v-datetime-picker
-        v-model="dateTime"
-        :label="field.caption"
+        v-model="date"
+        :label="fieldCaption"
         :text-field-props="textFieldProps"
         @input="onCalendarChange"
       >
@@ -26,7 +26,8 @@
         <template v-slot:activator="{ on, attrs }">
           <v-text-field
             v-model="date"
-            :label="field.caption"
+            :label="fieldCaption"
+            :rules="rules"
             readonly
             outlined
             v-bind="attrs"
@@ -46,17 +47,24 @@
 </template>
 
 <script>
+import { formFieldMixin } from '~/utility/form-control'
 export default {
-  props: ['value', 'field'],
+  mixins: [formFieldMixin],
+  props: ['value', 'field', 'rules'],
   data() {
+    const dateTime = this.value || new Date()
+    const date =
+      this.field.type === 'datetime'
+        ? new Date(dateTime)
+        : new Date(dateTime).toISOString().substr(0, 10)
     return {
-      date: new Date().toISOString().substr(0, 10),
+      date,
       modal: false,
       textFieldProps: {
         appendIcon: 'fa-calendar',
         outlined: true,
+        rules: this.rules,
       },
-      dateTime: new Date(),
     }
   },
   computed: {
@@ -64,10 +72,12 @@ export default {
       return this.field.type === 'datetime'
     },
   },
+  mounted() {
+    this.onCalendarChange()
+  },
   methods: {
     onCalendarChange() {
-      const date = this.isDateTime ? this.dateTime : this.date
-      this.$emit('input', date)
+      this.$emit('input', this.date)
     },
   },
 }

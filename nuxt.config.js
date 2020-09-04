@@ -109,6 +109,10 @@ export default {
       backendBaseUrl: process.env.PUBLIC_DOMAIN,
     },
   },
+  publicRuntimeConfig: {
+    cdnUri:
+      'https://res.cloudinary.com/mytestlogo/image/upload/bitpodjs/images/',
+  },
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module

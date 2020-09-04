@@ -6,7 +6,9 @@
       :item-text="itemText"
       :item-value="itemValue"
       :loading="isLoading"
-      :label="field.caption"
+      :label="fieldCaption"
+      :multiple="field.multiple"
+      :rules="rules"
       outlined
       @change="onChange"
     ></v-autocomplete>
@@ -16,6 +18,7 @@
 <script>
 import gql from 'graphql-tag'
 import { getIdFromAtob } from '~/utility'
+import { formFieldMixin } from '~/utility/form-control'
 
 function formatResult(data) {
   const [modelName] = Object.getOwnPropertyNames(data)
@@ -26,6 +29,7 @@ function formatResult(data) {
 }
 
 export default {
+  mixins: [formFieldMixin],
   model: {
     prop: 'value',
     event: 'change',
@@ -46,6 +50,10 @@ export default {
     filter: {
       type: Object,
       default: () => {},
+    },
+    rules: {
+      type: Array,
+      default: () => [],
     },
   },
   data() {
@@ -72,17 +80,23 @@ export default {
     },
     async loadItems() {
       if (!this.field.items) {
-        const where =
-          this.filter || this.field.dataSource.filter.call(this) || {}
-        const result = await this.$apollo.query({
-          query: gql`
-            ${this.field.dataSource.query}
-          `,
-          variables: {
-            filters: { where },
-          },
-        })
-        this.items = formatResult(result.data)
+        const dataSourceType = this.field.dataSource.type || 'graphql'
+        if (dataSourceType === 'rest') {
+          const getDataFunc = this.field.dataSource.getData.call(this, this)
+          this.items = await getDataFunc.call(this)
+        } else {
+          const where =
+            this.filter || this.field.dataSource.filter.call(this) || {}
+          const result = await this.$apollo.query({
+            query: gql`
+              ${this.field.dataSource.query}
+            `,
+            variables: {
+              filters: { where },
+            },
+          })
+          this.items = formatResult(result.data)
+        }
       }
     },
   },
