@@ -4,7 +4,6 @@
       <v-toolbar dark app color="accent">
         <v-toolbar-title>New Event</v-toolbar-title>
         <v-spacer></v-spacer>
-        <!-- <v-btn icon dark @click="onFormClose"> -->
         <v-btn icon dark @click="close">
           <v-icon>mdi-close</v-icon>
         </v-btn>
@@ -14,11 +13,8 @@
           <v-stepper-step :complete="e1 > 1" step="1"
             >Basic Info</v-stepper-step
           >
-
           <v-divider></v-divider>
-
           <v-stepper-step :complete="e1 > 2" step="2">Location</v-stepper-step>
-
           <v-divider></v-divider>
 
           <v-stepper-step step="3">Tickets</v-stepper-step>
@@ -434,8 +430,6 @@ import gql from 'graphql-tag'
 import strings from '../strings.js'
 import { formatTimezoneDateFieldsData } from '~/utility/form.js'
 import { getApiUrl } from '~/utility/index.js'
-// import CustomDate from '~/components/common/form/date.vue'
-// import Richtext from '~/components/common/form/richtext.vue'
 import Lookup from '~/components/common/form/lookup.vue'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import Timezone from '~/components/common/form/timezone'
@@ -445,7 +439,6 @@ import { formatGQLResult } from '~/utility/gql.js'
 import nuxtconfig from '~/nuxt.config'
 export default {
   components: {
-    // CustomDate,
     RichText: () =>
       process.client ? import('~/components/common/form/richtext.vue') : false,
     Lookup,
@@ -457,10 +450,7 @@ export default {
   },
   data: () => {
     const currentDatetime = new Date(new Date().setSeconds(0))
-    // const eventId = ''
     return {
-      // rules: [(v) => !!v || 'This field is required'],
-      // rules: [(v) => 'This field is required'],
       valid: true,
       lazy: false,
       isSaveButtonDisabled: false,
@@ -468,8 +458,6 @@ export default {
       isTicket: true,
       isEventCreate: false,
       isEventPublish: false,
-      // startdateMessage: '',
-      // enddateMessage: '',
       requiredRules: [(v) => !!v || 'This field is required'],
       uniquelinkRules: [(v) => !!v || 'Lower case alphanumeric letters only'],
       isMap: false,
@@ -477,7 +465,6 @@ export default {
       locationsVisibleOnMap: '',
       circleOptions: {},
       locations: [],
-      // eId: '',
       pins: {
         selected:
           'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAHUSURBVHgB5VU7SwNBEJ7LmZBgMC+UdKKx0MZCG2srwcbCB2glpFDQ3to/IegvSAIWPrBJIySlipUKKqYLaHJ3iWIelzu/DTk8j71H7MQPltmZnflmZ3b3juivQ3BzCIfDI4FAYBvTRV3XR7tBglCCOIP9oFwuv/46QSwWWwfZIaaDNi7vGOlqtZqhfhPE4/EViAy5V6ljE8uVSuXYc4JkMjncarUeMR0ib5Db7fZEvV6vWBd8PG+Q73LIFYyj3lAsa1G/37/D4+JWgPbcQkybd9jpdGYVRXlmSiQSSYmieMWmhgMuwI0kSTPkpQJgzKJnDfJuKYryBJH7sVNBSPGI7BKoFl3n+GguMY4JHiz6GtoybiisRczmEtPFAM+Ifl6i5DmTKYqeX+Nssj19lUz9N2J4XNxDTiQSkwi4oz6ADU3hLdxb7dwW9RyL5B0FHrltAgZUsEce4eRrmwB3ugCRJ3fk4VvsOwEDHtcWxKeDy4emaWmHdRKdFpvNphQKhdhFmOet42D3sftTJw7X/wHgw/U8h1ywkJ/gYJeI/wi/g8kdmqqqG5Alk62Er+emG7nXBFSr1aroNSNknwOVzZnNS6xIHtFoNF6CweAbpheyLOfo3+ALfrSuzJ1F8EsAAAAASUVORK5CYII=',
@@ -606,7 +593,6 @@ export default {
               startdateMessage = strings.EVENT_START_DATE
             else startdateMessage = ''
             return startdateMessage || true
-            // return startdateMessage.length ? startdateMessage : true
           },
         ],
       }
@@ -627,7 +613,6 @@ export default {
               enddateMessage = strings.EVENT_END_DATE
             else enddateMessage = ''
             return enddateMessage || true
-            // return enddateMessage.length ? enddateMessage : true
           },
         ],
       }
@@ -640,42 +625,20 @@ export default {
   methods: {
     close() {
       this.onFormClose()
-      // this.isEventPublish = false
-      // this.isEventCreate = false
       this.e1 = 1
-      // this.resetForm()
     },
     closeForm() {
       this.onFormClose()
-      // this.isEventPublish = false
-      // this.isEventCreate = false
       this.e1 = 1
       this.$router.push('/apps/event/event/' + this.eventId)
-      // this.resetForm()
     },
-    // resetForm() {
-    // this.eventData.Title = ''
-    // this.eventData.UniqLink = ''
-    // this.eventData.Description = ''
-    // this.venueAddress.AddressLine = ''
-    // this.eventData.VenueName = ''
-    // this.venueAddress.Country = ''
-    // this.venueAddress.City = ''
-    // this.venueAddress.State = ''
-    // this.venueAddress.LatLng.lat = ''
-    // this.venueAddress.LatLng.lng = ''
-    // this.isMap = false
-    // if (this.tickets.length > 1)
-    //   this.tickets.splice(1, this.tickets.length - 1)
-    // },
+
     buildMutationUpsertQuery(modelName) {
       return `mutation($Inputs : ${modelName}UpsertWithWhereInput!){ ${modelName}{ ${modelName}UpsertWithWhere(input:$Inputs){ clientMutationId obj{ id } } } }`
     },
     viewRegistration() {
-      // const baseUrl = window.location.origin
       const baseUrl = getApiUrl()
       const regUrl = baseUrl.replace('svc/api', 'e')
-      console.log('==regUrl==', regUrl)
       window.open(`${regUrl}${this.eventData.UniqLink}`, '_blank')
     },
     async eventPublish() {
@@ -728,7 +691,6 @@ export default {
                 'Start date should not be less than Current date'
             } else startdateMessage = ''
             return startdateMessage || true
-            // return startdateMessage.length ? startdateMessage : true
           },
         ],
       }
@@ -753,7 +715,6 @@ export default {
                 'Ticket end date should be less than event end date.'
             } else enddateMessage = ''
             return enddateMessage || true
-            // return startdateMessage.length ? startdateMessage : true
           },
         ],
       }
@@ -889,7 +850,6 @@ export default {
       ) {
         console.log('=address request===')
         const addressObj = `${AddressLine},${VenueName},${City},${State},${Country},${PostalCode}`
-        // const key = 'AIzaSyCPS6SZlor8qxfpul-dKyN6566XG2R5dFM'
         const key = nuxtconfig.generalConfig.googleMapKey
         const customAxiosInstance = this.$axios.create({
           headers: {},
@@ -901,10 +861,16 @@ export default {
           )
           .then((res) => {
             console.log('=address res===', res)
-
+            this.venueAddress.AddressLine = AddressLine || ''
+            this.eventData.VenueName = VenueName || ''
+            this.venueAddress.Country = Country || ''
+            this.venueAddress.City = City || ''
+            this.venueAddress.State = State || ''
             const latlng = {}
             latlng.lat = res.data.results[0].geometry.location.lat
             latlng.lng = res.data.results[0].geometry.location.lng
+            this.venueAddress.LatLng.lat = latlng.lat || ''
+            this.venueAddress.LatLng.lng = latlng.lng || ''
 
             const newLocations = []
             newLocations[0] = latlng
@@ -951,7 +917,6 @@ export default {
       this.verifyUniqueLink(value)
     },
     changeUniqueLink(event) {
-      // this.verifyUniqueLink(value)
       this.verifyUniqueLink(event.currentTarget.value)
     },
     verifyUniqueLink(value) {
