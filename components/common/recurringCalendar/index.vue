@@ -1,7 +1,7 @@
 <template>
   <div class="app">
     <v-snackbar v-model="snackbar" :top="true" :timeout="1000">
-      <div class="toast">
+      <div class="toast py-2 pr-1 pl-3">
         You can not edit past days session
       </div>
     </v-snackbar>
@@ -15,22 +15,29 @@
       >
         <v-card>
           <v-toolbar dense flat dark fixed color="accent">
-            <v-toolbar-title class="body-1">Manage Schedule</v-toolbar-title>
+            <v-toolbar-title class="body-1">{{
+              isParticipant ? 'Attendees' : 'Manage Schedule'
+            }}</v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-btn icon dark @click="dialog = false">
+            <v-btn
+              icon
+              dark
+              @click="
+                dialog = false
+                isParticipant = false
+              "
+            >
               <v-icon>mdi-close</v-icon>
             </v-btn>
           </v-toolbar>
-          <v-card-text>
+          <v-card-text v-if="!isParticipant">
             <v-container>
               <v-row>
                 <v-col cols="4" sm="4">
-                  <v-icon color="black">mdi-checkbox-marked-outline</v-icon>
-                  <h3
-                    :style="{
-                      display: 'inline',
-                    }"
+                  <v-icon dark color="black"
+                    >mdi-checkbox-marked-outline</v-icon
                   >
+                  <h3 class="d-inline">
                     Availability
                   </h3>
                 </v-col>
@@ -49,7 +56,7 @@
               </v-row>
               <v-divider></v-divider>
               <template v-if="!slots.length">
-                <div class="slots-unavilable">
+                <div class="unavilable mt-3 mb-0 text-lg-h6 py-3 px-0">
                   Unavailable
                 </div>
               </template>
@@ -66,13 +73,13 @@
                   <v-form ref="formData">
                     <div v-for="(slot, key) in slots" :key="key">
                       <v-row>
-                        <v-col cols="4" sm="4" class="dropdown">
-                          <v-overflow-btn
+                        <v-col cols="4" sm="4" class="pt-1 px-3 pb-2">
+                          <v-autocomplete
                             v-model="slot.startTime"
-                            class="dropdownbox"
+                            class="ma-0"
                             :items="dropdown"
                             editable
-                            outline
+                            outlined
                             :rules="[
                               () => {
                                 if (
@@ -97,19 +104,20 @@
                                   return `Time-slot overlapping with other slots`
                                 } else {
                                   slots[key].valid1 = true
-                                  return ``
+                                  return true
                                 }
                               },
                             ]"
                             @change="updateValidation"
-                          ></v-overflow-btn>
+                          ></v-autocomplete>
                         </v-col>
-                        <v-col cols="4" sm="4" class="dropdown">
-                          <v-overflow-btn
+                        <v-col cols="4" sm="4" class="pt-1 px-3 pb-2">
+                          <v-autocomplete
                             v-model="slot.endTime"
-                            class="dropdownbox"
+                            class="ma-0"
                             :items="dropdown"
                             editable
+                            outlined
                             :rules="[
                               () => {
                                 if (
@@ -119,14 +127,14 @@
                                   return `End time must be greater then start time`
                                 } else {
                                   slots[key].valid = true
-                                  return ``
+                                  return true
                                 }
                               },
                             ]"
                             @change="updateValidation"
-                          ></v-overflow-btn>
+                          ></v-autocomplete>
                         </v-col>
-                        <v-col cols="4" sm="4" class="deleteSlot">
+                        <v-col cols="4" sm="4" class="pt-2 px-3 pb-0">
                           <v-btn icon @click="deleteAvailablity(key)">
                             <v-icon dark>mdi-delete</v-icon>
                           </v-btn>
@@ -138,35 +146,40 @@
               </template>
               <v-row>
                 <v-col cols="12" sm="12">
-                  <v-icon color="black">mdi-repeat</v-icon>
-                  <h3
-                    :style="{
-                      display: 'inline',
-                    }"
-                  >
+                  <v-icon dark color="black">mdi-repeat</v-icon>
+                  <h3 class="d-inline">
                     Repeating days of the week
                   </h3>
                 </v-col>
               </v-row>
-              <v-divider style="margin-bottom: 10px;"></v-divider>
+              <v-divider class="mb-3"></v-divider>
               <v-row>
                 <v-col
                   v-for="(day, key) in selectedDays"
                   :key="key"
                   cols="3"
                   sm="3"
-                  class="dropdown"
+                  class="pt-1 px-3 pb-2"
                 >
                   <v-checkbox
                     v-model="day.selected"
-                    class="dropdownbox"
+                    class="ma-0"
                     :label="day.dayName"
                   ></v-checkbox>
                 </v-col>
               </v-row>
             </v-container>
           </v-card-text>
-          <v-card-actions class="pl-4">
+          <v-card-text v-else>
+            <v-container v-if="content()">
+              <Grid
+                view-name="eventAttendees"
+                :content="content()"
+                :filter="filterData()"
+              />
+            </v-container>
+          </v-card-text>
+          <v-card-actions v-if="!isParticipant" class="pl-4">
             <v-btn
               outlined
               color="primary"
@@ -198,14 +211,19 @@ import rrulePlugin from '@fullcalendar/rrule'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
+import Grid from '~/components/common/grid'
 import { formatGQLResult } from '~/utility/gql.js'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
+import { configLoaderMixin } from '~/utility'
 export default {
   components: {
+    Grid,
     FullCalendar,
   },
+  mixins: [configLoaderMixin],
   data() {
     return {
+      isParticipant: false,
       snackbar: false,
       exisistingEventId: '',
       exceptionDates: [],
@@ -240,22 +258,43 @@ export default {
           dayGridPlugin,
           listPlugin,
         ],
+        dayMaxEvents: 3,
         timeZone: 'UTC',
         initialView: 'dayGridMonth',
         nowIndicator: true,
         editable: false,
         headerToolbar: this.buildToolbar(),
+        buttonIcons: {
+          prev: 'chevron-left',
+          next: 'chevron-right',
+        },
         events: [],
         eventDidMount: (propsdata) => {
           if (propsdata.view.type === 'dayGridMonth') {
-            propsdata.el.childNodes[1].style.display = 'none'
-            propsdata.el.childNodes[0].style.display = 'none'
+            propsdata.el.childNodes[1].className = 'd-none'
+            propsdata.el.childNodes[0].className = 'd-none'
             Object.assign(propsdata.el.style, {
-              border: '1px solid',
+              border: propsdata.el.textContent.includes('unavailable')
+                ? '1px dashed'
+                : '1px solid',
+              color: propsdata.el.textContent.includes('unavailable')
+                ? 'grey'
+                : '',
               margin: '0 5px 5px',
               fontSize: '12px',
               textAlign: 'center',
             })
+            const dateBox =
+              propsdata.el.parentNode.parentNode.parentNode.firstElementChild
+            if (dateBox.childElementCount === 1) {
+              const participantIcon = document.createElement('i')
+              participantIcon.className =
+                'v-icon notranslate v-icon--left mdi mdi-account-multiple-outline participantButton'
+              participantIcon.onclick = () => {
+                this.isParticipant = true
+              }
+              dateBox.appendChild(participantIcon)
+            }
           }
         },
         dateClick: (propsdata) => {
@@ -272,20 +311,20 @@ export default {
               selected: key === propsdata.date.getDay(),
             }
           })
-          this.slots = this.IsDateHasEvent(propsdata.date).map((i) => {
-            const pair = i.title.split('-')
-            return {
-              startTime: pair[0].trim(),
-              endTime: pair[1].trim(),
-              valid: true,
-              valid1: true,
-            }
-          })
+          this.slots = this.IsDateHasEvent(propsdata.date)
+            .filter((i) => i.title !== 'unavailable')
+            .map((i) => {
+              const pair = i.title.split('-')
+              return {
+                startTime: pair[0].trim(),
+                endTime: pair[1].trim(),
+                valid: true,
+                valid1: true,
+              }
+            })
           this.selectedDate = propsdata.date.toDateString()
-          this.dialog = true
-          //   setTimeout(() => {
+          this.dialog = TextTrackCueList
           this.updateValidation()
-          //   }, 1000)
         },
       },
     }
@@ -294,6 +333,34 @@ export default {
     this.getTimeSlots()
   },
   methods: {
+    content() {
+      if (this.contents) {
+        const startDate =
+          this.clickedDate === '' ? new Date() : new Date(this.clickedDate)
+        const endDate =
+          this.clickedDate === '' ? new Date() : new Date(this.clickedDate)
+        endDate.setDate(endDate.getDate() + 1)
+        this.contents.Event.startDate = startDate.toISOString()
+        this.contents.Event.endDate = endDate.toISOString()
+      }
+      return this.contents ? this.contents.Event : null
+    },
+    filterData() {
+      const startDate =
+        this.clickedDate === '' ? new Date() : new Date(this.clickedDate)
+      const endDate =
+        this.clickedDate === '' ? new Date() : new Date(this.clickedDate)
+      endDate.setDate(endDate.getDate() + 1)
+      return {
+        where: {
+          and: [
+            { SessionId: this.$route.params.id },
+            { BookingDate: { gte: startDate.toISOString() } },
+            { BookingDate: { lte: endDate.toISOString() } },
+          ],
+        },
+      }
+    },
     validSlots() {
       return !this.slots.reduce((acc, i) => {
         return acc && i.valid && i.valid1
@@ -301,7 +368,7 @@ export default {
     },
     updateValidation() {
       setTimeout(() => {
-        if (this.slots && this.slots.length) {
+        if (this.slots && this.slots.length && !this.isParticipant) {
           this.$refs.formData.validate()
         }
       }, 1000)
@@ -422,54 +489,77 @@ export default {
       }
     },
     formattedEvents(calendarData) {
-      return calendarData
-        ? calendarData.map((event) => {
-            const allDay = this.rnd(0, 3) === 0
-            const difference =
-              event.end.split(':')[0] - event.start.split(':')[0]
-            const duration = (difference < 10 ? '0' : '') + difference + ':00'
-            return event.ranges && event.ranges.length
-              ? {
-                  title: event.title,
-                  rrule: `DTSTART:${event.ranges[0].start
-                    .split('-')
-                    .join('')}T${event.start
-                    .split(':')
-                    .join('')}00Z\nRRULE:BYDAY=${this.getDayName(
-                    event.dow[0]
-                  )};UNTIL=${event.ranges[0].end
-                    .split('-')
-                    .join('')}\n${this.getExceptionDate(
-                    event.exceptionDates,
-                    event.start
-                  )}`,
-                  duration,
-                }
-              : event.dow && event.dow.length
-              ? {
-                  title: event.title,
-                  rrule: `DTSTART:${new Date(0)
-                    .toISOString()
-                    .split('T')[0]
-                    .split('-')
-                    .join('')}T${event.start.split(':').join('')}00Z
+      let unavailable = []
+      if (calendarData) {
+        const eventsData = calendarData.map((event) => {
+          if (event.exceptionDates) {
+            const dt = event.exceptionDates.filter(
+              (edate) => !unavailable.includes(edate)
+            )
+            unavailable.push(...dt)
+          }
+          const allDay = this.rnd(0, 3) === 0
+          const difference = event.end.split(':')[0] - event.start.split(':')[0]
+          const duration = (difference < 10 ? '0' : '') + difference + ':00'
+          return event.ranges && event.ranges.length
+            ? {
+                title: event.title,
+                rrule: `DTSTART:${event.ranges[0].start
+                  .split('-')
+                  .join('')}T${event.start
+                  .split(':')
+                  .join('')}00Z\nRRULE:BYDAY=${this.getDayName(
+                  event.dow[0]
+                )};UNTIL=${event.ranges[0].end
+                  .split('-')
+                  .join('')}\n${this.getExceptionDate(
+                  event.exceptionDates,
+                  event.start
+                )}`,
+                duration,
+              }
+            : event.dow && event.dow.length
+            ? {
+                title: event.title,
+                rrule: `DTSTART:${new Date(0)
+                  .toISOString()
+                  .split('T')[0]
+                  .split('-')
+                  .join('')}T${event.start.split(':').join('')}00Z
                   \nRRULE:BYDAY=${this.getDayName(
                     event.dow[0]
                   )}\n${this.getExceptionDate(
-                    event.exceptionDates,
-                    event.start
-                  )}`,
-                  duration,
-                }
-              : {
-                  title: event.title,
-                  start: event.start,
-                  end: event.end,
-                  color: this.colors[this.rnd(0, this.colors.length - 1)],
-                  timed: !allDay,
-                }
+                  event.exceptionDates,
+                  event.start
+                )}`,
+                duration,
+              }
+            : {
+                title: event.title,
+                start: event.start,
+                end: event.end,
+                color: this.colors[this.rnd(0, this.colors.length - 1)],
+                timed: !allDay,
+              }
+        })
+        unavailable = unavailable.filter((i) =>
+          calendarData.reduce((acc, j) => {
+            return acc && (j.dow || (!j.dow && j.start.split('T')[0] !== i))
+          }, true)
+        )
+        eventsData.push(
+          ...unavailable.map((e) => {
+            return {
+              title: 'unavailable',
+              start: new Date(e),
+              end: new Date(e),
+            }
           })
-        : []
+        )
+        return eventsData
+      } else {
+        return []
+      }
     },
     rnd(a, b) {
       return Math.floor((b - a + 1) * Math.random()) + a
@@ -628,6 +718,5 @@ export default {
 }
 .toast {
   font-size: 18px;
-  padding: 6px 4px 6px 10px;
 }
 </style>
