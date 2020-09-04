@@ -57,7 +57,9 @@
               <v-divider></v-divider>
               <template v-if="!slots.length">
                 <div class="unavilable mt-3 mb-0 text-lg-h6 py-3 px-0">
-                  Unavailable
+                  <p class="mx-auto mb-1 unavilableText">
+                    Unavailable
+                  </p>
                 </div>
               </template>
               <template v-else>
