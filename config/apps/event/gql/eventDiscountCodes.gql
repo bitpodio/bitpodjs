@@ -13,7 +13,11 @@ query ($filters: JSON, $where: JSON) {
                     isPercent 
                     createdDate 
                     createdBy 
-                    modifiedDate 
+                    modifiedDate
+                    maxApplicableAmount
+                    description
+                    minApplicableOrderAmount
+                    maxUsageCount 
                     __typename 
                 } 
                 __typename 

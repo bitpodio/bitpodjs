@@ -13,7 +13,7 @@ import eventSession from './gql/eventSession.gql'
 import eventRecurringSession from './gql/eventRecurringSession.gql'
 import eventTasks from './gql/eventTasks.gql'
 import registrationType from './gql/registrationType.gql'
-import eventSpeakers from './gql/eventSpeakers.gql'
+// import eventSpeakers from './gql/eventSpeakers.gql'
 import { getData, getLookupData } from './rest'
 
 export default {
@@ -323,6 +323,10 @@ export default {
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            hidden: false,
+            inlineEdit: true,
+            newForm: false,
+            editForm: false,
           },
           Email: {
             displayOrder: 3,
@@ -331,6 +335,23 @@ export default {
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            form: {
+              caption: 'Email *',
+              displayOrder: 4,
+            },
+            cssClasses: 'col-6 col-md-6',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Email is required'
+              },
+              function (value, data) {
+                return /.+@.+\..+/.test(value) || 'E-mail must be valid'
+              },
+            ],
           },
           'registration.FullName': {
             displayOrder: 3,
@@ -339,6 +360,10 @@ export default {
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            hidden: false,
+            inlineEdit: true,
+            newForm: false,
+            editForm: false,
           },
           TicketAmount: {
             displayOrder: 4,
@@ -347,6 +372,10 @@ export default {
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            hidden: false,
+            inlineEdit: true,
+            newForm: false,
+            editForm: false,
           },
           CompanyName: {
             displayOrder: 5,
@@ -355,6 +384,15 @@ export default {
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            form: {
+              caption: 'Organization',
+              displayOrder: 5,
+            },
+            cssClasses: 'col-6 col-md-6',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
           },
           'attendeeTicket.Code': {
             displayOrder: 6,
@@ -363,6 +401,10 @@ export default {
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            hidden: false,
+            inlineEdit: true,
+            newForm: false,
+            editForm: false,
           },
           SeatNumber: {
             displayOrder: 7,
@@ -371,14 +413,22 @@ export default {
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            hidden: false,
+            inlineEdit: true,
+            newForm: false,
+            editForm: false,
           },
-          Category: {
+          'regType.Name': {
             displayOrder: 8,
             caption: 'Category',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            hidden: false,
+            inlineEdit: true,
+            newForm: false,
+            editForm: false,
           },
           CheckIn: {
             displayOrder: 9,
@@ -387,6 +437,10 @@ export default {
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            hidden: false,
+            inlineEdit: true,
+            newForm: false,
+            editForm: false,
           },
           createdDate: {
             displayOrder: 10,
@@ -395,6 +449,10 @@ export default {
             sortEnable: true,
             columnWidth: '150px',
             type: 'date',
+            hidden: false,
+            inlineEdit: true,
+            newForm: false,
+            editForm: false,
           },
           Status: {
             displayOrder: 11,
@@ -403,6 +461,10 @@ export default {
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            hidden: false,
+            inlineEdit: true,
+            newForm: false,
+            editForm: false,
           },
           Action: {
             displayOrder: 12,
@@ -411,12 +473,201 @@ export default {
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            hidden: false,
+            inlineEdit: true,
+            newForm: false,
+            editForm: false,
+          },
+          FirstName: {
+            form: {
+              caption: 'First Name *',
+              displayOrder: 1,
+            },
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            cssClasses: 'col-6 col-md-6',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'First Name is required'
+              },
+            ],
+          },
+          LastName: {
+            form: {
+              caption: 'Last Name *',
+              displayOrder: 2,
+            },
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            cssClasses: 'col-6 col-md-6',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Last Name is required'
+              },
+            ],
+          },
+          Phone: {
+            form: {
+              caption: 'Phone *',
+              displayOrder: 3,
+            },
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            cssClasses: 'col-6 col-md-6',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Phone is required'
+              },
+            ],
+          },
+          '_CurrentAddress.AddressLine': {
+            form: {
+              caption: 'Address',
+              displayOrder: 6,
+            },
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            cssClasses: 'col-6 col-md-6',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+          },
+          '_CurrentAddress.City': {
+            form: {
+              caption: 'City',
+              displayOrder: 7,
+            },
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            cssClasses: 'col-6 col-md-6',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+          },
+          '_CurrentAddress.State': {
+            form: {
+              caption: 'State',
+              displayOrder: 8,
+            },
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            cssClasses: 'col-6 col-md-6',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+          },
+          '_CurrentAddress.PostalCode': {
+            form: {
+              caption: 'Zip',
+              displayOrder: 9,
+            },
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            cssClasses: 'col-6 col-md-6',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+          },
+          '_CurrentAddress.Country': {
+            form: {
+              caption: 'Country',
+              displayOrder: 10,
+            },
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            cssClasses: 'col-6 col-md-6',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+          },
+          TicketId: {
+            form: {
+              caption: 'Tickets *',
+              displayOrder: 11,
+            },
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'lookup',
+            cssClasses: 'col-6 col-md-6',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            dataSource: {
+              query: eventTickets,
+              itemText: 'Code',
+              itemValue: 'id',
+              filter(data) {
+                return {
+                  Events: this.$route.params.id,
+                }
+              },
+            },
+          },
+          categoryId: {
+            form: {
+              caption: 'Registration Type',
+              displayOrder: 12,
+            },
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'lookup',
+            cssClasses: 'col-6 col-md-6',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            dataSource: {
+              query: registrationType,
+              itemText: 'Name',
+              itemValue: 'id',
+              filter(data) {
+                return {
+                  EventId: this.$route.params.id,
+                }
+              },
+            },
           },
         },
         template: {
-          name: 'event-grid',
+          name: 'eventAttendees-grid',
           context: {
-            basePath: '/event',
+            basePath: '/registration',
           },
         },
         dataSource: {
@@ -429,6 +680,14 @@ export default {
               where: {
                 EventId: ctx.$route.params.id,
               },
+            }
+          },
+          mutation(ctx, data) {
+            return {
+              new: {
+                EventId: ctx.$route.params.id,
+              },
+              edit: {},
             }
           },
         },
@@ -454,6 +713,10 @@ export default {
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            hidden: false,
+            inlineEdit: true,
+            newForm: false,
+            editForm: false,
           },
           Email: {
             displayOrder: 3,
@@ -462,14 +725,43 @@ export default {
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            form: {
+              caption: 'Email *',
+              displayOrder: 4,
+            },
+            cssClasses: 'col-6 col-md-6',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Email is required'
+              },
+              function (value, data) {
+                return /.+@.+\..+/.test(value) || 'E-mail must be valid'
+              },
+            ],
           },
           Phone: {
-            displayOrder: 4,
-            caption: 'Phone',
+            form: {
+              caption: 'Phone *',
+              displayOrder: 3,
+            },
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            cssClasses: 'col-6 col-md-6',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Phone is required'
+              },
+            ],
           },
           CompanyName: {
             displayOrder: 5,
@@ -478,6 +770,41 @@ export default {
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            form: {
+              caption: 'Organization',
+              displayOrder: 5,
+            },
+            cssClasses: 'col-6 col-md-6',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+          },
+          TicketId: {
+            form: {
+              caption: 'Tickets *',
+              displayOrder: 6,
+            },
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'lookup',
+            cssClasses: 'col-6 col-md-6',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            multiple: true,
+            dataSource: {
+              query: eventTickets,
+              itemText: 'Code',
+              itemValue: 'id',
+              filter(data) {
+                return {
+                  Events: this.$route.params.id,
+                }
+              },
+            },
           },
           TotalAmount: {
             displayOrder: 6,
@@ -486,6 +813,10 @@ export default {
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            hidden: false,
+            inlineEdit: true,
+            newForm: false,
+            editForm: false,
           },
           TicketQuantity: {
             displayOrder: 7,
@@ -494,6 +825,10 @@ export default {
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            hidden: false,
+            inlineEdit: true,
+            newForm: false,
+            editForm: false,
           },
           Status: {
             displayOrder: 8,
@@ -501,7 +836,31 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
-            type: 'string',
+            type: 'lookup',
+            cssClasses: 'col-6 col-md-6',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            form: {
+              caption: 'Status *',
+              displayOrder: 7,
+            },
+            dataSource: {
+              query: registrationStatusOptions,
+              itemText: 'value',
+              itemValue: 'key',
+              filter(data) {
+                return {
+                  type: 'RegistrationStatus',
+                }
+              },
+            },
+            rules: [
+              (v) => {
+                return !!v || 'Status is required'
+              },
+            ],
           },
           createdDate: {
             displayOrder: 9,
@@ -510,23 +869,131 @@ export default {
             sortEnable: true,
             columnWidth: '150px',
             type: 'date',
+            hidden: false,
+            inlineEdit: true,
+            newForm: false,
+            editForm: false,
           },
-          EventId: {
-            displayOrder: 9,
-            caption: 'EventId',
+          FirstName: {
+            form: {
+              caption: 'First Name *',
+              displayOrder: 1,
+            },
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            cssClasses: 'col-6 col-md-6',
+            hidden: true,
+            inlineEdit: true,
             newForm: true,
             editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'First Name is required'
+              },
+            ],
+          },
+          LastName: {
+            form: {
+              caption: 'Last Name *',
+              displayOrder: 2,
+            },
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            cssClasses: 'col-6 col-md-6',
             hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Last Name is required'
+              },
+            ],
+          },
+          '_CurrentAddress.AddressLine': {
+            form: {
+              caption: 'Address *',
+              displayOrder: 8,
+            },
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            cssClasses: 'col-12 col-md-12',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+          },
+          '_CurrentAddress.City': {
+            form: {
+              caption: 'City',
+              displayOrder: 9,
+            },
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            cssClasses: 'col-12 col-md-12',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+          },
+          '_CurrentAddress.State': {
+            form: {
+              caption: 'State',
+              displayOrder: 10,
+            },
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            cssClasses: 'col-12 col-md-12',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+          },
+          '_CurrentAddress.PostalCode': {
+            form: {
+              caption: 'Zip',
+              displayOrder: 11,
+            },
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            cssClasses: 'col-12 col-md-12',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+          },
+          '_CurrentAddress.Country': {
+            form: {
+              caption: 'Country',
+              displayOrder: 12,
+            },
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            cssClasses: 'col-12 col-md-12',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
           },
         },
         template: {
           name: 'event-grid',
           context: {
-            basePath: '/event',
+            basePath: '/registration',
           },
         },
         dataSource: {
@@ -539,6 +1006,14 @@ export default {
               where: {
                 EventId: ctx.$route.params.id,
               },
+            }
+          },
+          mutation(ctx) {
+            return {
+              new: {
+                EventId: ctx.$route.params.id,
+              },
+              edit: {},
             }
           },
         },
@@ -673,6 +1148,10 @@ export default {
         hidden: true,
         fields: {
           Code: {
+            form: {
+              caption: 'Title *',
+              displayOrder: 1,
+            },
             displayOrder: 2,
             caption: 'Title',
             searchEnable: true,
@@ -693,6 +1172,10 @@ export default {
             ],
           },
           Amount: {
+            form: {
+              caption: 'Price *',
+              displayOrder: 5,
+            },
             displayOrder: 4,
             caption: 'Amount',
             searchEnable: true,
@@ -711,6 +1194,10 @@ export default {
             },
           },
           Type: {
+            form: {
+              caption: 'Type *',
+              displayOrder: 4,
+            },
             displayOrder: 3,
             caption: 'Type',
             label: 'Ticket Type',
@@ -741,6 +1228,10 @@ export default {
             ],
           },
           TicketCount: {
+            form: {
+              caption: 'Ticket Count',
+              displayOrder: 6,
+            },
             displayOrder: 5,
             caption: 'Max Qty',
             searchEnable: true,
@@ -754,6 +1245,10 @@ export default {
             editForm: true,
           },
           Group: {
+            form: {
+              caption: 'Group Name',
+              displayOrder: 7,
+            },
             displayOrder: 5,
             caption: 'Group Name',
             searchEnable: true,
@@ -767,6 +1262,10 @@ export default {
             editForm: true,
           },
           Attendee: {
+            form: {
+              caption: 'Registration Type',
+              displayOrder: 8,
+            },
             displayOrder: 5,
             caption: 'Registration Type',
             searchEnable: true,
@@ -791,6 +1290,10 @@ export default {
             },
           },
           DisplayOrder: {
+            form: {
+              caption: 'Display Order',
+              displayOrder: 9,
+            },
             displayOrder: 6,
             caption: 'Display Order',
             searchEnable: true,
@@ -817,6 +1320,10 @@ export default {
             editForm: false,
           },
           StartDate: {
+            form: {
+              caption: 'Start Date *',
+              displayOrder: 2,
+            },
             displayOrder: 7,
             caption: 'Start Date',
             searchEnable: true,
@@ -841,6 +1348,10 @@ export default {
             ],
           },
           EndDate: {
+            form: {
+              caption: 'End Date *',
+              displayOrder: 3,
+            },
             displayOrder: 8,
             caption: 'End Date',
             searchEnable: true,
@@ -865,6 +1376,10 @@ export default {
             ],
           },
           ValidateQty: {
+            form: {
+              caption: 'Validate Quantity',
+              displayOrder: 10,
+            },
             displayOrder: 8,
             caption: 'Validate Quantity',
             searchEnable: true,
@@ -878,6 +1393,10 @@ export default {
             editForm: true,
           },
           CheckGroupDiscount: {
+            form: {
+              caption: 'Check Group Discount',
+              displayOrder: 11,
+            },
             displayOrder: 8,
             caption: 'Check Group Discount',
             searchEnable: true,
@@ -913,6 +1432,7 @@ export default {
             return {
               new: {
                 Events: ctx.$route.params.id,
+                AvailableCount: ctx.formData.TicketCount,
               },
               edit: {},
             }
@@ -934,6 +1454,10 @@ export default {
         hidden: true,
         fields: {
           codeTitle: {
+            form: {
+              caption: 'Code',
+              displayOrder: 1,
+            },
             displayOrder: 2,
             caption: 'Code',
             searchEnable: true,
@@ -946,6 +1470,10 @@ export default {
             editForm: true,
           },
           maxUsageCount: {
+            form: {
+              caption: 'Max Usage Count',
+              displayOrder: 2,
+            },
             displayOrder: 2,
             caption: 'Max Usage Count',
             searchEnable: true,
@@ -959,6 +1487,10 @@ export default {
             hidden: true,
           },
           minApplicableOrderAmount: {
+            form: {
+              caption: 'Min Applicable Order Amount',
+              displayOrder: 3,
+            },
             displayOrder: 2,
             caption: 'Min Applicable Amount',
             searchEnable: true,
@@ -971,6 +1503,10 @@ export default {
             hidden: true,
           },
           offerValue: {
+            form: {
+              caption: 'Offer Value',
+              displayOrder: 4,
+            },
             displayOrder: 3,
             caption: 'Amount',
             searchEnable: true,
@@ -984,6 +1520,10 @@ export default {
             hidden: false,
           },
           validTill: {
+            form: {
+              caption: 'Valid Till',
+              displayOrder: 6,
+            },
             displayOrder: 4,
             caption: 'Valid Till',
             searchEnable: true,
@@ -994,7 +1534,7 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
-            hidden: true,
+            hidden: false,
           },
           isActive: {
             displayOrder: 5,
@@ -1009,6 +1549,10 @@ export default {
             hidden: false,
           },
           isPercent: {
+            form: {
+              caption: 'Is Percent',
+              displayOrder: 6,
+            },
             displayOrder: 5,
             caption: 'Is Percent',
             searchEnable: true,
@@ -1021,6 +1565,10 @@ export default {
             hidden: true,
           },
           maxApplicableAmount: {
+            form: {
+              caption: 'Max Applicable Amount',
+              displayOrder: 7,
+            },
             displayOrder: 5,
             caption: 'Max Applicable Amount',
             searchEnable: true,
@@ -1033,7 +1581,11 @@ export default {
             editForm: true,
             hidden: true,
           },
-          Description: {
+          description: {
+            form: {
+              caption: 'Description',
+              displayOrder: 8,
+            },
             displayOrder: 5,
             caption: 'Description',
             searchEnable: true,
@@ -1156,6 +1708,10 @@ export default {
         hidden: true,
         fields: {
           Name: {
+            form: {
+              caption: 'Name *',
+              displayOrder: 1,
+            },
             displayOrder: 2,
             caption: 'Name',
             searchEnable: true,
@@ -1174,6 +1730,10 @@ export default {
             ],
           },
           Description: {
+            form: {
+              caption: 'Description',
+              displayOrder: 2,
+            },
             displayOrder: 2,
             caption: 'Description',
             searchEnable: true,
@@ -1187,6 +1747,10 @@ export default {
             editForm: true,
           },
           StartDate: {
+            form: {
+              caption: 'Start Date *',
+              displayOrder: 3,
+            },
             displayOrder: 3,
             caption: 'Start Date',
             searchEnable: true,
@@ -1211,6 +1775,10 @@ export default {
             ],
           },
           EndDate: {
+            form: {
+              caption: 'End Date *',
+              displayOrder: 4,
+            },
             displayOrder: 4,
             caption: 'End Date',
             searchEnable: true,
@@ -1235,6 +1803,10 @@ export default {
             ],
           },
           Timezone: {
+            form: {
+              caption: 'Timezone *',
+              displayOrder: 5,
+            },
             displayOrder: 5,
             caption: 'Timezone',
             searchEnable: true,
@@ -1248,6 +1820,10 @@ export default {
             editForm: true,
           },
           Type: {
+            form: {
+              caption: 'Type *',
+              displayOrder: 7,
+            },
             displayOrder: 6,
             caption: 'Type',
             searchEnable: true,
@@ -1275,7 +1851,11 @@ export default {
               },
             ],
           },
-          Speaker: {
+          MySpeaker: {
+            form: {
+              caption: 'Speaker',
+              displayOrder: 8,
+            },
             displayOrder: 7,
             caption: 'Speaker',
             searchEnable: true,
@@ -1283,23 +1863,39 @@ export default {
             columnWidth: '150px',
             type: 'lookup',
             cssClasses: 'col-6 col-md-6',
-            hidden: false,
+            hidden: true,
             inlineEdit: true,
             newForm: true,
             editForm: true,
             multiple: true,
             dataSource: {
-              query: eventSpeakers,
-              itemText: 'EventSpeakers.edges[0].node.FirstName',
-              itemValue: 'EventSpeakers.edges[0].node.id',
-              filter(data) {
-                return {
-                  id: this.$route.params.id,
-                }
+              type: 'rest',
+              itemText: 'FirstName',
+              itemValue: 'id',
+              getData: (ctx) => {
+                const path = `/Events/${ctx.$route.params.id}/EventSpeakers`
+                return getLookupData(path)
               },
             },
           },
+          Speaker: {
+            displayOrder: 7,
+            caption: 'Speaker',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            cssClasses: 'col-6 col-md-6',
+            hidden: false,
+            inlineEdit: true,
+            newForm: false,
+            editForm: false,
+          },
           Location: {
+            form: {
+              caption: 'Location',
+              displayOrder: 6,
+            },
             displayOrder: 8,
             caption: 'Location',
             searchEnable: true,
@@ -1663,7 +2259,7 @@ export default {
           },
         },
         template: {
-          name: 'link-grid',
+          name: 'eventTask-grid',
           context: {
             basePath: '/event',
           },
@@ -1746,7 +2342,7 @@ export default {
           },
         },
         template: {
-          name: 'event-grid',
+          name: 'eventRegistrationForm-grid',
           context: {
             basePath: '/event',
           },

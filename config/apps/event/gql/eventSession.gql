@@ -18,6 +18,8 @@ query ($filters: JSON, $where: JSON) {
                     createdDate 
                     createdBy 
                     modifiedDate
+                    Description
+                    MySpeaker
                 } 
             } 
         } 

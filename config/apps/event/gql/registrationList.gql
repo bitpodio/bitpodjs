@@ -24,6 +24,7 @@ query($filters: JSON, $where: JSON) {
           PaymentMethod
           CheckIn
           Phone
+          TicketId
           RegistrationId
           Status
           createdDate
