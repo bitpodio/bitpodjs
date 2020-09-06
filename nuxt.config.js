@@ -220,4 +220,10 @@ export default {
     },
     devtools: true,
   },
+  setting: {
+    domains: {
+      defaultPublicDomain:
+        process.env.DEFAULT_PUBLIC_DOMAIN || 'event.test.bitpod.io',
+    },
+  },
 }

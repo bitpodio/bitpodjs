@@ -111,14 +111,98 @@ app.get('/connect/userinfo', async (req, res) => {
       const userResponse = await axios.get(urls.userInfoEndPointUrl, config)
       userData = userResponse.data
     }
+    const userOrgsDetails = await fetchUserOrgsDetails(req)
+    const userDetails = {
+      ...userOrgsDetails,
+      ...userData,
+    }
     res.json({
       status: 200,
-      data: userData,
+      data: userDetails,
     })
   } catch (error) {
-    return res.status(404).send({ error: 'Not Found' })
+    return res.status(404).send({ error })
   }
 })
+
+function getAxiosConfig(req) {
+  return {
+    headers: {
+      Authorization: req.headers.authorization,
+    },
+  }
+}
+
+function getApiUrl(req) {
+  const host = req.get('host')
+  if (host && host.includes('localhost')) {
+    return nuxtconfig.axios.backendBaseUrl || 'https://event.test.bitpod.io'
+  }
+  const protocol = req.protocol
+  return `${protocol}://${host}`
+}
+
+async function fetchUserOrgs(req) {
+  const origin = getApiUrl(req)
+  const config = getAxiosConfig(req)
+  const apiEndpoint = nuxtconfig.axios.apiEndpoint || '/svc/api/'
+  let userOrgList = {}
+  try {
+    const orgResponse = await axios.get(
+      `${origin}${apiEndpoint}Organizations/list`,
+      config
+    )
+    userOrgList = orgResponse.data
+  } catch (error) {
+    userOrgList = {
+      error,
+    }
+  }
+  return userOrgList
+}
+
+async function fetchCurrentOrg(req) {
+  const origin = getApiUrl(req)
+  const config = getAxiosConfig(req)
+  let currentOrg = {}
+  const apiEndpoint = nuxtconfig.axios.apiEndpoint || '/svc/api/'
+  try {
+    const orgResponse = await axios.get(
+      `${origin}${apiEndpoint}Organizations/this`,
+      config
+    )
+    currentOrg = orgResponse.data
+  } catch (error) {
+    currentOrg = {
+      error,
+    }
+  }
+  return currentOrg
+}
+
+async function fetchUserOrgsDetails(req) {
+  const reqHost = req.get('host')
+  let defaultPublicDomain = nuxtconfig.setting.domains.defaultPublicDomain
+  defaultPublicDomain = defaultPublicDomain.split(',')[0]
+  let userDetails = {}
+  if (reqHost === defaultPublicDomain) {
+    const orgList = await fetchUserOrgs(req)
+    userDetails = {
+      orgList,
+      currentOrg: null,
+    }
+  } else {
+    const [orgList, currentOrg] = await Promise.all([
+      fetchUserOrgs(req),
+      fetchCurrentOrg(req),
+    ])
+    userDetails = {
+      orgList,
+      currentOrg,
+    }
+  }
+  return userDetails
+}
 
 module.exports = {
   path: '/api',
