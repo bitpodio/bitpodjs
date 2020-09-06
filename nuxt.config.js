@@ -46,7 +46,12 @@ export default {
     ],
     script: [
       {
-        src: `${process.env.GOOGLE_API}?key=${process.env.GOOGLE_API_KEY}&libraries=places`,
+        src: `${
+          process.env.GOOGLE_API || 'https://maps.googleapis.com/maps/api/js'
+        }?key=${
+          process.env.GOOGLE_API_KEY ||
+          'AIzaSyCPS6SZlor8qxfpul-dKyN6566XG2R5dFM'
+        }&libraries=places`,
       },
     ],
   },
@@ -86,7 +91,9 @@ export default {
     [
       'nuxt-gmaps',
       {
-        key: process.env.GOOGLE_API_KEY,
+        key:
+          process.env.GOOGLE_API_KEY ||
+          'AIzaSyCPS6SZlor8qxfpul-dKyN6566XG2R5dFM',
         // you can use libraries: ['places']
       },
     ],
