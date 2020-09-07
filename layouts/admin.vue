@@ -11,9 +11,9 @@
         </span>
         <span d-inline-flex align-center class="mx-2">Event</span>
         <v-spacer></v-spacer>
-        <div v-if="drawer === true">
+        <div v-if="drawer === true" class="d-none d-sm-flex">
           <v-app-bar-nav-icon
-            class="nav-drawer d-none d-sm-flex"
+            class="nav-drawer"
             @click.stop="drawer = !drawer"
           ></v-app-bar-nav-icon>
         </div>
