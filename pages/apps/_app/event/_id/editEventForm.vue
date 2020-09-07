@@ -184,6 +184,7 @@
 import gql from 'graphql-tag'
 import { utcToZonedTime } from 'date-fns-tz'
 import nuxtconfig from '../../../../../nuxt.config'
+import rules from '~/common.js'
 import event from '~/config/apps/event/gql/event.gql'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import { formatGQLResult } from '~/utility/gql.js'
@@ -212,19 +213,12 @@ export default {
       tags: [],
       addressLine: '',
       tagsDropdown: [],
-      nameRules: [(v) => !!v || 'This field is required'],
-      addressRules: [(v) => !!v || 'This is required'],
+      nameRules: rules.nameRules,
       errorAlert: {
         message: '',
         visible: false,
       },
-      emailRules: [
-        (v) => !!v || 'E-mail is required',
-        (v) =>
-          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-            v
-          ),
-      ],
+      emailRules: rules.emailRules,
       allowSpaces: false,
       data: {
         event: {},
@@ -279,7 +273,7 @@ export default {
     },
     addressValidation() {
       if (this.addressLine === '') {
-        const message = 'This field is required *'
+        const message = strings.FIELD_REQUIRED
         this.setErrorAlert(true, message)
         return message
       }

@@ -10,7 +10,7 @@ export default {
     base: basePath || '/',
   },
   /*
-   ** Nuxt target 
+   ** Nuxt target
    ** See https://nuxtjs.org/api/configuration-target
    */
   target: 'server',
@@ -45,8 +45,12 @@ export default {
     ],
     script: [
       {
-        src:
-          'https://maps.googleapis.com/maps/api/js?key=AIzaSyCPS6SZlor8qxfpul-dKyN6566XG2R5dFM&libraries=places ',
+        src: `${
+          process.env.GOOGLE_API || 'https://maps.googleapis.com/maps/api/js'
+        }?key=${
+          process.env.GOOGLE_API_KEY ||
+          'AIzaSyCPS6SZlor8qxfpul-dKyN6566XG2R5dFM'
+        }&libraries=places`,
       },
     ],
   },
@@ -92,9 +96,6 @@ export default {
     eventUrl: process.env.GETEVENTURL || 'event.test.bitpod.io',
   },
 
-  // baseUrl: {
-  //   eventUrl: 'event.test.bitpod.io',
-  // },
   publicRuntimeConfig: {
     cdnUri:
       'https://res.cloudinary.com/mytestlogo/image/upload/bitpodjs/images/',
