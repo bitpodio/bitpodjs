@@ -38,6 +38,7 @@ export default {
     },
     changeCurrentUrl(orgName) {
       if (typeof window !== 'undefined') {
+        debugger
         let defaultPublicDomain = nuxtconfig.setting.domains.defaultPublicDomain
         defaultPublicDomain = defaultPublicDomain.split(',')[0]
         const basePath = nuxtconfig.router.base
