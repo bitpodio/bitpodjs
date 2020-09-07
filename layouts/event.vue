@@ -330,7 +330,7 @@
       <div class="d-flex d-sm-none ml-n3">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       </div>
-      <v-toolbar-title class="pl-0 ml-n2"> </v-toolbar-title>
+      <v-toolbar-title class="pl-0 ml-n2"> Event</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn class="ma-2 d-none d-sm-flex" tile outlined>
         UPGARDE
@@ -451,9 +451,6 @@
           </v-list-item>
         </v-list>
       </v-menu>
-      <v-btn icon>
-        <v-icon>mdi-bell</v-icon>
-      </v-btn>
       <div v-if="$auth.$state.loggedIn">
         <v-menu
           v-model="account"
@@ -493,14 +490,6 @@
               </v-list-item>
             </v-list>
             <v-divider></v-divider>
-            <v-list-item>
-              <v-list-item-action>
-                <v-switch v-model="message" color="primary"></v-switch>
-              </v-list-item-action>
-              <v-list-item-title>Notification</v-list-item-title>
-            </v-list-item>
-            <v-divider></v-divider>
-
             <v-list>
               <v-list-item class="text-center justify-center">
                 <v-btn class="ma-2" outlined color="primary" @click="onLogout">
