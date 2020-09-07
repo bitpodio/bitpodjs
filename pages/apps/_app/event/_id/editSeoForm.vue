@@ -70,7 +70,7 @@
 <script>
 import gql from 'graphql-tag'
 import nuxtConfig from '../../../../../nuxt.config'
-import rules from '../../../../../common.js'
+import { required } from '~/utility/rules.js'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 
@@ -85,7 +85,7 @@ export default {
       data: {
         event: {},
       },
-      nameRules: rules.nameRules,
+      nameRules: [required],
       seoTitle: '',
       formData: {},
       valid: true,

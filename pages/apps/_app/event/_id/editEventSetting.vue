@@ -134,7 +134,7 @@
 <script>
 import gql from 'graphql-tag'
 import nuxtConfig from '../../../../../nuxt.config'
-import rules from '~/common.js'
+import { required, link } from '~/utility/rules.js'
 import event from '~/config/apps/event/gql/event.gql'
 import eventCount from '~/config/apps/event/gql/eventCount.gql'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
@@ -154,7 +154,6 @@ export default {
   data() {
     return {
       valid: true,
-      errorColor: 'red',
       privacy: [],
       eventPrivacyDropdown: [],
       currencyDropdown: [],
@@ -165,7 +164,7 @@ export default {
       isInvalidEventLink: false,
       formData: {},
       uniqueLinkMessage: '',
-      linkRules: rules.linkRules,
+      linkRules: [required, link],
     }
   },
   mounted() {
