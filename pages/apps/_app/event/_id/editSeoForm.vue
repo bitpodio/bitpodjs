@@ -69,6 +69,8 @@
 
 <script>
 import gql from 'graphql-tag'
+import nuxtConfig from '../../../../../nuxt.config'
+import rules from '../../../../../common.js'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 
@@ -83,7 +85,7 @@ export default {
       data: {
         event: {},
       },
-      nameRules: [(v) => !!v || 'This field is required'],
+      nameRules: rules.nameRules,
       seoTitle: '',
       formData: {},
       valid: true,
@@ -98,11 +100,10 @@ export default {
     },
     onSave() {
       delete this.formData._VenueAddress
-      console.log('=====111', this.seoTitle)
       this.formData.SEOTitle = this.seoTitle
       this.$axios
         .$patch(
-          `https://event.test.bitpod.io/svc/api/Events/${this.$route.params.id}`,
+          `https://${nuxtConfig.axios.eventUrl}/svc/api/Events/${this.$route.params.id}`,
           {
             ...this.formData,
           }
@@ -140,7 +141,6 @@ export default {
         this.formData = event.length > 0 ? { ...event[0] } : {}
         this.formData.id = this.$route.params.id
         this.seoTitle = this.formData.SEOTitle
-        console.log('====222', this.formData.SEOTitle)
         return {
           event: event.length > 0 ? event[0] : {},
         }

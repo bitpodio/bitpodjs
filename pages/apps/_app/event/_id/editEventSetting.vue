@@ -60,14 +60,16 @@
                 v-model="formData.UniqLink"
                 label="Event Link*"
                 :rules="linkRules"
-                @keypress="checkUniqueLink"
+                @input="checkUniqueLink"
                 persistent-hint
                 outlined
                 required
               ></v-text-field>
-              <span v-if="isInalidEventLink" :style="{ color: errorColor }">{{
-                uniqueLinkMessage
-              }}</span>
+              <span
+                v-if="isInvalidEventLink && !!formData.UniqLink"
+                class="uniqueLink"
+                >{{ uniqueLinkMessage }}</span
+              >
             </v-col>
             <v-col cols="12">
               <span>Cancellation Policy</span>
@@ -117,7 +119,7 @@
         <v-divider></v-divider>
         <v-card-actions class="pl-4">
           <v-btn
-            :disabled="!valid || isInalidEventLink"
+            :disabled="!valid || isInvalidEventLink"
             color="primary"
             depressed
             @click="onSave"
@@ -131,10 +133,13 @@
 
 <script>
 import gql from 'graphql-tag'
+import nuxtConfig from '../../../../../nuxt.config'
+import rules from '~/common.js'
 import event from '~/config/apps/event/gql/event.gql'
 import eventCount from '~/config/apps/event/gql/eventCount.gql'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import { formatGQLResult } from '~/utility/gql.js'
+
 export default {
   props: {
     eventSetting: {
@@ -156,13 +161,10 @@ export default {
       data: {
         event: {},
       },
-      isInalidEventLink: false,
+      isInvalidEventLink: false,
       formData: {},
       uniqueLinkMessage: '',
-      linkRules: [
-        (v) => !!v || 'This field is required',
-        (v) => /^[a-z0-9]+$/i.test(v) || 'Lower case alphanumeric letters only',
-      ],
+      linkRules: rules.linkRules,
     }
   },
   mounted() {
@@ -196,7 +198,7 @@ export default {
       delete this.formData._VenueAddress
       this.$axios
         .$patch(
-          `https://event.test.bitpod.io/svc/api/Events/${this.$route.params.id}`,
+          `https://${nuxtConfig.axios.eventUrl}/svc/api/Events/${this.$route.params.id}`,
           {
             ...this.formData,
           }
@@ -207,7 +209,7 @@ export default {
           return (this.data.event = res)
         })
         .catch((e) => {
-          console.log('error', e)
+          console.log('Error', e)
         })
     },
     getDropDownData(filterType) {
@@ -229,14 +231,14 @@ export default {
             result.data,
             'GeneralConfiguration'
           )
-          console.log('====res', generalConfig)
           return generalConfig
         })
         .catch((e) => {
-          console.log(e)
+          console.log('Error', e)
         })
     },
     async checkUniqueLink() {
+      debugger
       if (this.formData.UniqLink !== '') {
         const where = { UniqLink: this.formData.UniqLink }
         const result = await this.$apollo.query({
@@ -248,10 +250,10 @@ export default {
           },
         })
         if (result.data.Event.EventCount > 0) {
-          this.isInalidEventLink = true
+          this.isInvalidEventLink = true
           this.uniqueLinkMessage = 'This link is already taken'
         } else {
-          this.isInalidEventLink = false
+          this.isInvalidEventLink = false
           this.uniqueLinkMessage = ''
         }
       }
@@ -298,3 +300,10 @@ export default {
   },
 }
 </script>
+<style scoped>
+.uniqueLink {
+  color: red;
+  position: relative;
+  bottom: 21px;
+}
+</style>
