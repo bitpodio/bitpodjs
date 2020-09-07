@@ -50,18 +50,24 @@
                 outlined
               ></v-text-field>
             </v-col>
-            <v-col cols="12" sm="6" md="6">
+            <v-col cols="4" sm="6" md="6">
+              <h2 class="font-weight-bold">
+                https://bitpod-event.test.bitpod.io/e/
+              </h2>
+            </v-col>
+            <v-col cols="8" sm="6" md="6">
               <v-text-field
                 v-model="formData.UniqLink"
                 label="Event Link*"
-                hint="https://bitpod-event.test.bitpod.io/e/"
                 :rules="linkRules"
-                :error-messages="uniqueLinkMessage"
                 @input="checkUniqueLink"
                 persistent-hint
                 outlined
                 required
               ></v-text-field>
+              <span v-if="isInalidEventLink" :style="{ color: errorColor }">{{
+                uniqueLinkMessage
+              }}</span>
             </v-col>
             <v-col cols="12">
               <span>Cancellation Policy</span>
@@ -110,7 +116,11 @@
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions class="pl-4">
-          <v-btn :disabled="!valid" color="primary" depressed @click="onSave"
+          <v-btn
+            :disabled="!valid || isInalidEventLink"
+            color="primary"
+            depressed
+            @click="onSave"
             >Save</v-btn
           >
         </v-card-actions>
@@ -138,6 +148,7 @@ export default {
   data() {
     return {
       valid: true,
+      errorColor: 'red',
       privacy: [],
       eventPrivacyDropdown: [],
       currencyDropdown: [],
@@ -226,21 +237,23 @@ export default {
         })
     },
     async checkUniqueLink() {
-      const where = { UniqLink: this.formData.UniqLink }
-      const result = await this.$apollo.query({
-        query: gql`
-          ${eventCount}
-        `,
-        variables: {
-          where,
-        },
-      })
-      if (result.data.Event.EventCount > 0) {
-        this.isInalidEventLink = true
-        this.uniqueLinkMessage = 'This is already taken'
-      } else {
-        this.isInalidEventLink = false
-        this.uniqueLinkMessage = ''
+      if (this.formData.UniqLink !== '') {
+        const where = { UniqLink: this.formData.UniqLink }
+        const result = await this.$apollo.query({
+          query: gql`
+            ${eventCount}
+          `,
+          variables: {
+            where,
+          },
+        })
+        if (result.data.Event.EventCount > 0) {
+          this.isInalidEventLink = true
+          this.uniqueLinkMessage = 'This link is already taken'
+        } else {
+          this.isInalidEventLink = false
+          this.uniqueLinkMessage = ''
+        }
       }
     },
   },
