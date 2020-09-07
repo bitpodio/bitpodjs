@@ -11,7 +11,6 @@ export const templateLoaderMixin = {
       return (gridTemplatePath) => importTemplate(`${gridTemplatePath}`)
     },
     templateFolderName() {
-      debugger
       const view = this.content.views[this.viewName]
       const templateInfo = view.template
       return templateInfo.name || ''
@@ -19,7 +18,6 @@ export const templateLoaderMixin = {
   },
   methods: {
     async loadTemplate(templatePaths, returnErrorIfNotFound = true) {
-      debugger
       for (const templatePath of templatePaths) {
         try {
           await this.templateLoader(templatePath)()
@@ -30,7 +28,6 @@ export const templateLoaderMixin = {
     },
   },
   async mounted() {
-    debugger
     if (this._components)
       for (const templateName in this._components) {
         const { locations, returnErrorIfNotFound = true } = this._components[
@@ -57,13 +54,11 @@ export function getApiUrl() {
 }
 
 export function getGridTemplateInfo(content, viewName) {
-  debugger
   const view = content.views[viewName]
   return view.template || {}
 }
 
 export function getGridTemplateName(content, viewName) {
-  debugger
   return getGridTemplateInfo(content, viewName).name
 }
 
@@ -119,13 +114,11 @@ export function getContentByName(ctx, contentName) {
 }
 
 function getViewDataSource(content, viewName) {
-  debugger
   const view = content.views[viewName]
   return view.dataSource
 }
 
 export function getViewQuery(content, viewName) {
-  debugger
   return getViewDataSource(content, viewName).query
 }
 
@@ -139,7 +132,6 @@ export const configLoaderMixin = {
     }
   },
   async mounted() {
-    debugger
     const contentFactory = await import(
       `~/config/apps/${this.$route.params.app}/content`
     )
