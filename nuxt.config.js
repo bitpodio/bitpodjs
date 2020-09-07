@@ -1,5 +1,6 @@
 import colors from 'vuetify/es5/util/colors'
 const basePath = process.env.PUBLIC_PATH || ''
+
 export default {
   /*
    ** Nuxt rendering mode
@@ -46,7 +47,8 @@ export default {
     script: [
       {
         src: `${
-          process.env.GOOGLE_API || 'https://maps.googleapis.com/maps/api/js'
+          process.env.GOOGLE_MAPS_API ||
+          'https://maps.googleapis.com/maps/api/js'
         }?key=${
           process.env.GOOGLE_API_KEY ||
           'AIzaSyCPS6SZlor8qxfpul-dKyN6566XG2R5dFM'
@@ -77,6 +79,7 @@ export default {
     // Doc: https://github.com/nuxt-community/stylelint-module
     '@nuxtjs/stylelint-module',
     '@nuxtjs/vuetify',
+    '@nuxtjs/dotenv',
   ],
   /*
    ** Nuxt.js modules
@@ -86,6 +89,15 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/apollo',
     '@nuxtjs/auth-next',
+    [
+      'nuxt-gmaps',
+      {
+        key:
+          process.env.GOOGLE_API_KEY ||
+          'AIzaSyCPS6SZlor8qxfpul-dKyN6566XG2R5dFM',
+        // you can use libraries: ['places']
+      },
+    ],
   ],
   /*
    ** Axios module configuration
@@ -95,13 +107,18 @@ export default {
     apiEndpoint: '/svc/api/',
     backendBaseUrl: process.env.PUBLIC_DOMAIN || '',
     baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
-    eventUrl: process.env.GETEVENTURL || 'event.test.bitpod.io',
+    eventUrl: process.env.GETEVENTURL || 'event.test.bitpod.io',    
   },
 
   publicRuntimeConfig: {
+    axios: {
+      browserBaseURL: process.env.BROWSER_BASE_URL,
+      backendBaseUrl: process.env.PUBLIC_DOMAIN,
+    },
     cdnUri:
       'https://res.cloudinary.com/mytestlogo/image/upload/bitpodjs/images/',
   },
+
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
@@ -239,6 +256,13 @@ export default {
       },
     },
     devtools: true,
+  },
+  generalConfig: {
+    googleMapKey:
+      process.env.GOOGLE_API_KEY || 'AIzaSyCPS6SZlor8qxfpul-dKyN6566XG2R5dFM',
+    googleMapGeocodeApi:
+      process.env.GOOGLE_MAPS_GEOCODE_API ||
+      'https://maps.googleapis.com/maps/api/geocode/json',
   },
   setting: {
     domains: {

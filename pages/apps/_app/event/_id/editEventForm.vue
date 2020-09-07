@@ -119,7 +119,7 @@
                   @change="addressChanged"
                 >
                 </vue-google-autocomplete>
-                <span style="color: red;" v-if="errorAlert.message != ''">{{
+                <span v-if="errorAlert.message != ''" style="color: red;">{{
                   errorAlert.message
                 }}</span>
               </no-ssr>
