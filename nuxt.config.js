@@ -92,6 +92,8 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
+    apiEndpoint: '/svc/api/',
+    backendBaseUrl: process.env.PUBLIC_DOMAIN || '',
     baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
     eventUrl: process.env.GETEVENTURL || 'event.test.bitpod.io',
   },
@@ -237,5 +239,11 @@ export default {
       },
     },
     devtools: true,
+  },
+  setting: {
+    domains: {
+      defaultPublicDomain:
+        process.env.DEFAULT_PUBLIC_DOMAIN || 'event.test.bitpod.io',
+    },
   },
 }

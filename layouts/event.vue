@@ -328,6 +328,7 @@
         ></v-app-bar-nav-icon>
       </div>
       <v-toolbar-title class="pl-0 ml-n2">Event </v-toolbar-title>
+      <OrgnaizationList />
       <v-spacer></v-spacer>
       <v-btn class="ma-2" tile outlined>
         UPGARDE
@@ -465,7 +466,9 @@
             v-slot:activator="{ on, attrs }"
           >
             <v-avatar color="primary ml-2" size="30" v-bind="attrs" v-on="on">
-              <span class="white--text">{{ $auth.user.data.name[0] }}</span>
+              <span class="white--text">{{
+                $auth.user.data.name && $auth.user.data.name[0]
+              }}</span>
             </v-avatar>
           </template>
           <v-card>
@@ -474,7 +477,7 @@
                 <v-list-item-avatar>
                   <v-avatar color="primary" size="48" v-bind="attrs" v-on="on">
                     <span class="white--text headline">{{
-                      $auth.user.data.name[0]
+                      $auth.user.data.name && $auth.user.data.name[0]
                     }}</span>
                   </v-avatar>
                 </v-list-item-avatar>
@@ -530,7 +533,14 @@
 </template>
 
 <script>
+import OrgnaizationList from '~/components/common/organization-list'
 export default {
+  components: {
+    OrgnaizationList,
+  },
+  props: {
+    source: String,
+  },
   data: () => ({
     date: new Date().toISOString().substr(0, 10),
     menu: false,
