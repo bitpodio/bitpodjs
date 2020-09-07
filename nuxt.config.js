@@ -47,7 +47,8 @@ export default {
     script: [
       {
         src: `${
-          process.env.GOOGLE_API || 'https://maps.googleapis.com/maps/api/js'
+          process.env.GOOGLE_MAPS_API ||
+          'https://maps.googleapis.com/maps/api/js'
         }?key=${
           process.env.GOOGLE_API_KEY ||
           'AIzaSyCPS6SZlor8qxfpul-dKyN6566XG2R5dFM'
@@ -255,6 +256,10 @@ export default {
     devtools: true,
   },
   generalConfig: {
-    googleMapKey: process.env.GOOGLE_API_KEY,
+    googleMapKey:
+      process.env.GOOGLE_API_KEY || 'AIzaSyCPS6SZlor8qxfpul-dKyN6566XG2R5dFM',
+    googleMapGeocodeApi:
+      process.env.GOOGLE_MAPS_GEOCODE_API ||
+      'https://maps.googleapis.com/maps/api/geocode/json',
   },
 }
