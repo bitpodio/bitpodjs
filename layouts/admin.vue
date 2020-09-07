@@ -109,9 +109,9 @@
       </v-btn>
       <v-menu
         offset-y
-        :nudge-width="250"
         transition="slide-y-transition"
         bottom
+        content-class="app-drawer"
       >
         <template v-slot:activator="{ on, attrs }">
           <v-btn icon v-bind="attrs" v-on="on">

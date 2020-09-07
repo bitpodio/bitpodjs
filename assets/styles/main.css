@@ -119,4 +119,9 @@ body {
     width: 100% !important;
     position: unset !important;
   }
+  .app-drawer {
+    min-width: fit-content !IMPORTANT;
+    left: unset !important;
+    right: 20px !important;
+  }
 }
