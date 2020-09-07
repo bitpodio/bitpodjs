@@ -83,6 +83,7 @@ export default {
    */
   axios: {
     baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
+    eventUrl: process.env.GETEVENTURL || 'event.test.bitpod.io',
   },
   /*
    ** vuetify module configuration
