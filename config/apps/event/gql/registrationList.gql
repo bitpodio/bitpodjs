@@ -37,6 +37,13 @@ query($filters: JSON, $where: JSON) {
               Country
             }
           }
+          _CurrentAddress{
+            AddressLine
+            City
+            Country
+            PostalCode
+            State
+          }
         }
       }
     }

@@ -43,6 +43,16 @@ export default {
           'https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap',
       },
     ],
+    script: [
+      {
+        src: `${
+          process.env.GOOGLE_API || 'https://maps.googleapis.com/maps/api/js'
+        }?key=${
+          process.env.GOOGLE_API_KEY ||
+          'AIzaSyCPS6SZlor8qxfpul-dKyN6566XG2R5dFM'
+        }&libraries=places`,
+      },
+    ],
   },
   /*
    ** Global CSS
@@ -85,6 +95,11 @@ export default {
     baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
     eventUrl: process.env.GETEVENTURL || 'event.test.bitpod.io',
   },
+
+  publicRuntimeConfig: {
+    cdnUri:
+      'https://res.cloudinary.com/mytestlogo/image/upload/bitpodjs/images/',
+  },
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
@@ -120,7 +135,9 @@ export default {
    ** Build configuration
    ** See https://nuxtjs.org/api/configuration-build/
    */
-  build: {},
+  build: {
+    transpile: /@fullcalendar.*/, // transpile ESM modules within all fullcalendar packages
+  },
   vue: {
     config: {
       productionTip: true,

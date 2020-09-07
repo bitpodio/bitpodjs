@@ -144,6 +144,7 @@ export default {
   props: {
     eventSetting: {
       default: false,
+      allowSpaces: false,
     },
   },
   components: {

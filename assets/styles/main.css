@@ -55,6 +55,80 @@ body {
 .name-initial::first-letter {
   font-size: 14px !important;
 }
+.unavilable{
+  font-size: 20px;
+  border: 2px dashed lightgrey;
+}
+.unavilableText{
+  width: 108px;
+}
+.fc-icon{
+  position: relative;
+  bottom: 3px;
+}
+.participantButton{
+  position: absolute !important;
+  left: 4px;
+  cursor: pointer;
+}
+.fs-18 {
+  font-size: 18px;
+}
+.fs-30 {
+  font-size: 30px !important;
+}
+.bitpod-logo img {
+  max-width: 130px;
+}
+.wd-full {
+  width: -webkit-fill-available;
+}
+.nav-title {
+  font-size: 14px !important;
+  font-weight: 400 !important;
+}
+.nav-subheader {
+  font-size: 14px !important;
+}
+.app-name {
+  font-size: 24px;
+  font-weight: 300;
+}
+.nav-drawer {
+  display: none !important;
+}
+.nav-bar:hover .nav-drawer {
+  display: block !important;
+}
+.nav-bar .fa {
+  font-size: 20px !important;
+}
+.fs-36 {
+  font-size: 36px !important;
+}
+.app-container {
+  max-width: 300px;
+}
+.app-view {
+  min-width: 90px !important;
+  max-width: 90px !important;
+  min-height: 90px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  padding-top: 10px;
+}
+.app-view:hover {
+  background-color: #f6fafe;
+}
+.boxview h2.body-1,
+.boxview h2 > .fa {
+  color: #3fa5ff !important;
+}
+.survey-img {
+  max-width: 36px !important;
+  max-height: 36px !important;
+}
 @media (max-width: 600px) {
   .slide-form,
   .slide-form-default {
