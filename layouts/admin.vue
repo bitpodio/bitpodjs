@@ -13,7 +13,7 @@
         <v-spacer></v-spacer>
         <div v-if="drawer === true">
           <v-app-bar-nav-icon
-            class="nav-drawer"
+            class="nav-drawer d-none d-sm-flex"
             @click.stop="drawer = !drawer"
           ></v-app-bar-nav-icon>
         </div>

@@ -13,7 +13,7 @@
         <v-spacer></v-spacer>
         <div v-if="drawer === true">
           <v-app-bar-nav-icon
-            class="nav-drawer"
+            class="nav-drawer d-none d-sm-flex"
             @click.stop="drawer = !drawer"
           ></v-app-bar-nav-icon>
         </div>
@@ -330,7 +330,7 @@
       <div class="d-flex d-sm-none ml-n3">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       </div>
-      <v-toolbar-title class="pl-0 ml-n2">Event </v-toolbar-title>
+      <v-toolbar-title class="pl-0 ml-n2"> </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn class="ma-2 d-none d-sm-flex" tile outlined>
         UPGARDE
