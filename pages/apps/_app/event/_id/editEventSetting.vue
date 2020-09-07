@@ -67,7 +67,7 @@
               ></v-text-field>
               <span
                 v-if="isInvalidEventLink && !!formData.UniqLink"
-                class="uniqueLink"
+                class="red--text pa-3 pt-0 body-1"
                 >{{ uniqueLinkMessage }}</span
               >
             </v-col>
@@ -238,7 +238,6 @@ export default {
         })
     },
     async checkUniqueLink() {
-      debugger
       if (this.formData.UniqLink !== '') {
         const where = { UniqLink: this.formData.UniqLink }
         const result = await this.$apollo.query({
@@ -277,7 +276,6 @@ export default {
         }
       },
       update(data) {
-        debugger
         const event = formatGQLResult(data, 'Event')
         this.formData = event.length > 0 ? { ...event[0] } : {}
         this.formData.id = this.$route.params.id
@@ -300,10 +298,3 @@ export default {
   },
 }
 </script>
-<style scoped>
-.uniqueLink {
-  color: red;
-  position: relative;
-  bottom: 21px;
-}
-</style>
