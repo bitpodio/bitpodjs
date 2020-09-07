@@ -4,7 +4,6 @@ import Lookup from '~/components/common/form/lookup.vue'
 import Checkbox from '~/components/common/form/checkbox.vue'
 import CustomDate from '~/components/common/form/date.vue'
 import File from '~/components/common/form/file.vue'
-import RichText from '~/components/common/form/richtext.vue'
 import Timezone from '~/components/common/form/timezone'
 import { _set, isPlainObject } from '~/utility/object'
 
@@ -98,7 +97,8 @@ export const formControlsMixin = {
     Checkbox,
     CustomDate,
     File,
-    RichText,
+    RichText: () =>
+      process.client ? import('~/components/common/form/richtext.vue') : false,
     Timezone,
   },
   methods: {
