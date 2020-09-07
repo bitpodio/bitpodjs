@@ -1,5 +1,5 @@
 <template>
-  <v-checkbox v-model="checkbox" @change="updateRegForm"></v-checkbox>
+  <v-checkbox v-model="checkbox" @change="updateOfferCode"></v-checkbox>
 </template>
 
 <script>
@@ -7,16 +7,16 @@ export default {
   props: ['item', 'value', 'context'],
   data() {
     return {
-      checkbox: this.item.isAttendeeField,
+      checkbox: this.item.isActive,
     }
   },
   methods: {
-    updateRegForm() {
+    updateOfferCode() {
       this.$axios
         .$put(
-          `https://event.test.bitpod.io/svc/api/Events/${this.$route.params.id}/RegistrationForm/${this.item.id}`,
+          `https://event.test.bitpod.io/svc/api/OfferCodes/${this.item.id}`,
           {
-            isAttendeeField: this.checkbox,
+            isActive: this.checkbox,
           }
         )
         .then((res) => {

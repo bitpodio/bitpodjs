@@ -1141,7 +1141,7 @@ export default {
           hideDefaultFooter: false,
           showExpand: false,
           singleExpand: false,
-          showSelect: true,
+          showSelect: false,
           hideFilter: false,
           hideSearch: true,
         },
@@ -1600,7 +1600,7 @@ export default {
           },
         },
         template: {
-          name: 'event-grid',
+          name: 'eventDiscountCode-grid',
           context: {
             basePath: '/event',
           },
@@ -1755,7 +1755,7 @@ export default {
             caption: 'Start Date',
             searchEnable: true,
             sortEnable: true,
-            columnWidth: '150px',
+            columnWidth: '250px',
             type: 'datetime',
             cssClasses: 'col-6 col-md-6',
             hidden: false,

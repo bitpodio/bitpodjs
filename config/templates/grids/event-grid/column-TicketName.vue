@@ -5,7 +5,7 @@
       :key="value"
       class="ma-2"
       small
-      color="green"
+      color="orange"
       text-color="white"
       >{{ value }}</v-chip
     >

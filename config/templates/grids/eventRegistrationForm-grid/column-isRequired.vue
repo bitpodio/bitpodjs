@@ -1,9 +1,5 @@
 <template>
-  <div>
-    <div class="checkbox">
-      <v-checkbox v-model="checkbox" @change="updateRegForm"></v-checkbox>
-    </div>
-  </div>
+  <v-checkbox v-model="checkbox" @change="updateRegForm"></v-checkbox>
 </template>
 
 <script>

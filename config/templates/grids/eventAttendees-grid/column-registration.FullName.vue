@@ -9,7 +9,8 @@ export default {
   props: ['item', 'value', 'context'],
   computed: {
     route() {
-      return `/apps/event${this.context.basePath}/${this.item.id}`
+      const regId = atob(this.item.registration.id).split(':')[1]
+      return `/apps/event${this.context.basePath}/${regId}`
     },
   },
 }
