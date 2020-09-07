@@ -37,11 +37,13 @@ export default {
       this.changeCurrentUrl(orgName)
     },
     changeCurrentUrl(orgName) {
-      let defaultPublicDomain = nuxtconfig.setting.domains.defaultPublicDomain
-      defaultPublicDomain = defaultPublicDomain.split(',')[0]
-      const basePath = nuxtconfig.router.base
-      const orgURL = `${window.location.protocol}//${orgName}-${defaultPublicDomain}${basePath}`
-      window.location.assign(orgURL)
+      if (window) {
+        let defaultPublicDomain = nuxtconfig.setting.domains.defaultPublicDomain
+        defaultPublicDomain = defaultPublicDomain.split(',')[0]
+        const basePath = nuxtconfig.router.base
+        const orgURL = `${window.location.protocol}//${orgName}-${defaultPublicDomain}${basePath}`
+        window.location.assign(orgURL)
+      }
     },
     checkOrgDetails() {
       if (this.$auth.user.data) {
