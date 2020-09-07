@@ -82,6 +82,8 @@ export default {
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
+    apiEndpoint: '/svc/api/',
+    backendBaseUrl: process.env.PUBLIC_DOMAIN || '',
     baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
   },
   /*

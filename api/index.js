@@ -136,7 +136,7 @@ function getAxiosConfig(req) {
 function getApiUrl(req) {
   const host = req.get('host')
   if (host && host.includes('localhost')) {
-    return nuxtconfig.axios.backendBaseUrl || 'https://event.test.bitpod.io'
+    return nuxtconfig.axios.backendBaseUrl
   }
   const protocol = req.protocol
   return `${protocol}://${host}`
@@ -145,7 +145,7 @@ function getApiUrl(req) {
 async function fetchUserOrgs(req) {
   const origin = getApiUrl(req)
   const config = getAxiosConfig(req)
-  const apiEndpoint = nuxtconfig.axios.apiEndpoint || '/svc/api/'
+  const apiEndpoint = nuxtconfig.axios.apiEndpoint
   let userOrgList = {}
   try {
     const orgResponse = await axios.get(
@@ -165,7 +165,7 @@ async function fetchCurrentOrg(req) {
   const origin = getApiUrl(req)
   const config = getAxiosConfig(req)
   let currentOrg = {}
-  const apiEndpoint = nuxtconfig.axios.apiEndpoint || '/svc/api/'
+  const apiEndpoint = nuxtconfig.axios.apiEndpoint
   try {
     const orgResponse = await axios.get(
       `${origin}${apiEndpoint}Organizations/this`,
