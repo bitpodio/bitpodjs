@@ -184,7 +184,7 @@
 import gql from 'graphql-tag'
 import { utcToZonedTime } from 'date-fns-tz'
 import nuxtconfig from '../../../../../nuxt.config'
-import rules from '~/utility/rules.js'
+import { email, required } from '~/utility/rules.js'
 import event from '~/config/apps/event/gql/event.gql'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import { formatGQLResult } from '~/utility/gql.js'
@@ -213,12 +213,12 @@ export default {
       tags: [],
       addressLine: '',
       tagsDropdown: [],
-      nameRules: rules.required,
+      nameRules: [required],
       errorAlert: {
         message: '',
         visible: false,
       },
-      emailRules: rules.email,
+      emailRules: [required, email],
       allowSpaces: false,
       data: {
         event: {},
