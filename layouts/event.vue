@@ -214,8 +214,14 @@
       </v-card>
     </v-dialog>
 
-    <v-dialog v-model="dialog" fullscreen transition="dialog-bottom-transition">
-      <v-card>
+    <v-dialog
+      v-model="dialog"
+      persistent
+      content-class="slide-form"
+      transition="dialog-bottom-transition"
+    >
+      <NewRecurringEvent :on-form-close="closeSingleEventForm" />
+      <!-- <v-card>
         <v-toolbar dark color="primary">
           <v-btn icon dark @click="dialog = false">
             <v-icon>mdi-close</v-icon>
@@ -313,7 +319,7 @@
           </v-container>
           <small>*indicates required field</small>
         </v-card-text>
-      </v-card>
+      </v-card> -->
     </v-dialog>
 
     <v-app-bar app flat class="greybg">
@@ -591,6 +597,9 @@ export default {
     async onLogout() {
       this.$auth.logout()
       await this.$apolloHelpers.onLogout()
+    },
+    closeSingleEventForm() {
+      this.dialog = false
     },
   },
 }

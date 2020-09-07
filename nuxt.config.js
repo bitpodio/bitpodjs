@@ -10,7 +10,7 @@ export default {
     base: basePath || '/',
   },
   /*
-   ** Nuxt target 
+   ** Nuxt target
    ** See https://nuxtjs.org/api/configuration-target
    */
   target: 'server',
@@ -83,6 +83,7 @@ export default {
    */
   axios: {
     baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
+    // baseURL: `http://localhost:3000${basePath}`,
   },
   publicRuntimeConfig: {
     cdnUri:
