@@ -1,0 +1,77 @@
+query($filters: JSON) {
+  OrganizationInfo {
+    OrganizationInfoFind(filter: $filters) {
+      edges {
+        node {
+          id
+          weekDay
+          AvailableStartHour
+          AvailableEndHour
+          BusinessType
+          language
+          useCustomerPaymentGateway
+          Timezone
+          About
+          AddressGeoLocation
+          Currency
+          Email
+          Facebook
+          LinkedIn
+          MaxAllowQuantity
+          Mobile
+          Name
+          PageLimit
+          PrivacyPolicy
+          Theme
+          Twitter
+          footerTemplateCaption
+          paymentType
+          successTemplateCaption
+          domain
+          headerTemplateCaption
+          EventRegistrationURL
+          orgId
+          BannerImages
+          Image
+          _CurrentAddress {
+            AddressLine
+            City
+            Country
+            LatLng {
+              lat
+              lng
+              __typename
+            }
+            PostalCode
+            State
+            id
+            createdDate
+            createdBy
+            modifiedDate
+            modifiedBy
+            __typename
+          }
+          _PaymentGatewaySetting {
+            id
+            paymentType
+            token
+            url
+            createdDate
+            createdBy
+            modifiedDate
+            modifiedBy
+            __typename
+          }
+          createdDate
+          createdBy
+          modifiedDate
+          modifiedBy
+          __typename
+        }
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}

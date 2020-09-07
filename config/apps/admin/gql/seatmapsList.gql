@@ -1,0 +1,23 @@
+query($filters: JSON, $where: JSON) {
+  SeatMap {
+    SeatMapFind(filter: $filters) {
+      edges {
+        node {
+          id
+          ImageUrl
+          Name
+          orgId
+          createdDate
+          createdBy
+          modifiedDate
+          modifiedBy
+          __typename
+        }
+        __typename
+      }
+      __typename
+    }
+    SeatMapCount(where: $where)
+    __typename
+  }
+}

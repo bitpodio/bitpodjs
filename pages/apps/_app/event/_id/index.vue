@@ -319,8 +319,15 @@
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">Tags</div>
-          <div>
-            <span v-for="tag in data.event.Tags" :key="tag">#{{ tag }}</span>
+          <div class="body-1">
+            <v-chip
+              v-for="Tags in data.event.Tags"
+              :key="Tags"
+              small
+              class="ma-1"
+            >
+              {{ Tags }}
+            </v-chip>
           </div>
         </v-flex>
         <v-flex my-3>

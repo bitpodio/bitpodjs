@@ -6,7 +6,7 @@
       </div>
     </template>
     <div v-if="!error" :key="error">
-      <div class="grid-actions-container">
+      <div class="grid-actions-container mt-n11">
         <div class="d-flex">
           <template v-if="selectedItems.length > 0">
             <component

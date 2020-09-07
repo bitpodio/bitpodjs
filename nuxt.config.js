@@ -10,7 +10,7 @@ export default {
     base: basePath || '/',
   },
   /*
-   ** Nuxt target
+   ** Nuxt target 
    ** See https://nuxtjs.org/api/configuration-target
    */
   target: 'server',
@@ -95,6 +95,10 @@ export default {
   // baseUrl: {
   //   eventUrl: 'event.test.bitpod.io',
   // },
+  publicRuntimeConfig: {
+    cdnUri:
+      'https://res.cloudinary.com/mytestlogo/image/upload/bitpodjs/images/',
+  },
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
@@ -130,7 +134,9 @@ export default {
    ** Build configuration
    ** See https://nuxtjs.org/api/configuration-build/
    */
-  build: {},
+  build: {
+    transpile: /@fullcalendar.*/, // transpile ESM modules within all fullcalendar packages
+  },
   vue: {
     config: {
       productionTip: true,
