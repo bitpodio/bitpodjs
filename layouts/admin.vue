@@ -88,7 +88,7 @@
     <v-app-bar app flat class="greybg">
       <div
         v-if="drawer === false"
-        class="ml-xs-0 d-none d-sm-flex"
+        class="ml-xs-0 d-none d-sm-none d-md-flex d-lg-flex d-xl-flex"
         :class="drawer ? '' : 'ml-md-n4 mr-md-2'"
       >
         <v-app-bar-nav-icon
@@ -96,10 +96,10 @@
           @click.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
       </div>
-      <div class="d-flex d-sm-none ml-n3">
+      <div class="d-flex d-sm-flex d-md-none ml-n3">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       </div>
-      <v-toolbar-title class="pl-0 ml-n2"> Admin</v-toolbar-title>
+      <v-toolbar-title class="pl-0 ml-n2">Administration</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn class="ma-2 d-none d-sm-flex" tile outlined>
         UPGARDE
