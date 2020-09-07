@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <client-only>
-      <JoditEditor v-model="content" :config="config" />
+      <jodit-editor v-model="content" :config="config" />
     </client-only>
   </div>
 </template>
@@ -11,7 +11,9 @@ import 'jodit/build/jodit.min.css'
 import { JoditEditor } from 'jodit-vue'
 
 export default {
-  components: { JoditEditor },
+  components: {
+    JoditEditor,
+  },
   props: ['value', 'field'],
 
   data() {

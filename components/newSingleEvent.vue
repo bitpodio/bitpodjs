@@ -114,11 +114,6 @@
                       outlined
                       @change="changeLocation($event)"
                     ></v-select>
-                    <!-- <Lookup
-                      v-model="eventData.LocationType"
-                      :field="TypeProps"
-                      @change="changeLocation($event)"
-                    /> -->
                   </v-col>
                   <v-col v-if="isOnlineEvent" cols="12">
                     <v-text-field
@@ -439,6 +434,7 @@ import eventCount from '~/config/apps/event/gql/eventCount.gql'
 import organizationInfo from '~/config/apps/event/gql/organizationInfo.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import nuxtconfig from '~/nuxt.config'
+import { required } from '~/utility/rules.js'
 export default {
   components: {
     RichText: () =>
@@ -460,8 +456,7 @@ export default {
       isTicket: true,
       isEventCreate: false,
       isEventPublish: false,
-      requiredRules: [(v) => !!v || 'This field is required'],
-      // uniquelinkRules: [(v) => !!v || 'Lower case alphanumeric letters only'],
+      requiredRules: [required],
       isMap: false,
       currentLocation: {},
       locationsVisibleOnMap: '',

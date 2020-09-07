@@ -107,7 +107,7 @@ export default {
     apiEndpoint: '/svc/api/',
     backendBaseUrl: process.env.PUBLIC_DOMAIN || '',
     baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
-    // baseURL: `http://localhost:3000${basePath}`,
+    eventUrl: process.env.GETEVENTURL || 'event.test.bitpod.io',    
   },
 
   publicRuntimeConfig: {
@@ -154,7 +154,9 @@ export default {
    ** Build configuration
    ** See https://nuxtjs.org/api/configuration-build/
    */
-  build: {},
+  build: {
+    transpile: /@fullcalendar.*/, // transpile ESM modules within all fullcalendar packages
+  },
   vue: {
     config: {
       productionTip: true,
@@ -261,5 +263,11 @@ export default {
     googleMapGeocodeApi:
       process.env.GOOGLE_MAPS_GEOCODE_API ||
       'https://maps.googleapis.com/maps/api/geocode/json',
+  },
+  setting: {
+    domains: {
+      defaultPublicDomain:
+        process.env.DEFAULT_PUBLIC_DOMAIN || 'event.test.bitpod.io',
+    },
   },
 }

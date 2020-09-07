@@ -35,33 +35,52 @@
           </v-menu>
         </v-flex>
         <v-chip class="my-2" label>
-          {{ formatDate(data.event.StartDate) }} -
-          {{ formatDate(data.event.EndDate) }}
+          {{ formatedDate(data.event.StartDate, data.event.Timezone) }} -
+          {{ formatedDate(data.event.EndDate, data.event.Timezone) }} -
+          {{ formatField(data.event.Timezone) }}
         </v-chip>
         <v-flex>
           <p class="blue--text">
             <i class="fa fa-map-marker" aria-hidden="true"></i>
+            <a
+              v-if="
+                data &&
+                data.event &&
+                data.event._VenueAddress &&
+                !data.event._VenueAddress.AddressLine.includes(
+                  data.event.VenueName
+                )
+              "
+              class="blue--text"
+            >
+              {{ formatAddressField(data.event.VenueName) }}
+            </a>
             <a class="blue--text">
-              {{ data.event.VenueName }}
               {{
-                formatField(
+                formatAddressField(
                   data.event._VenueAddress &&
                     data.event._VenueAddress.AddressLine
                 )
               }}
               {{
-                formatField(
+                formatAddressField(
                   data.event._VenueAddress && data.event._VenueAddress.City
                 )
               }}
               {{
-                formatField(
+                formatAddressField(
                   data.event._VenueAddress && data.event._VenueAddress.State
                 )
               }}
               {{
-                formatField(
+                formatAddressField(
                   data.event._VenueAddress && data.event._VenueAddress.Country
+                )
+              }}
+              {{
+                formatAddressField(
+                  data.event._VenueAddress &&
+                    data.event._VenueAddress.PostalCode
                 )
               }}
             </a>
@@ -515,6 +534,7 @@
 <script>
 import gql from 'graphql-tag'
 import format from 'date-fns/format'
+import { utcToZonedTime } from 'date-fns-tz'
 import editSeoForm from './editSeoForm.vue'
 import editEventForm from './editEventForm.vue'
 import editEventSetting from './editEventSetting.vue'
@@ -533,10 +553,12 @@ export default {
     editSiteSetting,
   },
   mixins: [configLoaderMixin],
+  props: ['value', 'field'],
   data() {
     return {
       loading: 0,
-      allowSpaces: false,
+      editeventform: false,
+      editseoform: false,
       eventForm: false,
       seoForm: false,
       eventSetting: false,
@@ -555,10 +577,22 @@ export default {
   },
   methods: {
     formatDate(date) {
-      return date ? format(new Date(date), 'PPp') : ''
+      return date ? format(new Date(date), 'PPpp') : ''
+    },
+    formatedDate(date, timezone) {
+      if (date) {
+        const formattedDate = new Date(date)
+        const zonedDate = utcToZonedTime(formattedDate, timezone)
+        const pattern = 'PPpp' // 'd.M.YYYY HH:mm:ss.SSS [GMT]Z (z)'
+        const output = format(zonedDate, pattern, { timezone })
+        return output
+      }
     },
     formatField(fieldValue) {
       return fieldValue || '-'
+    },
+    formatAddressField(fieldValue) {
+      return fieldValue || ' '
     },
   },
   apollo: {
@@ -630,5 +664,19 @@ export default {
 }
 .event-tile-value {
   font-size: 20px;
+}
+.form-control {
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: 100%;
+  border-radius: 5px;
+}
+.v-picker {
+  border-radius: 0;
+}
+.error-message {
+  color: red;
+  padding: 10px;
+  font-size: 12px;
 }
 </style>
