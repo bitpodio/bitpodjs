@@ -3,7 +3,7 @@
     <div v-if="isDateTime">
       <v-datetime-picker
         v-model="date"
-        :label="field.caption"
+        :label="fieldCaption"
         :text-field-props="textFieldProps"
         @input="onCalendarChange"
       >
@@ -26,7 +26,7 @@
         <template v-slot:activator="{ on, attrs }">
           <v-text-field
             v-model="date"
-            :label="field.caption"
+            :label="fieldCaption"
             :rules="rules"
             readonly
             outlined
@@ -47,7 +47,9 @@
 </template>
 
 <script>
+import { formFieldMixin } from '~/utility/form-control'
 export default {
+  mixins: [formFieldMixin],
   props: ['value', 'field', 'rules'],
   data() {
     const dateTime = this.value || new Date()

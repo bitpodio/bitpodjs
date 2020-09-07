@@ -4,7 +4,6 @@ import Lookup from '~/components/common/form/lookup.vue'
 import Checkbox from '~/components/common/form/checkbox.vue'
 import CustomDate from '~/components/common/form/date.vue'
 import File from '~/components/common/form/file.vue'
-import RichText from '~/components/common/form/richtext.vue'
 import Timezone from '~/components/common/form/timezone'
 import { _set, isPlainObject } from '~/utility/object'
 
@@ -46,9 +45,13 @@ export function getGridFields(content, viewName, isEditForm) {
       })
     }
   }
-  editableFields.sort(
-    (field1, field2) => field1.displayOrder - field2.displayOrder
-  )
+  editableFields.sort((field1, field2) => {
+    const field1DisplayOrder =
+      (field1.form && field1.form.displayOrder) || field1.displayOrder
+    const field2DisplayOrder =
+      (field2.form && field2.form.displayOrder) || field2.displayOrder
+    return field1DisplayOrder - field2DisplayOrder
+  })
   return editableFields
 }
 
@@ -94,7 +97,8 @@ export const formControlsMixin = {
     Checkbox,
     CustomDate,
     File,
-    RichText,
+    RichText: () =>
+      process.client ? import('~/components/common/form/richtext.vue') : false,
     Timezone,
   },
   methods: {
