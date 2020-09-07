@@ -240,7 +240,7 @@
           <v-card>
             <v-list>
               <v-list-item>
-                <v-list-item-avatar>
+                <v-list-item-avatar size="48">
                   <v-avatar color="primary" size="48" v-bind="attrs" v-on="on">
                     <span class="white--text headline">{{
                       $auth.user.data.name[0]

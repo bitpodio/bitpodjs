@@ -11,7 +11,7 @@
         </span>
         <span d-inline-flex align-center class="mx-2">Event</span>
         <v-spacer></v-spacer>
-        <div v-if="drawer === true">
+        <div v-if="drawer === true" class="d-none d-sm-flex">
           <v-app-bar-nav-icon
             class="nav-drawer"
             @click.stop="drawer = !drawer"
@@ -330,7 +330,7 @@
       <div class="d-flex d-sm-none ml-n3">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       </div>
-      <v-toolbar-title class="pl-0 ml-n2">Event </v-toolbar-title>
+      <v-toolbar-title class="pl-0 ml-n2"> Event</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn class="ma-2 d-none d-sm-flex" tile outlined>
         UPGARDE
@@ -340,9 +340,9 @@
       </v-btn>
       <v-menu
         offset-y
-        :nudge-width="250"
         transition="slide-y-transition"
         bottom
+        content-class="app-drawer"
       >
         <template v-slot:activator="{ on, attrs }">
           <v-btn icon v-bind="attrs" v-on="on">
@@ -451,9 +451,6 @@
           </v-list-item>
         </v-list>
       </v-menu>
-      <v-btn icon>
-        <v-icon>mdi-bell</v-icon>
-      </v-btn>
       <div v-if="$auth.$state.loggedIn">
         <v-menu
           v-model="account"
@@ -474,7 +471,7 @@
           <v-card>
             <v-list>
               <v-list-item>
-                <v-list-item-avatar>
+                <v-list-item-avatar size="48">
                   <v-avatar color="primary" size="48" v-bind="attrs" v-on="on">
                     <span class="white--text headline">{{
                       $auth.user.data.name[0]
@@ -493,14 +490,6 @@
               </v-list-item>
             </v-list>
             <v-divider></v-divider>
-            <v-list-item>
-              <v-list-item-action>
-                <v-switch v-model="message" color="primary"></v-switch>
-              </v-list-item-action>
-              <v-list-item-title>Notification</v-list-item-title>
-            </v-list-item>
-            <v-divider></v-divider>
-
             <v-list>
               <v-list-item class="text-center justify-center">
                 <v-btn class="ma-2" outlined color="primary" @click="onLogout">
