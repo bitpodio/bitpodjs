@@ -60,7 +60,7 @@
                 v-model="formData.UniqLink"
                 label="Event Link*"
                 :rules="linkRules"
-                @input="checkUniqueLink"
+                @keypress="checkUniqueLink"
                 persistent-hint
                 outlined
                 required
