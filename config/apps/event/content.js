@@ -679,7 +679,7 @@ export default {
           },
         },
         template: {
-          name: 'event-grid',
+          name: 'eventInvites-grid',
           context: {
             basePath: '/event',
           },

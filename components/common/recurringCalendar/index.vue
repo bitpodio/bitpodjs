@@ -291,7 +291,7 @@ export default {
             if (dateBox.childElementCount === 1) {
               const participantIcon = document.createElement('i')
               participantIcon.className =
-                'v-icon notranslate v-icon--left mdi mdi-account-multiple-outline participantButton'
+                'v-icon notranslate v-icon--left mdi mdi-account-multiple-outline participantButton cursorPointer'
               participantIcon.onclick = () => {
                 this.isParticipant = true
               }

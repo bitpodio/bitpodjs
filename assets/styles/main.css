@@ -69,6 +69,8 @@ body {
 .participantButton{
   position: absolute !important;
   left: 4px;
+}
+.cursorPointer {
   cursor: pointer;
 }
 .fs-18 {
@@ -128,6 +130,20 @@ body {
 .survey-img {
   max-width: 36px !important;
   max-height: 36px !important;
+}
+.tabContent {
+  overflow: hidden auto;
+  max-height: 400px !important;
+}
+.tempCard {
+  transition: opacity .4s ease-in-out;
+}
+.on-hover {
+  opacity: 0.3;
+}
+.templateButtons {
+  position: absolute;
+  bottom: 30px;
 }
 @media (max-width: 600px) {
   .slide-form,
