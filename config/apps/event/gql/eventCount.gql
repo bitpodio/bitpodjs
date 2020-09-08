@@ -1,0 +1,5 @@
+query($where: JSON) {
+  Event {
+    EventCount(where: $where)
+  }
+}
