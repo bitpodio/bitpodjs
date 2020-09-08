@@ -113,7 +113,7 @@
       content-class="slide-form"
       transition="dialog-bottom-transition"
     >
-      <NewRecurringEvent :on-form-close="closeSingleEventForm" />
+      <NewRecurringEvent :on-form-close="closeRecurringEventForm" />
       <!-- <v-card>
         <v-toolbar dark color="primary">
           <v-btn icon dark @click="dialog = false">
@@ -503,6 +503,9 @@ export default {
     },
     closeSingleEventForm() {
       this.dialog1 = false
+    },
+    closeRecurringEventForm() {
+      this.dialog = false
     },
   },
 }

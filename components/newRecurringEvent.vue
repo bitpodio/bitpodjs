@@ -1,8 +1,94 @@
 <template>
   <v-form ref="form" v-model="valid" :lazy-validation="lazy">
+    <v-dialog v-model="isDateRange" max-width="600px">
+      <v-card>
+        <v-toolbar dark app color="accent">
+          <v-toolbar-title>Availability</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-btn icon dark @click="isDateRange = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </v-toolbar>
+        <!-- <v-card-title>
+            Event Scheduled
+          </v-card-title> -->
+        <v-card-text>
+          <v-row>
+            <v-col cols="12">
+              <v-select
+                value="Over a period of rolling days"
+                :items="[
+                  'Over a period of rolling days',
+                  'Over a date range',
+                  'Indefinitely',
+                ]"
+                label="Event Scheduled"
+                outlined
+                @change="changeSchedule($event)"
+              ></v-select>
+            </v-col>
+            <v-col v-if="isOverPeriod" cols="12">
+              <v-text-field
+                v-model="RollingDays"
+                label="Rolling Days"
+                type="number"
+                outlined
+              ></v-text-field>
+            </v-col>
+            <v-col v-if="isOverDate" cols="12">
+              <v-datetime-picker
+                v-model="StartDate"
+                label="Start Date"
+                :text-field-props="eventStartDateProps"
+              >
+                <template slot="dateIcon">
+                  <v-icon>fas fa-calendar</v-icon>
+                </template>
+                <template slot="timeIcon">
+                  <v-icon>fas fa-clock</v-icon>
+                </template>
+              </v-datetime-picker>
+            </v-col>
+            <v-col v-if="isOverDate" cols="12">
+              <v-datetime-picker
+                v-model="EndDate"
+                label="End Date"
+                :text-field-props="eventEndDateProps"
+              >
+                <template slot="dateIcon">
+                  <v-icon>fas fa-calendar</v-icon>
+                </template>
+                <template slot="timeIcon">
+                  <v-icon>fas fa-clock</v-icon>
+                </template>
+              </v-datetime-picker>
+            </v-col>
+            <v-col v-for="(day, k) in days" :key="k" cols="4">
+              <v-checkbox v-model="day.Value" :label="day.Label"></v-checkbox>
+            </v-col>
+          </v-row>
+        </v-card-text>
+        <v-btn color="primary" dark @click="dialog3 = !dialog3">
+          Apply
+        </v-btn>
+        <v-btn color="primary" dark @click="isDateRange = false">
+          Cancel
+        </v-btn>
+        <!-- <v-card-actions>
+                <v-btn
+                  color="primary"
+                  text
+                  @click="isDateRange = false"
+                >
+                  Cancel
+                </v-btn>
+              </v-card-actions> -->
+      </v-card>
+    </v-dialog>
+
     <div>
       <v-toolbar dark app color="accent">
-        <v-toolbar-title>New Event</v-toolbar-title>
+        <v-toolbar-title>New Recurring Event</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn icon dark @click="close">
           <v-icon>mdi-close</v-icon>
@@ -66,7 +152,7 @@
             <v-btn color="primary" @click="next(2)">Next</v-btn>
           </v-stepper-content>
           <v-stepper-content step="2">
-            <v-card v-if="isTicket" flat>
+            <v-card flat>
               <p>
                 Setup event tickets and price, you can also set tickets validity
                 so early birds can be offered better pricing.
@@ -134,7 +220,7 @@
           </v-stepper-content>
 
           <v-stepper-content step="3">
-            <v-card v-if="isTicket" flat>
+            <v-card v-if="isSession" flat>
               <p>
                 Setup event recurrence, sessions availability to help your
                 attendees book a time slot.
@@ -160,12 +246,16 @@
                   <tbody>
                     <tr v-for="(session, k) in sessions" :key="k">
                       <td class="pa-2 pb-0">
-                        <v-text-field
-                          v-model="session.DateRange"
+                        <span>{{ session.ScheduledType }}</span>
+                        <v-btn text small @click="selectSession(k)">
+                          <v-icon left>mdi-pencil</v-icon>
+                        </v-btn>
+                        <!-- <v-text-field
+                          v-model="session.ScheduledType"
                           :rules="requiredRules"
-                          label="DateRange"
+                          label="Date Range"
                           outlined
-                        ></v-text-field>
+                        ></v-text-field> -->
                       </td>
                       <td class="pa-2 pb-0">
                         <Lookup
@@ -181,7 +271,7 @@
                       </td>
                       <td class="pa-2 pb-0">
                         <Lookup
-                          v-model="session.SlotSize"
+                          v-model="session.Duration"
                           :field="slotSizeProps"
                         />
                       </td>
@@ -194,8 +284,9 @@
                       </td>
                       <td class="pa-2 pb-0">
                         <Lookup
-                          v-model="session.Location"
+                          v-model="session.LocationType"
                           :field="locationTypeProps"
+                          :on-change="changelocationType"
                         />
                       </td>
                       <td class="pa-2 pb-0">
@@ -318,20 +409,23 @@
 import gql from 'graphql-tag'
 import strings from '../strings.js'
 // import { formatTimezoneDateFieldsData } from '~/utility/form.js'
-// import { getApiUrl } from '~/utility/index.js'
+import { getApiUrl } from '~/utility/index.js'
 import Lookup from '~/components/common/form/lookup.vue'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import Timezone from '~/components/common/form/timezone'
 import eventCount from '~/config/apps/event/gql/eventCount.gql'
 import organizationInfo from '~/config/apps/event/gql/organizationInfo.gql'
 import { formatGQLResult } from '~/utility/gql.js'
-import nuxtconfig from '~/nuxt.config'
+// import Checkbox from '~/components/common/form/checkbox.vue'
+// import CustomDate from '~/components/common/form/date.vue'
+// import nuxtconfig from '~/nuxt.config'
 export default {
   components: {
     RichText: () =>
       process.client ? import('~/components/common/form/richtext.vue') : false,
     Lookup,
     Timezone,
+    // CustomDate
   },
   props: {
     onFormClose: Function,
@@ -341,9 +435,14 @@ export default {
     return {
       valid: true,
       lazy: false,
+      isDateRange: false,
+      isOverDate: false,
+      isOverPeriod: true,
+      selectedSession: '',
+      // isIndefinitely: false,
       isSaveButtonDisabled: false,
       addresslineMessage: '',
-      isTicket: true,
+      isSession: true,
       isEventCreate: false,
       isEventPublish: false,
       requiredRules: [(v) => !!v || 'This field is required'],
@@ -445,7 +544,7 @@ export default {
         Description: '',
         UniqLink: '',
         // JoiningInstruction: '',
-        BusinessType: 'Single',
+        BusinessType: 'Recurring',
         Privacy: 'Public',
         Currency: '',
         Status: 'Not ready',
@@ -478,6 +577,36 @@ export default {
       isInalidEventLink: false,
       uniqueLinkMessage: '',
       // currentDatetime,
+      days: [
+        {
+          Label: 'Sundays',
+          Value: false,
+        },
+        {
+          Label: 'Mondays',
+          Value: true,
+        },
+        {
+          Label: 'Tuesdays',
+          Value: true,
+        },
+        {
+          Label: 'Wednesdays',
+          Value: true,
+        },
+        {
+          Label: 'Thursdays',
+          Value: true,
+        },
+        {
+          Label: 'Fridays',
+          Value: true,
+        },
+        {
+          Label: 'Saturdays',
+          Value: false,
+        },
+      ],
       tickets: [
         {
           TicketId: 0,
@@ -490,14 +619,18 @@ export default {
       sessions: [
         {
           SessionId: 0,
-          DateRange: 'over 30 rolling days',
+          ScheduledType: 'over 30 rolling days',
           StartTime: '10:00',
           EndTime: '19:00',
-          SlotSize: '30 min',
+          Duration: '30 min',
           Timezone: '',
-          Location: 100,
+          LocationType: '',
           Type: 'Personal',
           Tickets: '0 ticket',
+          RollingDays: 30,
+          Frequency: 30,
+          isActive: true,
+          Days: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'],
         },
       ],
     }
@@ -507,8 +640,75 @@ export default {
       const errorMessage = this.isInalidEventLink ? this.uniqueLinkMessage : ''
       return errorMessage
     },
+    eventStartDateProps() {
+      return {
+        appendIcon: 'fa-calendar',
+        outlined: true,
+        // rules: [
+        //   (v) => {
+        //     const StartDate = v && new Date(v)
+        //     const { EndDate } = this.eventData
+        //     let startDateMessage = ''
+        //     if (!StartDate) startDateMessage = strings.FIELD_REQUIRED
+        //     else if (StartDate && EndDate && StartDate > EndDate)
+        //       startDateMessage = strings.EVENT_START_END_DATE
+        //     else if (StartDate < new Date())
+        //       startDateMessage = strings.EVENT_START_DATE
+        //     else startDateMessage = ''
+        //     return startDateMessage || true
+        //   },
+        // ],
+      }
+    },
+    eventEndDateProps() {
+      return {
+        appendIcon: 'fa-calendar',
+        outlined: true,
+        // rules: [
+        //   (v) => {
+        //     const EndDate = v && new Date(v)
+        //     const { StartDate } = this.eventData
+        //     let endDateMessage = ''
+        //     if (!EndDate) endDateMessage = strings.FIELD_REQUIRED
+        //     else if (StartDate && EndDate && StartDate > EndDate)
+        //       endDateMessage = strings.EVENT_START_END_DATE
+        //     else if (EndDate < new Date())
+        //       endDateMessage = strings.EVENT_END_DATE
+        //     else endDateMessage = ''
+        //     return endDateMessage || true
+        //   },
+        // ],
+      }
+    },
   },
   methods: {
+    changelocationType(value) {
+      console.log('==changelocationtype==value==', value)
+    },
+    selectSession(index) {
+      this.isDateRange = true
+      this.selectedSession = index
+      // const session = this.sessions[index]
+    },
+    setAvailability() {
+      // this.sessions[this.selectedSession].LocationType
+      debugger
+    },
+    changeSchedule(value) {
+      if (value === 'Over a date range') {
+        this.isOverDate = true
+        this.isOverPeriod = false
+        this.isIndefinitely = false
+      } else if (value === 'Over a period of rolling days') {
+        this.isOverDate = false
+        this.isOverPeriod = true
+        this.isIndefinitely = false
+      } else if (value === 'Indefinitely') {
+        this.isOverDate = false
+        this.isOverPeriod = false
+        this.isIndefinitely = true
+      }
+    },
     close() {
       this.onFormClose()
       this.stepNumber = 1
@@ -516,15 +716,15 @@ export default {
     closeForm() {
       this.onFormClose()
       this.stepNumber = 1
-      this.$router.push('/apps/event/event/' + this.eventId)
+      this.$router.push('/apps/event/event/recurring/' + this.eventId)
     },
 
     buildMutationUpsertQuery(modelName) {
       return `mutation($Inputs : ${modelName}UpsertWithWhereInput!){ ${modelName}{ ${modelName}UpsertWithWhere(input:$Inputs){ clientMutationId obj{ id } } } }`
     },
     viewRegistration() {
-      //   const baseUrl = getApiUrl()
-      const baseUrl = 'event.test.bitpod.io/svc/api'
+      const baseUrl = getApiUrl()
+      // const baseUrl = 'event.test.bitpod.io/svc/api'
       const regUrl = baseUrl.replace('svc/api', 'e')
       window.open(`${regUrl}${this.eventData.UniqLink}`, '_blank')
     },
@@ -564,6 +764,9 @@ export default {
         this.sessions.splice(index, 1)
       }
     },
+    editSession(index) {
+      this.isDateRange = true
+    },
     next(value) {
       const { Title, UniqLink } = this.eventData
       this.$refs.form.validate()
@@ -600,9 +803,7 @@ export default {
         // this.eventData.EndDate = convertedEventRecord.EndDate
         this.eventData.EventManager = this.$auth.$state.user.data.email
         this.eventData.Organizer = this.$auth.$state.user.data.name
-
-        // const baseUrl = getApiUrl()
-        const baseUrl = 'event.test.bitpod.io/svc/api'
+        const baseUrl = getApiUrl()
         this.$axios
           .$post(`${baseUrl}Events`, {
             ...this.eventData,
@@ -611,6 +812,7 @@ export default {
             this.eventId = res.id
 
             const ticketList = []
+            const sessionList = []
 
             this.tickets.forEach(function (ticket) {
               ticket.Events = res.id
@@ -622,60 +824,26 @@ export default {
             return this.$axios
               .$post(`${baseUrl}Tickets`, ticketList)
               .then((ticketres) => {
-                this.isTicket = false
-                this.isEventCreate = true
-                return ticketres
+                this.sessions.forEach(function (session) {
+                  session.Events = res.id
+                  session.Duration = parseInt(session.Duration.split(' ')[0])
+                  session.Frequency = parseInt(session.Duration.split(' ')[0])
+                  sessionList.push(session)
+                })
+                return this.$axios
+                  .$post(`${baseUrl}Sessions`, sessionList)
+                  .then((sessionres) => {
+                    this.isSession = false
+                    this.isEventCreate = true
+                    return sessionres
+                  })
+                  .catch((e) => {
+                    console.log('error', e)
+                  })
               })
               .catch((e) => {
                 console.log('error', e)
               })
-          })
-          .catch((e) => {
-            console.log('error', e)
-          })
-      }
-    },
-    changeAddressData(value) {
-      this.addresslineMessage = value === '' ? strings.FIELD_REQUIRED : ''
-    },
-    changeAddress() {
-      const { City, State, Country, PostalCode } = this.venueAddress
-      const VenueName = this.eventData.VenueName
-      const AddressLine = this.$refs['venueAddress.AddressLine'].$data
-        .autocompleteText
-      if (
-        AddressLine !== '' &&
-        (VenueName !== '' || City !== '' || State !== '' || Country !== '')
-      ) {
-        const addressObj = `${AddressLine},${VenueName},${City},${State},${Country},${PostalCode}`
-        const key = nuxtconfig.generalConfig.googleMapKey
-        const customAxiosInstance = this.$axios.create({
-          headers: {},
-        })
-        customAxiosInstance.setToken(false)
-        customAxiosInstance
-          .get(
-            `https://maps.googleapis.com/maps/api/geocode/json?address=${addressObj}&key=${key}`
-          )
-          .then((res) => {
-            this.venueAddress.AddressLine = AddressLine || ''
-            this.eventData.VenueName = VenueName || ''
-            this.venueAddress.Country = Country || ''
-            this.venueAddress.City = City || ''
-            this.venueAddress.State = State || ''
-            const latlng = {}
-            latlng.lat = res.data.results[0].geometry.location.lat
-            latlng.lng = res.data.results[0].geometry.location.lng
-            this.venueAddress.LatLng.lat = latlng.lat || ''
-            this.venueAddress.LatLng.lng = latlng.lng || ''
-
-            const newLocations = []
-            newLocations[0] = latlng
-
-            this.locations = newLocations
-            this.isMap = true
-            this.returnToCenter()
-            return res
           })
           .catch((e) => {
             console.log('error', e)
@@ -719,18 +887,6 @@ export default {
         this.uniqueLinkMessage = strings.UNIQUE_LINK_DUPLICATE
       } else this.isInalidEventLink = false
     },
-    // changeLocation(value) {
-    //   this.eventData.LocationType = value
-    //   if (value === 'Venue') {
-    //     this.isVenue = true
-    //     this.isOnlineEvent = false
-    //   }
-    //   if (value === 'Online Event') {
-    //     this.isVenue = false
-    //     this.isOnlineEvent = true
-    //     this.isMap = false
-    //   }
-    // },
     addTicketRow() {
       this.tickets.push({
         TicketId: this.tickets.length + 1,
@@ -743,14 +899,17 @@ export default {
     addSession() {
       this.sessions.push({
         SessionId: this.sessions.length + 1,
-        DateRange: 'over 30 rolling days',
+        ScheduledType: 'over 30 rolling days',
         StartTime: '10:00',
         EndTime: '19:00',
-        SlotSize: '30 min',
+        Duration: '30 min',
         Timezone: '',
-        Location: 100,
+        LocationType: '',
         Type: 'Personal',
         Tickets: '0 ticket',
+        RollingDays: 30,
+        Frequency: 30,
+        isActive: true,
       })
     },
   },
