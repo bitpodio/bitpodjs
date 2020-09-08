@@ -1350,6 +1350,23 @@ export default {
             columnWidth: '150px',
             type: 'string',
           },
+          MyImage: {
+            form: {
+              caption: 'Image',
+              displayOrder: 10,
+            },
+            cssClasses: 'col-6 col-md-6',
+            displayOrder: 8,
+            caption: 'MyImage',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'file',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+          },
         },
         template: {
           name: 'link-grid',
