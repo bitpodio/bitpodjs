@@ -201,7 +201,14 @@
                           justify="space-between"
                         >
                           <div class="align-self-center templateButtons">
-                            <v-btn class="ma-2" outlined color="indigo"
+                            <v-btn
+                              class="ma-2"
+                              outlined
+                              color="indigo"
+                              @click="
+                                choosedTemplate = 3
+                                RTEValue = item.Body
+                              "
                               >Select</v-btn
                             >
                             <v-btn
@@ -241,13 +248,17 @@
                     class="ma-2 float-right"
                     outlined
                     color="blue"
-                    @click="choosedTemplate = 0"
+                    @click="
+                      choosedTemplate = 0
+                      RTEValue = ''
+                    "
                     >X Discard</v-btn
                   >
                   <v-card-text class="pl-1"
                     >Continue with default content or use editor to change
                     content.</v-card-text
                   >
+                  <RichText v-model="RTEValue" />
                 </v-card>
               </v-tab-item>
               <v-tab-item>
@@ -299,6 +310,10 @@ import gql from 'graphql-tag'
 import { formatGQLResult } from '~/utility/gql.js'
 import marketingTemplates from '~/config/apps/admin/gql/marketingTemplates.gql'
 export default {
+  components: {
+    RichText: () =>
+      process.client ? import('~/components/common/form/richtext.vue') : false,
+  },
   data() {
     return {
       templateItems: [],
@@ -311,6 +326,7 @@ export default {
       choosedTemplate: 0,
       preview: false,
       previewURL: '',
+      RTEValue: '',
     }
   },
   methods: {
