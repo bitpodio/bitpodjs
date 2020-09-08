@@ -90,120 +90,13 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-dialog v-model="dialog1" persistent max-width="850px">
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn color="primary" dark v-bind="attrs" v-on="on">
-          Open Dialog
-        </v-btn>
-      </template>
-      <v-card>
-        <v-card-title>
-          <span class="headline">New Event</span>
-        </v-card-title>
-        <v-card-text>
-          <v-row>
-            <v-col cols="12">
-              <v-text-field
-                label="Event Name*"
-                required
-                outlined
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <v-dialog
-                ref="dialog"
-                v-model="modal"
-                :return-value.sync="date"
-                persistent
-                width="290px"
-              >
-                <template v-slot:activator="{ on, attrs }">
-                  <v-text-field
-                    v-model="date"
-                    outlined
-                    label="Start Date"
-                    append-icon="fa-calendar"
-                    readonly
-                    v-bind="attrs"
-                    v-on="on"
-                  ></v-text-field>
-                </template>
-                <v-date-picker v-model="date" scrollable>
-                  <v-spacer></v-spacer>
-                  <v-btn text color="primary" @click="modal = false"
-                    >Cancel</v-btn
-                  >
-                  <v-btn text color="primary" @click="$refs.dialog.save(date)"
-                    >OK</v-btn
-                  >
-                </v-date-picker>
-              </v-dialog>
-            </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <v-menu
-                v-model="menu2"
-                :close-on-content-click="false"
-                :nudge-right="40"
-                transition="scale-transition"
-                offset-y
-                min-width="290px"
-              >
-                <template v-slot:activator="{ on, attrs }">
-                  <v-text-field
-                    v-model="date"
-                    outlined
-                    label="End Date"
-                    append-icon="fa-calendar"
-                    readonly
-                    v-bind="attrs"
-                    v-on="on"
-                  ></v-text-field>
-                </template>
-                <v-date-picker
-                  v-model="date"
-                  @input="menu2 = false"
-                ></v-date-picker>
-              </v-menu>
-            </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <v-select
-                :items="['0-17', '18-29', '30-54', '54+']"
-                label="Timezone*"
-                required
-                outlined
-              ></v-select>
-            </v-col>
-            <v-col cols="12">
-              <v-textarea
-                clearable
-                outlined
-                clear-icon="fa fa-close"
-                label="Description"
-                value=""
-              ></v-textarea>
-            </v-col>
-            <v-col cols="12" sm="6" md="6">
-              <v-text-field
-                label="Event Link*"
-                hint="https://bitpod-event.test.bitpod.io/e/"
-                persistent-hint
-                outlined
-                required
-              ></v-text-field>
-            </v-col>
-          </v-row>
-          <small>*indicates required field</small>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="dialog1 = false"
-            >Close</v-btn
-          >
-          <v-btn color="blue darken-1" text @click="dialog1 = false"
-            >Save</v-btn
-          >
-        </v-card-actions>
-      </v-card>
+    <v-dialog
+      v-model="dialog1"
+      persistent
+      content-class="slide-form"
+      transition="dialog-bottom-transition"
+    >
+      <NewSingleEvent :on-form-close="closeSingleEventForm" />
     </v-dialog>
 
     <v-dialog v-model="dialog" fullscreen transition="dialog-bottom-transition">
@@ -403,12 +296,21 @@
 </template>
 
 <script>
+import addMonths from 'date-fns/addMonths'
+import addDays from 'date-fns/addDays'
+import NewSingleEvent from '~/components/newSingleEvent.vue'
+// import eventList from '~/config/apps/event/gql/eventlist.gql'
 export default {
+  components: {
+    NewSingleEvent,
+  },
   props: {
     source: String,
   },
   data: () => ({
     date: new Date().toISOString().substr(0, 10),
+    startDate: addMonths(new Date(), 1).toISOString().substr(0, 10),
+    endDate: addDays(addMonths(new Date(), 1), 4).toISOString().substr(0, 10),
     menu: false,
     modal: false,
     menu2: false,
@@ -420,6 +322,7 @@ export default {
     tabs: null,
     account: false,
     message: false,
+
     items: [
       { icon: 'mdi-view-dashboard', text: 'Eventboard', to: '/' },
       { heading: 'Event' },
@@ -467,6 +370,9 @@ export default {
     async onLogout() {
       this.$auth.logout()
       await this.$apolloHelpers.onLogout()
+    },
+    closeSingleEventForm() {
+      this.dialog1 = false
     },
   },
 }

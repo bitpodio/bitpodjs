@@ -11,7 +11,9 @@ import 'jodit/build/jodit.min.css'
 import { JoditEditor } from 'jodit-vue'
 
 export default {
-  components: { JoditEditor },
+  components: {
+    JoditEditor,
+  },
   props: ['value', 'field'],
 
   data() {
