@@ -182,9 +182,7 @@ async function fetchCurrentOrg(req) {
 
 async function fetchUserOrgsDetails(req) {
   const reqHost = req.get('host')
-  console.log('reqhost = ', reqHost)
   let defaultPublicDomain = nuxtconfig.setting.domains.defaultPublicDomain
-  console.log('defaultPublicDomain = ', defaultPublicDomain)
   defaultPublicDomain = defaultPublicDomain.split(',')[0]
   let userDetails = {}
   if (reqHost === defaultPublicDomain) {
@@ -203,7 +201,6 @@ async function fetchUserOrgsDetails(req) {
       currentOrg,
     }
   }
-  console.log('userDetails = ', userDetails)
   return userDetails
 }
 
