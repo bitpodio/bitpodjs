@@ -34,9 +34,78 @@
             <v-tabs-items v-model="tabs">
               <v-tab-item v-for="i in 1" :key="i" :value="'mobile-tabs-5-1'">
                 <v-row>
-                  <v-col cols="12" style="min-height: 90vh;">
+                  <v-col cols="12">
                     Select a template
                   </v-col>
+                  <v-flex
+                    class="d-flex flex-wrap pa-0 justify-center justify-md-start"
+                  >
+                    <v-hover
+                      v-for="item in formData"
+                      :key="item.id"
+                      v-slot:default="{ hover }"
+                    >
+                      <div style="position: relative;">
+                        <v-card
+                          :elevation="hover ? 4 : 2"
+                          class="ma-3 ml-0 mt-0"
+                          :class="{ 'on-hover': hover }"
+                          height="250"
+                          width="250"
+                        >
+                          <div v-if="item.ImageUrl !== null" class="pa-1">
+                            <v-img
+                              :src="item.ImageUrl"
+                              :lazy-src="item.ImageUrl"
+                              aspect-ratio="1"
+                              class="grey lighten-2"
+                              min-height="200"
+                              max-height="200"
+                            >
+                              <template v-slot:placeholder>
+                                <v-img
+                                  :src="$config.cdnUri + 'invitee-image.png'"
+                                  class="grey lighten-2"
+                                  min-height="200"
+                                  max-height="200"
+                                >
+                                </v-img>
+                              </template>
+                            </v-img>
+                          </div>
+                          <div v-else class="pa-1">
+                            <v-img
+                              :src="$config.cdnUri + 'invitee-image.png'"
+                              class="grey lighten-2"
+                              min-height="200"
+                              max-height="200"
+                            >
+                            </v-img>
+                          </div>
+                          <v-card-actions>
+                            <div class="text-truncate text-capitalize">
+                              {{ item.Name }}
+                            </div>
+                          </v-card-actions>
+                        </v-card>
+                        <v-row
+                          v-if="hover"
+                          class="fill-height flex-column"
+                          justify="space-between"
+                        >
+                          <div class="align-self-center templateButtons">
+                            <v-btn
+                              class="ma-2"
+                              outlined
+                              color="indigo"
+                              @click="selectTemplate(item.Name)"
+                              >Select</v-btn
+                            >
+                          </div>
+                        </v-row>
+                      </div>
+                    </v-hover>
+                  </v-flex>
                 </v-row>
               </v-tab-item>
               <v-tab-item v-for="i in 1" :key="i" :value="'mobile-tabs-5-2'">
@@ -48,79 +117,92 @@
                   </v-col>
                   <v-col cols="12" sm="6" md="6">
                     <v-text-field
+                      v-model="sectionHeading.speakers"
                       label="Label for Speakers section"
                       outlined
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="6">
                     <v-text-field
+                      v-model="sectionHeading.registrationTypes"
                       label="Label for Registration Types section"
                       outlined
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="6">
                     <v-text-field
+                      v-model="sectionHeading.session"
                       label="Label for Sessions section"
                       outlined
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="6">
                     <v-text-field
+                      v-model="sectionHeading.registrationbtn"
                       label="Label for Register button"
                       outlined
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="6">
                     <v-text-field
+                      v-model="sectionHeading.ticketsectionlabel"
                       label="Label for Tickets section"
                       outlined
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="6">
                     <v-text-field
+                      v-model="sectionHeading.ticketlabel"
                       label="Label for Tickets"
                       outlined
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="6">
                     <v-text-field
+                      v-model="sectionHeading.datetimelabel"
                       label="Label for Date and Time section"
                       outlined
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="6">
                     <v-text-field
+                      v-model="sectionHeading.venuelabel"
                       label="Label for Venue section"
                       outlined
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="6">
                     <v-text-field
+                      v-model="sectionHeading.sessionsectionlabel"
                       label="Label for Recurring Sessions section"
                       outlined
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="6">
                     <v-text-field
+                      v-model="sectionHeading.registrationquestionsectionlabel"
                       label="Label for Registration Questions section"
                       outlined
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="6">
                     <v-text-field
+                      v-model="sectionHeading.gallery"
                       label="Label for Image Gallery section"
                       outlined
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="6">
                     <v-text-field
+                      v-model="sectionHeading.review"
                       label="Label for Reviews section"
                       outlined
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="6">
                     <v-select
-                      :items="['Bollons', 'Music', 'Airlift']"
+                      v-model="animation"
+                      :items="animationDropDown"
                       label="Animation"
                       outlined
                     ></v-select>
@@ -128,14 +210,14 @@
                   <v-col cols="12" sm="6" md="6"></v-col>
                   <v-col cols="12" class="py-0">
                     <v-checkbox
-                      v-model="allowSpaces"
+                      v-model="sectionHeading.showimagegallery"
                       label=" Show Image Gallery"
                       class="ma-0"
                     ></v-checkbox>
                   </v-col>
                   <v-col cols="12" class="py-0">
                     <v-checkbox
-                      v-model="allowSpaces"
+                      v-model="sectionHeading.showeventreviews"
                       label=" Show Event Reviews"
                       class="ma-0"
                     ></v-checkbox>
@@ -147,7 +229,10 @@
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions class="pl-4">
-          <v-btn color="primary" depressed @click.native="close">Save</v-btn>
+          <!-- <v-btn color="primary" depressed @click.native="changeTab"
+            >Next</v-btn
+          > -->
+          <v-btn color="primary" depressed @click.native="onSave">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -155,6 +240,11 @@
 </template>
 
 <script>
+import gql from 'graphql-tag'
+import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
+import event from '~/config/apps/event/gql/event.gql'
+import { formatGQLResult } from '~/utility/gql.js'
+import templateList from '~/config/apps/event/gql/templateList.gql'
 export default {
   props: {
     siteSetting: {
@@ -163,12 +253,175 @@ export default {
   },
   data() {
     return {
-      tabs: null,
+      tabs: '1',
+      data: {
+        template: {},
+        event: {},
+      },
+      formData: {},
+      eventData: {},
+      sectionHeading: {},
+      themeSelected: '',
+      animation: [],
+      animationDropDown: [],
     }
   },
+  mounted() {
+    this.getDropDownData('AnimationImage')
+      .then((res) => {
+        this.animationDropDown = res.map((i) => i.value)
+        return res
+      })
+      .catch((e) => {
+        console.log('Error', e)
+      })
+  },
   methods: {
+    changeTab() {
+      this.tabs = '2'
+    },
+    selectTemplate(value) {
+      debugger
+      this.eventData.RegistrationSiteTemplate = value
+      console.log('===ooutput', value)
+    },
     close() {
       this.$emit('update:siteSetting', false)
+    },
+    refresh() {
+      this.$apollo.queries.data1.refresh()
+    },
+    onSave() {
+      debugger
+      this.sectionHeading.animation = this.animation
+      Object.assign(this.eventData, {
+        _sectionHeading: this.sectionHeading,
+      })
+      delete this.eventData._VenueAddress
+      this.$axios
+        .$patch(
+          `https://event.test.bitpod.io/svc/api/Events/${this.$route.params.id}`,
+          {
+            ...this.eventData,
+          }
+        )
+        .then((res) => {
+          debugger
+          this.close()
+          this.refresh()
+          return (this.sectionHeading = res._sectionHeading)
+        })
+        .catch((e) => {
+          console.log('Error', e)
+        })
+    },
+    getDropDownData(filterType) {
+      return this.$apollo
+        .query({
+          query: gql`
+            ${generalconfiguration}
+          `,
+          variables: {
+            filters: {
+              where: {
+                type: filterType,
+              },
+            },
+          },
+        })
+        .then((result) => {
+          const generalConfig = formatGQLResult(
+            result.data,
+            'GeneralConfiguration'
+          )
+          return generalConfig
+        })
+        .catch((e) => {
+          console.log('Error', e)
+        })
+    },
+  },
+  apollo: {
+    data: {
+      query() {
+        return gql`
+          ${templateList}
+        `
+      },
+      variables() {
+        return {
+          filters: {
+            where: {
+              Name: {
+                inq: ['event', 'Rhine', 'Limmat', 'Dark'],
+              },
+            },
+          },
+        }
+      },
+      update(data) {
+        debugger
+        const template = formatGQLResult(data, 'Template')
+        this.formData = template
+        return {
+          template: template.length > 0 ? template : {},
+        }
+      },
+      result({ data, loading, networkStatus }) {},
+      error(error) {
+        this.error = error
+        this.loading = 0
+      },
+      prefetch: false,
+      loadingKey: 'loading',
+      skip: false,
+      pollInterval: 0,
+    },
+    data1: {
+      query() {
+        return gql`
+          ${event}
+        `
+      },
+      variables() {
+        return {
+          filters: {
+            where: {
+              id: this.$route.params.id,
+            },
+          },
+          badgeFilter: {
+            where: {
+              EventId: this.$route.params.id,
+            },
+          },
+          eventId: this.$route.params.id,
+        }
+      },
+      update(data) {
+        debugger
+        const event = formatGQLResult(data, 'Event')
+        // this.eventData = event.length > 0 ? { ...event[0]._sectionHeading } : {}
+        this.sectionHeading = event.length > 0 ? event[0]._sectionHeading : {}
+        this.sectionHeading =
+          this.sectionHeading != null ? this.sectionHeading : {}
+        this.animation = this.sectionHeading.animation
+        this.eventData = event.length > 0 ? { ...event[0] } : {}
+        this.eventData.id = this.$route.params.id
+        console.log('result===', this.eventData)
+        return {
+          event: event.length > 0 ? event : {},
+        }
+      },
+      result({ data, loading, networkStatus }) {},
+      error(error) {
+        this.error = error
+        this.loading = 0
+      },
+      prefetch: false,
+      loadingKey: 'loading',
+      skip: false,
+      pollInterval: 0,
     },
   },
 }
