@@ -537,6 +537,9 @@ export default {
               (v) => {
                 return !!v || 'Phone is required'
               },
+              function (value, data) {
+                return /^[0-9]\d*$|^$/.test(value) || 'Number must be valid'
+              },
             ],
           },
           '_CurrentAddress.AddressLine': {
@@ -628,6 +631,11 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Ticket should be selected'
+              },
+            ],
             dataSource: {
               query: eventTickets,
               itemText: 'Code',
@@ -687,6 +695,7 @@ export default {
             return {
               new: {
                 EventId: ctx.$route.params.id,
+                Status: 'Success',
               },
               edit: {},
             }
@@ -762,6 +771,9 @@ export default {
               (v) => {
                 return !!v || 'Phone is required'
               },
+              function (value, data) {
+                return /^[0-9]\d*$|^$/.test(value) || 'Number must be valid'
+              },
             ],
           },
           CompanyName: {
@@ -796,21 +808,11 @@ export default {
             newForm: true,
             editForm: true,
             multiple: true,
-            // dataSource: {
-            //   type: 'rest',
-            //   itemText: 'CodeAmount',
-            //   itemValue: 'id',
-            //   getData: (ctx) => {
-            //     let filter = {
-            //       where: {
-            //         Events: ctx.$route.params.id,
-            //       },
-            //     }
-            //     filter = JSON.stringify(filter)
-            //     const path = `/Tickets/getTicketData?filter=${filter}`
-            //     return getLookupData(path)
-            //   },
-            // },
+            rules: [
+              (v) => {
+                return !!v || 'Ticket is required'
+              },
+            ],
             dataSource: {
               query: eventRegistrationTickets,
               itemText: 'CodeAmount',
@@ -944,6 +946,11 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Address is required'
+              },
+            ],
           },
           '_CurrentAddress.City': {
             form: {
@@ -1203,11 +1210,22 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
+            minimumValue: '1',
             default: 0,
             readonly(value, data) {
               const type = data.Type
               return type === 'Free' || type === ''
             },
+            rules: [
+              (v) => {
+                return !!v || 'Price is required'
+              },
+              function (value, data) {
+                return (
+                  /^[0-9]\d*$|^$/.test(value) || 'Price should not be negative'
+                )
+              },
+            ],
           },
           Type: {
             form: {
@@ -1259,6 +1277,12 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
+            minimumValue: '1',
+            rules: [
+              (v) => {
+                return !!v || 'Total Count is required'
+              },
+            ],
           },
           Group: {
             form: {
@@ -1321,6 +1345,18 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
+            minimumValue: '1',
+            rules: [
+              (v) => {
+                return !!v || 'Display Order is required'
+              },
+              function (value, data) {
+                return (
+                  /^[1-9]\d*$|^$/.test(value) ||
+                  'Display Order should not be negative'
+                )
+              },
+            ],
           },
           AvailableCount: {
             displayOrder: 6,
@@ -1471,7 +1507,7 @@ export default {
         fields: {
           codeTitle: {
             form: {
-              caption: 'Code',
+              caption: 'Code *',
               displayOrder: 1,
             },
             displayOrder: 2,
@@ -1484,6 +1520,11 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Code is required'
+              },
+            ],
           },
           maxUsageCount: {
             form: {
@@ -1534,6 +1575,18 @@ export default {
             newForm: true,
             editForm: true,
             hidden: false,
+            minimumValue: '1',
+            rules: [
+              (v) => {
+                return !!v || 'Offer Value is required'
+              },
+              function (value, data) {
+                return (
+                  /^[1-9]\d*$|^$/.test(value) ||
+                  'Offer Value should not be negative'
+                )
+              },
+            ],
           },
           validTill: {
             form: {
@@ -1771,7 +1824,7 @@ export default {
             caption: 'Start Date',
             searchEnable: true,
             sortEnable: true,
-            columnWidth: '250px',
+            columnWidth: '220px',
             type: 'datetime',
             cssClasses: 'col-6 col-md-6',
             hidden: false,
@@ -1799,7 +1852,7 @@ export default {
             caption: 'End Date',
             searchEnable: true,
             sortEnable: true,
-            columnWidth: '150px',
+            columnWidth: '220px',
             type: 'datetime',
             cssClasses: 'col-6 col-md-6',
             hidden: false,
@@ -2233,6 +2286,10 @@ export default {
         hidden: true,
         fields: {
           Title: {
+            form: {
+              caption: 'Enter Title *',
+              displayOrder: 1,
+            },
             displayOrder: 2,
             caption: 'Title',
             searchEnable: true,
@@ -2244,8 +2301,17 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Title is required'
+              },
+            ],
           },
           Category: {
+            form: {
+              caption: 'Category *',
+              displayOrder: 2,
+            },
             displayOrder: 5,
             caption: 'Category',
             searchEnable: true,
@@ -2257,6 +2323,11 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Category is required'
+              },
+            ],
             dataSource: {
               query: registrationStatusOptions,
               itemText: 'value',
@@ -2269,6 +2340,10 @@ export default {
             },
           },
           Status: {
+            form: {
+              caption: 'Status *',
+              displayOrder: 3,
+            },
             displayOrder: 3,
             caption: 'Status',
             searchEnable: true,
@@ -2280,6 +2355,12 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
+            default: 'Wait for an Action',
+            rules: [
+              (v) => {
+                return !!v || 'Status is required'
+              },
+            ],
             dataSource: {
               query: registrationStatusOptions,
               itemText: 'value',
@@ -2292,6 +2373,10 @@ export default {
             },
           },
           Action: {
+            form: {
+              caption: 'Action *',
+              displayOrder: 4,
+            },
             displayOrder: 4,
             caption: 'Wait For',
             searchEnable: true,
@@ -2303,6 +2388,12 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
+            default: 'New Registration',
+            rules: [
+              (v) => {
+                return !!v || 'Action is required'
+              },
+            ],
             dataSource: {
               query: registrationStatusOptions,
               itemText: 'value',
@@ -2310,6 +2401,58 @@ export default {
               filter(data) {
                 return {
                   type: 'Event_TaskAction',
+                }
+              },
+            },
+          },
+          Day: {
+            form: {
+              caption: 'Day',
+              displayOrder: 5,
+            },
+            displayOrder: 6,
+            caption: 'Type',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'lookup',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            dataSource: {
+              query: registrationStatusOptions,
+              itemText: 'value',
+              itemValue: 'key',
+              filter(data) {
+                return {
+                  type: 'Event_AvailableDay',
+                }
+              },
+            },
+          },
+          Time: {
+            form: {
+              caption: 'Time',
+              displayOrder: 6,
+            },
+            displayOrder: 6,
+            caption: 'Type',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'lookup',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            dataSource: {
+              query: registrationStatusOptions,
+              itemText: 'value',
+              itemValue: 'key',
+              filter(data) {
+                return {
+                  type: 'AvailableHour',
                 }
               },
             },
@@ -2327,6 +2470,10 @@ export default {
             editForm: false,
           },
           DueDate: {
+            form: {
+              caption: 'DueDate',
+              displayOrder: 7,
+            },
             displayOrder: 7,
             caption: 'Due Date',
             searchEnable: true,
@@ -2339,6 +2486,10 @@ export default {
             editForm: true,
           },
           Timezone: {
+            form: {
+              caption: 'Timezone',
+              displayOrder: 8,
+            },
             displayOrder: 7,
             caption: 'Timezone',
             searchEnable: true,
@@ -2397,19 +2548,6 @@ export default {
             inlineEdit: true,
             newForm: false,
             editForm: false,
-          },
-          EventId: {
-            displayOrder: 12,
-            caption: 'EventId',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
-            cssClasses: 'col-6 col-md-6',
-            hidden: true,
-            inlineEdit: true,
-            newForm: true,
-            editForm: true,
           },
         },
         template: {

@@ -25,7 +25,7 @@ export default {
 .v-chip.Failed {
   background: #f25955;
 }
-.v-chip.null {
+.v-chip.Cancelled {
   background: orange;
 }
 </style>

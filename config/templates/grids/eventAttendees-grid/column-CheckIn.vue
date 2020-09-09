@@ -20,12 +20,8 @@
 
 <script>
 export default {
-  props: ['item', 'value', 'context', 'tableData'],
+  props: ['item', 'value', 'context', 'tableData', 'refresh'],
   methods: {
-    refresh() {
-      debugger
-      this.$apollo.queries.tableData.refresh()
-    },
     updateDate() {
       this.$axios
         .$put(`https://event.test.bitpod.io/svc/api/Attes/${this.item.id}`, {

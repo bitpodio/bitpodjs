@@ -5,6 +5,7 @@
     :type="fieldControlType"
     outlined
     :rules="rules"
+    :min="field.minimumValue"
     :readonly="readonly"
     @keyup="onKeyup"
   ></v-text-field>
@@ -16,6 +17,7 @@ export default {
   mixins: [formFieldMixin],
   props: ['value', 'field', 'rules', 'readonly'],
   data() {
+    debugger
     return {
       textInput: this.value,
     }
