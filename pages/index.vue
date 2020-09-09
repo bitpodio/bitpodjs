@@ -65,4 +65,9 @@ export default {
 .login-type {
   border: 1px solid #ddd;
 }
+@media screen and (max-width: 600px) {
+  .login-box {
+    min-width: fit-content !important;
+  }
+}
 </style>
