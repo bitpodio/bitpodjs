@@ -22,17 +22,17 @@
           <v-card flat>
             <v-tabs v-model="tabs" center-active>
               <v-tabs-slider></v-tabs-slider>
-              <v-tab href="#mobile-tabs-5-1" class="primary--text">
+              <v-tab href="#tab-1" class="primary--text">
                 <span>Templates</span>
               </v-tab>
 
-              <v-tab href="#mobile-tabs-5-2" class="primary--text">
+              <v-tab href="#tab-2" class="primary--text">
                 <span>Section Setting</span>
               </v-tab>
             </v-tabs>
 
             <v-tabs-items v-model="tabs">
-              <v-tab-item v-for="i in 1" :key="i" :value="'mobile-tabs-5-1'">
+              <v-tab-item :value="'tab-1'">
                 <v-row>
                   <v-col cols="12">
                     Select a template
@@ -45,7 +45,7 @@
                       :key="item.id"
                       v-slot:default="{ hover }"
                     >
-                      <div style="position: relative;">
+                      <div class="card-content">
                         <v-card
                           :elevation="hover ? 4 : 2"
                           class="ma-3 ml-0 mt-0"
@@ -82,33 +82,42 @@
                             >
                             </v-img>
                           </div>
-                          <v-card-actions>
+                          <!-- <v-card-actions>
                             <div class="text-truncate text-capitalize">
                               {{ item.Name }}
                             </div>
-                          </v-card-actions>
-                        </v-card>
-                        <v-row
-                          v-if="hover"
-                          class="fill-height flex-column"
-                          justify="space-between"
-                        >
-                          <div class="align-self-center templateButtons">
-                            <v-btn
-                              class="ma-2"
-                              outlined
-                              color="indigo"
-                              @click="selectTemplate(item.Name)"
-                              >Select</v-btn
+                          </v-card-actions> -->
+                          <v-flex
+                            v-if="hover"
+                            class="justify-center text-center"
+                          >
+                            <div
+                              class="d-flex justify-center text-center templateButtons"
                             >
-                          </div>
-                        </v-row>
+                              <v-btn
+                                class="ma-2"
+                                outlined
+                                color="primary"
+                                @click="selectTemplate(item.Name)"
+                                >Select</v-btn
+                              >
+                            </div>
+                          </v-flex>
+                        </v-card>
+                        <div
+                          class="text-truncate text-capitalize text-center pb-10"
+                        >
+                          {{ item.Name }}
+                        </div>
                       </div>
                     </v-hover>
                   </v-flex>
                 </v-row>
+                <v-card flat>
+                  <v-btn color="primary" @click="tabs = 'tab-2'">Next</v-btn>
+                </v-card>
               </v-tab-item>
-              <v-tab-item v-for="i in 1" :key="i" :value="'mobile-tabs-5-2'">
+              <v-tab-item :value="'tab-2'">
                 <v-row>
                   <v-col cols="12">
                     Here you can change section titles of registration site, to
@@ -223,17 +232,24 @@
                     ></v-checkbox>
                   </v-col>
                 </v-row>
+                <v-btn color="primary" depressed @click="tabs = 'tab-1'"
+                  >Prev</v-btn
+                >
+                <v-btn color="primary" depressed @click.native="onSave"
+                  >Save</v-btn
+                >
               </v-tab-item>
             </v-tabs-items>
           </v-card>
         </v-card-text>
         <v-divider></v-divider>
-        <v-card-actions class="pl-4">
-          <!-- <v-btn color="primary" depressed @click.native="changeTab"
+        <!-- <v-card-actions class="pl-4"> -->
+        <!-- <v-btn color="primary" depressed @click.native="changeTab"
             >Next</v-btn
           > -->
-          <v-btn color="primary" depressed @click.native="onSave">Save</v-btn>
-        </v-card-actions>
+        <!-- <v-btn color="primary" depressed @click="tab = 'tab-1'">Prev</v-btn>
+          <v-btn color="primary" depressed @click.native="onSave">Save</v-btn> -->
+        <!-- </v-card-actions> -->
       </v-card>
     </v-dialog>
   </v-layout>
@@ -426,3 +442,18 @@ export default {
   },
 }
 </script>
+<style scoped>
+.card-content {
+  position: relative;
+}
+.templateButtons {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+}
+.selectBtn:hover {
+  background: #1a73e8;
+  text-align: center;
+  color: grey;
+}
+</style>
