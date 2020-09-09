@@ -22,7 +22,8 @@ import { formFieldMixin } from '~/utility/form-control'
 
 function formatResult(data) {
   const [modelName] = Object.getOwnPropertyNames(data)
-  const { edges } = data[modelName][`${modelName}Find`]
+  const [modelApi] = Object.getOwnPropertyNames(data[modelName])
+  const { edges } = data[modelName][`${modelApi}`]
   return edges.map(({ node: { id, ...rest } }) => {
     return { id: getIdFromAtob(id), ...rest }
   })

@@ -13,6 +13,7 @@ import eventSession from './gql/eventSession.gql'
 import eventRecurringSession from './gql/eventRecurringSession.gql'
 import eventTasks from './gql/eventTasks.gql'
 import registrationType from './gql/registrationType.gql'
+import eventRegistrationTickets from './gql/eventRegistrationTickets.gql'
 // import eventSpeakers from './gql/eventSpeakers.gql'
 import { getData, getLookupData } from './rest'
 
@@ -795,9 +796,24 @@ export default {
             newForm: true,
             editForm: true,
             multiple: true,
+            // dataSource: {
+            //   type: 'rest',
+            //   itemText: 'CodeAmount',
+            //   itemValue: 'id',
+            //   getData: (ctx) => {
+            //     let filter = {
+            //       where: {
+            //         Events: ctx.$route.params.id,
+            //       },
+            //     }
+            //     filter = JSON.stringify(filter)
+            //     const path = `/Tickets/getTicketData?filter=${filter}`
+            //     return getLookupData(path)
+            //   },
+            // },
             dataSource: {
-              query: eventTickets,
-              itemText: 'Code',
+              query: eventRegistrationTickets,
+              itemText: 'CodeAmount',
               itemValue: 'id',
               filter(data) {
                 return {
@@ -1026,7 +1042,7 @@ export default {
           hideDefaultFooter: false,
           showExpand: false,
           singleExpand: false,
-          showSelect: true,
+          showSelect: false,
           hideFilter: false,
           hideSearch: true,
         },
@@ -1114,7 +1130,7 @@ export default {
           },
         },
         template: {
-          name: 'event-grid',
+          name: 'eventInvites-grid',
           context: {
             basePath: '/event',
           },
@@ -1447,7 +1463,7 @@ export default {
           hideDefaultFooter: false,
           showExpand: false,
           singleExpand: false,
-          showSelect: true,
+          showSelect: false,
           hideFilter: false,
           hideSearch: true,
         },
@@ -1635,7 +1651,7 @@ export default {
           hideDefaultFooter: false,
           showExpand: false,
           singleExpand: false,
-          showSelect: true,
+          showSelect: false,
           hideFilter: false,
           hideSearch: true,
         },
@@ -1683,7 +1699,7 @@ export default {
           },
         },
         template: {
-          name: 'event-grid',
+          name: 'eventRegistrationQuestion-grid',
           context: {
             basePath: '/event',
           },
@@ -1701,7 +1717,7 @@ export default {
           hideDefaultFooter: false,
           showExpand: false,
           singleExpand: false,
-          showSelect: true,
+          showSelect: false,
           hideFilter: false,
           hideSearch: true,
         },
@@ -1989,79 +2005,217 @@ export default {
           hideDefaultFooter: false,
           showExpand: false,
           singleExpand: false,
-          showSelect: true,
+          showSelect: false,
           hideFilter: false,
           hideSearch: true,
         },
         hidden: true,
         fields: {
           Title: {
+            form: {
+              caption: 'Title',
+              displayOrder: 5,
+            },
             displayOrder: 2,
             caption: 'Title',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
           },
           FirstName: {
+            form: {
+              caption: 'First Name *',
+              displayOrder: 1,
+            },
             displayOrder: 3,
             caption: 'First Name',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'First Name is required'
+              },
+            ],
           },
           LastName: {
+            form: {
+              caption: 'Last Name *',
+              displayOrder: 2,
+            },
             displayOrder: 4,
             caption: 'Last Name',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Last Name is required'
+              },
+            ],
           },
           Email: {
+            form: {
+              caption: 'Email *',
+              displayOrder: 4,
+            },
             displayOrder: 5,
             caption: 'Email',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Email is required'
+              },
+              function (value, data) {
+                return /.+@.+\..+/.test(value) || 'E-mail must be valid'
+              },
+            ],
           },
           Phone: {
+            form: {
+              caption: 'Phone *',
+              displayOrder: 3,
+            },
             displayOrder: 6,
             caption: 'Phone',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Phone is required'
+              },
+            ],
           },
           Linkdin: {
+            form: {
+              caption: 'LinkedIn',
+              displayOrder: 7,
+            },
             displayOrder: 7,
             caption: 'Linkdin',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
           },
           Twitter: {
+            form: {
+              caption: 'Twitter',
+              displayOrder: 8,
+            },
             displayOrder: 8,
             caption: 'Twitter',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+          },
+          Facebook: {
+            form: {
+              caption: 'Facebook',
+              displayOrder: 6,
+            },
+            displayOrder: 8,
+            caption: 'Facebook',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+          },
+          Description: {
+            form: {
+              caption: 'Description',
+              displayOrder: 9,
+            },
+            cssClasses: 'col-12 col-md-12',
+            displayOrder: 8,
+            caption: 'Description',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+          },
+          MyImage: {
+            form: {
+              caption: 'Image',
+              displayOrder: 10,
+            },
+            cssClasses: 'col-6 col-md-6',
+            displayOrder: 8,
+            caption: 'MyImage',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'file',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
           },
         },
         template: {
-          name: 'event-grid',
+          name: 'eventSpeakers-grid',
           context: {
             basePath: '/event',
           },
         },
         dataSource: {
+          model: 'Speaker',
           type: 'rest',
           getData: (ctx) =>
             getData(`/Events/${ctx.$route.params.id}/EventSpeakers`),
+          mutation(ctx) {
+            return {
+              new: {
+                EventId: ctx.$route.params.id,
+              },
+              edit: {},
+            }
+          },
         },
         title: 'eventSpeakers',
         type: 'list',
@@ -2072,7 +2226,7 @@ export default {
           hideDefaultFooter: false,
           showExpand: false,
           singleExpand: false,
-          showSelect: true,
+          showSelect: false,
           hideFilter: false,
           hideSearch: true,
         },
@@ -2286,7 +2440,7 @@ export default {
           hideDefaultFooter: false,
           showExpand: false,
           singleExpand: false,
-          showSelect: true,
+          showSelect: false,
           hideFilter: false,
           hideSearch: true,
         },
