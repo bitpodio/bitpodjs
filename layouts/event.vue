@@ -1,6 +1,6 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer v-model="drawer" app class="nav-bar">
+    <v-navigation-drawer v-model="drawer" app class="nav-bar" :width="205">
       <v-toolbar-title class="ml-0 pl-3 px-2 py-2 logo-ds d-flex align-center">
         <span class="bitpod-logo logo-ds">
           <v-img
@@ -23,7 +23,7 @@
           <template v-slot:activator="{ on, attrs }">
             <v-btn
               v-bind="attrs"
-              color="blue darken-2"
+              color="primary"
               dark
               depressed
               class="ma-3 block wd-full"

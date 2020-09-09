@@ -101,7 +101,20 @@ body {
   display: block !important;
 }
 .nav-bar .fa {
-  font-size: 20px !important;
+  font-size: 15px !important;
+}
+.nav-bar .v-list-item {
+  min-height: 36px !important;
+  max-height: 36px !important;
+}
+.nav-bar .v-list-item__action {
+  margin: 10px 0 !important;
+}
+.nav-bar .nav-icon {
+  margin-right: 10px !important;
+}
+.v-list .v-list-item--active {
+  color: #1a73e8 !important;
 }
 .fs-36 {
   font-size: 36px !important;
@@ -128,6 +141,15 @@ body {
 .survey-img {
   max-width: 36px !important;
   max-height: 36px !important;
+}
+.v-data-table-header-mobile__wrapper {
+  flex-direction: row-reverse !important;
+}
+.v-data-table-header-mobile__select {
+  justify-content: flex-end !important;
+}
+.v-application--is-ltr .v-stepper__label {
+  text-align: center !important;
 }
 @media (max-width: 600px) {
   .slide-form,

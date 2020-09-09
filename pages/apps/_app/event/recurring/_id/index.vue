@@ -1,9 +1,9 @@
 <template>
   <v-flex d-flex flex-md-row flex-lg-row flex-column>
     <v-flex column xs12 sm8 md8 lg8>
-      <div class="xs12 sm8 md8 lg8 boxview pa-4 mr-2 mb-2">
+      <div class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-2 pb-0">
         <v-flex class="d-flex justify-center align-center pb-2">
-          <h1>{{ data.event.Title }}</h1>
+          <div class="text-h4">{{ data.event.Title }}</div>
           <v-spacer></v-spacer>
           <div class="mr-2">
             <v-btn depressed color="primary">View</v-btn>
@@ -18,9 +18,14 @@
               </v-btn>
             </template>
 
-            <v-list>
+            <v-list dense>
               <v-list-item>
-                <v-list-item-title>Publish to eventbrite</v-list-item-title>
+                <v-list-item-icon>
+                  <v-icon class="mr-3">mdi-plus</v-icon>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>Publish to eventbrite</v-list-item-title>
+                </v-list-item-content>
               </v-list-item>
               <v-list-item>
                 <v-list-item-title>Make a copy</v-list-item-title>
@@ -34,7 +39,7 @@
             </v-list>
           </v-menu>
         </v-flex>
-        <v-chip class="my-2">
+        <v-chip class="my-2 mt-1">
           Recurring Event
         </v-chip>
 
@@ -119,31 +124,14 @@
 
         <v-divider></v-divider>
         <v-flex class="d-flex flex-row align-center">
-          <v-tooltip top>
-            <template v-slot:activator="{ on, attrs }">
-              <v-avatar
-                color="warning"
-                size="24"
-                class="d-inline-flex"
-                dark
-                v-bind="attrs"
-                v-on="on"
-              >
-                <span class="white--text name-initial">{{
-                  data.event.createdBy
-                }}</span>
-              </v-avatar>
-            </template>
-            <span>{{ data.event.createdBy }}</span>
-          </v-tooltip>
-          <v-tooltip top>
-            <v-avatar color="warning" size="24" class="d-inline-flex">
+          <v-chip pill v-on="on">
+            <v-avatar left color="warning" size="24">
               <span class="white--text name-initial">{{
                 data.event.createdBy
               }}</span>
             </v-avatar>
             <span>{{ data.event.createdBy }}</span>
-          </v-tooltip>
+          </v-chip>
           <v-subheader class="d-inline-flex pl-1"
             ><span class="pl-1"
               >Created this event on
@@ -152,7 +140,7 @@
           >
         </v-flex>
       </div>
-      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
+      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2 pb-0">
         <h2 class="body-1 pb-2">
           <i class="fa fa-black-board pr-1" aria-hidden="true"></i>Recurring
           Sessions
@@ -160,42 +148,42 @@
         <v-divider></v-divider>
         <Grid view-name="eventRecurringSession" :content="content" />
       </div>
-      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
+      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2 pb-0">
         <h2 class="body-1 pb-2">
           <i class="fa fa-users pr-1" aria-hidden="true"></i>Attendees
         </h2>
         <v-divider></v-divider>
         <Grid view-name="eventAttendees" :content="content" />
       </div>
-      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
+      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2 pb-0">
         <h2 class="body-1 pb-2">
           <i class="fa fa-user-plus pr-1" aria-hidden="true"></i>Registrations
         </h2>
         <v-divider></v-divider>
         <Grid view-name="eventRegistrations" :content="content" />
       </div>
-      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
+      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2 pb-0">
         <h2 class="body-1 pb-2">
           <i class="fa fa-envelope1 pr-1" aria-hidden="true"></i> Invites
         </h2>
         <v-divider></v-divider>
         <Grid view-name="eventInvites" :content="content" />
       </div>
-      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
+      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2 pb-0">
         <h2 class="body-1 pb-2">
           <i class="fa fa-ticketalt pr-1" aria-hidden="true"></i> Tickets
         </h2>
         <v-divider></v-divider>
         <Grid view-name="eventTickets" :content="content" />
       </div>
-      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
+      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2 pb-0">
         <h2 class="body-1 pb-2">
           <i class="fa fa-settings1 pr-1" aria-hidden="true"></i> Discount Codes
         </h2>
         <v-divider></v-divider>
         <Grid view-name="eventDiscountCodes" :content="content" />
       </div>
-      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
+      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2 pb-0">
         <h2 class="body-1 pb-2">
           <i class="fa fa-question-circle pr-1" aria-hidden="true"></i>
           Registration Questions
@@ -203,21 +191,21 @@
         <v-divider></v-divider>
         <Grid view-name="eventRegistrationQuestion" :content="content" />
       </div>
-      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
+      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2 pb-0">
         <h2 class="body-1 pb-2">
           <i class="fa fa-mic pr-1" aria-hidden="true"></i> Speakers
         </h2>
         <v-divider></v-divider>
         <Grid view-name="eventSpeakers" :content="content" />
       </div>
-      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
+      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2 pb-0">
         <h2 class="body-1 pb-2">
           <i class="fa fa-external-link pr-1" aria-hidden="true"></i> Tasks
         </h2>
         <v-divider></v-divider>
         <Grid view-name="eventTasks" :content="content" />
       </div>
-      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
+      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2 pb-0">
         <h2 class="body-1 pb-2">
           <i class="fa fa-file-text-o pr-1" aria-hidden="true"></i> Registration
           Form
@@ -225,7 +213,7 @@
         <v-divider></v-divider>
         <Grid view-name="eventRegistrationForm" :content="content" />
       </div>
-      <div class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
+      <div class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2">
         <h2 class="body-1 pb-2">
           <i class="fa fa-image pr-1" aria-hidden="true"></i> Image Gallery
         </h2>
@@ -233,7 +221,7 @@
       </div>
     </v-flex>
     <v-flex column xs12 sm4 md4 lg4>
-      <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
+      <div class="xs12 sm4 md4 lg4 boxview pa-3 mb-2">
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-1">
             <i class="fa fa-info-circle pr-1" aria-hidden="true"></i> Event
@@ -276,7 +264,7 @@
         </v-flex>
       </div>
 
-      <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
+      <div class="xs12 sm4 md4 lg4 boxview pa-3 mb-2">
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-1">
             <i class="fa fa-tag pr-1" aria-hidden="true"></i> SEO Details
@@ -303,7 +291,7 @@
         </v-flex>
       </div>
 
-      <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
+      <div class="xs12 sm4 md4 lg4 boxview pa-3 mb-2">
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-1">
             <i class="fa fa-settings pr-1" aria-hidden="true"></i> Event
@@ -401,7 +389,7 @@
         </v-flex>
       </div>
 
-      <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
+      <div class="xs12 sm4 md4 lg4 boxview pa-3 mb-2">
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-1">
             <i class="fa fa-settings pr-1" aria-hidden="true"></i>
