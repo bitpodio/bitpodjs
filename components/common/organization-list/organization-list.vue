@@ -64,7 +64,7 @@ export default {
       debugger
       const orgURL = `${window.location.protocol}//${orgName}-${defaultPublicDomain}${basePath}`
       console.log(orgURL)
-      window.location.open(orgURL, '_blank')
+      window.open(orgURL, '_blank')
     },
     checkOrgDetails() {
       if (this.$auth.user.data) {
@@ -78,7 +78,7 @@ export default {
       }
     },
     onOpenClick() {
-        this.changeCurrentUrl(this.currentOrg)
+        this.currentOrg && this.changeCurrentUrl(this.currentOrg)
         this.dialog = false
     },
   },
