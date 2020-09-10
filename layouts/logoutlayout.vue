@@ -1,24 +1,20 @@
 <template>
   <v-app id="inspire">
-    <v-app-bar app flat class="greybg">
+    <v-app-bar app flat color="white">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title class="pl-0">Event</v-toolbar-title>
+      <span class="bitpod-logo logo-ds">
+        <v-img
+          :src="$config.cdnUri + 'bitpod-logo-blk2.svg'"
+          class="logo-full"
+        ></v-img>
+      </span>
       <v-spacer></v-spacer>
-      <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
-        <v-icon>mdi-invert-colors</v-icon>
-      </v-btn>
-      <v-btn icon>
-        <v-icon>mdi-apps</v-icon>
-      </v-btn>
-      <v-btn icon>
-        <v-icon>mdi-bell</v-icon>
-      </v-btn>
       <v-btn class="ma-2" outlined color="primary" to="/login">
         Sign in
       </v-btn>
     </v-app-bar>
 
-    <v-main class="greybg">
+    <v-main>
       <v-container fluid>
         <v-row>
           <v-col>
@@ -37,3 +33,14 @@ export default {
   layout: 'logoutlayout',
 }
 </script>
+
+<style scoped>
+.logo-full {
+  max-width: 110px !important;
+}
+@media screen and (max-width: 600px) {
+  .login-box {
+    min-width: fit-content !important;
+  }
+}
+</style>

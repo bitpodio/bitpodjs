@@ -1,5 +1,6 @@
 import colors from 'vuetify/es5/util/colors'
 const basePath = process.env.PUBLIC_PATH || ''
+
 export default {
   /*
    ** Nuxt rendering mode
@@ -43,6 +44,17 @@ export default {
           'https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap',
       },
     ],
+    script: [
+      {
+        src: `${
+          process.env.GOOGLE_MAPS_API ||
+          'https://maps.googleapis.com/maps/api/js'
+        }?key=${
+          process.env.GOOGLE_API_KEY ||
+          'AIzaSyCPS6SZlor8qxfpul-dKyN6566XG2R5dFM'
+        }&libraries=places`,
+      },
+    ],
   },
   /*
    ** Global CSS
@@ -67,6 +79,7 @@ export default {
     // Doc: https://github.com/nuxt-community/stylelint-module
     '@nuxtjs/stylelint-module',
     '@nuxtjs/vuetify',
+    '@nuxtjs/dotenv',
   ],
   /*
    ** Nuxt.js modules
@@ -76,14 +89,36 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/apollo',
     '@nuxtjs/auth-next',
+    [
+      'nuxt-gmaps',
+      {
+        key:
+          process.env.GOOGLE_API_KEY ||
+          'AIzaSyCPS6SZlor8qxfpul-dKyN6566XG2R5dFM',
+        // you can use libraries: ['places']
+      },
+    ],
   ],
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
+    apiEndpoint: '/svc/api/',
+    backendBaseUrl: process.env.PUBLIC_DOMAIN || '',
     baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
+    eventUrl: process.env.GET_EVENT_URL || 'event.test.bitpod.io',
   },
+
+  publicRuntimeConfig: {
+    axios: {
+      browserBaseURL: process.env.BROWSER_BASE_URL,
+      backendBaseUrl: process.env.PUBLIC_DOMAIN,
+    },
+    cdnUri:
+      'https://res.cloudinary.com/mytestlogo/image/upload/bitpodjs/images/',
+  },
+
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
@@ -119,7 +154,9 @@ export default {
    ** Build configuration
    ** See https://nuxtjs.org/api/configuration-build/
    */
-  build: {},
+  build: {
+    transpile: /@fullcalendar.*/, // transpile ESM modules within all fullcalendar packages
+  },
   vue: {
     config: {
       productionTip: true,
@@ -219,5 +256,18 @@ export default {
       },
     },
     devtools: true,
+  },
+  generalConfig: {
+    googleMapKey:
+      process.env.GOOGLE_API_KEY || 'AIzaSyCPS6SZlor8qxfpul-dKyN6566XG2R5dFM',
+    googleMapGeocodeApi:
+      process.env.GOOGLE_MAPS_GEOCODE_API ||
+      'https://maps.googleapis.com/maps/api/geocode/json',
+  },
+  setting: {
+    domains: {
+      defaultPublicDomain:
+        process.env.DEFAULT_PUBLIC_DOMAIN || 'event.test.bitpod.io',
+    },
   },
 }
