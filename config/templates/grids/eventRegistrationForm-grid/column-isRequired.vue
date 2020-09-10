@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  props: ['item', 'value', 'context'],
+  props: ['item', 'value', 'context', 'refresh'],
   data() {
     return {
       checkbox: this.item.isRequired,
@@ -20,6 +20,7 @@ export default {
           }
         )
         .then((res) => {
+          this.refresh()
           return res
         })
         .catch((e) => {

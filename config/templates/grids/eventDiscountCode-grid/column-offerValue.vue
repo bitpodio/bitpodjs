@@ -10,25 +10,5 @@
 <script>
 export default {
   props: ['item', 'value', 'context'],
-  methods: {
-    refresh() {
-      debugger
-      this.$apollo.queries.item.refresh()
-    },
-    updateDate() {
-      this.$axios
-        .$put(`https://event.test.bitpod.io/svc/api/Attes/${this.item.id}`, {
-          CheckIn: new Date(),
-        })
-        .then((res) => {
-          debugger
-          this.refresh()
-          return res
-        })
-        .catch((e) => {
-          console.log('error', e)
-        })
-    },
-  },
 }
 </script>

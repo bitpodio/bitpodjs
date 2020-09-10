@@ -19,12 +19,8 @@
 
 <script>
 export default {
-  props: ['item', 'value', 'context'],
+  props: ['item', 'value', 'context', 'refresh'],
   methods: {
-    refresh() {
-      debugger
-      this.$apollo.queries.tableData.refresh()
-    },
     updateDate() {
       alert('are you sure, you want to cancel check in?')
       this.$axios
@@ -32,7 +28,6 @@ export default {
           CheckIn: null,
         })
         .then((res) => {
-          debugger
           this.refresh()
           return res
         })
