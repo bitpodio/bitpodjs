@@ -1501,6 +1501,142 @@ export default {
         title: 'eventTasks',
         type: 'list',
       },
+      inviteeEventTasks: {
+        ui: {
+          hideDefaultHeader: false,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: true,
+          hideFilter: false,
+          hideSearch: true,
+        },
+        hidden: true,
+        fields: {
+          Title: {
+            displayOrder: 2,
+            caption: 'Title',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          Status: {
+            displayOrder: 3,
+            caption: 'Status',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          Action: {
+            displayOrder: 4,
+            caption: 'Wait For',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          Category: {
+            displayOrder: 5,
+            caption: 'Category',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          Type: {
+            displayOrder: 6,
+            caption: 'Type',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          DueDate: {
+            displayOrder: 7,
+            caption: 'Due Date',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'datetime',
+          },
+          Timezone: {
+            displayOrder: 7,
+            caption: 'Timezone',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'timezone',
+          },
+          createdDate: {
+            displayOrder: 8,
+            caption: 'Created Date',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'date',
+          },
+          createdBy: {
+            displayOrder: 9,
+            caption: 'Created By',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          TemplateName: {
+            displayOrder: 10,
+            caption: 'Template Name',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          Edit: {
+            displayOrder: 11,
+            caption: 'Action',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          EventId: {
+            displayOrder: 12,
+            caption: 'EventId',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            cssClasses: 'col-6 col-md-6',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+          },
+        },
+        template: {
+          name: 'contactInvitee-grid',
+          context: {
+            basePath: '/event',
+          },
+        },
+        dataSource: {
+          query: eventTasks,
+          defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          model: 'CRMActivity',
+          filter(ctx) {
+            return {
+              where: {
+                EventId: ctx.$route.params.id,
+              },
+            }
+          },
+        },
+        title: 'eventTasks',
+        type: 'list',
+      },
       eventRegistrationForm: {
         ui: {
           hideDefaultHeader: false,
@@ -3225,6 +3361,44 @@ export default {
         },
         template: {
           name: 'link-grid',
+          context: {
+            basePath: '/contacts',
+          },
+        },
+        dataSource: {
+          query: contactList,
+          filter: {
+            where: {},
+          },
+          type: 'graphql',
+          model: 'Contact',
+          defaultSort: 'createdDate DESC',
+        },
+        title: 'Contacts',
+        defaultSort: 'createdDate DESC',
+      },
+      InviteContacts: {
+        ui: {
+          hideDefaultHeader: false,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: true,
+          hideFilter: false,
+          hideSearch: true,
+        },
+        fields: {
+          Email: {
+            displayOrder: 1,
+            caption: 'Email',
+          },
+          FullName: {
+            displayOrder: 2,
+            caption: 'Full Name',
+          },
+        },
+        template: {
+          name: 'contactInvitee-grid',
           context: {
             basePath: '/contacts',
           },

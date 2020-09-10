@@ -4,7 +4,7 @@
       v-model="dialog"
       persistent
       scrollable
-      content-class="slide-form-default"
+      content-class="slide-form-default-big"
       transition="dialog-bottom-transition"
     >
       <template v-slot:activator="{ on, attrs }">
@@ -22,7 +22,7 @@
           </v-btn>
         </v-toolbar>
         <v-divider></v-divider>
-        <v-container>
+        <v-container style="height: 100%;">
           <template>
             <v-tabs v-model="curentTab">
               <v-tab>Basic Info</v-tab>
@@ -32,12 +32,12 @@
             </v-tabs>
             <v-tabs-items v-model="curentTab">
               <v-tab-item class="pl-2">
-                <v-card flat>
+                <v-card flat class="tabContent">
                   <v-card-text class="pl-1"
                     >Start with entering basic information about your email
                     invite and then press next.</v-card-text
                   >
-                  <div class="pr-3 pt-1 tabContent">
+                  <div class="pr-3 pt-1">
                     <v-text-field
                       v-model="subject"
                       label="Subject *"
@@ -134,6 +134,7 @@
                 <v-card
                   v-else-if="choosedTemplate === 1 || choosedTemplate === 2"
                   flat
+                  class="tabContent"
                 >
                   <v-card-text class="pl-1"
                     >Select a template to continue.
@@ -232,7 +233,7 @@
                 </v-card>
                 <v-card
                   v-else-if="choosedTemplate == 4"
-                  class="pa-10"
+                  class="pa-10 tabContent"
                   flat
                   align="center"
                 >
@@ -243,7 +244,7 @@
                     indeterminate
                   ></v-progress-circular>
                 </v-card>
-                <v-card v-else flat>
+                <v-card v-else flat class="tabContent">
                   <v-btn
                     class="ma-2 float-right"
                     outlined
@@ -261,13 +262,112 @@
                   <RichText v-model="RTEValue" />
                 </v-card>
               </v-tab-item>
-              <v-tab-item>
+              <v-tab-item class="tabContent">
                 <v-card flat>
                   <v-card-text
                     >From contact list below, select contacts who should receive
                     your invite and add them to invitees list.</v-card-text
                   >
                 </v-card>
+                <v-row class="px-6">
+                  <v-col cols="6">
+                    <div class="mb-11 borderBottomGrey pb-3">
+                      <v-icon>mdi-contacts</v-icon>
+                      <h4 class="d-inline font-weight-regular">Contacts</h4>
+                    </div>
+                    <div class="borderRightGrey pr-3 mr-n3">
+                      <Grid
+                        :value="selectedList"
+                        view-name="InviteContacts"
+                        :content="content()"
+                        @onSelectedListChange="updateList"
+                      />
+                    </div>
+                  </v-col>
+                  <v-col cols="6">
+                    <div class="borderBottomGrey pb-3">
+                      <v-icon>mdi-email-outline</v-icon>
+                      <h4 class="d-inline font-weight-regular">
+                        Invitees List
+                      </h4>
+                    </div>
+                    <div>
+                      <div
+                        v-for="(item, key) in selectedList"
+                        :key="item.Email"
+                        class="borderBottomGrey py-2 pl-2"
+                      >
+                        <v-btn
+                          class="float-right fc-icon"
+                          text
+                          small
+                          @click="unselectContact(key)"
+                        >
+                          <v-icon dark left>mdi-delete</v-icon>
+                        </v-btn>
+                        {{ item.FullName }} ({{ item.Email }})
+                      </div>
+                    </div>
+                  </v-col>
+                  <v-col cols="12">
+                    <div class="borderBottomGrey pb-3 mb-3">
+                      <v-icon>mdi-filter-outline</v-icon>
+                      <h4 class="d-inline font-weight-regular">
+                        Advance Filters
+                      </h4>
+                      <v-btn
+                        class="ml-10"
+                        text
+                        small
+                        @click="
+                          registrationRadio = ''
+                          openRadio = ''
+                          priorInvite = {}
+                        "
+                      >
+                        <v-icon dark left>mdi-replay</v-icon>
+                        Reset
+                      </v-btn>
+                    </div>
+                    <h4>Check prior registrations</h4>
+                    <h4 class="font-weight-regular">Send to those who have</h4>
+                    <v-radio-group
+                      v-model="registrationRadio"
+                      :mandatory="false"
+                      class="mt-0"
+                    >
+                      <v-radio label="Not Registered" value="0"></v-radio>
+                      <v-radio label="Registered" value="1"></v-radio>
+                    </v-radio-group>
+                    <h4 class="d-inline">Check prior invite (</h4>
+                    <h4
+                      class="blue--text d-inline cursorPointer"
+                      @click="previousInviteDialog = true"
+                    >
+                      {{ !!priorInvite.id ? priorInvite.Title : 'Click here' }}
+                    </h4>
+                    <h4 class="d-inline">
+                      {{
+                        !!priorInvite.id
+                          ? ' - ' +
+                            new Date(priorInvite.createdDate).toDateString()
+                          : 'to select one of the prior invite'
+                      }}
+                      )
+                    </h4>
+                    <h4 class="font-weight-regular">Send to those who have</h4>
+                    <v-radio-group
+                      v-model="openRadio"
+                      :mandatory="false"
+                      class="mt-0"
+                      :disabled="!priorInvite.id"
+                    >
+                      <v-radio label="Not Opened" value="0"></v-radio>
+                      <v-radio label="Opened" value="1"></v-radio>
+                      <v-radio label="Opened & Clicked" value="2"></v-radio>
+                    </v-radio-group>
+                  </v-col>
+                </v-row>
               </v-tab-item>
               <v-tab-item>
                 <v-card flat>
@@ -302,21 +402,46 @@
         <v-img :src="previewURL"></v-img>
       </v-card>
     </v-dialog>
+    <v-dialog v-model="previousInviteDialog" width="600px">
+      <v-card>
+        <v-toolbar dense flat dark fixed color="accent">
+          <v-toolbar-title class="body-1">Select Prior Invite</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-btn icon dark @click="previousInviteDialog = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </v-toolbar>
+        <v-divider></v-divider>
+        <v-container class="pt-12">
+          <Grid
+            view-name="inviteeEventTasks"
+            :content="CRMcontent()"
+            :single-select="true"
+            @onSelectedListChange="previousInviteSelect"
+          />
+        </v-container>
+      </v-card>
+    </v-dialog>
   </v-row>
 </template>
 
 <script>
 import gql from 'graphql-tag'
+import Grid from '~/components/common/grid'
 import { formatGQLResult } from '~/utility/gql.js'
+import { configLoaderMixin } from '~/utility'
 import marketingTemplates from '~/config/apps/admin/gql/marketingTemplates.gql'
 export default {
   components: {
+    Grid,
     RichText: () =>
       process.client ? import('~/components/common/form/richtext.vue') : false,
   },
+  mixins: [configLoaderMixin],
   data() {
     return {
       templateItems: [],
+      selectedList: [],
       dialog: false,
       curentTab: 0,
       subject: ``,
@@ -327,9 +452,33 @@ export default {
       preview: false,
       previewURL: '',
       RTEValue: '',
+      registrationRadio: '',
+      openRadio: '',
+      priorInvite: {},
+      previousInviteDialog: false,
     }
   },
   methods: {
+    content() {
+      return this.contents ? this.contents.Contacts : null
+    },
+    CRMcontent() {
+      return this.contents ? this.contents.Event : null
+    },
+    updateList(data) {
+      this.selectedList = data
+    },
+    previousInviteSelect(data) {
+      if (data && data.length) {
+        this.priorInvite = data[0]
+      } else {
+        this.priorInvite = {}
+      }
+      this.previousInviteDialog = false
+    },
+    unselectContact(index) {
+      this.selectedList = this.selectedList.filter((i, key) => key !== index)
+    },
     setPreviewImage(url) {
       this.previewURL = url
       this.preview = true

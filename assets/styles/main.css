@@ -39,6 +39,13 @@ body {
   bottom: 0 !important;
   width: 50% !important;
 }
+.slide-form-default-big {
+  position: fixed !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 75% !important;
+  height: 100%;
+}
 .Twitter {
   font-size: 0 !important;
   text-transform: capitalize !important;
@@ -133,7 +140,7 @@ body {
 }
 .tabContent {
   overflow: hidden auto;
-  max-height: 400px !important;
+  max-height: 390px !important;
 }
 .tempCard {
   transition: opacity .4s ease-in-out;
@@ -144,6 +151,12 @@ body {
 .templateButtons {
   position: absolute;
   bottom: 30px;
+}
+.borderBottomGrey {
+  border-bottom: 1px solid lightgray;
+}
+.borderRightGrey {
+  border-right: 1px solid lightgray;
 }
 @media (max-width: 600px) {
   .slide-form,
