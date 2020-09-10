@@ -150,6 +150,11 @@ body {
 }
 .v-application--is-ltr .v-stepper__label {
   text-align: center !important;
+  white-space: nowrap;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
 }
 .slide-form {
   position: fixed !important;

@@ -11,7 +11,7 @@
           <div v-if="data.event.Status === 'Not ready'" class="mr-2">
             <v-btn outlined color="primary">Publish</v-btn>
           </div>
-          <v-menu bottom origin="center center" transition="scale-transition">
+          <v-menu left :offset-y="offset" transition="slide-y-transition">
             <template v-slot:activator="{ on, attrs }">
               <v-btn icon small v-bind="attrs" v-on="on">
                 <v-icon>mdi-dots-vertical</v-icon>
@@ -20,26 +20,41 @@
 
             <v-list dense>
               <v-list-item>
-                <v-list-item-icon>
-                  <v-icon class="mr-3">mdi-plus</v-icon>
+                <v-list-item-icon class="mr-2">
+                  <i class="fa fa-clone mt-1" aria-hidden="true"></i>
                 </v-list-item-icon>
                 <v-list-item-content>
-                  <v-list-item-title>Publish to eventbrite</v-list-item-title>
+                  <v-list-item-title>Make a copy</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
               <v-list-item>
-                <v-list-item-title>Make a copy</v-list-item-title>
+                <v-list-item-icon class="mr-2">
+                  <i class="fa fa-pencil-square-o mt-1" aria-hidden="true"></i>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>Edit email template</v-list-item-title>
+                </v-list-item-content>
               </v-list-item>
               <v-list-item>
-                <v-list-item-title>Edit email template</v-list-item-title>
+                <v-list-item-icon class="mr-2">
+                  <i class="fa fa-link1 mt-1" aria-hidden="true"></i>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>Integrations</v-list-item-title>
+                </v-list-item-content>
               </v-list-item>
               <v-list-item>
-                <v-list-item-title>Integrations</v-list-item-title>
+                <v-list-item-icon class="mr-2">
+                  <i class="fa fa-clone mt-1" aria-hidden="true"></i>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>Copy Links</v-list-item-title>
+                </v-list-item-content>
               </v-list-item>
             </v-list>
           </v-menu>
         </v-flex>
-        <v-chip class="my-2 mt-1">
+        <v-chip class="my-2 mt-1 greybg">
           Recurring Event
         </v-chip>
 
@@ -98,25 +113,24 @@
           class="elevation-0 boxview"
           style="max-width: 800px;"
         >
-          <v-stepper-header>
-            <v-stepper-step step="3" complete>Not Ready</v-stepper-step>
+          <v-stepper-header success>
+            <v-stepper-step step="3" complete class="ml-n13 body-2"
+              >Not Ready</v-stepper-step
+            >
 
             <v-divider></v-divider>
 
-            <v-stepper-step
-              step="4"
-              complete="true"
-              class="text-center align-center"
+            <v-stepper-step step="4" complete="true" class="body-2"
               >Open for regsitarion</v-stepper-step
             >
 
             <v-divider></v-divider>
 
-            <v-stepper-step step="4">Sold out</v-stepper-step>
+            <v-stepper-step step="4" class="body-2">Sold out</v-stepper-step>
 
             <v-divider></v-divider>
 
-            <v-stepper-step step="" class="text-center align-center"
+            <v-stepper-step step="" class="body-2"
               >Registarion Closed</v-stepper-step
             >
           </v-stepper-header>
@@ -142,7 +156,7 @@
       </div>
       <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2 pb-0">
         <h2 class="body-1 pb-2">
-          <i class="fa fa-black-board pr-1" aria-hidden="true"></i>Recurring
+          <i class="fa fa-black-board pr-1" aria-hidden="true"></i> Recurring
           Sessions
         </h2>
         <v-divider></v-divider>
@@ -150,14 +164,14 @@
       </div>
       <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2 pb-0">
         <h2 class="body-1 pb-2">
-          <i class="fa fa-users pr-1" aria-hidden="true"></i>Attendees
+          <i class="fa fa-users pr-1" aria-hidden="true"></i> Attendees
         </h2>
         <v-divider></v-divider>
         <Grid view-name="eventAttendees" :content="content" />
       </div>
       <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2 pb-0">
         <h2 class="body-1 pb-2">
-          <i class="fa fa-user-plus pr-1" aria-hidden="true"></i>Registrations
+          <i class="fa fa-user-plus pr-1" aria-hidden="true"></i> Registrations
         </h2>
         <v-divider></v-divider>
         <Grid view-name="eventRegistrations" :content="content" />
@@ -245,7 +259,7 @@
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">Tags</div>
-          <div class="body-1">
+          <div class="body-1 v-tags">
             <v-chip
               v-for="Tags in data.event.Tags"
               :key="Tags"
@@ -551,5 +565,8 @@ export default {
 }
 .event-tile-value {
   font-size: 20px;
+}
+.v-tags {
+  min-height: 36px;
 }
 </style>

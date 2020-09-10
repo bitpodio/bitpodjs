@@ -4,441 +4,427 @@
       <v-card-title
         class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
       >
-        <h2 class="black--text pt-2 pb-15">Create Event</h2>
+        <h2 class="black--text pt-4 pb-0 text-h5">Create Event</h2>
         <v-spacer></v-spacer>
         <div>
           <v-btn icon @click="close">
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </div>
+        <v-tabs v-model="tabs" center-active class="mb-6 mt-2">
+          <v-tabs-slider></v-tabs-slider>
+          <v-tab href="#event-tabs-3-1" class="px-0 mr-4">
+            <v-icon left>mdi-information-outline</v-icon><span>Basic Info</span>
+          </v-tab>
+          <v-tab href="#event-tabs-3-2" class="px-0 mr-4">
+            <v-icon left>mdi-map-marker-outline</v-icon><span>Location</span>
+          </v-tab>
+          <v-tab href="#event-tabs-3-3" class="px-0 mr-4">
+            <v-icon left>mdi-ticket-confirmation</v-icon><span>Tickets</span>
+          </v-tab>
+        </v-tabs>
       </v-card-title>
       <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
-        <v-stepper v-model="stepNumber" class="elevation-0">
-          <v-stepper-header
-            class="elevation-0 col-md-6 col-xs-12 pl-0 pt-0 steper-fixed"
-          >
-            <v-stepper-step class="pl-0" :complete="stepNumber > 1" step="1"
-              >Basic Info</v-stepper-step
-            >
-            <v-divider></v-divider>
-            <v-stepper-step :complete="stepNumber > 2" step="2"
-              >Location</v-stepper-step
-            >
-            <v-divider></v-divider>
+        <v-tabs-items v-model="tabs">
+          <v-tab-item v-for="i in 1" :key="i" :value="'event-tabs-3-1'">
+            <v-card flat>
+              <p>
+                Enter event name and details to help your audience learn about
+                your event, add details that highlights why someone should
+                attend it.
+              </p>
+              <v-row>
+                <v-col cols="12" class="pb-0">
+                  <v-text-field
+                    v-model="eventData.Title"
+                    :rules="requiredRules"
+                    label="Event Title*"
+                    required
+                    dense
+                    outlined
+                    @change="changeEventName($event)"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" sm="6" md="4" class="pb-0">
+                  <v-datetime-picker
+                    v-model="eventData.StartDate"
+                    label="Start Date*"
+                    :text-field-props="eventStartDateProps"
+                  >
+                    <template slot="dateIcon">
+                      <v-icon>fas fa-calendar</v-icon>
+                    </template>
+                    <template slot="timeIcon">
+                      <v-icon>fas fa-clock</v-icon>
+                    </template>
+                  </v-datetime-picker>
+                </v-col>
+                <v-col cols="12" sm="6" md="4" class="pb-0">
+                  <v-datetime-picker
+                    v-model="eventData.EndDate"
+                    :rules="requiredRules"
+                    label="End Date*"
+                    :text-field-props="eventEndDateProps"
+                  >
+                    <template slot="dateIcon">
+                      <v-icon>fas fa-calendar</v-icon>
+                    </template>
+                    <template slot="timeIcon">
+                      <v-icon>fas fa-clock</v-icon>
+                    </template>
+                  </v-datetime-picker>
+                </v-col>
+                <v-col cols="12" sm="6" md="4" class="pb-0">
+                  <Timezone
+                    v-model="eventData.Timezone"
+                    :rules="requiredRules"
+                    :field="timezonefield"
+                    dense
+                    class="v-timezone"
+                  ></Timezone>
+                </v-col>
+                <v-col cols="12" class="pb-4 pt-2">
+                  <RichText
+                    v-model="eventData.Description"
+                    class="mb-3"
+                    label="Description"
+                  ></RichText>
+                </v-col>
+                <v-col cols="12" sm="6" md="6" class="pb-0">
+                  <v-text-field
+                    v-model="eventData.UniqLink"
+                    label="Event Link*"
+                    hint="https://bitpod-event.test.bitpod.io/e/"
+                    persistent-hint
+                    outlined
+                    dense
+                    required
+                    :error-messages="uniqueLinkValidationMsg"
+                    @keyup="changeUniqueLink($event)"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+            </v-card>
+          </v-tab-item>
 
-            <v-stepper-step step="3">Tickets</v-stepper-step>
-          </v-stepper-header>
-
-          <v-stepper-items class="stepper-box pt-1">
-            <v-stepper-content step="1" class="px-0 pt-0">
-              <v-card flat>
-                <p>
-                  Enter event name and details to help your audience learn about
-                  your event, add details that highlights why someone should
-                  attend it.
-                </p>
-                <v-row>
-                  <v-col cols="12" class="pb-0">
-                    <v-text-field
-                      v-model="eventData.Title"
-                      :rules="requiredRules"
-                      label="Event Title*"
+          <v-tab-item v-for="i in 1" :key="i" :value="'event-tabs-3-2'">
+            <v-card flat>
+              <v-row>
+                <v-col cols="12" sm="6" md="6" class="pl-0">
+                  <v-col class="pb-0">
+                    <v-select
+                      value="Venue"
+                      :items="['Online Event', 'Venue']"
+                      label="Location Type"
                       required
-                      dense
+                      dense=""
                       outlined
-                      @change="changeEventName($event)"
+                      @change="changeLocation($event)"
+                    ></v-select>
+                  </v-col>
+                  <v-col v-if="isOnlineEvent" cols="12" class="pb-0">
+                    <v-text-field
+                      v-model="eventData.WebinarLink"
+                      :rules="requiredRules"
+                      label="Online Event Link*"
+                      outlined
+                      dense
+                      required
                     ></v-text-field>
                   </v-col>
-                  <v-col cols="12" sm="6" md="4" class="pb-0">
-                    <v-datetime-picker
-                      v-model="eventData.StartDate"
-                      label="Start Date*"
-                      :text-field-props="eventStartDateProps"
-                    >
-                      <template slot="dateIcon">
-                        <v-icon>fas fa-calendar</v-icon>
-                      </template>
-                      <template slot="timeIcon">
-                        <v-icon>fas fa-clock</v-icon>
-                      </template>
-                    </v-datetime-picker>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4" class="pb-0">
-                    <v-datetime-picker
-                      v-model="eventData.EndDate"
-                      :rules="requiredRules"
-                      label="End Date*"
-                      :text-field-props="eventEndDateProps"
-                    >
-                      <template slot="dateIcon">
-                        <v-icon>fas fa-calendar</v-icon>
-                      </template>
-                      <template slot="timeIcon">
-                        <v-icon>fas fa-clock</v-icon>
-                      </template>
-                    </v-datetime-picker>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4" class="pb-0">
-                    <Timezone
-                      v-model="eventData.Timezone"
-                      :rules="requiredRules"
-                      :field="timezonefield"
+                  <v-col v-if="isOnlineEvent" cols="12" class="pb-0">
+                    <v-textarea
+                      v-model="eventData.JoiningInstruction"
+                      label="Additional online event joining instructions, URL, phone etc."
+                      outlined
+                      required
                       dense
-                      class="v-timezone"
-                    ></Timezone>
+                    ></v-textarea>
                   </v-col>
-                  <v-col cols="12" class="pb-4 pt-2">
-                    <RichText
-                      v-model="eventData.Description"
-                      class="mb-3"
-                      label="Description"
-                    ></RichText>
+
+                  <v-col v-if="isVenue" cols="12" class="pb-6">
+                    <no-ssr>
+                      <vue-google-autocomplete
+                        id="map"
+                        ref="venueAddress.AddressLine"
+                        v-model="venueAddress.AddressLine"
+                        class="form-control pa-3 d-block rounded"
+                        placeholder="Address*"
+                        :required="true"
+                        @placechanged="getAddressData"
+                        @change="changeAddressData($event)"
+                      ></vue-google-autocomplete>
+                    </no-ssr>
+                    <div
+                      v-show="addresslineMessage !== ''"
+                      class="red--text pa-3 pt-0 body-1"
+                    >
+                      {{ addresslineMessage }}
+                    </div>
                   </v-col>
-                  <v-col cols="12" sm="6" md="6" class="pb-0">
+                  <v-col v-if="isVenue" cols="12" class="pb-0">
                     <v-text-field
-                      v-model="eventData.UniqLink"
-                      label="Event Link*"
-                      hint="https://bitpod-event.test.bitpod.io/e/"
-                      persistent-hint
+                      v-model="eventData.VenueName"
+                      label="Venue Name"
                       outlined
                       dense
-                      required
-                      :error-messages="uniqueLinkValidationMsg"
-                      @keyup="changeUniqueLink($event)"
+                      @change="changeAddress()"
                     ></v-text-field>
                   </v-col>
-                </v-row>
-              </v-card>
-            </v-stepper-content>
-            <v-stepper-content step="2" class="px-0 pt-0">
-              <v-card flat>
-                <v-row>
-                  <v-col cols="12" sm="6" md="6" class="pl-0">
-                    <v-col class="pb-0">
-                      <v-select
-                        value="Venue"
-                        :items="['Online Event', 'Venue']"
-                        label="Location Type"
-                        required
-                        dense=""
-                        outlined
-                        @change="changeLocation($event)"
-                      ></v-select>
-                    </v-col>
-                    <v-col v-if="isOnlineEvent" cols="12" class="pb-0">
-                      <v-text-field
-                        v-model="eventData.WebinarLink"
-                        :rules="requiredRules"
-                        label="Online Event Link*"
-                        outlined
-                        dense
-                        required
-                      ></v-text-field>
-                    </v-col>
-                    <v-col v-if="isOnlineEvent" cols="12" class="pb-0">
-                      <v-textarea
-                        v-model="eventData.JoiningInstruction"
-                        label="Additional online event joining instructions, URL, phone etc."
-                        outlined
-                        required
-                        dense
-                      ></v-textarea>
-                    </v-col>
-
-                    <v-col v-if="isVenue" cols="12" class="pb-6">
-                      <no-ssr>
-                        <vue-google-autocomplete
-                          id="map"
-                          ref="venueAddress.AddressLine"
-                          v-model="venueAddress.AddressLine"
-                          class="form-control pa-3 d-block rounded"
-                          placeholder="Address*"
-                          :required="true"
-                          @placechanged="getAddressData"
-                          @change="changeAddressData($event)"
-                        ></vue-google-autocomplete>
-                      </no-ssr>
-                      <div
-                        v-show="addresslineMessage !== ''"
-                        class="red--text pa-3 pt-0 body-1"
+                  <v-col v-if="isVenue" cols="12" class="pb-0">
+                    <v-text-field
+                      v-model="venueAddress.City"
+                      label="City"
+                      outlined
+                      dense
+                      @change="changeAddress()"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col v-if="isVenue" cols="12" class="pb-0">
+                    <v-text-field
+                      v-model="venueAddress.State"
+                      label="State"
+                      outlined
+                      dense
+                      @change="changeAddress()"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col v-if="isVenue" cols="12" class="pb-0">
+                    <v-text-field
+                      v-model="venueAddress.Country"
+                      label="Country"
+                      outlined
+                      dense
+                      @change="changeAddress()"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col v-if="isVenue" cols="12" class="pb-0">
+                    <v-text-field
+                      v-model="venueAddress.PostalCode"
+                      label="Zip Code"
+                      outlined
+                      dense
+                    ></v-text-field>
+                  </v-col>
+                </v-col>
+                <v-col cols="12" sm="6" md="6">
+                  <v-col v-if="isMap">
+                    <div class="flex"></div>
+                    <div :key="`${locations[0].lat}-${locations[0].lng}`">
+                      <GMap
+                        ref="gMap"
+                        language="en"
+                        :cluster="{ options: { styles: clusterStyle } }"
+                        :center="gMapCenter"
+                        :options="{
+                          fullscreenControl: false,
+                          styles: mapStyle,
+                        }"
+                        :zoom="15"
+                        @bounds_changed="checkForMarkers"
                       >
-                        {{ addresslineMessage }}
-                      </div>
-                    </v-col>
-                    <v-col v-if="isVenue" cols="12" class="pb-0">
-                      <v-text-field
-                        v-model="eventData.VenueName"
-                        label="Venue Name"
-                        outlined
-                        dense
-                        @change="changeAddress()"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col v-if="isVenue" cols="12" class="pb-0">
-                      <v-text-field
-                        v-model="venueAddress.City"
-                        label="City"
-                        outlined
-                        dense
-                        @change="changeAddress()"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col v-if="isVenue" cols="12" class="pb-0">
-                      <v-text-field
-                        v-model="venueAddress.State"
-                        label="State"
-                        outlined
-                        dense
-                        @change="changeAddress()"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col v-if="isVenue" cols="12" class="pb-0">
-                      <v-text-field
-                        v-model="venueAddress.Country"
-                        label="Country"
-                        outlined
-                        dense
-                        @change="changeAddress()"
-                      ></v-text-field>
-                    </v-col>
-                    <v-col v-if="isVenue" cols="12" class="pb-0">
-                      <v-text-field
-                        v-model="venueAddress.PostalCode"
-                        label="Zip Code"
-                        outlined
-                        dense
-                      ></v-text-field>
-                    </v-col>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="6">
-                    <v-col v-if="isMap">
-                      <div class="flex"></div>
-                      <div :key="`${locations[0].lat}-${locations[0].lng}`">
-                        <GMap
-                          ref="gMap"
-                          language="en"
-                          :cluster="{ options: { styles: clusterStyle } }"
-                          :center="gMapCenter"
+                        <GMapMarker
+                          v-for="location in locations"
+                          :key="`${location.lat}-${location.lng}`"
+                          :position="{ lat: location.lat, lng: location.lng }"
                           :options="{
-                            fullscreenControl: false,
-                            styles: mapStyle,
+                            icon: pins.selected,
                           }"
-                          :zoom="15"
-                          @bounds_changed="checkForMarkers"
+                          @click="currentLocation = location"
                         >
-                          <GMapMarker
-                            v-for="location in locations"
-                            :key="`${location.lat}-${location.lng}`"
-                            :position="{ lat: location.lat, lng: location.lng }"
-                            :options="{
-                              icon: pins.selected,
-                            }"
-                            @click="currentLocation = location"
-                          >
-                            <GMapInfoWindow :options="{ maxWidth: 200 }">
-                              <code
-                                >lat: {{ location.lat }}, lng:
-                                {{ location.lng }}</code
-                              >
-                            </GMapInfoWindow>
-                          </GMapMarker>
-                          <GMapCircle :options="circleOptions" />
-                        </GMap>
-                      </div>
-                    </v-col>
+                          <GMapInfoWindow :options="{ maxWidth: 200 }">
+                            <code
+                              >lat: {{ location.lat }}, lng:
+                              {{ location.lng }}</code
+                            >
+                          </GMapInfoWindow>
+                        </GMapMarker>
+                        <GMapCircle :options="circleOptions" />
+                      </GMap>
+                    </div>
                   </v-col>
-                </v-row>
-              </v-card>
+                </v-col>
+              </v-row>
+            </v-card>
+          </v-tab-item>
 
-              <v-btn color="primary" @click="stepNumber = 1">Prev</v-btn>
-              <v-btn color="primary" @click="next(3)">Next</v-btn>
-            </v-stepper-content>
-            <v-stepper-content step="3" class="px-0 pt-0">
-              <v-card v-if="isTicket" flat>
-                <p>
-                  Setup event tickets and price, you can also set tickets
-                  validity so early birds can be offered better pricing.
-                </p>
-                <v-btn
-                  class="ma-2 ml-0"
-                  outlined
-                  color="indigo"
-                  @click="addTicketRow"
-                  >Add Tickets</v-btn
-                >
-                <v-simple-table class="event-table">
-                  <template v-slot:default>
-                    <thead>
-                      <tr>
-                        <th class="text-left">Title*</th>
-                        <th class="text-left">Type*</th>
-                        <th class="text-left">Price</th>
-                        <th class="text-left">Start Date*</th>
-                        <th class="text-left">End Date*</th>
-                        <th class="text-left">Quantity</th>
-                        <th class="text-left"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="(ticket, k) in tickets" :key="k">
-                        <td class="pa-2 pb-0">
-                          <v-text-field
-                            v-model="ticket.Code"
-                            :rules="requiredRules"
-                            label="Title"
-                            outlined
-                            dense
-                          ></v-text-field>
-                        </td>
-                        <td class="pa-2 pb-0">
-                          <Lookup
-                            v-model="ticket.Type"
-                            :field="ticketTypeProps"
-                            class="v-tickettype"
-                          />
-                        </td>
-                        <td class="pa-2 pb-0">
-                          <v-text-field
-                            v-model="ticket.Amount"
-                            label="price"
-                            outlined
-                            dense
-                            value
-                            :disabled="isPriceDisabled(k)"
-                          ></v-text-field>
-                        </td>
-                        <td class="pa-2 pb-0">
-                          <v-datetime-picker
-                            v-model="ticket.StartDate"
-                            label="Start Date*"
-                            :text-field-props="ticketStartDateProps(k)"
-                          >
-                            <template slot="dateIcon">
-                              <v-icon>fas fa-calendar</v-icon>
-                            </template>
-                            <template slot="timeIcon">
-                              <v-icon>fas fa-clock</v-icon>
-                            </template>
-                          </v-datetime-picker>
-                        </td>
-                        <td class="pa-2 pb-0">
-                          <v-datetime-picker
-                            v-model="ticket.EndDate"
-                            label="End Date*"
-                            :text-field-props="ticketEndDateProps(k)"
-                          >
-                            <template slot="dateIcon">
-                              <v-icon>fas fa-calendar</v-icon>
-                            </template>
-                            <template slot="timeIcon">
-                              <v-icon>fas fa-clock</v-icon>
-                            </template>
-                          </v-datetime-picker>
-                        </td>
-                        <td class="pa-2 pb-0">
-                          <v-text-field
-                            v-model="ticket.TicketCount"
-                            label="quantity"
-                            outlined
-                            dense
-                            value
-                          ></v-text-field>
-                        </td>
-                        <td class="pa-2 pt-0">
-                          <v-btn icon class="mt-1" @click="deleteTicket(k)">
-                            <v-icon>mdi-24px mdi-delete</v-icon>
-                          </v-btn>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </template>
-                </v-simple-table>
-                <v-btn color="primary" @click="stepNumber = 2">Prev</v-btn>
-              </v-card>
-              <v-card
-                v-else
+          <v-tab-item v-for="i in 1" :key="i" :value="'event-tabs-3-3'">
+            <v-card v-if="isTicket" flat>
+              <p>
+                Setup event tickets and price, you can also set tickets validity
+                so early birds can be offered better pricing.
+              </p>
+              <v-btn
+                class="ma-2 ml-0"
                 outlined
-                class="text-center elevation-2 vs-notification pa-5"
+                color="indigo"
+                @click="addTicketRow"
+                >Add Tickets</v-btn
               >
-                <div v-if="isEventCreate" class="flex">
-                  <div class="py-2">
-                    <i
-                      class="fa fa-calendar pa-4 d-inline-flex rounded-circle body-1 primary white--text"
-                      aria-hidden="true"
-                    ></i>
-                  </div>
-                  <div class="pb-2 text-uppercase">
-                    <span class="text-uppercase Body 1" style="font-size: 20px;"
-                      >EVENT HAS BEEN CREATED.</span
-                    >
-                  </div>
-                  <div class="pb-3 text--primary">
-                    Event goers can only register after you publish it. We
-                    recommend you click view button to verify your event page
-                    and if everything looks as expected then PUBLISH it.
-                    <br />
-                    You can also use events link from left panel to edit or
-                    publish this event any time you like.
-                  </div>
-                  <div class="pb-2">
-                    <v-btn
-                      depressed
-                      color="primary"
-                      class="ma-1"
-                      @click="viewRegistration"
-                      ><v-icon left>mdi-eye-outline</v-icon>View</v-btn
-                    >
-                    <v-btn
-                      outlined
-                      color="primary"
-                      class="ma-1"
-                      @click="eventPublish"
-                    >
-                      <v-icon left>mdi-rotate-315 mdi-send</v-icon>
-                      Publish</v-btn
-                    >
-                    <v-btn text color="primary" class="ma-1" @click="closeForm"
-                      >Close</v-btn
-                    >
-                  </div>
+              <v-simple-table class="event-table">
+                <template v-slot:default>
+                  <thead>
+                    <tr>
+                      <th class="text-left pl-0">Title*</th>
+                      <th class="text-left">Type*</th>
+                      <th class="text-left">Price</th>
+                      <th class="text-left">Start Date*</th>
+                      <th class="text-left">End Date*</th>
+                      <th class="text-left">Quantity</th>
+                      <th class="text-left"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(ticket, k) in tickets" :key="k">
+                      <td class="pa-2 pb-0 pl-0">
+                        <v-text-field
+                          v-model="ticket.Code"
+                          :rules="requiredRules"
+                          outlined
+                          dense
+                        ></v-text-field>
+                      </td>
+                      <td class="pa-2 pb-0">
+                        <Lookup
+                          v-model="ticket.Type"
+                          :field="ticketTypeProps"
+                          class="v-tickettype"
+                        />
+                      </td>
+                      <td class="pa-2 pb-0">
+                        <v-text-field
+                          v-model="ticket.Amount"
+                          outlined
+                          dense
+                          value
+                          :disabled="isPriceDisabled(k)"
+                        ></v-text-field>
+                      </td>
+                      <td class="pa-2 pb-0">
+                        <v-datetime-picker
+                          v-model="ticket.StartDate"
+                          :text-field-props="ticketStartDateProps(k)"
+                        >
+                          <template slot="dateIcon">
+                            <v-icon>fas fa-calendar</v-icon>
+                          </template>
+                          <template slot="timeIcon">
+                            <v-icon>fas fa-clock</v-icon>
+                          </template>
+                        </v-datetime-picker>
+                      </td>
+                      <td class="pa-2 pb-0">
+                        <v-datetime-picker
+                          v-model="ticket.EndDate"
+                          :text-field-props="ticketEndDateProps(k)"
+                        >
+                          <template slot="dateIcon">
+                            <v-icon>fas fa-calendar</v-icon>
+                          </template>
+                          <template slot="timeIcon">
+                            <v-icon>fas fa-clock</v-icon>
+                          </template>
+                        </v-datetime-picker>
+                      </td>
+                      <td class="pa-2 pb-0">
+                        <v-text-field
+                          v-model="ticket.TicketCount"
+                          outlined
+                          dense
+                          value
+                        ></v-text-field>
+                      </td>
+                      <td class="pa-2 pt-0">
+                        <v-btn icon class="mt-1" @click="deleteTicket(k)">
+                          <v-icon>mdi-24px mdi-delete</v-icon>
+                        </v-btn>
+                      </td>
+                    </tr>
+                  </tbody>
+                </template>
+              </v-simple-table>
+              <v-btn color="primary" @click="stepNumber = 2">Prev</v-btn>
+            </v-card>
+            <v-card
+              v-else
+              outlined
+              class="text-center elevation-2 vs-notification pa-5"
+            >
+              <div v-if="isEventCreate" class="flex">
+                <div class="py-2">
+                  <i
+                    class="fa fa-calendar pa-4 d-inline-flex rounded-circle body-1 primary white--text"
+                    aria-hidden="true"
+                  ></i>
                 </div>
-                <div v-if="isEventPublish" class="flex">
-                  <div class="py-2">
-                    <i
-                      class="fa fa-calendar pa-4 d-inline-flex rounded-circle body-1 primary white--text"
-                      aria-hidden="true"
-                    ></i>
-                  </div>
-                  <div class="pb-2">
-                    <span
-                      class="text-uppercase Body 1"
-                      style="font-size: 20px;"
-                    >
-                      YOUR EVENT HAS BEEN PUBLISHED.</span
-                    >
-                  </div>
-                  <div class="pb-2 text--primary">
-                    Now it is open for registrations, you can click on view to
-                    fetch the event landing page URL, which you can share with
-                    others, so they can register.
-                  </div>
-                  <div class="pb-2">
-                    <v-btn
-                      depressed
-                      color="primary"
-                      class="ma-1"
-                      @click="viewRegistration"
-                      ><v-icon left>mdi-eye-outline</v-icon>View</v-btn
-                    >
-                    <v-btn text color="primary" class="ma-1" @click="closeForm"
-                      >Close</v-btn
-                    >
-                  </div>
+                <div class="pb-2 text-uppercase">
+                  <span class="text-uppercase Body 1" style="font-size: 20px;"
+                    >EVENT HAS BEEN CREATED.</span
+                  >
                 </div>
-              </v-card>
-            </v-stepper-content>
-          </v-stepper-items>
-        </v-stepper>
+                <div class="pb-3 text--primary">
+                  Event goers can only register after you publish it. We
+                  recommend you click view button to verify your event page and
+                  if everything looks as expected then PUBLISH it.
+                  <br />
+                  You can also use events link from left panel to edit or
+                  publish this event any time you like.
+                </div>
+                <div class="pb-2">
+                  <v-btn
+                    depressed
+                    color="primary"
+                    class="ma-1"
+                    @click="viewRegistration"
+                    ><v-icon left>mdi-eye-outline</v-icon>View</v-btn
+                  >
+                  <v-btn
+                    outlined
+                    color="primary"
+                    class="ma-1"
+                    @click="eventPublish"
+                  >
+                    <v-icon left>mdi-rotate-315 mdi-send</v-icon>
+                    Publish</v-btn
+                  >
+                  <v-btn text color="primary" class="ma-1" @click="closeForm"
+                    >Close</v-btn
+                  >
+                </div>
+              </div>
+              <div v-if="isEventPublish" class="flex">
+                <div class="py-2">
+                  <i
+                    class="fa fa-calendar pa-4 d-inline-flex rounded-circle body-1 primary white--text"
+                    aria-hidden="true"
+                  ></i>
+                </div>
+                <div class="pb-2">
+                  <span class="text-uppercase Body 1" style="font-size: 20px;">
+                    YOUR EVENT HAS BEEN PUBLISHED.</span
+                  >
+                </div>
+                <div class="pb-2 text--primary">
+                  Now it is open for registrations, you can click on view to
+                  fetch the event landing page URL, which you can share with
+                  others, so they can register.
+                </div>
+                <div class="pb-2">
+                  <v-btn
+                    depressed
+                    color="primary"
+                    class="ma-1"
+                    @click="viewRegistration"
+                    ><v-icon left>mdi-eye-outline</v-icon>View</v-btn
+                  >
+                  <v-btn text color="primary" class="ma-1" @click="closeForm"
+                    >Close</v-btn
+                  >
+                </div>
+              </div>
+            </v-card>
+          </v-tab-item>
+        </v-tabs-items>
       </v-card-text>
       <v-divider></v-divider>
       <v-card-actions
@@ -487,6 +473,7 @@ export default {
     return {
       valid: true,
       lazy: false,
+      tabs: null,
       isSaveButtonDisabled: false,
       addresslineMessage: '',
       isTicket: true,
