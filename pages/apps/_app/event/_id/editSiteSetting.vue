@@ -45,7 +45,7 @@
                       :key="item.id"
                       v-slot:default="{ hover }"
                     >
-                      <div class="card-content" @click="selectedItem = item.id">
+                      <div class="card-content mr-4">
                         <v-card
                           :elevation="hover ? 4 : 2"
                           class="ma-3 ml-0 mt-0"
@@ -84,11 +84,6 @@
                             >
                             </v-img>
                           </div>
-                          <!-- <v-card-actions>
-                            <div class="text-truncate text-capitalize">
-                              {{ item.Name }}
-                            </div>
-                          </v-card-actions> -->
                           <v-flex
                             v-if="hover"
                             class="justify-center text-center"
@@ -100,7 +95,10 @@
                                 class="ma-2"
                                 outlined
                                 color="primary"
-                                @click="selectTemplate(item.Name)"
+                                @click="
+                                  selectTemplate(item.Name)
+                                  selectedItem = item.id
+                                "
                                 >Select</v-btn
                               >
                             </div>
@@ -245,13 +243,6 @@
           </v-card>
         </v-card-text>
         <v-divider></v-divider>
-        <!-- <v-card-actions class="pl-4"> -->
-        <!-- <v-btn color="primary" depressed @click.native="changeTab"
-            >Next</v-btn
-          > -->
-        <!-- <v-btn color="primary" depressed @click="tab = 'tab-1'">Prev</v-btn>
-          <v-btn color="primary" depressed @click.native="onSave">Save</v-btn> -->
-        <!-- </v-card-actions> -->
       </v-card>
     </v-dialog>
   </v-layout>
@@ -259,6 +250,7 @@
 
 <script>
 import gql from 'graphql-tag'
+import nuxtConfig from '../../../../../nuxt.config'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
@@ -302,7 +294,6 @@ export default {
     },
     selectTemplate(value) {
       this.eventData.RegistrationSiteTemplate = value
-      console.log('===ooutput', value)
     },
     close() {
       this.$emit('update:siteSetting', false)
@@ -319,7 +310,7 @@ export default {
       delete this.eventData._VenueAddress
       this.$axios
         .$patch(
-          `https://event.test.bitpod.io/svc/api/Events/${this.$route.params.id}`,
+          `https://${nuxtConfig.axios.eventUrl}/svc/api/Events/${this.$route.params.id}`,
           {
             ...this.eventData,
           }
@@ -417,14 +408,12 @@ export default {
       },
       update(data) {
         const event = formatGQLResult(data, 'Event')
-        // this.eventData = event.length > 0 ? { ...event[0]._sectionHeading } : {}
         this.sectionHeading = event.length > 0 ? event[0]._sectionHeading : {}
         this.sectionHeading =
           this.sectionHeading != null ? this.sectionHeading : {}
         this.animation = this.sectionHeading.animation
         this.eventData = event.length > 0 ? { ...event[0] } : {}
         this.eventData.id = this.$route.params.id
-        console.log('result===', this.eventData)
         return {
           event: event.length > 0 ? event : {},
         }
