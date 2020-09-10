@@ -27,7 +27,7 @@
               </v-tab>
 
               <v-tab href="#tab-2" class="px-0 mr-4 primary--text">
-                <span>Section Setting</span>
+                <span>Section Settings</span>
               </v-tab>
             </v-tabs>
 
@@ -301,7 +301,6 @@ export default {
       this.tabs = '2'
     },
     selectTemplate(value) {
-      debugger
       this.eventData.RegistrationSiteTemplate = value
       console.log('===ooutput', value)
     },
@@ -312,7 +311,6 @@ export default {
       this.$apollo.queries.data1.refresh()
     },
     onSave() {
-      debugger
       this.sectionHeading.animation =
         this.animation !== 'Select' ? this.animation : ''
       Object.assign(this.eventData, {
@@ -327,7 +325,6 @@ export default {
           }
         )
         .then((res) => {
-          debugger
           this.close()
           this.refresh()
           return (this.sectionHeading = res._sectionHeading)
@@ -381,7 +378,6 @@ export default {
         }
       },
       update(data) {
-        debugger
         const template = formatGQLResult(data, 'Template')
         this.formData = template
         return {
@@ -420,7 +416,6 @@ export default {
         }
       },
       update(data) {
-        debugger
         const event = formatGQLResult(data, 'Event')
         // this.eventData = event.length > 0 ? { ...event[0]._sectionHeading } : {}
         this.sectionHeading = event.length > 0 ? event[0]._sectionHeading : {}
