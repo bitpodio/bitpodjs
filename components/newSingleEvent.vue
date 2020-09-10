@@ -260,7 +260,7 @@
                   validity so early birds can be offered better pricing.
                 </p>
                 <v-btn
-                  class="ma-2"
+                  class="ma-2 ml-0"
                   outlined
                   color="indigo"
                   @click="addTicketRow"
