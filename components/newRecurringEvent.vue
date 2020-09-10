@@ -10,65 +10,69 @@
           </v-btn>
         </v-toolbar>
         <v-card-text>
-          <v-row>
-            <v-col cols="12" class="mt-4">
-              <Lookup
-                v-model="ScheduledType"
-                :value="ScheduledType"
-                :field="scheduledTypeProps"
-                :on-change="changeSchedule"
-              />
-            </v-col>
-            <v-col v-if="isOverPeriod" cols="12">
-              <v-text-field
-                v-model="RollingDays"
-                label="Rolling Days"
-                type="number"
-                outlined
-              ></v-text-field>
-            </v-col>
-            <v-col v-if="isOverDate" cols="12">
-              <v-datetime-picker
-                v-model="StartDate"
-                label="Start Date*"
-                :text-field-props="eventStartDateProps"
-              >
-                <template slot="dateIcon">
-                  <v-icon>fas fa-calendar</v-icon>
-                </template>
-                <template slot="timeIcon">
-                  <v-icon>fas fa-clock</v-icon>
-                </template>
-              </v-datetime-picker>
-            </v-col>
-            <v-col v-if="isOverDate" cols="12">
-              <v-datetime-picker
-                v-model="EndDate"
-                label="End Date*"
-                :text-field-props="eventEndDateProps"
-              >
-                <template slot="dateIcon">
-                  <v-icon>fas fa-calendar</v-icon>
-                </template>
-                <template slot="timeIcon">
-                  <v-icon>fas fa-clock</v-icon>
-                </template>
-              </v-datetime-picker>
-            </v-col>
-            <div class="col-md-12">
-              <v-flex class="d-flex justify-center align-center pb-2">
-                <h2 class="body-1 pb-1">
-                  <i class="fa-repeat" aria-hidden="true"></i> Repeating days of
-                  the week
-                </h2>
-                <v-spacer></v-spacer>
-              </v-flex>
-              <v-divider></v-divider>
-            </div>
-            <v-col v-for="(day, k) in days" :key="k" cols="4">
-              <v-checkbox v-model="day.Value" :label="day.Label"></v-checkbox>
-            </v-col>
-          </v-row>
+          <v-form ref="form" v-model="validDateRange" :lazy-validation="lazy">
+            <v-row>
+              <v-col cols="12" class="mt-4">
+                <Lookup
+                  v-model="ScheduledType"
+                  :value="ScheduledType"
+                  :field="scheduledTypeProps"
+                  :on-change="changeSchedule"
+                />
+              </v-col>
+              <v-col v-if="isOverPeriod" cols="12">
+                <v-text-field
+                  v-model="RollingDays"
+                  label="Rolling Days"
+                  type="number"
+                  min="0"
+                  outlined
+                  :rules="rollingDaysRules"
+                ></v-text-field>
+              </v-col>
+              <v-col v-if="isOverDate" cols="12">
+                <v-datetime-picker
+                  v-model="StartDate"
+                  label="Start Date*"
+                  :text-field-props="startDateRule"
+                >
+                  <template slot="dateIcon">
+                    <v-icon>fas fa-calendar</v-icon>
+                  </template>
+                  <template slot="timeIcon">
+                    <v-icon>fas fa-clock</v-icon>
+                  </template>
+                </v-datetime-picker>
+              </v-col>
+              <v-col v-if="isOverDate" cols="12">
+                <v-datetime-picker
+                  v-model="EndDate"
+                  label="End Date*"
+                  :text-field-props="endDateRule"
+                >
+                  <template slot="dateIcon">
+                    <v-icon>fas fa-calendar</v-icon>
+                  </template>
+                  <template slot="timeIcon">
+                    <v-icon>fas fa-clock</v-icon>
+                  </template>
+                </v-datetime-picker>
+              </v-col>
+              <div class="col-md-12">
+                <v-flex class="d-flex justify-center align-center pb-2">
+                  <h2 class="body-1 pb-1">
+                    <i class="fa-repeat" aria-hidden="true"></i> Repeating days
+                    of the week
+                  </h2>
+                  <v-spacer></v-spacer>
+                </v-flex>
+                <v-divider></v-divider>
+              </div>
+              <v-col v-for="(day, k) in days" :key="k" cols="4">
+                <v-checkbox v-model="day.Value" :label="day.Label"></v-checkbox>
+              </v-col>
+            </v-row>
+          </v-form>
         </v-card-text>
         <div class="pa-4">
           <v-btn color="primary" dark @click="setSchedule">
@@ -121,15 +125,18 @@
           </v-btn>
         </v-toolbar>
         <v-card-text class="v-location">
-          <v-row>
-            <v-col cols="12">
-              <v-text-field
-                v-model="Phone"
-                label="Phone"
-                outlined
-              ></v-text-field>
-            </v-col>
-          </v-row>
+          <v-form ref="phoneform" v-model="validPhone" :lazy-validation="lazy">
+            <v-row>
+              <v-col cols="12">
+                <v-text-field
+                  v-model="Phone"
+                  label="Phone"
+                  outlined
+                  :rules="phoneRules"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-form>
         </v-card-text>
         <div class="pa-4">
           <v-btn color="primary" dark @click="setPhone">
@@ -151,15 +158,22 @@
           </v-btn>
         </v-toolbar>
         <v-card-text class="v-location">
-          <v-row>
-            <v-col cols="12">
-              <v-text-field
-                v-model="WebinarLink"
-                label="Online meeting link"
-                outlined
-              ></v-text-field>
-            </v-col>
-          </v-row>
+          <v-form
+            ref="meetingform"
+            v-model="validOnlineMeeting"
+            :lazy-validation="lazy"
+          >
+            <v-row>
+              <v-col cols="12">
+                <v-text-field
+                  v-model="WebinarLink"
+                  label="Online meeting link"
+                  :rules="onlineMeetingRules"
+                  outlined
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-form>
         </v-card-text>
         <div class="pa-4">
           <v-btn color="primary" dark @click="setOnlineMeeting">
@@ -183,11 +197,6 @@
         <v-card-text class="v-location">
           <v-row>
             <v-col cols="12">
-              <!-- <v-text-field
-                v-model="Address"
-                label="Address"
-                outlined
-              ></v-text-field> -->
               <no-ssr>
                 <vue-google-autocomplete
                   id="map"
@@ -250,11 +259,21 @@
           </v-btn>
         </v-toolbar>
         <v-card-text class="v-location">
-          <v-row>
-            <v-col cols="12">
-              <Lookup v-model="InPersonMeeting" :field="inPersonMeetingProps" />
-            </v-col>
-          </v-row>
+          <v-form
+            ref="personmeetingform"
+            v-model="validPersonMeeting"
+            :lazy-validation="lazy"
+          >
+            <v-row>
+              <v-col cols="12">
+                <Lookup
+                  v-model="InPersonMeeting"
+                  :field="inPersonMeetingProps"
+                  :rules="personMeetingRules"
+                />
+              </v-col>
+            </v-row>
+          </v-form>
         </v-card-text>
         <div class="pa-4">
           <v-btn color="primary" dark @click="setPersonMeeting">
@@ -523,12 +542,14 @@
                         <Lookup
                           v-model="session.StartTime"
                           :field="startTimeProps"
+                          :rules="validStartTimeRule(k)"
                         />
                       </td>
                       <td class="pa-2 pb-0">
                         <Lookup
                           v-model="session.EndTime"
                           :field="endTimeProps"
+                          :rules="validEndTimeRule(k)"
                         />
                       </td>
                       <td class="pa-2 pb-0">
@@ -549,6 +570,8 @@
                         <Lookup
                           v-model="session.LocationType"
                           :field="locationTypeProps"
+                          :rules="requiredRules"
+                          required
                           :on-change="changelocationType(k)"
                         />
                       </td>
@@ -565,8 +588,8 @@
                         <span v-if="session.Type === 'Personal'"
                           >{{ session.Type }}
                         </span>
-                        <v-btn text small @click="selectType(k)">
-                          <v-icon left>mdi-pencil</v-icon>
+                        <v-btn icon small @click="selectType(k)">
+                          <v-icon left>mdi-18px mdi-pencil</v-icon>
                         </v-btn>
                       </td>
                       <td class="pa-2 pb-0">
@@ -576,9 +599,9 @@
                           outlined
                           value
                         ></v-text-field> -->
-                        <span>ticket </span>
-                        <v-btn text small @click="selectSessionTickets(k)">
-                          <v-icon left>mdi-pencil</v-icon>
+                        <span>Ticket </span>
+                        <v-btn icon small @click="selectSessionTickets(k)">
+                          <v-icon left>mdi-18px mdi-pencil</v-icon>
                         </v-btn>
                       </td>
                       <td class="pa-2 pb-0">
@@ -723,7 +746,47 @@ export default {
     // const tid = this.ObjectID5()
     return {
       valid: true,
+      validDateRange: true,
+      validPhone: true,
+      validOnlineMeeting: true,
+      validCustomLocation: true,
+      validPersonMeeting: true,
       lazy: false,
+      rollingDaysRules: [
+        (v) => {
+          if (!v && v.trim()) {
+            return true
+          }
+          if (!isNaN(parseFloat(v)) && v >= 0) {
+            return true
+          }
+          return 'Number should not be negative'
+        },
+      ],
+      phoneRules: [
+        (v) => {
+          if (v) {
+            return true
+          }
+          return 'Please enter valid phone number!'
+        },
+      ],
+      onlineMeetingRules: [
+        (v) => {
+          if (v) {
+            return true
+          }
+          return 'Please enter online meeting link! '
+        },
+      ],
+      personMeetingRules: [
+        (v) => {
+          if (v) {
+            return true
+          }
+          return 'Please select location!'
+        },
+      ],
       isDateRange: false,
       isOverDate: false,
       isOverPeriod: true,
@@ -999,6 +1062,34 @@ export default {
     }
   },
   computed: {
+    startDateRule() {
+      return {
+        appendIcon: 'fa-calendar',
+        outlined: true,
+        rules: [
+          (v) => {
+            const startDate = new Date(v)
+            return startDate > this.EndDate
+              ? 'Start Date should be less than Start Date'
+              : true
+          },
+        ],
+      }
+    },
+    endDateRule() {
+      return {
+        appendIcon: 'fa-calendar',
+        outlined: true,
+        rules: [
+          (v) => {
+            const endDate = new Date(v)
+            return this.StartDate > endDate
+              ? 'End Date should be greater than Start Date'
+              : true
+          },
+        ],
+      }
+    },
     uniqueLinkValidationMsg() {
       const errorMessage = this.isInalidEventLink ? this.uniqueLinkMessage : ''
       return errorMessage
@@ -1058,6 +1149,76 @@ export default {
     },
   },
   methods: {
+    validStartTimeRule(index) {
+      return [
+        (v) => {
+          const startTime = parseInt(
+            this.sessions[index].StartTime.split(':')[0]
+          )
+          const endTime = parseInt(this.sessions[index].EndTime.split(':')[0])
+          return startTime > endTime
+            ? 'Start Time should not be greater than End Time'
+            : true
+        },
+      ]
+    },
+    validEndTimeRule(index) {
+      return [
+        (v) => {
+          const startTime = parseInt(
+            this.sessions[index].StartTime.split(':')[0]
+          )
+          const endTime = parseInt(this.sessions[index].EndTime.split(':')[0])
+          return startTime > endTime
+            ? 'End Time should not be less than Start Time'
+            : true
+        },
+      ]
+    },
+    getMaxEnd(arr) {
+      console.log('==getMaxend==')
+      if (arr.length === 0) return false
+      arr.sort(function (a, b) {
+        if (a.end < b.end) return 1
+        if (a.end > b.end) return -1
+        return 0
+      })
+      return arr[0].end
+    },
+
+    partitionIntoOverlappingRanges(array) {
+      array.sort(function (a, b) {
+        if (a.start < b.start) return -1
+        if (a.start > b.start) return 1
+        return 0
+      })
+
+      const rarray = []
+      let g = 0
+      rarray[g] = [array[0]]
+
+      for (let i = 1, l = array.length; i < l; i++) {
+        if (
+          array[i].start >= array[i - 1].start &&
+          array[i].start < this.getMaxEnd(rarray[g])
+        ) {
+          rarray[g].push(array[i])
+        } else {
+          g++
+          rarray[g] = [array[i]]
+        }
+      }
+      console.log('==array==' + JSON.stringify(rarray))
+      for (let i = 0; i < rarray.length; i++) {
+        console.log('==array=i=' + JSON.stringify(rarray[i]))
+        console.log('==array[]==' + rarray[i].length)
+        if (rarray[i].length > 1) {
+          return true
+        }
+      }
+      return false
+    },
+
     getAddressData(addressData, placeResultData, id) {
       this.venueAddress.AddressLine =
         addressData.route ||
@@ -1136,26 +1297,35 @@ export default {
       console.log('==sessions==', JSON.stringify(this.sessions))
     },
     setPhone() {
-      this.isPhone = false
-      this.sessions[this.selectedSession].Phone = this.Phone
-      console.log('==sessions==', JSON.stringify(this.sessions))
+      this.$refs.phoneform.validate()
+      if (this.validPhone) {
+        this.isPhone = false
+        this.sessions[this.selectedSession].Phone = this.Phone
+        console.log('==sessions==', JSON.stringify(this.sessions))
+      }
     },
     setOnlineMeeting() {
-      this.isOnlineMeeting = false
-      this.sessions[this.selectedSession].WebinarLink = this.WebinarLink
-      console.log('==sessions==', JSON.stringify(this.sessions))
+      this.$refs.meetingform.validate()
+      if (this.validOnlineMeeting) {
+        this.isOnlineMeeting = false
+        this.sessions[this.selectedSession].WebinarLink = this.WebinarLink
+        console.log('==sessions==', JSON.stringify(this.sessions))
+      }
     },
     setCustomLocation() {
-      this.isCustom = false
-      // this.sessions[this.selectedSession].WebinarLink = this.WebinarLink
-      console.log('==sessions==', JSON.stringify(this.sessions))
-      this.sessions[this.selectedSession]._CurrentAddress = this.venueAddress
+      if (this.venueAddress && this.venueAddress.AddressLine !== '') {
+        this.isCustom = false
+        console.log('==sessions==', JSON.stringify(this.sessions))
+        this.sessions[this.selectedSession]._CurrentAddress = this.venueAddress
+      }
     },
     setPersonMeeting() {
-      this.isPersonMeeting = false
-
-      this.sessions[this.selectedSession].LocationId = this.InPersonMeeting
-      console.log('==sessions==', JSON.stringify(this.sessions))
+      this.$refs.personmeetingform.validate()
+      if (this.validPersonMeeting) {
+        this.isPersonMeeting = false
+        this.sessions[this.selectedSession].LocationId = this.InPersonMeeting
+        console.log('==sessions==', JSON.stringify(this.sessions))
+      }
     },
     selectType(index) {
       this.selectedSession = index
@@ -1232,55 +1402,53 @@ export default {
       })
     },
     setSchedule() {
-      this.isDateRange = false
-      this.sessions[this.selectedSession].ScheduledType = this.ScheduledType
-      this.sessions[this.selectedSession].RollingDays = this.RollingDays
-      this.sessions[this.selectedSession].StartDate = this.StartDate
-      this.sessions[this.selectedSession].EndDate = this.EndDate
-      this.sessions[this.selectedSession].Timezone = this.Timezone
+      if (this.validDateRange) {
+        this.isDateRange = false
+        this.sessions[this.selectedSession].ScheduledType = this.ScheduledType
+        this.sessions[this.selectedSession].RollingDays = this.RollingDays
+        this.sessions[this.selectedSession].StartDate = this.StartDate
+        this.sessions[this.selectedSession].EndDate = this.EndDate
+        this.sessions[this.selectedSession].Timezone = this.Timezone
 
-      console.log(
-        '==formatted date==',
-        format(new Date(this.StartDate), 'MM/dd/yyyy')
-      )
-
-      if (this.ScheduledType === 'Over a period of rolling days') {
-        this.sessions[
-          this.selectedSession
-        ].CustomScheduledType = `over ${this.RollingDays} rolling days`
+        if (this.ScheduledType === 'Over a period of rolling days') {
+          this.sessions[
+            this.selectedSession
+          ].CustomScheduledType = `over ${this.RollingDays} rolling days`
+        } else if (this.ScheduledType === 'Over a date range') {
+          const formatedDate = `from ${format(
+            new Date(this.StartDate),
+            'MM/dd/yyyy'
+          )} to ${format(new Date(this.EndDate), 'MM/dd/yyyy')}`
+          this.sessions[this.selectedSession].CustomScheduledType = formatedDate
+        } else if (this.ScheduledType === 'Indefinitely') {
+          this.sessions[this.selectedSession].CustomScheduledType =
+            'indefinitely into the future'
+        }
+        this.sessions[this.selectedSession].Days = []
+        this.days.forEach((d, i) => {
+          if (d.Label === 'Mondays' && d.Value === true) {
+            this.sessions[this.selectedSession].Days.push('monday')
+          }
+          if (d.Label === 'Tuesdays' && d.Value === true) {
+            this.sessions[this.selectedSession].Days.push('tuesday')
+          }
+          if (d.Label === 'Wednesdays' && d.Value === true) {
+            this.sessions[this.selectedSession].Days.push('wednesday')
+          }
+          if (d.Label === 'Thursdays' && d.Value === true) {
+            this.sessions[this.selectedSession].Days.push('thursday')
+          }
+          if (d.Label === 'Fridays' && d.Value === true) {
+            this.sessions[this.selectedSession].Days.push('friday')
+          }
+          if (d.Label === 'Saturdays' && d.Value === true) {
+            this.sessions[this.selectedSession].Days.push('saturday')
+          }
+          if (d.Label === 'Sundays' && d.Value === true) {
+            this.sessions[this.selectedSession].Days.push('sunday')
+          }
+        })
       }
-      // else if(this.ScheduledType === 'Over a date range'){
-      //   this.sessions[this.selectedSession].CustomScheduledType = `from ${this.StartDate} to ${this.EndDate}`
-      // }
-      else {
-        this.sessions[
-          this.selectedSession
-        ].CustomScheduledType = this.ScheduledType
-      }
-      this.sessions[this.selectedSession].Days = []
-      this.days.forEach((d, i) => {
-        if (d.Label === 'Mondays' && d.Value === true) {
-          this.sessions[this.selectedSession].Days.push('monday')
-        }
-        if (d.Label === 'Tuesdays' && d.Value === true) {
-          this.sessions[this.selectedSession].Days.push('tuesday')
-        }
-        if (d.Label === 'Wednesdays' && d.Value === true) {
-          this.sessions[this.selectedSession].Days.push('wednesday')
-        }
-        if (d.Label === 'Thursdays' && d.Value === true) {
-          this.sessions[this.selectedSession].Days.push('thursday')
-        }
-        if (d.Label === 'Fridays' && d.Value === true) {
-          this.sessions[this.selectedSession].Days.push('friday')
-        }
-        if (d.Label === 'Saturdays' && d.Value === true) {
-          this.sessions[this.selectedSession].Days.push('saturday')
-        }
-        if (d.Label === 'Sundays' && d.Value === true) {
-          this.sessions[this.selectedSession].Days.push('sunday')
-        }
-      })
     },
     changeSchedule(value) {
       this.setScheduleType(value)
@@ -1358,7 +1526,7 @@ export default {
     },
     next(value) {
       const { Title, UniqLink } = this.eventData
-      this.$refs.form.validate()
+      // this.$refs.form.validate()
       if (
         value === 2 &&
         Title !== '' &&
@@ -1372,125 +1540,146 @@ export default {
     },
 
     saveRecord() {
-      this.isSaveButtonDisabled = true
-      const { Code, Type, StartDate, EndDate } = this.tickets
+      const { Code, Type } = this.tickets
       this.$refs.form.validate()
-      if (
-        Code !== '' &&
-        Type !== '' &&
-        StartDate !== null &&
-        EndDate !== null
-      ) {
-        if (this.venueAddress.AddressLine !== '')
-          this.eventData._VenueAddress = this.venueAddress
+      if (Code !== '' && Type !== '') {
+        // if (this.venueAddress.AddressLine !== '')
+        //   this.eventData._VenueAddress = this.venueAddress
+        // let isInvalidSession = false
+        const isInvalidSessionMap = this.sessions.map((session, index) => {
+          return session.StartTime > session.EndTime
+        })
+        const isLocationTypeEmpty = this.sessions.map((session, index) => {
+          return session.LocationType === ''
+        })
+        console.log('===isInvalidSessionMap==', isInvalidSessionMap)
 
-        // const convertedEventRecord = formatTimezoneDateFieldsData(
-        //   this.eventData,
-        //   this.fields
-        // )
-        // this.eventData.StartDate = convertedEventRecord.StartDate
-        // this.eventData.EndDate = convertedEventRecord.EndDate
-        this.eventData.EventManager = this.$auth.$state.user.data.email
-        this.eventData.Organizer = this.$auth.$state.user.data.name
-        const baseUrl = getApiUrl()
-        this.$axios
-          .$post(`${baseUrl}Events`, {
-            ...this.eventData,
-          })
-          .then((res) => {
-            this.eventId = res.id
-
-            const ticketList = []
-            const sessionList = []
-
-            this.tickets.forEach(function (ticket) {
-              ticket.Events = res.id
-              ticket.Amount = parseInt(ticket.Amount)
-              ticket.TicketCount = parseInt(ticket.TicketCount)
-              ticketList.push(ticket)
+        const tempData = []
+        this.sessions.forEach((row) => {
+          let startTime = row.StartTime.replace(':', '.')
+          let endTime = row.EndTime.replace(':', '.')
+          startTime = parseInt(startTime)
+          endTime = parseInt(endTime)
+          const newsObject = { start: startTime, end: endTime }
+          tempData.push(newsObject)
+        })
+        console.log('==tempData=', JSON.stringify(tempData))
+        const isInvalidSlot = this.partitionIntoOverlappingRanges(tempData)
+        console.log('==isInvalidSlot=', isInvalidSlot)
+        if (
+          !isLocationTypeEmpty.includes(true) &&
+          !isInvalidSessionMap.includes(true) &&
+          (isInvalidSlot === false ||
+            confirm(
+              'This session overlaps with another session, are you sure? click Yes to create and cancel to cancel it.'
+            ))
+        ) {
+          this.isSaveButtonDisabled = true
+          this.eventData.EventManager = this.$auth.$state.user.data.email
+          this.eventData.Organizer = this.$auth.$state.user.data.name
+          const baseUrl = getApiUrl()
+          this.$axios
+            .$post(`${baseUrl}Events`, {
+              ...this.eventData,
             })
+            .then((res) => {
+              this.eventId = res.id
 
-            return this.$axios
-              .$post(`${baseUrl}Tickets`, ticketList)
-              .then((ticketres) => {
-                this.sessions.forEach(function (session) {
-                  session.EventId = res.id
+              const ticketList = []
+              const sessionList = []
 
-                  // session.Duration = parseInt(session.Duration.split(' ')[0])
-                  // session.Frequency = parseInt(session.Duration.split(' ')[0])
-                  session.Duration = parseInt(session.Duration)
-                  session.Frequency = parseInt(session.Duration)
-                  session.Name = session.StartTime + ' ' + session.EndTime
-                  const fields = [
-                    {
-                      type: 'timezone',
-                      fieldName: 'Timezone',
-                    },
-                    {
-                      type: 'datetime',
-                      fieldName: 'StartDate',
-                    },
-                    {
-                      type: 'datetime',
-                      fieldName: 'EndDate',
-                    },
-                  ]
-                  if (session.StartDate !== null && session.EndDate !== null) {
-                    const convertedEventRecord = formatTimezoneDateFieldsData(
-                      session,
-                      fields
-                    )
-                    session.StartDate = convertedEventRecord.StartDate
-                    session.EndDate = convertedEventRecord.EndDate
-                  }
+              this.tickets.forEach(function (ticket) {
+                ticket.Events = res.id
+                ticket.Amount = parseInt(ticket.Amount)
+                ticket.TicketCount = parseInt(ticket.TicketCount)
+                ticketList.push(ticket)
+              })
 
-                  const ObjectID5 = (
-                    m = Math,
-                    d = Date,
-                    h = 16,
-                    s = (s) => m.floor(s).toString(h)
-                  ) =>
-                    s(d.now() / 1000) +
-                    ' '.repeat(h).replace(/./g, () => s(m.random() * h))
-                  const Exceptions = session.Days.map((item, key) => {
-                    return {
-                      id: ObjectID5(),
-                      type: 'wday',
-                      wday: item,
-                      _intervals: [
-                        {
-                          id: ObjectID5(),
-                          from: session.StartTime,
-                          to: session.EndTime,
-                        },
-                      ],
+              return this.$axios
+                .$post(`${baseUrl}Tickets`, ticketList)
+                .then((ticketres) => {
+                  this.sessions.forEach(function (session) {
+                    session.EventId = res.id
+
+                    // session.Duration = parseInt(session.Duration.split(' ')[0])
+                    // session.Frequency = parseInt(session.Duration.split(' ')[0])
+                    session.Duration = parseInt(session.Duration)
+                    session.Frequency = parseInt(session.Duration)
+                    session.Name = session.StartTime + ' ' + session.EndTime
+                    const fields = [
+                      {
+                        type: 'timezone',
+                        fieldName: 'Timezone',
+                      },
+                      {
+                        type: 'datetime',
+                        fieldName: 'StartDate',
+                      },
+                      {
+                        type: 'datetime',
+                        fieldName: 'EndDate',
+                      },
+                    ]
+                    if (
+                      session.StartDate !== null &&
+                      session.EndDate !== null
+                    ) {
+                      const convertedEventRecord = formatTimezoneDateFieldsData(
+                        session,
+                        fields
+                      )
+                      session.StartDate = convertedEventRecord.StartDate
+                      session.EndDate = convertedEventRecord.EndDate
                     }
-                  })
 
-                  session._Exceptions = Exceptions
-                  sessionList.push(session)
+                    const ObjectID5 = (
+                      m = Math,
+                      d = Date,
+                      h = 16,
+                      s = (s) => m.floor(s).toString(h)
+                    ) =>
+                      s(d.now() / 1000) +
+                      ' '.repeat(h).replace(/./g, () => s(m.random() * h))
+                    const Exceptions = session.Days.map((item, key) => {
+                      return {
+                        id: ObjectID5(),
+                        type: 'wday',
+                        wday: item,
+                        _intervals: [
+                          {
+                            id: ObjectID5(),
+                            from: session.StartTime,
+                            to: session.EndTime,
+                          },
+                        ],
+                      }
+                    })
+
+                    session._Exceptions = Exceptions
+                    sessionList.push(session)
+                  })
+                  return this.$axios
+                    .$post(`${baseUrl}Sessions`, sessionList)
+                    .then((sessionres) => {
+                      this.isSession = false
+                      this.isEventCreate = true
+                      return sessionres
+                    })
+                    .catch((e) => {
+                      console.log('error', e)
+                      this.isSaveButtonDisabled = false
+                    })
                 })
-                return this.$axios
-                  .$post(`${baseUrl}Sessions`, sessionList)
-                  .then((sessionres) => {
-                    this.isSession = false
-                    this.isEventCreate = true
-                    return sessionres
-                  })
-                  .catch((e) => {
-                    console.log('error', e)
-                    this.isSaveButtonDisabled = false
-                  })
-              })
-              .catch((e) => {
-                console.log('error', e)
-                this.isSaveButtonDisabled = false
-              })
-          })
-          .catch((e) => {
-            console.log('error', e)
-            this.isSaveButtonDisabled = false
-          })
+                .catch((e) => {
+                  console.log('error', e)
+                  this.isSaveButtonDisabled = false
+                })
+            })
+            .catch((e) => {
+              console.log('error', e)
+              this.isSaveButtonDisabled = false
+            })
+        }
       }
     },
 
