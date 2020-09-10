@@ -1,101 +1,103 @@
 <template>
-  <v-form ref="form" v-model="valid">
-    <v-row justify="center">
-      <v-dialog
-        v-model="dialog"
-        persistent
-        scrollable
-        content-class="slide-form-default"
-        transition="dialog-bottom-transition"
-      >
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn text small v-bind="attrs" v-on="on">
-            <v-icon dark left>mdi-plus</v-icon>
-            New Question
-          </v-btn>
-        </template>
-        <v-card>
-          <v-toolbar dense flat dark fixed color="accent">
-            <v-toolbar-title class="body-1">New Item</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-btn icon dark @click="dialog = false">
+  <v-col class="px-0">
+    <v-dialog
+      v-model="dialog"
+      persistent
+      scrollable
+      content-class="slide-form-default"
+      transition="dialog-bottom-transition"
+    >
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn text small v-bind="attrs" v-on="on">
+          <v-icon left>mdi-plus</v-icon> New Question
+        </v-btn>
+      </template>
+      <v-card>
+        <v-card-title
+          class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
+        >
+          <h2 class="black--text pt-10 pb-9">New Registration Question</h2>
+          <v-spacer></v-spacer>
+          <div>
+            <v-btn icon @click="dialog = false">
               <v-icon>mdi-close</v-icon>
             </v-btn>
-          </v-toolbar>
-          <v-divider></v-divider>
-          <v-card-text>
-            <v-container>
-              <v-row>
-                <v-col cols="12">
-                  <v-text-field
-                    v-model="formData.Question"
-                    label="Question*"
-                    :rules="required"
-                    outlined
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6" md="6">
-                  <v-select
-                    v-model="controlType"
-                    :rules="required"
-                    :items="controlTypeDropDown"
-                    label="Control Type*"
-                    outlined
-                  ></v-select>
-                </v-col>
-                <v-col v-if="showCsvField" cols="12">
-                  <v-text-field
-                    v-model="CsvOptions"
-                    label="Options, use CSV format*"
-                    :rules="required"
-                    outlined
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12">
-                  <v-text-field
-                    v-model="formData.DisplayOrder"
-                    :rules="required"
-                    label="Display Order*"
-                    type="number"
-                    min="1"
-                    required
-                    outlined
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12">
-                  <v-checkbox
-                    v-model="formData.isRequired"
-                    label=" Required"
-                    class="ma-0"
-                  ></v-checkbox>
-                </v-col>
-                <v-col cols="12">
-                  <v-select
-                    v-model="tickets"
-                    :items="ticketsDropDown"
-                    label="Only ask when one of these tickets are purchased"
-                    multiple
-                    chips
-                    persistent-hint
-                  ></v-select>
-                </v-col>
-              </v-row>
-            </v-container>
-          </v-card-text>
-          <v-divider></v-divider>
-          <v-card-actions class="pl-4">
-            <v-btn
-              color="primary"
-              :disabled="!valid"
-              depressed
-              @click.native="onSave"
-              >Save</v-btn
-            >
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-    </v-row>
-  </v-form>
+          </div>
+        </v-card-title>
+        <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
+          <v-form ref="form" v-model="valid" :lazy-validation="lazy">
+            <v-row>
+              <v-col cols="12">
+                <v-text-field
+                  v-model="formData.Question"
+                  label="Question*"
+                  :rules="required"
+                  outlined
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-select
+                  v-model="controlType"
+                  :rules="required"
+                  :items="controlTypeDropDown"
+                  label="Control Type*"
+                  outlined
+                ></v-select>
+              </v-col>
+              <v-col v-if="showCsvField" cols="12">
+                <v-text-field
+                  v-model="CsvOptions"
+                  label="Options, use CSV format*"
+                  :rules="required"
+                  outlined
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  v-model="formData.DisplayOrder"
+                  :rules="required"
+                  label="Display Order*"
+                  type="number"
+                  min="1"
+                  required
+                  outlined
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-checkbox
+                  v-model="formData.isRequired"
+                  label=" Required"
+                  class="ma-0"
+                ></v-checkbox>
+              </v-col>
+              <v-col cols="12">
+                <span>Only ask when one of these tickets are purchased</span>
+                <v-select
+                  v-model="tickets"
+                  :items="ticketsDropDown"
+                  multiple
+                  chips
+                  persistent-hint
+                ></v-select>
+              </v-col>
+            </v-row>
+          </v-form>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions
+          class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
+        >
+          <v-btn
+            color="primary"
+            :disabled="!valid"
+            depressed
+            @click.native="onSave"
+            >Save</v-btn
+          >
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </v-col>
 </template>
 
 <script>
@@ -106,6 +108,7 @@ import eventTicket from '~/config/apps/event/gql/eventTickets.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { required } from '~/utility/rules.js'
 export default {
+  props: ['refresh'],
   data() {
     return {
       formData: {
@@ -155,14 +158,16 @@ export default {
     },
   },
   methods: {
-    refresh() {
-      this.$apollo.queries.tableData.refresh()
-    },
+    // refresh() {
+    //   this.$apollo.queries.tableData.refresh()
+    // },
     onSave() {
       debugger
       this.formData.ControlType = this.controlType
       this.formData.DisplayOrder = parseInt(this.formData.DisplayOrder)
-      this.formData.Options = this.CsvOptions.split(',')
+      if (this.showField.includes(this.formData.ControlType)) {
+        this.formData.Options = this.CsvOptions.split(',')
+      }
       this.formData.TicketName = this.tickets
       this.$axios
         .$post(
