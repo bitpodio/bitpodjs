@@ -22,11 +22,11 @@
           <v-card flat>
             <v-tabs v-model="tabs" center-active>
               <v-tabs-slider></v-tabs-slider>
-              <v-tab href="#tab-1" class="primary--text">
+              <v-tab href="#tab-1" class="px-0 mr-4 primary--text">
                 <span>Templates</span>
               </v-tab>
 
-              <v-tab href="#tab-2" class="primary--text">
+              <v-tab href="#tab-2" class="px-0 mr-4 primary--text">
                 <span>Section Setting</span>
               </v-tab>
             </v-tabs>
@@ -38,18 +38,20 @@
                     Select a template
                   </v-col>
                   <v-flex
-                    class="d-flex flex-wrap pa-0 justify-center justify-md-start"
+                    class="d-flex flex-wrap pa-0 ml-6 justify-center justify-md-start"
                   >
                     <v-hover
                       v-for="item in formData"
                       :key="item.id"
                       v-slot:default="{ hover }"
                     >
-                      <div class="card-content">
+                      <div class="card-content" @click="selectedItem = item.id">
                         <v-card
                           :elevation="hover ? 4 : 2"
                           class="ma-3 ml-0 mt-0"
-                          :class="{ 'on-hover': hover }"
+                          :class="{
+                            'on-hover': selectedItem === item.id,
+                          }"
                           height="250"
                           width="250"
                         >
@@ -124,91 +126,91 @@
                     best suit your event. For example, you may relabel Speakers
                     to Artists
                   </v-col>
-                  <v-col cols="12" sm="6" md="6">
+                  <v-col cols="12">
                     <v-text-field
                       v-model="sectionHeading.speakers"
                       label="Label for Speakers section"
                       outlined
                     ></v-text-field>
                   </v-col>
-                  <v-col cols="12" sm="6" md="6">
+                  <v-col cols="12">
                     <v-text-field
                       v-model="sectionHeading.registrationTypes"
                       label="Label for Registration Types section"
                       outlined
                     ></v-text-field>
                   </v-col>
-                  <v-col cols="12" sm="6" md="6">
+                  <v-col cols="12">
                     <v-text-field
                       v-model="sectionHeading.session"
                       label="Label for Sessions section"
                       outlined
                     ></v-text-field>
                   </v-col>
-                  <v-col cols="12" sm="6" md="6">
+                  <v-col cols="12">
                     <v-text-field
                       v-model="sectionHeading.registrationbtn"
                       label="Label for Register button"
                       outlined
                     ></v-text-field>
                   </v-col>
-                  <v-col cols="12" sm="6" md="6">
+                  <v-col cols="12">
                     <v-text-field
                       v-model="sectionHeading.ticketsectionlabel"
                       label="Label for Tickets section"
                       outlined
                     ></v-text-field>
                   </v-col>
-                  <v-col cols="12" sm="6" md="6">
+                  <v-col cols="12">
                     <v-text-field
                       v-model="sectionHeading.ticketlabel"
                       label="Label for Tickets"
                       outlined
                     ></v-text-field>
                   </v-col>
-                  <v-col cols="12" sm="6" md="6">
+                  <v-col cols="12">
                     <v-text-field
                       v-model="sectionHeading.datetimelabel"
                       label="Label for Date and Time section"
                       outlined
                     ></v-text-field>
                   </v-col>
-                  <v-col cols="12" sm="6" md="6">
+                  <v-col cols="12">
                     <v-text-field
                       v-model="sectionHeading.venuelabel"
                       label="Label for Venue section"
                       outlined
                     ></v-text-field>
                   </v-col>
-                  <v-col cols="12" sm="6" md="6">
+                  <v-col cols="12">
                     <v-text-field
                       v-model="sectionHeading.sessionsectionlabel"
                       label="Label for Recurring Sessions section"
                       outlined
                     ></v-text-field>
                   </v-col>
-                  <v-col cols="12" sm="6" md="6">
+                  <v-col cols="12">
                     <v-text-field
                       v-model="sectionHeading.registrationquestionsectionlabel"
                       label="Label for Registration Questions section"
                       outlined
                     ></v-text-field>
                   </v-col>
-                  <v-col cols="12" sm="6" md="6">
+                  <v-col cols="12">
                     <v-text-field
                       v-model="sectionHeading.gallery"
                       label="Label for Image Gallery section"
                       outlined
                     ></v-text-field>
                   </v-col>
-                  <v-col cols="12" sm="6" md="6">
+                  <v-col cols="12">
                     <v-text-field
                       v-model="sectionHeading.review"
                       label="Label for Reviews section"
                       outlined
                     ></v-text-field>
                   </v-col>
-                  <v-col cols="12" sm="6" md="6">
+                  <v-col cols="12">
                     <v-select
                       v-model="animation"
                       :items="animationDropDown"
@@ -216,7 +218,7 @@
                       outlined
                     ></v-select>
                   </v-col>
-                  <v-col cols="12" sm="6" md="6"></v-col>
+                  <v-col cols="12"></v-col>
                   <v-col cols="12" class="py-0">
                     <v-checkbox
                       v-model="sectionHeading.showimagegallery"
@@ -224,7 +226,7 @@
                       class="ma-0"
                     ></v-checkbox>
                   </v-col>
-                  <v-col cols="12" class="py-0">
+                  <v-col cols="12">
                     <v-checkbox
                       v-model="sectionHeading.showeventreviews"
                       label=" Show Event Reviews"
@@ -280,12 +282,14 @@ export default {
       themeSelected: '',
       animation: [],
       animationDropDown: [],
+      selectedItem: '',
     }
   },
   mounted() {
     this.getDropDownData('AnimationImage')
       .then((res) => {
         this.animationDropDown = res.map((i) => i.value)
+        this.animationDropDown.unshift('Select')
         return res
       })
       .catch((e) => {
@@ -309,7 +313,8 @@ export default {
     },
     onSave() {
       debugger
-      this.sectionHeading.animation = this.animation
+      this.sectionHeading.animation =
+        this.animation !== 'Select' ? this.animation : ''
       Object.assign(this.eventData, {
         _sectionHeading: this.sectionHeading,
       })
@@ -455,5 +460,9 @@ export default {
   background: #1a73e8;
   text-align: center;
   color: grey;
+}
+.on-hover {
+  /* opacity: 0.3; */
+  border: 2px solid #1a73e8;
 }
 </style>
