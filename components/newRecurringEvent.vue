@@ -8,7 +8,7 @@
           <v-btn icon dark @click="isDateRange = false">
             <v-icon>mdi-close</v-icon>
           </v-btn>
-        </v-toolbar>       
+        </v-toolbar>
         <v-card-text>
           <v-row>
             <v-col cols="12" class="mt-4">
@@ -88,8 +88,8 @@
           <v-btn icon dark @click="isDuration = false">
             <v-icon>mdi-close</v-icon>
           </v-btn>
-        </v-toolbar>       
-        <v-card-text>
+        </v-toolbar>
+        <v-card-text class="v-location">
           <v-row>
             <v-col cols="12">
               <v-text-field
@@ -119,8 +119,8 @@
           <v-btn icon dark @click="isPhone = false">
             <v-icon>mdi-close</v-icon>
           </v-btn>
-        </v-toolbar>       
-        <v-card-text>
+        </v-toolbar>
+        <v-card-text class="v-location">
           <v-row>
             <v-col cols="12">
               <v-text-field
@@ -141,7 +141,7 @@
         </div>
       </v-card>
     </v-dialog>
-     <v-dialog v-model="isOnlineMeeting" max-width="600px" max-height="350px">
+    <v-dialog v-model="isOnlineMeeting" max-width="600px" max-height="350px">
       <v-card>
         <v-toolbar dark app color="accent">
           <v-toolbar-title>Location</v-toolbar-title>
@@ -149,8 +149,8 @@
           <v-btn icon dark @click="isOnlineMeeting = false">
             <v-icon>mdi-close</v-icon>
           </v-btn>
-        </v-toolbar>       
-        <v-card-text>
+        </v-toolbar>
+        <v-card-text class="v-location">
           <v-row>
             <v-col cols="12">
               <v-text-field
@@ -171,7 +171,7 @@
         </div>
       </v-card>
     </v-dialog>
-     <v-dialog v-model="isCustom" max-width="600px" max-height="350px">
+    <v-dialog v-model="isCustom" max-width="600px" max-height="350px">
       <v-card>
         <v-toolbar dark app color="accent">
           <v-toolbar-title>Location</v-toolbar-title>
@@ -179,40 +179,51 @@
           <v-btn icon dark @click="isCustom = false">
             <v-icon>mdi-close</v-icon>
           </v-btn>
-        </v-toolbar>       
-        <v-card-text>
+        </v-toolbar>
+        <v-card-text class="v-location">
           <v-row>
             <v-col cols="12">
-              <v-text-field
+              <!-- <v-text-field
                 v-model="Address"
                 label="Address"
                 outlined
-              ></v-text-field>
+              ></v-text-field> -->
+              <no-ssr>
+                <vue-google-autocomplete
+                  id="map"
+                  ref="venueAddress.AddressLine"
+                  v-model="venueAddress.AddressLine"
+                  class="form-control pa-3 d-block rounded"
+                  placeholder="Address*"
+                  :required="true"
+                  @placechanged="getAddressData"
+                ></vue-google-autocomplete>
+              </no-ssr>
             </v-col>
             <v-col cols="6">
               <v-text-field
-                v-model="City"
+                v-model="venueAddress.City"
                 label="City"
                 outlined
               ></v-text-field>
             </v-col>
             <v-col cols="6">
               <v-text-field
-                v-model="State"
+                v-model="venueAddress.State"
                 label="State"
                 outlined
               ></v-text-field>
             </v-col>
             <v-col cols="6">
               <v-text-field
-                v-model="Country"
+                v-model="venueAddress.Country"
                 label="Country"
                 outlined
               ></v-text-field>
             </v-col>
             <v-col cols="6">
               <v-text-field
-                v-model="ZipCode"
+                v-model="venueAddress.ZipCode"
                 label="Zip Code"
                 outlined
               ></v-text-field>
@@ -237,14 +248,11 @@
           <v-btn icon dark @click="isPersonMeeting = false">
             <v-icon>mdi-close</v-icon>
           </v-btn>
-        </v-toolbar>       
-        <v-card-text>
+        </v-toolbar>
+        <v-card-text class="v-location">
           <v-row>
             <v-col cols="12">
-              <Lookup
-                v-model="InPersonMeeting"
-                :field="inPersonMeetingProps"
-              />
+              <Lookup v-model="InPersonMeeting" :field="inPersonMeetingProps" />
             </v-col>
           </v-row>
         </v-card-text>
@@ -266,14 +274,11 @@
           <v-btn icon dark @click="isSessionTicket = false">
             <v-icon>mdi-close</v-icon>
           </v-btn>
-        </v-toolbar>       
-        <v-card-text>
+        </v-toolbar>
+        <v-card-text class="v-location">
           <v-row>
             <v-col cols="12">
-              <Lookup
-                v-model="SessionTicket"
-                :field="sessionTicketProps"
-              />
+              <Lookup v-model="SessionTicket" :field="sessionTicketProps" />
             </v-col>
           </v-row>
         </v-card-text>
@@ -295,8 +300,8 @@
           <v-btn icon dark @click="isType = false">
             <v-icon>mdi-close</v-icon>
           </v-btn>
-        </v-toolbar>       
-        <v-card-text>
+        </v-toolbar>
+        <v-card-text class="v-location">
           <v-row>
             <v-col cols="12">
               <Lookup
@@ -305,7 +310,7 @@
                 :on-change="changeType"
               />
             </v-col>
-            <v-col cols="12" v-if="isGroup">
+            <v-col v-if="isGroup" cols="12">
               <v-text-field
                 v-model="MaxAllow"
                 label="Max Allow*"
@@ -468,8 +473,23 @@
               <v-btn class="ma-2" outlined color="indigo" @click="addSession"
                 >Add Recurring Session</v-btn
               >
-              <div v-if="isZoom"> To send Zoom joining info, you must setup Zoom integration, <a href="" v-on:click.stop.prevent="openWindow(zoomDocumentLink)">click here</a> for documentation.</div>
-              <div v-if="isGoogleMeet">To send google meet joining info, you must setup google meet integration, <a href="" v-on:click.stop.prevent="openWindow(googleMeetDocumentLink)">click here</a> for documentation.</div>
+              <div v-if="isZoom">
+                To send Zoom joining info, you must setup Zoom integration,
+                <a href="" @click.stop.prevent="openWindow(zoomDocumentLink)"
+                  >click here</a
+                >
+                for documentation.
+              </div>
+              <div v-if="isGoogleMeet">
+                To send google meet joining info, you must setup google meet
+                integration,
+                <a
+                  href=""
+                  @click.stop.prevent="openWindow(googleMeetDocumentLink)"
+                  >click here</a
+                >
+                for documentation.
+              </div>
               <v-simple-table>
                 <template v-slot:default>
                   <thead>
@@ -489,8 +509,8 @@
                     <tr v-for="(session, k) in sessions" :key="k">
                       <td class="pa-2 pb-0">
                         <span>{{ session.CustomScheduledType }}</span>
-                        <v-btn text small @click="selectSchedule(k)">
-                          <v-icon left>mdi-pencil</v-icon>
+                        <v-btn icon small @click="selectSchedule(k)">
+                          <v-icon left>mdi-18px mdi-pencil</v-icon>
                         </v-btn>
                         <!-- <v-text-field
                           v-model="session.ScheduledType"
@@ -539,8 +559,12 @@
                           outlined
                           value
                         ></v-text-field> -->
-                        <span v-if="session.Type === 'Group'">{{session.Type}} {{session.MaxAllow}}  </span>
-                        <span v-if="session.Type === 'Personal'">{{session.Type}}  </span>
+                        <span v-if="session.Type === 'Group'"
+                          >{{ session.Type }} {{ session.MaxAllow }}
+                        </span>
+                        <span v-if="session.Type === 'Personal'"
+                          >{{ session.Type }}
+                        </span>
                         <v-btn text small @click="selectType(k)">
                           <v-icon left>mdi-pencil</v-icon>
                         </v-btn>
@@ -583,7 +607,6 @@
                 <div class="py-2">
                   <i
                     class="fa fa-calendar pa-4 d-inline-flex rounded-circle body-1 primary white--text"
-                    aria-hidden="true"
                   ></i>
                 </div>
                 <div class="pb-2 text-uppercase">
@@ -673,6 +696,16 @@ import { formatGQLResult } from '~/utility/gql.js'
 // import Checkbox from '~/components/common/form/checkbox.vue'
 // import CustomDate from '~/components/common/form/date.vue'
 // import nuxtconfig from '~/nuxt.config'
+// function ObjectID5() {
+//       return (m = Math, d = Date, h = 16, s = (s) => m.floor(s).toString(h)) =>
+//         s(d.now() / 1000) + ' '.repeat(h).replace(/./g, () => s(m.random() * h))
+// }
+const ObjectID5 = (
+  m = Math,
+  d = Date,
+  h = 16,
+  s = (s) => m.floor(s).toString(h)
+) => s(d.now() / 1000) + ' '.repeat(h).replace(/./g, () => s(m.random() * h))
 export default {
   components: {
     RichText: () =>
@@ -680,12 +713,14 @@ export default {
     Lookup,
     Timezone,
     // CustomDate
+    VueGoogleAutocomplete: () => import('vue-google-autocomplete'),
   },
   props: {
     onFormClose: Function,
   },
   data: () => {
     // const currentDatetime = new Date(new Date().setSeconds(0))
+    // const tid = this.ObjectID5()
     return {
       valid: true,
       lazy: false,
@@ -707,23 +742,26 @@ export default {
       InPersonMeeting: '',
       Type: 'Personal',
       MaxAllow: 0,
-      isGroup	: false,
+      isGroup: false,
       Address: '',
       City: '',
       State: '',
       Country: '',
       ZipCode: '',
-      zoomDocumentLink: 'https://bitpod-event.test.bitpod.io/admin/apps/HelpCenter/Integrations/Zoom/views/Zoom',
-      googleMeetDocumentLink: 'https://bitpod-event.test.bitpod.io/admin/apps/HelpCenter/Integrations/Gmail/views/Gmail',
+      SessionTicket: [],
+      zoomDocumentLink:
+        'https://bitpod-event.test.bitpod.io/admin/apps/HelpCenter/Integrations/Zoom/views/Zoom',
+      googleMeetDocumentLink:
+        'https://bitpod-event.test.bitpod.io/admin/apps/HelpCenter/Integrations/Gmail/views/Gmail',
       selectedSession: '',
       ScheduledType: '',
       RollingDays: '',
       StartDate: null,
       EndDate: null,
+      addresslineMessage: '',
       // ObjectID5: (m = Math, d = Date, h = 16, s = s => m.floor(s).toString(h)) => s(d.now() / 1000) + ' '.repeat(h).replace(/./g, () => s(m.random() * h)),
       // isIndefinitely: false,
       isSaveButtonDisabled: false,
-      addresslineMessage: '',
       isSession: true,
       isEventCreate: false,
       isEventPublish: false,
@@ -822,9 +860,7 @@ export default {
           itemText: 'Name',
           itemValue: 'id',
           filter(data) {
-            return {
-              
-            }
+            return {}
           },
         },
       },
@@ -842,7 +878,7 @@ export default {
           },
         },
       },
-     
+
       // dateTime: new Date(),
       // fields: [
       //   {
@@ -876,20 +912,8 @@ export default {
         Status: 'Not ready',
         // LocationType: 'Venue',
         VenueName: '',
-        _VenueAddress: {},
       },
-      venueAddress: {
-        AddressLine: '',
-        City: '',
-        State: '',
-        Country: '',
-        PostalCode: '',
-        LatLng: {},
-      },
-      LatLng: {
-        lat: 0.0,
-        lng: 0.0,
-      },
+
       stepNumber: 1,
 
       isInalidEventLink: false,
@@ -926,9 +950,9 @@ export default {
       ],
       tickets: [
         {
-          // id: this.ObjectID5,
-          // TicketId: 0,
-          // TicketId: 
+          id: ObjectID5(),
+          TicketId: 0,
+          // TicketId:
           Code: 'General admission',
           Type: 'Free',
           Amount: 0,
@@ -954,11 +978,24 @@ export default {
           StartDate: null,
           EndDate: null,
           LocationId: [],
-          // SessionTicket: [],
+          _CurrentAddress: {},
+          SessionTicket: [],
           Days: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'],
           _Exceptions: [],
         },
       ],
+      venueAddress: {
+        AddressLine: '',
+        City: '',
+        State: '',
+        Country: '',
+        PostalCode: '',
+        LatLng: {},
+      },
+      LatLng: {
+        lat: 0.0,
+        lng: 0.0,
+      },
     }
   },
   computed: {
@@ -966,7 +1003,7 @@ export default {
       const errorMessage = this.isInalidEventLink ? this.uniqueLinkMessage : ''
       return errorMessage
     },
-    sessionTicketProps(){
+    sessionTicketProps() {
       return {
         caption: 'tickets',
         type: 'lookup',
@@ -975,8 +1012,8 @@ export default {
         dataSource: {
           items: this.tickets,
           itemText: 'Code',
-          itemValue: 'id'
-        }
+          itemValue: 'id',
+        },
       }
     },
     eventStartDateProps() {
@@ -1021,92 +1058,123 @@ export default {
     },
   },
   methods: {
-    openWindow(link){
+    getAddressData(addressData, placeResultData, id) {
+      this.venueAddress.AddressLine =
+        addressData.route ||
+        '' + ', ' + addressData.administrative_area_level_1 ||
+        ''
+      // this.eventData.VenueName = addressData.route || ''
+      this.venueAddress.Country = addressData.country || ''
+      this.venueAddress.City = addressData.locality || ''
+      this.venueAddress.State = addressData.administrative_area_level_1 || ''
+      this.venueAddress.LatLng.lat = addressData.latitude || ''
+      this.venueAddress.LatLng.lng = addressData.longitude || ''
+      // const latlng = {}
+      // latlng.lat = addressData.latitude
+      // latlng.lng = addressData.longitude
+      // latlng.name =
+      //   addressData.route +
+      //   ' ' +
+      //   addressData.locality +
+      //   ' ' +
+      //   addressData.country
+      // const newLocations = []
+      // newLocations[0] = latlng
+    },
+    // ObjectID5() {
+    //   return (m = Math, d = Date, h = 16, s = (s) => m.floor(s).toString(h)) =>
+    //     s(d.now() / 1000) + ' '.repeat(h).replace(/./g, () => s(m.random() * h))
+    // },
+    openWindow(link) {
       window.open(link, '_blank')
     },
-    changeType(value){
-      this.isGroup = value === 'Group' ? true : false 
+    changeType(value) {
+      this.isGroup = value === 'Group'
     },
     changelocationType(index) {
       // const index = 0
       return () => {
         console.log('==changelocationtype==index==', index)
         this.selectedSession = index
-        if(this.sessions[index].LocationType === 'Phone call'){
+        if (this.sessions[index].LocationType === 'Phone call') {
           this.isPhone = true
         }
-        if(this.sessions[index].LocationType === 'Online meeting'){
+        if (this.sessions[index].LocationType === 'Online meeting') {
           this.isOnlineMeeting = true
         }
-        if(this.sessions[index].LocationType === 'Custom'){
+        if (this.sessions[index].LocationType === 'Custom') {
           this.isCustom = true
         }
-        if(this.sessions[index].LocationType === 'In-person meeting'){
+        if (this.sessions[index].LocationType === 'In-person meeting') {
           this.isPersonMeeting = true
         }
-        if(this.sessions[index].LocationType === 'Zoom'){
+        if (this.sessions[index].LocationType === 'Zoom') {
           this.isZoom = true
           this.isGoogleMeet = false
         }
-        if(this.sessions[index].LocationType === 'Google Meet'){
+        if (this.sessions[index].LocationType === 'Google Meet') {
           this.isGoogleMeet = true
           this.isZoom = false
-        } 
+        }
       }
     },
-    changeDuration(index){
+    changeDuration(index) {
       return () => {
         this.selectedSession = index
-        console.log('==this.sessions[index].Duration==', this.sessions[index].Duration)
-        if(this.sessions[index].Duration === '0'){
+        console.log(
+          '==this.sessions[index].Duration==',
+          this.sessions[index].Duration
+        )
+        if (this.sessions[index].Duration === '0') {
           this.isDuration = true
         }
       }
     },
-    setDuration(){
+    setDuration() {
       this.isDuration = false
       this.sessions[this.selectedSession].Duration = this.Duration
       console.log('==sessions==', JSON.stringify(this.sessions))
     },
-    setPhone(){
+    setPhone() {
       this.isPhone = false
       this.sessions[this.selectedSession].Phone = this.Phone
       console.log('==sessions==', JSON.stringify(this.sessions))
     },
-    setOnlineMeeting(){
+    setOnlineMeeting() {
       this.isOnlineMeeting = false
       this.sessions[this.selectedSession].WebinarLink = this.WebinarLink
       console.log('==sessions==', JSON.stringify(this.sessions))
     },
-    setCustomLocation(){
+    setCustomLocation() {
       this.isCustom = false
       // this.sessions[this.selectedSession].WebinarLink = this.WebinarLink
       console.log('==sessions==', JSON.stringify(this.sessions))
+      this.sessions[this.selectedSession]._CurrentAddress = this.venueAddress
     },
-    setPersonMeeting(){
+    setPersonMeeting() {
       this.isPersonMeeting = false
 
-      debugger
       this.sessions[this.selectedSession].LocationId = this.InPersonMeeting
       console.log('==sessions==', JSON.stringify(this.sessions))
     },
-    selectType(index){
+    selectType(index) {
       this.selectedSession = index
       this.isType = true
     },
-    setType(){
+    setType() {
       this.isType = false
       this.sessions[this.selectedSession].Type = this.Type
-      if(this.Type === 'Group'){
+      if (this.Type === 'Group') {
         this.sessions[this.selectedSession].MaxAllow = parseInt(this.MaxAllow)
       }
     },
-    selectSessionTickets(index){
+    selectSessionTickets(index) {
       this.selectedSession = index
       this.isSessionTicket = true
     },
-    setSessionTicket(){
+    setSessionTicket() {
       this.isSessionTicket = false
+
       this.sessions[this.selectedSession].SessionTicket = this.SessionTicket
     },
     setScheduleType(type) {
@@ -1170,11 +1238,12 @@ export default {
       this.sessions[this.selectedSession].StartDate = this.StartDate
       this.sessions[this.selectedSession].EndDate = this.EndDate
       this.sessions[this.selectedSession].Timezone = this.Timezone
-      // console.log(
-      //   '==formatted date==',
-      //   format(new Date(this.StartDate), 'mm/dd/yyyy')
-      // )
-      // console.log('==formatted date==', format(this.StartDate, 'mm/dd/yyyy'))
+
+      console.log(
+        '==formatted date==',
+        format(new Date(this.StartDate), 'MM/dd/yyyy')
+      )
+
       if (this.ScheduledType === 'Over a period of rolling days') {
         this.sessions[
           this.selectedSession
@@ -1346,7 +1415,7 @@ export default {
               .then((ticketres) => {
                 this.sessions.forEach(function (session) {
                   session.EventId = res.id
-                  
+
                   // session.Duration = parseInt(session.Duration.split(' ')[0])
                   // session.Frequency = parseInt(session.Duration.split(' ')[0])
                   session.Duration = parseInt(session.Duration)
@@ -1366,7 +1435,7 @@ export default {
                       fieldName: 'EndDate',
                     },
                   ]
-                  if(session.StartDate !== null && session.EndDate !== null){ 
+                  if (session.StartDate !== null && session.EndDate !== null) {
                     const convertedEventRecord = formatTimezoneDateFieldsData(
                       session,
                       fields
@@ -1397,7 +1466,7 @@ export default {
                       ],
                     }
                   })
-                  
+
                   session._Exceptions = Exceptions
                   sessionList.push(session)
                 })
@@ -1424,7 +1493,7 @@ export default {
           })
       }
     },
-    
+
     changeEventName(value) {
       this.verifyUniqueLink(value)
     },
@@ -1464,7 +1533,7 @@ export default {
     addTicketRow() {
       this.tickets.push({
         TicketId: this.tickets.length + 1,
-        // id: this.ObjectID5,
+        id: ObjectID5(),
         Code: 'General admission',
         Type: 'Free',
         Amount: 0,
@@ -1479,7 +1548,7 @@ export default {
         CustomScheduledType: 'over 30 rolling days ',
         StartTime: '10:00',
         EndTime: '19:00',
-        Duration: '30 min',
+        Duration: '30',
         Timezone: '',
         LocationType: '',
         Type: 'Personal',
@@ -1527,5 +1596,8 @@ export default {
 }
 .vs-notification {
   box-shadow: 0 1px 2px 0 hsla(0, 0%, 0%, 0.25) !important;
+}
+.v-location {
+  min-height: 300px;
 }
 </style>

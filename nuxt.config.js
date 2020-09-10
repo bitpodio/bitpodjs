@@ -107,7 +107,8 @@ export default {
     apiEndpoint: '/svc/api/',
     backendBaseUrl: process.env.PUBLIC_DOMAIN || '',
     baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
-    eventUrl: process.env.GETEVENTURL || 'event.test.bitpod.io',    
+    eventUrl: process.env.GETEVENTURL || 'event.test.bitpod.io',
+    // baseURL: `http://localhost:3000${basePath}`,
   },
 
   publicRuntimeConfig: {
