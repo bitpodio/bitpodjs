@@ -64,7 +64,7 @@ export default {
       debugger
       const orgURL = `${window.location.protocol}//${orgName}-${defaultPublicDomain}${basePath}`
       console.log(orgURL)
-      window.location.assign(orgURL)
+      window.location.open(orgURL, '_blank')
     },
     checkOrgDetails() {
       if (this.$auth.user.data) {
