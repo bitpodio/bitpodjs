@@ -221,7 +221,6 @@
         ></v-app-bar-nav-icon>
       </div>
       <v-toolbar-title class="pl-0 ml-n2">Event </v-toolbar-title>
-      <OrgnaizationList />
       <v-spacer></v-spacer>
       <v-btn class="ma-2" tile outlined>
         UPGARDE
@@ -391,6 +390,9 @@
                 <v-switch v-model="message" color="primary"></v-switch>
               </v-list-item-action>
               <v-list-item-title>Notification</v-list-item-title>
+            </v-list-item>
+            <v-list-item>
+              <OrgnaizationList />
             </v-list-item>
             <v-divider></v-divider>
 
