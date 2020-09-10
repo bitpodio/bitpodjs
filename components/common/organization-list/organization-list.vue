@@ -60,7 +60,8 @@ export default {
     changeCurrentUrl(orgName) {
       let defaultPublicDomain = nuxtconfig.setting.domains.defaultPublicDomain
       defaultPublicDomain = defaultPublicDomain.split(',')[0]
-      const basePath = nuxtconfig.router.base
+      const basePath = this.$router.options.base // nuxtconfig.router.base
+      debugger
       const orgURL = `${window.location.protocol}//${orgName}-${defaultPublicDomain}${basePath}`
       console.log(orgURL)
       window.location.assign(orgURL)
