@@ -101,6 +101,7 @@
     <v-dialog
       v-model="dialog1"
       persistent
+      scrollable
       content-class="slide-form"
       transition="dialog-bottom-transition"
     >

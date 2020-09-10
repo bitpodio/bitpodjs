@@ -151,6 +151,39 @@ body {
 .v-application--is-ltr .v-stepper__label {
   text-align: center !important;
 }
+.slide-form {
+  position: fixed !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: calc(100% - 240px) !important;
+  max-height: calc(100% - 40px) !important;
+}
+.v-timezone .v-autocomplete.v-input > .v-input__control > .v-input__slot {
+  min-height: 40px !important;
+}
+.v-timezone .v-application--is-ltr .v-text-field .v-input__append-inner {
+  margin-top: 4px !important;
+}
+.v-tickettype .v-text-field--outlined > .v-input__control > .v-input__slot {
+  min-height: 40px;
+}
+.event-table .v-text-field.v-text-field--enclosed {
+  max-height: 50px !important;
+  margin-bottom: 10px !important;
+  margin-top: 12px !important;
+}
+.event-table .v-text-field--enclosed .v-input__append-inner {
+  margin-top: 8px !important;
+}
+.v-eventform .v-card__text {
+  overflow-y: hidden !important;
+}
+.v-eventform:hover .v-card__text {
+  overflow-y: auto !important;
+}
+.jodit-ui-group {
+  flex-wrap: nowrap !important;
+}
 @media (max-width: 600px) {
   .slide-form,
   .slide-form-default {
@@ -161,5 +194,8 @@ body {
     min-width: fit-content !IMPORTANT;
     left: unset !important;
     right: 20px !important;
+  }
+  .v-eventform .v-card__text {
+    overflow-y: auto !important;
   }
 }
