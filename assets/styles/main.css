@@ -27,8 +27,8 @@ body {
   position: fixed !important;
   right: 0 !important;
   bottom: 0 !important;
-  width: calc(100% - 300px) !important;
-  max-height: calc(100% - 100px) !important;
+  width: calc(100% - 230px) !important;
+  max-height: calc(100% - 15px) !important;
 }
 .stepper-box {
   min-height: 650px;
@@ -38,6 +38,10 @@ body {
   right: 0 !important;
   bottom: 0 !important;
   width: 50% !important;
+}
+.v-dialog {
+  margin: 12px !important;
+  margin-bottom: 0px !important;
 }
 .Twitter {
   font-size: 0 !important;
@@ -156,13 +160,6 @@ body {
   text-overflow: ellipsis;
   display: inline-block;
 }
-.slide-form {
-  position: fixed !important;
-  right: 0 !important;
-  bottom: 0 !important;
-  width: calc(100% - 240px) !important;
-  max-height: calc(100% - 40px) !important;
-}
 .v-timezone .v-autocomplete.v-input > .v-input__control > .v-input__slot {
   min-height: 40px !important;
 }
@@ -180,14 +177,23 @@ body {
 .event-table .v-text-field--enclosed .v-input__append-inner {
   margin-top: 8px !important;
 }
-.v-eventform .v-card__text {
-  overflow-y: hidden !important;
+.v-eventform .v-card__text::-webkit-scrollbar {
+  visibility: hidden !important;
 }
+/* .v-eventform .v-card__text {
+  overflow-y: auto !important;
+} */
 .v-eventform:hover .v-card__text {
   overflow-y: auto !important;
 }
 .jodit-ui-group {
   flex-wrap: nowrap !important;
+}
+.v-event-icon .fa {
+  font-size: 20px !important;
+}
+.v-text-field--enclosed .v-input__append-inner {
+  margin-top: 10px !important;
 }
 @media (max-width: 600px) {
   .slide-form,

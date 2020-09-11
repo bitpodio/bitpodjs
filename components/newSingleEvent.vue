@@ -11,20 +11,20 @@
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </div>
-        <v-tabs v-model="tabs" center-active class="mb-6 mt-2">
+        <v-tabs v-model="tabs" class="mb-6 mt-2 v-event-icon">
           <v-tabs-slider></v-tabs-slider>
           <v-tab href="#event-tabs-3-1" class="px-0 mr-4">
-            <v-icon left>mdi-information-outline</v-icon><span>Basic Info</span>
+            <v-icon left>fa-info-circle</v-icon><span>Basic Info</span>
           </v-tab>
           <v-tab href="#event-tabs-3-2" class="px-0 mr-4">
-            <v-icon left>mdi-map-marker-outline</v-icon><span>Location</span>
+            <v-icon left>fa-map-marker</v-icon><span>Location</span>
           </v-tab>
           <v-tab href="#event-tabs-3-3" class="px-0 mr-4">
-            <v-icon left>mdi-ticket-confirmation</v-icon><span>Tickets</span>
+            <v-icon left>fa-ticket</v-icon><span>Tickets</span>
           </v-tab>
         </v-tabs>
       </v-card-title>
-      <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
+      <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0 event-inner">
         <v-tabs-items v-model="tabs">
           <v-tab-item v-for="i in 1" :key="i" :value="'event-tabs-3-1'">
             <v-card flat>
@@ -110,7 +110,7 @@
           <v-tab-item v-for="i in 1" :key="i" :value="'event-tabs-3-2'">
             <v-card flat>
               <v-row>
-                <v-col cols="12" sm="6" md="6" class="pl-0">
+                <v-col cols="12" sm="6" md="6" class="pl-0 pt-0 pb-0">
                   <v-col class="pb-0">
                     <v-select
                       value="Venue"
@@ -207,7 +207,7 @@
                     ></v-text-field>
                   </v-col>
                 </v-col>
-                <v-col cols="12" sm="6" md="6">
+                <v-col cols="12" sm="6" md="6" class="pb-0">
                   <v-col v-if="isMap">
                     <div class="flex"></div>
                     <div :key="`${locations[0].lat}-${locations[0].lng}`">
@@ -255,7 +255,7 @@
                 so early birds can be offered better pricing.
               </p>
               <v-btn
-                class="ma-2 ml-0"
+                class="ma-2 ml-0 mb-3"
                 outlined
                 color="indigo"
                 @click="addTicketRow"
@@ -266,11 +266,11 @@
                   <thead>
                     <tr>
                       <th class="text-left pl-0">Title*</th>
-                      <th class="text-left">Type*</th>
-                      <th class="text-left">Price</th>
-                      <th class="text-left">Start Date*</th>
-                      <th class="text-left">End Date*</th>
-                      <th class="text-left">Quantity</th>
+                      <th class="text-left pl-2">Type*</th>
+                      <th class="text-left pl-2">Price</th>
+                      <th class="text-left pl-2">Start Date*</th>
+                      <th class="text-left pl-2">End Date*</th>
+                      <th class="text-left pl-2">Quantity</th>
                       <th class="text-left"></th>
                     </tr>
                   </thead>
@@ -343,7 +343,7 @@
                   </tbody>
                 </template>
               </v-simple-table>
-              <v-btn color="primary" @click="stepNumber = 2">Prev</v-btn>
+              <!-- <v-btn color="primary" @click="stepNumber = 2">Prev</v-btn> -->
             </v-card>
             <v-card
               v-else
@@ -492,7 +492,6 @@ export default {
       mapStyle: [],
       clusterStyle: [],
       ticketTypeProps: {
-        caption: 'Type*',
         type: 'lookup',
         dataSource: {
           query: registrationStatusOptions,
@@ -1016,5 +1015,8 @@ export default {
 .steper-fixed {
   position: fixed;
   top: 55px;
+}
+.event-inner {
+  min-height: 457px;
 }
 </style>
