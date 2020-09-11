@@ -100,6 +100,8 @@
                 v-model="Duration"
                 label="Duration"
                 type="number"
+                min="1"
+                :rules="durationRules"
                 outlined
               ></v-text-field>
             </v-col>
@@ -270,6 +272,7 @@
                   v-model="InPersonMeeting"
                   :field="inPersonMeetingProps"
                   :rules="personMeetingRules"
+                  :on-change="changePersonMeeting"
                 />
               </v-col>
             </v-row>
@@ -321,23 +324,26 @@
           </v-btn>
         </v-toolbar>
         <v-card-text class="v-location">
-          <v-row>
-            <v-col cols="12">
-              <Lookup
-                v-model="Type"
-                :field="typeProps"
-                :on-change="changeType"
-              />
-            </v-col>
-            <v-col v-if="isGroup" cols="12">
-              <v-text-field
-                v-model="MaxAllow"
-                label="Max Allow*"
-                type="number"
-                outlined
-              ></v-text-field>
-            </v-col>
-          </v-row>
+          <v-form ref="typeform" v-model="validType" :lazy-validation="lazy">
+            <v-row>
+              <v-col cols="12">
+                <Lookup
+                  v-model="Type"
+                  :field="typeProps"
+                  :on-change="changeType"
+                />
+              </v-col>
+              <v-col v-if="isGroup" cols="12">
+                <v-text-field
+                  v-model="MaxAllow"
+                  label="Max Allow*"
+                  min="0"
+                  :rules="maxAllowRules"
+                  outlined
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-form>
         </v-card-text>
         <div class="pa-4">
           <v-btn color="primary" dark @click="setType">
@@ -508,6 +514,9 @@
                   >click here</a
                 >
                 for documentation.
+              </div>
+              <div v-if="isLocationMessage" class="red--text pa-3 pt-0 body-1">
+                {{ locationMessage }}
               </div>
               <v-simple-table>
                 <template v-slot:default>
@@ -751,21 +760,40 @@ export default {
       validOnlineMeeting: true,
       validCustomLocation: true,
       validPersonMeeting: true,
+      validType: true,
       lazy: false,
+      locationMesssage: '',
+      isLocationMessage: false,
+      maxAllowRules: [
+        (v) => {
+          if (!isNaN(parseFloat(v)) && v >= 0) {
+            return true
+          }
+          return 'Max Allow should be greater than zero'
+        },
+      ],
+      durationRules: [
+        (v) => {
+          if (!isNaN(parseFloat(v)) && v > 0) {
+            return true
+          }
+          return 'Duration should be greater than zero'
+        },
+      ],
       rollingDaysRules: [
         (v) => {
           if (!v && v.trim()) {
             return true
           }
-          if (!isNaN(parseFloat(v)) && v >= 0) {
+          if (!isNaN(parseFloat(v)) && v > 0) {
             return true
           }
-          return 'Number should not be negative'
+          return 'Rolling days should be greater than zero'
         },
       ],
       phoneRules: [
         (v) => {
-          if (v) {
+          if (v && !isNaN(v)) {
             return true
           }
           return 'Please enter valid phone number!'
@@ -781,7 +809,8 @@ export default {
       ],
       personMeetingRules: [
         (v) => {
-          if (v) {
+          if (v.length > 0) {
+            console.log('==selected session==', this.selectedSession)
             return true
           }
           return 'Please select location!'
@@ -804,7 +833,7 @@ export default {
       WebinarLink: '',
       InPersonMeeting: '',
       Type: 'Personal',
-      MaxAllow: 0,
+      MaxAllow: 5,
       isGroup: false,
       Address: '',
       City: '',
@@ -1062,6 +1091,18 @@ export default {
     }
   },
   computed: {
+    // personMeetingRules() {
+    //   return {
+    //     rules: [
+    //       (v) => {
+    //         return true
+    //         // return this.sessions[this.selectedSession].LocationId
+    //         //   ? 'Start Date should be less than Start Date'
+    //         //   : true
+    //       },
+    //     ],
+    //   }
+    // },
     startDateRule() {
       return {
         appendIcon: 'fa-calendar',
@@ -1149,6 +1190,9 @@ export default {
     },
   },
   methods: {
+    changePersonMeeting(locationId) {
+      // debugger
+    },
     validStartTimeRule(index) {
       return [
         (v) => {
@@ -1259,15 +1303,23 @@ export default {
         this.selectedSession = index
         if (this.sessions[index].LocationType === 'Phone call') {
           this.isPhone = true
+          this.isZoom = false
+          this.isGoogleMeet = false
         }
         if (this.sessions[index].LocationType === 'Online meeting') {
           this.isOnlineMeeting = true
+          this.isZoom = false
+          this.isGoogleMeet = false
         }
         if (this.sessions[index].LocationType === 'Custom') {
           this.isCustom = true
+          this.isZoom = false
+          this.isGoogleMeet = false
         }
         if (this.sessions[index].LocationType === 'In-person meeting') {
           this.isPersonMeeting = true
+          this.isZoom = false
+          this.isGoogleMeet = false
         }
         if (this.sessions[index].LocationType === 'Zoom') {
           this.isZoom = true
@@ -1332,10 +1384,13 @@ export default {
       this.isType = true
     },
     setType() {
-      this.isType = false
-      this.sessions[this.selectedSession].Type = this.Type
-      if (this.Type === 'Group') {
-        this.sessions[this.selectedSession].MaxAllow = parseInt(this.MaxAllow)
+      this.$refs.typeform.validate()
+      if (this.validType) {
+        this.isType = false
+        this.sessions[this.selectedSession].Type = this.Type
+        if (this.Type === 'Group') {
+          this.sessions[this.selectedSession].MaxAllow = parseInt(this.MaxAllow)
+        }
       }
     },
     selectSessionTickets(index) {
@@ -1550,10 +1605,42 @@ export default {
           return session.StartTime > session.EndTime
         })
         const isLocationTypeEmpty = this.sessions.map((session, index) => {
-          return session.LocationType === ''
+          // return session.LocationType === ''          
+          if (session.LocationType === '') {
+            return true
+          } else if (session.LocationType === 'In-person meeting') {
+            if (session.LocationId.length === 0) {
+              this.locationMessage = 'Selected location should not be blank'
+              return true
+            }
+          } else if (session.LocationType === 'Phone call') {
+            if (session.Phone === undefined || session.Phone === '') {
+              this.locationMessage = 'Selected location should not be blank'
+              return true
+            }
+          } else if (session.LocationType === 'Online meeting') {
+            if (
+              session.WebinarLink === undefined ||
+              session.WebinarLink === ''
+            ) {
+              this.locationMessage = 'Selected location should not be blank'
+              return true
+            }
+          } else if (session.LocationType === 'Custom') {
+            if (
+              session.AddressLine === undefined ||
+              session.AddressLine === ''
+            ) {
+              this.locationMessage = 'Selected location should not be blank'
+              return true
+            }
+          }
+          return false
         })
         console.log('===isInvalidSessionMap==', isInvalidSessionMap)
-
+        this.isLocationMessage = !!isLocationTypeEmpty.includes(true)
+        console.log('====isLocationMessage=', this.isLocationMessage)
+        console.log('====locationmessage=', this.locationMesssage)
         const tempData = []
         this.sessions.forEach((row) => {
           let startTime = row.StartTime.replace(':', '.')
