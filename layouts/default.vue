@@ -1,8 +1,8 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer v-model="drawer" app>
-      <v-toolbar-title class="ml-0 pl-3 logo-ds d-flex align-center">
-        <span class="hidden-sm-and-down bitpod-logo logo-ds">
+    <v-navigation-drawer v-model="drawer" app class="nav-bar">
+      <v-toolbar-title class="ml-0 pl-3 px-2 py-2 logo-ds d-flex align-center">
+        <span class="bitpod-logo logo-ds">
           <v-img
             :src="$config.cdnUri + 'logo-favicon.png'"
             height="50"
@@ -10,6 +10,13 @@
           ></v-img>
         </span>
         <span d-inline-flex align-center class="mx-2">Event</span>
+        <v-spacer></v-spacer>
+        <div v-if="drawer === true" class="d-none d-sm-flex">
+          <v-app-bar-nav-icon
+            class="nav-drawer"
+            @click.stop="drawer = !drawer"
+          ></v-app-bar-nav-icon>
+        </div>
       </v-toolbar-title>
       <div class="text-center">
         <v-menu>
@@ -18,6 +25,7 @@
               v-bind="attrs"
               color="blue darken-2"
               dark
+              depressed
               class="ma-3 block wd-full"
               v-on="on"
             >
@@ -202,21 +210,140 @@
     </v-dialog>
 
     <v-app-bar app flat class="greybg">
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title class="pl-0">Event</v-toolbar-title>
+      <div
+        v-if="drawer === false"
+        class="ml-xs-0 d-none d-sm-flex"
+        :class="drawer ? '' : 'ml-md-n4 mr-md-2'"
+      >
+        <v-app-bar-nav-icon
+          :ripple="false"
+          @click.stop="drawer = !drawer"
+        ></v-app-bar-nav-icon>
+      </div>
+      <div class="d-flex d-sm-none ml-n3">
+        <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      </div>
+      <v-toolbar-title class="pl-0 ml-n2"> Event</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn class="ma-2" tile outlined>
+      <v-btn class="ma-2 d-none d-sm-flex" tile outlined>
         UPGARDE
       </v-btn>
       <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
         <v-icon>mdi-invert-colors</v-icon>
       </v-btn>
-      <v-btn icon>
-        <v-icon>mdi-apps</v-icon>
-      </v-btn>
-      <v-btn icon>
-        <v-icon>mdi-bell</v-icon>
-      </v-btn>
+      <v-menu
+        offset-y
+        transition="slide-y-transition"
+        bottom
+        content-class="app-drawer"
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn icon v-bind="attrs" v-on="on">
+            <v-icon>mdi-apps</v-icon>
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item>
+            <v-list-item-title class="d-flex flex-wrap app-container">
+              <nuxt-link
+                to="/apps/event/list/Event/All Events"
+                class="text-decoration-none"
+              >
+                <v-flex
+                  class="d-flex justify-center align-center flex-column app-view"
+                >
+                  <v-flex class="d-flex justify-center align-center">
+                    <i
+                      class="fa fa-calendar fs-36 success--text"
+                      aria-hidden="true"
+                    ></i>
+                  </v-flex>
+                  <v-flex
+                    ><div class="pa-1 caption text--primary">
+                      Event
+                    </div></v-flex
+                  >
+                </v-flex>
+              </nuxt-link>
+              <nuxt-link
+                to="/apps/admin/organization/5cfe026f6ab042000c530105"
+                class="text-decoration-none"
+              >
+                <v-flex
+                  class="d-flex justify-center align-center flex-column app-view"
+                >
+                  <v-flex class="d-flex justify-center align-center">
+                    <i
+                      class="fa fa-cogs fs-36 primary--text"
+                      aria-hidden="true"
+                    ></i>
+                  </v-flex>
+                  <v-flex
+                    ><div class="pa-1 caption text--primary">
+                      Administration
+                    </div></v-flex
+                  >
+                </v-flex>
+              </nuxt-link>
+              <nuxt-link to="" class="text-decoration-none">
+                <v-flex
+                  class="d-flex justify-center align-center flex-column app-view"
+                >
+                  <v-flex class="d-flex justify-center align-center">
+                    <i
+                      class="fa fa-help-circle fs-36 warning--text"
+                      aria-hidden="true"
+                    ></i>
+                  </v-flex>
+                  <v-flex
+                    ><div class="pa-1 caption text--primary">
+                      Help Center
+                    </div></v-flex
+                  >
+                </v-flex>
+              </nuxt-link>
+              <a
+                href="https://dev-survey.bitpod.io/"
+                class="text-decoration-none"
+                target="_blank"
+              >
+                <v-flex
+                  class="d-flex justify-center align-center flex-column app-view"
+                >
+                  <v-flex class="d-flex justify-center align-center">
+                    <v-img
+                      src="https://survey.bitpod.io/favicon.ico"
+                      class="survey-img"
+                    ></v-img>
+                  </v-flex>
+                  <v-flex
+                    ><div class="pa-1 caption text--primary">
+                      Survey
+                    </div></v-flex
+                  >
+                </v-flex>
+              </a>
+              <nuxt-link to="" class="text-decoration-none">
+                <v-flex
+                  class="d-flex justify-center align-center flex-column app-view"
+                >
+                  <v-flex class="d-flex justify-center align-center">
+                    <i
+                      class="fa fa-grid-alt fs-36 primary--text"
+                      aria-hidden="true"
+                    ></i>
+                  </v-flex>
+                  <v-flex
+                    ><div class="pa-1 caption text--primary">
+                      Seat Map
+                    </div></v-flex
+                  >
+                </v-flex>
+              </nuxt-link>
+            </v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
       <div v-if="$auth.$state.loggedIn">
         <v-menu
           v-model="account"
@@ -237,7 +364,7 @@
           <v-card>
             <v-list>
               <v-list-item>
-                <v-list-item-avatar>
+                <v-list-item-avatar size="48">
                   <v-avatar color="primary" size="48" v-bind="attrs" v-on="on">
                     <span class="white--text headline">{{
                       $auth.user.data.name[0]
@@ -256,14 +383,6 @@
               </v-list-item>
             </v-list>
             <v-divider></v-divider>
-            <v-list-item>
-              <v-list-item-action>
-                <v-switch v-model="message" color="primary"></v-switch>
-              </v-list-item-action>
-              <v-list-item-title>Notification</v-list-item-title>
-            </v-list-item>
-            <v-divider></v-divider>
-
             <v-list>
               <v-list-item class="text-center justify-center">
                 <v-btn class="ma-2" outlined color="primary" @click="onLogout">
@@ -299,7 +418,6 @@
 import addMonths from 'date-fns/addMonths'
 import addDays from 'date-fns/addDays'
 import NewSingleEvent from '~/components/newSingleEvent.vue'
-// import eventList from '~/config/apps/event/gql/eventlist.gql'
 export default {
   components: {
     NewSingleEvent,
@@ -314,7 +432,7 @@ export default {
     menu: false,
     modal: false,
     menu2: false,
-    drawer: true,
+    drawer: null,
     dialog1: false,
     dialog: false,
     notifications: false,
@@ -324,37 +442,37 @@ export default {
     message: false,
 
     items: [
-      { icon: 'mdi-view-dashboard', text: 'Eventboard', to: '/' },
+      { icon: 'fa fa-tachometer', text: 'Eventboard', to: '/' },
       { heading: 'Event' },
       {
-        icon: 'mdi-calendar-text',
+        icon: 'fa fa-calendar',
         text: 'Events',
-        to: '/event/list/Event/All Events',
+        to: '/apps/event/list/Event/All Events',
       },
       {
-        icon: 'mdi-account-plus',
+        icon: 'fa fa-user-plus',
         text: 'Registrations',
-        to: '/event/list/Registrations/Registrations',
+        to: '/apps/event/list/Registrations/Registrations',
       },
       { heading: 'Promotions' },
       {
-        icon: 'mdi-cog',
+        icon: 'fa fa-building',
         text: 'Discount Code',
-        to: '/list/DiscountCodes/Discount Codes',
+        to: '/apps/event/list/DiscountCodes/Discount Codes',
       },
       { heading: 'Members' },
       {
-        icon: 'mdi-account-multiple-outline',
+        icon: 'fa fa-users',
         text: 'Members',
-        to: '/list/EventCustomers/Members',
+        to: '/apps/event/list/EventCustomers/Members',
       },
       {
-        icon: 'mdi-account-box-outline',
+        icon: 'fa fa-address-book-o',
         text: 'Contacts',
-        to: '/list/Contacts/Contacts',
+        to: '/apps/event/list/Contacts/Contacts',
       },
       { heading: 'Task' },
-      { icon: 'mdi-cellphone-link', text: 'My Task', to: '' },
+      { icon: 'fa fa-tasks', text: 'My Task', to: '' },
     ],
   }),
   async created() {
@@ -377,23 +495,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-.bitpod-logo img {
-  max-width: 130px;
-}
-.wd-full {
-  width: -webkit-fill-available;
-}
-.nav-title {
-  font-size: 14px !important;
-  font-weight: 400 !important;
-}
-.nav-subheader {
-  font-size: 14px !important;
-}
-.app-name {
-  font-size: 24px;
-  font-weight: 300;
-}
-</style>
