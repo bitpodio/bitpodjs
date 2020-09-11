@@ -1,10 +1,18 @@
 <template>
-  <div>
+  <div style="position: relative;">
+    <h3
+      class="font-weight-regular"
+      style="position: absolute; top: 16px; left: 40px;"
+      @click="lableClicked"
+    >
+      {{ field.caption }}
+    </h3>
     <v-file-input
+      ref="test"
       :multiple="field.multiple"
-      :label="fieldCaption"
       :rules="rules"
       :hide-input="true"
+      prepend-icon="mdi-cloud-upload"
       @change="onChange"
     ></v-file-input>
     <div class="text-center">
@@ -22,6 +30,7 @@
 </template>
 <script>
 import { formFieldMixin } from '~/utility/form-control'
+import nuxtconfig from '~/nuxt.config'
 export default {
   mixins: [formFieldMixin],
   props: ['value', 'field', 'rules'],
@@ -44,6 +53,9 @@ export default {
     }
   },
   methods: {
+    lableClicked() {
+      this.$refs.test.$el.firstElementChild.click()
+    },
     async onChange(files) {
       const fileUploadPromises = files.map((file) => this.uploadFile(file))
       const attachmentResp = await Promise.all(fileUploadPromises)
@@ -60,11 +72,9 @@ export default {
       )
     },
     uploadFile(file) {
-      const AttachmentURL = 'https://event.test.bitpod.io/svc/api/Attachments'
+      const AttachmentURL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Attachments`
       const formData = new FormData()
-
       formData.append('file', file)
-
       return this.$axios.post(AttachmentURL, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -72,11 +82,11 @@ export default {
       })
     },
     getFileDetails(id) {
-      const AttachmentURL = `https://event.test.bitpod.io/svc/api/Attachments/${id}`
+      const AttachmentURL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Attachments/${id}`
       return this.$axios.get(AttachmentURL)
     },
     async deleteFile(id) {
-      const AttachmentURL = `https://event.test.bitpod.io/svc/api/Attachments/${id}`
+      const AttachmentURL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Attachments/${id}`
       await this.$axios.delete(AttachmentURL)
       this.files = this.files.filter((i) => i.id !== id)
       this.$emit(
