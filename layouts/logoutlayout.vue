@@ -1,6 +1,6 @@
 <template>
   <v-app id="inspire">
-    <v-app-bar app flat>
+    <v-app-bar app flat color="white">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <span class="bitpod-logo logo-ds">
         <v-img
@@ -9,9 +9,6 @@
         ></v-img>
       </span>
       <v-spacer></v-spacer>
-      <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
-        <v-icon>mdi-invert-colors</v-icon>
-      </v-btn>
       <v-btn class="ma-2" outlined color="primary" to="/login">
         Sign in
       </v-btn>
@@ -40,5 +37,10 @@ export default {
 <style scoped>
 .logo-full {
   max-width: 110px !important;
+}
+@media screen and (max-width: 600px) {
+  .login-box {
+    min-width: fit-content !important;
+  }
 }
 </style>
