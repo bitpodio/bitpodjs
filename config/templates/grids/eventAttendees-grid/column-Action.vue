@@ -18,15 +18,19 @@
 </template>
 
 <script>
+import nuxtconfig from '../../../../nuxt.config'
 export default {
   props: ['item', 'value', 'context', 'refresh'],
   methods: {
     updateDate() {
       alert('are you sure, you want to cancel check in?')
       this.$axios
-        .$put(`https://event.test.bitpod.io/svc/api/Attes/${this.item.id}`, {
-          CheckIn: null,
-        })
+        .$put(
+          `https://${nuxtconfig.axios.eventUrl}/svc/api/Attes/${this.item.id}`,
+          {
+            CheckIn: null,
+          }
+        )
         .then((res) => {
           this.refresh()
           return res

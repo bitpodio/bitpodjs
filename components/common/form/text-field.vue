@@ -17,7 +17,6 @@ export default {
   mixins: [formFieldMixin],
   props: ['value', 'field', 'rules', 'readonly'],
   data() {
-    debugger
     return {
       textInput: this.value,
     }

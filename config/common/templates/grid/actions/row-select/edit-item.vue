@@ -30,6 +30,7 @@
               <v-row>
                 <v-col
                   v-for="field in fields"
+                  v-show="visible[field.fieldName]"
                   :key="`${field.fieldName}${updateCount}`"
                   :class="field.cssClasses || 'col-12 col-md-6'"
                 >

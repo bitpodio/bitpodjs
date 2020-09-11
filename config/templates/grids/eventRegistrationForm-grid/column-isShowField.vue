@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import nuxtconfig from '../../../../nuxt.config'
 export default {
   props: ['item', 'value', 'context', 'refresh'],
   data() {
@@ -18,7 +19,7 @@ export default {
     updateRegForm() {
       this.$axios
         .$put(
-          `https://event.test.bitpod.io/svc/api/Events/${this.$route.params.id}/RegistrationForm/${this.item.id}`,
+          `https://${nuxtconfig.axios.eventUrl}/svc/api/Events/${this.$route.params.id}/RegistrationForm/${this.item.id}`,
           {
             isShowField: this.checkbox,
           }

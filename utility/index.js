@@ -70,6 +70,9 @@ export const formValidationMixin = {
     disabled() {
       return this.calculatePropValue('disabled')
     },
+    visible() {
+      return this.calculatePropValue('visible', true)
+    },
     filter() {
       const propFields = {}
       for (const field of this.fields) {
@@ -91,10 +94,12 @@ export const formValidationMixin = {
         }
       })
     },
-    calculatePropValue(propName) {
+    calculatePropValue(propName, defaultValue = false) {
       const propFields = {}
       for (const field of this.fields) {
-        if (
+        if (field[propName] === undefined) {
+          propFields[field.fieldName] = defaultValue
+        } else if (
           field[propName] &&
           field[propName](this.formData[field.fieldName], this.formData)
         ) {

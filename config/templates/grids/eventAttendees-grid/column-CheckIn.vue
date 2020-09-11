@@ -19,16 +19,19 @@
 </template>
 
 <script>
+import nuxtconfig from '../../../../nuxt.config'
 export default {
   props: ['item', 'value', 'context', 'tableData', 'refresh'],
   methods: {
     updateDate() {
       this.$axios
-        .$put(`https://event.test.bitpod.io/svc/api/Attes/${this.item.id}`, {
-          CheckIn: new Date(),
-        })
+        .$put(
+          `https://${nuxtconfig.axios.eventUrl}/svc/api/Attes/${this.item.id}`,
+          {
+            CheckIn: new Date(),
+          }
+        )
         .then((res) => {
-          debugger
           this.refresh()
           return res
         })

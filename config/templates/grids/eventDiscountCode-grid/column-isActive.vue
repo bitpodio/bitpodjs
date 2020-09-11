@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import nuxtconfig from '../../../../nuxt.config'
 export default {
   props: ['item', 'value', 'context', 'refresh'],
   data() {
@@ -14,7 +15,7 @@ export default {
     updateOfferCode() {
       this.$axios
         .$put(
-          `https://event.test.bitpod.io/svc/api/OfferCodes/${this.item.id}`,
+          `https://${nuxtconfig.axios.eventUrl}/svc/api/OfferCodes/${this.item.id}`,
           {
             isActive: this.checkbox,
           }

@@ -9,6 +9,7 @@
       :label="fieldCaption"
       :multiple="field.multiple"
       :rules="rules"
+      :readonly="readonly"
       outlined
       @change="onChange"
     ></v-autocomplete>
@@ -55,6 +56,10 @@ export default {
     rules: {
       type: Array,
       default: () => [],
+    },
+    readonly: {
+      type: Object,
+      default: () => {},
     },
   },
   data() {

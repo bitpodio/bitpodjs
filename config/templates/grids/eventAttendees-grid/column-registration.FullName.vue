@@ -9,7 +9,6 @@ export default {
   props: ['item', 'value', 'context'],
   computed: {
     route() {
-      debugger
       const regId = this.item.registration
         ? atob(this.item.registration.id).split(':')[1]
         : ''

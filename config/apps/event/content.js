@@ -14,8 +14,8 @@ import eventRecurringSession from './gql/eventRecurringSession.gql'
 import eventTasks from './gql/eventTasks.gql'
 import registrationType from './gql/registrationType.gql'
 import eventRegistrationTickets from './gql/eventRegistrationTickets.gql'
-// import eventSpeakers from './gql/eventSpeakers.gql'
 import { getData, getLookupData } from './rest'
+import marketingTemplates from '~/config/apps/admin/gql/marketingTemplates.gql'
 
 export default {
   Event: {
@@ -312,7 +312,7 @@ export default {
           showExpand: false,
           singleExpand: false,
           showSelect: true,
-          hideFilter: false,
+          hideFilter: true,
           hideSearch: true,
         },
         hidden: true,
@@ -436,7 +436,7 @@ export default {
             caption: 'Check In',
             searchEnable: true,
             sortEnable: true,
-            columnWidth: '150px',
+            columnWidth: '250px',
             type: 'string',
             hidden: false,
             inlineEdit: true,
@@ -711,7 +711,7 @@ export default {
           showExpand: false,
           singleExpand: false,
           showSelect: true,
-          hideFilter: false,
+          hideFilter: true,
           hideSearch: true,
         },
         hidden: true,
@@ -2355,7 +2355,13 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
-            default: 'Wait for an Action',
+            readonly(value, data) {
+              const category = data.Category
+              return (
+                category === 'Registration Email' ||
+                category === 'Calendar Invite'
+              )
+            },
             rules: [
               (v) => {
                 return !!v || 'Status is required'
@@ -2388,7 +2394,33 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
-            default: 'New Registration',
+            readonly(value, data) {
+              const category = data.Category
+              return (
+                category === 'Registration Email' ||
+                category === 'Calendar Invite'
+              )
+            },
+            visible(value, data) {
+              const category = data.Category
+              const status = data.Status
+              if (
+                category === 'Registration Email' ||
+                category === 'Calendar Invite'
+              ) {
+                data.Status = 'Wait for an Action'
+                data.Action = 'New Registration'
+                return (
+                  category === 'Registration Email' ||
+                  category === 'Calendar Invite'
+                )
+              } else {
+                return (
+                  (category === 'Survey Invite' || category === 'Email') &&
+                  status === 'Wait for an Action'
+                )
+              }
+            },
             rules: [
               (v) => {
                 return !!v || 'Action is required'
@@ -2405,13 +2437,131 @@ export default {
               },
             },
           },
+          SurveyId: {
+            form: {
+              caption: 'Survey List',
+              displayOrder: 7,
+            },
+            cssClasses: 'col-12 col-md-12',
+            caption: 'Survey List',
+            searchEnable: true,
+            sortEnable: true,
+            type: 'string',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Survey is required'
+              },
+            ],
+            visible(value, data) {
+              const category = data.Category
+              if (category === 'Survey Invite') {
+                return category === 'Survey Invite'
+              }
+            },
+          },
+          TemplateId: {
+            form: {
+              caption: 'Template',
+              displayOrder: 8,
+            },
+            cssClasses: 'col-12 col-md-12',
+            caption: 'Template',
+            searchEnable: true,
+            sortEnable: true,
+            type: 'lookup',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Template is required'
+              },
+            ],
+            visible(value, data) {
+              const category = data.Category
+              return category === 'Email'
+            },
+            dataSource: {
+              query: marketingTemplates,
+              itemText: 'Name',
+              itemValue: 'id',
+              filter() {
+                return {
+                  createdBy: this.$auth.$state.user.data.email,
+                }
+              },
+            },
+          },
+          DueDate: {
+            form: {
+              caption: 'DueDate *',
+              displayOrder: 4,
+            },
+            displayOrder: 7,
+            caption: 'Due Date',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'datetime',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'DueDate is required'
+              },
+            ],
+            visible(value, data) {
+              const category = data.Category
+              const status = data.Status
+              return (
+                (category === 'Survey Invite' || category === 'Email') &&
+                status === 'Schedule'
+              )
+            },
+          },
+          Timezone: {
+            form: {
+              caption: 'Timezone *',
+              displayOrder: 6,
+            },
+            displayOrder: 7,
+            caption: 'Timezone',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'timezone',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Timezone is required'
+              },
+            ],
+            visible(value, data) {
+              const category = data.Category
+              const status = data.Status
+              return (
+                (category === 'Survey Invite' || category === 'Email') &&
+                (status === 'Schedule' || status === 'Wait for an Action')
+              )
+            },
+          },
           Day: {
             form: {
               caption: 'Day',
-              displayOrder: 5,
+              displayOrder: 4,
             },
             displayOrder: 6,
-            caption: 'Type',
+            caption: 'Day',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
@@ -2420,6 +2570,14 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
+            visible(value, data) {
+              const category = data.Category
+              const status = data.Status
+              return (
+                (category === 'Survey Invite' || category === 'Email') &&
+                status === 'Wait for an Action'
+              )
+            },
             dataSource: {
               query: registrationStatusOptions,
               itemText: 'value',
@@ -2434,10 +2592,10 @@ export default {
           Time: {
             form: {
               caption: 'Time',
-              displayOrder: 6,
+              displayOrder: 5,
             },
             displayOrder: 6,
-            caption: 'Type',
+            caption: 'Time',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
@@ -2446,6 +2604,14 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
+            visible(value, data) {
+              const category = data.Category
+              const status = data.Status
+              return (
+                (category === 'Survey Invite' || category === 'Email') &&
+                status === 'Wait for an Action'
+              )
+            },
             dataSource: {
               query: registrationStatusOptions,
               itemText: 'value',
@@ -2456,98 +2622,6 @@ export default {
                 }
               },
             },
-          },
-          Type: {
-            displayOrder: 6,
-            caption: 'Type',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
-            hidden: false,
-            inlineEdit: true,
-            newForm: false,
-            editForm: false,
-          },
-          DueDate: {
-            form: {
-              caption: 'DueDate',
-              displayOrder: 7,
-            },
-            displayOrder: 7,
-            caption: 'Due Date',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'datetime',
-            hidden: false,
-            inlineEdit: true,
-            newForm: true,
-            editForm: true,
-          },
-          Timezone: {
-            form: {
-              caption: 'Timezone',
-              displayOrder: 8,
-            },
-            displayOrder: 7,
-            caption: 'Timezone',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'timezone',
-            hidden: false,
-            inlineEdit: true,
-            newForm: true,
-            editForm: true,
-          },
-          createdDate: {
-            displayOrder: 8,
-            caption: 'Created Date',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'date',
-            hidden: false,
-            inlineEdit: true,
-            newForm: false,
-            editForm: false,
-          },
-          createdBy: {
-            displayOrder: 9,
-            caption: 'Created By',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
-            hidden: false,
-            inlineEdit: true,
-            newForm: false,
-            editForm: false,
-          },
-          TemplateName: {
-            displayOrder: 10,
-            caption: 'Template Name',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
-            hidden: false,
-            inlineEdit: true,
-            newForm: false,
-            editForm: false,
-          },
-          Edit: {
-            displayOrder: 11,
-            caption: 'Action',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
-            hidden: false,
-            inlineEdit: true,
-            newForm: false,
-            editForm: false,
           },
         },
         template: {
