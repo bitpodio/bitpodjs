@@ -179,9 +179,6 @@ body {
 .v-eventform .v-card__text::-webkit-scrollbar {
   visibility: hidden !important;
 }
-/* .v-eventform .v-card__text {
-  overflow-y: auto !important;
-} */
 .v-eventform:hover .v-card__text {
   overflow-y: auto !important;
 }
@@ -199,6 +196,12 @@ body {
 }
 .slide-form-default .col {
   padding-bottom:  0px !important;
+}
+.event-cards {
+  overflow: hidden;
+}
+.event-cards:hover {
+  overflow-x: auto;
 }
 @media (max-width: 600px) {
   .slide-form,

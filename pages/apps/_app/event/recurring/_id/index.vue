@@ -236,7 +236,7 @@
     </v-flex>
     <v-flex column xs12 sm4 md4 lg4>
       <div class="xs12 sm4 md4 lg4 boxview pa-3 mb-2">
-        <v-flex class="d-flex justify-center align-center pb-2">
+        <v-flex class="d-flex justify-center align-center pb-1">
           <h2 class="body-1 pb-0">
             <i class="fa fa-info-circle pr-1" aria-hidden="true"></i> Event
             Information
@@ -279,7 +279,7 @@
       </div>
 
       <div class="xs12 sm4 md4 lg4 boxview pa-3 mb-2">
-        <v-flex class="d-flex justify-center align-center pb-2">
+        <v-flex class="d-flex justify-center align-center pb-1">
           <h2 class="body-1 pb-0">
             <i class="fa fa-tag pr-1" aria-hidden="true"></i> SEO Details
           </h2>
@@ -306,7 +306,7 @@
       </div>
 
       <div class="xs12 sm4 md4 lg4 boxview pa-3 mb-2">
-        <v-flex class="d-flex justify-center align-center pb-2">
+        <v-flex class="d-flex justify-center align-center pb-1">
           <h2 class="body-1 pb-0">
             <i class="fa fa-settings pr-1" aria-hidden="true"></i> Event
             Settings
@@ -404,7 +404,7 @@
       </div>
 
       <div class="xs12 sm4 md4 lg4 boxview pa-3 mb-2">
-        <v-flex class="d-flex justify-center align-center pb-2">
+        <v-flex class="d-flex justify-center align-center pb-1">
           <h2 class="body-1 pb-0">
             <i class="fa fa-settings pr-1" aria-hidden="true"></i>
             Registration Page Settings
