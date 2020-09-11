@@ -250,7 +250,7 @@
 
 <script>
 import gql from 'graphql-tag'
-import nuxtConfig from '../../../../../nuxt.config'
+import nuxtconfig from '~/nuxt.config'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
@@ -310,7 +310,7 @@ export default {
       delete this.eventData._VenueAddress
       this.$axios
         .$patch(
-          `https://${nuxtConfig.axios.eventUrl}/svc/api/Events/${this.$route.params.id}`,
+          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`,
           {
             ...this.eventData,
           }
