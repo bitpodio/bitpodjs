@@ -430,6 +430,7 @@
       <v-card-actions
         class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
       >
+        <v-btn depressed color="grey lighten-2" @click="next(2)">Prev</v-btn>
         <v-btn depressed color="primary" @click="next(2)">Next</v-btn>
         <v-btn
           depressed

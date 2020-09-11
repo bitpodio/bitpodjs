@@ -156,7 +156,7 @@
               <i class="fa fa-calendar2" aria-hidden="true"></i>
             </div>
             <div class="d-flex flex-column pa-2 event-tile-right greybg">
-              <div class="event-tile-value text-truncate">19 Days</div>
+              <div class="event-tile-value text-truncate">29 Days</div>
               <div class="caption text-truncate">Opens in</div>
             </div>
           </div>
