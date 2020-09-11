@@ -1,5 +1,10 @@
 <template>
   <v-row justify="center">
+    <v-snackbar v-model="snackbar" :top="true" :timeout="1000">
+      <div class="toast py-2 pr-1 pl-3">
+        Some Error Occured, Please contact Administrator.
+      </div>
+    </v-snackbar>
     <v-dialog
       v-model="dialog"
       persistent
@@ -17,7 +22,7 @@
         <v-toolbar dense flat dark fixed color="accent">
           <v-toolbar-title class="body-1">New Email Invite</v-toolbar-title>
           <v-spacer></v-spacer>
-          <v-btn icon dark @click="dialog = false">
+          <v-btn icon dark @click="resetForm">
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </v-toolbar>
@@ -136,7 +141,7 @@
                   flat
                   class="tabContent"
                 >
-                  <v-card-text class="pl-1"
+                  <v-card-text class="pl-3"
                     >Select a template to continue.
                     <span
                       class="blue--text cursorPointer"
@@ -146,7 +151,7 @@
                     </span></v-card-text
                   >
                   <v-flex
-                    class="d-flex flex-wrap pa-0 justify-center justify-md-start"
+                    class="d-flex flex-wrap pl-3 justify-center justify-md-start"
                   >
                     <v-hover
                       v-for="item in templateItems"
@@ -209,6 +214,8 @@
                               @click="
                                 choosedTemplate = 3
                                 RTEValue = item.Body
+                                templateID = item.id
+                                templateSubject = Subject
                               "
                               >Select</v-btn
                             >
@@ -272,6 +279,12 @@
                 <v-row class="px-6">
                   <v-col cols="6">
                     <div class="mb-11 borderBottomGrey pb-3">
+                      <v-checkbox
+                        v-model="selectAll"
+                        class="ma-0 pa-0 float-right"
+                        label="Select All"
+                      >
+                      </v-checkbox>
                       <v-icon>mdi-contacts</v-icon>
                       <h4 class="d-inline font-weight-regular">Contacts</h4>
                     </div>
@@ -336,8 +349,11 @@
                       :mandatory="false"
                       class="mt-0"
                     >
-                      <v-radio label="Not Registered" value="0"></v-radio>
-                      <v-radio label="Registered" value="1"></v-radio>
+                      <v-radio
+                        label="Not Registered"
+                        value="NotRegister"
+                      ></v-radio>
+                      <v-radio label="Registered" value="Register"></v-radio>
                     </v-radio-group>
                     <h4 class="d-inline">Check prior invite (</h4>
                     <h4
@@ -362,17 +378,226 @@
                       class="mt-0"
                       :disabled="!priorInvite.id"
                     >
-                      <v-radio label="Not Opened" value="0"></v-radio>
-                      <v-radio label="Opened" value="1"></v-radio>
-                      <v-radio label="Opened & Clicked" value="2"></v-radio>
+                      <v-radio label="Not Opened" value="NotRead"></v-radio>
+                      <v-radio label="Opened" value="Read"></v-radio>
+                      <v-radio
+                        label="Opened & Clicked"
+                        value="clicked"
+                      ></v-radio>
                     </v-radio-group>
                   </v-col>
                 </v-row>
               </v-tab-item>
-              <v-tab-item>
-                <v-card flat>
-                  <v-card-text>tab 4</v-card-text>
-                </v-card>
+              <v-tab-item class="tabContent">
+                <v-row v-if="acknowledgement" class="ma-1">
+                  <v-col cols="12">
+                    <v-card align="center" justify="center" class="pb-3">
+                      <h3 class="font-weight-regular ma-2 pt-5">
+                        Thank you for submitting your email invite.
+                      </h3>
+                      <h5 class="font-weight-regular ma-2 py-3">
+                        If approval is turned on it will be sent for approval to
+                        administrator and you will be notified status through
+                        email.
+                      </h5>
+                      <v-btn
+                        class="blue accent-4 white--text"
+                        @click="resetForm"
+                        >close</v-btn
+                      >
+                    </v-card>
+                  </v-col>
+                </v-row>
+                <v-row v-else-if="scheduleInvite" class="ma-3">
+                  <v-col cols="5">
+                    <v-card align="center" justify="center" class="pb-10">
+                      <v-icon class="py-5" size="50">mdi-calendar</v-icon>
+                      <h3 class="font-weight-regular ma-2">
+                        Fixed Time and Time Zone
+                      </h3>
+                      <h5 class="font-weight-regular ma-2">
+                        We'll launch your invite on the date and time you
+                        specify.
+                      </h5>
+                      <div style="width: 200px;">
+                        <v-datetime-picker
+                          v-model="scheduledTime"
+                          label="Schedule Date *"
+                          :min="new Date().toISOString"
+                        >
+                          <template slot="dateIcon">
+                            <v-icon>fas fa-calendar</v-icon>
+                          </template>
+                          <template slot="timeIcon">
+                            <v-icon>fas fa-clock</v-icon>
+                          </template>
+                        </v-datetime-picker>
+                      </div>
+                      <v-btn
+                        class="blue accent-4 white--text"
+                        :disabled="disableButton || !scheduledTime"
+                        @click="sendNow('Schedule')"
+                        >Schedule</v-btn
+                      >
+                      <v-btn
+                        class="blue accent-4 white--text"
+                        :disabled="disableButton"
+                        @click="scheduleInvite = false"
+                        >Cancel</v-btn
+                      >
+                    </v-card>
+                  </v-col>
+                </v-row>
+                <v-row
+                  v-else-if="!selectedList.length && !selectAll"
+                  class="ma-3"
+                >
+                  <v-col cols="12" class="red lighten-5">
+                    <h4 class="font-weight-regular">CONTACT DETAILS</h4>
+                    <v-btn
+                      class="float-right"
+                      color="blue"
+                      outlined
+                      @click="curentTab = 2"
+                      >Select Contact</v-btn
+                    >
+                    <h5 class="font-weight-regular">
+                      You have not added any contact yet.
+                    </h5>
+                  </v-col>
+                </v-row>
+                <v-row v-else-if="!RTEValue" class="ma-3">
+                  <v-col cols="12" class="red lighten-5">
+                    <h4 class="font-weight-regular">CONTENT DETAILS</h4>
+                    <v-btn
+                      class="float-right"
+                      color="blue"
+                      outlined
+                      @click="curentTab = 1"
+                      >Select Content</v-btn
+                    >
+                    <h5 class="font-weight-regular">
+                      You have not added any content yet.
+                    </h5>
+                  </v-col>
+                </v-row>
+                <v-row v-else class="ma-1">
+                  <v-col class="pl-5" cols="4">
+                    <v-card
+                      height="250"
+                      align="center"
+                      :hover="true"
+                      class="hover"
+                      justify="center"
+                    >
+                      <v-icon class="py-5" size="50">mdi-email-outline</v-icon>
+                      <h3 class="font-weight-regular ma-2">Send Now</h3>
+                      <h5 class="font-weight-regular ma-2">
+                        Send email invite right away.
+                      </h5>
+                      <v-btn
+                        class="blue accent-4 white--text"
+                        :disabled="disableButton"
+                        @click="sendNow"
+                        >Send</v-btn
+                      >
+                    </v-card>
+                  </v-col>
+                  <v-col cols="4">
+                    <v-card
+                      height="250"
+                      align="center"
+                      :hover="true"
+                      class="hover"
+                      justify="center"
+                    >
+                      <v-icon class="py-5" size="50">mdi-calendar</v-icon>
+                      <h3 class="font-weight-regular ma-2">
+                        Schedule Invite
+                      </h3>
+                      <h5 class="font-weight-regular ma-2">
+                        Schedule your invite the way you prefer.
+                      </h5>
+                      <v-btn
+                        class="blue accent-4 white--text"
+                        :disabled="disableButton"
+                        @click="scheduleInvite = true"
+                        >Schedule</v-btn
+                      >
+                    </v-card>
+                  </v-col>
+                  <v-col cols="4">
+                    <v-card
+                      height="250"
+                      align="center"
+                      :hover="true"
+                      class="hover"
+                      justify="center"
+                    >
+                      <v-icon class="py-5" size="50">mdi-floppy</v-icon>
+                      <h3 class="font-weight-regular ma-2">
+                        Save as Draft
+                      </h3>
+                      <h5 class="font-weight-regular ma-2">
+                        Save your email as draft.
+                      </h5>
+                      <v-btn
+                        class="blue accent-4 white--text"
+                        :disabled="disableButton"
+                        @click="sendNow('Draft')"
+                        >Save as Draft</v-btn
+                      >
+                    </v-card>
+                  </v-col>
+                </v-row>
+                <v-row class="ma-1">
+                  <v-col cols="12">
+                    <div class="borderBottomGrey pb-3">
+                      <v-icon>mdi-information-outline</v-icon>
+                      <h4 class="d-inline font-weight-regular">
+                        Subject and Sender
+                      </h4>
+                      <v-btn class="ml-10" text small @click="curentTab = 0">
+                        <v-icon dark left>mdi-pencil</v-icon>
+                        Edit
+                      </v-btn>
+                    </div>
+                  </v-col>
+                  <v-col cols="6">
+                    <div>Name</div>
+                    <div class="blue--text pt-1 pb-2">{{ senderName }}</div>
+                    <div>Subject</div>
+                    <div class="blue--text pt-1">{{ subject }}</div>
+                  </v-col>
+                  <v-col cols="6">
+                    <div>Sender Address</div>
+                    <div class="blue--text pt-1 pb-2">{{ sender }}</div>
+                    <div>Reply-to Address</div>
+                    <div class="blue--text pt-1">{{ setReplyTo }}</div>
+                  </v-col>
+                  <v-col cols="12">
+                    <div class="borderBottomGrey pb-3">
+                      <h4 class="d-inline font-weight-regular">
+                        Contact Details
+                      </h4>
+                    </div>
+                    <div
+                      v-for="(item, key) in selectedList"
+                      :key="item.Email"
+                      class="borderBottomGrey py-2 pl-2"
+                    >
+                      <v-btn
+                        class="float-right fc-icon"
+                        text
+                        small
+                        @click="unselectContact(key)"
+                      >
+                        <v-icon dark left>mdi-delete</v-icon>
+                      </v-btn>
+                      {{ item.FullName }} ({{ item.Email }})
+                    </div>
+                  </v-col>
+                </v-row>
               </v-tab-item>
             </v-tabs-items>
           </template>
@@ -429,7 +654,7 @@
 import gql from 'graphql-tag'
 import Grid from '~/components/common/grid'
 import { formatGQLResult } from '~/utility/gql.js'
-import { configLoaderMixin } from '~/utility'
+import { configLoaderMixin, getIdFromAtob } from '~/utility'
 import marketingTemplates from '~/config/apps/admin/gql/marketingTemplates.gql'
 export default {
   components: {
@@ -445,9 +670,9 @@ export default {
       dialog: false,
       curentTab: 0,
       subject: ``,
-      senderName: this.$auth.user.data.name,
-      sender: this.$auth.user.data.email,
-      setReplyTo: this.$auth.user.data.email,
+      senderName: (this.$auth && this.$auth.user.data.name) || '',
+      sender: (this.$auth && this.$auth.user.data.email) || '',
+      setReplyTo: (this.$auth && this.$auth.user.data.email) || '',
       choosedTemplate: 0,
       preview: false,
       previewURL: '',
@@ -456,6 +681,14 @@ export default {
       openRadio: '',
       priorInvite: {},
       previousInviteDialog: false,
+      templateID: '',
+      templateSubject: '',
+      snackbar: false,
+      acknowledgement: false,
+      disableButton: false,
+      scheduleInvite: false,
+      scheduledTime: '',
+      selectAll: false,
     }
   },
   methods: {
@@ -467,6 +700,20 @@ export default {
     },
     updateList(data) {
       this.selectedList = data
+    },
+    resetForm() {
+      this.dialog = false
+      this.selectedList = []
+      this.choosedTemplate = 0
+      this.curentTab = 0
+      this.RTEValue = ''
+      this.registrationRadio = ''
+      this.openRadio = ''
+      this.priorInvite = {}
+      this.templateID = ''
+      this.templateSubject = ''
+      this.acknowledgement = false
+      this.disableButton = false
     },
     previousInviteSelect(data) {
       if (data && data.length) {
@@ -482,6 +729,84 @@ export default {
     setPreviewImage(url) {
       this.previewURL = url
       this.preview = true
+    },
+    templateExists() {
+      return this.templateItems.find((i) => i.Body === this.RTEValue)
+    },
+    sendNow(type) {
+      this.disableButton = true
+      const exceptionURL = `https://bitpod-event.test.bitpod.io/svc/api/CRMACTIVITIES`
+      const postData = {
+        ContactId: this.selectedList.map((i) => i.id),
+        DueDate: null,
+        EventId: this.$route.params.id,
+        IncludeRegister: true,
+        Name: '',
+        Owner: this.sender,
+        ReplyTo: this.setReplyTo,
+        SenderName: this.senderName,
+        Status: 'Start',
+        TemplateId: getIdFromAtob(this.templateID),
+        TemplateName: this.templateSubject,
+        Title: this.subject,
+        Type: 'Mass Email',
+      }
+      if (this.openRadio) {
+        postData.ParentId = this.priorInvite.id
+        postData.PreviousEmailCondition = this.openRadio
+      }
+      if (this.registrationRadio) {
+        postData.RegistrationCondition = this.registrationRadio
+      }
+      if (type === 'Schedule') {
+        postData.DueDate = this.scheduledTime.toISOString()
+        postData.Status = type
+      }
+      if (type === 'Draft') {
+        postData.Status = type
+      }
+      if (this.selectAll) {
+        postData.ContactId = []
+      }
+      Promise.all([])
+        .then(() => {
+          if (!this.templateExists()) {
+            return this.$axios({
+              method: 'POST',
+              url:
+                'https://bitpod-event.test.bitpod.io/svc/api/MarketingTemplates',
+              data: {
+                Body: this.RTEValue,
+                Name: '',
+                Subject: this.subject,
+                Type: 'My Template',
+              },
+            })
+          } else {
+            return false
+          }
+        })
+        .then((saved) => {
+          if (saved) {
+            postData.templateID = saved.data.id
+          }
+          return this.$axios({
+            method: 'POST',
+            url: exceptionURL,
+            data: postData,
+          })
+        })
+        .then((data) => {
+          if (data.data.Status === 'Draft') {
+            this.resetForm()
+          }
+          this.acknowledgement = true
+          return data
+        })
+        .catch(() => {
+          this.disableButton = false
+          this.snackbar = true
+        })
     },
     chooseTemplate(index) {
       this.choosedTemplate = index
