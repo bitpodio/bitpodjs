@@ -8,15 +8,15 @@
       transition="dialog-bottom-transition"
     >
       <template v-slot:activator="{ on, attrs }">
-        <v-btn text small v-bind="attrs" v-on="on">
-          <v-icon left>mdi-plus</v-icon> New Question
+        <v-btn text small v-bind="attrs" v-on="on" @click="getQuestions">
+          <v-icon left>mdi-pencil</v-icon>Edit Item
         </v-btn>
       </template>
       <v-card>
         <v-card-title
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
-          <h2 class="black--text pt-10 pb-9">New Registration Question</h2>
+          <h2 class="black--text pt-10 pb-9">Edit Survey Question</h2>
           <v-spacer></v-spacer>
           <div>
             <v-btn icon @click="dialog = false">
@@ -38,6 +38,7 @@
               <v-col cols="12">
                 <v-select
                   v-model="controlType"
+                  :rules="required"
                   :items="controlTypeDropDown"
                   label="Control Type*"
                   outlined
@@ -58,6 +59,7 @@
                   label="Display Order*"
                   type="number"
                   min="1"
+                  required
                   outlined
                 ></v-text-field>
               </v-col>
@@ -106,7 +108,7 @@ import eventTicket from '~/config/apps/event/gql/eventTickets.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { required } from '~/utility/rules.js'
 export default {
-  props: ['refresh'],
+  props: ['content', 'viewName', 'items'],
   data() {
     return {
       formData: {
@@ -126,6 +128,7 @@ export default {
       ticketsDropDown: [],
       showField: ['checkbox', 'radio', 'dropdown'],
       CsvOptions: '',
+      id: '',
     }
   },
   mounted() {
@@ -167,8 +170,8 @@ export default {
       }
       this.formData.TicketName = this.tickets
       this.$axios
-        .$post(
-          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/Survey`,
+        .$put(
+          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/Survey/${this.id}`,
           {
             ...this.formData,
           }
@@ -182,7 +185,25 @@ export default {
           console.log('Error', e)
         })
     },
-
+    getQuestions() {
+      let id
+      this.items.map((ele) => {
+        this.id = ele.id
+      })
+      this.$axios
+        .$get(
+          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/Survey/${this.id}`
+        )
+        .then((res) => {
+          this.formData = res
+          this.controlType = res.ControlType
+          this.tickets = res.TicketName
+          this.CsvOptions = res.Options
+          //   this.formData.id = res.id
+          return res
+        })
+        .catch((err) => console.log('Error', err))
+    },
     getDropDownData(filterType) {
       return this.$apollo
         .query({
