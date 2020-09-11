@@ -54,7 +54,6 @@ body {
 .name-initial {
   font-size: 0 !important;
   text-transform: capitalize !important;
-  padding-top: 3px !important;
 }
 .name-initial::first-letter {
   font-size: 14px !important;

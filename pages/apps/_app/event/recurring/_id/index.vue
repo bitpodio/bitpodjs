@@ -3,7 +3,7 @@
     <v-flex column xs12 sm8 md8 lg8>
       <div class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-2 pb-0">
         <v-flex class="d-flex justify-center align-center pb-2">
-          <div class="text-h4">{{ data.event.Title }}</div>
+          <div class="text-h4 text-capitalize">{{ data.event.Title }}</div>
           <v-spacer></v-spacer>
           <div class="mr-2">
             <v-btn depressed color="primary">View</v-btn>
@@ -110,7 +110,7 @@
 
         <v-stepper
           alt-labels
-          class="elevation-0 boxview"
+          class="elevation-0 boxview mt-n3"
           style="max-width: 800px;"
         >
           <v-stepper-header success>
@@ -138,7 +138,7 @@
 
         <v-divider></v-divider>
         <v-flex class="d-flex flex-row align-center">
-          <v-chip pill v-on="on">
+          <v-chip pill class="greybg" v-on="on">
             <v-avatar left color="warning" size="24">
               <span class="white--text name-initial">{{
                 data.event.createdBy
@@ -237,13 +237,13 @@
     <v-flex column xs12 sm4 md4 lg4>
       <div class="xs12 sm4 md4 lg4 boxview pa-3 mb-2">
         <v-flex class="d-flex justify-center align-center pb-2">
-          <h2 class="body-1 pb-1">
+          <h2 class="body-1 pb-0">
             <i class="fa fa-info-circle pr-1" aria-hidden="true"></i> Event
             Information
           </h2>
           <v-spacer></v-spacer>
           <v-btn text small @click.stop="eventform = true">
-            <v-icon left>mdi-pencil</v-icon>Edit
+            <v-icon left>fa-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
         <v-divider></v-divider>
@@ -280,12 +280,12 @@
 
       <div class="xs12 sm4 md4 lg4 boxview pa-3 mb-2">
         <v-flex class="d-flex justify-center align-center pb-2">
-          <h2 class="body-1 pb-1">
+          <h2 class="body-1 pb-0">
             <i class="fa fa-tag pr-1" aria-hidden="true"></i> SEO Details
           </h2>
           <v-spacer></v-spacer>
           <v-btn text small @click="seoForm = true">
-            <v-icon left>mdi-pencil</v-icon>Edit
+            <v-icon left>fa-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
         <v-divider></v-divider>
@@ -307,13 +307,13 @@
 
       <div class="xs12 sm4 md4 lg4 boxview pa-3 mb-2">
         <v-flex class="d-flex justify-center align-center pb-2">
-          <h2 class="body-1 pb-1">
+          <h2 class="body-1 pb-0">
             <i class="fa fa-settings pr-1" aria-hidden="true"></i> Event
             Settings
           </h2>
           <v-spacer></v-spacer>
           <v-btn text small @click="formdialog1 = true">
-            <v-icon left>mdi-pencil</v-icon>Edit
+            <v-icon left>fa-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
         <v-divider></v-divider>
@@ -405,13 +405,13 @@
 
       <div class="xs12 sm4 md4 lg4 boxview pa-3 mb-2">
         <v-flex class="d-flex justify-center align-center pb-2">
-          <h2 class="body-1 pb-1">
+          <h2 class="body-1 pb-0">
             <i class="fa fa-settings pr-1" aria-hidden="true"></i>
             Registration Page Settings
           </h2>
           <v-spacer></v-spacer>
           <v-btn text small @click="sitesetting = true">
-            <v-icon left>mdi-pencil</v-icon>Edit
+            <v-icon left>fa-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
         <v-divider></v-divider>
