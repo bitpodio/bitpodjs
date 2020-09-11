@@ -195,6 +195,12 @@ body {
 .v-text-field--enclosed .v-input__append-inner {
   margin-top: 10px !important;
 }
+.event-table tr:hover {
+  background: transparent !important;
+}
+.slide-form-default .col {
+  padding-bottom:  0px !important;
+}
 @media (max-width: 600px) {
   .slide-form,
   .slide-form-default {

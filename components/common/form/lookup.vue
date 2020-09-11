@@ -1,18 +1,17 @@
 <template>
-  <div>
-    <v-autocomplete
-      v-model="value"
-      :items="items"
-      :item-text="itemText"
-      :item-value="itemValue"
-      :loading="isLoading"
-      :label="fieldCaption"
-      :multiple="field.multiple"
-      :rules="rules"
-      outlined
-      @change="onChange"
-    ></v-autocomplete>
-  </div>
+  <v-autocomplete
+    v-model="value"
+    :items="items"
+    :item-text="itemText"
+    :item-value="itemValue"
+    :loading="isLoading"
+    :label="fieldCaption"
+    :multiple="field.multiple"
+    :rules="rules"
+    outlined
+    dense
+    @change="onChange"
+  ></v-autocomplete>
 </template>
 
 <script>

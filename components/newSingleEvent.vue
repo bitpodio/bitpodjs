@@ -11,7 +11,7 @@
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </div>
-        <v-tabs v-model="tabs" class="mb-6 mt-2 v-event-icon">
+        <v-tabs v-model="tabs" height="36" class="mb-6 mt-2 v-event-icon">
           <v-tabs-slider></v-tabs-slider>
           <v-tab href="#event-tabs-3-1" class="px-0 mr-4">
             <v-icon left>fa-info-circle</v-icon><span>Basic Info</span>
