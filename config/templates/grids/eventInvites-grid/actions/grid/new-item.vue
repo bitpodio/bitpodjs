@@ -652,6 +652,7 @@
 
 <script>
 import gql from 'graphql-tag'
+import nuxtConfig from '~/nuxt.config'
 import Grid from '~/components/common/grid'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin, getIdFromAtob } from '~/utility'
@@ -735,7 +736,7 @@ export default {
     },
     sendNow(type) {
       this.disableButton = true
-      const exceptionURL = `https://bitpod-event.test.bitpod.io/svc/api/CRMACTIVITIES`
+      const exceptionURL = `https://${nuxtConfig.axios.eventUrl}${nuxtConfig.axios.apiEndpoint}/CRMACTIVITIES`
       const postData = {
         ContactId: this.selectedList.map((i) => i.id),
         DueDate: null,
@@ -773,8 +774,7 @@ export default {
           if (!this.templateExists()) {
             return this.$axios({
               method: 'POST',
-              url:
-                'https://bitpod-event.test.bitpod.io/svc/api/MarketingTemplates',
+              url: `https://${nuxtConfig.axios.eventUrl}${nuxtConfig.axios.apiEndpoint}MarketingTemplates`,
               data: {
                 Body: this.RTEValue,
                 Name: '',
