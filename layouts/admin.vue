@@ -99,7 +99,7 @@
       <div class="d-flex d-sm-flex d-md-none ml-n3">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       </div>
-      <v-toolbar-title class="pl-0 ml-n2">Administration</v-toolbar-title>
+      <v-toolbar-title class="pl-0 ml-n1">Administration</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn class="ma-2 d-none d-sm-flex" tile outlined>
         UPGARDE

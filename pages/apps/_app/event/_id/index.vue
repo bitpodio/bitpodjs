@@ -54,7 +54,7 @@
             </v-list>
           </v-menu>
         </v-flex>
-        <v-chip small class="my-2 greybg" label>
+        <v-chip small class="mt-1 mb-3 greybg" label>
           {{ formatedDate(data.event.StartDate, data.event.Timezone) }} -
           {{ formatedDate(data.event.EndDate, data.event.Timezone) }} -
           {{ formatField(data.event.Timezone) }}
