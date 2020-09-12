@@ -75,7 +75,7 @@ export default {
           singleExpand: false,
           showSelect: true,
           hideFilter: false,
-          hideSearch: true,
+          hideSearch: false,
         },
         default: false,
         fields: {

@@ -6,7 +6,7 @@
       </div>
     </template>
     <div v-if="!error" :key="error">
-      <div class="grid-actions-container mt-n11">
+      <div class="grid-actions-container mt-lg-n11 mt-md-n11 mt-sm-n11 mt-xs-0">
         <div class="d-flex">
           <template v-if="selectedItems.length > 0">
             <component
@@ -16,6 +16,7 @@
               :on-update-item="onUpdateItem"
               :on-delete-item="onDeleteItem"
               :items="selectedItems"
+              :refresh="refresh"
               class="d-flex"
             />
           </template>
@@ -24,6 +25,7 @@
             :content="content"
             :view-name="viewName"
             :on-new-item-save="onNewItemSave"
+            :refresh="refresh"
           />
         </div>
         <div v-if="hideFilter">
