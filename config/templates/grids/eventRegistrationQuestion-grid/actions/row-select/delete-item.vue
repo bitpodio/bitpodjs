@@ -20,7 +20,7 @@
 <script>
 import nuxtconfig from '~/nuxt.config'
 export default {
-  props: ['content', 'viewName', 'items'],
+  props: ['content', 'viewName', 'items', 'refresh'],
   data() {
     return {
       dialog: false,
@@ -41,6 +41,7 @@ export default {
             })
             .then((res) => {
               console.log('Item deleted successfully', res)
+              this.refresh()
               return res
             })
         }, Promise.resolve())

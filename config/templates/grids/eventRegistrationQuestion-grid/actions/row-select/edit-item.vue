@@ -108,7 +108,7 @@ import eventTicket from '~/config/apps/event/gql/eventTickets.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { required } from '~/utility/rules.js'
 export default {
-  props: ['content', 'viewName', 'items'],
+  props: ['content', 'viewName', 'items', 'refresh'],
   data() {
     return {
       formData: {
@@ -131,6 +131,15 @@ export default {
       id: '',
     }
   },
+  computed: {
+    showCsvField() {
+      return (
+        this.controlType === 'checkbox' ||
+        this.controlType === 'radio' ||
+        this.controlType === 'dropdown'
+      )
+    },
+  },
   mounted() {
     this.getDropDownData('ControlType')
       .then((res) => {
@@ -148,15 +157,6 @@ export default {
       .catch((e) => {
         console.log('Error', e)
       })
-  },
-  computed: {
-    showCsvField() {
-      return (
-        this.controlType === 'checkbox' ||
-        this.controlType === 'radio' ||
-        this.controlType === 'dropdown'
-      )
-    },
   },
   methods: {
     onSave() {
@@ -186,7 +186,6 @@ export default {
         })
     },
     getQuestions() {
-      let id
       this.items.map((ele) => {
         this.id = ele.id
       })
@@ -199,7 +198,6 @@ export default {
           this.controlType = res.ControlType
           this.tickets = res.TicketName
           this.CsvOptions = res.Options
-          //   this.formData.id = res.id
           return res
         })
         .catch((err) => console.log('Error', err))

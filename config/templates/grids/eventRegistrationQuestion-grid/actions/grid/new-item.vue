@@ -128,6 +128,15 @@ export default {
       CsvOptions: '',
     }
   },
+  computed: {
+    showCsvField() {
+      return (
+        this.controlType === 'checkbox' ||
+        this.controlType === 'radio' ||
+        this.controlType === 'dropdown'
+      )
+    },
+  },
   mounted() {
     this.getDropDownData('ControlType')
       .then((res) => {
@@ -145,15 +154,6 @@ export default {
       .catch((e) => {
         console.log('Error', e)
       })
-  },
-  computed: {
-    showCsvField() {
-      return (
-        this.controlType === 'checkbox' ||
-        this.controlType === 'radio' ||
-        this.controlType === 'dropdown'
-      )
-    },
   },
   methods: {
     onSave() {
