@@ -78,8 +78,8 @@ export default {
       }
     },
     onOpenClick() {
-        this.currentOrg && this.changeCurrentUrl(this.currentOrg)
-        this.dialog = false
+      this.currentOrg && this.changeCurrentUrl(this.currentOrg)
+      this.dialog = false
     },
   },
 }
