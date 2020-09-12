@@ -74,7 +74,7 @@ import {
 
 export default {
   mixins: [formControlsMixin, formValidationMixin],
-  props: ['content', 'viewName', 'items', 'onUpdateItem'],
+  props: ['content', 'viewName', 'items', 'onUpdateItem', 'context'],
   data() {
     const fields = getGridFields(this.content, this.viewName, true)
     return {

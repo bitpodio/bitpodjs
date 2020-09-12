@@ -84,7 +84,7 @@ function getFormDefaultValues(content, viewName) {
 
 export default {
   mixins: [formControlsMixin, formValidationMixin],
-  props: ['content', 'viewName', 'onNewItemSave'],
+  props: ['content', 'viewName', 'onNewItemSave', 'context'],
   data() {
     const fields = getGridFields(this.content, this.viewName)
     const intialFormData = getFormDefaultValues(this.content, this.viewName)

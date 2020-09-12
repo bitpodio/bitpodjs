@@ -870,8 +870,13 @@ export default {
             newForm: true,
             editForm: true,
             rules: [
-              (v) => {
-                return !!v || 'Start Date is required'
+              function (v) {
+                const eventStartDate =
+                  this.context.event && this.context.event.StartDate
+                const eventStartDateObj =
+                  eventStartDate && new Date(eventStartDate)
+                const isValidStartDate = eventStartDateObj > (v && new Date(v))
+                return !!isValidStartDate || 'Start Date is required'
               },
             ],
           },
