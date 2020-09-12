@@ -50,9 +50,6 @@ export default {
       return userOrgList || []
     },
   },
-  created() {
-    // this.checkOrgDetails()
-  },
   methods: {
     onOrgChange(orgName) {
       this.changeCurrentUrl(orgName)
@@ -60,10 +57,8 @@ export default {
     changeCurrentUrl(orgName) {
       let defaultPublicDomain = nuxtconfig.setting.domains.defaultPublicDomain
       defaultPublicDomain = defaultPublicDomain.split(',')[0]
-      const basePath = this.$router.options.base // nuxtconfig.router.base
-      debugger
+      const basePath = this.$router.options.base
       const orgURL = `${window.location.protocol}//${orgName}-${defaultPublicDomain}${basePath}`
-      console.log(orgURL)
       window.open(orgURL, '_blank')
     },
     checkOrgDetails() {
