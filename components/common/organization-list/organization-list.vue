@@ -61,17 +61,6 @@ export default {
       const orgURL = `${window.location.protocol}//${orgName}-${defaultPublicDomain}${basePath}`
       window.open(orgURL, '_blank')
     },
-    checkOrgDetails() {
-      if (this.$auth.user.data) {
-        if (this.$auth.user.data.currentOrg) {
-          this.currentOrg = this.$auth.user.data.currentOrg.name
-        } else {
-          const orgList = this.$auth.user.data.orgList
-          const userOrg = orgList && orgList[0].name
-          this.changeCurrentUrl(userOrg)
-        }
-      }
-    },
     onOpenClick() {
       this.currentOrg && this.changeCurrentUrl(this.currentOrg)
       this.dialog = false
