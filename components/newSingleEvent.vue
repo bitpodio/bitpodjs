@@ -13,20 +13,20 @@
         </div>
         <v-tabs v-model="tabs" height="36" class="mb-6 mt-2 v-event-icon">
           <v-tabs-slider></v-tabs-slider>
-          <v-tab href="#event-tabs-3-1" class="px-0 mr-4">
+          <v-tab class="px-0 mr-4" >
             <v-icon left>fa-info-circle</v-icon><span>Basic Info</span>
           </v-tab>
-          <v-tab href="#event-tabs-3-2" class="px-0 mr-4">
+          <v-tab class="px-0 mr-4" >
             <v-icon left>fa-map-marker</v-icon><span>Location</span>
           </v-tab>
-          <v-tab href="#event-tabs-3-3" class="px-0 mr-4">
+          <v-tab class="px-0 mr-4" >
             <v-icon left>fa-ticket</v-icon><span>Tickets</span>
           </v-tab>
         </v-tabs>
       </v-card-title>
       <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0 event-inner">
         <v-tabs-items v-model="tabs">
-          <v-tab-item v-for="i in 1" :key="i" :value="'event-tabs-3-1'">
+          <v-tab-item >
             <v-card flat>
               <p>
                 Enter event name and details to help your audience learn about
@@ -107,7 +107,7 @@
             </v-card>
           </v-tab-item>
 
-          <v-tab-item v-for="i in 1" :key="i" :value="'event-tabs-3-2'">
+          <v-tab-item >
             <v-card flat>
               <v-row>
                 <v-col cols="12" sm="6" md="6" class="pl-0 pt-0 pb-0">
@@ -248,7 +248,7 @@
             </v-card>
           </v-tab-item>
 
-          <v-tab-item v-for="i in 1" :key="i" :value="'event-tabs-3-3'">
+          <v-tab-item  >
             <v-card v-if="isTicket" flat>
               <p>
                 Setup event tickets and price, you can also set tickets validity
@@ -430,14 +430,14 @@
       <v-card-actions
         class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
       >
-        <v-btn depressed color="grey lighten-2" @click="next(2)">Prev</v-btn>
-        <v-btn depressed color="primary" @click="next(2)">Next</v-btn>
+        <v-btn depressed color="grey lighten-2" @click="prev()" v-if="currentTab > 1">Prev</v-btn>
+        <v-btn depressed color="primary" @click="next()" v-if="currentTab < 3">Next</v-btn>
         <v-btn
           depressed
           color="primary"
           :disabled="isSaveButtonDisabled"
           @click="saveRecord"
-          >Save</v-btn
+          v-if="currentTab > 2">Save</v-btn
         >
       </v-card-actions>
     </v-card>
@@ -475,6 +475,7 @@ export default {
       valid: true,
       lazy: false,
       tabs: null,
+      currentTab: 1,
       isSaveButtonDisabled: false,
       addresslineMessage: '',
       isTicket: true,
@@ -634,14 +635,24 @@ export default {
       return errorMessage
     },
   },
+  watch: {
+    tabs(prev,next) {
+      debugger
+      if(prev !== next){ 
+        this.tabs = 0
+      }
+    }
+  },
   methods: {
     close() {
       this.onFormClose()
-      this.stepNumber = 1
+      // this.stepNumber = 1
+      this.currentTab = 1
     },
     closeForm() {
       this.onFormClose()
-      this.stepNumber = 1
+      // this.stepNumber = 1
+      this.currentTab = 1
       this.$router.push('/apps/event/event/' + this.eventId)
     },
 
@@ -737,7 +748,63 @@ export default {
     returnToCenter() {
       this.$refs.gMap && this.$refs.gMap.map.setCenter(this.locations[0])
     },
-    next(value) {
+    validTab1(){
+      debugger
+      const {
+        Title,
+        StartDate,
+        EndDate,
+        Timezone,
+        UniqLink,
+        LocationType,
+        WebinarLink,
+      } = this.eventData
+      if( Title !== '' &&
+        StartDate !== null &&
+        EndDate !== null &&
+        Timezone !== '' &&
+        UniqLink !== '' &&
+        StartDate < EndDate &&
+        StartDate >= new Date() &&
+        EndDate >= new Date() &&
+        this.isInalidEventLink === false){
+          debugger
+        return true
+      }
+      else{
+        return false
+      }
+
+    },
+    selectTab(value){
+      
+      // this.currentTab = parseInt(this.tabs.split("-")[3])
+      // let tabValue = '1'
+      this.tabs = 1 
+      debugger
+      // if(value > this.currentTab){
+      //   if(value === 2 && !this.validTab1()){
+      //     debugger
+      //     // this.tabs = `event-tabs-3-${this.currentTab}`
+      //     let tabValue = 'event-tabs-3-1'
+      //     // this.tabs = tabValue
+      //     this.tabs = tabValue
+      //   }
+      // }
+    },
+    prev(value){
+      this.currentTab = parseInt(this.tabs.split("-")[3])
+      this.currentTab -= 1
+      let tabValue = `event-tabs-3-${this.currentTab}`
+      this.tabs = tabValue
+    },
+    setNextTab(){
+      this.currentTab = parseInt(this.tabs.split("-")[3])
+      this.currentTab += 1
+      let tabValue = `event-tabs-3-${this.currentTab}`
+      this.tabs = tabValue
+    },
+    next() {
       const {
         Title,
         StartDate,
@@ -748,8 +815,11 @@ export default {
         WebinarLink,
       } = this.eventData
       this.$refs.form.validate()
+      
+     
+      debugger
       if (
-        value === 2 &&
+        this.currentTab === 1 &&
         Title !== '' &&
         StartDate !== null &&
         EndDate !== null &&
@@ -760,18 +830,20 @@ export default {
         EndDate >= new Date() &&
         this.isInalidEventLink === false
       ) {
-        this.stepNumber = value
-      } else if (value === 3) {
+        // this.stepNumber = value
+        this.setNextTab()
+      } else if (this.currentTab === 2) {
         if (
           (LocationType === 'Venue' &&
-            this.$refs['venueAddress.AddressLine'].$data.autocompleteText !==
+            this.$refs['venueAddress.AddressLine'][0].$data.autocompleteText !==
               '') ||
           (LocationType === 'Online Event' && WebinarLink !== '')
         ) {
-          this.stepNumber = value
+          // this.stepNumber = value
           this.addresslineMessage = ''
+          this.setNextTab()
         } else if (
-          this.$refs['venueAddress.AddressLine'].$data.autocompleteText === ''
+          this.$refs['venueAddress.AddressLine'][0].$data.autocompleteText === ''
         ) {
           this.addresslineMessage = strings.FIELD_REQUIRED
         }
