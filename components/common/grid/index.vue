@@ -52,6 +52,7 @@
       <v-skeleton-loader :loading="loading" type="table">
         <v-data-table
           v-model="selectedItems"
+          dense
           :headers="headers"
           :items="tableData.items"
           :single-select="singleSelect"
