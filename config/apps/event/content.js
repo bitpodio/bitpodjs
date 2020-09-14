@@ -3461,6 +3461,18 @@ export default {
         },
         hidden: true,
         fields: {
+          FullName: {
+            displayOrder: 2,
+            caption: 'Full Name',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            hidden: false,
+            inlineEdit: true,
+            newForm: false,
+            editForm: false,
+          },
           FirstName: {
             form: {
               caption: 'First Name *',
@@ -3548,6 +3560,79 @@ export default {
                 return /.+@.+\..+/.test(value) || 'E-mail must be valid'
               },
             ],
+          },
+          'attendeeTicket.Code': {
+            displayOrder: 4,
+            caption: 'Ticket',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            hidden: false,
+            inlineEdit: true,
+            newForm: false,
+            editForm: false,
+          },
+          TicketAmount: {
+            displayOrder: 5,
+            caption: 'Ticket Amount',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            hidden: false,
+            inlineEdit: true,
+            newForm: false,
+            editForm: false,
+          },
+          SeatNumber: {
+            displayOrder: 6,
+            caption: 'Seat Number',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            hidden: false,
+            inlineEdit: true,
+            newForm: false,
+            editForm: false,
+          },
+          CompanyName: {
+            displayOrder: 7,
+            caption: 'Organization',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            cssClasses: 'col-6 col-md-6',
+            hidden: false,
+            inlineEdit: true,
+            newForm: false,
+            editForm: false,
+          },
+          CheckIn: {
+            displayOrder: 8,
+            caption: 'Check In',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '250px',
+            type: 'string',
+            hidden: false,
+            inlineEdit: true,
+            newForm: false,
+            editForm: false,
+          },
+          createdDate: {
+            displayOrder: 9,
+            caption: 'Created Date',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'date',
+            hidden: false,
+            inlineEdit: true,
+            newForm: false,
+            editForm: false,
           },
           '_CurrentAddress.AddressLine': {
             form: {
@@ -3638,11 +3723,6 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
-            rules: [
-              (v) => {
-                return !!v || 'Ticket should be selected'
-              },
-            ],
             dataSource: {
               query: eventTickets,
               itemText: 'Code',
@@ -3651,6 +3731,31 @@ export default {
                 debugger
                 return {
                   Events: this.$route.params.id,
+                }
+              },
+            },
+          },
+          categoryId: {
+            form: {
+              caption: 'Registration Type',
+              displayOrder: 12,
+            },
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'lookup',
+            cssClasses: 'col-6 col-md-6',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            dataSource: {
+              query: registrationType,
+              itemText: 'Name',
+              itemValue: 'id',
+              filter(data) {
+                return {
+                  EventId: this.$route.params.id,
                 }
               },
             },
@@ -3672,6 +3777,14 @@ export default {
               where: {
                 RegistrationId: ctx.$route.params.id,
               },
+            }
+          },
+          mutation(ctx, data) {
+            return {
+              new: {
+                RegistrationId: ctx.$route.params.id,
+              },
+              edit: {},
             }
           },
         },
@@ -3756,7 +3869,7 @@ export default {
           },
         },
         template: {
-          name: 'registration-grid',
+          name: 'registrationSession-grid',
           context: {
             basePath: '/registration',
           },
@@ -4549,6 +4662,7 @@ export default {
           type: 'graphql',
           model: 'Registration',
           filter(ctx) {
+            debugger
             return {
               where: {
                 Email: ctx.$route.params.id,
@@ -4755,6 +4869,71 @@ export default {
           },
         },
         title: 'contactEmails',
+        type: 'list',
+      },
+    },
+  },
+
+  users: {
+    views: {
+      users: {
+        ui: {
+          hideDefaultHeader: false,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: false,
+          hideFilter: false,
+          hideSearch: true,
+        },
+        default: true,
+        fields: {
+          name: {
+            displayOrder: 2,
+            caption: 'Name',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          id: {
+            displayOrder: 3,
+            caption: 'Username',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          email: {
+            displayOrder: 4,
+            caption: 'Email',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          'rolemappings[0].roleId': {
+            displayOrder: 5,
+            caption: 'Roles',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+        },
+        template: {
+          context: {
+            basePath: '/organization',
+          },
+        },
+        dataSource: {
+          type: 'rest',
+          getData: (ctx) =>
+            getData(
+              `/Organizations/${this.$store.state.currentOrg.id}/Users?filter={"include":{"rolemappings":"role"}}`
+            ),
+        },
+        title: 'Users',
         type: 'list',
       },
     },

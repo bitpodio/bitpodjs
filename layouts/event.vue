@@ -479,7 +479,11 @@ export default {
         to: '/apps/event/list/Contacts/Contacts',
       },
       { heading: 'Task' },
-      { icon: 'fa fa-tasks', text: 'My Task', to: '' },
+      {
+        icon: 'fa fa-tasks',
+        text: 'My Task',
+        to: '/apps/event/list/users/users',
+      },
     ],
   }),
   async created() {
