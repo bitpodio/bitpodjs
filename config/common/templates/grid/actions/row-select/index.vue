@@ -6,6 +6,7 @@
       :view-name="viewName"
       :items="items"
       :on-update-item="onUpdateItem"
+      :refresh="refresh"
     />
     <component
       :is="deleteItem || null"
@@ -13,6 +14,7 @@
       :view-name="viewName"
       :items="items"
       :on-delete-item="onDeleteItem"
+      :refresh="refresh"
     />
   </div>
 </template>
@@ -21,7 +23,14 @@ import { templateLoaderMixin } from '~/utility'
 
 export default {
   mixins: [templateLoaderMixin],
-  props: ['content', 'viewName', 'items', 'onUpdateItem', 'onDeleteItem'],
+  props: [
+    'content',
+    'viewName',
+    'items',
+    'onUpdateItem',
+    'onDeleteItem',
+    'refresh',
+  ],
   data() {
     return {
       editItem: null,

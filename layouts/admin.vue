@@ -101,9 +101,6 @@
       </div>
       <v-toolbar-title class="pl-0 ml-n1">Administration</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn class="ma-2 d-none d-sm-flex" tile outlined>
-        UPGARDE
-      </v-btn>
       <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
         <v-icon>mdi-invert-colors</v-icon>
       </v-btn>
@@ -234,7 +231,9 @@
             v-slot:activator="{ on, attrs }"
           >
             <v-avatar color="primary ml-2" size="30" v-bind="attrs" v-on="on">
-              <span class="white--text">{{ $auth.user.data.name[0] }}</span>
+              <span class="white--text">{{
+                $auth.user.data.name && $auth.user.data.name[0]
+              }}</span>
             </v-avatar>
           </template>
           <v-card>
@@ -243,7 +242,7 @@
                 <v-list-item-avatar size="48">
                   <v-avatar color="primary" size="48" v-bind="attrs" v-on="on">
                     <span class="white--text headline">{{
-                      $auth.user.data.name[0]
+                      $auth.user.data.name && $auth.user.data.name[0]
                     }}</span>
                   </v-avatar>
                 </v-list-item-avatar>
@@ -258,6 +257,10 @@
                 </v-list-item-content>
               </v-list-item>
             </v-list>
+            <v-divider></v-divider>
+            <v-list-item>
+              <OrgnaizationList />
+            </v-list-item>
             <v-divider></v-divider>
             <v-list>
               <v-list-item class="text-center justify-center">
@@ -291,7 +294,11 @@
 </template>
 
 <script>
+import OrgnaizationList from '~/components/common/organization-list'
 export default {
+  components: {
+    OrgnaizationList,
+  },
   data: () => ({
     date: new Date().toISOString().substr(0, 10),
     menu: false,

@@ -1,17 +1,19 @@
 <template>
-  <v-autocomplete
-    v-model="value"
-    :items="items"
-    :item-text="itemText"
-    :item-value="itemValue"
-    :loading="isLoading"
-    :label="fieldCaption"
-    :multiple="field.multiple"
-    :rules="rules"
-    outlined
-    dense
-    @change="onChange"
-  ></v-autocomplete>
+  <div>
+    <v-autocomplete
+      v-model="value"
+      :items="items"
+      :item-text="itemText"
+      :item-value="itemValue"
+      :loading="isLoading"
+      :label="fieldCaption"
+      :multiple="field.multiple"
+      :rules="rules"
+      outlined
+      dense
+      @change="onLookupChange"
+    ></v-autocomplete>
+  </div>
 </template>
 
 <script>
@@ -54,6 +56,10 @@ export default {
       type: Array,
       default: () => [],
     },
+    onChange: {
+      type: Function,
+      default: () => null,
+    },
   },
   data() {
     return {
@@ -74,8 +80,9 @@ export default {
     this.loadItems()
   },
   methods: {
-    onChange() {
+    onLookupChange() {
       this.$emit('change', this.value)
+      this.onChange && this.onChange(this.value)
     },
     async loadItems() {
       if (!this.field.items) {
