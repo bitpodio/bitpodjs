@@ -134,9 +134,6 @@
       </div>
       <v-toolbar-title class="pl-0 ml-n1">Event </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn class="ma-2 d-none d-sm-flex" tile outlined>
-        UPGARDE
-      </v-btn>
       <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
         <v-icon>mdi-invert-colors</v-icon>
       </v-btn>
@@ -294,12 +291,6 @@
               </v-list-item>
             </v-list>
             <v-divider></v-divider>
-            <v-list-item>
-              <v-list-item-action>
-                <v-switch v-model="message" color="primary"></v-switch>
-              </v-list-item-action>
-              <v-list-item-title>Notification</v-list-item-title>
-            </v-list-item>
             <v-list-item>
               <OrgnaizationList />
             </v-list-item>
