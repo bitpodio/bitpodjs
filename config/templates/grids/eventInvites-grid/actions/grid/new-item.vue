@@ -76,19 +76,22 @@
               </v-tab-item>
               <v-tab-item>
                 <v-card v-if="choosedTemplate === 0" flat>
-                  <v-card-text class="pl-1"
+                  <v-card-text class="pl-3"
                     >Use a pre designed template or editor to design your
                     content.</v-card-text
                   >
-                  <div class="pr-3 pt-1 tabContent">
+                  <div class="pr-3 pt-1 pl-1 tabContent">
                     <v-row>
-                      <v-col class="pl-5" cols="4" @click="chooseTemplate(1)">
+                      <v-col
+                        class="pl-5 templateTile"
+                        cols="4"
+                        @click="chooseTemplate(1)"
+                      >
                         <v-card
-                          height="250"
+                          height="230"
                           align="center"
-                          :hover="true"
-                          class="hover"
                           justify="center"
+                          class="tileCard cursorPointer"
                         >
                           <v-icon class="py-5" size="50"
                             >mdi-star-outline</v-icon
@@ -99,13 +102,16 @@
                           </h5>
                         </v-card>
                       </v-col>
-                      <v-col cols="4" @click="chooseTemplate(2)">
+                      <v-col
+                        cols="4"
+                        class="templateTile"
+                        @click="chooseTemplate(2)"
+                      >
                         <v-card
-                          height="250"
+                          height="230"
                           align="center"
-                          :hover="true"
-                          class="hover"
                           justify="center"
+                          class="tileCard cursorPointer"
                         >
                           <v-icon class="py-5" size="50">mdi-newspaper</v-icon>
                           <h3 class="font-weight-regular ma-2">
@@ -116,13 +122,16 @@
                           </h5>
                         </v-card>
                       </v-col>
-                      <v-col cols="4" @click="chooseTemplate(3)">
+                      <v-col
+                        cols="4"
+                        class="templateTile"
+                        @click="chooseTemplate(3)"
+                      >
                         <v-card
-                          height="250"
+                          height="230"
                           align="center"
-                          :hover="true"
-                          class="hover"
                           justify="center"
+                          class="tileCard cursorPointer"
                         >
                           <v-icon class="py-5" size="50">mdi-xml</v-icon>
                           <h3 class="font-weight-regular ma-2">
@@ -174,6 +183,7 @@
                               class="grey lighten-2"
                               min-height="200"
                               max-height="200"
+                              contain
                             >
                               <template v-slot:placeholder>
                                 <v-img
@@ -262,11 +272,11 @@
                     "
                     >X Discard</v-btn
                   >
-                  <v-card-text class="pl-1"
+                  <v-card-text class="pl-3"
                     >Continue with default content or use editor to change
                     content.</v-card-text
                   >
-                  <RichText v-model="RTEValue" />
+                  <RichText v-model="RTEValue" class="pl-3" />
                 </v-card>
               </v-tab-item>
               <v-tab-item class="tabContent">
@@ -278,7 +288,7 @@
                 </v-card>
                 <v-row class="px-6">
                   <v-col cols="6">
-                    <div class="mb-11 borderBottomGrey pb-3">
+                    <div class="borderBottomGrey pb-1">
                       <v-checkbox
                         v-model="selectAll"
                         class="ma-0 pa-0 float-right"
@@ -298,13 +308,13 @@
                     </div>
                   </v-col>
                   <v-col cols="6">
-                    <div class="borderBottomGrey pb-3">
+                    <div class="borderBottomGrey pb-1">
                       <v-icon>mdi-email-outline</v-icon>
                       <h4 class="d-inline font-weight-regular">
                         Invitees List
                       </h4>
                     </div>
-                    <div>
+                    <div style="max-height: 600px; overflow: auto;">
                       <div
                         v-for="(item, key) in selectedList"
                         :key="item.Email"
@@ -336,6 +346,7 @@
                           registrationRadio = ''
                           openRadio = ''
                           priorInvite = {}
+                          priorInviteeSelected = []
                         "
                       >
                         <v-icon dark left>mdi-replay</v-icon>
@@ -423,7 +434,8 @@
                         <v-datetime-picker
                           v-model="scheduledTime"
                           label="Schedule Date *"
-                          :min="new Date().toISOString"
+                          min="new Date().toISOString"
+                          timePickerFormat="24hr"
                         >
                           <template slot="dateIcon">
                             <v-icon>fas fa-calendar</v-icon>
@@ -483,13 +495,7 @@
                 </v-row>
                 <v-row v-else class="ma-1">
                   <v-col class="pl-5" cols="4">
-                    <v-card
-                      height="250"
-                      align="center"
-                      :hover="true"
-                      class="hover"
-                      justify="center"
-                    >
+                    <v-card height="250" align="center" justify="center">
                       <v-icon class="py-5" size="50">mdi-email-outline</v-icon>
                       <h3 class="font-weight-regular ma-2">Send Now</h3>
                       <h5 class="font-weight-regular ma-2">
@@ -504,13 +510,7 @@
                     </v-card>
                   </v-col>
                   <v-col cols="4">
-                    <v-card
-                      height="250"
-                      align="center"
-                      :hover="true"
-                      class="hover"
-                      justify="center"
-                    >
+                    <v-card height="250" align="center" justify="center">
                       <v-icon class="py-5" size="50">mdi-calendar</v-icon>
                       <h3 class="font-weight-regular ma-2">
                         Schedule Invite
@@ -527,13 +527,7 @@
                     </v-card>
                   </v-col>
                   <v-col cols="4">
-                    <v-card
-                      height="250"
-                      align="center"
-                      :hover="true"
-                      class="hover"
-                      justify="center"
-                    >
+                    <v-card height="250" align="center" justify="center">
                       <v-icon class="py-5" size="50">mdi-floppy</v-icon>
                       <h3 class="font-weight-regular ma-2">
                         Save as Draft
@@ -587,6 +581,7 @@
                       class="borderBottomGrey py-2 pl-2"
                     >
                       <v-btn
+                        v-if="!acknowledgement"
                         class="float-right fc-icon"
                         text
                         small
@@ -639,6 +634,7 @@
         <v-divider></v-divider>
         <v-container class="pt-12">
           <Grid
+            :value="priorInviteeSelected"
             view-name="inviteeEventTasks"
             :content="CRMcontent()"
             :single-select="true"
@@ -690,6 +686,7 @@ export default {
       scheduleInvite: false,
       scheduledTime: '',
       selectAll: false,
+      priorInviteeSelected: [],
     }
   },
   methods: {
@@ -715,6 +712,7 @@ export default {
       this.templateSubject = ''
       this.acknowledgement = false
       this.disableButton = false
+      this.priorInviteeSelected = []
     },
     previousInviteSelect(data) {
       if (data && data.length) {

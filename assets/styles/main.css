@@ -118,6 +118,15 @@ body {
 .app-container {
   max-width: 300px;
 }
+.templateTile {
+  max-width: 250px !important;
+}
+.tileCard:hover {
+  background: #eeeeee !important;
+}
+.v-data-table__wrapper {
+  width: 100%;
+}
 .app-view {
   min-width: 90px !important;
   max-width: 90px !important;
