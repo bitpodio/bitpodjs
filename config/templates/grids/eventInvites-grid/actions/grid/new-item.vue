@@ -809,7 +809,7 @@ export default {
         })
         .then((saved) => {
           if (saved) {
-            postData.templateID = saved.data.id
+            postData.TemplateId = saved.data.id
           }
           return this.$axios({
             method: 'POST',

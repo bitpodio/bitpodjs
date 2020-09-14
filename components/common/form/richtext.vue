@@ -68,7 +68,6 @@ export default {
               Logo: 'logo',
             },
             exec: (editor, flag, currentOption) => {
-              debugger
               const modelFields = {
                 eventName: 'Event.Title',
                 description: 'Event.Description',
