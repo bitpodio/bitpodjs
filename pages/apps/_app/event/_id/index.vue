@@ -60,7 +60,7 @@
           {{ formatField(data.event.Timezone) }}
         </v-chip>
         <v-flex>
-          <p class="blue--text">
+          <p class="blue--text body-2">
             <i class="fa fa-map-marker" aria-hidden="true"></i>
             <a
               v-if="
