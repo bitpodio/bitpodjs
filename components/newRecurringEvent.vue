@@ -1,18 +1,28 @@
 <template>
   <div>
-    <v-dialog v-model="isDateRange" max-width="600px" max-height="350px">
+    <v-dialog
+      v-model="isDateRange"
+      persistent
+      scrollable
+      max-width="600px"
+      max-height="350px"
+    >
       <v-card>
-        <v-toolbar dark app color="accent">
-          <v-toolbar-title>Availability</v-toolbar-title>
+        <v-card-title
+          class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
+        >
+          <h2 class="black--text pt-4 pb-0 text-h5">Availability</h2>
           <v-spacer></v-spacer>
-          <v-btn icon dark @click="isDateRange = false">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </v-toolbar>
-        <v-card-text>
+          <div>
+            <v-btn icon @click="isDateRange = false">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </div>
+        </v-card-title>
+        <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-form ref="form" v-model="validDateRange" :lazy-validation="lazy">
             <v-row>
-              <v-col cols="12" class="mt-4">
+              <v-col cols="12" class="mt-4 pb-0">
                 <Lookup
                   v-model="ScheduledType"
                   :value="ScheduledType"
@@ -20,17 +30,18 @@
                   :on-change="changeSchedule"
                 />
               </v-col>
-              <v-col v-if="isOverPeriod" cols="12">
+              <v-col v-if="isOverPeriod" cols="12" class="pb-0">
                 <v-text-field
                   v-model="RollingDays"
                   label="Rolling Days"
                   type="number"
                   min="0"
                   outlined
+                  dense
                   :rules="rollingDaysRules"
                 ></v-text-field>
               </v-col>
-              <v-col v-if="isOverDate" cols="12">
+              <v-col v-if="isOverDate" cols="12" class="pb-0">
                 <CustomDate
                   v-model="StartDate"
                   label="Start Date*"
@@ -38,18 +49,6 @@
                   :rules="startDateRule"
                   type="date"
                 />
-                <!-- <v-datetime-picker
-                  v-model="StartDate"
-                  label="Start Date*"
-                  :text-field-props="startDateRule"
-                >
-                  <template slot="dateIcon">
-                    <v-icon>fas fa-calendar</v-icon>
-                  </template>
-                  <template slot="timeIcon">
-                    <v-icon>fas fa-clock</v-icon>
-                  </template>
-                </v-datetime-picker> -->
               </v-col>
               <v-col v-if="isOverDate" cols="12">
                 <CustomDate
@@ -58,18 +57,6 @@
                   :field="endDateRule"
                   type="date"
                 />
-                <!-- <v-datetime-picker
-                  v-model="EndDate"
-                  label="End Date*"
-                  :text-field-props="endDateRule"
-                >
-                  <template slot="dateIcon">
-                    <v-icon>fas fa-calendar</v-icon>
-                  </template>
-                  <template slot="timeIcon">
-                    <v-icon>fas fa-clock</v-icon>
-                  </template>
-                </v-datetime-picker> -->
               </v-col>
               <div class="col-md-12">
                 <v-flex class="d-flex justify-center align-center pb-2">
@@ -87,28 +74,38 @@
             </v-row>
           </v-form>
         </v-card-text>
-        <div class="pa-4">
-          <v-btn color="primary" dark @click="setSchedule">
+        <div class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10 mb-3">
+          <v-btn depressed color="primary" class="mr-1" @click="setSchedule">
             Apply
           </v-btn>
-          <v-btn color="primary" dark @click="isDateRange = false">
+          <v-btn depressed color="grey lighten-2" @click="isDateRange = false">
             Cancel
           </v-btn>
         </div>
       </v-card>
     </v-dialog>
-    <v-dialog v-model="isDuration" max-width="600px" max-height="350px">
+    <v-dialog
+      v-model="isDuration"
+      persistent
+      scrollable
+      max-width="600px"
+      max-height="350px"
+    >
       <v-card>
-        <v-toolbar dark app color="accent">
-          <v-toolbar-title>Duration</v-toolbar-title>
+        <v-card-title
+          class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
+        >
+          <h2 class="black--text pt-4 pb-0 text-h5">Duration</h2>
           <v-spacer></v-spacer>
-          <v-btn icon dark @click="isDuration = false">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </v-toolbar>
-        <v-card-text class="v-location">
+          <div>
+            <v-btn icon @click="isDuration = false">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </div>
+        </v-card-title>
+        <v-card-text class="v-location px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-row>
-            <v-col cols="12">
+            <v-col cols="12" class="mt-3">
               <v-text-field
                 v-model="Duration"
                 label="Duration"
@@ -116,102 +113,144 @@
                 min="1"
                 :rules="durationRules"
                 outlined
+                dense
               ></v-text-field>
             </v-col>
           </v-row>
         </v-card-text>
-        <div class="pa-4">
-          <v-btn color="primary" dark @click="setDuration">
+        <div class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10 mb-3">
+          <v-btn depressed class="mr-1" color="primary" @click="setDuration">
             Apply
           </v-btn>
-          <v-btn color="primary" dark @click="isDuration = false">
+          <v-btn depressed color="grey lighten-2" @click="isDuration = false">
             Cancel
           </v-btn>
         </div>
       </v-card>
     </v-dialog>
-    <v-dialog v-model="isPhone" max-width="600px" max-height="350px">
+    <v-dialog
+      v-model="isPhone"
+      persistent
+      scrollable
+      max-width="600px"
+      max-height="350px"
+    >
       <v-card>
-        <v-toolbar dark app color="accent">
-          <v-toolbar-title>Location</v-toolbar-title>
+        <v-card-title
+          class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
+        >
+          <h2 class="black--text pt-4 pb-0 text-h5">Location</h2>
           <v-spacer></v-spacer>
-          <v-btn icon dark @click="isPhone = false">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </v-toolbar>
-        <v-card-text class="v-location">
+          <div>
+            <v-btn icon @click="isPhone = false">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </div>
+        </v-card-title>
+        <v-card-text class="v-location px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-form ref="phoneform" v-model="validPhone" :lazy-validation="lazy">
             <v-row>
-              <v-col cols="12">
+              <v-col cols="12" class="mt-3">
                 <v-text-field
                   v-model="Phone"
                   label="Phone"
                   outlined
+                  dense
                   :rules="phoneRules"
                 ></v-text-field>
               </v-col>
             </v-row>
           </v-form>
         </v-card-text>
-        <div class="pa-4">
-          <v-btn color="primary" dark @click="setPhone">
+        <div class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10 mb-3">
+          <v-btn depressed class="mr-1" color="primary" @click="setPhone">
             Apply
           </v-btn>
-          <v-btn color="primary" dark @click="isPhone = false">
+          <v-btn depressed color="grey lighten-2" @click="isPhone = false">
             Cancel
           </v-btn>
         </div>
       </v-card>
     </v-dialog>
-    <v-dialog v-model="isOnlineMeeting" max-width="600px" max-height="350px">
+    <v-dialog
+      v-model="isOnlineMeeting"
+      persistent
+      scrollable
+      max-width="600px"
+      max-height="350px"
+    >
       <v-card>
-        <v-toolbar dark app color="accent">
-          <v-toolbar-title>Location</v-toolbar-title>
+        <v-card-title
+          class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
+        >
+          <h2 class="black--text pt-4 pb-0 text-h5">Location</h2>
           <v-spacer></v-spacer>
-          <v-btn icon dark @click="isOnlineMeeting = false">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </v-toolbar>
-        <v-card-text class="v-location">
+          <div>
+            <v-btn icon @click="isOnlineMeeting = false">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </div>
+        </v-card-title>
+        <v-card-text class="v-location px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-form
             ref="meetingform"
             v-model="validOnlineMeeting"
             :lazy-validation="lazy"
           >
             <v-row>
-              <v-col cols="12">
+              <v-col cols="12" class="mt-3">
                 <v-text-field
                   v-model="WebinarLink"
                   label="Online meeting link"
                   :rules="onlineMeetingRules"
                   outlined
+                  dense
                 ></v-text-field>
               </v-col>
             </v-row>
           </v-form>
         </v-card-text>
-        <div class="pa-4">
-          <v-btn color="primary" dark @click="setOnlineMeeting">
+        <div class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10 mb-3">
+          <v-btn
+            depressed
+            class="mr-1"
+            color="primary"
+            @click="setOnlineMeeting"
+          >
             Apply
           </v-btn>
-          <v-btn color="primary" dark @click="isOnlineMeeting = false">
+          <v-btn
+            depressed
+            color="grey lighten-2"
+            @click="isOnlineMeeting = false"
+          >
             Cancel
           </v-btn>
         </div>
       </v-card>
     </v-dialog>
-    <v-dialog v-model="isCustom" max-width="600px" max-height="350px">
+    <v-dialog
+      v-model="isCustom"
+      persistent
+      scrollable
+      max-width="600px"
+      max-height="350px"
+    >
       <v-card>
-        <v-toolbar dark app color="accent">
-          <v-toolbar-title>Location</v-toolbar-title>
+        <v-card-title
+          class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
+        >
+          <h2 class="black--text pt-4 pb-0 text-h5">Location</h2>
           <v-spacer></v-spacer>
-          <v-btn icon dark @click="isCustom = false">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </v-toolbar>
-        <v-card-text class="v-location">
+          <div>
+            <v-btn icon @click="isCustom = false">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </div>
+        </v-card-title>
+        <v-card-text class="v-location px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-row>
-            <v-col cols="12">
+            <v-col cols="12" class="mt-3 mb-3">
               <no-ssr>
                 <vue-google-autocomplete
                   id="map"
@@ -224,63 +263,82 @@
                 ></vue-google-autocomplete>
               </no-ssr>
             </v-col>
-            <v-col cols="6">
+            <v-col cols="6" class="pb-0">
               <v-text-field
                 v-model="venueAddress.City"
                 label="City"
                 outlined
+                dense
               ></v-text-field>
             </v-col>
-            <v-col cols="6">
+            <v-col cols="6" class="pb-0">
               <v-text-field
                 v-model="venueAddress.State"
                 label="State"
                 outlined
+                dense
               ></v-text-field>
             </v-col>
-            <v-col cols="6">
+            <v-col cols="6" class="pb-0">
               <v-text-field
                 v-model="venueAddress.Country"
                 label="Country"
                 outlined
+                dense
               ></v-text-field>
             </v-col>
-            <v-col cols="6">
+            <v-col cols="6" class="pb-0">
               <v-text-field
                 v-model="venueAddress.ZipCode"
                 label="Zip Code"
                 outlined
+                dense
               ></v-text-field>
             </v-col>
           </v-row>
         </v-card-text>
-        <div class="pa-4">
-          <v-btn color="primary" dark @click="setCustomLocation">
+        <div class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10 mb-3">
+          <v-btn
+            depressed
+            class="mr-1"
+            color="primary"
+            @click="setCustomLocation"
+          >
             Apply
           </v-btn>
-          <v-btn color="primary" dark @click="isCustom = false">
+          <v-btn depressed color="grey lighten-2" @click="isCustom = false">
             Cancel
           </v-btn>
         </div>
       </v-card>
     </v-dialog>
-    <v-dialog v-model="isPersonMeeting" max-width="600px" max-height="350px">
+    <v-dialog
+      v-model="isPersonMeeting"
+      persistent
+      scrollable
+      max-width="600px"
+      max-height="350px"
+    >
       <v-card>
-        <v-toolbar dark app color="accent">
-          <v-toolbar-title>Location</v-toolbar-title>
+        <v-card-title
+          class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
+        >
+          <h2 class="black--text pt-4 pb-0 text-h5">Location</h2>
           <v-spacer></v-spacer>
-          <v-btn icon dark @click="isPersonMeeting = false">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </v-toolbar>
-        <v-card-text class="v-location">
+          <div>
+            <v-btn icon @click="isPersonMeeting = false">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </div>
+        </v-card-title>
+        <v-card-text class="v-location px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-form
             ref="personmeetingform"
             v-model="validPersonMeeting"
             :lazy-validation="lazy"
           >
             <v-row>
-              <v-col cols="12">
+              <v-col cols="12" class="mt-3">
                 <Lookup
                   v-model="InPersonMeeting"
                   :field="inPersonMeetingProps"
@@ -291,55 +349,93 @@
             </v-row>
           </v-form>
         </v-card-text>
-        <div class="pa-4">
-          <v-btn color="primary" dark @click="setPersonMeeting">
+        <div class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10 mb-3">
+          <v-btn
+            depressed
+            color="primary"
+            class="mr-1"
+            @click="setPersonMeeting"
+          >
             Apply
           </v-btn>
-          <v-btn color="primary" dark @click="isPersonMeeting = false">
+          <v-btn
+            depressed
+            color="grey lighten-2"
+            @click="isPersonMeeting = false"
+          >
             Cancel
           </v-btn>
         </div>
       </v-card>
     </v-dialog>
-    <v-dialog v-model="isSessionTicket" max-width="600px" max-height="350px">
+    <v-dialog
+      v-model="isSessionTicket"
+      persistent
+      scrollable
+      max-width="600px"
+      max-height="350px"
+    >
       <v-card>
-        <v-toolbar dark app color="accent">
-          <v-toolbar-title>Change Tickets</v-toolbar-title>
+        <v-card-title
+          class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
+        >
+          <h2 class="black--text pt-4 pb-0 text-h5">Change Tickets</h2>
           <v-spacer></v-spacer>
-          <v-btn icon dark @click="isSessionTicket = false">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </v-toolbar>
-        <v-card-text class="v-location">
+          <div>
+            <v-btn icon @click="isSessionTicket = false">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </div>
+        </v-card-title>
+        <v-card-text class="v-location px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-row>
-            <v-col cols="12">
+            <v-col cols="12" class="mt-3">
               <Lookup v-model="SessionTicket" :field="sessionTicketProps" />
             </v-col>
           </v-row>
         </v-card-text>
-        <div class="pa-4">
-          <v-btn color="primary" dark @click="setSessionTicket">
+        <div class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10 mb-3">
+          <v-btn
+            depressed
+            color="primary"
+            class="mr-1"
+            @click="setSessionTicket"
+          >
             Apply
           </v-btn>
-          <v-btn color="primary" dark @click="isSessionTicket = false">
+          <v-btn
+            depressed
+            color="grey lighten-2"
+            @click="isSessionTicket = false"
+          >
             Cancel
           </v-btn>
         </div>
       </v-card>
     </v-dialog>
-    <v-dialog v-model="isType" max-width="600px" max-height="350px">
+    <v-dialog
+      v-model="isType"
+      persistent
+      scrollable
+      max-width="600px"
+      max-height="350px"
+    >
       <v-card>
-        <v-toolbar dark app color="accent">
-          <v-toolbar-title>Location</v-toolbar-title>
+        <v-card-title
+          class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
+        >
+          <h2 class="black--text pt-4 pb-0 text-h5">Location</h2>
           <v-spacer></v-spacer>
-          <v-btn icon dark @click="isType = false">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </v-toolbar>
-        <v-card-text class="v-location">
+          <div>
+            <v-btn icon @click="isType = false">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </div>
+        </v-card-title>
+        <v-card-text class="v-location px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-form ref="typeform" v-model="validType" :lazy-validation="lazy">
             <v-row>
-              <v-col cols="12">
+              <v-col cols="12" class="mt-4 pb-0">
                 <Lookup
                   v-model="Type"
                   :field="typeProps"
@@ -353,16 +449,17 @@
                   min="0"
                   :rules="maxAllowRules"
                   outlined
+                  dense
                 ></v-text-field>
               </v-col>
             </v-row>
           </v-form>
         </v-card-text>
-        <div class="pa-4">
-          <v-btn color="primary" dark @click="setType">
+        <div class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10 mb-3">
+          <v-btn depressed color="primary" class="mr-1" @click="setType">
             Apply
           </v-btn>
-          <v-btn color="primary" dark @click="isType = false">
+          <v-btn depressed color="grey lighten-2" @click="isType = false">
             Cancel
           </v-btn>
         </div>
@@ -370,367 +467,377 @@
     </v-dialog>
 
     <div>
-      <v-toolbar dark app color="accent">
-        <v-toolbar-title>New Recurring Event</v-toolbar-title>
-        <v-spacer></v-spacer>
-        <v-btn icon dark @click="close">
-          <v-icon>mdi-close</v-icon>
-        </v-btn>
-      </v-toolbar>
-      <v-stepper v-model="stepNumber">
-        <v-stepper-header class="elevation-0">
-          <v-stepper-step :complete="stepNumber > 1" step="1"
-            >Basic Info</v-stepper-step
-          >
-          <v-divider></v-divider>
-          <v-stepper-step :complete="stepNumber > 2" step="2"
-            >Tickets</v-stepper-step
-          >
-          <v-divider></v-divider>
-
-          <v-stepper-step step="3">Recurring Session</v-stepper-step>
-        </v-stepper-header>
-
-        <v-stepper-items class="stepper-box">
-          <v-stepper-content step="1">
-            <v-card flat>
-              <p>
-                Enter event name and details to help your audience learn about
-                your event, add details that highlights why someone should
-                attend it.
-              </p>
-              <v-form
-                ref="validBasicInfoForm"
-                v-model="validBasicInfo"
-                :lazy-validation="lazy"
-              >
+      <v-card>
+        <v-card-title
+          class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
+        >
+          <h2 class="black--text pt-4 pb-0 text-h5">New Recurring Event</h2>
+          <v-spacer></v-spacer>
+          <div>
+            <v-btn icon @click="close">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </div>
+          <v-tabs v-model="tabs" height="36" class="mb-6 mt-2 v-event-icon">
+            <v-tabs-slider></v-tabs-slider>
+            <v-tab href="#eventrec-tabs-3-1" class="px-0 mr-4">
+              <v-icon left>fa-info-circle</v-icon><span>Basic Info</span>
+            </v-tab>
+            <v-tab href="#eventrec-tabs-3-2" class="px-0 mr-4">
+              <v-icon left>fa-ticket</v-icon><span>Tickets</span>
+            </v-tab>
+            <v-tab href="#eventrec-tabs-3-3" class="px-0 mr-4">
+              <v-icon left>fa-history</v-icon><span>Recurring Session</span>
+            </v-tab>
+          </v-tabs>
+        </v-card-title>
+        <v-card-text
+          class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0 event-inner"
+        >
+          <v-tabs-items v-model="tabs">
+            <v-tab-item v-for="i in 1" :key="i" :value="'eventrec-tabs-3-1'">
+              <v-card flat>
+                <p>
+                  Enter event name and details to help your audience learn about
+                  your event, add details that highlights why someone should
+                  attend it.
+                </p>
                 <v-row>
-                  <v-col cols="12">
+                  <v-col cols="12" class="pb-0">
                     <v-text-field
                       v-model="eventData.Title"
                       :rules="requiredRules"
                       label="Event Title*"
                       required
+                      dense
                       outlined
                       @change="changeEventName($event)"
                     ></v-text-field>
                   </v-col>
-                  <v-col cols="12">
+                  <v-col cols="12" class="pb-4 pt-2">
                     <RichText
                       v-model="eventData.Description"
                       class="mb-3"
                       label="Description"
-                    ></RichText> </v-col
-                  ><br />
-                  <v-col cols="12" sm="6" md="6">
+                    ></RichText>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="6" class="pb-0">
                     <v-text-field
                       v-model="eventData.UniqLink"
                       label="Event Link*"
                       hint="https://bitpod-event.test.bitpod.io/e/"
                       persistent-hint
-                      :rules="requiredRules"
                       outlined
+                      dense
                       required
                       :error-messages="uniqueLinkValidationMsg"
                       @keyup="changeUniqueLink($event)"
                     ></v-text-field>
                   </v-col>
                 </v-row>
-              </v-form>
-            </v-card>
+              </v-card>
+            </v-tab-item>
 
-            <v-btn color="primary" :disabled="isNextDisabled()" @click="next(2)"
-              >Next</v-btn
-            >
-          </v-stepper-content>
-          <v-stepper-content step="2">
-            <v-card flat>
-              <p>
-                Setup event tickets and price, you can also set tickets validity
-                so early birds can be offered better pricing.
-              </p>
-              <v-btn class="ma-2" outlined color="indigo" @click="addTicketRow"
-                >Add Tickets</v-btn
-              >
-              <v-simple-table>
-                <template v-slot:default>
-                  <thead>
-                    <tr>
-                      <th class="text-left">Title*</th>
-                      <th class="text-left">Type*</th>
-                      <th class="text-left">Price</th>
-                      <th class="text-left">Quantity</th>
-                      <th class="text-left"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="(ticket, k) in tickets" :key="k">
-                      <td class="pa-2 pb-0">
-                        <v-text-field
-                          v-model="ticket.Code"
-                          :rules="requiredRules"
-                          label="Title"
-                          outlined
-                        ></v-text-field>
-                      </td>
-                      <td class="pa-2 pb-0">
-                        <Lookup
-                          v-model="ticket.Type"
-                          :field="ticketTypeProps"
-                        />
-                      </td>
-                      <td class="pa-2 pb-0">
-                        <v-text-field
-                          v-model="ticket.Amount"
-                          label="price"
-                          outlined
-                          value
-                          :disabled="isPriceDisabled(k)"
-                        ></v-text-field>
-                      </td>
-                      <td class="pa-2 pb-0">
-                        <v-text-field
-                          v-model="ticket.TicketCount"
-                          label="quantity"
-                          outlined
-                          value
-                        ></v-text-field>
-                      </td>
-                      <td class="pa-2 pb-0">
-                        <v-btn text small @click="deleteTicket(k)">
-                          <v-icon left>mdi-delete</v-icon>
-                        </v-btn>
-                      </td>
-                    </tr>
-                  </tbody>
-                </template>
-              </v-simple-table>
-            </v-card>
-
-            <v-btn color="primary" @click="stepNumber = 1">Prev</v-btn>
-            <v-btn color="primary" @click="next(3)">Next</v-btn>
-          </v-stepper-content>
-
-          <v-stepper-content step="3">
-            <v-card v-if="isSession" flat>
-              <p>
-                Setup event recurrence, sessions availability to help your
-                attendees book a time slot.
-              </p>
-              <v-btn class="ma-2" outlined color="indigo" @click="addSession"
-                >Add Recurring Session</v-btn
-              >
-              <div v-if="isZoom">
-                To send Zoom joining info, you must setup Zoom integration,
-                <a href="" @click.stop.prevent="openWindow(zoomDocumentLink)"
-                  >click here</a
+            <v-tab-item v-for="i in 1" :key="i" :value="'eventrec-tabs-3-2'">
+              <v-card flat>
+                <p>
+                  Setup event tickets and price, you can also set tickets
+                  validity so early birds can be offered better pricing.
+                </p>
+                <v-btn
+                  class="ma-2 ml-0 mb-3"
+                  outlined
+                  color="primary"
+                  @click="addTicketRow"
+                  >Add Tickets</v-btn
                 >
-                for documentation.
-              </div>
-              <div v-if="isGoogleMeet">
-                To send google meet joining info, you must setup google meet
-                integration,
-                <a
-                  href=""
-                  @click.stop.prevent="openWindow(googleMeetDocumentLink)"
-                  >click here</a
+                <v-simple-table class="event-table">
+                  <template v-slot:default>
+                    <thead>
+                      <tr>
+                        <th class="text-left pl-0">Title*</th>
+                        <th class="text-left pl-2">Type*</th>
+                        <th class="text-left pl-2">Price</th>
+                        <th class="text-left pl-2">Quantity</th>
+                        <th class="text-left pl-2"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="(ticket, k) in tickets" :key="k">
+                        <td class="pa-2 pb-0 pl-0">
+                          <v-text-field
+                            v-model="ticket.Code"
+                            :rules="requiredRules"
+                            label="Title"
+                            outlined
+                            dense
+                          ></v-text-field>
+                        </td>
+                        <td class="pa-2 pb-0">
+                          <Lookup
+                            v-model="ticket.Type"
+                            :field="ticketTypeProps"
+                          />
+                        </td>
+                        <td class="pa-2 pb-0">
+                          <v-text-field
+                            v-model="ticket.Amount"
+                            label="price"
+                            outlined
+                            dense
+                            value
+                            :disabled="isPriceDisabled(k)"
+                          ></v-text-field>
+                        </td>
+                        <td class="pa-2 pb-0">
+                          <v-text-field
+                            v-model="ticket.TicketCount"
+                            label="quantity"
+                            outlined
+                            dense
+                            value
+                          ></v-text-field>
+                        </td>
+                        <td class="pa-2 pb-0">
+                          <v-btn icon class="mt-1" @click="deleteTicket(k)">
+                            <v-icon>mdi-24px mdi-delete</v-icon>
+                          </v-btn>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </template>
+                </v-simple-table>
+              </v-card>
+            </v-tab-item>
+
+            <v-tab-item v-for="i in 1" :key="i" :value="'eventrec-tabs-3-3'">
+              <v-card v-if="isSession" flat>
+                <p>
+                  Setup event recurrence, sessions availability to help your
+                  attendees book a time slot.
+                </p>
+                <v-btn
+                  class="ma-2 ml-0 mb-3"
+                  outlined
+                  color="primary"
+                  @click="addSession"
+                  >Add Recurring Session</v-btn
                 >
-                for documentation.
-              </div>
-              <div v-if="isLocationMessage" class="red--text pa-3 pt-0 body-1">
-                {{ locationMessage }}
-              </div>
-              <v-simple-table>
-                <template v-slot:default>
-                  <thead>
-                    <tr>
-                      <th class="text-left">Date Range*</th>
-                      <th class="text-left">Start Time*</th>
-                      <th class="text-left">End Time*</th>
-                      <th class="text-left">Slot Size*</th>
-                      <th class="text-left">Timezone</th>
-                      <th class="text-left">Location*</th>
-                      <th class="text-left">Type*</th>
-                      <th class="text-left">Tickets</th>
-                      <th class="text-left"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="(session, k) in sessions" :key="k">
-                      <td class="pa-2 pb-0">
-                        <span>{{ session.CustomScheduledType }}</span>
-                        <v-btn icon small @click="selectSchedule(k)">
-                          <v-icon left>mdi-18px mdi-pencil</v-icon>
-                        </v-btn>
-                        <!-- <v-text-field
-                          v-model="session.ScheduledType"
-                          :rules="requiredRules"
-                          label="Date Range"
-                          outlined
-                        ></v-text-field> -->
-                      </td>
-                      <td class="pa-2 pb-0">
-                        <Lookup
-                          v-model="session.StartTime"
-                          :field="startTimeProps"
-                          :rules="validStartTimeRule(k)"
-                        />
-                      </td>
-                      <td class="pa-2 pb-0">
-                        <Lookup
-                          v-model="session.EndTime"
-                          :field="endTimeProps"
-                          :rules="validEndTimeRule(k)"
-                        />
-                      </td>
-                      <td class="pa-2 pb-0">
-                        <Lookup
-                          v-model="session.Duration"
-                          :field="slotSizeProps"
-                          :on-change="changeDuration(k)"
-                        />
-                      </td>
-                      <td class="pa-2 pb-0">
-                        <Timezone
-                          v-model="session.Timezone"
-                          :rules="requiredRules"
-                          :field="timezonefield"
-                        ></Timezone>
-                      </td>
-                      <td class="pa-2 pb-0">
-                        <Lookup
-                          v-model="session.LocationType"
-                          :field="locationTypeProps"
-                          :rules="requiredRules"
-                          required
-                          :on-change="changelocationType(k)"
-                        />
-                      </td>
-                      <td class="pa-2 pb-0">
-                        <!-- <v-text-field
-                          v-model="session.Type"
-                          label="Type*"
-                          outlined
-                          value
-                        ></v-text-field> -->
-                        <span v-if="session.Type === 'Group'"
-                          >{{ session.Type }} {{ session.MaxAllow }}
-                        </span>
-                        <span v-if="session.Type === 'Personal'"
-                          >{{ session.Type }}
-                        </span>
-                        <v-btn icon small @click="selectType(k)">
-                          <v-icon left>mdi-18px mdi-pencil</v-icon>
-                        </v-btn>
-                      </td>
-                      <td class="pa-2 pb-0">
-                        <!-- <v-text-field
-                          v-model="session.Tickets"
-                          label="Tickets"
-                          outlined
-                          value
-                        ></v-text-field> -->
-                        <span>{{ customTicket }} </span>
-                        <v-btn icon small @click="selectSessionTickets(k)">
-                          <v-icon left>mdi-18px mdi-pencil</v-icon>
-                        </v-btn>
-                      </td>
-                      <td class="pa-2 pb-0">
-                        <v-btn text small @click="deleteSession(k)">
-                          <v-icon left>mdi-delete</v-icon>
-                        </v-btn>
-                      </td>
-                    </tr>
-                  </tbody>
-                </template>
-              </v-simple-table>
-              <v-btn color="primary" @click="stepNumber = 2">Prev</v-btn>
-              <v-btn
-                color="primary"
-                :disabled="isSaveButtonDisabled"
-                @click="saveRecord"
-                >Save</v-btn
+                <div v-if="isZoom">
+                  To send Zoom joining info, you must setup Zoom integration,
+                  <a href="" @click.stop.prevent="openWindow(zoomDocumentLink)"
+                    >click here</a
+                  >
+                  for documentation.
+                </div>
+                <div v-if="isGoogleMeet">
+                  To send google meet joining info, you must setup google meet
+                  integration,
+                  <a
+                    href=""
+                    @click.stop.prevent="openWindow(googleMeetDocumentLink)"
+                    >click here</a
+                  >
+                  for documentation.
+                </div>
+                <div
+                  v-if="isLocationMessage"
+                  class="red--text pa-3 pt-0 body-1"
+                >
+                  {{ locationMessage }}
+                </div>
+                <v-simple-table class="event-table">
+                  <template v-slot:default>
+                    <thead>
+                      <tr>
+                        <th class="text-left pl-0">Date Range*</th>
+                        <th class="text-left pl-2">Start Time*</th>
+                        <th class="text-left pl-2">End Time*</th>
+                        <th class="text-left pl-2">Slot Size*</th>
+                        <th class="text-left pl-2">Timezone</th>
+                        <th class="text-left pl-2">Location*</th>
+                        <th class="text-left pl-2">Type*</th>
+                        <th class="text-left">Tickets</th>
+                        <th class="text-left"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="(session, k) in sessions" :key="k">
+                        <td class="pa-2 pb-0 pl-0">
+                          <span>{{ session.CustomScheduledType }}</span>
+                          <v-btn icon small @click="selectSchedule(k)">
+                            <v-icon left>mdi-18px mdi-pencil</v-icon>
+                          </v-btn>
+                        </td>
+                        <td class="pa-2 pb-0">
+                          <Lookup
+                            v-model="session.StartTime"
+                            :field="startTimeProps"
+                            :rules="validStartTimeRule(k)"
+                          />
+                        </td>
+                        <td class="pa-2 pb-0">
+                          <Lookup
+                            v-model="session.EndTime"
+                            :field="endTimeProps"
+                            :rules="validEndTimeRule(k)"
+                          />
+                        </td>
+                        <td class="pa-2 pb-0">
+                          <Lookup
+                            v-model="session.Duration"
+                            :field="slotSizeProps"
+                            :on-change="changeDuration(k)"
+                          />
+                        </td>
+                        <td class="pa-2 pb-0">
+                          <Timezone
+                            v-model="session.Timezone"
+                            :rules="requiredRules"
+                            :field="timezonefield"
+                          ></Timezone>
+                        </td>
+                        <td class="pa-2 pb-0">
+                          <Lookup
+                            v-model="session.LocationType"
+                            :field="locationTypeProps"
+                            :rules="requiredRules"
+                            required
+                            :on-change="changelocationType(k)"
+                          />
+                        </td>
+                        <td class="pa-2 pb-0">
+                          <span v-if="session.Type === 'Group'"
+                            >{{ session.Type }} {{ session.MaxAllow }}
+                          </span>
+                          <span v-if="session.Type === 'Personal'"
+                            >{{ session.Type }}
+                          </span>
+                          <v-btn icon small @click="selectType(k)">
+                            <v-icon left>mdi-18px mdi-pencil</v-icon>
+                          </v-btn>
+                        </td>
+                        <td class="pa-2 pb-0">
+                          <span>{{ customTicket }} </span>
+                          <v-btn icon small @click="selectSessionTickets(k)">
+                            <v-icon left>mdi-18px mdi-pencil</v-icon>
+                          </v-btn>
+                        </td>
+                        <td class="pa-2 pb-0">
+                          <v-btn icon class="mt-1" @click="deleteSession(k)">
+                            <v-icon>mdi-24px mdi-delete</v-icon>
+                          </v-btn>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </template>
+                </v-simple-table>
+                <v-btn color="primary" @click="stepNumber = 2">Prev</v-btn>
+                <v-btn
+                  color="primary"
+                  :disabled="isSaveButtonDisabled"
+                  @click="saveRecord"
+                  >Save</v-btn
+                >
+              </v-card>
+              <v-card
+                v-else
+                outlined
+                class="text-center elevation-2 vs-notification pa-5"
               >
-            </v-card>
-            <v-card
-              v-else
-              outlined
-              class="text-center elevation-2 vs-notification pa-5"
-            >
-              <div v-if="isEventCreate" class="flex">
-                <div class="py-2">
-                  <i
-                    class="fa fa-calendar pa-4 d-inline-flex rounded-circle body-1 primary white--text"
-                  ></i>
+                <div v-if="isEventCreate" class="flex">
+                  <div class="py-2">
+                    <i
+                      class="fa fa-calendar pa-4 d-inline-flex rounded-circle body-1 primary white--text"
+                    ></i>
+                  </div>
+                  <div class="pb-2 text-uppercase">
+                    <span class="text-uppercase Body 1" style="font-size: 20px;"
+                      >EVENT HAS BEEN CREATED.</span
+                    >
+                  </div>
+                  <div class="pb-3 text--primary">
+                    Event goers can only register after you publish it. We
+                    recommend you click view button to verify your event page
+                    and if everything looks as expected then PUBLISH it.
+                    <br />
+                    You can also use events link from left panel to edit or
+                    publish this event any time you like.
+                  </div>
+                  <div class="pb-2">
+                    <v-btn
+                      depressed
+                      color="primary"
+                      class="ma-1"
+                      @click="viewRegistration"
+                      ><v-icon left>mdi-eye-outline</v-icon>View</v-btn
+                    >
+                    <v-btn
+                      outlined
+                      color="primary"
+                      class="ma-1"
+                      @click="eventPublish"
+                    >
+                      <v-icon left>mdi-rotate-315 mdi-send</v-icon>
+                      Publish</v-btn
+                    >
+                    <v-btn text color="primary" class="ma-1" @click="closeForm"
+                      >Close</v-btn
+                    >
+                  </div>
                 </div>
-                <div class="pb-2 text-uppercase">
-                  <span class="text-uppercase Body 1" style="font-size: 20px;"
-                    >EVENT HAS BEEN CREATED.</span
-                  >
+                <div v-if="isEventPublish" class="flex">
+                  <div class="py-2">
+                    <i
+                      class="fa fa-calendar pa-4 d-inline-flex rounded-circle body-1 primary white--text"
+                      aria-hidden="true"
+                    ></i>
+                  </div>
+                  <div class="pb-2">
+                    <span
+                      class="text-uppercase Body 1"
+                      style="font-size: 20px;"
+                    >
+                      YOUR EVENT HAS BEEN PUBLISHED.</span
+                    >
+                  </div>
+                  <div class="pb-2 text--primary">
+                    Now it is open for registrations, you can click on view to
+                    fetch the event landing page URL, which you can share with
+                    others, so they can register.
+                  </div>
+                  <div class="pb-2">
+                    <v-btn
+                      depressed
+                      color="primary"
+                      class="ma-1"
+                      @click="viewRegistration"
+                      ><v-icon left>mdi-eye-outline</v-icon>View</v-btn
+                    >
+                    <v-btn text color="primary" class="ma-1" @click="closeForm"
+                      >Close</v-btn
+                    >
+                  </div>
                 </div>
-                <div class="pb-3 text--primary">
-                  Event goers can only register after you publish it. We
-                  recommend you click view button to verify your event page and
-                  if everything looks as expected then PUBLISH it.
-                  <br />
-                  You can also use events link from left panel to edit or
-                  publish this event any time you like.
-                </div>
-                <div class="pb-2">
-                  <v-btn
-                    depressed
-                    color="primary"
-                    class="ma-1"
-                    @click="viewRegistration"
-                    ><v-icon left>mdi-eye-outline</v-icon>View</v-btn
-                  >
-                  <v-btn
-                    outlined
-                    color="primary"
-                    class="ma-1"
-                    @click="eventPublish"
-                  >
-                    <v-icon left>mdi-rotate-315 mdi-send</v-icon> Publish</v-btn
-                  >
-                  <v-btn text color="primary" class="ma-1" @click="closeForm"
-                    >Close</v-btn
-                  >
-                </div>
-              </div>
-              <div v-if="isEventPublish" class="flex">
-                <div class="py-2">
-                  <i
-                    class="fa fa-calendar pa-4 d-inline-flex rounded-circle body-1 primary white--text"
-                    aria-hidden="true"
-                  ></i>
-                </div>
-                <div class="pb-2">
-                  <span class="text-uppercase Body 1" style="font-size: 20px;">
-                    YOUR EVENT HAS BEEN PUBLISHED.</span
-                  >
-                </div>
-                <div class="pb-2 text--primary">
-                  Now it is open for registrations, you can click on view to
-                  fetch the event landing page URL, which you can share with
-                  others, so they can register.
-                </div>
-                <div class="pb-2">
-                  <v-btn
-                    depressed
-                    color="primary"
-                    class="ma-1"
-                    @click="viewRegistration"
-                    ><v-icon left>mdi-eye-outline</v-icon>View</v-btn
-                  >
-                  <v-btn text color="primary" class="ma-1" @click="closeForm"
-                    >Close</v-btn
-                  >
-                </div>
-              </div>
-            </v-card>
-          </v-stepper-content>
-        </v-stepper-items>
-      </v-stepper>
+              </v-card>
+            </v-tab-item>
+          </v-tabs-items>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions
+          class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
+        >
+          <v-btn depressed color="grey lighten-2" @click="next(2)">Prev</v-btn>
+          <v-btn depressed color="primary" @click="next(2)">Next</v-btn>
+          <v-btn
+            depressed
+            color="primary"
+            :disabled="isSaveButtonDisabled"
+            @click="saveRecord"
+            >Save</v-btn
+          >
+        </v-card-actions>
+      </v-card>
     </div>
   </div>
 </template>
@@ -778,6 +885,7 @@ export default {
     return {
       isUniqLinkValid: false,
       valid: true,
+      tabs: null,
       validDateRange: true,
       validPhone: true,
       validOnlineMeeting: true,
@@ -1943,5 +2051,8 @@ export default {
 }
 .v-location {
   min-height: 300px;
+}
+.event-inner {
+  min-height: 455px;
 }
 </style>

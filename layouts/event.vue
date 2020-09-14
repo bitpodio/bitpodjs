@@ -111,109 +111,11 @@
     <v-dialog
       v-model="dialog"
       persistent
+      scrollable
       content-class="slide-form"
       transition="dialog-bottom-transition"
     >
       <NewRecurringEvent :on-form-close="closeRecurringEventForm" />
-      <!-- <v-card>
-        <v-toolbar dark color="primary">
-          <v-btn icon dark @click="dialog = false">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-          <v-toolbar-title>New Event</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-toolbar-items>
-            <v-btn dark text @click="dialog = false">Save</v-btn>
-          </v-toolbar-items>
-        </v-toolbar>
-        <v-card-text>
-          <v-container>
-            <v-row>
-              <v-col cols="12">
-                <v-text-field label="Event Name*" required></v-text-field>
-              </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <v-dialog
-                  ref="dialog"
-                  v-model="modal"
-                  :return-value.sync="date"
-                  persistent
-                  width="290px"
-                >
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-text-field
-                      v-model="date"
-                      label="Start Date"
-                      append-icon="fa-calendar"
-                      readonly
-                      v-bind="attrs"
-                      v-on="on"
-                    ></v-text-field>
-                  </template>
-                  <v-date-picker v-model="date" scrollable>
-                    <v-spacer></v-spacer>
-                    <v-btn text color="primary" @click="modal = false"
-                      >Cancel</v-btn
-                    >
-                    <v-btn text color="primary" @click="$refs.dialog.save(date)"
-                      >OK</v-btn
-                    >
-                  </v-date-picker>
-                </v-dialog>
-              </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <v-menu
-                  v-model="menu2"
-                  :close-on-content-click="false"
-                  :nudge-right="40"
-                  transition="scale-transition"
-                  offset-y
-                  min-width="290px"
-                >
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-text-field
-                      v-model="date"
-                      label="End Date"
-                      append-icon="fa-calendar"
-                      readonly
-                      v-bind="attrs"
-                      v-on="on"
-                    ></v-text-field>
-                  </template>
-                  <v-date-picker
-                    v-model="date"
-                    @input="menu2 = false"
-                  ></v-date-picker>
-                </v-menu>
-              </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <v-select
-                  :items="['0-17', '18-29', '30-54', '54+']"
-                  label="Timezone*"
-                  required
-                ></v-select>
-              </v-col>
-              <v-col cols="12">
-                <v-textarea
-                  clearable
-                  clear-icon="fa-close"
-                  label="Description"
-                  value=""
-                ></v-textarea>
-              </v-col>
-              <v-col cols="12" sm="6" md="6">
-                <v-text-field
-                  label="Event Link*"
-                  hint="https://bitpod-event.test.bitpod.io/e/"
-                  persistent-hint
-                  required
-                ></v-text-field>
-              </v-col>
-            </v-row>
-          </v-container>
-          <small>*indicates required field</small>
-        </v-card-text>
-      </v-card> -->
     </v-dialog>
 
     <v-app-bar app flat class="greybg">
