@@ -1,5 +1,5 @@
 <template>
-  <v-form ref="form" v-model="valid" :lazy-validation="lazy">
+  <div>
     <v-dialog v-model="isDateRange" max-width="600px" max-height="350px">
       <v-card>
         <v-toolbar dark app color="accent">
@@ -31,7 +31,14 @@
                 ></v-text-field>
               </v-col>
               <v-col v-if="isOverDate" cols="12">
-                <v-datetime-picker
+                <CustomDate
+                  v-model="StartDate"
+                  label="Start Date*"
+                  :field="startDateField"
+                  :rules="startDateRule"
+                  type="date"
+                />
+                <!-- <v-datetime-picker
                   v-model="StartDate"
                   label="Start Date*"
                   :text-field-props="startDateRule"
@@ -42,10 +49,16 @@
                   <template slot="timeIcon">
                     <v-icon>fas fa-clock</v-icon>
                   </template>
-                </v-datetime-picker>
+                </v-datetime-picker> -->
               </v-col>
               <v-col v-if="isOverDate" cols="12">
-                <v-datetime-picker
+                <CustomDate
+                  v-model="EndDate"
+                  label="End Date*"
+                  :field="endDateRule"
+                  type="date"
+                />
+                <!-- <v-datetime-picker
                   v-model="EndDate"
                   label="End Date*"
                   :text-field-props="endDateRule"
@@ -56,7 +69,7 @@
                   <template slot="timeIcon">
                     <v-icon>fas fa-clock</v-icon>
                   </template>
-                </v-datetime-picker>
+                </v-datetime-picker> -->
               </v-col>
               <div class="col-md-12">
                 <v-flex class="d-flex justify-center align-center pb-2">
@@ -386,40 +399,49 @@
                 your event, add details that highlights why someone should
                 attend it.
               </p>
-              <v-row>
-                <v-col cols="12">
-                  <v-text-field
-                    v-model="eventData.Title"
-                    :rules="requiredRules"
-                    label="Event Title*"
-                    required
-                    outlined
-                    @change="changeEventName($event)"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12">
-                  <RichText
-                    v-model="eventData.Description"
-                    class="mb-3"
-                    label="Description"
-                  ></RichText> </v-col
-                ><br />
-                <v-col cols="12" sm="6" md="6">
-                  <v-text-field
-                    v-model="eventData.UniqLink"
-                    label="Event Link*"
-                    hint="https://bitpod-event.test.bitpod.io/e/"
-                    persistent-hint
-                    outlined
-                    required
-                    :error-messages="uniqueLinkValidationMsg"
-                    @keyup="changeUniqueLink($event)"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
+              <v-form
+                ref="validBasicInfoForm"
+                v-model="validBasicInfo"
+                :lazy-validation="lazy"
+              >
+                <v-row>
+                  <v-col cols="12">
+                    <v-text-field
+                      v-model="eventData.Title"
+                      :rules="requiredRules"
+                      label="Event Title*"
+                      required
+                      outlined
+                      @change="changeEventName($event)"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12">
+                    <RichText
+                      v-model="eventData.Description"
+                      class="mb-3"
+                      label="Description"
+                    ></RichText> </v-col
+                  ><br />
+                  <v-col cols="12" sm="6" md="6">
+                    <v-text-field
+                      v-model="eventData.UniqLink"
+                      label="Event Link*"
+                      hint="https://bitpod-event.test.bitpod.io/e/"
+                      persistent-hint
+                      :rules="requiredRules"
+                      outlined
+                      required
+                      :error-messages="uniqueLinkValidationMsg"
+                      @keyup="changeUniqueLink($event)"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+              </v-form>
             </v-card>
 
-            <v-btn color="primary" @click="next(2)">Next</v-btn>
+            <v-btn color="primary" :disabled="isNextDisabled()" @click="next(2)"
+              >Next</v-btn
+            >
           </v-stepper-content>
           <v-stepper-content step="2">
             <v-card flat>
@@ -570,7 +592,7 @@
                       </td>
                       <td class="pa-2 pb-0">
                         <Timezone
-                          v-model="Timezone"
+                          v-model="session.Timezone"
                           :rules="requiredRules"
                           :field="timezonefield"
                         ></Timezone>
@@ -608,7 +630,7 @@
                           outlined
                           value
                         ></v-text-field> -->
-                        <span>Ticket </span>
+                        <span>{{ customTicket }} </span>
                         <v-btn icon small @click="selectSessionTickets(k)">
                           <v-icon left>mdi-18px mdi-pencil</v-icon>
                         </v-btn>
@@ -710,7 +732,7 @@
         </v-stepper-items>
       </v-stepper>
     </div>
-  </v-form>
+  </div>
 </template>
 <script>
 import gql from 'graphql-tag'
@@ -726,7 +748,7 @@ import eventCount from '~/config/apps/event/gql/eventCount.gql'
 import organizationInfo from '~/config/apps/event/gql/organizationInfo.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 // import Checkbox from '~/components/common/form/checkbox.vue'
-// import CustomDate from '~/components/common/form/date.vue'
+import CustomDate from '~/components/common/form/date.vue'
 // import nuxtconfig from '~/nuxt.config'
 // function ObjectID5() {
 //       return (m = Math, d = Date, h = 16, s = (s) => m.floor(s).toString(h)) =>
@@ -744,7 +766,7 @@ export default {
       process.client ? import('~/components/common/form/richtext.vue') : false,
     Lookup,
     Timezone,
-    // CustomDate
+    CustomDate,
     VueGoogleAutocomplete: () => import('vue-google-autocomplete'),
   },
   props: {
@@ -754,6 +776,7 @@ export default {
     // const currentDatetime = new Date(new Date().setSeconds(0))
     // const tid = this.ObjectID5()
     return {
+      isUniqLinkValid: false,
       valid: true,
       validDateRange: true,
       validPhone: true,
@@ -761,9 +784,12 @@ export default {
       validCustomLocation: true,
       validPersonMeeting: true,
       validType: true,
+      validBasicInfo: true,
       lazy: false,
       locationMesssage: '',
       isLocationMessage: false,
+      customTicket: 'Ticket',
+      slotOptions: [],
       maxAllowRules: [
         (v) => {
           if (!isNaN(parseFloat(v)) && v >= 0) {
@@ -1091,36 +1117,53 @@ export default {
     }
   },
   computed: {
-    // personMeetingRules() {
-    //   return {
-    //     rules: [
-    //       (v) => {
-    //         return true
-    //         // return this.sessions[this.selectedSession].LocationId
-    //         //   ? 'Start Date should be less than Start Date'
-    //         //   : true
-    //       },
-    //     ],
-    //   }
-    // },
-    startDateRule() {
+    slotLookupOptions() {
+      const items = this.slotOptions
+      return {
+        caption: 'Slot Size*',
+        type: 'lookup',
+        items,
+        dataSource: {
+          items,
+          itemText: 'value',
+          itemValue: 'key',
+        },
+      }
+    },
+    startDateField() {
       return {
         appendIcon: 'fa-calendar',
         outlined: true,
-        rules: [
-          (v) => {
-            const startDate = new Date(v)
-            return startDate > this.EndDate
-              ? 'Start Date should be less than Start Date'
-              : true
-          },
-        ],
+        caption: 'Start Date',
+        type: 'date',
+        // rules: [
+        //   (v) => {
+        //     const startDate = new Date(v)
+        //     return startDate > this.EndDate
+        //       ? 'Start Date should be less than End Date'
+        //       : true
+        //   },
+        // ],
       }
+    },
+    startDateRule() {
+      return [
+        (v) => {
+          const startDate = new Date(v)
+          console.log('==startDate==', startDate)
+          console.log('==this.EndDate==', this.EndDate)
+          return startDate > new Date(this.EndDate)
+            ? 'Start Date should be less than End Date'
+            : true
+        },
+      ]
     },
     endDateRule() {
       return {
         appendIcon: 'fa-calendar',
         outlined: true,
+        caption: 'End Date',
+        type: 'date',
         rules: [
           (v) => {
             const endDate = new Date(v)
@@ -1131,6 +1174,17 @@ export default {
         ],
       }
     },
+    // endDateRule() {
+    //   return [
+    //       (v) => {
+    //         const endDate = new Date(v)
+    //         return this.StartDate > endDate
+    //           ? 'End Date should be greater than Start Date'
+    //           : true
+    //       },
+    //     ],
+    //   }
+    // },
     uniqueLinkValidationMsg() {
       const errorMessage = this.isInalidEventLink ? this.uniqueLinkMessage : ''
       return errorMessage
@@ -1190,6 +1244,9 @@ export default {
     },
   },
   methods: {
+    isNextDisabled() {
+      return this.isUniqLinkValid === false
+    },
     changePersonMeeting(locationId) {
       // debugger
     },
@@ -1399,7 +1456,7 @@ export default {
     },
     setSessionTicket() {
       this.isSessionTicket = false
-
+      this.customTicket = `Ticket ${this.SessionTicket.length}`
       this.sessions[this.selectedSession].SessionTicket = this.SessionTicket
     },
     setScheduleType(type) {
@@ -1581,12 +1638,14 @@ export default {
     },
     next(value) {
       const { Title, UniqLink } = this.eventData
-      // this.$refs.form.validate()
+
+      this.$refs.validBasicInfoForm.validate()
       if (
         value === 2 &&
         Title !== '' &&
         UniqLink !== '' &&
-        this.isInalidEventLink === false
+        this.isInalidEventLink === false &&
+        this.validBasicInfo
       ) {
         this.stepNumber = value
       } else if (value === 3) {
@@ -1596,7 +1655,7 @@ export default {
 
     saveRecord() {
       const { Code, Type } = this.tickets
-      this.$refs.form.validate()
+      // this.$refs.form.validate()
       if (Code !== '' && Type !== '') {
         // if (this.venueAddress.AddressLine !== '')
         //   this.eventData._VenueAddress = this.venueAddress
@@ -1605,7 +1664,7 @@ export default {
           return session.StartTime > session.EndTime
         })
         const isLocationTypeEmpty = this.sessions.map((session, index) => {
-          // return session.LocationType === ''          
+          // return session.LocationType === ''
           if (session.LocationType === '') {
             return true
           } else if (session.LocationType === 'In-person meeting') {
@@ -1804,7 +1863,10 @@ export default {
       if (result.data.Event.EventCount > 0) {
         this.isInalidEventLink = true
         this.uniqueLinkMessage = strings.UNIQUE_LINK_DUPLICATE
-      } else this.isInalidEventLink = false
+      } else {
+        this.isInalidEventLink = false
+        this.isUniqLinkValid = true
+      }
     },
     addTicketRow() {
       this.tickets.push({
@@ -1852,10 +1914,16 @@ export default {
           filters: {
             where: {},
           },
+          slotFilters: {
+            where: {
+              type: 'EventDuration',
+            },
+          },
         }
       },
       update(data) {
         const OrganizationInfo = formatGQLResult(data, 'OrganizationInfo')
+        this.slotOptions = formatGQLResult(data, 'GeneralConfiguration')
         this.eventData.Currency = OrganizationInfo[0].Currency
       },
       error(error) {
