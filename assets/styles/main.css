@@ -207,6 +207,12 @@ body {
   box-shadow: 0px 2px 10px 0 hsla(120, 4%, 84%, .64) inset;
   background-color: hsl(0, 0%, 100%) !important;
 }
+.boxview .v-data-table__wrapper {
+  overflow-x: hidden !important;
+}
+.boxview:hover .v-data-table__wrapper {
+  overflow-x: auto !important;
+}
 @media (max-width: 600px) {
   .slide-form,
   .slide-form-default {
