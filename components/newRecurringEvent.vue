@@ -55,6 +55,7 @@
                   v-model="EndDate"
                   label="End Date*"
                   :field="endDateRule"
+                  :rules="endDateRule"
                   type="date"
                 />
               </v-col>
@@ -480,13 +481,13 @@
           </div>
           <v-tabs v-model="tabs" height="36" class="mb-6 mt-2 v-event-icon">
             <v-tabs-slider></v-tabs-slider>
-            <v-tab href="#eventrec-tabs-3-1" class="px-0 mr-4">
+            <v-tab href="#tab-1" class="px-0 mr-4" @click="selectTab(1)">
               <v-icon left>fa-info-circle</v-icon><span>Basic Info</span>
             </v-tab>
-            <v-tab href="#eventrec-tabs-3-2" class="px-0 mr-4">
+            <v-tab href="#tab-2" class="px-0 mr-4" :disabled="!validTab1()" @click="selectTab(2)">
               <v-icon left>fa-ticket</v-icon><span>Tickets</span>
             </v-tab>
-            <v-tab href="#eventrec-tabs-3-3" class="px-0 mr-4">
+            <v-tab href="#tab-3" class="px-0 mr-4" :disabled="!validTab1()" @click="selectTab(3)">
               <v-icon left>fa-history</v-icon><span>Recurring Session</span>
             </v-tab>
           </v-tabs>
@@ -495,50 +496,56 @@
           class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0 event-inner"
         >
           <v-tabs-items v-model="tabs">
-            <v-tab-item v-for="i in 1" :key="i" :value="'eventrec-tabs-3-1'">
+            <v-tab-item :value="'tab-1'" >
               <v-card flat>
                 <p>
                   Enter event name and details to help your audience learn about
                   your event, add details that highlights why someone should
                   attend it.
                 </p>
-                <v-row>
-                  <v-col cols="12" class="pb-0">
-                    <v-text-field
-                      v-model="eventData.Title"
-                      :rules="requiredRules"
-                      label="Event Title*"
-                      required
-                      dense
-                      outlined
-                      @change="changeEventName($event)"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col cols="12" class="pb-4 pt-2">
-                    <RichText
-                      v-model="eventData.Description"
-                      class="mb-3"
-                      label="Description"
-                    ></RichText>
-                  </v-col>
-                  <v-col cols="12" sm="6" md="6" class="pb-0">
-                    <v-text-field
-                      v-model="eventData.UniqLink"
-                      label="Event Link*"
-                      hint="https://bitpod-event.test.bitpod.io/e/"
-                      persistent-hint
-                      outlined
-                      dense
-                      required
-                      :error-messages="uniqueLinkValidationMsg"
-                      @keyup="changeUniqueLink($event)"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
+                <v-form
+                  ref="validBasicInfoForm"
+                  v-model="validBasicInfo"
+                  :lazy-validation="lazy"
+                > 
+                  <v-row>
+                    <v-col cols="12" class="pb-0">
+                      <v-text-field
+                        v-model="eventData.Title"
+                        :rules="requiredRules"
+                        label="Event Title*"
+                        required
+                        dense
+                        outlined
+                        @change="changeEventName($event)"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" class="pb-4 pt-2">
+                      <RichText
+                        v-model="eventData.Description"
+                        class="mb-3"
+                        label="Description"
+                      ></RichText>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="6" class="pb-0">
+                      <v-text-field
+                        v-model="eventData.UniqLink"
+                        label="Event Link*"
+                        hint="https://bitpod-event.test.bitpod.io/e/"
+                        persistent-hint
+                        outlined
+                        dense
+                        required
+                        :error-messages="uniqueLinkValidationMsg"
+                        @keyup="changeUniqueLink($event)"
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-form>
               </v-card>
             </v-tab-item>
 
-            <v-tab-item v-for="i in 1" :key="i" :value="'eventrec-tabs-3-2'">
+            <v-tab-item :value="'tab-2'" >
               <v-card flat>
                 <p>
                   Setup event tickets and price, you can also set tickets
@@ -607,8 +614,13 @@
               </v-card>
             </v-tab-item>
 
-            <v-tab-item v-for="i in 1" :key="i" :value="'eventrec-tabs-3-3'">
+            <v-tab-item :value="'tab-3'" >
               <v-card v-if="isSession" flat>
+                <v-form
+                      ref="validTicketsForm"
+                      v-model="validTickets"
+                      :lazy-validation="lazy"
+                    > 
                 <p>
                   Setup event recurrence, sessions availability to help your
                   attendees book a time slot.
@@ -658,6 +670,7 @@
                         <th class="text-left"></th>
                       </tr>
                     </thead>
+                    
                     <tbody>
                       <tr v-for="(session, k) in sessions" :key="k">
                         <td class="pa-2 pb-0 pl-0">
@@ -681,11 +694,21 @@
                           />
                         </td>
                         <td class="pa-2 pb-0">
-                          <Lookup
+                          <!-- <Lookup
                             v-model="session.Duration"
-                            :field="slotSizeProps"
+                            :field="slotLookupOptions"
                             :on-change="changeDuration(k)"
-                          />
+                          /> -->
+                          <v-autocomplete
+                            v-model="session.Duration"
+                            :items="slotLookupOptions"
+                            item-text="value"
+                            item-value="key"
+                            label="Slot Size"
+                            outlined
+                            dense
+                            @change="changeDuration(k)"
+                          ></v-autocomplete>
                         </td>
                         <td class="pa-2 pb-0">
                           <Timezone
@@ -695,7 +718,11 @@
                           ></Timezone>
                         </td>
                         <td class="pa-2 pb-0">
-                          <Lookup
+                          <div v-if="showLocation" >
+                            {{selectedLocation}}
+                            <v-icon @click="closeShowLocation">mdi-close</v-icon>
+                          </div>
+                          <Lookup v-else
                             v-model="session.LocationType"
                             :field="locationTypeProps"
                             :rules="requiredRules"
@@ -727,15 +754,17 @@
                         </td>
                       </tr>
                     </tbody>
+                    
                   </template>
                 </v-simple-table>
-                <v-btn color="primary" @click="stepNumber = 2">Prev</v-btn>
+                <!-- <v-btn color="primary" @click="stepNumber = 2">Prev</v-btn>
                 <v-btn
                   color="primary"
                   :disabled="isSaveButtonDisabled"
                   @click="saveRecord"
                   >Save</v-btn
-                >
+                > -->
+                </v-form>
               </v-card>
               <v-card
                 v-else
@@ -824,14 +853,14 @@
         <v-card-actions
           class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
         >
-          <v-btn depressed color="grey lighten-2" @click="next(2)">Prev</v-btn>
-          <v-btn depressed color="primary" @click="next(2)">Next</v-btn>
+          <v-btn depressed color="grey lighten-2" @click="prev()" v-if="currentTab > 1">Prev</v-btn>
+          <v-btn depressed color="primary" @click="next()" v-if="currentTab < 3">Next</v-btn>
           <v-btn
             depressed
             color="primary"
             :disabled="isSaveButtonDisabled"
             @click="saveRecord"
-            >Save</v-btn
+            v-if="currentTab > 2">Save</v-btn
           >
         </v-card-actions>
       </v-card>
@@ -851,6 +880,7 @@ import Timezone from '~/components/common/form/timezone'
 import eventCount from '~/config/apps/event/gql/eventCount.gql'
 import organizationInfo from '~/config/apps/event/gql/organizationInfo.gql'
 import { formatGQLResult } from '~/utility/gql.js'
+import { getIdFromAtob } from '~/utility'
 // import Checkbox from '~/components/common/form/checkbox.vue'
 import CustomDate from '~/components/common/form/date.vue'
 // import nuxtconfig from '~/nuxt.config'
@@ -880,9 +910,12 @@ export default {
     // const currentDatetime = new Date(new Date().setSeconds(0))
     // const tid = this.ObjectID5()
     return {
+      showLocation: false,
+      selectedLocation: '',
       isUniqLinkValid: false,
       valid: true,
       tabs: null,
+      currentTab: 1,
       validDateRange: true,
       validPhone: true,
       validOnlineMeeting: true,
@@ -890,11 +923,13 @@ export default {
       validPersonMeeting: true,
       validType: true,
       validBasicInfo: true,
+      validTickets: true,
       lazy: false,
       locationMesssage: '',
       isLocationMessage: false,
-      customTicket: 'Ticket',
+      customTicket: '0 Ticket',
       slotOptions: [],
+      inPersonMeetingOptions: [],
       maxAllowRules: [
         (v) => {
           if (!isNaN(parseFloat(v)) && v >= 0) {
@@ -941,7 +976,7 @@ export default {
       personMeetingRules: [
         (v) => {
           if (v.length > 0) {
-            console.log('==selected session==', this.selectedSession)
+            // console.log('==selected session==', this.selectedSession)
             return true
           }
           return 'Please select location!'
@@ -962,7 +997,8 @@ export default {
       Duration: 0,
       Phone: '',
       WebinarLink: '',
-      InPersonMeeting: '',
+      // InPersonMeeting: '',
+      InPersonMeeting: [],
       Type: 'Personal',
       MaxAllow: 5,
       isGroup: false,
@@ -1057,6 +1093,7 @@ export default {
       },
       locationTypeProps: {
         type: 'lookup',
+        caption: 'Location',
         dataSource: {
           query: registrationStatusOptions,
           itemText: 'value',
@@ -1068,18 +1105,18 @@ export default {
           },
         },
       },
-      inPersonMeetingProps: {
-        type: 'lookup',
-        multiple: true,
-        dataSource: {
-          query: location,
-          itemText: 'Name',
-          itemValue: 'id',
-          filter(data) {
-            return {}
-          },
-        },
-      },
+      // inPersonMeetingProps: {
+      //   type: 'lookup',
+      //   multiple: true,
+      //   dataSource: {
+      //     query: location,
+      //     itemText: 'Name',
+      //     itemValue: 'id',
+      //     filter(data) {
+      //       return {}
+      //     },
+      //   },
+      // },
       typeProps: {
         type: 'lookup',
         dataSource: {
@@ -1215,13 +1252,18 @@ export default {
   computed: {
     slotLookupOptions() {
       const items = this.slotOptions
+      return items
+    },
+    inPersonMeetingProps() {
+      const items = this.inPersonMeetingOptions
       return {
         type: 'lookup',
+        multiple: true,
         items,
         dataSource: {
           items,
-          itemText: 'value',
-          itemValue: 'key',
+          itemText: 'Name',
+          itemValue: 'id',
         },
       }
     },
@@ -1231,14 +1273,6 @@ export default {
         outlined: true,
         caption: 'Start Date',
         type: 'date',
-        // rules: [
-        //   (v) => {
-        //     const startDate = new Date(v)
-        //     return startDate > this.EndDate
-        //       ? 'Start Date should be less than End Date'
-        //       : true
-        //   },
-        // ],
       }
     },
     startDateRule() {
@@ -1253,21 +1287,23 @@ export default {
         },
       ]
     },
-    endDateRule() {
+    endDateField() {
       return {
         appendIcon: 'fa-calendar',
         outlined: true,
         caption: 'End Date',
         type: 'date',
-        rules: [
-          (v) => {
+      }
+    },
+    endDateRule() {
+      return [
+        (v) => {
             const endDate = new Date(v)
-            return this.StartDate > endDate
+            return new Date(this.StartDate) > endDate
               ? 'End Date should be greater than Start Date'
               : true
           },
-        ],
-      }
+        ]
     },
     // endDateRule() {
     //   return [
@@ -1300,44 +1336,33 @@ export default {
       return {
         appendIcon: 'fa-calendar',
         outlined: true,
-        // rules: [
-        //   (v) => {
-        //     const StartDate = v && new Date(v)
-        //     const { EndDate } = this.eventData
-        //     let startDateMessage = ''
-        //     if (!StartDate) startDateMessage = strings.FIELD_REQUIRED
-        //     else if (StartDate && EndDate && StartDate > EndDate)
-        //       startDateMessage = strings.EVENT_START_END_DATE
-        //     else if (StartDate < new Date())
-        //       startDateMessage = strings.EVENT_START_DATE
-        //     else startDateMessage = ''
-        //     return startDateMessage || true
-        //   },
-        // ],
       }
     },
     eventEndDateProps() {
       return {
         appendIcon: 'fa-calendar',
         outlined: true,
-        // rules: [
-        //   (v) => {
-        //     const EndDate = v && new Date(v)
-        //     const { StartDate } = this.eventData
-        //     let endDateMessage = ''
-        //     if (!EndDate) endDateMessage = strings.FIELD_REQUIRED
-        //     else if (StartDate && EndDate && StartDate > EndDate)
-        //       endDateMessage = strings.EVENT_START_END_DATE
-        //     else if (EndDate < new Date())
-        //       endDateMessage = strings.EVENT_END_DATE
-        //     else endDateMessage = ''
-        //     return endDateMessage || true
-        //   },
-        // ],
       }
     },
   },
   methods: {
+    selectTab(tabNumber){
+      this.currentTab = tabNumber
+    },
+
+    // slotLookupOptions() {
+    //   const items = this.slotOptions
+    //   debugger
+    //   return {
+    //     type: 'lookup',
+    //     items,
+    //     dataSource: {
+    //       items,
+    //       itemText: 'value',
+    //       itemValue: 'key',
+    //     },
+    //   }
+    // },
     isNextDisabled() {
       return this.isUniqLinkValid === false
     },
@@ -1475,15 +1500,22 @@ export default {
         if (this.sessions[index].LocationType === 'Zoom') {
           this.isZoom = true
           this.isGoogleMeet = false
+          this.isLocationMessage = false
         }
         if (this.sessions[index].LocationType === 'Google Meet') {
           this.isGoogleMeet = true
           this.isZoom = false
+          this.isLocationMessage = false
+        }
+        if (this.sessions[index].LocationType === 'Ask invitee') {
+          this.isGoogleMeet = false
+          this.isZoom = false
+          this.isLocationMessage = false
         }
       }
     },
     changeDuration(index) {
-      return () => {
+      // return () => {
         this.selectedSession = index
         console.log(
           '==this.sessions[index].Duration==',
@@ -1492,25 +1524,41 @@ export default {
         if (this.sessions[index].Duration === '0') {
           this.isDuration = true
         }
-      }
+      // }
     },
     setDuration() {
       this.isDuration = false
       this.sessions[this.selectedSession].Duration = this.Duration
+      const filterOption = this.slotOptions.filter(({key}) => key === this.duration  )
+      if(!filterOption.length){
+        const newSlotOption = [...this.slotOptions,{key: this.Duration, value: `${this.Duration} min`}]
+        this.slotOptions = newSlotOption
+      }
       console.log('==sessions==', JSON.stringify(this.sessions))
     },
     setPhone() {
       this.$refs.phoneform.validate()
       if (this.validPhone) {
+        this.isLocationMessage = false
         this.isPhone = false
+        this.showLocation = true
+        this.selectedLocation = `Phone ${this.Phone}`
         this.sessions[this.selectedSession].Phone = this.Phone
         console.log('==sessions==', JSON.stringify(this.sessions))
       }
+    },
+    closeShowLocation(){
+      this.showLocation = false
+      
+      this.sessions[this.selectedSession].LocationType = ''
     },
     setOnlineMeeting() {
       this.$refs.meetingform.validate()
       if (this.validOnlineMeeting) {
         this.isOnlineMeeting = false
+        this.showLocation = true
+        this.isLocationMessage = false
+        this.selectedLocation = 'Online meeting'
         this.sessions[this.selectedSession].WebinarLink = this.WebinarLink
         console.log('==sessions==', JSON.stringify(this.sessions))
       }
@@ -1518,6 +1566,7 @@ export default {
     setCustomLocation() {
       if (this.venueAddress && this.venueAddress.AddressLine !== '') {
         this.isCustom = false
+        this.isLocationMessage = false
         console.log('==sessions==', JSON.stringify(this.sessions))
         this.sessions[this.selectedSession]._CurrentAddress = this.venueAddress
       }
@@ -1526,6 +1575,9 @@ export default {
       this.$refs.personmeetingform.validate()
       if (this.validPersonMeeting) {
         this.isPersonMeeting = false
+        this.showLocation = true
+        this.isLocationMessage = false
+        this.selectedLocation = `${this.InPersonMeeting}`
         this.sessions[this.selectedSession].LocationId = this.InPersonMeeting
         console.log('==sessions==', JSON.stringify(this.sessions))
       }
@@ -1542,6 +1594,9 @@ export default {
         if (this.Type === 'Group') {
           this.sessions[this.selectedSession].MaxAllow = parseInt(this.MaxAllow)
         }
+        else{
+          this.MaxAllow = 5
+        }
       }
     },
     selectSessionTickets(index) {
@@ -1550,7 +1605,7 @@ export default {
     },
     setSessionTicket() {
       this.isSessionTicket = false
-      this.customTicket = `Ticket ${this.SessionTicket.length}`
+      this.customTicket = `${this.SessionTicket.length} Ticket`
       this.sessions[this.selectedSession].SessionTicket = this.SessionTicket
     },
     setScheduleType(type) {
@@ -1658,27 +1713,14 @@ export default {
     },
     changeSchedule(value) {
       this.setScheduleType(value)
-      // if (value === 'Over a date range') {
-      //   this.isOverDate = true
-      //   this.isOverPeriod = false
-      //   this.isIndefinitely = false
-      // } else if (value === 'Over a period of rolling days') {
-      //   this.isOverDate = false
-      //   this.isOverPeriod = true
-      //   this.isIndefinitely = false
-      // } else if (value === 'Indefinitely') {
-      //   this.isOverDate = false
-      //   this.isOverPeriod = false
-      //   this.isIndefinitely = true
-      // }
     },
     close() {
       this.onFormClose()
-      this.stepNumber = 1
+      this.tabs = 'tab-1'
     },
     closeForm() {
       this.onFormClose()
-      this.stepNumber = 1
+      this.tabs = 'tab-1'
       this.$router.push('/apps/event/event/recurring/' + this.eventId)
     },
 
@@ -1730,26 +1772,55 @@ export default {
     editSession(index) {
       this.isDateRange = true
     },
-    next(value) {
+    validTab1(){
       const { Title, UniqLink } = this.eventData
-
-      this.$refs.validBasicInfoForm.validate()
       if (
-        value === 2 &&
         Title !== '' &&
         UniqLink !== '' &&
         this.isInalidEventLink === false &&
         this.validBasicInfo
       ) {
-        this.stepNumber = value
-      } else if (value === 3) {
-        this.stepNumber = value
+        return true
+      }
+      else{
+        return false
+      }
+    },
+    prev(){
+      this.currentTab = parseInt(this.tabs.split("-")[1])
+      this.currentTab -= 1
+      let tabValue = `tab-${this.currentTab}`
+      this.tabs = tabValue
+    },
+    setNextTab(){
+      this.currentTab = parseInt(this.tabs.split("-")[1])
+      this.currentTab += 1
+      let tabValue = `tab-${this.currentTab}`
+      this.tabs = tabValue
+    },
+    next() {
+      const { Title, UniqLink } = this.eventData
+
+      this.$refs.validBasicInfoForm.validate()
+      if (
+        this.currentTab === 1 &&
+        Title !== '' &&
+        UniqLink !== '' &&
+        this.isInalidEventLink === false &&
+        this.validBasicInfo
+      ) {
+        // this.stepNumber = value
+        this.setNextTab()
+      } else if (this.currentTab === 2) {
+        // this.stepNumber = value
+        this.currentTab = 3
+        this.setNextTab()
       }
     },
 
     saveRecord() {
       const { Code, Type } = this.tickets
-      // this.$refs.form.validate()
+      this.$refs.validTicketsForm.validate()
       if (Code !== '' && Type !== '') {
         // if (this.venueAddress.AddressLine !== '')
         //   this.eventData._VenueAddress = this.venueAddress
@@ -1759,16 +1830,12 @@ export default {
         })
         const isLocationTypeEmpty = this.sessions.map((session, index) => {
           // return session.LocationType === ''
-          if (session.LocationType === '') {
-            return true
-          } else if (session.LocationType === 'In-person meeting') {
+          if (session.LocationType === 'In-person meeting') {
             if (session.LocationId.length === 0) {
-              this.locationMessage = 'Selected location should not be blank'
               return true
             }
           } else if (session.LocationType === 'Phone call') {
             if (session.Phone === undefined || session.Phone === '') {
-              this.locationMessage = 'Selected location should not be blank'
               return true
             }
           } else if (session.LocationType === 'Online meeting') {
@@ -1776,7 +1843,6 @@ export default {
               session.WebinarLink === undefined ||
               session.WebinarLink === ''
             ) {
-              this.locationMessage = 'Selected location should not be blank'
               return true
             }
           } else if (session.LocationType === 'Custom') {
@@ -1784,7 +1850,6 @@ export default {
               session.AddressLine === undefined ||
               session.AddressLine === ''
             ) {
-              this.locationMessage = 'Selected location should not be blank'
               return true
             }
           }
@@ -1794,6 +1859,9 @@ export default {
         this.isLocationMessage = !!isLocationTypeEmpty.includes(true)
         console.log('====isLocationMessage=', this.isLocationMessage)
         console.log('====locationmessage=', this.locationMesssage)
+        if(this.isLocationMessage){
+          this.locationMessage = 'Selected location should not be blank'
+        }
         const tempData = []
         this.sessions.forEach((row) => {
           let startTime = row.StartTime.replace(':', '.')
@@ -2013,11 +2081,16 @@ export default {
               type: 'EventDuration',
             },
           },
+          inPersonMeetingFilters: {
+          },
         }
       },
       update(data) {
         const OrganizationInfo = formatGQLResult(data, 'OrganizationInfo')
         this.slotOptions = formatGQLResult(data, 'GeneralConfiguration')
+        const locationResult = formatGQLResult(data, 'Location')
+        this.inPersonMeetingOptions = locationResult.map(({id,...rest}) => ({id: getIdFromAtob(id),...rest}))
+        // this.inPersonMeetingOptions
         this.eventData.Currency = OrganizationInfo[0].Currency
       },
       error(error) {
