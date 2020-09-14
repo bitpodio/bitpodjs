@@ -2824,54 +2824,13 @@ export default {
   },
 
   Registrations: {
-    child: {},
     dataSource: {
-      FormID: 'EventsAdvSearch',
-      'Key Field': '',
-      'Parent key field': '',
       Type: 'List',
       URL: 'Registration',
     },
     general: {
       caption: 'Registrations',
       name: 'Registration',
-    },
-    permissions: {
-      Groups: '',
-    },
-    ui: {
-      MobileViewTemplate: {
-        isActive: true,
-        templateName: 'Event_Registation_Mobile',
-      },
-      TemplateActions: {},
-      Checkbox: 'True',
-      'Card View Template': 'VisitingCard0',
-      Width: '50%',
-      Height: '',
-      TemplateHelpers: {},
-      'Display Order': '',
-      'Map View Template': '',
-      'List View Template': '',
-      'Detail View': 'tab',
-      Column: '',
-      'Tile View': 'now',
-      'App Type': 'View',
-      Templates: {
-        VisitingCard0: 'Registrations_Card_View',
-        Status:
-          '<div title="{{Status}}"><style>.reg-status {\n                  font-size: 10px;\n                            display: inline-block;\n                            color: #fff;\n                            margin-right: 5px;\n                            margin-bottom: 0px;\n                            padding: 3px 10px !important;\n                            border-radius: 20px !important;\n                            text-transform: capitalize;\n                        }\n                      .reg-success {\n                                      background-color: #0cb14b;\n                    }\n                      .reg-fail {\n                                      background-color: #f25955;\n                    }\n                      .reg-refund {\n                                      background-color: #3fa5ff;\n                    }\n                    .reg-parefund {\n                                      background-color: #b9b9b9;\n                    }\n                      .reg-parrefund {\n                                      background-color: #f4b400;\n                    }</style><div class="reg-status {{getStatusColor Status}}"> {{getCapitalResult Status}} </div></div>',
-        SyncStatus:
-          '<div><i class="{{ShowSyncField SFRegistrationId}}" style="{{getColor SFRegistrationId}}" onclick="invokeAction(\'changeSyncStatus\',this)" node={{node.id}}> </i></div>',
-        CheckIn:
-          '<style>\n    .checkin-btn {\ncolor: #fff;\npadding: 3px 10px !important;\n    background-color: #3fa5ff !important;;\nfont-size: 12px;\nborder-radius: 2px;\ncursor: pointer;\n}\n.check-label {\n        color: #1a73e8;\nfont-size: 13px;\n}\n</style>\n{{#ifStatus Status}}\n<div title="CheckIn">\n    {{#if CheckIn}}<span class="check-label">\n        <i class="fa fa-check" style="color: #1a73e8;margin-top:3px;" node={{node.id}}> </i>Checked in </span>\n    <span class="check-label">{{date_diff CheckIn}}</span>\n    {{else}}\n    <span onclick="invokeAction(\'CheckIn\',this)" class="checkin-btn">Check in</span>\n    {{/if}}\n</div>\n{{else}} <div style="height: 100%;" title=""></div>{{/ifStatus}}',
-        FullName:
-          '<div onclick="invokeAction(\'goToDetails\', this)" data-action="edit" data-bind="ID={{id}}" style="cursor: pointer;color: #1a73e8;"> {{FullName}} </div>',
-      },
-      decorator: {
-        Attachment: '',
-        LinkedinURL: '',
-      },
     },
     views: {
       Registrations: {
@@ -3477,7 +3436,7 @@ export default {
           },
         },
         template: {
-          name: 'registration-grid',
+          name: 'registrationSession-grid',
           context: {
             basePath: '/registration',
           },
@@ -3502,73 +3461,203 @@ export default {
         },
         hidden: true,
         fields: {
-          FullName: {
-            displayOrder: 2,
-            caption: 'Full Name',
+          FirstName: {
+            form: {
+              caption: 'First Name *',
+              displayOrder: 1,
+            },
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            cssClasses: 'col-6 col-md-6',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'First Name is required'
+              },
+            ],
+          },
+          LastName: {
+            form: {
+              caption: 'Last Name *',
+              displayOrder: 2,
+            },
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            cssClasses: 'col-6 col-md-6',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Last Name is required'
+              },
+            ],
+          },
+          Phone: {
+            form: {
+              caption: 'Phone *',
+              displayOrder: 3,
+            },
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            cssClasses: 'col-6 col-md-6',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Phone is required'
+              },
+              function (value, data) {
+                return /^[0-9]\d*$|^$/.test(value) || 'Number must be valid'
+              },
+            ],
           },
           Email: {
             displayOrder: 3,
             caption: 'Email',
             searchEnable: true,
             sortEnable: true,
-            columnWidth: '130px',
+            columnWidth: '150px',
             type: 'string',
+            form: {
+              caption: 'Email *',
+              displayOrder: 4,
+            },
+            cssClasses: 'col-6 col-md-6',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Email is required'
+              },
+              function (value, data) {
+                return /.+@.+\..+/.test(value) || 'E-mail must be valid'
+              },
+            ],
           },
-          CompanyName: {
-            displayOrder: 4,
-            caption: 'Organization',
+          '_CurrentAddress.AddressLine': {
+            form: {
+              caption: 'Address',
+              displayOrder: 5,
+            },
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            cssClasses: 'col-6 col-md-6',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
           },
-          TicketName: {
-            displayOrder: 5,
-            caption: 'Ticket',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '130px',
-            type: 'string',
-          },
-          TicketAmount: {
-            displayOrder: 6,
-            caption: 'Ticket Amount',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '130px',
-            type: 'string',
-          },
-          SeatNumber: {
-            displayOrder: 7,
-            caption: 'Seat Number',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '130px',
-            type: 'string',
-          },
-          CheckIn: {
-            displayOrder: 8,
-            caption: 'CheckIn',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '180px',
-            type: 'string',
-          },
-          createdDate: {
-            displayOrder: 9,
-            caption: 'Created Date ',
+          '_CurrentAddress.City': {
+            form: {
+              caption: 'City',
+              displayOrder: 6,
+            },
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
-            type: 'date',
+            type: 'string',
+            cssClasses: 'col-6 col-md-6',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+          },
+          '_CurrentAddress.State': {
+            form: {
+              caption: 'State',
+              displayOrder: 7,
+            },
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            cssClasses: 'col-6 col-md-6',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+          },
+          '_CurrentAddress.PostalCode': {
+            form: {
+              caption: 'Zip',
+              displayOrder: 8,
+            },
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            cssClasses: 'col-6 col-md-6',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+          },
+          '_CurrentAddress.Country': {
+            form: {
+              caption: 'Country',
+              displayOrder: 9,
+            },
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            cssClasses: 'col-6 col-md-6',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+          },
+          TicketId: {
+            form: {
+              caption: 'Tickets *',
+              displayOrder: 11,
+            },
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'lookup',
+            cssClasses: 'col-6 col-md-6',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Ticket should be selected'
+              },
+            ],
+            dataSource: {
+              query: eventTickets,
+              itemText: 'Code',
+              itemValue: 'id',
+              filter(ctx, data) {
+                debugger
+                return {
+                  Events: this.$route.params.id,
+                }
+              },
+            },
           },
         },
         template: {
-          name: 'registration-grid',
+          name: 'eventAttendees-grid',
           context: {
             basePath: '/registration',
           },
