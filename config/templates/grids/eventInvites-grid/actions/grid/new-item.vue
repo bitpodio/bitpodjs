@@ -287,7 +287,7 @@
                   >
                 </v-card>
                 <v-row class="px-6">
-                  <v-col cols="6">
+                  <v-col cols="6" class="contactsGrid">
                     <div class="borderBottomGrey pb-1">
                       <v-checkbox
                         v-model="selectAll"
@@ -298,7 +298,7 @@
                       <v-icon>mdi-contacts</v-icon>
                       <h4 class="d-inline font-weight-regular">Contacts</h4>
                     </div>
-                    <div class="borderRightGrey pr-3 mr-n3 contactsGrid">
+                    <div class="borderRightGrey pr-3 mr-n3">
                       <Grid
                         :value="selectedList"
                         view-name="InviteContacts"
