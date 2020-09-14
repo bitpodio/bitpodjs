@@ -5,6 +5,7 @@
       :content="content"
       :view-name="viewName"
       :on-new-item-save="onNewItemSave"
+      :refresh="refresh"
     />
   </div>
 </template>
@@ -13,7 +14,7 @@ import { templateLoaderMixin } from '~/utility'
 
 export default {
   mixins: [templateLoaderMixin],
-  props: ['content', 'viewName', 'onNewItemSave'],
+  props: ['content', 'viewName', 'onNewItemSave', 'refresh'],
   data() {
     return {
       newItem: null,
