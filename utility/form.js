@@ -21,9 +21,10 @@ export function formatTimezoneDateFieldsData(formData, fields) {
   }
   const selectedTimezone = formData[timezoneField.fieldName]
   const newFormData = {}
-  for (const field of fields) {
-    const fieldData = formData[field.fieldName]
-    newFormData[field.fieldName] = FORM_DATE_CONTROLS.includes(field.type)
+  for (const fieldName in formData) {
+    const fieldData = formData[fieldName]
+    const { field } = fields[fieldName]
+    newFormData[fieldName] = FORM_DATE_CONTROLS.includes(field.type)
       ? zonedTimeToUtc(fieldData, selectedTimezone)
       : fieldData
   }
