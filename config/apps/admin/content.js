@@ -88,6 +88,7 @@ export default {
           type: 'graphql',
           model: 'Location',
           filter(ctx) {
+            debugger
             return {
               where: {},
             }
@@ -865,7 +866,7 @@ export default {
           type: 'rest',
           getData: (ctx) =>
             getData(
-              `/Organizations/1/Users?filter={"include":{"rolemappings":"role"}}`
+              `/Organizations/${this.$store.state.currentOrg.id}/Users?filter={"include":{"rolemappings":"role"}}`
             ),
         },
         title: 'Users',
