@@ -568,7 +568,6 @@
                           <v-text-field
                             v-model="ticket.Code"
                             :rules="requiredRules"
-                            label="Title"
                             outlined
                             dense
                           ></v-text-field>
@@ -582,7 +581,6 @@
                         <td class="pa-2 pb-0">
                           <v-text-field
                             v-model="ticket.Amount"
-                            label="price"
                             outlined
                             dense
                             value
@@ -592,7 +590,6 @@
                         <td class="pa-2 pb-0">
                           <v-text-field
                             v-model="ticket.TicketCount"
-                            label="quantity"
                             outlined
                             dense
                             value
@@ -994,7 +991,6 @@ export default {
       requiredRules: [(v) => !!v || 'This field is required'],
       isMap: false,
       ticketTypeProps: {
-        caption: 'Type*',
         type: 'lookup',
         dataSource: {
           query: registrationStatusOptions,
@@ -1008,7 +1004,6 @@ export default {
         },
       },
       scheduledTypeProps: {
-        caption: 'Event Scheduled',
         type: 'lookup',
         dataSource: {
           query: registrationStatusOptions,
@@ -1022,7 +1017,6 @@ export default {
         },
       },
       startTimeProps: {
-        caption: 'Start Time*',
         type: 'lookup',
         dataSource: {
           query: registrationStatusOptions,
@@ -1036,7 +1030,6 @@ export default {
         },
       },
       endTimeProps: {
-        caption: 'End Time*',
         type: 'lookup',
         dataSource: {
           query: registrationStatusOptions,
@@ -1050,7 +1043,6 @@ export default {
         },
       },
       slotSizeProps: {
-        caption: 'Slot Size*',
         type: 'lookup',
         dataSource: {
           query: registrationStatusOptions,
@@ -1064,7 +1056,6 @@ export default {
         },
       },
       locationTypeProps: {
-        caption: 'Location*',
         type: 'lookup',
         dataSource: {
           query: registrationStatusOptions,
@@ -1078,7 +1069,6 @@ export default {
         },
       },
       inPersonMeetingProps: {
-        caption: 'Location',
         type: 'lookup',
         multiple: true,
         dataSource: {
@@ -1091,7 +1081,6 @@ export default {
         },
       },
       typeProps: {
-        caption: 'Type*',
         type: 'lookup',
         dataSource: {
           query: registrationStatusOptions,
@@ -1121,7 +1110,6 @@ export default {
       //   },
       // ],
       timezonefield: {
-        caption: 'Timezone*',
         type: 'Timezone',
         fieldName: 'Timezone',
       },
@@ -1228,7 +1216,6 @@ export default {
     slotLookupOptions() {
       const items = this.slotOptions
       return {
-        caption: 'Slot Size*',
         type: 'lookup',
         items,
         dataSource: {
@@ -1299,7 +1286,6 @@ export default {
     },
     sessionTicketProps() {
       return {
-        caption: 'tickets',
         type: 'lookup',
         multiple: true,
         items: this.tickets,
