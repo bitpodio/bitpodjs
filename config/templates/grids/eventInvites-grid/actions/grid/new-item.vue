@@ -298,7 +298,7 @@
                       <v-icon>mdi-contacts</v-icon>
                       <h4 class="d-inline font-weight-regular">Contacts</h4>
                     </div>
-                    <div class="borderRightGrey pr-3 mr-n3">
+                    <div class="borderRightGrey pr-3 mr-n3 contactsGrid">
                       <Grid
                         :value="selectedList"
                         view-name="InviteContacts"
@@ -314,7 +314,7 @@
                         Invitees List
                       </h4>
                     </div>
-                    <div style="max-height: 600px; overflow: auto;">
+                    <div class="contactsGrid">
                       <div
                         v-for="(item, key) in selectedList"
                         :key="item.Email"
@@ -420,13 +420,13 @@
                   </v-col>
                 </v-row>
                 <v-row v-else-if="scheduleInvite" class="ma-3">
-                  <v-col cols="5">
+                  <v-col cols="5" style="max-width: 300px;">
                     <v-card align="center" justify="center" class="pb-10">
                       <v-icon class="py-5" size="50">mdi-calendar</v-icon>
                       <h3 class="font-weight-regular ma-2">
                         Fixed Time and Time Zone
                       </h3>
-                      <h5 class="font-weight-regular ma-2">
+                      <h5 class="font-weight-regular ma-2 pb-2">
                         We'll launch your invite on the date and time you
                         specify.
                       </h5>
@@ -434,8 +434,7 @@
                         <v-datetime-picker
                           v-model="scheduledTime"
                           label="Schedule Date *"
-                          min="new Date().toISOString"
-                          timePickerFormat="24hr"
+                          :text-field-props="textFieldProps()"
                         >
                           <template slot="dateIcon">
                             <v-icon>fas fa-calendar</v-icon>
@@ -447,7 +446,9 @@
                       </div>
                       <v-btn
                         class="blue accent-4 white--text"
-                        :disabled="disableButton || !scheduledTime"
+                        :disabled="
+                          disableButton || !scheduledTime || !validDate
+                        "
                         @click="sendNow('Schedule')"
                         >Schedule</v-btn
                       >
@@ -494,7 +495,7 @@
                   </v-col>
                 </v-row>
                 <v-row v-else class="ma-1">
-                  <v-col class="pl-5" cols="4">
+                  <v-col class="pl-5 templateTile" cols="4">
                     <v-card height="250" align="center" justify="center">
                       <v-icon class="py-5" size="50">mdi-email-outline</v-icon>
                       <h3 class="font-weight-regular ma-2">Send Now</h3>
@@ -509,7 +510,7 @@
                       >
                     </v-card>
                   </v-col>
-                  <v-col cols="4">
+                  <v-col cols="4" class="templateTile">
                     <v-card height="250" align="center" justify="center">
                       <v-icon class="py-5" size="50">mdi-calendar</v-icon>
                       <h3 class="font-weight-regular ma-2">
@@ -526,7 +527,7 @@
                       >
                     </v-card>
                   </v-col>
-                  <v-col cols="4">
+                  <v-col cols="4" class="templateTile">
                     <v-card height="250" align="center" justify="center">
                       <v-icon class="py-5" size="50">mdi-floppy</v-icon>
                       <h3 class="font-weight-regular ma-2">
@@ -687,6 +688,7 @@ export default {
       scheduledTime: '',
       selectAll: false,
       priorInviteeSelected: [],
+      validDate: false,
     }
   },
   methods: {
@@ -698,6 +700,27 @@ export default {
     },
     updateList(data) {
       this.selectedList = data
+    },
+    textFieldProps() {
+      return {
+        appendIcon: 'fa-calendar',
+        outlined: true,
+        rules: [
+          (v) => {
+            const scheduledDate = v && new Date(v)
+            if (
+              scheduledDate &&
+              scheduledDate.getTime() < new Date().getTime()
+            ) {
+              this.validDate = false
+              return 'Invalid date'
+            } else {
+              this.validDate = true
+              return true
+            }
+          },
+        ],
+      }
     },
     resetForm() {
       this.dialog = false
@@ -875,7 +898,9 @@ export default {
         }
       },
       update(data) {
-        this.choosedTemplate = 1
+        if (this.curentTab === 1) {
+          this.choosedTemplate = 1
+        }
         this.templateItems = formatGQLResult(data, 'MarketingTemplate')
       },
       error(error) {
@@ -904,7 +929,9 @@ export default {
         }
       },
       update(data) {
-        this.choosedTemplate = 2
+        if (this.curentTab === 1) {
+          this.choosedTemplate = 2
+        }
         this.templateItems = formatGQLResult(data, 'MarketingTemplate')
       },
       error(error) {

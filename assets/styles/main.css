@@ -151,6 +151,11 @@ body {
   overflow: hidden auto;
   max-height: 390px !important;
 }
+.contactsGrid {
+  overflow: hidden auto;
+  max-height: 600px !important;
+  width: 100%;
+}
 .tempCard {
   transition: opacity .4s ease-in-out;
 }
