@@ -307,14 +307,14 @@
                       />
                     </div>
                   </v-col>
-                  <v-col cols="6">
+                  <v-col cols="6" class="contactsGrid">
                     <div class="borderBottomGrey pb-1">
                       <v-icon>mdi-email-outline</v-icon>
                       <h4 class="d-inline font-weight-regular">
                         Invitees List
                       </h4>
                     </div>
-                    <div class="contactsGrid">
+                    <div>
                       <div
                         v-for="(item, key) in selectedList"
                         :key="item.Email"
