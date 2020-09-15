@@ -15,10 +15,20 @@
           <v-tab href="#tab-1" class="px-0 mr-4" @click="selectTab(1)">
             <v-icon left>fa-info-circle</v-icon><span>Basic Info</span>
           </v-tab>
-          <v-tab href="#tab-2" class="px-0 mr-4" :disabled="!validTab1()" @click="selectTab(2)">
+          <v-tab
+            href="#tab-2"
+            class="px-0 mr-4"
+            :disabled="!validTab1()"
+            @click="selectTab(2)"
+          >
             <v-icon left>fa-map-marker</v-icon><span>Location</span>
           </v-tab>
-          <v-tab href="#tab-3" class="px-0 mr-4" :disabled="!validTab1() || !validTab2()" @click="selectTab(3)">
+          <v-tab
+            href="#tab-3"
+            class="px-0 mr-4"
+            :disabled="!validTab1() || !validTab2()"
+            @click="selectTab(3)"
+          >
             <v-icon left>fa-ticket</v-icon><span>Tickets</span>
           </v-tab>
         </v-tabs>
@@ -106,7 +116,7 @@
             </v-card>
           </v-tab-item>
 
-          <v-tab-item :value="'tab-2'" >
+          <v-tab-item :value="'tab-2'">
             <v-card flat>
               <v-row>
                 <v-col cols="12" sm="6" md="6" class="pl-0 pt-0 pb-0">
@@ -428,14 +438,23 @@
       <v-card-actions
         class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
       >
-        <v-btn depressed color="grey lighten-2" @click="prev()" v-if="currentTab > 1">Prev</v-btn>
-        <v-btn depressed color="primary" @click="next()" v-if="currentTab < 3">Next</v-btn>
         <v-btn
+          v-if="currentTab > 1"
+          depressed
+          color="grey lighten-2"
+          @click="prev()"
+          >Prev</v-btn
+        >
+        <v-btn v-if="currentTab < 3" depressed color="primary" @click="next()"
+          >Next</v-btn
+        >
+        <v-btn
+          v-if="currentTab > 2"
           depressed
           color="primary"
           :disabled="isSaveButtonDisabled"
           @click="saveRecord"
-          v-if="currentTab > 2">Save</v-btn
+          >Save</v-btn
         >
       </v-card-actions>
     </v-card>
@@ -632,7 +651,7 @@ export default {
     },
   },
   methods: {
-    selectTab(tabNumber){
+    selectTab(tabNumber) {
       this.currentTab = tabNumber
     },
     close() {
@@ -737,7 +756,7 @@ export default {
     returnToCenter() {
       this.$refs.gMap && this.$refs.gMap.map.setCenter(this.locations[0])
     },
-    validTab1(){
+    validTab1() {
       const {
         Title,
         StartDate,
@@ -747,7 +766,8 @@ export default {
         LocationType,
         WebinarLink,
       } = this.eventData
-      if( Title !== '' &&
+      if (
+        Title !== '' &&
         StartDate !== null &&
         EndDate !== null &&
         Timezone !== '' &&
@@ -755,41 +775,40 @@ export default {
         StartDate < EndDate &&
         StartDate >= new Date() &&
         EndDate >= new Date() &&
-        this.isInalidEventLink === false){
+        this.isInalidEventLink === false
+      ) {
         return true
-      }
-      else{
+      } else {
         return false
       }
     },
-    validTab2(){
-      const {
-        LocationType,
-        WebinarLink
-      } = this.eventData
+    validTab2() {
+      const { LocationType, WebinarLink } = this.eventData
       if (
-          (LocationType === 'Venue' && this.$refs['venueAddress.AddressLine'] &&
-            this.$refs['venueAddress.AddressLine'].$data.autocompleteText !==
-              '') ||
-          (LocationType === 'Online Event' && WebinarLink !== '')
-        ) {
-         return true
-        } else if (
-          this.$refs['venueAddress.AddressLine'] && this.$refs['venueAddress.AddressLine'].$data.autocompleteText === ''
-        ) {
-          return false
-        }
+        (LocationType === 'Venue' &&
+          this.$refs['venueAddress.AddressLine'] &&
+          this.$refs['venueAddress.AddressLine'].$data.autocompleteText !==
+            '') ||
+        (LocationType === 'Online Event' && WebinarLink !== '')
+      ) {
+        return true
+      } else if (
+        this.$refs['venueAddress.AddressLine'] &&
+        this.$refs['venueAddress.AddressLine'].$data.autocompleteText === ''
+      ) {
+        return false
+      }
     },
-    prev(value){
-      this.currentTab = parseInt(this.tabs.split("-")[1])
+    prev(value) {
+      this.currentTab = parseInt(this.tabs.split('-')[1])
       this.currentTab -= 1
-      let tabValue = `tab-${this.currentTab}`
+      const tabValue = `tab-${this.currentTab}`
       this.tabs = tabValue
     },
-    setNextTab(){
-      this.currentTab = parseInt(this.tabs.split("-")[1])
+    setNextTab() {
+      this.currentTab = parseInt(this.tabs.split('-')[1])
       this.currentTab += 1
-      let tabValue = `tab-${this.currentTab}`
+      const tabValue = `tab-${this.currentTab}`
       this.tabs = tabValue
     },
     next() {
