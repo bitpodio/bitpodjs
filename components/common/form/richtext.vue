@@ -76,7 +76,7 @@ export default {
                 Timezone: 'Event.Timezone',
                 Organizer: 'Event.Organizer',
                 Venue: 'Event.VenueName',
-                Adddress: 'Event._VenueAddress.AddressLine',
+                Address: 'Event._VenueAddress.AddressLine',
                 City: 'Event._VenueAddress.City',
                 State: 'Event._VenueAddress.State',
                 Country: 'Event._VenueAddress.Country',
