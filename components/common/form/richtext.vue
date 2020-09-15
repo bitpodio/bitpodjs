@@ -14,7 +14,7 @@ export default {
   components: {
     JoditEditor,
   },
-  props: ['value', 'field'],
+  props: ['value', 'field', 'isInvitee', 'showTemplateDropdown'],
   data() {
     return {
       content: this.value || '',
@@ -52,19 +52,7 @@ export default {
               'Contact First Name': 'Contact First Name',
               'Contact Last Name': 'Contact Last Name',
               'Contact Email': 'Contact Email',
-              'First Name': 'First Name',
-              'Last Name': 'Last Name',
-              'Registration Email': 'Registration Email',
-              'Registration Phone': 'Registration Phone',
-              'Registration Id': 'Registration Id',
-              'Ticket Quantity': 'Ticket Quantity',
-              'Full Name': 'Full Name',
               Register: 'Register',
-              'Session Location': 'Session Location',
-              'Session Booking Date': 'Session Booking Date',
-              'Session List': 'Session List',
-              'Attendee List': 'Attendee List',
-              'Payment Details': 'Payment Details',
               Logo: 'Logo',
             },
             exec: (editor, flag, currentOption) => {
@@ -176,6 +164,27 @@ export default {
     content() {
       this.$emit('input', this.content)
     },
+  },
+  mounted() {
+    if (!this.isInvitee) {
+      Object.assign(this._data.config.extraButtons[0].list, {
+        'Registration Email': 'Registration Email',
+        'Registration Phone': 'Registration Phone',
+        'Registration Id': 'Registration Id',
+        'Ticket Quantity': 'Ticket Quantity',
+        'Session Location': 'Session Location',
+        'Session Booking Date': 'Session Booking Date',
+        'Session List': 'Session List',
+        'Attendee List': 'Attendee List',
+        'Payment Details': 'Payment Details',
+        'First Name': 'First Name',
+        'Last Name': 'Last Name',
+        'Full Name': 'Full Name',
+      })
+    }
+    if (!this.showTemplateDropdown) {
+      delete this.config.extraButtons
+    }
   },
 }
 </script>

@@ -276,7 +276,12 @@
                     >Continue with default content or use editor to change
                     content.</v-card-text
                   >
-                  <RichText v-model="RTEValue" class="pl-3" />
+                  <RichText
+                    v-model="RTEValue"
+                    class="pl-3"
+                    :is-invitee="true"
+                    :show-template-dropdown="true"
+                  />
                 </v-card>
               </v-tab-item>
               <v-tab-item class="tabContent">
