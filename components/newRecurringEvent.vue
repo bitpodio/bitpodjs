@@ -689,11 +689,15 @@
                       <thead>
                         <tr>
                           <th class="text-left pl-0">Date Range*</th>
-                          <th class="text-left pl-2">Start Time*</th>
-                          <th class="text-left pl-2">End Time*</th>
-                          <th class="text-left pl-2">Slot Size*</th>
-                          <th class="text-left pl-2">Timezone</th>
-                          <th class="text-left pl-2">Location*</th>
+                          <th class="text-left pl-2 st-date">Start Time*</th>
+                          <th class="text-left pl-2 st-date">End Time*</th>
+                          <th class="text-left pl-2 st-date">Slot Size*</th>
+                          <th class="text-left pl-2 event-timezone">
+                            Timezone
+                          </th>
+                          <th class="text-left pl-2 event-timezone">
+                            Location*
+                          </th>
                           <th class="text-left pl-2">Type*</th>
                           <th class="text-left">Tickets</th>
                           <th class="text-left"></th>
@@ -705,17 +709,17 @@
                           <td class="pa-2 pb-0 pl-0">
                             <span>{{ session.CustomScheduledType }}</span>
                             <v-btn icon small @click="selectSchedule(k)">
-                              <v-icon left>mdi-18px mdi-pencil</v-icon>
+                              <v-icon>mdi-18px mdi-pencil</v-icon>
                             </v-btn>
                           </td>
-                          <td class="pa-2 pb-0">
+                          <td class="pa-2 pb-0 st-date">
                             <Lookup
                               v-model="session.StartTime"
                               :field="startTimeProps"
                               :rules="validStartTimeRule(k)"
                             />
                           </td>
-                          <td class="pa-2 pb-0">
+                          <td class="pa-2 pb-0 st-date">
                             <Lookup
                               v-model="session.EndTime"
                               :field="endTimeProps"
@@ -731,17 +735,18 @@
                               label="Slot Size"
                               outlined
                               dense
+                              class="st-date"
                               @change="changeDuration(k)"
                             ></v-autocomplete>
                           </td>
-                          <td class="pa-2 pb-0">
+                          <td class="pa-2 pb-0 event-timezone text-truncate">
                             <Timezone
                               v-model="session.Timezone"
                               :rules="requiredRules"
                               :field="timezonefield"
                             ></Timezone>
                           </td>
-                          <td class="pa-2 pb-0">
+                          <td class="pa-2 pb-0 event-timezone">
                             <div v-if="showLocation">
                               {{ selectedLocation }}
                               <v-icon @click="closeShowLocation"
@@ -765,13 +770,13 @@
                               >{{ session.Type }}
                             </span>
                             <v-btn icon small @click="selectType(k)">
-                              <v-icon left>mdi-18px mdi-pencil</v-icon>
+                              <v-icon>mdi-18px mdi-pencil</v-icon>
                             </v-btn>
                           </td>
                           <td class="pa-2 pb-0">
                             <span>{{ customTicket }} </span>
                             <v-btn icon small @click="selectSessionTickets(k)">
-                              <v-icon left>mdi-18px mdi-pencil</v-icon>
+                              <v-icon>mdi-18px mdi-pencil</v-icon>
                             </v-btn>
                           </td>
                           <td class="pa-2 pb-0">
@@ -2108,5 +2113,15 @@ export default {
 }
 .event-inner {
   min-height: 455px;
+}
+.st-date {
+  max-width: 125px !important;
+  min-width: 125px !important;
+  box-sizing: border-box;
+}
+.event-timezone {
+  max-width: 160px !important;
+  min-width: 160px !important;
+  box-sizing: border-box;
 }
 </style>
