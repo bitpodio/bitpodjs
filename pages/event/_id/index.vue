@@ -102,29 +102,37 @@
         </v-flex>
 
         <v-stepper
+          v-model="e1"
           alt-labels
           class="elevation-0 boxview"
           style="max-width: 800px;"
         >
           <v-stepper-header>
-            <v-stepper-step step="3" complete>Not Ready</v-stepper-step>
+            <v-stepper-step step="1" :complete="isReady"
+              >Not Ready</v-stepper-step
+            >
 
             <v-divider></v-divider>
 
             <v-stepper-step
-              step="4"
-              complete="true"
+              step="2"
+              :complete="isOpen"
               class="text-center align-center"
               >Open for regsitarion</v-stepper-step
             >
 
             <v-divider></v-divider>
 
-            <v-stepper-step step="4">Sold out</v-stepper-step>
+            <v-stepper-step step="3" :complete="isSoldOut"
+              >Sold out</v-stepper-step
+            >
 
             <v-divider></v-divider>
 
-            <v-stepper-step step="" class="text-center align-center"
+            <v-stepper-step
+              step="4"
+              :complete="isRegistrationClosed"
+              class="text-center align-center"
               >Registarion Closed</v-stepper-step
             >
           </v-stepper-header>
@@ -449,13 +457,62 @@ export default {
   },
   data() {
     return {
+      // ready: false,
+      // open: false,
+      // soldOut: false,
+      // closed: false,
+      e1: '',
       loading: 0,
       data: {
         event: {},
         badge: {},
         eventSummary: {},
+        status: {},
       },
     }
+  },
+  computed: {
+    isReady() {
+      const status = this.data.event.Status
+      console.log('status1', status)
+      if (
+        status === 'Not ready' ||
+        status === 'Open for registration' ||
+        status === 'Sold out' ||
+        status === 'Registration closed'
+      ) {
+        return true
+      } else {
+        return false
+      }
+    },
+    isOpen() {
+      const status = this.data.event.Status
+      console.log('status2', status)
+      if (
+        status === 'Open for registration' ||
+        status === 'Sold out' ||
+        status === 'Registration closed'
+      ) {
+        return true
+      } else return false
+    },
+
+    isSoldOut() {
+      const status = this.data.event.Status
+      console.log('status3', status)
+      if (status === 'Sold out' || status === 'Registration closed') {
+        return true
+      } else return false
+    },
+
+    isRegistrationClosed() {
+      const status = this.data.event.Status
+      console.log('status4', status)
+      if (status === 'Registration closed') {
+        return true
+      } else return false
+    },
   },
   methods: {
     formatDate(date) {
@@ -465,6 +522,7 @@ export default {
       return fieldValue || '-'
     },
   },
+
   apollo: {
     data: {
       query() {
