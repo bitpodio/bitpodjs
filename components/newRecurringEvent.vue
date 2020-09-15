@@ -266,8 +266,15 @@
                   placeholder="Address*"
                   :required="true"
                   @placechanged="getAddressData"
+                  @change="changeAddressData($event)"
                 ></vue-google-autocomplete>
               </no-ssr>
+              <div
+                v-show="addresslineMessage !== ''"
+                class="red--text pa-3 pt-0 body-1"
+              >
+                {{ addresslineMessage }}
+              </div>
             </v-col>
             <v-col cols="6" class="pb-0">
               <v-text-field
@@ -275,6 +282,7 @@
                 label="City"
                 outlined
                 dense
+                @change="changeAddress()"
               ></v-text-field>
             </v-col>
             <v-col cols="6" class="pb-0">
@@ -283,6 +291,7 @@
                 label="State"
                 outlined
                 dense
+                @change="changeAddress()"
               ></v-text-field>
             </v-col>
             <v-col cols="6" class="pb-0">
@@ -291,6 +300,7 @@
                 label="Country"
                 outlined
                 dense
+                @change="changeAddress()"
               ></v-text-field>
             </v-col>
             <v-col cols="6" class="pb-0">
@@ -299,6 +309,7 @@
                 label="Zip Code"
                 outlined
                 dense
+                @change="changeAddress()"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -591,6 +602,7 @@
                             :rules="requiredRules"
                             outlined
                             dense
+                            @change="changeTicketCode(k)"
                           ></v-text-field>
                         </td>
                         <td class="pa-2 pb-0">
@@ -606,6 +618,7 @@
                             dense
                             value
                             :disabled="isPriceDisabled(k)"
+                            @change="changeTicketAmount(k)"
                           ></v-text-field>
                         </td>
                         <td class="pa-2 pb-0">
@@ -1181,6 +1194,7 @@ export default {
           Type: 'Free',
           Amount: 0,
           TicketCount: 100,
+          CodeAmount: 'General admission 0',
         },
       ],
       sessions: [
@@ -1287,7 +1301,7 @@ export default {
         items: this.tickets,
         dataSource: {
           items: this.tickets,
-          itemText: 'Code',
+          itemText: 'CodeAmount',
           itemValue: 'id',
         },
       }
@@ -1306,6 +1320,14 @@ export default {
     },
   },
   methods: {
+    changeTicketCode(index) {
+      this.tickets[index].CodeAmount =
+        this.tickets[index].Code + ' ' + this.tickets[index].Amount
+    },
+    changeTicketAmount(index) {
+      this.tickets[index].CodeAmount =
+        this.tickets[index].Code + ' ' + this.tickets[index].Amount
+    },
     selectTab(tabNumber) {
       this.currentTab = tabNumber
     },
@@ -1377,7 +1399,21 @@ export default {
       }
       return false
     },
-
+    changeAddressData(value) {
+      this.addresslineMessage = value === '' ? strings.FIELD_REQUIRED : ''
+    },
+    changeAddress() {
+      const { City, State, Country, PostalCode } = this.venueAddress
+      if (this.$refs['venueAddress.AddressLine']) {
+        this.venueAddress.AddressLine = this.$refs[
+          'venueAddress.AddressLine'
+        ].autocompleteText
+      }
+      this.venueAddress.Country = Country || ''
+      this.venueAddress.City = City || ''
+      this.venueAddress.State = State || ''
+      this.venueAddress.PostalCode = PostalCode || ''
+    },
     getAddressData(addressData, placeResultData, id) {
       this.venueAddress.AddressLine =
         addressData.route ||
@@ -1399,19 +1435,34 @@ export default {
       return () => {
         this.selectedSession = index
         if (this.sessions[index].LocationType === 'Phone call') {
+          this.Phone = ''
           this.isPhone = true
           this.isZoom = false
           this.isGoogleMeet = false
+          this.selectedLocation = ''
         }
         if (this.sessions[index].LocationType === 'Online meeting') {
+          this.WebinarLink = ''
           this.isOnlineMeeting = true
           this.isZoom = false
           this.isGoogleMeet = false
+          this.selectedLocation = ''
         }
         if (this.sessions[index].LocationType === 'Custom') {
           this.isCustom = true
           this.isZoom = false
           this.isGoogleMeet = false
+          this.selectedLocation = ''
+          if (this.$refs['venueAddress.AddressLine']) {
+            this.$refs['venueAddress.AddressLine'].autocompleteText = ''
+            this.venueAddress.AddressLine = ''
+          }
+
+          this.venueAddress.City = ''
+          this.venueAddress.State = ''
+          this.venueAddress.Country = ''
+          this.venueAddress.PostalCode = ''
+          this.venueAddress.LatLng = {}
         }
         if (this.sessions[index].LocationType === 'In-person meeting') {
           this.isPersonMeeting = true
@@ -1461,8 +1512,11 @@ export default {
         this.isLocationMessage = false
         this.isPhone = false
         this.showLocation = true
+        this.selectedLocation = ''
         this.selectedLocation = `Phone ${this.Phone}`
         this.sessions[this.selectedSession].Phone = this.Phone
+      } else {
+        this.showLocation = false
       }
     },
     closeShowLocation() {
@@ -1476,15 +1530,41 @@ export default {
         this.isOnlineMeeting = false
         this.showLocation = true
         this.isLocationMessage = false
+        this.selectedLocation = ''
         this.selectedLocation = 'Online meeting'
         this.sessions[this.selectedSession].WebinarLink = this.WebinarLink
+      } else {
+        this.showLocation = false
       }
     },
     setCustomLocation() {
       if (this.venueAddress && this.venueAddress.AddressLine !== '') {
+        this.addresslineMessage = ''
         this.isCustom = false
         this.isLocationMessage = false
+        this.showLocation = true
+        this.selectedLocation = ''
+        this.selectedLocation =
+          this.venueAddress.AddressLine + ' ' + this.venueAddress.City
         this.sessions[this.selectedSession]._CurrentAddress = this.venueAddress
+      } else if (
+        this.$refs['venueAddress.AddressLine'] &&
+        this.$refs['venueAddress.AddressLine'].autocompleteText !== ''
+      ) {
+        this.venueAddress.AddressLine = this.$refs[
+          'venueAddress.AddressLine'
+        ].autocompleteText
+        this.addresslineMessage = ''
+        this.isCustom = false
+        this.isLocationMessage = false
+        this.showLocation = true
+        this.selectedLocation = ''
+        this.selectedLocation =
+          this.venueAddress.AddressLine + ' ' + this.venueAddress.City
+        this.sessions[this.selectedSession]._CurrentAddress = this.venueAddress
+      } else {
+        this.addresslineMessage = strings.FIELD_REQUIRED
+        this.showLocation = false
       }
     },
     setPersonMeeting() {
@@ -1493,6 +1573,7 @@ export default {
         this.isPersonMeeting = false
         this.showLocation = true
         this.isLocationMessage = false
+        this.selectedLocation = ''
         this.InPersonMeeting.forEach((recordId) => {
           this.inPersonMeetingOptions.forEach((option, i) => {
             if (option.id === recordId) {
@@ -1501,6 +1582,8 @@ export default {
           })
         })
         this.sessions[this.selectedSession].LocationId = this.InPersonMeeting
+      } else {
+        this.showLocation = false
       }
     },
     selectType(index) {
@@ -1583,7 +1666,13 @@ export default {
       })
     },
     setSchedule() {
-      if (this.validDateRange) {
+      this.$refs.form.validate()
+      if (
+        this.validDateRange ||
+        (this.ScheduledType === 'Over a date range' &&
+          this.StartDate !== null &&
+          this.EndDate !== null)
+      ) {
         this.isDateRange = false
         this.sessions[this.selectedSession].ScheduledType = this.ScheduledType
         this.sessions[this.selectedSession].RollingDays = this.RollingDays
@@ -1737,7 +1826,7 @@ export default {
     saveRecord() {
       const { Code, Type } = this.tickets
       this.$refs.validTicketsForm.validate()
-      if (Code !== '' && Type !== '') {
+      if (this.validTickets && Code !== '' && Type !== '') {
         const isInvalidSessionMap = this.sessions.map((session, index) => {
           return session.StartTime > session.EndTime
         })
@@ -1759,8 +1848,8 @@ export default {
             }
           } else if (session.LocationType === 'Custom') {
             if (
-              session.AddressLine === undefined ||
-              session.AddressLine === ''
+              session._CurrentAddress.AddressLine === undefined ||
+              session._CurrentAddress.AddressLine === ''
             ) {
               return true
             }
@@ -1941,6 +2030,7 @@ export default {
         Code: 'General admission',
         Type: 'Free',
         Amount: 0,
+        CodeAmount: 'General admission 0',
         TicketCount: 100,
       })
     },
