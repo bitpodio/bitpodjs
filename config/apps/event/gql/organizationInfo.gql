@@ -1,4 +1,4 @@
-query($filters: JSON, $slotFilters: JSON) {
+query($filters: JSON, $slotFilters: JSON, $inPersonMeetingFilters: JSON) {
   OrganizationInfo {
     OrganizationInfoFind(filter: $filters) {
       edges {
@@ -17,6 +17,16 @@ query($filters: JSON, $slotFilters: JSON) {
           value
           key
           type
+        }
+      }
+    }
+  }
+  Location {
+    LocationFind(filter: $inPersonMeetingFilters) {
+      edges {
+        node {
+          id
+          Name
         }
       }
     }

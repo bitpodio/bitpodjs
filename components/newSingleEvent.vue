@@ -12,21 +12,20 @@
           </v-btn>
         </div>
         <v-tabs v-model="tabs" height="36" class="mb-6 mt-2 v-event-icon">
-          <v-tabs-slider></v-tabs-slider>
-          <v-tab href="#event-tabs-3-1" class="px-0 mr-4">
+          <v-tab href="#tab-1" class="px-0 mr-4" @click="selectTab(1)">
             <v-icon left>fa-info-circle</v-icon><span>Basic Info</span>
           </v-tab>
-          <v-tab href="#event-tabs-3-2" class="px-0 mr-4">
+          <v-tab href="#tab-2" class="px-0 mr-4" :disabled="!validTab1()" @click="selectTab(2)">
             <v-icon left>fa-map-marker</v-icon><span>Location</span>
           </v-tab>
-          <v-tab href="#event-tabs-3-3" class="px-0 mr-4">
+          <v-tab href="#tab-3" class="px-0 mr-4" :disabled="!validTab1() || !validTab2()" @click="selectTab(3)">
             <v-icon left>fa-ticket</v-icon><span>Tickets</span>
           </v-tab>
         </v-tabs>
       </v-card-title>
       <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0 event-inner">
         <v-tabs-items v-model="tabs">
-          <v-tab-item v-for="i in 1" :key="i" :value="'event-tabs-3-1'">
+          <v-tab-item :value="'tab-1'">
             <v-card flat>
               <p>
                 Enter event name and details to help your audience learn about
@@ -107,7 +106,7 @@
             </v-card>
           </v-tab-item>
 
-          <v-tab-item v-for="i in 1" :key="i" :value="'event-tabs-3-2'">
+          <v-tab-item :value="'tab-2'" >
             <v-card flat>
               <v-row>
                 <v-col cols="12" sm="6" md="6" class="pl-0 pt-0 pb-0">
@@ -248,7 +247,7 @@
             </v-card>
           </v-tab-item>
 
-          <v-tab-item v-for="i in 1" :key="i" :value="'event-tabs-3-3'">
+          <v-tab-item :value="'tab-3'">
             <v-card v-if="isTicket" flat>
               <p>
                 Setup event tickets and price, you can also set tickets validity
@@ -343,7 +342,6 @@
                   </tbody>
                 </template>
               </v-simple-table>
-              <!-- <v-btn color="primary" @click="stepNumber = 2">Prev</v-btn> -->
             </v-card>
             <v-card
               v-else
@@ -430,14 +428,14 @@
       <v-card-actions
         class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
       >
-        <v-btn depressed color="grey lighten-2" @click="next(2)">Prev</v-btn>
-        <v-btn depressed color="primary" @click="next(2)">Next</v-btn>
+        <v-btn depressed color="grey lighten-2" @click="prev()" v-if="currentTab > 1">Prev</v-btn>
+        <v-btn depressed color="primary" @click="next()" v-if="currentTab < 3">Next</v-btn>
         <v-btn
           depressed
           color="primary"
           :disabled="isSaveButtonDisabled"
           @click="saveRecord"
-          >Save</v-btn
+          v-if="currentTab > 2">Save</v-btn
         >
       </v-card-actions>
     </v-card>
@@ -475,6 +473,7 @@ export default {
       valid: true,
       lazy: false,
       tabs: null,
+      currentTab: 1,
       isSaveButtonDisabled: false,
       addresslineMessage: '',
       isTicket: true,
@@ -555,8 +554,6 @@ export default {
         lat: 0.0,
         lng: 0.0,
       },
-      // e13: 2,
-      stepNumber: 1,
       datetime: new Date().toISOString().substr(0, 10),
       date: new Date().toISOString().substr(0, 10),
       menu: false,
@@ -635,13 +632,16 @@ export default {
     },
   },
   methods: {
+    selectTab(tabNumber){
+      this.currentTab = tabNumber
+    },
     close() {
       this.onFormClose()
-      this.stepNumber = 1
+      this.tabs = 'tab-1'
     },
     closeForm() {
       this.onFormClose()
-      this.stepNumber = 1
+      this.tabs = 'tab-1'
       this.$router.push('/apps/event/event/' + this.eventId)
     },
 
@@ -737,7 +737,62 @@ export default {
     returnToCenter() {
       this.$refs.gMap && this.$refs.gMap.map.setCenter(this.locations[0])
     },
-    next(value) {
+    validTab1(){
+      const {
+        Title,
+        StartDate,
+        EndDate,
+        Timezone,
+        UniqLink,
+        LocationType,
+        WebinarLink,
+      } = this.eventData
+      if( Title !== '' &&
+        StartDate !== null &&
+        EndDate !== null &&
+        Timezone !== '' &&
+        UniqLink !== '' &&
+        StartDate < EndDate &&
+        StartDate >= new Date() &&
+        EndDate >= new Date() &&
+        this.isInalidEventLink === false){
+        return true
+      }
+      else{
+        return false
+      }
+    },
+    validTab2(){
+      const {
+        LocationType,
+        WebinarLink
+      } = this.eventData
+      if (
+          (LocationType === 'Venue' && this.$refs['venueAddress.AddressLine'] &&
+            this.$refs['venueAddress.AddressLine'].$data.autocompleteText !==
+              '') ||
+          (LocationType === 'Online Event' && WebinarLink !== '')
+        ) {
+         return true
+        } else if (
+          this.$refs['venueAddress.AddressLine'] && this.$refs['venueAddress.AddressLine'].$data.autocompleteText === ''
+        ) {
+          return false
+        }
+    },
+    prev(value){
+      this.currentTab = parseInt(this.tabs.split("-")[1])
+      this.currentTab -= 1
+      let tabValue = `tab-${this.currentTab}`
+      this.tabs = tabValue
+    },
+    setNextTab(){
+      this.currentTab = parseInt(this.tabs.split("-")[1])
+      this.currentTab += 1
+      let tabValue = `tab-${this.currentTab}`
+      this.tabs = tabValue
+    },
+    next() {
       const {
         Title,
         StartDate,
@@ -749,7 +804,7 @@ export default {
       } = this.eventData
       this.$refs.form.validate()
       if (
-        value === 2 &&
+        this.currentTab === 1 &&
         Title !== '' &&
         StartDate !== null &&
         EndDate !== null &&
@@ -760,16 +815,16 @@ export default {
         EndDate >= new Date() &&
         this.isInalidEventLink === false
       ) {
-        this.stepNumber = value
-      } else if (value === 3) {
+        this.setNextTab()
+      } else if (this.currentTab === 2) {
         if (
           (LocationType === 'Venue' &&
             this.$refs['venueAddress.AddressLine'].$data.autocompleteText !==
               '') ||
           (LocationType === 'Online Event' && WebinarLink !== '')
         ) {
-          this.stepNumber = value
           this.addresslineMessage = ''
+          this.setNextTab()
         } else if (
           this.$refs['venueAddress.AddressLine'].$data.autocompleteText === ''
         ) {
