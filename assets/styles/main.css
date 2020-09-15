@@ -66,6 +66,12 @@ body {
   position: relative;
   bottom: 3px;
 }
+.uploadFile{
+  position: absolute !important;
+  z-index: 1;
+  top: 18px;
+  left: 8px;
+}
 .participantButton{
   position: absolute !important;
   left: 4px;
