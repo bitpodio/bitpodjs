@@ -865,7 +865,12 @@ export default {
 
     saveRecord() {
       const isValidTicket = this.tickets.map((ticket, index) => {
-        return ticket.Code !== '' && ticket.Type !== '' && ticket.StartDate !== null && ticket.EndDate !== null
+        return (
+          ticket.Code !== '' &&
+          ticket.Type !== '' &&
+          ticket.StartDate !== null &&
+          ticket.EndDate !== null
+        )
       })
       this.$refs.form.validate()
       if (!isValidTicket.includes(false)) {
