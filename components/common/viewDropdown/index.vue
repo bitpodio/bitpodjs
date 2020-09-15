@@ -1,10 +1,10 @@
 <template>
   <div>
-    <span>{{ viewCaption }}</span>
+    <span class="fs-18">{{ viewCaption }}</span>
     <v-menu offset-y transition="slide-y-transition" bottom>
       <template v-slot:activator="{ on, attrs }">
         <v-btn icon v-bind="attrs" v-on="on">
-          <v-icon>mdi-chevron-down</v-icon>
+          <v-icon class="fs-30">mdi-chevron-down</v-icon>
         </v-btn>
       </template>
 
@@ -28,7 +28,7 @@ function getViewPath(viewKey, view, contentName) {
       break
     case 'card':
     case 'list':
-      path = `/${type}/${contentName}/${viewKey}`
+      path = `${viewKey}`
       break
   }
   return path

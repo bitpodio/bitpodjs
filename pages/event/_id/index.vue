@@ -2,7 +2,35 @@
   <v-flex d-flex flex-md-row flex-lg-row flex-column>
     <v-flex column xs12 sm8 md8 lg8>
       <div class="xs12 sm8 md8 lg8 boxview pa-4 mr-2 mb-2">
-        <h1>{{ data.event.Title }}</h1>
+        <v-flex class="d-flex justify-center align-center pb-2">
+          <h1>{{ data.event.Title }}</h1>
+          <v-spacer></v-spacer>
+          <div class="mr-2">
+            <v-btn depressed color="primary">View</v-btn>
+          </div>
+          <v-menu bottom origin="center center" transition="scale-transition">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn icon small v-bind="attrs" v-on="on">
+                <v-icon>mdi-dots-vertical</v-icon>
+              </v-btn>
+            </template>
+
+            <v-list>
+              <v-list-item>
+                <v-list-item-title>Publish to eventbrite</v-list-item-title>
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-title>Make a copy</v-list-item-title>
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-title>Edit email template</v-list-item-title>
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-title>Integrations</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </v-flex>
         <v-chip class="my-2" label>
           {{ formatDate(data.event.StartDate) }} -
           {{ formatDate(data.event.EndDate) }}
@@ -178,35 +206,35 @@
           <i class="fa fa-users pr-1" aria-hidden="true"></i>Attendees
         </h2>
         <v-divider></v-divider>
-        <Grid view-name="eventAttendees" content-name="Event" />
+        <Grid view-name="eventAttendees" :content="content" />
       </div>
       <div class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
         <h2 class="body-1 pb-2">
           <i class="fa fa-user-plus pr-1" aria-hidden="true"></i>Registrations
         </h2>
         <v-divider></v-divider>
-        <Grid view-name="eventRegistrations" content-name="Event" />
+        <Grid view-name="eventRegistrations" :content="content" />
       </div>
       <div class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
         <h2 class="body-1 pb-2">
           <i class="fa fa-envelope1 pr-1" aria-hidden="true"></i> Invites
         </h2>
         <v-divider></v-divider>
-        <Grid view-name="eventInvites" content-name="Event" />
+        <Grid view-name="eventInvites" :content="content" />
       </div>
       <div class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
         <h2 class="body-1 pb-2">
           <i class="fa fa-ticketalt pr-1" aria-hidden="true"></i> Tickets
         </h2>
         <v-divider></v-divider>
-        <Grid view-name="eventTickets" content-name="Event" />
+        <Grid view-name="eventTickets" :content="content" />
       </div>
       <div class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
         <h2 class="body-1 pb-2">
           <i class="fa fa-settings1 pr-1" aria-hidden="true"></i> Discount Codes
         </h2>
         <v-divider></v-divider>
-        <Grid view-name="eventDiscountCodes" content-name="Event" />
+        <Grid view-name="eventDiscountCodes" :content="content" />
       </div>
       <div class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
         <h2 class="body-1 pb-2">
@@ -214,28 +242,28 @@
           Registration Questions
         </h2>
         <v-divider></v-divider>
-        <Grid view-name="eventRegistrationQuestion" content-name="Event" />
+        <Grid view-name="eventRegistrationQuestion" :content="content" />
       </div>
       <div class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
         <h2 class="body-1 pb-2">
           <i class="fa fa-black-board pr-1" aria-hidden="true"></i> Sessions
         </h2>
         <v-divider></v-divider>
-        <Grid view-name="eventSession" content-name="Event" />
+        <Grid view-name="eventSession" :content="content" />
       </div>
       <div class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
         <h2 class="body-1 pb-2">
           <i class="fa fa-mic pr-1" aria-hidden="true"></i> Speakers
         </h2>
         <v-divider></v-divider>
-        <Grid view-name="eventSpeakers" content-name="Event" />
+        <Grid view-name="eventSpeakers" :content="content" />
       </div>
       <div class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
         <h2 class="body-1 pb-2">
           <i class="fa fa-external-link pr-1" aria-hidden="true"></i> Tasks
         </h2>
         <v-divider></v-divider>
-        <Grid view-name="eventTasks" content-name="Event" />
+        <Grid view-name="eventTasks" :content="content" />
       </div>
       <div class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
         <h2 class="body-1 pb-2">
@@ -243,7 +271,7 @@
           Form
         </h2>
         <v-divider></v-divider>
-        <Grid view-name="eventRegistrationForm" content-name="Event" />
+        <Grid view-name="eventRegistrationForm" :content="content" />
       </div>
       <div class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
         <h2 class="body-1 pb-2">
@@ -254,10 +282,16 @@
     </v-flex>
     <v-flex column xs12 sm4 md4 lg4>
       <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
-        <h2 class="body-1 pb-1">
-          <i class="fa fa-info-circle pr-1" aria-hidden="true"></i> Event
-          Information
-        </h2>
+        <v-flex class="d-flex justify-center align-center pb-2">
+          <h2 class="body-1 pb-1">
+            <i class="fa fa-info-circle pr-1" aria-hidden="true"></i> Event
+            Information
+          </h2>
+          <v-spacer></v-spacer>
+          <v-btn text small @click="editeventform = !editeventform">
+            <v-icon left>mdi-pencil</v-icon>Edit
+          </v-btn>
+        </v-flex>
         <v-divider></v-divider>
         <v-flex my-3>
           <div class="body-2 text--secondary">Organizer</div>
@@ -292,9 +326,15 @@
       </div>
 
       <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
-        <h2 class="body-1 pb-1">
-          <i class="fa fa-tag pr-1" aria-hidden="true"></i> SEO Details
-        </h2>
+        <v-flex class="d-flex justify-center align-center pb-2">
+          <h2 class="body-1 pb-1">
+            <i class="fa fa-tag pr-1" aria-hidden="true"></i> SEO Details
+          </h2>
+          <v-spacer></v-spacer>
+          <v-btn text small @click="editseoform = !editseoform">
+            <v-icon left>mdi-pencil</v-icon>Edit
+          </v-btn>
+        </v-flex>
         <v-divider></v-divider>
         <v-flex my-3>
           <div class="body-2 text--secondary">SEO Title</div>
@@ -313,9 +353,20 @@
       </div>
 
       <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
-        <h2 class="body-1 pb-1">
-          <i class="fa fa-settings pr-1" aria-hidden="true"></i> Event Settings
-        </h2>
+        <v-flex class="d-flex justify-center align-center pb-2">
+          <h2 class="body-1 pb-1">
+            <i class="fa fa-settings pr-1" aria-hidden="true"></i> Event
+            Settings
+          </h2>
+          <v-spacer></v-spacer>
+          <v-btn
+            text
+            small
+            @click="editeventsettingform = !editeventsettingform"
+          >
+            <v-icon left>mdi-pencil</v-icon>Edit
+          </v-btn>
+        </v-flex>
         <v-divider></v-divider>
         <v-flex my-3>
           <div class="body-2 text--secondary">Privacy</div>
@@ -400,10 +451,16 @@
       </div>
 
       <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
-        <h2 class="body-1 pb-1">
-          <i class="fa fa-settings pr-1" aria-hidden="true"></i>
-          Registration Page Settings
-        </h2>
+        <v-flex class="d-flex justify-center align-center pb-2">
+          <h2 class="body-1 pb-1">
+            <i class="fa fa-settings pr-1" aria-hidden="true"></i>
+            Registration Page Settings
+          </h2>
+          <v-spacer></v-spacer>
+          <v-btn text small @click="editregform = !editregform">
+            <v-icon left>mdi-pencil</v-icon>Edit
+          </v-btn>
+        </v-flex>
         <v-divider></v-divider>
         <v-flex my-3>
           <div class="body-2 text--secondary">Registration Site Template</div>
@@ -443,6 +500,178 @@
         </v-flex>
       </div>
     </v-flex>
+
+    <v-dialog
+      v-model="editeventform"
+      persistent
+      scrollable
+      content-class="slide-form-default"
+      transition="dialog-bottom-transition"
+    >
+      <v-card>
+        <v-toolbar dense flat dark fixed color="accent">
+          <v-toolbar-title class="body-1"
+            >Edit Event Information</v-toolbar-title
+          >
+          <v-spacer></v-spacer>
+          <v-btn icon dark @click="editeventform = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </v-toolbar>
+        <v-divider></v-divider>
+        <v-card-text>
+          <v-row>
+            <v-col cols="12">
+              <v-text-field
+                label="Event Name*"
+                required
+                outlined
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12">
+              <v-textarea
+                clearable
+                outlined
+                clear-icon="fa fa-close"
+                label="Description"
+                value=""
+              ></v-textarea>
+            </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <v-dialog
+                ref="dialog"
+                v-model="modal"
+                :return-value.sync="date"
+                persistent
+                width="290px"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-text-field
+                    v-model="date"
+                    outlined
+                    label="Start Date"
+                    append-icon="fa-calendar"
+                    readonly
+                    v-bind="attrs"
+                    v-on="on"
+                  ></v-text-field>
+                </template>
+                <v-date-picker v-model="date" scrollable>
+                  <v-spacer></v-spacer>
+                  <v-btn text color="primary" @click="modal = false"
+                    >Cancel</v-btn
+                  >
+                  <v-btn text color="primary" @click="$refs.dialog.save(date)"
+                    >OK</v-btn
+                  >
+                </v-date-picker>
+              </v-dialog>
+            </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <v-menu
+                v-model="menu2"
+                :close-on-content-click="false"
+                :nudge-right="40"
+                transition="scale-transition"
+                offset-y
+                min-width="290px"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-text-field
+                    v-model="date"
+                    outlined
+                    label="End Date"
+                    append-icon="fa-calendar"
+                    readonly
+                    v-bind="attrs"
+                    v-on="on"
+                  ></v-text-field>
+                </template>
+                <v-date-picker
+                  v-model="date"
+                  @input="menu2 = false"
+                ></v-date-picker>
+              </v-menu>
+            </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <v-select
+                :items="['0-17', '18-29', '30-54', '54+']"
+                label="Timezone*"
+                required
+                outlined
+              ></v-select>
+            </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <v-text-field
+                label="Event organizer *"
+                outlined
+                required
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="6" md="4">
+              <v-text-field
+                label="Event Manager/Team Email *"
+                outlined
+                required
+              ></v-text-field>
+            </v-col>
+          </v-row>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions class="pl-4">
+          <v-btn color="primary" depressed @click="editeventform = false"
+            >Save</v-btn
+          >
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog
+      v-model="editseoform"
+      persistent
+      scrollable
+      content-class="slide-form-default"
+      transition="dialog-bottom-transition"
+    >
+      <v-card>
+        <v-toolbar dense flat dark fixed color="accent">
+          <v-toolbar-title class="body-1">Edit Seo Details</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-btn icon dark @click="editseoform = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </v-toolbar>
+        <v-divider></v-divider>
+        <v-card-text>
+          <v-row>
+            <v-col>
+              <v-checkbox
+                v-model="allowSpaces"
+                label=" SEO elements are auto derived from event elements when event is created or edited. Check this if you want to Turn off auto update"
+              ></v-checkbox>
+            </v-col>
+            <v-col cols="12">
+              <v-text-field
+                label="Part which goes into URL"
+                outlined
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12">
+              <v-text-field label="Meta Description" outlined> </v-text-field>
+            </v-col>
+            <v-col cols="12">
+              <v-text-field label="Meta Keywords" outlined> </v-text-field>
+            </v-col>
+          </v-row>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions class="pl-4">
+          <v-btn color="primary" depressed @click="editseoform = false"
+            >Save</v-btn
+          >
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-flex>
 </template>
 <script>
@@ -451,10 +680,13 @@ import format from 'date-fns/format'
 import Grid from '~/components/common/grid'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
+import { configLoaderMixin } from '~/utility'
+
 export default {
   components: {
     Grid,
   },
+  mixins: [configLoaderMixin],
   data() {
     return {
       // ready: false,
@@ -463,6 +695,9 @@ export default {
       // closed: false,
       e1: '',
       loading: 0,
+      editeventform: false,
+      editseoform: false,
+      allowSpaces: false,
       data: {
         event: {},
         badge: {},

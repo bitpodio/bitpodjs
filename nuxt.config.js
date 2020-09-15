@@ -1,10 +1,15 @@
 import colors from 'vuetify/es5/util/colors'
+const basePath = process.env.PUBLIC_PATH || ''
+
 export default {
   /*
    ** Nuxt rendering mode
    ** See https://nuxtjs.org/api/configuration-mode
    */
   mode: 'universal',
+  router: {
+    base: basePath || '/',
+  },
   /*
    ** Nuxt target
    ** See https://nuxtjs.org/api/configuration-target
@@ -39,6 +44,17 @@ export default {
           'https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap',
       },
     ],
+    script: [
+      {
+        src: `${
+          process.env.GOOGLE_MAPS_API ||
+          'https://maps.googleapis.com/maps/api/js'
+        }?key=${
+          process.env.GOOGLE_API_KEY ||
+          'AIzaSyCPS6SZlor8qxfpul-dKyN6566XG2R5dFM'
+        }&libraries=places`,
+      },
+    ],
   },
   /*
    ** Global CSS
@@ -48,7 +64,7 @@ export default {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: ['~/plugins/eventBus.js'],
+  plugins: ['~/plugins/eventBus.js', '~/plugins/date-time-picker.js'],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
@@ -63,6 +79,7 @@ export default {
     // Doc: https://github.com/nuxt-community/stylelint-module
     '@nuxtjs/stylelint-module',
     '@nuxtjs/vuetify',
+    '@nuxtjs/dotenv',
   ],
   /*
    ** Nuxt.js modules
@@ -72,12 +89,36 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/apollo',
     '@nuxtjs/auth-next',
+    [
+      'nuxt-gmaps',
+      {
+        key:
+          process.env.GOOGLE_API_KEY ||
+          'AIzaSyCPS6SZlor8qxfpul-dKyN6566XG2R5dFM',
+        // you can use libraries: ['places']
+      },
+    ],
   ],
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
-  axios: {},
+  axios: {
+    apiEndpoint: '/svc/api/',
+    backendBaseUrl: process.env.PUBLIC_DOMAIN || '',
+    baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
+    eventUrl: process.env.GET_EVENT_URL || 'event.test.bitpod.io',
+  },
+
+  publicRuntimeConfig: {
+    axios: {
+      browserBaseURL: process.env.BROWSER_BASE_URL,
+      backendBaseUrl: process.env.PUBLIC_DOMAIN,
+    },
+    cdnUri:
+      'https://res.cloudinary.com/mytestlogo/image/upload/bitpodjs/images/',
+  },
+
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
@@ -88,7 +129,7 @@ export default {
       light: true,
       themes: {
         dark: {
-          primary: colors.blue.darken2,
+          primary: '#1a73e8',
           accent: colors.grey.darken3,
           secondary: colors.amber.darken3,
           info: colors.teal.lighten1,
@@ -99,7 +140,7 @@ export default {
           greybg: '#000000',
         },
         light: {
-          primary: colors.blue.darken2,
+          primary: '#1a73e8',
           secondary: colors.grey.darken1,
           accent: colors.shades.black,
           error: colors.red.accent3,
@@ -113,7 +154,9 @@ export default {
    ** Build configuration
    ** See https://nuxtjs.org/api/configuration-build/
    */
-  build: {},
+  build: {
+    transpile: /@fullcalendar.*/, // transpile ESM modules within all fullcalendar packages
+  },
   vue: {
     config: {
       productionTip: true,
@@ -144,25 +187,25 @@ export default {
     redirect: {
       login: '/login',
       callback: '/callback',
-      home: '/event',
+      home: `${basePath}/apps/event/list/Event/All Events`,
       logout: '/',
     },
     strategies: {
       bitpod: {
         scheme: 'oauth2',
-        bitpodTokenEndPointUrl:
+        tokenEndPointUrl:
           process.env.BITPOD_TOKEN_ENDPOINT_URL ||
           'https://login.bitpod.io/auth/connect/token',
-        bitpodUserInfoEndPointUrl:
+        userInfoEndPointUrl:
           process.env.BITPOD__USERINFO_ENDPOINT_URL ||
           'https://login.bitpod.io/auth/connect/userinfo',
         authorization:
-          process.env.AUTHORIZATION_ENDPOINT_URL ||
+          process.env.BITPOD_AUTHORIZATION_ENDPOINT_URL ||
           'https://login.bitpod.io/auth/connect/authorize',
         endpoints: {
-          authorization: '/authorize',
-          token: 'api/connect/token',
-          userInfo: 'api/connect/userinfo',
+          authorization: `${basePath}/authorize?provider=bitpod`,
+          token: 'api/connect/token?provider=bitpod',
+          userInfo: 'api/connect/userinfo?provider=bitpod',
         },
         responseType: 'code',
         grantType: 'authorization_code',
@@ -178,7 +221,53 @@ export default {
         tokenKey: 'access_token',
         refreshTokenKey: 'refresh_token',
       },
+      google: {
+        scheme: 'oauth2',
+        tokenEndPointUrl:
+          process.env.GOOGLE_TOKEN_ENDPOINT_URL ||
+          'https://oauth2.googleapis.com/token',
+        userInfoEndPointUrl:
+          process.env.GOOGLE__USERINFO_ENDPOINT_URL ||
+          'https://oauth2.googleapis.com/tokeninfo',
+        authorization:
+          process.env.GOOGLE_AUTHORIZATION_ENDPOINT_URL ||
+          'https://accounts.google.com/o/oauth2/auth',
+        endpoints: {
+          authorization: `${basePath}/authorize?provider=google`,
+          token: 'api/connect/token?provider=google',
+          userInfo: 'api/connect/userinfo?provider=google',
+        },
+        accessType: 'offline',
+        prompt: 'consent',
+        responseType: 'code',
+        grantType: 'authorization_code',
+        redirectUri:
+          process.env.REDIRECT_URI || 'http://localhost:3000/callback',
+        scope: ['openid', 'profile', 'email'],
+        clientId:
+          process.env.GOOGLE_EVENT_CLIENTID ||
+          `49928390950-pmu4l73fu6mpcim2gdnerqf62k6oppqt.apps.googleusercontent.com`,
+        clientSecret:
+          process.env.GOOGLE_EVENT_CLIENTSECRET || `2lhT6LeqTR1sx5pxyPLZoA0_`,
+        tokenType: 'Bearer',
+        tokenKey: 'access_token',
+        refreshTokenKey: 'refresh_token',
+        codeChallengeMethod: '',
+      },
+    },
+    devtools: true,
+  },
+  generalConfig: {
+    googleMapKey:
+      process.env.GOOGLE_API_KEY || 'AIzaSyCPS6SZlor8qxfpul-dKyN6566XG2R5dFM',
+    googleMapGeocodeApi:
+      process.env.GOOGLE_MAPS_GEOCODE_API ||
+      'https://maps.googleapis.com/maps/api/geocode/json',
+  },
+  setting: {
+    domains: {
+      defaultPublicDomain:
+        process.env.DEFAULT_PUBLIC_DOMAIN || 'event.test.bitpod.io',
     },
   },
-  devtools: true,
 }

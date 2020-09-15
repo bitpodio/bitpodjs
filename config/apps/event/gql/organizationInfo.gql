@@ -1,0 +1,12 @@
+query($filters: JSON) {
+  OrganizationInfo {
+    OrganizationInfoFind(filter: $filters) {
+      edges {
+        node {
+          id
+          Currency
+        }
+      }
+    }
+  }
+}

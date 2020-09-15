@@ -1,0 +1,36 @@
+query ($filters: JSON, $where: JSON) {
+     Session {
+       SessionFind(filter: $filters) {
+         edges {
+           node {
+             id
+         Name
+         isActive
+         SeatReservation
+         LocationType
+         Speaker
+         ScheduledType
+         RollingDays
+         Location
+         StartTime
+         EndTime
+         StartDate
+         EndDate
+         Timezone
+         Type
+         TicketName
+         EventId
+         SyncStatus
+         createdDate
+         createdBy
+         modifiedDate
+         __typename
+       }
+       __typename
+     }
+     __typename
+   }
+   SessionCount(where: $where)
+   __typename
+ }
+}

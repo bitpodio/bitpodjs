@@ -1,5 +1,5 @@
 import MissingComponent from './missing-component.vue'
-import contentFactory from '~/config/apps/event/content'
+import nuxtconfig from '~/nuxt.config'
 
 export function importTemplate(templatePath) {
   return () => import(`~/config/${templatePath}`)
@@ -41,6 +41,18 @@ export const templateLoaderMixin = {
   },
 }
 
+export function getApiUrl() {
+  let apiURL = ''
+  if (window.location.origin.includes('localhost')) {
+    apiURL = `https://${nuxtconfig.axios.backendBaseUrl}${nuxtconfig.axios.apiEndpoint}`
+  } else {
+    apiURL = `${window.location.origin}${nuxtconfig.axios.apiEndpoint}`
+  }
+  console.log('===nuxtconfig.axios.apiEndpoint=', nuxtconfig.axios.apiEndpoint)
+  console.log('===apiURL=', apiURL)
+  return apiURL
+}
+
 export function getGridTemplateInfo(content, viewName) {
   const view = content.views[viewName]
   return view.template || {}
@@ -62,7 +74,9 @@ export const formValidationMixin = {
       const propFields = {}
       for (const field of this.fields) {
         propFields[field.fieldName] = field.dataSource
-          ? field.dataSource.filter.call(this, this.formData)
+          ? field.dataSource.filter
+            ? field.dataSource.filter.call(this, this.formData)
+            : {}
           : {}
       }
       return propFields
@@ -95,7 +109,7 @@ export const formValidationMixin = {
 }
 
 export function getContentByName(ctx, contentName) {
-  const contents = contentFactory(ctx)
+  const contents = ctx.contentFactory(ctx)
   return contents[contentName]
 }
 
@@ -106,4 +120,25 @@ function getViewDataSource(content, viewName) {
 
 export function getViewQuery(content, viewName) {
   return getViewDataSource(content, viewName).query
+}
+
+export const configLoaderMixin = {
+  layout(context) {
+    return context.route.params.app || 'default'
+  },
+  data() {
+    return {
+      contents: null,
+    }
+  },
+  async mounted() {
+    const contentFactory = await import(
+      `~/config/apps/${this.$route.params.app}/content`
+    )
+    this.contents = contentFactory.default
+  },
+}
+
+export function getIdFromAtob(encodedId) {
+  return encodedId ? atob(encodedId).split(':')[1] : ''
 }
