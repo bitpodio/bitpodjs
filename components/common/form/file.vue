@@ -9,12 +9,12 @@
     <v-btn
       class="blue white--text uploadFile"
       small
-      :disabled="allowSecondUpload()"
+      :disabled="allowSecondUpload"
       @click="uploadClicked"
       >Upload</v-btn
     >
     <v-file-input
-      v-if="!allowSecondUpload()"
+      v-if="!allowSecondUpload"
       ref="test"
       class="pl-2"
       :multiple="field.multiple"
@@ -23,7 +23,7 @@
       prepend-icon="mdi-cloud-upload"
       @change="onChange"
     ></v-file-input>
-    <div :class="{ 'pt-12': allowSecondUpload() }">
+    <div :class="{ 'pt-12': allowSecondUpload }">
       <div
         v-for="file in files"
         :key="file.id"
@@ -32,7 +32,7 @@
         <v-icon class="float-right" @click="deleteFile(file.id)"
           >mdi-close</v-icon
         >
-        <a :href="getDownloadLink(file.id)">{{ file.name }}</a>
+        <a :href="getAttachmentLink(file.id, true)">{{ file.name }}</a>
       </div>
     </div>
   </div>
@@ -49,6 +49,11 @@ export default {
       files: [],
     }
   },
+  computed: {
+    allowSecondUpload() {
+      return !this.field.multiple && !!this.value && !!this.value.length
+    },
+  },
   async mounted() {
     if (this.value && this.value.length) {
       const fileDetailPromises = this.value.map((id) => this.getFileDetails(id))
@@ -62,11 +67,11 @@ export default {
     }
   },
   methods: {
-    allowSecondUpload() {
-      return !this.field.multiple && !!this.value && !!this.value.length
-    },
-    getDownloadLink(id) {
-      return `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Attachments/download/${id}`
+    getAttachmentLink(id, isDownloadLink) {
+      const attachmentUrl = `https://${nuxtconfig.axios.eventUrl}${
+        nuxtconfig.axios.apiEndpoint
+      }Attachments${isDownloadLink ? '/download' : ''}${id ? '/' + id : ''}`
+      return attachmentUrl
     },
     uploadClicked() {
       this.$refs.test.$el.firstElementChild.firstElementChild.firstElementChild.click()
@@ -87,22 +92,19 @@ export default {
       )
     },
     uploadFile(file) {
-      const AttachmentURL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Attachments`
       const formData = new FormData()
       formData.append('file', file)
-      return this.$axios.post(AttachmentURL, formData, {
+      return this.$axios.post(this.getAttachmentLink(), formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       })
     },
     getFileDetails(id) {
-      const AttachmentURL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Attachments/${id}`
-      return this.$axios.get(AttachmentURL)
+      return this.$axios.get(this.getAttachmentLink(id))
     },
     async deleteFile(id) {
-      const AttachmentURL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Attachments/${id}`
-      await this.$axios.delete(AttachmentURL)
+      await this.$axios.delete(this.getAttachmentLink(id))
       this.files = this.files.filter((i) => i.id !== id)
       this.$emit(
         'input',
