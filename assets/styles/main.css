@@ -227,4 +227,7 @@ body {
   .v-eventform .v-card__text {
     overflow-y: auto !important;
   }
+  .boxview {
+    margin-right: 0 !important;
+  }
 }

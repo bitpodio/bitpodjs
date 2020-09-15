@@ -107,14 +107,7 @@
           </p>
         </v-flex>
 
-        <v-flex
-          d-flex
-          flex-md-row
-          flex-lg-row
-          flex-column
-          my-2
-          class="event-cards"
-        >
+        <v-flex d-flex flex-md-row flex-lg-row my-2 class="event-cards">
           <div
             class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
           >
@@ -168,23 +161,33 @@
           style="max-width: 800px;"
         >
           <v-stepper-header success>
-            <v-stepper-step step="3" complete class="ml-n13 body-2"
+            <v-stepper-step
+              step="3"
+              complete
+              color="success"
+              class="ml-n13 body-2"
               >Not Ready</v-stepper-step
             >
 
             <v-divider></v-divider>
 
-            <v-stepper-step step="4" complete="true" class="body-2"
+            <v-stepper-step
+              step="4"
+              complete="true"
+              color="success"
+              class="body-2"
               >Open for regsitarion</v-stepper-step
             >
 
             <v-divider></v-divider>
 
-            <v-stepper-step step="4" class="body-2">Sold out</v-stepper-step>
+            <v-stepper-step step="4" class="body-2" color="success"
+              >Sold out</v-stepper-step
+            >
 
             <v-divider></v-divider>
 
-            <v-stepper-step step="" class="body-2"
+            <v-stepper-step step="" class="body-2" color="success"
               >Registarion Closed</v-stepper-step
             >
           </v-stepper-header>
