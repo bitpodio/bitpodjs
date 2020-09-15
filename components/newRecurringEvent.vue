@@ -47,6 +47,7 @@
                   label="Start Date*"
                   :field="startDateField"
                   :rules="startDateRule"
+                  :on-change="changeStartDate"
                   type="date"
                 />
               </v-col>
@@ -56,6 +57,7 @@
                   label="End Date*"
                   :field="endDateRule"
                   :rules="endDateRule"
+                   :on-change="changeEndDate"
                   type="date"
                 />
               </v-col>
@@ -510,7 +512,7 @@
             <v-tab
               href="#tab-3"
               class="px-0 mr-4"
-              :disabled="!validTab1()"
+              :disabled="!validTab1() || !validTab2()"
               @click="selectTab(3)"
             >
               <v-icon left>fa-history</v-icon><span>Recurring Session</span>
@@ -572,6 +574,11 @@
 
             <v-tab-item :value="'tab-2'">
               <v-card flat>
+                <v-form
+                  ref="validTicketsForm"
+                  v-model="validTickets"
+                  :lazy-validation="lazy"
+                >
                 <p>
                   Setup event tickets and price, you can also set tickets
                   validity so early birds can be offered better pricing.
@@ -638,14 +645,15 @@
                     </tbody>
                   </template>
                 </v-simple-table>
+                </v-form>
               </v-card>
             </v-tab-item>
 
             <v-tab-item :value="'tab-3'">
               <v-card v-if="isSession" flat>
                 <v-form
-                  ref="validTicketsForm"
-                  v-model="validTickets"
+                  ref="validSessionsForm"
+                  v-model="validSessions"
                   :lazy-validation="lazy"
                 >
                   <p>
@@ -915,6 +923,7 @@ import organizationInfo from '~/config/apps/event/gql/organizationInfo.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { getIdFromAtob } from '~/utility'
 import CustomDate from '~/components/common/form/date.vue'
+import { isValid } from 'date-fns'
 
 const ObjectID5 = (
   m = Math,
@@ -949,7 +958,7 @@ export default {
       validPersonMeeting: true,
       validType: true,
       validBasicInfo: true,
-      validTickets: true,
+      validSessions: true,
       lazy: false,
       locationMesssage: '',
       isLocationMessage: false,
@@ -1266,6 +1275,14 @@ export default {
         caption: 'Start Date',
         type: 'date',
       }
+    },    
+    endDateField() {
+      return {
+        appendIcon: 'fa-calendar',
+        outlined: true,
+        caption: 'End Date',
+        type: 'date',
+      }
     },
     startDateRule() {
       return [
@@ -1276,14 +1293,6 @@ export default {
             : true
         },
       ]
-    },
-    endDateField() {
-      return {
-        appendIcon: 'fa-calendar',
-        outlined: true,
-        caption: 'End Date',
-        type: 'date',
-      }
     },
     endDateRule() {
       return [
@@ -1325,6 +1334,12 @@ export default {
     },
   },
   methods: {
+    changeStartDate(value){
+      this.$refs.form.validate()
+    },
+    changeEndDate(value){
+      this.$refs.form.validate()
+    },
     changeTicketCode(index) {
       this.tickets[index].CodeAmount =
         this.tickets[index].Code + ' ' + this.tickets[index].Amount
@@ -1798,6 +1813,12 @@ export default {
         return false
       }
     },
+    validTab2(){
+      const isValidTicket = this.tickets.map((ticket, index) => {
+          return ticket.Code !== '' && ticket.Type !== ''
+        })
+      return !isValidTicket.includes(false)
+    },
     prev() {
       this.currentTab = parseInt(this.tabs.split('-')[1])
       this.currentTab -= 1
@@ -1822,7 +1843,8 @@ export default {
         this.validBasicInfo
       ) {
         this.setNextTab()
-      } else if (this.currentTab === 2) {
+      } else if (this.currentTab === 2 && this.validTickets) {
+        this.$refs.validTicketsForm.validate()
         this.currentTab = 3
         this.setNextTab()
       }
@@ -1830,8 +1852,8 @@ export default {
 
     saveRecord() {
       const { Code, Type } = this.tickets
-      this.$refs.validTicketsForm.validate()
-      if (this.validTickets && Code !== '' && Type !== '') {
+      this.$refs.validSessionsForm.validate()
+      if (this.validSessions && Code !== '' && Type !== '') {
         const isInvalidSessionMap = this.sessions.map((session, index) => {
           return session.StartTime > session.EndTime
         })

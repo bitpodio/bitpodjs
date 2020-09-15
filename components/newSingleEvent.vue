@@ -864,15 +864,12 @@ export default {
     },
 
     saveRecord() {
-      this.isSaveButtonDisabled = true
-      const { Code, Type, StartDate, EndDate } = this.tickets
+      const isValidTicket = this.tickets.map((ticket, index) => {
+        return ticket.Code !== '' && ticket.Type !== '' && ticket.StartDate !== null && ticket.EndDate !== null
+      })
       this.$refs.form.validate()
-      if (
-        Code !== '' &&
-        Type !== '' &&
-        StartDate !== null &&
-        EndDate !== null
-      ) {
+      if (!isValidTicket.includes(false)) {
+        this.isSaveButtonDisabled = true
         if (this.venueAddress.AddressLine !== '')
           this.eventData._VenueAddress = this.venueAddress
 
