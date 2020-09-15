@@ -349,7 +349,6 @@
                   v-model="InPersonMeeting"
                   :field="inPersonMeetingProps"
                   :rules="personMeetingRules"
-                  :on-change="changePersonMeeting"
                 />
               </v-col>
             </v-row>
@@ -711,11 +710,6 @@
                             />
                           </td>
                           <td class="pa-2 pb-0">
-                            <!-- <Lookup
-                            v-model="session.Duration"
-                            :field="slotLookupOptions"
-                            :on-change="changeDuration(k)"
-                          /> -->
                             <v-autocomplete
                               v-model="session.Duration"
                               :items="slotLookupOptions"
@@ -776,13 +770,6 @@
                       </tbody>
                     </template>
                   </v-simple-table>
-                  <!-- <v-btn color="primary" @click="stepNumber = 2">Prev</v-btn>
-                <v-btn
-                  color="primary"
-                  :disabled="isSaveButtonDisabled"
-                  @click="saveRecord"
-                  >Save</v-btn
-                > -->
                 </v-form>
               </v-card>
               <v-card
@@ -903,19 +890,14 @@ import { formatTimezoneDateFieldsData } from '~/utility/form.js'
 import { getApiUrl } from '~/utility/index.js'
 import Lookup from '~/components/common/form/lookup.vue'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
-import location from '~/config/apps/event/gql/location.gql'
+// import location from '~/config/apps/event/gql/location.gql'
 import Timezone from '~/components/common/form/timezone'
 import eventCount from '~/config/apps/event/gql/eventCount.gql'
 import organizationInfo from '~/config/apps/event/gql/organizationInfo.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { getIdFromAtob } from '~/utility'
-// import Checkbox from '~/components/common/form/checkbox.vue'
 import CustomDate from '~/components/common/form/date.vue'
-// import nuxtconfig from '~/nuxt.config'
-// function ObjectID5() {
-//       return (m = Math, d = Date, h = 16, s = (s) => m.floor(s).toString(h)) =>
-//         s(d.now() / 1000) + ' '.repeat(h).replace(/./g, () => s(m.random() * h))
-// }
+
 const ObjectID5 = (
   m = Math,
   d = Date,
@@ -935,8 +917,6 @@ export default {
     onFormClose: Function,
   },
   data: () => {
-    // const currentDatetime = new Date(new Date().setSeconds(0))
-    // const tid = this.ObjectID5()
     return {
       showLocation: false,
       selectedLocation: '',
@@ -1004,7 +984,6 @@ export default {
       personMeetingRules: [
         (v) => {
           if (v.length > 0) {
-            // console.log('==selected session==', this.selectedSession)
             return true
           }
           return 'Please select location!'
@@ -1025,7 +1004,6 @@ export default {
       Duration: 0,
       Phone: '',
       WebinarLink: '',
-      // InPersonMeeting: '',
       InPersonMeeting: [],
       Type: 'Personal',
       MaxAllow: 5,
@@ -1046,8 +1024,6 @@ export default {
       StartDate: null,
       EndDate: null,
       addresslineMessage: '',
-      // ObjectID5: (m = Math, d = Date, h = 16, s = s => m.floor(s).toString(h)) => s(d.now() / 1000) + ' '.repeat(h).replace(/./g, () => s(m.random() * h)),
-      // isIndefinitely: false,
       isSaveButtonDisabled: false,
       isSession: true,
       isEventCreate: false,
@@ -1133,18 +1109,6 @@ export default {
           },
         },
       },
-      // inPersonMeetingProps: {
-      //   type: 'lookup',
-      //   multiple: true,
-      //   dataSource: {
-      //     query: location,
-      //     itemText: 'Name',
-      //     itemValue: 'id',
-      //     filter(data) {
-      //       return {}
-      //     },
-      //   },
-      // },
       typeProps: {
         type: 'lookup',
         dataSource: {
@@ -1159,21 +1123,6 @@ export default {
         },
       },
 
-      // dateTime: new Date(),
-      // fields: [
-      //   {
-      //     type: 'timezone',
-      //     fieldName: 'Timezone',
-      //   },
-      //   {
-      //     type: 'datetime',
-      //     fieldName: 'StartDate',
-      //   },
-      //   {
-      //     type: 'datetime',
-      //     fieldName: 'EndDate',
-      //   },
-      // ],
       timezonefield: {
         type: 'Timezone',
         fieldName: 'Timezone',
@@ -1181,15 +1130,12 @@ export default {
       text: null,
       eventData: {
         Title: '',
-        // Timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
         Description: '',
         UniqLink: '',
-        // JoiningInstruction: '',
         BusinessType: 'Recurring',
         Privacy: 'Public',
         Currency: '',
         Status: 'Not ready',
-        // LocationType: 'Venue',
         VenueName: '',
       },
 
@@ -1231,7 +1177,6 @@ export default {
         {
           id: ObjectID5(),
           TicketId: 0,
-          // TicketId:
           Code: 'General admission',
           Type: 'Free',
           Amount: 0,
@@ -1307,8 +1252,6 @@ export default {
       return [
         (v) => {
           const startDate = new Date(v)
-          console.log('==startDate==', startDate)
-          console.log('==this.EndDate==', this.EndDate)
           return startDate > new Date(this.EndDate)
             ? 'Start Date should be less than End Date'
             : true
@@ -1333,17 +1276,6 @@ export default {
         },
       ]
     },
-    // endDateRule() {
-    //   return [
-    //       (v) => {
-    //         const endDate = new Date(v)
-    //         return this.StartDate > endDate
-    //           ? 'End Date should be greater than Start Date'
-    //           : true
-    //       },
-    //     ],
-    //   }
-    // },
     uniqueLinkValidationMsg() {
       const errorMessage = this.isInalidEventLink ? this.uniqueLinkMessage : ''
       return errorMessage
@@ -1377,25 +1309,8 @@ export default {
     selectTab(tabNumber) {
       this.currentTab = tabNumber
     },
-
-    // slotLookupOptions() {
-    //   const items = this.slotOptions
-    //   debugger
-    //   return {
-    //     type: 'lookup',
-    //     items,
-    //     dataSource: {
-    //       items,
-    //       itemText: 'value',
-    //       itemValue: 'key',
-    //     },
-    //   }
-    // },
     isNextDisabled() {
       return this.isUniqLinkValid === false
-    },
-    changePersonMeeting(locationId) {
-      // debugger
     },
     validStartTimeRule(index) {
       return [
@@ -1424,7 +1339,6 @@ export default {
       ]
     },
     getMaxEnd(arr) {
-      console.log('==getMaxend==')
       if (arr.length === 0) return false
       arr.sort(function (a, b) {
         if (a.end < b.end) return 1
@@ -1456,10 +1370,7 @@ export default {
           rarray[g] = [array[i]]
         }
       }
-      console.log('==array==' + JSON.stringify(rarray))
       for (let i = 0; i < rarray.length; i++) {
-        console.log('==array=i=' + JSON.stringify(rarray[i]))
-        console.log('==array[]==' + rarray[i].length)
         if (rarray[i].length > 1) {
           return true
         }
@@ -1472,28 +1383,12 @@ export default {
         addressData.route ||
         '' + ', ' + addressData.administrative_area_level_1 ||
         ''
-      // this.eventData.VenueName = addressData.route || ''
       this.venueAddress.Country = addressData.country || ''
       this.venueAddress.City = addressData.locality || ''
       this.venueAddress.State = addressData.administrative_area_level_1 || ''
       this.venueAddress.LatLng.lat = addressData.latitude || ''
       this.venueAddress.LatLng.lng = addressData.longitude || ''
-      // const latlng = {}
-      // latlng.lat = addressData.latitude
-      // latlng.lng = addressData.longitude
-      // latlng.name =
-      //   addressData.route +
-      //   ' ' +
-      //   addressData.locality +
-      //   ' ' +
-      //   addressData.country
-      // const newLocations = []
-      // newLocations[0] = latlng
     },
-    // ObjectID5() {
-    //   return (m = Math, d = Date, h = 16, s = (s) => m.floor(s).toString(h)) =>
-    //     s(d.now() / 1000) + ' '.repeat(h).replace(/./g, () => s(m.random() * h))
-    // },
     openWindow(link) {
       window.open(link, '_blank')
     },
@@ -1501,9 +1396,7 @@ export default {
       this.isGroup = value === 'Group'
     },
     changelocationType(index) {
-      // const index = 0
       return () => {
-        console.log('==changelocationtype==index==', index)
         this.selectedSession = index
         if (this.sessions[index].LocationType === 'Phone call') {
           this.isPhone = true
@@ -1543,16 +1436,10 @@ export default {
       }
     },
     changeDuration(index) {
-      // return () => {
       this.selectedSession = index
-      console.log(
-        '==this.sessions[index].Duration==',
-        this.sessions[index].Duration
-      )
       if (this.sessions[index].Duration === '0') {
         this.isDuration = true
       }
-      // }
     },
     setDuration() {
       this.isDuration = false
@@ -1567,7 +1454,6 @@ export default {
         ]
         this.slotOptions = newSlotOption
       }
-      console.log('==sessions==', JSON.stringify(this.sessions))
     },
     setPhone() {
       this.$refs.phoneform.validate()
@@ -1577,7 +1463,6 @@ export default {
         this.showLocation = true
         this.selectedLocation = `Phone ${this.Phone}`
         this.sessions[this.selectedSession].Phone = this.Phone
-        console.log('==sessions==', JSON.stringify(this.sessions))
       }
     },
     closeShowLocation() {
@@ -1593,14 +1478,12 @@ export default {
         this.isLocationMessage = false
         this.selectedLocation = 'Online meeting'
         this.sessions[this.selectedSession].WebinarLink = this.WebinarLink
-        console.log('==sessions==', JSON.stringify(this.sessions))
       }
     },
     setCustomLocation() {
       if (this.venueAddress && this.venueAddress.AddressLine !== '') {
         this.isCustom = false
         this.isLocationMessage = false
-        console.log('==sessions==', JSON.stringify(this.sessions))
         this.sessions[this.selectedSession]._CurrentAddress = this.venueAddress
       }
     },
@@ -1610,9 +1493,14 @@ export default {
         this.isPersonMeeting = false
         this.showLocation = true
         this.isLocationMessage = false
-        this.selectedLocation = `${this.InPersonMeeting}`
+        this.InPersonMeeting.forEach((recordId) => {
+          this.inPersonMeetingOptions.forEach((option, i) => {
+            if (option.id === recordId) {
+              this.selectedLocation += `${option.Name},`
+            }
+          })
+        })
         this.sessions[this.selectedSession].LocationId = this.InPersonMeeting
-        console.log('==sessions==', JSON.stringify(this.sessions))
       }
     },
     selectType(index) {
@@ -1701,7 +1589,7 @@ export default {
         this.sessions[this.selectedSession].RollingDays = this.RollingDays
         this.sessions[this.selectedSession].StartDate = this.StartDate
         this.sessions[this.selectedSession].EndDate = this.EndDate
-        this.sessions[this.selectedSession].Timezone = this.Timezone
+        // this.sessions[this.selectedSession].Timezone = this.Timezone
 
         if (this.ScheduledType === 'Over a period of rolling days') {
           this.sessions[
@@ -1761,7 +1649,6 @@ export default {
     },
     viewRegistration() {
       const baseUrl = getApiUrl()
-      // const baseUrl = 'event.test.bitpod.io/svc/api'
       const regUrl = baseUrl.replace('svc/api', 'e')
       window.open(`${regUrl}${this.eventData.UniqLink}`, '_blank')
     },
@@ -1840,10 +1727,8 @@ export default {
         this.isInalidEventLink === false &&
         this.validBasicInfo
       ) {
-        // this.stepNumber = value
         this.setNextTab()
       } else if (this.currentTab === 2) {
-        // this.stepNumber = value
         this.currentTab = 3
         this.setNextTab()
       }
@@ -1853,14 +1738,10 @@ export default {
       const { Code, Type } = this.tickets
       this.$refs.validTicketsForm.validate()
       if (Code !== '' && Type !== '') {
-        // if (this.venueAddress.AddressLine !== '')
-        //   this.eventData._VenueAddress = this.venueAddress
-        // let isInvalidSession = false
         const isInvalidSessionMap = this.sessions.map((session, index) => {
           return session.StartTime > session.EndTime
         })
         const isLocationTypeEmpty = this.sessions.map((session, index) => {
-          // return session.LocationType === ''
           if (session.LocationType === 'In-person meeting') {
             if (session.LocationId.length === 0) {
               return true
@@ -1886,10 +1767,7 @@ export default {
           }
           return false
         })
-        console.log('===isInvalidSessionMap==', isInvalidSessionMap)
         this.isLocationMessage = !!isLocationTypeEmpty.includes(true)
-        console.log('====isLocationMessage=', this.isLocationMessage)
-        console.log('====locationmessage=', this.locationMesssage)
         if (this.isLocationMessage) {
           this.locationMessage = 'Selected location should not be blank'
         }
@@ -1902,9 +1780,7 @@ export default {
           const newsObject = { start: startTime, end: endTime }
           tempData.push(newsObject)
         })
-        console.log('==tempData=', JSON.stringify(tempData))
         const isInvalidSlot = this.partitionIntoOverlappingRanges(tempData)
-        console.log('==isInvalidSlot=', isInvalidSlot)
         if (
           !isLocationTypeEmpty.includes(true) &&
           !isInvalidSessionMap.includes(true) &&
@@ -1939,9 +1815,6 @@ export default {
                 .then((ticketres) => {
                   this.sessions.forEach(function (session) {
                     session.EventId = res.id
-
-                    // session.Duration = parseInt(session.Duration.split(' ')[0])
-                    // session.Frequency = parseInt(session.Duration.split(' ')[0])
                     session.Duration = parseInt(session.Duration)
                     session.Frequency = parseInt(session.Duration)
                     session.Name = session.StartTime + ' ' + session.EndTime
@@ -2123,7 +1996,10 @@ export default {
           id: getIdFromAtob(id),
           ...rest,
         }))
+<<<<<<< HEAD
+=======
         // this.inPersonMeetingOptions
+>>>>>>> 43c6a36a5a47a65bf74535a10e7c249ab4687479
         this.eventData.Currency = OrganizationInfo[0].Currency
       },
       error(error) {

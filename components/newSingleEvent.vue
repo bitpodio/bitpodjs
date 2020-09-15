@@ -763,8 +763,8 @@ export default {
         EndDate,
         Timezone,
         UniqLink,
-        LocationType,
-        WebinarLink,
+        // LocationType,
+        // WebinarLink,
       } = this.eventData
       if (
         Title !== '' &&
