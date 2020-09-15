@@ -413,7 +413,11 @@ export default {
     account: false,
     message: false,
     items: [
-      { icon: 'mdi-contacts', text: 'Eventboard', to: '/' },
+      {
+        icon: 'fa fa-tachometer',
+        text: 'Eventboard',
+        to: '/apps/event/eventboard',
+      },
       { heading: 'Event' },
       { icon: 'mdi-history', text: 'Events', to: '/flat/tiles' },
       {
