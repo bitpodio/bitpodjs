@@ -105,6 +105,7 @@
                 label="Tags"
                 multiple
                 chips
+                small-chips
                 outlined
                 persistent-hint
                 dense
