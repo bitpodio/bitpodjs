@@ -75,6 +75,28 @@ query($filters: JSON, $badgeFilter: JSON, $eventId: String) {
             modifiedDate
             modifiedBy
           }
+          _sectionHeading {
+            id
+            registrationquestionsectionlabel
+            sessionsectionlabel
+            venuelabel
+            datetimelabel
+            ticketlabel
+            ticketsectionlabel
+            showimagegallery
+            showeventreviews
+            review
+            gallery
+            session
+            registrationTypes
+            speakers
+            registrationbtn
+            animation
+            createdDate
+            createdBy
+            modifiedDate
+            modifiedBy
+          }
         }
       }
     }

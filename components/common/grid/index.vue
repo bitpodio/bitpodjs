@@ -16,6 +16,7 @@
               :on-update-item="onUpdateItem"
               :on-delete-item="onDeleteItem"
               :items="selectedItems"
+              :refresh="refresh"
               class="d-flex"
             />
           </template>
@@ -24,6 +25,7 @@
             :content="content"
             :view-name="viewName"
             :on-new-item-save="onNewItemSave"
+            :refresh="refresh"
           />
         </div>
         <div v-if="hideFilter">
