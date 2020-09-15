@@ -60,17 +60,22 @@
                 />
               </v-col>
               <div class="col-md-12">
-                <v-flex class="d-flex justify-center align-center pb-2">
+                <v-flex class="d-flex justify-center align-center pb-1">
                   <h2 class="body-1 pb-1">
-                    <i class="fa-repeat" aria-hidden="true"></i> Repeating days
-                    of the week
+                    <i class="fa-repeat pr-1" aria-hidden="true"></i> Repeating
+                    days of the week
                   </h2>
                   <v-spacer></v-spacer>
                 </v-flex>
                 <v-divider></v-divider>
               </div>
-              <v-col v-for="(day, k) in days" :key="k" cols="4">
-                <v-checkbox v-model="day.Value" :label="day.Label"></v-checkbox>
+              <v-col v-for="(day, k) in days" :key="k" cols="4" class="py-0">
+                <v-checkbox
+                  v-model="day.Value"
+                  :label="day.Label"
+                  class="mt-0"
+                  height="20"
+                ></v-checkbox>
               </v-col>
             </v-row>
           </v-form>
