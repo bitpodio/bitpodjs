@@ -94,6 +94,20 @@
                 required
               ></v-text-field>
             </v-col>
+            <v-col
+              v-if="formData.BusinessType === 'Recurring'"
+              cols="12"
+              sm="6"
+              md="4"
+            >
+              <v-text-field
+                v-model="formData.MaxNoRegistrations"
+                type="number"
+                label="Max registrations per day"
+                min="0"
+                outlined
+              ></v-text-field>
+            </v-col>
             <v-col cols="12">
               <v-select
                 v-model="tags"
@@ -104,75 +118,76 @@
                 persistent-hint
               ></v-select>
             </v-col>
-            <v-col cols="12">
-              <no-ssr>
-                <vue-google-autocomplete
-                  id="map"
-                  ref="address"
-                  v-model="VenueAddress.AddressLine"
+            <div
+              v-if="formData.BusinessType !== 'Recurring'"
+              style="display: contents;"
+            >
+              <v-col cols="12">
+                <no-ssr>
+                  <vue-google-autocomplete
+                    id="map"
+                    ref="address"
+                    v-model="VenueAddress.AddressLine"
+                    outlined
+                    label="Venue Address"
+                    classname="form-control"
+                    :rules="[addressValidation]"
+                    placeholder="Venue Address *"
+                    @placechanged="getAddressData"
+                    @change="addressChanged"
+                  >
+                  </vue-google-autocomplete>
+                  <span v-if="errorAlert.message != ''" style="color: red;">{{
+                    errorAlert.message
+                  }}</span>
+                </no-ssr>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  v-model="formData.VenueName"
+                  label="Venue Name"
                   outlined
-                  label="Venue Address"
-                  classname="form-control"
-                  :rules="[addressValidation]"
-                  placeholder="Venue Address *"
-                  @placechanged="getAddressData"
-                  @change="addressChanged"
-                >
-                </vue-google-autocomplete>
-                <span v-if="errorAlert.message != ''" style="color: red;">{{
-                  errorAlert.message
-                }}</span>
-              </no-ssr>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                v-model="formData.VenueName"
-                label="Venue Name"
-                outlined
-                @change="changeVenueName"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                v-model="VenueAddress.City"
-                label="City"
-                outlined
-                @change="changeCity"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                v-model="VenueAddress.State"
-                label="State"
-                outlined
-                @change="changeState"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                v-model="VenueAddress.Country"
-                label="Country"
-                outlined
-                @change="changeCountry"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                v-model="VenueAddress.PostalCode"
-                label="Zip Code"
-                outlined
-                @change="changeZipCode"
-              ></v-text-field>
-            </v-col>
+                  @change="changeVenueName"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  v-model="VenueAddress.City"
+                  label="City"
+                  outlined
+                  @change="changeCity"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  v-model="VenueAddress.State"
+                  label="State"
+                  outlined
+                  @change="changeState"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  v-model="VenueAddress.Country"
+                  label="Country"
+                  outlined
+                  @change="changeCountry"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  v-model="VenueAddress.PostalCode"
+                  label="Zip Code"
+                  outlined
+                  @change="changeZipCode"
+                ></v-text-field>
+              </v-col>
+            </div>
           </v-row>
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions class="pl-4">
-          <v-btn
-            :disabled="!valid || !this.addressLine"
-            color="primary"
-            depressed
-            @click="onSave"
+          <v-btn :disabled="!valid" color="primary" depressed @click="onSave"
             >Save</v-btn
           >
         </v-card-actions>
@@ -257,16 +272,20 @@ export default {
         outlined: true,
         rules: [
           (v) => {
-            const StartDate = v && new Date(v)
-            const { EndDate } = this.formData
-            let startdateMessage = ''
-            if (!StartDate) startdateMessage = strings.FIELD_REQUIRED
-            else if (StartDate && EndDate && StartDate > EndDate)
-              startdateMessage = strings.EVENT_START_END_DATE
-            else if (StartDate < new Date())
-              startdateMessage = strings.EVENT_START_DATE
-            else startdateMessage = ''
-            return startdateMessage || true
+            if (this.formData.BusinessType !== 'Recurring') {
+              const StartDate = v && new Date(v)
+              const { EndDate } = this.formData
+              let startdateMessage = ''
+              if (!StartDate) startdateMessage = strings.FIELD_REQUIRED
+              else if (StartDate && EndDate && StartDate > EndDate)
+                startdateMessage = strings.EVENT_START_END_DATE
+              else if (StartDate < new Date())
+                startdateMessage = strings.EVENT_START_DATE
+              else startdateMessage = ''
+              return startdateMessage || true
+            } else {
+              return true
+            }
           },
         ],
       }
@@ -342,30 +361,62 @@ export default {
       }
     },
     onSave() {
+      debugger
       const eventUrl = `https://${nuxtconfig.axios.eventUrl}/svc/api/Events/${this.$route.params.id}`
       this.formData.Tags = this.tags
-      const convertedEventRecord = formatTimezoneDateFieldsData(
-        this.formData,
-        this.fields
-      )
-      this.formData.StartDate = convertedEventRecord.StartDate
-      this.formData.EndDate = convertedEventRecord.EndDate
-      this.formData.Timezone = convertedEventRecord.Timezone
-      Object.assign({}, this.formData, { _VenueAddress: this.VenueAddress })
-      delete this.formData.VenueAddress
-      delete this.formData._VenueAddress.LatLng
-      this.$axios
-        .$patch(eventUrl, {
-          ...this.formData,
-        })
-        .then((res) => {
-          this.close()
-          this.refresh()
-          return (this.data.event = res)
-        })
-        .catch((e) => {
-          console.log('error', e)
-        })
+
+      if (
+        this.formData.BusinessType !== 'Recurring' ||
+        this.formData.StartDate !== null ||
+        this.formData.EndDate !== null
+      ) {
+        const convertedEventRecord = formatTimezoneDateFieldsData(
+          this.formData,
+          this.fields
+        )
+        this.formData.StartDate = convertedEventRecord.StartDate
+        this.formData.EndDate = convertedEventRecord.EndDate
+        this.formData.Timezone = convertedEventRecord.Timezone
+      } else {
+        this.formData.StartDate = null
+        this.formData.EndDate = null
+        // this.formData.Timezone = convertedEventRecord.Timezone
+      }
+      if (this.formData.BusinessType !== 'Recurring') {
+        Object.assign({}, this.formData, { _VenueAddress: this.VenueAddress })
+        delete this.formData.VenueAddress
+        delete this.formData._VenueAddress.LatLng
+        this.$axios
+          .$patch(eventUrl, {
+            ...this.formData,
+          })
+          .then((res) => {
+            this.close()
+            this.refresh()
+            return (this.data.event = res)
+          })
+          .catch((e) => {
+            console.log('error', e)
+          })
+      } else {
+        debugger
+        this.formData.MaxNoRegistrations = parseInt(
+          this.formData.MaxNoRegistrations
+        )
+        delete this.formData._VenueAddress
+        this.$axios
+          .$patch(eventUrl, {
+            ...this.formData,
+          })
+          .then((res) => {
+            this.close()
+            this.refresh()
+            return (this.data.event = res)
+          })
+          .catch((e) => {
+            console.log('error', e)
+          })
+      }
     },
     getTags() {
       return this.$apollo
@@ -416,21 +467,44 @@ export default {
         }
       },
       update(data) {
+        debugger
         const event = formatGQLResult(data, 'Event')
         this.formData = event.length > 0 ? { ...event[0] } : {}
         this.formData.id = this.$route.params.id
         this.tags = this.formData.Tags
-        this.addressLine = this.formData._VenueAddress.AddressLine
-        this.formData.StartDate = this.getZonedDateTime(
-          this.formData.StartDate,
-          this.formData.Timezone
-        )
-        this.formData.EndDate = this.getZonedDateTime(
-          this.formData.EndDate,
-          this.formData.Timezone
-        )
-        this.VenueAddress =
-          this.formData._VenueAddress != null ? this.formData._VenueAddress : {}
+        if (
+          this.formData.BusinessType !== 'Recurring' &&
+          this.formData.StartDate !== null &&
+          this.formData.EndDate !== null
+        ) {
+          this.addressLine = this.formData._VenueAddress.AddressLine
+          this.formData.StartDate = this.getZonedDateTime(
+            this.formData.StartDate,
+            this.formData.Timezone
+          )
+          this.formData.EndDate = this.getZonedDateTime(
+            this.formData.EndDate,
+            this.formData.Timezone
+          )
+          this.VenueAddress =
+            this.formData._VenueAddress != null
+              ? this.formData._VenueAddress
+              : {}
+        } else {
+          debugger
+          this.formData.StartDate = this.formData.StartDate
+            ? this.getZonedDateTime(
+                this.formData.StartDate,
+                this.formData.Timezone
+              )
+            : null
+          this.formData.EndDate = this.formData.EndDate
+            ? this.getZonedDateTime(
+                this.formData.EndDate,
+                this.formData.Timezone
+              )
+            : null
+        }
         return {
           event: event.length > 0 ? event[0] : {},
         }

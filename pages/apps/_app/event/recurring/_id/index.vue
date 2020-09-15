@@ -240,7 +240,7 @@
             Information
           </h2>
           <v-spacer></v-spacer>
-          <v-btn text small @click.stop="eventform = true">
+          <v-btn text small @click.stop="eventForm = true">
             <v-icon left>mdi-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
@@ -310,7 +310,7 @@
             Settings
           </h2>
           <v-spacer></v-spacer>
-          <v-btn text small @click="formdialog1 = true">
+          <v-btn text small @click="eventSetting = true">
             <v-icon left>mdi-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
@@ -408,7 +408,7 @@
             Registration Page Settings
           </h2>
           <v-spacer></v-spacer>
-          <v-btn text small @click="sitesetting = true">
+          <v-btn text small @click="siteSetting = true">
             <v-icon left>mdi-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
@@ -452,12 +452,20 @@
       </div>
     </v-flex>
     <editSeoForm :seo-form.sync="seoForm" />
+    <editEventForm :event-form.sync="eventForm" />
+    <editEventSetting :event-setting.sync="eventSetting" />
+    <editSiteSetting :site-setting.sync="siteSetting" />
   </v-flex>
 </template>
 <script>
 import gql from 'graphql-tag'
 import format from 'date-fns/format'
+import editEventForm from '../../_id/editEventForm.vue'
 import editSeoForm from '~/pages/apps/_app/event/_id/editSeoForm.vue'
+// import editEventForm from '~/pages/apps/_app/event/_id/editEventForm.vue'
+// import editEventForm from '~/pages/apps/_app/event/recurring/_id/editRecurringEventForm.vue'
+import editEventSetting from '~/pages/apps/_app/event/_id/editEventSetting.vue'
+import editSiteSetting from '~/pages/apps/_app/event/_id/editSiteSetting.vue'
 import Grid from '~/components/common/grid'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
@@ -468,12 +476,18 @@ export default {
   components: {
     Grid,
     editSeoForm,
+    editEventForm,
+    editEventSetting,
+    editSiteSetting,
   },
   mixins: [configLoaderMixin],
   data() {
     return {
       loading: 0,
       seoForm: false,
+      eventForm: false,
+      eventSetting: false,
+      siteSetting: false,
       data: {
         event: {},
         badge: {},
