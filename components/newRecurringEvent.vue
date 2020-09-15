@@ -1991,6 +1991,10 @@ export default {
           id: getIdFromAtob(id),
           ...rest,
         }))
+<<<<<<< HEAD
+=======
+        // this.inPersonMeetingOptions
+>>>>>>> 43c6a36a5a47a65bf74535a10e7c249ab4687479
         this.eventData.Currency = OrganizationInfo[0].Currency
       },
       error(error) {

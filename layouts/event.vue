@@ -297,6 +297,9 @@
             <v-divider></v-divider>
             <v-list>
               <v-list-item class="text-center justify-center">
+                <v-btn class="ma-2" color="primary">
+                  upgrade
+                </v-btn>
                 <v-btn class="ma-2" outlined color="primary" @click="onLogout">
                   Logout
                 </v-btn>
