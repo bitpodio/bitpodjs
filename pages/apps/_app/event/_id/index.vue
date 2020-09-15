@@ -288,6 +288,33 @@
           <i class="fa fa-image pr-1" aria-hidden="true"></i> Image Gallery
         </h2>
         <v-divider></v-divider>
+        <v-row align="center" justify="center">
+          <v-img
+            src="https://bitpod-event.test.bitpod.io/svc/api/Attachments/download/SkivkXCEP"
+            lazy-src="https://bitpod-event.test.bitpod.io/svc/api/Attachments/download/SkivkXCEP"
+            aspect-ratio="1"
+            class="grey lighten-2"
+            max-width="500"
+            max-height="300"
+          >
+            <template v-slot:placeholder>
+              <v-row class="fill-height ma-0" align="center" justify="center">
+                <v-progress-circular
+                  indeterminate
+                  color="grey lighten-5"
+                ></v-progress-circular>
+              </v-row>
+            </template>
+          </v-img>
+          <v-chip
+            v-for="Images in data.event.Images"
+            :key="Images"
+            small
+            class="ma-1"
+          >
+            {{ Images }}
+          </v-chip>
+        </v-row>
       </div>
     </v-flex>
     <v-flex column xs12 sm4 md4 lg4>
