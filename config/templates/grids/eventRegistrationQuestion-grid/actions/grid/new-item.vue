@@ -104,6 +104,7 @@ import nuxtconfig from '~/nuxt.config'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import eventTicket from '~/config/apps/event/gql/eventTickets.gql'
 import { formatGQLResult } from '~/utility/gql.js'
+import { getIdFromAtob } from '~/utility'
 import { required } from '~/utility/rules.js'
 export default {
   props: ['refresh'],
@@ -115,6 +116,7 @@ export default {
         Options: [],
         Question: '',
         TicketName: [],
+        TicketIds: [],
         isRequired: false,
       },
       valid: false,
@@ -124,6 +126,7 @@ export default {
       controlTypeDropDown: [],
       tickets: [],
       ticketsDropDown: [],
+      ticketIds: [],
       showField: ['checkbox', 'radio', 'dropdown'],
       CsvOptions: '',
     }
@@ -148,7 +151,15 @@ export default {
       })
     this.getTicketDetails()
       .then((res) => {
-        this.ticketsDropDown = res.map((i) => i.Code)
+        this.ticketIds = []
+
+        this.ticketsDropDown = res.map((i) => {
+          this.ticketIds.push({
+            name: i.Code,
+            id: getIdFromAtob(i.id),
+          })
+          return i.Code
+        })
         return res
       })
       .catch((e) => {
@@ -165,21 +176,20 @@ export default {
       this.formData.ControlType = this.controlType
       this.formData.DisplayOrder = parseInt(this.formData.DisplayOrder)
       if (
-        this.showField.includes(this.formData.ControlType) &&
+        this.showField.includes(this.formData.ControlType) ||
         this.CsvOptions.includes(',')
       ) {
         this.formData.Options = this.CsvOptions.split(',')
       } else {
-        this.formData.Options.push(this.CsvOptions)
+        this.formData.Options = []
       }
-      if (this.CsvOptions === '') {
-        delete this.formData.Options
-      }
-      if (this.tickets && this.tickets.length === 0) {
-        delete this.formData.TicketName
-      } else {
-        this.formData.TicketName = this.tickets
-      }
+      this.formData.Options = this.formData.Options ? this.formData.Options : []
+      this.formData.TicketName = this.tickets ? this.tickets : []
+      this.formData.TicketIds = this.tickets
+        ? this.ticketIds
+            .filter((i) => this.tickets.some((j) => j === i.name))
+            .map((k) => k.id)
+        : []
       this.$axios
         .$post(
           `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/Survey`,
