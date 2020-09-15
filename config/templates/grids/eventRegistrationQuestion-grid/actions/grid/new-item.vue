@@ -87,7 +87,7 @@
         >
           <v-btn
             color="primary"
-            :disabled="!valid || !this.controlType || !this.CsvOptions"
+            :disabled="!valid || !this.controlType"
             depressed
             @click.native="onSave"
             >Save</v-btn
@@ -156,6 +156,11 @@ export default {
       })
   },
   methods: {
+    onReset() {
+      this.formData.Options = []
+      this.formData.TicketName = []
+      this.$refs.form.reset()
+    },
     onSave() {
       this.formData.ControlType = this.controlType
       this.formData.DisplayOrder = parseInt(this.formData.DisplayOrder)
@@ -164,8 +169,17 @@ export default {
         this.CsvOptions.includes(',')
       ) {
         this.formData.Options = this.CsvOptions.split(',')
+      } else {
+        this.formData.Options.push(this.CsvOptions)
       }
-      this.formData.TicketName = this.tickets
+      if (this.CsvOptions === '') {
+        delete this.formData.Options
+      }
+      if (this.tickets && this.tickets.length === 0) {
+        delete this.formData.TicketName
+      } else {
+        this.formData.TicketName = this.tickets
+      }
       this.$axios
         .$post(
           `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/Survey`,
@@ -175,6 +189,7 @@ export default {
         )
         .then((res) => {
           this.dialog = false
+          this.onReset()
           this.refresh()
           return res
         })
