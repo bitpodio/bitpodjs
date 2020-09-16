@@ -112,19 +112,25 @@
           </div>
         </v-card-title>
         <v-card-text class="v-location px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
-          <v-row>
-            <v-col cols="12" class="mt-3">
-              <v-text-field
-                v-model="Duration"
-                label="Duration"
-                type="number"
-                min="1"
-                :rules="durationRules"
-                outlined
-                dense
-              ></v-text-field>
-            </v-col>
-          </v-row>
+          <v-form
+            ref="durationform"
+            v-model="validDuration"
+            :lazy-validation="lazy"
+          >
+            <v-row>
+              <v-col cols="12" class="mt-3">
+                <v-text-field
+                  v-model="Duration"
+                  label="Duration"
+                  type="number"
+                  min="0"
+                  :rules="durationRules"
+                  outlined
+                  dense
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-form>
         </v-card-text>
         <div class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10 mb-3">
           <v-btn depressed class="mr-1" color="primary" @click="setDuration">
@@ -558,7 +564,7 @@
                       <v-text-field
                         v-model="eventData.UniqLink"
                         label="Event Link*"
-                        hint="https://bitpod-event.test.bitpod.io/e/"
+                        :hint="eventLinkHint"
                         persistent-hint
                         outlined
                         dense
@@ -624,6 +630,8 @@
                               outlined
                               dense
                               value
+                              type="Number"
+                              min="0"
                               :disabled="isPriceDisabled(k)"
                               @change="changeTicketAmount(k)"
                             ></v-text-field>
@@ -634,6 +642,8 @@
                               outlined
                               dense
                               value
+                              type="Number"
+                              min="0"
                             ></v-text-field>
                           </td>
                           <td class="pa-2 pb-0">
@@ -755,9 +765,9 @@
                             ></Timezone>
                           </td>
                           <td class="pa-2 pb-0 event-timezone">
-                            <div v-if="showLocation">
-                              {{ selectedLocation }}
-                              <v-icon @click="closeShowLocation"
+                            <div v-if="session.selectedLocation">
+                              {{ session.selectedLocation }}
+                              <v-icon @click="closeShowLocation(k)"
                                 >mdi-close</v-icon
                               >
                             </div>
@@ -772,7 +782,7 @@
                           </td>
                           <td class="pa-2 pb-0">
                             <span v-if="session.Type === 'Group'"
-                              >{{ session.Type }} {{ session.MaxAllow }}
+                              >{{ getMaxAllow(session) }}
                             </span>
                             <span v-if="session.Type === 'Personal'"
                               >{{ session.Type }}
@@ -782,7 +792,7 @@
                             </v-btn>
                           </td>
                           <td class="pa-2 pb-0">
-                            <span>{{ customTicket }} </span>
+                            <span>{{ getTicketCount(session) }} </span>
                             <v-btn icon small @click="selectSessionTickets(k)">
                               <v-icon>mdi-18px mdi-pencil</v-icon>
                             </v-btn>
@@ -892,7 +902,12 @@
             @click="prev()"
             >Prev</v-btn
           >
-          <v-btn v-if="currentTab < 3" depressed color="primary" @click="next()"
+          <v-btn
+            v-if="currentTab < 3"
+            depressed
+            color="primary"
+            :disabled="isNextDisabled()"
+            @click="next()"
             >Next</v-btn
           >
           <v-btn
@@ -950,7 +965,9 @@ export default {
       valid: true,
       tabs: null,
       currentTab: 1,
+      validTickets: true,
       validDateRange: true,
+      validDuration: true,
       validPhone: true,
       validOnlineMeeting: true,
       validCustomLocation: true,
@@ -961,7 +978,6 @@ export default {
       lazy: false,
       locationMesssage: '',
       isLocationMessage: false,
-      customTicket: '0 Ticket',
       slotOptions: [],
       inPersonMeetingOptions: [],
       maxAllowRules: [
@@ -974,10 +990,10 @@ export default {
       ],
       durationRules: [
         (v) => {
-          if (!isNaN(parseFloat(v)) && v > 0) {
+          if (!isNaN(parseFloat(v))) {
             return true
           }
-          return 'Duration should be greater than zero'
+          return 'Duration should not be less than zero'
         },
       ],
       rollingDaysRules: [
@@ -1231,6 +1247,7 @@ export default {
           LocationId: [],
           _CurrentAddress: {},
           SessionTicket: [],
+          selectedLocation: '',
           Days: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'],
           _Exceptions: [],
         },
@@ -1250,6 +1267,9 @@ export default {
     }
   },
   computed: {
+    eventLinkHint() {
+      return `https://bitpod-event.test.bitpod.io/e/${this.eventData.UniqLink}`
+    },
     slotLookupOptions() {
       const items = this.slotOptions
       return items
@@ -1333,6 +1353,16 @@ export default {
     },
   },
   methods: {
+    getMaxAllow(session) {
+      return `${session.Type} ${session.MaxAllow}`
+    },
+    getTicketCount(session) {
+      if (session.SessionTicket) {
+        return `${session.SessionTicket.length} Ticket`
+      } else {
+        return '0 Ticket'
+      }
+    },
     changeStartDate(value) {
       this.$refs.form.validate()
     },
@@ -1448,6 +1478,7 @@ export default {
       window.open(link, '_blank')
     },
     changeType(value) {
+      this.MaxAllow = this.sessions[this.selectedSession].MaxAllow || 5
       this.isGroup = value === 'Group'
     },
     changelocationType(index) {
@@ -1484,6 +1515,7 @@ export default {
           this.venueAddress.LatLng = {}
         }
         if (this.sessions[index].LocationType === 'In-person meeting') {
+          this.InPersonMeeting = []
           this.isPersonMeeting = true
           this.isZoom = false
           this.isGoogleMeet = false
@@ -1509,20 +1541,24 @@ export default {
       this.selectedSession = index
       if (this.sessions[index].Duration === '0') {
         this.isDuration = true
+        this.Duration = 0
       }
     },
     setDuration() {
-      this.isDuration = false
-      this.sessions[this.selectedSession].Duration = this.Duration
-      const filterOption = this.slotOptions.filter(
-        ({ key }) => key === this.duration
-      )
-      if (!filterOption.length) {
-        const newSlotOption = [
-          ...this.slotOptions,
-          { key: this.Duration, value: `${this.Duration} min` },
-        ]
-        this.slotOptions = newSlotOption
+      this.$refs.durationform.validate()
+      if (this.validDuration) {
+        this.isDuration = false
+        this.sessions[this.selectedSession].Duration = this.Duration
+        const filterOption = this.slotOptions.filter(
+          ({ key }) => key === this.duration
+        )
+        if (!filterOption.length) {
+          const newSlotOption = [
+            ...this.slotOptions,
+            { key: this.Duration, value: `${this.Duration} min` },
+          ]
+          this.slotOptions = newSlotOption
+        }
       }
     },
     setPhone() {
@@ -1530,30 +1566,29 @@ export default {
       if (this.validPhone) {
         this.isLocationMessage = false
         this.isPhone = false
-        this.showLocation = true
-        this.selectedLocation = ''
-        this.selectedLocation = `Phone ${this.Phone}`
+        this.sessions[
+          this.selectedSession
+        ].selectedLocation = `Phone ${this.Phone}`
         this.sessions[this.selectedSession].Phone = this.Phone
-      } else {
-        this.showLocation = false
+        const sessions = [...this.sessions]
+        this.sessions = sessions
       }
     },
-    closeShowLocation() {
-      this.showLocation = false
-
-      this.sessions[this.selectedSession].LocationType = ''
+    closeShowLocation(index) {
+      this.sessions[index].LocationType = ''
+      this.sessions[index].selectedLocation = ''
+      const sessions = [...this.sessions]
+      this.sessions = sessions
     },
     setOnlineMeeting() {
       this.$refs.meetingform.validate()
       if (this.validOnlineMeeting) {
         this.isOnlineMeeting = false
-        this.showLocation = true
         this.isLocationMessage = false
-        this.selectedLocation = ''
-        this.selectedLocation = 'Online meeting'
+        this.sessions[this.selectedSession].selectedLocation = 'Online meeting'
         this.sessions[this.selectedSession].WebinarLink = this.WebinarLink
-      } else {
-        this.showLocation = false
+        const sessions = [...this.sessions]
+        this.sessions = sessions
       }
     },
     setCustomLocation() {
@@ -1561,9 +1596,7 @@ export default {
         this.addresslineMessage = ''
         this.isCustom = false
         this.isLocationMessage = false
-        this.showLocation = true
-        this.selectedLocation = ''
-        this.selectedLocation =
+        this.sessions[this.selectedSession].selectedLocation =
           this.venueAddress.AddressLine + ' ' + this.venueAddress.City
         this.sessions[this.selectedSession]._CurrentAddress = this.venueAddress
       } else if (
@@ -1576,37 +1609,44 @@ export default {
         this.addresslineMessage = ''
         this.isCustom = false
         this.isLocationMessage = false
-        this.showLocation = true
-        this.selectedLocation = ''
-        this.selectedLocation =
+        this.sessions[this.selectedSession].selectedLocation =
           this.venueAddress.AddressLine + ' ' + this.venueAddress.City
         this.sessions[this.selectedSession]._CurrentAddress = this.venueAddress
+        const sessions = [...this.sessions]
+        this.sessions = sessions
       } else {
         this.addresslineMessage = strings.FIELD_REQUIRED
-        this.showLocation = false
       }
     },
     setPersonMeeting() {
       this.$refs.personmeetingform.validate()
       if (this.validPersonMeeting) {
         this.isPersonMeeting = false
-        this.showLocation = true
         this.isLocationMessage = false
-        this.selectedLocation = ''
+        this.sessions[this.selectedSession].selectedLocation = ''
         this.InPersonMeeting.forEach((recordId) => {
           this.inPersonMeetingOptions.forEach((option, i) => {
             if (option.id === recordId) {
-              this.selectedLocation += `${option.Name},`
+              this.sessions[
+                this.selectedSession
+              ].selectedLocation += `${option.Name},`
             }
           })
         })
         this.sessions[this.selectedSession].LocationId = this.InPersonMeeting
-      } else {
-        this.showLocation = false
+        const sessions = [...this.sessions]
+        this.sessions = sessions
       }
     },
     selectType(index) {
       this.selectedSession = index
+      this.Type = this.sessions[index].Type
+      if (this.Type === 'Group') {
+        this.MaxAllow = this.sessions[this.selectedSession].MaxAllow || 5
+        this.isGroup = true
+      } else {
+        this.isGroup = false
+      }
       this.isType = true
     },
     setType() {
@@ -1617,8 +1657,11 @@ export default {
         if (this.Type === 'Group') {
           this.sessions[this.selectedSession].MaxAllow = parseInt(this.MaxAllow)
         } else {
+          this.sessions[this.selectedSession].MaxAllow = 5
           this.MaxAllow = 5
         }
+        const sessions = [...this.sessions]
+        this.sessions = sessions
       }
     },
     selectSessionTickets(index) {
@@ -1627,8 +1670,9 @@ export default {
     },
     setSessionTicket() {
       this.isSessionTicket = false
-      this.customTicket = `${this.SessionTicket.length} Ticket`
       this.sessions[this.selectedSession].SessionTicket = this.SessionTicket
+      const sessions = [...this.sessions]
+      this.sessions = sessions
     },
     setScheduleType(type) {
       if (type === 'Over a date range') {
@@ -1697,7 +1741,6 @@ export default {
         this.sessions[this.selectedSession].RollingDays = this.RollingDays
         this.sessions[this.selectedSession].StartDate = this.StartDate
         this.sessions[this.selectedSession].EndDate = this.EndDate
-        // this.sessions[this.selectedSession].Timezone = this.Timezone
 
         if (this.ScheduledType === 'Over a period of rolling days') {
           this.sessions[
@@ -1928,7 +1971,10 @@ export default {
               return this.$axios
                 .$post(`${baseUrl}Tickets`, ticketList)
                 .then((ticketres) => {
-                  this.sessions.forEach(function (session) {
+                  const cloneSessions = JSON.parse(
+                    JSON.stringify(this.sessions)
+                  )
+                  cloneSessions.forEach(function (session) {
                     session.EventId = res.id
                     session.Duration = parseInt(session.Duration)
                     session.Frequency = parseInt(session.Duration)

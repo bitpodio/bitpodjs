@@ -103,7 +103,7 @@
                   <v-text-field
                     v-model="eventData.UniqLink"
                     label="Event Link*"
-                    hint="https://bitpod-event.test.bitpod.io/e/"
+                    :hint="eventLinkHint"
                     persistent-hint
                     outlined
                     dense
@@ -445,7 +445,12 @@
           @click="prev()"
           >Prev</v-btn
         >
-        <v-btn v-if="currentTab < 3" depressed color="primary" @click="next()"
+        <v-btn
+          v-if="currentTab < 3"
+          depressed
+          color="primary"
+          :disabled="isNextDisabled()"
+          @click="next()"
           >Next</v-btn
         >
         <v-btn
@@ -492,6 +497,7 @@ export default {
       valid: true,
       lazy: false,
       tabs: null,
+      isUniqLinkValid: false,
       currentTab: 1,
       isSaveButtonDisabled: false,
       addresslineMessage: '',
@@ -600,6 +606,9 @@ export default {
     }
   },
   computed: {
+    eventLinkHint() {
+      return `https://bitpod-event.test.bitpod.io/e/${this.eventData.UniqLink}`
+    },
     gMapCenter() {
       return { lat: this.locations[0].lat, lng: this.locations[0].lng }
     },
@@ -651,6 +660,9 @@ export default {
     },
   },
   methods: {
+    isNextDisabled() {
+      return this.isUniqLinkValid === false
+    },
     selectTab(tabNumber) {
       this.currentTab = tabNumber
     },
@@ -1028,7 +1040,10 @@ export default {
       if (result.data.Event.EventCount > 0) {
         this.isInalidEventLink = true
         this.uniqueLinkMessage = strings.UNIQUE_LINK_DUPLICATE
-      } else this.isInalidEventLink = false
+      } else {
+        this.isInalidEventLink = false
+        this.isUniqLinkValid = true
+      }
     },
     changeLocation(value) {
       this.eventData.LocationType = value
