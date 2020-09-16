@@ -6,7 +6,9 @@
           <div class="text-h4 text-capitalize">{{ data.event.Title }}</div>
           <v-spacer></v-spacer>
           <div class="mr-2">
-            <v-btn depressed color="primary">View</v-btn>
+            <v-btn depressed color="primary" @click="viewRegistration"
+              >View</v-btn
+            >
           </div>
           <div v-if="data.event.Status === 'Not ready'" class="mr-2">
             <v-btn outlined color="primary">Publish</v-btn>
@@ -164,6 +166,148 @@
           >
         </v-flex>
       </div>
+      <div class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2 pb-2">
+        <v-flex class="d-flex justify-center align-center pb-1">
+          <h2 class="body-1 pb-1">
+            <i class="fa fa-image pr-1" aria-hidden="true"></i> Image Gallery
+          </h2>
+          <v-spacer></v-spacer>
+          <v-menu offset-y>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn depressed small color="primary" v-bind="attrs" v-on="on">
+                Upload
+              </v-btn>
+            </template>
+            <v-list dense>
+              <v-list-item>
+                <v-list-item-title>Badge Logo</v-list-item-title>
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-title>Event Banner (680x350)</v-list-item-title>
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-title>Other</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </v-flex>
+        <v-divider></v-divider>
+        <v-card
+          v-for="image in data.event.Images"
+          :key="image"
+          class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0"
+          @click.stop="dialog = true"
+        >
+          <v-img
+            :src="getAttachmentLink(image, true)"
+            :lazy-src="getAttachmentLink(image, true)"
+            aspect-ratio="1"
+            class="grey lighten-2"
+            max-width="150"
+            max-height="150"
+            width="150"
+          >
+            <template v-slot:placeholder>
+              <v-row class="fill-height ma-0" align="center" justify="center">
+                <v-progress-circular
+                  indeterminate
+                  color="grey lighten-5"
+                ></v-progress-circular>
+              </v-row>
+            </template>
+          </v-img>
+        </v-card>
+        <v-dialog v-model="dialog" max-width="600">
+          <v-card>
+            <v-card-title class="pa-1">
+              <v-spacer></v-spacer>
+              <div>
+                <v-btn icon @click="dialog = false">
+                  <v-icon>mdi-close</v-icon>
+                </v-btn>
+              </div>
+            </v-card-title>
+            <v-card-text class="pa-1">
+              <v-card
+                v-for="image in data.event.Images"
+                :key="image"
+                class="mx-auto elevation-0"
+                @click.stop="dialog = true"
+              >
+                <v-img
+                  :src="getAttachmentLink(image, true)"
+                  :lazy-src="getAttachmentLink(image, true)"
+                  aspect-ratio="1"
+                  class="grey lighten-2"
+                  width="100%"
+                >
+                  <template v-slot:placeholder>
+                    <v-row
+                      class="fill-height ma-0"
+                      align="center"
+                      justify="center"
+                    >
+                      <v-progress-circular
+                        indeterminate
+                        color="grey lighten-5"
+                      ></v-progress-circular>
+                    </v-row>
+                  </template>
+                </v-img>
+              </v-card>
+            </v-card-text>
+          </v-card>
+        </v-dialog>
+        <v-card
+          v-for="image in data.event.Logo"
+          :key="image"
+          class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0"
+        >
+          <v-img
+            :src="getAttachmentLink(image, true)"
+            :lazy-src="getAttachmentLink(image, true)"
+            aspect-ratio="1"
+            class="grey lighten-2"
+            max-width="150"
+            max-height="150"
+            width="150"
+            contain
+          >
+            <template v-slot:placeholder>
+              <v-row class="fill-height ma-0" align="center" justify="center">
+                <v-progress-circular
+                  indeterminate
+                  color="grey lighten-5"
+                ></v-progress-circular>
+              </v-row>
+            </template>
+          </v-img>
+        </v-card>
+        <v-card
+          v-for="image in data.event.Other"
+          :key="image"
+          class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0"
+        >
+          <v-img
+            :src="getAttachmentLink(image, true)"
+            :lazy-src="getAttachmentLink(image, true)"
+            aspect-ratio="1"
+            class="grey lighten-2"
+            max-width="150"
+            max-height="150"
+            width="150"
+          >
+            <template v-slot:placeholder>
+              <v-row class="fill-height ma-0" align="center" justify="center">
+                <v-progress-circular
+                  indeterminate
+                  color="grey lighten-5"
+                ></v-progress-circular>
+              </v-row>
+            </template>
+          </v-img>
+        </v-card>
+      </div>
       <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2 pb-0">
         <h2 class="body-1 pb-2">
           <i class="fa fa-black-board pr-1" aria-hidden="true"></i> Recurring
@@ -236,12 +380,6 @@
         </h2>
         <v-divider></v-divider>
         <Grid view-name="eventRegistrationForm" :content="content" />
-      </div>
-      <div class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2">
-        <h2 class="body-1 pb-2">
-          <i class="fa fa-image pr-1" aria-hidden="true"></i> Image Gallery
-        </h2>
-        <v-divider></v-divider>
       </div>
     </v-flex>
     <v-flex column xs12 sm4 md4 lg4>
@@ -474,6 +612,7 @@ import Grid from '~/components/common/grid'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin } from '~/utility'
+import nuxtconfig from '~/nuxt.config'
 
 export default {
   layout: 'event',
@@ -486,6 +625,7 @@ export default {
     return {
       loading: 0,
       seoForm: false,
+      dialog: false,
       data: {
         event: {},
         badge: {},
@@ -504,6 +644,16 @@ export default {
     },
     formatField(fieldValue) {
       return fieldValue || '-'
+    },
+    getAttachmentLink(id, isDownloadLink) {
+      const attachmentUrl = `https://${nuxtconfig.axios.eventUrl}${
+        nuxtconfig.axios.apiEndpoint
+      }Attachments${isDownloadLink ? '/download' : ''}${id ? '/' + id : ''}`
+      return attachmentUrl
+    },
+    viewRegistration() {
+      const regUrl = `https://${nuxtconfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
+      window.open(`${regUrl}`, '_blank')
     },
   },
   apollo: {
