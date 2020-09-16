@@ -453,12 +453,19 @@ export default {
       type: Object,
       required: true,
     },
+    value: {
+      type: Array,
+      default: () => [],
+    },
+    singleSelect: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     const headers = getTableHeader(this.content, this.viewName)
     const gridProps = getGridsProps(this.content, this.viewName)
     return {
-      singleSelect: false,
       headers,
       tableData: {
         items: [],
@@ -514,6 +521,9 @@ export default {
       // call rest
       this.loadRestData()
     },
+    value() {
+      this.selectedItems = this.$props.value
+    },
   },
   mounted() {
     this.headers.forEach(async (column, index) => {
@@ -561,6 +571,7 @@ export default {
     },
     onItemSelected(items) {
       this.selectedItems = items
+      this.$emit('onSelectedListChange', this.selectedItems)
     },
     async onNewItemSave(data) {
       const modelName = getModelName(this.content, this.viewName)

@@ -39,6 +39,13 @@ body {
   bottom: 0 !important;
   width: 50% !important;
 }
+.slide-form-default-big {
+  position: fixed !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 75% !important;
+  height: 100%;
+}
 .Twitter {
   font-size: 0 !important;
   text-transform: capitalize !important;
@@ -75,6 +82,8 @@ body {
 .participantButton{
   position: absolute !important;
   left: 4px;
+}
+.cursorPointer {
   cursor: pointer;
 }
 .fs-18 {
@@ -115,6 +124,15 @@ body {
 .app-container {
   max-width: 300px;
 }
+.templateTile {
+  max-width: 250px !important;
+}
+.tileCard:hover {
+  background: #eeeeee !important;
+}
+.v-data-table__wrapper {
+  width: 100%;
+}
 .app-view {
   min-width: 90px !important;
   max-width: 90px !important;
@@ -134,6 +152,31 @@ body {
 .survey-img {
   max-width: 36px !important;
   max-height: 36px !important;
+}
+.tabContent {
+  overflow: hidden auto;
+  max-height: 390px !important;
+}
+.contactsGrid {
+  overflow: hidden auto;
+  max-height: 660px !important;
+  width: 100%;
+}
+.tempCard {
+  transition: opacity .4s ease-in-out;
+}
+.on-hover {
+  opacity: 0.3;
+}
+.templateButtons {
+  position: absolute;
+  bottom: 30px;
+}
+.borderBottomGrey {
+  border-bottom: 1px solid lightgray;
+}
+.borderRightGrey {
+  border-right: 1px solid lightgray;
 }
 @media (max-width: 600px) {
   .slide-form,

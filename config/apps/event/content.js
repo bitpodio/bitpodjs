@@ -679,7 +679,7 @@ export default {
           },
         },
         template: {
-          name: 'event-grid',
+          name: 'eventInvites-grid',
           context: {
             basePath: '/event',
           },
@@ -1530,6 +1530,84 @@ export default {
             return {
               where: {
                 EventId: ctx.$route.params.id,
+              },
+            }
+          },
+        },
+        title: 'eventTasks',
+        type: 'list',
+      },
+      inviteeEventTasks: {
+        ui: {
+          hideDefaultHeader: false,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: true,
+          hideFilter: false,
+          hideSearch: true,
+        },
+        hidden: true,
+        fields: {
+          Title: {
+            displayOrder: 2,
+            caption: 'Title',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          Status: {
+            displayOrder: 3,
+            caption: 'Status',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          DueDate: {
+            displayOrder: 7,
+            caption: 'Due Date',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'datetime',
+          },
+          createdDate: {
+            displayOrder: 8,
+            caption: 'Created Date',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'date',
+          },
+          createdBy: {
+            displayOrder: 9,
+            caption: 'Created By',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+        },
+        template: {
+          name: 'contactInvitee-grid',
+          context: {
+            basePath: '/event',
+          },
+        },
+        dataSource: {
+          query: eventTasks,
+          defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          model: 'CRMActivity',
+          filter(ctx) {
+            return {
+              where: {
+                and: [
+                  { EventId: ctx.$route.params.id },
+                  { Type: 'Mass Email' },
+                ],
               },
             }
           },
@@ -3261,6 +3339,52 @@ export default {
         },
         template: {
           name: 'link-grid',
+          context: {
+            basePath: '/contacts',
+          },
+        },
+        dataSource: {
+          query: contactList,
+          filter: {
+            where: {},
+          },
+          type: 'graphql',
+          model: 'Contact',
+          defaultSort: 'createdDate DESC',
+        },
+        title: 'Contacts',
+        defaultSort: 'createdDate DESC',
+      },
+      InviteContacts: {
+        ui: {
+          hideDefaultHeader: false,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: true,
+          hideFilter: true,
+          hideSearch: true,
+        },
+        fields: {
+          Email: {
+            displayOrder: 1,
+            caption: 'Email',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'string',
+          },
+          FullName: {
+            displayOrder: 2,
+            caption: 'Full Name',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'string',
+          },
+        },
+        template: {
+          name: 'contactInvitee-grid',
           context: {
             basePath: '/contacts',
           },
