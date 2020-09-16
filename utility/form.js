@@ -125,3 +125,12 @@ export const formControlsMixin = {
     },
   },
 }
+
+export const formTitleMixin = {
+  computed: {
+    subTitle() {
+      const view = this.content.views[this.viewName]
+      return view.itemTitle || ''
+    },
+  },
+}

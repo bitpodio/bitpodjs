@@ -10,7 +10,7 @@
       :multiple="field.multiple"
       :rules="rules"
       outlined
-      @change="onChange"
+      @change="onLookupChange"
     ></v-autocomplete>
   </div>
 </template>
@@ -55,6 +55,11 @@ export default {
       type: Array,
       default: () => [],
     },
+    onChange: {
+      type: Array,
+      required: true,
+      default: () => null,
+    },
   },
   data() {
     return {
@@ -75,8 +80,9 @@ export default {
     this.loadItems()
   },
   methods: {
-    onChange() {
+    onLookupChange() {
       this.$emit('change', this.value)
+      this.onChange && this.onChange(this.value)
     },
     async loadItems() {
       if (!this.field.items) {
@@ -95,7 +101,14 @@ export default {
               filters: { where },
             },
           })
-          this.items = formatResult(result.data)
+          const items = formatResult(result.data)
+          this.items = items.map((item) => {
+            const computedItemFunction = this.field.dataSource.computed
+            const computedItem = computedItemFunction
+              ? computedItemFunction.call(this, item)
+              : {}
+            return { ...item, ...computedItem }
+          })
         }
       }
     },
