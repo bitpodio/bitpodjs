@@ -939,8 +939,8 @@ export default {
             cssClasses: 'col-6 col-md-6',
             hidden: true,
             inlineEdit: true,
-            newForm: true,
-            editForm: true,
+            newForm: false,
+            editForm: false,
             rules: [
               (v) => {
                 return !!v || 'EventId is required'

@@ -78,7 +78,11 @@ function getFormDefaultValues(content, viewName) {
     const field = fields[fieldName]
     const defaultVal =
       typeof field.default === 'undefined' ? null : field.default
-    intialFormData[fieldName] = defaultVal
+    const isNewFormField =
+      typeof field.newForm === 'undefined' ? true : field.newForm
+    if (isNewFormField) {
+      intialFormData[fieldName] = defaultVal
+    }
   }
   return intialFormData
 }
