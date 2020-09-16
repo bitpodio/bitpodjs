@@ -165,7 +165,7 @@ export default {
       this.formData.ControlType = this.controlType
       this.formData.DisplayOrder = parseInt(this.formData.DisplayOrder)
       if (
-        this.showField.includes(this.formData.ControlType) ||
+        this.showField.includes(this.formData.ControlType) &&
         this.CsvOptions.includes(',')
       ) {
         this.formData.Options = this.CsvOptions.split(',')
