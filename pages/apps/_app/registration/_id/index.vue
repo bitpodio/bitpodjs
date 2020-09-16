@@ -80,7 +80,11 @@
         </h2>
         <v-divider></v-divider>
         <!-- <Grid view-name="registrationSessions" :content="content" :filter="filter" /> -->
-        <Grid view-name="registrationSessions" :content="content" />
+        <Grid
+          view-name="registrationSessions"
+          class="mt-11"
+          :content="content"
+        />
       </div>
       <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
         <h2 class="body-1 pb-2">
@@ -94,7 +98,7 @@
           <i class="fa fa-envelope1 pr-1" aria-hidden="true"></i> Emails
         </h2>
         <v-divider></v-divider>
-        <Grid view-name="registrationEmails" :content="content" />
+        <Grid view-name="registrationEmails" class="mt-11" :content="content" />
       </div>
     </v-flex>
     <v-flex column xs12 sm4 md4 lg4>

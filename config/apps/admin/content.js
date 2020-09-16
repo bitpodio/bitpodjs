@@ -88,7 +88,6 @@ export default {
           type: 'graphql',
           model: 'Location',
           filter(ctx) {
-            debugger
             return {
               where: {},
             }

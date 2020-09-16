@@ -1,5 +1,5 @@
 <template>
-  <v-checkbox v-model="checkbox" @change="updateRegForm"></v-checkbox>
+  <v-checkbox v-model="checkbox" @change="updateRegistrationType"></v-checkbox>
 </template>
 
 <script>
@@ -8,16 +8,16 @@ export default {
   props: ['item', 'value', 'context', 'refresh'],
   data() {
     return {
-      checkbox: this.item.isActive,
+      checkbox: this.item.AllowMultiple,
     }
   },
   methods: {
-    updateRegForm() {
+    updateRegistrationType() {
       this.$axios
         .$put(
-          `https://${nuxtconfig.axios.eventUrl}/svc/api/OfferCodes/${this.item.id}`,
+          `https://${nuxtconfig.axios.eventUrl}/svc/api/RegistrationTypes/${this.item.id}`,
           {
-            isActive: this.checkbox,
+            AllowMultiple: this.checkbox,
           }
         )
         .then((res) => {

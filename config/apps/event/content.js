@@ -14,6 +14,7 @@ import eventRecurringSession from './gql/eventRecurringSession.gql'
 import eventTasks from './gql/eventTasks.gql'
 import registrationType from './gql/registrationType.gql'
 import eventRegistrationTickets from './gql/eventRegistrationTickets.gql'
+import location from './gql/location.gql'
 import { getData, getLookupData } from './rest'
 import marketingTemplates from '~/config/apps/admin/gql/marketingTemplates.gql'
 
@@ -41,108 +42,379 @@ export default {
         default: false,
         fields: {
           Title: {
+            form: {
+              caption: 'Title *',
+              displayOrder: 1,
+            },
             displayOrder: 2,
             caption: 'Title',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '250px',
             type: 'string',
+            cssClasses: 'col-12 col-md-12',
+            hidden: false,
+            inlineEdit: true,
+            newForm: false,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Title is required'
+              },
+            ],
+          },
+          Description: {
+            form: {
+              caption: 'Description',
+              displayOrder: 2,
+            },
+            caption: 'Description',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'richtext',
+            hidden: true,
+            cssClasses: 'col-12 col-md-12',
+            inlineEdit: true,
+            newForm: false,
+            editForm: true,
           },
           Timezone: {
+            form: {
+              caption: 'Timezone *',
+              displayOrder: 11,
+            },
             displayOrder: 3,
             caption: 'Timezone',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
             type: 'timezone',
+            hidden: false,
+            inlineEdit: true,
+            newForm: false,
+            editForm: true,
+            cssClasses: 'col-4 col-md-4',
+            rules: [
+              (v) => {
+                return !!v || 'Timezone is required'
+              },
+            ],
           },
           StartDate: {
+            form: {
+              caption: 'Start Date *',
+              displayOrder: 3,
+            },
             displayOrder: 3,
             caption: 'Start Date',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
             type: 'datetime',
+            hidden: false,
+            cssClasses: 'col-4 col-md-4',
+            inlineEdit: true,
+            newForm: false,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Start Date is required'
+              },
+            ],
           },
           EndDate: {
+            form: {
+              caption: 'End Date *',
+              displayOrder: 4,
+            },
             displayOrder: 3,
             caption: 'End Date',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
             type: 'datetime',
+            hidden: false,
+            cssClasses: 'col-4 col-md-4',
+            inlineEdit: true,
+            newForm: false,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'End Date is required'
+              },
+            ],
+          },
+          Organizer: {
+            form: {
+              caption: 'Event Organizer *',
+              displayOrder: 5,
+            },
+            caption: 'Event Organizer',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            hidden: true,
+            cssClasses: 'col-4 col-md-4',
+            inlineEdit: true,
+            newForm: false,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Organizer is required'
+              },
+            ],
+          },
+          EventManager: {
+            form: {
+              caption: 'Event Manager/Team Email *',
+              displayOrder: 6,
+            },
+            caption: 'Event Organizer',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            hidden: true,
+            cssClasses: 'col-4 col-md-4',
+            inlineEdit: true,
+            newForm: false,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Email is required'
+              },
+              function (value, data) {
+                return /.+@.+\..+/.test(value) || 'E-mail must be valid'
+              },
+            ],
+          },
+          Status: {
+            form: {
+              caption: 'Status *',
+              displayOrder: 7,
+            },
+            displayOrder: 3,
+            caption: 'Status',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'lookup',
+            hidden: true,
+            cssClasses: 'col-4 col-md-4',
+            inlineEdit: true,
+            newForm: false,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Status is required'
+              },
+            ],
+            dataSource: {
+              query: registrationStatusOptions,
+              itemText: 'value',
+              itemValue: 'key',
+              filter(data) {
+                return {
+                  type: 'EventStatus',
+                }
+              },
+            },
           },
           Privacy: {
+            form: {
+              caption: 'Privacy',
+              displayOrder: 8,
+            },
             displayOrder: 4,
             caption: 'Privacy',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
-            type: 'string',
+            type: 'lookup',
+            hidden: false,
+            cssClasses: 'col-4 col-md-4',
+            inlineEdit: true,
+            newForm: false,
+            editForm: true,
+            dataSource: {
+              query: registrationStatusOptions,
+              itemText: 'value',
+              itemValue: 'key',
+              filter(data) {
+                return {
+                  type: 'EventPrivacy',
+                }
+              },
+            },
           },
           Tags: {
+            form: {
+              caption: 'Tags',
+              displayOrder: 9,
+            },
             displayOrder: 5,
             caption: 'Tags',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
-            type: 'string',
+            type: 'lookup',
+            hidden: false,
+            cssClasses: 'col-4 col-md-4',
+            inlineEdit: true,
+            newForm: false,
+            editForm: true,
+            multiple: true,
+            dataSource: {
+              query: registrationStatusOptions,
+              itemText: 'value',
+              itemValue: 'key',
+              filter(data) {
+                return {
+                  type: 'EventTags',
+                }
+              },
+            },
           },
           VenueName: {
+            form: {
+              caption: 'Venue Name',
+              displayOrder: 13,
+            },
             displayOrder: 6,
             caption: 'Venue',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            cssClasses: 'col-12 col-md-12',
+            inlineEdit: true,
+            newForm: false,
+            editForm: true,
           },
           '_VenueAddress.AddressLine': {
+            form: {
+              caption: 'Venue *',
+              displayOrder: 12,
+            },
             displayOrder: 7,
             caption: 'Address',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            cssClasses: 'col-12 col-md-12',
+            inlineEdit: true,
+            newForm: false,
+            editForm: true,
           },
           '_VenueAddress.City': {
+            form: {
+              caption: 'City',
+              displayOrder: 14,
+            },
             displayOrder: 8,
             caption: 'City',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            cssClasses: 'col-12 col-md-12',
+            inlineEdit: true,
+            newForm: false,
+            editForm: true,
           },
           '_VenueAddress.State': {
+            form: {
+              caption: 'State',
+              displayOrder: 15,
+            },
             displayOrder: 9,
             caption: 'State',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            cssClasses: 'col-12 col-md-12',
+            inlineEdit: true,
+            newForm: false,
+            editForm: true,
           },
           '_VenueAddress.PostalCode': {
+            form: {
+              caption: 'Zip',
+              displayOrder: 17,
+            },
             displayOrder: 10,
             caption: 'Postal Code',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            cssClasses: 'col-12 col-md-12',
+            inlineEdit: true,
+            newForm: false,
+            editForm: true,
           },
           '_VenueAddress.Country': {
+            form: {
+              caption: 'Country',
+              displayOrder: 16,
+            },
             displayOrder: 11,
             caption: 'Country',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            cssClasses: 'col-12 col-md-12',
+            inlineEdit: true,
+            newForm: false,
+            editForm: true,
+          },
+          CancellationPolicy: {
+            form: {
+              caption: 'Cancellation Policy',
+              displayOrder: 18,
+            },
+            displayOrder: 11,
+            caption: 'Cancellation Policy',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'richtext',
+            cssClasses: 'col-12 col-md-12',
+            inlineEdit: true,
+            newForm: false,
+            editForm: true,
           },
           Currency: {
+            form: {
+              caption: 'Currency *',
+              displayOrder: 10,
+            },
             displayOrder: 12,
             caption: 'Currency',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
-            type: 'string',
+            type: 'lookup',
+            hidden: false,
+            cssClasses: 'col-4 col-md-4',
+            inlineEdit: true,
+            newForm: false,
+            editForm: true,
+            dataSource: {
+              query: registrationStatusOptions,
+              itemText: 'value',
+              itemValue: 'key',
+              filter(data) {
+                return {
+                  type: 'Currency',
+                }
+              },
+            },
           },
           createdDate: {
             displayOrder: 13,
@@ -637,7 +909,7 @@ export default {
               },
             ],
             dataSource: {
-              query: eventTickets,
+              query: eventRegistrationTickets,
               itemText: 'Code',
               itemValue: 'id',
               filter(data) {
@@ -1014,7 +1286,7 @@ export default {
           },
         },
         template: {
-          name: 'event-grid',
+          name: 'eventRegistrations-grid',
           context: {
             basePath: '/registration',
           },
@@ -2638,7 +2910,7 @@ export default {
           filter(ctx) {
             return {
               where: {
-                EventId: ctx.$route.params.id,
+                and: [{ EventId: ctx.$route.params.id }, { Type: 'Scheduled' }],
               },
             }
           },
@@ -2727,59 +2999,247 @@ export default {
           hideDefaultFooter: false,
           showExpand: false,
           singleExpand: false,
-          showSelect: true,
+          showSelect: false,
           hideFilter: false,
           hideSearch: true,
         },
         hidden: true,
         fields: {
           Name: {
+            form: {
+              caption: 'Name *',
+              displayOrder: 1,
+            },
             displayOrder: 1,
             caption: 'Name',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            cssClasses: 'col-6 col-md-6',
+            newForm: true,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Name is required'
+              },
+            ],
           },
           ScheduledType: {
+            form: {
+              caption: 'Event Scheduled',
+              displayOrder: 18,
+            },
             displayOrder: 2,
             caption: 'ScheduledType',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '250px',
-            type: 'string',
+            type: 'lookup',
+            newForm: true,
+            editForm: true,
+            dataSource: {
+              query: registrationStatusOptions,
+              itemText: 'value',
+              itemValue: 'key',
+              filter(data) {
+                return {
+                  type: 'ScheduledType',
+                }
+              },
+            },
           },
           StartTime: {
+            form: {
+              caption: 'Start Time *',
+              displayOrder: 4,
+            },
             displayOrder: 3,
-            caption: 'StartTime',
+            caption: 'Start Time',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '130px',
-            type: 'string',
+            type: 'lookup',
+            cssClasses: 'col-6 col-md-6',
+            newForm: true,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Start Time is required'
+              },
+            ],
+            dataSource: {
+              query: registrationStatusOptions,
+              itemText: 'value',
+              itemValue: 'key',
+              filter(data) {
+                return {
+                  type: 'AvailableHour',
+                }
+              },
+            },
           },
           EndTime: {
+            form: {
+              caption: 'End Time *',
+              displayOrder: 5,
+            },
             displayOrder: 4,
-            caption: 'EndTime',
+            caption: 'End Time',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '130px',
-            type: 'string',
+            type: 'lookup',
+            cssClasses: 'col-6 col-md-6',
+            newForm: true,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'End Time is required'
+              },
+              function (value, data) {
+                return (
+                  data.EndTime > data.StartTime ||
+                  'End Time should be greater than Start Time'
+                )
+              },
+            ],
+            dataSource: {
+              query: registrationStatusOptions,
+              itemText: 'value',
+              itemValue: 'key',
+              filter(data) {
+                return {
+                  type: 'AvailableHour',
+                }
+              },
+            },
+          },
+          Timezone: {
+            form: {
+              caption: 'Timezone *',
+              displayOrder: 6,
+            },
+            displayOrder: 7,
+            caption: 'Timezone',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'timezone',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Timezone is required'
+              },
+            ],
+          },
+          Duration: {
+            form: {
+              caption: 'Duration *',
+              displayOrder: 7,
+            },
+            displayOrder: 7,
+            caption: 'Duration',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'lookup',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Duration is required'
+              },
+            ],
+            dataSource: {
+              query: registrationStatusOptions,
+              itemText: 'value',
+              itemValue: 'key',
+              filter(data) {
+                return {
+                  type: 'EventDuration',
+                }
+              },
+            },
           },
           Type: {
+            form: {
+              caption: 'Type *',
+              displayOrder: 2,
+            },
             displayOrder: 4,
             caption: 'Type',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '100px',
-            type: 'string',
+            type: 'lookup',
+            cssClasses: 'col-6 col-md-6',
+            newForm: true,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Type is required'
+              },
+            ],
+            dataSource: {
+              query: registrationStatusOptions,
+              itemText: 'value',
+              itemValue: 'key',
+              filter(data) {
+                return {
+                  type: 'SessionType',
+                }
+              },
+            },
+          },
+          MaxAllow: {
+            form: {
+              caption: 'Max Allow *',
+              displayOrder: 3,
+            },
+            displayOrder: 4,
+            caption: 'MaxAllow',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '100px',
+            type: 'number',
+            hidden: true,
+            cssClasses: 'col-6 col-md-6',
+            newForm: true,
+            editForm: true,
+            minimumValue: '0',
+            visible(value, data) {
+              const type = data.Type
+              return type === 'Group'
+            },
+            rules: [
+              (v) => {
+                return !!v || 'Max Allow is required'
+              },
+            ],
           },
           SeatReservation: {
+            form: {
+              caption: 'Seat Reservation',
+              displayOrder: 9,
+            },
             displayOrder: 6,
             caption: 'Seat Reservation',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
-            type: 'string',
+            type: 'checkbox',
+            newForm: true,
+            editForm: true,
+            visible(value, data) {
+              const LocationType = data.LocationType
+              return LocationType === 'In-person meeting'
+            },
           },
           TicketName: {
             displayOrder: 7,
@@ -2788,6 +3248,8 @@ export default {
             sortEnable: true,
             columnWidth: '200px',
             type: 'string',
+            newForm: false,
+            editForm: false,
           },
           isActive: {
             displayOrder: 8,
@@ -2796,10 +3258,321 @@ export default {
             sortEnable: true,
             columnWidth: '100px',
             type: 'string',
+            newForm: false,
+            editForm: false,
+          },
+          LocationType: {
+            form: {
+              caption: 'Location Type *',
+              displayOrder: 8,
+            },
+            displayOrder: 4,
+            caption: 'Location Type',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '100px',
+            type: 'lookup',
+            hidden: true,
+            cssClasses: 'col-6 col-md-6',
+            newForm: true,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Location Type is required'
+              },
+            ],
+            dataSource: {
+              query: registrationStatusOptions,
+              itemText: 'value',
+              itemValue: 'key',
+              filter(data) {
+                return {
+                  type: 'LocationType',
+                }
+              },
+            },
+          },
+          LocationId: {
+            form: {
+              caption: 'Location *',
+              displayOrder: 10,
+            },
+            displayOrder: 4,
+            caption: 'Location Type',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '100px',
+            type: 'lookup',
+            multiple: true,
+            hidden: true,
+            cssClasses: 'col-6 col-md-6',
+            newForm: true,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Location is required'
+              },
+            ],
+            visible(value, data) {
+              const LocationType = data.LocationType
+              return LocationType === 'In-person meeting'
+            },
+            dataSource: {
+              query: location,
+              itemText: 'Name',
+              itemValue: 'id',
+            },
+          },
+          Phone: {
+            form: {
+              caption: 'Phone *',
+              displayOrder: 11,
+            },
+            displayOrder: 4,
+            caption: 'Phone',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '100px',
+            type: 'string',
+            hidden: true,
+            cssClasses: 'col-6 col-md-6',
+            newForm: true,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Phone is required'
+              },
+              function (value, data) {
+                return /^[0-9]\d*$|^$/.test(value) || 'Number must be valid'
+              },
+            ],
+            visible(value, data) {
+              const LocationType = data.LocationType
+              return LocationType === 'Phone call'
+            },
+          },
+          WebinarLink: {
+            form: {
+              caption: 'online meeting link *',
+              displayOrder: 12,
+            },
+            displayOrder: 4,
+            caption: 'online meeting link',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '100px',
+            type: 'string',
+            hidden: true,
+            cssClasses: 'col-6 col-md-6',
+            newForm: true,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'online meeting link is required'
+              },
+            ],
+            visible(value, data) {
+              const LocationType = data.LocationType
+              return LocationType === 'Online meeting'
+            },
+          },
+          '_CurrentAddress.AddressLine': {
+            form: {
+              caption: 'Address *',
+              displayOrder: 13,
+            },
+            displayOrder: 4,
+            caption: 'Address',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '100px',
+            type: 'string',
+            hidden: true,
+            cssClasses: 'col-12 col-md-12',
+            newForm: true,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Address is required'
+              },
+            ],
+            visible(value, data) {
+              const LocationType = data.LocationType
+              return LocationType === 'Custom'
+            },
+          },
+          '_CurrentAddress.City': {
+            form: {
+              caption: 'City',
+              displayOrder: 14,
+            },
+            displayOrder: 4,
+            caption: 'City',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '100px',
+            type: 'string',
+            hidden: true,
+            cssClasses: 'col-3 col-md-3',
+            newForm: true,
+            editForm: true,
+            visible(value, data) {
+              const LocationType = data.LocationType
+              return LocationType === 'Custom'
+            },
+          },
+          '_CurrentAddress.State': {
+            form: {
+              caption: 'State',
+              displayOrder: 15,
+            },
+            displayOrder: 4,
+            caption: 'State',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '100px',
+            type: 'string',
+            hidden: true,
+            cssClasses: 'col-3 col-md-3',
+            newForm: true,
+            editForm: true,
+            visible(value, data) {
+              const LocationType = data.LocationType
+              return LocationType === 'Custom'
+            },
+          },
+          '_CurrentAddress.PostalCode': {
+            form: {
+              caption: 'Zip ',
+              displayOrder: 17,
+            },
+            displayOrder: 4,
+            caption: 'Zip',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '100px',
+            type: 'string',
+            hidden: true,
+            cssClasses: 'col-3 col-md-3',
+            newForm: true,
+            editForm: true,
+            visible(value, data) {
+              const LocationType = data.LocationType
+              return LocationType === 'Custom'
+            },
+          },
+          '_CurrentAddress.Country': {
+            form: {
+              caption: 'Country',
+              displayOrder: 16,
+            },
+            displayOrder: 4,
+            caption: 'Country',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '100px',
+            type: 'string',
+            hidden: true,
+            cssClasses: 'col-3 col-md-3',
+            newForm: true,
+            editForm: true,
+            visible(value, data) {
+              const LocationType = data.LocationType
+              return LocationType === 'Custom'
+            },
+          },
+          RollingDays: {
+            form: {
+              caption: 'Rolling Days',
+              displayOrder: 19,
+            },
+            displayOrder: 4,
+            caption: 'Rolling Days',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '100px',
+            type: 'number',
+            minimumValue: '0',
+            default: 30,
+            hidden: true,
+            cssClasses: 'col-6 col-md-6',
+            newForm: true,
+            editForm: true,
+            visible(value, data) {
+              const ScheduledType = data.ScheduledType
+              return ScheduledType === 'Over a period of rolling days'
+            },
+          },
+          StartDate: {
+            form: {
+              caption: 'Start Date',
+              displayOrder: 20,
+            },
+            displayOrder: 4,
+            caption: 'Start Date',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '100px',
+            type: 'date',
+            hidden: true,
+            cssClasses: 'col-6 col-md-6',
+            newForm: true,
+            editForm: true,
+            visible(value, data) {
+              const ScheduledType = data.ScheduledType
+              return ScheduledType === 'Over a date range'
+            },
+          },
+          EndDate: {
+            form: {
+              caption: 'End Date',
+              displayOrder: 21,
+            },
+            displayOrder: 4,
+            caption: 'End Date',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '100px',
+            type: 'date',
+            hidden: true,
+            cssClasses: 'col-6 col-md-6',
+            newForm: true,
+            editForm: true,
+            visible(value, data) {
+              const ScheduledType = data.ScheduledType
+              return ScheduledType === 'Over a date range'
+            },
+          },
+          SessionTicket: {
+            form: {
+              caption: 'Select tickets for this session',
+              displayOrder: 22,
+            },
+            displayOrder: 4,
+            caption: 'Select tickets for this session',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '100px',
+            type: 'lookup',
+            hidden: true,
+            cssClasses: 'col-6 col-md-6',
+            newForm: true,
+            editForm: true,
+            multiple: true,
+            dataSource: {
+              query: eventTickets,
+              itemText: 'Code',
+              itemValue: 'id',
+              filter(data) {
+                return {
+                  Events: this.$route.params.id,
+                }
+              },
+            },
           },
         },
         template: {
-          name: 'recurring-grid',
+          name: 'eventRecurringSession-grid',
           context: {
             basePath: '/event',
           },
@@ -2818,6 +3591,213 @@ export default {
           },
         },
         title: 'Recurring Session',
+        type: 'list',
+      },
+      eventInvitaionHistory: {
+        ui: {
+          hideDefaultHeader: false,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: false,
+          hideFilter: false,
+          hideSearch: true,
+        },
+        hidden: true,
+        fields: {
+          createdDate: {
+            displayOrder: 1,
+            caption: 'Title',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'datetime',
+          },
+          Title: {
+            displayOrder: 2,
+            caption: 'Subject',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          SenderName: {
+            displayOrder: 3,
+            caption: 'Sender',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          Status: {
+            displayOrder: 4,
+            caption: 'Status',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          createdBy: {
+            displayOrder: 5,
+            caption: 'Created By',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+        },
+        template: {
+          name: 'eventInvitaionHistory-grid',
+          context: {
+            basePath: '/event',
+          },
+        },
+        dataSource: {
+          query: eventTasks,
+          type: 'graphql',
+          model: 'CRMActivity',
+          filter(ctx) {
+            return {
+              where: {
+                and: [
+                  { EventId: ctx.$route.query.event },
+                  { Type: 'Mass Email' },
+                ],
+              },
+            }
+          },
+        },
+        title: 'Hisory',
+        type: 'list',
+      },
+      eventRegistrationType: {
+        ui: {
+          hideDefaultHeader: false,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: false,
+          hideFilter: false,
+          hideSearch: true,
+        },
+        hidden: true,
+        fields: {
+          Name: {
+            form: {
+              caption: 'Name',
+              displayOrder: 1,
+            },
+            displayOrder: 1,
+            caption: 'Name',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            cssClasses: 'col-12 col-md-12',
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Name is required'
+              },
+            ],
+          },
+          MaxQuantityAllowed: {
+            form: {
+              caption: 'Max Quantity Allowed',
+              displayOrder: 2,
+            },
+            displayOrder: 2,
+            caption: 'Max Quantity Allowed',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'number',
+            cssClasses: 'col-12 col-md-12',
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            minimumValue: '1',
+            default: 10,
+          },
+          DisplayOrder: {
+            form: {
+              caption: 'Display Order',
+              displayOrder: 3,
+            },
+            displayOrder: 3,
+            caption: 'Display Order',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'number',
+            cssClasses: 'col-12 col-md-12',
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            minimumValue: '1',
+          },
+          ColorCode: {
+            form: {
+              caption: 'Color Code',
+              displayOrder: 5,
+            },
+            displayOrder: 4,
+            caption: 'Color Code',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            cssClasses: 'col-12 col-md-12',
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+          },
+          AllowMultiple: {
+            form: {
+              caption: 'Allow Multiple',
+              displayOrder: 4,
+            },
+            displayOrder: 5,
+            caption: 'Allow Multiple',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'checkbox',
+            newForm: true,
+            editForm: true,
+          },
+          isDefault: {
+            displayOrder: 6,
+            caption: 'Default',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            newForm: false,
+            editForm: false,
+          },
+        },
+        template: {
+          name: 'eventRegistrationType-grid',
+          context: {
+            basePath: '/event',
+          },
+        },
+        dataSource: {
+          query: registrationType,
+          type: 'graphql',
+          model: 'RegistrationType',
+          filter(ctx) {
+            return {
+              where: {
+                EventId: ctx.$route.query.event,
+              },
+            }
+          },
+        },
+        title: 'Registration Type',
         type: 'list',
       },
     },
@@ -2840,7 +3820,7 @@ export default {
           showExpand: false,
           singleExpand: false,
           showSelect: true,
-          hideFilter: true,
+          hideFilter: false,
           hideSearch: false,
         },
         default: false,
@@ -2849,8 +3829,8 @@ export default {
             displayOrder: 1,
             caption: 'First Name',
             form: {
-              caption: 'First Name*',
-              displayOrder: 15,
+              caption: 'First Name *',
+              displayOrder: 1,
             },
             searchEnable: true,
             sortEnable: true,
@@ -2860,13 +3840,18 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'First Name is required'
+              },
+            ],
           },
           LastName: {
             displayOrder: 1,
             caption: 'Last Name',
             form: {
-              caption: 'Last Name*',
-              displayOrder: 14,
+              caption: 'Last Name *',
+              displayOrder: 2,
             },
             searchEnable: true,
             sortEnable: true,
@@ -2876,6 +3861,11 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Last Name is required'
+              },
+            ],
           },
           PaymentMethod: {
             displayOrder: 10,
@@ -2896,8 +3886,8 @@ export default {
             displayOrder: 4,
             caption: 'Organization',
             form: {
-              caption: 'Organization*',
-              displayOrder: 12,
+              caption: 'Organization',
+              displayOrder: 5,
             },
             searchEnable: true,
             sortEnable: true,
@@ -2912,8 +3902,8 @@ export default {
             displayOrder: 5,
             caption: 'Phone',
             form: {
-              caption: 'Phone*',
-              displayOrder: 11,
+              caption: 'Phone *',
+              displayOrder: 3,
             },
             searchEnable: true,
             sortEnable: true,
@@ -2923,13 +3913,21 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Phone is required'
+              },
+              function (value, data) {
+                return /^[0-9]\d*$|^$/.test(value) || 'Number must be valid'
+              },
+            ],
           },
           Email: {
             displayOrder: 3,
             caption: 'Email',
             form: {
-              caption: 'Email*',
-              displayOrder: 10,
+              caption: 'Email *',
+              displayOrder: 4,
             },
             searchEnable: true,
             sortEnable: true,
@@ -2939,13 +3937,21 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Email is required'
+              },
+              function (value, data) {
+                return /.+@.+\..+/.test(value) || 'E-mail must be valid'
+              },
+            ],
           },
           '_CurrentAddress.AddressLine': {
             caption: 'Address',
             searchEnable: true,
             form: {
-              caption: 'Address*',
-              displayOrder: 9,
+              caption: 'Address',
+              displayOrder: 7,
             },
             sortEnable: true,
             columnWidth: '150px',
@@ -2959,7 +3965,7 @@ export default {
             caption: 'City',
             searchEnable: true,
             form: {
-              caption: 'City*',
+              caption: 'City',
               displayOrder: 8,
             },
             sortEnable: true,
@@ -2973,8 +3979,8 @@ export default {
           '_CurrentAddress.State': {
             caption: 'State',
             form: {
-              caption: 'State*',
-              displayOrder: 7,
+              caption: 'State',
+              displayOrder: 9,
             },
             searchEnable: true,
             sortEnable: true,
@@ -2988,8 +3994,8 @@ export default {
           '_CurrentAddress.PostalCode': {
             caption: 'Zip',
             form: {
-              caption: 'PostalCode *',
-              displayOrder: 6,
+              caption: 'PostalCode',
+              displayOrder: 10,
             },
             searchEnable: true,
             sortEnable: true,
@@ -3003,8 +4009,8 @@ export default {
           '_CurrentAddress.Country': {
             caption: 'Country',
             form: {
-              caption: 'Country *',
-              displayOrder: 5,
+              caption: 'Country',
+              displayOrder: 11,
             },
             searchEnable: true,
             sortEnable: true,
@@ -3018,16 +4024,29 @@ export default {
           EventName: {
             displayOrder: 6,
             caption: 'Event Name',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'string',
+            cssClasses: 'col-12 col-md-12',
+            hidden: false,
+            inlineEdit: true,
+            newForm: false,
+            editForm: false,
+          },
+          EventId: {
+            displayOrder: 6,
+            caption: 'Event',
             form: {
-              caption: 'EventName *',
-              displayOrder: 4,
+              caption: 'Event *',
+              displayOrder: 12,
             },
             searchEnable: true,
             sortEnable: true,
             columnWidth: '180px',
             type: 'lookup',
-            cssClasses: 'col-12 col-md-12',
-            hidden: false,
+            cssClasses: 'col-6 col-md-6',
+            hidden: true,
             inlineEdit: true,
             newForm: true,
             editForm: true,
@@ -3042,12 +4061,34 @@ export default {
               },
             },
           },
+          AttendeeType: {
+            displayOrder: 6,
+            caption: 'AttendeeType',
+            form: {
+              caption: 'RegistrationType',
+              displayOrder: 15,
+            },
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'lookup',
+            cssClasses: 'col-6 col-md-6',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            dataSource: {
+              query: registrationType,
+              itemText: 'Name',
+              itemValue: 'id',
+            },
+          },
           Status: {
             displayOrder: 9,
             caption: 'Status',
             form: {
-              caption: 'Status*',
-              displayOrder: 3,
+              caption: 'Status *',
+              displayOrder: 6,
             },
             searchEnable: true,
             sortEnable: true,
@@ -3099,13 +4140,19 @@ export default {
             displayOrder: 9,
             caption: 'Attendees',
             form: {
-              caption: 'Attendees*',
-              displayOrder: -1,
+              caption: 'Ticket Quantity',
+              displayOrder: 14,
             },
             searchEnable: true,
             sortEnable: true,
             columnWidth: '130px',
             type: 'number',
+            cssClasses: 'col-6 col-md-6',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            minimumValue: '1',
           },
           FullName: {
             displayOrder: 2,
@@ -3147,8 +4194,8 @@ export default {
             caption: 'Tickets',
             searchEnable: true,
             form: {
-              caption: 'Tickets*',
-              displayOrder: 1,
+              caption: 'Tickets *',
+              displayOrder: 13,
             },
             sortEnable: true,
             columnWidth: '150px',
@@ -3157,10 +4204,20 @@ export default {
             newForm: true,
             editForm: true,
             hidden: true,
+            multiple: true,
+            readonly(value, data) {
+              const id = data.EventId
+              return id === '' || id === null
+            },
             dataSource: {
               query: eventTickets,
               itemText: 'Code',
               itemValue: 'id',
+              filter(data) {
+                return {
+                  Events: data.EventId,
+                }
+              },
             },
           },
         },
@@ -3409,6 +4466,10 @@ export default {
             sortEnable: false,
             columnWidth: '130px',
             type: 'datetime',
+            hidden: false,
+            inlineEdit: true,
+            newForm: false,
+            editForm: false,
           },
           EndDate: {
             displayOrder: 5,
@@ -3417,6 +4478,10 @@ export default {
             sortEnable: false,
             columnWidth: '130px',
             type: 'datetime',
+            hidden: false,
+            inlineEdit: true,
+            newForm: false,
+            editForm: false,
           },
           Type: {
             displayOrder: 6,
@@ -3728,7 +4793,6 @@ export default {
               itemText: 'Code',
               itemValue: 'id',
               filter(ctx, data) {
-                debugger
                 return {
                   Events: this.$route.params.id,
                 }
@@ -3894,16 +4958,7 @@ export default {
   },
 
   DiscountCodes: {
-    actions: {
-      'Embeded Actions': '',
-      'General Actions': ['Create Registration'],
-      'Selected Item Action': [],
-    },
-    child: {},
     dataSource: {
-      FormID: 'EventsAdvSearch',
-      'Key Field': '',
-      'Parent key field': '',
       Type: 'List',
       URL: 'Offercode',
     },
@@ -3911,46 +4966,17 @@ export default {
       caption: 'OfferCodes',
       name: 'OfferCode',
     },
-    permissions: {
-      Groups: '',
-    },
-    ui: {
-      MobileViewTemplate: {
-        isActive: true,
-        templateName: 'Event_Registation_Mobile',
-      },
-      TemplateActions: {},
-      Checkbox: 'True',
-      'Card View Template': 'VisitingCard0',
-      Width: '50%',
-      Height: '',
-      TemplateHelpers: {},
-      'Display Order': '',
-      'Map View Template': '',
-      'List View Template': '',
-      'Detail View': 'tab',
-      Column: '',
-      'Tile View': 'now',
-      'App Type': 'View',
-      Templates: {
-        VisitingCard0: 'Registrations_Card_View',
-        Status:
-          '<div title="{{Status}}"><style>.reg-status {\n                  font-size: 10px;\n                            display: inline-block;\n                            color: #fff;\n                            margin-right: 5px;\n                            margin-bottom: 0px;\n                            padding: 3px 10px !important;\n                            border-radius: 20px !important;\n                            text-transform: capitalize;\n                        }\n                      .reg-success {\n                                      background-color: #0cb14b;\n                    }\n                      .reg-fail {\n                                      background-color: #f25955;\n                    }\n                      .reg-refund {\n                                      background-color: #3fa5ff;\n                    }\n                    .reg-parefund {\n                                      background-color: #b9b9b9;\n                    }\n                      .reg-parrefund {\n                                      background-color: #f4b400;\n                    }</style><div class="reg-status {{getStatusColor Status}}"> {{getCapitalResult Status}} </div></div>',
-        SyncStatus:
-          '<div><i class="{{ShowSyncField SFRegistrationId}}" style="{{getColor SFRegistrationId}}" onclick="invokeAction(\'changeSyncStatus\',this)" node={{node.id}}> </i></div>',
-        CheckIn:
-          '<style>\n    .checkin-btn {\ncolor: #fff;\npadding: 3px 10px !important;\n    background-color: #3fa5ff !important;;\nfont-size: 12px;\nborder-radius: 2px;\ncursor: pointer;\n}\n.check-label {\n        color: #1a73e8;\nfont-size: 13px;\n}\n</style>\n{{#ifStatus Status}}\n<div title="CheckIn">\n    {{#if CheckIn}}<span class="check-label">\n        <i class="fa fa-check" style="color: #1a73e8;margin-top:3px;" node={{node.id}}> </i>Checked in </span>\n    <span class="check-label">{{date_diff CheckIn}}</span>\n    {{else}}\n    <span onclick="invokeAction(\'CheckIn\',this)" class="checkin-btn">Check in</span>\n    {{/if}}\n</div>\n{{else}} <div style="height: 100%;" title=""></div>{{/ifStatus}}',
-        FullName:
-          '<div onclick="invokeAction(\'goToDetails\', this)" data-action="edit" data-bind="ID={{id}}" style="cursor: pointer;color: #1a73e8;"> {{FullName}} </div>',
-      },
-      decorator: {
-        Attachment: '',
-        LinkedinURL: '',
-      },
-    },
     views: {
       'Discount Codes': {
-        default: true,
+        ui: {
+          hideDefaultHeader: false,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: true,
+          hideFilter: true,
+          hideSearch: false,
+        },
         defaultSort: 'createdDate DESC',
         fields: {
           currentUsageCount: {
@@ -3965,6 +4991,10 @@ export default {
             editForm: false,
           },
           codeTitle: {
+            form: {
+              caption: 'Code *',
+              displayOrder: 1,
+            },
             displayOrder: 1,
             caption: 'Code',
             searchEnable: true,
@@ -3975,8 +5005,17 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Please fill out this field'
+              },
+            ],
           },
           Description: {
+            form: {
+              caption: 'Description',
+              displayOrder: 2,
+            },
             displayOrder: 2,
             caption: 'Description',
             searchEnable: true,
@@ -3990,6 +5029,10 @@ export default {
             editForm: true,
           },
           isActive: {
+            form: {
+              caption: 'Is Active',
+              displayOrder: 4,
+            },
             displayOrder: 4,
             caption: 'Active',
             searchEnable: true,
@@ -4002,6 +5045,10 @@ export default {
             editForm: true,
           },
           isPercent: {
+            form: {
+              caption: 'Is percent',
+              displayOrder: 3,
+            },
             displayOrder: 3,
             caption: 'Percent',
             searchEnable: true,
@@ -4014,18 +5061,26 @@ export default {
             editForm: true,
           },
           validTill: {
+            form: {
+              caption: 'Valid Till',
+              displayOrder: 7,
+            },
             displayOrder: 7,
             caption: 'Valid Till',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '180px',
-            type: 'datetime',
+            type: 'date',
             cssClasses: 'col-6 col-md-6',
             inlineEdit: true,
             newForm: true,
             editForm: true,
           },
           maxApplicableAmount: {
+            form: {
+              caption: 'Max Applicable Amount',
+              displayOrder: 8,
+            },
             displayOrder: 8,
             caption: 'Max Applicable Amount',
             searchEnable: true,
@@ -4037,8 +5092,13 @@ export default {
             newForm: true,
             editForm: true,
             hidden: true,
+            minimumValue: '1',
           },
           maxUsageCount: {
+            form: {
+              caption: 'Max Usage Count',
+              displayOrder: 9,
+            },
             displayOrder: 8,
             caption: 'Max Usage Count',
             searchEnable: true,
@@ -4049,22 +5109,46 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
+            minimumValue: '1',
           },
           offerValue: {
+            form: {
+              caption: 'Offer Value *',
+              displayOrder: 5,
+            },
             displayOrder: 5,
             caption: 'Offer Value',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '130px',
             type: 'number',
+            cssClasses: 'col-6 col-md-6',
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            minimumValue: '1',
+            rules: [
+              (v) => {
+                return !!v || 'Please fillout this field'
+              },
+            ],
           },
           minApplicableOrderAmount: {
+            form: {
+              caption: 'Min Applicable Order Amount',
+              displayOrder: 6,
+            },
             displayOrder: 6,
             caption: 'Min Applicable Amount',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '220px',
             type: 'number',
+            cssClasses: 'col-6 col-md-6',
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            minimumValue: '1',
           },
           createdDate: {
             displayOrder: 10,
@@ -4079,6 +5163,10 @@ export default {
             editForm: false,
           },
           EventId: {
+            form: {
+              caption: 'Event',
+              displayOrder: 10,
+            },
             caption: 'Event',
             searchEnable: true,
             sortEnable: true,
@@ -4122,19 +5210,19 @@ export default {
           defaultSort: 'createdDate DESC',
           type: 'graphql',
         },
+        title: 'Discount Codes',
+        model: 'OfferCode',
+      },
+      discountMembers: {
         ui: {
           hideDefaultHeader: false,
           hideDefaultFooter: false,
           showExpand: false,
           singleExpand: false,
           showSelect: true,
-          hideFilter: true,
-          hideSearch: false,
+          hideFilter: false,
+          hideSearch: true,
         },
-        title: 'Discount Codes',
-        model: 'OfferCode',
-      },
-      discountMembers: {
         fields: {
           FirstName: {
             displayOrder: 2,
@@ -4174,7 +5262,7 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '180px',
-            type: 'date',
+            type: 'datetime',
           },
           Action: {
             displayOrder: 7,
@@ -4186,7 +5274,7 @@ export default {
           },
         },
         template: {
-          name: 'discount-grid',
+          name: '',
           context: {
             basePath: '/discountcodes',
           },
@@ -4195,15 +5283,6 @@ export default {
           type: 'rest',
           getData: (ctx) =>
             getData(`/OfferCodes/${ctx.$route.params.id}/getMember`),
-        },
-        ui: {
-          hideDefaultHeader: false,
-          hideDefaultFooter: false,
-          showExpand: false,
-          singleExpand: false,
-          showSelect: true,
-          hideFilter: true,
-          hideSearch: false,
         },
         hidden: true,
         title: 'discountMembers',
@@ -4221,10 +5300,6 @@ export default {
       caption: 'Members',
       name: 'Customer',
     },
-    permissions: {
-      Groups: [],
-      Type: '',
-    },
     views: {
       Members: {
         ui: {
@@ -4233,41 +5308,103 @@ export default {
           showExpand: false,
           singleExpand: false,
           showSelect: true,
-          hideFilter: true,
+          hideFilter: false,
           hideSearch: false,
         },
         fields: {
           FirstName: {
+            form: {
+              caption: 'First Name *',
+              displayOrder: 1,
+            },
             displayOrder: 2,
             caption: 'FirstName',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            cssClasses: 'col-4 col-md-4',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'First Name is required'
+              },
+            ],
           },
           LastName: {
+            form: {
+              caption: 'Last Name *',
+              displayOrder: 2,
+            },
             displayOrder: 3,
             caption: 'LastName',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
             type: 'string',
+            cssClasses: 'col-4 col-md-4',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Last Name is required'
+              },
+            ],
           },
           Email: {
+            form: {
+              caption: 'Email *',
+              displayOrder: 3,
+            },
             displayOrder: 4,
             caption: 'Email',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '130px',
             type: 'string',
+            cssClasses: 'col-4 col-md-4',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Email is required'
+              },
+              function (value, data) {
+                return /.+@.+\..+/.test(value) || 'E-mail must be valid'
+              },
+            ],
           },
           BusinessNumber: {
+            form: {
+              caption: 'Phone *',
+              displayOrder: 4,
+            },
             displayOrder: 5,
             caption: 'BusinessNumber',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '130px',
             type: 'string',
+            cssClasses: 'col-4 col-md-4',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Phone is required'
+              },
+              function (value, data) {
+                return /^[0-9]\d*$|^$/.test(value) || 'Number must be valid'
+              },
+            ],
           },
           createdDate: {
             displayOrder: 6,
@@ -4280,6 +5417,10 @@ export default {
             editForm: false,
           },
           Tags: {
+            form: {
+              caption: 'Tags',
+              displayOrder: 5,
+            },
             caption: 'Tags',
             searchEnable: true,
             sortEnable: true,
@@ -4288,8 +5429,13 @@ export default {
             hidden: true,
             newForm: true,
             editForm: true,
+            cssClasses: 'col-4 col-md-4',
           },
           '_BillingAddress.AddressLine': {
+            form: {
+              caption: 'Address',
+              displayOrder: 6,
+            },
             caption: 'Address',
             searchEnable: true,
             sortEnable: true,
@@ -4298,8 +5444,13 @@ export default {
             hidden: true,
             newForm: true,
             editForm: true,
+            cssClasses: 'col-4 col-md-4',
           },
           '_BillingAddress.City': {
+            form: {
+              caption: 'City',
+              displayOrder: 7,
+            },
             caption: 'City',
             searchEnable: true,
             sortEnable: true,
@@ -4308,8 +5459,13 @@ export default {
             hidden: true,
             newForm: true,
             editForm: true,
+            cssClasses: 'col-4 col-md-4',
           },
           '_BillingAddress.State': {
+            form: {
+              caption: 'State',
+              displayOrder: 8,
+            },
             caption: 'State',
             searchEnable: true,
             sortEnable: true,
@@ -4318,8 +5474,13 @@ export default {
             hidden: true,
             newForm: true,
             editForm: true,
+            cssClasses: 'col-4 col-md-4',
           },
           '_BillingAddress.PostalCode': {
+            form: {
+              caption: 'Zip',
+              displayOrder: 9,
+            },
             caption: 'Zip',
             searchEnable: true,
             sortEnable: true,
@@ -4328,8 +5489,13 @@ export default {
             hidden: true,
             newForm: true,
             editForm: true,
+            cssClasses: 'col-4 col-md-4',
           },
           '_BillingAddress.Country': {
+            form: {
+              caption: 'Country',
+              displayOrder: 10,
+            },
             caption: 'Country',
             searchEnable: true,
             sortEnable: true,
@@ -4338,8 +5504,13 @@ export default {
             hidden: true,
             newForm: true,
             editForm: true,
+            cssClasses: 'col-4 col-md-4',
           },
           Description: {
+            form: {
+              caption: 'Description',
+              displayOrder: 11,
+            },
             caption: 'Description',
             searchEnable: true,
             sortEnable: true,
@@ -4384,34 +5555,6 @@ export default {
       caption: 'Contacts',
       name: 'Contact',
     },
-    permissions: {
-      groups: '',
-    },
-    ui: {
-      checkbox: true,
-      'Card View Template': '',
-      width: '',
-      height: '',
-      TemplateHelpers: {},
-      'Display Order': '',
-      'Map View Template': '',
-      'List View Template': '',
-      Column: '',
-      'Tile View': 'now',
-      'App Type': 'View',
-      Templates: {
-        FullName:
-          '<div onclick="invokeAction(\'goToDetails\', this)" data-action="edit" data-bind="ID={{id}}" style="cursor: pointer;color: blue;"> {{FullName}} </div>',
-      },
-      decorator: {
-        Attachment: '',
-        'Field icon': {
-          isActive: 'fa fa-check|fa fa-times',
-          isEarning: 'fa fa-check|fa fa-times',
-        },
-        LinkedinURL: '',
-      },
-    },
     views: {
       Contacts: {
         ui: {
@@ -4420,11 +5563,15 @@ export default {
           showExpand: false,
           singleExpand: false,
           showSelect: true,
-          hideFilter: true,
+          hideFilter: false,
           hideSearch: false,
         },
         fields: {
           FirstName: {
+            form: {
+              caption: 'First Name *',
+              displayOrder: 1,
+            },
             caption: 'First Name',
             searchEnable: true,
             sortEnable: true,
@@ -4434,8 +5581,17 @@ export default {
             newForm: true,
             editForm: true,
             cssClasses: 'col-12 col-md-12',
+            rules: [
+              (v) => {
+                return !!v || 'First Name is required'
+              },
+            ],
           },
           LastName: {
+            form: {
+              caption: 'Last Name *',
+              displayOrder: 2,
+            },
             caption: 'Last Name',
             searchEnable: true,
             sortEnable: true,
@@ -4445,8 +5601,17 @@ export default {
             newForm: true,
             editForm: true,
             cssClasses: 'col-12 col-md-12',
+            rules: [
+              (v) => {
+                return !!v || 'Last Name is required'
+              },
+            ],
           },
           Type: {
+            form: {
+              caption: 'Type',
+              displayOrder: 3,
+            },
             displayOrder: 8,
             caption: 'Type',
             searchEnable: true,
@@ -4468,6 +5633,10 @@ export default {
             },
           },
           Job: {
+            form: {
+              caption: 'Full Job Title',
+              displayOrder: 4,
+            },
             displayOrder: 4,
             caption: 'Job Title',
             searchEnable: true,
@@ -4479,6 +5648,10 @@ export default {
             cssClasses: 'col-12 col-md-12',
           },
           Department: {
+            form: {
+              caption: 'Department',
+              displayOrder: 5,
+            },
             caption: 'Department',
             searchEnable: true,
             sortEnable: true,
@@ -4500,6 +5673,10 @@ export default {
             },
           },
           CellPhone: {
+            form: {
+              caption: 'Mobile Phone *',
+              displayOrder: 6,
+            },
             displayOrder: 7,
             caption: 'Phone',
             searchEnable: true,
@@ -4509,8 +5686,20 @@ export default {
             newForm: true,
             editForm: true,
             cssClasses: 'col-12 col-md-12',
+            rules: [
+              (v) => {
+                return !!v || 'Phone is required'
+              },
+              function (value, data) {
+                return /^[0-9]\d*$|^$/.test(value) || 'Number must be valid'
+              },
+            ],
           },
           Email: {
+            form: {
+              caption: 'Email *',
+              displayOrder: 7,
+            },
             displayOrder: 3,
             caption: 'Email',
             searchEnable: true,
@@ -4520,6 +5709,14 @@ export default {
             newForm: true,
             editForm: true,
             cssClasses: 'col-12 col-md-12',
+            rules: [
+              (v) => {
+                return !!v || 'Email is required'
+              },
+              function (value, data) {
+                return /.+@.+\..+/.test(value) || 'E-mail must be valid'
+              },
+            ],
           },
           FullName: {
             displayOrder: 2,
@@ -4564,7 +5761,7 @@ export default {
           },
         },
         template: {
-          name: 'link-grid',
+          name: 'contact-grid',
           context: {
             basePath: '/contacts',
           },
@@ -4662,11 +5859,8 @@ export default {
           type: 'graphql',
           model: 'Registration',
           filter(ctx) {
-            debugger
             return {
-              where: {
-                Email: ctx.$route.params.id,
-              },
+              where: {},
             }
           },
         },
@@ -4767,7 +5961,7 @@ export default {
         },
         hidden: true,
         template: {
-          name: 'contact-grid',
+          name: 'contactInvites-grid',
           context: {
             basePath: '/contact',
           },
@@ -4850,7 +6044,7 @@ export default {
           },
         },
         template: {
-          name: 'link-grid',
+          name: 'contactEmails-grid',
           context: {
             basePath: '/contact',
           },
@@ -4871,12 +6065,7 @@ export default {
         title: 'contactEmails',
         type: 'list',
       },
-    },
-  },
-
-  users: {
-    views: {
-      users: {
+      Invites: {
         ui: {
           hideDefaultHeader: false,
           hideDefaultFooter: false,
@@ -4886,54 +6075,67 @@ export default {
           hideFilter: false,
           hideSearch: true,
         },
-        default: true,
+        hidden: true,
         fields: {
-          name: {
+          createdDate: {
             displayOrder: 2,
-            caption: 'Name',
+            caption: 'Date',
             searchEnable: true,
             sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
+            columnWidth: '180px',
+            type: 'datetime',
           },
-          id: {
+          Title: {
             displayOrder: 3,
-            caption: 'Username',
+            caption: 'Subject',
             searchEnable: true,
             sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
+            columnWidth: '180px',
+            type: 'String',
           },
-          email: {
+          SenderName: {
             displayOrder: 4,
-            caption: 'Email',
+            caption: 'Sender',
             searchEnable: true,
             sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
+            columnWidth: '180px',
+            type: 'String',
           },
-          'rolemappings[0].roleId': {
+          Status: {
             displayOrder: 5,
-            caption: 'Roles',
+            caption: 'Status',
             searchEnable: true,
             sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
+            columnWidth: '180px',
+            type: 'String',
+          },
+          createdBy: {
+            displayOrder: 6,
+            caption: 'Created By',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'String',
           },
         },
         template: {
+          name: 'contact-grid',
           context: {
-            basePath: '/organization',
+            basePath: '/contact',
           },
         },
         dataSource: {
-          type: 'rest',
-          getData: (ctx) =>
-            getData(
-              `/Organizations/${this.$store.state.currentOrg.id}/Users?filter={"include":{"rolemappings":"role"}}`
-            ),
+          query: eventTasks,
+          defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          model: 'CRMActivity',
+          filter(ctx) {
+            return {
+              where: {},
+            }
+          },
         },
-        title: 'Users',
+        title: 'Invites',
         type: 'list',
       },
     },

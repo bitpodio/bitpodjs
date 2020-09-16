@@ -1,5 +1,5 @@
 <template>
-  <v-checkbox v-model="checkbox" @change="updateRegForm"></v-checkbox>
+  <v-checkbox v-model="checkbox" @change="updateRecurringSession"></v-checkbox>
 </template>
 
 <script>
@@ -12,10 +12,10 @@ export default {
     }
   },
   methods: {
-    updateRegForm() {
+    updateRecurringSession() {
       this.$axios
-        .$put(
-          `https://${nuxtconfig.axios.eventUrl}/svc/api/OfferCodes/${this.item.id}`,
+        .$patch(
+          `https://${nuxtconfig.axios.eventUrl}/svc/api/Sessions/${this.item.id}`,
           {
             isActive: this.checkbox,
           }
