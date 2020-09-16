@@ -23,7 +23,9 @@
                 <v-list-item-title>Publish to eventbrite</v-list-item-title>
               </v-list-item>
               <v-list-item>
-                <v-list-item-title>Make a copy</v-list-item-title>
+                <v-list-item-title @click="isMakeCopy = true"
+                  >Make a copy</v-list-item-title
+                >
               </v-list-item>
               <v-list-item>
                 <v-list-item-title>Edit email template</v-list-item-title>
@@ -452,12 +454,14 @@
       </div>
     </v-flex>
     <editSeoForm :seo-form.sync="seoForm" />
+    <makeCopy :is-make-copy.sync="isMakeCopy" />
   </v-flex>
 </template>
 <script>
 import gql from 'graphql-tag'
 import format from 'date-fns/format'
 import editSeoForm from '~/pages/apps/_app/event/_id/editSeoForm.vue'
+import makeCopy from '~/pages/apps/_app/event/_id/makeCopy.vue'
 import Grid from '~/components/common/grid'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
@@ -468,12 +472,14 @@ export default {
   components: {
     Grid,
     editSeoForm,
+    makeCopy,
   },
   mixins: [configLoaderMixin],
   data() {
     return {
       loading: 0,
       seoForm: false,
+      isMakeCopy: false,
       data: {
         event: {},
         badge: {},

@@ -23,7 +23,9 @@
                 <v-list-item-title>Publish to eventbrite</v-list-item-title>
               </v-list-item>
               <v-list-item>
-                <v-list-item-title>Make a copy</v-list-item-title>
+                <v-list-item-title @click="isMakeCopy = true"
+                  >Make a copy</v-list-item-title
+                >
               </v-list-item>
               <v-list-item>
                 <v-list-item-title>Edit email template</v-list-item-title>
@@ -39,7 +41,7 @@
           {{ formatedDate(data.event.EndDate, data.event.Timezone) }} -
           {{ formatField(data.event.Timezone) }}
         </v-chip>
-        <v-flex>
+        <!-- <v-flex>
           <p class="blue--text">
             <i class="fa fa-map-marker" aria-hidden="true"></i>
             <a
@@ -85,7 +87,7 @@
               }}
             </a>
           </p>
-        </v-flex>
+        </v-flex> -->
 
         <v-flex d-flex flex-md-row flex-lg-row flex-column my-2>
           <div
@@ -529,6 +531,7 @@
     <editSeoForm :seo-form.sync="seoForm" />
     <editEventSetting :event-setting.sync="eventSetting" />
     <editSiteSetting :site-setting.sync="siteSetting" />
+    <makeCopy :is-make-copy.sync="isMakeCopy" />
   </v-flex>
 </template>
 <script>
@@ -539,6 +542,7 @@ import editSeoForm from './editSeoForm.vue'
 import editEventForm from './editEventForm.vue'
 import editEventSetting from './editEventSetting.vue'
 import editSiteSetting from './editSiteSetting.vue'
+import makeCopy from './makeCopy.vue'
 import Grid from '~/components/common/grid'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
@@ -551,6 +555,7 @@ export default {
     editEventForm,
     editEventSetting,
     editSiteSetting,
+    makeCopy,
   },
   mixins: [configLoaderMixin],
   props: ['value', 'field'],
@@ -563,6 +568,7 @@ export default {
       seoForm: false,
       eventSetting: false,
       siteSetting: false,
+      isMakeCopy: false,
       data: {
         event: {},
         badge: {},
