@@ -1568,7 +1568,10 @@ export default {
           filter(ctx) {
             return {
               where: {
-                EventId: ctx.$route.params.id,
+                and: [
+                  { EventId: ctx.$route.params.id },
+                  { Type: 'Mass Email' },
+                ],
               },
             }
           },
