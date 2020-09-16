@@ -47,6 +47,7 @@
                   label="Start Date*"
                   :field="startDateField"
                   :rules="startDateRule"
+                  :on-change="changeStartDate"
                   type="date"
                 />
               </v-col>
@@ -56,6 +57,7 @@
                   label="End Date*"
                   :field="endDateRule"
                   :rules="endDateRule"
+                  :on-change="changeEndDate"
                   type="date"
                 />
               </v-col>
@@ -510,7 +512,7 @@
             <v-tab
               href="#tab-3"
               class="px-0 mr-4"
-              :disabled="!validTab1()"
+              :disabled="!validTab1() || !validTab2()"
               @click="selectTab(3)"
             >
               <v-icon left>fa-history</v-icon><span>Recurring Session</span>
@@ -572,80 +574,86 @@
 
             <v-tab-item :value="'tab-2'">
               <v-card flat>
-                <p>
-                  Setup event tickets and price, you can also set tickets
-                  validity so early birds can be offered better pricing.
-                </p>
-                <v-btn
-                  class="ma-2 ml-0 mb-3"
-                  outlined
-                  color="primary"
-                  @click="addTicketRow"
-                  >Add Tickets</v-btn
+                <v-form
+                  ref="validTicketsForm"
+                  v-model="validTickets"
+                  :lazy-validation="lazy"
                 >
-                <v-simple-table class="event-table">
-                  <template v-slot:default>
-                    <thead>
-                      <tr>
-                        <th class="text-left pl-0">Title*</th>
-                        <th class="text-left pl-2">Type*</th>
-                        <th class="text-left pl-2">Price</th>
-                        <th class="text-left pl-2">Quantity</th>
-                        <th class="text-left pl-2"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="(ticket, k) in tickets" :key="k">
-                        <td class="pa-2 pb-0 pl-0">
-                          <v-text-field
-                            v-model="ticket.Code"
-                            :rules="requiredRules"
-                            outlined
-                            dense
-                            @change="changeTicketCode(k)"
-                          ></v-text-field>
-                        </td>
-                        <td class="pa-2 pb-0">
-                          <Lookup
-                            v-model="ticket.Type"
-                            :field="ticketTypeProps"
-                          />
-                        </td>
-                        <td class="pa-2 pb-0">
-                          <v-text-field
-                            v-model="ticket.Amount"
-                            outlined
-                            dense
-                            value
-                            :disabled="isPriceDisabled(k)"
-                            @change="changeTicketAmount(k)"
-                          ></v-text-field>
-                        </td>
-                        <td class="pa-2 pb-0">
-                          <v-text-field
-                            v-model="ticket.TicketCount"
-                            outlined
-                            dense
-                            value
-                          ></v-text-field>
-                        </td>
-                        <td class="pa-2 pb-0">
-                          <v-btn icon class="mt-1" @click="deleteTicket(k)">
-                            <v-icon>mdi-24px mdi-delete</v-icon>
-                          </v-btn>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </template>
-                </v-simple-table>
+                  <p>
+                    Setup event tickets and price, you can also set tickets
+                    validity so early birds can be offered better pricing.
+                  </p>
+                  <v-btn
+                    class="ma-2 ml-0 mb-3"
+                    outlined
+                    color="primary"
+                    @click="addTicketRow"
+                    >Add Tickets</v-btn
+                  >
+                  <v-simple-table class="event-table">
+                    <template v-slot:default>
+                      <thead>
+                        <tr>
+                          <th class="text-left pl-0">Title*</th>
+                          <th class="text-left pl-2">Type*</th>
+                          <th class="text-left pl-2">Price</th>
+                          <th class="text-left pl-2">Quantity</th>
+                          <th class="text-left pl-2"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="(ticket, k) in tickets" :key="k">
+                          <td class="pa-2 pb-0 pl-0">
+                            <v-text-field
+                              v-model="ticket.Code"
+                              :rules="requiredRules"
+                              outlined
+                              dense
+                              @change="changeTicketCode(k)"
+                            ></v-text-field>
+                          </td>
+                          <td class="pa-2 pb-0">
+                            <Lookup
+                              v-model="ticket.Type"
+                              :field="ticketTypeProps"
+                            />
+                          </td>
+                          <td class="pa-2 pb-0">
+                            <v-text-field
+                              v-model="ticket.Amount"
+                              outlined
+                              dense
+                              value
+                              :disabled="isPriceDisabled(k)"
+                              @change="changeTicketAmount(k)"
+                            ></v-text-field>
+                          </td>
+                          <td class="pa-2 pb-0">
+                            <v-text-field
+                              v-model="ticket.TicketCount"
+                              outlined
+                              dense
+                              value
+                            ></v-text-field>
+                          </td>
+                          <td class="pa-2 pb-0">
+                            <v-btn icon class="mt-1" @click="deleteTicket(k)">
+                              <v-icon>mdi-24px mdi-delete</v-icon>
+                            </v-btn>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </template>
+                  </v-simple-table>
+                </v-form>
               </v-card>
             </v-tab-item>
 
             <v-tab-item :value="'tab-3'">
               <v-card v-if="isSession" flat>
                 <v-form
-                  ref="validTicketsForm"
-                  v-model="validTickets"
+                  ref="validSessionsForm"
+                  v-model="validSessions"
                   :lazy-validation="lazy"
                 >
                   <p>
@@ -949,7 +957,7 @@ export default {
       validPersonMeeting: true,
       validType: true,
       validBasicInfo: true,
-      validTickets: true,
+      validSessions: true,
       lazy: false,
       locationMesssage: '',
       isLocationMessage: false,
@@ -1267,6 +1275,14 @@ export default {
         type: 'date',
       }
     },
+    endDateField() {
+      return {
+        appendIcon: 'fa-calendar',
+        outlined: true,
+        caption: 'End Date',
+        type: 'date',
+      }
+    },
     startDateRule() {
       return [
         (v) => {
@@ -1276,14 +1292,6 @@ export default {
             : true
         },
       ]
-    },
-    endDateField() {
-      return {
-        appendIcon: 'fa-calendar',
-        outlined: true,
-        caption: 'End Date',
-        type: 'date',
-      }
     },
     endDateRule() {
       return [
@@ -1325,6 +1333,12 @@ export default {
     },
   },
   methods: {
+    changeStartDate(value) {
+      this.$refs.form.validate()
+    },
+    changeEndDate(value) {
+      this.$refs.form.validate()
+    },
     changeTicketCode(index) {
       this.tickets[index].CodeAmount =
         this.tickets[index].Code + ' ' + this.tickets[index].Amount
@@ -1798,6 +1812,12 @@ export default {
         return false
       }
     },
+    validTab2() {
+      const isValidTicket = this.tickets.map((ticket, index) => {
+        return ticket.Code !== '' && ticket.Type !== ''
+      })
+      return !isValidTicket.includes(false)
+    },
     prev() {
       this.currentTab = parseInt(this.tabs.split('-')[1])
       this.currentTab -= 1
@@ -1822,7 +1842,8 @@ export default {
         this.validBasicInfo
       ) {
         this.setNextTab()
-      } else if (this.currentTab === 2) {
+      } else if (this.currentTab === 2 && this.validTickets) {
+        this.$refs.validTicketsForm.validate()
         this.currentTab = 3
         this.setNextTab()
       }
@@ -1830,8 +1851,8 @@ export default {
 
     saveRecord() {
       const { Code, Type } = this.tickets
-      this.$refs.validTicketsForm.validate()
-      if (this.validTickets && Code !== '' && Type !== '') {
+      this.$refs.validSessionsForm.validate()
+      if (this.validSessions && Code !== '' && Type !== '') {
         const isInvalidSessionMap = this.sessions.map((session, index) => {
           return session.StartTime > session.EndTime
         })
