@@ -45,7 +45,7 @@
                   <v-list-item-title>Edit email template</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
-              <v-list-item>
+              <v-list-item @click="redirectIntegration">
                 <v-list-item-icon class="mr-2">
                   <i class="fa fa-link1 mt-1" aria-hidden="true"></i>
                 </v-list-item-icon>
@@ -742,6 +742,11 @@ export default {
     viewRegistration() {
       const regUrl = `https://${nuxtconfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
       window.open(`${regUrl}`, '_blank')
+    },
+    redirectIntegration() {
+      debugger
+      const integrationUrl = `https://${nuxtconfig.axios.eventUrl}/apps/event/list/Event/Integrations?event=${this.$route.params.id}`
+      this.$route.push(integrationUrl)
     },
   },
   apollo: {
