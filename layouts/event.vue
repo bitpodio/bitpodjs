@@ -224,7 +224,6 @@
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       </div>
       <v-toolbar-title class="pl-0 ml-n2">Event </v-toolbar-title>
-      <OrgnaizationList />
       <v-spacer></v-spacer>
       <v-btn class="ma-2 d-none d-sm-flex" tile outlined>
         UPGARDE
@@ -385,6 +384,16 @@
                 </v-list-item-content>
               </v-list-item>
             </v-list>
+            <v-divider></v-divider>
+            <v-list-item>
+              <v-list-item-action>
+                <v-switch v-model="message" color="primary"></v-switch>
+              </v-list-item-action>
+              <v-list-item-title>Notification</v-list-item-title>
+            </v-list-item>
+            <v-list-item>
+              <OrgnaizationList />
+            </v-list-item>
             <v-divider></v-divider>
             <v-list>
               <v-list-item class="text-center justify-center">

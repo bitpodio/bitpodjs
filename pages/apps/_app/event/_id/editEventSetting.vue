@@ -60,10 +60,10 @@
                 v-model="formData.UniqLink"
                 label="Event Link*"
                 :rules="linkRules"
-                @input="checkUniqueLink"
                 persistent-hint
                 outlined
                 required
+                @input="checkUniqueLink"
               ></v-text-field>
               <span
                 v-if="isInvalidEventLink && !!formData.UniqLink"
@@ -167,15 +167,15 @@ import generalconfiguration from '~/config/apps/event/gql/registrationStatusOpti
 import { formatGQLResult } from '~/utility/gql.js'
 
 export default {
+  components: {
+    RichText: () =>
+      process.client ? import('~/components/common/form/richtext.vue') : false,
+  },
   props: {
     eventSetting: {
       default: false,
       allowSpaces: false,
     },
-  },
-  components: {
-    RichText: () =>
-      process.client ? import('~/components/common/form/richtext.vue') : false,
   },
   data() {
     return {

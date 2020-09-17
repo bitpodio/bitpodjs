@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  props: ['content', 'viewName', 'items', 'onDeleteItem'],
+  props: ['content', 'viewName', 'items', 'onDeleteItem', 'context'],
   data() {
     return {
       dialog: false,

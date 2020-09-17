@@ -161,45 +161,11 @@ async function fetchUserOrgs(req) {
   return userOrgList
 }
 
-async function fetchCurrentOrg(req) {
-  const origin = getApiUrl(req)
-  const config = getAxiosConfig(req)
-  let currentOrg = {}
-  const apiEndpoint = nuxtconfig.axios.apiEndpoint
-  try {
-    const orgResponse = await axios.get(
-      `${origin}${apiEndpoint}Organizations/this`,
-      config
-    )
-    currentOrg = orgResponse.data
-  } catch (error) {
-    currentOrg = {
-      error,
-    }
-  }
-  return currentOrg
-}
-
 async function fetchUserOrgsDetails(req) {
-  const reqHost = req.get('host')
-  let defaultPublicDomain = nuxtconfig.setting.domains.defaultPublicDomain
-  defaultPublicDomain = defaultPublicDomain.split(',')[0]
   let userDetails = {}
-  if (reqHost === defaultPublicDomain) {
-    const orgList = await fetchUserOrgs(req)
-    userDetails = {
-      orgList,
-      currentOrg: null,
-    }
-  } else {
-    const [orgList, currentOrg] = await Promise.all([
-      fetchUserOrgs(req),
-      fetchCurrentOrg(req),
-    ])
-    userDetails = {
-      orgList,
-      currentOrg,
-    }
+  const orgList = await fetchUserOrgs(req)
+  userDetails = {
+    orgList,
   }
   return userDetails
 }
