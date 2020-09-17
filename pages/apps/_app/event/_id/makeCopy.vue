@@ -284,7 +284,7 @@
             color="primary"
             depressed
             @click="onSave"
-            >Save</v-btn
+            >Copy</v-btn
           >
         </v-card-actions>
       </v-card>
@@ -497,17 +497,23 @@ export default {
       this.$apollo.queries.data.refresh()
     },
     onSave() {
-      this.formData.Currency = this.currency
-      this.formData.Privacy = this.privacy
-      delete this.formData._VenueAddress
+      // this.formData.Currency = this.currency
+      // this.formData.Privacy = this.privacy
+      // delete this.formData._VenueAddress
+      delete this.eventData.id
+      if(this.eventData.BusinessType === 'Single' && this.eventData.LocationType === 'Venue'){
+        delete this.eventData._VenueAddress.LatLng.__typename
+        delete this.eventData._VenueAddress.LatLng.visible
+      }
       this.$axios
-        .$patch(
-          `https://${nuxtConfig.axios.eventUrl}/svc/api/Events/${this.$route.params.id}`,
+        .$post(
+          `https://${nuxtConfig.axios.eventUrl}/svc/api/Events/cloneEvent`,
           {
-            ...this.formData,
+            ...this.eventData,
           }
         )
         .then((res) => {
+          debugger
           this.close()
           this.refresh()
           return (this.data.event = res)
