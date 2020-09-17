@@ -306,6 +306,8 @@
                           outlined
                           dense
                           value
+                          type="Number"
+                          min="0"
                           :disabled="isPriceDisabled(k)"
                         ></v-text-field>
                       </td>
@@ -340,6 +342,8 @@
                           v-model="ticket.TicketCount"
                           outlined
                           dense
+                          type="Number"
+                          min="0"
                           value
                         ></v-text-field>
                       </td>

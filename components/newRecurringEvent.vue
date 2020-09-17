@@ -980,10 +980,10 @@ export default {
       ],
       durationRules: [
         (v) => {
-          if (!isNaN(parseFloat(v))) {
+          if (!isNaN(parseFloat(v)) && v > 0) {
             return true
           }
-          return 'Duration should not be less than zero'
+          return 'Duration should be greater than zero'
         },
       ],
       rollingDaysRules: [
@@ -1046,6 +1046,7 @@ export default {
       Country: '',
       ZipCode: '',
       SessionTicket: [],
+      TicketName: '',
       zoomDocumentLink:
         'https://bitpod-event.test.bitpod.io/admin/apps/HelpCenter/Integrations/Zoom/views/Zoom',
       googleMeetDocumentLink:
@@ -1589,6 +1590,8 @@ export default {
         this.sessions[this.selectedSession].selectedLocation =
           this.venueAddress.AddressLine + ' ' + this.venueAddress.City
         this.sessions[this.selectedSession]._CurrentAddress = this.venueAddress
+        const sessions = [...this.sessions]
+        this.sessions = sessions
       } else if (
         this.$refs['venueAddress.AddressLine'] &&
         this.$refs['venueAddress.AddressLine'].autocompleteText !== ''
@@ -1656,10 +1659,25 @@ export default {
     },
     selectSessionTickets(index) {
       this.selectedSession = index
+      this.SessionTicket = []
       this.isSessionTicket = true
     },
     setSessionTicket() {
       this.isSessionTicket = false
+      const cloneTickets = JSON.parse(JSON.stringify(this.tickets))
+      let TicketName = ''
+      this.SessionTicket.forEach(function (tid) {
+        cloneTickets.forEach(function (ticket) {
+          if (tid === ticket.id) {
+            if (TicketName === '') {
+              TicketName = ticket.Code
+            } else {
+              TicketName += ',' + ticket.Code
+            }
+          }
+        })
+      })
+      this.sessions[this.selectedSession].TicketName = TicketName
       this.sessions[this.selectedSession].SessionTicket = this.SessionTicket
       const sessions = [...this.sessions]
       this.sessions = sessions
