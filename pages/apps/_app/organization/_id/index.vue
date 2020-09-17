@@ -304,18 +304,15 @@ export default {
     },
   },
   methods: {
-    uploadOrgLogo(data) {
+    async uploadOrgLogo(data) {
       this.orgLogo = false
       this.formData.Image = []
       this.formData.Image.push(data[0])
-      this.$axios
+      const res = await this.$axios
         .$patch(
           `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}OrganizationInfos/${this.$route.params.id}`,
           this.formData
         )
-        .then((res) => {
-          return res
-        })
         .catch((e) => console.log('Error', e))
     },
     formatDate(date) {

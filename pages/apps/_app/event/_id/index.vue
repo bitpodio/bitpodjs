@@ -858,8 +858,8 @@ export default {
         multiple: false,
       },
       bannerName: '',
-      OtherImageName:'',
-      logoName:''
+      OtherImageName: '',
+      logoName: '',
     }
   },
   computed: {
