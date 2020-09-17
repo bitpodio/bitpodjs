@@ -87,7 +87,7 @@ body {
   cursor: pointer;
 }
 .fs-18 {
-  font-size: 18px;
+  font-size: 18px !important;
 }
 .fs-30 {
   font-size: 30px !important;
@@ -127,8 +127,17 @@ body {
 .templateTile {
   max-width: 250px !important;
 }
+.tileCard {
+  transition: 0.3s all;
+  -webkit-transition: 0.3s all;
+  -moz-transition: 0.3s all;
+}
 .tileCard:hover {
-  background: #eeeeee !important;
+  background: #f4f4f4 !important;
+  transform: scale(1.04);
+  transition: 0.3s all;
+  -webkit-transition: 0.3s all;
+  -moz-transition: 0.3s all;
 }
 .v-data-table__wrapper {
   width: 100%;
@@ -153,10 +162,6 @@ body {
   max-width: 36px !important;
   max-height: 36px !important;
 }
-.tabContent {
-  overflow: hidden auto;
-  max-height: 390px !important;
-}
 .contactsGrid {
   overflow: hidden auto;
   max-height: 660px !important;
@@ -171,12 +176,17 @@ body {
 .templateButtons {
   position: absolute;
   bottom: 30px;
+  width: 100%;
+  text-align: center;
 }
 .borderBottomGrey {
   border-bottom: 1px solid lightgray;
 }
 .borderRightGrey {
   border-right: 1px solid lightgray;
+}
+.invite-form .v-tab {
+  min-width: auto !important;
 }
 @media (max-width: 600px) {
   .slide-form,

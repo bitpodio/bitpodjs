@@ -9,7 +9,7 @@
       v-model="dialog"
       persistent
       scrollable
-      content-class="slide-form-default-big"
+      content-class="slide-form"
       transition="dialog-bottom-transition"
     >
       <template v-slot:activator="{ on, attrs }">
@@ -18,69 +18,89 @@
           send Event Invite
         </v-btn>
       </template>
-      <v-card>
-        <v-toolbar dense flat dark fixed color="accent">
-          <v-toolbar-title class="body-1">New Email Invite</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-btn icon dark @click="resetForm">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </v-toolbar>
-        <v-divider></v-divider>
-        <v-container style="height: 100%;">
-          <template>
-            <v-tabs v-model="curentTab">
-              <v-tab>Basic Info</v-tab>
-              <v-tab>Content</v-tab>
-              <v-tab>Contacts</v-tab>
-              <v-tab>Verify</v-tab>
+      <template>
+        <v-card class="invite-form">
+          <v-card-title
+            class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
+          >
+            <h2 class="black--text pt-4 pb-2 text-h5">New Email Invite</h2>
+            <v-spacer></v-spacer>
+            <div>
+              <v-btn icon @click="resetForm">
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+            </div>
+            <v-tabs v-model="curentTab" height="36">
+              <v-tab class="px-0 mr-4">Basic Info</v-tab>
+              <v-tab class="px-0 mr-4">Content</v-tab>
+              <v-tab class="px-0 mr-4">Contacts</v-tab>
+              <v-tab class="px-0 mr-4">Verify</v-tab>
             </v-tabs>
+          </v-card-title>
+          <v-card-text
+            class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0 event-inner"
+          >
             <v-tabs-items v-model="curentTab">
-              <v-tab-item class="pl-2">
+              <v-tab-item>
                 <v-card flat class="tabContent">
-                  <v-card-text class="pl-1"
-                    >Start with entering basic information about your email
-                    invite and then press next.</v-card-text
-                  >
+                  <p class="mt-4 mb-2">
+                    Start with entering basic information about your email
+                    invite and then press next.
+                  </p>
                   <div class="pr-3 pt-1">
-                    <v-text-field
-                      v-model="subject"
-                      label="Subject *"
-                      outlined
-                    ></v-text-field>
-                    <v-text-field
-                      v-model="senderName"
-                      label="Sender Name"
-                      outlined
-                    ></v-text-field>
-                    <v-text-field
-                      v-model="sender"
-                      label="Sender *"
-                      outlined
-                    ></v-text-field>
-                    <v-text-field
-                      v-model="setReplyTo"
-                      label="Set reply-to *"
-                      outlined
-                    ></v-text-field>
-                    <v-icon class="amber--text fc-icon"
-                      >mdi-lightbulb-on-outline</v-icon
-                    >
-                    <v-card-text class="d-inline pa-0">
-                      You may refer invite members data by using placeholder
-                      expressions in subject line. e.g: ${Contact.FirstName}
-                      ${Contact.LastName} ${OrganizationInfo.Name}</v-card-text
-                    >
+                    <v-row>
+                      <v-col cols="12" class="pb-0">
+                        <v-text-field
+                          v-model="subject"
+                          label="Subject *"
+                          outlined
+                          dense
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12" class="pb-0">
+                        <v-text-field
+                          v-model="senderName"
+                          label="Sender Name"
+                          outlined
+                          dense
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12" class="pb-0">
+                        <v-text-field
+                          v-model="sender"
+                          label="Sender *"
+                          outlined
+                          dense
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12" class="pb-0">
+                        <v-text-field
+                          v-model="setReplyTo"
+                          label="Set reply-to *"
+                          outlined
+                          dense
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12" class="pb-0">
+                        <v-icon class="amber--text">fa-bulb</v-icon>
+                        <v-card-text class="d-inline pa-0">
+                          You may refer invite members data by using placeholder
+                          expressions in subject line. e.g: ${Contact.FirstName}
+                          ${Contact.LastName}
+                          ${OrganizationInfo.Name}</v-card-text
+                        >
+                      </v-col>
+                    </v-row>
                   </div>
                 </v-card>
               </v-tab-item>
               <v-tab-item>
                 <v-card v-if="choosedTemplate === 0" flat>
-                  <v-card-text class="pl-3"
-                    >Use a pre designed template or editor to design your
-                    content.</v-card-text
-                  >
-                  <div class="pr-3 pt-1 pl-1 tabContent">
+                  <p class="mt-4 mb-3">
+                    Use a pre designed template or editor to design your
+                    content.
+                  </p>
+                  <div class="pr-3 pt-1 tabContent">
                     <v-row>
                       <v-col
                         class="pl-5 templateTile"
@@ -91,55 +111,66 @@
                           height="230"
                           align="center"
                           justify="center"
-                          class="tileCard cursorPointer"
+                          class="tileCard cursorPointer pa-2"
                         >
-                          <v-icon class="py-5" size="50"
-                            >mdi-star-outline</v-icon
+                          <v-icon class="py-5" size="48">fa-star2</v-icon>
+                          <h3
+                            class="text-h5 my-2"
+                            style="font-size: 18px !important;"
                           >
-                          <h3 class="font-weight-regular ma-2">My Templates</h3>
-                          <h5 class="font-weight-regular ma-2">
+                            My Templates
+                          </h3>
+                          <div class="Caption mb-4">
                             A place where you can save templates for future use.
-                          </h5>
+                          </div>
                         </v-card>
                       </v-col>
+
                       <v-col
+                        class="pl-5 templateTile"
                         cols="4"
-                        class="templateTile"
                         @click="chooseTemplate(2)"
                       >
                         <v-card
                           height="230"
                           align="center"
                           justify="center"
-                          class="tileCard cursorPointer"
+                          class="tileCard cursorPointer pa-2"
                         >
-                          <v-icon class="py-5" size="50">mdi-newspaper</v-icon>
-                          <h3 class="font-weight-regular ma-2">
+                          <v-icon class="py-5" size="48">fa-news</v-icon>
+                          <h3
+                            class="text-h5 my-2"
+                            style="font-size: 18px !important;"
+                          >
                             Pre-designed Templates
                           </h3>
-                          <h5 class="font-weight-regular ma-2">
+                          <div class="Caption mb-4">
                             Ready-to-use templates to send emails quickly.
-                          </h5>
+                          </div>
                         </v-card>
                       </v-col>
+
                       <v-col
+                        class="pl-5 templateTile"
                         cols="4"
-                        class="templateTile"
                         @click="chooseTemplate(3)"
                       >
                         <v-card
                           height="230"
                           align="center"
                           justify="center"
-                          class="tileCard cursorPointer"
+                          class="tileCard cursorPointer pa-2"
                         >
-                          <v-icon class="py-5" size="50">mdi-xml</v-icon>
-                          <h3 class="font-weight-regular ma-2">
+                          <v-icon class="py-5" size="48">fa-code1</v-icon>
+                          <h3
+                            class="text-h5 my-2"
+                            style="font-size: 18px !important;"
+                          >
                             Rich Text Editor
                           </h3>
-                          <h5 class="font-weight-regular ma-2">
+                          <div class="Caption mb-4">
                             Use editor to design your content.
-                          </h5>
+                          </div>
                         </v-card>
                       </v-col>
                     </v-row>
@@ -150,17 +181,17 @@
                   flat
                   class="tabContent"
                 >
-                  <v-card-text class="pl-3"
-                    >Select a template to continue.
+                  <p class="mt-4 mb-4">
+                    Select a template to continue.
                     <span
                       class="blue--text cursorPointer"
                       @click="choosedTemplate = 0"
                     >
                       Back
-                    </span></v-card-text
-                  >
+                    </span>
+                  </p>
                   <v-flex
-                    class="d-flex flex-wrap pl-3 justify-center justify-md-start"
+                    class="d-flex flex-wrap pl-0 justify-center justify-md-start"
                   >
                     <v-hover
                       v-for="item in templateItems"
@@ -180,15 +211,13 @@
                               :src="item.ImageURL"
                               :lazy-src="item.ImageURL"
                               aspect-ratio="1"
-                              class="grey lighten-2"
-                              min-height="200"
-                              max-height="200"
+                              min-height="240"
+                              max-height="240"
                               contain
                             >
                               <template v-slot:placeholder>
                                 <v-img
                                   :src="$config.cdnUri + 'invitee-image.png'"
-                                  class="grey lighten-2"
                                   min-height="200"
                                   max-height="200"
                                 >
@@ -205,45 +234,40 @@
                             >
                             </v-img>
                           </div>
-                          <v-card-actions>
-                            <div class="text-truncate text-capitalize">
-                              {{ item.Name }}
-                            </div>
-                          </v-card-actions>
                         </v-card>
-                        <v-row
+                        <div
                           v-if="hover"
-                          class="fill-height flex-column"
-                          justify="space-between"
+                          class="align-self-center templateButtons"
                         >
-                          <div class="align-self-center templateButtons">
-                            <v-btn
-                              class="ma-2"
-                              outlined
-                              color="indigo"
-                              @click="
-                                choosedTemplate = 3
-                                RTEValue = item.Body
-                                templateID = item.id
-                                templateSubject = Subject
-                              "
-                              >Select</v-btn
-                            >
-                            <v-btn
-                              class="ma-2"
-                              outlined
-                              color="indigo"
-                              @click="
-                                setPreviewImage(
-                                  item.ImageURL !== null
-                                    ? item.ImageURL
-                                    : $config.cdnUri + 'invitee-image.png'
-                                )
-                              "
-                              >View</v-btn
-                            >
-                          </div>
-                        </v-row>
+                          <v-btn
+                            class="my-2 mx-0"
+                            outlined
+                            color="primary"
+                            @click="
+                              choosedTemplate = 3
+                              RTEValue = item.Body
+                              templateID = item.id
+                              templateSubject = Subject
+                            "
+                            >Select</v-btn
+                          >
+                          <v-btn
+                            class="ma-2"
+                            outlined
+                            color="primary"
+                            @click="
+                              setPreviewImage(
+                                item.ImageURL !== null
+                                  ? item.ImageURL
+                                  : $config.cdnUri + 'invitee-image.png'
+                              )
+                            "
+                            >View</v-btn
+                          >
+                        </div>
+                        <div class="text-truncate text-center text-capitalize">
+                          {{ item.Name }}
+                        </div>
                       </div>
                     </v-hover>
                   </v-flex>
@@ -262,23 +286,27 @@
                   ></v-progress-circular>
                 </v-card>
                 <v-card v-else flat class="tabContent">
-                  <v-btn
-                    class="ma-2 float-right"
-                    outlined
-                    color="blue"
-                    @click="
-                      choosedTemplate = 0
-                      RTEValue = ''
-                    "
-                    >X Discard</v-btn
-                  >
-                  <v-card-text class="pl-3"
-                    >Continue with default content or use editor to change
-                    content.</v-card-text
-                  >
+                  <v-flex class="d-flex">
+                    <p class="mt-5 mb-4">
+                      Continue with default content or use editor to change
+                      content.
+                    </p>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                      class="ma-2"
+                      outlined
+                      color="primary"
+                      @click="
+                        choosedTemplate = 0
+                        RTEValue = ''
+                      "
+                      >X Discard</v-btn
+                    >
+                  </v-flex>
+
                   <RichText
                     v-model="RTEValue"
-                    class="pl-3"
+                    class="pl-0"
                     :is-invitee="true"
                     :show-template-dropdown="true"
                   />
@@ -286,12 +314,12 @@
               </v-tab-item>
               <v-tab-item class="tabContent">
                 <v-card flat>
-                  <v-card-text
-                    >From contact list below, select contacts who should receive
-                    your invite and add them to invitees list.</v-card-text
-                  >
+                  <p class="mt-5 mb-4">
+                    From contact list below, select contacts who should receive
+                    your invite and add them to invitees list.
+                  </p>
                 </v-card>
-                <v-row class="px-6">
+                <v-row>
                   <v-col cols="6" class="contactsGrid">
                     <div class="borderBottomGrey pb-1">
                       <v-checkbox
@@ -300,8 +328,8 @@
                         label="Select All"
                       >
                       </v-checkbox>
-                      <v-icon>mdi-contacts</v-icon>
-                      <h4 class="d-inline font-weight-regular">Contacts</h4>
+                      <v-icon size="18" class="mr-1">fa-address-book-o</v-icon>
+                      <h4 class="d-inline body-1">Contacts</h4>
                     </div>
                     <div class="borderRightGrey pr-3 mr-n3">
                       <Grid
@@ -314,8 +342,8 @@
                   </v-col>
                   <v-col cols="6" class="contactsGrid">
                     <div class="borderBottomGrey pb-1">
-                      <v-icon>mdi-email-outline</v-icon>
-                      <h4 class="d-inline font-weight-regular">
+                      <v-icon size="18">mdi-email-outline</v-icon>
+                      <h4 class="d-inline body-1">
                         Invitees List
                       </h4>
                     </div>
@@ -338,9 +366,9 @@
                     </div>
                   </v-col>
                   <v-col cols="12">
-                    <div class="borderBottomGrey pb-3 mb-3">
+                    <div class="borderBottomGrey pb-1 mb-3">
                       <v-icon>mdi-filter-outline</v-icon>
-                      <h4 class="d-inline font-weight-regular">
+                      <h4 class="d-inline body-1">
                         Advance Filters
                       </h4>
                       <v-btn
@@ -358,27 +386,34 @@
                         Reset
                       </v-btn>
                     </div>
-                    <h4>Check prior registrations</h4>
-                    <h4 class="font-weight-regular">Send to those who have</h4>
-                    <v-radio-group
-                      v-model="registrationRadio"
-                      :mandatory="false"
-                      class="mt-0"
-                    >
-                      <v-radio
-                        label="Not Registered"
-                        value="NotRegister"
-                      ></v-radio>
-                      <v-radio label="Registered" value="Register"></v-radio>
-                    </v-radio-group>
-                    <h4 class="d-inline">Check prior invite (</h4>
+                    <h4 class="body-1">Check prior registrations</h4>
+                    <v-flex class="d-flex">
+                      <h4 class="body-1 mr-3 mt-1">
+                        Send to those who have
+                      </h4>
+                      <v-radio-group
+                        v-model="registrationRadio"
+                        row
+                        :mandatory="false"
+                        class="mt-0"
+                      >
+                        <v-radio
+                          label="Not Registered"
+                          value="NotRegister"
+                        ></v-radio>
+                        <v-radio label="Registered" value="Register"></v-radio>
+                      </v-radio-group>
+                    </v-flex>
+                    <h4 class="d-inline body-1">
+                      Check prior invite ( To use this filter
+                    </h4>
                     <h4
                       class="blue--text d-inline cursorPointer"
                       @click="previousInviteDialog = true"
                     >
                       {{ !!priorInvite.id ? priorInvite.Title : 'Click here' }}
                     </h4>
-                    <h4 class="d-inline">
+                    <h4 class="d-inline body-1">
                       {{
                         !!priorInvite.id
                           ? ' - ' +
@@ -387,20 +422,25 @@
                       }}
                       )
                     </h4>
-                    <h4 class="font-weight-regular">Send to those who have</h4>
-                    <v-radio-group
-                      v-model="openRadio"
-                      :mandatory="false"
-                      class="mt-0"
-                      :disabled="!priorInvite.id"
-                    >
-                      <v-radio label="Not Opened" value="NotRead"></v-radio>
-                      <v-radio label="Opened" value="Read"></v-radio>
-                      <v-radio
-                        label="Opened & Clicked"
-                        value="clicked"
-                      ></v-radio>
-                    </v-radio-group>
+                    <v-flex class="d-flex">
+                      <h4 class="body-1 mr-3 mt-1">
+                        Send to those who have
+                      </h4>
+                      <v-radio-group
+                        v-model="openRadio"
+                        row
+                        :mandatory="false"
+                        class="mt-0"
+                        :disabled="!priorInvite.id"
+                      >
+                        <v-radio label="Not Opened" value="NotRead"></v-radio>
+                        <v-radio label="Opened" value="Read"></v-radio>
+                        <v-radio
+                          label="Opened & Clicked"
+                          value="clicked"
+                        ></v-radio>
+                      </v-radio-group>
+                    </v-flex>
                   </v-col>
                 </v-row>
               </v-tab-item>
@@ -468,35 +508,31 @@
                 </v-row>
                 <v-row
                   v-else-if="!selectedList.length && !selectAll"
-                  class="ma-3"
+                  class="ma-3 ml-0 mb-6"
                 >
                   <v-col cols="12" class="red lighten-5">
-                    <h4 class="font-weight-regular">CONTACT DETAILS</h4>
-                    <v-btn
-                      class="float-right"
-                      color="blue"
-                      outlined
-                      @click="curentTab = 2"
-                      >Select Contact</v-btn
-                    >
-                    <h5 class="font-weight-regular">
-                      You have not added any contact yet.
-                    </h5>
+                    <h4 class="body-1 py-2">CONTACT DETAILS</h4>
+                    <v-flex class="d-flex">
+                      <h5 class="body-2 mt-2 mr-2">
+                        You have not added any contact yet.
+                      </h5>
+                      <v-btn color="blue" outlined @click="curentTab = 2"
+                        >Select Contact</v-btn
+                      >
+                    </v-flex>
                   </v-col>
                 </v-row>
-                <v-row v-else-if="!RTEValue" class="ma-3">
+                <v-row v-else-if="!RTEValue" class="ma-3 ml-0 mb-6">
                   <v-col cols="12" class="red lighten-5">
-                    <h4 class="font-weight-regular">CONTENT DETAILS</h4>
-                    <v-btn
-                      class="float-right"
-                      color="blue"
-                      outlined
-                      @click="curentTab = 1"
-                      >Select Content</v-btn
-                    >
-                    <h5 class="font-weight-regular">
-                      You have not added any content yet.
-                    </h5>
+                    <h4 class="body-1 py-2">CONTENT DETAILS</h4>
+                    <v-flex class="d-flex">
+                      <h5 class="body-2 mt-2 mr-2">
+                        You have not added any content yet.
+                      </h5>
+                      <v-btn color="blue" outlined @click="curentTab = 1"
+                        >Select Content</v-btn
+                      >
+                    </v-flex>
                   </v-col>
                 </v-row>
                 <v-row v-else class="ma-1">
@@ -551,35 +587,44 @@
                   </v-col>
                 </v-row>
                 <v-row class="ma-1">
-                  <v-col cols="12">
-                    <div class="borderBottomGrey pb-3">
-                      <v-icon>mdi-information-outline</v-icon>
-                      <h4 class="d-inline font-weight-regular">
-                        Subject and Sender
-                      </h4>
-                      <v-btn class="ml-10" text small @click="curentTab = 0">
-                        <v-icon dark left>mdi-pencil</v-icon>
-                        Edit
-                      </v-btn>
+                  <v-col cols="12" class="pl-0 pt-0">
+                    <div class="borderBottomGrey pb-1">
+                      <v-flex class="d-flex">
+                        <v-icon size="18" class="mr-1"
+                          >mdi-information-outline</v-icon
+                        >
+                        <h4 class="body-1 mt-1">
+                          Subject and Sender
+                        </h4>
+                        <v-btn class="ml-10" text small @click="curentTab = 0">
+                          <v-icon dark left>mdi-pencil</v-icon>
+                          Edit
+                        </v-btn>
+                      </v-flex>
                     </div>
                   </v-col>
-                  <v-col cols="6">
+                  <v-col cols="6" class="pl-0 pt-0">
                     <div>Name</div>
                     <div class="blue--text pt-1 pb-2">{{ senderName }}</div>
                     <div>Subject</div>
                     <div class="blue--text pt-1">{{ subject }}</div>
                   </v-col>
-                  <v-col cols="6">
+                  <v-col cols="6" class="pl-0">
                     <div>Sender Address</div>
                     <div class="blue--text pt-1 pb-2">{{ sender }}</div>
                     <div>Reply-to Address</div>
                     <div class="blue--text pt-1">{{ setReplyTo }}</div>
                   </v-col>
-                  <v-col cols="12">
-                    <div class="borderBottomGrey pb-3">
-                      <h4 class="d-inline font-weight-regular">
-                        Contact Details
-                      </h4>
+                  <v-col cols="12" class="pl-0">
+                    <div class="borderBottomGrey pb-1">
+                      <v-flex class="d-flex">
+                        <v-icon size="18" class="mr-1"
+                          >fa-address-book-o</v-icon
+                        >
+                        <h4 class="mt-1 body-1">
+                          Contact Details
+                        </h4>
+                      </v-flex>
                     </div>
                     <div
                       v-for="(item, key) in selectedList"
@@ -601,26 +646,29 @@
                 </v-row>
               </v-tab-item>
             </v-tabs-items>
-          </template>
-        </v-container>
-        <v-divider></v-divider>
-        <v-card-actions class="pl-4">
-          <v-btn v-if="curentTab > 0" depressed @click="curentTab--"
-            >Prev</v-btn
+          </v-card-text>
+          <v-divider></v-divider>
+          <v-card-actions
+            class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
           >
-          <v-btn
-            v-if="curentTab < 3"
-            color="primary"
-            depressed
-            @click="curentTab++"
-            >Next</v-btn
-          >
-        </v-card-actions>
-      </v-card>
+            <v-btn v-if="curentTab > 0" depressed @click="curentTab--"
+              >Prev</v-btn
+            >
+            <v-btn
+              v-if="curentTab < 3"
+              color="primary"
+              depressed
+              @click="curentTab++"
+              >Next</v-btn
+            >
+          </v-card-actions>
+        </v-card>
+      </template>
     </v-dialog>
     <v-dialog v-if="!!previewURL" v-model="preview" width="600px">
       <v-card>
-        <v-card-title>
+        <v-card-title class="pa-1">
+          <v-spacer></v-spacer>
           <v-btn icon @click="preview = false">
             <v-icon>mdi-close</v-icon>
           </v-btn>
