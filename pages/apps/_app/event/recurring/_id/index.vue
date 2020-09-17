@@ -13,7 +13,12 @@
           <div v-if="data.event.Status === 'Not ready'" class="mr-2">
             <v-btn outlined color="primary">Publish</v-btn>
           </div>
-          <v-menu left :offset-y="offset" transition="slide-y-transition">
+          <v-menu
+            left
+            :close-on-click="closeOnClick"
+            :offset-y="offset"
+            transition="slide-y-transition"
+          >
             <template v-slot:activator="{ on, attrs }">
               <v-btn icon small v-bind="attrs" v-on="on">
                 <v-icon>mdi-dots-vertical</v-icon>
@@ -49,12 +54,43 @@
                 <v-list-item-icon class="mr-2">
                   <i class="fa fa-clone mt-1" aria-hidden="true"></i>
                 </v-list-item-icon>
-                <v-list-item-content>
+                <v-list-item-content @click.stop="copylinks = true">
                   <v-list-item-title>Copy Links</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
             </v-list>
           </v-menu>
+          <v-dialog v-model="copylinks" max-width="600">
+            <v-card>
+              <v-card-title class="pa-4 pr-2">
+                <h2 class="black--text text--lighten-1 pt-1 pb-0 text-h5">
+                  Copy Links
+                </h2>
+                <v-spacer></v-spacer>
+                <div>
+                  <v-btn icon @click="copylinks = false">
+                    <v-icon>mdi-close</v-icon>
+                  </v-btn>
+                </div>
+              </v-card-title>
+              <v-card-text class="pa-4 pt-0">
+                <v-flex my-3>
+                  <div class="body-2 text--secondary">Event Link</div>
+                  <div class="body-1 black--text text--lighten-1">
+                    {{ regUrl }}
+                  </div>
+                </v-flex>
+                <v-flex my-3>
+                  <div class="body-2 text--secondary">
+                    Recurring sessions Link
+                  </div>
+                  <div class="body-1 black--text text--lighten-1">
+                    {{ formatField(data.event.UniqLink) }}
+                  </div>
+                </v-flex>
+              </v-card-text>
+            </v-card>
+          </v-dialog>
         </v-flex>
         <v-chip class="my-2 mt-1 greybg">
           Recurring Event
@@ -626,6 +662,7 @@ export default {
       loading: 0,
       seoForm: false,
       dialog: false,
+      copylinks: false,
       data: {
         event: {},
         badge: {},
@@ -654,6 +691,10 @@ export default {
     viewRegistration() {
       const regUrl = `https://${nuxtconfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
       window.open(`${regUrl}`, '_blank')
+    },
+    copyEvent() {
+      const regUrl = `https://${nuxtconfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
+      return regUrl
     },
   },
   apollo: {
