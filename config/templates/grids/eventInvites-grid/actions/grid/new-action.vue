@@ -1,7 +1,7 @@
 <template>
   <v-col class="px-0">
     <v-btn text small v-bind="attrs" v-on="on" @click="routeToHistory">
-      <v-icon left>mdi-plus</v-icon> Invitation History
+      <v-icon left>mdi-history</v-icon> Invitation History
     </v-btn>
   </v-col>
 </template>

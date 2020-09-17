@@ -1,5 +1,5 @@
 <template>
-  <v-row justify="center">
+  <v-row justify="center" class="pt-4">
     <v-snackbar v-model="snackbar" :top="true" :timeout="1000">
       <div class="toast py-2 pr-1 pl-3">
         Some Error Occured, Please contact Administrator.
@@ -14,7 +14,7 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on">
-          <v-icon dark left>mdi-plus</v-icon>
+          <v-icon left>mdi-plus</v-icon>
           send Event Invite
         </v-btn>
       </template>

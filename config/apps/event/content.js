@@ -1,3 +1,4 @@
+import addMonths from 'date-fns/addMonths'
 import registrationStatusOptions from './gql/registrationStatusOptions.gql'
 import registrationList from './gql/registrationList.gql'
 import discountCodes from './gql/discountCodes.gql'
@@ -13,7 +14,6 @@ import eventSession from './gql/eventSession.gql'
 import eventRecurringSession from './gql/eventRecurringSession.gql'
 import eventTasks from './gql/eventTasks.gql'
 import registrationType from './gql/registrationType.gql'
-import eventRegistrationTickets from './gql/eventRegistrationTickets.gql'
 import location from './gql/location.gql'
 import { getData, getLookupData } from './rest'
 import marketingTemplates from '~/config/apps/admin/gql/marketingTemplates.gql'
@@ -39,6 +39,7 @@ export default {
           hideFilter: false,
           hideSearch: false,
         },
+        itemTitle: 'Event',
         default: false,
         fields: {
           Title: {
@@ -388,6 +389,126 @@ export default {
             inlineEdit: true,
             newForm: false,
             editForm: true,
+            hidden: true,
+          },
+          Message: {
+            form: {
+              caption: 'Message',
+              displayOrder: 19,
+            },
+            displayOrder: 11,
+            caption: 'Message',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'richtext',
+            cssClasses: 'col-12 col-md-12',
+            inlineEdit: true,
+            newForm: false,
+            editForm: true,
+            hidden: true,
+          },
+          SeatReservation: {
+            form: {
+              caption: 'Seat Reservation',
+              displayOrder: 20,
+            },
+            displayOrder: 11,
+            caption: 'Seat Reservation',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'checkbox',
+            cssClasses: 'col-4 col-md-4',
+            inlineEdit: true,
+            newForm: false,
+            editForm: true,
+            hidden: true,
+          },
+          ShowAttendeeForm: {
+            form: {
+              caption: 'Show attendee form for each ticket',
+              displayOrder: 21,
+            },
+            displayOrder: 11,
+            caption: 'Show attendee form for each ticket',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'checkbox',
+            cssClasses: 'col-4 col-md-4',
+            inlineEdit: true,
+            newForm: false,
+            editForm: true,
+            hidden: true,
+          },
+          IsOnlineEvent: {
+            form: {
+              caption: 'Online Event',
+              displayOrder: 22,
+            },
+            displayOrder: 11,
+            caption: 'Online Event',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'checkbox',
+            cssClasses: 'col-4 col-md-4',
+            inlineEdit: true,
+            newForm: false,
+            editForm: true,
+            hidden: true,
+          },
+          SessionTimingConflict: {
+            form: {
+              caption: 'Session Timing Conflict',
+              displayOrder: 23,
+            },
+            displayOrder: 11,
+            caption: 'Session Timing Conflict',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'checkbox',
+            cssClasses: 'col-4 col-md-4',
+            inlineEdit: true,
+            newForm: false,
+            editForm: true,
+            hidden: true,
+          },
+          ShowRemainingTickets: {
+            form: {
+              caption: 'Show Remaining Tickets',
+              displayOrder: 24,
+            },
+            displayOrder: 11,
+            caption: 'Show Remaining Tickets',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'checkbox',
+            cssClasses: 'col-4 col-md-4',
+            inlineEdit: true,
+            newForm: false,
+            editForm: true,
+            hidden: true,
+          },
+          Images: {
+            form: {
+              caption: 'Event Image(680x350)',
+              displayOrder: 25,
+            },
+            cssClasses: 'col-4 col-md-4',
+            displayOrder: 8,
+            caption: 'Event Image(680x350)',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'file',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
           },
           Currency: {
             form: {
@@ -587,6 +708,7 @@ export default {
           hideFilter: true,
           hideSearch: true,
         },
+        itemTitle: 'Attendee',
         hidden: true,
         fields: {
           FullName: {
@@ -909,12 +1031,17 @@ export default {
               },
             ],
             dataSource: {
-              query: eventRegistrationTickets,
-              itemText: 'Code',
+              query: eventTickets,
+              itemText: 'customField',
               itemValue: 'id',
               filter(data) {
                 return {
                   Events: this.$route.params.id,
+                }
+              },
+              computed(data) {
+                return {
+                  customField: `${data.Code} ${data.Amount}`,
                 }
               },
             },
@@ -986,6 +1113,7 @@ export default {
           hideFilter: true,
           hideSearch: true,
         },
+        itemTitle: 'Registration',
         hidden: true,
         fields: {
           FullName: {
@@ -1086,7 +1214,7 @@ export default {
               },
             ],
             dataSource: {
-              query: registrationType,
+              query: eventTickets,
               itemText: 'customField',
               itemValue: 'id',
               filter(data) {
@@ -1096,7 +1224,7 @@ export default {
               },
               computed(data) {
                 return {
-                  customField: `${data.Name}   (max allowed - ${data.MaxQuantityAllowed})`,
+                  customField: `${data.Code} ${data.Amount}`,
                 }
               },
             },
@@ -1152,13 +1280,8 @@ export default {
               },
             },
             rules: [
-              function (v) {
-                const eventStartDate =
-                  this.context.event && this.context.event.StartDate
-                const eventStartDateObj =
-                  eventStartDate && new Date(eventStartDate)
-                const isValidStartDate = eventStartDateObj > (v && new Date(v))
-                return !!isValidStartDate || 'Start Date is required'
+              (v) => {
+                return !!v || 'Status is required'
               },
             ],
           },
@@ -1226,8 +1349,8 @@ export default {
             cssClasses: 'col-12 col-md-12',
             hidden: true,
             inlineEdit: true,
-            newForm: false,
-            editForm: false,
+            newForm: true,
+            editForm: true,
             rules: [
               (v) => {
                 return !!v || 'Address is required'
@@ -1267,7 +1390,7 @@ export default {
           '_CurrentAddress.PostalCode': {
             form: {
               caption: 'Zip',
-              displayOrder: 11,
+              displayOrder: 12,
             },
             searchEnable: true,
             sortEnable: true,
@@ -1282,7 +1405,7 @@ export default {
           '_CurrentAddress.Country': {
             form: {
               caption: 'Country',
-              displayOrder: 12,
+              displayOrder: 11,
             },
             searchEnable: true,
             sortEnable: true,
@@ -1450,6 +1573,7 @@ export default {
           hideFilter: false,
           hideSearch: true,
         },
+        itemTitle: 'Ticket',
         hidden: true,
         fields: {
           Code: {
@@ -1653,36 +1777,93 @@ export default {
             newForm: false,
             editForm: false,
           },
-          MyImage: {
+          StartDate: {
             form: {
-              caption: 'Image',
+              caption: 'Start Date *',
+              displayOrder: 2,
+            },
+            displayOrder: 7,
+            caption: 'Start Date',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'datetime',
+            cssClasses: 'col-6 col-md-6',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            rules: [
+              (v) => {
+                return !!v || 'Start is required'
+              },
+              (v, data) => {
+                return (
+                  (!!v && data.EndDate > new Date(v)) ||
+                  'Start Date should be less than End Date'
+                )
+              },
+            ],
+          },
+          EndDate: {
+            form: {
+              caption: 'End Date *',
+              displayOrder: 3,
+            },
+            displayOrder: 8,
+            caption: 'End Date',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'datetime',
+            cssClasses: 'col-6 col-md-6',
+            hidden: false,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            default: addMonths(new Date(), 1),
+            rules: [
+              function (v) {
+                debugger
+                const eventEndDate = this.context.event.EndDate
+                const isValidEndDate =
+                  eventEndDate > (v && new Date(v).toISOString())
+                return (
+                  !!isValidEndDate ||
+                  'Ticket end date should be less than event end date.'
+                )
+              },
+            ],
+          },
+          ValidateQty: {
+            form: {
+              caption: 'Validate Quantity',
               displayOrder: 10,
             },
-            cssClasses: 'col-12 col-md-6',
             displayOrder: 8,
-            caption: 'My Image',
-            searchEnable: false,
-            sortEnable: false,
+            caption: 'Validate Quantity',
+            searchEnable: true,
+            sortEnable: true,
             columnWidth: '150px',
-            type: 'file',
+            type: 'checkbox',
+            cssClasses: 'col-6 col-md-6',
             hidden: true,
             inlineEdit: true,
             newForm: true,
             editForm: true,
-            multiple: false,
           },
-          MyImages: {
+          CheckGroupDiscount: {
             form: {
-              caption: 'Image',
-              displayOrder: 10,
+              caption: 'Check Group Discount',
+              displayOrder: 11,
             },
-            cssClasses: 'col-12 col-md-6',
-            displayOrder: 9,
-            caption: 'My Images',
-            searchEnable: false,
-            sortEnable: false,
+            displayOrder: 8,
+            caption: 'Check Group Discount',
+            searchEnable: true,
+            sortEnable: true,
             columnWidth: '150px',
-            type: 'file',
+            type: 'checkbox',
+            cssClasses: 'col-6 col-md-6',
             hidden: true,
             inlineEdit: true,
             newForm: true,
@@ -1730,6 +1911,7 @@ export default {
           hideFilter: false,
           hideSearch: true,
         },
+        itemTitle: 'Discount Code',
         hidden: true,
         fields: {
           codeTitle: {
@@ -1769,6 +1951,7 @@ export default {
             newForm: true,
             editForm: true,
             hidden: true,
+            minimumValue: '1',
           },
           minApplicableOrderAmount: {
             form: {
@@ -1785,6 +1968,7 @@ export default {
             newForm: true,
             editForm: true,
             hidden: true,
+            minimumValue: '1',
           },
           offerValue: {
             form: {
@@ -1876,6 +2060,7 @@ export default {
             newForm: true,
             editForm: true,
             hidden: true,
+            minimumValue: '1',
           },
           description: {
             form: {
@@ -2001,6 +2186,7 @@ export default {
           hideFilter: false,
           hideSearch: true,
         },
+        itemTitle: 'Session',
         hidden: true,
         fields: {
           Name: {
@@ -2086,14 +2272,16 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
+            default: '',
             rules: [
-              (v) => {
-                return !!v || 'EndDate is required'
-              },
-              (v, data) => {
+              function (v) {
+                debugger
+                const eventEndDate = this.context.event.EndDate
+                const isValidEndDate =
+                  eventEndDate > (v && new Date(v).toISOString())
                 return (
-                  (!!v && data.StartDate < new Date(v)) ||
-                  'EndDate should be greater than StartDate'
+                  !!isValidEndDate ||
+                  'Session End date should be in between event date.'
                 )
               },
             ],
@@ -2289,6 +2477,7 @@ export default {
           hideFilter: false,
           hideSearch: true,
         },
+        itemTitle: 'Speaker',
         hidden: true,
         fields: {
           Title: {
@@ -2466,7 +2655,7 @@ export default {
             },
             cssClasses: 'col-6 col-md-6',
             displayOrder: 8,
-            caption: 'MyImage',
+            caption: 'Image',
             searchEnable: true,
             sortEnable: true,
             columnWidth: '150px',
@@ -2510,6 +2699,7 @@ export default {
           hideFilter: false,
           hideSearch: true,
         },
+        itemTitle: 'Task',
         hidden: true,
         fields: {
           Title: {
@@ -3626,83 +3816,6 @@ export default {
         title: 'eventTasks',
         type: 'list',
       },
-      eventRegistrationForm: {
-        ui: {
-          hideDefaultHeader: false,
-          hideDefaultFooter: false,
-          showExpand: false,
-          singleExpand: false,
-          showSelect: false,
-          hideFilter: false,
-          hideSearch: true,
-        },
-        hidden: true,
-        fields: {
-          createdDate: {
-            displayOrder: 1,
-            caption: 'Title',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'datetime',
-          },
-          Title: {
-            displayOrder: 2,
-            caption: 'Subject',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
-          },
-          SenderName: {
-            displayOrder: 3,
-            caption: 'Sender',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
-          },
-          Status: {
-            displayOrder: 4,
-            caption: 'Status',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
-          },
-          createdBy: {
-            displayOrder: 5,
-            caption: 'Created By',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'string',
-          },
-        },
-        template: {
-          name: 'eventInvitaionHistory-grid',
-          context: {
-            basePath: '/event',
-          },
-        },
-        dataSource: {
-          query: eventTasks,
-          type: 'graphql',
-          model: 'CRMActivity',
-          filter(ctx) {
-            return {
-              where: {
-                and: [
-                  { EventId: ctx.$route.query.event },
-                  { Type: 'Mass Email' },
-                ],
-              },
-            }
-          },
-        },
-        title: 'Hisory',
-        type: 'list',
-      },
       eventRegistrationType: {
         ui: {
           hideDefaultHeader: false,
@@ -3713,6 +3826,7 @@ export default {
           hideFilter: false,
           hideSearch: true,
         },
+        itemTitle: 'Registation Type',
         hidden: true,
         fields: {
           Name: {
@@ -3831,6 +3945,83 @@ export default {
           },
         },
         title: 'Registration Type',
+        type: 'list',
+      },
+      eventInvitaionHistory: {
+        ui: {
+          hideDefaultHeader: false,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: false,
+          hideFilter: false,
+          hideSearch: true,
+        },
+        hidden: true,
+        fields: {
+          createdDate: {
+            displayOrder: 1,
+            caption: 'Title',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'datetime',
+          },
+          Title: {
+            displayOrder: 2,
+            caption: 'Subject',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          SenderName: {
+            displayOrder: 3,
+            caption: 'Sender',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          Status: {
+            displayOrder: 4,
+            caption: 'Status',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          createdBy: {
+            displayOrder: 5,
+            caption: 'Created By',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+        },
+        template: {
+          name: 'eventInvitaionHistory-grid',
+          context: {
+            basePath: '/event',
+          },
+        },
+        dataSource: {
+          query: eventTasks,
+          type: 'graphql',
+          model: 'CRMActivity',
+          filter(ctx) {
+            return {
+              where: {
+                and: [
+                  { EventId: ctx.$route.query.event },
+                  { Type: 'Mass Email' },
+                ],
+              },
+            }
+          },
+        },
+        title: 'Hisory',
         type: 'list',
       },
     },
@@ -4819,8 +5010,9 @@ export default {
               itemText: 'Code',
               itemValue: 'id',
               filter(ctx, data) {
+                debugger
                 return {
-                  Events: this.$route.params.id,
+                  Events: this.context.registration.EventId,
                 }
               },
             },
@@ -5931,6 +6123,7 @@ export default {
           type: 'graphql',
           model: 'Registration',
           filter(ctx) {
+            debugger
             return {
               where: {},
             }

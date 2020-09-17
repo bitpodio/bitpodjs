@@ -134,3 +134,14 @@ export const formTitleMixin = {
     },
   },
 }
+
+export function formatedDate(date, timezone) {
+  let output
+  if (date) {
+    const formattedDate = new Date(date)
+    const zonedDate = utcToZonedTime(formattedDate, timezone)
+    const pattern = 'PPp' // 'd.M.YYYY HH:mm:ss.SSS [GMT]Z (z)'
+    output = format(zonedDate, pattern, { timezone })
+  }
+  return output
+}

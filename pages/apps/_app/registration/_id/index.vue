@@ -91,7 +91,11 @@
           <i class="fa fa-user-plus pr-1" aria-hidden="true"></i>Attendees
         </h2>
         <v-divider></v-divider>
-        <Grid view-name="registrationAttendees" :content="content" />
+        <Grid
+          view-name="registrationAttendees"
+          :content="content"
+          :context="data"
+        />
       </div>
       <div v-if="content" class="xs12 sm12 md12 boxview pa-4 mr-2 mb-2">
         <h2 class="body-1 pb-2">

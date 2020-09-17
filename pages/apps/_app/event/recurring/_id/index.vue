@@ -223,7 +223,11 @@
           Form
         </h2>
         <v-divider></v-divider>
-        <Grid view-name="eventRegistrationForm" :content="content" />
+        <Grid
+          view-name="eventRegistrationForm"
+          class="mt-11"
+          :content="content"
+        />
       </div>
       <div class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
         <h2 class="body-1 pb-2">
