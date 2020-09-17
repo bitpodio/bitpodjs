@@ -182,12 +182,6 @@ body {
 .event-table .v-text-field--enclosed .v-input__append-inner {
   margin-top: 8px !important;
 }
-.v-eventform .v-card__text::-webkit-scrollbar {
-  visibility: hidden !important;
-}
-.v-eventform:hover .v-card__text {
-  overflow-y: auto !important;
-}
 .jodit-ui-group {
   flex-wrap: nowrap !important;
 }
@@ -229,9 +223,6 @@ body {
     min-width: fit-content !IMPORTANT;
     left: unset !important;
     right: 20px !important;
-  }
-  .v-eventform .v-card__text {
-    overflow-y: auto !important;
   }
   .boxview {
     margin-right: 0 !important;
