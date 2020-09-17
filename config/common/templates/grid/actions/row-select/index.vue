@@ -7,6 +7,7 @@
       :items="items"
       :on-update-item="onUpdateItem"
       :refresh="refresh"
+      :context="context"
     />
     <component
       :is="deleteItem || null"
@@ -15,6 +16,7 @@
       :items="items"
       :on-delete-item="onDeleteItem"
       :refresh="refresh"
+      :context="context"
     />
   </div>
 </template>
@@ -30,6 +32,7 @@ export default {
     'onUpdateItem',
     'onDeleteItem',
     'refresh',
+    'context',
   ],
   data() {
     return {
