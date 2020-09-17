@@ -180,7 +180,10 @@
                       outlined
                     ></v-text-field>
                   </v-col>
-                  <v-col cols="12">
+                  <v-col
+                    v-if="eventData.BusinessType === 'Recurring'"
+                    cols="12"
+                  >
                     <v-text-field
                       v-model="sectionHeading.sessionsectionlabel"
                       label="Label for Recurring Sessions section"
