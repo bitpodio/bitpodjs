@@ -101,34 +101,6 @@
               :refresh="refresh"
             />
           </template>
-
-          <template v-if="!!slotTemplates.item" v-slot:item="props">
-            <component
-              :is="slotTemplates.item || null"
-              :item="props.item"
-              :headers="props.headers"
-              :is-selected="props.isSelected"
-              :context="context"
-              :items="tableData.items"
-              :content="content"
-            />
-          </template>
-          <template
-            v-for="(column, index) in headers"
-            v-slot:[`item.${column.value}`]="props"
-          >
-            <component
-              :is="component[index] || null"
-              :key="column.value"
-              :item="props.item"
-              :value="props.value"
-              :context="context"
-              :items="tableData.items"
-              :column="column"
-              :content="content"
-              :refresh="refresh"
-            />
-          </template>
           <template
             v-if="!!slotTemplates['expanded-item']"
             v-slot:expanded-item="props"
