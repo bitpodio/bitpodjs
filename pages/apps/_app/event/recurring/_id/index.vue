@@ -403,7 +403,7 @@
           <i class="fa fa-ticketalt pr-1" aria-hidden="true"></i> Tickets
         </h2>
         <v-divider></v-divider>
-        <Grid view-name="eventTickets" :content="content" />
+        <Grid view-name="eventTickets" :content="content" :context="data" />
       </div>
       <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2 pb-0">
         <h2 class="body-1 pb-2">

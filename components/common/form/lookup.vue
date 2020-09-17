@@ -58,6 +58,7 @@ export default {
     },
     onChange: {
       type: Function,
+      required: true,
       default: () => null,
     },
   },
@@ -101,7 +102,14 @@ export default {
               filters: { where },
             },
           })
-          this.items = formatResult(result.data)
+          const items = formatResult(result.data)
+          this.items = items.map((item) => {
+            const computedItemFunction = this.field.dataSource.computed
+            const computedItem = computedItemFunction
+              ? computedItemFunction.call(this, item)
+              : {}
+            return { ...item, ...computedItem }
+          })
         }
       }
     },

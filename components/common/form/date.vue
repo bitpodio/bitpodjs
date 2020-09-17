@@ -80,7 +80,7 @@ export default {
   methods: {
     onCalendarChange() {
       this.$emit('input', this.date)
-      this.onChange && this.onChange(this.value)
+      this.onChange && this.onChange(this.date)
     },
   },
 }

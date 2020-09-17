@@ -17,6 +17,7 @@
               :on-delete-item="onDeleteItem"
               :items="selectedItems"
               :refresh="refresh"
+              :context="context"
               class="d-flex"
             />
           </template>
@@ -26,6 +27,7 @@
             :view-name="viewName"
             :on-new-item-save="onNewItemSave"
             :refresh="refresh"
+            :context="context"
           />
         </div>
         <div v-if="hideFilter">
@@ -58,7 +60,7 @@
           :headers="headers"
           :items="tableData.items"
           :single-select="singleSelect"
-          :loading="loading"
+          :loading="loading === 1"
           :options.sync="options"
           :server-items-length="tableData.total"
           :hide-default-header="hideDefaultHeader"
@@ -72,6 +74,34 @@
           @click:row="onRowClick"
           @input="onItemSelected"
         >
+          <template v-if="!!slotTemplates.item" v-slot:item="props">
+            <component
+              :is="slotTemplates.item || null"
+              :item="props.item"
+              :headers="props.headers"
+              :is-selected="props.isSelected"
+              :context="contentContext"
+              :items="tableData.items"
+              :content="content"
+            />
+          </template>
+          <template
+            v-for="(column, index) in headers"
+            v-slot:[`item.${column.value}`]="props"
+          >
+            <component
+              :is="component[index] || null"
+              :key="column.value"
+              :item="props.item"
+              :value="props.value"
+              :context="contentContext"
+              :items="tableData.items"
+              :column="column"
+              :content="content"
+              :refresh="refresh"
+            />
+          </template>
+
           <template v-if="!!slotTemplates.item" v-slot:item="props">
             <component
               :is="slotTemplates.item || null"
@@ -456,12 +486,24 @@ export default {
       type: Object,
       required: true,
     },
+    context: {
+      type: Object,
+      required: false,
+      default: () => {},
+    },
+    value: {
+      type: Array,
+      default: () => [],
+    },
+    singleSelect: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     const headers = getTableHeader(this.content, this.viewName)
     const gridProps = getGridsProps(this.content, this.viewName)
     return {
-      singleSelect: false,
       headers,
       tableData: {
         items: [],
@@ -494,8 +536,13 @@ export default {
       const fields = getGridFields(this.content, this.viewName)
       return fields
     },
-    context() {
-      return getGridTemplateInfo(this.content, this.viewName).context || {}
+    contentContext() {
+      const contentContext =
+        getGridTemplateInfo(this.content, this.viewName).context || {}
+      return {
+        ...contentContext,
+        ...this.context,
+      }
     },
     _components() {
       return {
@@ -516,6 +563,9 @@ export default {
     search() {
       // call rest
       this.loadRestData()
+    },
+    value() {
+      this.selectedItems = this.$props.value
     },
   },
   mounted() {
@@ -564,6 +614,7 @@ export default {
     },
     onItemSelected(items) {
       this.selectedItems = items
+      this.$emit('onSelectedListChange', this.selectedItems)
     },
     async onNewItemSave(data) {
       const modelName = getModelName(this.content, this.viewName)
