@@ -290,17 +290,12 @@
                 </v-list-item-content>
               </v-list-item>
             </v-list>
-            <v-divider></v-divider>
             <v-list-item>
               <OrgnaizationList />
             </v-list-item>
-            <v-divider></v-divider>
-            <v-list>
-              <v-list-item class="text-center justify-center">
-                <v-btn class="ma-2" color="primary">
-                  upgrade
-                </v-btn>
-                <v-btn class="ma-2" outlined color="primary" @click="onLogout">
+            <v-list dense class="pt-0">
+              <v-list-item>
+                <v-btn text small color="primary" @click="onLogout">
                   Logout
                 </v-btn>
               </v-list-item>

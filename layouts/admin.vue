@@ -260,7 +260,7 @@
             <v-list-item>
               <OrgnaizationList />
             </v-list-item>
-            <v-list dense>
+            <v-list dense class="pt-0">
               <v-list-item>
                 <v-btn text small color="primary" @click="onLogout">
                   Logout
