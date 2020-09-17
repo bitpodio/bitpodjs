@@ -928,6 +928,7 @@ import organizationInfo from '~/config/apps/event/gql/organizationInfo.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { getIdFromAtob } from '~/utility'
 import CustomDate from '~/components/common/form/date.vue'
+import { required } from '~/utility/rules.js'
 
 const ObjectID5 = (
   m = Math,
@@ -945,7 +946,10 @@ export default {
     VueGoogleAutocomplete: () => import('vue-google-autocomplete'),
   },
   props: {
-    onFormClose: Function,
+    onFormClose: {
+      type: Function,
+      default: () => null,
+    },
   },
   data: () => {
     return {
@@ -975,7 +979,7 @@ export default {
           if (!isNaN(parseFloat(v)) && v >= 0) {
             return true
           }
-          return 'Max Allow should be greater than zero'
+          return strings.MAX_ALLOW_MSG
         },
       ],
       durationRules: [
@@ -983,7 +987,7 @@ export default {
           if (!isNaN(parseFloat(v)) && v > 0) {
             return true
           }
-          return 'Duration should be greater than zero'
+          return strings.DURATION_RANGE
         },
       ],
       rollingDaysRules: [
@@ -994,7 +998,7 @@ export default {
           if (!isNaN(parseFloat(v)) && v > 0) {
             return true
           }
-          return 'Rolling days should be greater than zero'
+          return strings.ROLLING_DAYS_RANGE
         },
       ],
       phoneRules: [
@@ -1002,7 +1006,7 @@ export default {
           if (v && !isNaN(v)) {
             return true
           }
-          return 'Please enter valid phone number!'
+          return strings.INVALID_PHONE_MSG
         },
       ],
       onlineMeetingRules: [
@@ -1010,7 +1014,7 @@ export default {
           if (v) {
             return true
           }
-          return 'Please enter online meeting link! '
+          return strings.ONLINE_MEETING_MSG
         },
       ],
       personMeetingRules: [
@@ -1018,7 +1022,7 @@ export default {
           if (v.length > 0) {
             return true
           }
-          return 'Please select location!'
+          return strings.LOCATION_MSG
         },
       ],
       isDateRange: false,
@@ -1047,10 +1051,8 @@ export default {
       ZipCode: '',
       SessionTicket: [],
       TicketName: '',
-      zoomDocumentLink:
-        'https://bitpod-event.test.bitpod.io/admin/apps/HelpCenter/Integrations/Zoom/views/Zoom',
-      googleMeetDocumentLink:
-        'https://bitpod-event.test.bitpod.io/admin/apps/HelpCenter/Integrations/Gmail/views/Gmail',
+      zoomDocumentLink: strings.ZOOM_DOCUMENT_LINK,
+      googleMeetDocumentLink: strings.GOOGLE_MEET_DOCUMENT_LINK,
       selectedSession: '',
       ScheduledType: '',
       RollingDays: '',
@@ -1061,7 +1063,7 @@ export default {
       isSession: true,
       isEventCreate: false,
       isEventPublish: false,
-      requiredRules: [(v) => !!v || 'This field is required'],
+      requiredRules: [required],
       isMap: false,
       ticketTypeProps: {
         type: 'lookup',
@@ -1259,7 +1261,7 @@ export default {
   },
   computed: {
     eventLinkHint() {
-      return `https://bitpod-event.test.bitpod.io/e/${this.eventData.UniqLink}`
+      return `${strings.EVENT_LINK_HINT}${this.eventData.UniqLink}`
     },
     slotLookupOptions() {
       const items = this.slotOptions
@@ -1299,7 +1301,7 @@ export default {
         (v) => {
           const startDate = new Date(v)
           return startDate > new Date(this.EndDate)
-            ? 'Start Date should be less than End Date'
+            ? strings.START_END_DATE
             : true
         },
       ]
@@ -1309,7 +1311,7 @@ export default {
         (v) => {
           const endDate = new Date(v)
           return new Date(this.StartDate) > endDate
-            ? 'End Date should be greater than Start Date'
+            ? strings.END_START_DATE
             : true
         },
       ]
@@ -1381,9 +1383,7 @@ export default {
             this.sessions[index].StartTime.split(':')[0]
           )
           const endTime = parseInt(this.sessions[index].EndTime.split(':')[0])
-          return startTime > endTime
-            ? 'Start Time should not be greater than End Time'
-            : true
+          return startTime > endTime ? strings.START_END_TIME : true
         },
       ]
     },
@@ -1394,9 +1394,7 @@ export default {
             this.sessions[index].StartTime.split(':')[0]
           )
           const endTime = parseInt(this.sessions[index].EndTime.split(':')[0])
-          return startTime > endTime
-            ? 'End Time should not be less than Start Time'
-            : true
+          return startTime > endTime ? strings.END_START_TIME : true
         },
       ]
     },
@@ -1900,7 +1898,7 @@ export default {
       }
     },
 
-    saveRecord() {
+    async saveRecord() {
       const { Code, Type } = this.tickets
       this.$refs.validSessionsForm.validate()
       if (this.validSessions && Code !== '' && Type !== '') {
@@ -1959,107 +1957,102 @@ export default {
           this.eventData.EventManager = this.$auth.$state.user.data.email
           this.eventData.Organizer = this.$auth.$state.user.data.name
           const baseUrl = getApiUrl()
-          this.$axios
+          const res = await this.$axios
             .$post(`${baseUrl}Events`, {
               ...this.eventData,
-            })
-            .then((res) => {
-              this.eventId = res.id
-
-              const ticketList = []
-              const sessionList = []
-
-              this.tickets.forEach(function (ticket) {
-                ticket.Events = res.id
-                ticket.Amount = parseInt(ticket.Amount)
-                ticket.TicketCount = parseInt(ticket.TicketCount)
-                ticketList.push(ticket)
-              })
-
-              return this.$axios
-                .$post(`${baseUrl}Tickets`, ticketList)
-                .then((ticketres) => {
-                  const cloneSessions = JSON.parse(
-                    JSON.stringify(this.sessions)
-                  )
-                  cloneSessions.forEach(function (session) {
-                    session.EventId = res.id
-                    session.Duration = parseInt(session.Duration)
-                    session.Frequency = parseInt(session.Duration)
-                    session.Name = session.StartTime + ' ' + session.EndTime
-                    const fields = [
-                      {
-                        type: 'timezone',
-                        fieldName: 'Timezone',
-                      },
-                      {
-                        type: 'datetime',
-                        fieldName: 'StartDate',
-                      },
-                      {
-                        type: 'datetime',
-                        fieldName: 'EndDate',
-                      },
-                    ]
-                    if (
-                      session.StartDate !== null &&
-                      session.EndDate !== null
-                    ) {
-                      const convertedEventRecord = formatTimezoneDateFieldsData(
-                        session,
-                        fields
-                      )
-                      session.StartDate = convertedEventRecord.StartDate
-                      session.EndDate = convertedEventRecord.EndDate
-                    }
-
-                    const ObjectID5 = (
-                      m = Math,
-                      d = Date,
-                      h = 16,
-                      s = (s) => m.floor(s).toString(h)
-                    ) =>
-                      s(d.now() / 1000) +
-                      ' '.repeat(h).replace(/./g, () => s(m.random() * h))
-                    const Exceptions = session.Days.map((item, key) => {
-                      return {
-                        id: ObjectID5(),
-                        type: 'wday',
-                        wday: item,
-                        _intervals: [
-                          {
-                            id: ObjectID5(),
-                            from: session.StartTime,
-                            to: session.EndTime,
-                          },
-                        ],
-                      }
-                    })
-
-                    session._Exceptions = Exceptions
-                    sessionList.push(session)
-                  })
-                  return this.$axios
-                    .$post(`${baseUrl}Sessions`, sessionList)
-                    .then((sessionres) => {
-                      this.isSession = false
-                      this.isEventCreate = true
-                      return sessionres
-                    })
-                    .catch((e) => {
-                      console.log('error', e)
-                      this.isSaveButtonDisabled = false
-                    })
-                })
-                .catch((e) => {
-                  console.log('error', e)
-                  this.isSaveButtonDisabled = false
-                })
             })
             .catch((e) => {
               console.log('error', e)
               this.isSaveButtonDisabled = false
             })
+
+          if (res) {
+            this.eventId = res.id
+            const ticketList = []
+            const sessionList = []
+
+            this.tickets.forEach(function (ticket) {
+              ticket.Events = res.id
+              ticket.Amount = parseInt(ticket.Amount)
+              ticket.TicketCount = parseInt(ticket.TicketCount)
+              ticketList.push(ticket)
+            })
+            const ticketres = await this.$axios
+              .$post(`${baseUrl}Tickets`, ticketList)
+              .catch((e) => {
+                console.log('error', e)
+                this.isSaveButtonDisabled = false
+              })
+            if (ticketres) {
+              const cloneSessions = JSON.parse(JSON.stringify(this.sessions))
+              cloneSessions.forEach(function (session) {
+                session.EventId = res.id
+                session.Duration = parseInt(session.Duration)
+                session.Frequency = parseInt(session.Duration)
+                session.Name = session.StartTime + ' ' + session.EndTime
+                const fields = [
+                  {
+                    type: 'timezone',
+                    fieldName: 'Timezone',
+                  },
+                  {
+                    type: 'datetime',
+                    fieldName: 'StartDate',
+                  },
+                  {
+                    type: 'datetime',
+                    fieldName: 'EndDate',
+                  },
+                ]
+                if (session.StartDate !== null && session.EndDate !== null) {
+                  const convertedEventRecord = formatTimezoneDateFieldsData(
+                    session,
+                    fields
+                  )
+                  session.StartDate = convertedEventRecord.StartDate
+                  session.EndDate = convertedEventRecord.EndDate
+                }
+
+                const ObjectID5 = (
+                  m = Math,
+                  d = Date,
+                  h = 16,
+                  s = (s) => m.floor(s).toString(h)
+                ) =>
+                  s(d.now() / 1000) +
+                  ' '.repeat(h).replace(/./g, () => s(m.random() * h))
+                const Exceptions = session.Days.map((item, key) => {
+                  return {
+                    id: ObjectID5(),
+                    type: 'wday',
+                    wday: item,
+                    _intervals: [
+                      {
+                        id: ObjectID5(),
+                        from: session.StartTime,
+                        to: session.EndTime,
+                      },
+                    ],
+                  }
+                })
+
+                session._Exceptions = Exceptions
+                sessionList.push(session)
+              })
+            }
+
+            const sessionres = await this.$axios
+              .$post(`${baseUrl}Sessions`, sessionList)
+              .catch((e) => {
+                console.log('error', e)
+                this.isSaveButtonDisabled = false
+              })
+            if (sessionres) {
+              this.isSession = false
+              this.isEventCreate = true
+              return sessionres
+            }
+          }
         }
       }
     },

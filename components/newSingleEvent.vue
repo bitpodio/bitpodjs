@@ -493,7 +493,10 @@ export default {
     VueGoogleAutocomplete: () => import('vue-google-autocomplete'),
   },
   props: {
-    onFormClose: Function,
+    onFormClose: {
+      type: Function,
+      default: () => null,
+    },
   },
   data: () => {
     const currentDatetime = new Date(new Date().setSeconds(0))
@@ -611,7 +614,7 @@ export default {
   },
   computed: {
     eventLinkHint() {
-      return `https://bitpod-event.test.bitpod.io/e/${this.eventData.UniqLink}`
+      return `${strings.EVENT_LINK_HINT}${this.eventData.UniqLink}`
     },
     gMapCenter() {
       return { lat: this.locations[0].lat, lng: this.locations[0].lng }
@@ -773,16 +776,8 @@ export default {
       this.$refs.gMap && this.$refs.gMap.map.setCenter(this.locations[0])
     },
     validTab1() {
-      const {
-        Title,
-        StartDate,
-        EndDate,
-        Timezone,
-        UniqLink,
-        // LocationType,
-        // WebinarLink,
-      } = this.eventData
-      if (
+      const { Title, StartDate, EndDate, Timezone, UniqLink } = this.eventData
+      return (
         Title !== '' &&
         StartDate !== null &&
         EndDate !== null &&
@@ -792,11 +787,7 @@ export default {
         StartDate >= new Date() &&
         EndDate >= new Date() &&
         this.isInalidEventLink === false
-      ) {
-        return true
-      } else {
-        return false
-      }
+      )
     },
     validTab2() {
       const { LocationType, WebinarLink } = this.eventData
