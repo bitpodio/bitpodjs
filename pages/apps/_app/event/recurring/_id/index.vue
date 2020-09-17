@@ -399,6 +399,30 @@
             <span class="ml-2">Notify organizer when someone registers</span>
           </span>
         </v-flex>
+        <v-flex my-3>
+          <span v-if="data.event.showTimezone === true">
+            <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
+            <span class="ml-2"
+              >Allow user to select a time zone for recurring event</span
+            >
+          </span>
+          <span v-else>
+            <v-icon>mdi-checkbox-blank-outline</v-icon>
+            <span class="ml-2"
+              >Allow user to select a time zone for recurring event</span
+            >
+          </span>
+        </v-flex>
+        <v-flex my-3>
+          <span v-if="data.event.SendCalendar === true">
+            <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
+            <span class="ml-2">Send calendar invite when registered</span>
+          </span>
+          <span v-else>
+            <v-icon>mdi-checkbox-blank-outline</v-icon>
+            <span class="ml-2">Send calendar invite when registered</span>
+          </span>
+        </v-flex>
       </div>
 
       <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
@@ -462,8 +486,6 @@ import gql from 'graphql-tag'
 import format from 'date-fns/format'
 import editEventForm from '../../_id/editEventForm.vue'
 import editSeoForm from '~/pages/apps/_app/event/_id/editSeoForm.vue'
-// import editEventForm from '~/pages/apps/_app/event/_id/editEventForm.vue'
-// import editEventForm from '~/pages/apps/_app/event/recurring/_id/editRecurringEventForm.vue'
 import editEventSetting from '~/pages/apps/_app/event/_id/editEventSetting.vue'
 import editSiteSetting from '~/pages/apps/_app/event/_id/editSiteSetting.vue'
 import Grid from '~/components/common/grid'

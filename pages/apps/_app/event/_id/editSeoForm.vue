@@ -98,24 +98,24 @@ export default {
     refresh() {
       this.$apollo.queries.data.refresh()
     },
-    onSave() {
+    async onSave() {
       delete this.formData._VenueAddress
       this.formData.SEOTitle = this.seoTitle
-      this.$axios
+      const res = await this.$axios
         .$patch(
           `https://${nuxtConfig.axios.eventUrl}/svc/api/Events/${this.$route.params.id}`,
           {
             ...this.formData,
           }
         )
-        .then((res) => {
-          this.close()
-          this.refresh()
-          return (this.data.event = res)
-        })
         .catch((e) => {
           console.log('error', e)
         })
+      if (res) {
+        this.close()
+        this.refresh()
+        this.data.event = res
+      }
     },
   },
   apollo: {

@@ -33,7 +33,12 @@
               <span>Description</span>
               <RichText v-model="formData.Description" label="Description" />
             </v-col>
-            <v-col cols="12" sm="6" md="4">
+            <v-col
+              v-if="formData.BusinessType !== 'Recurring'"
+              cols="12"
+              sm="6"
+              md="4"
+            >
               <div class="custom-date-time-picker">
                 <v-datetime-picker
                   v-model="formData.StartDate"
@@ -52,7 +57,12 @@
                 }}</span>
               </div>
             </v-col>
-            <v-col cols="12" sm="6" md="4">
+            <v-col
+              v-if="formData.BusinessType !== 'Recurring'"
+              cols="12"
+              sm="6"
+              md="4"
+            >
               <v-datetime-picker
                 v-model="formData.EndDate"
                 label="End Date *"
@@ -69,7 +79,13 @@
                 startdateMessage
               }}</span>
             </v-col>
-            <v-col class="d-flex" cols="12" sm="6" md="4">
+            <v-col
+              v-if="formData.BusinessType !== 'Recurring'"
+              class="d-flex"
+              cols="12"
+              sm="6"
+              md="4"
+            >
               <Timezone
                 v-model="formData.Timezone"
                 :rules="[() => !!formData.Timezone || 'This field is required']"
