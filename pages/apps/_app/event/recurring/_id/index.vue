@@ -60,7 +60,7 @@
               </v-list-item>
             </v-list>
           </v-menu>
-          <v-dialog v-model="copylinks" max-width="600">
+          <v-dialog v-model="copylinks" max-width="800">
             <v-card>
               <v-card-title class="pa-4 pr-2">
                 <h2 class="black--text text--lighten-1 pt-1 pb-0 text-h5">
@@ -74,20 +74,45 @@
                 </div>
               </v-card-title>
               <v-card-text class="pa-4 pt-0">
-                <v-flex my-3>
-                  <div class="body-2 text--secondary">Event Link</div>
-                  <div class="body-1 black--text text--lighten-1">
-                    {{ regUrl }}
-                  </div>
-                </v-flex>
-                <v-flex my-3>
-                  <div class="body-2 text--secondary">
-                    Recurring sessions Link
-                  </div>
-                  <div class="body-1 black--text text--lighten-1">
-                    {{ formatField(data.event.UniqLink) }}
-                  </div>
-                </v-flex>
+                <v-col cols="12" sm="12" class="pl-0 pb-0 d-flex">
+                  <v-text-field
+                    id="eventLink"
+                    :value="eventLink()"
+                    label="Event Link"
+                    outlined
+                    readonly
+                    dense
+                  ></v-text-field>
+                  <v-btn icon class="ml-2">
+                    <v-icon>mdi-18px mdi-content-copy</v-icon>
+                  </v-btn>
+                </v-col>
+                <v-col cols="12" sm="12" class="pl-0 pb-0 d-flex">
+                  <v-text-field
+                    :value="sessionLink()"
+                    label="Recurring sessions Link"
+                    outlined
+                    readonly
+                    dense
+                  ></v-text-field>
+                  <v-btn icon class="ml-2">
+                    <v-icon>mdi-18px mdi-content-copy</v-icon>
+                  </v-btn>
+                </v-col>
+                <v-col cols="12" sm="12" class="pl-0 pb-0 d-flex">
+                  <v-text-field
+                    :value="embedLink()"
+                    label="Embed Recurring Sessions"
+                    outlined
+                    hint="You will need to contact Bitpod support to whitelist your domain, if you would like to embed it, into any of your website."
+                    persistent-hint
+                    readonly
+                    dense
+                  ></v-text-field>
+                  <v-btn icon class="ml-2">
+                    <v-icon>mdi-18px mdi-content-copy</v-icon>
+                  </v-btn>
+                </v-col>
               </v-card-text>
             </v-card>
           </v-dialog>
@@ -692,8 +717,16 @@ export default {
       const regUrl = `https://${nuxtconfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
       window.open(`${regUrl}`, '_blank')
     },
-    copyEvent() {
+    eventLink() {
       const regUrl = `https://${nuxtconfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
+      return regUrl
+    },
+    sessionLink() {
+      const regUrl = `https://${nuxtconfig.axios.eventUrl}/t/${this.data.event.UniqLink}`
+      return regUrl
+    },
+    embedLink() {
+      const regUrl = `<iframe src="https://${nuxtconfig.axios.eventUrl}/embed/t/${this.data.event.UniqLink}"></iframe>`
       return regUrl
     },
   },
