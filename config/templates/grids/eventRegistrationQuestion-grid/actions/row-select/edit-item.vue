@@ -109,7 +109,25 @@ import { formatGQLResult } from '~/utility/gql.js'
 import { getIdFromAtob } from '~/utility'
 import { required } from '~/utility/rules.js'
 export default {
-  props: ['content', 'viewName', 'items', 'refresh'],
+  props: {
+    content: {
+      type: Object,
+      required: true,
+    },
+    viewName: {
+      type: String,
+      required: true,
+    },
+    items: {
+      type: Object,
+      required: true,
+    },
+    refresh: {
+      type: Function,
+      required: false,
+      default: () => false,
+    },
+  },
   data() {
     return {
       formData: {},
@@ -161,7 +179,7 @@ export default {
       })
   },
   methods: {
-    onSave() {
+    async onSave() {
       this.formData.ControlType = this.controlType
       this.formData.DisplayOrder = parseInt(this.formData.DisplayOrder)
       if (
@@ -182,39 +200,35 @@ export default {
             .filter((i) => this.tickets.some((j) => j === i.name))
             .map((k) => k.id)
         : []
-
-      this.$axios
-        .$put(
+      const res = await this.$axios
+        .put(
           `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/Survey/${this.id}`,
           {
             ...this.formData,
           }
         )
-        .then((res) => {
-          this.dialog = false
-          this.refresh()
-          return res
-        })
-        .catch((e) => {
-          console.log('Error', e)
-        })
+        .catch((e) => console.log('Error', e))
+
+      if (res) {
+        this.dialog = false
+        this.refresh()
+      }
     },
-    getQuestions() {
+    async getQuestions() {
       this.items.map((ele) => {
         this.id = ele.id
       })
-      this.$axios
+      const res = await this.$axios
         .$get(
           `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/Survey/${this.id}`
         )
-        .then((res) => {
-          this.formData = res
-          this.controlType = res.ControlType
-          this.tickets = res.TicketName
-          this.CsvOptions = res.Options.toString()
-          return res
-        })
-        .catch((err) => console.log('Error', err))
+        .catch((e) => console.log('Error', e))
+      if (res) {
+        this.formData = res
+        this.controlType = res.ControlType
+        this.tickets = res.TicketName
+        this.CsvOptions = res.Options.toString()
+      }
     },
     getDropDownData(filterType) {
       return this.$apollo

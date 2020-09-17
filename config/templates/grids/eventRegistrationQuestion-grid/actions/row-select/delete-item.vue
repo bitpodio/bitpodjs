@@ -20,7 +20,25 @@
 <script>
 import nuxtconfig from '~/nuxt.config'
 export default {
-  props: ['content', 'viewName', 'items', 'refresh'],
+  props: {
+    content: {
+      type: Object,
+      required: true,
+    },
+    viewName: {
+      type: String,
+      required: true,
+    },
+    items: {
+      type: Object,
+      required: true,
+    },
+    refresh: {
+      type: Function,
+      required: false,
+      default: () => false,
+    },
+  },
   data() {
     return {
       dialog: false,

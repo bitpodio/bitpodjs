@@ -107,7 +107,13 @@ import { formatGQLResult } from '~/utility/gql.js'
 import { getIdFromAtob } from '~/utility'
 import { required } from '~/utility/rules.js'
 export default {
-  props: ['refresh'],
+  props: {
+    refresh: {
+      type: Function,
+      required: false,
+      default: () => false,
+    },
+  },
   data() {
     return {
       formData: {
@@ -172,7 +178,7 @@ export default {
       this.formData.TicketName = []
       this.$refs.form.reset()
     },
-    onSave() {
+    async onSave() {
       this.formData.ControlType = this.controlType
       this.formData.DisplayOrder = parseInt(this.formData.DisplayOrder)
       if (
@@ -190,22 +196,19 @@ export default {
             .filter((i) => this.tickets.some((j) => j === i.name))
             .map((k) => k.id)
         : []
-      this.$axios
+      const res = await this.$axios
         .$post(
           `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/Survey`,
           {
             ...this.formData,
           }
         )
-        .then((res) => {
-          this.dialog = false
-          this.onReset()
-          this.refresh()
-          return res
-        })
-        .catch((e) => {
-          console.log('Error', e)
-        })
+        .catch((e) => console.log('Error', e))
+      if (res) {
+        this.dialog = false
+        this.onReset()
+        this.refresh()
+      }
     },
 
     getDropDownData(filterType) {
