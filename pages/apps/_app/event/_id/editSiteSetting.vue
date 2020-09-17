@@ -8,25 +8,28 @@
       transition="dialog-bottom-transition"
     >
       <v-card>
-        <v-toolbar dense flat dark fixed color="accent">
-          <v-toolbar-title class="body-1"
-            >Edit Registration Page Settings
-          </v-toolbar-title>
+        <v-card-title
+          class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
+        >
+          <h2 class="black--text pt-5 pb-3 text-h5">
+            Edit Registration Page Settings
+          </h2>
           <v-spacer></v-spacer>
-          <v-btn icon dark @click.native="close">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </v-toolbar>
-        <v-divider></v-divider>
-        <v-card-text>
+          <div>
+            <v-btn icon @click.native="close">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </div>
+        </v-card-title>
+        <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-card flat>
-            <v-tabs v-model="tabs" center-active>
+            <v-tabs v-model="tabs" center-active height="36">
               <v-tabs-slider></v-tabs-slider>
-              <v-tab href="#tab-1" class="px-0 mr-4 primary--text">
+              <v-tab href="#tab-1" class="px-0 mr-4">
                 <span>Templates</span>
               </v-tab>
 
-              <v-tab href="#tab-2" class="px-0 mr-4 primary--text">
+              <v-tab href="#tab-2" class="px-0 mr-4">
                 <span>Section Settings</span>
               </v-tab>
             </v-tabs>
@@ -34,11 +37,11 @@
             <v-tabs-items v-model="tabs">
               <v-tab-item :value="'tab-1'">
                 <v-row>
-                  <v-col cols="12">
+                  <v-col cols="12" class="mb-2">
                     Select a template
                   </v-col>
                   <v-flex
-                    class="d-flex flex-wrap pa-0 ml-6 justify-center justify-md-start"
+                    class="d-flex flex-wrap pa-0 ml-3 justify-center justify-md-start"
                   >
                     <v-hover
                       v-for="item in formData"
@@ -94,6 +97,7 @@
                               <v-btn
                                 class="ma-2"
                                 outlined
+                                dense
                                 color="primary"
                                 @click="
                                   selectTemplate(item.Name)
@@ -105,7 +109,7 @@
                           </v-flex>
                         </v-card>
                         <div
-                          class="text-truncate text-capitalize text-center pb-10"
+                          class="text-truncate text-capitalize text-center pb-5"
                         >
                           {{ item.Name }}
                         </div>
@@ -113,22 +117,20 @@
                     </v-hover>
                   </v-flex>
                 </v-row>
-                <v-card flat>
-                  <v-btn color="primary" @click="tabs = 'tab-2'">Next</v-btn>
-                </v-card>
               </v-tab-item>
               <v-tab-item :value="'tab-2'">
                 <v-row>
-                  <v-col cols="12">
+                  <v-col cols="12" class="mt-3">
                     Here you can change section titles of registration site, to
                     best suit your event. For example, you may relabel Speakers
                     to Artists
                   </v-col>
-                  <v-col cols="12">
+                  <v-col cols="12" class="mt-3">
                     <v-text-field
                       v-model="sectionHeading.speakers"
                       label="Label for Speakers section"
                       outlined
+                      dense
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12">
@@ -136,6 +138,7 @@
                       v-model="sectionHeading.registrationTypes"
                       label="Label for Registration Types section"
                       outlined
+                      dense
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12">
@@ -143,6 +146,7 @@
                       v-model="sectionHeading.session"
                       label="Label for Sessions section"
                       outlined
+                      dense
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12">
@@ -150,6 +154,7 @@
                       v-model="sectionHeading.registrationbtn"
                       label="Label for Register button"
                       outlined
+                      dense
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12">
@@ -157,6 +162,7 @@
                       v-model="sectionHeading.ticketsectionlabel"
                       label="Label for Tickets section"
                       outlined
+                      dense
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12">
@@ -164,6 +170,7 @@
                       v-model="sectionHeading.ticketlabel"
                       label="Label for Tickets"
                       outlined
+                      dense
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12">
@@ -171,6 +178,7 @@
                       v-model="sectionHeading.datetimelabel"
                       label="Label for Date and Time section"
                       outlined
+                      dense
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12">
@@ -178,6 +186,7 @@
                       v-model="sectionHeading.venuelabel"
                       label="Label for Venue section"
                       outlined
+                      dense
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12">
@@ -185,6 +194,7 @@
                       v-model="sectionHeading.sessionsectionlabel"
                       label="Label for Recurring Sessions section"
                       outlined
+                      dense
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12">
@@ -192,6 +202,7 @@
                       v-model="sectionHeading.registrationquestionsectionlabel"
                       label="Label for Registration Questions section"
                       outlined
+                      dense
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12">
@@ -199,6 +210,7 @@
                       v-model="sectionHeading.gallery"
                       label="Label for Image Gallery section"
                       outlined
+                      dense
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12">
@@ -206,6 +218,7 @@
                       v-model="sectionHeading.review"
                       label="Label for Reviews section"
                       outlined
+                      dense
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12">
@@ -214,6 +227,7 @@
                       :items="animationDropDown"
                       label="Animation"
                       outlined
+                      dense
                     ></v-select>
                   </v-col>
                   <v-col cols="12"></v-col>
@@ -221,28 +235,33 @@
                     <v-checkbox
                       v-model="sectionHeading.showimagegallery"
                       label=" Show Image Gallery"
+                      height="20"
                       class="ma-0"
                     ></v-checkbox>
                   </v-col>
-                  <v-col cols="12">
+                  <v-col cols="12" class="pt-0">
                     <v-checkbox
                       v-model="sectionHeading.showeventreviews"
                       label=" Show Event Reviews"
+                      height="20"
                       class="ma-0"
                     ></v-checkbox>
                   </v-col>
                 </v-row>
-                <v-btn color="primary" depressed @click="tabs = 'tab-1'"
-                  >Prev</v-btn
-                >
-                <v-btn color="primary" depressed @click.native="onSave"
-                  >Save</v-btn
-                >
               </v-tab-item>
             </v-tabs-items>
           </v-card>
         </v-card-text>
         <v-divider></v-divider>
+        <v-card-actions
+          class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
+        >
+          <v-btn color="grey lighten-2" depressed @click="tabs = 'tab-1'"
+            >Prev</v-btn
+          >
+          <v-btn color="primary" depressed @click="tabs = 'tab-2'">Next</v-btn>
+          <v-btn color="primary" depressed @click.native="onSave">Save</v-btn>
+        </v-card-actions>
       </v-card>
     </v-dialog>
   </v-layout>
