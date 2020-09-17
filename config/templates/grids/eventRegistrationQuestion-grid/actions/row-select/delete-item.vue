@@ -40,7 +40,6 @@ export default {
               )
             })
             .then((res) => {
-              console.log('Item deleted successfully')
               this.snackbar = true
               this.refresh()
               return res
