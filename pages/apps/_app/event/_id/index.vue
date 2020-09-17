@@ -226,14 +226,59 @@
               </v-btn>
             </template>
             <v-list dense>
-              <v-list-item>
-                <v-list-item-title>Badge Logo</v-list-item-title>
+              <v-list-item
+                @click="
+                  checkArray = []
+                  badgeLogo = !badgeLogo
+                "
+              >
+                <v-list-item-title>
+                  <File
+                    :field="fileField"
+                    :no-btn-look="true"
+                    :block="true"
+                    :open-file-dialog="badgeLogo"
+                    :value="checkArray"
+                    @input="fileUploadedBadgeLogo"
+                  />
+                  Badge Logo
+                </v-list-item-title>
               </v-list-item>
-              <v-list-item>
-                <v-list-item-title>Event Banner (680x350)</v-list-item-title>
+              <v-list-item
+                @click="
+                  checkArray = []
+                  eventBanner = !eventBanner
+                "
+              >
+                <v-list-item-title>
+                  <File
+                    :field="fileField"
+                    :no-btn-look="true"
+                    :block="true"
+                    :open-file-dialog="eventBanner"
+                    :value="checkArray"
+                    @input="fileUploadedEventBanner"
+                  />
+                  Event Banner(680x350)
+                </v-list-item-title>
               </v-list-item>
-              <v-list-item>
-                <v-list-item-title>Other</v-list-item-title>
+              <v-list-item
+                @click="
+                  checkArray = []
+                  otherDialog = !otherDialog
+                "
+              >
+                <v-list-item-title>
+                  <File
+                    :field="fileField"
+                    :no-btn-look="true"
+                    :block="true"
+                    :open-file-dialog="otherDialog"
+                    :value="checkArray"
+                    @input="fileUploadedOther"
+                  />
+                  Other
+                </v-list-item-title>
               </v-list-item>
             </v-list>
           </v-menu>
@@ -243,7 +288,7 @@
           v-for="image in data.event.Images"
           :key="image"
           class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0"
-          @click.stop="dialog = true"
+          @click.stop="logoDialog = true"
         >
           <v-img
             :src="getAttachmentLink(image, true)"
@@ -263,13 +308,14 @@
               </v-row>
             </template>
           </v-img>
+          <v-card-text>{{ logoName }}</v-card-text>
         </v-card>
-        <v-dialog v-model="dialog" max-width="600">
+        <v-dialog v-model="logoDialog" max-width="600">
           <v-card>
             <v-card-title class="pa-1">
               <v-spacer></v-spacer>
               <div>
-                <v-btn icon @click="dialog = false">
+                <v-btn icon @click="logoDialog = false">
                   <v-icon>mdi-close</v-icon>
                 </v-btn>
               </div>
@@ -279,7 +325,7 @@
                 v-for="image in data.event.Images"
                 :key="image"
                 class="mx-auto elevation-0"
-                @click.stop="dialog = true"
+                @click.stop="logoDialog = true"
               >
                 <v-img
                   :src="getAttachmentLink(image, true)"
@@ -309,6 +355,7 @@
           v-for="image in data.event.Logo"
           :key="image"
           class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0"
+          @click.stop="bannerDialog = true"
         >
           <v-img
             :src="getAttachmentLink(image, true)"
@@ -329,11 +376,54 @@
               </v-row>
             </template>
           </v-img>
+          <v-card-text>{{ bannerName }}</v-card-text>
         </v-card>
+        <v-dialog v-model="bannerDialog" max-width="600">
+          <v-card>
+            <v-card-title class="pa-1">
+              <v-spacer></v-spacer>
+              <div>
+                <v-btn icon @click="bannerDialog = false">
+                  <v-icon>mdi-close</v-icon>
+                </v-btn>
+              </div>
+            </v-card-title>
+            <v-card-text class="pa-1">
+              <v-card
+                v-for="image in data.event.Logo"
+                :key="image"
+                class="mx-auto elevation-0"
+                @click.stop="bannerDialog = true"
+              >
+                <v-img
+                  :src="getAttachmentLink(image, true)"
+                  :lazy-src="getAttachmentLink(image, true)"
+                  aspect-ratio="1"
+                  class="grey lighten-2"
+                  width="100%"
+                >
+                  <template v-slot:placeholder>
+                    <v-row
+                      class="fill-height ma-0"
+                      align="center"
+                      justify="center"
+                    >
+                      <v-progress-circular
+                        indeterminate
+                        color="grey lighten-5"
+                      ></v-progress-circular>
+                    </v-row>
+                  </template>
+                </v-img>
+              </v-card>
+            </v-card-text>
+          </v-card>
+        </v-dialog>
         <v-card
           v-for="image in data.event.Other"
           :key="image"
           class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0"
+          @click.stop="otherDialogOpen = true"
         >
           <v-img
             :src="getAttachmentLink(image, true)"
@@ -353,7 +443,49 @@
               </v-row>
             </template>
           </v-img>
+          <v-card-text>{{ OtherImageName }}</v-card-text>
         </v-card>
+        <v-dialog v-model="otherDialogOpen" max-width="600">
+          <v-card>
+            <v-card-title class="pa-1">
+              <v-spacer></v-spacer>
+              <div>
+                <v-btn icon @click="otherDialogOpen = false">
+                  <v-icon>mdi-close</v-icon>
+                </v-btn>
+              </div>
+            </v-card-title>
+            <v-card-text class="pa-1">
+              <v-card
+                v-for="image in data.event.Other"
+                :key="image"
+                class="mx-auto elevation-0"
+                @click.stop="otherDialogOpen = true"
+              >
+                <v-img
+                  :src="getAttachmentLink(image, true)"
+                  :lazy-src="getAttachmentLink(image, true)"
+                  aspect-ratio="1"
+                  class="grey lighten-2"
+                  width="100%"
+                >
+                  <template v-slot:placeholder>
+                    <v-row
+                      class="fill-height ma-0"
+                      align="center"
+                      justify="center"
+                    >
+                      <v-progress-circular
+                        indeterminate
+                        color="grey lighten-5"
+                      ></v-progress-circular>
+                    </v-row>
+                  </template>
+                </v-img>
+              </v-card>
+            </v-card-text>
+          </v-card>
+        </v-dialog>
       </div>
       <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2 pb-0">
         <h2 class="body-1 pb-2">
@@ -426,78 +558,6 @@
         </h2>
         <v-divider></v-divider>
         <Grid view-name="eventRegistrationForm" :content="content" />
-      </div>
-      <div class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
-        <v-flex class="d-flex justify-center align-center pb-1">
-          <h2 class="body-1 pb-1">
-            <i class="fa fa-image pr-1" aria-hidden="true"></i> Image Gallery
-          </h2>
-          <v-spacer></v-spacer>
-          <v-menu offset-y>
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn depressed small color="primary" v-bind="attrs" v-on="on">
-                Upload
-              </v-btn>
-            </template>
-            <v-list dense>
-              <v-list-item
-                @click="
-                  checkArray = []
-                  badgeLogo = !badgeLogo
-                "
-              >
-                <v-list-item-title>
-                  <File
-                    :field="fileField"
-                    :no-btn-look="true"
-                    :block="true"
-                    :open-file-dialog="badgeLogo"
-                    :value="checkArray"
-                    @input="fileUploadedBadgeLogo"
-                  />
-                  Badge Logo
-                </v-list-item-title>
-              </v-list-item>
-              <v-list-item
-                @click="
-                  checkArray = []
-                  eventBanner = !eventBanner
-                "
-              >
-                <v-list-item-title>
-                  <File
-                    :field="fileField"
-                    :no-btn-look="true"
-                    :block="true"
-                    :open-file-dialog="eventBanner"
-                    :value="checkArray"
-                    @input="fileUploadedEventBanner"
-                  />
-                  Event Banner(680x350)
-                </v-list-item-title>
-              </v-list-item>
-              <v-list-item
-                @click="
-                  checkArray = []
-                  otherDialog = !otherDialog
-                "
-              >
-                <v-list-item-title>
-                  <File
-                    :field="fileField"
-                    :no-btn-look="true"
-                    :block="true"
-                    :open-file-dialog="otherDialog"
-                    :value="checkArray"
-                    @input="fileUploadedOther"
-                  />
-                  Other
-                </v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-        </v-flex>
-        <v-divider></v-divider>
       </div>
     </v-flex>
     <v-flex column xs12 sm4 md4 lg4>
@@ -735,7 +795,6 @@
     <editSeoForm :seo-form.sync="seoForm" />
     <editEventSetting :event-setting.sync="eventSetting" />
     <editSiteSetting :site-setting.sync="siteSetting" />
-    <!-- <badgeLogoForm :event-form.sync="badgeLogo" /> -->
   </v-flex>
 </template>
 <script>
@@ -752,7 +811,6 @@ import File from '~/components/common/form/file.vue'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin } from '~/utility'
-import nuxtconfig from '~/nuxt.config'
 
 export default {
   components: {
@@ -762,7 +820,6 @@ export default {
     editEventSetting,
     editSiteSetting,
     File,
-    // badgeLogoForm,
   },
   mixins: [configLoaderMixin],
   props: ['value', 'field'],
@@ -779,7 +836,9 @@ export default {
       otherDialog: false,
       eventSetting: false,
       siteSetting: false,
-      // fileDialog: false,
+      logoDialog: false,
+      bannerDialog: false,
+      otherDialogOpen: false,
       formData: {
         Logo: [],
         Images: [],
@@ -798,6 +857,9 @@ export default {
       fileField: {
         multiple: false,
       },
+      bannerName: '',
+      OtherImageName:'',
+      logoName:''
     }
   },
   computed: {
@@ -808,7 +870,35 @@ export default {
       return nuxtconfig.axios.eventUrl
     },
   },
+  mounted() {},
   methods: {
+    async getBannerImageName(imageId) {
+      const res = await this.$axios.$get(
+        `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Attachments/${imageId}`
+      )
+      if (res) {
+        this.bannerName = res.fileName
+      }
+    },
+    async getLogoName(imageId) {
+      const res = await this.$axios.$get(
+        `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Attachments/${imageId}`
+      )
+      if (res) {
+        this.logoName = res.fileName
+      }
+    },
+    async getOtherImageName(imageId) {
+      const res = await this.$axios.$get(
+        `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Attachments/${imageId}`
+      )
+      if (res) {
+        this.OtherImageName = res.fileName
+      }
+    },
+    refresh() {
+      this.$apollo.queries.data.refresh()
+    },
     fileUploadedBadgeLogo(data) {
       this.badgeLogo = false
       this.formData.Logo = []
@@ -831,16 +921,16 @@ export default {
       this.formData.Other.push(data[0])
       this.updateEventGallery(this.formData)
     },
-    updateEventGallery(formData) {
-      this.$axios
+    async updateEventGallery(formData) {
+      const res = await this.$axios
         .$patch(
           `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`,
           formData
         )
-        .then((res) => {
-          return res
-        })
         .catch((e) => console.log('Error', e))
+      if (res) {
+        this.refresh()
+      }
     },
     formatDate(date) {
       return date ? format(new Date(date), 'PPpp') : ''
@@ -897,6 +987,15 @@ export default {
         const event = formatGQLResult(data, 'Event')
         const badge = formatGQLResult(data, 'Badge')
         const eventSummary = data.Event.EventGetEventSummery
+        if (event[0].Images[0] !== []) {
+          this.getBannerImageName(event[0].Images[0])
+        }
+        if (event[0].Logo[0] !== []) {
+          this.getLogoName(event[0].Logo[0])
+        }
+        if (event[0].Other[0] !== []) {
+          this.getOtherImageName(event[0].Other[0])
+        }
         return {
           event: event.length > 0 ? event[0] : {},
           badge: badge.length > 0 ? badge[0] : {},
