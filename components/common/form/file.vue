@@ -1,5 +1,5 @@
 <template>
-  <div style="position: relative;">
+  <div v-show="field.caption" style="position: relative;">
     <h3
       class="font-weight-regular"
       style="position: absolute; top: -12px; left: 8px;"
@@ -11,19 +11,19 @@
       small
       :disabled="allowSecondUpload"
       @click="uploadClicked"
-      >Upload</v-btn
+      >{{ this.label ? this.label : 'Upload' }}</v-btn
     >
     <v-file-input
       v-if="!allowSecondUpload"
       ref="test"
       class="pl-2"
-      :multiple="field.multiple"
+      :multiple="field && field.multiple"
       :rules="rules"
       :hide-input="true"
       prepend-icon="mdi-cloud-upload"
       @change="onChange"
     ></v-file-input>
-    <div :class="{ 'pt-12': allowSecondUpload }">
+    <div v-if="!hidePreview" :class="{ 'pt-12': allowSecondUpload }">
       <div
         v-for="file in files"
         :key="file.id"
@@ -42,7 +42,19 @@ import { formFieldMixin } from '~/utility/form-control'
 import nuxtconfig from '~/nuxt.config'
 export default {
   mixins: [formFieldMixin],
-  props: ['value', 'field', 'rules'],
+  props: {
+    value: {},
+    field: {},
+    rules: {},
+    hidePreview: {},
+    label: {},
+    noBtnLook: {},
+    block: {},
+    openFileDialog: {
+      type: Boolean,
+      default: () => false,
+    },
+  },
   data() {
     return {
       fileIds: this.value,
@@ -52,6 +64,18 @@ export default {
   computed: {
     allowSecondUpload() {
       return !this.field.multiple && !!this.value && !!this.value.length
+    },
+  },
+  watch: {
+    openFileDialog(newVal, oldVal) {
+      if (newVal === true) {
+        this.uploadClicked()
+      }
+    },
+    value(newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.files = []
+      }
     },
   },
   async mounted() {
@@ -91,6 +115,7 @@ export default {
         this.files.map((i) => i.id)
       )
     },
+
     uploadFile(file) {
       const formData = new FormData()
       formData.append('file', file)

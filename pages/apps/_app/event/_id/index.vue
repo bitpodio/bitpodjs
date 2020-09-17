@@ -288,9 +288,75 @@
         <Grid view-name="eventRegistrationForm" :content="content" />
       </div>
       <div class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
-        <h2 class="body-1 pb-2">
-          <i class="fa fa-image pr-1" aria-hidden="true"></i> Image Gallery
-        </h2>
+        <v-flex class="d-flex justify-center align-center pb-1">
+          <h2 class="body-1 pb-1">
+            <i class="fa fa-image pr-1" aria-hidden="true"></i> Image Gallery
+          </h2>
+          <v-spacer></v-spacer>
+          <v-menu offset-y>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn depressed small color="primary" v-bind="attrs" v-on="on">
+                Upload
+              </v-btn>
+            </template>
+            <v-list dense>
+              <v-list-item
+                @click="
+                  checkArray = []
+                  badgeLogo = !badgeLogo
+                "
+              >
+                <v-list-item-title>
+                  <File
+                    :field="fileField"
+                    :no-btn-look="true"
+                    :block="true"
+                    :open-file-dialog="badgeLogo"
+                    :value="checkArray"
+                    @input="fileUploadedBadgeLogo"
+                  />
+                  Badge Logo
+                </v-list-item-title>
+              </v-list-item>
+              <v-list-item
+                @click="
+                  checkArray = []
+                  eventBanner = !eventBanner
+                "
+              >
+                <v-list-item-title>
+                  <File
+                    :field="fileField"
+                    :no-btn-look="true"
+                    :block="true"
+                    :open-file-dialog="eventBanner"
+                    :value="checkArray"
+                    @input="fileUploadedEventBanner"
+                  />
+                  Event Banner(680x350)
+                </v-list-item-title>
+              </v-list-item>
+              <v-list-item
+                @click="
+                  checkArray = []
+                  otherDialog = !otherDialog
+                "
+              >
+                <v-list-item-title>
+                  <File
+                    :field="fileField"
+                    :no-btn-look="true"
+                    :block="true"
+                    :open-file-dialog="otherDialog"
+                    :value="checkArray"
+                    @input="fileUploadedOther"
+                  />
+                  Other
+                </v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </v-flex>
         <v-divider></v-divider>
       </div>
     </v-flex>
@@ -529,6 +595,7 @@
     <editSeoForm :seo-form.sync="seoForm" />
     <editEventSetting :event-setting.sync="eventSetting" />
     <editSiteSetting :site-setting.sync="siteSetting" />
+    <!-- <badgeLogoForm :event-form.sync="badgeLogo" /> -->
   </v-flex>
 </template>
 <script>
@@ -539,7 +606,9 @@ import editSeoForm from './editSeoForm.vue'
 import editEventForm from './editEventForm.vue'
 import editEventSetting from './editEventSetting.vue'
 import editSiteSetting from './editSiteSetting.vue'
+import nuxtconfig from '~/nuxt.config'
 import Grid from '~/components/common/grid'
+import File from '~/components/common/form/file.vue'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin } from '~/utility'
@@ -551,6 +620,8 @@ export default {
     editEventForm,
     editEventSetting,
     editSiteSetting,
+    File,
+    // badgeLogoForm,
   },
   mixins: [configLoaderMixin],
   props: ['value', 'field'],
@@ -561,12 +632,29 @@ export default {
       editseoform: false,
       eventForm: false,
       seoForm: false,
+      badgeLogo: false,
+      eventBanner: false,
+      otherDialog: false,
       eventSetting: false,
       siteSetting: false,
+      // fileDialog: false,
+      formData: {
+        Logo: [],
+        Images: [],
+        ImagesURL: [],
+        Other: [],
+      },
+      checkArray: [],
+      logoFileId: '',
+      bannerFileId: '',
+      otherFileId: '',
       data: {
         event: {},
         badge: {},
         eventSummary: {},
+      },
+      fileField: {
+        multiple: false,
       },
     }
   },
@@ -576,6 +664,39 @@ export default {
     },
   },
   methods: {
+    fileUploadedBadgeLogo(data) {
+      this.badgeLogo = false
+      this.formData.Logo = []
+      this.formData.Logo.push(data[0])
+      this.updateEventGallery(this.formData)
+    },
+    fileUploadedEventBanner(data) {
+      this.eventBanner = false
+      const imageUrl = `/svc/api/Attachments/download/${data[0]}`
+      this.formData.Images = []
+      this.formData.ImagesURL = []
+      this.formData.Images.push(data[0])
+      this.formData.ImagesURL.push(imageUrl)
+
+      this.updateEventGallery(this.formData)
+    },
+    fileUploadedOther(data) {
+      this.otherDialog = false
+      this.formData.Other = []
+      this.formData.Other.push(data[0])
+      this.updateEventGallery(this.formData)
+    },
+    updateEventGallery(formData) {
+      this.$axios
+        .$patch(
+          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`,
+          formData
+        )
+        .then((res) => {
+          return res
+        })
+        .catch((e) => console.log('Error', e))
+    },
     formatDate(date) {
       return date ? format(new Date(date), 'PPpp') : ''
     },
@@ -678,5 +799,10 @@ export default {
   color: red;
   padding: 10px;
   font-size: 12px;
+}
+.upload-btn {
+  position: relative;
+  right: 45px;
+  bottom: 28px;
 }
 </style>
