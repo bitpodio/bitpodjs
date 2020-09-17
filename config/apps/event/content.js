@@ -679,7 +679,7 @@ export default {
           },
         },
         template: {
-          name: 'event-grid',
+          name: 'eventInvites-grid',
           context: {
             basePath: '/event',
           },
@@ -822,11 +822,16 @@ export default {
             editForm: true,
             dataSource: {
               query: registrationType,
-              itemText: 'Name',
+              itemText: 'customField',
               itemValue: 'id',
               filter(data) {
                 return {
                   EventId: this.$route.params.id,
+                }
+              },
+              computed(data) {
+                return {
+                  customField: `${data.Name}   (max allowed - ${data.MaxQuantityAllowed})`,
                 }
               },
             },
@@ -870,8 +875,13 @@ export default {
             newForm: true,
             editForm: true,
             rules: [
-              (v) => {
-                return !!v || 'Start Date is required'
+              function (v) {
+                const eventStartDate =
+                  this.context.event && this.context.event.StartDate
+                const eventStartDateObj =
+                  eventStartDate && new Date(eventStartDate)
+                const isValidStartDate = eventStartDateObj > (v && new Date(v))
+                return !!isValidStartDate || 'Start Date is required'
               },
             ],
           },
@@ -929,8 +939,8 @@ export default {
             cssClasses: 'col-6 col-md-6',
             hidden: true,
             inlineEdit: true,
-            newForm: true,
-            editForm: true,
+            newForm: false,
+            editForm: false,
             rules: [
               (v) => {
                 return !!v || 'EventId is required'
@@ -1171,7 +1181,7 @@ export default {
           },
         },
         template: {
-          name: 'event-grid',
+          name: 'eventRegistrationQuestion-grid',
           context: {
             basePath: '/event',
           },
@@ -1537,6 +1547,84 @@ export default {
         title: 'eventTasks',
         type: 'list',
       },
+      inviteeEventTasks: {
+        ui: {
+          hideDefaultHeader: false,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: true,
+          hideFilter: false,
+          hideSearch: true,
+        },
+        hidden: true,
+        fields: {
+          Title: {
+            displayOrder: 2,
+            caption: 'Title',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          Status: {
+            displayOrder: 3,
+            caption: 'Status',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          DueDate: {
+            displayOrder: 7,
+            caption: 'Due Date',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'datetime',
+          },
+          createdDate: {
+            displayOrder: 8,
+            caption: 'Created Date',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'date',
+          },
+          createdBy: {
+            displayOrder: 9,
+            caption: 'Created By',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+        },
+        template: {
+          name: 'contactInvitee-grid',
+          context: {
+            basePath: '/event',
+          },
+        },
+        dataSource: {
+          query: eventTasks,
+          defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          model: 'CRMActivity',
+          filter(ctx) {
+            return {
+              where: {
+                and: [
+                  { EventId: ctx.$route.params.id },
+                  { Type: 'Mass Email' },
+                ],
+              },
+            }
+          },
+        },
+        title: 'eventTasks',
+        type: 'list',
+      },
       eventRegistrationForm: {
         ui: {
           hideDefaultHeader: false,
@@ -1719,55 +1807,6 @@ export default {
   },
 
   Registrations: {
-    child: {},
-    dataSource: {
-      FormID: 'EventsAdvSearch',
-      'Key Field': '',
-      'Parent key field': '',
-      Type: 'List',
-      URL: 'Registration',
-    },
-    general: {
-      caption: 'Registrations',
-      name: 'Registration',
-    },
-    permissions: {
-      Groups: '',
-    },
-    ui: {
-      MobileViewTemplate: {
-        isActive: true,
-        templateName: 'Event_Registation_Mobile',
-      },
-      TemplateActions: {},
-      Checkbox: 'True',
-      'Card View Template': 'VisitingCard0',
-      Width: '50%',
-      Height: '',
-      TemplateHelpers: {},
-      'Display Order': '',
-      'Map View Template': '',
-      'List View Template': '',
-      'Detail View': 'tab',
-      Column: '',
-      'Tile View': 'now',
-      'App Type': 'View',
-      Templates: {
-        VisitingCard0: 'Registrations_Card_View',
-        Status:
-          '<div title="{{Status}}"><style>.reg-status {\n                  font-size: 10px;\n                            display: inline-block;\n                            color: #fff;\n                            margin-right: 5px;\n                            margin-bottom: 0px;\n                            padding: 3px 10px !important;\n                            border-radius: 20px !important;\n                            text-transform: capitalize;\n                        }\n                      .reg-success {\n                                      background-color: #0cb14b;\n                    }\n                      .reg-fail {\n                                      background-color: #f25955;\n                    }\n                      .reg-refund {\n                                      background-color: #3fa5ff;\n                    }\n                    .reg-parefund {\n                                      background-color: #b9b9b9;\n                    }\n                      .reg-parrefund {\n                                      background-color: #f4b400;\n                    }</style><div class="reg-status {{getStatusColor Status}}"> {{getCapitalResult Status}} </div></div>',
-        SyncStatus:
-          '<div><i class="{{ShowSyncField SFRegistrationId}}" style="{{getColor SFRegistrationId}}" onclick="invokeAction(\'changeSyncStatus\',this)" node={{node.id}}> </i></div>',
-        CheckIn:
-          '<style>\n    .checkin-btn {\ncolor: #fff;\npadding: 3px 10px !important;\n    background-color: #3fa5ff !important;;\nfont-size: 12px;\nborder-radius: 2px;\ncursor: pointer;\n}\n.check-label {\n        color: #1a73e8;\nfont-size: 13px;\n}\n</style>\n{{#ifStatus Status}}\n<div title="CheckIn">\n    {{#if CheckIn}}<span class="check-label">\n        <i class="fa fa-check" style="color: #1a73e8;margin-top:3px;" node={{node.id}}> </i>Checked in </span>\n    <span class="check-label">{{date_diff CheckIn}}</span>\n    {{else}}\n    <span onclick="invokeAction(\'CheckIn\',this)" class="checkin-btn">Check in</span>\n    {{/if}}\n</div>\n{{else}} <div style="height: 100%;" title=""></div>{{/ifStatus}}',
-        FullName:
-          '<div onclick="invokeAction(\'goToDetails\', this)" data-action="edit" data-bind="ID={{id}}" style="cursor: pointer;color: #1a73e8;"> {{FullName}} </div>',
-      },
-      decorator: {
-        Attachment: '',
-        LinkedinURL: '',
-      },
-    },
     views: {
       Registrations: {
         ui: {
@@ -2115,6 +2154,7 @@ export default {
             where: {},
           },
         },
+        itemTitle: 'Registration',
         title: 'Registrations',
         type: 'list',
       },
@@ -3261,6 +3301,52 @@ export default {
         },
         template: {
           name: 'link-grid',
+          context: {
+            basePath: '/contacts',
+          },
+        },
+        dataSource: {
+          query: contactList,
+          filter: {
+            where: {},
+          },
+          type: 'graphql',
+          model: 'Contact',
+          defaultSort: 'createdDate DESC',
+        },
+        title: 'Contacts',
+        defaultSort: 'createdDate DESC',
+      },
+      InviteContacts: {
+        ui: {
+          hideDefaultHeader: false,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: true,
+          hideFilter: true,
+          hideSearch: true,
+        },
+        fields: {
+          Email: {
+            displayOrder: 1,
+            caption: 'Email',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'string',
+          },
+          FullName: {
+            displayOrder: 2,
+            caption: 'Full Name',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'string',
+          },
+        },
+        template: {
+          name: 'contactInvitee-grid',
           context: {
             basePath: '/contacts',
           },

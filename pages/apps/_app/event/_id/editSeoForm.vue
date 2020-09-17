@@ -9,50 +9,59 @@
         transition="dialog-bottom-transition"
       >
         <v-card>
-          <v-toolbar dense flat dark fixed color="accent">
-            <v-toolbar-title class="body-1">Edit Seo Details</v-toolbar-title>
+          <v-card-title
+            class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
+          >
+            <h2 class="black--text pt-5 pb-2 text-h5">Edit Seo Details</h2>
             <v-spacer></v-spacer>
-            <v-btn icon dark @click.native="close">
-              <v-icon>mdi-close</v-icon>
-            </v-btn>
-          </v-toolbar>
-          <v-divider></v-divider>
-          <v-card-text>
+            <div>
+              <v-btn icon @click.native="close">
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+            </div>
+          </v-card-title>
+          <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
             <v-row>
-              <v-col>
+              <v-col class="pt-2">
                 <v-checkbox
                   v-model="formData.AutoUpdateSEOElements"
+                  class="mt-1"
                   label=" SEO elements are auto derived from event elements when event is created or edited. Check this if you want to Turn off auto update"
                 ></v-checkbox>
               </v-col>
-              <v-col cols="12">
+              <v-col cols="12" class="pb-0">
                 <v-text-field
                   v-model="seoTitle"
                   :rules="nameRules"
                   label="Part which goes into URL"
                   outlined
+                  dense
                 ></v-text-field>
               </v-col>
-              <v-col cols="12">
+              <v-col cols="12" class="pb-0">
                 <v-text-field
                   v-model="formData.SEODesc"
                   label="Meta Description"
                   outlined
+                  dense
                 >
                 </v-text-field>
               </v-col>
-              <v-col cols="12">
+              <v-col cols="12" class="pb-0">
                 <v-text-field
                   v-model="formData.SEOKeywords"
                   label="Meta Keywords"
                   outlined
+                  dense
                 >
                 </v-text-field>
               </v-col>
             </v-row>
           </v-card-text>
           <v-divider></v-divider>
-          <v-card-actions class="pl-4">
+          <v-card-actions
+            class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
+          >
             <v-btn
               color="primary"
               :disabled="!valid"

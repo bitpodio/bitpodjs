@@ -8,7 +8,9 @@
       </template>
       <v-card>
         <v-card-title>
-          <span class="title">Open another organization</span>
+          <h2 class="black--text pt-2 pb-2 text-h5">
+            Open another organization
+          </h2>
         </v-card-title>
         <v-card-text>
           <v-select
@@ -17,15 +19,15 @@
             item-text="name"
             item-value="name"
             label="Organizations"
-            class=""
-            solo
+            outlined
+            dense
             hide-details
           ></v-select>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="onOpenClick">Open</v-btn>
-          <v-btn color="blue darken-1" text @click="dialog = false"
+          <v-btn color="primary" text @click="onOpenClick">Open</v-btn>
+          <v-btn color="grey darken-1" text @click="dialog = false"
             >Cancel</v-btn
           >
         </v-card-actions>
