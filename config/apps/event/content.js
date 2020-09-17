@@ -1181,7 +1181,7 @@ export default {
           },
         },
         template: {
-          name: 'event-grid',
+          name: 'eventRegistrationQuestion-grid',
           context: {
             basePath: '/event',
           },
