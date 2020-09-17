@@ -64,6 +64,7 @@
           view-name="contactRegistration"
           class="mt-11"
           :content="content"
+          :filter="filter"
         />
       </div>
       <div v-if="content" class="xs12 sm12 md12 boxview pa-4 mr-2 mb-2">
@@ -232,13 +233,13 @@ export default {
     content() {
       return this.contents ? this.contents.Contacts : null
     },
-    // filter() {
-    //   return {
-    //     where: {
-    //       Email: this.contact.Email,
-    //     },
-    //   }
-    // },
+    filter() {
+      return {
+        where: {
+          Email: this.data.contact && this.data.contact.Email,
+        },
+      }
+    },
   },
   methods: {
     formatDate(date) {
