@@ -17,6 +17,7 @@
               :on-delete-item="onDeleteItem"
               :items="selectedItems"
               :refresh="refresh"
+              :context="context"
               class="d-flex"
             />
           </template>
@@ -26,6 +27,7 @@
             :view-name="viewName"
             :on-new-item-save="onNewItemSave"
             :refresh="refresh"
+            :context="context"
           />
         </div>
         <div v-if="hideFilter">
@@ -76,7 +78,7 @@
             :item="props.item"
             :headers="props.headers"
             :is-selected="props.isSelected"
-            :context="context"
+            :context="contentContext"
             :items="tableData.items"
             :content="content"
           />
@@ -90,7 +92,7 @@
             :key="column.value"
             :item="props.item"
             :value="props.value"
-            :context="context"
+            :context="contentContext"
             :items="tableData.items"
             :column="column"
             :content="content"
@@ -453,12 +455,24 @@ export default {
       type: Object,
       required: true,
     },
+    context: {
+      type: Object,
+      required: false,
+      default: () => {},
+    },
+    value: {
+      type: Array,
+      default: () => [],
+    },
+    singleSelect: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     const headers = getTableHeader(this.content, this.viewName)
     const gridProps = getGridsProps(this.content, this.viewName)
     return {
-      singleSelect: false,
       headers,
       tableData: {
         items: [],
@@ -491,8 +505,13 @@ export default {
       const fields = getGridFields(this.content, this.viewName)
       return fields
     },
-    context() {
-      return getGridTemplateInfo(this.content, this.viewName).context || {}
+    contentContext() {
+      const contentContext =
+        getGridTemplateInfo(this.content, this.viewName).context || {}
+      return {
+        ...contentContext,
+        ...this.context,
+      }
     },
     _components() {
       return {
@@ -513,6 +532,9 @@ export default {
     search() {
       // call rest
       this.loadRestData()
+    },
+    value() {
+      this.selectedItems = this.$props.value
     },
   },
   mounted() {
@@ -561,6 +583,7 @@ export default {
     },
     onItemSelected(items) {
       this.selectedItems = items
+      this.$emit('onSelectedListChange', this.selectedItems)
     },
     async onNewItemSave(data) {
       const modelName = getModelName(this.content, this.viewName)

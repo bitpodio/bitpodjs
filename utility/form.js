@@ -21,9 +21,10 @@ export function formatTimezoneDateFieldsData(formData, fields) {
   }
   const selectedTimezone = formData[timezoneField.fieldName]
   const newFormData = {}
-  for (const field of fields) {
-    const fieldData = formData[field.fieldName]
-    newFormData[field.fieldName] = FORM_DATE_CONTROLS.includes(field.type)
+  for (const fieldName in formData) {
+    const fieldData = formData[fieldName]
+    const { field } = fields[fieldName]
+    newFormData[fieldName] = FORM_DATE_CONTROLS.includes(field.type)
       ? zonedTimeToUtc(fieldData, selectedTimezone)
       : fieldData
   }
@@ -125,13 +126,11 @@ export const formControlsMixin = {
   },
 }
 
-export function formatedDate(date, timezone) {
-  let output
-  if (date) {
-    const formattedDate = new Date(date)
-    const zonedDate = utcToZonedTime(formattedDate, timezone)
-    const pattern = 'PPp' // 'd.M.YYYY HH:mm:ss.SSS [GMT]Z (z)'
-    output = format(zonedDate, pattern, { timezone })
-  }
-  return output
+export const formTitleMixin = {
+  computed: {
+    subTitle() {
+      const view = this.content.views[this.viewName]
+      return view.itemTitle || ''
+    },
+  },
 }

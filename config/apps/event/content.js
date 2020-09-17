@@ -1086,12 +1086,17 @@ export default {
               },
             ],
             dataSource: {
-              query: eventRegistrationTickets,
-              itemText: 'CodeAmount',
+              query: registrationType,
+              itemText: 'customField',
               itemValue: 'id',
               filter(data) {
                 return {
                   Events: this.$route.params.id,
+                }
+              },
+              computed(data) {
+                return {
+                  customField: `${data.Name}   (max allowed - ${data.MaxQuantityAllowed})`,
                 }
               },
             },
@@ -1147,8 +1152,13 @@ export default {
               },
             },
             rules: [
-              (v) => {
-                return !!v || 'Status is required'
+              function (v) {
+                const eventStartDate =
+                  this.context.event && this.context.event.StartDate
+                const eventStartDateObj =
+                  eventStartDate && new Date(eventStartDate)
+                const isValidStartDate = eventStartDateObj > (v && new Date(v))
+                return !!isValidStartDate || 'Start Date is required'
               },
             ],
           },
@@ -1216,8 +1226,8 @@ export default {
             cssClasses: 'col-12 col-md-12',
             hidden: true,
             inlineEdit: true,
-            newForm: true,
-            editForm: true,
+            newForm: false,
+            editForm: false,
             rules: [
               (v) => {
                 return !!v || 'Address is required'
@@ -1643,91 +1653,36 @@ export default {
             newForm: false,
             editForm: false,
           },
-          StartDate: {
+          MyImage: {
             form: {
-              caption: 'Start Date *',
-              displayOrder: 2,
-            },
-            displayOrder: 7,
-            caption: 'Start Date',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'datetime',
-            cssClasses: 'col-6 col-md-6',
-            hidden: false,
-            inlineEdit: true,
-            newForm: true,
-            editForm: true,
-            rules: [
-              (v) => {
-                return !!v || 'Start is required'
-              },
-              (v, data) => {
-                return (
-                  (!!v && data.EndDate > new Date(v)) ||
-                  'Start Date should be less than End Date'
-                )
-              },
-            ],
-          },
-          EndDate: {
-            form: {
-              caption: 'End Date *',
-              displayOrder: 3,
-            },
-            displayOrder: 8,
-            caption: 'End Date',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'datetime',
-            cssClasses: 'col-6 col-md-6',
-            hidden: false,
-            inlineEdit: true,
-            newForm: true,
-            editForm: true,
-            rules: [
-              (v) => {
-                return !!v || 'EndDate is required'
-              },
-              (v, data) => {
-                return (
-                  (!!v && data.StartDate < new Date(v)) ||
-                  'EndDate should be greater than StartDate'
-                )
-              },
-            ],
-          },
-          ValidateQty: {
-            form: {
-              caption: 'Validate Quantity',
+              caption: 'Image',
               displayOrder: 10,
             },
+            cssClasses: 'col-12 col-md-6',
             displayOrder: 8,
-            caption: 'Validate Quantity',
-            searchEnable: true,
-            sortEnable: true,
+            caption: 'My Image',
+            searchEnable: false,
+            sortEnable: false,
             columnWidth: '150px',
-            type: 'checkbox',
-            cssClasses: 'col-6 col-md-6',
+            type: 'file',
             hidden: true,
             inlineEdit: true,
             newForm: true,
             editForm: true,
+            multiple: false,
           },
-          CheckGroupDiscount: {
+          MyImages: {
             form: {
-              caption: 'Check Group Discount',
-              displayOrder: 11,
+              caption: 'Image',
+              displayOrder: 10,
             },
-            displayOrder: 8,
-            caption: 'Check Group Discount',
-            searchEnable: true,
-            sortEnable: true,
+            cssClasses: 'col-12 col-md-6',
+            displayOrder: 9,
+            caption: 'My Images',
+            searchEnable: false,
+            sortEnable: false,
             columnWidth: '150px',
-            type: 'checkbox',
-            cssClasses: 'col-6 col-md-6',
+            type: 'file',
             hidden: true,
             inlineEdit: true,
             newForm: true,
@@ -3593,7 +3548,85 @@ export default {
         title: 'Recurring Session',
         type: 'list',
       },
-      eventInvitaionHistory: {
+      inviteeEventTasks: {
+        ui: {
+          hideDefaultHeader: false,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: true,
+          hideFilter: false,
+          hideSearch: true,
+        },
+        hidden: true,
+        fields: {
+          Title: {
+            displayOrder: 2,
+            caption: 'Title',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          Status: {
+            displayOrder: 3,
+            caption: 'Status',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          DueDate: {
+            displayOrder: 7,
+            caption: 'Due Date',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'datetime',
+          },
+          createdDate: {
+            displayOrder: 8,
+            caption: 'Created Date',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'date',
+          },
+          createdBy: {
+            displayOrder: 9,
+            caption: 'Created By',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+        },
+        template: {
+          name: 'contactInvitee-grid',
+          context: {
+            basePath: '/event',
+          },
+        },
+        dataSource: {
+          query: eventTasks,
+          defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          model: 'CRMActivity',
+          filter(ctx) {
+            return {
+              where: {
+                and: [
+                  { EventId: ctx.$route.params.id },
+                  { Type: 'Mass Email' },
+                ],
+              },
+            }
+          },
+        },
+        title: 'eventTasks',
+        type: 'list',
+      },
+      eventRegistrationForm: {
         ui: {
           hideDefaultHeader: false,
           hideDefaultFooter: false,
@@ -3804,14 +3837,6 @@ export default {
   },
 
   Registrations: {
-    dataSource: {
-      Type: 'List',
-      URL: 'Registration',
-    },
-    general: {
-      caption: 'Registrations',
-      name: 'Registration',
-    },
     views: {
       Registrations: {
         ui: {
@@ -4233,6 +4258,7 @@ export default {
           type: 'graphql',
           model: 'Registration',
         },
+        itemTitle: 'Registration',
         title: 'Registrations',
         type: 'list',
       },
@@ -5762,6 +5788,52 @@ export default {
         },
         template: {
           name: 'contact-grid',
+          context: {
+            basePath: '/contacts',
+          },
+        },
+        dataSource: {
+          query: contactList,
+          filter: {
+            where: {},
+          },
+          type: 'graphql',
+          model: 'Contact',
+          defaultSort: 'createdDate DESC',
+        },
+        title: 'Contacts',
+        defaultSort: 'createdDate DESC',
+      },
+      InviteContacts: {
+        ui: {
+          hideDefaultHeader: false,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: true,
+          hideFilter: true,
+          hideSearch: true,
+        },
+        fields: {
+          Email: {
+            displayOrder: 1,
+            caption: 'Email',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'string',
+          },
+          FullName: {
+            displayOrder: 2,
+            caption: 'Full Name',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'string',
+          },
+        },
+        template: {
+          name: 'contactInvitee-grid',
           context: {
             basePath: '/contacts',
           },
