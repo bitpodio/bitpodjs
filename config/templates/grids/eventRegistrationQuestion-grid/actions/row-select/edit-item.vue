@@ -211,7 +211,7 @@ export default {
           this.formData = res
           this.controlType = res.ControlType
           this.tickets = res.TicketName
-          this.CsvOptions = res.Options
+          this.CsvOptions = res.Options.toString()
           return res
         })
         .catch((err) => console.log('Error', err))
