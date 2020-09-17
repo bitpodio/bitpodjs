@@ -38,7 +38,7 @@
             </v-tabs>
           </v-card-title>
           <v-card-text
-            class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0 event-inner"
+            class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0 invite-inner"
           >
             <v-tabs-items v-model="curentTab">
               <v-tab-item>
@@ -999,3 +999,9 @@ export default {
   },
 }
 </script>
+<style scoped>
+.invite-inner {
+  height: calc(100vh - 150px) !important;
+  min-height: calc(100vh - 150px) !important;
+}
+</style>
