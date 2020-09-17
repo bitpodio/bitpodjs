@@ -999,9 +999,3 @@ export default {
   },
 }
 </script>
-<style scoped>
-.invite-inner {
-  height: calc(100vh - 150px) !important;
-  min-height: calc(100vh - 150px) !important;
-}
-</style>
