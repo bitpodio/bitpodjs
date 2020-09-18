@@ -8,28 +8,30 @@
       transition="dialog-bottom-transition"
     >
       <v-card>
-        <v-toolbar dense flat dark fixed color="accent">
-          <v-toolbar-title class="body-1"
-            >Edit Event Information</v-toolbar-title
-          >
+        <v-card-title
+          class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
+        >
+          <h2 class="black--text pt-5 pb-2 text-h5">Edit Event Information</h2>
           <v-spacer></v-spacer>
-          <v-btn icon dark @click="close">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </v-toolbar>
-        <v-divider></v-divider>
-        <v-card-text>
+          <div>
+            <v-btn icon @click.native="close">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </div>
+        </v-card-title>
+        <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-row>
-            <v-col cols="12">
+            <v-col cols="12" class="mt-3 pb-0">
               <v-text-field
                 v-model="formData.Title"
                 label="Title *"
                 :rules="nameRules"
                 required
                 outlined
+                dense
               ></v-text-field>
             </v-col>
-            <v-col cols="12">
+            <v-col cols="12" class="mb-5">
               <span>Description</span>
               <RichText v-model="formData.Description" label="Description" />
             </v-col>
@@ -99,6 +101,7 @@
                 :rules="nameRules"
                 outlined
                 required
+                dense
               ></v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="4">
@@ -108,6 +111,7 @@
                 :rules="emailRules"
                 outlined
                 required
+                dense
               ></v-text-field>
             </v-col>
             <v-col
@@ -131,7 +135,10 @@
                 label="Tags"
                 multiple
                 chips
+                small-chips
+                outlined
                 persistent-hint
+                dense
               ></v-select>
             </v-col>
             <div
@@ -286,6 +293,7 @@ export default {
       return {
         appendIcon: 'fa-calendar',
         outlined: true,
+        dense: true,
         rules: [
           (v) => {
             if (this.formData.BusinessType !== 'Recurring') {
