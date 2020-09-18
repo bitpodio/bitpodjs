@@ -1,311 +1,326 @@
 <template>
-  <v-form ref="form" v-model="valid">
+  <div>
     <v-dialog
-      v-model="isMakeCopy"
+      v-model="isViewEvent"
       persistent
       scrollable
-      content-class="slide-form-default"
-      transition="dialog-bottom-transition"
+      max-width="600px"
+      max-height="350px"
     >
       <v-card>
-        <v-toolbar dense flat dark fixed color="accent">
-          <v-toolbar-title class="body-1">Copy Event</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-btn icon dark @click="close">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </v-toolbar>
-        <v-divider></v-divider>
-        <v-card-text>
-          <v-row>
-            <v-col cols="12" sm="12" md="12">
-              <v-text-field
-                v-model="eventData.Title"
-                label="Title"
-                dense
-                outlined
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <v-datetime-picker
-                v-model="eventData.StartDate"
-                label="Start Date*"
-                dense
-                :text-field-props="eventEndDateProps"
-              >
-                <template slot="dateIcon">
-                  <v-icon>fas fa-calendar</v-icon>
-                </template>
-                <template slot="timeIcon">
-                  <v-icon>fas fa-clock</v-icon>
-                </template>
-              </v-datetime-picker>
-            </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <v-datetime-picker
-                v-model="eventData.EndDate"
-                label="End Date*"
-                dense
-                :text-field-props="eventEndDateProps"
-              >
-                <template slot="dateIcon">
-                  <v-icon>fas fa-calendar</v-icon>
-                </template>
-                <template slot="timeIcon">
-                  <v-icon>fas fa-clock</v-icon>
-                </template>
-              </v-datetime-picker>
-            </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <Timezone
-                v-model="eventData.Timezone"
-                :field="timezonefield"
-                class="v-timezone"
-              ></Timezone>
-            </v-col>
-            <!-- <v-col cols="6" class="pb-1">
-              <v-text-field
-                v-model="UniqLink"
-                label="Event Link*"
-                hint="https://bitpod-event.test.bitpod.io/e/"
-                persistent-hint
-                outlined
-                dense
-                required
-                :error-messages="uniqueLinkValidationMsg"
-                @keyup="changeUniqueLink($event)"
-              ></v-text-field>
-            </v-col > -->
-            <!-- <v-col cols="12" sm="6" md="4">
-              <h2 >
-                https://bitpod-event.test.bitpod.io/e/
-              </h2>
-            </v-col> -->
-            <v-col cols="12" sm="6" md="6">
-              <v-text-field
-                v-model="UniqLink"
-                label="Event Link*"
-                persistent-hint
-                hint="https://bitpod-event.test.bitpod.io/e/"
-                dense
-                outlined
-                @keyup="changeUniqueLink($event)"
-              ></v-text-field>
-              <!-- <span
-                v-if="isInvalidEventLink && !!UniqLink"
-                class="red--text pa-3 pt-0 body-1"
-                >{{ uniqueLinkMessage }}</span
-              > -->
-            </v-col>
-          </v-row>
-
-          <v-row v-if="isOnline">
-            <v-col cols="12" class="pb-0">
-              <v-text-field
-                v-model="eventData.WebinarLink"
-                label="Online Event Link*"
-                outlined
-                dense
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" class="pb-0">
-              <v-textarea
-                v-model="eventData.JoiningInstruction"
-                label="Additional online event joining instructions, URL, phone etc."
-                outlined
-                dense
-              ></v-textarea>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="12" sm="6" md="6" class="pl-0 pt-0 pb-0">
-              <v-col v-if="isVenue" cols="12" class="pb-6">
-                <no-ssr>
-                  <vue-google-autocomplete
-                    id="map"
-                    ref="venueAddress.AddressLine"
-                    v-model="venueAddress.AddressLine"
-                    class="form-control pa-3 d-block rounded"
-                    placeholder="Address*"
-                    :required="true"
-                    @placechanged="getAddressData"
-                  ></vue-google-autocomplete>
-                </no-ssr>
-                <div
-                  v-show="addresslineMessage !== ''"
-                  class="red--text pa-3 pt-0 body-1"
-                >
-                  {{ addresslineMessage }}
-                </div>
-              </v-col>
-              <v-col v-if="isVenue" cols="12" class="pb-0">
+        <div class="flex">
+          <div class="pb-2 text-center pa-4">
+            <span class="text-h5"> Event has been copied successfully.</span>
+          </div>
+          <div class="pb-2 text--primary text-center">
+            We recommend you click the preview button to verify your event page.
+          </div>
+          <div class="pb-2 text-center">
+            <v-btn depressed color="primary" class="ma-1" @click="viewEvent"
+              ><v-icon left>mdi-eye-outline</v-icon>Preview</v-btn
+            >
+            <v-btn text color="primary" class="ma-1" @click="closeForm"
+              >Close</v-btn
+            >
+          </div>
+        </div>
+      </v-card>
+    </v-dialog>
+    <v-form ref="form" v-model="valid" :lazy-validation="lazy">
+      <v-dialog
+        v-model="isMakeCopy"
+        persistent
+        scrollable
+        content-class="slide-form-default"
+        transition="dialog-bottom-transition"
+      >
+        <v-card>
+          <v-card-title
+            class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
+          >
+            <h2 class="black--text pt-5 pb-4 text-h5">Copy Event</h2>
+            <v-spacer></v-spacer>
+            <div>
+              <v-btn icon @click="close">
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+            </div>
+          </v-card-title>
+          <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
+            <v-row>
+              <v-col cols="12" sm="12" md="12">
                 <v-text-field
-                  v-model="eventData.VenueName"
-                  label="Venue Name"
+                  v-model="eventData.Title"
+                  :rules="requiredRules"
+                  label="Title*"
+                  dense
+                  outlined
+                ></v-text-field>
+              </v-col>
+              <v-col v-if="isVenue || isOnline" cols="12" sm="6" md="4">
+                <CustomDate
+                  v-model="StartDate"
+                  label="Start Date*"
+                  :field="startDateField"
+                  :rules="startDateRule"
+                  :on-change="changeStartDate()"
+                  type="datetime"
+                />
+              </v-col>
+              <v-col v-if="isVenue || isOnline" cols="12" sm="6" md="4">
+                <CustomDate
+                  v-model="EndDate"
+                  label="End Date*"
+                  :field="endDateField"
+                  :rules="endDateRule"
+                  :on-change="changeEndDate()"
+                  type="datetime"
+                />
+              </v-col>
+              <v-col v-if="isVenue || isOnline" cols="12" sm="6" md="4">
+                <Timezone
+                  v-model="eventData.Timezone"
+                  :field="timezonefield"
+                  class="v-timezone"
+                ></Timezone>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  v-model="UniqLink"
+                  label="Event Link*"
+                  persistent-hint
+                  :hint="eventLinkHint"
+                  dense
+                  outlined
+                  @keyup="changeUniqueLink($event)"
+                ></v-text-field>
+                <span
+                  v-if="isInvalidEventLink && !!UniqLink"
+                  class="red--text pa-3 pt-0 body-2"
+                  >{{ uniqueLinkMessage }}</span
+                >
+              </v-col>
+            </v-row>
+            <v-row v-if="isOnline">
+              <v-col cols="12" class="pb-0">
+                <v-text-field
+                  v-model="eventData.WebinarLink"
+                  label="Online Event Link*"
                   outlined
                   dense
                 ></v-text-field>
               </v-col>
-              <v-row class="px-2">
-                <v-col v-if="isVenue" cols="12" sm="6" md="6" class="pb-0">
-                  <v-text-field
-                    v-model="venueAddress.City"
-                    label="City"
-                    outlined
-                    dense
-                  ></v-text-field>
-                </v-col>
-                <v-col v-if="isVenue" cols="12" sm="6" md="6" class="pb-0">
-                  <v-text-field
-                    v-model="venueAddress.State"
-                    label="State"
-                    outlined
-                    dense
-                  ></v-text-field>
-                </v-col>
-                <v-col v-if="isVenue" cols="12" sm="6" md="6" class="pb-0">
-                  <v-text-field
-                    v-model="venueAddress.Country"
-                    label="Country"
-                    outlined
-                    dense
-                  ></v-text-field>
-                </v-col>
-                <v-col v-if="isVenue" cols="12" sm="6" md="6" class="pb-0">
-                  <v-text-field
-                    v-model="venueAddress.PostalCode"
-                    label="Zip Code"
-                    outlined
-                    dense
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-            </v-col>
-
-            <v-col cols="12" sm="6" md="6" class="pb-0">
-              <v-col v-if="isMap" class="event-map">
-                <div class="flex"></div>
-                <div :key="`${locations[0].lat}-${locations[0].lng}`">
-                  <GMap
-                    ref="gMap"
-                    language="en"
-                    class="event-map"
-                    :cluster="{ options: { styles: clusterStyle } }"
-                    :center="gMapCenter"
-                    :options="{
-                      fullscreenControl: false,
-                      styles: mapStyle,
-                    }"
-                    :zoom="15"
-                    @bounds_changed="checkForMarkers"
-                  >
-                    <GMapMarker
-                      v-for="location in locations"
-                      :key="`${location.lat}-${location.lng}`"
-                      :position="{ lat: location.lat, lng: location.lng }"
-                      :options="{
-                        icon: pins.selected,
-                      }"
-                      @click="currentLocation = location"
-                    >
-                      <GMapInfoWindow :options="{ maxWidth: 200 }">
-                        <code
-                          >lat: {{ location.lat }}, lng:
-                          {{ location.lng }}</code
-                        >
-                      </GMapInfoWindow>
-                    </GMapMarker>
-                    <GMapCircle :options="circleOptions" />
-                  </GMap>
-                </div>
+              <v-col cols="12" class="pb-0">
+                <v-textarea
+                  v-model="eventData.JoiningInstruction"
+                  label="Additional online event joining instructions, URL, phone etc."
+                  outlined
+                  dense
+                  rows="2"
+                ></v-textarea>
               </v-col>
-            </v-col>
-          </v-row>
+            </v-row>
+            <div v-if="isVenue" class="col-md-12 pl-0">
+              <v-flex class="d-flex justify-center align-center pb-1">
+                <h2 class="body-1 pb-1">
+                  <i class="fa fa-map-marker" aria-hidden="true"></i>
+                  Venue
+                </h2>
+                <v-spacer></v-spacer>
+              </v-flex>
+            </div>
+            <v-row>
+              <v-col cols="12" sm="6" md="6" class="pl-0 pt-0 pb-0">
+                <v-col v-if="isVenue" cols="12" class="pb-6">
+                  <no-ssr>
+                    <vue-google-autocomplete
+                      id="map"
+                      ref="venueAddress.AddressLine"
+                      v-model="venueAddress.AddressLine"
+                      class="form-control pa-3 d-block rounded"
+                      placeholder="Address*"
+                      :required="true"
+                      @placechanged="getAddressData"
+                    ></vue-google-autocomplete>
+                  </no-ssr>
+                  <div
+                    v-show="addresslineMessage !== ''"
+                    class="red--text pa-3 pt-0 body-1"
+                  >
+                    {{ addresslineMessage }}
+                  </div>
+                </v-col>
+                <v-col v-if="isVenue" cols="12" class="pb-0">
+                  <v-text-field
+                    v-model="eventData.VenueName"
+                    label="Venue Name"
+                    outlined
+                    dense
+                  ></v-text-field>
+                </v-col>
 
-          <div class="col-md-12">
-            <v-flex class="d-flex justify-center align-center pb-1">
-              <h2 class="body-1 pb-1">
-                <i class="fa fa-network pr-1" aria-hidden="true"></i> I would
-                like to copy following event objects as well
-              </h2>
-              <v-spacer></v-spacer>
-            </v-flex>
-          </div>
-          <v-row>
-            <v-col cols="12" sm="6" md="6" class="py-0">
-              <v-checkbox
-                v-model="isSpeakers"
-                label="Speakers"
-                class="ma-0"
-              ></v-checkbox>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="12" sm="6" md="6" class="py-0">
-              <v-checkbox
-                v-model="isTickets"
-                label="Tickets"
-                class="ma-0"
-              ></v-checkbox>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="12" sm="6" md="6" class="py-0">
-              <v-checkbox
-                v-model="isSessions"
-                label="Sessions"
-                class="ma-0"
-              ></v-checkbox>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="12" sm="6" md="6" class="py-0">
-              <v-checkbox
-                v-model="isRegTypes"
-                label="Registration Types"
-                class="ma-0"
-              ></v-checkbox>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col cols="12" sm="6" md="6" class="py-0">
-              <v-checkbox
-                v-model="isOfferCodes"
-                label="Offer Code"
-                class="ma-0"
-              ></v-checkbox>
-            </v-col>
-          </v-row>
-        </v-card-text>
-        <v-divider></v-divider>
-        <v-card-actions class="pl-4">
-          <v-btn
-            :disabled="!valid || isInvalidEventLink"
-            color="primary"
-            depressed
-            @click="onSave"
-            >Copy</v-btn
+                <v-row class="px-2">
+                  <v-col v-if="isVenue" cols="12" sm="6" md="6" class="pb-0">
+                    <v-text-field
+                      v-model="venueAddress.City"
+                      label="City"
+                      outlined
+                      dense
+                    ></v-text-field>
+                  </v-col>
+                  <v-col v-if="isVenue" cols="12" sm="6" md="6" class="pb-0">
+                    <v-text-field
+                      v-model="venueAddress.State"
+                      label="State"
+                      outlined
+                      dense
+                    ></v-text-field>
+                  </v-col>
+                  <v-col v-if="isVenue" cols="12" sm="6" md="6" class="pb-0">
+                    <v-text-field
+                      v-model="venueAddress.Country"
+                      label="Country"
+                      outlined
+                      dense
+                    ></v-text-field>
+                  </v-col>
+                  <v-col v-if="isVenue" cols="12" sm="6" md="6" class="pb-0">
+                    <v-text-field
+                      v-model="venueAddress.PostalCode"
+                      label="Zip Code"
+                      outlined
+                      dense
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+              </v-col>
+              <v-col cols="12" sm="6" md="6" class="pb-0 pa-0">
+                <v-col v-if="isMap" class="event-map pa-0">
+                  <div class="flex"></div>
+                  <div :key="`${locations[0].lat}-${locations[0].lng}`">
+                    <GMap
+                      ref="gMap"
+                      language="en"
+                      class="event-map"
+                      :cluster="{ options: { styles: clusterStyle } }"
+                      :center="gMapCenter"
+                      :options="{
+                        fullscreenControl: false,
+                        styles: mapStyle,
+                      }"
+                      :zoom="15"
+                      @bounds_changed="checkForMarkers"
+                    >
+                      <GMapMarker
+                        v-for="location in locations"
+                        :key="`${location.lat}-${location.lng}`"
+                        :position="{ lat: location.lat, lng: location.lng }"
+                        :options="{
+                          icon: pins.selected,
+                        }"
+                        @click="currentLocation = location"
+                      >
+                        <GMapInfoWindow :options="{ maxWidth: 200 }">
+                          <code
+                            >lat: {{ location.lat }}, lng:
+                            {{ location.lng }}</code
+                          >
+                        </GMapInfoWindow>
+                      </GMapMarker>
+                      <GMapCircle :options="circleOptions" />
+                    </GMap>
+                  </div>
+                </v-col>
+              </v-col>
+            </v-row>
+            <div class="col-md-12 pl-0">
+              <v-flex class="d-flex justify-center align-center pb-1">
+                <h2 class="body-1 pb-1">
+                  <i class="fa fa-network pr-1" aria-hidden="true"></i> I would
+                  like to copy following event objects as well
+                </h2>
+                <v-spacer></v-spacer>
+              </v-flex>
+            </div>
+            <v-row>
+              <v-col cols="12" sm="6" md="6" class="py-0">
+                <v-checkbox
+                  v-model="isSpeakers"
+                  label="Speakers"
+                  class="ma-0"
+                ></v-checkbox>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12" sm="6" md="6" class="py-0">
+                <v-checkbox
+                  v-model="isTickets"
+                  label="Tickets"
+                  class="ma-0"
+                ></v-checkbox>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12" sm="6" md="6" class="py-0">
+                <v-checkbox
+                  v-model="isSessions"
+                  label="Sessions"
+                  class="ma-0"
+                ></v-checkbox>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12" sm="6" md="6" class="py-0">
+                <v-checkbox
+                  v-model="isRegistrationTypes"
+                  label="Registration Types"
+                  class="ma-0"
+                ></v-checkbox>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12" sm="6" md="6" class="py-0">
+                <v-checkbox
+                  v-model="isOfferCode"
+                  label="Offer Code"
+                  class="ma-0"
+                ></v-checkbox>
+              </v-col>
+            </v-row>
+          </v-card-text>
+          <v-divider></v-divider>
+          <v-card-actions
+            class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
           >
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </v-form>
+            <v-btn
+              :disabled="!valid || isInvalidEventLink"
+              color="primary"
+              depressed
+              @click="onSave"
+              >Copy</v-btn
+            >
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-form>
+  </div>
 </template>
 
 <script>
 import gql from 'graphql-tag'
-import nuxtConfig from '../../../../../nuxt.config'
 import strings from '~/strings.js'
 import Timezone from '~/components/common/form/timezone'
-import { required, link } from '~/utility/rules.js'
+import { required } from '~/utility/rules.js'
 import event from '~/config/apps/event/gql/event.gql'
 import eventCount from '~/config/apps/event/gql/eventCount.gql'
-// import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import { formatGQLResult } from '~/utility/gql.js'
+import { getApiUrl } from '~/utility/index.js'
+import CustomDate from '~/components/common/form/date.vue'
 
 export default {
   components: {
     Timezone,
+    CustomDate,
     VueGoogleAutocomplete: () => import('vue-google-autocomplete'),
   },
   props: {
@@ -316,15 +331,22 @@ export default {
   },
   data() {
     return {
+      valid: false,
+      lazy: false,
+      StartDate: null,
+      EndDate: null,
       isSpeakers: true,
       isTickets: true,
       isSessions: true,
-      isRegTypes: true,
-      isOfferCodes: true,
+      isRegistrationTypes: true,
+      isOfferCode: true,
       addresslineMessage: '',
+      requiredRules: [required],
       isVenue: false,
       isOnline: false,
+      isRecurring: false,
       isMap: false,
+      copyEventId: '',
       currentLocation: {},
       locationsVisibleOnMap: '',
       circleOptions: {},
@@ -335,24 +357,19 @@ export default {
       },
       mapStyle: [],
       clusterStyle: [],
-      valid: true,
-      StartDate: null,
-      EndDate: null,
       UniqLink: '',
-      isInvalidEventLink: false,
+      isInvalidEventLink: true,
       uniqueLinkMessage: '',
-      linkRules: [required, link],
+      isViewEvent: false,
       data: {
         event: {},
       },
-      // formData: {},
       eventData: {},
       timezonefield: {
         caption: 'Timezone*',
         type: 'Timezone',
         fieldName: 'eventData.Timezone',
       },
-      VenueName: '',
       venueAddress: {
         AddressLine: '',
         City: '',
@@ -368,53 +385,77 @@ export default {
     }
   },
   computed: {
-    eventEndDateProps() {
+    startDateField() {
       return {
         appendIcon: 'fa-calendar',
         outlined: true,
-        dense: true,
-        rules: [
-          (v) => {
-            const EndDate = v && new Date(v)
-            // const { StartDate } = this.eventData
-            let endDateMessage = ''
-            if (!EndDate) endDateMessage = 'This field is required'
-            // else if (StartDate && EndDate && StartDate > EndDate)
-            //   endDateMessage = strings.EVENT_START_END_DATE
-            // else if (EndDate < new Date())
-            //   endDateMessage = strings.EVENT_END_DATE
-            else endDateMessage = ''
-            return endDateMessage || true
-          },
-        ],
+        caption: 'Start Date',
+        type: 'datetime',
       }
     },
+    endDateField() {
+      return {
+        appendIcon: 'fa-calendar',
+        outlined: true,
+        caption: 'End Date',
+        type: 'datetime',
+      }
+    },
+    startDateRule() {
+      return [
+        (v) => {
+          const StartDate = v && new Date(v)
+          const { EndDate } = this.eventData
+          let startDateMessage = ''
+          if (!StartDate) startDateMessage = strings.FIELD_REQUIRED
+          else if (StartDate && EndDate && StartDate > EndDate)
+            startDateMessage = strings.EVENT_START_END_DATE
+          else if (StartDate < new Date())
+            startDateMessage = strings.EVENT_START_DATE
+          else startDateMessage = ''
+          return startDateMessage || true
+        },
+      ]
+    },
+    endDateRule() {
+      return [
+        (v) => {
+          const EndDate = v && new Date(v)
+          const { StartDate } = this.eventData
+          let endDateMessage = ''
+          if (!EndDate) endDateMessage = this.requiredRules
+          else if (StartDate && EndDate && StartDate > EndDate)
+            endDateMessage = strings.EVENT_START_END_DATE
+          else if (EndDate < new Date()) endDateMessage = strings.EVENT_END_DATE
+          else endDateMessage = ''
+          return endDateMessage || true
+        },
+      ]
+    },
+    eventLinkHint() {
+      return `${strings.EVENT_LINK_HINT}${this.UniqLink}`
+    },
+    gMapCenter() {
+      return { lat: this.locations[0].lat, lng: this.locations[0].lng }
+    },
   },
-  // mounted() {
-  //   this.getDropDownData('EventPrivacy')
-  //     .then((res) => {
-  //       this.eventPrivacyDropdown = res.map((i) => i.value)
-  //       return res
-  //     })
-  //     .catch((e) => {
-  //       console.log('Error', e)
-  //     })
-  //   this.getDropDownData('Currency')
-  //     .then((res) => {
-  //       this.currencyDropdown = res.map((i) => i.value)
-  //       return res
-  //     })
-  //     .catch((e) => {
-  //       console.log('Error', e)
-  //     })
-  // },
   methods: {
-    uniqueLinkValidationMsg() {
-      debugger
-      const errorMessage = this.isInvalidEventLink
-        ? this.uniqueLinkMessage
-        : null
-      return errorMessage
+    changeStartDate() {
+      this.$refs.form.validate()
+      this.eventData.StartDate = this.StartDate
+    },
+    changeEndDate(value) {
+      this.$refs.form.validate()
+      this.eventData.EndDate = this.EndDate
+    },
+    closeForm() {
+      this.isViewEvent = false
+      this.$router.push('/apps/event/event/' + this.copyEventId)
+    },
+    viewEvent() {
+      const baseUrl = getApiUrl()
+      const eventUrl = baseUrl.replace('svc/api', 'e')
+      window.open(`${eventUrl}${this.UniqLink}`, '_blank')
     },
     changeUniqueLink(event) {
       this.verifyUniqueLink(event.currentTarget.value)
@@ -422,12 +463,12 @@ export default {
     verifyUniqueLink(value) {
       value = value.toLowerCase().replace(/\s/g, '')
       value = value.trim()
-      this.eventData.UniqLink = value
+      this.UniqLink = value
       const regex = RegExp(/^[0-9a-zA-Z]+$/)
       if (regex.test(value)) {
         if (isNaN(value)) {
-          this.eventData.UniqLink = value
-          this.checkUniqueLink(this.eventData.UniqLink)
+          this.UniqLink = value
+          this.checkUniqueLink(this.UniqLink)
         }
       } else {
         this.isInvalidEventLink = true
@@ -468,21 +509,19 @@ export default {
         addressData.route ||
         '' + ', ' + addressData.administrative_area_level_1 ||
         ''
-      this.VenueName = addressData.route || ''
+      this.eventData.VenueName = addressData.route || ''
       this.venueAddress.Country = addressData.country || ''
       this.venueAddress.City = addressData.locality || ''
       this.venueAddress.State = addressData.administrative_area_level_1 || ''
-      // this.venueAddress.LatLng.lat = addressData.latitude || ''
-      // this.venueAddress.LatLng.lng = addressData.longitude || ''
       const latlng = {}
       latlng.lat = addressData.latitude
       latlng.lng = addressData.longitude
-      // latlng.name =
-      //   addressData.route +
-      //   ' ' +
-      //   addressData.locality +
-      //   ' ' +
-      //   addressData.country
+      latlng.name =
+        addressData.route +
+        ' ' +
+        addressData.locality +
+        ' ' +
+        addressData.country
       const newLocations = []
       newLocations[0] = latlng
 
@@ -493,80 +532,38 @@ export default {
     close() {
       this.$emit('update:isMakeCopy', false)
     },
-    refresh() {
-      this.$apollo.queries.data.refresh()
+    setObjects() {
+      this.eventData.isOfferCode = this.isOfferCode
+      this.eventData.isRegistrationTypes = this.isRegistrationTypes
+      this.eventData.isSessions = this.isSessions
+      this.eventData.isSpeakers = this.isSpeakers
+      this.eventData.isTickets = this.isTickets
     },
-    onSave() {
-      // this.formData.Currency = this.currency
-      // this.formData.Privacy = this.privacy
-      // delete this.formData._VenueAddress
-      delete this.eventData.id
-      if(this.eventData.BusinessType === 'Single' && this.eventData.LocationType === 'Venue'){
+    async onSave() {
+      this.setObjects()
+      if (
+        this.eventData.BusinessType === 'Single' &&
+        this.eventData.LocationType === 'Venue'
+      ) {
         delete this.eventData._VenueAddress.LatLng.__typename
         delete this.eventData._VenueAddress.LatLng.visible
+        delete this.eventData._VenueAddress.LatLng.name
       }
-      this.$axios
-        .$post(
-          `https://${nuxtConfig.axios.eventUrl}/svc/api/Events/cloneEvent`,
-          {
-            ...this.eventData,
-          }
-        )
-        .then((res) => {
-          debugger
-          this.close()
-          this.refresh()
-          return (this.data.event = res)
+      const baseUrl = getApiUrl()
+      const res = await this.$axios
+        .$post(`${baseUrl}Events/cloneEvent`, {
+          ...this.eventData,
         })
         .catch((e) => {
           console.log('Error', e)
         })
+      if (res) {
+        this.close()
+        this.isViewEvent = true
+        this.copyEventId = res.id
+        return res
+      }
     },
-    // getDropDownData(filterType) {
-    //   return this.$apollo
-    //     .query({
-    //       query: gql`
-    //         ${generalconfiguration}
-    //       `,
-    //       variables: {
-    //         filters: {
-    //           where: {
-    //             type: filterType,
-    //           },
-    //         },
-    //       },
-    //     })
-    //     .then((result) => {
-    //       const generalConfig = formatGQLResult(
-    //         result.data,
-    //         'GeneralConfiguration'
-    //       )
-    //       return generalConfig
-    //     })
-    //     .catch((e) => {
-    //       console.log('Error', e)
-    //     })
-    // },
-    // async checkUniqueLink() {
-    //   if (this.formData.UniqLink !== '') {
-    //     const where = { UniqLink: this.formData.UniqLink }
-    //     const result = await this.$apollo.query({
-    //       query: gql`
-    //         ${eventCount}
-    //       `,
-    //       variables: {
-    //         where,
-    //       },
-    //     })
-    //     if (result.data.Event.EventCount > 0) {
-    //       this.isInvalidEventLink = true
-    //       this.uniqueLinkMessage = 'This link is already taken'
-    //     } else {
-    //       this.isInvalidEventLink = false
-    //       this.uniqueLinkMessage = ''
-    //     }
-    //   }
-    // },
   },
   apollo: {
     data: {
@@ -589,10 +586,10 @@ export default {
         const event = formatGQLResult(data, 'Event')
         this.eventData = event.length > 0 ? { ...event[0] } : {}
         this.eventData.Title = `Copy of ${this.eventData.Title}`
-        this.eventData.StartDate = new Date(this.eventData.StartDate)
-        this.eventData.EndDate = new Date(this.eventData.EndDate)
+        this.StartDate = new Date(this.eventData.StartDate)
+        this.EndDate = new Date(this.eventData.EndDate)
         this.eventData.UniqLink = ''
-        debugger
+        this.eventData.id = atob(this.eventData.id).split(':')[1]
         if (
           this.eventData.BusinessType === 'Single' &&
           this.eventData.LocationType === 'Venue'
@@ -603,24 +600,17 @@ export default {
           if (this.eventData._VenueAddress.LatLng !== null) {
             const latlng = this.eventData._VenueAddress.LatLng
             const newLocations = []
+            latlng.name = `${this.eventData.VenueName} ${this.eventData._VenueAddress.City} ${this.eventData._VenueAddress.Country}`
             newLocations[0] = latlng
             this.locations = newLocations
             this.returnToCenter()
           }
         } else if (
           this.eventData.BusinessType === 'Single' &&
-          this.eventData.LocationType === 'Online Event'
+          this.eventData.LocationType === 'Online event'
         ) {
           this.isOnline = true
         }
-
-        // this.eventData.EndDate = addDays(addMonths(new Date(), 1), 4),
-        // this.eventData.id = this.$route.params.id
-        // this.formData = event.length > 0 ? { ...event[0] } : {}
-        // this.formData.id = this.$route.params.id
-        // debugger
-        // this.currency = this.formData.Currency
-        // this.privacy = this.formData.Privacy
         return {
           event: event.length > 0 ? event[0] : {},
         }

@@ -1,29 +1,41 @@
 <template>
   <v-form ref="form" v-model="valid" :lazy-validation="lazy">
-    <div>
-      <v-toolbar dark app color="accent">
-        <v-toolbar-title>New Event</v-toolbar-title>
+    <v-card class="elevation-0 v-eventform">
+      <v-card-title
+        class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
+      >
+        <h2 class="black--text pt-4 pb-0 text-h5">Create Event</h2>
         <v-spacer></v-spacer>
-        <v-btn icon dark @click="close">
-          <v-icon>mdi-close</v-icon>
-        </v-btn>
-      </v-toolbar>
-      <v-stepper v-model="stepNumber">
-        <v-stepper-header class="elevation-0">
-          <v-stepper-step :complete="stepNumber > 1" step="1"
-            >Basic Info</v-stepper-step
+        <div>
+          <v-btn icon @click="close">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </div>
+        <v-tabs v-model="tabs" height="36" class="mb-6 mt-2 v-event-icon">
+          <v-tab href="#tab-1" class="px-0 mr-4" @click="selectTab(1)">
+            <v-icon left>fa-info-circle</v-icon><span>Basic Info</span>
+          </v-tab>
+          <v-tab
+            href="#tab-2"
+            class="px-0 mr-4"
+            :disabled="!validTab1()"
+            @click="selectTab(2)"
           >
-          <v-divider></v-divider>
-          <v-stepper-step :complete="stepNumber > 2" step="2"
-            >Location</v-stepper-step
+            <v-icon left>fa-map-marker</v-icon><span>Location</span>
+          </v-tab>
+          <v-tab
+            href="#tab-3"
+            class="px-0 mr-4"
+            :disabled="!validTab1() || !validTab2()"
+            @click="selectTab(3)"
           >
-          <v-divider></v-divider>
-
-          <v-stepper-step step="3">Tickets</v-stepper-step>
-        </v-stepper-header>
-
-        <v-stepper-items class="stepper-box">
-          <v-stepper-content step="1">
+            <v-icon left>fa-ticket</v-icon><span>Tickets</span>
+          </v-tab>
+        </v-tabs>
+      </v-card-title>
+      <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0 event-inner">
+        <v-tabs-items v-model="tabs">
+          <v-tab-item :value="'tab-1'">
             <v-card flat>
               <p>
                 Enter event name and details to help your audience learn about
@@ -31,17 +43,18 @@
                 attend it.
               </p>
               <v-row>
-                <v-col cols="12">
+                <v-col cols="12" class="pb-0">
                   <v-text-field
                     v-model="eventData.Title"
                     :rules="requiredRules"
                     label="Event Title*"
                     required
+                    dense
                     outlined
                     @change="changeEventName($event)"
                   ></v-text-field>
                 </v-col>
-                <v-col cols="12" sm="6" md="4">
+                <v-col cols="12" sm="6" md="4" class="pb-0">
                   <v-datetime-picker
                     v-model="eventData.StartDate"
                     label="Start Date*"
@@ -55,7 +68,7 @@
                     </template>
                   </v-datetime-picker>
                 </v-col>
-                <v-col cols="12" sm="6" md="4">
+                <v-col cols="12" sm="6" md="4" class="pb-0">
                   <v-datetime-picker
                     v-model="eventData.EndDate"
                     :rules="requiredRules"
@@ -70,27 +83,30 @@
                     </template>
                   </v-datetime-picker>
                 </v-col>
-                <v-col cols="12" sm="6" md="4">
+                <v-col cols="12" sm="6" md="4" class="pb-0">
                   <Timezone
                     v-model="eventData.Timezone"
                     :rules="requiredRules"
                     :field="timezonefield"
+                    dense
+                    class="v-timezone"
                   ></Timezone>
                 </v-col>
-                <v-col cols="12">
+                <v-col cols="12" class="pb-4 pt-2">
                   <RichText
                     v-model="eventData.Description"
                     class="mb-3"
                     label="Description"
-                  ></RichText> </v-col
-                ><br />
-                <v-col cols="12" sm="6" md="6">
+                  ></RichText>
+                </v-col>
+                <v-col cols="12" sm="6" md="6" class="pb-0">
                   <v-text-field
                     v-model="eventData.UniqLink"
                     label="Event Link*"
-                    hint="https://bitpod-event.test.bitpod.io/e/"
+                    :hint="eventLinkHint"
                     persistent-hint
                     outlined
+                    dense
                     required
                     :error-messages="uniqueLinkValidationMsg"
                     @keyup="changeUniqueLink($event)"
@@ -98,42 +114,44 @@
                 </v-col>
               </v-row>
             </v-card>
+          </v-tab-item>
 
-            <v-btn color="primary" @click="next(2)">Next</v-btn>
-          </v-stepper-content>
-          <v-stepper-content step="2">
+          <v-tab-item :value="'tab-2'">
             <v-card flat>
               <v-row>
-                <v-col cols="12" sm="6" md="6">
-                  <v-col>
+                <v-col cols="12" sm="6" md="6" class="pl-0 pt-0 pb-0">
+                  <v-col class="pb-0">
                     <v-select
                       value="Venue"
                       :items="['Online Event', 'Venue']"
                       label="Location Type"
                       required
+                      dense=""
                       outlined
                       @change="changeLocation($event)"
                     ></v-select>
                   </v-col>
-                  <v-col v-if="isOnlineEvent" cols="12">
+                  <v-col v-if="isOnlineEvent" cols="12" class="pb-0">
                     <v-text-field
                       v-model="eventData.WebinarLink"
                       :rules="requiredRules"
                       label="Online Event Link*"
                       outlined
+                      dense
                       required
                     ></v-text-field>
                   </v-col>
-                  <v-col v-if="isOnlineEvent" cols="12">
+                  <v-col v-if="isOnlineEvent" cols="12" class="pb-0">
                     <v-textarea
                       v-model="eventData.JoiningInstruction"
                       label="Additional online event joining instructions, URL, phone etc."
                       outlined
                       required
+                      dense
                     ></v-textarea>
                   </v-col>
 
-                  <v-col v-if="isVenue" cols="12">
+                  <v-col v-if="isVenue" cols="12" class="pb-6">
                     <no-ssr>
                       <vue-google-autocomplete
                         id="map"
@@ -153,47 +171,52 @@
                       {{ addresslineMessage }}
                     </div>
                   </v-col>
-                  <v-col v-if="isVenue" cols="12">
+                  <v-col v-if="isVenue" cols="12" class="pb-0">
                     <v-text-field
                       v-model="eventData.VenueName"
                       label="Venue Name"
                       outlined
+                      dense
                       @change="changeAddress()"
                     ></v-text-field>
                   </v-col>
-                  <v-col v-if="isVenue" cols="12">
+                  <v-col v-if="isVenue" cols="12" class="pb-0">
                     <v-text-field
                       v-model="venueAddress.City"
                       label="City"
                       outlined
+                      dense
                       @change="changeAddress()"
                     ></v-text-field>
                   </v-col>
-                  <v-col v-if="isVenue" cols="12">
+                  <v-col v-if="isVenue" cols="12" class="pb-0">
                     <v-text-field
                       v-model="venueAddress.State"
                       label="State"
                       outlined
+                      dense
                       @change="changeAddress()"
                     ></v-text-field>
                   </v-col>
-                  <v-col v-if="isVenue" cols="12">
+                  <v-col v-if="isVenue" cols="12" class="pb-0">
                     <v-text-field
                       v-model="venueAddress.Country"
                       label="Country"
                       outlined
+                      dense
                       @change="changeAddress()"
                     ></v-text-field>
                   </v-col>
-                  <v-col v-if="isVenue" cols="12">
+                  <v-col v-if="isVenue" cols="12" class="pb-0">
                     <v-text-field
                       v-model="venueAddress.PostalCode"
                       label="Zip Code"
                       outlined
+                      dense
                     ></v-text-field>
                   </v-col>
                 </v-col>
-                <v-col cols="12" sm="6" md="6">
+                <v-col cols="12" sm="6" md="6" class="pb-0">
                   <v-col v-if="isMap">
                     <div class="flex"></div>
                     <div :key="`${locations[0].lat}-${locations[0].lng}`">
@@ -232,62 +255,65 @@
                 </v-col>
               </v-row>
             </v-card>
+          </v-tab-item>
 
-            <v-btn color="primary" @click="stepNumber = 1">Prev</v-btn>
-            <v-btn color="primary" @click="next(3)">Next</v-btn>
-          </v-stepper-content>
-
-          <v-stepper-content step="3">
+          <v-tab-item :value="'tab-3'">
             <v-card v-if="isTicket" flat>
               <p>
                 Setup event tickets and price, you can also set tickets validity
                 so early birds can be offered better pricing.
               </p>
-              <v-btn class="ma-2" outlined color="indigo" @click="addTicketRow"
+              <v-btn
+                class="ma-2 ml-0 mb-3"
+                outlined
+                color="indigo"
+                @click="addTicketRow"
                 >Add Tickets</v-btn
               >
-              <v-simple-table>
+              <v-simple-table class="event-table">
                 <template v-slot:default>
                   <thead>
                     <tr>
-                      <th class="text-left">Title*</th>
-                      <th class="text-left">Type*</th>
-                      <th class="text-left">Price</th>
-                      <th class="text-left">Start Date*</th>
-                      <th class="text-left">End Date*</th>
-                      <th class="text-left">Quantity</th>
+                      <th class="text-left pl-0">Title*</th>
+                      <th class="text-left pl-2">Type*</th>
+                      <th class="text-left pl-2">Price</th>
+                      <th class="text-left pl-2">Start Date*</th>
+                      <th class="text-left pl-2">End Date*</th>
+                      <th class="text-left pl-2">Quantity</th>
                       <th class="text-left"></th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="(ticket, k) in tickets" :key="k">
-                      <td class="pa-2 pb-0">
+                      <td class="pa-2 pb-0 pl-0">
                         <v-text-field
                           v-model="ticket.Code"
                           :rules="requiredRules"
-                          label="Title"
                           outlined
+                          dense
                         ></v-text-field>
                       </td>
                       <td class="pa-2 pb-0">
                         <Lookup
                           v-model="ticket.Type"
                           :field="ticketTypeProps"
+                          class="v-tickettype"
                         />
                       </td>
                       <td class="pa-2 pb-0">
                         <v-text-field
                           v-model="ticket.Amount"
-                          label="price"
                           outlined
+                          dense
                           value
+                          type="Number"
+                          min="0"
                           :disabled="isPriceDisabled(k)"
                         ></v-text-field>
                       </td>
                       <td class="pa-2 pb-0">
                         <v-datetime-picker
                           v-model="ticket.StartDate"
-                          label="Start Date*"
                           :text-field-props="ticketStartDateProps(k)"
                         >
                           <template slot="dateIcon">
@@ -301,7 +327,6 @@
                       <td class="pa-2 pb-0">
                         <v-datetime-picker
                           v-model="ticket.EndDate"
-                          label="End Date*"
                           :text-field-props="ticketEndDateProps(k)"
                         >
                           <template slot="dateIcon">
@@ -315,27 +340,22 @@
                       <td class="pa-2 pb-0">
                         <v-text-field
                           v-model="ticket.TicketCount"
-                          label="quantity"
                           outlined
+                          dense
+                          type="Number"
+                          min="0"
                           value
                         ></v-text-field>
                       </td>
-                      <td class="pa-2 pb-0">
-                        <v-btn text small @click="deleteTicket(k)">
-                          <v-icon left>mdi-delete</v-icon>
+                      <td class="pa-2 pt-0">
+                        <v-btn icon class="mt-1" @click="deleteTicket(k)">
+                          <v-icon>mdi-24px mdi-delete</v-icon>
                         </v-btn>
                       </td>
                     </tr>
                   </tbody>
                 </template>
               </v-simple-table>
-              <v-btn color="primary" @click="stepNumber = 2">Prev</v-btn>
-              <v-btn
-                color="primary"
-                :disabled="isSaveButtonDisabled"
-                @click="saveRecord"
-                >Save</v-btn
-              >
             </v-card>
             <v-card
               v-else
@@ -376,7 +396,8 @@
                     class="ma-1"
                     @click="eventPublish"
                   >
-                    <v-icon left>mdi-rotate-315 mdi-send</v-icon> Publish</v-btn
+                    <v-icon left>mdi-rotate-315 mdi-send</v-icon>
+                    Publish</v-btn
                   >
                   <v-btn text color="primary" class="ma-1" @click="closeForm"
                     >Close</v-btn
@@ -414,10 +435,38 @@
                 </div>
               </div>
             </v-card>
-          </v-stepper-content>
-        </v-stepper-items>
-      </v-stepper>
-    </div>
+          </v-tab-item>
+        </v-tabs-items>
+      </v-card-text>
+      <v-divider></v-divider>
+      <v-card-actions
+        class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
+      >
+        <v-btn
+          v-if="currentTab > 1"
+          depressed
+          color="grey lighten-2"
+          @click="prev()"
+          >Prev</v-btn
+        >
+        <v-btn
+          v-if="currentTab < 3"
+          depressed
+          color="primary"
+          :disabled="isNextDisabled()"
+          @click="next()"
+          >Next</v-btn
+        >
+        <v-btn
+          v-if="currentTab > 2"
+          depressed
+          color="primary"
+          :disabled="isSaveButtonDisabled"
+          @click="saveRecord"
+          >Save</v-btn
+        >
+      </v-card-actions>
+    </v-card>
   </v-form>
 </template>
 <script>
@@ -444,13 +493,19 @@ export default {
     VueGoogleAutocomplete: () => import('vue-google-autocomplete'),
   },
   props: {
-    onFormClose: Function,
+    onFormClose: {
+      type: Function,
+      default: () => null,
+    },
   },
   data: () => {
     const currentDatetime = new Date(new Date().setSeconds(0))
     return {
       valid: true,
       lazy: false,
+      tabs: null,
+      isUniqLinkValid: false,
+      currentTab: 1,
       isSaveButtonDisabled: false,
       addresslineMessage: '',
       isTicket: true,
@@ -469,7 +524,6 @@ export default {
       mapStyle: [],
       clusterStyle: [],
       ticketTypeProps: {
-        caption: 'Type*',
         type: 'lookup',
         dataSource: {
           query: registrationStatusOptions,
@@ -532,8 +586,6 @@ export default {
         lat: 0.0,
         lng: 0.0,
       },
-      // e13: 2,
-      stepNumber: 1,
       datetime: new Date().toISOString().substr(0, 10),
       date: new Date().toISOString().substr(0, 10),
       menu: false,
@@ -561,6 +613,9 @@ export default {
     }
   },
   computed: {
+    eventLinkHint() {
+      return `${strings.EVENT_LINK_HINT}${this.eventData.UniqLink}`
+    },
     gMapCenter() {
       return { lat: this.locations[0].lat, lng: this.locations[0].lng }
     },
@@ -568,6 +623,7 @@ export default {
       return {
         appendIcon: 'fa-calendar',
         outlined: true,
+        dense: true,
         rules: [
           (v) => {
             const StartDate = v && new Date(v)
@@ -588,6 +644,7 @@ export default {
       return {
         appendIcon: 'fa-calendar',
         outlined: true,
+        dense: true,
         rules: [
           (v) => {
             const EndDate = v && new Date(v)
@@ -610,13 +667,19 @@ export default {
     },
   },
   methods: {
+    isNextDisabled() {
+      return this.isUniqLinkValid === false
+    },
+    selectTab(tabNumber) {
+      this.currentTab = tabNumber
+    },
     close() {
       this.onFormClose()
-      this.stepNumber = 1
+      this.tabs = 'tab-1'
     },
     closeForm() {
       this.onFormClose()
-      this.stepNumber = 1
+      this.tabs = 'tab-1'
       this.$router.push('/apps/event/event/' + this.eventId)
     },
 
@@ -663,6 +726,7 @@ export default {
       return {
         appendIcon: 'fa-calendar',
         outlined: true,
+        dense: true,
         rules: [
           (v) => {
             const StartDate = v && new Date(v)
@@ -687,6 +751,7 @@ export default {
       return {
         appendIcon: 'fa-calendar',
         outlined: true,
+        dense: true,
         rules: [
           (v) => {
             const EndDate = v && new Date(v)
@@ -710,7 +775,50 @@ export default {
     returnToCenter() {
       this.$refs.gMap && this.$refs.gMap.map.setCenter(this.locations[0])
     },
-    next(value) {
+    validTab1() {
+      const { Title, StartDate, EndDate, Timezone, UniqLink } = this.eventData
+      return (
+        Title !== '' &&
+        StartDate !== null &&
+        EndDate !== null &&
+        Timezone !== '' &&
+        UniqLink !== '' &&
+        StartDate < EndDate &&
+        StartDate >= new Date() &&
+        EndDate >= new Date() &&
+        this.isInalidEventLink === false
+      )
+    },
+    validTab2() {
+      const { LocationType, WebinarLink } = this.eventData
+      if (
+        (LocationType === 'Venue' &&
+          this.$refs['venueAddress.AddressLine'] &&
+          this.$refs['venueAddress.AddressLine'].$data.autocompleteText !==
+            '') ||
+        (LocationType === 'Online Event' && WebinarLink !== '')
+      ) {
+        return true
+      } else if (
+        this.$refs['venueAddress.AddressLine'] &&
+        this.$refs['venueAddress.AddressLine'].$data.autocompleteText === ''
+      ) {
+        return false
+      }
+    },
+    prev(value) {
+      this.currentTab = parseInt(this.tabs.split('-')[1])
+      this.currentTab -= 1
+      const tabValue = `tab-${this.currentTab}`
+      this.tabs = tabValue
+    },
+    setNextTab() {
+      this.currentTab = parseInt(this.tabs.split('-')[1])
+      this.currentTab += 1
+      const tabValue = `tab-${this.currentTab}`
+      this.tabs = tabValue
+    },
+    next() {
       const {
         Title,
         StartDate,
@@ -722,7 +830,7 @@ export default {
       } = this.eventData
       this.$refs.form.validate()
       if (
-        value === 2 &&
+        this.currentTab === 1 &&
         Title !== '' &&
         StartDate !== null &&
         EndDate !== null &&
@@ -733,16 +841,16 @@ export default {
         EndDate >= new Date() &&
         this.isInalidEventLink === false
       ) {
-        this.stepNumber = value
-      } else if (value === 3) {
+        this.setNextTab()
+      } else if (this.currentTab === 2) {
         if (
           (LocationType === 'Venue' &&
             this.$refs['venueAddress.AddressLine'].$data.autocompleteText !==
               '') ||
           (LocationType === 'Online Event' && WebinarLink !== '')
         ) {
-          this.stepNumber = value
           this.addresslineMessage = ''
+          this.setNextTab()
         } else if (
           this.$refs['venueAddress.AddressLine'].$data.autocompleteText === ''
         ) {
@@ -763,15 +871,17 @@ export default {
     },
 
     saveRecord() {
-      this.isSaveButtonDisabled = true
-      const { Code, Type, StartDate, EndDate } = this.tickets
+      const isValidTicket = this.tickets.map((ticket, index) => {
+        return (
+          ticket.Code !== '' &&
+          ticket.Type !== '' &&
+          ticket.StartDate !== null &&
+          ticket.EndDate !== null
+        )
+      })
       this.$refs.form.validate()
-      if (
-        Code !== '' &&
-        Type !== '' &&
-        StartDate !== null &&
-        EndDate !== null
-      ) {
+      if (!isValidTicket.includes(false)) {
+        this.isSaveButtonDisabled = true
         if (this.venueAddress.AddressLine !== '')
           this.eventData._VenueAddress = this.venueAddress
 
@@ -889,6 +999,7 @@ export default {
 
       this.locations = newLocations
       this.isMap = true
+      debugger
       this.returnToCenter()
     },
     changeEventName(value) {
@@ -925,7 +1036,10 @@ export default {
       if (result.data.Event.EventCount > 0) {
         this.isInalidEventLink = true
         this.uniqueLinkMessage = strings.UNIQUE_LINK_DUPLICATE
-      } else this.isInalidEventLink = false
+      } else {
+        this.isInalidEventLink = false
+        this.isUniqLinkValid = true
+      }
     },
     changeLocation(value) {
       this.eventData.LocationType = value
@@ -979,10 +1093,18 @@ export default {
 </script>
 <style scoped>
 .form-control {
-  border: 1px solid #ccc;
+  border: 1px solid #9a9a9a;
   width: 100%;
+  max-height: 40px;
 }
 .vs-notification {
   box-shadow: 0 1px 2px 0 hsla(0, 0%, 0%, 0.25) !important;
+}
+.steper-fixed {
+  position: fixed;
+  top: 55px;
+}
+.event-inner {
+  min-height: 457px;
 }
 </style>
