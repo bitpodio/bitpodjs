@@ -107,20 +107,20 @@ export default {
     async onSave() {
       delete this.formData._VenueAddress
       this.formData.SEOTitle = this.seoTitle
-      const res = await this.$axios
-        .$patch(
+      try {
+        const res = await this.$axios.$patch(
           `https://${nuxtConfig.axios.eventUrl}/svc/api/Events/${this.$route.params.id}`,
           {
             ...this.seoData,
           }
         )
-        .catch((e) => {
-          console.log('error', e)
-        })
-      if (res) {
-        this.close()
-        this.refresh()
-        this.data.event = res
+        if (res) {
+          this.close()
+          this.refresh()
+          this.data.event = res
+        }
+      } catch (e) {
+        console.log('Error', e)
       }
     },
   },

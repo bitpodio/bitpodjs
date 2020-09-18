@@ -218,25 +218,25 @@ export default {
     refresh() {
       this.$apollo.queries.data.refresh()
     },
-    onSave() {
+    async onSave() {
       this.formData.Currency = this.currency
       this.formData.Privacy = this.privacy
       delete this.formData._VenueAddress
-      this.$axios
-        .$patch(
+      try {
+        const res = await this.$axios.$patch(
           `https://${nuxtConfig.axios.eventUrl}${nuxtConfig.axios.apiEndpoint}Events/${this.$route.params.id}`,
           {
             ...this.formData,
           }
         )
-        .then((res) => {
+        if (res) {
           this.close()
           this.refresh()
-          return (this.data.event = res)
-        })
-        .catch((e) => {
-          console.log('Error', e)
-        })
+          this.data.event = res
+        }
+      } catch (e) {
+        console.log('Error', e)
+      }
     },
     getDropDownData(filterType) {
       return this.$apollo

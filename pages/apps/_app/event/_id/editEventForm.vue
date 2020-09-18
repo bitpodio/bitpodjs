@@ -376,9 +376,8 @@ export default {
         return zonedDate
       }
     },
-    onSave() {
-      debugger
-      const eventUrl = `https://${nuxtconfig.axios.eventUrl}/svc/api/Events/${this.$route.params.id}`
+    async onSave() {
+      const eventUrl = `https://${nuxtconfig.axios.eventUrl}/${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`
       this.formData.Tags = this.tags
 
       if (
@@ -396,42 +395,40 @@ export default {
       } else {
         this.formData.StartDate = null
         this.formData.EndDate = null
-        // this.formData.Timezone = convertedEventRecord.Timezone
       }
       if (this.formData.BusinessType !== 'Recurring') {
         Object.assign({}, this.formData, { _VenueAddress: this.VenueAddress })
         delete this.formData.VenueAddress
         delete this.formData._VenueAddress.LatLng
-        this.$axios
-          .$patch(eventUrl, {
+        try {
+          const res = await this.$axios.$patch(eventUrl, {
             ...this.formData,
           })
-          .then((res) => {
+          if (res) {
             this.close()
             this.refresh()
-            return (this.data.event = res)
-          })
-          .catch((e) => {
-            console.log('error', e)
-          })
+            this.data.event = res
+          }
+        } catch (e) {
+          console.log('error', e)
+        }
       } else {
-        debugger
         this.formData.MaxNoRegistrations = parseInt(
           this.formData.MaxNoRegistrations
         )
         delete this.formData._VenueAddress
-        this.$axios
-          .$patch(eventUrl, {
+        try {
+          const res = await this.$axios.$patch(eventUrl, {
             ...this.formData,
           })
-          .then((res) => {
+          if (res) {
             this.close()
             this.refresh()
             return (this.data.event = res)
-          })
-          .catch((e) => {
-            console.log('error', e)
-          })
+          }
+        } catch (e) {
+          console.log('Error', e)
+        }
       }
     },
     getTags() {
@@ -483,7 +480,6 @@ export default {
         }
       },
       update(data) {
-        debugger
         const event = formatGQLResult(data, 'Event')
         this.formData = event.length > 0 ? { ...event[0] } : {}
         this.formData.id = this.$route.params.id
@@ -507,7 +503,6 @@ export default {
               ? this.formData._VenueAddress
               : {}
         } else {
-          debugger
           this.formData.StartDate = this.formData.StartDate
             ? this.getZonedDateTime(
                 this.formData.StartDate,
