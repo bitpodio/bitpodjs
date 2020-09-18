@@ -178,6 +178,48 @@ body {
 .borderRightGrey {
   border-right: 1px solid lightgray;
 }
+.summaryBlock {
+  overflow: hidden;
+}
+.summaryBlock:hover {
+  overflow: auto hidden;
+}
+.greenColor {
+  background-color: #0cb14b;
+}
+.redColor {
+  background-color: #f25955;
+}
+.yellowColor {
+  background-color: #f4b400;
+}
+.blueColor {
+  background-color: #3fa5ff;
+}
+.v-skeleton-loader__bone {
+  width: 100% !important; 
+  height: 100% !important;
+}
+.pie-dummy {
+  width: 200px;
+  height: 200px;
+  background-image: conic-gradient(#c5c4c0 64%,#ababab 17%,#d6d4d4);
+  border-radius: 50% !important;
+  margin: 0px auto;
+}
+.pie-dummy::before {
+  content: " ";
+  background: #fff;
+  width: 80px;
+  height: 80px;
+  display: inline-block;
+  border-radius: 50% !important;
+  margin-top: 60px;
+}
+.pie-dummy-wrapper {
+  text-align: center;
+  padding-top: 45px;
+}
 @media (max-width: 600px) {
   .slide-form,
   .slide-form-default {
