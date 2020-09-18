@@ -337,11 +337,11 @@
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">Event Link</div>
-          <div class="body-1">{{ formatField(data.event.UniqLink) }}</div>
+          <div class="body-1">{{ formatField(eventUniqueLink) }}</div>
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">Session Link</div>
-          <div class="body-1">{{ formatField(data.event.UniqLink) }}</div>
+          <div class="body-1">{{ formatField(eventSessionLink) }}</div>
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">Cancelation Policy</div>
@@ -413,16 +413,6 @@
             >
           </span>
         </v-flex>
-        <v-flex my-3>
-          <span v-if="data.event.SendCalendar === true">
-            <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
-            <span class="ml-2">Send calendar invite when registered</span>
-          </span>
-          <span v-else>
-            <v-icon>mdi-checkbox-blank-outline</v-icon>
-            <span class="ml-2">Send calendar invite when registered</span>
-          </span>
-        </v-flex>
       </div>
 
       <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
@@ -492,6 +482,7 @@ import Grid from '~/components/common/grid'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin } from '~/utility'
+import nuxtConfig from '../../../../../../nuxt.config'
 
 export default {
   layout: 'event',
@@ -515,6 +506,8 @@ export default {
         badge: {},
         eventSummary: {},
       },
+      eventUniqueLink: '',
+      eventSessionLink: '',
     }
   },
   computed: {
@@ -556,6 +549,8 @@ export default {
         const event = formatGQLResult(data, 'Event')
         const badge = formatGQLResult(data, 'Badge')
         const eventSummary = data.Event.EventGetEventSummery
+        this.eventUniqueLink = `https://${nuxtConfig.axios.eventUrl}/e/${event[0].UniqLink}`
+        this.eventSessionLink = `https://${nuxtConfig.axios.eventUrl}/e/${event[0].UniqLink}`
         return {
           event: event.length > 0 ? event[0] : {},
           badge: badge.length > 0 ? badge[0] : {},
