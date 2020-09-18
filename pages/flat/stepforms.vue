@@ -1013,29 +1013,3 @@ export default {
   },
 }
 </script>
-
-<style>
-.slide-form {
-  position: fixed !important;
-  right: 0 !important;
-  bottom: 0 !important;
-  width: calc(100% - 300px) !important;
-  max-height: calc(100% - 100px) !important;
-}
-.stepper-box {
-  min-height: 650px;
-}
-.slide-form-default {
-  position: fixed !important;
-  right: 0 !important;
-  bottom: 0 !important;
-  width: 50% !important;
-}
-@media (max-width: 600px) {
-  .slide-form,
-  .slide-form-default {
-    width: 100% !important;
-    position: unset !important;
-  }
-}
-</style>
