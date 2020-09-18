@@ -873,27 +873,39 @@ export default {
   mounted() {},
   methods: {
     async getBannerImageName(imageId) {
-      const res = await this.$axios.$get(
-        `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Attachments/${imageId}`
-      )
-      if (res) {
-        this.bannerName = res.fileName
+      try {
+        const res = await this.$axios.$get(
+          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Attachments/${imageId}`
+        )
+        if (res) {
+          this.bannerName = res.fileName
+        }
+      } catch (e) {
+        console.log('Error', e)
       }
     },
     async getLogoName(imageId) {
-      const res = await this.$axios.$get(
-        `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Attachments/${imageId}`
-      )
-      if (res) {
-        this.logoName = res.fileName
+      try {
+        const res = await this.$axios.$get(
+          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Attachments/${imageId}`
+        )
+        if (res) {
+          this.logoName = res.fileName
+        }
+      } catch (e) {
+        console.log('Error', e)
       }
     },
     async getOtherImageName(imageId) {
-      const res = await this.$axios.$get(
-        `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Attachments/${imageId}`
-      )
-      if (res) {
-        this.OtherImageName = res.fileName
+      try {
+        const res = await this.$axios.$get(
+          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Attachments/${imageId}`
+        )
+        if (res) {
+          this.OtherImageName = res.fileName
+        }
+      } catch (e) {
+        console.log('Error', e)
       }
     },
     refresh() {
@@ -922,14 +934,16 @@ export default {
       this.updateEventGallery(this.formData)
     },
     async updateEventGallery(formData) {
-      const res = await this.$axios
-        .$patch(
+      try {
+        const res = await this.$axios.$patch(
           `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`,
           formData
         )
-        .catch((e) => console.log('Error', e))
-      if (res) {
-        this.refresh()
+        if (res) {
+          this.refresh()
+        }
+      } catch (e) {
+        console.log('Error', e)
       }
     },
     formatDate(date) {
