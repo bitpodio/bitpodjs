@@ -462,14 +462,17 @@
                     </v-card>
                   </v-col>
                 </v-row>
-                <v-row v-else-if="scheduleInvite" class="ma-3">
-                  <v-col cols="5" style="max-width: 300px;">
+                <v-row v-else-if="scheduleInvite" class="ma-3 ml-0">
+                  <v-col cols="5" style="max-width: 300px;" class="pl-0">
                     <v-card align="center" justify="center" class="pb-10">
                       <v-icon class="py-2 pt-7" size="48">fa-calendar</v-icon>
-                      <h3 class="font-weight-regular ma-2">
+                      <h3
+                        class="text-h5 my-2"
+                        style="font-size: 20px !important;"
+                      >
                         Fixed Time and Time Zone
                       </h3>
-                      <h5 class="body-2 my-2 mb-5">
+                      <h5 class="body-2 ma-2 mb-5">
                         We'll launch your invite on the date and time you
                         specify.
                       </h5>
