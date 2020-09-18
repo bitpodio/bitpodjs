@@ -103,7 +103,7 @@
                   <div class="pr-3 pt-1 tabContent">
                     <v-row>
                       <v-col
-                        class="pl-5 templateTile"
+                        class="pl-4 templateTile"
                         cols="4"
                         @click="chooseTemplate(1)"
                       >
@@ -446,19 +446,17 @@
               </v-tab-item>
               <v-tab-item class="tabContent">
                 <v-row v-if="acknowledgement" class="ma-1">
-                  <v-col cols="12">
+                  <v-col cols="12" class="px-0 mb-4">
                     <v-card align="center" justify="center" class="pb-3">
-                      <h3 class="font-weight-regular ma-2 pt-5">
+                      <h3 class="text-h5 ma-2 pt-5">
                         Thank you for submitting your email invite.
                       </h3>
-                      <h5 class="font-weight-regular ma-2 py-3">
+                      <h5 class="body-2 ma-2 py-3">
                         If approval is turned on it will be sent for approval to
                         administrator and you will be notified status through
                         email.
                       </h5>
-                      <v-btn
-                        class="blue accent-4 white--text"
-                        @click="resetForm"
+                      <v-btn depressed color="primary" @click="resetForm"
                         >close</v-btn
                       >
                     </v-card>
@@ -535,50 +533,64 @@
                     </v-flex>
                   </v-col>
                 </v-row>
-                <v-row v-else class="ma-1">
-                  <v-col class="pl-5 templateTile" cols="4">
+                <v-row v-else class="ma-1 my-3">
+                  <v-col class="templateverify pl-0" cols="4">
                     <v-card height="250" align="center" justify="center">
-                      <v-icon class="py-5" size="50">mdi-email-outline</v-icon>
-                      <h3 class="font-weight-regular ma-2">Send Now</h3>
-                      <h5 class="font-weight-regular ma-2">
+                      <v-icon class="py-2 pt-7" size="48">fa-mail</v-icon>
+                      <h3
+                        class="text-h5 my-2"
+                        style="font-size: 20px !important;"
+                      >
+                        Send Now
+                      </h3>
+                      <h5 class="body-2 my-2 mb-5">
                         Send email invite right away.
                       </h5>
                       <v-btn
-                        class="blue accent-4 white--text"
+                        depressed
+                        color="primary"
                         :disabled="disableButton"
                         @click="sendNow"
                         >Send</v-btn
                       >
                     </v-card>
                   </v-col>
-                  <v-col cols="4" class="templateTile">
+                  <v-col cols="4" class="templateverify">
                     <v-card height="250" align="center" justify="center">
-                      <v-icon class="py-5" size="50">mdi-calendar</v-icon>
-                      <h3 class="font-weight-regular ma-2">
+                      <v-icon class="py-2 pt-7" size="48">fa-calendar</v-icon>
+                      <h3
+                        class="text-h5 my-2"
+                        style="font-size: 20px !important;"
+                      >
                         Schedule Invite
                       </h3>
-                      <h5 class="font-weight-regular ma-2">
+                      <h5 class="body-2 my-2 mb-5">
                         Schedule your invite the way you prefer.
                       </h5>
                       <v-btn
-                        class="blue accent-4 white--text"
+                        depressed
+                        color="primary"
                         :disabled="disableButton"
                         @click="scheduleInvite = true"
                         >Schedule</v-btn
                       >
                     </v-card>
                   </v-col>
-                  <v-col cols="4" class="templateTile">
+                  <v-col cols="4" class="templateverify">
                     <v-card height="250" align="center" justify="center">
-                      <v-icon class="py-5" size="50">mdi-floppy</v-icon>
-                      <h3 class="font-weight-regular ma-2">
+                      <v-icon class="py-2 pt-7" size="48">fa-save</v-icon>
+                      <h3
+                        class="text-h5 my-2"
+                        style="font-size: 20px !important;"
+                      >
                         Save as Draft
                       </h3>
-                      <h5 class="font-weight-regular ma-2">
+                      <h5 class="body-2 my-2 mb-5">
                         Save your email as draft.
                       </h5>
                       <v-btn
-                        class="blue accent-4 white--text"
+                        depressed
+                        color="primary"
                         :disabled="disableButton"
                         @click="sendNow('Draft')"
                         >Save as Draft</v-btn
@@ -605,15 +617,17 @@
                   </v-col>
                   <v-col cols="6" class="pl-0 pt-0">
                     <div>Name</div>
-                    <div class="blue--text pt-1 pb-2">{{ senderName }}</div>
+                    <div class="blue--text pt-1 pb-4 body-1">
+                      {{ senderName }}
+                    </div>
                     <div>Subject</div>
-                    <div class="blue--text pt-1">{{ subject }}</div>
+                    <div class="blue--text pt-1 body-1">{{ subject }}</div>
                   </v-col>
                   <v-col cols="6" class="pl-0">
                     <div>Sender Address</div>
-                    <div class="blue--text pt-1 pb-2">{{ sender }}</div>
+                    <div class="blue--text pt-1 pb-4 body-1">{{ sender }}</div>
                     <div>Reply-to Address</div>
-                    <div class="blue--text pt-1">{{ setReplyTo }}</div>
+                    <div class="blue--text pt-1 body-1">{{ setReplyTo }}</div>
                   </v-col>
                   <v-col cols="12" class="pl-0">
                     <div class="borderBottomGrey pb-1">
@@ -999,3 +1013,8 @@ export default {
   },
 }
 </script>
+<style scoped>
+.invite-inner {
+  height: calc(100vh - 100px);
+}
+</style>

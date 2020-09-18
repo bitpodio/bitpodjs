@@ -134,7 +134,10 @@ body {
   max-width: 300px;
 }
 .templateTile {
-  max-width: 250px !important;
+  max-width: 270px !important;
+}
+.templateverify {
+  max-width: 300px !important;
 }
 .tileCard {
   transition: 0.3s all;
@@ -234,8 +237,8 @@ body {
   overflow-x: auto !important;
 }
 .contactsGrid {
-  overflow: hidden auto;
-  max-height: 660px !important;
+  overflow: auto;
+  max-height: 480px !important;
   width: 100%;
 }
 .tempCard {
