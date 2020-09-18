@@ -1,6 +1,11 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer v-model="drawer" app class="nav-bar" :width="205">
+    <v-navigation-drawer
+      v-model="drawer"
+      app
+      class="nav-bar greybg"
+      :width="280"
+    >
       <v-toolbar-title class="ml-0 pl-3 px-2 py-2 logo-ds d-flex align-center">
         <span class="bitpod-logo logo-ds">
           <v-img
@@ -43,7 +48,7 @@
           </v-list>
         </v-menu>
       </div>
-      <v-list dense>
+      <v-list shaped>
         <template v-for="item in items">
           <v-row v-if="item.heading" :key="item.heading" align="center">
             <div class="pa-0 pl-5">

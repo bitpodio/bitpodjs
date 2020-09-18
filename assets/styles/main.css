@@ -112,11 +112,11 @@ body {
   display: block !important;
 }
 .nav-bar .fa {
-  font-size: 15px !important;
+  font-size: 18px !important;
 }
 .nav-bar .v-list-item {
-  min-height: 36px !important;
-  max-height: 36px !important;
+  min-height: 44px !important;
+  max-height: 44px !important;
 }
 .nav-bar .v-list-item__action {
   margin: 10px 0 !important;
@@ -261,6 +261,9 @@ body {
 }
 .invite-form .v-tab {
   min-width: auto !important;
+}
+.v-navigation-drawer__border {
+  display: none !important;
 }
 @media (max-width: 600px) {
   .slide-form,
