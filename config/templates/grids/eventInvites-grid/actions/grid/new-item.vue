@@ -465,11 +465,11 @@
                 <v-row v-else-if="scheduleInvite" class="ma-3">
                   <v-col cols="5" style="max-width: 300px;">
                     <v-card align="center" justify="center" class="pb-10">
-                      <v-icon class="py-5" size="50">mdi-calendar</v-icon>
+                      <v-icon class="py-2 pt-7" size="48">fa-calendar</v-icon>
                       <h3 class="font-weight-regular ma-2">
                         Fixed Time and Time Zone
                       </h3>
-                      <h5 class="font-weight-regular ma-2 pb-2">
+                      <h5 class="body-2 my-2 mb-5">
                         We'll launch your invite on the date and time you
                         specify.
                       </h5>
@@ -488,7 +488,8 @@
                         </v-datetime-picker>
                       </div>
                       <v-btn
-                        class="blue accent-4 white--text"
+                        color="primary"
+                        depressed
                         :disabled="
                           disableButton || !scheduledTime || !validDate
                         "
@@ -496,7 +497,9 @@
                         >Schedule</v-btn
                       >
                       <v-btn
-                        class="blue accent-4 white--text"
+                        class="ml-1"
+                        color="grey lighten-2"
+                        depressed
                         :disabled="disableButton"
                         @click="scheduleInvite = false"
                         >Cancel</v-btn
@@ -772,6 +775,7 @@ export default {
       return {
         appendIcon: 'fa-calendar',
         outlined: true,
+        dense: true,
         rules: [
           (v) => {
             const scheduledDate = v && new Date(v)
