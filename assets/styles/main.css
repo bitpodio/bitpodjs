@@ -27,8 +27,8 @@ body {
   position: fixed !important;
   right: 0 !important;
   bottom: 0 !important;
-  width: calc(100% - 300px) !important;
-  max-height: calc(100% - 100px) !important;
+  width: calc(100% - 230px) !important;
+  max-height: calc(100% - 15px) !important;
 }
 .stepper-box {
   min-height: 650px;
@@ -39,12 +39,9 @@ body {
   bottom: 0 !important;
   width: 50% !important;
 }
-.slide-form-default-big {
-  position: fixed !important;
-  right: 0 !important;
-  bottom: 0 !important;
-  width: 75% !important;
-  height: 100%;
+.v-dialog {
+  margin: 12px !important;
+  margin-bottom: 0px !important;
 }
 .Twitter {
   font-size: 0 !important;
@@ -57,7 +54,6 @@ body {
 .name-initial {
   font-size: 0 !important;
   text-transform: capitalize !important;
-  padding-top: 3px !important;
 }
 .name-initial::first-letter {
   font-size: 14px !important;
@@ -116,7 +112,20 @@ body {
   display: block !important;
 }
 .nav-bar .fa {
-  font-size: 20px !important;
+  font-size: 15px !important;
+}
+.nav-bar .v-list-item {
+  min-height: 36px !important;
+  max-height: 36px !important;
+}
+.nav-bar .v-list-item__action {
+  margin: 10px 0 !important;
+}
+.nav-bar .nav-icon {
+  margin-right: 10px !important;
+}
+.v-list .v-list-item--active {
+  color: #1a73e8 !important;
 }
 .fs-36 {
   font-size: 36px !important;
@@ -162,6 +171,68 @@ body {
   max-width: 36px !important;
   max-height: 36px !important;
 }
+.v-data-table-header-mobile__wrapper {
+  flex-direction: row-reverse !important;
+}
+.v-data-table-header-mobile__select {
+  justify-content: flex-end !important;
+}
+.v-application--is-ltr .v-stepper__label {
+  text-align: center !important;
+  white-space: nowrap;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+}
+.v-timezone .v-autocomplete.v-input > .v-input__control > .v-input__slot {
+  min-height: 40px !important;
+}
+.v-timezone .v-application--is-ltr .v-text-field .v-input__append-inner {
+  margin-top: 4px !important;
+}
+.v-tickettype .v-text-field--outlined > .v-input__control > .v-input__slot {
+  min-height: 40px;
+}
+.event-table .v-text-field.v-text-field--enclosed {
+  max-height: 50px !important;
+  margin-bottom: 10px !important;
+  margin-top: 12px !important;
+}
+.event-table .v-text-field--enclosed .v-input__append-inner {
+  margin-top: 8px !important;
+}
+.jodit-ui-group {
+  flex-wrap: nowrap !important;
+}
+.v-event-icon .fa {
+  font-size: 20px !important;
+}
+.v-text-field--enclosed .v-input__append-inner {
+  margin-top: 10px !important;
+}
+.event-table tr:hover {
+  background: transparent !important;
+}
+.slide-form-default .col {
+  padding-bottom:  0px !important;
+}
+.event-cards {
+  overflow: hidden;
+}
+.event-cards:hover {
+  overflow-x: auto;
+}
+.event-datechip {
+  box-shadow: 0px 2px 10px 0 hsla(120, 4%, 84%, .64) inset;
+  background-color: hsl(0, 0%, 100%) !important;
+}
+.boxview .v-data-table__wrapper {
+  overflow-x: hidden !important;
+}
+.boxview:hover .v-data-table__wrapper {
+  overflow-x: auto !important;
+}
 .contactsGrid {
   overflow: hidden auto;
   max-height: 660px !important;
@@ -198,5 +269,8 @@ body {
     min-width: fit-content !IMPORTANT;
     left: unset !important;
     right: 20px !important;
+  }
+  .boxview {
+    margin-right: 0 !important;
   }
 }

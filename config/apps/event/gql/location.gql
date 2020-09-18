@@ -1,0 +1,12 @@
+query($filters: JSON) {
+  Location {
+    LocationFind(filter: $filters) {
+      edges {
+        node {
+          id
+          Name
+        }
+      }
+    }
+  }
+}

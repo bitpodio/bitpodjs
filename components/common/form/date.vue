@@ -30,6 +30,7 @@
             :rules="rules"
             readonly
             outlined
+            dense
             v-bind="attrs"
             v-on="on"
           ></v-text-field>
@@ -63,6 +64,7 @@ export default {
       textFieldProps: {
         appendIcon: 'fa-calendar',
         outlined: true,
+        dense: true,
         rules: this.rules,
       },
     }

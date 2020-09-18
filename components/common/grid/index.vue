@@ -53,88 +53,91 @@
           </slot>
         </div>
       </div>
-      <v-data-table
-        v-model="selectedItems"
-        :headers="headers"
-        :items="tableData.items"
-        :single-select="singleSelect"
-        :loading="loading === 1"
-        :options.sync="options"
-        :server-items-length="tableData.total"
-        :hide-default-header="hideDefaultHeader"
-        :hide-default-footer="hideDefaultFooter"
-        :show-expand="showExpand"
-        :single-expand="singleExpand"
-        item-key="id"
-        class="elevation-0"
-        :show-select="showSelect"
-        @update:options="updatePagination"
-        @click:row="onRowClick"
-        @input="onItemSelected"
-      >
-        <template v-if="!!slotTemplates.item" v-slot:item="props">
-          <component
-            :is="slotTemplates.item || null"
-            :item="props.item"
-            :headers="props.headers"
-            :is-selected="props.isSelected"
-            :context="contentContext"
-            :items="tableData.items"
-            :content="content"
-          />
-        </template>
-        <template
-          v-for="(column, index) in headers"
-          v-slot:[`item.${column.value}`]="props"
+      <v-skeleton-loader :loading="loading" type="table">
+        <v-data-table
+          v-model="selectedItems"
+          dense
+          :headers="headers"
+          :items="tableData.items"
+          :single-select="singleSelect"
+          :loading="loading === 1"
+          :options.sync="options"
+          :server-items-length="tableData.total"
+          :hide-default-header="hideDefaultHeader"
+          :hide-default-footer="hideDefaultFooter"
+          :show-expand="showExpand"
+          :single-expand="singleExpand"
+          item-key="id"
+          class="elevation-0"
+          :show-select="showSelect"
+          @update:options="updatePagination"
+          @click:row="onRowClick"
+          @input="onItemSelected"
         >
-          <component
-            :is="component[index] || null"
-            :key="column.value"
-            :item="props.item"
-            :value="props.value"
-            :context="contentContext"
-            :items="tableData.items"
-            :column="column"
-            :content="content"
-            :refresh="refresh"
-          />
-        </template>
-        <template
-          v-if="!!slotTemplates['expanded-item']"
-          v-slot:expanded-item="props"
-        >
-          <component
-            :is="slotTemplates['expanded-item'] || null"
-            :item="props.item"
-            :headers="props.headers"
-          />
-        </template>
-        <template v-if="!!slotTemplates.body" v-slot:body="props">
-          <component
-            :is="slotTemplates.body || null"
-            :pagination="props.pagination"
-            :items="props.items"
-            :options="props.options"
-            :expand="props.expand"
-            :select="props.select"
-          />
-        </template>
-        <template v-if="!!slotTemplates.header" v-slot:header="props">
-          <component
-            :is="slotTemplates.header || null"
-            :props="props.props"
-            :on="props.on"
-          />
-        </template>
-        <template v-if="!!slotTemplates.footer" v-slot:footer="props">
-          <component
-            :is="slotTemplates.footer || null"
-            :props="props.props"
-            :on="props.on"
-            :headers="props.headers"
-          />
-        </template>
-      </v-data-table>
+          <template v-if="!!slotTemplates.item" v-slot:item="props">
+            <component
+              :is="slotTemplates.item || null"
+              :item="props.item"
+              :headers="props.headers"
+              :is-selected="props.isSelected"
+              :context="contentContext"
+              :items="tableData.items"
+              :content="content"
+            />
+          </template>
+          <template
+            v-for="(column, index) in headers"
+            v-slot:[`item.${column.value}`]="props"
+          >
+            <component
+              :is="component[index] || null"
+              :key="column.value"
+              :item="props.item"
+              :value="props.value"
+              :context="contentContext"
+              :items="tableData.items"
+              :column="column"
+              :content="content"
+              :refresh="refresh"
+            />
+          </template>
+          <template
+            v-if="!!slotTemplates['expanded-item']"
+            v-slot:expanded-item="props"
+          >
+            <component
+              :is="slotTemplates['expanded-item'] || null"
+              :item="props.item"
+              :headers="props.headers"
+            />
+          </template>
+          <template v-if="!!slotTemplates.body" v-slot:body="props">
+            <component
+              :is="slotTemplates.body || null"
+              :pagination="props.pagination"
+              :items="props.items"
+              :options="props.options"
+              :expand="props.expand"
+              :select="props.select"
+            />
+          </template>
+          <template v-if="!!slotTemplates.header" v-slot:header="props">
+            <component
+              :is="slotTemplates.header || null"
+              :props="props.props"
+              :on="props.on"
+            />
+          </template>
+          <template v-if="!!slotTemplates.footer" v-slot:footer="props">
+            <component
+              :is="slotTemplates.footer || null"
+              :props="props.props"
+              :on="props.on"
+              :headers="props.headers"
+            />
+          </template>
+        </v-data-table>
+      </v-skeleton-loader>
     </div>
   </div>
 </template>
