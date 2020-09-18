@@ -999,7 +999,6 @@ export default {
 
       this.locations = newLocations
       this.isMap = true
-      debugger
       this.returnToCenter()
     },
     changeEventName(value) {

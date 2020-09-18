@@ -550,13 +550,14 @@ export default {
         delete this.eventData._VenueAddress.LatLng.name
       }
       const baseUrl = getApiUrl()
-      const res = await this.$axios
-        .$post(`${baseUrl}Events/cloneEvent`, {
+      let res = null
+      try {
+        res = await this.$axios.$post(`${baseUrl}Events/cloneEvent`, {
           ...this.eventData,
         })
-        .catch((e) => {
-          console.log('Error', e)
-        })
+      } catch (e) {
+        console.error('Error', e)
+      }
       if (res) {
         this.close()
         this.isViewEvent = true
