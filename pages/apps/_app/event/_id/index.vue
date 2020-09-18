@@ -473,6 +473,16 @@
             <span class="ml-2">Notify organizer when someone registers</span>
           </span>
         </v-flex>
+        <v-flex my-3>
+          <span v-if="data.event.SendCalendar === true">
+            <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
+            <span class="ml-2">Send calendar invite when registered</span>
+          </span>
+          <span v-else>
+            <v-icon>mdi-checkbox-blank-outline</v-icon>
+            <span class="ml-2">Send calendar invite when registered</span>
+          </span>
+        </v-flex>
       </div>
 
       <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">

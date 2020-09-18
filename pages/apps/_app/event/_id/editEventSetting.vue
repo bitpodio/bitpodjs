@@ -123,12 +123,12 @@
             >
               <v-checkbox
                 v-model="formData.showTimezone"
-                label="Allow user to select a time zone for recurring event"
+                label="Allow user to select a timezone for recurring event"
                 class="ma-0"
               ></v-checkbox>
             </v-col>
             <v-col
-              v-if="formData.BusinessType === 'Recurring'"
+              v-if="formData.BusinessType !== 'Recurring'"
               cols="12"
               sm="6"
               md="6"
