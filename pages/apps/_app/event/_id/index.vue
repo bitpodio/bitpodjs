@@ -29,7 +29,7 @@
                   <v-list-item-title>Publish to eventbrite</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
-              <v-list-item>
+              <v-list-item @click="isMakeCopy = true">
                 <v-list-item-icon class="mr-2">
                   <i class="fa fa-clone mt-1" aria-hidden="true"></i>
                 </v-list-item-icon>
@@ -673,6 +673,7 @@
     <editSeoForm :seo-form.sync="seoForm" />
     <editEventSetting :event-setting.sync="eventSetting" />
     <editSiteSetting :site-setting.sync="siteSetting" />
+    <makeCopy :is-make-copy.sync="isMakeCopy" />
   </v-flex>
 </template>
 <script>
@@ -683,6 +684,7 @@ import editSeoForm from './editSeoForm.vue'
 import editEventForm from './editEventForm.vue'
 import editEventSetting from './editEventSetting.vue'
 import editSiteSetting from './editSiteSetting.vue'
+import makeCopy from './makeCopy.vue'
 import Grid from '~/components/common/grid'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
@@ -696,6 +698,7 @@ export default {
     editEventForm,
     editEventSetting,
     editSiteSetting,
+    makeCopy,
   },
   mixins: [configLoaderMixin],
   props: ['value', 'field'],
@@ -709,6 +712,7 @@ export default {
       seoForm: false,
       eventSetting: false,
       siteSetting: false,
+      isMakeCopy: false,
       data: {
         event: {},
         badge: {},
