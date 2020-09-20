@@ -26,7 +26,7 @@
             </template>
 
             <v-list dense>
-              <v-list-item>
+              <v-list-item @click="isMakeCopy = true">
                 <v-list-item-icon class="mr-2">
                   <i class="fa fa-clone mt-1" aria-hidden="true"></i>
                 </v-list-item-icon>
@@ -663,12 +663,14 @@
       </div>
     </v-flex>
     <editSeoForm :seo-form.sync="seoForm" />
+    <makeCopy :is-make-copy.sync="isMakeCopy" />
   </v-flex>
 </template>
 <script>
 import gql from 'graphql-tag'
 import format from 'date-fns/format'
 import editSeoForm from '~/pages/apps/_app/event/_id/editSeoForm.vue'
+import makeCopy from '~/pages/apps/_app/event/_id/makeCopy.vue'
 import Grid from '~/components/common/grid'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
@@ -680,12 +682,14 @@ export default {
   components: {
     Grid,
     editSeoForm,
+    makeCopy,
   },
   mixins: [configLoaderMixin],
   data() {
     return {
       loading: 0,
       seoForm: false,
+      isMakeCopy: false,
       dialog: false,
       copylinks: false,
       data: {
