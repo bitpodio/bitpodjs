@@ -14,7 +14,7 @@
         >
           <v-card class="elevation-1 pa-2">
             <div v-if="!item.Images.length" class="overflow-h rounded-0">
-              <v-img
+              <!-- <v-img
                 src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
                 lazy-src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
                 aspect-ratio="1"
@@ -32,7 +32,8 @@
                     ></v-progress-circular>
                   </v-row>
                 </template>
-              </v-img>
+              </v-img> -->
+              <geo-pattern style="height: 170px;" />
             </div>
             <v-img
               v-for="image in item.Images"
