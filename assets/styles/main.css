@@ -167,7 +167,9 @@ body {
   background-color: #f6fafe;
 }
 .boxview h2.body-1,
-.boxview h2 > .fa {
+.boxview h2 > .fa,
+.box-grey h2.body-1,
+.box-grey h2 > .fa {
   color: #3fa5ff !important;
 }
 .survey-img {
