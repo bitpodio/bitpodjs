@@ -3,3 +3,4 @@ import DatetimePicker from 'vuetify-datetime-picker'
 // import 'vuetify-datetime-picker/src/stylus/main.styl'
 
 Vue.use(DatetimePicker)
+Vue.component('v-datetime-picker', DatetimePicker)
