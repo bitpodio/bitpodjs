@@ -232,10 +232,11 @@ body {
 }
 .boxview .v-data-table__wrapper {
   overflow-x: hidden !important;
-  height: calc();
+  padding-bottom: 6px;
 }
 .boxview:hover .v-data-table__wrapper {
   overflow-x: auto !important;
+  padding-bottom: 0px;
 }
 .contactsGrid {
   overflow: auto;
