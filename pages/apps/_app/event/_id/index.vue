@@ -2,7 +2,7 @@
   <v-flex d-flex flex-md-row flex-lg-row flex-column>
     <v-flex column xs12 sm8 md8 lg8>
       <div
-        class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+        class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-1">
           <div class="text-h4 text-capitalize">{{ data.event.Title }}</div>
@@ -402,90 +402,121 @@
           <v-spacer></v-spacer>
         </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="eventInvites" :content="content" class="mt-n12" />
+        <Grid view-name="eventInvites" :content="content" class="mt-11" />
       </div>
       <div
         v-if="content"
         class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
       >
-        <h2 class="body-1 pb-0">
-          <i class="fa fa-ticketalt pr-1" aria-hidden="true"></i> Tickets
-        </h2>
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-ticketalt pr-1" aria-hidden="true"></i>
+            Tickets
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="eventTickets" :content="content" :context="data" />
+        <Grid
+          view-name="eventTickets"
+          :content="content"
+          :context="data"
+          class="mt-n12"
+        />
       </div>
       <div
         v-if="content"
         class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
       >
-        <h2 class="body-1 pb-0">
-          <i class="fa fa-settings1 pr-1" aria-hidden="true"></i> Discount Codes
-        </h2>
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-settings1 pr-1" aria-hidden="true"></i>
+            Discount Codes
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
         <v-divider></v-divider>
         <Grid
           view-name="eventDiscountCodes"
           :content="content"
-          class="mt-n14"
+          class="mt-n12"
         />
       </div>
       <div
         v-if="content"
         class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
       >
-        <h2 class="body-1 pb-0">
-          <i class="fa fa-question-circle pr-1" aria-hidden="true"></i>
-          Registration Questions
-        </h2>
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-question-circle pr-1" aria-hidden="true"></i>
+            Registration Questions
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
         <v-divider></v-divider>
         <Grid
           view-name="eventRegistrationQuestion"
           :content="content"
-          class="mt-n14"
+          class="mt-n12"
         />
       </div>
       <div
         v-if="content"
         class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
       >
-        <h2 class="body-1 pb-0">
-          <i class="fa fa-black-board pr-1" aria-hidden="true"></i> Sessions
-        </h2>
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-black-board pr-1" aria-hidden="true"></i>
+            Sessions
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="eventSession" :content="content" class="mt-n11" />
+        <Grid view-name="eventSession" :content="content" class="mt-n12" />
       </div>
       <div
         v-if="content"
         class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
       >
-        <h2 class="body-1 pb-0">
-          <i class="fa fa-mic pr-1" aria-hidden="true"></i> Speakers
-        </h2>
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-mic pr-1" aria-hidden="true"></i>
+            Speakers
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="eventSpeakers" :content="content" class="mt-n11" />
+        <Grid view-name="eventSpeakers" :content="content" class="mt-n12" />
       </div>
       <div
         v-if="content"
         class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
       >
-        <h2 class="body-1 pb-0">
-          <i class="fa fa-external-link pr-1" aria-hidden="true"></i> Tasks
-        </h2>
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-external-link pr-1" aria-hidden="true"></i>
+            Tasks
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="eventTasks" :content="content" class="mt-n11" />
+        <Grid view-name="eventTasks" :content="content" class="mt-n12" />
       </div>
       <div
         v-if="content"
         class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
       >
-        <h2 class="body-1 pb-0">
-          <i class="fa fa-file-text-o pr-1" aria-hidden="true"></i> Registration
-          Form
-        </h2>
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-file-text-o pr-1" aria-hidden="true"></i>
+            Registration Form
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
         <v-divider></v-divider>
         <Grid
           view-name="eventRegistrationForm"
           :content="content"
-          class="mt-n11"
+          class="mt-n12"
         />
       </div>
     </v-flex>
@@ -612,7 +643,7 @@
             {{ formatField(data.event.CancellationPolicy) }}
           </div>
         </v-flex>
-        <v-flex my-3>
+        <v-flex my-3 class="d-block text-truncate">
           <span v-if="data.event.isRefundable === true">
             <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
             <span class="ml-2">Allow Cancelation</span>
@@ -622,7 +653,7 @@
             <span class="ml-2">Allow Cancelation</span>
           </span>
         </v-flex>
-        <v-flex my-3>
+        <v-flex my-3 class="d-block text-truncate">
           <span v-if="data.event.SessionTimingConflict === true">
             <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
             <span class="ml-2">Validate Session Timing Conflict</span>
@@ -632,7 +663,7 @@
             <span class="ml-2">Validate Session Timing Conflict</span>
           </span>
         </v-flex>
-        <v-flex my-3>
+        <v-flex my-3 class="d-block text-truncate">
           <span v-if="data.event.ShowRemainingTickets === true">
             <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
             <span class="ml-2">Show Remaining Tickets Count</span>
@@ -642,7 +673,7 @@
             <span class="ml-2">Show Remaining Tickets Count</span>
           </span>
         </v-flex>
-        <v-flex my-3>
+        <v-flex my-3 class="d-block text-truncate">
           <span v-if="data.event.ShowAttendeeForm === true">
             <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
             <span class="ml-2">Show Attendee Form</span>
@@ -652,7 +683,7 @@
             <span class="ml-2">Show Attendee Form</span>
           </span>
         </v-flex>
-        <v-flex my-3>
+        <v-flex my-3 class="d-block text-truncate">
           <span v-if="data.event.NotifyOrganizer === true">
             <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
             <span class="ml-2">Notify organizer when someone registers</span>

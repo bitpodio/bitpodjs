@@ -31,7 +31,7 @@
               color="primary"
               dark
               depressed
-              class="ma-3 block wd-full my-0"
+              class="ma-3 block wd-full my-0 mb-1"
               v-on="on"
             >
               Create Event
