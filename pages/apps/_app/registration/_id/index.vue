@@ -3,7 +3,7 @@
     <v-flex column xs12 sm8 md8 lg8>
       <div class="xs12 sm8 md8 lg8 boxview pa-4 mr-2 mb-2">
         <v-row>
-          <v-col class="col-md-6 col-12 pt-0">
+          <v-col class="col-md-5 col-12 pt-0">
             <v-card class="elevation-0">
               <v-list>
                 <v-list-item class="pl-0">
@@ -32,7 +32,7 @@
               </v-list>
             </v-card>
           </v-col>
-          <v-col class="col-md-6 col-12 pt-0">
+          <v-col class="col-md-5 col-12 pt-0">
             <div class="text-truncate my-3">
               <v-icon class="mr-2">mdi-email-outline</v-icon>
               {{ data.registration.Email }}
@@ -45,6 +45,24 @@
               <v-icon class="mr-2">mdi-map-marker-outline</v-icon>
               {{ data.registration.Country }}
             </div>
+          </v-col>
+
+          <v-col class="col-md-2 col-12 pt-0">
+            <v-menu bottom origin="center center" transition="scale-transition">
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn depressed color="primary" v-bind="attrs" v-on="on">
+                  Action
+                </v-btn>
+              </template>
+              <v-list>
+                <v-list-item>
+                  <v-list-item-title>Edit</v-list-item-title>
+                </v-list-item>
+                <v-list-item>
+                  <v-list-item-title>Cancel</v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </v-menu>
           </v-col>
         </v-row>
         <v-divider></v-divider>
