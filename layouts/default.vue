@@ -1,6 +1,6 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer v-model="drawer" app class="nav-bar">
+    <v-navigation-drawer v-model="drawer" app class="nav-bar" :width="205">
       <v-toolbar-title class="ml-0 pl-3 px-2 py-2 logo-ds d-flex align-center">
         <span class="bitpod-logo logo-ds">
           <v-img
@@ -23,7 +23,7 @@
           <template v-slot:activator="{ on, attrs }">
             <v-btn
               v-bind="attrs"
-              color="blue darken-2"
+              color="primary"
               dark
               depressed
               class="ma-3 block wd-full"
@@ -101,118 +101,27 @@
     <v-dialog
       v-model="dialog1"
       persistent
+      scrollable
       content-class="slide-form"
       transition="dialog-bottom-transition"
     >
       <NewSingleEvent :on-form-close="closeSingleEventForm" />
     </v-dialog>
 
-    <v-dialog v-model="dialog" fullscreen transition="dialog-bottom-transition">
-      <v-card>
-        <v-toolbar dark color="primary">
-          <v-btn icon dark @click="dialog = false">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-          <v-toolbar-title>New Event</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-toolbar-items>
-            <v-btn dark text @click="dialog = false">Save</v-btn>
-          </v-toolbar-items>
-        </v-toolbar>
-        <v-card-text>
-          <v-container>
-            <v-row>
-              <v-col cols="12">
-                <v-text-field label="Event Name*" required></v-text-field>
-              </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <v-dialog
-                  ref="dialog"
-                  v-model="modal"
-                  :return-value.sync="date"
-                  persistent
-                  width="290px"
-                >
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-text-field
-                      v-model="date"
-                      label="Start Date"
-                      append-icon="fa-calendar"
-                      readonly
-                      v-bind="attrs"
-                      v-on="on"
-                    ></v-text-field>
-                  </template>
-                  <v-date-picker v-model="date" scrollable>
-                    <v-spacer></v-spacer>
-                    <v-btn text color="primary" @click="modal = false"
-                      >Cancel</v-btn
-                    >
-                    <v-btn text color="primary" @click="$refs.dialog.save(date)"
-                      >OK</v-btn
-                    >
-                  </v-date-picker>
-                </v-dialog>
-              </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <v-menu
-                  v-model="menu2"
-                  :close-on-content-click="false"
-                  :nudge-right="40"
-                  transition="scale-transition"
-                  offset-y
-                  min-width="290px"
-                >
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-text-field
-                      v-model="date"
-                      label="End Date"
-                      append-icon="fa-calendar"
-                      readonly
-                      v-bind="attrs"
-                      v-on="on"
-                    ></v-text-field>
-                  </template>
-                  <v-date-picker
-                    v-model="date"
-                    @input="menu2 = false"
-                  ></v-date-picker>
-                </v-menu>
-              </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <v-select
-                  :items="['0-17', '18-29', '30-54', '54+']"
-                  label="Timezone*"
-                  required
-                ></v-select>
-              </v-col>
-              <v-col cols="12">
-                <v-textarea
-                  clearable
-                  clear-icon="fa-close"
-                  label="Description"
-                  value=""
-                ></v-textarea>
-              </v-col>
-              <v-col cols="12" sm="6" md="6">
-                <v-text-field
-                  label="Event Link*"
-                  hint="https://bitpod-event.test.bitpod.io/e/"
-                  persistent-hint
-                  required
-                ></v-text-field>
-              </v-col>
-            </v-row>
-          </v-container>
-          <small>*indicates required field</small>
-        </v-card-text>
-      </v-card>
+    <v-dialog
+      v-model="dialog"
+      persistent
+      scrollable
+      content-class="slide-form"
+      transition="dialog-bottom-transition"
+    >
+      <NewRecurringEvent :on-form-close="closeRecurringEventForm" />
     </v-dialog>
 
     <v-app-bar app flat class="greybg">
       <div
         v-if="drawer === false"
-        class="ml-xs-0 d-none d-sm-flex"
+        class="ml-xs-0 d-none d-sm-none d-md-flex d-lg-flex d-xl-flex"
         :class="drawer ? '' : 'ml-md-n4 mr-md-2'"
       >
         <v-app-bar-nav-icon
@@ -220,14 +129,11 @@
           @click.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
       </div>
-      <div class="d-flex d-sm-none ml-n3">
+      <div class="d-flex d-sm-flex d-md-none ml-n3">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       </div>
-      <v-toolbar-title class="pl-0 ml-n2"> Event</v-toolbar-title>
+      <v-toolbar-title class="pl-0 ml-n1">Event </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn class="ma-2 d-none d-sm-flex" tile outlined>
-        UPGARDE
-      </v-btn>
       <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
         <v-icon>mdi-invert-colors</v-icon>
       </v-btn>
@@ -358,7 +264,9 @@
             v-slot:activator="{ on, attrs }"
           >
             <v-avatar color="primary ml-2" size="30" v-bind="attrs" v-on="on">
-              <span class="white--text">{{ $auth.user.data.name[0] }}</span>
+              <span class="white--text">{{
+                $auth.user.data.name && $auth.user.data.name[0]
+              }}</span>
             </v-avatar>
           </template>
           <v-card>
@@ -367,7 +275,7 @@
                 <v-list-item-avatar size="48">
                   <v-avatar color="primary" size="48" v-bind="attrs" v-on="on">
                     <span class="white--text headline">{{
-                      $auth.user.data.name[0]
+                      $auth.user.data.name && $auth.user.data.name[0]
                     }}</span>
                   </v-avatar>
                 </v-list-item-avatar>
@@ -382,10 +290,12 @@
                 </v-list-item-content>
               </v-list-item>
             </v-list>
-            <v-divider></v-divider>
-            <v-list>
-              <v-list-item class="text-center justify-center">
-                <v-btn class="ma-2" outlined color="primary" @click="onLogout">
+            <v-list-item>
+              <OrgnaizationList />
+            </v-list-item>
+            <v-list dense class="pt-0">
+              <v-list-item>
+                <v-btn text small color="primary" @click="onLogout">
                   Logout
                 </v-btn>
               </v-list-item>
@@ -415,20 +325,16 @@
 </template>
 
 <script>
-import addMonths from 'date-fns/addMonths'
-import addDays from 'date-fns/addDays'
-import NewSingleEvent from '~/components/newSingleEvent.vue'
+import OrgnaizationList from '~/components/common/organization-list'
 export default {
   components: {
-    NewSingleEvent,
+    OrgnaizationList,
   },
   props: {
     source: String,
   },
   data: () => ({
     date: new Date().toISOString().substr(0, 10),
-    startDate: addMonths(new Date(), 1).toISOString().substr(0, 10),
-    endDate: addDays(addMonths(new Date(), 1), 4).toISOString().substr(0, 10),
     menu: false,
     modal: false,
     menu2: false,
@@ -440,7 +346,6 @@ export default {
     tabs: null,
     account: false,
     message: false,
-
     items: [
       {
         icon: 'fa fa-tachometer',
@@ -495,6 +400,9 @@ export default {
     },
     closeSingleEventForm() {
       this.dialog1 = false
+    },
+    closeRecurringEventForm() {
+      this.dialog = false
     },
   },
 }

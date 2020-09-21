@@ -30,6 +30,7 @@
             :rules="rules"
             readonly
             outlined
+            dense
             v-bind="attrs"
             v-on="on"
           ></v-text-field>
@@ -50,7 +51,7 @@
 import { formFieldMixin } from '~/utility/form-control'
 export default {
   mixins: [formFieldMixin],
-  props: ['value', 'field', 'rules'],
+  props: ['value', 'field', 'rules', 'onChange'],
   data() {
     const dateTime = this.value || new Date()
     const date =
@@ -63,6 +64,7 @@ export default {
       textFieldProps: {
         appendIcon: 'fa-calendar',
         outlined: true,
+        dense: true,
         rules: this.rules,
       },
     }
@@ -78,6 +80,7 @@ export default {
   methods: {
     onCalendarChange() {
       this.$emit('input', this.date)
+      this.onChange && this.onChange(this.date)
     },
   },
 }

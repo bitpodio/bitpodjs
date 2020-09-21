@@ -1,16 +1,16 @@
 <template>
-  <div>
-    <v-autocomplete
-      v-model="timezone"
-      :items="items"
-      item-text="label"
-      item-value="tzCode"
-      :label="field.caption"
-      :rules="rules"
-      outlined
-      @change="onChange"
-    ></v-autocomplete>
-  </div>
+  <v-autocomplete
+    v-model="timezone"
+    :items="items"
+    item-text="label"
+    item-value="tzCode"
+    :loading="isLoading"
+    :label="field.caption"
+    :rules="rules"
+    dense
+    outlined
+    @change="onChange"
+  ></v-autocomplete>
 </template>
 
 <script>
