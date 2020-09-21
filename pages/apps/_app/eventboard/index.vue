@@ -45,7 +45,9 @@
                       class="font-weight-regular text-truncate"
                       style="width: 132px;"
                     >
-                      {{ data.data }}
+                      {{ data.caption === 'Total Revenue' ? '$' : ''
+                      }}{{ data.data
+                      }}{{ data.caption === 'Email Conversion' ? '%' : '' }}
                     </h3>
                     <h5
                       class="font-weight-regular text-truncate"
@@ -207,7 +209,7 @@
                 </div>
                 <div class="pl-2 pt-1">
                   <h3
-                    class="font-weight-regular text-truncate"
+                    class="font-weight-regular text-truncate text-capitalize"
                     style="width: 200px;"
                   >
                     {{ data.creatorName }}
@@ -319,7 +321,12 @@
             style="height: 316px;"
             class="rounded white elevation-2"
           >
-            <div class="pie-dummy-wrapper"><div class="pie-dummy"></div></div>
+            <div class="pie-dummy-wrapper">
+              <div class="pt-15 holeWrapper">
+                <div class="pieHole white d-inline-block rounded-circle"></div>
+              </div>
+              <div class="pie-dummy rounded-circle mx-auto"></div>
+            </div>
           </div>
           <div v-else class="elevation-2 rounded overflowHidden">
             <GChart
@@ -440,12 +447,22 @@ export default {
         height: '316',
         hAxis: { logscale: true },
         chartArea: { width: '80%', height: '70%' },
+        animation: {
+          startup: true,
+          duration: 1000,
+          easing: 'in',
+        },
       },
       conversionBubbleData: [['ID', 'Sent', 'Open', 'Country', 'Register']],
       conversionBubbleOptions: {
         legend: 'none',
         height: '316',
         chartArea: { width: '80%', height: '70%' },
+        animation: {
+          startup: true,
+          duration: 1000,
+          easing: 'in',
+        },
       },
       geoLocationData: [['City', 'Sale']],
       geoLocationOptions: {
@@ -454,6 +471,11 @@ export default {
         displayMode: 'markers',
         chartArea: { width: '80%', height: '70%' },
         colorAxis: { colors: ['green', 'yellow'] },
+        animation: {
+          startup: true,
+          duration: 1000,
+          easing: 'in',
+        },
       },
       pieChartData: [['Event', 'Sold']],
       pieChartOptions: {
@@ -462,12 +484,22 @@ export default {
         pieHole: 0.4,
         chartArea: { width: '80%', height: '70%' },
         colorAxis: { colors: ['green', 'yellow'] },
+        animation: {
+          startup: true,
+          duration: 1000,
+          easing: 'in',
+        },
       },
       conversionAreaData: [['ID', 'Sent', 'Open']],
       conversionAreaOptions: {
         legend: 'none',
         height: '316',
         chartArea: { width: '80%', height: '70%' },
+        animation: {
+          startup: true,
+          duration: 1000,
+          easing: 'in',
+        },
       },
       sessionSaleData: [['Id', 'Session Sold']],
       sessionSalechartOptions: {
@@ -476,72 +508,82 @@ export default {
         height: '316',
         hAxis: { logscale: true },
         chartArea: { width: '80%', height: '70%' },
+        animation: {
+          startup: true,
+          duration: 1000,
+          easing: 'in',
+        },
       },
       timelineData: [],
       timelineOptions: {
         legend: 'none',
         height: '316',
         chartArea: { width: '80%', height: '70%' },
+        animation: {
+          startup: true,
+          duration: 1000,
+          easing: 'in',
+        },
       },
       eventSummaryData: [
         {
           caption: 'Total Registrations',
           icon: 'fa fa-user-check',
           data: '',
-          class: 'greenColor',
+          class: 'green accent-4',
         },
         {
           caption: 'Abandoned Registrations',
           icon: 'fa fa-user-x',
           data: '',
-          class: 'redColor',
+          class: 'red lighten-1',
           click: 'routeToAbandoned',
         },
         {
           caption: 'Total Revenue',
           icon: 'fa fa-banknote',
           data: '',
-          class: 'yellowColor',
+          class: 'yellow darken-2',
         },
         {
           caption: 'Tickets Sold',
           icon: 'fa fa-ticket',
           data: '',
-          class: 'blueColor',
+          class: 'light-blue darken-1',
         },
         {
           caption: 'Email Conversion',
           icon: 'fa fa-seo-consulting',
           data: '',
-          class: 'greenColor',
+          class: 'green accent-4',
         },
       ],
       eventOnSaleData: [
         {
-          class: 'greenColor',
+          class: 'green accent-4',
         },
         {
-          class: 'redColor',
+          class: 'red lighten-1',
         },
         {
-          class: 'yellowColor',
+          class: 'yellow darken-2',
         },
         {
-          class: 'blueColor',
+          class: 'light-blue darken-1',
         },
       ],
       recentBuyersData: [
         {
-          class: 'greenColor',
+          class: 'green accent-4',
         },
         {
-          class: 'redColor',
+          class: 'red lighten-1',
         },
         {
-          class: 'yellowColor',
+          class: 'yellow darken-2',
         },
         {
-          class: 'blueColor',
+          class: 'light-blue darken-1',
         },
       ],
       eventSummaryLoaded: false,
@@ -933,5 +975,9 @@ export default {
   right: 10px;
   bottom: 5px;
   text-align: right;
+}
+.holeWrapper {
+  position: absolute;
+  width: 100%;
 }
 </style>
