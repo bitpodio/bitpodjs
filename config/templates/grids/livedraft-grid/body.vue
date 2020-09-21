@@ -13,34 +13,7 @@
           lg="3"
         >
           <v-card class="elevation-1">
-            <!-- <div v-if="item.Images !== null" class="pa-1">
-              <v-card
-                v-for="image in item.Images"
-                :key="image"
-                class="d-inline-block elevation-0 tile-img"
-              >
-                <v-img
-                  :src="getAttachmentLink(image, true)"
-                  :lazy-src="getAttachmentLink(image, true)"
-                  aspect-ratio="1"
-                  class="grey lighten-2 tile-img"
-                >
-                  <template v-slot:placeholder>
-                    <v-row
-                      class="fill-height ma-0"
-                      align="center"
-                      justify="center"
-                    >
-                      <v-progress-circular
-                        indeterminate
-                        color="grey lighten-5"
-                      ></v-progress-circular>
-                    </v-row>
-                  </template>
-                </v-img>
-              </v-card>
-            </div> -->
-            <div>
+            <div v-if="!item.Images.length" class="rounded-t overflow-h">
               <v-img
                 src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
                 lazy-src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
@@ -61,6 +34,25 @@
                 </template>
               </v-img>
             </div>
+            <v-img
+              v-for="image in item.Images"
+              :key="image"
+              :src="getAttachmentLink(image, true)"
+              :lazy-src="getAttachmentLink(image, true)"
+              aspect-ratio="1"
+              class="tile-img"
+            >
+              <template v-slot:placeholder>
+                <v-row class="fill-height ma-0" align="center" justify="center">
+                  <v-img
+                    src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+                    lazy-src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
+                    aspect-ratio="1"
+                    class="tile-img"
+                  ></v-img>
+                </v-row>
+              </template>
+            </v-img>
             <v-flex class="tile-info">
               <div class="text--secondary pa-2 pb-0 body-2">
                 {{ item.StartDate }}
@@ -70,20 +62,24 @@
               >
                 {{ item.Title }}
               </v-card-title>
-              <div class="text--secondary pa-2 pt-0 body-2">
+              <div
+                class="text--secondary pa-2 pt-0 body-2 text-truncate d-block"
+              >
                 {{ item.VenueName }}
               </div>
             </v-flex>
             <v-divider></v-divider>
             <v-card-actions>
-              <v-chip
-                v-for="Tags in item.Tags"
-                :key="Tags"
-                small
-                class="ma-0 mr-1"
-              >
-                {{ Tags }}
-              </v-chip>
+              <div class="text-truncate d-block">
+                <v-chip
+                  v-for="Tags in item.Tags"
+                  :key="Tags"
+                  small
+                  class="ma-0 mr-1"
+                >
+                  {{ Tags }}
+                </v-chip>
+              </div>
 
               <v-spacer></v-spacer>
               <v-menu
@@ -101,14 +97,6 @@
                 <v-list dense>
                   <v-list-item>
                     <v-list-item-icon class="mr-2">
-                      <i class="fa fa-clone mt-1" aria-hidden="true"></i>
-                    </v-list-item-icon>
-                    <v-list-item-content>
-                      <v-list-item-title>Make a copy</v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                  <v-list-item>
-                    <v-list-item-icon class="mr-2">
                       <i class="fa fa-eye mt-1" aria-hidden="true"></i>
                     </v-list-item-icon>
                     <v-list-item-content>
@@ -124,6 +112,14 @@
                     </v-list-item-icon>
                     <v-list-item-content>
                       <v-list-item-title>Edit</v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <v-list-item>
+                    <v-list-item-icon class="mr-2">
+                      <i class="fa fa-clone mt-1" aria-hidden="true"></i>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                      <v-list-item-title>Make a copy</v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
                 </v-list>
@@ -164,5 +160,8 @@ export default {
 }
 .tile-info {
   min-height: 90px;
+}
+.overflow-h {
+  overflow: hidden;
 }
 </style>
