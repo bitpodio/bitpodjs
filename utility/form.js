@@ -5,6 +5,7 @@ import Checkbox from '~/components/common/form/checkbox.vue'
 import CustomDate from '~/components/common/form/date.vue'
 import File from '~/components/common/form/file.vue'
 import Timezone from '~/components/common/form/timezone'
+import Tags from '~/components/common/form/tags.vue'
 import { _set, isPlainObject } from '~/utility/object'
 
 const FORM_DATE_CONTROLS = ['date', 'datetime']
@@ -107,6 +108,7 @@ export const formControlsMixin = {
     RichText: () =>
       process.client ? import('~/components/common/form/richtext.vue') : false,
     Timezone,
+    Tags,
   },
   methods: {
     formControl(field) {
@@ -127,6 +129,8 @@ export const formControlsMixin = {
           return 'RichText'
         case 'timezone':
           return 'Timezone'
+        case 'tags':
+          return 'Tags'
       }
     },
   },
