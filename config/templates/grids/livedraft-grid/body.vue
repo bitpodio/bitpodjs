@@ -12,13 +12,13 @@
           md="4"
           lg="3"
         >
-          <v-card class="elevation-1">
-            <div v-if="!item.Images.length" class="rounded-t overflow-h">
+          <v-card class="elevation-1 pa-2">
+            <div v-if="!item.Images.length" class="overflow-h rounded-0">
               <v-img
                 src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
                 lazy-src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
                 aspect-ratio="1"
-                class="tile-img"
+                class="tile-img rounded-0"
               >
                 <template v-slot:placeholder>
                   <v-row
@@ -40,7 +40,7 @@
               :src="getAttachmentLink(image, true)"
               :lazy-src="getAttachmentLink(image, true)"
               aspect-ratio="1"
-              class="tile-img"
+              class="tile-img rounded-0"
             >
               <template v-slot:placeholder>
                 <v-row class="fill-height ma-0" align="center" justify="center">
@@ -48,28 +48,28 @@
                     src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
                     lazy-src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
                     aspect-ratio="1"
-                    class="tile-img"
+                    class="tile-img rounded-0"
                   ></v-img>
                 </v-row>
               </template>
             </v-img>
             <v-flex class="tile-info">
-              <div class="text--secondary pa-2 pb-0 body-2">
+              <div class="text--secondary pa-2 pb-0 body-2 pl-0">
                 {{ item.StartDate }}
               </div>
               <v-card-title
-                class="text-h5 text-truncate d-block text-capitalize pa-2 pt-0 pb-1"
+                class="text-h5 text-truncate d-block text-capitalize pa-2 pt-0 pb-1 pl-0"
               >
                 {{ item.Title }}
               </v-card-title>
               <div
-                class="text--secondary pa-2 pt-0 body-2 text-truncate d-block"
+                class="text--secondary pa-2 pt-0 body-2 text-truncate d-block pl-0"
               >
                 {{ item.VenueName }}
               </div>
             </v-flex>
             <v-divider></v-divider>
-            <v-card-actions>
+            <v-card-actions class="px-0">
               <div class="text-truncate d-block">
                 <v-chip
                   v-for="Tags in item.Tags"
@@ -141,7 +141,6 @@ export default {
       return fieldValue || ' '
     },
     getAttachmentLink(id, isDownloadLink) {
-      debugger
       const attachmentUrl = `https://${nuxtconfig.axios.eventUrl}${
         nuxtconfig.axios.apiEndpoint
       }Attachments${isDownloadLink ? '/download' : ''}${id ? '/' + id : ''}`
