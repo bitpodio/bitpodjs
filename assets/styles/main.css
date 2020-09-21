@@ -232,6 +232,7 @@ body {
 }
 .boxview .v-data-table__wrapper {
   overflow-x: hidden !important;
+  height: calc();
 }
 .boxview:hover .v-data-table__wrapper {
   overflow-x: auto !important;
@@ -265,6 +266,11 @@ body {
 .v-navigation-drawer__border {
   display: none !important;
 }
+.v-data-table--dense > .v-data-table__wrapper > table > tbody > tr > td, 
+.v-data-table > .v-data-table__wrapper > table > thead > tr > th {
+  padding-left: 0 !important;
+}
+
 @media (max-width: 600px) {
   .slide-form,
   .slide-form-default {

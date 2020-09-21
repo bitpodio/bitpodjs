@@ -31,7 +31,7 @@
               color="primary"
               dark
               depressed
-              class="ma-3 block wd-full"
+              class="ma-3 block wd-full my-0"
               v-on="on"
             >
               Create Event
@@ -316,9 +316,9 @@
     </v-app-bar>
 
     <v-main class="greybg">
-      <v-container fluid>
+      <v-container fluid class="pt-0">
         <v-row>
-          <v-col>
+          <v-col class="pt-0">
             <div>
               <nuxt />
             </div>
@@ -352,32 +352,32 @@ export default {
     account: false,
     message: false,
     items: [
-      { icon: 'fa fa-tachometer', text: 'Eventboard', to: '/' },
+      { icon: 'mdi-view-dashboard', text: 'Eventboard', to: '/' },
       { heading: 'Event' },
       {
-        icon: 'fa fa-calendar',
+        icon: 'mdi-calendar-clock',
         text: 'Events',
         to: '/apps/event/list/Event/All Events',
       },
       {
-        icon: 'fa fa-user-plus',
+        icon: 'mdi-account-plus',
         text: 'Registrations',
         to: '/apps/event/list/Registrations/Registrations',
       },
       { heading: 'Promotions' },
       {
-        icon: 'fa fa-building',
+        icon: 'mdi-ticket-percent',
         text: 'Discount Code',
         to: '/apps/event/list/DiscountCodes/Discount Codes',
       },
       { heading: 'Members' },
       {
-        icon: 'fa fa-users',
+        icon: 'mdi-account-check',
         text: 'Members',
         to: '/apps/event/list/EventCustomers/Members',
       },
       {
-        icon: 'fa fa-address-book-o',
+        icon: 'mdi-account-multiple-plus',
         text: 'Contacts',
         to: '/apps/event/list/Contacts/Contacts',
       },
