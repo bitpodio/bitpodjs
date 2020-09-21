@@ -14,6 +14,12 @@ function getFormTimeZoneField(fields) {
   return timezoneField || null
 }
 
+function getFieldByFieldName(fields, field) {
+  const fieldDetails =
+    fields && fields.filter(({ fieldName }) => fieldName === field)
+  return fieldDetails || {}
+}
+
 export function formatTimezoneDateFieldsData(formData, fields) {
   const timezoneField = getFormTimeZoneField(fields)
   if (!timezoneField) {
@@ -23,7 +29,7 @@ export function formatTimezoneDateFieldsData(formData, fields) {
   const newFormData = {}
   for (const fieldName in formData) {
     const fieldData = formData[fieldName]
-    const { field } = fields[fieldName]
+    const field = getFieldByFieldName(fields, fieldName)
     newFormData[fieldName] = FORM_DATE_CONTROLS.includes(field.type)
       ? zonedTimeToUtc(fieldData, selectedTimezone)
       : fieldData
