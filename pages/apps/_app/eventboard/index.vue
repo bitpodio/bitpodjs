@@ -2,7 +2,13 @@
   <div>
     <div>
       <v-row class="px-3">
-        <v-col cols="12" class="summaryBlock px-0">
+        <v-col
+          ref="summaryBlock"
+          cols="12"
+          class="overflowHidden px-0 summaryBlock"
+          :class="{ scrollReplacement: !hasScroll }"
+          @mouseenter="updateScroll"
+        >
           <div style="width: 1080px;">
             <div
               v-for="(data, index) in eventSummaryData"
@@ -18,7 +24,11 @@
                 height="60"
                 width="60"
               >
-                <div class="d-flex">
+                <div
+                  class="d-flex"
+                  :class="{ cursorPointer: data.click }"
+                  @click="routeToAbandoned(data.click)"
+                >
                   <div
                     style="width: 60px; height: 60px;"
                     :class="data.class"
@@ -27,8 +37,8 @@
                     <v-icon
                       style="font-size: 28px;"
                       class="pl-4 pt-4 white--text"
-                      >{{ data.icon }}</v-icon
-                    >
+                      :class="data.icon"
+                    ></v-icon>
                   </div>
                   <div class="pl-2 pt-1">
                     <h3
@@ -56,8 +66,9 @@
           <div
             v-for="(data, index) in eventOnSaleData"
             :key="index"
-            class="white elevation-2 rounded mb-3"
+            class="white elevation-2 rounded mb-3 cursorPointer"
             style="height: 70px;"
+            @click="routeToEvent(data.id)"
           >
             <v-skeleton-loader
               :loading="!eventOnSaleLoaded"
@@ -72,9 +83,19 @@
                   :class="data.class"
                   class="rounded-l"
                 >
-                  <v-icon style="font-size: 28px;" class="pl-5 pt-5 white--text"
-                    >mdi-timer</v-icon
-                  >
+                  <v-icon
+                    v-if="data.type === 'Recurring'"
+                    style="font-size: 28px;"
+                    class="pl-5 pt-5 white--text fa fa-timer rec-event"
+                  ></v-icon>
+                  <div v-else class="pie-dummy-wrapper pt-2">
+                    <h2 class="white--text font-weight-regular">
+                      {{ data.date }}
+                    </h2>
+                    <h4 class="white--text font-weight-regular mt-n2">
+                      {{ data.month }}
+                    </h4>
+                  </div>
                 </div>
                 <div
                   v-if="data.imageUrl"
@@ -93,21 +114,42 @@
                 </div>
                 <div class="pl-2 pt-1">
                   <h3
-                    class="font-weight-regular text-truncate"
-                    style="width: 132px;"
+                    class="font-weight-regular text-truncate pl-1 text-capitalize"
+                    style="width: 200px;"
                   >
                     {{ data.title }}
                   </h3>
-                  <h5
-                    class="font-weight-regular text-truncate"
-                    style="width: 132px;"
+                  <h4
+                    v-if="data.location"
+                    class="font-weight-regular text-truncate d-inline-flex pt-1"
+                    style="width: 150px;"
                   >
+                    <v-icon>mdi-map-marker-outline</v-icon>
+                    <div>
+                      {{ data.location }}
+                    </div>
+                  </h4>
+                  <h5 class="attendeeCount grey--text">
+                    <v-icon>mdi-account-multiple-outline</v-icon>
                     {{ data.attendeeCount }}
                   </h5>
                 </div>
               </div>
             </v-skeleton-loader>
           </div>
+          <v-hover v-slot:default="{ hover }">
+            <h4
+              v-if="eventOnSaleLoaded"
+              class="font-weight-regular float-right viewAll cursorPointer"
+              :class="{
+                'grey--text': !hover,
+                'blue--text': hover,
+              }"
+              @click="routeToLiveEvents"
+            >
+              View all
+            </h4>
+          </v-hover>
         </v-col>
         <v-col cols="4">
           <h3 class="font-weight-regular pb-2">10 Days Tickets Sale</h3>
@@ -123,7 +165,7 @@
               style="height: 52px;"
             ></div>
           </div>
-          <div v-else class="elevation-2 rounded">
+          <div v-else class="elevation-2 rounded overflowHidden">
             <GChart
               type="LineChart"
               :data="ticketSaleData"
@@ -137,8 +179,9 @@
           <div
             v-for="(data, index) in recentBuyersData"
             :key="index"
-            class="white elevation-2 rounded mb-3"
+            class="white elevation-2 rounded mb-3 cursorPointer"
             style="height: 70px;"
+            @click="routeToRegistration(data.id)"
           >
             <v-skeleton-loader
               :loading="!recentBuyersLoaded"
@@ -165,30 +208,52 @@
                 <div class="pl-2 pt-1">
                   <h3
                     class="font-weight-regular text-truncate"
-                    style="width: 132px;"
+                    style="width: 200px;"
                   >
                     {{ data.creatorName }}
                   </h3>
                   <h5
                     class="font-weight-regular text-truncate"
-                    style="width: 132px;"
+                    style="width: 200px;"
                   >
                     {{ data.eventName }}
                   </h5>
                 </div>
-                <div>
+                <div class="attendeeCount mb-n2">
                   <v-chip
                     class="ma-2"
-                    :color="data.status === 'Success' ? 'green' : 'orange'"
+                    :color="
+                      data.status === 'Success'
+                        ? 'green'
+                        : data.status === 'Failed'
+                        ? 'red'
+                        : data.status === 'Cancelled'
+                        ? 'grey'
+                        : 'orange'
+                    "
                     text-color="white"
                     small
                   >
                     {{ data.status }}
                   </v-chip>
+                  <h5 class="font-weight-regular px-2">{{ data.time }}</h5>
                 </div>
               </div>
             </v-skeleton-loader>
           </div>
+          <v-hover v-slot:default="{ hover }">
+            <h4
+              v-if="eventOnSaleLoaded"
+              class="font-weight-regular float-right viewAll cursorPointer"
+              :class="{
+                'grey--text': !hover,
+                'blue--text': hover,
+              }"
+              @click="routeToRegistrations"
+            >
+              View all
+            </h4>
+          </v-hover>
         </v-col>
       </v-row>
       <v-row>
@@ -208,7 +273,7 @@
               style="height: 52px;"
             ></div>
           </div>
-          <div v-else class="elevation-2 rounded">
+          <div v-else class="elevation-2 rounded overflowHidden">
             <GChart
               type="BubbleChart"
               :data="conversionBubbleData"
@@ -236,7 +301,7 @@
             >
             </v-img>
           </div>
-          <div v-else class="elevation-2 rounded">
+          <div v-else class="elevation-2 rounded overflowHidden">
             <GChart
               type="GeoChart"
               :data="geoLocationData"
@@ -256,7 +321,7 @@
           >
             <div class="pie-dummy-wrapper"><div class="pie-dummy"></div></div>
           </div>
-          <div v-else class="elevation-2 rounded">
+          <div v-else class="elevation-2 rounded overflowHidden">
             <GChart
               type="PieChart"
               :data="pieChartData"
@@ -282,11 +347,11 @@
               style="height: 52px;"
             ></div>
           </div>
-          <div v-else class="elevation-2 rounded">
+          <div v-else class="elevation-2 rounded overflowHidden">
             <GChart
-              type="PieChart"
-              :data="pieChartData"
-              :options="pieChartOptions"
+              type="AreaChart"
+              :data="conversionAreaData"
+              :options="conversionAreaOptions"
               :resize-debounce="100"
             />
           </div>
@@ -307,11 +372,11 @@
               style="height: 52px;"
             ></div>
           </div>
-          <div v-else class="elevation-2 rounded">
+          <div v-else class="elevation-2 rounded overflowHidden">
             <GChart
-              type="BubbleChart"
-              :data="ticketSaleData"
-              :options="ticketSalechartOptions"
+              type="LineChart"
+              :data="sessionSaleData"
+              :options="sessionSalechartOptions"
               :resize-debounce="100"
             />
           </div>
@@ -332,12 +397,13 @@
               style="height: 52px;"
             ></div>
           </div>
-          <div v-else class="elevation-2 rounded">
+          <div v-else class="elevation-2 rounded overflowHidden white">
             <GChart
-              type="BubbleChart"
-              :data="ticketSaleData"
-              :options="ticketSalechartOptions"
+              type="Timeline"
+              :data="timelineData"
+              :options="timelineOptions"
               :resize-debounce="100"
+              :settings="{ packages: ['timeline'] }"
             />
           </div>
         </v-col>
@@ -356,8 +422,11 @@ import {
   pieData,
 } from './aggregateFilters.js'
 import { formatGQLResult } from '~/utility/gql.js'
+import { getIdFromAtob } from '~/utility'
 import nuxtconfig from '~/nuxt.config'
 import timeAgo from '~/utility/get-time-difference.js'
+import eventList from '~/config/apps/event/gql/eventlist.gql'
+import registrationList from '~/config/apps/event/gql/registrationList.gql'
 export default {
   components: {
     GChart,
@@ -370,20 +439,20 @@ export default {
         legend: 'none',
         height: '316',
         hAxis: { logscale: true },
-        chartArea: { width: '80%', height: '80%' },
+        chartArea: { width: '80%', height: '70%' },
       },
       conversionBubbleData: [['ID', 'Sent', 'Open', 'Country', 'Register']],
       conversionBubbleOptions: {
         legend: 'none',
         height: '316',
-        chartArea: { width: '80%', height: '80%' },
+        chartArea: { width: '80%', height: '70%' },
       },
       geoLocationData: [['City', 'Sale']],
       geoLocationOptions: {
         legend: 'none',
         height: '316',
         displayMode: 'markers',
-        chartArea: { width: '80%', height: '80%' },
+        chartArea: { width: '80%', height: '70%' },
         colorAxis: { colors: ['green', 'yellow'] },
       },
       pieChartData: [['Event', 'Sold']],
@@ -391,37 +460,58 @@ export default {
         legend: 'none',
         height: '316',
         pieHole: 0.4,
-        chartArea: { width: '80%', height: '80%' },
+        chartArea: { width: '80%', height: '70%' },
         colorAxis: { colors: ['green', 'yellow'] },
+      },
+      conversionAreaData: [['ID', 'Sent', 'Open']],
+      conversionAreaOptions: {
+        legend: 'none',
+        height: '316',
+        chartArea: { width: '80%', height: '70%' },
+      },
+      sessionSaleData: [['Id', 'Session Sold']],
+      sessionSalechartOptions: {
+        curveType: 'function',
+        legend: 'none',
+        height: '316',
+        hAxis: { logscale: true },
+        chartArea: { width: '80%', height: '70%' },
+      },
+      timelineData: [],
+      timelineOptions: {
+        legend: 'none',
+        height: '316',
+        chartArea: { width: '80%', height: '70%' },
       },
       eventSummaryData: [
         {
           caption: 'Total Registrations',
-          icon: 'mdi-account-check',
+          icon: 'fa fa-user-check',
           data: '',
           class: 'greenColor',
         },
         {
           caption: 'Abandoned Registrations',
-          icon: 'mdi-account-remove',
+          icon: 'fa fa-user-x',
           data: '',
           class: 'redColor',
+          click: 'routeToAbandoned',
         },
         {
           caption: 'Total Revenue',
-          icon: 'mdi-cash-usd',
+          icon: 'fa fa-banknote',
           data: '',
           class: 'yellowColor',
         },
         {
           caption: 'Tickets Sold',
-          icon: 'mdi-ticket-confirmation',
+          icon: 'fa fa-ticket',
           data: '',
           class: 'blueColor',
         },
         {
           caption: 'Email Conversion',
-          icon: 'mdi-account-convert',
+          icon: 'fa fa-seo-consulting',
           data: '',
           class: 'greenColor',
         },
@@ -464,6 +554,7 @@ export default {
       conversionTrendLoaded: false,
       sessionLoaded: false,
       eventTimelineLoaded: false,
+      hasScroll: false,
     }
   },
   mounted() {
@@ -475,6 +566,29 @@ export default {
     this.getPieData()
   },
   methods: {
+    routeToLiveEvents(method) {
+      this.$router.push('/apps/event/list/Event/All Events')
+    },
+    routeToRegistrations(method) {
+      this.$router.push('/apps/event/list/Registrations/Registrations')
+    },
+    routeToAbandoned(method) {
+      if (method === 'routeToAbandoned') {
+        this.$router.push(
+          '/apps/event/list/Registrations/Abandoned Registrations'
+        )
+      }
+    },
+    routeToEvent(id) {
+      this.$router.push(`/apps/event/event/recurring/${id}`)
+    },
+    routeToRegistration(id) {
+      this.$router.push(`/apps/event/registration/${id}`)
+    },
+    updateScroll() {
+      const block = this.$refs.summaryBlock
+      this.hasScroll = block.scrollWidth > block.clientWidth
+    },
     getURL(id) {
       const attachmentUrl = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Attachments/download/${id}`
       return attachmentUrl
@@ -505,6 +619,24 @@ export default {
           }Events/aggregate?filter=${JSON.stringify(sessionSoldData())}`
         )
         .then((data) => {
+          if (data.data.data.length) {
+            data.data.data.forEach((i) => {
+              if (i.SessionId.length) {
+                i._id.forEach((j, index) => {
+                  const data = i.SessionId.reduce((acc, k) => {
+                    return k.includes(j) ? ++acc : acc
+                  }, 0)
+                  if (data) {
+                    this.sessionSaleData.push([
+                      i.Name + '-' + i.sessionname[index],
+                      data,
+                    ])
+                  }
+                })
+              }
+            })
+            this.sessionLoaded = true
+          }
           return data
         })
         .catch((err) => {
@@ -519,32 +651,34 @@ export default {
           }Registrations/aggregate?filter=${JSON.stringify(ticketSoldData())}`
         )
         .then((data) => {
-          const monthsName = [
-            'Jan',
-            'Feb',
-            'Mar',
-            'Apr',
-            'May',
-            'Jun',
-            'Jul',
-            'Aug',
-            'Sep',
-            'Oct',
-            'Nov',
-            'Dec',
-          ]
-          const today = new Date()
-          for (let i = 0; i < 10; i++) {
-            const present = data.data.data.filter(
-              (j) => j.day === today.getDate()
-            )
-            this.ticketSaleData.push([
-              today.getDate() + '/' + monthsName[today.getMonth()],
-              present.length ? present[0].TicketQuantity : 0,
-            ])
-            today.setDate(today.getDate() - 1)
+          if (data.data.data.length) {
+            const monthsName = [
+              'Jan',
+              'Feb',
+              'Mar',
+              'Apr',
+              'May',
+              'Jun',
+              'Jul',
+              'Aug',
+              'Sep',
+              'Oct',
+              'Nov',
+              'Dec',
+            ]
+            const today = new Date()
+            for (let i = 0; i < 10; i++) {
+              const present = data.data.data.filter(
+                (j) => j.day === today.getDate()
+              )
+              this.ticketSaleData.push([
+                today.getDate() + '/' + monthsName[today.getMonth()],
+                present.length ? present[0].TicketQuantity : 0,
+              ])
+              today.setDate(today.getDate() - 1)
+            }
+            this.ticketSoldLoaded = true
           }
-          this.ticketSoldLoaded = true
           return data
         })
         .catch((err) => {
@@ -559,16 +693,24 @@ export default {
           }Events/aggregate?filter=${JSON.stringify(conversionData())}`
         )
         .then((data) => {
-          data.data.data.forEach((i) => {
-            this.conversionBubbleData.push([
-              i.Event,
-              i.Sent.length,
-              i.Open.filter((j) => j > 0).length,
-              i.Country,
-              i.isRegistered.filter((k) => k === true).length,
-            ])
-          })
-          this.conversionLoaded = true
+          if (data.data.data.length) {
+            data.data.data.forEach((i) => {
+              this.conversionBubbleData.push([
+                i.Event,
+                i.Sent.length,
+                i.Open.filter((j) => j > 0).length,
+                i.Country,
+                i.isRegistered.filter((k) => k === true).length,
+              ])
+              this.conversionAreaData.push([
+                i.Event,
+                i.Sent.length,
+                i.Open.filter((j) => j > 0).length,
+              ])
+            })
+            this.conversionLoaded = true
+            this.conversionTrendLoaded = true
+          }
           return data
         })
         .catch((err) => {
@@ -583,10 +725,12 @@ export default {
           }Registrations/aggregate?filter=${JSON.stringify(geoData())}`
         )
         .then((data) => {
-          data.data.data.forEach((i) => {
-            this.geoLocationData.push([i._id, i.total])
-          })
-          this.geoLocationLoaded = true
+          if (data.data.data.length) {
+            data.data.data.forEach((i) => {
+              this.geoLocationData.push([i._id, i.total])
+            })
+            this.geoLocationLoaded = true
+          }
           return data
         })
         .catch((err) => {
@@ -601,22 +745,24 @@ export default {
           }Events/aggregate?filter=${JSON.stringify(pieData())}`
         )
         .then((data) => {
-          data.data.data.forEach((i) => {
-            if (i.TicketId.length) {
-              i._id.forEach((j, index) => {
-                const data = i.TicketId.reduce((acc, k) => {
-                  return k.includes(j) ? ++acc : acc
-                }, 0)
-                if (data) {
-                  this.pieChartData.push([
-                    i.Name + '-' + i.ticketname[index],
-                    data,
-                  ])
-                }
-              })
-            }
-          })
-          this.pieLoaded = true
+          if (data.data.data.length) {
+            data.data.data.forEach((i) => {
+              if (i.TicketId.length) {
+                i._id.forEach((j, index) => {
+                  const data = i.TicketId.reduce((acc, k) => {
+                    return k.includes(j) ? ++acc : acc
+                  }, 0)
+                  if (data) {
+                    this.pieChartData.push([
+                      i.Name + '-' + i.ticketname[index],
+                      data,
+                    ])
+                  }
+                })
+              }
+            })
+            this.pieLoaded = true
+          }
           return data
         })
         .catch((err) => {
@@ -628,41 +774,108 @@ export default {
     eventInfo: {
       query() {
         return gql`
-          query {
-            Event {
-              EventFind(filter: { limit: 4, order: "StartDate", skip: 0 }) {
-                edges {
-                  node {
-                    id
-                    Attende {
-                      totalCount
-                    }
-                    Images
-                    Title
-                  }
-                }
-              }
-            }
-          }
+          ${eventList}
         `
       },
       variables() {
         return {
-          filters: {},
-          where: {},
+          filters: {
+            limit: 4,
+            order: 'createdDate DESC',
+            skip: 0,
+            where: {
+              and: [{ Status: 'Open for registration' }],
+            },
+          },
+          where: {
+            and: [{ Status: 'Open for registration' }],
+          },
         }
       },
       update(data) {
         const eventData = formatGQLResult(data, 'Event')
-        this.eventOnSaleData = eventData.map((item, index) => {
-          return {
-            imageUrl: item.Images.length ? item.Images[0] : '',
-            title: item.Title,
-            attendeeCount: item.Attende.totalCount,
-            class: this.eventOnSaleData[index].class,
-          }
-        })
-        this.eventOnSaleLoaded = true
+        if (eventData.length) {
+          this.eventOnSaleData = eventData.map((item, index) => {
+            return {
+              imageUrl: item.Images.length ? item.Images[0] : '',
+              title: item.Title,
+              attendeeCount: item.Attende.totalCount,
+              class: this.eventOnSaleData[index].class,
+              id: getIdFromAtob(item.id),
+              type: item.BusinessType,
+              date: item.StartDate
+                ? new Date(item.StartDate).toString().split(' ')[2]
+                : '',
+              month: item.StartDate
+                ? new Date(item.StartDate).toString().split(' ')[1]
+                : '',
+              location: item.VenueName ? item.VenueName : '',
+            }
+          })
+          this.eventOnSaleLoaded = true
+        }
+      },
+      error(error) {
+        this.error = error
+        this.loading = 0
+      },
+      prefetch: false,
+      loadingKey: 'loading',
+      skip: false,
+      pollInterval: 0,
+    },
+    timelineInfo: {
+      query() {
+        return gql`
+          ${eventList}
+        `
+      },
+      variables() {
+        return {
+          filters: {
+            limit: 4,
+            order: 'id DESC',
+            skip: 0,
+            where: {
+              and: [
+                { Status: { neq: 'Not ready' } },
+                { EndDate: { gte: new Date().toISOString() } },
+                {
+                  or: [
+                    { StartDate: { lte: new Date().toISOString() } },
+                    { StartDate: { gte: new Date().toISOString() } },
+                  ],
+                },
+              ],
+            },
+          },
+          where: {
+            and: [
+              { Status: { neq: 'Not ready' } },
+              { EndDate: { gte: new Date().toISOString() } },
+              {
+                or: [
+                  { StartDate: { lte: new Date().toISOString() } },
+                  { StartDate: { gte: new Date().toISOString() } },
+                ],
+              },
+            ],
+          },
+        }
+      },
+      update(data) {
+        const eventData = formatGQLResult(data, 'Event')
+        this.timelineData = []
+        if (eventData.length) {
+          eventData.forEach((element) => {
+            this.timelineData.push([
+              element.Title,
+              new Date(element.StartDate),
+              new Date(element.EndDate),
+            ])
+          })
+          this.eventTimelineLoaded = true
+        }
       },
       error(error) {
         this.error = error
@@ -676,44 +889,31 @@ export default {
     registrationInfo: {
       query() {
         return gql`
-          query {
-            Registration {
-              RegistrationFind(
-                filter: { limit: 4, order: "id DESC", skip: 0 }
-              ) {
-                edges {
-                  node {
-                    id
-                    EventName
-                    FullName
-                    Status
-                    createdDate
-                  }
-                }
-              }
-            }
-          }
+          ${registrationList}
         `
       },
       variables() {
         return {
-          filters: {},
+          filters: { limit: 4, order: 'id DESC', skip: 0 },
           where: {},
         }
       },
       update(data) {
         const registrationData = formatGQLResult(data, 'Registration')
-        this.recentBuyersData = registrationData.map((item, index) => {
-          return {
-            title: item.Title,
-            eventName: item.EventName,
-            creatorName: item.FullName,
-            status: item.Status,
-            time: timeAgo(item.createdDate),
-            class: this.recentBuyersData[index].class,
-          }
-        })
-        this.recentBuyersLoaded = true
+        if (registrationData.length) {
+          this.recentBuyersData = registrationData.map((item, index) => {
+            return {
+              title: item.Title,
+              eventName: item.EventName,
+              creatorName: item.FullName,
+              status: item.Status,
+              time: timeAgo(item.createdDate),
+              class: this.recentBuyersData[index].class,
+              id: getIdFromAtob(item.id),
+            }
+          })
+          this.recentBuyersLoaded = true
+        }
       },
       error(error) {
         this.error = error
@@ -727,3 +927,11 @@ export default {
   },
 }
 </script>
+<style scoped>
+.attendeeCount {
+  position: absolute;
+  right: 10px;
+  bottom: 5px;
+  text-align: right;
+}
+</style>
