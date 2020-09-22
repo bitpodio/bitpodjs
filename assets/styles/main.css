@@ -92,14 +92,14 @@ body {
   max-width: 130px;
 }
 .wd-full {
-  width: -webkit-fill-available;
+  width: 80%;
 }
 .nav-title {
-  font-size: 14px !important;
+  font-size: 15px !important;
   font-weight: 400 !important;
 }
 .nav-subheader {
-  font-size: 14px !important;
+  font-size: 15px !important;
 }
 .app-name {
   font-size: 24px;
@@ -240,6 +240,9 @@ body {
   overflow-x: auto !important;
   margin-bottom: 0px;
 }
+.v-application .boxview .v-data-table {
+  padding: 0 !important;
+}
 .contactsGrid {
   overflow: auto;
   max-height: 480px !important;
@@ -273,7 +276,10 @@ body {
 .v-data-table > .v-data-table__wrapper > table > thead > tr > th {
   padding-left: 0 !important;
 }
-
+.logo-bitpod {
+  width: 30px;
+  height: 40px;
+}
 @media (max-width: 600px) {
   .slide-form,
   .slide-form-default {
