@@ -14,26 +14,10 @@
         >
           <v-card class="elevation-1 pa-2">
             <div v-if="!item.Images.length" class="overflow-h rounded-0">
-              <!-- <v-img
-                src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-                lazy-src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
-                aspect-ratio="1"
-                class="tile-img rounded-0"
-              >
-                <template v-slot:placeholder>
-                  <v-row
-                    class="fill-height ma-0"
-                    align="center"
-                    justify="center"
-                  >
-                    <v-progress-circular
-                      indeterminate
-                      color="grey lighten-5"
-                    ></v-progress-circular>
-                  </v-row>
-                </template>
-              </v-img> -->
-              <geo-pattern style="height: 170px;" />
+              <v-flex
+                class="tile-img tile-pattern rounded-0"
+                :style="{ 'background-image': getRandomImage(item.Title) }"
+              ></v-flex>
             </div>
             <v-img
               v-for="image in item.Images"
@@ -147,6 +131,9 @@ export default {
       }Attachments${isDownloadLink ? '/download' : ''}${id ? '/' + id : ''}`
       return attachmentUrl
     },
+    getRandomImage(name) {
+      return window.GeoPattern.generate(name).toDataUrl()
+    },
   },
 }
 </script>
@@ -163,5 +150,9 @@ export default {
 }
 .overflow-h {
   overflow: hidden;
+}
+.tile-pattern {
+  background-size: cover;
+  height: 170px;
 }
 </style>
