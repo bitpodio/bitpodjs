@@ -539,7 +539,7 @@
       </div>
     </v-flex>
     <v-flex column xs12 sm4 md4 lg4>
-      <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 py-0 box-grey">
+      <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 py-0 pr-2 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-0">
             <i class="fa fa-info-circle pr-1" aria-hidden="true"></i> Event
@@ -576,7 +576,7 @@
         </v-flex>
       </div>
 
-      <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pb-0 box-grey">
+      <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-0 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-0">
             <i class="fa fa-tag pr-1" aria-hidden="true"></i> SEO Details
@@ -603,7 +603,7 @@
         </v-flex>
       </div>
 
-      <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pb-0 box-grey">
+      <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-0 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-0">
             <i class="fa fa-settings pr-1" aria-hidden="true"></i> Event
@@ -701,7 +701,7 @@
         </v-flex>
       </div>
 
-      <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pb-0 box-grey">
+      <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-0 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-0">
             <i class="fa fa-settings pr-1" aria-hidden="true"></i>
