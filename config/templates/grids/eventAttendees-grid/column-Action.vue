@@ -24,21 +24,23 @@ export default {
   props: ['item', 'value', 'context', 'refresh'],
   methods: {
     updateDate() {
-      confirm('are you sure, you want to cancel check in?')
-      this.$axios
-        .$put(
-          `https://${nuxtconfig.axios.eventUrl}/svc/api/Attes/${this.item.id}`,
-          {
-            CheckIn: null,
-          }
-        )
-        .then((res) => {
-          this.refresh()
-          return res
-        })
-        .catch((e) => {
-          console.log('error', e)
-        })
+      const res = confirm('are you sure, you want to cancel check in?')
+      if (res) {
+        this.$axios
+          .$put(
+            `https://${nuxtconfig.axios.eventUrl}/svc/api/Attes/${this.item.id}`,
+            {
+              CheckIn: null,
+            }
+          )
+          .then((res) => {
+            this.refresh()
+            return res
+          })
+          .catch((e) => {
+            console.log('error', e)
+          })
+      }
     },
   },
 }

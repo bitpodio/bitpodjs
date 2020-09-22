@@ -691,6 +691,7 @@
 import gql from 'graphql-tag'
 import format from 'date-fns/format'
 import editEventForm from '../../_id/editEventForm.vue'
+import nuxtconfig from '../../../../../../nuxt.config'
 import editSeoForm from '~/pages/apps/_app/event/_id/editSeoForm.vue'
 import editEventSetting from '~/pages/apps/_app/event/_id/editEventSetting.vue'
 import editSiteSetting from '~/pages/apps/_app/event/_id/editSiteSetting.vue'
@@ -699,7 +700,6 @@ import Grid from '~/components/common/grid'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin } from '~/utility'
-import nuxtConfig from '../../../../../../nuxt.config'
 
 export default {
   layout: 'event',
@@ -792,8 +792,8 @@ export default {
         const event = formatGQLResult(data, 'Event')
         const badge = formatGQLResult(data, 'Badge')
         const eventSummary = data.Event.EventGetEventSummery
-        this.eventUniqueLink = `https://${nuxtConfig.axios.eventUrl}/e/${event[0].UniqLink}`
-        this.eventSessionLink = `https://${nuxtConfig.axios.eventUrl}/t/${event[0].UniqLink}`
+        this.eventUniqueLink = `https://${nuxtconfig.axios.eventUrl}/e/${event[0].UniqLink}`
+        this.eventSessionLink = `https://${nuxtconfig.axios.eventUrl}/t/${event[0].UniqLink}`
         return {
           event: event.length > 0 ? event[0] : {},
           badge: badge.length > 0 ? badge[0] : {},

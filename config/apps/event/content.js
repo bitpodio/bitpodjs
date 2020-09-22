@@ -80,28 +80,6 @@ export default {
             newForm: false,
             editForm: true,
           },
-          Timezone: {
-            form: {
-              caption: 'Timezone *',
-              displayOrder: 11,
-            },
-            displayOrder: 3,
-            caption: 'Timezone',
-            searchEnable: true,
-            sortEnable: true,
-            columnWidth: '150px',
-            type: 'timezone',
-            hidden: true,
-            inlineEdit: true,
-            newForm: false,
-            editForm: true,
-            cssClasses: 'col-4 col-md-4',
-            rules: [
-              (v) => {
-                return !!v || 'Timezone is required'
-              },
-            ],
-          },
           StartDate: {
             form: {
               caption: 'Start Date *',
@@ -143,6 +121,28 @@ export default {
             rules: [
               (v) => {
                 return !!v || 'End Date is required'
+              },
+            ],
+          },
+          Timezone: {
+            form: {
+              caption: 'Timezone *',
+              displayOrder: 11,
+            },
+            displayOrder: 3,
+            caption: 'Timezone',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'timezone',
+            hidden: true,
+            inlineEdit: true,
+            newForm: false,
+            editForm: true,
+            cssClasses: 'col-4 col-md-4',
+            rules: [
+              (v) => {
+                return !!v || 'Timezone is required'
               },
             ],
           },
@@ -1616,9 +1616,13 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
+            default: '0',
             minimumValue: '1',
             readonly(value, data) {
               const type = data.Type
+              if (data.Type === 'Free' && this.formData) {
+                this.formData.Amount = 0
+              }
               return type === 'Free' || type === ''
             },
             rules: [
@@ -1629,23 +1633,6 @@ export default {
                 return (
                   /^[0-9]\d*$|^$/.test(value) || 'Price should not be negative'
                 )
-              },
-              function (value, data) {
-                const type = data.Type
-                if (type === 'Paid' || type === 'Donation') {
-                  data.Amount = 1
-                  return (
-                    /^[1-9]\d*$|^$/.test(value) ||
-                    'Price should be greater than 0'
-                  )
-                }
-                if (type === 'Free') {
-                  data.Amount = 0
-                  return (
-                    /^[1-9]\d*$|^$/.test(value) ||
-                    'Price should be greater than 0'
-                  )
-                }
               },
             ],
           },
@@ -1753,7 +1740,7 @@ export default {
           },
           DisplayOrder: {
             form: {
-              caption: 'Display Order',
+              caption: 'Display Order *',
               displayOrder: 9,
             },
             displayOrder: 6,
@@ -1809,17 +1796,17 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
-            rules: [
-              (v) => {
-                return !!v || 'Start is required'
-              },
-              (v, data) => {
-                return (
-                  (!!v && data.EndDate > new Date(v)) ||
-                  'Start Date should be less than End Date'
-                )
-              },
-            ],
+            // rules: [
+            //   (v) => {
+            //     return !!v || 'Start is required'
+            //   },
+            //   (v, data) => {
+            //     return (
+            //       (!!v && data.EndDate > new Date(v)) ||
+            //       'Start Date should be less than End Date'
+            //     )
+            //   },
+            // ],
           },
           EndDate: {
             form: {
@@ -1838,18 +1825,18 @@ export default {
             newForm: true,
             editForm: true,
             default: addMonths(new Date(), 1),
-            rules: [
-              function (v) {
-                debugger
-                const eventEndDate = this.context.event.EndDate
-                const isValidEndDate =
-                  eventEndDate > (v && new Date(v).toISOString())
-                return (
-                  !!isValidEndDate ||
-                  'Ticket end date should be less than event end date.'
-                )
-              },
-            ],
+            // rules: [
+            //   function (v) {
+            //     debugger
+            //     const eventEndDate = this.context.event.EndDate
+            //     const isValidEndDate =
+            //       eventEndDate > (v && new Date(v).toISOString())
+            //     return (
+            //       !!isValidEndDate ||
+            //       'Ticket end date should be less than event end date.'
+            //     )
+            //   },
+            // ],
           },
           ValidateQty: {
             form: {
@@ -2870,7 +2857,7 @@ export default {
           },
           SurveyId: {
             form: {
-              caption: 'Survey List',
+              caption: 'Survey List *',
               displayOrder: 7,
             },
             cssClasses: 'col-12 col-md-12',
@@ -2882,11 +2869,21 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
-            // rules: [
-            //   (v) => {
-            //     return !!v || 'Survey is required'
-            //   },
-            // ],
+            rules: [
+              (v, data) => {
+                debugger
+                const category = data.Category
+                if (category === 'Survey Invite') {
+                  return !!v || 'Action is required'
+                } else if (
+                  category === 'Registration Email' ||
+                  category === 'Calendar Invite' ||
+                  category === 'Email'
+                ) {
+                  return true
+                }
+              },
+            ],
             visible(value, data) {
               const category = data.Category
               if (category === 'Survey Invite') {
@@ -2908,11 +2905,16 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
-            // rules: [
-            //   (v) => {
-            //     return !!v || 'Template is required'
-            //   },
-            // ],
+            rules: [
+              function (value, data) {
+                const category = data.Category
+                if (category === 'Email') {
+                  return !!value || 'Template is required'
+                } else {
+                  return true
+                }
+              },
+            ],
             visible(value, data) {
               const category = data.Category
               return category === 'Email'
@@ -2943,11 +2945,14 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
-            rules: [
-              (v) => {
-                return !!v || 'DueDate is required'
-              },
-            ],
+            // rules: [
+            //   function (value, data) {
+            //     const status = data.Status
+            //     if (status === 'Schedule') {
+            //       return !!value || 'DueDate is required'
+            //     }
+            //   },
+            // ],
             visible(value, data) {
               const category = data.Category
               const status = data.Status
@@ -2973,8 +2978,12 @@ export default {
             newForm: true,
             editForm: true,
             // rules: [
-            //   (v) => {
-            //     return !!v || 'Timezone is required'
+            //   function (value, data) {
+            //     const status = data.Status
+            //     const category = data.Category
+            //     if ((status === 'Schedule' || status === 'Wait for an Action') && (category === 'Survey Invite' || category === 'Email')  ) {
+            //       return !!value || 'DueDate is required'
+            //     }
             //   },
             // ],
             visible(value, data) {
@@ -5760,7 +5769,7 @@ export default {
             searchEnable: true,
             sortEnable: true,
             columnWidth: '130px',
-            type: 'string',
+            type: 'tags',
             hidden: true,
             newForm: true,
             editForm: true,
