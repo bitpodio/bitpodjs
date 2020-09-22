@@ -1043,12 +1043,11 @@ export default {
           const res = await this.$axios.$put(
             `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/Others/rel/${id}`
           )
-          setTimeout(() => {
+          if(res){
             this.snackbarText = 'Attachment added successfully'
             this.snackbar = true
             this.refresh()
-          }, 5000)
-          return res
+          }
         })
       } catch (e) {
         console.log('Error', e)

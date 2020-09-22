@@ -1,14 +1,14 @@
 <template>
   <div>
     <v-snackbar v-model="snackbar" :timeout="timeout" top="true" width="10">
-      <div class="toast py-2 pr-1 pl-5 text-h2 text-center">
+      <div
+        class="toast py-2 pr-1 pl-5 text-h6 light font-weight-regular text-center"
+      >
         {{ snackbarText }}
       </div>
     </v-snackbar>
     <input v-show="false" type="text" :class="uniqueId" :value="textToCopy" />
-    <v-icon size="18" :class="`${uniqueId}btn`" @click="onCopy"
-      >mdi-content-copy</v-icon
-    >
+    <v-icon size="18" :class="`${uniqueId}btn`">mdi-content-copy</v-icon>
   </div>
 </template>
 
@@ -33,31 +33,33 @@ export default {
       timeout: 1000,
     }
   },
+  mounted() {
+    const writeBtn = document.querySelector(`.${this.uniqueId}btn`)
+    writeBtn.addEventListener('click', this.clickListener)
+  },
+  beforeDestroy() {
+    const writeBtn = document.querySelector(`.${this.uniqueId}btn`)
+    if (writeBtn) {
+      writeBtn.removeEventListener('click', this.clickListener)
+    }
+  },
   methods: {
-    onCopy() {
+    async clickListener() {
       const writeBtn = document.querySelector(`.${this.uniqueId}btn`)
       const inputEl = document.querySelector(`.${this.uniqueId}`)
-
-      writeBtn.addEventListener('click', () => {
-        const inputValue = inputEl.value.trim()
-        if (inputValue) {
-          navigator.clipboard
-            .writeText(inputValue)
-            .then(() => {
-              inputEl.value = ''
-              if (writeBtn.textContent !== 'Copied!') {
-                const originalText = writeBtn.textContent
-                this.snackbar = true
-                setTimeout(() => {
-                  writeBtn.textContent = originalText
-                }, 1500)
-              }
-            })
-            .catch((err) => {
-              console.log('Something went wrong', err)
-            })
+      const inputValue = inputEl.value.trim()
+      if (inputValue) {
+        try {
+          await navigator.clipboard.writeText(inputValue)
+          inputEl.value = ''
+          if (writeBtn.textContent !== 'Copied!') {
+            const originalText = writeBtn.textContent
+            this.snackbar = true
+          }
+        } catch (e) {
+          console.log('Something went wrong', err)
         }
-      })
+      }
     },
   },
 }
