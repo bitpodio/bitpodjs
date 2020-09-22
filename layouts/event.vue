@@ -352,7 +352,7 @@ export default {
     message: false,
     items: [
       {
-        icon: 'fa fa fa-grid',
+        icon: 'fa fa-grid',
         text: 'Eventboard',
         to: '/apps/event/eventboard',
       },
