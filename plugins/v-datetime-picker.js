@@ -1,4 +1,4 @@
 import Vue from 'vue'
-import vDatetimePicker from '~/components/common/form/datetime-picker.vue'
+import VDatetimePicker from '~/components/common/form/datetime-picker.vue'
 
-Vue.component('v-datetime-picker', vDatetimePicker)
+Vue.component('v-datetime-picker', VDatetimePicker)
