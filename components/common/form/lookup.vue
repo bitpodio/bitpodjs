@@ -10,6 +10,7 @@
       :multiple="field.multiple"
       :rules="rules"
       outlined
+      dense
       @change="onLookupChange"
     ></v-autocomplete>
   </div>
@@ -56,8 +57,8 @@ export default {
       default: () => [],
     },
     onChange: {
-      type: Array,
-      required: true,
+      type: Function,
+      required: false,
       default: () => null,
     },
   },

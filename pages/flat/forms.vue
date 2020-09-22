@@ -345,13 +345,3 @@ export default {
   methods: {},
 }
 </script>
-
-<style>
-.slide-form {
-  position: fixed !important;
-  right: 0 !important;
-  bottom: 0 !important;
-  width: calc(100% - 300px) !important;
-  max-height: calc(100% - 100px) !important;
-}
-</style>
