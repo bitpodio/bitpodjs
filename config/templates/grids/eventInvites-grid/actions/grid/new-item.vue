@@ -20,7 +20,9 @@
           v-on="on"
           @click="campaignFormDisplayed"
         >
-          <v-icon dark left>mdi-plus</v-icon>
+          <v-icon dark left>{{
+            template === 'General Template' ? 'mdi-email-outline' : 'mdi-plus'
+          }}</v-icon>
           {{ buttonLabel }}
         </v-btn>
       </template>
@@ -36,11 +38,11 @@
                 <v-icon>mdi-close</v-icon>
               </v-btn>
             </div>
-            <v-tabs v-model="curentTab" height="36">
+            <v-tabs ref="slider" v-model="curentTab" height="36">
               <v-tab class="px-0 mr-4">Basic Info</v-tab>
-              <v-tab class="px-0 mr-4">Content</v-tab>
-              <v-tab class="px-0 mr-4">Contacts</v-tab>
-              <v-tab class="px-0 mr-4">Verify</v-tab>
+              <v-tab :disabled="invalid" class="px-0 mr-4">Content</v-tab>
+              <v-tab :disabled="invalid" class="px-0 mr-4">Contacts</v-tab>
+              <v-tab :disabled="invalid" class="px-0 mr-4">Verify</v-tab>
             </v-tabs>
           </v-card-title>
           <v-card-text
@@ -54,49 +56,69 @@
                     invite and then press next.
                   </p>
                   <div class="pr-3 pt-1">
-                    <v-row>
-                      <v-col cols="12" class="pb-0">
-                        <v-text-field
-                          v-model="subject"
-                          label="Subject *"
-                          outlined
-                          dense
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12" class="pb-0">
-                        <v-text-field
-                          v-model="senderName"
-                          label="Sender Name"
-                          outlined
-                          dense
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12" class="pb-0">
-                        <v-text-field
-                          v-model="sender"
-                          label="Sender *"
-                          outlined
-                          dense
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12" class="pb-0">
-                        <v-text-field
-                          v-model="setReplyTo"
-                          label="Set reply-to *"
-                          outlined
-                          dense
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12" class="pb-0">
-                        <v-icon class="amber--text">fa-bulb</v-icon>
-                        <v-card-text class="d-inline pa-0">
-                          You may refer invite members data by using placeholder
-                          expressions in subject line. e.g: ${Contact.FirstName}
-                          ${Contact.LastName}
-                          ${OrganizationInfo.Name}</v-card-text
-                        >
-                      </v-col>
-                    </v-row>
+                    <v-form ref="form">
+                      <v-row>
+                        <v-col cols="12" class="pb-0">
+                          <v-text-field
+                            v-model="subject"
+                            label="Subject *"
+                            outlined
+                            dense
+                            :rules="[
+                              (v) => {
+                                invalid = !subject || !sender || !setReplyTo
+                                return v ? true : 'This field is required'
+                              },
+                            ]"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12" class="pb-0">
+                          <v-text-field
+                            v-model="senderName"
+                            label="Sender Name"
+                            outlined
+                            dense
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12" class="pb-0">
+                          <v-text-field
+                            v-model="sender"
+                            label="Sender *"
+                            outlined
+                            dense
+                            :rules="[
+                              (v) => {
+                                invalid = !subject || !sender || !setReplyTo
+                                return v ? true : 'This field is required'
+                              },
+                            ]"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12" class="pb-0">
+                          <v-text-field
+                            v-model="setReplyTo"
+                            label="Set reply-to *"
+                            outlined
+                            dense
+                            :rules="[
+                              (v) => {
+                                invalid = !subject || !sender || !setReplyTo
+                                return v ? true : 'This field is required'
+                              },
+                            ]"
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12" class="pb-0">
+                          <v-icon class="amber--text">fa-bulb</v-icon>
+                          <v-card-text class="d-inline pa-0">
+                            You may refer invite members data by using
+                            placeholder expressions in subject line. e.g:
+                            ${Contact.FirstName} ${Contact.LastName}
+                            ${OrganizationInfo.Name}</v-card-text
+                          >
+                        </v-col>
+                      </v-row>
+                    </v-form>
                   </div>
                 </v-card>
               </v-tab-item>
@@ -786,7 +808,20 @@ export default {
       selectAll: false,
       priorInviteeSelected: [],
       validDate: false,
+      invalid: true,
     }
+  },
+  watch: {
+    curentTab(newVal, oldVal) {
+      if (oldVal === 0) {
+        this.$refs.form.validate()
+        if (!this.subject || !this.setReplyTo || !this.sender) {
+          event.stopPropagation()
+          this.$refs.slider.$data.internalLazyValue = 0
+          this.curentTab = 0
+        }
+      }
+    },
   },
   methods: {
     campaignFormDisplayed() {
