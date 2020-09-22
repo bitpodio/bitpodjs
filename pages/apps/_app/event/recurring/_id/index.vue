@@ -451,8 +451,8 @@
             Information
           </h2>
           <v-spacer></v-spacer>
-          <v-btn text small @click.stop="eventform = true">
-            <v-icon left>fa-pencil</v-icon>Edit
+          <v-btn text small @click.stop="eventForm = true">
+            <v-icon left>mdi-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
         <v-divider></v-divider>
@@ -521,8 +521,8 @@
             Settings
           </h2>
           <v-spacer></v-spacer>
-          <v-btn text small @click="formdialog1 = true">
-            <v-icon left>fa-pencil</v-icon>Edit
+          <v-btn text small @click="eventSetting = true">
+            <v-icon left>mdi-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
         <v-divider></v-divider>
@@ -548,11 +548,11 @@
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">Event Link</div>
-          <div class="body-1">{{ formatField(data.event.UniqLink) }}</div>
+          <div class="body-1">{{ formatField(eventUniqueLink) }}</div>
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">Session Link</div>
-          <div class="body-1">{{ formatField(data.event.UniqLink) }}</div>
+          <div class="body-1">{{ formatField(eventSessionLink) }}</div>
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">Cancelation Policy</div>
@@ -610,6 +610,20 @@
             <span class="ml-2">Notify organizer when someone registers</span>
           </span>
         </v-flex>
+        <v-flex my-3>
+          <span v-if="data.event.showTimezone === true">
+            <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
+            <span class="ml-2"
+              >Allow user to select a time zone for recurring event</span
+            >
+          </span>
+          <span v-else>
+            <v-icon>mdi-checkbox-blank-outline</v-icon>
+            <span class="ml-2"
+              >Allow user to select a time zone for recurring event</span
+            >
+          </span>
+        </v-flex>
       </div>
 
       <div class="xs12 sm4 md4 lg4 boxview pa-3 mb-2">
@@ -619,8 +633,8 @@
             Registration Page Settings
           </h2>
           <v-spacer></v-spacer>
-          <v-btn text small @click="sitesetting = true">
-            <v-icon left>fa-pencil</v-icon>Edit
+          <v-btn text small @click="siteSetting = true">
+            <v-icon left>mdi-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
         <v-divider></v-divider>
@@ -663,25 +677,34 @@
       </div>
     </v-flex>
     <editSeoForm :seo-form.sync="seoForm" />
+    <editEventForm :event-form.sync="eventForm" />
+    <editEventSetting :event-setting.sync="eventSetting" />
+    <editSiteSetting :site-setting.sync="siteSetting" />
     <makeCopy :is-make-copy.sync="isMakeCopy" />
   </v-flex>
 </template>
 <script>
 import gql from 'graphql-tag'
 import format from 'date-fns/format'
+import editEventForm from '../../_id/editEventForm.vue'
 import editSeoForm from '~/pages/apps/_app/event/_id/editSeoForm.vue'
+import editEventSetting from '~/pages/apps/_app/event/_id/editEventSetting.vue'
+import editSiteSetting from '~/pages/apps/_app/event/_id/editSiteSetting.vue'
 import makeCopy from '~/pages/apps/_app/event/_id/makeCopy.vue'
 import Grid from '~/components/common/grid'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin } from '~/utility'
-import nuxtconfig from '~/nuxt.config'
+import nuxtConfig from '../../../../../../nuxt.config'
 
 export default {
   layout: 'event',
   components: {
     Grid,
     editSeoForm,
+    editEventForm,
+    editEventSetting,
+    editSiteSetting,
     makeCopy,
   },
   mixins: [configLoaderMixin],
@@ -689,6 +712,9 @@ export default {
     return {
       loading: 0,
       seoForm: false,
+      eventForm: false,
+      eventSetting: false,
+      siteSetting: false,
       isMakeCopy: false,
       dialog: false,
       copylinks: false,
@@ -697,6 +723,8 @@ export default {
         badge: {},
         eventSummary: {},
       },
+      eventUniqueLink: '',
+      eventSessionLink: '',
     }
   },
   computed: {
@@ -760,6 +788,8 @@ export default {
         const event = formatGQLResult(data, 'Event')
         const badge = formatGQLResult(data, 'Badge')
         const eventSummary = data.Event.EventGetEventSummery
+        this.eventUniqueLink = `https://${nuxtConfig.axios.eventUrl}/e/${event[0].UniqLink}`
+        this.eventSessionLink = `https://${nuxtConfig.axios.eventUrl}/t/${event[0].UniqLink}`
         return {
           event: event.length > 0 ? event[0] : {},
           badge: badge.length > 0 ? badge[0] : {},
