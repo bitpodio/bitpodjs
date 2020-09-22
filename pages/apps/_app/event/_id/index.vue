@@ -270,7 +270,7 @@
               >
                 <v-list-item-title>
                   <File
-                    :field="fileField"
+                    :field="otherFileField"
                     :no-btn-look="true"
                     :block="true"
                     :open-file-dialog="otherDialog"
@@ -287,76 +287,14 @@
         <v-card
           v-for="image in data.event.Images"
           :key="image"
-          class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0"
-          @click.stop="logoDialog = true"
+          class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0 cardImg"
+          :class="{ 'on-hover': hover }"
         >
-          <v-img
-            :src="getAttachmentLink(image, true)"
-            :lazy-src="getAttachmentLink(image, true)"
-            aspect-ratio="1"
-            class="grey lighten-2"
-            max-width="150"
-            max-height="150"
-            width="150"
-          >
-            <template v-slot:placeholder>
-              <v-row class="fill-height ma-0" align="center" justify="center">
-                <v-progress-circular
-                  indeterminate
-                  color="grey lighten-5"
-                ></v-progress-circular>
-              </v-row>
-            </template>
-          </v-img>
-          <v-card-text>{{ logoName }}</v-card-text>
-        </v-card>
-        <v-dialog v-model="logoDialog" max-width="600">
-          <v-card>
-            <v-card-title class="pa-1">
-              <v-spacer></v-spacer>
-              <div>
-                <v-btn icon @click="logoDialog = false">
-                  <v-icon>mdi-close</v-icon>
-                </v-btn>
-              </div>
-            </v-card-title>
-            <v-card-text class="pa-1">
-              <v-card
-                v-for="image in data.event.Images"
-                :key="image"
-                class="mx-auto elevation-0"
-                @click.stop="logoDialog = true"
-              >
-                <v-img
-                  :src="getAttachmentLink(image, true)"
-                  :lazy-src="getAttachmentLink(image, true)"
-                  aspect-ratio="1"
-                  class="grey lighten-2"
-                  width="100%"
-                >
-                  <template v-slot:placeholder>
-                    <v-row
-                      class="fill-height ma-0"
-                      align="center"
-                      justify="center"
-                    >
-                      <v-progress-circular
-                        indeterminate
-                        color="grey lighten-5"
-                      ></v-progress-circular>
-                    </v-row>
-                  </template>
-                </v-img>
-              </v-card>
-            </v-card-text>
-          </v-card>
-        </v-dialog>
-        <v-card
-          v-for="image in data.event.Logo"
-          :key="image"
-          class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0"
-          @click.stop="bannerDialog = true"
-        >
+          <span class="cardDelete">
+            <v-icon class="pa-1" text @click="deleteBannerFile(e, image)"
+              >mdi-delete</v-icon
+            >
+          </span>
           <v-img
             :src="getAttachmentLink(image, true)"
             :lazy-src="getAttachmentLink(image, true)"
@@ -366,6 +304,7 @@
             max-height="150"
             width="150"
             contain
+            @click.stop="bannerDialog = true"
           >
             <template v-slot:placeholder>
               <v-row class="fill-height ma-0" align="center" justify="center">
@@ -376,7 +315,18 @@
               </v-row>
             </template>
           </v-img>
-          <v-card-text>{{ bannerName }}</v-card-text>
+          <v-flex class="mt-1 d-flex">
+            <v-card-text class="pa-0 pb-1 d-inline-block text-truncate"
+              ><a
+                class="d-inline-block text-truncate anchorTag"
+                :href="getAttachmentLink(image, true)"
+                >{{ bannerName }}</a
+              ></v-card-text
+            >
+            <v-spacer></v-spacer>
+            <copy :text-to-copy="getImageUrl(image)" :unique-id="image" />
+          </v-flex>
+          <v-card-text class="pa-0 mt-n2">Event Banner</v-card-text>
         </v-card>
         <v-dialog v-model="bannerDialog" max-width="600">
           <v-card>
@@ -390,7 +340,7 @@
             </v-card-title>
             <v-card-text class="pa-1">
               <v-card
-                v-for="image in data.event.Logo"
+                v-for="image in data.event.Images"
                 :key="image"
                 class="mx-auto elevation-0"
                 @click.stop="bannerDialog = true"
@@ -420,11 +370,13 @@
           </v-card>
         </v-dialog>
         <v-card
-          v-for="image in data.event.Other"
+          v-for="image in data.event.Logo"
           :key="image"
-          class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0"
-          @click.stop="otherDialogOpen = true"
+          class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0 cardImg"
         >
+          <span class="cardDelete">
+            <v-icon text @click="deleteLogoFile(image)">mdi-delete</v-icon>
+          </span>
           <v-img
             :src="getAttachmentLink(image, true)"
             :lazy-src="getAttachmentLink(image, true)"
@@ -433,6 +385,8 @@
             max-width="150"
             max-height="150"
             width="150"
+            contain
+            @click.stop="logoDialog = true"
           >
             <template v-slot:placeholder>
               <v-row class="fill-height ma-0" align="center" justify="center">
@@ -443,7 +397,97 @@
               </v-row>
             </template>
           </v-img>
-          <v-card-text>{{ OtherImageName }}</v-card-text>
+          <v-flex class="mt-1 d-flex">
+            <v-card-text class="pa-0 pb-1 d-inline-block"
+              ><a
+                class="d-inline-block text-truncate anchorTag"
+                :href="getAttachmentLink(image, true)"
+                >{{ logoName }}</a
+              ></v-card-text
+            >
+            <copy :text-to-copy="getImageUrl(image)" :unique-id="image" />
+          </v-flex>
+          <v-card-text class="pa-0 mt-n2">Logo Image</v-card-text>
+        </v-card>
+        <v-dialog v-model="logoDialog" max-width="600">
+          <v-card>
+            <v-card-title class="pa-1">
+              <v-spacer></v-spacer>
+              <div>
+                <v-btn icon @click="logoDialog = false">
+                  <v-icon>mdi-close</v-icon>
+                </v-btn>
+              </div>
+            </v-card-title>
+            <v-card-text class="pa-1">
+              <v-card
+                v-for="image in data.event.Logo"
+                :key="image"
+                class="mx-auto elevation-0"
+                @click.stop="logoDialog = true"
+              >
+                <v-img
+                  :src="getAttachmentLink(image, true)"
+                  :lazy-src="getAttachmentLink(image, true)"
+                  aspect-ratio="1"
+                  class="grey lighten-2"
+                  width="100%"
+                >
+                  <template v-slot:placeholder>
+                    <v-row
+                      class="fill-height ma-0"
+                      align="center"
+                      justify="center"
+                    >
+                      <v-progress-circular
+                        indeterminate
+                        color="grey lighten-5"
+                      ></v-progress-circular>
+                    </v-row>
+                  </template>
+                </v-img>
+              </v-card>
+            </v-card-text>
+          </v-card>
+        </v-dialog>
+        <v-card
+          v-for="(image, index) in eventData.Other"
+          :key="image"
+          class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0 cardImg"
+        >
+          <span class="cardDelete">
+            <v-icon text @click="deleteOtherFile(image)">mdi-delete</v-icon>
+          </span>
+          <v-img
+            :src="getAttachmentLink(image, true)"
+            :lazy-src="getAttachmentLink(image, true)"
+            aspect-ratio="1"
+            class="grey lighten-2"
+            max-width="150"
+            max-height="150"
+            width="150"
+            @click.stop="otherDialogOpen = true"
+          >
+            <template v-slot:placeholder>
+              <v-row class="fill-height ma-0" align="center" justify="center">
+                <v-progress-circular
+                  indeterminate
+                  color="grey lighten-5"
+                ></v-progress-circular>
+              </v-row>
+            </template>
+          </v-img>
+          <v-flex class="mt-1 d-flex">
+            <v-card-text class="pa-0 pb-1"
+              ><a
+                class="d-inline-block text-truncate anchorTag"
+                :href="getAttachmentLink(image, true)"
+                >{{ OtherImageName[index] }}</a
+              ></v-card-text
+            >
+            <copy :text-to-copy="getImageUrl(image)" :unique-id="image" />
+          </v-flex>
+          <v-card-text class="pa-0 mt-n2 otherImg">Logo Image</v-card-text>
         </v-card>
         <v-dialog v-model="otherDialogOpen" max-width="600">
           <v-card>
@@ -457,10 +501,9 @@
             </v-card-title>
             <v-card-text class="pa-1">
               <v-card
-                v-for="image in data.event.Other"
+                v-for="image in eventData.Other"
                 :key="image"
                 class="mx-auto elevation-0"
-                @click.stop="otherDialogOpen = true"
               >
                 <v-img
                   :src="getAttachmentLink(image, true)"
@@ -468,6 +511,7 @@
                   aspect-ratio="1"
                   class="grey lighten-2"
                   width="100%"
+                  contain
                 >
                   <template v-slot:placeholder>
                     <v-row
@@ -790,6 +834,11 @@
           </span>
         </v-flex>
       </div>
+      <v-snackbar v-model="snackbar" :timeout="timeout" top="true">
+        <div class="toast py-2 pr-1 pl-3">
+          {{ snackbarText }}
+        </div>
+      </v-snackbar>
     </v-flex>
     <editEventForm :event-form.sync="eventForm" />
     <editSeoForm :seo-form.sync="seoForm" />
@@ -809,6 +858,7 @@ import nuxtconfig from '~/nuxt.config'
 import Grid from '~/components/common/grid'
 import File from '~/components/common/form/file.vue'
 import event from '~/config/apps/event/gql/event.gql'
+import copy from '~/components/common/copy'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin } from '~/utility'
 
@@ -820,6 +870,7 @@ export default {
     editEventSetting,
     editSiteSetting,
     File,
+    copy,
   },
   mixins: [configLoaderMixin],
   props: ['value', 'field'],
@@ -845,6 +896,7 @@ export default {
         ImagesURL: [],
         Other: [],
       },
+      eventData: {},
       checkArray: [],
       logoFileId: '',
       bannerFileId: '',
@@ -857,9 +909,15 @@ export default {
       fileField: {
         multiple: false,
       },
+      otherFileField: {
+        multiple: true,
+      },
       bannerName: '',
-      OtherImageName: '',
+      OtherImageName: [],
       logoName: '',
+      snackbar: false,
+      timeout: '1000',
+      snackbarText: '',
     }
   },
   computed: {
@@ -870,8 +928,24 @@ export default {
       return nuxtconfig.axios.eventUrl
     },
   },
-  mounted() {},
+  watch: {
+    eventData() {
+      if (this.eventData.Other.length > 0) {
+        this.getImageName()
+      }
+    },
+  },
+
   methods: {
+    getImageName() {
+      this.eventData.Other.map((id) => {
+        this.getOtherImageName(id)
+      })
+    },
+    getImageUrl(imageId) {
+      const downloadLink = this.getAttachmentLink(imageId, true)
+      return downloadLink
+    },
     async getBannerImageName(imageId) {
       try {
         const res = await this.$axios.$get(
@@ -902,7 +976,8 @@ export default {
           `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Attachments/${imageId}`
         )
         if (res) {
-          this.OtherImageName = res.fileName
+          this.OtherImageName.push(res.fileName)
+          this.refresh()
         }
       } catch (e) {
         console.log('Error', e)
@@ -930,8 +1005,8 @@ export default {
     fileUploadedOther(data) {
       this.otherDialog = false
       this.formData.Other = []
-      this.formData.Other.push(data[0])
-      this.updateEventGallery(this.formData)
+      this.formData.Other.push(...data)
+      this.updateOtherImageGallery(this.formData.Other)
     },
     async updateEventGallery(formData) {
       try {
@@ -940,8 +1015,27 @@ export default {
           formData
         )
         if (res) {
+          this.snackbarText = 'Attachment added successfully'
+          this.snackbar = true
           this.refresh()
         }
+      } catch (e) {
+        console.log('Error', e)
+      }
+    },
+    updateOtherImageGallery(formData) {
+      try {
+        formData.map(async (id) => {
+          const res = await this.$axios.$put(
+            `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/Others/rel/${id}`
+          )
+          setTimeout(() => {
+            this.snackbarText = 'Attachment added successfully'
+            this.snackbar = true
+            this.refresh()
+          }, 5000)
+          return res
+        })
       } catch (e) {
         console.log('Error', e)
       }
@@ -974,6 +1068,45 @@ export default {
       const regUrl = `https://${nuxtconfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
       window.open(`${regUrl}`, '_blank')
     },
+    async deleteBannerFile(e, id) {
+      const checkRes = confirm('Are you sure you want to delete')
+      if (checkRes) {
+        const res = await this.$axios.delete(
+          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/BannerImage/${id}`
+        )
+        if (res) {
+          this.refresh()
+          this.snackbarText = 'Attachment deleted successfully'
+          this.snackbar = true
+        }
+      }
+    },
+    async deleteLogoFile(id) {
+      const checkRes = confirm('Are you sure you want to delete')
+      if (checkRes) {
+        const res = await this.$axios.delete(
+          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/LogoURL/${id}`
+        )
+        if (res) {
+          this.snackbarText = 'Attachment deleted successfully'
+          this.snackbar = true
+          this.refresh()
+        }
+      }
+    },
+    async deleteOtherFile(id) {
+      const checkRes = confirm('Are you sure you want to delete')
+      if (checkRes) {
+        const res = await this.$axios.delete(
+          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/Others/${id}`
+        )
+        if (res) {
+          this.snackbarText = 'Attachment deleted successfully'
+          this.snackbar = true
+          this.refresh()
+        }
+      }
+    },
   },
   apollo: {
     data: {
@@ -1001,14 +1134,12 @@ export default {
         const event = formatGQLResult(data, 'Event')
         const badge = formatGQLResult(data, 'Badge')
         const eventSummary = data.Event.EventGetEventSummery
-        if (event[0].Images[0] !== []) {
+        this.eventData = event.length > 0 ? event[0] : {}
+        if (event[0].Images.length > 0) {
           this.getBannerImageName(event[0].Images[0])
         }
-        if (event[0].Logo[0] !== []) {
+        if (event[0].Logo.length > 0) {
           this.getLogoName(event[0].Logo[0])
-        }
-        if (event[0].Other[0] !== []) {
-          this.getOtherImageName(event[0].Other[0])
         }
         return {
           event: event.length > 0 ? event[0] : {},
@@ -1075,5 +1206,25 @@ export default {
 }
 .v-tags {
   min-height: 36px;
+}
+.cardImg {
+  position: relative;
+}
+.cardImg:hover .cardDelete {
+  display: inline-block;
+}
+
+.cardDelete {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 99;
+  display: none;
+}
+.otherImg {
+  visibility: hidden;
+}
+.anchorTag {
+  max-width: 120px;
 }
 </style>
