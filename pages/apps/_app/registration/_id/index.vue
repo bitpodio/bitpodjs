@@ -56,10 +56,37 @@
               </template>
               <v-list>
                 <v-list-item>
-                  <v-list-item-title>Edit</v-list-item-title>
+                  <v-list-item-icon class="mr-2">
+                    <i
+                      class="fa fa-pencil-square-o mt-1"
+                      aria-hidden="true"
+                    ></i>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title @click="isEditReg = true"
+                      >Edit</v-list-item-title
+                    >
+                  </v-list-item-content>
                 </v-list-item>
-                <v-list-item>
-                  <v-list-item-title>Cancel</v-list-item-title>
+                <v-list-item v-if="data.registration.Status === 'Success'">
+                  <v-list-item-icon class="mr-2">
+                    <i class="fa-cross-circle mt-1" aria-hidden="true"></i>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title @click="isCancelReg = true"
+                      >Cancel</v-list-item-title
+                    >
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item v-if="data.registration.TotalAmount > 0">
+                  <v-list-item-icon class="mr-2">
+                    <i class="fa-refresh mt-1" aria-hidden="true"></i>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title @click="isRefund = true"
+                      >Refund</v-list-item-title
+                    >
+                  </v-list-item-content>
                 </v-list-item>
               </v-list>
             </v-menu>
@@ -207,12 +234,18 @@
         <v-divider></v-divider>
       </div>
     </v-flex>
+    <editRegistration :is-edit-reg.sync="isEditReg" />
+    <cancelRegistration :is-cancel-reg.sync="isCancelReg" />
+    <refundRegistration :is-refund.sync="isRefund" />
   </v-flex>
 </template>
 
 <script>
 import gql from 'graphql-tag'
 import format from 'date-fns/format'
+import editRegistration from './editRegistration.vue'
+import refundRegistration from './refundRegistration.vue'
+import cancelRegistration from './cancelRegistration.vue'
 import Grid from '~/components/common/grid'
 import registration from '~/config/apps/event/gql/registration.gql'
 import { formatGQLResult } from '~/utility/gql.js'
@@ -220,11 +253,17 @@ import { configLoaderMixin } from '~/utility'
 export default {
   components: {
     Grid,
+    editRegistration,
+    cancelRegistration,
+    refundRegistration,
   },
   mixins: [configLoaderMixin],
   data() {
     return {
       loading: 0,
+      isEditReg: false,
+      isCancelReg: false,
+      isRefund: false,
       data: {
         registration: {},
       },

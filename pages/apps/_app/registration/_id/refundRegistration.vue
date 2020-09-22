@@ -1,0 +1,239 @@
+<template>
+  <div>
+    <v-form ref="form" v-model="valid" :lazy-validation="lazy">
+      <v-dialog
+        v-model="isRefund"
+        persistent
+        scrollable
+        content-class="slide-form-default"
+        transition="dialog-bottom-transition"
+      >
+        <v-card>
+          <v-card-title
+            class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
+          >
+            <h2 class="black--text pt-5 pb-4 text-h5">Refund Request</h2>
+            <v-spacer></v-spacer>
+            <div>
+              <v-btn icon @click="close">
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+            </div>
+          </v-card-title>
+          <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
+            <v-row>
+              <v-col cols="12" sm="12" md="12">
+                <Lookup
+                  v-model="refund.RefundMethod"
+                  :field="refundMethodProps"
+                  :rules="requiredRules"
+                />
+              </v-col>
+              <v-col>
+                <v-radio-group
+                  v-model="refund.RefundRequest"
+                  row
+                  :mandatory="false"
+                  class="mt-0"
+                  :rules="requiredRules"
+                  @change="changeRefundRequest($event)"
+                >
+                  <v-radio label="Full Refund" value="FullRefund"></v-radio>
+                  <v-radio
+                    label="Partial Refund"
+                    value="PartialRefund"
+                  ></v-radio>
+                </v-radio-group>
+              </v-col>
+              <v-col cols="12" sm="12" md="12">
+                <v-text-field
+                  v-model="refund.Amount"
+                  label="Amount*"
+                  dense
+                  outlined
+                  min="1"
+                  type="Number"
+                  :rules="amountRule"
+                  :disabled="isFullRefund"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="12" md="12">
+                <v-text-field
+                  v-model="refund.Comments"
+                  label="Comments"
+                  dense
+                  outlined
+                  min="1"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="12" md="12">
+                <Lookup v-model="refund.Reason" :field="reasonProps" />
+              </v-col>
+            </v-row>
+          </v-card-text>
+          <v-divider></v-divider>
+          <v-card-actions
+            class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
+          >
+            <v-btn :disabled="!valid" color="primary" depressed @click="onSave"
+              >Submit</v-btn
+            >
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-form>
+  </div>
+</template>
+
+<script>
+import gql from 'graphql-tag'
+import { required } from '~/utility/rules.js'
+import eventRegistrationTicketSlot from '~/config/apps/event/gql/eventRegistrationTicketSlot.gql'
+import { formatGQLResult } from '~/utility/gql.js'
+import { getApiUrl } from '~/utility/index.js'
+import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
+
+export default {
+  props: {
+    isRefund: {
+      default: false,
+      allowSpaces: false,
+    },
+  },
+  data() {
+    return {
+      regData: {},
+      refund: {},
+      refundData: {},
+      valid: false,
+      Amount: '',
+      requiredRules: [required],
+      data: {
+        event: {},
+      },
+      refundMethodProps: {
+        type: 'lookup',
+        caption: 'Refund Method',
+        dataSource: {
+          query: registrationStatusOptions,
+          itemText: 'value',
+          itemValue: 'key',
+          filter(data) {
+            return {
+              type: 'RefundMethod',
+            }
+          },
+        },
+      },
+      reasonProps: {
+        type: 'lookup',
+        caption: 'Reason',
+        dataSource: {
+          query: registrationStatusOptions,
+          itemText: 'value',
+          itemValue: 'key',
+          filter(data) {
+            return {
+              type: 'Reason',
+            }
+          },
+        },
+      },
+    }
+  },
+  computed: {
+    isFullRefund() {
+      return this.refund.RefundRequest === 'FullRefund'
+    },
+    amountRule() {
+      return [
+        (v) => {
+          if (parseInt(v) > parseInt(this.refundData.TotalAmount)) {
+            return 'Refunded Amount can not be greater or equal than total paid amount '
+          } else if (v === '') {
+            return 'This field is required'
+          } else if (parseInt(v) < 1) {
+            return 'Amount should not be less than or equal to  0'
+          }
+        },
+      ]
+    },
+  },
+  methods: {
+    changeRefundRequest(value) {
+      if (value === 'FullRefund') {
+        this.refund.Amount = this.refundData.TotalAmount
+      } else if (value === 'PartialRefund') {
+        this.refund.Amount = ''
+      }
+    },
+    close() {
+      this.$emit('update:isRefund', false)
+    },
+    refresh() {
+      this.$apollo.queries.data.refresh()
+    },
+    async onSave() {
+      const baseUrl = getApiUrl()
+      this.refundData._Refund = this.refund
+      const regId = this.$route.params.id
+      let res = null
+      try {
+        res = await this.$axios.$post(
+          `${baseUrl}Registrations/update?where={"id":"${regId}"}`,
+          {
+            ...this.refundData,
+          }
+        )
+      } catch (e) {
+        console.error('Error', e)
+      }
+      if (res) {
+        this.close()
+        this.refresh()
+        return res
+      }
+    },
+  },
+  apollo: {
+    data: {
+      query() {
+        return gql`
+          ${eventRegistrationTicketSlot}
+        `
+      },
+      variables() {
+        return {
+          filters: {
+            where: {
+              id: this.$route.params.id,
+            },
+          },
+        }
+      },
+      update(data) {
+        const registration = formatGQLResult(data, 'Registration')
+        this.regData = registration.length > 0 ? { ...registration[0] } : {}
+        this.refundData.TotalAmount = this.regData.TotalAmount
+        if (this.regData._Refund) {
+          this.refund = this.regData._Refund
+          this.refundData.TransactionReferenceId = this.regData.TransactionReferenceId
+          this.refundData.RefundAttempt = this.regData.RefundAttempt
+        }
+        return {
+          event: {},
+        }
+      },
+      result({ data, loading, networkStatus }) {},
+      error(error) {
+        this.error = error
+        this.loading = 0
+      },
+      prefetch: false,
+      loadingKey: 'loading',
+      skip: false,
+      pollInterval: 0,
+    },
+  },
+}
+</script>
