@@ -19,7 +19,7 @@
             </template>
 
             <v-list>
-              <v-list-item>
+              <v-list-item @click.stop="eventBriteDialog = true">
                 <v-list-item-title>Publish to eventbrite</v-list-item-title>
               </v-list-item>
               <v-list-item>
@@ -529,6 +529,7 @@
     <editSeoForm :seo-form.sync="seoForm" />
     <editEventSetting :event-setting.sync="eventSetting" />
     <editSiteSetting :site-setting.sync="siteSetting" />
+    <eventBriteForm :event-brite-dialog.sync="eventBriteDialog" />
   </v-flex>
 </template>
 <script>
@@ -539,6 +540,7 @@ import editSeoForm from './editSeoForm.vue'
 import editEventForm from './editEventForm.vue'
 import editEventSetting from './editEventSetting.vue'
 import editSiteSetting from './editSiteSetting.vue'
+import eventBriteForm from './eventBriteForm.vue'
 import Grid from '~/components/common/grid'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
@@ -551,6 +553,7 @@ export default {
     editEventForm,
     editEventSetting,
     editSiteSetting,
+    eventBriteForm,
   },
   mixins: [configLoaderMixin],
   props: ['value', 'field'],
@@ -563,6 +566,7 @@ export default {
       seoForm: false,
       eventSetting: false,
       siteSetting: false,
+      eventBriteDialog: false,
       data: {
         event: {},
         badge: {},
