@@ -6,6 +6,7 @@
         color="blue"
         text-color="white"
         label
+        small
         @click="updateDate"
       >
         Check In

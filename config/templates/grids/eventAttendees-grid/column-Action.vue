@@ -6,6 +6,7 @@
         color="orange"
         text-color="white"
         label
+        small
         @click="updateDate"
       >
         Cancel Checkin
@@ -23,7 +24,7 @@ export default {
   props: ['item', 'value', 'context', 'refresh'],
   methods: {
     updateDate() {
-      alert('are you sure, you want to cancel check in?')
+      confirm('are you sure, you want to cancel check in?')
       this.$axios
         .$put(
           `https://${nuxtconfig.axios.eventUrl}/svc/api/Attes/${this.item.id}`,

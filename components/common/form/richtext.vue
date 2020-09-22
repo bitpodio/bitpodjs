@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <client-only>
+      {{ field.form.caption }}
       <jodit-editor v-model="content" :config="config" />
     </client-only>
   </div>
@@ -16,6 +17,7 @@ export default {
   },
   props: ['value', 'field', 'isInvitee', 'showTemplateDropdown'],
   data() {
+    debugger
     return {
       content: this.value || '',
       config: {

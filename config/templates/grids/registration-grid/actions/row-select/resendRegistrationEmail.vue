@@ -1,8 +1,6 @@
 <template>
   <v-col class="px-0">
-    <v-snackbar v-model="snackbar" :top="true"
-      >Confirmation Email Sent</v-snackbar
-    >
+    <v-snackbar v-model="snackbar">Confirmation Email Sent</v-snackbar>
     <v-btn text small v-bind="attrs" v-on="on" @click="resendRegistrationEmail">
       <v-icon left>mdi-email-outline</v-icon> Resend Registration Email
     </v-btn>

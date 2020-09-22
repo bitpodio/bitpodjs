@@ -17,8 +17,11 @@ export default {
   },
   methods: {
     async onDelete() {
-      const ids = this.items.map(({ id }) => id)
-      await this.onDeleteItem(ids)
+      const res = confirm('Are you sure, You want to delete?')
+      if (res) {
+        const ids = this.items.map(({ id }) => id)
+        await this.onDeleteItem(ids)
+      }
     },
   },
 }
