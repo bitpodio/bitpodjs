@@ -13,9 +13,15 @@
       transition="dialog-bottom-transition"
     >
       <template v-slot:activator="{ on, attrs }">
-        <v-btn text small v-bind="attrs" v-on="on">
+        <v-btn
+          text
+          small
+          v-bind="attrs"
+          v-on="on"
+          @click="campaignFormDisplayed"
+        >
           <v-icon dark left>mdi-plus</v-icon>
-          send Event Invite
+          {{ buttonLabel }}
         </v-btn>
       </template>
       <template>
@@ -309,6 +315,7 @@
                     class="pl-0"
                     :is-invitee="true"
                     :show-template-dropdown="true"
+                    :is-general="template === 'General Template'"
                   />
                 </v-card>
               </v-tab-item>
@@ -734,6 +741,23 @@ export default {
       process.client ? import('~/components/common/form/richtext.vue') : false,
   },
   mixins: [configLoaderMixin],
+  props: {
+    buttonLabel: {
+      type: String,
+      default: 'send event invite',
+      required: false,
+    },
+    template: {
+      type: String,
+      default: 'Invitation Template',
+      required: false,
+    },
+    myTemplate: {
+      type: String,
+      default: 'My Template',
+      required: false,
+    },
+  },
   data() {
     return {
       templateItems: [],
@@ -765,6 +789,11 @@ export default {
     }
   },
   methods: {
+    campaignFormDisplayed() {
+      if (this.template === 'General Template') {
+        this.selectedList = this.$parent.$parent.$data.selectedItems
+      }
+    },
     content() {
       return this.contents ? this.contents.Contacts : null
     },
@@ -874,7 +903,7 @@ export default {
                 Body: this.RTEValue,
                 Name: '',
                 Subject: this.subject,
-                Type: 'My Template',
+                Type: this.myTemplate,
               },
             })
           } else {
@@ -941,9 +970,11 @@ export default {
         }
       },
       update(data) {
-        this.subject = `Join us for ${
-          data.Event.EventFind.edges[0].node.Title
-        } | ${new Date().toDateString()}`
+        if (data.Event.EventFind.edges && data.Event.EventFind.edges.length) {
+          this.subject = `Join us for ${
+            data.Event.EventFind.edges[0].node.Title
+          } | ${new Date().toDateString()}`
+        }
       },
       error(error) {
         this.error = error
@@ -964,7 +995,7 @@ export default {
         return {
           filters: {
             where: {
-              Type: 'My Template',
+              Type: this.myTemplate,
               createdBy: this.$auth.user.data.email,
             },
           },
@@ -996,7 +1027,7 @@ export default {
         return {
           filters: {
             where: {
-              Type: 'Invitation Template',
+              Type: this.template,
             },
           },
           where: {},

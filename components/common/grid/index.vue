@@ -541,6 +541,7 @@ export default {
     },
   },
   mounted() {
+    this.selectedItems = this.value
     this.headers.forEach(async (column, index) => {
       this.component[index] = await this.loadTemplate([
         `templates/grids/${this.templateFolderName}/column-${column.value}.vue`,
