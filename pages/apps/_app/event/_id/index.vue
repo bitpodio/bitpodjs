@@ -31,7 +31,7 @@
                   <v-list-item-title>Publish to eventbrite</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
-              <v-list-item>
+              <v-list-item @click="isMakeCopy = true">
                 <v-list-item-icon class="mr-2">
                   <i class="fa fa-clone mt-1" aria-hidden="true"></i>
                 </v-list-item-icon>
@@ -693,6 +693,16 @@
             <span class="ml-2">Notify organizer when someone registers</span>
           </span>
         </v-flex>
+        <v-flex my-3>
+          <span v-if="data.event.SendCalendar === true">
+            <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
+            <span class="ml-2">Send calendar invite when registered</span>
+          </span>
+          <span v-else>
+            <v-icon>mdi-checkbox-blank-outline</v-icon>
+            <span class="ml-2">Send calendar invite when registered</span>
+          </span>
+        </v-flex>
       </div>
 
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-0 box-grey">
@@ -749,6 +759,7 @@
     <editSeoForm :seo-form.sync="seoForm" />
     <editEventSetting :event-setting.sync="eventSetting" />
     <editSiteSetting :site-setting.sync="siteSetting" />
+    <makeCopy :is-make-copy.sync="isMakeCopy" />
   </v-flex>
 </template>
 <script>
@@ -759,6 +770,7 @@ import editSeoForm from './editSeoForm.vue'
 import editEventForm from './editEventForm.vue'
 import editEventSetting from './editEventSetting.vue'
 import editSiteSetting from './editSiteSetting.vue'
+import makeCopy from './makeCopy.vue'
 import Grid from '~/components/common/grid'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
@@ -772,6 +784,7 @@ export default {
     editEventForm,
     editEventSetting,
     editSiteSetting,
+    makeCopy,
   },
   mixins: [configLoaderMixin],
   props: ['value', 'field'],
@@ -785,6 +798,7 @@ export default {
       seoForm: false,
       eventSetting: false,
       siteSetting: false,
+      isMakeCopy: false,
       data: {
         event: {},
         badge: {},

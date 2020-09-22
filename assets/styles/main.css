@@ -260,11 +260,24 @@ body {
   width: 100%;
   text-align: center;
 }
+.positionAbsolute {
+  position: absolute;
+}
+.positionRelative {
+  position: relative;
+}
 .borderBottomGrey {
   border-bottom: 1px solid lightgray;
 }
 .borderRightGrey {
   border-right: 1px solid lightgray;
+}
+.overflowHidden {
+  overflow: hidden;
+}
+.v-skeleton-loader__bone {
+  width: 100% !important; 
+  height: 100% !important;
 }
 .invite-form .v-tab {
   min-width: auto !important;
