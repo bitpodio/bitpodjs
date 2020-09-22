@@ -35,7 +35,6 @@ export default {
   },
   methods: {
     onCopy() {
-      debugger
       const writeBtn = document.querySelector(`.${this.uniqueId}btn`)
       const inputEl = document.querySelector(`.${this.uniqueId}`)
 
