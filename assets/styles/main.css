@@ -268,35 +268,9 @@ body {
 .overflowHidden {
   overflow: hidden;
 }
-.scrollReplacement{
-  border-bottom: 6px solid transparent !important;
-}
-.summaryBlock{
-  border-bottom: 6px solid transparent;
-}
-.summaryBlock:hover{
-  border-bottom: none;
-}
-.summaryBlock:hover {
-  overflow: auto hidden;
-}
 .v-skeleton-loader__bone {
   width: 100% !important; 
   height: 100% !important;
-}
-.pie-dummy {
-  width: 200px;
-  height: 200px;
-  background-image: conic-gradient(#c5c4c0 64%,#ababab 17%,#d6d4d4);
-}
- .pieHole {
-  width: 80px;
-  height: 80px;
-}
-.pie-dummy-wrapper {
-  text-align: center;
-  position: relative;
-  padding-top: 45px;
 }
 .invite-form .v-tab {
   min-width: auto !important;

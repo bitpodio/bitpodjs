@@ -41,18 +41,12 @@
                     ></v-icon>
                   </div>
                   <div class="pl-2 pt-1">
-                    <h3
-                      class="font-weight-regular text-truncate"
-                      style="width: 132px;"
-                    >
+                    <h3 class="font-weight-regular text-truncate summaryTile">
                       {{ data.caption === 'Total Revenue' ? '$' : ''
                       }}{{ data.data
                       }}{{ data.caption === 'Email Conversion' ? '%' : '' }}
                     </h3>
-                    <h5
-                      class="font-weight-regular text-truncate"
-                      style="width: 132px;"
-                    >
+                    <h5 class="font-weight-regular text-truncate summaryTile">
                       {{ data.caption }}
                     </h5>
                   </div>
@@ -63,13 +57,12 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col cols="4">
+        <v-col class="col-12 col-sm-6 col-md-4">
           <h3 class="font-weight-regular pb-2">Events on Sale</h3>
           <div
             v-for="(data, index) in eventOnSaleData"
             :key="index"
-            class="white elevation-2 rounded mb-3 cursorPointer"
-            style="height: 70px;"
+            class="white elevation-2 rounded mb-3 cursorPointer dataTile"
             @click="routeToEvent(data.id)"
           >
             <v-skeleton-loader
@@ -90,7 +83,7 @@
                     style="font-size: 28px;"
                     class="pl-5 pt-5 white--text fa fa-timer rec-event"
                   ></v-icon>
-                  <div v-else class="pie-dummy-wrapper pt-2">
+                  <div v-else class="pt-3 positionRelative text-center pt-2">
                     <h2 class="white--text font-weight-regular">
                       {{ data.date }}
                     </h2>
@@ -116,15 +109,14 @@
                 </div>
                 <div class="pl-2 pt-1">
                   <h3
-                    class="font-weight-regular text-truncate pl-1 text-capitalize"
-                    style="width: 200px;"
+                    class="font-weight-regular text-truncate pl-1 text-capitalize tileCaption"
                   >
                     {{ data.title }}
                   </h3>
                   <h4
                     v-if="data.location"
                     class="font-weight-regular text-truncate d-inline-flex pt-1"
-                    style="width: 150px;"
+                    style="width: 170px;"
                   >
                     <v-icon>mdi-map-marker-outline</v-icon>
                     <div>
@@ -153,18 +145,16 @@
             </h4>
           </v-hover>
         </v-col>
-        <v-col cols="4">
+        <v-col class="col-12 col-sm-6 col-md-4">
           <h3 class="font-weight-regular pb-2">10 Days Tickets Sale</h3>
           <div
             v-if="!ticketSoldLoaded"
-            style="height: 316px;"
-            class="rounded white elevation-2"
+            class="rounded white elevation-2 chartHeight"
           >
             <div
               v-for="i in 5"
               :key="i"
-              class="mx-14 borderBottomGrey"
-              style="height: 52px;"
+              class="mx-14 borderBottomGrey dummyChart"
             ></div>
           </div>
           <div v-else class="elevation-2 rounded overflowHidden">
@@ -176,13 +166,12 @@
             />
           </div>
         </v-col>
-        <v-col cols="4">
+        <v-col class="col-12 col-sm-6 col-md-4">
           <h3 class="font-weight-regular pb-2">Recent Buyers</h3>
           <div
             v-for="(data, index) in recentBuyersData"
             :key="index"
-            class="white elevation-2 rounded mb-3 cursorPointer"
-            style="height: 70px;"
+            class="white elevation-2 rounded mb-3 cursorPointer dataTile"
             @click="routeToRegistration(data.id)"
           >
             <v-skeleton-loader
@@ -209,15 +198,11 @@
                 </div>
                 <div class="pl-2 pt-1">
                   <h3
-                    class="font-weight-regular text-truncate text-capitalize"
-                    style="width: 200px;"
+                    class="font-weight-regular text-truncate text-capitalize tileCaption"
                   >
                     {{ data.creatorName }}
                   </h3>
-                  <h5
-                    class="font-weight-regular text-truncate"
-                    style="width: 200px;"
-                  >
+                  <h5 class="font-weight-regular text-truncate tileCaption">
                     {{ data.eventName }}
                   </h5>
                 </div>
@@ -259,20 +244,18 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col cols="4">
+        <v-col class="col-12 col-sm-6 col-md-4">
           <h3 class="font-weight-regular pb-2">
             Invitations Conversion by Event
           </h3>
           <div
             v-if="!conversionLoaded"
-            style="height: 316px;"
-            class="rounded white elevation-2"
+            class="rounded white elevation-2 chartHeight"
           >
             <div
               v-for="i in 5"
               :key="i"
-              class="mx-14 borderBottomGrey"
-              style="height: 52px;"
+              class="mx-14 borderBottomGrey dummyChart"
             ></div>
           </div>
           <div v-else class="elevation-2 rounded overflowHidden">
@@ -284,14 +267,13 @@
             />
           </div>
         </v-col>
-        <v-col cols="4">
+        <v-col class="col-12 col-sm-6 col-md-4">
           <h3 class="font-weight-regular pb-2">
             Sale by Geo Location
           </h3>
           <div
             v-if="!geoLocationLoaded"
-            style="height: 316px;"
-            class="rounded white elevation-2"
+            class="rounded white elevation-2 chartHeight"
           >
             <v-img
               src="https://res.cloudinary.com/mytestlogo/image/upload/v1574258140/GeoChartBlank_cde6u6.png"
@@ -312,16 +294,12 @@
               :settings="{ packages: ['geochart'] }"
             /></div
         ></v-col>
-        <v-col cols="4">
+        <v-col class="col-12 col-sm-6 col-md-4">
           <h3 class="font-weight-regular pb-2">
             Tickets Sold
           </h3>
-          <div
-            v-if="!pieLoaded"
-            style="height: 316px;"
-            class="rounded white elevation-2"
-          >
-            <div class="pie-dummy-wrapper">
+          <div v-if="!pieLoaded" class="rounded white elevation-2 chartHeight">
+            <div class="pt-11 positionRelative text-center">
               <div class="pt-15 holeWrapper">
                 <div class="pieHole white d-inline-block rounded-circle"></div>
               </div>
@@ -338,20 +316,18 @@
         ></v-col>
       </v-row>
       <v-row>
-        <v-col cols="4">
+        <v-col class="col-12 col-sm-6 col-md-4">
           <h3 class="font-weight-regular pb-2">
             Invitations Conversion Trend
           </h3>
           <div
             v-if="!conversionTrendLoaded"
-            style="height: 316px;"
-            class="rounded white elevation-2"
+            class="rounded white elevation-2 chartHeight"
           >
             <div
               v-for="i in 5"
               :key="i"
-              class="mx-14 borderBottomGrey"
-              style="height: 52px;"
+              class="mx-14 borderBottomGrey dummyChart"
             ></div>
           </div>
           <div v-else class="elevation-2 rounded overflowHidden">
@@ -363,20 +339,18 @@
             />
           </div>
         </v-col>
-        <v-col cols="4">
+        <v-col class="col-12 col-sm-6 col-md-4">
           <h3 class="font-weight-regular pb-2">
             Sessions Sold
           </h3>
           <div
             v-if="!sessionLoaded"
-            style="height: 316px;"
-            class="rounded white elevation-2"
+            class="rounded white elevation-2 chartHeight"
           >
             <div
               v-for="i in 5"
               :key="i"
-              class="mx-14 borderBottomGrey"
-              style="height: 52px;"
+              class="mx-14 borderBottomGrey dummyChart"
             ></div>
           </div>
           <div v-else class="elevation-2 rounded overflowHidden">
@@ -388,20 +362,18 @@
             />
           </div>
         </v-col>
-        <v-col cols="4">
+        <v-col class="col-12 col-sm-6 col-md-4">
           <h3 class="font-weight-regular pb-2">
             Events Timeline
           </h3>
           <div
             v-if="!eventTimelineLoaded"
-            style="height: 316px;"
-            class="rounded white elevation-2"
+            class="rounded white elevation-2 chartHeight"
           >
             <div
               v-for="i in 5"
               :key="i"
-              class="mx-14 borderBottomGrey"
-              style="height: 52px;"
+              class="mx-14 borderBottomGrey dummyChart"
             ></div>
           </div>
           <div v-else class="elevation-2 rounded overflowHidden white">
@@ -979,5 +951,39 @@ export default {
 .holeWrapper {
   position: absolute;
   width: 100%;
+}
+.pie-dummy {
+  width: 200px;
+  height: 200px;
+  background-image: conic-gradient(#c5c4c0 64%, #ababab 17%, #d6d4d4);
+}
+.pieHole {
+  width: 80px;
+  height: 80px;
+}
+.scrollReplacement {
+  border-bottom: 6px solid transparent !important;
+}
+.summaryBlock {
+  border-bottom: 6px solid transparent;
+}
+.summaryBlock:hover {
+  border-bottom: none;
+  overflow: auto hidden;
+}
+.chartHeight {
+  height: 316px;
+}
+.dummyChart {
+  height: 316px;
+}
+.summaryTile {
+  width: 132px;
+}
+.dataTile {
+  height: 70px;
+}
+.tileCaption {
+  width: 200px;
 }
 </style>
