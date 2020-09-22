@@ -8,52 +8,54 @@
       transition="dialog-bottom-transition"
     >
       <v-card>
-        <v-toolbar dense flat dark fixed color="accent">
-          <v-toolbar-title class="body-1">Edit Event Settings</v-toolbar-title>
+        <v-card-title
+          class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
+        >
+          <h2 class="black--text pt-5 pb-2 text-h5">Edit Event Settings</h2>
           <v-spacer></v-spacer>
-          <v-btn icon dark @click="close">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </v-toolbar>
-        <v-divider></v-divider>
-        <v-card-text>
-          <v-row>
-            <v-col cols="12" sm="6" md="6">
+          <div>
+            <v-btn icon @click.native="close">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </div>
+        </v-card-title>
+        <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
+          <v-row class="mt-3">
+            <v-col cols="12" sm="6" md="6" class="pb-0">
               <v-select
                 v-model="privacy"
                 :items="eventPrivacyDropdown"
                 label="Privacy*"
                 required
                 outlined
+                dense
               ></v-select>
             </v-col>
-            <v-col cols="12" sm="6" md="6">
+            <v-col cols="12" sm="6" md="6" class="pb-0">
               <v-select
                 v-model="currency"
                 :items="currencyDropdown"
                 label="Currency*"
                 required
                 outlined
+                dense
               ></v-select>
             </v-col>
-            <v-col cols="12" sm="6" md="6">
+            <v-col cols="12" sm="6" md="6" class="pb-0">
               <v-text-field
                 v-model="formData.ProjectCode"
                 label="GL Account Code"
                 outlined
+                dense
               ></v-text-field>
             </v-col>
-            <v-col cols="12" sm="6" md="6">
+            <v-col cols="12" sm="6" md="6" class="pb-0">
               <v-text-field
                 v-model="formData.CostCenter"
                 label="Cost Center"
                 outlined
+                dense
               ></v-text-field>
-            </v-col>
-            <v-col cols="4" sm="6" md="6">
-              <h2 class="font-weight-bold">
-                https://bitpod-event.test.bitpod.io/e/
-              </h2>
             </v-col>
             <v-col cols="8" sm="6" md="6">
               <v-text-field
@@ -61,8 +63,10 @@
                 label="Event Link*"
                 :rules="linkRules"
                 persistent-hint
+                hint="https://bitpod-event.test.bitpod.io/e/"
                 outlined
                 required
+                dense
                 @input="checkUniqueLink"
               ></v-text-field>
               <span
@@ -71,7 +75,7 @@
                 >{{ uniqueLinkMessage }}</span
               >
             </v-col>
-            <v-col cols="12">
+            <v-col cols="12" class="mb-6">
               <span>Cancellation Policy</span>
               <RichText
                 v-model="formData.CancellationPolicy"
@@ -114,10 +118,38 @@
                 class="ma-0"
               ></v-checkbox>
             </v-col>
+            <v-col
+              v-if="formData.BusinessType === 'Recurring'"
+              cols="12"
+              sm="6"
+              md="6"
+              class="py-0"
+            >
+              <v-checkbox
+                v-model="formData.showTimezone"
+                label="Allow user to select a timezone for recurring event"
+                class="ma-0"
+              ></v-checkbox>
+            </v-col>
+            <v-col
+              v-if="formData.BusinessType !== 'Recurring'"
+              cols="12"
+              sm="6"
+              md="6"
+              class="py-0"
+            >
+              <v-checkbox
+                v-model="formData.SendCalendar"
+                label=" Send calendar invite when registered"
+                class="ma-0"
+              ></v-checkbox>
+            </v-col>
           </v-row>
         </v-card-text>
         <v-divider></v-divider>
-        <v-card-actions class="pl-4">
+        <v-card-actions
+          class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
+        >
           <v-btn
             :disabled="!valid || isInvalidEventLink"
             color="primary"
@@ -192,25 +224,25 @@ export default {
     refresh() {
       this.$apollo.queries.data.refresh()
     },
-    onSave() {
+    async onSave() {
       this.formData.Currency = this.currency
       this.formData.Privacy = this.privacy
       delete this.formData._VenueAddress
-      this.$axios
-        .$patch(
-          `https://${nuxtConfig.axios.eventUrl}/svc/api/Events/${this.$route.params.id}`,
+      try {
+        const res = await this.$axios.$patch(
+          `https://${nuxtConfig.axios.eventUrl}${nuxtConfig.axios.apiEndpoint}Events/${this.$route.params.id}`,
           {
             ...this.formData,
           }
         )
-        .then((res) => {
+        if (res) {
           this.close()
           this.refresh()
-          return (this.data.event = res)
-        })
-        .catch((e) => {
-          console.log('Error', e)
-        })
+          this.data.event = res
+        }
+      } catch (e) {
+        console.log('Error', e)
+      }
     },
     getDropDownData(filterType) {
       return this.$apollo

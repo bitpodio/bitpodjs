@@ -9,50 +9,58 @@
         transition="dialog-bottom-transition"
       >
         <v-card>
-          <v-toolbar dense flat dark fixed color="accent">
-            <v-toolbar-title class="body-1">Edit Seo Details</v-toolbar-title>
+          <v-card-title
+            class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
+          >
+            <h2 class="black--text pt-5 pb-2 text-h5">Edit Seo Details</h2>
             <v-spacer></v-spacer>
-            <v-btn icon dark @click.native="close">
-              <v-icon>mdi-close</v-icon>
-            </v-btn>
-          </v-toolbar>
-          <v-divider></v-divider>
-          <v-card-text>
+            <div>
+              <v-btn icon @click.native="close">
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+            </div>
+          </v-card-title>
+          <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
             <v-row>
-              <v-col>
+              <v-col class="pt-2">
                 <v-checkbox
-                  v-model="formData.AutoUpdateSEOElements"
+                  v-model="seoData.AutoUpdateSEOElements"
                   label=" SEO elements are auto derived from event elements when event is created or edited. Check this if you want to Turn off auto update"
                 ></v-checkbox>
               </v-col>
-              <v-col cols="12">
+              <v-col cols="12" class="pb-0">
                 <v-text-field
-                  v-model="seoTitle"
+                  v-model="seoData.SEOTitle"
                   :rules="nameRules"
                   label="Part which goes into URL"
                   outlined
+                  dense
                 ></v-text-field>
               </v-col>
-              <v-col cols="12">
+              <v-col cols="12" class="pb-0">
                 <v-text-field
-                  v-model="formData.SEODesc"
+                  v-model="seoData.SEODesc"
                   label="Meta Description"
                   outlined
+                  dense
                 >
                 </v-text-field>
               </v-col>
-              <v-col cols="12">
+              <v-col cols="12" class="pb-0">
                 <v-text-field
-                  v-model="formData.SEOKeywords"
+                  v-model="seoData.SEOKeywords"
                   label="Meta Keywords"
                   outlined
+                  dense
                 >
                 </v-text-field>
               </v-col>
             </v-row>
           </v-card-text>
           <v-divider></v-divider>
-          <v-card-actions class="pl-4">
+          <v-card-actions
+            class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
+          >
             <v-btn
               color="primary"
               :disabled="!valid"
@@ -89,6 +97,12 @@ export default {
       seoTitle: '',
       formData: {},
       valid: true,
+      seoData: {
+        SEOTitle: '',
+        SEODesc: '',
+        SEOKeywords: '',
+        AutoUpdateSEOElements: '',
+      },
     }
   },
   methods: {
@@ -98,24 +112,24 @@ export default {
     refresh() {
       this.$apollo.queries.data.refresh()
     },
-    onSave() {
+    async onSave() {
       delete this.formData._VenueAddress
       this.formData.SEOTitle = this.seoTitle
-      this.$axios
-        .$patch(
+      try {
+        const res = await this.$axios.$patch(
           `https://${nuxtConfig.axios.eventUrl}/svc/api/Events/${this.$route.params.id}`,
           {
-            ...this.formData,
+            ...this.seoData,
           }
         )
-        .then((res) => {
+        if (res) {
           this.close()
           this.refresh()
-          return (this.data.event = res)
-        })
-        .catch((e) => {
-          console.log('error', e)
-        })
+          this.data.event = res
+        }
+      } catch (e) {
+        console.log('Error', e)
+      }
     },
   },
   apollo: {
@@ -139,7 +153,10 @@ export default {
         const event = formatGQLResult(data, 'Event')
         this.formData = event.length > 0 ? { ...event[0] } : {}
         this.formData.id = this.$route.params.id
-        this.seoTitle = this.formData.SEOTitle
+        this.seoData.SEODesc = this.formData.SEODesc
+        this.seoData.SEOKeywords = this.formData.SEOKeywords
+        this.seoData.SEOTitle = this.formData.SEOTitle
+        this.seoData.AutoUpdateSEOElements = this.formData.AutoUpdateSEOElements
         return {
           event: event.length > 0 ? event[0] : {},
         }

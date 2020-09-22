@@ -1,5 +1,8 @@
 <template>
   <v-col class="px-0">
+    <v-btn text small @click.stop="onNewClick">
+      <v-icon left>mdi-plus</v-icon> New
+    </v-btn>
     <v-dialog
       v-model="dialog"
       persistent
@@ -7,16 +10,11 @@
       content-class="slide-form-default"
       transition="dialog-bottom-transition"
     >
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn text small v-bind="attrs" v-on="on">
-          <v-icon left>mdi-plus</v-icon> New
-        </v-btn>
-      </template>
       <v-card>
         <v-card-title
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
-          <h2 class="black--text pt-10 pb-9">New {{ subTitle }}</h2>
+          <h2 class="black--text pt-5 pb-3 text-h5">New {{ subTitle }}</h2>
           <v-spacer></v-spacer>
           <div>
             <v-btn icon @click="dialog = false">
@@ -30,7 +28,7 @@
               <v-col
                 v-for="field in fields"
                 v-show="visible[field.fieldName]"
-                :key="field.fieldName"
+                :key="`${field.fieldName}${updateCount}`"
                 :class="field.cssClasses || 'col-12 col-md-6'"
               >
                 <component
@@ -100,6 +98,7 @@ export default {
       dialog: false,
       valid: true,
       lazy: false,
+      updateCount: 0,
     }
   },
   methods: {
@@ -120,6 +119,12 @@ export default {
         await this.onNewItemSave(newItemFormData)
         this.dialog = false
       }
+    },
+    onNewClick() {
+      const intialFormData = getFormDefaultValues(this.content, this.viewName)
+      this.formData = intialFormData
+      this.updateCount = this.updateCount + 1
+      this.dialog = true
     },
   },
 }

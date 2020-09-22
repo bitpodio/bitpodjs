@@ -5,6 +5,7 @@ import Checkbox from '~/components/common/form/checkbox.vue'
 import CustomDate from '~/components/common/form/date.vue'
 import File from '~/components/common/form/file.vue'
 import Timezone from '~/components/common/form/timezone'
+import Tags from '~/components/common/form/tags.vue'
 import { _set, isPlainObject } from '~/utility/object'
 
 const FORM_DATE_CONTROLS = ['date', 'datetime']
@@ -12,6 +13,12 @@ const FORM_DATE_CONTROLS = ['date', 'datetime']
 function getFormTimeZoneField(fields) {
   const timezoneField = fields.find((field) => field.type === 'timezone')
   return timezoneField || null
+}
+
+function getFieldByFieldName(fields, field) {
+  const fieldDetails =
+    fields && fields.filter(({ fieldName }) => fieldName === field)
+  return fieldDetails || {}
 }
 
 export function formatTimezoneDateFieldsData(formData, fields) {
@@ -23,7 +30,7 @@ export function formatTimezoneDateFieldsData(formData, fields) {
   const newFormData = {}
   for (const fieldName in formData) {
     const fieldData = formData[fieldName]
-    const { field } = fields[fieldName]
+    const field = getFieldByFieldName(fields, fieldName)
     newFormData[fieldName] = FORM_DATE_CONTROLS.includes(field.type)
       ? zonedTimeToUtc(fieldData, selectedTimezone)
       : fieldData
@@ -101,6 +108,7 @@ export const formControlsMixin = {
     RichText: () =>
       process.client ? import('~/components/common/form/richtext.vue') : false,
     Timezone,
+    Tags,
   },
   methods: {
     formControl(field) {
@@ -121,6 +129,8 @@ export const formControlsMixin = {
           return 'RichText'
         case 'timezone':
           return 'Timezone'
+        case 'tags':
+          return 'Tags'
       }
     },
   },
