@@ -43,13 +43,6 @@ body {
   margin: 12px !important;
   margin-bottom: 0px !important;
 }
-.slide-form-default-big {
-  position: fixed !important;
-  right: 0 !important;
-  bottom: 0 !important;
-  width: 75% !important;
-  height: 100%;
-}
 .Twitter {
   font-size: 0 !important;
   text-transform: capitalize !important;
@@ -90,7 +83,7 @@ body {
   cursor: pointer;
 }
 .fs-18 {
-  font-size: 18px;
+  font-size: 18px !important;
 }
 .fs-30 {
   font-size: 30px !important;
@@ -141,10 +134,22 @@ body {
   max-width: 300px;
 }
 .templateTile {
-  max-width: 250px !important;
+  max-width: 270px !important;
+}
+.templateverify {
+  max-width: 300px !important;
+}
+.tileCard {
+  transition: 0.3s all;
+  -webkit-transition: 0.3s all;
+  -moz-transition: 0.3s all;
 }
 .tileCard:hover {
-  background: #eeeeee !important;
+  background: #f4f4f4 !important;
+  transform: scale(1.04);
+  transition: 0.3s all;
+  -webkit-transition: 0.3s all;
+  -moz-transition: 0.3s all;
 }
 .v-data-table__wrapper {
   width: 100%;
@@ -231,13 +236,9 @@ body {
 .boxview:hover .v-data-table__wrapper {
   overflow-x: auto !important;
 }
-.tabContent {
-  overflow: hidden auto;
-  max-height: 390px !important;
-}
 .contactsGrid {
-  overflow: hidden auto;
-  max-height: 660px !important;
+  overflow: auto;
+  max-height: 480px !important;
   width: 100%;
 }
 .tempCard {
@@ -249,12 +250,30 @@ body {
 .templateButtons {
   position: absolute;
   bottom: 30px;
+  width: 100%;
+  text-align: center;
+}
+.positionAbsolute {
+  position: absolute;
+}
+.positionRelative {
+  position: relative;
 }
 .borderBottomGrey {
   border-bottom: 1px solid lightgray;
 }
 .borderRightGrey {
   border-right: 1px solid lightgray;
+}
+.overflowHidden {
+  overflow: hidden;
+}
+.v-skeleton-loader__bone {
+  width: 100% !important; 
+  height: 100% !important;
+}
+.invite-form .v-tab {
+  min-width: auto !important;
 }
 @media (max-width: 600px) {
   .slide-form,

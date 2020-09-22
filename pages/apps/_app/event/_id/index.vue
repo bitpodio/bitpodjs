@@ -29,7 +29,7 @@
                   <v-list-item-title>Publish to eventbrite</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
-              <v-list-item>
+              <v-list-item @click="isMakeCopy = true">
                 <v-list-item-icon class="mr-2">
                   <i class="fa fa-clone mt-1" aria-hidden="true"></i>
                 </v-list-item-icon>
@@ -783,6 +783,16 @@
             <span class="ml-2">Notify organizer when someone registers</span>
           </span>
         </v-flex>
+        <v-flex my-3>
+          <span v-if="data.event.SendCalendar === true">
+            <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
+            <span class="ml-2">Send calendar invite when registered</span>
+          </span>
+          <span v-else>
+            <v-icon>mdi-checkbox-blank-outline</v-icon>
+            <span class="ml-2">Send calendar invite when registered</span>
+          </span>
+        </v-flex>
       </div>
 
       <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
@@ -844,6 +854,7 @@
     <editSeoForm :seo-form.sync="seoForm" />
     <editEventSetting :event-setting.sync="eventSetting" />
     <editSiteSetting :site-setting.sync="siteSetting" />
+    <makeCopy :is-make-copy.sync="isMakeCopy" />
   </v-flex>
 </template>
 <script>
@@ -855,6 +866,7 @@ import editEventForm from './editEventForm.vue'
 import editEventSetting from './editEventSetting.vue'
 import editSiteSetting from './editSiteSetting.vue'
 import nuxtconfig from '~/nuxt.config'
+import makeCopy from './makeCopy.vue'
 import Grid from '~/components/common/grid'
 import File from '~/components/common/form/file.vue'
 import event from '~/config/apps/event/gql/event.gql'
@@ -871,6 +883,7 @@ export default {
     editSiteSetting,
     File,
     copy,
+    makeCopy,
   },
   mixins: [configLoaderMixin],
   props: ['value', 'field'],
@@ -901,6 +914,7 @@ export default {
       logoFileId: '',
       bannerFileId: '',
       otherFileId: '',
+      isMakeCopy: false,
       data: {
         event: {},
         badge: {},
