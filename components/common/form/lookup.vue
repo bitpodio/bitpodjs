@@ -58,7 +58,7 @@ export default {
     },
     onChange: {
       type: Function,
-      required: true,
+      required: false,
       default: () => null,
     },
   },
