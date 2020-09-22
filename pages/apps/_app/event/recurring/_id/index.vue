@@ -740,25 +740,25 @@ export default {
       return fieldValue || '-'
     },
     getAttachmentLink(id, isDownloadLink) {
-      const attachmentUrl = `https://${nuxtconfig.axios.eventUrl}${
-        nuxtconfig.axios.apiEndpoint
+      const attachmentUrl = `https://${nuxtConfig.axios.eventUrl}${
+        nuxtConfig.axios.apiEndpoint
       }Attachments${isDownloadLink ? '/download' : ''}${id ? '/' + id : ''}`
       return attachmentUrl
     },
     viewRegistration() {
-      const regUrl = `https://${nuxtconfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
+      const regUrl = `https://${nuxtConfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
       window.open(`${regUrl}`, '_blank')
     },
     eventLink() {
-      const regUrl = `https://${nuxtconfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
+      const regUrl = `https://${nuxtConfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
       return regUrl
     },
     sessionLink() {
-      const regUrl = `https://${nuxtconfig.axios.eventUrl}/t/${this.data.event.UniqLink}`
+      const regUrl = `https://${nuxtConfig.axios.eventUrl}/t/${this.data.event.UniqLink}`
       return regUrl
     },
     embedLink() {
-      const regUrl = `<iframe src="https://${nuxtconfig.axios.eventUrl}/embed/t/${this.data.event.UniqLink}"></iframe>`
+      const regUrl = `<iframe src="https://${nuxtConfig.axios.eventUrl}/embed/t/${this.data.event.UniqLink}"></iframe>`
       return regUrl
     },
   },
