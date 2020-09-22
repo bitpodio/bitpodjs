@@ -1,7 +1,9 @@
 <template>
   <v-flex d-flex flex-md-row flex-lg-row flex-column>
     <v-flex column xs12 sm8 md8 lg8>
-      <div class="xs12 sm8 md8 lg8 boxview pa-4 mr-2 mb-2">
+      <div
+        class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+      >
         <v-row>
           <v-col class="col-md-6 col-12 pt-0">
             <v-card class="elevation-0">
@@ -49,23 +51,14 @@
         </v-row>
         <v-divider></v-divider>
         <v-flex class="d-flex flex-row align-center">
-          <v-tooltip top>
-            <template v-slot:activator="{ on, attrs }">
-              <v-avatar
-                color="warning"
-                size="24"
-                class="d-inline-flex"
-                dark
-                v-bind="attrs"
-                v-on="on"
-              >
-                <span class="white--text name-initial">{{
-                  data.registration.FirstName
-                }}</span>
-              </v-avatar>
-            </template>
+          <v-chip pill class="greybg" v-on="on">
+            <v-avatar left color="warning" size="24">
+              <span class="white--text name-initial">{{
+                data.registration.FirstName
+              }}</span>
+            </v-avatar>
             <span>{{ data.registration.FirstName }}</span>
-          </v-tooltip>
+          </v-chip>
           <v-subheader class="d-inline-flex pl-1"
             ><span class="pl-1"
               >Registered on
@@ -74,35 +67,70 @@
           >
         </v-flex>
       </div>
-      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
-        <h2 class="body-1 pb-2">
-          <i class="fa fa-black-board pr-1" aria-hidden="true"></i> Sessions
-        </h2>
+      <div
+        v-if="content"
+        class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-black-board pr-1" aria-hidden="true"></i>
+            Sessions
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
         <v-divider></v-divider>
-        <!-- <Grid view-name="registrationSessions" :content="content" :filter="filter" /> -->
-        <Grid view-name="registrationSessions" :content="content" />
+        <Grid
+          view-name="registrationSessions"
+          :content="content"
+          class="mt-n12"
+        />
       </div>
-      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
-        <h2 class="body-1 pb-2">
-          <i class="fa fa-user-plus pr-1" aria-hidden="true"></i>Attendees
-        </h2>
+      <div
+        v-if="content"
+        class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-users pr-1" aria-hidden="true"></i> Attendees
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="registrationAttendees" :content="content" />
+        <Grid
+          view-name="registrationAttendees"
+          :content="content"
+          class="mt-n12"
+        />
       </div>
-      <div v-if="content" class="xs12 sm12 md12 boxview pa-4 mr-2 mb-2">
-        <h2 class="body-1 pb-2">
-          <i class="fa fa-envelope1 pr-1" aria-hidden="true"></i> Emails
-        </h2>
+      <div
+        v-if="content"
+        class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-mail pr-1" aria-hidden="true"></i>
+            Emails
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="registrationEmails" :content="content" />
+        <Grid
+          view-name="registrationEmails"
+          :content="content"
+          class="mt-n12"
+        />
       </div>
     </v-flex>
     <v-flex column xs12 sm4 md4 lg4>
-      <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
-        <h2 class="body-1 pb-1">
-          <i class="fa fa-info-circle pr-1" aria-hidden="true"></i> Event
-          Information
-        </h2>
+      <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 py-0 box-grey">
+        <v-flex class="d-flex justify-center align-center pb-2">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-info-circle pr-1" aria-hidden="true"></i> Event
+            Information
+          </h2>
+          <v-spacer></v-spacer>
+          <v-btn text small> <v-icon left>fa-pencil</v-icon>Edit </v-btn>
+        </v-flex>
         <v-divider></v-divider>
         <v-flex my-3>
           <div class="body-2 text--secondary">Event Name</div>
@@ -130,10 +158,15 @@
         </v-flex>
       </div>
 
-      <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
-        <h2 class="body-1 pb-1">
-          <i class="fa fa-banknote pr-1" aria-hidden="true"></i> Payment Details
-        </h2>
+      <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 py-0 box-grey">
+        <v-flex class="d-flex justify-center align-center pb-2">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-banknote pr-1" aria-hidden="true"></i> Payment
+            Details
+          </h2>
+          <v-spacer></v-spacer>
+          <v-btn text small> <v-icon left>fa-pencil</v-icon>Edit </v-btn>
+        </v-flex>
         <v-divider></v-divider>
         <v-flex my-3>
           <div class="body-2 text--secondary">Card Type</div>
@@ -181,11 +214,15 @@
         </v-flex>
       </div>
 
-      <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
-        <h2 class="body-1 pb-1">
-          <i class="fa fa-question-circle pr-1" aria-hidden="true"></i> Survey
-          Questions
-        </h2>
+      <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 py-0 box-grey">
+        <v-flex class="d-flex justify-center align-center pb-2">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-question-circle pr-1" aria-hidden="true"></i>
+            Survey Questions
+          </h2>
+          <v-spacer></v-spacer>
+          <v-btn text small> <v-icon left>fa-pencil</v-icon>Edit </v-btn>
+        </v-flex>
         <v-divider></v-divider>
       </div>
     </v-flex>
