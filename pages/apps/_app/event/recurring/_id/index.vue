@@ -687,6 +687,7 @@
 import gql from 'graphql-tag'
 import format from 'date-fns/format'
 import editEventForm from '../../_id/editEventForm.vue'
+import nuxtConfig from '../../../../../../nuxt.config'
 import editSeoForm from '~/pages/apps/_app/event/_id/editSeoForm.vue'
 import editEventSetting from '~/pages/apps/_app/event/_id/editEventSetting.vue'
 import editSiteSetting from '~/pages/apps/_app/event/_id/editSiteSetting.vue'
@@ -695,7 +696,6 @@ import Grid from '~/components/common/grid'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin } from '~/utility'
-import nuxtConfig from '../../../../../../nuxt.config'
 
 export default {
   layout: 'event',
