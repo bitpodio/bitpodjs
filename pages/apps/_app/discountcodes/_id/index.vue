@@ -1,7 +1,9 @@
 <template>
   <v-flex d-flex flex-md-row flex-lg-row flex-column>
     <v-flex column xs12 sm8 md8 lg8>
-      <div class="xs12 sm8 md8 lg8 boxview pa-4 mr-2 mb-2">
+      <div
+        class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+      >
         <v-row class="ma-1 discount-top">
           <v-col
             class="col-md-2 col-lg-2 col-4 d-flex flex-column justify-center align-center grey lighten-2"
@@ -45,20 +47,30 @@
           </v-col>
         </v-row>
       </div>
-      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
-        <h2 class="body-1 pb-2">
-          <i class="fa fa-user-plus pr-1" aria-hidden="true"></i>Members
-        </h2>
+      <div
+        v-if="content"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-user-plus pr-1" aria-hidden="true"></i>
+            Members
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="discountMembers" :content="content" />
+        <Grid view-name="discountMembers" :content="content" class="mt-n12" />
       </div>
     </v-flex>
     <v-flex column xs12 sm4 md4 lg4>
-      <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
-        <h2 class="body-1 pb-1">
-          <i class="fa fa-info-circle pr-1" aria-hidden="true"></i>
-          Information
-        </h2>
+      <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pb-0 box-grey">
+        <v-flex class="d-flex justify-center align-center pb-2">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-info-circle pr-1" aria-hidden="true"></i>
+            Information
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
         <v-divider></v-divider>
         <v-row>
           <v-col class="col-md-6 col-12">
