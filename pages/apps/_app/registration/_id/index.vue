@@ -120,6 +120,19 @@
           class="mt-n12"
         />
       </div>
+      <div
+        class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-comments-alt pr-1" aria-hidden="true"></i>
+            Notes
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
+        <v-divider></v-divider>
+        <Notes model-name="Registrations" />
+      </div>
     </v-flex>
     <v-flex column xs12 sm4 md4 lg4>
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 py-0 pr-2 box-grey">
@@ -233,12 +246,14 @@
 import gql from 'graphql-tag'
 import format from 'date-fns/format'
 import Grid from '~/components/common/grid'
+import Notes from '~/components/common/notes'
 import registration from '~/config/apps/event/gql/registration.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin } from '~/utility'
 export default {
   components: {
     Grid,
+    Notes,
   },
   mixins: [configLoaderMixin],
   data() {
