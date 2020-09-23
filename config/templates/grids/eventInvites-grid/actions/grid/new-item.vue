@@ -38,7 +38,7 @@
                 <v-icon>mdi-close</v-icon>
               </v-btn>
             </div>
-            <v-tabs ref="slider" v-model="curentTab" height="36">
+            <v-tabs v-model="curentTab" height="36">
               <v-tab class="px-0 mr-4">Basic Info</v-tab>
               <v-tab :disabled="invalid" class="px-0 mr-4">Content</v-tab>
               <v-tab :disabled="invalid" class="px-0 mr-4">Contacts</v-tab>
@@ -816,8 +816,6 @@ export default {
       if (oldVal === 0) {
         this.$refs.form.validate()
         if (!this.subject || !this.setReplyTo || !this.sender) {
-          event.stopPropagation()
-          this.$refs.slider.$data.internalLazyValue = 0
           this.curentTab = 0
         }
       }
