@@ -877,8 +877,8 @@ export default {
         const event = formatGQLResult(data, 'Event')
         const badge = formatGQLResult(data, 'Badge')
         const eventSummary = data.Event.EventGetEventSummery
-        this.eventUniqueLink = `https://${nuxtconfig.axios.eventUrl}/e/${event[0].UniqLink}`
-        this.eventSessionLink = `https://${nuxtconfig.axios.eventUrl}/t/${event[0].UniqLink}`
+        this.eventUniqueLink = `https://${nuxtConfig.axios.eventUrl}/e/${event[0].UniqLink}`
+        this.eventSessionLink = `https://${nuxtConfig.axios.eventUrl}/t/${event[0].UniqLink}`
         return {
           event: event.length > 0 ? event[0] : {},
           badge: badge.length > 0 ? badge[0] : {},

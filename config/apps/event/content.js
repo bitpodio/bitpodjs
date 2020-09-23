@@ -1798,17 +1798,17 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
-            // rules: [
-            //   (v) => {
-            //     return !!v || 'Start is required'
-            //   },
-            //   (v, data) => {
-            //     return (
-            //       (!!v && data.EndDate > new Date(v)) ||
-            //       'Start Date should be less than End Date'
-            //     )
-            //   },
-            // ],
+            rules: [
+              (v) => {
+                return !!v || 'Start is required'
+              },
+              (v, data) => {
+                return (
+                  (!!v && data.EndDate > new Date(v)) ||
+                  'Start Date should be less than End Date'
+                )
+              },
+            ],
           },
           EndDate: {
             form: {
@@ -1827,18 +1827,17 @@ export default {
             newForm: true,
             editForm: true,
             default: addMonths(new Date(), 1),
-            // rules: [
-            //   function (v) {
-            //     debugger
-            //     const eventEndDate = this.context.event.EndDate
-            //     const isValidEndDate =
-            //       eventEndDate > (v && new Date(v).toISOString())
-            //     return (
-            //       !!isValidEndDate ||
-            //       'Ticket end date should be less than event end date.'
-            //     )
-            //   },
-            // ],
+            rules: [
+              function (v) {
+                const eventEndDate = this.context.event.EndDate
+                const isValidEndDate =
+                  eventEndDate > (v && new Date(v).toISOString())
+                return (
+                  !!isValidEndDate ||
+                  'Ticket end date should be less than event end date.'
+                )
+              },
+            ],
           },
           ValidateQty: {
             form: {
@@ -2295,18 +2294,17 @@ export default {
             newForm: true,
             editForm: true,
             default: '',
-            // rules: [
-            //   function (v) {
-            //     debugger
-            //     const eventEndDate = this.context.event.EndDate
-            //     const isValidEndDate =
-            //       eventEndDate > (v && new Date(v).toISOString())
-            //     return (
-            //       !!isValidEndDate ||
-            //       'Session End date should be in between event date.'
-            //     )
-            //   },
-            // ],
+            rules: [
+              function (v) {
+                const eventEndDate = this.context.event.EndDate
+                const isValidEndDate =
+                  eventEndDate > (v && new Date(v).toISOString())
+                return (
+                  !!isValidEndDate ||
+                  'Session End date should be in between event date.'
+                )
+              },
+            ],
           },
           Type: {
             form: {
@@ -2871,21 +2869,6 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
-            rules: [
-              (v, data) => {
-                debugger
-                const category = data.Category
-                if (category === 'Survey Invite') {
-                  return !!v || 'Action is required'
-                } else if (
-                  category === 'Registration Email' ||
-                  category === 'Calendar Invite' ||
-                  category === 'Email'
-                ) {
-                  return true
-                }
-              },
-            ],
             visible(value, data) {
               const category = data.Category
               if (category === 'Survey Invite') {
@@ -2907,16 +2890,6 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
-            rules: [
-              function (value, data) {
-                const category = data.Category
-                if (category === 'Email') {
-                  return !!value || 'Template is required'
-                } else {
-                  return true
-                }
-              },
-            ],
             visible(value, data) {
               const category = data.Category
               return category === 'Email'
@@ -2947,14 +2920,6 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
-            // rules: [
-            //   function (value, data) {
-            //     const status = data.Status
-            //     if (status === 'Schedule') {
-            //       return !!value || 'DueDate is required'
-            //     }
-            //   },
-            // ],
             visible(value, data) {
               const category = data.Category
               const status = data.Status
@@ -2979,15 +2944,6 @@ export default {
             inlineEdit: true,
             newForm: true,
             editForm: true,
-            // rules: [
-            //   function (value, data) {
-            //     const status = data.Status
-            //     const category = data.Category
-            //     if ((status === 'Schedule' || status === 'Wait for an Action') && (category === 'Survey Invite' || category === 'Email')  ) {
-            //       return !!value || 'DueDate is required'
-            //     }
-            //   },
-            // ],
             visible(value, data) {
               const category = data.Category
               const status = data.Status
@@ -4408,7 +4364,6 @@ export default {
               itemText: 'Name',
               itemValue: 'id',
               filter(ctx, data) {
-                debugger
                 return {
                   EventId: ctx.EventId,
                 }
@@ -5129,7 +5084,6 @@ export default {
               itemText: 'Code',
               itemValue: 'id',
               filter(ctx, data) {
-                debugger
                 return {
                   Events: this.context.registration.EventId,
                 }
@@ -6411,7 +6365,6 @@ export default {
           type: 'graphql',
           model: 'Registration',
           filter(ctx) {
-            debugger
             return {
               where: {},
             }

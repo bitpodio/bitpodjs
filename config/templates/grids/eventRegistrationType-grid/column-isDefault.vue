@@ -16,7 +16,6 @@ export default {
   },
   methods: {
     async updateRegistrationType() {
-      debugger
       const where = { EventId: this.$route.query.event }
       const result = await this.$apollo.query({
         query: gql`

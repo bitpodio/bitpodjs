@@ -13,9 +13,6 @@
       transition="dialog-bottom-transition"
     >
       <template v-slot:activator="{ on, attrs }">
-        <v-btn text small v-bind="attrs" v-on="on">
-          <v-icon left>mdi-plus</v-icon>
-          send Event Invite
         <v-btn
           text
           small
