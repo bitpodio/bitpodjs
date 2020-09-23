@@ -32,4 +32,8 @@ module.exports = Object.freeze({
   END_START_DATE: 'End Date should be greater than Start Date',
   START_END_TIME: 'Start Time should not be greater than End Time',
   END_START_TIME: 'End Time should not be less than Start Time',
+
+  REFUND_PAID_AMT:
+    'Refunded Amount can not be greater or equal than total paid amount',
+  REFUND_AMT_MSG: 'Amount should not be less than or equal to  0',
 })
