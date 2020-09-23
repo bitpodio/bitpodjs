@@ -2939,7 +2939,7 @@ export default {
           singleExpand: false,
           showSelect: true,
           hideFilter: true,
-          hideSearch: false,
+          hideSearch: true,
         },
         hidden: true,
         title: 'discountMembers',

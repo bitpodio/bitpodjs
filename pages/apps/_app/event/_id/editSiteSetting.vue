@@ -189,7 +189,10 @@
                       dense
                     ></v-text-field>
                   </v-col>
-                  <v-col cols="12">
+                  <v-col
+                    v-if="eventData.BusinessType === 'Recurring'"
+                    cols="12"
+                  >
                     <v-text-field
                       v-model="sectionHeading.sessionsectionlabel"
                       label="Label for Recurring Sessions section"
@@ -320,28 +323,28 @@ export default {
     refresh() {
       this.$apollo.queries.data1.refresh()
     },
-    onSave() {
+    async onSave() {
       this.sectionHeading.animation =
         this.animation !== 'Select' ? this.animation : ''
       Object.assign(this.eventData, {
         _sectionHeading: this.sectionHeading,
       })
       delete this.eventData._VenueAddress
-      this.$axios
-        .$patch(
+      try {
+        const res = await this.$axios.$patch(
           `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`,
           {
             ...this.eventData,
           }
         )
-        .then((res) => {
+        if (res) {
           this.close()
           this.refresh()
-          return (this.sectionHeading = res._sectionHeading)
-        })
-        .catch((e) => {
-          console.log('Error', e)
-        })
+          this.sectionHeading = res._sectionHeading
+        }
+      } catch (e) {
+        console.log('Error', e)
+      }
     },
     getDropDownData(filterType) {
       return this.$apollo

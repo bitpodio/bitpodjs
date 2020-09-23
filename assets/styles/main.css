@@ -92,14 +92,14 @@ body {
   max-width: 130px;
 }
 .wd-full {
-  width: -webkit-fill-available;
+  width: 80%;
 }
 .nav-title {
-  font-size: 14px !important;
+  font-size: 15px !important;
   font-weight: 400 !important;
 }
 .nav-subheader {
-  font-size: 14px !important;
+  font-size: 15px !important;
 }
 .app-name {
   font-size: 24px;
@@ -112,11 +112,11 @@ body {
   display: block !important;
 }
 .nav-bar .fa {
-  font-size: 15px !important;
+  font-size: 18px !important;
 }
 .nav-bar .v-list-item {
-  min-height: 36px !important;
-  max-height: 36px !important;
+  min-height: 44px !important;
+  max-height: 44px !important;
 }
 .nav-bar .v-list-item__action {
   margin: 10px 0 !important;
@@ -167,7 +167,9 @@ body {
   background-color: #f6fafe;
 }
 .boxview h2.body-1,
-.boxview h2 > .fa {
+.boxview h2 > .fa,
+.box-grey h2.body-1,
+.box-grey h2 > .fa {
   color: #3fa5ff !important;
 }
 .survey-img {
@@ -232,9 +234,14 @@ body {
 }
 .boxview .v-data-table__wrapper {
   overflow-x: hidden !important;
+  margin-bottom: 6px;
 }
 .boxview:hover .v-data-table__wrapper {
   overflow-x: auto !important;
+  margin-bottom: 0px;
+}
+.v-application .boxview .v-data-table {
+  padding: 0 !important;
 }
 .contactsGrid {
   overflow: auto;
@@ -253,14 +260,38 @@ body {
   width: 100%;
   text-align: center;
 }
+.positionAbsolute {
+  position: absolute;
+}
+.positionRelative {
+  position: relative;
+}
 .borderBottomGrey {
   border-bottom: 1px solid lightgray;
 }
 .borderRightGrey {
   border-right: 1px solid lightgray;
 }
+.overflowHidden {
+  overflow: hidden;
+}
+.v-skeleton-loader__bone {
+  width: 100% !important; 
+  height: 100% !important;
+}
 .invite-form .v-tab {
   min-width: auto !important;
+}
+.v-navigation-drawer__border {
+  display: none !important;
+}
+.v-data-table--dense > .v-data-table__wrapper > table > tbody > tr > td, 
+.v-data-table > .v-data-table__wrapper > table > thead > tr > th {
+  padding-left: 0 !important;
+}
+.logo-bitpod {
+  width: 30px;
+  height: 40px;
 }
 @media (max-width: 600px) {
   .slide-form,

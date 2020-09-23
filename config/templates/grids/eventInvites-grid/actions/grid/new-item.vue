@@ -1,5 +1,5 @@
 <template>
-  <v-row justify="center">
+  <v-flex>
     <v-snackbar v-model="snackbar" :top="true" :timeout="1000">
       <div class="toast py-2 pr-1 pl-3">
         Some Error Occured, Please contact Administrator.
@@ -746,7 +746,7 @@
         </v-container>
       </v-card>
     </v-dialog>
-  </v-row>
+  </v-flex>
 </template>
 
 <script>
