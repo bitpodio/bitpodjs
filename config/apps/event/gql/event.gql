@@ -42,6 +42,10 @@ query($filters: JSON, $badgeFilter: JSON, $eventId: String) {
           ShowRemainingTickets
           StartDate
           Status
+          Logo
+          Banner
+          Images
+          Other
           SyncStatus
           Tags
           Timezone
@@ -70,6 +74,28 @@ query($filters: JSON, $badgeFilter: JSON, $eventId: String) {
             Country
             City
             AddressLine
+            createdDate
+            createdBy
+            modifiedDate
+            modifiedBy
+          }
+          _sectionHeading {
+            id
+            registrationquestionsectionlabel
+            sessionsectionlabel
+            venuelabel
+            datetimelabel
+            ticketlabel
+            ticketsectionlabel
+            showimagegallery
+            showeventreviews
+            review
+            gallery
+            session
+            registrationTypes
+            speakers
+            registrationbtn
+            animation
             createdDate
             createdBy
             modifiedDate

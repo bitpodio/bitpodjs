@@ -27,8 +27,8 @@ body {
   position: fixed !important;
   right: 0 !important;
   bottom: 0 !important;
-  width: calc(100% - 300px) !important;
-  max-height: calc(100% - 100px) !important;
+  width: calc(100% - 230px) !important;
+  max-height: calc(100% - 15px) !important;
 }
 .stepper-box {
   min-height: 650px;
@@ -38,6 +38,10 @@ body {
   right: 0 !important;
   bottom: 0 !important;
   width: 50% !important;
+}
+.v-dialog {
+  margin: 12px !important;
+  margin-bottom: 0px !important;
 }
 .Twitter {
   font-size: 0 !important;
@@ -50,7 +54,6 @@ body {
 .name-initial {
   font-size: 0 !important;
   text-transform: capitalize !important;
-  padding-top: 3px !important;
 }
 .name-initial::first-letter {
   font-size: 14px !important;
@@ -66,13 +69,21 @@ body {
   position: relative;
   bottom: 3px;
 }
+.uploadFile{
+  position: absolute !important;
+  z-index: 1;
+  top: 18px;
+  left: 8px;
+}
 .participantButton{
   position: absolute !important;
   left: 4px;
+}
+.cursorPointer {
   cursor: pointer;
 }
 .fs-18 {
-  font-size: 18px;
+  font-size: 18px !important;
 }
 .fs-30 {
   font-size: 30px !important;
@@ -81,14 +92,14 @@ body {
   max-width: 130px;
 }
 .wd-full {
-  width: -webkit-fill-available;
+  width: 80%;
 }
 .nav-title {
-  font-size: 14px !important;
+  font-size: 15px !important;
   font-weight: 400 !important;
 }
 .nav-subheader {
-  font-size: 14px !important;
+  font-size: 15px !important;
 }
 .app-name {
   font-size: 24px;
@@ -101,13 +112,47 @@ body {
   display: block !important;
 }
 .nav-bar .fa {
-  font-size: 20px !important;
+  font-size: 18px !important;
+}
+.nav-bar .v-list-item {
+  min-height: 44px !important;
+  max-height: 44px !important;
+}
+.nav-bar .v-list-item__action {
+  margin: 10px 0 !important;
+}
+.nav-bar .nav-icon {
+  margin-right: 10px !important;
+}
+.v-list .v-list-item--active {
+  color: #1a73e8 !important;
 }
 .fs-36 {
   font-size: 36px !important;
 }
 .app-container {
   max-width: 300px;
+}
+.templateTile {
+  max-width: 270px !important;
+}
+.templateverify {
+  max-width: 300px !important;
+}
+.tileCard {
+  transition: 0.3s all;
+  -webkit-transition: 0.3s all;
+  -moz-transition: 0.3s all;
+}
+.tileCard:hover {
+  background: #f4f4f4 !important;
+  transform: scale(1.04);
+  transition: 0.3s all;
+  -webkit-transition: 0.3s all;
+  -moz-transition: 0.3s all;
+}
+.v-data-table__wrapper {
+  width: 100%;
 }
 .app-view {
   min-width: 90px !important;
@@ -122,17 +167,140 @@ body {
   background-color: #f6fafe;
 }
 .boxview h2.body-1,
-.boxview h2 > .fa {
+.boxview h2 > .fa,
+.box-grey h2.body-1,
+.box-grey h2 > .fa {
   color: #3fa5ff !important;
 }
 .survey-img {
   max-width: 36px !important;
   max-height: 36px !important;
 }
+.v-data-table-header-mobile__wrapper {
+  flex-direction: row-reverse !important;
+}
+.v-data-table-header-mobile__select {
+  justify-content: flex-end !important;
+}
+.v-application--is-ltr .v-stepper__label {
+  text-align: center !important;
+  white-space: nowrap;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+}
+.v-timezone .v-autocomplete.v-input > .v-input__control > .v-input__slot {
+  min-height: 40px !important;
+}
+.v-timezone .v-application--is-ltr .v-text-field .v-input__append-inner {
+  margin-top: 4px !important;
+}
+.v-tickettype .v-text-field--outlined > .v-input__control > .v-input__slot {
+  min-height: 40px;
+}
+.event-table .v-text-field.v-text-field--enclosed {
+  max-height: 50px !important;
+  margin-bottom: 10px !important;
+  margin-top: 12px !important;
+}
+.event-table .v-text-field--enclosed .v-input__append-inner {
+  margin-top: 8px !important;
+}
+.jodit-ui-group {
+  flex-wrap: nowrap !important;
+}
+.v-event-icon .fa {
+  font-size: 20px !important;
+}
+.v-text-field--enclosed .v-input__append-inner {
+  margin-top: 10px !important;
+}
+.event-table tr:hover {
+  background: transparent !important;
+}
+.slide-form-default .col {
+  padding-bottom:  0px !important;
+}
+.event-cards {
+  overflow: hidden;
+}
+.event-cards:hover {
+  overflow-x: auto;
+}
+.event-datechip {
+  box-shadow: 0px 2px 10px 0 hsla(120, 4%, 84%, .64) inset;
+  background-color: hsl(0, 0%, 100%) !important;
+}
+.boxview .v-data-table__wrapper {
+  overflow-x: hidden !important;
+  margin-bottom: 6px;
+}
+.boxview:hover .v-data-table__wrapper {
+  overflow-x: auto !important;
+  margin-bottom: 0px;
+}
+.v-application .boxview .v-data-table {
+  padding: 0 !important;
+}
+.contactsGrid {
+  overflow: auto;
+  max-height: 480px !important;
+  width: 100%;
+}
+.tempCard {
+  transition: opacity .4s ease-in-out;
+}
+.on-hover {
+  opacity: 0.3;
+}
+.templateButtons {
+  position: absolute;
+  bottom: 30px;
+  width: 100%;
+  text-align: center;
+}
+.positionAbsolute {
+  position: absolute;
+}
+.positionRelative {
+  position: relative;
+}
+.borderBottomGrey {
+  border-bottom: 1px solid lightgray;
+}
+.borderRightGrey {
+  border-right: 1px solid lightgray;
+}
+.overflowHidden {
+  overflow: hidden;
+}
+.v-skeleton-loader__bone {
+  width: 100% !important; 
+  height: 100% !important;
+}
+.invite-form .v-tab {
+  min-width: auto !important;
+}
+.v-navigation-drawer__border {
+  display: none !important;
+}
+.logo-bitpod {
+  width: 30px;
+  height: 40px;
+}
 @media (max-width: 600px) {
   .slide-form,
   .slide-form-default {
     width: 100% !important;
     position: unset !important;
+  }
+  .app-drawer {
+    min-width: fit-content !IMPORTANT;
+    left: unset !important;
+    right: 20px !important;
+  }
+  .boxview {
+    margin-right: 0 !important;
   }
 }

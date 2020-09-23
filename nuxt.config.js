@@ -1,5 +1,6 @@
 import colors from 'vuetify/es5/util/colors'
 const basePath = process.env.PUBLIC_PATH || ''
+
 export default {
   /*
    ** Nuxt rendering mode
@@ -43,6 +44,21 @@ export default {
           'https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap',
       },
     ],
+    script: [
+      {
+        src: `${
+          process.env.GOOGLE_MAPS_API ||
+          'https://maps.googleapis.com/maps/api/js'
+        }?key=${
+          process.env.GOOGLE_API_KEY ||
+          'AIzaSyCPS6SZlor8qxfpul-dKyN6566XG2R5dFM'
+        }&libraries=places`,
+      },
+      {
+        src:
+          'https://cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js',
+      },
+    ],
   },
   /*
    ** Global CSS
@@ -52,7 +68,10 @@ export default {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: ['~/plugins/eventBus.js', '~/plugins/date-time-picker.js'],
+  plugins: [
+    '~/plugins/eventBus.js',
+    { src: '~/plugins/v-datetime-picker.js', mode: 'client' },
+  ],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
@@ -77,6 +96,15 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/apollo',
     '@nuxtjs/auth-next',
+    [
+      'nuxt-gmaps',
+      {
+        key:
+          process.env.GOOGLE_API_KEY ||
+          'AIzaSyCPS6SZlor8qxfpul-dKyN6566XG2R5dFM',
+        // you can use libraries: ['places']
+      },
+    ],
   ],
   /*
    ** Axios module configuration
@@ -87,8 +115,7 @@ export default {
     apiEndpoint: '/svc/api/',
     backendBaseUrl: process.env.PUBLIC_DOMAIN || '',
     baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
-    // use below locally and comment above
-    // baseURL: `http://localhost:3000${basePath}`,
+    eventUrl: process.env.GET_EVENT_URL || 'event.test.bitpod.io',
   },
 
   publicRuntimeConfig: {
@@ -99,6 +126,7 @@ export default {
     cdnUri:
       'https://res.cloudinary.com/mytestlogo/image/upload/bitpodjs/images/',
   },
+
   /*
    ** vuetify module configuration
    ** https://github.com/nuxt-community/vuetify-module
@@ -167,7 +195,7 @@ export default {
     redirect: {
       login: '/login',
       callback: '/callback',
-      home: `${basePath}/apps/event/list/Event/All Events`,
+      home: `${basePath}/apps/event/list/Event/live and draft event`,
       logout: '/',
     },
     strategies: {
@@ -236,5 +264,18 @@ export default {
       },
     },
     devtools: true,
+  },
+  generalConfig: {
+    googleMapKey:
+      process.env.GOOGLE_API_KEY || 'AIzaSyCPS6SZlor8qxfpul-dKyN6566XG2R5dFM',
+    googleMapGeocodeApi:
+      process.env.GOOGLE_MAPS_GEOCODE_API ||
+      'https://maps.googleapis.com/maps/api/geocode/json',
+  },
+  setting: {
+    domains: {
+      defaultPublicDomain:
+        process.env.DEFAULT_PUBLIC_DOMAIN || 'event.test.bitpod.io',
+    },
   },
 }

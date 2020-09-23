@@ -2,6 +2,7 @@ import registrationStatusOptions from './gql/registrationStatusOptions.gql'
 import registrationList from './gql/registrationList.gql'
 import discountCodes from './gql/discountCodes.gql'
 import eventList from './gql/eventlist.gql'
+import liveDraftEvents from './gql/liveDraftevents.gql'
 import eventNames from './gql/eventNames.gql'
 import contactList from './gql/contactList.gql'
 import memberList from './gql/memberList.gql'
@@ -75,7 +76,7 @@ export default {
           singleExpand: false,
           showSelect: true,
           hideFilter: false,
-          hideSearch: true,
+          hideSearch: false,
         },
         default: false,
         fields: {
@@ -342,6 +343,192 @@ export default {
           },
         },
         title: 'Past',
+        type: 'list',
+      },
+      'live and draft event': {
+        ui: {
+          hideDefaultHeader: true,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: true,
+          hideFilter: false,
+          hideSearch: true,
+        },
+        default: true,
+        fields: {
+          Title: {
+            displayOrder: 2,
+            caption: 'Title',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '250px',
+            type: 'string',
+          },
+          StartDate: {
+            displayOrder: 3,
+            caption: 'Start Date',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'date',
+          },
+          EndDate: {
+            displayOrder: 3,
+            caption: 'End Date',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'date',
+          },
+          Privacy: {
+            displayOrder: 4,
+            caption: 'Privacy',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          Tags: {
+            displayOrder: 5,
+            caption: 'Tags',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          VenueName: {
+            displayOrder: 6,
+            caption: 'Venue',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          '_VenueAddress.AddressLine': {
+            displayOrder: 7,
+            caption: 'Address',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          '_VenueAddress.City': {
+            displayOrder: 8,
+            caption: 'City',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          '_VenueAddress.State': {
+            displayOrder: 9,
+            caption: 'State',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          '_VenueAddress.PostalCode': {
+            displayOrder: 10,
+            caption: 'Postal Code',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          '_VenueAddress.Country': {
+            displayOrder: 11,
+            caption: 'Country',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          Currency: {
+            displayOrder: 12,
+            caption: 'Currency',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          createdDate: {
+            displayOrder: 13,
+            caption: 'Created Date',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'date',
+          },
+        },
+        template: {
+          name: 'livedraft-grid',
+          context: {
+            basePath: '/event',
+          },
+        },
+        dataSource: {
+          query: liveDraftEvents,
+          defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          model: 'Event',
+          filter: {
+            order: 'createdDate DESC',
+            skip: '0',
+            where: {
+              or: [
+                {
+                  and: [
+                    {
+                      or: [
+                        {
+                          StartDate: {
+                            lte: new Date(),
+                          },
+                        },
+                        {
+                          StartDate: {
+                            gte: new Date(),
+                          },
+                        },
+                        {
+                          StartDate: {
+                            exists: false,
+                          },
+                        },
+                        {
+                          StartDate: null,
+                        },
+                      ],
+                    },
+                    {
+                      or: [
+                        {
+                          StartDate: {
+                            gte: new Date(),
+                          },
+                        },
+                        {
+                          StartDate: {
+                            exists: false,
+                          },
+                        },
+                        {
+                          StartDate: null,
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  Status: 'Not ready',
+                },
+              ],
+            },
+          },
+        },
+        title: 'Live and Draft Events',
         type: 'list',
       },
       eventAttendees: {
@@ -679,7 +866,7 @@ export default {
           },
         },
         template: {
-          name: 'event-grid',
+          name: 'eventInvites-grid',
           context: {
             basePath: '/event',
           },
@@ -822,11 +1009,16 @@ export default {
             editForm: true,
             dataSource: {
               query: registrationType,
-              itemText: 'Name',
+              itemText: 'customField',
               itemValue: 'id',
               filter(data) {
                 return {
                   EventId: this.$route.params.id,
+                }
+              },
+              computed(data) {
+                return {
+                  customField: `${data.Name}   (max allowed - ${data.MaxQuantityAllowed})`,
                 }
               },
             },
@@ -870,8 +1062,13 @@ export default {
             newForm: true,
             editForm: true,
             rules: [
-              (v) => {
-                return !!v || 'Start Date is required'
+              function (v) {
+                const eventStartDate =
+                  this.context.event && this.context.event.StartDate
+                const eventStartDateObj =
+                  eventStartDate && new Date(eventStartDate)
+                const isValidStartDate = eventStartDateObj > (v && new Date(v))
+                return !!isValidStartDate || 'Start Date is required'
               },
             ],
           },
@@ -929,8 +1126,8 @@ export default {
             cssClasses: 'col-6 col-md-6',
             hidden: true,
             inlineEdit: true,
-            newForm: true,
-            editForm: true,
+            newForm: false,
+            editForm: false,
             rules: [
               (v) => {
                 return !!v || 'EventId is required'
@@ -1171,7 +1368,7 @@ export default {
           },
         },
         template: {
-          name: 'event-grid',
+          name: 'eventRegistrationQuestion-grid',
           context: {
             basePath: '/event',
           },
@@ -1350,6 +1547,42 @@ export default {
             columnWidth: '150px',
             type: 'string',
           },
+          MyImage: {
+            form: {
+              caption: 'Image',
+              displayOrder: 10,
+            },
+            cssClasses: 'col-12 col-md-6',
+            displayOrder: 8,
+            caption: 'My Image',
+            searchEnable: false,
+            sortEnable: false,
+            columnWidth: '150px',
+            type: 'file',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            multiple: false,
+          },
+          MyImages: {
+            form: {
+              caption: 'Image',
+              displayOrder: 10,
+            },
+            cssClasses: 'col-12 col-md-6',
+            displayOrder: 9,
+            caption: 'My Images',
+            searchEnable: false,
+            sortEnable: false,
+            columnWidth: '150px',
+            type: 'file',
+            hidden: true,
+            inlineEdit: true,
+            newForm: true,
+            editForm: true,
+            multiple: true,
+          },
         },
         template: {
           name: 'link-grid',
@@ -1494,6 +1727,84 @@ export default {
             return {
               where: {
                 EventId: ctx.$route.params.id,
+              },
+            }
+          },
+        },
+        title: 'eventTasks',
+        type: 'list',
+      },
+      inviteeEventTasks: {
+        ui: {
+          hideDefaultHeader: false,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: true,
+          hideFilter: false,
+          hideSearch: true,
+        },
+        hidden: true,
+        fields: {
+          Title: {
+            displayOrder: 2,
+            caption: 'Title',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          Status: {
+            displayOrder: 3,
+            caption: 'Status',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          DueDate: {
+            displayOrder: 7,
+            caption: 'Due Date',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'datetime',
+          },
+          createdDate: {
+            displayOrder: 8,
+            caption: 'Created Date',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'date',
+          },
+          createdBy: {
+            displayOrder: 9,
+            caption: 'Created By',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+        },
+        template: {
+          name: 'contactInvitee-grid',
+          context: {
+            basePath: '/event',
+          },
+        },
+        dataSource: {
+          query: eventTasks,
+          defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          model: 'CRMActivity',
+          filter(ctx) {
+            return {
+              where: {
+                and: [
+                  { EventId: ctx.$route.params.id },
+                  { Type: 'Mass Email' },
+                ],
               },
             }
           },
@@ -1683,55 +1994,6 @@ export default {
   },
 
   Registrations: {
-    child: {},
-    dataSource: {
-      FormID: 'EventsAdvSearch',
-      'Key Field': '',
-      'Parent key field': '',
-      Type: 'List',
-      URL: 'Registration',
-    },
-    general: {
-      caption: 'Registrations',
-      name: 'Registration',
-    },
-    permissions: {
-      Groups: '',
-    },
-    ui: {
-      MobileViewTemplate: {
-        isActive: true,
-        templateName: 'Event_Registation_Mobile',
-      },
-      TemplateActions: {},
-      Checkbox: 'True',
-      'Card View Template': 'VisitingCard0',
-      Width: '50%',
-      Height: '',
-      TemplateHelpers: {},
-      'Display Order': '',
-      'Map View Template': '',
-      'List View Template': '',
-      'Detail View': 'tab',
-      Column: '',
-      'Tile View': 'now',
-      'App Type': 'View',
-      Templates: {
-        VisitingCard0: 'Registrations_Card_View',
-        Status:
-          '<div title="{{Status}}"><style>.reg-status {\n                  font-size: 10px;\n                            display: inline-block;\n                            color: #fff;\n                            margin-right: 5px;\n                            margin-bottom: 0px;\n                            padding: 3px 10px !important;\n                            border-radius: 20px !important;\n                            text-transform: capitalize;\n                        }\n                      .reg-success {\n                                      background-color: #0cb14b;\n                    }\n                      .reg-fail {\n                                      background-color: #f25955;\n                    }\n                      .reg-refund {\n                                      background-color: #3fa5ff;\n                    }\n                    .reg-parefund {\n                                      background-color: #b9b9b9;\n                    }\n                      .reg-parrefund {\n                                      background-color: #f4b400;\n                    }</style><div class="reg-status {{getStatusColor Status}}"> {{getCapitalResult Status}} </div></div>',
-        SyncStatus:
-          '<div><i class="{{ShowSyncField SFRegistrationId}}" style="{{getColor SFRegistrationId}}" onclick="invokeAction(\'changeSyncStatus\',this)" node={{node.id}}> </i></div>',
-        CheckIn:
-          '<style>\n    .checkin-btn {\ncolor: #fff;\npadding: 3px 10px !important;\n    background-color: #3fa5ff !important;;\nfont-size: 12px;\nborder-radius: 2px;\ncursor: pointer;\n}\n.check-label {\n        color: #1a73e8;\nfont-size: 13px;\n}\n</style>\n{{#ifStatus Status}}\n<div title="CheckIn">\n    {{#if CheckIn}}<span class="check-label">\n        <i class="fa fa-check" style="color: #1a73e8;margin-top:3px;" node={{node.id}}> </i>Checked in </span>\n    <span class="check-label">{{date_diff CheckIn}}</span>\n    {{else}}\n    <span onclick="invokeAction(\'CheckIn\',this)" class="checkin-btn">Check in</span>\n    {{/if}}\n</div>\n{{else}} <div style="height: 100%;" title=""></div>{{/ifStatus}}',
-        FullName:
-          '<div onclick="invokeAction(\'goToDetails\', this)" data-action="edit" data-bind="ID={{id}}" style="cursor: pointer;color: #1a73e8;"> {{FullName}} </div>',
-      },
-      decorator: {
-        Attachment: '',
-        LinkedinURL: '',
-      },
-    },
     views: {
       Registrations: {
         ui: {
@@ -2079,6 +2341,7 @@ export default {
             where: {},
           },
         },
+        itemTitle: 'Registration',
         title: 'Registrations',
         type: 'list',
       },
@@ -2863,7 +3126,7 @@ export default {
           singleExpand: false,
           showSelect: true,
           hideFilter: true,
-          hideSearch: false,
+          hideSearch: true,
         },
         hidden: true,
         title: 'discountMembers',
@@ -3224,7 +3487,53 @@ export default {
           },
         },
         template: {
-          name: 'link-grid',
+          name: 'contacts-grid',
+          context: {
+            basePath: '/contacts',
+          },
+        },
+        dataSource: {
+          query: contactList,
+          filter: {
+            where: {},
+          },
+          type: 'graphql',
+          model: 'Contact',
+          defaultSort: 'createdDate DESC',
+        },
+        title: 'Contacts',
+        defaultSort: 'createdDate DESC',
+      },
+      InviteContacts: {
+        ui: {
+          hideDefaultHeader: false,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: true,
+          hideFilter: true,
+          hideSearch: true,
+        },
+        fields: {
+          Email: {
+            displayOrder: 1,
+            caption: 'Email',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'string',
+          },
+          FullName: {
+            displayOrder: 2,
+            caption: 'Full Name',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '180px',
+            type: 'string',
+          },
+        },
+        template: {
+          name: 'contactInvitee-grid',
           context: {
             basePath: '/contacts',
           },

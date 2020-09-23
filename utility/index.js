@@ -57,7 +57,6 @@ export function getApiUrl() {
   } else {
     apiURL = `${window.location.origin}${nuxtconfig.axios.apiEndpoint}`
   }
-
   return apiURL
 }
 
@@ -95,7 +94,7 @@ export const formValidationMixin = {
       const { rules = [] } = field
       return rules.map((ruleFunction) => {
         return (value) => {
-          return ruleFunction(value, this.formData)
+          return ruleFunction.call(this, value, this.formData)
         }
       })
     },

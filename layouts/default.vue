@@ -1,24 +1,36 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer v-model="drawer" app>
-      <v-toolbar-title class="ml-0 pl-3 logo-ds d-flex align-center">
-        <span class="hidden-sm-and-down bitpod-logo logo-ds">
+    <v-navigation-drawer
+      v-model="drawer"
+      app
+      class="nav-bar greybg"
+      :width="280"
+    >
+      <v-toolbar-title class="ml-0 pl-3 px-2 py-1 logo-ds d-flex align-center">
+        <span class="bitpod-logo logo-ds">
           <v-img
             :src="$config.cdnUri + 'logo-favicon.png'"
-            height="50"
-            width="30"
+            class="logo-bitpod"
           ></v-img>
         </span>
-        <span d-inline-flex align-center class="mx-2">Event</span>
+        <span d-inline-flex align-center class="mx-2 text-h5">Event</span>
+        <v-spacer></v-spacer>
+        <div v-if="drawer === true" class="d-none d-sm-flex">
+          <v-app-bar-nav-icon
+            class="nav-drawer"
+            @click.stop="drawer = !drawer"
+          ></v-app-bar-nav-icon>
+        </div>
       </v-toolbar-title>
-      <div class="text-center">
+      <div class="text-center mt-4">
         <v-menu>
           <template v-slot:activator="{ on, attrs }">
             <v-btn
               v-bind="attrs"
-              color="blue darken-2"
+              color="primary"
               dark
-              class="ma-3 block wd-full"
+              depressed
+              class="ma-3 block wd-full my-0 mb-1 ml-n4"
               v-on="on"
             >
               Create Event
@@ -35,11 +47,11 @@
           </v-list>
         </v-menu>
       </div>
-      <v-list dense>
+      <v-list shaped>
         <template v-for="item in items">
           <v-row v-if="item.heading" :key="item.heading" align="center">
             <div class="pa-0 pl-5">
-              <v-subheader v-if="item.heading" class="nav-subheader">
+              <v-subheader v-if="item.heading" class="nav-subheader pl-2">
                 {{ item.heading }}
               </v-subheader>
             </div>
@@ -90,240 +102,158 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-dialog v-model="dialog1" persistent max-width="850px">
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn color="primary" dark v-bind="attrs" v-on="on">
-          Open Dialog
-        </v-btn>
-      </template>
-      <v-card>
-        <v-card-title>
-          <span class="headline">New Event</span>
-        </v-card-title>
-        <v-card-text>
-          <v-row>
-            <v-col cols="12">
-              <v-text-field
-                label="Event Name*"
-                required
-                outlined
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <v-dialog
-                ref="dialog"
-                v-model="modal"
-                :return-value.sync="date"
-                persistent
-                width="290px"
-              >
-                <template v-slot:activator="{ on, attrs }">
-                  <v-text-field
-                    v-model="date"
-                    outlined
-                    label="Start Date"
-                    append-icon="fa-calendar"
-                    readonly
-                    v-bind="attrs"
-                    v-on="on"
-                  ></v-text-field>
-                </template>
-                <v-date-picker v-model="date" scrollable>
-                  <v-spacer></v-spacer>
-                  <v-btn text color="primary" @click="modal = false"
-                    >Cancel</v-btn
-                  >
-                  <v-btn text color="primary" @click="$refs.dialog.save(date)"
-                    >OK</v-btn
-                  >
-                </v-date-picker>
-              </v-dialog>
-            </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <v-menu
-                v-model="menu2"
-                :close-on-content-click="false"
-                :nudge-right="40"
-                transition="scale-transition"
-                offset-y
-                min-width="290px"
-              >
-                <template v-slot:activator="{ on, attrs }">
-                  <v-text-field
-                    v-model="date"
-                    outlined
-                    label="End Date"
-                    append-icon="fa-calendar"
-                    readonly
-                    v-bind="attrs"
-                    v-on="on"
-                  ></v-text-field>
-                </template>
-                <v-date-picker
-                  v-model="date"
-                  @input="menu2 = false"
-                ></v-date-picker>
-              </v-menu>
-            </v-col>
-            <v-col cols="12" sm="6" md="4">
-              <v-select
-                :items="['0-17', '18-29', '30-54', '54+']"
-                label="Timezone*"
-                required
-                outlined
-              ></v-select>
-            </v-col>
-            <v-col cols="12">
-              <v-textarea
-                clearable
-                outlined
-                clear-icon="fa fa-close"
-                label="Description"
-                value=""
-              ></v-textarea>
-            </v-col>
-            <v-col cols="12" sm="6" md="6">
-              <v-text-field
-                label="Event Link*"
-                hint="https://bitpod-event.test.bitpod.io/e/"
-                persistent-hint
-                outlined
-                required
-              ></v-text-field>
-            </v-col>
-          </v-row>
-          <small>*indicates required field</small>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="dialog1 = false"
-            >Close</v-btn
-          >
-          <v-btn color="blue darken-1" text @click="dialog1 = false"
-            >Save</v-btn
-          >
-        </v-card-actions>
-      </v-card>
+    <v-dialog
+      v-model="dialog1"
+      persistent
+      scrollable
+      content-class="slide-form"
+      transition="dialog-bottom-transition"
+    >
+      <NewSingleEvent :on-form-close="closeSingleEventForm" />
     </v-dialog>
 
-    <v-dialog v-model="dialog" fullscreen transition="dialog-bottom-transition">
-      <v-card>
-        <v-toolbar dark color="primary">
-          <v-btn icon dark @click="dialog = false">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-          <v-toolbar-title>New Event</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-toolbar-items>
-            <v-btn dark text @click="dialog = false">Save</v-btn>
-          </v-toolbar-items>
-        </v-toolbar>
-        <v-card-text>
-          <v-container>
-            <v-row>
-              <v-col cols="12">
-                <v-text-field label="Event Name*" required></v-text-field>
-              </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <v-dialog
-                  ref="dialog"
-                  v-model="modal"
-                  :return-value.sync="date"
-                  persistent
-                  width="290px"
-                >
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-text-field
-                      v-model="date"
-                      label="Start Date"
-                      append-icon="fa-calendar"
-                      readonly
-                      v-bind="attrs"
-                      v-on="on"
-                    ></v-text-field>
-                  </template>
-                  <v-date-picker v-model="date" scrollable>
-                    <v-spacer></v-spacer>
-                    <v-btn text color="primary" @click="modal = false"
-                      >Cancel</v-btn
-                    >
-                    <v-btn text color="primary" @click="$refs.dialog.save(date)"
-                      >OK</v-btn
-                    >
-                  </v-date-picker>
-                </v-dialog>
-              </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <v-menu
-                  v-model="menu2"
-                  :close-on-content-click="false"
-                  :nudge-right="40"
-                  transition="scale-transition"
-                  offset-y
-                  min-width="290px"
-                >
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-text-field
-                      v-model="date"
-                      label="End Date"
-                      append-icon="fa-calendar"
-                      readonly
-                      v-bind="attrs"
-                      v-on="on"
-                    ></v-text-field>
-                  </template>
-                  <v-date-picker
-                    v-model="date"
-                    @input="menu2 = false"
-                  ></v-date-picker>
-                </v-menu>
-              </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <v-select
-                  :items="['0-17', '18-29', '30-54', '54+']"
-                  label="Timezone*"
-                  required
-                ></v-select>
-              </v-col>
-              <v-col cols="12">
-                <v-textarea
-                  clearable
-                  clear-icon="fa-close"
-                  label="Description"
-                  value=""
-                ></v-textarea>
-              </v-col>
-              <v-col cols="12" sm="6" md="6">
-                <v-text-field
-                  label="Event Link*"
-                  hint="https://bitpod-event.test.bitpod.io/e/"
-                  persistent-hint
-                  required
-                ></v-text-field>
-              </v-col>
-            </v-row>
-          </v-container>
-          <small>*indicates required field</small>
-        </v-card-text>
-      </v-card>
+    <v-dialog
+      v-model="dialog"
+      persistent
+      scrollable
+      content-class="slide-form"
+      transition="dialog-bottom-transition"
+    >
+      <NewRecurringEvent :on-form-close="closeRecurringEventForm" />
     </v-dialog>
 
-    <v-app-bar app flat class="greybg">
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title class="pl-0">Event</v-toolbar-title>
+    <v-app-bar app flat class="greybg" height="50">
+      <div
+        v-if="drawer === false"
+        class="ml-xs-0 d-none d-sm-none d-md-flex d-lg-flex d-xl-flex"
+        :class="drawer ? '' : 'ml-md-n4 mr-md-2'"
+      >
+        <v-app-bar-nav-icon
+          :ripple="false"
+          @click.stop="drawer = !drawer"
+        ></v-app-bar-nav-icon>
+      </div>
+      <div class="d-flex d-sm-flex d-md-none ml-n3">
+        <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      </div>
+      <v-toolbar-title class="pl-0 ml-n1">Event </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn class="ma-2" tile outlined>
-        UPGARDE
-      </v-btn>
       <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
         <v-icon>mdi-invert-colors</v-icon>
       </v-btn>
-      <v-btn icon>
-        <v-icon>mdi-apps</v-icon>
-      </v-btn>
-      <v-btn icon>
-        <v-icon>mdi-bell</v-icon>
-      </v-btn>
+      <v-menu
+        offset-y
+        transition="slide-y-transition"
+        bottom
+        content-class="app-drawer"
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn icon v-bind="attrs" v-on="on">
+            <v-icon>mdi-apps</v-icon>
+          </v-btn>
+        </template>
+        <v-list>
+          <v-list-item>
+            <v-list-item-title class="d-flex flex-wrap app-container">
+              <nuxt-link
+                to="/apps/event/list/Event/live and draft event"
+                class="text-decoration-none"
+              >
+                <v-flex
+                  class="d-flex justify-center align-center flex-column app-view"
+                >
+                  <v-flex class="d-flex justify-center align-center">
+                    <i
+                      class="fa fa-calendar fs-36 success--text"
+                      aria-hidden="true"
+                    ></i>
+                  </v-flex>
+                  <v-flex
+                    ><div class="pa-1 caption text--primary">
+                      Event
+                    </div></v-flex
+                  >
+                </v-flex>
+              </nuxt-link>
+              <nuxt-link
+                to="/apps/admin/organization/5cfe026f6ab042000c530105"
+                class="text-decoration-none"
+              >
+                <v-flex
+                  class="d-flex justify-center align-center flex-column app-view"
+                >
+                  <v-flex class="d-flex justify-center align-center">
+                    <i
+                      class="fa fa-cogs fs-36 primary--text"
+                      aria-hidden="true"
+                    ></i>
+                  </v-flex>
+                  <v-flex
+                    ><div class="pa-1 caption text--primary">
+                      Administration
+                    </div></v-flex
+                  >
+                </v-flex>
+              </nuxt-link>
+              <nuxt-link to="" class="text-decoration-none">
+                <v-flex
+                  class="d-flex justify-center align-center flex-column app-view"
+                >
+                  <v-flex class="d-flex justify-center align-center">
+                    <i
+                      class="fa fa-help-circle fs-36 warning--text"
+                      aria-hidden="true"
+                    ></i>
+                  </v-flex>
+                  <v-flex
+                    ><div class="pa-1 caption text--primary">
+                      Help Center
+                    </div></v-flex
+                  >
+                </v-flex>
+              </nuxt-link>
+              <a
+                href="https://dev-survey.bitpod.io/"
+                class="text-decoration-none"
+                target="_blank"
+              >
+                <v-flex
+                  class="d-flex justify-center align-center flex-column app-view"
+                >
+                  <v-flex class="d-flex justify-center align-center">
+                    <v-img
+                      src="https://survey.bitpod.io/favicon.ico"
+                      class="survey-img"
+                    ></v-img>
+                  </v-flex>
+                  <v-flex
+                    ><div class="pa-1 caption text--primary">
+                      Survey
+                    </div></v-flex
+                  >
+                </v-flex>
+              </a>
+              <nuxt-link to="" class="text-decoration-none">
+                <v-flex
+                  class="d-flex justify-center align-center flex-column app-view"
+                >
+                  <v-flex class="d-flex justify-center align-center">
+                    <i
+                      class="fa fa-grid-alt fs-36 primary--text"
+                      aria-hidden="true"
+                    ></i>
+                  </v-flex>
+                  <v-flex
+                    ><div class="pa-1 caption text--primary">
+                      Seat Map
+                    </div></v-flex
+                  >
+                </v-flex>
+              </nuxt-link>
+            </v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
       <div v-if="$auth.$state.loggedIn">
         <v-menu
           v-model="account"
@@ -338,17 +268,19 @@
             v-slot:activator="{ on, attrs }"
           >
             <v-avatar color="primary ml-2" size="30" v-bind="attrs" v-on="on">
-              <!-- <span class="white--text">{{ $auth.user.data.name[0] }}</span> -->
+              <span class="white--text">{{
+                $auth.user.data.name && $auth.user.data.name[0]
+              }}</span>
             </v-avatar>
           </template>
           <v-card>
             <v-list>
               <v-list-item>
-                <v-list-item-avatar>
+                <v-list-item-avatar size="48">
                   <v-avatar color="primary" size="48" v-bind="attrs" v-on="on">
-                    <!-- <span class="white--text headline">{{
-                      $auth.user.data.name[0]
-                    }}</span> -->
+                    <span class="white--text headline">{{
+                      $auth.user.data.name && $auth.user.data.name[0]
+                    }}</span>
                   </v-avatar>
                 </v-list-item-avatar>
 
@@ -362,18 +294,12 @@
                 </v-list-item-content>
               </v-list-item>
             </v-list>
-            <v-divider></v-divider>
             <v-list-item>
-              <v-list-item-action>
-                <v-switch v-model="message" color="primary"></v-switch>
-              </v-list-item-action>
-              <v-list-item-title>Notification</v-list-item-title>
+              <OrgnaizationList />
             </v-list-item>
-            <v-divider></v-divider>
-
-            <v-list>
-              <v-list-item class="text-center justify-center">
-                <v-btn class="ma-2" outlined color="primary" @click="onLogout">
+            <v-list dense class="pt-0">
+              <v-list-item>
+                <v-btn text small color="primary" @click="onLogout">
                   Logout
                 </v-btn>
               </v-list-item>
@@ -391,7 +317,7 @@
     <v-main class="greybg">
       <v-container fluid>
         <v-row>
-          <v-col>
+          <v-col class="pt-0">
             <div>
               <nuxt />
             </div>
@@ -403,7 +329,11 @@
 </template>
 
 <script>
+import OrgnaizationList from '~/components/common/organization-list'
 export default {
+  components: {
+    OrgnaizationList,
+  },
   props: {
     source: String,
   },
@@ -412,7 +342,7 @@ export default {
     menu: false,
     modal: false,
     menu2: false,
-    drawer: true,
+    drawer: null,
     dialog1: false,
     dialog: false,
     notifications: false,
@@ -421,37 +351,41 @@ export default {
     account: false,
     message: false,
     items: [
-      { icon: 'mdi-view-dashboard', text: 'Eventboard', to: '/' },
+      {
+        icon: 'fa fa-grid',
+        text: 'Eventboard',
+        to: '/apps/event/eventboard',
+      },
       { heading: 'Event' },
       {
-        icon: 'mdi-calendar-text',
+        icon: 'fa fa-calendar',
         text: 'Events',
-        to: '/event/list/Event/All Events',
+        to: '/apps/event/list/Event/live and draft event',
       },
       {
-        icon: 'mdi-account-plus',
+        icon: 'fa fa-user-plus',
         text: 'Registrations',
-        to: '/event/list/Registrations/Registrations',
+        to: '/apps/event/list/Registrations/Registrations',
       },
       { heading: 'Promotions' },
       {
-        icon: 'mdi-cog',
+        icon: 'fa fa-building',
         text: 'Discount Code',
-        to: '/list/DiscountCodes/Discount Codes',
+        to: '/apps/event/list/DiscountCodes/Discount Codes',
       },
       { heading: 'Members' },
       {
-        icon: 'mdi-account-multiple-outline',
+        icon: 'fa fa-users',
         text: 'Members',
-        to: '/list/EventCustomers/Members',
+        to: '/apps/event/list/EventCustomers/Members',
       },
       {
-        icon: 'mdi-account-box-outline',
+        icon: 'fa fa-address-book-o',
         text: 'Contacts',
-        to: '/list/Contacts/Contacts',
+        to: '/apps/event/list/Contacts/Contacts',
       },
       { heading: 'Task' },
-      { icon: 'mdi-cellphone-link', text: 'My Task', to: '' },
+      { icon: 'fa fa-tasks', text: 'My Task', to: '' },
       {
         icon: 'mdi-chart-bubble',
         text: 'Activities',
@@ -473,26 +407,12 @@ export default {
       this.$auth.logout()
       await this.$apolloHelpers.onLogout()
     },
+    closeSingleEventForm() {
+      this.dialog1 = false
+    },
+    closeRecurringEventForm() {
+      this.dialog = false
+    },
   },
 }
 </script>
-
-<style scoped>
-.bitpod-logo img {
-  max-width: 130px;
-}
-.wd-full {
-  width: -webkit-fill-available;
-}
-.nav-title {
-  font-size: 14px !important;
-  font-weight: 400 !important;
-}
-.nav-subheader {
-  font-size: 14px !important;
-}
-.app-name {
-  font-size: 24px;
-  font-weight: 300;
-}
-</style>

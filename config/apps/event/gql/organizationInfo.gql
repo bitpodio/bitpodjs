@@ -1,0 +1,34 @@
+query($filters: JSON, $slotFilters: JSON, $inPersonMeetingFilters: JSON) {
+  OrganizationInfo {
+    OrganizationInfoFind(filter: $filters) {
+      edges {
+        node {
+          id
+          Currency
+        }
+      }
+    }
+  }
+  GeneralConfiguration {
+    GeneralConfigurationFind(filter: $slotFilters) {
+      edges {
+        node {
+          id
+          value
+          key
+          type
+        }
+      }
+    }
+  }
+  Location {
+    LocationFind(filter: $inPersonMeetingFilters) {
+      edges {
+        node {
+          id
+          Name
+        }
+      }
+    }
+  }
+}

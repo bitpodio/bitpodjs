@@ -4,8 +4,8 @@ import Lookup from '~/components/common/form/lookup.vue'
 import Checkbox from '~/components/common/form/checkbox.vue'
 import CustomDate from '~/components/common/form/date.vue'
 import File from '~/components/common/form/file.vue'
-import RichText from '~/components/common/form/richtext.vue'
 import Timezone from '~/components/common/form/timezone'
+import Tags from '~/components/common/form/tags.vue'
 import { _set, isPlainObject } from '~/utility/object'
 
 const FORM_DATE_CONTROLS = ['date', 'datetime']
@@ -15,6 +15,12 @@ function getFormTimeZoneField(fields) {
   return timezoneField || null
 }
 
+function getFieldByFieldName(fields, field) {
+  const fieldDetails =
+    fields && fields.filter(({ fieldName }) => fieldName === field)
+  return fieldDetails || {}
+}
+
 export function formatTimezoneDateFieldsData(formData, fields) {
   const timezoneField = getFormTimeZoneField(fields)
   if (!timezoneField) {
@@ -22,9 +28,10 @@ export function formatTimezoneDateFieldsData(formData, fields) {
   }
   const selectedTimezone = formData[timezoneField.fieldName]
   const newFormData = {}
-  for (const field of fields) {
-    const fieldData = formData[field.fieldName]
-    newFormData[field.fieldName] = FORM_DATE_CONTROLS.includes(field.type)
+  for (const fieldName in formData) {
+    const fieldData = formData[fieldName]
+    const field = getFieldByFieldName(fields, fieldName)
+    newFormData[fieldName] = FORM_DATE_CONTROLS.includes(field.type)
       ? zonedTimeToUtc(fieldData, selectedTimezone)
       : fieldData
   }
@@ -98,8 +105,10 @@ export const formControlsMixin = {
     Checkbox,
     CustomDate,
     File,
-    RichText,
+    RichText: () =>
+      process.client ? import('~/components/common/form/richtext.vue') : false,
     Timezone,
+    Tags,
   },
   methods: {
     formControl(field) {
@@ -120,7 +129,18 @@ export const formControlsMixin = {
           return 'RichText'
         case 'timezone':
           return 'Timezone'
+        case 'tags':
+          return 'Tags'
       }
+    },
+  },
+}
+
+export const formTitleMixin = {
+  computed: {
+    subTitle() {
+      const view = this.content.views[this.viewName]
+      return view.itemTitle || ''
     },
   },
 }

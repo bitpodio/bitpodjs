@@ -1,40 +1,44 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer v-model="drawer" app class="nav-bar">
-      <v-toolbar-title class="ml-0 pl-3 px-2 py-2 logo-ds d-flex align-center">
+    <v-navigation-drawer
+      v-model="drawer"
+      app
+      class="nav-bar greybg"
+      :width="280"
+    >
+      <v-toolbar-title class="ml-0 pl-3 px-2 py-1 logo-ds d-flex align-center">
         <span class="bitpod-logo logo-ds">
           <v-img
             :src="$config.cdnUri + 'logo-favicon.png'"
-            height="50"
-            width="30"
+            class="logo-bitpod"
           ></v-img>
         </span>
         <span d-inline-flex align-center class="mx-2">Event</span>
         <v-spacer></v-spacer>
-        <div v-if="drawer === true">
+        <div v-if="drawer === true" class="d-none d-sm-flex">
           <v-app-bar-nav-icon
             class="nav-drawer"
             @click.stop="drawer = !drawer"
           ></v-app-bar-nav-icon>
         </div>
       </v-toolbar-title>
-      <div class="text-center">
+      <div class="text-center mt-4">
         <v-btn
           v-bind="attrs"
           color="blue darken-2"
           dark
           depressed
-          class="ma-3 block wd-full"
+          class="ma-3 block wd-full my-0 mb-1 ml-n4"
           v-on="on"
         >
           Create user
         </v-btn>
       </div>
-      <v-list dense>
+      <v-list shaped>
         <template v-for="item in items">
           <v-row v-if="item.heading" :key="item.heading" align="center">
             <div class="pa-0 pl-5">
-              <v-subheader v-if="item.heading" class="nav-subheader">
+              <v-subheader v-if="item.heading" class="nav-subheader pl-2">
                 {{ item.heading }}
               </v-subheader>
             </div>
@@ -85,10 +89,10 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app flat class="greybg">
+    <v-app-bar app flat class="greybg" height="50">
       <div
         v-if="drawer === false"
-        class="ml-xs-0"
+        class="ml-xs-0 d-none d-sm-none d-md-flex d-lg-flex d-xl-flex"
         :class="drawer ? '' : 'ml-md-n4 mr-md-2'"
       >
         <v-app-bar-nav-icon
@@ -96,19 +100,19 @@
           @click.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
       </div>
-      <v-toolbar-title class="pl-0 ml-n2">Administration </v-toolbar-title>
+      <div class="d-flex d-sm-flex d-md-none ml-n3">
+        <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+      </div>
+      <v-toolbar-title class="pl-0 ml-n1">Administration</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn class="ma-2" tile outlined>
-        UPGARDE
-      </v-btn>
       <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
         <v-icon>mdi-invert-colors</v-icon>
       </v-btn>
       <v-menu
         offset-y
-        :nudge-width="250"
         transition="slide-y-transition"
         bottom
+        content-class="app-drawer"
       >
         <template v-slot:activator="{ on, attrs }">
           <v-btn icon v-bind="attrs" v-on="on">
@@ -119,7 +123,7 @@
           <v-list-item>
             <v-list-item-title class="d-flex flex-wrap app-container">
               <nuxt-link
-                to="/apps/event/list/Event/All Events"
+                to="/apps/event/list/Event/live and draft event"
                 class="text-decoration-none"
               >
                 <v-flex
@@ -217,9 +221,6 @@
           </v-list-item>
         </v-list>
       </v-menu>
-      <v-btn icon>
-        <v-icon>mdi-bell</v-icon>
-      </v-btn>
       <div v-if="$auth.$state.loggedIn">
         <v-menu
           v-model="account"
@@ -234,16 +235,18 @@
             v-slot:activator="{ on, attrs }"
           >
             <v-avatar color="primary ml-2" size="30" v-bind="attrs" v-on="on">
-              <span class="white--text">{{ $auth.user.data.name[0] }}</span>
+              <span class="white--text">{{
+                $auth.user.data.name && $auth.user.data.name[0]
+              }}</span>
             </v-avatar>
           </template>
           <v-card>
             <v-list>
               <v-list-item>
-                <v-list-item-avatar>
+                <v-list-item-avatar size="48">
                   <v-avatar color="primary" size="48" v-bind="attrs" v-on="on">
                     <span class="white--text headline">{{
-                      $auth.user.data.name[0]
+                      $auth.user.data.name && $auth.user.data.name[0]
                     }}</span>
                   </v-avatar>
                 </v-list-item-avatar>
@@ -258,18 +261,12 @@
                 </v-list-item-content>
               </v-list-item>
             </v-list>
-            <v-divider></v-divider>
             <v-list-item>
-              <v-list-item-action>
-                <v-switch v-model="message" color="primary"></v-switch>
-              </v-list-item-action>
-              <v-list-item-title>Notification</v-list-item-title>
+              <OrgnaizationList />
             </v-list-item>
-            <v-divider></v-divider>
-
-            <v-list>
-              <v-list-item class="text-center justify-center">
-                <v-btn class="ma-2" outlined color="primary" @click="onLogout">
+            <v-list dense class="pt-0">
+              <v-list-item>
+                <v-btn text small color="primary" @click="onLogout">
                   Logout
                 </v-btn>
               </v-list-item>
@@ -287,7 +284,7 @@
     <v-main class="greybg">
       <v-container fluid>
         <v-row>
-          <v-col>
+          <v-col class="pt-0">
             <div>
               <nuxt />
             </div>
@@ -299,13 +296,17 @@
 </template>
 
 <script>
+import OrgnaizationList from '~/components/common/organization-list'
 export default {
+  components: {
+    OrgnaizationList,
+  },
   data: () => ({
     date: new Date().toISOString().substr(0, 10),
     menu: false,
     modal: false,
     menu2: false,
-    drawer: true,
+    drawer: null,
     dialog1: false,
     dialog: false,
     notifications: false,
