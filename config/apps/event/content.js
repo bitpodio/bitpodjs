@@ -1691,6 +1691,15 @@ export default {
           context: {
             basePath: '/event',
           },
+          actions: {
+            new: {
+              hidden: true,
+              caption: 'new field',
+            },
+            edit: {
+              hidden: true,
+            },
+          },
         },
         dataSource: {
           query: eventRegistrationForm,
