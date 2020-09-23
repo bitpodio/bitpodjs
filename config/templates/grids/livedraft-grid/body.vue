@@ -243,7 +243,9 @@
 <script>
 import nuxtconfig from '~/nuxt.config'
 export default {
-  props: ['items', 'context'],
+  props: {
+    items: String,
+  },
   methods: {
     routes(id) {
       return `/apps/event/event/${id}`
