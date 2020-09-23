@@ -2922,7 +2922,7 @@ export default {
           },
         },
         template: {
-          name: 'discount-grid',
+          name: 'discountMember-grid',
           context: {
             basePath: '/discountcodes',
           },
