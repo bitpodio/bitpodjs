@@ -5,7 +5,7 @@
         class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
       >
         <v-row>
-          <v-col class="col-md-6 col-12 pt-0">
+          <v-col class="col-md-5 col-12 pt-0">
             <v-card class="elevation-0">
               <v-list>
                 <v-list-item class="pl-0">
@@ -34,7 +34,7 @@
               </v-list>
             </v-card>
           </v-col>
-          <v-col class="col-md-6 col-12 pt-0">
+          <v-col class="col-md-5 col-12 pt-0">
             <div class="text-truncate my-3">
               <v-icon class="mr-2">mdi-email-outline</v-icon>
               {{ data.registration.Email }}
@@ -47,6 +47,51 @@
               <v-icon class="mr-2">mdi-map-marker-outline</v-icon>
               {{ data.registration.Country }}
             </div>
+          </v-col>
+
+          <v-col class="col-md-2 col-12 pt-0">
+            <v-menu bottom origin="center center" transition="scale-transition">
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn depressed color="primary" v-bind="attrs" v-on="on">
+                  Action
+                </v-btn>
+              </template>
+              <v-list>
+                <v-list-item>
+                  <v-list-item-icon class="mr-2">
+                    <i
+                      class="fa fa-pencil-square-o mt-1"
+                      aria-hidden="true"
+                    ></i>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title @click="isEditReg = true"
+                      >Edit</v-list-item-title
+                    >
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item v-if="data.registration.Status === 'Success'">
+                  <v-list-item-icon class="mr-2">
+                    <i class="fa-cross-circle mt-1" aria-hidden="true"></i>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title @click="isCancelReg = true"
+                      >Cancel</v-list-item-title
+                    >
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item v-if="data.registration.TotalAmount > 0">
+                  <v-list-item-icon class="mr-2">
+                    <i class="fa-refresh mt-1" aria-hidden="true"></i>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title @click="isRefund = true"
+                      >Refund</v-list-item-title
+                    >
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list>
+            </v-menu>
           </v-col>
         </v-row>
         <v-divider></v-divider>
@@ -226,12 +271,18 @@
         <v-divider></v-divider>
       </div>
     </v-flex>
+    <editRegistration :is-edit-reg.sync="isEditReg" />
+    <cancelRegistration :is-cancel-reg.sync="isCancelReg" />
+    <refundRegistration :is-refund.sync="isRefund" />
   </v-flex>
 </template>
 
 <script>
 import gql from 'graphql-tag'
 import format from 'date-fns/format'
+import editRegistration from './editRegistration.vue'
+import refundRegistration from './refundRegistration.vue'
+import cancelRegistration from './cancelRegistration.vue'
 import Grid from '~/components/common/grid'
 import registration from '~/config/apps/event/gql/registration.gql'
 import { formatGQLResult } from '~/utility/gql.js'
@@ -239,11 +290,17 @@ import { configLoaderMixin } from '~/utility'
 export default {
   components: {
     Grid,
+    editRegistration,
+    cancelRegistration,
+    refundRegistration,
   },
   mixins: [configLoaderMixin],
   data() {
     return {
       loading: 0,
+      isEditReg: false,
+      isCancelReg: false,
+      isRefund: false,
       data: {
         registration: {},
       },
