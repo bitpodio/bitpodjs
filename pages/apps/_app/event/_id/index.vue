@@ -1,7 +1,9 @@
 <template>
   <v-flex d-flex flex-md-row flex-lg-row flex-column>
     <v-flex column xs12 sm8 md8 lg8>
-      <div class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-2 pb-0">
+      <div
+        class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+      >
         <v-flex class="d-flex justify-center align-center pb-1">
           <div class="text-h4 text-capitalize">{{ data.event.Title }}</div>
           <v-spacer></v-spacer>
@@ -69,6 +71,7 @@
                 data &&
                 data.event &&
                 data.event._VenueAddress &&
+                data.event._VenueAddress.AddressLine &&
                 !data.event._VenueAddress.AddressLine.includes(
                   data.event.VenueName
                 )
@@ -213,27 +216,74 @@
           >
         </v-flex>
       </div>
-      <div class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2 pb-2">
-        <v-flex class="d-flex justify-center align-center pb-1">
-          <h2 class="body-1 pb-1">
+      <div
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-2">
+          <h2 class="body-1 pb-0">
             <i class="fa fa-image pr-1" aria-hidden="true"></i> Image Gallery
           </h2>
           <v-spacer></v-spacer>
           <v-menu offset-y>
             <template v-slot:activator="{ on, attrs }">
-              <v-btn depressed small color="primary" v-bind="attrs" v-on="on">
-                Upload
+              <v-btn depressed text small v-bind="attrs" v-on="on">
+                <v-icon left>mdi-upload</v-icon> Upload
               </v-btn>
             </template>
             <v-list dense>
-              <v-list-item>
-                <v-list-item-title>Badge Logo</v-list-item-title>
+              <v-list-item
+                @click="
+                  checkArray = []
+                  badgeLogo = !badgeLogo
+                "
+              >
+                <v-list-item-title>
+                  <File
+                    :field="fileField"
+                    :no-btn-look="true"
+                    :block="true"
+                    :open-file-dialog="badgeLogo"
+                    :value="checkArray"
+                    @input="fileUploadedBadgeLogo"
+                  />
+                  Badge Logo
+                </v-list-item-title>
               </v-list-item>
-              <v-list-item>
-                <v-list-item-title>Event Banner (680x350)</v-list-item-title>
+              <v-list-item
+                @click="
+                  checkArray = []
+                  eventBanner = !eventBanner
+                "
+              >
+                <v-list-item-title>
+                  <File
+                    :field="fileField"
+                    :no-btn-look="true"
+                    :block="true"
+                    :open-file-dialog="eventBanner"
+                    :value="checkArray"
+                    @input="fileUploadedEventBanner"
+                  />
+                  Event Banner(680x350)
+                </v-list-item-title>
               </v-list-item>
-              <v-list-item>
-                <v-list-item-title>Other</v-list-item-title>
+              <v-list-item
+                @click="
+                  checkArray = []
+                  otherDialog = !otherDialog
+                "
+              >
+                <v-list-item-title>
+                  <File
+                    :field="otherFileField"
+                    :no-btn-look="true"
+                    :block="true"
+                    :open-file-dialog="otherDialog"
+                    :value="checkArray"
+                    @input="fileUploadedOther"
+                  />
+                  Other
+                </v-list-item-title>
               </v-list-item>
             </v-list>
           </v-menu>
@@ -242,9 +292,14 @@
         <v-card
           v-for="image in data.event.Images"
           :key="image"
-          class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0"
-          @click.stop="dialog = true"
+          class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0 cardImg"
+          :class="{ 'on-hover': hover }"
         >
+          <span class="cardDelete">
+            <v-icon class="pa-1" text @click="deleteBannerFile(e, image)"
+              >mdi-delete</v-icon
+            >
+          </span>
           <v-img
             :src="getAttachmentLink(image, true)"
             :lazy-src="getAttachmentLink(image, true)"
@@ -253,6 +308,8 @@
             max-width="150"
             max-height="150"
             width="150"
+            contain
+            @click.stop="bannerDialog = true"
           >
             <template v-slot:placeholder>
               <v-row class="fill-height ma-0" align="center" justify="center">
@@ -263,13 +320,25 @@
               </v-row>
             </template>
           </v-img>
+          <v-flex class="mt-1 d-flex">
+            <v-card-text class="pa-0 pb-1 d-inline-block text-truncate"
+              ><a
+                class="d-inline-block text-truncate anchorTag"
+                :href="getAttachmentLink(image, true)"
+                >{{ bannerName }}</a
+              ></v-card-text
+            >
+            <v-spacer></v-spacer>
+            <copy :text-to-copy="getImageUrl(image)" :unique-id="image" />
+          </v-flex>
+          <v-card-text class="pa-0 mt-n2">Event Banner</v-card-text>
         </v-card>
-        <v-dialog v-model="dialog" max-width="600">
+        <v-dialog v-model="bannerDialog" max-width="600">
           <v-card>
             <v-card-title class="pa-1">
               <v-spacer></v-spacer>
               <div>
-                <v-btn icon @click="dialog = false">
+                <v-btn icon @click="bannerDialog = false">
                   <v-icon>mdi-close</v-icon>
                 </v-btn>
               </div>
@@ -279,7 +348,7 @@
                 v-for="image in data.event.Images"
                 :key="image"
                 class="mx-auto elevation-0"
-                @click.stop="dialog = true"
+                @click.stop="bannerDialog = true"
               >
                 <v-img
                   :src="getAttachmentLink(image, true)"
@@ -308,8 +377,11 @@
         <v-card
           v-for="image in data.event.Logo"
           :key="image"
-          class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0"
+          class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0 cardImg"
         >
+          <span class="cardDelete">
+            <v-icon text @click="deleteLogoFile(image)">mdi-delete</v-icon>
+          </span>
           <v-img
             :src="getAttachmentLink(image, true)"
             :lazy-src="getAttachmentLink(image, true)"
@@ -319,6 +391,7 @@
             max-height="150"
             width="150"
             contain
+            @click.stop="logoDialog = true"
           >
             <template v-slot:placeholder>
               <v-row class="fill-height ma-0" align="center" justify="center">
@@ -329,12 +402,67 @@
               </v-row>
             </template>
           </v-img>
+          <v-flex class="mt-1 d-flex">
+            <v-card-text class="pa-0 pb-1 d-inline-block"
+              ><a
+                class="d-inline-block text-truncate anchorTag"
+                :href="getAttachmentLink(image, true)"
+                >{{ logoName }}</a
+              ></v-card-text
+            >
+            <copy :text-to-copy="getImageUrl(image)" :unique-id="image" />
+          </v-flex>
+          <v-card-text class="pa-0 mt-n2">Logo Image</v-card-text>
         </v-card>
+        <v-dialog v-model="logoDialog" max-width="600">
+          <v-card>
+            <v-card-title class="pa-1">
+              <v-spacer></v-spacer>
+              <div>
+                <v-btn icon @click="logoDialog = false">
+                  <v-icon>mdi-close</v-icon>
+                </v-btn>
+              </div>
+            </v-card-title>
+            <v-card-text class="pa-1">
+              <v-card
+                v-for="image in data.event.Logo"
+                :key="image"
+                class="mx-auto elevation-0"
+                @click.stop="logoDialog = true"
+              >
+                <v-img
+                  :src="getAttachmentLink(image, true)"
+                  :lazy-src="getAttachmentLink(image, true)"
+                  aspect-ratio="1"
+                  class="grey lighten-2"
+                  width="100%"
+                >
+                  <template v-slot:placeholder>
+                    <v-row
+                      class="fill-height ma-0"
+                      align="center"
+                      justify="center"
+                    >
+                      <v-progress-circular
+                        indeterminate
+                        color="grey lighten-5"
+                      ></v-progress-circular>
+                    </v-row>
+                  </template>
+                </v-img>
+              </v-card>
+            </v-card-text>
+          </v-card>
+        </v-dialog>
         <v-card
-          v-for="image in data.event.Other"
+          v-for="(image, index) in eventData.Other"
           :key="image"
-          class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0"
+          class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0 cardImg"
         >
+          <span class="cardDelete">
+            <v-icon text @click="deleteOtherFile(image)">mdi-delete</v-icon>
+          </span>
           <v-img
             :src="getAttachmentLink(image, true)"
             :lazy-src="getAttachmentLink(image, true)"
@@ -343,6 +471,7 @@
             max-width="150"
             max-height="150"
             width="150"
+            @click.stop="otherDialogOpen = true"
           >
             <template v-slot:placeholder>
               <v-row class="fill-height ma-0" align="center" justify="center">
@@ -353,85 +482,225 @@
               </v-row>
             </template>
           </v-img>
+          <v-flex class="mt-1 d-flex">
+            <v-card-text class="pa-0 pb-1"
+              ><a
+                class="d-inline-block text-truncate anchorTag"
+                :href="getAttachmentLink(image, true)"
+                >{{ OtherImageName[index] }}</a
+              ></v-card-text
+            >
+            <copy :text-to-copy="getImageUrl(image)" :unique-id="image" />
+          </v-flex>
+          <v-card-text class="pa-0 mt-n2 otherImg">Logo Image</v-card-text>
         </v-card>
+        <v-dialog v-model="otherDialogOpen" max-width="600">
+          <v-card>
+            <v-card-title class="pa-1">
+              <v-spacer></v-spacer>
+              <div>
+                <v-btn icon @click="otherDialogOpen = false">
+                  <v-icon>mdi-close</v-icon>
+                </v-btn>
+              </div>
+            </v-card-title>
+            <v-card-text class="pa-1">
+              <v-card
+                v-for="image in eventData.Other"
+                :key="image"
+                class="mx-auto elevation-0"
+              >
+                <v-img
+                  :src="getAttachmentLink(image, true)"
+                  :lazy-src="getAttachmentLink(image, true)"
+                  aspect-ratio="1"
+                  class="grey lighten-2"
+                  width="100%"
+                  contain
+                >
+                  <template v-slot:placeholder>
+                    <v-row
+                      class="fill-height ma-0"
+                      align="center"
+                      justify="center"
+                    >
+                      <v-progress-circular
+                        indeterminate
+                        color="grey lighten-5"
+                      ></v-progress-circular>
+                    </v-row>
+                  </template>
+                </v-img>
+              </v-card>
+            </v-card-text>
+          </v-card>
+        </v-dialog>
       </div>
-      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2 pb-0">
-        <h2 class="body-1 pb-2">
-          <i class="fa fa-users pr-1" aria-hidden="true"></i> Attendees
-        </h2>
+      <div
+        v-if="content"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-users pr-1" aria-hidden="true"></i> Attendees
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="eventAttendees" :content="content" />
+        <Grid view-name="eventAttendees" :content="content" class="mt-n12" />
       </div>
-      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2 pb-0">
-        <h2 class="body-1 pb-2">
-          <i class="fa fa-user-plus pr-1" aria-hidden="true"></i> Registrations
-        </h2>
+      <div
+        v-if="content"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-user-plus pr-1" aria-hidden="true"></i>
+            Registrations
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="eventRegistrations" :content="content" />
+        <Grid
+          view-name="eventRegistrations"
+          :content="content"
+          class="mt-n12"
+        />
       </div>
-      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2 pb-0">
-        <h2 class="body-1 pb-2">
-          <i class="fa fa-envelope1 pr-1" aria-hidden="true"></i> Invites
-        </h2>
+      <div
+        v-if="content"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-mail pr-1" aria-hidden="true"></i>
+            Invites
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="eventInvites" :content="content" />
+        <Grid view-name="eventInvites" :content="content" class="mt-11" />
       </div>
-      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2 pb-0">
-        <h2 class="body-1 pb-2">
-          <i class="fa fa-ticketalt pr-1" aria-hidden="true"></i> Tickets
-        </h2>
+      <div
+        v-if="content"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-ticketalt pr-1" aria-hidden="true"></i>
+            Tickets
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="eventTickets" :content="content" :context="data" />
+        <Grid
+          view-name="eventTickets"
+          :content="content"
+          :context="data"
+          class="mt-n12"
+        />
       </div>
-      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2 pb-0">
-        <h2 class="body-1 pb-2">
-          <i class="fa fa-settings1 pr-1" aria-hidden="true"></i> Discount Codes
-        </h2>
+      <div
+        v-if="content"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-settings1 pr-1" aria-hidden="true"></i>
+            Discount Codes
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="eventDiscountCodes" :content="content" />
+        <Grid
+          view-name="eventDiscountCodes"
+          :content="content"
+          class="mt-n12"
+        />
       </div>
-      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2 pb-0">
-        <h2 class="body-1 pb-2">
-          <i class="fa fa-question-circle pr-1" aria-hidden="true"></i>
-          Registration Questions
-        </h2>
+      <div
+        v-if="content"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-question-circle pr-1" aria-hidden="true"></i>
+            Registration Questions
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="eventRegistrationQuestion" :content="content" />
+        <Grid
+          view-name="eventRegistrationQuestion"
+          :content="content"
+          class="mt-n12"
+        />
       </div>
-      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2 pb-0">
-        <h2 class="body-1 pb-2">
-          <i class="fa fa-black-board pr-1" aria-hidden="true"></i> Sessions
-        </h2>
+      <div
+        v-if="content"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-black-board pr-1" aria-hidden="true"></i>
+            Sessions
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="eventSession" :content="content" />
+        <Grid view-name="eventSession" :content="content" class="mt-n12" />
       </div>
-      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2 pb-0">
-        <h2 class="body-1 pb-2">
-          <i class="fa fa-mic pr-1" aria-hidden="true"></i> Speakers
-        </h2>
+      <div
+        v-if="content"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-mic pr-1" aria-hidden="true"></i>
+            Speakers
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="eventSpeakers" :content="content" />
+        <Grid view-name="eventSpeakers" :content="content" class="mt-n12" />
       </div>
-      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2 pb-0">
-        <h2 class="body-1 pb-2">
-          <i class="fa fa-external-link pr-1" aria-hidden="true"></i> Tasks
-        </h2>
+      <div
+        v-if="content"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-external-link pr-1" aria-hidden="true"></i>
+            Tasks
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="eventTasks" :content="content" />
+        <Grid view-name="eventTasks" :content="content" class="mt-n12" />
       </div>
-      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2 pb-0">
-        <h2 class="body-1 pb-2">
-          <i class="fa fa-file-text-o pr-1" aria-hidden="true"></i> Registration
-          Form
-        </h2>
+      <div
+        v-if="content"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-file-text-o pr-1" aria-hidden="true"></i>
+            Registration Form
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="eventRegistrationForm" :content="content" />
+        <Grid
+          view-name="eventRegistrationForm"
+          :content="content"
+          class="mt-n12"
+        />
       </div>
     </v-flex>
     <v-flex column xs12 sm4 md4 lg4>
-      <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
-        <v-flex class="d-flex justify-center align-center pb-1">
-          <h2 class="body-1 pb-1">
+      <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 py-0 pr-2 box-grey">
+        <v-flex class="d-flex justify-center align-center pb-2">
+          <h2 class="body-1 pb-0">
             <i class="fa fa-info-circle pr-1" aria-hidden="true"></i> Event
             Information
           </h2>
@@ -451,7 +720,7 @@
             {{ formatField(data.event.EventManager) }}
           </div>
         </v-flex>
-        <v-flex my-3>
+        <v-flex v-if="data.event.Tags" my-3>
           <div class="body-2 text--secondary">Tags</div>
           <div class="body-1 v-tags">
             <v-chip
@@ -464,17 +733,11 @@
             </v-chip>
           </div>
         </v-flex>
-        <v-flex my-3>
-          <div class="body-2 text--secondary">Description</div>
-          <div class="body-1">
-            <div v-html="formatField(data.event.Description)" />
-          </div>
-        </v-flex>
       </div>
 
-      <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
-        <v-flex class="d-flex justify-center align-center pb-1">
-          <h2 class="body-1 pb-1">
+      <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pb-0 pr-2 box-grey">
+        <v-flex class="d-flex justify-center align-center pb-2">
+          <h2 class="body-1 pb-0">
             <i class="fa fa-id-badge pr-1" aria-hidden="true"></i> Badge
           </h2>
           <v-spacer></v-spacer>
@@ -488,9 +751,9 @@
         </v-flex>
       </div>
 
-      <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
-        <v-flex class="d-flex justify-center align-center pb-1">
-          <h2 class="body-1 pb-1">
+      <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-0 box-grey">
+        <v-flex class="d-flex justify-center align-center pb-2">
+          <h2 class="body-1 pb-0">
             <i class="fa fa-tag pr-1" aria-hidden="true"></i> SEO Details
           </h2>
           <v-spacer></v-spacer>
@@ -515,9 +778,9 @@
         </v-flex>
       </div>
 
-      <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
-        <v-flex class="d-flex justify-center align-center pb-1">
-          <h2 class="body-1 pb-1">
+      <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-2 box-grey">
+        <v-flex class="d-flex justify-center align-center pb-2">
+          <h2 class="body-1 pb-0">
             <i class="fa fa-settings pr-1" aria-hidden="true"></i> Event
             Settings
           </h2>
@@ -557,7 +820,7 @@
             {{ formatField(data.event.CancellationPolicy) }}
           </div>
         </v-flex>
-        <v-flex my-3>
+        <v-flex my-3 class="d-block text-truncate">
           <span v-if="data.event.isRefundable === true">
             <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
             <span class="ml-2">Allow Cancelation</span>
@@ -567,7 +830,7 @@
             <span class="ml-2">Allow Cancelation</span>
           </span>
         </v-flex>
-        <v-flex my-3>
+        <v-flex my-3 class="d-block text-truncate">
           <span v-if="data.event.SessionTimingConflict === true">
             <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
             <span class="ml-2">Validate Session Timing Conflict</span>
@@ -577,7 +840,7 @@
             <span class="ml-2">Validate Session Timing Conflict</span>
           </span>
         </v-flex>
-        <v-flex my-3>
+        <v-flex my-3 class="d-block text-truncate">
           <span v-if="data.event.ShowRemainingTickets === true">
             <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
             <span class="ml-2">Show Remaining Tickets Count</span>
@@ -587,7 +850,7 @@
             <span class="ml-2">Show Remaining Tickets Count</span>
           </span>
         </v-flex>
-        <v-flex my-3>
+        <v-flex my-3 class="d-block text-truncate">
           <span v-if="data.event.ShowAttendeeForm === true">
             <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
             <span class="ml-2">Show Attendee Form</span>
@@ -597,7 +860,7 @@
             <span class="ml-2">Show Attendee Form</span>
           </span>
         </v-flex>
-        <v-flex my-3>
+        <v-flex my-3 class="d-block text-truncate">
           <span v-if="data.event.NotifyOrganizer === true">
             <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
             <span class="ml-2">Notify organizer when someone registers</span>
@@ -619,9 +882,9 @@
         </v-flex>
       </div>
 
-      <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
-        <v-flex class="d-flex justify-center align-center pb-1">
-          <h2 class="body-1 pb-1">
+      <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-0 box-grey">
+        <v-flex class="d-flex justify-center align-center pb-2">
+          <h2 class="body-1 pb-0">
             <i class="fa fa-settings pr-1" aria-hidden="true"></i>
             Registration Page Settings
           </h2>
@@ -668,6 +931,11 @@
           </span>
         </v-flex>
       </div>
+      <v-snackbar v-model="snackbar" :timeout="timeout" top="true">
+        <div class="toast py-2 pr-1 pl-3">
+          {{ snackbarText }}
+        </div>
+      </v-snackbar>
     </v-flex>
     <editEventForm :event-form.sync="eventForm" />
     <editSeoForm :seo-form.sync="seoForm" />
@@ -687,11 +955,13 @@ import editEventSetting from './editEventSetting.vue'
 import editSiteSetting from './editSiteSetting.vue'
 import eventBriteForm from './eventBriteForm.vue'
 import makeCopy from './makeCopy.vue'
+import nuxtconfig from '~/nuxt.config'
 import Grid from '~/components/common/grid'
+import File from '~/components/common/form/file.vue'
 import event from '~/config/apps/event/gql/event.gql'
+import copy from '~/components/common/copy'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin } from '~/utility'
-import nuxtconfig from '~/nuxt.config'
 
 export default {
   components: {
@@ -701,6 +971,8 @@ export default {
     editEventSetting,
     editSiteSetting,
     eventBriteForm,
+    File,
+    copy,
     makeCopy,
   },
   mixins: [configLoaderMixin],
@@ -713,15 +985,44 @@ export default {
       editseoform: false,
       eventForm: false,
       seoForm: false,
+      badgeLogo: false,
+      eventBanner: false,
+      otherDialog: false,
       eventSetting: false,
       siteSetting: false,
       eventBriteDialog: false,
+      logoDialog: false,
+      bannerDialog: false,
+      otherDialogOpen: false,
+      formData: {
+        Logo: [],
+        Images: [],
+        ImagesURL: [],
+        Other: [],
+      },
+      eventData: {},
+      checkArray: [],
+      logoFileId: '',
+      bannerFileId: '',
+      otherFileId: '',
       isMakeCopy: false,
       data: {
         event: {},
         badge: {},
         eventSummary: {},
       },
+      fileField: {
+        multiple: false,
+      },
+      otherFileField: {
+        multiple: true,
+      },
+      bannerName: '',
+      OtherImageName: [],
+      logoName: '',
+      snackbar: false,
+      timeout: '1000',
+      snackbarText: '',
     }
   },
   computed: {
@@ -732,7 +1033,117 @@ export default {
       return nuxtconfig.axios.eventUrl
     },
   },
+  watch: {
+    eventData() {
+      if (this.eventData.Other.length > 0) {
+        this.getImageName()
+      }
+    },
+  },
+
   methods: {
+    getImageName() {
+      this.eventData.Other.map((id) => {
+        this.getOtherImageName(id)
+      })
+    },
+    getImageUrl(imageId) {
+      const downloadLink = this.getAttachmentLink(imageId, true)
+      return downloadLink
+    },
+    async getBannerImageName(imageId) {
+      try {
+        const res = await this.$axios.$get(
+          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Attachments/${imageId}`
+        )
+        if (res) {
+          this.bannerName = res.fileName
+        }
+      } catch (e) {
+        console.log('Error', e)
+      }
+    },
+    async getLogoName(imageId) {
+      try {
+        const res = await this.$axios.$get(
+          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Attachments/${imageId}`
+        )
+        if (res) {
+          this.logoName = res.fileName
+        }
+      } catch (e) {
+        console.log('Error', e)
+      }
+    },
+    async getOtherImageName(imageId) {
+      try {
+        const res = await this.$axios.$get(
+          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Attachments/${imageId}`
+        )
+        if (res) {
+          this.OtherImageName.push(res.fileName)
+          this.refresh()
+        }
+      } catch (e) {
+        console.log('Error', e)
+      }
+    },
+    refresh() {
+      this.$apollo.queries.data.refresh()
+    },
+    fileUploadedBadgeLogo(data) {
+      this.badgeLogo = false
+      this.formData.Logo = []
+      this.formData.Logo.push(data[0])
+      this.updateEventGallery(this.formData)
+    },
+    fileUploadedEventBanner(data) {
+      this.eventBanner = false
+      const imageUrl = `/svc/api/Attachments/download/${data[0]}`
+      this.formData.Images = []
+      this.formData.ImagesURL = []
+      this.formData.Images.push(data[0])
+      this.formData.ImagesURL.push(imageUrl)
+
+      this.updateEventGallery(this.formData)
+    },
+    fileUploadedOther(data) {
+      this.otherDialog = false
+      this.formData.Other = []
+      this.formData.Other.push(...data)
+      this.updateOtherImageGallery(this.formData.Other)
+    },
+    async updateEventGallery(formData) {
+      try {
+        const res = await this.$axios.$patch(
+          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`,
+          formData
+        )
+        if (res) {
+          this.snackbarText = 'Attachment added successfully'
+          this.snackbar = true
+          this.refresh()
+        }
+      } catch (e) {
+        console.log('Error', e)
+      }
+    },
+    updateOtherImageGallery(formData) {
+      try {
+        formData.map(async (id) => {
+          const res = await this.$axios.$put(
+            `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/Others/rel/${id}`
+          )
+          if (res) {
+            this.snackbarText = 'Attachment added successfully'
+            this.snackbar = true
+            this.refresh()
+          }
+        })
+      } catch (e) {
+        console.log('Error', e)
+      }
+    },
     formatDate(date) {
       return date ? format(new Date(date), 'PPpp') : ''
     },
@@ -761,6 +1172,45 @@ export default {
       const regUrl = `https://${nuxtconfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
       window.open(`${regUrl}`, '_blank')
     },
+    async deleteBannerFile(e, id) {
+      const checkRes = confirm('Are you sure you want to delete')
+      if (checkRes) {
+        const res = await this.$axios.delete(
+          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/BannerImage/${id}`
+        )
+        if (res) {
+          this.refresh()
+          this.snackbarText = 'Attachment deleted successfully'
+          this.snackbar = true
+        }
+      }
+    },
+    async deleteLogoFile(id) {
+      const checkRes = confirm('Are you sure you want to delete')
+      if (checkRes) {
+        const res = await this.$axios.delete(
+          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/LogoURL/${id}`
+        )
+        if (res) {
+          this.snackbarText = 'Attachment deleted successfully'
+          this.snackbar = true
+          this.refresh()
+        }
+      }
+    },
+    async deleteOtherFile(id) {
+      const checkRes = confirm('Are you sure you want to delete')
+      if (checkRes) {
+        const res = await this.$axios.delete(
+          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/Others/${id}`
+        )
+        if (res) {
+          this.snackbarText = 'Attachment deleted successfully'
+          this.snackbar = true
+          this.refresh()
+        }
+      }
+    },
   },
   apollo: {
     data: {
@@ -788,6 +1238,13 @@ export default {
         const event = formatGQLResult(data, 'Event')
         const badge = formatGQLResult(data, 'Badge')
         const eventSummary = data.Event.EventGetEventSummery
+        this.eventData = event.length > 0 ? event[0] : {}
+        if (event[0].Images.length > 0) {
+          this.getBannerImageName(event[0].Images[0])
+        }
+        if (event[0].Logo.length > 0) {
+          this.getLogoName(event[0].Logo[0])
+        }
         return {
           event: event.length > 0 ? event[0] : {},
           badge: badge.length > 0 ? badge[0] : {},
@@ -846,7 +1303,32 @@ export default {
   padding: 10px;
   font-size: 12px;
 }
+.upload-btn {
+  position: relative;
+  right: 45px;
+  bottom: 28px;
+}
 .v-tags {
   min-height: 36px;
+}
+.cardImg {
+  position: relative;
+}
+.cardDelete {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 99;
+  display: none;
+}
+.cardImg:hover .cardDelete {
+  display: inline-block;
+}
+
+.otherImg {
+  visibility: hidden;
+}
+.anchorTag {
+  max-width: 120px;
 }
 </style>

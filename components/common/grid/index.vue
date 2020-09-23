@@ -68,7 +68,7 @@
           :show-expand="showExpand"
           :single-expand="singleExpand"
           item-key="id"
-          class="elevation-0"
+          class="elevation-0 pa-2"
           :show-select="showSelect"
           @update:options="updatePagination"
           @click:row="onRowClick"
@@ -541,6 +541,7 @@ export default {
     },
   },
   mounted() {
+    this.selectedItems = this.value
     this.headers.forEach(async (column, index) => {
       this.component[index] = await this.loadTemplate([
         `templates/grids/${this.templateFolderName}/column-${column.value}.vue`,
