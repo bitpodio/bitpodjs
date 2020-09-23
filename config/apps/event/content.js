@@ -3300,7 +3300,7 @@ export default {
           },
         },
         template: {
-          name: 'link-grid',
+          name: 'contacts-grid',
           context: {
             basePath: '/contacts',
           },

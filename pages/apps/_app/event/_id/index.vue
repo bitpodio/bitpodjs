@@ -71,6 +71,7 @@
                 data &&
                 data.event &&
                 data.event._VenueAddress &&
+                data.event._VenueAddress.AddressLine &&
                 !data.event._VenueAddress.AddressLine.includes(
                   data.event.VenueName
                 )
@@ -951,8 +952,8 @@ import editSeoForm from './editSeoForm.vue'
 import editEventForm from './editEventForm.vue'
 import editEventSetting from './editEventSetting.vue'
 import editSiteSetting from './editSiteSetting.vue'
-import nuxtconfig from '~/nuxt.config'
 import makeCopy from './makeCopy.vue'
+import nuxtconfig from '~/nuxt.config'
 import Grid from '~/components/common/grid'
 import File from '~/components/common/form/file.vue'
 import event from '~/config/apps/event/gql/event.gql'
@@ -1129,7 +1130,7 @@ export default {
           const res = await this.$axios.$put(
             `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/Others/rel/${id}`
           )
-          if(res){
+          if (res) {
             this.snackbarText = 'Attachment added successfully'
             this.snackbar = true
             this.refresh()
@@ -1309,10 +1310,6 @@ export default {
 .cardImg {
   position: relative;
 }
-.cardImg:hover .cardDelete {
-  display: inline-block;
-}
-
 .cardDelete {
   position: absolute;
   top: 5px;
@@ -1320,6 +1317,10 @@ export default {
   z-index: 99;
   display: none;
 }
+.cardImg:hover .cardDelete {
+  display: inline-block;
+}
+
 .otherImg {
   visibility: hidden;
 }

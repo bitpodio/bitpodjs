@@ -367,12 +367,14 @@ export default {
       this.orgLogo = false
       this.formData.Image = []
       this.formData.Image.push(data[0])
-      const res = await this.$axios
-        .$patch(
+      try {
+        await this.$axios.$patch(
           `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}OrganizationInfos/${this.$route.params.id}`,
           this.formData
         )
-        .catch((e) => console.log('Error', e))
+      } catch (e) {
+        console.log('Error', e)
+      }
     },
     formatDate(date) {
       return date ? format(new Date(date), 'PPp') : ''
