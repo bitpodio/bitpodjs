@@ -25,7 +25,7 @@
                 <v-list-item-icon class="mr-2">
                   <i class="fa fa-paperplane mt-1" aria-hidden="true"></i>
                 </v-list-item-icon>
-                <v-list-item-content>
+                <v-list-item-content @click="eventBriteDialog = true">
                   <v-list-item-title>Publish to eventbrite</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
