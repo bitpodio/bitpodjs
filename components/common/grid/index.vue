@@ -6,9 +6,7 @@
       </div>
     </template>
     <v-snackbar v-model="snackbar" :timeout="timeout" top="true">
-      <div class="text-center">{{
-      snackbarText
-    }}</div>
+      <div class="text-center">{{ snackbarText }}</div>
     </v-snackbar>
     <div v-if="!error" :key="error">
       <div class="grid-actions-container mt-lg-n11 mt-md-n11 mt-sm-n11 mt-xs-0">
