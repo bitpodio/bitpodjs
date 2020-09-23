@@ -1,24 +1,23 @@
 <template>
   <v-flex class="greybg">
     <div>
-      <div class="body-1 pb-2">Live Events</div>
       <v-row class="ma-0">
         <v-col
           v-for="item in items"
           :key="item.id"
-          class="pl-0 pt-0 eventtiles"
+          class="pa-4 pl-0 pt-0 eventtiles"
           cols="12"
           sm="4"
           md="4"
           lg="3"
         >
           <div v-if="item.BusinessType === 'Recurring'">
-            <v-card class="elevation-1 pa-2">
+            <v-card class="elevation-0 pa-0">
               <nuxt-link
                 :to="recurringRoutes(item.id)"
                 class="text-decoration-none"
               >
-                <div v-if="!item.Images.length" class="overflow-h rounded-0">
+                <div v-if="!item.Images.length" class="overflow-h rounded-t">
                   <v-flex
                     class="tile-img tile-pattern rounded-0"
                     :style="{
@@ -26,31 +25,33 @@
                     }"
                   ></v-flex>
                 </div>
-                <v-img
-                  v-for="image in item.Images"
-                  :key="image"
-                  :src="getAttachmentLink(image, true)"
-                  :lazy-src="getAttachmentLink(image, true)"
-                  aspect-ratio="1"
-                  class="tile-img rounded-0"
-                >
-                  <template v-slot:placeholder>
-                    <v-row
-                      class="fill-height ma-0"
-                      align="center"
-                      justify="center"
-                    >
-                      <v-flex
-                        class="tile-img tile-pattern rounded-0"
-                        :style="{
-                          'background-image': getRandomImage(item.Title),
-                        }"
-                      ></v-flex>
-                    </v-row>
-                  </template>
-                </v-img>
-                <v-flex class="tile-info">
-                  <div class="text--secondary pa-2 pb-0 body-2 pl-0">
+                <div class="overflow-h rounded-t">
+                  <v-img
+                    v-for="image in item.Images"
+                    :key="image"
+                    :src="getAttachmentLink(image, true)"
+                    :lazy-src="getAttachmentLink(image, true)"
+                    aspect-ratio="1"
+                    class="tile-img rounded-0"
+                  >
+                    <template v-slot:placeholder>
+                      <v-row
+                        class="fill-height ma-0"
+                        align="center"
+                        justify="center"
+                      >
+                        <v-flex
+                          class="tile-img tile-pattern rounded-0"
+                          :style="{
+                            'background-image': getRandomImage(item.Title),
+                          }"
+                        ></v-flex>
+                      </v-row>
+                    </template>
+                  </v-img>
+                </div>
+                <v-flex class="tile-info pa-4 pb-0">
+                  <div class="text--secondary pa-2 pb-0 body-2 pl-0 pt-0">
                     {{ item.StartDate }}
                   </div>
                   <v-card-title
@@ -59,14 +60,13 @@
                     {{ item.Title }}
                   </v-card-title>
                   <div
-                    class="text--secondary pa-2 pt-0 body-2 text-truncate d-block pl-0"
+                    class="text--secondary pa-2 pb-0 pt-0 body-2 text-truncate d-block pl-0"
                   >
                     {{ item.VenueName }}
                   </div>
                 </v-flex>
-                <v-divider></v-divider>
               </nuxt-link>
-              <v-card-actions class="px-0 pb-0">
+              <v-card-actions class="pt-0 pl-4">
                 <div class="text-truncate d-block">
                   <v-chip
                     v-for="Tags in item.Tags"
@@ -125,9 +125,9 @@
             </v-card>
           </div>
           <div v-else>
-            <v-card class="elevation-1 pa-2">
+            <v-card class="elevation-0 pa-0">
               <nuxt-link :to="routes(item.id)" class="text-decoration-none">
-                <div v-if="!item.Images.length" class="overflow-h rounded-0">
+                <div v-if="!item.Images.length" class="overflow-h rounded-t">
                   <v-flex
                     class="tile-img tile-pattern rounded-0"
                     :style="{
@@ -135,31 +135,33 @@
                     }"
                   ></v-flex>
                 </div>
-                <v-img
-                  v-for="image in item.Images"
-                  :key="image"
-                  :src="getAttachmentLink(image, true)"
-                  :lazy-src="getAttachmentLink(image, true)"
-                  aspect-ratio="1"
-                  class="tile-img rounded-0"
-                >
-                  <template v-slot:placeholder>
-                    <v-row
-                      class="fill-height ma-0"
-                      align="center"
-                      justify="center"
-                    >
-                      <v-flex
-                        class="tile-img tile-pattern rounded-0"
-                        :style="{
-                          'background-image': getRandomImage(item.Title),
-                        }"
-                      ></v-flex>
-                    </v-row>
-                  </template>
-                </v-img>
-                <v-flex class="tile-info">
-                  <div class="text--secondary pa-2 pb-0 body-2 pl-0">
+                <div class="overflow-h rounded-t">
+                  <v-img
+                    v-for="image in item.Images"
+                    :key="image"
+                    :src="getAttachmentLink(image, true)"
+                    :lazy-src="getAttachmentLink(image, true)"
+                    aspect-ratio="1"
+                    class="tile-img rounded-0"
+                  >
+                    <template v-slot:placeholder>
+                      <v-row
+                        class="fill-height ma-0"
+                        align="center"
+                        justify="center"
+                      >
+                        <v-flex
+                          class="tile-img tile-pattern rounded-0"
+                          :style="{
+                            'background-image': getRandomImage(item.Title),
+                          }"
+                        ></v-flex>
+                      </v-row>
+                    </template>
+                  </v-img>
+                </div>
+                <v-flex class="tile-info pa-4 pb-0">
+                  <div class="text--secondary pa-2 pb-0 body-2 pl-0 pt-0">
                     {{ item.StartDate }}
                   </div>
                   <v-card-title
@@ -168,14 +170,13 @@
                     {{ item.Title }}
                   </v-card-title>
                   <div
-                    class="text--secondary pa-2 pt-0 body-2 text-truncate d-block pl-0"
+                    class="text--secondary pa-2 pb-0 pt-0 body-2 text-truncate d-block pl-0"
                   >
                     {{ item.VenueName }}
                   </div>
                 </v-flex>
-                <v-divider></v-divider>
               </nuxt-link>
-              <v-card-actions class="px-0 pb-0">
+              <v-card-actions class="pt-0 pl-4">
                 <div class="text-truncate d-block">
                   <v-chip
                     v-for="Tags in item.Tags"
@@ -268,22 +269,32 @@ export default {
 </script>
 
 <style scoped>
+.tile-pattern {
+  background-size: cover;
+  height: 140px;
+}
 .tile-img {
-  max-height: 170px;
-  min-height: 170px;
+  max-height: 140px;
+  min-height: 140px;
+  transition: transform 0.3s, opacity 0.3s ease-out;
+  -moz-transition: transform 0.3s, opacity 0.3s ease-out;
+  -webkit-transition: transform 0.3s, opacity 0.3s ease-out;
+  -o-transition: transform 0.3s, opacity 0.3s ease-out;
+}
+.tile-img:focus,
+.tile-img:hover {
+  transform: scale(1.1);
+  opacity: 1;
+  overflow: hidden;
 }
 .eventtiles {
   max-width: 280px;
   min-width: 280px;
 }
 .tile-info {
-  min-height: 90px;
+  min-height: 92px;
 }
 .overflow-h {
   overflow: hidden;
-}
-.tile-pattern {
-  background-size: cover;
-  height: 170px;
 }
 </style>
