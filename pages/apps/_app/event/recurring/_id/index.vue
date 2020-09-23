@@ -1,7 +1,9 @@
 <template>
   <v-flex d-flex flex-md-row flex-lg-row flex-column>
     <v-flex column xs12 sm8 md8 lg8>
-      <div class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-2 pb-0">
+      <div
+        class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+      >
         <v-flex class="d-flex justify-center align-center pb-2">
           <div class="text-h4 text-capitalize">{{ data.event.Title }}</div>
           <v-spacer></v-spacer>
@@ -227,16 +229,18 @@
           >
         </v-flex>
       </div>
-      <div class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2 pb-2">
-        <v-flex class="d-flex justify-center align-center pb-1">
-          <h2 class="body-1 pb-1">
+      <div
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-2">
+          <h2 class="body-1 pb-0">
             <i class="fa fa-image pr-1" aria-hidden="true"></i> Image Gallery
           </h2>
           <v-spacer></v-spacer>
           <v-menu offset-y>
             <template v-slot:activator="{ on, attrs }">
-              <v-btn depressed small color="primary" v-bind="attrs" v-on="on">
-                Upload
+              <v-btn depressed text small v-bind="attrs" v-on="on">
+                <v-icon left>mdi-upload</v-icon> Upload
               </v-btn>
             </template>
             <v-list dense>
@@ -369,89 +373,180 @@
           </v-img>
         </v-card>
       </div>
-      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2 pb-0">
-        <h2 class="body-1 pb-2">
-          <i class="fa fa-black-board pr-1" aria-hidden="true"></i> Recurring
-          Sessions
-        </h2>
+      <div
+        v-if="content"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-black-board pr-1" aria-hidden="true"></i> Recurring
+            Sessions
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="eventRecurringSession" :content="content" />
+        <Grid
+          view-name="eventRecurringSession"
+          :content="content"
+          class="mt-n12"
+        />
       </div>
-      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2 pb-0">
-        <h2 class="body-1 pb-2">
-          <i class="fa fa-users pr-1" aria-hidden="true"></i> Attendees
-        </h2>
+      <div
+        v-if="content"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-users pr-1" aria-hidden="true"></i> Attendees
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="eventAttendees" :content="content" />
+        <Grid view-name="eventAttendees" :content="content" class="mt-n12" />
       </div>
-      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2 pb-0">
-        <h2 class="body-1 pb-2">
-          <i class="fa fa-user-plus pr-1" aria-hidden="true"></i> Registrations
-        </h2>
+      <div
+        v-if="content"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-user-plus pr-1" aria-hidden="true"></i>
+            Registrations
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="eventRegistrations" :content="content" />
+        <Grid
+          view-name="eventRegistrations"
+          :content="content"
+          class="mt-n12"
+        />
       </div>
-      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2 pb-0">
-        <h2 class="body-1 pb-2">
-          <i class="fa fa-envelope1 pr-1" aria-hidden="true"></i> Invites
-        </h2>
+      <div
+        v-if="content"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-mail pr-1" aria-hidden="true"></i>
+            Invites
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="eventInvites" :content="content" />
+        <Grid view-name="eventInvites" :content="content" class="mt-12" />
       </div>
-      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2 pb-0">
-        <h2 class="body-1 pb-2">
-          <i class="fa fa-ticketalt pr-1" aria-hidden="true"></i> Tickets
-        </h2>
+      <div
+        v-if="content"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-ticketalt pr-1" aria-hidden="true"></i>
+            Tickets
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="eventTickets" :content="content" :context="data" />
+        <Grid
+          view-name="eventTickets"
+          :content="content"
+          class="mt-n12"
+          :context="data"
+        />
       </div>
-      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2 pb-0">
-        <h2 class="body-1 pb-2">
-          <i class="fa fa-settings1 pr-1" aria-hidden="true"></i> Discount Codes
-        </h2>
+      <div
+        v-if="content"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-settings1 pr-1" aria-hidden="true"></i>
+            Discount Codes
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="eventDiscountCodes" :content="content" />
+        <Grid
+          view-name="eventDiscountCodes"
+          :content="content"
+          class="mt-n12"
+        />
       </div>
-      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2 pb-0">
-        <h2 class="body-1 pb-2">
-          <i class="fa fa-question-circle pr-1" aria-hidden="true"></i>
-          Registration Questions
-        </h2>
+      <div
+        v-if="content"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-question-circle pr-1" aria-hidden="true"></i>
+            Registration Questions
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="eventRegistrationQuestion" :content="content" />
+        <Grid
+          view-name="eventRegistrationQuestion"
+          :content="content"
+          class="mt-n12"
+        />
       </div>
-      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2 pb-0">
-        <h2 class="body-1 pb-2">
-          <i class="fa fa-mic pr-1" aria-hidden="true"></i> Speakers
-        </h2>
+      <div
+        v-if="content"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-mic pr-1" aria-hidden="true"></i>
+            Speakers
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="eventSpeakers" :content="content" />
+        <Grid view-name="eventSpeakers" :content="content" class="mt-n12" />
       </div>
-      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2 pb-0">
-        <h2 class="body-1 pb-2">
-          <i class="fa fa-external-link pr-1" aria-hidden="true"></i> Tasks
-        </h2>
+      <div
+        v-if="content"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-external-link pr-1" aria-hidden="true"></i>
+            Tasks
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="eventTasks" :content="content" />
+        <Grid view-name="eventTasks" :content="content" class="mt-n12" />
       </div>
-      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-2 pb-0">
-        <h2 class="body-1 pb-2">
-          <i class="fa fa-file-text-o pr-1" aria-hidden="true"></i> Registration
-          Form
-        </h2>
+      <div
+        v-if="content"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-file-text-o pr-1" aria-hidden="true"></i>
+            Registration Form
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="eventRegistrationForm" :content="content" />
+        <Grid
+          view-name="eventRegistrationForm"
+          :content="content"
+          class="mt-n12"
+        />
       </div>
     </v-flex>
     <v-flex column xs12 sm4 md4 lg4>
-      <div class="xs12 sm4 md4 lg4 boxview pa-3 mb-2">
-        <v-flex class="d-flex justify-center align-center pb-1">
+      <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 py-0 pr-2 box-grey">
+        <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-0">
             <i class="fa fa-info-circle pr-1" aria-hidden="true"></i> Event
             Information
           </h2>
           <v-spacer></v-spacer>
-          <v-btn text small @click.stop="eventform = true">
+          <v-btn text small @click.stop="eventForm = true">
             <v-icon left>fa-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
@@ -466,7 +561,7 @@
             {{ formatField(data.event.EventManager) }}
           </div>
         </v-flex>
-        <v-flex my-3>
+        <v-flex v-if="data.event.Tags" my-3>
           <div class="body-2 text--secondary">Tags</div>
           <div class="body-1 v-tags">
             <v-chip
@@ -479,16 +574,10 @@
             </v-chip>
           </div>
         </v-flex>
-        <v-flex my-3>
-          <div class="body-2 text--secondary">Description</div>
-          <div class="body-1">
-            <div v-html="formatField(data.event.Description)" />
-          </div>
-        </v-flex>
       </div>
 
-      <div class="xs12 sm4 md4 lg4 boxview pa-3 mb-2">
-        <v-flex class="d-flex justify-center align-center pb-1">
+      <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-0 box-grey">
+        <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-0">
             <i class="fa fa-tag pr-1" aria-hidden="true"></i> SEO Details
           </h2>
@@ -514,14 +603,14 @@
         </v-flex>
       </div>
 
-      <div class="xs12 sm4 md4 lg4 boxview pa-3 mb-2">
-        <v-flex class="d-flex justify-center align-center pb-1">
+      <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-0 box-grey">
+        <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-0">
             <i class="fa fa-settings pr-1" aria-hidden="true"></i> Event
             Settings
           </h2>
           <v-spacer></v-spacer>
-          <v-btn text small @click="formdialog1 = true">
+          <v-btn text small @click="eventSetting = true">
             <v-icon left>fa-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
@@ -548,11 +637,11 @@
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">Event Link</div>
-          <div class="body-1">{{ formatField(data.event.UniqLink) }}</div>
+          <div class="body-1">{{ formatField(eventUniqueLink) }}</div>
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">Session Link</div>
-          <div class="body-1">{{ formatField(data.event.UniqLink) }}</div>
+          <div class="body-1">{{ formatField(eventSessionLink) }}</div>
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">Cancelation Policy</div>
@@ -560,7 +649,7 @@
             {{ formatField(data.event.CancellationPolicy) }}
           </div>
         </v-flex>
-        <v-flex my-3>
+        <v-flex my-3 class="d-block text-truncate">
           <span v-if="data.event.isRefundable === true">
             <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
             <span class="ml-2">Allow Cancelation</span>
@@ -570,7 +659,7 @@
             <span class="ml-2">Allow Cancelation</span>
           </span>
         </v-flex>
-        <v-flex my-3>
+        <v-flex my-3 class="d-block text-truncate">
           <span v-if="data.event.SessionTimingConflict === true">
             <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
             <span class="ml-2">Validate Session Timing Conflict</span>
@@ -580,7 +669,7 @@
             <span class="ml-2">Validate Session Timing Conflict</span>
           </span>
         </v-flex>
-        <v-flex my-3>
+        <v-flex my-3 class="d-block text-truncate">
           <span v-if="data.event.ShowRemainingTickets === true">
             <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
             <span class="ml-2">Show Remaining Tickets Count</span>
@@ -590,7 +679,7 @@
             <span class="ml-2">Show Remaining Tickets Count</span>
           </span>
         </v-flex>
-        <v-flex my-3>
+        <v-flex my-3 class="d-block text-truncate">
           <span v-if="data.event.ShowAttendeeForm === true">
             <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
             <span class="ml-2">Show Attendee Form</span>
@@ -600,7 +689,7 @@
             <span class="ml-2">Show Attendee Form</span>
           </span>
         </v-flex>
-        <v-flex my-3>
+        <v-flex my-3 class="d-block text-truncate">
           <span v-if="data.event.NotifyOrganizer === true">
             <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
             <span class="ml-2">Notify organizer when someone registers</span>
@@ -610,16 +699,30 @@
             <span class="ml-2">Notify organizer when someone registers</span>
           </span>
         </v-flex>
+        <v-flex my-3>
+          <span v-if="data.event.showTimezone === true">
+            <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
+            <span class="ml-2"
+              >Allow user to select a time zone for recurring event</span
+            >
+          </span>
+          <span v-else>
+            <v-icon>mdi-checkbox-blank-outline</v-icon>
+            <span class="ml-2"
+              >Allow user to select a time zone for recurring event</span
+            >
+          </span>
+        </v-flex>
       </div>
 
-      <div class="xs12 sm4 md4 lg4 boxview pa-3 mb-2">
-        <v-flex class="d-flex justify-center align-center pb-1">
+      <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-0 box-grey">
+        <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-0">
             <i class="fa fa-settings pr-1" aria-hidden="true"></i>
             Registration Page Settings
           </h2>
           <v-spacer></v-spacer>
-          <v-btn text small @click="sitesetting = true">
+          <v-btn text small @click="siteSetting = true">
             <v-icon left>fa-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
@@ -663,25 +766,34 @@
       </div>
     </v-flex>
     <editSeoForm :seo-form.sync="seoForm" />
+    <editEventForm :event-form.sync="eventForm" />
+    <editEventSetting :event-setting.sync="eventSetting" />
+    <editSiteSetting :site-setting.sync="siteSetting" />
     <makeCopy :is-make-copy.sync="isMakeCopy" />
   </v-flex>
 </template>
 <script>
 import gql from 'graphql-tag'
 import format from 'date-fns/format'
+import editEventForm from '../../_id/editEventForm.vue'
+import nuxtConfig from '../../../../../../nuxt.config'
 import editSeoForm from '~/pages/apps/_app/event/_id/editSeoForm.vue'
+import editEventSetting from '~/pages/apps/_app/event/_id/editEventSetting.vue'
+import editSiteSetting from '~/pages/apps/_app/event/_id/editSiteSetting.vue'
 import makeCopy from '~/pages/apps/_app/event/_id/makeCopy.vue'
 import Grid from '~/components/common/grid'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin } from '~/utility'
-import nuxtconfig from '~/nuxt.config'
 
 export default {
   layout: 'event',
   components: {
     Grid,
     editSeoForm,
+    editEventForm,
+    editEventSetting,
+    editSiteSetting,
     makeCopy,
   },
   mixins: [configLoaderMixin],
@@ -689,6 +801,9 @@ export default {
     return {
       loading: 0,
       seoForm: false,
+      eventForm: false,
+      eventSetting: false,
+      siteSetting: false,
       isMakeCopy: false,
       dialog: false,
       copylinks: false,
@@ -697,6 +812,8 @@ export default {
         badge: {},
         eventSummary: {},
       },
+      eventUniqueLink: '',
+      eventSessionLink: '',
     }
   },
   computed: {
@@ -712,25 +829,25 @@ export default {
       return fieldValue || '-'
     },
     getAttachmentLink(id, isDownloadLink) {
-      const attachmentUrl = `https://${nuxtconfig.axios.eventUrl}${
-        nuxtconfig.axios.apiEndpoint
+      const attachmentUrl = `https://${nuxtConfig.axios.eventUrl}${
+        nuxtConfig.axios.apiEndpoint
       }Attachments${isDownloadLink ? '/download' : ''}${id ? '/' + id : ''}`
       return attachmentUrl
     },
     viewRegistration() {
-      const regUrl = `https://${nuxtconfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
+      const regUrl = `https://${nuxtConfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
       window.open(`${regUrl}`, '_blank')
     },
     eventLink() {
-      const regUrl = `https://${nuxtconfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
+      const regUrl = `https://${nuxtConfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
       return regUrl
     },
     sessionLink() {
-      const regUrl = `https://${nuxtconfig.axios.eventUrl}/t/${this.data.event.UniqLink}`
+      const regUrl = `https://${nuxtConfig.axios.eventUrl}/t/${this.data.event.UniqLink}`
       return regUrl
     },
     embedLink() {
-      const regUrl = `<iframe src="https://${nuxtconfig.axios.eventUrl}/embed/t/${this.data.event.UniqLink}"></iframe>`
+      const regUrl = `<iframe src="https://${nuxtConfig.axios.eventUrl}/embed/t/${this.data.event.UniqLink}"></iframe>`
       return regUrl
     },
   },
@@ -760,6 +877,8 @@ export default {
         const event = formatGQLResult(data, 'Event')
         const badge = formatGQLResult(data, 'Badge')
         const eventSummary = data.Event.EventGetEventSummery
+        this.eventUniqueLink = `https://${nuxtConfig.axios.eventUrl}/e/${event[0].UniqLink}`
+        this.eventSessionLink = `https://${nuxtConfig.axios.eventUrl}/t/${event[0].UniqLink}`
         return {
           event: event.length > 0 ? event[0] : {},
           badge: badge.length > 0 ? badge[0] : {},
