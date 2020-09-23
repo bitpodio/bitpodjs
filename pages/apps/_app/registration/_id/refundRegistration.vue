@@ -13,6 +13,7 @@
             class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
           >
             <h2 class="black--text pt-5 pb-4 text-h5">Refund Request</h2>
+
             <v-spacer></v-spacer>
             <div>
               <v-btn icon @click="close">
@@ -20,7 +21,20 @@
               </v-btn>
             </div>
           </v-card-title>
+
           <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
+            <v-alert
+              v-if="isWarningMsg"
+              outlined
+              dense
+              color="warning"
+              class="body-2"
+            >
+              <v-icon class="amber--text" size="18">fa-bulb</v-icon>
+              You are submitting a refund request for a payment which was
+              charged less than 24 hours ago, if funds are not settled, this
+              refund will be pending until funds are settled.
+            </v-alert>
             <v-row>
               <v-col cols="12" sm="12" md="12">
                 <Lookup
@@ -54,7 +68,7 @@
                   min="1"
                   type="Number"
                   :rules="amountRule"
-                  :disabled="isFullRefund"
+                  :disabled="isAmountDisabled"
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="12" md="12">
@@ -87,10 +101,12 @@
 
 <script>
 import gql from 'graphql-tag'
+import addHours from 'date-fns/addHours'
 import { required } from '~/utility/rules.js'
 import eventRegistrationTicketSlot from '~/config/apps/event/gql/eventRegistrationTicketSlot.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { getApiUrl } from '~/utility/index.js'
+import strings from '~/strings.js'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
 
 export default {
@@ -105,15 +121,17 @@ export default {
       regData: {},
       refund: {},
       refundData: {},
+      isAmountDisabled: false,
       valid: false,
       Amount: '',
+      isWarningMsg: false,
       requiredRules: [required],
       data: {
         event: {},
       },
       refundMethodProps: {
         type: 'lookup',
-        caption: 'Refund Method',
+        caption: 'Refund Method*',
         dataSource: {
           query: registrationStatusOptions,
           itemText: 'value',
@@ -142,29 +160,34 @@ export default {
     }
   },
   computed: {
-    isFullRefund() {
-      return this.refund.RefundRequest === 'FullRefund'
-    },
     amountRule() {
       return [
         (v) => {
           if (parseInt(v) > parseInt(this.refundData.TotalAmount)) {
-            return 'Refunded Amount can not be greater or equal than total paid amount '
+            return strings.REFUND_PAID_AMT
           } else if (v === '') {
-            return 'This field is required'
+            return strings.FIELD_REQUIRED
           } else if (parseInt(v) < 1) {
-            return 'Amount should not be less than or equal to  0'
+            return strings.REFUND_AMT_MSG
           }
         },
       ]
     },
   },
+  mounted() {
+    this.isFullRefund()
+  },
   methods: {
+    isFullRefund() {
+      return this.refund.RefundRequest === 'FullRefund'
+    },
     changeRefundRequest(value) {
       if (value === 'FullRefund') {
         this.refund.Amount = this.refundData.TotalAmount
+        this.isAmountDisabled = true
       } else if (value === 'PartialRefund') {
         this.refund.Amount = ''
+        this.isAmountDisabled = false
       }
     },
     close() {
@@ -215,11 +238,20 @@ export default {
         const registration = formatGQLResult(data, 'Registration')
         this.regData = registration.length > 0 ? { ...registration[0] } : {}
         this.refundData.TotalAmount = this.regData.TotalAmount
+        if (new Date() < addHours(new Date(this.regData.createdDate), 24)) {
+          this.isWarningMsg = true
+        } else {
+          this.isWarningMsg = false
+        }
         if (this.regData._Refund) {
           this.refund = this.regData._Refund
           this.refundData.TransactionReferenceId = this.regData.TransactionReferenceId
           this.refundData.RefundAttempt = this.regData.RefundAttempt
+        } else {
+          this.refund.Amount = this.refundData.TotalAmount
+          this.refund.RefundRequest = 'FullRefund'
         }
+        this.isAmountDisabled = this.refund.RefundRequest === 'FullRefund'
         return {
           event: {},
         }

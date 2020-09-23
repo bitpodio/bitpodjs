@@ -184,7 +184,6 @@
 
 <script>
 import gql from 'graphql-tag'
-// import strings from '~/strings.js'
 import { required } from '~/utility/rules.js'
 import eventRegistrationTicketSlot from '~/config/apps/event/gql/eventRegistrationTicketSlot.gql'
 import ticket from '~/config/apps/event/gql/ticket.gql'
@@ -289,11 +288,12 @@ export default {
       }))
       if (isReg) {
         this.regData.TicketId && this.ticketChange(this.regData.TicketId)
+      } else {
+        this.regData.TicketId = []
       }
     },
     async ticketChange(ticketId) {
       this.isSessionLoading = true
-      debugger
       const where = { SessionTicket: { inq: ticketId } }
       const result = await this.$apollo.query({
         query: gql`
@@ -323,6 +323,17 @@ export default {
       if (this.regData._Refund === null) {
         delete this.regData._Refund
       }
+
+      const cloneTickets = JSON.parse(JSON.stringify(this.tickets))
+      let totalAmount = 0
+      this.regData.TicketId.forEach(function (tid) {
+        cloneTickets.forEach(function (ticket) {
+          if (tid === ticket.id && ticket.Amount > 0) {
+            totalAmount += ticket.Amount
+          }
+        })
+      })
+      this.regData.TotalAmount = totalAmount
 
       this.regData._CurrentAddress = this.venueAddress
       if (this.regData._CurrentAddress) {
@@ -377,7 +388,9 @@ export default {
             order: 'createdDate DESC',
             where: {
               and: [
-                { EndDate: { gte: new Date() } },
+                {
+                  or: [{ EndDate: null }, { EndDate: { gte: new Date() } }],
+                },
                 { Status: 'Open for registration' },
               ],
             },
