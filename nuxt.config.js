@@ -54,6 +54,10 @@ export default {
           'AIzaSyCPS6SZlor8qxfpul-dKyN6566XG2R5dFM'
         }&libraries=places`,
       },
+      {
+        src:
+          'https://cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js',
+      },
     ],
   },
   /*
@@ -190,7 +194,7 @@ export default {
     redirect: {
       login: '/login',
       callback: '/callback',
-      home: `${basePath}/apps/event/list/Event/All Events`,
+      home: `${basePath}/apps/event/list/Event/live and draft event`,
       logout: '/',
     },
     strategies: {

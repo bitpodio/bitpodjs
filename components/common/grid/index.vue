@@ -68,7 +68,7 @@
           :show-expand="showExpand"
           :single-expand="singleExpand"
           item-key="id"
-          class="elevation-0 pa-2"
+          class="elevation-0"
           :show-select="showSelect"
           @update:options="updatePagination"
           @click:row="onRowClick"
