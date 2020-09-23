@@ -71,6 +71,7 @@
                 data &&
                 data.event &&
                 data.event._VenueAddress &&
+                data.event._VenueAddress.AddressLine &&
                 !data.event._VenueAddress.AddressLine.includes(
                   data.event.VenueName
                 )
