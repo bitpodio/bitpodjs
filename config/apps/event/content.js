@@ -3126,7 +3126,7 @@ export default {
           singleExpand: false,
           showSelect: true,
           hideFilter: true,
-          hideSearch: false,
+          hideSearch: true,
         },
         hidden: true,
         title: 'discountMembers',
@@ -3487,7 +3487,7 @@ export default {
           },
         },
         template: {
-          name: 'link-grid',
+          name: 'contacts-grid',
           context: {
             basePath: '/contacts',
           },

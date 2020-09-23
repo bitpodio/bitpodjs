@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import DatetimePicker from 'vuetify-datetime-picker/dist'
-// import 'vuetify-datetime-picker/src/stylus/main.styl'
+import VDatetimePicker from '~/components/common/form/datetime-picker.vue'
 
-Vue.use(DatetimePicker)
+Vue.component('v-datetime-picker', VDatetimePicker)

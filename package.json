@@ -37,7 +37,8 @@
     "rrule": "2.6.4",
     "vue-google-autocomplete": "^1.1.0",
     "vuepress-plugin-geopattern": "^0.1.2",
-    "vuetify-datetime-picker": "^2.1.1"
+    "vuetify-datetime-picker": "^2.1.1",
+    "vue-google-charts": "^0.3.3"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
