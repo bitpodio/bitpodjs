@@ -347,7 +347,11 @@ export default {
     account: false,
     message: false,
     items: [
-      { icon: 'fa fa-tachometer', text: 'Eventboard', to: '/' },
+      {
+        icon: 'fa fa-tachometer',
+        text: 'Eventboard',
+        to: '/apps/event/eventboard',
+      },
       { heading: 'Event' },
       {
         icon: 'fa fa-calendar',

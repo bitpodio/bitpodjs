@@ -4,6 +4,10 @@ query($filters: JSON, $where: JSON) {
       edges {
         node {
           id
+          Images
+          Attende {
+            totalCount
+          }
           createdDate
           createdBy
           SendCalendar

@@ -1,7 +1,9 @@
 <template>
   <v-flex d-flex flex-md-row flex-lg-row flex-column>
     <v-flex column xs12 sm8 md8 lg8>
-      <div class="xs12 sm8 md8 lg8 boxview pa-4 mr-2 mb-2">
+      <div
+        class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+      >
         <v-row>
           <v-col class="col-md-6 col-12 pt-0">
             <v-card class="elevation-0">
@@ -55,35 +57,56 @@
           </v-col>
         </v-row>
       </div>
-      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
-        <h2 class="body-1 pb-2">
-          <i class="fa fa-user-plus pr-1" aria-hidden="true"></i>Registrations
-        </h2>
+      <div
+        v-if="content"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-user-plus pr-1" aria-hidden="true"></i>
+            Registrations
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
         <v-divider></v-divider>
         <Grid
           view-name="contactRegistration"
-          class="mt-11"
+          class="mt-n12"
           :content="content"
           :filter="filter"
         />
       </div>
-      <div v-if="content" class="xs12 sm12 md12 boxview pa-4 mr-2 mb-2">
-        <h2 class="body-1 pb-2">
-          <i class="fa fa-file pr-1" aria-hidden="true"></i> Invites
-        </h2>
+      <div
+        v-if="content"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-mail pr-1" aria-hidden="true"></i>
+            Invites
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="contactInvites" class="mt-11" :content="content" />
+        <Grid view-name="contactInvites" :content="content" class="mt-n12" />
       </div>
-      <div v-if="content" class="xs12 sm12 md12 boxview pa-4 mr-2 mb-2">
-        <h2 class="body-1 pb-2">
-          <i class="fa fa-envelope1 pr-1" aria-hidden="true"></i> Emails
-        </h2>
+      <div
+        v-if="content"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-mail pr-1" aria-hidden="true"></i>
+            Emails
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="contactEmails" class="mt-11" :content="content" />
+        <Grid view-name="contactEmails" :content="content" class="mt-n12" />
       </div>
     </v-flex>
     <v-flex column xs12 sm4 md4 lg4>
-      <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
+      <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 py-0 box-grey">
         <h2 class="body-1 pb-1">
           <i class="fa fa-info-circle pr-1" aria-hidden="true"></i> Contact
           Information
@@ -141,7 +164,7 @@
         </v-row>
       </div>
 
-      <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
+      <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 py-0 box-grey">
         <h2 class="body-1 pb-1">
           <i class="fa fa-location pr-1" aria-hidden="true"></i> Address
           Information
