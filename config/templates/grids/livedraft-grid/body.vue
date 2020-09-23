@@ -16,7 +16,9 @@
             <div v-if="!item.Images.length" class="overflow-h rounded-0">
               <v-flex
                 class="tile-img tile-pattern rounded-0"
-                :style="{ 'background-image': getRandomImage(item.Title) }"
+                :style="{
+                  'background-image': getRandomImage(item.Title),
+                }"
               ></v-flex>
             </div>
             <v-img
