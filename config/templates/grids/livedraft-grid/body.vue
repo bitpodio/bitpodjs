@@ -66,7 +66,7 @@
                 </v-flex>
                 <v-divider></v-divider>
               </nuxt-link>
-              <v-card-actions class="px-0">
+              <v-card-actions class="px-0 pb-0">
                 <div class="text-truncate d-block">
                   <v-chip
                     v-for="Tags in item.Tags"
@@ -175,7 +175,7 @@
                 </v-flex>
                 <v-divider></v-divider>
               </nuxt-link>
-              <v-card-actions class="px-0">
+              <v-card-actions class="px-0 pb-0">
                 <div class="text-truncate d-block">
                   <v-chip
                     v-for="Tags in item.Tags"
