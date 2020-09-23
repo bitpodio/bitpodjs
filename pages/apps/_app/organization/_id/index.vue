@@ -21,6 +21,22 @@
                       }}</span>
                     </v-avatar>
                   </v-list-item-avatar>
+                  <span
+                    @click="
+                      checkArray = []
+                      orgLogo = !orgLogo
+                    "
+                  >
+                    <File
+                      :field="fileField"
+                      :no-btn-look="true"
+                      :block="true"
+                      :open-file-dialog="orgLogo"
+                      :value="checkArray"
+                      @input="uploadOrgLogo"
+                    />
+                    Upload</span
+                  >
 
                   <v-list-item-content>
                     <v-list-item-title>
@@ -313,13 +329,16 @@
 import gql from 'graphql-tag'
 import format from 'date-fns/format'
 import Grid from '~/components/common/grid'
+import File from '~/components/common/form/file.vue'
 import organization from '~/config/apps/admin/gql/organization.gql'
+import nuxtconfig from '~/nuxt.config'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin } from '~/utility'
 export default {
   layout: 'admin',
   components: {
     Grid,
+    File,
   },
   mixins: [configLoaderMixin],
   data() {
@@ -328,6 +347,14 @@ export default {
       data: {
         organization: {},
       },
+      fileField: {
+        multiple: false,
+      },
+      formData: {
+        Image: [],
+      },
+      checkArray: [],
+      orgLogo: false,
     }
   },
   computed: {
@@ -336,6 +363,17 @@ export default {
     },
   },
   methods: {
+    async uploadOrgLogo(data) {
+      this.orgLogo = false
+      this.formData.Image = []
+      this.formData.Image.push(data[0])
+      const res = await this.$axios
+        .$patch(
+          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}OrganizationInfos/${this.$route.params.id}`,
+          this.formData
+        )
+        .catch((e) => console.log('Error', e))
+    },
     formatDate(date) {
       return date ? format(new Date(date), 'PPp') : ''
     },
