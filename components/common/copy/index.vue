@@ -45,19 +45,15 @@ export default {
   },
   methods: {
     async clickListener() {
-      const writeBtn = document.querySelector(`.${this.uniqueId}btn`)
       const inputEl = document.querySelector(`.${this.uniqueId}`)
       const inputValue = inputEl.value.trim()
       if (inputValue) {
         try {
           await navigator.clipboard.writeText(inputValue)
           inputEl.value = ''
-          if (writeBtn.textContent !== 'Copied!') {
-            const originalText = writeBtn.textContent
-            this.snackbar = true
-          }
+          this.snackbar = true
         } catch (e) {
-          console.log('Something went wrong', err)
+          console.log('Something went wrong', e)
         }
       }
     },
