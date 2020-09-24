@@ -384,13 +384,6 @@ export default {
         text: 'Contacts',
         to: '/apps/event/list/Contacts/Contacts',
       },
-      { heading: 'Task' },
-      { icon: 'fa fa-tasks', text: 'My Task', to: '' },
-      {
-        icon: 'mdi-chart-bubble',
-        text: 'Activities',
-        to: '/apps/event/list/Activities/Activities',
-      },
     ],
   }),
   async created() {

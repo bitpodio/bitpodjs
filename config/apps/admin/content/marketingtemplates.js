@@ -1,0 +1,186 @@
+import marketingTemplates from '../gql/marketingTemplates.gql'
+
+export default {
+  views: {
+    template: {
+      ui: {
+        hideDefaultHeader: true,
+        hideDefaultFooter: true,
+        showExpand: false,
+        singleExpand: false,
+        showSelect: true,
+        hideFilter: false,
+        hideSearch: true,
+      },
+      default: false,
+      fields: {
+        Name: {
+          displayOrder: 1,
+          caption: 'Name',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '250px',
+          type: 'string',
+        },
+        Type: {
+          displayOrder: 2,
+          caption: 'Type',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '250px',
+          type: 'string',
+        },
+        ImageUrl: {
+          displayOrder: 3,
+          caption: 'Image Url',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '250px',
+          type: 'string',
+        },
+        Body: {
+          displayOrder: 4,
+          caption: 'Body',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '250px',
+          type: 'string',
+        },
+        Category: {
+          displayOrder: 5,
+          caption: 'Category',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '250px',
+          type: 'string',
+        },
+        createdDate: {
+          displayOrder: 6,
+          caption: 'Date',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'date',
+        },
+        createdBy: {
+          displayOrder: 7,
+          caption: 'Created By',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+        },
+      },
+      template: {
+        name: 'invitetemplate-grid',
+        context: {
+          basePath: '/templates',
+        },
+      },
+      dataSource: {
+        query: marketingTemplates,
+        defaultSort: 'createdDate DESC',
+        type: 'graphql',
+        model: 'MarketingTemplate',
+        filter: {
+          order: 'createdDate DESC',
+          skip: '0',
+          where: {},
+        },
+      },
+      title: 'Templates',
+      type: 'list',
+    },
+    mytemplate: {
+      ui: {
+        hideDefaultHeader: true,
+        hideDefaultFooter: true,
+        showExpand: false,
+        singleExpand: false,
+        showSelect: true,
+        hideFilter: false,
+        hideSearch: true,
+      },
+      default: false,
+      fields: {
+        Name: {
+          displayOrder: 1,
+          caption: 'Name',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '250px',
+          type: 'string',
+        },
+        Type: {
+          displayOrder: 2,
+          caption: 'Type',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '250px',
+          type: 'string',
+        },
+        ImageUrl: {
+          displayOrder: 3,
+          caption: 'Image Url',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '250px',
+          type: 'string',
+        },
+        Body: {
+          displayOrder: 4,
+          caption: 'Body',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '250px',
+          type: 'string',
+        },
+        Category: {
+          displayOrder: 5,
+          caption: 'Category',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '250px',
+          type: 'string',
+        },
+        createdDate: {
+          displayOrder: 6,
+          caption: 'Date',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'date',
+        },
+        createdBy: {
+          displayOrder: 7,
+          caption: 'Created By',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+        },
+      },
+      template: {
+        name: 'mytemplate-grid',
+        context: {
+          basePath: '/templates',
+        },
+      },
+      dataSource: {
+        query: marketingTemplates,
+        defaultSort: 'createdDate DESC',
+        type: 'graphql',
+        model: 'MarketingTemplate',
+        filter(ctx) {
+          return {
+            where: {
+              createdBy: ctx.$auth.$state.user.data.email,
+            },
+          }
+        },
+      },
+      title: 'My Templates',
+      type: 'list',
+    },
+  },
+}

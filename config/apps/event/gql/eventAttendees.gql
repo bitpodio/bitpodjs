@@ -7,16 +7,26 @@ query ($filters: JSON, $where: JSON) {
                     Status 
                     FullName  
                     TicketName 
-                    TicketAmount 
+                    TicketAmount
+                    categoryId
+                    TicketId 
                     SeatNumber 
                     CompanyName 
                     CheckIn 
                     LastName 
-                    Email  
+                    Email
+                    Phone  
                     id 
                     createdDate 
                     createdBy 
-                    modifiedDate 
+                    modifiedDate
+                    _CurrentAddress{
+                        AddressLine
+                        City
+                        Country
+                        PostalCode
+                        State
+                    } 
                     regType{ 
                         Name 
                     } 

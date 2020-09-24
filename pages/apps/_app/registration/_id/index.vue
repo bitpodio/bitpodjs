@@ -144,6 +144,7 @@
         <Grid
           view-name="registrationAttendees"
           :content="content"
+          :context="data"
           class="mt-n12"
         />
       </div>
