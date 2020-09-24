@@ -5,7 +5,13 @@
 <script>
 import nuxtconfig from '../../../../nuxt.config'
 export default {
-  props: ['item', 'value', 'context'],
+  props: {
+    value: {
+      type: String,
+      default: '',
+      required: false,
+    },
+  },
   data() {
     return {
       Symbol: '',
@@ -15,15 +21,18 @@ export default {
     this.getCurrency()
   },
   methods: {
-    getCurrency() {
-      return this.$axios
-        .$get(
+    async getCurrency() {
+      try {
+        const res = await this.$axios.$get(
           `https://${nuxtconfig.axios.eventUrl}/svc/api/Events/${this.$route.params.id}`
         )
-        .then((res) => {
+        if (res) {
           this.getCurrencySymbol(res.Currency)
           return res
-        })
+        }
+      } catch (e) {
+        console.log('Error', e)
+      }
     },
 
     getCurrencySymbol(Currency) {

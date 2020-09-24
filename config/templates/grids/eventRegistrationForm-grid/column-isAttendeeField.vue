@@ -5,28 +5,38 @@
 <script>
 import nuxtconfig from '../../../../nuxt.config'
 export default {
-  props: ['item', 'value', 'context', 'refresh'],
+  props: {
+    item: {
+      type: Object,
+      default: () => {},
+      required: false,
+    },
+    refresh: {
+      type: Function,
+      default: () => false,
+      required: false,
+    },
+  },
   data() {
     return {
       checkbox: this.item.isAttendeeField,
     }
   },
   methods: {
-    updateRegForm() {
-      this.$axios
-        .$put(
+    async updateRegForm() {
+      try {
+        const res = await this.$axios.$put(
           `https://${nuxtconfig.axios.eventUrl}/svc/api/Events/${this.$route.params.id}/RegistrationForm/${this.item.id}`,
           {
             isAttendeeField: this.checkbox,
           }
         )
-        .then((res) => {
+        if (res) {
           this.refresh()
-          return res
-        })
-        .catch((e) => {
-          console.log('error', e)
-        })
+        }
+      } catch (e) {
+        console.log('Error', e)
+      }
     },
   },
 }

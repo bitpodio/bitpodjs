@@ -11,7 +11,18 @@
 
 <script>
 export default {
-  props: ['item', 'value', 'context'],
+  props: {
+    item: {
+      type: Object,
+      default: () => {},
+      required: false,
+    },
+    value: {
+      type: String,
+      default: '',
+      required: false,
+    },
+  },
   computed: {
     twitter() {
       return `/${this.value}`

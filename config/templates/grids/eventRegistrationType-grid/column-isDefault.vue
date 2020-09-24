@@ -8,7 +8,18 @@ import nuxtconfig from '../../../../nuxt.config'
 import registrationType from '~/config/apps/event/gql/registrationType.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 export default {
-  props: ['item', 'value', 'context', 'refresh'],
+  props: {
+    item: {
+      type: Object,
+      default: () => {},
+      required: false,
+    },
+    refresh: {
+      type: Function,
+      default: () => false,
+      required: false,
+    },
+  },
   data() {
     return {
       checkbox: this.item.isDefault,
@@ -27,28 +38,25 @@ export default {
           },
         },
       })
-      console.log('------', this.checkbox)
       const regType = formatGQLResult(result.data, 'RegistrationType')
-      console.log('------', regType)
       const count = regType.filter((e) => e.isDefault === true).length
       if (count >= 1 && this.checkbox) {
         alert('Only one registration type can be set to default')
         this.refresh()
       } else {
-        this.$axios
-          .$put(
+        try {
+          const res = await this.$axios.$put(
             `https://${nuxtconfig.axios.eventUrl}/svc/api/RegistrationTypes/${this.item.id}`,
             {
               isDefault: this.checkbox,
             }
           )
-          .then((res) => {
+          if (res) {
             this.refresh()
-            return res
-          })
-          .catch((e) => {
-            console.log('error', e)
-          })
+          }
+        } catch (e) {
+          console.log('Error', e)
+        }
       }
     },
   },

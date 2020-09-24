@@ -12,6 +12,5 @@ export default {
     newAction,
     newItem,
   },
-  props: ['content', 'viewName', 'onNewItemSave', 'refresh', 'context'],
 }
 </script>

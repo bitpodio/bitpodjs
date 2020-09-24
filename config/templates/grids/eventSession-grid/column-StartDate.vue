@@ -7,7 +7,13 @@
 <script>
 import { formatedDate } from '~/utility/form.js'
 export default {
-  props: ['item', 'value', 'context'],
+  props: {
+    item: {
+      type: Object,
+      default: () => {},
+      required: false,
+    },
+  },
   computed: {
     formatDate() {
       const date = this.item.StartDate

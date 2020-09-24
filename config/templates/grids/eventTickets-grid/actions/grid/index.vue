@@ -19,6 +19,31 @@ export default {
     registrationType,
     newItem,
   },
-  props: ['content', 'viewName', 'onNewItemSave', 'refresh', 'context'],
+  props: {
+    viewName: {
+      type: String,
+      required: false,
+    },
+    content: {
+      type: Object,
+      default: () => {},
+      required: false,
+    },
+    refresh: {
+      type: Function,
+      default: () => false,
+      required: false,
+    },
+    onNewItemSave: {
+      type: Function,
+      default: () => false,
+      required: false,
+    },
+    context: {
+      type: Object,
+      default: () => {},
+      required: false,
+    },
+  },
 }
 </script>

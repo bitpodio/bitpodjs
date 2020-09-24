@@ -30,14 +30,41 @@ export default {
     deleteItem,
     editItem,
   },
-  props: [
-    'content',
-    'viewName',
-    'items',
-    'refresh',
-    'onDeleteItem',
-    'onUpdateItem',
-    'context',
-  ],
+  props: {
+    items: {
+      type: Array,
+      default: () => [],
+      required: false,
+    },
+    viewName: {
+      type: String,
+      required: false,
+    },
+    content: {
+      type: Object,
+      default: () => {},
+      required: false,
+    },
+    refresh: {
+      type: Function,
+      default: () => false,
+      required: false,
+    },
+    onDeleteItem: {
+      type: Function,
+      default: () => false,
+      required: false,
+    },
+    onUpdateItem: {
+      type: Function,
+      default: () => false,
+      required: false,
+    },
+    context: {
+      type: Object,
+      default: () => {},
+      required: false,
+    },
+  },
 }
 </script>

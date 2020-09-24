@@ -11,7 +11,18 @@
 <script>
 import nuxtconfig from '../../../../../../nuxt.config'
 export default {
-  props: ['items', 'value', 'context', 'refresh'],
+  props: {
+    items: {
+      type: Array,
+      default: () => [],
+      required: false,
+    },
+    refresh: {
+      type: Function,
+      default: () => false,
+      required: false,
+    },
+  },
   data() {
     return {
       snackbar: false,
@@ -19,24 +30,23 @@ export default {
     }
   },
   methods: {
-    resendRegistrationEmail() {
+    async resendRegistrationEmail() {
       const regIds = this.items.map((e) => e.id)
       alert('are you sure, you want to resend confirmation emails ?')
-      this.$axios
-        .$post(
+      try {
+        const res = await this.$axios.$post(
           `https://${nuxtconfig.axios.eventUrl}/svc/api/CRMACTIVITIES/cloneActivityForResendEmail`,
           {
             regIds,
           }
         )
-        .then((res) => {
+        if (res) {
           this.snackbar = true
           this.refresh()
-          return res
-        })
-        .catch((e) => {
-          console.log('error', e)
-        })
+        }
+      } catch (e) {
+        console.log('Error', e)
+      }
     },
   },
 }

@@ -8,6 +8,12 @@
 
 <script>
 export default {
-  props: ['item', 'value', 'context'],
+  props: {
+    value: {
+      type: String,
+      default: '',
+      required: false,
+    },
+  },
 }
 </script>

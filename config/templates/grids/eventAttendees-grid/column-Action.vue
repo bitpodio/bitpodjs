@@ -21,25 +21,35 @@
 <script>
 import nuxtconfig from '../../../../nuxt.config'
 export default {
-  props: ['item', 'value', 'context', 'refresh'],
+  props: {
+    item: {
+      type: Object,
+      default: () => {},
+      required: false,
+    },
+    refresh: {
+      type: Function,
+      default: () => false,
+      required: false,
+    },
+  },
   methods: {
-    updateDate() {
+    async updateDate() {
       const res = confirm('are you sure, you want to cancel check in?')
       if (res) {
-        this.$axios
-          .$put(
+        try {
+          const res = await this.$axios.$put(
             `https://${nuxtconfig.axios.eventUrl}/svc/api/Attes/${this.item.id}`,
             {
               CheckIn: null,
             }
           )
-          .then((res) => {
+          if (res) {
             this.refresh()
-            return res
-          })
-          .catch((e) => {
-            console.log('error', e)
-          })
+          }
+        } catch (e) {
+          console.log('Error', e)
+        }
       }
     },
   },

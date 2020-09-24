@@ -22,23 +22,33 @@
 <script>
 import nuxtconfig from '../../../../nuxt.config'
 export default {
-  props: ['item', 'value', 'context', 'tableData', 'refresh'],
+  props: {
+    item: {
+      type: Object,
+      default: () => {},
+      required: false,
+    },
+    refresh: {
+      type: Function,
+      default: () => false,
+      required: false,
+    },
+  },
   methods: {
-    updateDate() {
-      this.$axios
-        .$put(
+    async updateDate() {
+      try {
+        const res = await this.$axios.$put(
           `https://${nuxtconfig.axios.eventUrl}/svc/api/Attes/${this.item.id}`,
           {
             CheckIn: new Date(),
           }
         )
-        .then((res) => {
+        if (res) {
           this.refresh()
-          return res
-        })
-        .catch((e) => {
-          console.log('error', e)
-        })
+        }
+      } catch (e) {
+        console.log('Error', e)
+      }
     },
   },
 }

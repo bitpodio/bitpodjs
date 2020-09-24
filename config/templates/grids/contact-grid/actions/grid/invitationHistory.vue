@@ -17,7 +17,6 @@
 </template>
 <script>
 export default {
-  props: ['item', 'value', 'context'],
   methods: {
     routeToHistory(ctx) {
       this.$router.push(`/apps/event/list/Contacts/Invites`)

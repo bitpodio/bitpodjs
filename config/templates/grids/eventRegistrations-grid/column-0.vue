@@ -11,7 +11,23 @@
 
 <script>
 export default {
-  props: ['item', 'value', 'context'],
+  props: {
+    item: {
+      type: Object,
+      default: () => {},
+      required: false,
+    },
+    value: {
+      type: String,
+      default: '',
+      required: false,
+    },
+    context: {
+      type: Object,
+      default: () => {},
+      required: false,
+    },
+  },
   computed: {
     route() {
       return `/apps/event${this.context.basePath}/${this.item.id}`
