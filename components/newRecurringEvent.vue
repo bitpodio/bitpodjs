@@ -2180,7 +2180,7 @@ export default {
   min-height: 300px;
 }
 .event-inner {
-  min-height: 469px;
+  min-height: 455px;
 }
 .st-date {
   max-width: 125px !important;
