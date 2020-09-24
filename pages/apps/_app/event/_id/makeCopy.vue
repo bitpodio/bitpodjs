@@ -88,6 +88,7 @@
                 <v-text-field
                   v-model="UniqLink"
                   label="Event Link*"
+                  class="text-links"
                   persistent-hint
                   :hint="eventLinkHint"
                   dense
@@ -96,7 +97,7 @@
                 ></v-text-field>
                 <v-flex
                   v-if="isInvalidEventLink && !!UniqLink"
-                  class="red--text pt-1 pb-0 mt-n3 body-2"
+                  class="red--text pt-1 pb-0 mt-n6 pl-3 body-2"
                   >{{ uniqueLinkMessage }}</v-flex
                 >
               </v-col>
@@ -638,5 +639,8 @@ export default {
 .event-map {
   max-height: 280px !important;
   overflow: hidden !important;
+}
+.text-links {
+  height: 80px;
 }
 </style>
