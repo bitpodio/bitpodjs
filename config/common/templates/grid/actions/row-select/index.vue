@@ -2,27 +2,32 @@
   <div>
     <component
       :is="editItem || null"
+      v-if="isHiddenAction('edit')"
       :content="content"
       :view-name="viewName"
       :items="items"
       :on-update-item="onUpdateItem"
       :refresh="refresh"
+      :context="context"
     />
     <component
       :is="deleteItem || null"
+      v-if="isHiddenAction('delete')"
       :content="content"
       :view-name="viewName"
       :items="items"
       :on-delete-item="onDeleteItem"
       :refresh="refresh"
+      :context="context"
     />
   </div>
 </template>
 <script>
 import { templateLoaderMixin } from '~/utility'
+import { gridActionMixin } from '~/utility/form'
 
 export default {
-  mixins: [templateLoaderMixin],
+  mixins: [templateLoaderMixin, gridActionMixin],
   props: [
     'content',
     'viewName',
@@ -30,6 +35,7 @@ export default {
     'onUpdateItem',
     'onDeleteItem',
     'refresh',
+    'context',
   ],
   data() {
     return {

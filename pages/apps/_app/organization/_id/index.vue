@@ -1,7 +1,9 @@
 <template>
   <v-flex d-flex flex-md-row flex-lg-row flex-column>
     <v-flex column xs12 sm8 md8 lg8>
-      <div class="xs12 sm8 md8 lg8 boxview pa-4 mr-2 mb-2">
+      <div
+        class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+      >
         <v-row>
           <v-col class="col-md-12 col-12 pt-0">
             <v-card class="elevation-0">
@@ -19,6 +21,23 @@
                       }}</span>
                     </v-avatar>
                   </v-list-item-avatar>
+                  <span
+                    @click="
+                      checkArray = []
+                      orgLogo = !orgLogo
+                    "
+                  >
+                    <File
+                      :field="fileField"
+                      :no-btn-look="true"
+                      :block="true"
+                      :open-file-dialog="orgLogo"
+                      :value="checkArray"
+                      :hide-preview="true"
+                      @input="uploadOrgLogo"
+                    />
+                    Upload</span
+                  >
 
                   <v-list-item-content>
                     <v-list-item-title>
@@ -37,47 +56,104 @@
           </v-col>
         </v-row>
       </div>
-      <div v-if="content" class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
-        <h2 class="body-1 pb-2">
-          <i class="fa fa-user-plus pr-1" aria-hidden="true"></i>Business Units
-        </h2>
+      <div
+        v-if="content"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-user-plus pr-1" aria-hidden="true"></i> Business
+            Units
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="organizationBusinessUnit" :content="content" />
+        <Grid
+          view-name="organizationBusinessUnit"
+          :content="content"
+          class="mt-n12"
+        />
       </div>
-      <div v-if="content" class="xs12 sm12 md12 boxview pa-4 mr-2 mb-2">
-        <h2 class="body-1 pb-2">
-          <i class="fa fa-server pr-1" aria-hidden="true"></i> Subscriptions
-        </h2>
+      <div
+        v-if="content"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-server pr-1" aria-hidden="true"></i> Subscriptions
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
         <v-divider></v-divider>
         <Grid
           view-name="organizationProductSubscription"
           :content="content"
-          class="mt-11"
+          class="mt-n12"
         />
       </div>
-      <div v-if="content" class="xs12 sm12 md12 boxview pa-4 mr-2 mb-2">
-        <h2 class="body-1 pb-2">
-          <i class="fa fa-external-link pr-1" aria-hidden="true"></i> Tasks
-        </h2>
+      <div
+        v-if="content"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-external-link pr-1" aria-hidden="true"></i> Tasks
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="organizationTasks" :content="content" />
+        <Grid view-name="organizationTasks" :content="content" class="mt-n12" />
       </div>
-      <div v-if="content" class="xs12 sm12 md12 boxview pa-4 mr-2 mb-2">
-        <h2 class="body-1 pb-2">
-          <i class="fa fa-link1 pr-1" aria-hidden="true"></i> Integrations
-        </h2>
+      <div
+        v-if="content"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-link1 pr-1" aria-hidden="true"></i> Integrations
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="organizationIntegration" :content="content" />
+        <Grid
+          view-name="organizationIntegration"
+          :content="content"
+          class="mt-n12"
+        />
       </div>
-      <div class="xs12 sm4 md4 lg4 boxview pa-4 mr-2 mb-2">
-        <h2 class="body-1 pb-2">
-          <i class="fa fa-image pr-1" aria-hidden="true"></i> Image Gallery
-        </h2>
+      <div
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-2">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-image pr-1" aria-hidden="true"></i> Image Gallery
+          </h2>
+          <v-spacer></v-spacer>
+          <v-menu offset-y>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn depressed text small v-bind="attrs" v-on="on">
+                <v-icon left>mdi-upload</v-icon> Upload
+              </v-btn>
+            </template>
+            <v-list dense>
+              <v-list-item>
+                <v-list-item-title>Badge Logo</v-list-item-title>
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-title>Event Banner (680x350)</v-list-item-title>
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-title>Other</v-list-item-title>
+              </v-list-item>
+            </v-list>
+          </v-menu>
+        </v-flex>
         <v-divider></v-divider>
+        <v-flex class="py-2"></v-flex>
       </div>
     </v-flex>
     <v-flex column xs12 sm4 md4 lg4>
-      <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
+      <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-2 box-grey">
         <h2 class="body-1 pb-1">
           <i class="fa fa-location pr-1" aria-hidden="true"></i> Organization
           Information
@@ -142,7 +218,7 @@
         </v-row>
       </div>
 
-      <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
+      <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-2 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-1">
             <i class="fa fa-cog pr-1" aria-hidden="true"></i> Settings
@@ -179,7 +255,7 @@
         </v-flex>
       </div>
 
-      <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
+      <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-2 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-1">
             <i class="fa fa-share-square-o pr-1" aria-hidden="true"></i> Social
@@ -209,7 +285,7 @@
         </v-flex>
       </div>
 
-      <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
+      <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-2 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-1">
             <i class="fa fa-timer pr-1" aria-hidden="true"></i> Work Timings
@@ -254,13 +330,16 @@
 import gql from 'graphql-tag'
 import format from 'date-fns/format'
 import Grid from '~/components/common/grid'
+import File from '~/components/common/form/file.vue'
 import organization from '~/config/apps/admin/gql/organization.gql'
+import nuxtconfig from '~/nuxt.config'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin } from '~/utility'
 export default {
   layout: 'admin',
   components: {
     Grid,
+    File,
   },
   mixins: [configLoaderMixin],
   data() {
@@ -269,6 +348,14 @@ export default {
       data: {
         organization: {},
       },
+      fileField: {
+        multiple: false,
+      },
+      formData: {
+        Image: [],
+      },
+      checkArray: [],
+      orgLogo: false,
     }
   },
   computed: {
@@ -277,6 +364,19 @@ export default {
     },
   },
   methods: {
+    async uploadOrgLogo(data) {
+      this.orgLogo = false
+      this.formData.Image = []
+      this.formData.Image.push(data[0])
+      try {
+        await this.$axios.$patch(
+          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}OrganizationInfos/${this.$route.params.id}`,
+          this.formData
+        )
+      } catch (e) {
+        console.log('Error', e)
+      }
+    },
     formatDate(date) {
       return date ? format(new Date(date), 'PPp') : ''
     },

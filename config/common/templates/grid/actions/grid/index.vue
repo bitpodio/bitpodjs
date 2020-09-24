@@ -2,19 +2,22 @@
   <div>
     <component
       :is="newItem || null"
+      v-if="isHiddenAction('new')"
       :content="content"
       :view-name="viewName"
       :on-new-item-save="onNewItemSave"
       :refresh="refresh"
+      :context="context"
     />
   </div>
 </template>
 <script>
 import { templateLoaderMixin } from '~/utility'
+import { gridActionMixin } from '~/utility/form'
 
 export default {
-  mixins: [templateLoaderMixin],
-  props: ['content', 'viewName', 'onNewItemSave', 'refresh'],
+  mixins: [templateLoaderMixin, gridActionMixin],
+  props: ['content', 'viewName', 'onNewItemSave', 'refresh', 'context'],
   data() {
     return {
       newItem: null,

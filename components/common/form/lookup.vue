@@ -9,8 +9,10 @@
       :label="fieldCaption"
       :multiple="field.multiple"
       :rules="rules"
+      :readonly="readonly"
       outlined
-      @change="onChange"
+      dense
+      @change="onLookupChange"
     ></v-autocomplete>
   </div>
 </template>
@@ -22,7 +24,8 @@ import { formFieldMixin } from '~/utility/form-control'
 
 function formatResult(data) {
   const [modelName] = Object.getOwnPropertyNames(data)
-  const { edges } = data[modelName][`${modelName}Find`]
+  const [modelApi] = Object.getOwnPropertyNames(data[modelName])
+  const { edges } = data[modelName][`${modelApi}`]
   return edges.map(({ node: { id, ...rest } }) => {
     return { id: getIdFromAtob(id), ...rest }
   })
@@ -55,6 +58,15 @@ export default {
       type: Array,
       default: () => [],
     },
+    readonly: {
+      type: Object,
+      default: () => {},
+    },
+    onChange: {
+      type: Function,
+      required: false,
+      default: () => null,
+    },
   },
   data() {
     return {
@@ -75,8 +87,9 @@ export default {
     this.loadItems()
   },
   methods: {
-    onChange() {
+    onLookupChange() {
       this.$emit('change', this.value)
+      this.onChange && this.onChange(this.value)
     },
     async loadItems() {
       if (!this.field.items) {
@@ -95,7 +108,14 @@ export default {
               filters: { where },
             },
           })
-          this.items = formatResult(result.data)
+          const items = formatResult(result.data)
+          this.items = items.map((item) => {
+            const computedItemFunction = this.field.dataSource.computed
+            const computedItem = computedItemFunction
+              ? computedItemFunction.call(this, item)
+              : {}
+            return { ...item, ...computedItem }
+          })
         }
       }
     },

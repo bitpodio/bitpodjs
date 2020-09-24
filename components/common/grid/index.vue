@@ -5,6 +5,9 @@
         <component :is="errorTemplate || null" :error="error" />
       </div>
     </template>
+    <v-snackbar v-model="snackbar" :timeout="timeout" top="true">
+      <div class="text-center">{{ snackbarText }}</div>
+    </v-snackbar>
     <div v-if="!error" :key="error">
       <div class="grid-actions-container mt-lg-n11 mt-md-n11 mt-sm-n11 mt-xs-0">
         <div class="d-flex">
@@ -17,6 +20,7 @@
               :on-delete-item="onDeleteItem"
               :items="selectedItems"
               :refresh="refresh"
+              :context="context"
               class="d-flex"
             />
           </template>
@@ -26,6 +30,7 @@
             :view-name="viewName"
             :on-new-item-save="onNewItemSave"
             :refresh="refresh"
+            :context="context"
           />
         </div>
         <div v-if="hideFilter">
@@ -51,106 +56,104 @@
           </slot>
         </div>
       </div>
-      <v-data-table
-        v-model="selectedItems"
-        :headers="headers"
-        :items="tableData.items"
-        :single-select="singleSelect"
-        :loading="loading === 1"
-        :options.sync="options"
-        :server-items-length="tableData.total"
-        :hide-default-header="hideDefaultHeader"
-        :hide-default-footer="hideDefaultFooter"
-        :show-expand="showExpand"
-        :single-expand="singleExpand"
-        item-key="id"
-        class="elevation-0"
-        :show-select="showSelect"
-        @update:options="updatePagination"
-        @click:row="onRowClick"
-        @input="onItemSelected"
-      >
-        <template v-if="!!slotTemplates.item" v-slot:item="props">
-          <component
-            :is="slotTemplates.item || null"
-            :item="props.item"
-            :headers="props.headers"
-            :is-selected="props.isSelected"
-            :context="context"
-            :items="tableData.items"
-            :content="content"
-          />
-        </template>
-        <template
-          v-for="(column, index) in headers"
-          v-slot:[`item.${column.value}`]="props"
+      <v-skeleton-loader :loading="loading" type="table">
+        <v-data-table
+          v-model="selectedItems"
+          dense
+          :headers="headers"
+          :items="tableData.items"
+          :single-select="singleSelect"
+          :loading="loading === 1"
+          :options.sync="options"
+          :server-items-length="tableData.total"
+          :hide-default-header="hideDefaultHeader"
+          :hide-default-footer="hideDefaultFooter"
+          :show-expand="showExpand"
+          :single-expand="singleExpand"
+          item-key="id"
+          class="elevation-0"
+          :show-select="showSelect"
+          @update:options="updatePagination"
+          @click:row="onRowClick"
+          @input="onItemSelected"
         >
-          <component
-            :is="component[index] || null"
-            :key="column.value"
-            :item="props.item"
-            :value="props.value"
-            :context="context"
-            :items="tableData.items"
-            :column="column"
-            :content="content"
-            :refresh="refresh"
-          />
-        </template>
-        <template
-          v-if="!!slotTemplates['expanded-item']"
-          v-slot:expanded-item="props"
-        >
-          <component
-            :is="slotTemplates['expanded-item'] || null"
-            :item="props.item"
-            :headers="props.headers"
-          />
-        </template>
-        <template v-if="!!slotTemplates.body" v-slot:body="props">
-          <component
-            :is="slotTemplates.body || null"
-            :pagination="props.pagination"
-            :items="props.items"
-            :options="props.options"
-            :expand="props.expand"
-            :select="props.select"
-          />
-        </template>
-        <template v-if="!!slotTemplates.header" v-slot:header="props">
-          <component
-            :is="slotTemplates.header || null"
-            :props="props.props"
-            :on="props.on"
-          />
-        </template>
-        <template v-if="!!slotTemplates.footer" v-slot:footer="props">
-          <component
-            :is="slotTemplates.footer || null"
-            :props="props.props"
-            :on="props.on"
-            :headers="props.headers"
-          />
-        </template>
-      </v-data-table>
+          <template v-if="!!slotTemplates.item" v-slot:item="props">
+            <component
+              :is="slotTemplates.item || null"
+              :item="props.item"
+              :headers="props.headers"
+              :is-selected="props.isSelected"
+              :context="contentContext"
+              :items="tableData.items"
+              :content="content"
+            />
+          </template>
+          <template
+            v-for="(column, index) in headers"
+            v-slot:[`item.${column.value}`]="props"
+          >
+            <component
+              :is="component[index] || null"
+              :key="column.value"
+              :item="props.item"
+              :value="props.value"
+              :context="contentContext"
+              :items="tableData.items"
+              :column="column"
+              :content="content"
+              :refresh="refresh"
+            />
+          </template>
+          <template
+            v-if="!!slotTemplates['expanded-item']"
+            v-slot:expanded-item="props"
+          >
+            <component
+              :is="slotTemplates['expanded-item'] || null"
+              :item="props.item"
+              :headers="props.headers"
+            />
+          </template>
+          <template v-if="!!slotTemplates.body" v-slot:body="props">
+            <component
+              :is="slotTemplates.body || null"
+              :pagination="props.pagination"
+              :items="props.items"
+              :options="props.options"
+              :expand="props.expand"
+              :select="props.select"
+            />
+          </template>
+          <template v-if="!!slotTemplates.header" v-slot:header="props">
+            <component
+              :is="slotTemplates.header || null"
+              :props="props.props"
+              :on="props.on"
+            />
+          </template>
+          <template v-if="!!slotTemplates.footer" v-slot:footer="props">
+            <component
+              :is="slotTemplates.footer || null"
+              :props="props.props"
+              :on="props.on"
+              :headers="props.headers"
+            />
+          </template>
+        </v-data-table>
+      </v-skeleton-loader>
     </div>
   </div>
 </template>
 
 <script>
 import gql from 'graphql-tag'
-import addDays from 'date-fns/addDays'
 import format from 'date-fns/format'
-import startOfToday from 'date-fns/startOfToday'
-import endOfToday from 'date-fns/endOfToday'
-import startOfTomorrow from 'date-fns/startOfTomorrow'
-import endOfTomorrow from 'date-fns/endOfTomorrow'
-import startOfYesterday from 'date-fns/startOfYesterday'
-import endOfYesterday from 'date-fns/endOfYesterday'
-import startOfDay from 'date-fns/startOfDay'
-import endOfDay from 'date-fns/endOfDay'
 import FieldsFilter from './FieldsFilter.vue'
-import { templateLoaderMixin } from '~/utility'
+import {
+  templateLoaderMixin,
+  getOrderQuery,
+  buildQueryVariables,
+} from '~/utility'
 
 const DEFAULT_GRID_PROPS = {
   hideDefaultHeader: false,
@@ -239,171 +242,6 @@ function formatCountData(data, modelName) {
   return count
 }
 
-function getOrderQuery(content, viewName, sortBy, sortDesc) {
-  if (!(sortBy && sortBy.length)) {
-    const defaultSort = getViewDataSource(content, viewName).defaultSort
-    return defaultSort || ''
-  }
-  return `${sortBy && sortBy[0]} ${sortDesc && sortDesc[0] ? 'DESC' : 'ASC'}`
-}
-
-function buildSearchQueryVariables(content, viewName, search) {
-  const fields = getGridFields(content, viewName)
-
-  let where = {}
-  const or = []
-  for (const field in fields) {
-    const { type, searchEnable } = fields[field]
-    if (type === 'string' && searchEnable) {
-      or.push({ [field]: { like: search, options: 'i' } })
-    }
-  }
-  where = {
-    or,
-  }
-  return where
-}
-
-function getDateBeforeQuerybyDays(field, days) {
-  const and = [
-    { [field]: { gte: startOfDay(addDays(new Date(), -days)) } },
-    { [field]: { lte: endOfToday() } },
-  ]
-  return { and }
-}
-
-function getDateAfterQuerybyDays(field, days) {
-  const and = [
-    { [field]: { gte: startOfToday() } },
-    { [field]: { lte: endOfDay(addDays(new Date(), days)) } },
-  ]
-  return { and }
-}
-
-function getOperatorQuery(field, operator, value) {
-  let ruleFilter = {}
-  switch (operator) {
-    case 'is':
-      ruleFilter = { [field]: value }
-      break
-    case 'isNot':
-      ruleFilter = { [field]: { neq: value } }
-      break
-    case 'contains':
-      ruleFilter = { [field]: { like: value, options: 'i' } }
-      break
-    case 'notContains':
-      ruleFilter = { [field]: { nlike: value, options: 'i' } }
-      break
-    case 'startsWith':
-      ruleFilter = { [field]: { regexp: `^${value}` } }
-      break
-    case 'endsWith':
-      ruleFilter = { [field]: { regexp: `${value}$` } }
-      break
-    case 'gt':
-    case 'lt':
-    case 'gte':
-    case 'lte':
-      ruleFilter = { [field]: { [operator]: value } }
-      break
-    case 'today': {
-      const and = [
-        { [field]: { gte: startOfToday() } },
-        { [field]: { lt: endOfToday() } },
-      ]
-      ruleFilter = { and }
-      break
-    }
-    case 'tomorrow': {
-      const and = [
-        { [field]: { gte: startOfTomorrow() } },
-        { [field]: { lt: endOfTomorrow() } },
-      ]
-      ruleFilter = { and }
-      break
-    }
-    case 'yesterday': {
-      const and = [
-        { [field]: { gte: startOfYesterday() } },
-        { [field]: { lt: endOfYesterday() } },
-      ]
-      ruleFilter = { and }
-      break
-    }
-    case 'pastWeek': {
-      ruleFilter = getDateBeforeQuerybyDays(field, 7)
-      break
-    }
-    case 'pastMonth':
-      ruleFilter = getDateBeforeQuerybyDays(field, 30)
-      break
-    case 'pastYear':
-      ruleFilter = getDateBeforeQuerybyDays(field, 365)
-      break
-    case 'nextWeek':
-      ruleFilter = getDateAfterQuerybyDays(field, 7)
-      break
-    case 'nextMonth':
-      ruleFilter = getDateAfterQuerybyDays(field, 30)
-      break
-    case 'nextYear':
-      ruleFilter = getDateAfterQuerybyDays(field, 365)
-      break
-    case 'exactDate': {
-      const and = [
-        { [field]: { gte: startOfDay(new Date(value)) } },
-        { [field]: { lte: endOfDay(new Date(value)) } },
-      ]
-      ruleFilter = { and }
-      break
-    }
-    case 'isEmpty':
-      ruleFilter = { [field]: null }
-      break
-    case 'isNotEmpty':
-      ruleFilter = { [field]: { neq: null } }
-      break
-  }
-  return ruleFilter
-}
-
-function computeViewFilter(filter, ctx) {
-  return filter && (filter instanceof Function ? filter.call(ctx, ctx) : filter)
-}
-
-function buildQueryVariables({
-  viewName,
-  search,
-  filters,
-  filter,
-  content,
-  ctx,
-}) {
-  const { rules: filterRules, ruleCondition } = filters
-  const and = []
-  const condition = []
-  for (const rule of filterRules) {
-    const { field, value, operator } = rule
-    const ruleFilter = getOperatorQuery(field, operator, value)
-    condition.push(ruleFilter)
-  }
-  if (condition.length > 0) {
-    and.push({ [ruleCondition]: condition })
-  }
-  if (search) {
-    const serachQuery = buildSearchQueryVariables(content, viewName, search)
-    and.push(serachQuery)
-  }
-  const viewDataSource = getViewDataSource(content, viewName)
-  const contentFilter = filter || computeViewFilter(viewDataSource.filter, ctx)
-
-  if (contentFilter) {
-    and.push(contentFilter.where)
-  }
-  return and.length > 0 ? { and } : {}
-}
-
 function getGridsProps(content, viewName) {
   const view = content.views[viewName]
   return { ...DEFAULT_GRID_PROPS, ...view.ui }
@@ -453,12 +291,24 @@ export default {
       type: Object,
       required: true,
     },
+    context: {
+      type: Object,
+      required: false,
+      default: () => {},
+    },
+    value: {
+      type: Array,
+      default: () => [],
+    },
+    singleSelect: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     const headers = getTableHeader(this.content, this.viewName)
     const gridProps = getGridsProps(this.content, this.viewName)
     return {
-      singleSelect: false,
       headers,
       tableData: {
         items: [],
@@ -484,15 +334,30 @@ export default {
       triggerChange: 0,
       error: '',
       errorTemplate: null,
+      snackbar: false,
+      timeout: 1000,
+      snackbarText: '',
     }
   },
   computed: {
     filterableFields() {
       const fields = getGridFields(this.content, this.viewName)
-      return fields
+      const filterEnableFields = {}
+      for (const field in fields) {
+        const { filterEnable } = fields[field]
+        if (filterEnable) {
+          filterEnableFields[field] = fields[field]
+        }
+      }
+      return filterEnableFields
     },
-    context() {
-      return getGridTemplateInfo(this.content, this.viewName).context || {}
+    contentContext() {
+      const contentContext =
+        getGridTemplateInfo(this.content, this.viewName).context || {}
+      return {
+        ...contentContext,
+        ...this.context,
+      }
     },
     _components() {
       return {
@@ -514,11 +379,16 @@ export default {
       // call rest
       this.loadRestData()
     },
+    value() {
+      this.selectedItems = this.$props.value
+    },
   },
   mounted() {
+    this.selectedItems = this.value
     this.headers.forEach(async (column, index) => {
+      const columnFileName = column && column.value.toLowerCase()
       this.component[index] = await this.loadTemplate([
-        `templates/grids/${this.templateFolderName}/column-${column.value}.vue`,
+        `templates/grids/${this.templateFolderName}/column-${columnFileName}.vue`,
         `templates/grids/${this.templateFolderName}/column-${index}.vue`,
         `common/templates/grid/column.vue`,
       ])
@@ -561,6 +431,7 @@ export default {
     },
     onItemSelected(items) {
       this.selectedItems = items
+      this.$emit('onSelectedListChange', this.selectedItems)
     },
     async onNewItemSave(data) {
       const modelName = getModelName(this.content, this.viewName)
@@ -594,6 +465,8 @@ export default {
         },
       })
       this.refresh()
+      this.snackbarText = 'Record Updated Successfully'
+      this.snackbar = true
       return itemUpdated
     },
     async onDeleteItem(ids) {
@@ -613,6 +486,8 @@ export default {
         },
       })
       this.refresh()
+      this.snackbarText = 'Record deleted Successfully'
+      this.snackbar = true
       return itemDeleted
     },
     refresh() {
