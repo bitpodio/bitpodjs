@@ -9,12 +9,14 @@
     </v-snackbar>
     <v-row>
       <v-col class="col-12 col-sm-8">
-        <v-text-field
+        <v-textarea
           v-model="message"
           label="Add a note"
           outlined
           dense
-        ></v-text-field>
+          row-height="18"
+          auto-grow
+        ></v-textarea>
         <div class="px-2 mb-3">
           <v-btn
             class="float-right"
@@ -40,7 +42,11 @@
         />
         <div v-for="(comment, index) in existingComments" :key="comment.id">
           <v-hover v-slot:default="{ hover }">
-            <div>
+            <div
+              :class="{
+                extraComments: !showMore && index > 4,
+              }"
+            >
               <i
                 v-show="hover"
                 class="fa fa-trash float-right cursorPointer pa-3"
@@ -69,22 +75,39 @@
                         :key="attachment.id"
                         class="mr-2 d-inline-block"
                       >
-                        <div class="attachments">
-                          <v-img
-                            contain
-                            height="150"
-                            width="150"
-                            :src="getAttachmentLink(attachment, true)"
-                          >
-                            <template v-slot:placeholder>
-                              <v-row
-                                class="fill-height ma-0"
-                                align="center"
-                                justify="center"
-                              >
-                                <v-icon>mdi-file-image</v-icon>
-                              </v-row>
-                            </template></v-img
+                        <div class="tile">
+                          <div class="attachments text-center">
+                            <v-img
+                              contain
+                              height="120"
+                              width="120"
+                              :src="getAttachmentLink(attachment, true)"
+                            >
+                              <template v-slot:placeholder>
+                                <v-row
+                                  class="fill-height ma-0"
+                                  align="center"
+                                  justify="center"
+                                >
+                                  <v-icon>{{
+                                    attachmentDetails[attachment] &&
+                                    attachmentDetails[
+                                      attachment
+                                    ].contentType.includes('image')
+                                      ? 'mdi-file-image'
+                                      : 'mdi-file'
+                                  }}</v-icon>
+                                </v-row>
+                              </template></v-img
+                            >
+                          </div>
+                          <a
+                            class="text-h7"
+                            :href="getAttachmentLink(attachment, true)"
+                            >{{
+                              attachmentDetails[attachment] &&
+                              attachmentDetails[attachment].fileName
+                            }}</a
                           >
                         </div>
                       </div>
@@ -97,6 +120,9 @@
               </div>
             </div>
           </v-hover>
+        </div>
+        <div class="blue--text cursorPointer" @click="showMore = !showMore">
+          {{ showMore ? 'Show Less' : 'Show More' }}
         </div>
       </v-col>
     </v-row>
@@ -128,6 +154,8 @@ export default {
       resetList: [],
       snackbarText: '',
       snackbar: false,
+      attachmentDetails: {},
+      showMore: false,
     }
   },
   mounted() {
@@ -187,6 +215,19 @@ export default {
       try {
         const res = await this.$axios.get(this.getLink())
         this.existingComments = [...res.data].reverse()
+        this.getattachmentDetails()
+      } catch (err) {
+        return err
+      }
+    },
+    getattachmentDetails() {
+      try {
+        this.existingComments.forEach((i) => {
+          i.AttachmentId.forEach(async (j) => {
+            const res = await this.$axios.get(this.getAttachmentLink(j))
+            this.attachmentDetails[j] = res.data
+          })
+        })
       } catch (err) {
         return err
       }
@@ -200,5 +241,11 @@ export default {
 }
 .gallery {
   width: 350px;
+}
+.tile {
+  width: 120px;
+}
+.extraComments {
+  display: none;
 }
 </style>
