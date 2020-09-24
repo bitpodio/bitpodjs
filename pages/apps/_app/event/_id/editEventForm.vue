@@ -40,6 +40,7 @@
               cols="12"
               sm="6"
               md="4"
+              class="pb-0"
             >
               <div class="custom-date-time-picker">
                 <v-datetime-picker
@@ -64,6 +65,7 @@
               cols="12"
               sm="6"
               md="4"
+              class="pb-0"
             >
               <v-datetime-picker
                 v-model="formData.EndDate"
@@ -83,7 +85,7 @@
             </v-col>
             <v-col
               v-if="formData.BusinessType !== 'Recurring'"
-              class="d-flex"
+              class="d-flex pb-0"
               cols="12"
               sm="6"
               md="4"
@@ -94,7 +96,7 @@
                 :field="timezonefield"
               />
             </v-col>
-            <v-col cols="12" sm="6" md="4">
+            <v-col cols="12" sm="6" md="4" class="pb-0">
               <v-text-field
                 v-model="formData.Organizer"
                 label="Event organizer *"
@@ -104,7 +106,7 @@
                 dense
               ></v-text-field>
             </v-col>
-            <v-col cols="12" sm="6" md="4">
+            <v-col cols="12" sm="6" md="4" class="pb-0">
               <v-text-field
                 v-model="formData.EventManager"
                 label="Event Manager/Team Email *"
@@ -165,11 +167,12 @@
                   }}</span>
                 </no-ssr>
               </v-col>
-              <v-col cols="12">
+              <v-col cols="12" class="mt-6">
                 <v-text-field
                   v-model="formData.VenueName"
                   label="Venue Name"
                   outlined
+                  dense
                   @change="changeVenueName"
                 ></v-text-field>
               </v-col>
@@ -178,6 +181,7 @@
                   v-model="VenueAddress.City"
                   label="City"
                   outlined
+                  dense
                   @change="changeCity"
                 ></v-text-field>
               </v-col>
@@ -186,6 +190,7 @@
                   v-model="VenueAddress.State"
                   label="State"
                   outlined
+                  dense
                   @change="changeState"
                 ></v-text-field>
               </v-col>
@@ -194,6 +199,7 @@
                   v-model="VenueAddress.Country"
                   label="Country"
                   outlined
+                  dense
                   @change="changeCountry"
                 ></v-text-field>
               </v-col>
@@ -202,6 +208,7 @@
                   v-model="VenueAddress.PostalCode"
                   label="Zip Code"
                   outlined
+                  dense
                   @change="changeZipCode"
                 ></v-text-field>
               </v-col>

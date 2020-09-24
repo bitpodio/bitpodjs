@@ -39,6 +39,7 @@ body {
   right: 0 !important;
   bottom: 0 !important;
   width: 50% !important;
+  min-height: 50% !important;
 }
 .v-dialog {
   margin: 12px !important;
