@@ -380,8 +380,9 @@ export default {
   mounted() {
     this.selectedItems = this.value
     this.headers.forEach(async (column, index) => {
+      const columnFileName = column && column.value.toLowerCase()
       this.component[index] = await this.loadTemplate([
-        `templates/grids/${this.templateFolderName}/column-${column.value}.vue`,
+        `templates/grids/${this.templateFolderName}/column-${columnFileName}.vue`,
         `templates/grids/${this.templateFolderName}/column-${index}.vue`,
         `common/templates/grid/column.vue`,
       ])
