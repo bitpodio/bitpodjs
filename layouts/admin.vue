@@ -123,7 +123,7 @@
           <v-list-item>
             <v-list-item-title class="d-flex flex-wrap app-container">
               <nuxt-link
-                to="/apps/event/list/Event/All Events"
+                to="/apps/event/list/Event/live and draft event"
                 class="text-decoration-none"
               >
                 <v-flex
