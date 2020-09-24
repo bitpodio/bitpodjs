@@ -4,7 +4,7 @@
 
 <script>
 import gql from 'graphql-tag'
-import nuxtconfig from '../../../../nuxt.config'
+import nuxtconfig from '~/nuxt.config'
 import registrationType from '~/config/apps/event/gql/registrationType.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 export default {

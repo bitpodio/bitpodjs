@@ -1,6 +1,17 @@
 <template>
   <div>
-    <v-chip small :color="`${value}`" text-color="white"> {{ value }}</v-chip>
+    <v-chip
+      small
+      :class="{
+        orange: value === 'Cancelled',
+        red: value === 'Failed',
+        orange: value === 'Pending',
+        success: value === 'Success',
+      }"
+      text-color="white"
+    >
+      {{ value }}
+    </v-chip>
   </div>
 </template>
 

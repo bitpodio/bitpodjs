@@ -9,7 +9,7 @@
   </v-col>
 </template>
 <script>
-import nuxtconfig from '../../../../../../nuxt.config'
+import nuxtconfig from '~/nuxt.config'
 export default {
   props: {
     items: {
