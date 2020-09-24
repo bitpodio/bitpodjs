@@ -3,7 +3,7 @@ const basePath = process.env.PUBLIC_PATH || ''
 
 export default {
   /*
-   ** Nuxt rendering mode
+   ** Nuxt rendering mode 
    ** See https://nuxtjs.org/api/configuration-mode
    */
   mode: 'universal',
