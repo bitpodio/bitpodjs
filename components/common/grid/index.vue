@@ -68,7 +68,7 @@
           :show-expand="showExpand"
           :single-expand="singleExpand"
           item-key="id"
-          class="elevation-0 pa-2"
+          class="elevation-0"
           :show-select="showSelect"
           @update:options="updatePagination"
           @click:row="onRowClick"
@@ -144,18 +144,13 @@
 
 <script>
 import gql from 'graphql-tag'
-import addDays from 'date-fns/addDays'
 import format from 'date-fns/format'
-import startOfToday from 'date-fns/startOfToday'
-import endOfToday from 'date-fns/endOfToday'
-import startOfTomorrow from 'date-fns/startOfTomorrow'
-import endOfTomorrow from 'date-fns/endOfTomorrow'
-import startOfYesterday from 'date-fns/startOfYesterday'
-import endOfYesterday from 'date-fns/endOfYesterday'
-import startOfDay from 'date-fns/startOfDay'
-import endOfDay from 'date-fns/endOfDay'
 import FieldsFilter from './FieldsFilter.vue'
-import { templateLoaderMixin } from '~/utility'
+import {
+  templateLoaderMixin,
+  getOrderQuery,
+  buildQueryVariables,
+} from '~/utility'
 
 const DEFAULT_GRID_PROPS = {
   hideDefaultHeader: false,
@@ -242,171 +237,6 @@ function formatResult(content, viewName, data, modelName) {
 function formatCountData(data, modelName) {
   const count = data[modelName][`${modelName}Count`]
   return count
-}
-
-function getOrderQuery(content, viewName, sortBy, sortDesc) {
-  if (!(sortBy && sortBy.length)) {
-    const defaultSort = getViewDataSource(content, viewName).defaultSort
-    return defaultSort || ''
-  }
-  return `${sortBy && sortBy[0]} ${sortDesc && sortDesc[0] ? 'DESC' : 'ASC'}`
-}
-
-function buildSearchQueryVariables(content, viewName, search) {
-  const fields = getGridFields(content, viewName)
-
-  let where = {}
-  const or = []
-  for (const field in fields) {
-    const { type, searchEnable } = fields[field]
-    if (type === 'string' && searchEnable) {
-      or.push({ [field]: { like: search, options: 'i' } })
-    }
-  }
-  where = {
-    or,
-  }
-  return where
-}
-
-function getDateBeforeQuerybyDays(field, days) {
-  const and = [
-    { [field]: { gte: startOfDay(addDays(new Date(), -days)) } },
-    { [field]: { lte: endOfToday() } },
-  ]
-  return { and }
-}
-
-function getDateAfterQuerybyDays(field, days) {
-  const and = [
-    { [field]: { gte: startOfToday() } },
-    { [field]: { lte: endOfDay(addDays(new Date(), days)) } },
-  ]
-  return { and }
-}
-
-function getOperatorQuery(field, operator, value) {
-  let ruleFilter = {}
-  switch (operator) {
-    case 'is':
-      ruleFilter = { [field]: value }
-      break
-    case 'isNot':
-      ruleFilter = { [field]: { neq: value } }
-      break
-    case 'contains':
-      ruleFilter = { [field]: { like: value, options: 'i' } }
-      break
-    case 'notContains':
-      ruleFilter = { [field]: { nlike: value, options: 'i' } }
-      break
-    case 'startsWith':
-      ruleFilter = { [field]: { regexp: `^${value}` } }
-      break
-    case 'endsWith':
-      ruleFilter = { [field]: { regexp: `${value}$` } }
-      break
-    case 'gt':
-    case 'lt':
-    case 'gte':
-    case 'lte':
-      ruleFilter = { [field]: { [operator]: value } }
-      break
-    case 'today': {
-      const and = [
-        { [field]: { gte: startOfToday() } },
-        { [field]: { lt: endOfToday() } },
-      ]
-      ruleFilter = { and }
-      break
-    }
-    case 'tomorrow': {
-      const and = [
-        { [field]: { gte: startOfTomorrow() } },
-        { [field]: { lt: endOfTomorrow() } },
-      ]
-      ruleFilter = { and }
-      break
-    }
-    case 'yesterday': {
-      const and = [
-        { [field]: { gte: startOfYesterday() } },
-        { [field]: { lt: endOfYesterday() } },
-      ]
-      ruleFilter = { and }
-      break
-    }
-    case 'pastWeek': {
-      ruleFilter = getDateBeforeQuerybyDays(field, 7)
-      break
-    }
-    case 'pastMonth':
-      ruleFilter = getDateBeforeQuerybyDays(field, 30)
-      break
-    case 'pastYear':
-      ruleFilter = getDateBeforeQuerybyDays(field, 365)
-      break
-    case 'nextWeek':
-      ruleFilter = getDateAfterQuerybyDays(field, 7)
-      break
-    case 'nextMonth':
-      ruleFilter = getDateAfterQuerybyDays(field, 30)
-      break
-    case 'nextYear':
-      ruleFilter = getDateAfterQuerybyDays(field, 365)
-      break
-    case 'exactDate': {
-      const and = [
-        { [field]: { gte: startOfDay(new Date(value)) } },
-        { [field]: { lte: endOfDay(new Date(value)) } },
-      ]
-      ruleFilter = { and }
-      break
-    }
-    case 'isEmpty':
-      ruleFilter = { [field]: null }
-      break
-    case 'isNotEmpty':
-      ruleFilter = { [field]: { neq: null } }
-      break
-  }
-  return ruleFilter
-}
-
-function computeViewFilter(filter, ctx) {
-  return filter && (filter instanceof Function ? filter.call(ctx, ctx) : filter)
-}
-
-function buildQueryVariables({
-  viewName,
-  search,
-  filters,
-  filter,
-  content,
-  ctx,
-}) {
-  const { rules: filterRules, ruleCondition } = filters
-  const and = []
-  const condition = []
-  for (const rule of filterRules) {
-    const { field, value, operator } = rule
-    const ruleFilter = getOperatorQuery(field, operator, value)
-    condition.push(ruleFilter)
-  }
-  if (condition.length > 0) {
-    and.push({ [ruleCondition]: condition })
-  }
-  if (search) {
-    const serachQuery = buildSearchQueryVariables(content, viewName, search)
-    and.push(serachQuery)
-  }
-  const viewDataSource = getViewDataSource(content, viewName)
-  const contentFilter = filter || computeViewFilter(viewDataSource.filter, ctx)
-
-  if (contentFilter) {
-    and.push(contentFilter.where)
-  }
-  return and.length > 0 ? { and } : {}
 }
 
 function getGridsProps(content, viewName) {
@@ -506,7 +336,14 @@ export default {
   computed: {
     filterableFields() {
       const fields = getGridFields(this.content, this.viewName)
-      return fields
+      const filterEnableFields = {}
+      for (const field in fields) {
+        const { filterEnable } = fields[field]
+        if (filterEnable) {
+          filterEnableFields[field] = fields[field]
+        }
+      }
+      return filterEnableFields
     },
     contentContext() {
       const contentContext =
