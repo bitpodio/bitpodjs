@@ -121,7 +121,11 @@
             </div>
           </v-hover>
         </div>
-        <div class="blue--text cursorPointer" @click="showMore = !showMore">
+        <div
+          v-if="existingComments && existingComments.length > 5"
+          class="blue--text cursorPointer"
+          @click="showMore = !showMore"
+        >
           {{ showMore ? 'Show Less' : 'Show More' }}
         </div>
       </v-col>
