@@ -28,7 +28,17 @@
           <v-form ref="form" v-model="valid" :lazy-validation="lazy">
             <v-row>
               <v-col cols="12">
-                <Lookup v-model="customerId" :field="customerProps" />
+                <Lookup
+                  v-model="customerId"
+                  :field="customerProps"
+                  :rules="required"
+                />
+                <div
+                  v-show="duplicateMessage !== ''"
+                  class="red--text pa-3 pt-0 body-1"
+                >
+                  {{ duplicateMessage }}
+                </div>
               </v-col>
             </v-row>
           </v-form>
@@ -39,7 +49,7 @@
         >
           <v-btn
             color="primary"
-            :disabled="!valid"
+            :disabled="!valid || isSaveButtonDisabled"
             depressed
             @click.native="onSave"
             >Save</v-btn
@@ -51,7 +61,6 @@
 </template>
 
 <script>
-// import nuxtconfig from '~/nuxt.config'
 import member from '~/config/apps/event/gql/member.gql'
 import { required } from '~/utility/rules.js'
 import { getApiUrl } from '~/utility/index.js'
@@ -70,6 +79,8 @@ export default {
       valid: false,
       required: [required],
       dialog: false,
+      duplicateMessage: '',
+      isSaveButtonDisabled: false,
       customerProps: {
         type: 'lookup',
         dataSource: {
@@ -91,6 +102,8 @@ export default {
 
   methods: {
     async onSave() {
+      this.duplicateMessage = ''
+      this.isSaveButtonDisabled = true
       const offerCodeId = this.$route.params.id
       const baseUrl = getApiUrl()
       let res = null
@@ -98,8 +111,11 @@ export default {
         res = await this.$axios.$put(
           `${baseUrl}OfferCodes/${offerCodeId}/getMember/rel/${this.customerId}`
         )
-      } catch (e) {
-        console.error('Error', e)
+      } catch (error) {
+        this.isSaveButtonDisabled = false
+        if (error.response.status === 422) {
+          this.duplicateMessage = 'Already exist member!'
+        }
       }
       if (res) {
         this.dialog = false
