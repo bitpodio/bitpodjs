@@ -2819,7 +2819,7 @@ export default {
   DiscountCodes: {
     actions: {
       'Embeded Actions': '',
-      'General Actions': ['Create Registration'],
+      'General Actions': [],
       'Selected Item Action': [],
     },
     child: {},
@@ -3838,6 +3838,176 @@ export default {
         },
         title: 'contactEmails',
         type: 'list',
+      },
+    },
+  },
+  Activities: {
+    actions: {
+      'Embeded Actions': '',
+      'General Actions': [],
+      'Selected Item Action': [],
+    },
+    child: {},
+    dataSource: {
+      'Key Field': '',
+      'Parent key field': '',
+      Type: 'List',
+      URL: 'CRMActivity',
+    },
+    general: {
+      caption: 'Activities',
+      name: 'CRMActivity',
+    },
+    permissions: {
+      Groups: '',
+    },
+    ui: {
+      TemplateActions: {},
+      Checkbox: 'True',
+      Width: '50%',
+      Height: '',
+      TemplateHelpers: {},
+      'Display Order': '',
+      'Map View Template': '',
+      'List View Template': '',
+      'Detail View': 'tab',
+      Column: '',
+      'Tile View': 'now',
+      'App Type': 'View',
+      Templates: {},
+      decorator: {
+        Attachment: '',
+        LinkedinURL: '',
+      },
+    },
+    views: {
+      Activities: {
+        actions: {
+          row: [],
+          grid: {},
+          rowSelect: {},
+        },
+        ui: {
+          hideDefaultHeader: false,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: true,
+          hideFilter: true,
+          hideSearch: false,
+        },
+        default: true,
+        fields: {
+          Category: {
+            displayOrder: 3,
+            caption: 'Category',
+            searchEnable: true,
+            sortEnable: true,
+            filterEnable: true,
+            columnWidth: '150px',
+            type: 'lookup',
+            dataSource: {
+              query: registrationStatusOptions,
+              itemText: 'value',
+              itemValue: 'key',
+              filter(data) {
+                return {
+                  type: 'Event_TaskCategory',
+                }
+              },
+            },
+          },
+          Type: {
+            displayOrder: 5,
+            caption: 'Type',
+            searchEnable: true,
+            sortEnable: true,
+            filterEnable: true,
+            columnWidth: '100px',
+            type: 'string',
+          },
+          Status: {
+            displayOrder: 4,
+            caption: 'Status',
+            searchEnable: true,
+            sortEnable: true,
+            filterEnable: true,
+            columnWidth: '100px',
+            type: 'lookup',
+            dataSource: {
+              query: registrationStatusOptions,
+              itemText: 'value',
+              itemValue: 'key',
+              filter(data) {
+                return (data && data.Category === 'Registration Email') ||
+                  (data && data.Category === 'Calendar Invite')
+                  ? {
+                      type: 'Event_TaskStatus',
+                      value: { inq: ['Wait for an Action', 'Inactive'] },
+                    }
+                  : { type: 'Event_TaskStatus' }
+              },
+            },
+          },
+          createdDate: {
+            displayOrder: 7,
+            caption: 'createdDate',
+            searchEnable: true,
+            sortEnable: true,
+            filterEnable: true,
+            columnWidth: '150px',
+            type: 'date',
+            inlineEdit: false,
+            newForm: false,
+            editForm: false,
+          },
+          Title: {
+            displayOrder: 2,
+            caption: 'Title',
+            searchEnable: true,
+            sortEnable: true,
+            filterEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            cssClasses: 'col-12 col-md-12',
+          },
+          TemplateName: {
+            displayOrder: 6,
+            caption: 'Template Name',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '130px',
+            type: 'string',
+          },
+          action: {
+            displayOrder: 8,
+            caption: 'Action',
+            searchEnable: false,
+            sortEnable: false,
+            columnWidth: '130px',
+            type: 'action',
+            inlineEdit: false,
+            newForm: false,
+            editForm: false,
+            condtion: ({ item, items, index }) => {
+              return true
+            },
+          },
+        },
+        template: {
+          name: '',
+          context: {
+            basePath: '/event',
+          },
+        },
+        dataSource: {
+          defaultSort: 'createdDate DESC',
+          type: 'rest',
+          model: 'CRMActivity',
+          getData: () => getData('CRMActivitie'),
+          // newItem: ,
+        },
+        title: 'Activity',
       },
     },
   },

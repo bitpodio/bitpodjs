@@ -110,6 +110,7 @@ export default {
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
+
   axios: {
     apiEndpoint: '/svc/api/',
     backendBaseUrl: process.env.PUBLIC_DOMAIN || '',

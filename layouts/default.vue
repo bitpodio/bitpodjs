@@ -285,12 +285,12 @@
                 </v-list-item-avatar>
 
                 <v-list-item-content>
-                  <v-list-item-title>{{
+                  <!-- <v-list-item-title>{{
                     $auth.user.data.name
                   }}</v-list-item-title>
                   <v-list-item-subtitle>{{
                     $auth.user.data.email
-                  }}</v-list-item-subtitle>
+                  }}</v-list-item-subtitle> -->
                 </v-list-item-content>
               </v-list-item>
             </v-list>
@@ -386,6 +386,11 @@ export default {
       },
       { heading: 'Task' },
       { icon: 'fa fa-tasks', text: 'My Task', to: '' },
+      {
+        icon: 'mdi-chart-bubble',
+        text: 'Activities',
+        to: '/list/Activities/Activities',
+      },
     ],
   }),
   async created() {
