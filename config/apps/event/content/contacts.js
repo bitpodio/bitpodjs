@@ -431,9 +431,21 @@ export default {
         },
       },
       template: {
-        name: 'contactInvitee-grid',
+        name: '',
         context: {
           basePath: '/contacts',
+        },
+        actions: {
+          new: {
+            hidden: true,
+            caption: 'new field',
+          },
+          edit: {
+            hidden: true,
+          },
+          delete: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
@@ -635,6 +647,18 @@ export default {
         context: {
           basePath: '/contact',
         },
+        actions: {
+          new: {
+            hidden: true,
+            caption: 'new field',
+          },
+          edit: {
+            hidden: true,
+          },
+          delete: {
+            hidden: true,
+          },
+        },
       },
       dataSource: {
         query: eventInvites,
@@ -717,6 +741,17 @@ export default {
         name: 'contactEmails-grid',
         context: {
           basePath: '/contact',
+        },
+        actions: {
+          new: {
+            hidden: true,
+          },
+          edit: {
+            hidden: true,
+          },
+          delete: {
+            hidden: true,
+          },
         },
       },
       dataSource: {

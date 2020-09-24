@@ -549,6 +549,11 @@ export default {
         context: {
           basePath: '/event',
         },
+        actions: {
+          new: {
+            hidden: true,
+          },
+        },
       },
       dataSource: {
         query: eventList,
@@ -680,6 +685,18 @@ export default {
         name: 'pastEvents-grid',
         context: {
           basePath: '/event',
+        },
+        actions: {
+          new: {
+            hidden: true,
+            caption: 'new field',
+          },
+          edit: {
+            hidden: true,
+          },
+          delete: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
@@ -2357,7 +2374,7 @@ export default {
       },
       dataSource: {
         type: 'rest',
-        getData: (ctx) => getData(`/Events/${ctx.$route.params.id}/Survey`),
+        getData: (ctx) => getData(`Events/${ctx.$route.params.id}/Survey`),
       },
       title: 'eventRegistrationQuestion',
       type: 'list',
@@ -2542,7 +2559,7 @@ export default {
             itemText: 'FirstName',
             itemValue: 'id',
             getData: (ctx) => {
-              const path = `/Events/${ctx.$route.params.id}/EventSpeakers`
+              const path = `Events/${ctx.$route.params.id}/EventSpeakers`
               return getLookupData(path)
             },
           },
@@ -2859,7 +2876,7 @@ export default {
         model: 'Speaker',
         type: 'rest',
         getData: (ctx) =>
-          getData(`/Events/${ctx.$route.params.id}/EventSpeakers`),
+          getData(`Events/${ctx.$route.params.id}/EventSpeakers`),
         mutation(ctx) {
           return {
             new: {
@@ -3366,11 +3383,23 @@ export default {
         context: {
           basePath: '/event',
         },
+        actions: {
+          new: {
+            hidden: true,
+            caption: 'new field',
+          },
+          edit: {
+            hidden: true,
+          },
+          delete: {
+            hidden: true,
+          },
+        },
       },
       dataSource: {
         type: 'rest',
         getData: (ctx) =>
-          getData(`/Events/${ctx.$route.params.id}/RegistrationForm`),
+          getData(`Events/${ctx.$route.params.id}/RegistrationForm`),
       },
       title: 'eventRegistrationForm',
       type: 'list',
@@ -4246,6 +4275,18 @@ export default {
         name: 'eventInvitaionHistory-grid',
         context: {
           basePath: '/event',
+        },
+        actions: {
+          new: {
+            hidden: true,
+            caption: 'new field',
+          },
+          edit: {
+            hidden: true,
+          },
+          delete: {
+            hidden: true,
+          },
         },
       },
       dataSource: {

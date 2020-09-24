@@ -313,7 +313,7 @@ export default {
                 },
               }
               filter = JSON.stringify(filter)
-              const path = `/GeneralConfigurations?filter=${filter}`
+              const path = `GeneralConfigurations?filter=${filter}`
               return getLookupData(path)
             },
           },
@@ -711,11 +711,23 @@ export default {
         context: {
           basePath: '/registration',
         },
+        actions: {
+          new: {
+            hidden: true,
+            caption: 'new field',
+          },
+          edit: {
+            hidden: true,
+          },
+          delete: {
+            hidden: true,
+          },
+        },
       },
       dataSource: {
         type: 'rest',
         getData: (ctx) =>
-          getData(`/Registrations/${ctx.$route.params.id}/SessionListId`),
+          getData(`Registrations/${ctx.$route.params.id}/SessionListId`),
       },
       title: 'Sessions',
       type: 'list',

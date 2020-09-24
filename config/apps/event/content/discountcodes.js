@@ -325,7 +325,7 @@ export default {
       dataSource: {
         type: 'rest',
         getData: (ctx) =>
-          getData(`/OfferCodes/${ctx.$route.params.id}/getMember`),
+          getData(`OfferCodes/${ctx.$route.params.id}/getMember`),
       },
       hidden: true,
       title: 'discountMembers',

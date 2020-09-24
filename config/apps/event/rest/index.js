@@ -31,11 +31,11 @@ export function getData(modelName) {
     const apiUrl = getApiUrl()
 
     const resPromise = this.$axios.$get(
-      `${apiUrl}${modelName}s?filter=${JSON.stringify(filter)}`
+      `${apiUrl}${modelName}?filter=${JSON.stringify(filter)}`
     )
     // to get record count
     const recCountPromise = this.$axios.$get(
-      `${apiUrl}${modelName}s/count?where=${JSON.stringify(where)}`
+      `${apiUrl}${modelName}/count?where=${JSON.stringify(where)}`
     )
     // to execute parallel call
     const [res, recCount] = await Promise.all([resPromise, recCountPromise])
