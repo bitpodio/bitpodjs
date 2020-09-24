@@ -33,7 +33,7 @@ export default {
           sortEnable: true,
           columnWidth: '150px',
           type: 'string',
-          cssClasses: 'col-4 col-md-4',
+          cssClasses: 'col-12 col-md-6',
           hidden: false,
           inlineEdit: true,
           newForm: true,
@@ -55,7 +55,7 @@ export default {
           sortEnable: true,
           columnWidth: '150px',
           type: 'string',
-          cssClasses: 'col-4 col-md-4',
+          cssClasses: 'col-12 col-md-6',
           hidden: false,
           inlineEdit: true,
           newForm: true,
@@ -77,7 +77,7 @@ export default {
           sortEnable: true,
           columnWidth: '130px',
           type: 'string',
-          cssClasses: 'col-4 col-md-4',
+          cssClasses: 'col-12 col-md-6',
           hidden: false,
           inlineEdit: true,
           newForm: true,
@@ -102,7 +102,7 @@ export default {
           sortEnable: true,
           columnWidth: '130px',
           type: 'string',
-          cssClasses: 'col-4 col-md-4',
+          cssClasses: 'col-12 col-md-6',
           hidden: false,
           inlineEdit: true,
           newForm: true,
@@ -149,7 +149,7 @@ export default {
           hidden: true,
           newForm: true,
           editForm: true,
-          cssClasses: 'col-4 col-md-4',
+          cssClasses: 'col-12 col-md-12',
         },
         '_BillingAddress.AddressLine': {
           form: {
@@ -164,7 +164,7 @@ export default {
           hidden: true,
           newForm: true,
           editForm: true,
-          cssClasses: 'col-4 col-md-4',
+          cssClasses: 'col-12 col-md-12',
         },
         '_BillingAddress.City': {
           form: {
@@ -179,7 +179,7 @@ export default {
           hidden: true,
           newForm: true,
           editForm: true,
-          cssClasses: 'col-4 col-md-4',
+          cssClasses: 'col-12 col-md-6',
         },
         '_BillingAddress.State': {
           form: {
@@ -194,7 +194,7 @@ export default {
           hidden: true,
           newForm: true,
           editForm: true,
-          cssClasses: 'col-4 col-md-4',
+          cssClasses: 'col-12 col-md-6',
         },
         '_BillingAddress.PostalCode': {
           form: {
@@ -209,7 +209,7 @@ export default {
           hidden: true,
           newForm: true,
           editForm: true,
-          cssClasses: 'col-4 col-md-4',
+          cssClasses: 'col-12 col-md-6',
         },
         '_BillingAddress.Country': {
           form: {
@@ -224,7 +224,7 @@ export default {
           hidden: true,
           newForm: true,
           editForm: true,
-          cssClasses: 'col-4 col-md-4',
+          cssClasses: 'col-12 col-md-6',
         },
         Description: {
           form: {
