@@ -1,0 +1,9 @@
+query($filters: JSON){
+  Ticket {
+    TicketGetTicketData(filter: $filters){
+      edges{
+        node
+      }
+    }
+  }
+}

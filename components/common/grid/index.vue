@@ -5,6 +5,9 @@
         <component :is="errorTemplate || null" :error="error" />
       </div>
     </template>
+    <v-snackbar v-model="snackbar" :timeout="timeout" top="true">
+      <div class="text-center">{{ snackbarText }}</div>
+    </v-snackbar>
     <div v-if="!error" :key="error">
       <div class="grid-actions-container mt-lg-n11 mt-md-n11 mt-sm-n11 mt-xs-0">
         <div class="d-flex">
@@ -331,6 +334,9 @@ export default {
       triggerChange: 0,
       error: '',
       errorTemplate: null,
+      snackbar: false,
+      timeout: 1000,
+      snackbarText: '',
     }
   },
   computed: {
@@ -380,8 +386,9 @@ export default {
   mounted() {
     this.selectedItems = this.value
     this.headers.forEach(async (column, index) => {
+      const columnFileName = column && column.value.toLowerCase()
       this.component[index] = await this.loadTemplate([
-        `templates/grids/${this.templateFolderName}/column-${column.value}.vue`,
+        `templates/grids/${this.templateFolderName}/column-${columnFileName}.vue`,
         `templates/grids/${this.templateFolderName}/column-${index}.vue`,
         `common/templates/grid/column.vue`,
       ])
@@ -458,6 +465,8 @@ export default {
         },
       })
       this.refresh()
+      this.snackbarText = 'Record Updated Successfully'
+      this.snackbar = true
       return itemUpdated
     },
     async onDeleteItem(ids) {
@@ -477,6 +486,8 @@ export default {
         },
       })
       this.refresh()
+      this.snackbarText = 'Record deleted Successfully'
+      this.snackbar = true
       return itemDeleted
     },
     refresh() {

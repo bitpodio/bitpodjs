@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <client-only>
+      {{ field && field.form && field.form.caption }}
       <jodit-editor v-model="content" :config="config" />
     </client-only>
   </div>
