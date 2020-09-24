@@ -94,10 +94,10 @@
                   outlined
                   @keyup="changeUniqueLink($event)"
                 ></v-text-field>
-                <span
+                <v-flex
                   v-if="isInvalidEventLink && !!UniqLink"
-                  class="red--text pa-3 pt-0 body-2"
-                  >{{ uniqueLinkMessage }}</span
+                  class="red--text pt-1 pb-0 mt-n3 body-2"
+                  >{{ uniqueLinkMessage }}</v-flex
                 >
               </v-col>
             </v-row>

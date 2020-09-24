@@ -217,7 +217,7 @@
         </v-flex>
       </div>
       <div
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-0">
@@ -292,23 +292,23 @@
         <v-card
           v-for="image in data.event.Images"
           :key="image"
-          class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0 cardImg"
+          class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0 cardImg rounded cursorPointer"
           :class="{ 'on-hover': hover }"
         >
           <span class="cardDelete">
-            <v-icon class="pa-1" text @click="deleteBannerFile(e, image)"
-              >mdi-delete</v-icon
-            >
+            <i
+              class="fa-trash pa-2 cursorPointer"
+              @click="deleteBannerFile(e, image)"
+            ></i>
           </span>
           <v-img
             :src="getAttachmentLink(image, true)"
             :lazy-src="getAttachmentLink(image, true)"
             aspect-ratio="1"
-            class="grey lighten-2"
+            class="rounded"
             max-width="150"
             max-height="150"
             width="150"
-            contain
             @click.stop="bannerDialog = true"
           >
             <template v-slot:placeholder>
@@ -354,8 +354,9 @@
                   :src="getAttachmentLink(image, true)"
                   :lazy-src="getAttachmentLink(image, true)"
                   aspect-ratio="1"
-                  class="grey lighten-2"
+                  class="white"
                   width="100%"
+                  contain
                 >
                   <template v-slot:placeholder>
                     <v-row
@@ -377,16 +378,19 @@
         <v-card
           v-for="image in data.event.Logo"
           :key="image"
-          class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0 cardImg"
+          class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0 cardImg rounded"
         >
           <span class="cardDelete">
-            <v-icon text @click="deleteLogoFile(image)">mdi-delete</v-icon>
+            <i
+              class="fa-trash pa-2 cursorPointer"
+              @click="deleteLogoFile(image)"
+            ></i>
           </span>
           <v-img
             :src="getAttachmentLink(image, true)"
             :lazy-src="getAttachmentLink(image, true)"
             aspect-ratio="1"
-            class="grey lighten-2"
+            class="rounded white"
             max-width="150"
             max-height="150"
             width="150"
@@ -435,8 +439,9 @@
                   :src="getAttachmentLink(image, true)"
                   :lazy-src="getAttachmentLink(image, true)"
                   aspect-ratio="1"
-                  class="grey lighten-2"
+                  class="white"
                   width="100%"
+                  contain
                 >
                   <template v-slot:placeholder>
                     <v-row
@@ -458,16 +463,19 @@
         <v-card
           v-for="(image, index) in eventData.Other"
           :key="image"
-          class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0 cardImg"
+          class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0 cardImg rounded"
         >
           <span class="cardDelete">
-            <v-icon text @click="deleteOtherFile(image)">mdi-delete</v-icon>
+            <i
+              class="fa-trash pa-2 cursorPointer"
+              @click="deleteOtherFile(image)"
+            ></i>
           </span>
           <v-img
             :src="getAttachmentLink(image, true)"
             :lazy-src="getAttachmentLink(image, true)"
             aspect-ratio="1"
-            class="grey lighten-2"
+            class="rounded"
             max-width="150"
             max-height="150"
             width="150"
@@ -514,7 +522,7 @@
                   :src="getAttachmentLink(image, true)"
                   :lazy-src="getAttachmentLink(image, true)"
                   aspect-ratio="1"
-                  class="grey lighten-2"
+                  class="white"
                   width="100%"
                   contain
                 >
