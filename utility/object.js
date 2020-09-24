@@ -49,3 +49,11 @@ export function isPlainObject(o) {
   // Most likely a plain Object
   return true
 }
+
+export function _isUndefined(value) {
+  return value === undefined
+}
+
+export function _isNull(value) {
+  return value === null
+}

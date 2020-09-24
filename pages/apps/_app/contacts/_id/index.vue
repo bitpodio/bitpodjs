@@ -71,8 +71,9 @@
         <v-divider></v-divider>
         <Grid
           view-name="contactRegistration"
-          :content="content"
           class="mt-n12"
+          :content="content"
+          :filter="filter"
         />
       </div>
       <div
@@ -255,13 +256,13 @@ export default {
     content() {
       return this.contents ? this.contents.Contacts : null
     },
-    // filter() {
-    //   return {
-    //     where: {
-    //       Email: this.contact.Email,
-    //     },
-    //   }
-    // },
+    filter() {
+      return {
+        where: {
+          Email: this.data.contact && this.data.contact.Email,
+        },
+      }
+    },
   },
   methods: {
     formatDate(date) {
