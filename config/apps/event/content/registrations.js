@@ -431,6 +431,11 @@ export default {
         context: {
           basePath: '/registration',
         },
+        actions: {
+          new: {
+            caption: 'New Registration',
+          },
+        },
       },
       dataSource: {
         query: registrationList,
