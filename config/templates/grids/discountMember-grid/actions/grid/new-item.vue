@@ -16,7 +16,7 @@
         <v-card-title
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
-          <h2 class="black--text pt-10 pb-9">Associate Member</h2>
+          <h2 class="black--text pt-5 pb-4">Associate Member</h2>
           <v-spacer></v-spacer>
           <div>
             <v-btn icon @click="dialog = false">
@@ -35,7 +35,7 @@
                 />
                 <div
                   v-show="duplicateMessage !== ''"
-                  class="red--text pa-3 pt-0 body-1"
+                  class="red--text pa-3 pt-0 body-1 mt-n5"
                 >
                   {{ duplicateMessage }}
                 </div>
@@ -120,7 +120,8 @@ export default {
       if (res) {
         this.dialog = false
         this.refresh()
-        this.customerId = ''
+        this.$refs.form.reset()
+        this.isSaveButtonDisabled = false
         return res
       }
     },
