@@ -1,0 +1,46 @@
+query($filters: JSON, $eventFilters: JSON) {
+  Registration {
+    RegistrationFind(filter: $filters) {
+      edges {
+        node {
+          id
+          EventId
+          TicketId
+          SessionId
+          Email
+          FirstName
+          TotalAmount
+          TicketQuantity
+          CompanyName
+          FullName
+          LastName
+          _CurrentAddress {
+              id
+              City
+              State
+              PostalCode
+              AddressLine
+              Country
+            }
+          _Refund {
+              id TransactionType TransactionID RefundStatus RefundRequest RefundMethod Reason Comments Amount RefundInitiatedDate createdDate createdBy modifiedDate modifiedBy
+          }
+          PaymentMethod
+          Phone
+          RegistrationId
+          Status
+          createdDate
+        }
+      }
+    }
+  }
+  Event {
+    EventFind(filter: $eventFilters) {
+      edges {
+        node {
+          id Title StartDate EndDate BusinessType Status
+        }
+      }
+    }
+  }
+}

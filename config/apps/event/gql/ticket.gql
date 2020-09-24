@@ -1,0 +1,13 @@
+query ($filters: JSON) { 
+    Ticket { 
+        TicketFind(filter: $filters) { 
+            edges { 
+                node { 
+                    Amount
+                    Code 
+                    id 
+                } 
+            } 
+        } 
+    } 
+}

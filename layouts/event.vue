@@ -156,7 +156,7 @@
           <v-list-item>
             <v-list-item-title class="d-flex flex-wrap app-container">
               <nuxt-link
-                to="/apps/event/list/Event/All Events"
+                to="/apps/event/list/Event/live and draft event"
                 class="text-decoration-none"
               >
                 <v-flex
@@ -360,7 +360,7 @@ export default {
       {
         icon: 'fa fa-calendar',
         text: 'Events',
-        to: '/apps/event/list/Event/All Events',
+        to: '/apps/event/list/Event/live and draft event',
       },
       {
         icon: 'fa fa-user-plus',
