@@ -285,10 +285,6 @@ body {
 .v-navigation-drawer__border {
   display: none !important;
 }
-.v-data-table--dense > .v-data-table__wrapper > table > tbody > tr > td, 
-.v-data-table > .v-data-table__wrapper > table > thead > tr > th {
-  padding-left: 0 !important;
-}
 .logo-bitpod {
   width: 30px;
   height: 40px;

@@ -1,15 +1,19 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer v-model="drawer" app class="nav-bar" :width="205">
-      <v-toolbar-title class="ml-0 pl-3 px-2 py-2 logo-ds d-flex align-center">
+    <v-navigation-drawer
+      v-model="drawer"
+      app
+      class="nav-bar greybg"
+      :width="280"
+    >
+      <v-toolbar-title class="ml-0 pl-3 px-2 py-1 logo-ds d-flex align-center">
         <span class="bitpod-logo logo-ds">
           <v-img
             :src="$config.cdnUri + 'logo-favicon.png'"
-            height="50"
-            width="30"
+            class="logo-bitpod"
           ></v-img>
         </span>
-        <span d-inline-flex align-center class="mx-2">Event</span>
+        <span d-inline-flex align-center class="mx-2 text-h5">Event</span>
         <v-spacer></v-spacer>
         <div v-if="drawer === true" class="d-none d-sm-flex">
           <v-app-bar-nav-icon
@@ -18,7 +22,7 @@
           ></v-app-bar-nav-icon>
         </div>
       </v-toolbar-title>
-      <div class="text-center">
+      <div class="text-center mt-4">
         <v-menu>
           <template v-slot:activator="{ on, attrs }">
             <v-btn
@@ -26,7 +30,7 @@
               color="primary"
               dark
               depressed
-              class="ma-3 block wd-full"
+              class="ma-3 block wd-full my-0 mb-1 ml-n4"
               v-on="on"
             >
               Create Event
@@ -43,11 +47,11 @@
           </v-list>
         </v-menu>
       </div>
-      <v-list dense>
+      <v-list shaped>
         <template v-for="item in items">
           <v-row v-if="item.heading" :key="item.heading" align="center">
             <div class="pa-0 pl-5">
-              <v-subheader v-if="item.heading" class="nav-subheader">
+              <v-subheader v-if="item.heading" class="nav-subheader pl-2">
                 {{ item.heading }}
               </v-subheader>
             </div>
@@ -118,7 +122,7 @@
       <NewRecurringEvent :on-form-close="closeRecurringEventForm" />
     </v-dialog>
 
-    <v-app-bar app flat class="greybg">
+    <v-app-bar app flat class="greybg" height="50">
       <div
         v-if="drawer === false"
         class="ml-xs-0 d-none d-sm-none d-md-flex d-lg-flex d-xl-flex"
@@ -152,7 +156,7 @@
           <v-list-item>
             <v-list-item-title class="d-flex flex-wrap app-container">
               <nuxt-link
-                to="/apps/event/list/Event/All Events"
+                to="/apps/event/list/Event/live and draft event"
                 class="text-decoration-none"
               >
                 <v-flex
@@ -281,12 +285,12 @@
                 </v-list-item-avatar>
 
                 <v-list-item-content>
-                  <v-list-item-title>{{
+                  <!-- <v-list-item-title>{{
                     $auth.user.data.name
                   }}</v-list-item-title>
                   <v-list-item-subtitle>{{
                     $auth.user.data.email
-                  }}</v-list-item-subtitle>
+                  }}</v-list-item-subtitle> -->
                 </v-list-item-content>
               </v-list-item>
             </v-list>
@@ -313,7 +317,7 @@
     <v-main class="greybg">
       <v-container fluid>
         <v-row>
-          <v-col>
+          <v-col class="pt-0">
             <div>
               <nuxt />
             </div>
@@ -348,7 +352,7 @@ export default {
     message: false,
     items: [
       {
-        icon: 'fa fa-tachometer',
+        icon: 'fa fa-grid',
         text: 'Eventboard',
         to: '/apps/event/eventboard',
       },
@@ -356,7 +360,7 @@ export default {
       {
         icon: 'fa fa-calendar',
         text: 'Events',
-        to: '/apps/event/list/Event/All Events',
+        to: '/apps/event/list/Event/live and draft event',
       },
       {
         icon: 'fa fa-user-plus',
@@ -382,6 +386,11 @@ export default {
       },
       { heading: 'Task' },
       { icon: 'fa fa-tasks', text: 'My Task', to: '' },
+      {
+        icon: 'mdi-chart-bubble',
+        text: 'Activities',
+        to: '/list/Activities/Activities',
+      },
     ],
   }),
   async created() {

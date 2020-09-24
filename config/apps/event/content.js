@@ -2,6 +2,7 @@ import registrationStatusOptions from './gql/registrationStatusOptions.gql'
 import registrationList from './gql/registrationList.gql'
 import discountCodes from './gql/discountCodes.gql'
 import eventList from './gql/eventlist.gql'
+import liveDraftEvents from './gql/liveDraftevents.gql'
 import eventNames from './gql/eventNames.gql'
 import contactList from './gql/contactList.gql'
 import memberList from './gql/memberList.gql'
@@ -342,6 +343,192 @@ export default {
           },
         },
         title: 'Past',
+        type: 'list',
+      },
+      'live and draft event': {
+        ui: {
+          hideDefaultHeader: true,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: true,
+          hideFilter: false,
+          hideSearch: true,
+        },
+        default: true,
+        fields: {
+          Title: {
+            displayOrder: 2,
+            caption: 'Title',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '250px',
+            type: 'string',
+          },
+          StartDate: {
+            displayOrder: 3,
+            caption: 'Start Date',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'date',
+          },
+          EndDate: {
+            displayOrder: 3,
+            caption: 'End Date',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'date',
+          },
+          Privacy: {
+            displayOrder: 4,
+            caption: 'Privacy',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          Tags: {
+            displayOrder: 5,
+            caption: 'Tags',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          VenueName: {
+            displayOrder: 6,
+            caption: 'Venue',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          '_VenueAddress.AddressLine': {
+            displayOrder: 7,
+            caption: 'Address',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          '_VenueAddress.City': {
+            displayOrder: 8,
+            caption: 'City',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          '_VenueAddress.State': {
+            displayOrder: 9,
+            caption: 'State',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          '_VenueAddress.PostalCode': {
+            displayOrder: 10,
+            caption: 'Postal Code',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          '_VenueAddress.Country': {
+            displayOrder: 11,
+            caption: 'Country',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          Currency: {
+            displayOrder: 12,
+            caption: 'Currency',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+          },
+          createdDate: {
+            displayOrder: 13,
+            caption: 'Created Date',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '150px',
+            type: 'date',
+          },
+        },
+        template: {
+          name: 'livedraft-grid',
+          context: {
+            basePath: '/event',
+          },
+        },
+        dataSource: {
+          query: liveDraftEvents,
+          defaultSort: 'createdDate DESC',
+          type: 'graphql',
+          model: 'Event',
+          filter: {
+            order: 'createdDate DESC',
+            skip: '0',
+            where: {
+              or: [
+                {
+                  and: [
+                    {
+                      or: [
+                        {
+                          StartDate: {
+                            lte: new Date(),
+                          },
+                        },
+                        {
+                          StartDate: {
+                            gte: new Date(),
+                          },
+                        },
+                        {
+                          StartDate: {
+                            exists: false,
+                          },
+                        },
+                        {
+                          StartDate: null,
+                        },
+                      ],
+                    },
+                    {
+                      or: [
+                        {
+                          StartDate: {
+                            gte: new Date(),
+                          },
+                        },
+                        {
+                          StartDate: {
+                            exists: false,
+                          },
+                        },
+                        {
+                          StartDate: null,
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  Status: 'Not ready',
+                },
+              ],
+            },
+          },
+        },
+        title: 'Live and Draft Events',
         type: 'list',
       },
       eventAttendees: {
@@ -2632,7 +2819,7 @@ export default {
   DiscountCodes: {
     actions: {
       'Embeded Actions': '',
-      'General Actions': ['Create Registration'],
+      'General Actions': [],
       'Selected Item Action': [],
     },
     child: {},
@@ -3651,6 +3838,176 @@ export default {
         },
         title: 'contactEmails',
         type: 'list',
+      },
+    },
+  },
+  Activities: {
+    actions: {
+      'Embeded Actions': '',
+      'General Actions': [],
+      'Selected Item Action': [],
+    },
+    child: {},
+    dataSource: {
+      'Key Field': '',
+      'Parent key field': '',
+      Type: 'List',
+      URL: 'CRMActivity',
+    },
+    general: {
+      caption: 'Activities',
+      name: 'CRMActivity',
+    },
+    permissions: {
+      Groups: '',
+    },
+    ui: {
+      TemplateActions: {},
+      Checkbox: 'True',
+      Width: '50%',
+      Height: '',
+      TemplateHelpers: {},
+      'Display Order': '',
+      'Map View Template': '',
+      'List View Template': '',
+      'Detail View': 'tab',
+      Column: '',
+      'Tile View': 'now',
+      'App Type': 'View',
+      Templates: {},
+      decorator: {
+        Attachment: '',
+        LinkedinURL: '',
+      },
+    },
+    views: {
+      Activities: {
+        actions: {
+          row: [],
+          grid: {},
+          rowSelect: {},
+        },
+        ui: {
+          hideDefaultHeader: false,
+          hideDefaultFooter: false,
+          showExpand: false,
+          singleExpand: false,
+          showSelect: true,
+          hideFilter: true,
+          hideSearch: false,
+        },
+        default: true,
+        fields: {
+          Category: {
+            displayOrder: 3,
+            caption: 'Category',
+            searchEnable: true,
+            sortEnable: true,
+            filterEnable: true,
+            columnWidth: '150px',
+            type: 'lookup',
+            dataSource: {
+              query: registrationStatusOptions,
+              itemText: 'value',
+              itemValue: 'key',
+              filter(data) {
+                return {
+                  type: 'Event_TaskCategory',
+                }
+              },
+            },
+          },
+          Type: {
+            displayOrder: 5,
+            caption: 'Type',
+            searchEnable: true,
+            sortEnable: true,
+            filterEnable: true,
+            columnWidth: '100px',
+            type: 'string',
+          },
+          Status: {
+            displayOrder: 4,
+            caption: 'Status',
+            searchEnable: true,
+            sortEnable: true,
+            filterEnable: true,
+            columnWidth: '100px',
+            type: 'lookup',
+            dataSource: {
+              query: registrationStatusOptions,
+              itemText: 'value',
+              itemValue: 'key',
+              filter(data) {
+                return (data && data.Category === 'Registration Email') ||
+                  (data && data.Category === 'Calendar Invite')
+                  ? {
+                      type: 'Event_TaskStatus',
+                      value: { inq: ['Wait for an Action', 'Inactive'] },
+                    }
+                  : { type: 'Event_TaskStatus' }
+              },
+            },
+          },
+          createdDate: {
+            displayOrder: 7,
+            caption: 'createdDate',
+            searchEnable: true,
+            sortEnable: true,
+            filterEnable: true,
+            columnWidth: '150px',
+            type: 'date',
+            inlineEdit: false,
+            newForm: false,
+            editForm: false,
+          },
+          Title: {
+            displayOrder: 2,
+            caption: 'Title',
+            searchEnable: true,
+            sortEnable: true,
+            filterEnable: true,
+            columnWidth: '150px',
+            type: 'string',
+            cssClasses: 'col-12 col-md-12',
+          },
+          TemplateName: {
+            displayOrder: 6,
+            caption: 'Template Name',
+            searchEnable: true,
+            sortEnable: true,
+            columnWidth: '130px',
+            type: 'string',
+          },
+          action: {
+            displayOrder: 8,
+            caption: 'Action',
+            searchEnable: false,
+            sortEnable: false,
+            columnWidth: '130px',
+            type: 'action',
+            inlineEdit: false,
+            newForm: false,
+            editForm: false,
+            condtion: ({ item, items, index }) => {
+              return true
+            },
+          },
+        },
+        template: {
+          name: '',
+          context: {
+            basePath: '/event',
+          },
+        },
+        dataSource: {
+          defaultSort: 'createdDate DESC',
+          type: 'rest',
+          model: 'CRMActivity',
+          getData: () => getData('CRMActivitie'),
+          // newItem: ,
+        },
+        title: 'Activity',
       },
     },
   },
