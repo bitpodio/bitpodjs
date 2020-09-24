@@ -64,52 +64,61 @@
           {{ formatField(data.event.Timezone) }}
         </v-chip>
         <v-flex>
-          <p class="blue--text body-2">
-            <i class="fa fa-map-marker" aria-hidden="true"></i>
-            <a
-              v-if="
-                data &&
-                data.event &&
-                data.event._VenueAddress &&
-                data.event._VenueAddress.AddressLine &&
-                !data.event._VenueAddress.AddressLine.includes(
-                  data.event.VenueName
-                )
-              "
-              class="blue--text"
-            >
-              {{ formatAddressField(data.event.VenueName) }}
-            </a>
-            <a class="blue--text">
-              {{
-                formatAddressField(
+          <div
+            v-if="data.event.LocationType === 'Online Event'"
+            class="pb-1"
+            @click="viewRegistration"
+          >
+            <a>{{ viewRegistrationLink() }}</a>
+          </div>
+          <div v-else>
+            <p class="blue--text body-2">
+              <i class="fa fa-map-marker" aria-hidden="true"></i>
+              <a
+                v-if="
+                  data &&
+                  data.event &&
                   data.event._VenueAddress &&
-                    data.event._VenueAddress.AddressLine
-                )
-              }}
-              {{
-                formatAddressField(
-                  data.event._VenueAddress && data.event._VenueAddress.City
-                )
-              }}
-              {{
-                formatAddressField(
-                  data.event._VenueAddress && data.event._VenueAddress.State
-                )
-              }}
-              {{
-                formatAddressField(
-                  data.event._VenueAddress && data.event._VenueAddress.Country
-                )
-              }}
-              {{
-                formatAddressField(
-                  data.event._VenueAddress &&
-                    data.event._VenueAddress.PostalCode
-                )
-              }}
-            </a>
-          </p>
+                  data.event._VenueAddress.AddressLine &&
+                  !data.event._VenueAddress.AddressLine.includes(
+                    data.event.VenueName
+                  )
+                "
+                class="blue--text"
+              >
+                {{ formatAddressField(data.event.VenueName) }}
+              </a>
+              <a class="blue--text">
+                {{
+                  formatAddressField(
+                    data.event._VenueAddress &&
+                      data.event._VenueAddress.AddressLine
+                  )
+                }}
+                {{
+                  formatAddressField(
+                    data.event._VenueAddress && data.event._VenueAddress.City
+                  )
+                }}
+                {{
+                  formatAddressField(
+                    data.event._VenueAddress && data.event._VenueAddress.State
+                  )
+                }}
+                {{
+                  formatAddressField(
+                    data.event._VenueAddress && data.event._VenueAddress.Country
+                  )
+                }}
+                {{
+                  formatAddressField(
+                    data.event._VenueAddress &&
+                      data.event._VenueAddress.PostalCode
+                  )
+                }}
+              </a>
+            </p>
+          </div>
         </v-flex>
 
         <v-flex d-flex flex-md-row flex-lg-row my-2 class="event-cards">
@@ -1147,6 +1156,10 @@ export default {
       } catch (e) {
         console.log('Error', e)
       }
+    },
+    viewRegistrationLink() {
+      const regUrl = `https://${nuxtconfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
+      return regUrl
     },
     formatDate(date) {
       return date ? format(new Date(date), 'PPpp') : ''
