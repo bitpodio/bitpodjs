@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <client-only>
+      {{ field && field.form && field.form.caption }}
       <jodit-editor v-model="content" :config="config" />
     </client-only>
   </div>
@@ -14,7 +15,7 @@ export default {
   components: {
     JoditEditor,
   },
-  props: ['value', 'field', 'isInvitee', 'showTemplateDropdown'],
+  props: ['value', 'field', 'isInvitee', 'isGeneral', 'showTemplateDropdown'],
   data() {
     return {
       content: this.value || '',
@@ -158,6 +159,21 @@ export default {
         allowResizeY: true,
         zIndex: 99999,
       },
+      generalButtons: {
+        'Organization Name': 'Organization Name',
+        'Organization Address': 'Organization Address',
+        'Organization City': 'Organization City',
+        'Organization State': 'Organization State',
+        'Organization Country': 'Organization Country',
+        'Organization Postal Code': 'Organization Postal Code',
+        'Privacy Policy': 'Privacy Policy',
+        'Organization Facebook': 'Organization Facebook',
+        'Organization Linkedin': 'Organization Linkedin',
+        'Organization Twitter': 'Organization Twitter',
+        'Contact First Name': 'Contact First Name',
+        'Contact Last Name': 'Contact Last Name',
+        'Contact Email': 'Contact Email',
+      },
     }
   },
   watch: {
@@ -184,6 +200,9 @@ export default {
     }
     if (!this.showTemplateDropdown) {
       delete this.config.extraButtons
+    }
+    if (this.isGeneral) {
+      this._data.config.extraButtons[0].list = { ...this.generalButtons }
     }
   },
 }

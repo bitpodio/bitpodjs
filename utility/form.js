@@ -1,17 +1,24 @@
-import { zonedTimeToUtc } from 'date-fns-tz'
+import { zonedTimeToUtc, utcToZonedTime, format } from 'date-fns-tz'
 import TextField from '~/components/common/form/text-field.vue'
 import Lookup from '~/components/common/form/lookup.vue'
 import Checkbox from '~/components/common/form/checkbox.vue'
 import CustomDate from '~/components/common/form/date.vue'
 import File from '~/components/common/form/file.vue'
 import Timezone from '~/components/common/form/timezone'
-import { _set, isPlainObject } from '~/utility/object'
+import Tags from '~/components/common/form/tags.vue'
+import { _set, _get, isPlainObject } from '~/utility/object'
 
 const FORM_DATE_CONTROLS = ['date', 'datetime']
 
 function getFormTimeZoneField(fields) {
   const timezoneField = fields.find((field) => field.type === 'timezone')
   return timezoneField || null
+}
+
+function getFieldByFieldName(fields, field) {
+  const fieldDetails =
+    fields && fields.filter(({ fieldName }) => fieldName === field)
+  return fieldDetails || {}
 }
 
 export function formatTimezoneDateFieldsData(formData, fields) {
@@ -23,7 +30,7 @@ export function formatTimezoneDateFieldsData(formData, fields) {
   const newFormData = {}
   for (const fieldName in formData) {
     const fieldData = formData[fieldName]
-    const { field } = fields[fieldName]
+    const field = getFieldByFieldName(fields, fieldName)
     newFormData[fieldName] = FORM_DATE_CONTROLS.includes(field.type)
       ? zonedTimeToUtc(fieldData, selectedTimezone)
       : fieldData
@@ -101,6 +108,7 @@ export const formControlsMixin = {
     RichText: () =>
       process.client ? import('~/components/common/form/richtext.vue') : false,
     Timezone,
+    Tags,
   },
   methods: {
     formControl(field) {
@@ -121,6 +129,8 @@ export const formControlsMixin = {
           return 'RichText'
         case 'timezone':
           return 'Timezone'
+        case 'tags':
+          return 'Tags'
       }
     },
   },
@@ -131,6 +141,28 @@ export const formTitleMixin = {
     subTitle() {
       const view = this.content.views[this.viewName]
       return view.itemTitle || ''
+    },
+  },
+}
+
+export function formatedDate(date, timezone) {
+  let output
+  if (date) {
+    const formattedDate = new Date(date)
+    const zonedDate = utcToZonedTime(formattedDate, timezone)
+    const pattern = 'PPp' // 'd.M.YYYY HH:mm:ss.SSS [GMT]Z (z)'
+    output = format(zonedDate, pattern, { timezone })
+  }
+  return output
+}
+
+export const gridActionMixin = {
+  methods: {
+    isHiddenAction(actionType) {
+      const view = this.content.views[this.viewName]
+      const template = view.template
+      const isHidden = _get(template, ['actions', actionType, 'hidden'])
+      return !isHidden
     },
   },
 }

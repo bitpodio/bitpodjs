@@ -2,6 +2,7 @@
   <div>
     <component
       :is="newItem || null"
+      v-if="isHiddenAction('new')"
       :content="content"
       :view-name="viewName"
       :on-new-item-save="onNewItemSave"
@@ -12,9 +13,10 @@
 </template>
 <script>
 import { templateLoaderMixin } from '~/utility'
+import { gridActionMixin } from '~/utility/form'
 
 export default {
-  mixins: [templateLoaderMixin],
+  mixins: [templateLoaderMixin, gridActionMixin],
   props: ['content', 'viewName', 'onNewItemSave', 'refresh', 'context'],
   data() {
     return {

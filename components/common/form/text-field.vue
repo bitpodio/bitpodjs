@@ -6,6 +6,7 @@
     outlined
     dense
     :rules="rules"
+    :min="field.minimumValue"
     :readonly="readonly"
     @keyup="onKeyup"
   ></v-text-field>

@@ -6,7 +6,8 @@ query ($filters: JSON, $where: JSON) {
                     ValidateQty 
                     TicketCount 
                     AvailableCount 
-                    CheckGroupDiscount 
+                    CheckGroupDiscount
+                    DisplayOrder 
                     EndDate 
                     SyncStatus 
                     Code 

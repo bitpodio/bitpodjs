@@ -8,7 +8,9 @@ query($filters: JSON) {
             isDefault
             ColorCode
             MaxQuantityAllowed
+            DisplayOrder
             EventId
+            AllowMultiple
         }
       }
     }

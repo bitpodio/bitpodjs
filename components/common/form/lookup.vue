@@ -9,6 +9,7 @@
       :label="fieldCaption"
       :multiple="field.multiple"
       :rules="rules"
+      :readonly="readonly"
       outlined
       dense
       @change="onLookupChange"
@@ -23,7 +24,8 @@ import { formFieldMixin } from '~/utility/form-control'
 
 function formatResult(data) {
   const [modelName] = Object.getOwnPropertyNames(data)
-  const { edges } = data[modelName][`${modelName}Find`]
+  const [modelApi] = Object.getOwnPropertyNames(data[modelName])
+  const { edges } = data[modelName][`${modelApi}`]
   return edges.map(({ node: { id, ...rest } }) => {
     return { id: getIdFromAtob(id), ...rest }
   })
@@ -56,9 +58,13 @@ export default {
       type: Array,
       default: () => [],
     },
+    readonly: {
+      type: Object,
+      default: () => {},
+    },
     onChange: {
       type: Function,
-      required: true,
+      required: false,
       default: () => null,
     },
   },

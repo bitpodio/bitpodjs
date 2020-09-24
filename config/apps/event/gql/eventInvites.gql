@@ -15,6 +15,10 @@ query ($filters: JSON, $where: JSON) {
                     Unsubscribed
                     orgId
                     ContactId
+                    event {
+                        Title
+                        id
+                    }
                     getContact {
                         id
                         LastName

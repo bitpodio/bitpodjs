@@ -118,6 +118,32 @@
                 class="ma-0"
               ></v-checkbox>
             </v-col>
+            <v-col
+              v-if="formData.BusinessType === 'Recurring'"
+              cols="12"
+              sm="6"
+              md="6"
+              class="py-0"
+            >
+              <v-checkbox
+                v-model="formData.showTimezone"
+                label="Allow user to select a timezone for recurring event"
+                class="ma-0"
+              ></v-checkbox>
+            </v-col>
+            <v-col
+              v-if="formData.BusinessType !== 'Recurring'"
+              cols="12"
+              sm="6"
+              md="6"
+              class="py-0"
+            >
+              <v-checkbox
+                v-model="formData.SendCalendar"
+                label=" Send calendar invite when registered"
+                class="ma-0"
+              ></v-checkbox>
+            </v-col>
           </v-row>
         </v-card-text>
         <v-divider></v-divider>
@@ -198,25 +224,25 @@ export default {
     refresh() {
       this.$apollo.queries.data.refresh()
     },
-    onSave() {
+    async onSave() {
       this.formData.Currency = this.currency
       this.formData.Privacy = this.privacy
       delete this.formData._VenueAddress
-      this.$axios
-        .$patch(
-          `https://${nuxtConfig.axios.eventUrl}/svc/api/Events/${this.$route.params.id}`,
+      try {
+        const res = await this.$axios.$patch(
+          `https://${nuxtConfig.axios.eventUrl}${nuxtConfig.axios.apiEndpoint}Events/${this.$route.params.id}`,
           {
             ...this.formData,
           }
         )
-        .then((res) => {
+        if (res) {
           this.close()
           this.refresh()
-          return (this.data.event = res)
-        })
-        .catch((e) => {
-          console.log('Error', e)
-        })
+          this.data.event = res
+        }
+      } catch (e) {
+        console.log('Error', e)
+      }
     },
     getDropDownData(filterType) {
       return this.$apollo

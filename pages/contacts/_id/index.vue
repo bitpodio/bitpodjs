@@ -78,7 +78,7 @@
       </div>
     </v-flex>
     <v-flex column xs12 sm4 md4 lg4>
-      <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
+      <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2 pr-2">
         <h2 class="body-1 pb-1">
           <i class="fa fa-info-circle pr-1" aria-hidden="true"></i> Contact
           Information
@@ -136,7 +136,7 @@
         </v-row>
       </div>
 
-      <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2">
+      <div class="xs12 sm4 md4 lg4 boxview pa-4 mb-2 pr-2">
         <h2 class="body-1 pb-1">
           <i class="fa fa-location pr-1" aria-hidden="true"></i> Address
           Information
