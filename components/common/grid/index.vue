@@ -67,7 +67,7 @@
           :options.sync="options"
           :server-items-length="tableData.total"
           :hide-default-header="hideDefaultHeader"
-          :hide-default-footer="hideDefaultFooter"
+          :hide-default-footer="isHideDefaultFooter"
           :show-expand="showExpand"
           :single-expand="singleExpand"
           item-key="id"
@@ -368,6 +368,10 @@ export default {
           ],
         },
       }
+    },
+    isHideDefaultFooter() {
+      const isLessItems = this.tableData.total > this.options.itemsPerPage
+      return !isLessItems || this.hideDefaultFooter
     },
   },
   watch: {
