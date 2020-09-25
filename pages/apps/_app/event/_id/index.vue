@@ -161,39 +161,56 @@
         </v-flex>
 
         <v-stepper
+          v-model="Status"
           alt-labels
           class="elevation-0 boxview mt-n3"
           style="max-width: 800px;"
         >
           <v-stepper-header success>
             <v-stepper-step
-              step="3"
-              complete
+              editable
+              step="1"
+              :complete="true"
               color="success"
               class="ml-n13 body-2"
+              @click="changeStatus('Not ready')"
               >Not Ready</v-stepper-step
             >
 
             <v-divider></v-divider>
 
             <v-stepper-step
-              step="4"
-              complete="true"
+              editable
+              step="2"
+              :complete="Status > 1"
               color="success"
               class="body-2"
-              >Open for regsitarion</v-stepper-step
+              @click="changeStatus('Open for registration')"
+              >Open for registration</v-stepper-step
             >
 
             <v-divider></v-divider>
 
-            <v-stepper-step step="4" class="body-2" color="success"
+            <v-stepper-step
+              editable
+              step="3"
+              :complete="Status > 2"
+              class="body-2"
+              color="success"
+              @click="changeStatus('Sold out')"
               >Sold out</v-stepper-step
             >
 
             <v-divider></v-divider>
 
-            <v-stepper-step step="" class="body-2" color="success"
-              >Registarion Closed</v-stepper-step
+            <v-stepper-step
+              editable
+              step="4"
+              :complete="Status > 3"
+              class="body-2"
+              color="success"
+              @click="changeStatus('Registration closed')"
+              >Registration closed</v-stepper-step
             >
           </v-stepper-header>
         </v-stepper>
@@ -959,7 +976,7 @@ import File from '~/components/common/form/file.vue'
 import event from '~/config/apps/event/gql/event.gql'
 import copy from '~/components/common/copy'
 import { formatGQLResult } from '~/utility/gql.js'
-import { configLoaderMixin } from '~/utility'
+import { configLoaderMixin, getApiUrl } from '~/utility'
 
 export default {
   components: {
@@ -1019,6 +1036,7 @@ export default {
       snackbar: false,
       timeout: '1000',
       snackbarText: '',
+      Status: '',
     }
   },
   computed: {
@@ -1036,8 +1054,38 @@ export default {
       }
     },
   },
-
   methods: {
+    updateStepper() {
+      debugger
+      const status = this.eventData.Status
+      console.log('status1', status)
+      if (status === 'Not ready') {
+        this.Status = 1
+      } else if (status === 'Open for registration') {
+        this.Status = 2
+      } else if (status === 'Sold out') {
+        this.Status = 3
+      } else {
+        this.Status = 4
+      }
+    },
+    async changeStatus(statusName) {
+      debugger
+      const url = getApiUrl()
+      try {
+        const res = await this.$axios.$patch(
+          `${url}Events/${this.$route.params.id}`,
+          {
+            Status: statusName,
+          }
+        )
+        if (res) {
+          this.refresh()
+        }
+      } catch (e) {
+        console.log('Error', e)
+      }
+    },
     getImageName() {
       this.eventData.Other.map((id) => {
         this.getOtherImageName(id)
@@ -1235,6 +1283,8 @@ export default {
         const badge = formatGQLResult(data, 'Badge')
         const eventSummary = data.Event.EventGetEventSummery
         this.eventData = event.length > 0 ? event[0] : {}
+        debugger
+        this.updateStepper()
         if (event[0].Images.length > 0) {
           this.getBannerImageName(event[0].Images[0])
         }
