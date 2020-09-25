@@ -1207,6 +1207,11 @@ export default {
         }
       }
     },
+    redirectIntegration() {
+      this.$router.push(
+        `/apps/event/list/Event/integrations?event=${this.$route.params.id}`
+      )
+    },
   },
   apollo: {
     data: {

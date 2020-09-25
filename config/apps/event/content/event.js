@@ -12,6 +12,7 @@ import eventSession from '../gql/eventSession.gql'
 import eventTasks from '../gql/eventTasks.gql'
 import location from '../gql/location.gql'
 import eventRecurringSession from '../gql/eventRecurringSession.gql'
+import getmyconnection from '../gql/getmyconnection.gql'
 import { getData, getLookupData } from '../rest'
 import marketingTemplates from '~/config/apps/admin/gql/marketingTemplates.gql'
 
@@ -4305,6 +4306,87 @@ export default {
         },
       },
       title: 'Invites',
+      type: 'list',
+    },
+    integrations: {
+      ui: {
+        hideDefaultHeader: false,
+        hideDefaultFooter: false,
+        showExpand: false,
+        singleExpand: false,
+        showSelect: false,
+        hideFilter: false,
+        hideSearch: true,
+      },
+      hidden: true,
+      fields: {
+        'MetaData.Category': {
+          displayOrder: 2,
+          caption: 'Category',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '120px',
+          type: 'string',
+        },
+        ServiceId: {
+          displayOrder: 3,
+          caption: 'App Name',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '80px',
+          type: 'string',
+        },
+        Integrate: {
+          displayOrder: 4,
+          caption: 'Integrate',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '180px',
+          type: 'string',
+        },
+        Action: {
+          displayOrder: 5,
+          caption: 'Action',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '180px',
+          type: 'string',
+        },
+      },
+      template: {
+        name: 'eventIntegration-grid',
+        context: {
+          basePath: '/event',
+        },
+        actions: {
+          new: {
+            hidden: true,
+            caption: 'new field',
+          },
+          edit: {
+            hidden: true,
+          },
+          delete: {
+            hidden: true,
+          },
+        },
+      },
+      dataSource: {
+        query: getmyconnection,
+        type: 'graphql',
+        model: 'OrganizationInfo',
+        filter(ctx) {
+          return {
+            where: {
+              'MetaData.eventId': {
+                like: ctx.$route.query.event,
+                options: 'i',
+              },
+            },
+          }
+        },
+      },
+      title: 'Integration',
       type: 'list',
     },
   },

@@ -217,8 +217,10 @@ function getGridTemplateInfo(content, viewName) {
 }
 
 function formatResult(content, viewName, data, modelName) {
+  debugger
   if (!data[modelName]) return []
-  let { edges } = data[modelName][`${modelName}Find`]
+  const [modelApi] = Object.getOwnPropertyNames(data[modelName])
+  let { edges } = data[modelName][`${modelApi}`]
   const fields = getGridFields(content, viewName)
   edges = edges.map(({ node }) => {
     const formattedRecord = {}
@@ -546,6 +548,7 @@ export default {
         }
       },
       update(data) {
+        debugger
         const { content, viewName } = this
         const modelName =
           getModelName(content, viewName) || content.general.name
