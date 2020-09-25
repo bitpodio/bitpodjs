@@ -596,7 +596,7 @@
           <v-spacer></v-spacer>
         </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="eventInvites" :content="content" class="mt-11" />
+        <Grid view-name="eventInvites" :content="content" class="mt-n12" />
       </div>
       <div
         v-if="content"
@@ -710,7 +710,7 @@
         <Grid
           view-name="eventRegistrationForm"
           :content="content"
-          class="mt-n12"
+          class="mt-12"
         />
       </div>
     </v-flex>
