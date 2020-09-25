@@ -167,7 +167,11 @@
           <v-spacer></v-spacer>
         </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="eventInvites" :content="content" class="mt-12" />
+        <Grid
+          view-name="eventInvitesDetails"
+          :content="content"
+          class="mt-12"
+        />
       </div>
     </v-flex>
   </v-flex>
@@ -178,7 +182,6 @@ import gql from 'graphql-tag'
 import format from 'date-fns/format'
 import Grid from '~/components/common/grid'
 import invites from '~/config/apps/event/gql/eventInviteSummary.gql'
-// import eventinvites from '~/config/apps/event/gql/eventInvites.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin } from '~/utility'
 export default {
@@ -191,7 +194,6 @@ export default {
       loading: 0,
       data: {
         invites: {},
-        // eventinvites: {},
       },
     }
   },
