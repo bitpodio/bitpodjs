@@ -16,17 +16,23 @@
         <v-form ref="form" v-model="valid" :lazy-validation="lazy">
           <v-row>
             <v-col cols="12">
-              <v-text-field label="Access Key *" outlined dense></v-text-field>
+              <v-text-field label="URL *" outlined dense></v-text-field>
+            </v-col>
+            <v-col cols="12">
+              <v-text-field label="Host *" outlined dense></v-text-field>
+            </v-col>
+            <v-col cols="12">
+              <v-text-field label="Path *" outlined dense></v-text-field>
+            </v-col>
+            <v-col cols="12">
+              <v-text-field label="Access Key*" outlined dense></v-text-field>
             </v-col>
             <v-col cols="12">
               <v-text-field
-                label="Refresh Token *"
+                label="Access Secret *"
                 outlined
                 dense
               ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field label="URL *" outlined dense></v-text-field>
             </v-col>
           </v-row>
         </v-form>
@@ -50,12 +56,17 @@
 <script>
 export default {
   props: {
-    dynamicnavdialog: {
+    bitpodCRMdialog: {
       default: false,
     },
     onClose: {
       required: true,
       type: Function,
+    },
+  },
+  methods: {
+    close() {
+      this.$emit('update:bitpodCRMdialog', false)
     },
   },
 }

@@ -1,22 +1,26 @@
 <template>
   <div>
-    <v-btn text small @click="onClick(serviceId)">
+    <v-btn text small @click="dynamicnavdialog = true">
       Setup
     </v-btn>
-
-    <dynamicnav :dynamicnavdialog.sync="dynamicnavdialog" />
-    <bitpodCRM :bitpod-c-r-mdialog.sync="bitpodCRMdialog" />
+    <v-dialog
+      v-model="dynamicnavdialog"
+      persistent
+      scrollable
+      content-class="slide-form-default"
+      transition="dialog-bottom-transition"
+    >
+      <div>
+        <component :is="serviceForm || null" :on-close="onClose" />
+      </div>
+    </v-dialog>
   </div>
 </template>
 
 <script>
-import dynamicnav from './dynamicnav.vue'
-import bitpodCRM from './bitpodcrm.vue'
+import { templateLoaderMixin } from '~/utility'
 export default {
-  components: {
-    dynamicnav,
-    bitpodCRM,
-  },
+  mixins: [templateLoaderMixin],
   props: {
     item: {
       type: Object,
@@ -41,15 +45,22 @@ export default {
       bitpodCRMdialog: false,
     }
   },
-
-  methods: {
-    onClick(serviceId) {
-      debugger
-      if (serviceId === 'dynamicNAV') {
-        this.dynamicnavdialog = true
-      } else if (serviceId === 'bitpod') {
-        this.bitpodCRMdialog = true
+  computed: {
+    _components() {
+      const serviceFormName = this.serviceId && this.serviceId.toLowerCase()
+      return {
+        serviceForm: {
+          locations: [
+            `templates/grids/eventIntegration-grid/${serviceFormName}.vue`,
+            `templates/grids/eventIntegration-grid/index.vue`,
+          ],
+        },
       }
+    },
+  },
+  methods: {
+    onClose() {
+      this.dynamicnavdialog = false
     },
   },
 }
