@@ -4,14 +4,16 @@
       <div
         class="xs12 sm8 md8 lg8 boxview pa-3 mr-0 mb-4 pb-2 elevation-1 rounded-lg"
       >
-        <v-flex class="d-flex justify-center align-center pb-1">
-          <div class="text-h4 text-capitalize">
+        <v-flex class="d-flex justify-center align-center pb-0">
+          <div
+            class="text-h4 text-capitalize d-inline-block text-truncate col-md-10 pa-0"
+          >
             {{ data.invites.Title }}
           </div>
           <v-spacer></v-spacer>
-          <div class="mr-2">
+          <div class="mr-2 d-none">
             <v-btn icon small>
-              <v-icon>mdi-dots-vertical</v-icon>
+              <v-icon class="fs-18">fa-trash</v-icon>
             </v-btn>
           </div>
         </v-flex>
@@ -50,7 +52,7 @@
             </div>
             <div class="d-flex flex-column pa-2 event-tile-right greybg">
               <div class="event-tile-value text-truncate">
-                2
+                4
               </div>
               <div class="caption text-truncate">Sent</div>
             </div>
@@ -98,7 +100,7 @@
             </div>
             <div class="d-flex flex-column pa-2 event-tile-right greybg">
               <div class="event-tile-value text-truncate">
-                3
+                1
               </div>
               <div class="caption text-truncate">Bounce</div>
             </div>
@@ -114,7 +116,7 @@
             </div>
             <div class="d-flex flex-column pa-2 event-tile-right greybg">
               <div class="event-tile-value text-truncate">
-                3
+                0
               </div>
               <div class="caption text-truncate">Unsubscribe</div>
             </div>
@@ -130,7 +132,7 @@
             </div>
             <div class="d-flex flex-column pa-2 event-tile-right greybg">
               <div class="event-tile-value text-truncate">
-                0
+                4
               </div>
               <div class="caption text-truncate">Register</div>
             </div>
