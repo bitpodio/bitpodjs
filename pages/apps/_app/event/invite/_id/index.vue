@@ -203,13 +203,6 @@ export default {
     content() {
       return this.contents ? this.contents.Event : null
     },
-    filter() {
-      return {
-        where: {
-          CRMActivityId: this.$route.params.id,
-        },
-      }
-    },
   },
   methods: {
     formatDate(date) {

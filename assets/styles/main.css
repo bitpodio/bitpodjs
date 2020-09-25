@@ -48,7 +48,6 @@ body {
 .Twitter {
   font-size: 0 !important;
   text-transform: capitalize !important;
-  padding-top: 3px !important;
 }
 .Twitter::first-letter {
   font-size: 24px !important;
