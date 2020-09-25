@@ -289,6 +289,9 @@ body {
   width: 30px;
   height: 40px;
 }
+.slide-form-default {
+  min-height: 65% !important;
+  }
 @media (max-width: 600px) {
   .slide-form,
   .slide-form-default {
