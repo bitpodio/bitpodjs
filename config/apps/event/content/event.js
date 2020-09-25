@@ -4411,6 +4411,9 @@ export default {
           edit: {
             hidden: true,
           },
+          delete: {
+            hidden: true,
+          },
         },
       },
       dataSource: {

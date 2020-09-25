@@ -434,7 +434,7 @@
           <v-spacer></v-spacer>
         </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="eventInvites" :content="content" class="mt-12" />
+        <Grid view-name="eventInvites" :content="content" class="mt-n12" />
       </div>
       <div
         v-if="content"
