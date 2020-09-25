@@ -1283,29 +1283,6 @@ export default {
 </script>
 
 <style scoped>
-.event-tile {
-  height: 60px;
-  max-width: 200px;
-  min-width: 200px;
-}
-.event-tile-left {
-  width: 75px;
-  min-width: 75px;
-  height: 60px;
-  border-radius: 4px 0 0 4px;
-}
-.event-tile-left .fa {
-  font-size: 24px;
-  color: #fff;
-}
-.event-tile-right {
-  height: 60px;
-  min-width: 125px;
-  border-radius: 0 4px 4px 0;
-}
-.event-tile-value {
-  font-size: 20px;
-}
 .form-control {
   border: 1px solid #ccc;
   padding: 10px;
