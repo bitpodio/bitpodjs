@@ -233,9 +233,11 @@ function formatResult(content, viewName, data, modelName) {
           : ''
       else formattedRecord[field] = node[field]
     }
+
     formattedRecord.id = getIdFromAtob(node.id)
     return formattedRecord
   })
+  debugger
   return edges
 }
 
@@ -250,7 +252,15 @@ function getGridsProps(content, viewName) {
 }
 
 function getIdFromAtob(encodedId) {
-  return encodedId ? atob(encodedId).split(':')[1] : ''
+  debugger
+  if(!encodedId){
+    return ''
+  }
+  const decodedStr = atob(encodedId)
+  if(decodedStr.split(':')[1]){
+    return decodedStr.split(':')[1]
+  }
+  return encodedId
 }
 
 function buildMutationCreateQuery(modelName) {

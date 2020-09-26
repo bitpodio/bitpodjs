@@ -4344,7 +4344,7 @@ export default {
           columnWidth: '180px',
           type: 'string',
         },
-        Action: {
+        Status: {
           displayOrder: 5,
           caption: 'Action',
           searchEnable: true,

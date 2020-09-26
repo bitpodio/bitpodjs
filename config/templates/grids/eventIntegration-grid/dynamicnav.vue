@@ -16,17 +16,28 @@
         <v-form ref="form" v-model="valid" :lazy-validation="lazy">
           <v-row>
             <v-col cols="12">
-              <v-text-field label="Access Key *" outlined dense></v-text-field>
+              <v-text-field
+                v-model="formData.AccessKey"
+                label="Access Key *"
+                outlined
+                dense
+              ></v-text-field>
             </v-col>
             <v-col cols="12">
               <v-text-field
+                v-model="formData.RefreshToken"
                 label="Refresh Token *"
                 outlined
                 dense
               ></v-text-field>
             </v-col>
             <v-col cols="12">
-              <v-text-field label="URL *" outlined dense></v-text-field>
+              <v-text-field
+                v-model="formData.URL"
+                label="URL *"
+                outlined
+                dense
+              ></v-text-field>
             </v-col>
           </v-row>
         </v-form>
@@ -35,13 +46,7 @@
       <v-card-actions
         class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
       >
-        <v-btn
-          color="primary"
-          :disabled="!valid || !this.controlType"
-          depressed
-          @click.native="onSave"
-          >Save</v-btn
-        >
+        <v-btn color="primary" depressed @click="onSave(formData)">Save</v-btn>
       </v-card-actions>
     </v-card>
   </v-col>
@@ -50,13 +55,32 @@
 <script>
 export default {
   props: {
-    dynamicnavdialog: {
+    dialog: {
       default: false,
     },
     onClose: {
       required: true,
       type: Function,
     },
+    onSave: {
+      required: false,
+      type: Function,
+    },
+    // formData: {
+    //   type: Object,
+    //   default: () => {},
+    //   required: false,
+    // },
+  },
+
+  data() {
+    return {
+      formData: {
+        AccessKey: '',
+        RefreshToken: '',
+        URL: '',
+      },
+    }
   },
 }
 </script>
