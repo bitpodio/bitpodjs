@@ -7,8 +7,15 @@
         {{ snackbarText }}
       </div>
     </v-snackbar>
-    <input v-show="false" type="text" :class="uniqueId" :value="textToCopy" />
-    <v-icon size="18" :class="`${uniqueId}btn`">mdi-content-copy</v-icon>
+    <input
+      v-show="false"
+      type="text"
+      :class="uniqueId ? uniqueId : 'to-copy'"
+      :value="textToCopy"
+    />
+    <v-icon size="30" :class="uniqueId ? `${uniqueId}btn` : 'write-btn'"
+      >mdi-content-copy</v-icon
+    >
   </div>
 </template>
 
@@ -34,18 +41,25 @@ export default {
     }
   },
   mounted() {
-    const writeBtn = document.querySelector(`.${this.uniqueId}btn`)
+    const writeBtn = this.uniqueId
+      ? document.querySelector(`.${this.uniqueId}btn`)
+      : document.querySelector('.write-btn')
     writeBtn.addEventListener('click', this.clickListener)
   },
   beforeDestroy() {
-    const writeBtn = document.querySelector(`.${this.uniqueId}btn`)
+    const writeBtn = this.uniqueId
+      ? document.querySelector(`.${this.uniqueId}btn`)
+      : document.querySelector('.write-btn')
     if (writeBtn) {
       writeBtn.removeEventListener('click', this.clickListener)
     }
   },
   methods: {
     async clickListener() {
-      const inputEl = document.querySelector(`.${this.uniqueId}`)
+      debugger
+      const inputEl = this.uniqueId
+        ? document.querySelector(`.${this.uniqueId}`)
+        : document.querySelector('.to-copy')
       const inputValue = inputEl.value.trim()
       if (inputValue) {
         try {

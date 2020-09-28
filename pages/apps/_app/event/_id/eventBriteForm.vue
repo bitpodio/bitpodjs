@@ -5,8 +5,8 @@
         v-model="eventBriteDialog"
         persistent
         scrollable
-        content-class="slide-form-default"
-        transition="dialog-bottom-transition"
+        max-width="900"
+        max-height="900"
       >
         <v-card>
           <v-card-title
@@ -24,8 +24,30 @@
             class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0 pb-3 text--primary"
           >
             <v-row>
+              <v-col v-if="!allowPublicSearchable" cols="12">
+                <div
+                  v-for="(error, key) in errors"
+                  :key="key"
+                  class="pa-1 text-h5"
+                >
+                  <span class="text-h6">{{ error && error.error }}</span
+                  ><br />
+                  <span class="text--secondary">{{
+                    error && error.error_description
+                  }}</span>
+                </div>
+              </v-col>
+              <v-col cols="12">
+                <span v-if="errorMsg" class="pa-1 text-h6 caption red--text"
+                  >Eventbrite connection is not setup, to use this feature you
+                  must setup connection.
+                  <v-icon @click="errorMsg = false">mdi-close</v-icon>
+                </span>
+              </v-col>
               <v-col class="pt-2">
                 <v-checkbox
+                  v-model="formData.listed"
+                  v-if="allowPublicSearchable"
                   label="Allow the event to be publicly searchable on the Eventbrite website"
                 ></v-checkbox>
               </v-col>
@@ -56,8 +78,10 @@
                   >
                 </v-col>
                 <v-col cols="12" class="eventUrl">
-                  <span>{{ eventUrl }}</span
-                  ><v-icon>mdi-content-copy</v-icon>
+                  <span class="blue--text"
+                    >{{ eventUrl
+                    }}<copy :text-to-copy="getEventBriteWebhookUrl()" />
+                  </span>
                 </v-col>
               </div>
             </v-row>
@@ -70,7 +94,11 @@
 
 <script>
 import nuxtconfig from '~/nuxt.config'
+import copy from '~/components/common/copy'
 export default {
+  components: {
+    copy,
+  },
   props: {
     eventBriteDialog: {
       default: false,
@@ -81,22 +109,46 @@ export default {
       eventUrl: `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Webhooks`,
       formData: {
         eventId: '',
+        listed: '',
       },
+      errorMsg: false,
+      errors: [],
+      allowPublicSearchable: true,
     }
   },
   methods: {
+    reset() {
+      this.allowPublicSearchable = true
+      this.errorMsg = false
+    },
+    getEventBriteWebhookUrl() {
+      const url = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Webhooks`
+      return url
+    },
     close() {
+      this.reset()
       this.$emit('update:eventBriteDialog', false)
     },
     async publishEventBrite() {
       debugger
       this.formData.eventId = this.$route.params.id
-      const res = await this.$axios.$post(
-        `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/eventBrite`,
-        formData
-      )
-      if (res) {
-        this.eventBriteDialog = false
+      try {
+        const res = await this.$axios.$post(
+          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/eventbrite`,
+          this.formData
+        )
+        if (res) {
+          debugger
+          if (res.error) {
+            this.allowPublicSearchable = false
+            this.errors = [...res.error]
+          } else {
+            this.this.eventBriteDialog = false
+          }
+        }
+      } catch (e) {
+        this.errorMsg = true
+        console.log('Error', e)
       }
     },
     webhookEventbrite() {
