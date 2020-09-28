@@ -36,6 +36,7 @@
           :is="serviceForm || null"
           :on-close="onClose"
           :on-save="onSave"
+          :item="formEditData"
         />
       </div>
     </v-dialog>
@@ -68,6 +69,11 @@ export default {
       default: () => {},
       required: false,
     },
+    refresh: {
+      type: Function,
+      default: () => false,
+      required: false,
+    },
   },
   data() {
     debugger
@@ -80,6 +86,7 @@ export default {
       eventId: this.$route.query.event,
       status: this.item.Status,
       itemId: this.item.id,
+      formEditData: this.item.MetaData,
     }
   },
   computed: {
@@ -111,7 +118,9 @@ export default {
       connobj.ProfileId = this.profileId
       connobj.ProfileName = this.profileName
       connobj.MetaData = formData
-
+      if (this.item.id) {
+        connobj.id = this.item.id
+      }
       console.log('--data=', connobj)
       debugger
       try {
@@ -132,9 +141,9 @@ export default {
 
     async onDelete() {
       debugger
-      console.log('+++data item+++',this.item)
-      const id= this.item.id
-      console.log('+++data item+++',this.item)
+      console.log('+++data item+++', this.item)
+      const id = this.item.id
+      console.log('+++data item+++', this.item)
       debugger
       if (id) {
         try {

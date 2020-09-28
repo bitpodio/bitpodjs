@@ -41,13 +41,7 @@
       <v-card-actions
         class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
       >
-        <v-btn
-          color="primary"
-          :disabled="!valid || !this.controlType"
-          depressed
-          @click.native="onSave"
-          >Save</v-btn
-        >
+        <v-btn color="primary" depressed @click.native="onSave">Save</v-btn>
       </v-card-actions>
     </v-card>
   </v-col>

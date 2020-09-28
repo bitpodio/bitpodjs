@@ -253,11 +253,11 @@ function getGridsProps(content, viewName) {
 
 function getIdFromAtob(encodedId) {
   debugger
-  if(!encodedId){
+  if (!encodedId) {
     return ''
   }
   const decodedStr = atob(encodedId)
-  if(decodedStr.split(':')[1]){
+  if (decodedStr.split(':')[1]) {
     return decodedStr.split(':')[1]
   }
   return encodedId

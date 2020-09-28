@@ -55,6 +55,11 @@
 <script>
 export default {
   props: {
+    item: {
+      type: Object,
+      default: () => {},
+      required: false,
+    },
     dialog: {
       default: false,
     },
@@ -67,19 +72,16 @@ export default {
       type: Function,
     },
     // formData: {
-    //   type: Object,
-    //   default: () => {},
-    //   required: false,
+    // type: Object,
+    // default: () => {},
+    // required: false,
     // },
   },
 
   data() {
+    debugger
     return {
-      formData: {
-        AccessKey: '',
-        RefreshToken: '',
-        URL: '',
-      },
+      formData: this.item,
     }
   },
 }
