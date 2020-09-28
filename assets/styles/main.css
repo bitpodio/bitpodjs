@@ -314,6 +314,9 @@ body {
 .event-tile-value {
   font-size: 20px;
 }
+.mxcol-name {
+  max-width: 150px;
+}
 @media (max-width: 600px) {
   .slide-form,
   .slide-form-default {
