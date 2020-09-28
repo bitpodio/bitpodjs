@@ -4401,6 +4401,7 @@ export default {
         },
       },
       template: {
+        name: 'eventInvitesDetails-grid',
         context: {
           basePath: '/event',
         },

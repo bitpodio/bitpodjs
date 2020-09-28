@@ -11,7 +11,12 @@
             {{ data.invites.Title }}
           </div>
           <v-spacer></v-spacer>
-          <div class="mr-2 d-none">
+          <div class="mr-2">
+            <span v-if="data.invites.Status === 'Draft'">
+              <v-btn icon small>
+                <v-icon class="fs-18">fa-pencil</v-icon>
+              </v-btn>
+            </span>
             <v-btn icon small>
               <v-icon class="fs-18">fa-trash</v-icon>
             </v-btn>
@@ -52,7 +57,7 @@
             </div>
             <div class="d-flex flex-column pa-2 event-tile-right greybg">
               <div class="event-tile-value text-truncate">
-                {{ analytics.Sent }}
+                {{ formatField(analytics.Sent) }}
               </div>
               <div class="caption text-truncate">Sent</div>
             </div>
@@ -68,7 +73,7 @@
             </div>
             <div class="d-flex flex-column pa-2 event-tile-right greybg">
               <div class="event-tile-value text-truncate">
-                {{ analytics.Delivered }}
+                {{ formatField(analytics.Delivered) }}
               </div>
               <div class="caption text-truncate">Delivered</div>
             </div>
@@ -84,7 +89,7 @@
             </div>
             <div class="d-flex flex-column pa-2 event-tile-right greybg">
               <div class="event-tile-value text-truncate">
-                {{ analytics.Open }}
+                {{ formatField(analytics.Open) }}
               </div>
               <div class="caption text-truncate">Open</div>
             </div>
@@ -100,7 +105,7 @@
             </div>
             <div class="d-flex flex-column pa-2 event-tile-right greybg">
               <div class="event-tile-value text-truncate">
-                {{ analytics.SpamReport }}
+                {{ formatField(analytics.SpamReport) }}
               </div>
               <div class="caption text-truncate">Bounce</div>
             </div>
@@ -116,7 +121,7 @@
             </div>
             <div class="d-flex flex-column pa-2 event-tile-right greybg">
               <div class="event-tile-value text-truncate">
-                {{ analytics.Unsubscribed }}
+                {{ formatField(analytics.Unsubscribed) }}
               </div>
               <div class="caption text-truncate">Unsubscribe</div>
             </div>
@@ -132,7 +137,7 @@
             </div>
             <div class="d-flex flex-column pa-2 event-tile-right greybg">
               <div class="event-tile-value text-truncate">
-                {{ analytics.isRegistered }}
+                {{ formatField(analytics.isRegistered) }}
               </div>
               <div class="caption text-truncate">Register</div>
             </div>
