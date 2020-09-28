@@ -1,7 +1,7 @@
 <template>
   <v-col class="px-0">
     <v-btn text small @click.stop="onNewClick">
-      <v-icon left>mdi-plus</v-icon> New
+      <v-icon left>mdi-plus</v-icon> {{ actionCaption('new') }}
     </v-btn>
     <v-dialog
       v-model="dialog"
@@ -67,6 +67,7 @@ import {
   formControlsMixin,
   buildEmbededFieldData,
   formTitleMixin,
+  gridActionMixin,
 } from '~/utility/form'
 
 function getFormDefaultValues(content, viewName) {
@@ -87,7 +88,12 @@ function getFormDefaultValues(content, viewName) {
 }
 
 export default {
-  mixins: [formControlsMixin, formValidationMixin, formTitleMixin],
+  mixins: [
+    formControlsMixin,
+    formValidationMixin,
+    formTitleMixin,
+    gridActionMixin,
+  ],
   props: ['content', 'viewName', 'onNewItemSave', 'context'],
   data() {
     const fields = getGridFields(this.content, this.viewName)
