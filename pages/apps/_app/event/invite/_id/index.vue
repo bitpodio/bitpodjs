@@ -57,7 +57,10 @@
             </div>
             <div class="d-flex flex-column pa-2 event-tile-right greybg">
               <div class="event-tile-value text-truncate">
-                {{ analytics.Sent }}
+                <span v-if="data.invites.Status === 'Completed'">
+                  {{ analytics.Sent }}
+                </span>
+                <span v-else>0</span>
               </div>
               <div class="caption text-truncate">Sent</div>
             </div>
@@ -73,7 +76,10 @@
             </div>
             <div class="d-flex flex-column pa-2 event-tile-right greybg">
               <div class="event-tile-value text-truncate">
-                {{ analytics.Delivered }}
+                <span v-if="data.invites.Status === 'Completed'">
+                  {{ analytics.Delivered }}
+                </span>
+                <span v-else>0</span>
               </div>
               <div class="caption text-truncate">Delivered</div>
             </div>
@@ -89,7 +95,10 @@
             </div>
             <div class="d-flex flex-column pa-2 event-tile-right greybg">
               <div class="event-tile-value text-truncate">
-                {{ analytics.Open }}
+                <span v-if="data.invites.Status === 'Completed'">
+                  {{ analytics.Open }}
+                </span>
+                <span v-else>0</span>
               </div>
               <div class="caption text-truncate">Open</div>
             </div>
@@ -105,7 +114,10 @@
             </div>
             <div class="d-flex flex-column pa-2 event-tile-right greybg">
               <div class="event-tile-value text-truncate">
-                {{ analytics.SpamReport }}
+                <span v-if="data.invites.Status === 'Completed'">
+                  {{ analytics.SpamReport }}
+                </span>
+                <span v-else>0</span>
               </div>
               <div class="caption text-truncate">Bounce</div>
             </div>
@@ -121,7 +133,10 @@
             </div>
             <div class="d-flex flex-column pa-2 event-tile-right greybg">
               <div class="event-tile-value text-truncate">
-                {{ analytics.Unsubscribed }}
+                <span v-if="data.invites.Status === 'Completed'">
+                  {{ analytics.Unsubscribed }}
+                </span>
+                <span v-else>0</span>
               </div>
               <div class="caption text-truncate">Unsubscribe</div>
             </div>
@@ -137,7 +152,10 @@
             </div>
             <div class="d-flex flex-column pa-2 event-tile-right greybg">
               <div class="event-tile-value text-truncate">
-                {{ analytics.isRegistered }}
+                <span v-if="data.invites.Status === 'Completed'">
+                  {{ analytics.isRegistered }}
+                </span>
+                <span v-else>0</span>
               </div>
               <div class="caption text-truncate">Register</div>
             </div>
