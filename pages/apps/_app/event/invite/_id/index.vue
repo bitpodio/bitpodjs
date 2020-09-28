@@ -52,7 +52,7 @@
             </div>
             <div class="d-flex flex-column pa-2 event-tile-right greybg">
               <div class="event-tile-value text-truncate">
-                {{ data.analytics.Sent }}
+                {{ analytics.Sent }}
               </div>
               <div class="caption text-truncate">Sent</div>
             </div>
@@ -68,7 +68,7 @@
             </div>
             <div class="d-flex flex-column pa-2 event-tile-right greybg">
               <div class="event-tile-value text-truncate">
-                3
+                {{ analytics.Delivered }}
               </div>
               <div class="caption text-truncate">Delivered</div>
             </div>
@@ -84,7 +84,7 @@
             </div>
             <div class="d-flex flex-column pa-2 event-tile-right greybg">
               <div class="event-tile-value text-truncate">
-                3
+                {{ analytics.Open }}
               </div>
               <div class="caption text-truncate">Open</div>
             </div>
@@ -100,7 +100,7 @@
             </div>
             <div class="d-flex flex-column pa-2 event-tile-right greybg">
               <div class="event-tile-value text-truncate">
-                1
+                {{ analytics.SpamReport }}
               </div>
               <div class="caption text-truncate">Bounce</div>
             </div>
@@ -116,7 +116,7 @@
             </div>
             <div class="d-flex flex-column pa-2 event-tile-right greybg">
               <div class="event-tile-value text-truncate">
-                0
+                {{ analytics.Unsubscribed }}
               </div>
               <div class="caption text-truncate">Unsubscribe</div>
             </div>
@@ -132,7 +132,7 @@
             </div>
             <div class="d-flex flex-column pa-2 event-tile-right greybg">
               <div class="event-tile-value text-truncate">
-                4
+                {{ analytics.isRegistered }}
               </div>
               <div class="caption text-truncate">Register</div>
             </div>
@@ -197,8 +197,8 @@ export default {
       loading: 0,
       data: {
         invites: {},
-        analytics: {},
       },
+      analytics: {},
     }
   },
   computed: {
@@ -256,7 +256,6 @@ export default {
         }/svc/api/EmailAnalytics/aggregate?filter=${JSON.stringify(filter)}`
       )
       if (res) {
-        console.log('Check', res)
         this.analytics = res.data[0]
         return res
       }
