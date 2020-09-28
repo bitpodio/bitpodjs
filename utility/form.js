@@ -9,6 +9,11 @@ import Tags from '~/components/common/form/tags.vue'
 import { _set, _get, isPlainObject } from '~/utility/object'
 
 const FORM_DATE_CONTROLS = ['date', 'datetime']
+const DEFAULT_ACTION_CAPTION = {
+  new: 'New',
+  edit: 'Edit',
+  delete: 'Delete',
+}
 
 function getFormTimeZoneField(fields) {
   const timezoneField = fields.find((field) => field.type === 'timezone')
@@ -163,6 +168,12 @@ export const gridActionMixin = {
       const template = view.template
       const isHidden = _get(template, ['actions', actionType, 'hidden'])
       return !isHidden
+    },
+    actionCaption(actionType) {
+      const view = this.content.views[this.viewName]
+      const template = view.template
+      const actionCaption = _get(template, ['actions', actionType, 'caption'])
+      return actionCaption || DEFAULT_ACTION_CAPTION[actionType]
     },
   },
 }
