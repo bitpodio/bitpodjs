@@ -1056,7 +1056,6 @@ export default {
   },
   methods: {
     updateStepper() {
-      debugger
       const status = this.eventData.Status
       console.log('status1', status)
       if (status === 'Not ready') {
@@ -1070,7 +1069,6 @@ export default {
       }
     },
     async changeStatus(statusName) {
-      debugger
       const url = getApiUrl()
       try {
         const res = await this.$axios.$patch(
