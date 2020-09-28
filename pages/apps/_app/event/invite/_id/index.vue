@@ -11,7 +11,7 @@
             {{ data.invites.Title }}
           </div>
           <v-spacer></v-spacer>
-          <div class="mr-2">
+          <div class="mr-2 invite-actions d-none">
             <span v-if="data.invites.Status === 'Draft'">
               <v-btn icon small>
                 <v-icon class="fs-18">fa-pencil</v-icon>
@@ -311,3 +311,9 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.boxview:hover .invite-actions {
+  display: block !important;
+}
+</style>
