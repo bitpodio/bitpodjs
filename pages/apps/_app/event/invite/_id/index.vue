@@ -52,7 +52,7 @@
             </div>
             <div class="d-flex flex-column pa-2 event-tile-right greybg">
               <div class="event-tile-value text-truncate">
-                4
+                {{ data.analytics.Sent }}
               </div>
               <div class="caption text-truncate">Sent</div>
             </div>
@@ -184,6 +184,7 @@ import gql from 'graphql-tag'
 import format from 'date-fns/format'
 import Grid from '~/components/common/grid'
 import invites from '~/config/apps/event/gql/eventInviteSummary.gql'
+import nuxtconfig from '~/nuxt.config'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin } from '~/utility'
 export default {
@@ -196,6 +197,7 @@ export default {
       loading: 0,
       data: {
         invites: {},
+        analytics: {},
       },
     }
   },
@@ -203,6 +205,64 @@ export default {
     content() {
       return this.contents ? this.contents.Event : null
     },
+  },
+  async mounted() {
+    try {
+      const filter = {
+        filterArray: [
+          {
+            type: 'match',
+            filterQuery: { $and: [{ CRMActivityId: this.$route.params.id }] },
+          },
+          {
+            type: 'group',
+            filterQuery: {
+              _id: '$CRMActivityId',
+              Sent: { $sum: { $cond: [{ $eq: ['$Sent', true] }, 1, 0] } },
+              Unsubscribed: {
+                $sum: { $cond: [{ $eq: ['$Unsubscribed', true] }, 1, 0] },
+              },
+              Open: { $sum: { $cond: [{ $gte: ['$Open', 1] }, 1, 0] } },
+              Delivered: {
+                $sum: { $cond: [{ $eq: ['$Delivered', true] }, 1, 0] },
+              },
+              SpamReport: {
+                $sum: { $cond: [{ $eq: ['$SpamReport', true] }, 1, 0] },
+              },
+              isRegistered: {
+                $sum: { $cond: [{ $eq: ['$isRegistered', true] }, 1, 0] },
+              },
+              Bounce: { $sum: { $cond: [{ $eq: ['$Bounce', true] }, 1, 0] } },
+            },
+          },
+          {
+            type: 'project',
+            filterQuery: {
+              _id: 0,
+              Bounce: 1,
+              Sent: 1,
+              Delivered: 1,
+              Unsubscribed: 1,
+              SpamReport: 1,
+              Open: 1,
+              isRegistered: 1,
+            },
+          },
+        ],
+      }
+      const res = await this.$axios.$get(
+        `https://${
+          nuxtconfig.axios.eventUrl
+        }/svc/api/EmailAnalytics/aggregate?filter=${JSON.stringify(filter)}`
+      )
+      if (res) {
+        console.log('Check', res)
+        this.analytics = res.data[0]
+        return res
+      }
+    } catch (e) {
+      console.log('Error', e)
+    }
   },
   methods: {
     formatDate(date) {
