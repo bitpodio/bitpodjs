@@ -216,7 +216,9 @@
           </v-row>
         </v-card-text>
         <v-divider></v-divider>
-        <v-card-actions class="pl-4">
+        <v-card-actions
+          class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
+        >
           <v-btn :disabled="!valid" color="primary" depressed @click="onSave"
             >Save</v-btn
           >
