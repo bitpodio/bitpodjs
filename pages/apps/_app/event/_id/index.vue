@@ -1057,7 +1057,6 @@ export default {
   methods: {
     updateStepper() {
       const status = this.eventData.Status
-      console.log('status1', status)
       if (status === 'Not ready') {
         this.Status = 1
       } else if (status === 'Open for registration') {
@@ -1081,7 +1080,7 @@ export default {
           this.refresh()
         }
       } catch (e) {
-        console.log('Error', e)
+        console.log(`Error in event/_id/index.vue from method changeStatus Inputs:-statusName:-${statusName}`, e)
       }
     },
     getImageName() {
