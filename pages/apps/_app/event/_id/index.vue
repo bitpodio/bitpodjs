@@ -723,7 +723,7 @@
           </h2>
           <v-spacer></v-spacer>
           <v-btn text small @click.stop="eventForm = true">
-            <v-icon left>fa-pencil</v-icon>Edit
+            <v-icon left class="fs-16">fa-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
         <v-divider></v-divider>
@@ -775,7 +775,7 @@
           </h2>
           <v-spacer></v-spacer>
           <v-btn text small @click="seoForm = true">
-            <v-icon left>fa-pencil</v-icon>Edit
+            <v-icon left class="fs-16">fa-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
         <v-divider></v-divider>
@@ -803,7 +803,7 @@
           </h2>
           <v-spacer></v-spacer>
           <v-btn text small @click="eventSetting = true">
-            <v-icon left>fa-pencil</v-icon>Edit
+            <v-icon left class="fs-16">fa-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
         <v-divider></v-divider>
@@ -907,7 +907,7 @@
           </h2>
           <v-spacer></v-spacer>
           <v-btn text small @click="siteSetting = true">
-            <v-icon left>fa-pencil</v-icon>Edit
+            <v-icon left class="fs-16">fa-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
         <v-divider></v-divider>
