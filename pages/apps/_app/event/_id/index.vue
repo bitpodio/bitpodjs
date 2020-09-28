@@ -1281,7 +1281,6 @@ export default {
         const badge = formatGQLResult(data, 'Badge')
         const eventSummary = data.Event.EventGetEventSummery
         this.eventData = event.length > 0 ? event[0] : {}
-        debugger
         this.updateStepper()
         if (event[0].Images.length > 0) {
           this.getBannerImageName(event[0].Images[0])
