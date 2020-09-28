@@ -1,9 +1,7 @@
 <template>
   <div>
     <v-snackbar v-model="snackbar" :timeout="timeout" top="true" width="10">
-      <div
-        class="toast py-2 pr-1 pl-5 text-h6 light font-weight-regular text-center"
-      >
+      <div class="toast body-1 font-weight-regular text-center">
         {{ snackbarText }}
       </div>
     </v-snackbar>

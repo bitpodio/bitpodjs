@@ -365,7 +365,7 @@
               <div v-if="isEventCreate" class="flex">
                 <div class="py-2">
                   <i
-                    class="fa fa-calendar pa-4 d-inline-flex rounded-circle body-1 primary white--text"
+                    class="fa fa-calendar pa-4 d-inline-flex rounded-circle fs-18 primary white--text"
                     aria-hidden="true"
                   ></i>
                 </div>
@@ -407,7 +407,7 @@
               <div v-if="isEventPublish" class="flex">
                 <div class="py-2">
                   <i
-                    class="fa fa-calendar pa-4 d-inline-flex rounded-circle body-1 primary white--text"
+                    class="fa fa-calendar pa-4 d-inline-flex rounded-circle fs-18 primary white--text"
                     aria-hidden="true"
                   ></i>
                 </div>
