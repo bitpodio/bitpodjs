@@ -1052,7 +1052,7 @@ export default {
           this.refresh()
         }
       } catch (e) {
-        console.log('Error', e)
+        console.log(`Error in event/_id/index.vue from method publishEvent`, e)
       }
     },
     getImageName() {
