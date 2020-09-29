@@ -25,7 +25,7 @@ export default {
   },
   computed: {
     route() {
-      return `/apps/event${this.context.basePath}/${this.item.id}`
+      return `/apps/event${this.context.basePath}/invite/${this.item.id}`
     },
   },
 }

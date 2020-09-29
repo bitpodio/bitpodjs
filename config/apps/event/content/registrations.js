@@ -1157,7 +1157,7 @@ export default {
         },
       },
       template: {
-        name: 'registrationSession-grid',
+        name: 'registrationEmails-grid',
         context: {
           basePath: '/registration',
         },

@@ -13,18 +13,20 @@
       transition="dialog-bottom-transition"
     >
       <template v-slot:activator="{ on, attrs }">
-        <v-btn
-          text
-          small
-          v-bind="attrs"
-          v-on="on"
-          @click="campaignFormDisplayed"
-        >
-          <v-icon dark left>{{
-            template === 'General Template' ? 'mdi-email-outline' : 'mdi-plus'
-          }}</v-icon>
-          {{ buttonLabel }}
-        </v-btn>
+        <v-col class="px-0">
+          <v-btn
+            text
+            small
+            v-bind="attrs"
+            v-on="on"
+            @click="campaignFormDisplayed"
+          >
+            <v-icon dark left>{{
+              template === 'General Template' ? 'mdi-email-outline' : 'mdi-plus'
+            }}</v-icon>
+            {{ buttonLabel }}
+          </v-btn>
+        </v-col>
       </template>
       <template>
         <v-card class="invite-form">
