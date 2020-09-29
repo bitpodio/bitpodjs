@@ -33,6 +33,7 @@
                       :block="true"
                       :open-file-dialog="orgLogo"
                       :value="checkArray"
+                      :hide-preview="true"
                       @input="uploadOrgLogo"
                     />
                     Upload</span

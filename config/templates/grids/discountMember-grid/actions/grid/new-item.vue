@@ -116,6 +116,9 @@ export default {
         if (error.response.status === 422) {
           this.duplicateMessage = 'Already exist member!'
         }
+        console.log(
+          `Error in Discountcode grid add member on Save function - context: offercodeid - ${offerCodeId} , customerId - ${this.customerId}`
+        )
       }
       if (res) {
         this.dialog = false

@@ -1,13 +1,16 @@
 <template>
   <v-col class="px-0">
     <v-btn text small v-bind="attrs" v-on="on" @click="onDelete">
-      <v-icon left>mdi-delete</v-icon>Delete
+      <v-icon left>mdi-delete</v-icon>{{ actionCaption('delete') }}
     </v-btn>
   </v-col>
 </template>
 
 <script>
+import { gridActionMixin } from '~/utility/form'
+
 export default {
+  mixins: [gridActionMixin],
   props: ['content', 'viewName', 'items', 'onDeleteItem', 'context'],
   data() {
     return {

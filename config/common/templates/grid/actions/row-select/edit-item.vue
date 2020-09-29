@@ -9,7 +9,7 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on">
-          <v-icon left>mdi-pencil</v-icon>Edit
+          <v-icon left>mdi-pencil</v-icon>{{ actionCaption('edit') }}
         </v-btn>
       </template>
       <v-card>
@@ -72,10 +72,16 @@ import {
   generateFormData,
   buildEmbededFieldData,
   formTitleMixin,
+  gridActionMixin,
 } from '~/utility/form'
 
 export default {
-  mixins: [formControlsMixin, formValidationMixin, formTitleMixin],
+  mixins: [
+    formControlsMixin,
+    formValidationMixin,
+    formTitleMixin,
+    gridActionMixin,
+  ],
   props: ['content', 'viewName', 'items', 'onUpdateItem', 'context'],
   data() {
     const fields = getGridFields(this.content, this.viewName, true)
