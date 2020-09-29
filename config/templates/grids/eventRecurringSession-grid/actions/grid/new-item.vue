@@ -13,9 +13,6 @@
         </v-btn>
       </template>
       <v-card>
-        <div v-if="timeSlotMessage !== ''" class="red--text pa-3 pt-0 body-1">
-          {{ timeSlotMessage }}
-        </div>
         <v-card-title
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
@@ -61,6 +58,7 @@
                   label="Max Allow*"
                   outlined
                   type="number"
+                  :rules="maxAllowRules"
                   dense
                 ></v-text-field>
               </v-col>
@@ -89,6 +87,12 @@
                   :rules="required"
                 />
               </v-col>
+              <div
+                v-show="timeSlotMessage !== ''"
+                class="red--text pa-3 pt-0 body-1"
+              >
+                {{ timeSlotMessage }}
+              </div>
             </v-row>
             <v-row>
               <v-col cols="12" sm="6" md="4" class="pb-0">
@@ -169,11 +173,17 @@
                 cols="12"
                 class="mt-3"
               >
-                <Lookup
+                <v-autocomplete
                   v-model="session.LocationId"
-                  :field="inPersonMeetingProps"
-                  :rules="personMeetingRules"
-                />
+                  :items="locationLookupOptions"
+                  item-text="Name"
+                  item-value="id"
+                  label="Location"
+                  outlined
+                  dense
+                  class="st-date"
+                  multiple
+                ></v-autocomplete>
               </v-col>
               <v-col
                 v-if="session.LocationType === 'Online meeting'"
@@ -208,8 +218,6 @@
                   for documentation.
                 </div>
               </v-col>
-              <!-- </v-row>
-            <v-row> -->
               <v-col v-if="session.LocationType === 'Custom'" cols="12">
                 <no-ssr>
                   <vue-google-autocomplete
@@ -223,6 +231,12 @@
                     @change="changeAddressData($event)"
                   ></vue-google-autocomplete>
                 </no-ssr>
+                <div
+                  v-show="addresslineMessage !== ''"
+                  class="red--text pa-3 pt-0 body-1"
+                >
+                  {{ addresslineMessage }}
+                </div>
               </v-col>
               <v-col
                 v-if="session.LocationType === 'Custom'"
@@ -323,26 +337,19 @@
                 md="4"
                 class="pb-0"
               >
-                <v-datetime-picker
-                  v-model="session.StartDate"
-                  label="Start Date*"
-                  :text-field-props="startDateProps"
-                >
-                  <template slot="dateIcon">
-                    <v-icon>fas fa-calendar</v-icon>
-                  </template>
-                  <template slot="timeIcon">
-                    <v-icon>fas fa-clock</v-icon>
-                  </template>
-                </v-datetime-picker>
-                <!-- <CustomDate
+                <CustomDate
                   v-model="session.StartDate"
                   label="Start Date*"
                   :field="startDateField"
-                  :rules="startDateRule"
-                  :on-change="changeStartDate"
                   type="date"
-                /> -->
+                  :on-change="changeStartDate"
+                />
+                <div
+                  v-show="startDateMessage !== ''"
+                  class="red--text pa-0 pt-0 body-10 mt-n6"
+                >
+                  {{ startDateMessage }}
+                </div>
               </v-col>
               <v-col
                 v-if="session.ScheduledType === 'Over a date range'"
@@ -350,26 +357,28 @@
                 sm="6"
                 md="4"
               >
-                <v-datetime-picker
-                  v-model="session.EndDate"
-                  label="End Date*"
-                  :text-field-props="endDateProps"
-                >
-                  <template slot="dateIcon">
-                    <v-icon>fas fa-calendar</v-icon>
-                  </template>
-                  <template slot="timeIcon">
-                    <v-icon>fas fa-clock</v-icon>
-                  </template>
-                </v-datetime-picker>
-                <!-- <CustomDate
+                <CustomDate
                   v-model="session.EndDate"
                   label="End Date*"
                   :field="endDateField"
-                  :rules="endDateRule"
-                  :on-change="changeEndDate"
                   type="date"
-                /> -->
+                  :on-change="changeEndDate"
+                />
+                <div
+                  v-show="endDateMessage !== ''"
+                  class="red--text pa-0 pt-0 body-10 mt-n6"
+                >
+                  {{ endDateMessage }}
+                </div>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col cols="12" class="mt-3">
+                <Lookup
+                  v-model="session.SessionTicket"
+                  :field="ticketProps"
+                  :rules="ticketRules"
+                />
               </v-col>
             </v-row>
             <div class="col-md-12 pl-0">
@@ -416,15 +425,14 @@ import gql from 'graphql-tag'
 import { formatGQLResult } from '~/utility/gql.js'
 import strings from '~/strings.js'
 import { required } from '~/utility/rules.js'
-// import { getApiUrl } from '~/utility/index.js'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import location from '~/config/apps/event/gql/location.gql'
 import { getIdFromAtob } from '~/utility'
-// import CustomDate from '~/components/common/form/date.vue'
+import CustomDate from '~/components/common/form/date.vue'
 import { getApiUrl } from '~/utility/index.js'
 export default {
   components: {
-    // CustomDate,
+    CustomDate,
     VueGoogleAutocomplete: () => import('vue-google-autocomplete'),
   },
   props: {
@@ -444,16 +452,24 @@ export default {
       isGroup: false,
       InPersonMeeting: [],
       inPersonMeetingOptions: [],
+      ticketOptions: [],
       customDuration: 15,
       timeSlotMessage: '',
+      addresslineMessage: '',
       requiredRules: [required],
       ScheduledType: 'Over a period of rolling days',
       zoomDocumentLink: strings.ZOOM_DOCUMENT_LINK,
+      startDateMessage: '',
+      endDateMessage: '',
       googleMeetDocumentLink: strings.GOOGLE_MEET_DOCUMENT_LINK,
+      sessionResult: [],
       session: {
         MaxAllow: 5,
         StartDate: '',
         EndDate: '',
+        Duration: '30',
+        ScheduledType: 'Over a period of rolling days',
+        RollingDays: 30,
       },
       venueAddress: {
         AddressLine: '',
@@ -484,12 +500,28 @@ export default {
           return strings.DURATION_RANGE
         },
       ],
+      maxAllowRules: [
+        (v) => {
+          if (!isNaN(parseFloat(v)) && v > 0) {
+            return true
+          }
+          return strings.MAX_ALLOW_MSG
+        },
+      ],
       personMeetingRules: [
         (v) => {
           if (v.length > 0) {
             return true
           }
           return strings.LOCATION_MSG
+        },
+      ],
+      ticketRules: [
+        (v) => {
+          if (v.length > 0) {
+            return true
+          }
+          return strings.TICKET_MSG
         },
       ],
       typeProps: {
@@ -614,55 +646,9 @@ export default {
     }
   },
   computed: {
-    startDateProps() {
-      return {
-        appendIcon: 'fa-calendar',
-        outlined: true,
-        dense: true,
-        rules: [
-          (v) => {
-            const startDate = new Date(v)
-            return startDate > new Date(this.EndDate)
-              ? strings.START_END_DATE
-              : true
-            // const StartDate = v && new Date(v)
-            // const { EndDate } = this.eventData
-            // let startDateMessage = ''
-            // if (!StartDate) startDateMessage = strings.FIELD_REQUIRED
-            // else if (StartDate && EndDate && StartDate > EndDate)
-            //   startDateMessage = strings.EVENT_START_END_DATE
-            // else if (StartDate < new Date())
-            //   startDateMessage = strings.EVENT_START_DATE
-            // else startDateMessage = ''
-            // return startDateMessage || true
-          },
-        ],
-      }
-    },
-    endDateProps() {
-      return {
-        appendIcon: 'fa-calendar',
-        outlined: true,
-        dense: true,
-        rules: [
-          (v) => {
-            const endDate = new Date(v)
-            return new Date(this.StartDate) > endDate
-              ? strings.END_START_DATE
-              : true
-            // const EndDate = v && new Date(v)
-            // const { StartDate } = this.eventData
-            // let endDateMessage = ''
-            // if (!EndDate) endDateMessage = strings.FIELD_REQUIRED
-            // else if (StartDate && EndDate && StartDate > EndDate)
-            //   endDateMessage = strings.EVENT_START_END_DATE
-            // else if (EndDate < new Date())
-            //   endDateMessage = strings.EVENT_END_DATE
-            // else endDateMessage = ''
-            // return endDateMessage || true
-          },
-        ],
-      }
+    locationLookupOptions() {
+      const items = this.inPersonMeetingOptions
+      return items
     },
     inPersonMeetingProps() {
       const items = this.inPersonMeetingOptions
@@ -678,27 +664,41 @@ export default {
         },
       }
     },
-    // startDateField() {
-    //   return {
-    //     appendIcon: 'fa-calendar',
-    //     outlined: true,
-    //     caption: 'Start Date',
-    //     type: 'datetime',
-    //   }
-    // },
-    // endDateField() {
-    //   return {
-    //     appendIcon: 'fa-calendar',
-    //     outlined: true,
-    //     caption: 'End Date',
-    //     type: 'datetime',
-    //   }
-    // },
+    ticketProps() {
+      const items = this.ticketOptions
+      return {
+        type: 'lookup',
+        multiple: true,
+        caption: 'Select tickets for this session',
+        items,
+        dataSource: {
+          items,
+          itemText: 'Code',
+          itemValue: 'id',
+        },
+      }
+    },
+    startDateField() {
+      return {
+        appendIcon: 'fa-calendar',
+        outlined: true,
+        caption: 'Start Date',
+        type: 'date',
+      }
+    },
+    endDateField() {
+      return {
+        appendIcon: 'fa-calendar',
+        outlined: true,
+        caption: 'End Date',
+        type: 'date',
+      }
+    },
     startDateRule() {
       return [
         (v) => {
           const startDate = new Date(v)
-          return startDate > new Date(this.EndDate)
+          return startDate > new Date(this.session.EndDate)
             ? strings.START_END_DATE
             : true
         },
@@ -708,7 +708,7 @@ export default {
       return [
         (v) => {
           const endDate = new Date(v)
-          return new Date(this.StartDate) > endDate
+          return new Date(this.session.StartDate) > endDate
             ? strings.END_START_DATE
             : true
         },
@@ -716,6 +716,45 @@ export default {
     },
   },
   methods: {
+    getMaxEnd(arr) {
+      if (arr.length === 0) return false
+      arr.sort(function (a, b) {
+        if (a.end < b.end) return 1
+        if (a.end > b.end) return -1
+        return 0
+      })
+      return arr[0].end
+    },
+
+    partitionIntoOverlappingRanges(array) {
+      array.sort(function (a, b) {
+        if (a.start < b.start) return -1
+        if (a.start > b.start) return 1
+        return 0
+      })
+
+      const rarray = []
+      let g = 0
+      rarray[g] = [array[0]]
+
+      for (let i = 1, l = array.length; i < l; i++) {
+        if (
+          array[i].start >= array[i - 1].start &&
+          array[i].start < this.getMaxEnd(rarray[g])
+        ) {
+          rarray[g].push(array[i])
+        } else {
+          g++
+          rarray[g] = [array[i]]
+        }
+      }
+      for (let i = 0; i < rarray.length; i++) {
+        if (rarray[i].length > 1) {
+          return true
+        }
+      }
+      return false
+    },
     removeDay(day) {
       let removeIndex
       this.selectedDays.forEach((d, i) => {
@@ -776,14 +815,25 @@ export default {
       }
     },
 
-    // changeStartDate(value) {
-    //   this.$refs.form.validate()
-    // },
-    // changeEndDate(value) {
-    //   this.$refs.form.validate()
-    // },
+    changeStartDate(v) {
+      const startDate = new Date(v)
+      this.startDateMessage =
+        startDate > new Date(this.session.EndDate) ? strings.START_END_DATE : ''
+      if (this.startDateMessage === '') {
+        this.endDateMessage = ''
+      }
+    },
+    changeEndDate(v) {
+      const endDate = new Date(v)
+      this.endDateMessage =
+        new Date(this.session.StartDate) > endDate ? strings.END_START_DATE : ''
+      if (this.endDateMessage === '') {
+        this.startDateMessage = ''
+      }
+    },
     changeAddressData(value) {
-      this.addresslineMessage = value === '' ? strings.FIELD_REQUIRED : ''
+      this.addresslineMessage =
+        value === ' ' || value === '' ? strings.FIELD_REQUIRED : ''
     },
     getAddressData(addressData, placeResultData, id) {
       this.venueAddress.AddressLine =
@@ -797,7 +847,7 @@ export default {
       this.venueAddress.LatLng.lng = addressData.longitude || ''
     },
     changeType(value) {
-      this.MaxAllow = parseInt(this.session.MaxAllow) || 5
+      this.session.MaxAllow = parseInt(this.session.MaxAllow) || 5
       this.isGroup = value === 'Group'
     },
     changeDuration(value) {
@@ -822,66 +872,93 @@ export default {
         this.timeSlotMessage = ''
       }
       if (this.session.LocationType === 'Custom') {
-        this.session._CurrentAddress = this.venueAddress
-      }
-      console.log('==days==', this.days)
-
-      const ObjectID5 = (
-        m = Math,
-        d = Date,
-        h = 16,
-        s = (s) => m.floor(s).toString(h)
-      ) =>
-        s(d.now() / 1000) + ' '.repeat(h).replace(/./g, () => s(m.random() * h))
-      const _Exceptions = this.selectedDays.map((item, key) => {
-        return {
-          id: ObjectID5(),
-          type: 'wday',
-          wday: item,
-          _intervals: [
-            {
-              id: ObjectID5(),
-              from: this.session.StartTime,
-              to: this.session.EndTime,
-            },
-          ],
+        if (this.venueAddress.AddressLine !== '') {
+          this.session._CurrentAddress = this.venueAddress
+        } else {
+          this.addresslineMessage = strings.FIELD_REQUIRED
+          return
         }
+      }
+      const tempData = []
+      this.sessionResult.push({
+        StartTime: this.session.StartTime,
+        EndTime: this.session.EndTime,
       })
-
-      // this.session._Exceptions = Exceptions
-      this.session.RollingDays = parseInt(this.session.RollingDays)
-      this.session.Duration = parseInt(this.session.Duration)
-      this.session.Frequency = parseInt(this.session.Duration)
-      // this.session.isActive = true
-      this.session.EventId = this.$route.params.id
-      console.log('==selectedDays==', this.selectedDays)
-      console.log('==Exceptions==', _Exceptions)
-      const baseUrl = getApiUrl()
-      let res = null
-      let exceptionRes = null
-      try {
-        res = await this.$axios.$post(`${baseUrl}Sessions`, {
-          ...this.session,
+      this.sessionResult.forEach((row) => {
+        let startTime = row.StartTime.replace(':', '.')
+        let endTime = row.EndTime.replace(':', '.')
+        startTime = parseInt(startTime)
+        endTime = parseInt(endTime)
+        const newsObject = { start: startTime, end: endTime }
+        tempData.push(newsObject)
+      })
+      const isInvalidSlot = this.partitionIntoOverlappingRanges(tempData)
+      if (
+        isInvalidSlot === false ||
+        confirm(
+          'This session overlaps with another session, are you sure? click Yes to create and cancel to cancel it.'
+        )
+      ) {
+        const ObjectID5 = (
+          m = Math,
+          d = Date,
+          h = 16,
+          s = (s) => m.floor(s).toString(h)
+        ) =>
+          s(d.now() / 1000) +
+          ' '.repeat(h).replace(/./g, () => s(m.random() * h))
+        const _Exceptions = this.selectedDays.map((item, key) => {
+          return {
+            id: ObjectID5(),
+            type: 'wday',
+            wday: item,
+            _intervals: [
+              {
+                id: ObjectID5(),
+                from: this.session.StartTime,
+                to: this.session.EndTime,
+              },
+            ],
+          }
         })
-      } catch (e) {
-        console.error('Error', e)
-      }
-      if (res) {
+        this.session.RollingDays = parseInt(this.session.RollingDays)
+        this.session.Duration = parseInt(this.session.Duration)
+        this.session.Frequency = parseInt(this.session.Duration)
+        this.session.MaxAllow = parseInt(this.session.MaxAllow)
+        this.session.EventId = this.$route.params.id
+        const baseUrl = getApiUrl()
+        let res = null
+        let exceptionRes = null
         try {
-          exceptionRes = await this.$axios.$patch(
-            `${baseUrl}Sessions/${res.id}`,
-            {
-              _Exceptions,
-            }
-          )
+          res = await this.$axios.$post(`${baseUrl}Sessions`, {
+            ...this.session,
+          })
         } catch (e) {
-          console.error('Error', e)
+          console.log(
+            `Error in Recurring session grid new session form on Save function - context: create Recurring session, eventId - ${this.session.EventId}`
+          )
         }
-      }
-      if (exceptionRes) {
-        this.dialog = false
-        this.refresh()
-        return exceptionRes
+        if (res) {
+          try {
+            exceptionRes = await this.$axios.$patch(
+              `${baseUrl}Sessions/${res.id}`,
+              {
+                _Exceptions,
+              }
+            )
+          } catch (e) {
+            console.log(
+              `Error in Recurring session grid new session form on Save function - context: create Recurring session , Schedules,intervals, eventId - ${this.session.EventId}`
+            )
+          }
+        }
+        if (exceptionRes) {
+          this.dialog = false
+          this.$refs.form.reset()
+          this.isGroup = false
+          this.refresh()
+          return exceptionRes
+        }
       }
     },
   },
@@ -897,11 +974,35 @@ export default {
           filters: {
             where: {},
           },
+          ticketFilters: {
+            where: {
+              Events: this.$route.params.id,
+            },
+          },
+          sessionFilters: {
+            where: {
+              EventId: this.$route.params.id,
+            },
+          },
         }
       },
       update(data) {
         const locationResult = formatGQLResult(data, 'Location')
-        this.inPersonMeetingOptions = locationResult.map(({ id, ...rest }) => ({
+        const ticketResult = formatGQLResult(data, 'Ticket')
+        this.sessionResult = formatGQLResult(data, 'Session')
+        const locId = []
+        this.inPersonMeetingOptions = locationResult.map(({ id, ...rest }) => {
+          const decryptedId = getIdFromAtob(id)
+          if (rest.Default) {
+            locId.push(decryptedId)
+          }
+          return {
+            id: decryptedId,
+            ...rest,
+          }
+        })
+        this.session.LocationId = locId
+        this.ticketOptions = ticketResult.map(({ id, ...rest }) => ({
           id: getIdFromAtob(id),
           ...rest,
         }))
