@@ -50,14 +50,19 @@ export const templateLoaderMixin = {
   },
 }
 
-export function getApiUrl() {
-  let apiURL = ''
+export function getCurrentOrigin() {
+  let currentOrigin = ''
   if (window.location.origin.includes('localhost')) {
-    apiURL = `https://${nuxtconfig.axios.backendBaseUrl}${nuxtconfig.axios.apiEndpoint}`
+    currentOrigin = `https://${nuxtconfig.axios.backendBaseUrl}`
   } else {
-    apiURL = `${window.location.origin}${nuxtconfig.axios.apiEndpoint}`
+    currentOrigin = `${window.location.origin}`
   }
-  return apiURL
+  return currentOrigin
+}
+
+export function getApiUrl() {
+  const currentOrigin = getCurrentOrigin()
+  return `${currentOrigin}${nuxtconfig.axios.apiEndpoint}`
 }
 
 export function getGridTemplateInfo(content, viewName) {

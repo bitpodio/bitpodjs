@@ -7,7 +7,7 @@
   </div>
 </template>
 <script>
-import { getApiUrl } from '~/utility'
+import { getApiUrl, getCurrentOrigin } from '~/utility'
 const layoutWithType = {
   shapes: [],
   groups: {
@@ -37,13 +37,14 @@ const layoutWithType = {
 
 export default {
   data() {
+    const seatmapUrl = getCurrentOrigin()
     return {
       snackbarText: '',
       snackbar: false,
       timeout: 1000,
       seatmapData: null,
       loading: false,
-      iframe: { src: 'https://event.test.bitpod.io/seatmap', loaded: false },
+      iframe: { src: seatmapUrl, loaded: false },
     }
   },
   mounted() {
