@@ -9,7 +9,6 @@ import startOfDay from 'date-fns/startOfDay'
 import endOfDay from 'date-fns/endOfDay'
 import MissingComponent from './missing-component.vue'
 import nuxtconfig from '~/nuxt.config'
-import { _isUndefined } from '~/utility/object'
 
 export function importTemplate(templatePath) {
   return () => import(`~/config/${templatePath}`)
@@ -53,7 +52,10 @@ export const templateLoaderMixin = {
 
 export function getCurrentOrigin() {
   let currentOrigin = ''
-  if (_isUndefined(window) || !window.location.origin.includes('localhost')) {
+  if (
+    typeof window === 'undefined' ||
+    !window.location.origin.includes('localhost')
+  ) {
     currentOrigin = `https://${nuxtconfig.axios.backendBaseUrl}`
   } else {
     currentOrigin = `${window.location.origin}`
