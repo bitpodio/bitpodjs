@@ -44,7 +44,7 @@ export default {
       timeout: 1000,
       seatmapData: null,
       loading: false,
-      iframe: { src: seatmapUrl, loaded: false },
+      iframe: { src: `${seatmapUrl}/seatmap`, loaded: false },
     }
   },
   mounted() {
