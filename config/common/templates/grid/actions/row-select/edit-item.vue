@@ -9,7 +9,8 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on">
-          <v-icon left>mdi-pencil</v-icon>{{ actionCaption('edit') }}
+          <v-icon left class="fs-16">fa-pencil</v-icon
+          >{{ actionCaption('edit') }}
         </v-btn>
       </template>
       <v-card>
