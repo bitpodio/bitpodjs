@@ -14,7 +14,15 @@ export default {
   components: {
     JoditEditor,
   },
-  props: ['value', 'field', 'isInvitee', 'isGeneral', 'showTemplateDropdown'],
+  props: [
+    'value',
+    'field',
+    'isInvitee',
+    'isGeneral',
+    'showTemplateDropdown',
+    'isBadge',
+    'isEditBadge',
+  ],
   data() {
     return {
       content: this.value || '',
@@ -96,6 +104,18 @@ export default {
                 'Attendee List': 'attendeeList',
                 'Payment Details': 'paymentDetails',
               }
+              const badgeFields = {
+                Category: 'Category',
+                'First Name': 'Registration.FirstName',
+                'Last Name': 'Registration.LastName',
+                'First  Name': 'FirstName',
+                'Last  Name': 'LastName',
+                'Full  Name': 'FullName',
+                Organization: 'Organization',
+                'Event  Name': 'EventName',
+                Logo: 'Logo',
+                QRCode: 'QRCode',
+              }
               const socialFields = {
                 'Organization Facebook': {
                   icon:
@@ -120,6 +140,8 @@ export default {
                 const key = currentOption.control.args[1]
                 if (modelFields[key]) {
                   editor.selection.insertHTML('${' + modelFields[key] + '}')
+                } else if (badgeFields[key]) {
+                  editor.selection.insertHTML('{{ ' + badgeFields[key] + ' }}')
                 } else if (socialFields[key]) {
                   const { icon, modelField, title } = socialFields[key]
                   editor.selection.insertHTML(
@@ -145,6 +167,12 @@ export default {
                 } else if (key === 'Register') {
                   editor.selection.insertHTML(
                     `${`<a href="`}\${hostURL}${`/events/`}\${Event.id}" target="_blank">Register</a>`
+                  )
+                } else if (key === 'QRCode') {
+                  const qrCode =
+                    'https://www.qrcode-monkey.com/img/default-preview-qr.svg'
+                  editor.selection.insertHTML(
+                    `<img src="${qrCode}" "style"="max-width:200px;height:auto" class="img-responsive"/>`
                   )
                 }
               }
@@ -173,6 +201,24 @@ export default {
         'Contact Last Name': 'Contact Last Name',
         'Contact Email': 'Contact Email',
       },
+      badgeButtons: {
+        'First Name': 'First  Name',
+        'Last Name': 'Last  Name',
+        'Full Name': 'Full  Name',
+        Category: 'Category',
+        'Event Name': 'Event  Name',
+        Organization: 'Organization',
+        Logo: 'Logo',
+        QRCode: 'QRCode',
+      },
+      editBadgeButtons: {
+        'First Name': 'First  Name',
+        'Last Name': 'Last  Name',
+        'Full Name': 'Full  Name',
+        Category: 'Category',
+        'Event Name': 'Event  Name',
+        Organization: 'Organization',
+      },
     }
   },
   watch: {
@@ -196,6 +242,12 @@ export default {
         'Last Name': 'Last Name',
         'Full Name': 'Full Name',
       })
+    }
+    if (this.isBadge) {
+      this._data.config.extraButtons[0].list = { ...this.badgeButtons }
+    }
+    if (this.isEditBadge) {
+      this._data.config.extraButtons[0].list = { ...this.editBadgeButtons }
     }
     if (!this.showTemplateDropdown) {
       delete this.config.extraButtons

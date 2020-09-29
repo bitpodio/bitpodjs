@@ -1,0 +1,14 @@
+query($filters: JSON) {
+  Badge {
+    BadgeFind(filter: $filters) {
+      edges {
+        node {
+          id
+          Category
+          Template
+          Size
+        }
+      }
+    }
+  }
+}
