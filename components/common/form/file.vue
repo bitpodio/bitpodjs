@@ -1,28 +1,30 @@
 <template>
-  <div v-show="field.caption" style="position: relative;">
-    <h3
-      class="font-weight-regular"
-      style="position: absolute; top: -12px; left: 8px;"
-    >
-      {{ field.caption }}
-    </h3>
-    <v-btn
-      class="blue white--text uploadFile"
-      small
-      :disabled="allowSecondUpload"
-      @click="uploadClicked"
-      >{{ this.label ? this.label : 'Upload' }}</v-btn
-    >
-    <v-file-input
-      v-if="!allowSecondUpload"
-      ref="test"
-      class="pl-2"
-      :multiple="field && field.multiple"
-      :rules="rules"
-      :hide-input="true"
-      prepend-icon="mdi-cloud-upload"
-      @change="onChange"
-    ></v-file-input>
+  <div>
+    <div v-show="field.caption" style="position: relative;">
+      <h3
+        class="font-weight-regular"
+        style="position: absolute; top: -12px; left: 8px;"
+      >
+        {{ field.caption }}
+      </h3>
+      <v-btn
+        class="blue white--text uploadFile"
+        small
+        :disabled="allowSecondUpload"
+        @click="uploadClicked"
+        >{{ label }}</v-btn
+      >
+      <v-file-input
+        v-if="!allowSecondUpload"
+        ref="test"
+        class="pl-2"
+        :multiple="field && field.multiple"
+        :rules="rules"
+        :hide-input="true"
+        prepend-icon="mdi-cloud-upload"
+        @change="onChange"
+      ></v-file-input>
+    </div>
     <div v-if="!hidePreview" :class="{ 'pt-12': allowSecondUpload }">
       <div
         v-for="file in files"
@@ -32,7 +34,9 @@
         <v-icon class="float-right" @click="deleteFile(file.id)"
           >mdi-close</v-icon
         >
-        <a :href="getAttachmentLink(file.id, true)">{{ file.name }}</a>
+        <a class="text-h7" :href="getAttachmentLink(file.id, true)">{{
+          file.name
+        }}</a>
       </div>
     </div>
   </div>
@@ -43,13 +47,26 @@ import nuxtconfig from '~/nuxt.config'
 export default {
   mixins: [formFieldMixin],
   props: {
-    value: {},
-    field: {},
-    rules: {},
-    hidePreview: {},
-    label: {},
-    noBtnLook: {},
-    block: {},
+    value: {
+      type: Array,
+      default: () => [],
+    },
+    field: {
+      type: Object,
+      default: () => {},
+    },
+    rules: {
+      type: Array,
+      default: () => [],
+    },
+    hidePreview: {
+      type: Boolean,
+      default: false,
+    },
+    label: {
+      type: String,
+      default: 'Upload',
+    },
     openFileDialog: {
       type: Boolean,
       default: () => false,
@@ -63,14 +80,12 @@ export default {
   },
   computed: {
     allowSecondUpload() {
-      return !this.field.multiple && !!this.value && !!this.value.length
+      return !this.field.multiple && !!this.value.length
     },
   },
   watch: {
     openFileDialog(newVal, oldVal) {
-      if (newVal === true) {
-        this.uploadClicked()
-      }
+      this.uploadClicked()
     },
     value(newVal, oldVal) {
       if (newVal !== oldVal) {
@@ -79,7 +94,7 @@ export default {
     },
   },
   async mounted() {
-    if (this.value && this.value.length) {
+    if (this.value.length) {
       const fileDetailPromises = this.value.map((id) => this.getFileDetails(id))
       const fileDetails = await Promise.all(fileDetailPromises)
       this.files = fileDetails.map(({ data }) => {

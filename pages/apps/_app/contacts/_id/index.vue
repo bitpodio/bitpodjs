@@ -71,8 +71,9 @@
         <v-divider></v-divider>
         <Grid
           view-name="contactRegistration"
-          :content="content"
           class="mt-n12"
+          :content="content"
+          :filter="filter"
         />
       </div>
       <div
@@ -102,6 +103,19 @@
         </v-flex>
         <v-divider></v-divider>
         <Grid view-name="contactEmails" :content="content" class="mt-n12" />
+      </div>
+      <div
+        class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-comments-alt pr-1" aria-hidden="true"></i>
+            Notes
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
+        <v-divider></v-divider>
+        <Notes model-name="Contacts" />
       </div>
     </v-flex>
     <v-flex column xs12 sm4 md4 lg4>
@@ -235,12 +249,14 @@
 import gql from 'graphql-tag'
 import format from 'date-fns/format'
 import Grid from '~/components/common/grid'
+import Notes from '~/components/common/notes'
 import contact from '~/config/apps/event/gql/contact.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin } from '~/utility'
 export default {
   components: {
     Grid,
+    Notes,
   },
   mixins: [configLoaderMixin],
   data() {
@@ -255,13 +271,13 @@ export default {
     content() {
       return this.contents ? this.contents.Contacts : null
     },
-    // filter() {
-    //   return {
-    //     where: {
-    //       Email: this.contact.Email,
-    //     },
-    //   }
-    // },
+    filter() {
+      return {
+        where: {
+          Email: this.data.contact && this.data.contact.Email,
+        },
+      }
+    },
   },
   methods: {
     formatDate(date) {

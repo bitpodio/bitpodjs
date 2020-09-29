@@ -1,0 +1,21 @@
+query($filters: JSON) {
+  Event {
+    EventFind(filter: $filters) {
+      edges {
+        node {
+          id
+          MySpeakers
+          EventSpeakers{
+            edges{
+              node{
+                id
+                FirstName
+                LastName
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

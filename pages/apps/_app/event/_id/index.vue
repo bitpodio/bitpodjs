@@ -64,52 +64,61 @@
           {{ formatField(data.event.Timezone) }}
         </v-chip>
         <v-flex>
-          <p class="blue--text body-2">
-            <i class="fa fa-map-marker" aria-hidden="true"></i>
-            <a
-              v-if="
-                data &&
-                data.event &&
-                data.event._VenueAddress &&
-                data.event._VenueAddress.AddressLine &&
-                !data.event._VenueAddress.AddressLine.includes(
-                  data.event.VenueName
-                )
-              "
-              class="blue--text"
-            >
-              {{ formatAddressField(data.event.VenueName) }}
-            </a>
-            <a class="blue--text">
-              {{
-                formatAddressField(
+          <div
+            v-if="data.event.LocationType === 'Online Event'"
+            class="pb-1"
+            @click="viewRegistration"
+          >
+            <a>{{ viewRegistrationLink() }}</a>
+          </div>
+          <div v-else>
+            <p class="blue--text body-2">
+              <i class="fa fa-map-marker" aria-hidden="true"></i>
+              <a
+                v-if="
+                  data &&
+                  data.event &&
                   data.event._VenueAddress &&
-                    data.event._VenueAddress.AddressLine
-                )
-              }}
-              {{
-                formatAddressField(
-                  data.event._VenueAddress && data.event._VenueAddress.City
-                )
-              }}
-              {{
-                formatAddressField(
-                  data.event._VenueAddress && data.event._VenueAddress.State
-                )
-              }}
-              {{
-                formatAddressField(
-                  data.event._VenueAddress && data.event._VenueAddress.Country
-                )
-              }}
-              {{
-                formatAddressField(
-                  data.event._VenueAddress &&
-                    data.event._VenueAddress.PostalCode
-                )
-              }}
-            </a>
-          </p>
+                  data.event._VenueAddress.AddressLine &&
+                  !data.event._VenueAddress.AddressLine.includes(
+                    data.event.VenueName
+                  )
+                "
+                class="blue--text"
+              >
+                {{ formatAddressField(data.event.VenueName) }}
+              </a>
+              <a class="blue--text">
+                {{
+                  formatAddressField(
+                    data.event._VenueAddress &&
+                      data.event._VenueAddress.AddressLine
+                  )
+                }}
+                {{
+                  formatAddressField(
+                    data.event._VenueAddress && data.event._VenueAddress.City
+                  )
+                }}
+                {{
+                  formatAddressField(
+                    data.event._VenueAddress && data.event._VenueAddress.State
+                  )
+                }}
+                {{
+                  formatAddressField(
+                    data.event._VenueAddress && data.event._VenueAddress.Country
+                  )
+                }}
+                {{
+                  formatAddressField(
+                    data.event._VenueAddress &&
+                      data.event._VenueAddress.PostalCode
+                  )
+                }}
+              </a>
+            </p>
+          </div>
         </v-flex>
 
         <v-flex d-flex flex-md-row flex-lg-row my-2 class="event-cards">
@@ -217,7 +226,7 @@
         </v-flex>
       </div>
       <div
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-0">
@@ -292,23 +301,23 @@
         <v-card
           v-for="image in data.event.Images"
           :key="image"
-          class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0 cardImg"
+          class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0 cardImg rounded cursorPointer"
           :class="{ 'on-hover': hover }"
         >
           <span class="cardDelete">
-            <v-icon class="pa-1" text @click="deleteBannerFile(e, image)"
-              >mdi-delete</v-icon
-            >
+            <i
+              class="fa-trash pa-2 cursorPointer"
+              @click="deleteBannerFile(e, image)"
+            ></i>
           </span>
           <v-img
             :src="getAttachmentLink(image, true)"
             :lazy-src="getAttachmentLink(image, true)"
             aspect-ratio="1"
-            class="grey lighten-2"
+            class="rounded"
             max-width="150"
             max-height="150"
             width="150"
-            contain
             @click.stop="bannerDialog = true"
           >
             <template v-slot:placeholder>
@@ -354,8 +363,9 @@
                   :src="getAttachmentLink(image, true)"
                   :lazy-src="getAttachmentLink(image, true)"
                   aspect-ratio="1"
-                  class="grey lighten-2"
+                  class="white"
                   width="100%"
+                  contain
                 >
                   <template v-slot:placeholder>
                     <v-row
@@ -377,16 +387,19 @@
         <v-card
           v-for="image in data.event.Logo"
           :key="image"
-          class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0 cardImg"
+          class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0 cardImg rounded"
         >
           <span class="cardDelete">
-            <v-icon text @click="deleteLogoFile(image)">mdi-delete</v-icon>
+            <i
+              class="fa-trash pa-2 cursorPointer"
+              @click="deleteLogoFile(image)"
+            ></i>
           </span>
           <v-img
             :src="getAttachmentLink(image, true)"
             :lazy-src="getAttachmentLink(image, true)"
             aspect-ratio="1"
-            class="grey lighten-2"
+            class="rounded white"
             max-width="150"
             max-height="150"
             width="150"
@@ -435,8 +448,9 @@
                   :src="getAttachmentLink(image, true)"
                   :lazy-src="getAttachmentLink(image, true)"
                   aspect-ratio="1"
-                  class="grey lighten-2"
+                  class="white"
                   width="100%"
+                  contain
                 >
                   <template v-slot:placeholder>
                     <v-row
@@ -458,16 +472,19 @@
         <v-card
           v-for="(image, index) in eventData.Other"
           :key="image"
-          class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0 cardImg"
+          class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0 cardImg rounded"
         >
           <span class="cardDelete">
-            <v-icon text @click="deleteOtherFile(image)">mdi-delete</v-icon>
+            <i
+              class="fa-trash pa-2 cursorPointer"
+              @click="deleteOtherFile(image)"
+            ></i>
           </span>
           <v-img
             :src="getAttachmentLink(image, true)"
             :lazy-src="getAttachmentLink(image, true)"
             aspect-ratio="1"
-            class="grey lighten-2"
+            class="rounded"
             max-width="150"
             max-height="150"
             width="150"
@@ -514,7 +531,7 @@
                   :src="getAttachmentLink(image, true)"
                   :lazy-src="getAttachmentLink(image, true)"
                   aspect-ratio="1"
-                  class="grey lighten-2"
+                  class="white"
                   width="100%"
                   contain
                 >
@@ -579,7 +596,7 @@
           <v-spacer></v-spacer>
         </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="eventInvites" :content="content" class="mt-11" />
+        <Grid view-name="eventInvites" :content="content" class="mt-n12" />
       </div>
       <div
         v-if="content"
@@ -693,7 +710,7 @@
         <Grid
           view-name="eventRegistrationForm"
           :content="content"
-          class="mt-n12"
+          class="mt-12"
         />
       </div>
     </v-flex>
@@ -706,7 +723,7 @@
           </h2>
           <v-spacer></v-spacer>
           <v-btn text small @click.stop="eventForm = true">
-            <v-icon left>fa-pencil</v-icon>Edit
+            <v-icon left class="fs-16">fa-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
         <v-divider></v-divider>
@@ -784,7 +801,7 @@
           </h2>
           <v-spacer></v-spacer>
           <v-btn text small @click="seoForm = true">
-            <v-icon left>fa-pencil</v-icon>Edit
+            <v-icon left class="fs-16">fa-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
         <v-divider></v-divider>
@@ -812,7 +829,7 @@
           </h2>
           <v-spacer></v-spacer>
           <v-btn text small @click="eventSetting = true">
-            <v-icon left>fa-pencil</v-icon>Edit
+            <v-icon left class="fs-16">fa-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
         <v-divider></v-divider>
@@ -916,7 +933,7 @@
           </h2>
           <v-spacer></v-spacer>
           <v-btn text small @click="siteSetting = true">
-            <v-icon left>fa-pencil</v-icon>Edit
+            <v-icon left class="fs-16">fa-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
         <v-divider></v-divider>
@@ -1282,6 +1299,10 @@ export default {
         console.log('Error', e)
       }
     },
+    viewRegistrationLink() {
+      const regUrl = `https://${nuxtconfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
+      return regUrl
+    },
     formatDate(date) {
       return date ? format(new Date(date), 'PPpp') : ''
     },
@@ -1406,29 +1427,6 @@ export default {
 </script>
 
 <style scoped>
-.event-tile {
-  height: 60px;
-  max-width: 200px;
-  min-width: 200px;
-}
-.event-tile-left {
-  width: 75px;
-  min-width: 75px;
-  height: 60px;
-  border-radius: 4px 0 0 4px;
-}
-.event-tile-left .fa {
-  font-size: 24px;
-  color: #fff;
-}
-.event-tile-right {
-  height: 60px;
-  min-width: 125px;
-  border-radius: 0 4px 4px 0;
-}
-.event-tile-value {
-  font-size: 20px;
-}
 .form-control {
   border: 1px solid #ccc;
   padding: 10px;

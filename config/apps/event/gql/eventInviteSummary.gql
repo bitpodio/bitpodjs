@@ -1,0 +1,62 @@
+query($filters: JSON, $where: JSON) {
+  CRMActivity {
+    CRMActivityFind(filter: $filters) {
+      edges {
+        node {
+          id
+          SurveyName
+          SurveyId
+          Action
+          Day
+          Time
+          Timezone
+          PreviousEmailCondition
+          RegistrationCondition
+          SendCondition
+          Priority
+          Category
+          Description
+          DueDate
+          RelatedType
+          ScheduleType
+          StartDate
+          Status
+          TemplateName
+          Title
+          Type
+          EndDate
+          IncludeRegister
+          Location
+          Owner
+          SenderName
+          ReplyTo
+          Body
+          Name
+          orgId
+          createdDate
+          createdBy
+          modifiedDate
+          modifiedBy
+          AttachmentId
+          ContactId
+          EventId
+          ParentId
+          OrganizationInfoId
+          Registrations
+          RegistrationId
+          _Comments {
+            id
+            Notes
+            createdDate
+            createdBy
+            modifiedDate
+            modifiedBy
+            AttachmentId
+          }
+          TemplateId
+        }
+      }
+    }
+    CRMActivityCount(where: $where)
+  }
+}

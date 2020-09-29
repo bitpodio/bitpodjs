@@ -10,6 +10,7 @@
       multiple
       append-icon
       chips
+      small-chips
       deletable-chips
       class="tag-input"
       :search-input.sync="search"

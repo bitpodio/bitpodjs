@@ -6,6 +6,7 @@ query($filters: JSON, $where: JSON) {
           id
           Email
           EventName
+          EventId
           FirstName
           TotalAmount
           TicketQuantity
@@ -24,6 +25,7 @@ query($filters: JSON, $where: JSON) {
           PaymentMethod
           CheckIn
           Phone
+          TicketId
           RegistrationId
           Status
           createdDate
