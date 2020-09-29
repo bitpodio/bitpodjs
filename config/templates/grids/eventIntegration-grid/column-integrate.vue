@@ -1,29 +1,18 @@
 <template>
   <div>
-    <v-menu left :offset-y="offset" transition="slide-y-transition">
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn icon small v-bind="attrs" v-on="on">
-          <v-icon>mdi-dots-vertical</v-icon>
-        </v-btn>
-      </template>
-      <v-list dense>
-        <v-list-item v-if="status != 'Connected'" @click="dialog = true">
-          <v-list-item-content>
-            <v-list-item-title>Setup</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item v-if="status === 'Connected'" @click="dialog = true">
-          <v-list-item-content>
-            <v-list-item-title>Edit</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-        <v-list-item v-if="status === 'Connected'" @click="onDelete()">
-          <v-list-item-content>
-            <v-list-item-title>Delete</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-menu>
+    <v-btn v-if="status === ''" text @click="dialog = true">Setup</v-btn>
+    <v-btn
+      v-if="status === 'Connected' || status === 'Disconnected'"
+      icon
+      @click="dialog = true"
+      ><v-icon>fa-pencil</v-icon></v-btn
+    >
+    <v-btn
+      v-if="status === 'Connected' || status === 'Disconnected'"
+      icon
+      @click="onDelete()"
+      ><v-icon>fa-trash</v-icon></v-btn
+    >
     <v-dialog
       v-model="dialog"
       persistent
@@ -84,7 +73,7 @@ export default {
       profileName: this.item.ProfileName,
       profileId: this.$auth.$state.user.data.email,
       eventId: this.$route.query.event,
-      status: this.item.Status,
+      status: this.item.Status || '',
       itemId: this.item.id,
       formEditData: this.item.MetaData,
     }
@@ -106,6 +95,7 @@ export default {
   methods: {
     onClose() {
       debugger
+      this.item={}
       this.dialog = false
     },
     async onSave(formData) {

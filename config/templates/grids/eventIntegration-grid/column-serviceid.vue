@@ -1,13 +1,18 @@
 <template>
-  <div>
-    <v-img
-      :src="imageUrl"
-      aspect-ratio="1"
-      min-height="55"
-      max-height="55"
-      contain
-    ></v-img>
-    {{ value }}
+  <div class="d-flex flex-column ma-1">
+    <div>
+      <v-img
+        :src="imageUrl"
+        aspect-ratio="0.75"
+        height="50"
+        max-height="50"
+        position="left"
+        contain
+      ></v-img>
+    </div>
+    <div style="font-size: 12px">
+      {{ profileName }}
+    </div>
   </div>
 </template>
 
@@ -33,6 +38,7 @@ export default {
   data() {
     return {
       imageUrl: this.item.MetaData.Image,
+      profileName: this.item.ProfileName,
     }
   },
 }

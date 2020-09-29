@@ -7,7 +7,7 @@
         <h2 class="black--text pt-10 pb-9">Edit Setting</h2>
         <v-spacer></v-spacer>
         <div>
-          <v-btn icon @click.native="onReset">
+          <v-btn icon @click.native="onClose">
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </div>
@@ -17,34 +17,7 @@
           <v-row>
             <v-col cols="12">
               <v-text-field
-                v-model="formData.URL"
-                label="URL *"
-                :rules="required"
-                outlined
-                dense
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                v-model="formData.Host"
-                label="Host *"
-                :rules="required"
-                outlined
-                dense
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                v-model="formData.Path"
-                label="Path *"
-                :rules="required"
-                outlined
-                dense
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                v-model="formData.AccessKeyId"
+                v-model="formData.AccessKey"
                 label="Access Key *"
                 :rules="required"
                 outlined
@@ -53,8 +26,17 @@
             </v-col>
             <v-col cols="12">
               <v-text-field
-                v-model="formData.AccessSecret"
-                label="Access Secret *"
+                v-model="formData.Token"
+                label="Token *"
+                :rules="required"
+                outlined
+                dense
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12">
+              <v-text-field
+                v-model="formData.URL"
+                label="URL *"
                 :rules="required"
                 outlined
                 dense
@@ -108,14 +90,6 @@ export default {
       required: [required],
       formData: this.item,
     }
-  },
-
-  methods: {
-    onReset() {
-      debugger
-     this.formData={}
-     this.onClose()
-    },
   },
 }
 </script>

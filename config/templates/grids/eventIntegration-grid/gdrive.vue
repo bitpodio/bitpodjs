@@ -4,21 +4,25 @@
       <v-card-title
         class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
       >
-        <h2 class="black--text pt-10 pb-9">Edit Setting</h2>
+        <h2 class="black--text pt-10 pb-9">Google Drive Setup</h2>
         <v-spacer></v-spacer>
         <div>
-          <v-btn icon @click.native="onReset">
+          <v-btn icon @click.native="onClose">
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </div>
       </v-card-title>
       <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
         <v-form ref="form" v-model="valid" :lazy-validation="lazy">
+          To integrate with google drive, you will need to authenticate using
+          google drive credentials, click button below to go to google drive
+          login site and login with account you want to use for this
+          integration.
           <v-row>
             <v-col cols="12">
               <v-text-field
-                v-model="formData.URL"
-                label="URL *"
+                v-model="formData.maxFileSize"
+                label="Max File Size Allowed (in bytes) *"
                 :rules="required"
                 outlined
                 dense
@@ -26,8 +30,8 @@
             </v-col>
             <v-col cols="12">
               <v-text-field
-                v-model="formData.Host"
-                label="Host *"
+                v-model="formData.fileExtention"
+                label="File Extentions Allowed(eg, csv,txt,xls) *"
                 :rules="required"
                 outlined
                 dense
@@ -35,27 +39,8 @@
             </v-col>
             <v-col cols="12">
               <v-text-field
-                v-model="formData.Path"
-                label="Path *"
-                :rules="required"
-                outlined
-                dense
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                v-model="formData.AccessKeyId"
-                label="Access Key *"
-                :rules="required"
-                outlined
-                dense
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                v-model="formData.AccessSecret"
-                label="Access Secret *"
-                :rules="required"
+                v-model="formData.fileNameRgex"
+                label="Filename Regex"
                 outlined
                 dense
               ></v-text-field>
@@ -108,14 +93,6 @@ export default {
       required: [required],
       formData: this.item,
     }
-  },
-
-  methods: {
-    onReset() {
-      debugger
-     this.formData={}
-     this.onClose()
-    },
   },
 }
 </script>

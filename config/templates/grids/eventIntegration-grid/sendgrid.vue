@@ -7,7 +7,7 @@
         <h2 class="black--text pt-10 pb-9">Edit Setting</h2>
         <v-spacer></v-spacer>
         <div>
-          <v-btn icon @click.native="onReset">
+          <v-btn icon @click.native="onClose">
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </div>
@@ -15,6 +15,15 @@
       <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
         <v-form ref="form" v-model="valid" :lazy-validation="lazy">
           <v-row>
+            <v-col cols="12">
+              <v-text-field
+                v-model="formData.Token"
+                label="Token *"
+                :rules="required"
+                outlined
+                dense
+              ></v-text-field>
+            </v-col>
             <v-col cols="12">
               <v-text-field
                 v-model="formData.URL"
@@ -26,8 +35,8 @@
             </v-col>
             <v-col cols="12">
               <v-text-field
-                v-model="formData.Host"
-                label="Host *"
+                v-model="formData.FromEmail"
+                label="From Email *"
                 :rules="required"
                 outlined
                 dense
@@ -35,27 +44,8 @@
             </v-col>
             <v-col cols="12">
               <v-text-field
-                v-model="formData.Path"
-                label="Path *"
-                :rules="required"
-                outlined
-                dense
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                v-model="formData.AccessKeyId"
-                label="Access Key *"
-                :rules="required"
-                outlined
-                dense
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                v-model="formData.AccessSecret"
-                label="Access Secret *"
-                :rules="required"
+                v-model="formData.FromName"
+                label="From Name"
                 outlined
                 dense
               ></v-text-field>
@@ -108,14 +98,6 @@ export default {
       required: [required],
       formData: this.item,
     }
-  },
-
-  methods: {
-    onReset() {
-      debugger
-     this.formData={}
-     this.onClose()
-    },
   },
 }
 </script>

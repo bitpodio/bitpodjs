@@ -4,57 +4,24 @@
       <v-card-title
         class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
       >
-        <h2 class="black--text pt-10 pb-9">Edit Setting</h2>
+        <h2 class="black--text pt-10 pb-9">Salesforce Integration Setup</h2>
         <v-spacer></v-spacer>
         <div>
-          <v-btn icon @click.native="onReset">
+          <v-btn icon @click.native="onClose">
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </div>
       </v-card-title>
       <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
+        To integrate with salesforce, you will need to authenticate using
+        salesforce credentials, click button below to go to salesforce login
+        site and login with account you want to use for this integration.
         <v-form ref="form" v-model="valid" :lazy-validation="lazy">
           <v-row>
             <v-col cols="12">
               <v-text-field
-                v-model="formData.URL"
-                label="URL *"
-                :rules="required"
-                outlined
-                dense
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                v-model="formData.Host"
-                label="Host *"
-                :rules="required"
-                outlined
-                dense
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                v-model="formData.Path"
-                label="Path *"
-                :rules="required"
-                outlined
-                dense
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                v-model="formData.AccessKeyId"
-                label="Access Key *"
-                :rules="required"
-                outlined
-                dense
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                v-model="formData.AccessSecret"
-                label="Access Secret *"
+                v-model="formData.ClientId"
+                label="Salesforce Login URL *"
                 :rules="required"
                 outlined
                 dense
@@ -108,14 +75,6 @@ export default {
       required: [required],
       formData: this.item,
     }
-  },
-
-  methods: {
-    onReset() {
-      debugger
-     this.formData={}
-     this.onClose()
-    },
   },
 }
 </script>
