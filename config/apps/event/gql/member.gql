@@ -1,0 +1,13 @@
+query($filters: JSON) {
+  Customer {
+    CustomerFind(filter: $filters) {
+      edges {
+        node {
+          id
+          Email
+          CustomerName
+        }
+      }
+    }
+  }
+}
