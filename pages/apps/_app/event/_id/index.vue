@@ -1080,7 +1080,10 @@ export default {
           this.refresh()
         }
       } catch (e) {
-        console.log(`Error in event/_id/index.vue from method changeStatus Inputs:-statusName:-${statusName}`, e)
+      console.log(
+          `Error in app/Event/_id/index.vue while making a PATCH call to Event model from method changeStatus context:-URL:-${url}\nInput:-\t Status:-${statusName}\n id:-${this.$route.params.id} `,
+          e
+        )
       }
     },
     getImageName() {
