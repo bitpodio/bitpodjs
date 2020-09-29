@@ -564,7 +564,12 @@
           <v-spacer></v-spacer>
         </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="eventAttendees" :content="content" class="mt-n12" />
+        <Grid
+          view-name="eventAttendees"
+          :content="content"
+          :context="data"
+          class="mt-n12"
+        />
       </div>
       <div
         v-if="content"
@@ -761,7 +766,7 @@
           <v-btn text small @click="openBadgeForm">
             <v-icon left>mdi-plus</v-icon>Create
           </v-btn>
-          <v-btn text small @click="openPrintForm">
+          <v-btn text small class="ml-1" @click="openPrintForm">
             <v-icon left>mdi-printer</v-icon>Print
           </v-btn>
           <v-spacer></v-spacer>
@@ -987,8 +992,8 @@
     <makeCopy :is-make-copy.sync="isMakeCopy" />
     <newBadgeForm :new-badge.sync="newBadge" />
     <editBadgeForm
-      :edit-badge-form.sync="editBadgeForm"
       :id="this.badgeData.id"
+      :edit-badge-form.sync="editBadgeForm"
     />
   </v-flex>
 </template>
@@ -1002,17 +1007,17 @@ import editEventSetting from './editEventSetting.vue'
 import editSiteSetting from './editSiteSetting.vue'
 import newBadgeForm from './newBadgeForm.vue'
 import editBadgeForm from './editBadgeForm.vue'
+import makeCopy from './makeCopy.vue'
 import badge from '~/config/apps/event/gql/badge.gql'
 import organizationInfo from '~/config/apps/event/gql/organizationInfo.gql'
-import makeCopy from './makeCopy.vue'
+import eventAttendees from '~/config/apps/event/gql/eventAttendees.gql'
 import nuxtconfig from '~/nuxt.config'
 import Grid from '~/components/common/grid'
 import File from '~/components/common/form/file.vue'
 import event from '~/config/apps/event/gql/event.gql'
 import copy from '~/components/common/copy'
 import { formatGQLResult } from '~/utility/gql.js'
-import { configLoaderMixin } from '~/utility'
-import { getIdFromAtob, getApiUrl } from '~/utility'
+import { configLoaderMixin, getIdFromAtob, getApiUrl } from '~/utility'
 
 export default {
   components: {
@@ -1079,6 +1084,7 @@ export default {
       snackbarText: '',
       logoId: '',
       getBadgeCategory: 'Guest',
+      attendees: [],
     }
   },
   computed: {
@@ -1096,13 +1102,18 @@ export default {
       }
     },
   },
+  mounted() {
+    this.getAttendees()
+  },
 
   methods: {
     openPrintForm() {
       const myWindow = window.open('', '', 'width=900,height=900')
-      const str = this.getBadge(this.data.badge.Template)
-      myWindow.document.write(`${str}`)
-      myWindow.document.close() //missing code
+      this.attendees.map((ele) => {
+        const str = this.getBadgePrinted(this.badgeData.Template, ele)
+        myWindow.document.write(`${str}`)
+      })
+      myWindow.document.close()
       myWindow.focus()
       myWindow.print()
       setTimeout(function () {
@@ -1115,14 +1126,36 @@ export default {
         this.newBadge = true
       }
     },
+    getAttendees() {
+      return this.$apollo
+        .query({
+          query: gql`
+            ${eventAttendees}
+          `,
+          variables: {
+            filters: {
+              where: {
+                EventId: this.$route.params.id,
+              },
+            },
+          },
+        })
+        .then((result) => {
+          const attendeesData = formatGQLResult(result.data, 'Attendee')
+          this.attendees = attendeesData
+          return attendeesData
+        })
+        .catch((e) => {
+          console.log(
+            `Error in apps/event/_id/index.vue while making a GQL call to Attendee model in method getAttendees context: EventId:-${this.$route.params.id}`,
+            e
+          )
+        })
+    },
     getBadge(str) {
       this.getOrgInfo()
       const logoUrl =
         'https://res.cloudinary.com/mytestlogo/admin-default-template-logo.png'
-      // this.getBadgeCategory =
-      //   this.badgeData.Category !== null
-      //     ? this.badgeData.Category
-      //     : this.selectedBadge(this.badgeData.id)
       if (str) {
         str = str
           .replace('{{ FullName }}', `${this.$auth.user.data.name}`)
@@ -1156,24 +1189,55 @@ export default {
             : {}
         return badgeCategory
       } catch (e) {
-        console.log('Error', e)
+        console.log(
+          `Error in apps/event/_id/index.vue while making a GQL call to Badge model in method selectedBadge context: id:-${getIdFromAtob(
+            id
+          )}`,
+          e
+        )
       }
+    },
+    getBadgePrinted(str, ele) {
+      const logoUrl =
+        'https://res.cloudinary.com/mytestlogo/admin-default-template-logo.png'
+      if (str) {
+        str = str
+          .replace('{{ FullName }}', `${ele.FullName}`)
+          .replace(
+            '{{ Category }}',
+            `${(ele.regType && ele.regType.Name) || 'Guest'}`
+          )
+          .replace('{{ Organization }}', `${ele.CompanyName}`)
+          .replace(logoUrl, this.getAttachmentLink(this.logoId, true))
+        if (this.data.event && this.data.event.Title) {
+          str = str.replace('{{ EventName }}', `${this.data.event.Title}`)
+        }
+      }
+      return str
     },
     async deleteBadge() {
       const url = getApiUrl()
-      try {
-        const res = await this.$axios.$delete(
-          `https://${nuxtconfig.axios.eventUrl}${
-            nuxtconfig.axios.apiEndpoint
-          }Badges/${getIdFromAtob(this.badgeData.id)}`
-        )
-        if (res) {
-          this.snackbarText = 'Badges deleted successfully'
-          this.snackbar = true
-          this.refresh()
+      const check = confirm('Are you sure you want to delete this badge?')
+      if (check === true) {
+        try {
+          const res = await this.$axios.$delete(
+            `https://${nuxtconfig.axios.eventUrl}${
+              nuxtconfig.axios.apiEndpoint
+            }Badges/${getIdFromAtob(this.badgeData.id)}`
+          )
+          if (res) {
+            this.snackbarText = 'Badges deleted successfully'
+            this.snackbar = true
+            this.refresh()
+          }
+        } catch (e) {
+          console.log(
+            `Error in apps/event/_id/index.vue while making a DELETE call to Badge model in method deleteBadge context: url:-${url} BadgeId:-${getIdFromAtob(
+              this.badgeData.id
+            )}`,
+            e
+          )
         }
-      } catch (e) {
-        console.log('Error', e)
       }
     },
     getOrgInfo() {
@@ -1194,7 +1258,10 @@ export default {
           return orgInfo
         })
         .catch((e) => {
-          console.log('Error', e)
+          console.log(
+            `Error in apps/event/_id/index.vue while making a GQL call to OrganizationInfo model in method getOrgInfo `,
+            e
+          )
         })
     },
     getImageName() {

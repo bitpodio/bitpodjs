@@ -107,8 +107,10 @@
                     <RichText
                       v-model="RTEValue"
                       label="Description"
-                      :showTemplateDropdown="true"
-                      :isBadge="true"
+                      :show-template-dropdown="true"
+                      :is-badge="true"
+                      :is-q-r-code="false"
+                      :is-logo="false"
                     />
                   </v-col>
                 </v-row>
@@ -155,9 +157,8 @@ import gql from 'graphql-tag'
 import nuxtconfig from '~/nuxt.config'
 import event from '~/config/apps/event/gql/event.gql'
 import badge from '~/config/apps/event/gql/badge.gql'
-import organizationInfo from '~/config/apps/event/gql/organizationInfo.gql'
 import { formatGQLResult } from '~/utility/gql.js'
-import { getIdFromAtob } from '~/utility'
+import { getIdFromAtob, getApiUrl } from '~/utility'
 export default {
   components: {
     RichText: () =>
@@ -200,9 +201,7 @@ export default {
     },
     getBadge(str) {
       const logoId = this.$refs.badgeDialog.$parent.$parent.$data.logoId
-      // const badgeCategory = this.$refs.badgeDialog.$parent.$parent.$data
-      //   .getBadgeCategory
-      let imgUrl =
+      const imgUrl =
         'https://res.cloudinary.com/mytestlogo/admin-default-template-logo.png'
       str = str
         .replace('{{ FullName }}', `${this.$auth.user.data.name}`)
@@ -216,25 +215,24 @@ export default {
       return str
     },
     async onSave() {
+      const url = getApiUrl()
       this.formData.EventId = this.$route.params.id
       this.formData.DisplayOrder = this.selectedBadge.DisplayOrder
       this.formData.Size = this.selectedBadge.Size
       this.formData.Template = this.selectedBadge.Template
       try {
-        const res = await this.$axios.$post(
-          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Badges`,
-          {
-            ...this.formData,
-          }
-        )
+        const res = await this.$axios.$post(`${url}Badges`, {
+          ...this.formData,
+        })
         if (res) {
-          // debugger
           this.$refs.badgeDialog.$parent.$parent.refresh()
-          // this.refresh()
           this.close()
         }
       } catch (e) {
-        console.log('Error', e)
+        console.log(
+          `Error in apps/event/_id/newBadgeForm.vue while making a POST call in method onSave context: URL:-${url}\n formData:${this.formData}`,
+          e
+        )
       }
     },
     async selectTemplate(id) {
@@ -259,7 +257,12 @@ export default {
             ? getSelectedBadgeData[0].Template
             : ''
       } catch (e) {
-        console.log('Error', e)
+        console.log(
+          `Error in  apps/event/_id/newBadgeForm.vue while making a GQL call to Badge model in method selectTemplate context: id:-${getIdFromAtob(
+            id
+          )}`,
+          e
+        )
       }
     },
     close() {
@@ -347,7 +350,6 @@ export default {
 </script>
 <style scoped>
 .on-click {
-  /* opacity: 0.3; */
   border: 2px solid #1a73e8;
 }
 </style>

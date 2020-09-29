@@ -15,15 +15,44 @@ export default {
   components: {
     JoditEditor,
   },
-  props: [
-    'value',
-    'field',
-    'isInvitee',
-    'isGeneral',
-    'showTemplateDropdown',
-    'isBadge',
-    'isEditBadge',
-  ],
+  props: {
+    value: {
+      default: '',
+      Type: String,
+    },
+    field: {
+      default: () => {},
+      Type: Object,
+    },
+    isInvitee: {
+      default: false,
+      Type: Boolean,
+    },
+    isGeneral: {
+      default: false,
+      Type: Boolean,
+    },
+    showTemplateDropdown: {
+      default: false,
+      Type: Boolean,
+    },
+    isBadge: {
+      default: false,
+      Type: Boolean,
+    },
+    isEditBadge: {
+      default: false,
+      Type: Boolean,
+    },
+    isQRCode: {
+      default: false,
+      Type: Boolean,
+    },
+    isLogo: {
+      default: false,
+      Type: Boolean,
+    },
+  },
   data() {
     return {
       content: this.value || '',
@@ -107,8 +136,6 @@ export default {
               }
               const badgeFields = {
                 Category: 'Category',
-                'First Name': 'Registration.FirstName',
-                'Last Name': 'Registration.LastName',
                 'First  Name': 'FirstName',
                 'Last  Name': 'LastName',
                 'Full  Name': 'FullName',
@@ -183,6 +210,7 @@ export default {
             },
           },
         ],
+
         allowResizeX: true,
         allowResizeY: true,
         zIndex: 99999,
@@ -242,6 +270,40 @@ export default {
         'First Name': 'First Name',
         'Last Name': 'Last Name',
         'Full Name': 'Full Name',
+      })
+    }
+    if (this.isQRCode) {
+      this._data.config.extraButtons.push({
+        name: 'QRCode',
+        tooltip: 'Fields',
+        list: {
+          Category: 'Category',
+          'First  Name': 'FirstName',
+          'Last  Name': 'LastName',
+          Organization: 'Organization',
+          'Event  Name': 'EventName',
+        },
+        exec: (editor, flag, currentOption) => {
+          if (currentOption.control.args) {
+            const qrCode =
+              'https://www.qrcode-monkey.com/img/default-preview-qr.svg'
+            editor.selection.insertHTML(
+              `<img src="${qrCode}" "style"="max-width:200px;height:auto" class="img-responsive"/>`
+            )
+          }
+        },
+      })
+    }
+    if (this.isLogo) {
+      this._data.config.extraButtons.push({
+        name: 'Logo',
+        exec: (editor, flag, currentOption) => {
+          const logo =
+            'https://res.cloudinary.com/mytestlogo/admin-default-template-logo.png'
+          editor.selection.insertHTML(
+            `<img src="${logo}" "style"="max-width:200px;height:auto" class="img-responsive"/>`
+          )
+        },
       })
     }
     if (this.isBadge) {

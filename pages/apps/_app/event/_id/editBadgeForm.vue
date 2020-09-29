@@ -29,8 +29,10 @@
                 <RichText
                   v-model="RTEValue"
                   label="Description"
-                  :showTemplateDropdown="true"
-                  :isEditBadge="true"
+                  :show-template-dropdown="true"
+                  :is-edit-badge="true"
+                  :is-q-r-code="true"
+                  :is-logo="true"
                 />
               </v-col>
             </v-row>
@@ -51,7 +53,6 @@ import gql from 'graphql-tag'
 import nuxtconfig from '~/nuxt.config'
 import event from '~/config/apps/event/gql/event.gql'
 import badge from '~/config/apps/event/gql/badge.gql'
-// import organizationInfo from '~/config/apps/event/gql/organizationInfo.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { getIdFromAtob, getApiUrl } from '~/utility'
 export default {
@@ -81,12 +82,18 @@ export default {
       RTEContent: '',
     }
   },
+  watch: {
+    id(newVal, oldVal) {
+      if (newVal !== '') {
+        this.editBadge()
+      }
+    },
+  },
   methods: {
     close() {
       this.$emit('update:editBadgeForm', false)
     },
     async onSave() {
-      debugger
       const url = getApiUrl()
       const badgeId = getIdFromAtob(this.id)
       try {
@@ -97,10 +104,14 @@ export default {
           }
         )
         if (res) {
+          this.$refs.editBadgeDialog.$parent.$parent.refresh()
           this.close()
         }
       } catch (e) {
-        console.log('Error', e)
+        console.log(
+          `Error in editBadgeForm.vue while making a PATCH call in method onSave context: URL:-${url}\n badgeId:${badgeId}`,
+          e
+        )
       }
     },
     editBadge() {
@@ -123,56 +134,17 @@ export default {
           return badgeTemplate
         })
         .catch((e) => {
-          console.log('Error', e)
+          console.log(
+            `Error in editBadgeForm.vue while making a GQL call to Badge model in method editBadge context: id:-${getIdFromAtob(
+              this.id
+            )}`,
+            e
+          )
         })
-    },
-  },
-  watch: {
-    id(newVal, oldVal) {
-      if (newVal !== '') {
-        this.editBadge()
-      }
     },
   },
 
   apollo: {
-    // data: {
-    //   query() {
-    //     return gql`
-    //       ${badge}
-    //     `
-    //   },
-    //   variables() {
-    //     debugger
-    //     return {
-    //       filters: {
-    //         where: {
-    //         },
-    //       },
-    //     }
-    //   },
-    //   update(data) {
-    //     debugger
-    //     const id = this.badgeData.id
-    //     const badge = formatGQLResult(data, 'Badge')
-    //     this.eventBadge = badge.length > 0 ? badge[0] : {}
-    //     this.RTEValue = this.eventBadge.Template
-    //     //   this.eventBadge = badge
-    //     //   this.template = this.eventBadge[0].Template
-    //     return {
-    //       badge: badge.length > 0 ? badge[0] : {},
-    //     }
-    //   },
-    //   result({ data, loading, networkStatus }) {},
-    //   error(error) {
-    //     this.error = error
-    //     this.loading = 0
-    //   },
-    //   prefetch: false,
-    //   loadingKey: 'loading',
-    //   skip: false,
-    //   pollInterval: 0,
-    // },
     data: {
       query() {
         return gql`
@@ -195,7 +167,6 @@ export default {
         }
       },
       update(data) {
-        debugger
         const event = formatGQLResult(data, 'Event')
         const badge = formatGQLResult(data, 'Badge')
         this.eventData = event.length > 0 ? event[0] : {}
