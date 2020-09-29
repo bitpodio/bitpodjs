@@ -13,6 +13,9 @@
         </v-btn>
       </template>
       <v-card>
+        <div v-if="timeSlotMessage !== ''" class="red--text pa-3 pt-0 body-1">
+          {{ timeSlotMessage }}
+        </div>
         <v-card-title
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
@@ -144,7 +147,7 @@
               >
                 <v-text-field
                   v-model="session.Phone"
-                  label="Phone"
+                  label="Phone*"
                   outlined
                   dense
                   :rules="phoneRules"
@@ -167,7 +170,7 @@
                 class="mt-3"
               >
                 <Lookup
-                  v-model="InPersonMeeting"
+                  v-model="session.LocationId"
                   :field="inPersonMeetingProps"
                   :rules="personMeetingRules"
                 />
@@ -182,6 +185,7 @@
                   v-model="WebinarLink"
                   label="online meeting link*"
                   outlined
+                  :rules="requiredRules"
                   dense
                 ></v-text-field>
               </v-col>
@@ -319,14 +323,26 @@
                 md="4"
                 class="pb-0"
               >
-                <CustomDate
+                <v-datetime-picker
+                  v-model="session.StartDate"
+                  label="Start Date*"
+                  :text-field-props="startDateProps"
+                >
+                  <template slot="dateIcon">
+                    <v-icon>fas fa-calendar</v-icon>
+                  </template>
+                  <template slot="timeIcon">
+                    <v-icon>fas fa-clock</v-icon>
+                  </template>
+                </v-datetime-picker>
+                <!-- <CustomDate
                   v-model="session.StartDate"
                   label="Start Date*"
                   :field="startDateField"
                   :rules="startDateRule"
                   :on-change="changeStartDate"
                   type="date"
-                />
+                /> -->
               </v-col>
               <v-col
                 v-if="session.ScheduledType === 'Over a date range'"
@@ -334,14 +350,26 @@
                 sm="6"
                 md="4"
               >
-                <CustomDate
+                <v-datetime-picker
+                  v-model="session.EndDate"
+                  label="End Date*"
+                  :text-field-props="endDateProps"
+                >
+                  <template slot="dateIcon">
+                    <v-icon>fas fa-calendar</v-icon>
+                  </template>
+                  <template slot="timeIcon">
+                    <v-icon>fas fa-clock</v-icon>
+                  </template>
+                </v-datetime-picker>
+                <!-- <CustomDate
                   v-model="session.EndDate"
                   label="End Date*"
                   :field="endDateField"
                   :rules="endDateRule"
                   :on-change="changeEndDate"
                   type="date"
-                />
+                /> -->
               </v-col>
             </v-row>
             <div class="col-md-12 pl-0">
@@ -360,6 +388,7 @@
                   :label="day.Label"
                   class="mt-0"
                   height="20"
+                  @change="selectDays(day)"
                 ></v-checkbox>
               </v-col>
             </v-row>
@@ -391,10 +420,11 @@ import { required } from '~/utility/rules.js'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import location from '~/config/apps/event/gql/location.gql'
 import { getIdFromAtob } from '~/utility'
-import CustomDate from '~/components/common/form/date.vue'
+// import CustomDate from '~/components/common/form/date.vue'
+import { getApiUrl } from '~/utility/index.js'
 export default {
   components: {
-    CustomDate,
+    // CustomDate,
     VueGoogleAutocomplete: () => import('vue-google-autocomplete'),
   },
   props: {
@@ -415,7 +445,11 @@ export default {
       InPersonMeeting: [],
       inPersonMeetingOptions: [],
       customDuration: 15,
+      timeSlotMessage: '',
+      requiredRules: [required],
       ScheduledType: 'Over a period of rolling days',
+      zoomDocumentLink: strings.ZOOM_DOCUMENT_LINK,
+      googleMeetDocumentLink: strings.GOOGLE_MEET_DOCUMENT_LINK,
       session: {
         MaxAllow: 5,
         StartDate: '',
@@ -433,6 +467,15 @@ export default {
         lat: 0.0,
         lng: 0.0,
       },
+      selectedDays: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'],
+      phoneRules: [
+        (v) => {
+          if (v && !isNaN(v)) {
+            return true
+          }
+          return strings.INVALID_PHONE_MSG
+        },
+      ],
       durationRules: [
         (v) => {
           if (!isNaN(parseFloat(v)) && v > 0) {
@@ -507,7 +550,7 @@ export default {
       },
       locationTypeProps: {
         type: 'lookup',
-        caption: 'Type*',
+        caption: 'Location Type*',
         dataSource: {
           query: registrationStatusOptions,
           itemText: 'value',
@@ -571,6 +614,56 @@ export default {
     }
   },
   computed: {
+    startDateProps() {
+      return {
+        appendIcon: 'fa-calendar',
+        outlined: true,
+        dense: true,
+        rules: [
+          (v) => {
+            const startDate = new Date(v)
+            return startDate > new Date(this.EndDate)
+              ? strings.START_END_DATE
+              : true
+            // const StartDate = v && new Date(v)
+            // const { EndDate } = this.eventData
+            // let startDateMessage = ''
+            // if (!StartDate) startDateMessage = strings.FIELD_REQUIRED
+            // else if (StartDate && EndDate && StartDate > EndDate)
+            //   startDateMessage = strings.EVENT_START_END_DATE
+            // else if (StartDate < new Date())
+            //   startDateMessage = strings.EVENT_START_DATE
+            // else startDateMessage = ''
+            // return startDateMessage || true
+          },
+        ],
+      }
+    },
+    endDateProps() {
+      return {
+        appendIcon: 'fa-calendar',
+        outlined: true,
+        dense: true,
+        rules: [
+          (v) => {
+            const endDate = new Date(v)
+            return new Date(this.StartDate) > endDate
+              ? strings.END_START_DATE
+              : true
+            // const EndDate = v && new Date(v)
+            // const { StartDate } = this.eventData
+            // let endDateMessage = ''
+            // if (!EndDate) endDateMessage = strings.FIELD_REQUIRED
+            // else if (StartDate && EndDate && StartDate > EndDate)
+            //   endDateMessage = strings.EVENT_START_END_DATE
+            // else if (EndDate < new Date())
+            //   endDateMessage = strings.EVENT_END_DATE
+            // else endDateMessage = ''
+            // return endDateMessage || true
+          },
+        ],
+      }
+    },
     inPersonMeetingProps() {
       const items = this.inPersonMeetingOptions
       return {
@@ -585,22 +678,22 @@ export default {
         },
       }
     },
-    startDateField() {
-      return {
-        appendIcon: 'fa-calendar',
-        outlined: true,
-        caption: 'Start Date',
-        type: 'datetime',
-      }
-    },
-    endDateField() {
-      return {
-        appendIcon: 'fa-calendar',
-        outlined: true,
-        caption: 'End Date',
-        type: 'datetime',
-      }
-    },
+    // startDateField() {
+    //   return {
+    //     appendIcon: 'fa-calendar',
+    //     outlined: true,
+    //     caption: 'Start Date',
+    //     type: 'datetime',
+    //   }
+    // },
+    // endDateField() {
+    //   return {
+    //     appendIcon: 'fa-calendar',
+    //     outlined: true,
+    //     caption: 'End Date',
+    //     type: 'datetime',
+    //   }
+    // },
     startDateRule() {
       return [
         (v) => {
@@ -623,6 +716,66 @@ export default {
     },
   },
   methods: {
+    removeDay(day) {
+      let removeIndex
+      this.selectedDays.forEach((d, i) => {
+        if (d === 'monday' && day.Label === 'Mondays') {
+          removeIndex = i
+        }
+        if (d === 'tuesday' && day.Label === 'Tuesdays') {
+          removeIndex = i
+        }
+        if (d === 'wednesday' && day.Label === 'Wednesdays') {
+          removeIndex = i
+        }
+        if (d === 'thursday' && day.Label === 'Thursdays') {
+          removeIndex = i
+        }
+        if (d === 'friday' && day.Label === 'Fridays') {
+          removeIndex = i
+        }
+        if (d === 'saturday' && day.Label === 'Saturdays') {
+          removeIndex = i
+        }
+        if (d === 'sunday' && day.Label === 'Sundays') {
+          removeIndex = i
+        }
+      })
+      this.selectedDays.splice(removeIndex, 1)
+    },
+    addDay(day) {
+      let dayName
+      if (day.Label === 'Mondays') {
+        dayName = 'monday'
+      }
+      if (day.Label === 'Tuesdays') {
+        dayName = 'tuesday'
+      }
+      if (day.Label === 'Wednesdays') {
+        dayName = 'wednesday'
+      }
+      if (day.Label === 'Thursdays') {
+        dayName = 'thursday'
+      }
+      if (day.Label === 'Fridays') {
+        dayName = 'friday'
+      }
+      if (day.Label === 'Saturdays') {
+        dayName = 'saturday'
+      }
+      if (day.Label === 'Sundays') {
+        dayName = 'sunday'
+      }
+      this.selectedDays.push(dayName)
+    },
+    selectDays(d) {
+      if (d.Value === true) {
+        this.addDay(d)
+      } else {
+        this.removeDay(d)
+      }
+    },
+
     // changeStartDate(value) {
     //   this.$refs.form.validate()
     // },
@@ -644,7 +797,7 @@ export default {
       this.venueAddress.LatLng.lng = addressData.longitude || ''
     },
     changeType(value) {
-      this.MaxAllow = this.session.MaxAllow || 5
+      this.MaxAllow = parseInt(this.session.MaxAllow) || 5
       this.isGroup = value === 'Group'
     },
     changeDuration(value) {
@@ -661,7 +814,76 @@ export default {
     openWindow(link) {
       window.open(link, '_blank')
     },
-    onSave() {},
+    async onSave() {
+      if (this.session.StartTime > this.session.EndTime) {
+        this.timeSlotMessage = 'End time should be greater than start time.'
+        return
+      } else {
+        this.timeSlotMessage = ''
+      }
+      if (this.session.LocationType === 'Custom') {
+        this.session._CurrentAddress = this.venueAddress
+      }
+      console.log('==days==', this.days)
+
+      const ObjectID5 = (
+        m = Math,
+        d = Date,
+        h = 16,
+        s = (s) => m.floor(s).toString(h)
+      ) =>
+        s(d.now() / 1000) + ' '.repeat(h).replace(/./g, () => s(m.random() * h))
+      const _Exceptions = this.selectedDays.map((item, key) => {
+        return {
+          id: ObjectID5(),
+          type: 'wday',
+          wday: item,
+          _intervals: [
+            {
+              id: ObjectID5(),
+              from: this.session.StartTime,
+              to: this.session.EndTime,
+            },
+          ],
+        }
+      })
+
+      // this.session._Exceptions = Exceptions
+      this.session.RollingDays = parseInt(this.session.RollingDays)
+      this.session.Duration = parseInt(this.session.Duration)
+      this.session.Frequency = parseInt(this.session.Duration)
+      // this.session.isActive = true
+      this.session.EventId = this.$route.params.id
+      console.log('==selectedDays==', this.selectedDays)
+      console.log('==Exceptions==', _Exceptions)
+      const baseUrl = getApiUrl()
+      let res = null
+      let exceptionRes = null
+      try {
+        res = await this.$axios.$post(`${baseUrl}Sessions`, {
+          ...this.session,
+        })
+      } catch (e) {
+        console.error('Error', e)
+      }
+      if (res) {
+        try {
+          exceptionRes = await this.$axios.$patch(
+            `${baseUrl}Sessions/${res.id}`,
+            {
+              _Exceptions,
+            }
+          )
+        } catch (e) {
+          console.error('Error', e)
+        }
+      }
+      if (exceptionRes) {
+        this.dialog = false
+        this.refresh()
+        return exceptionRes
+      }
+    },
   },
   apollo: {
     data: {
