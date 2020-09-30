@@ -127,7 +127,7 @@
         <Grid
           view-name="registrationSessions"
           :content="content"
-          class="mt-n12"
+          class="mt-12"
         />
       </div>
       <div

@@ -317,7 +317,7 @@ export default {
         },
       },
       template: {
-        name: '',
+        name: 'discountMember-grid',
         context: {
           basePath: '/discountcodes',
         },

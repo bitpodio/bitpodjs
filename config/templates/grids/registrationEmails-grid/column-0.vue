@@ -1,5 +1,5 @@
 <template>
-  <div class="d-inline-block text-truncate eventuser-name">
+  <div class="d-inline-block text-truncate mxcol-name">
     <nuxt-link :to="route"> {{ value }}</nuxt-link>
   </div>
 </template>
@@ -25,13 +25,8 @@ export default {
   },
   computed: {
     route() {
-      return `/apps/event${this.context.basePath}/${this.item.id}`
+      return `/apps/event${this.context.basePath}/activity/${this.item.id}`
     },
   },
 }
 </script>
-<style scoped>
-.eventuser-name {
-  max-width: 150px;
-}
-</style>
