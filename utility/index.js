@@ -54,7 +54,7 @@ export function getCurrentOrigin() {
   let currentOrigin = ''
   if (
     typeof window === 'undefined' ||
-    !window.location.origin.includes('localhost')
+    window.location.origin.includes('localhost')
   ) {
     currentOrigin = `https://${nuxtconfig.axios.backendBaseUrl}`
   } else {
