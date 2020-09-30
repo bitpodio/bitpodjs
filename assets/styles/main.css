@@ -29,6 +29,7 @@ body {
   bottom: 0 !important;
   width: calc(100% - 230px) !important;
   max-height: calc(100% - 15px) !important;
+  min-height: calc(100% - 15px) !important;
 }
 .stepper-box {
   min-height: 650px;
@@ -38,6 +39,7 @@ body {
   right: 0 !important;
   bottom: 0 !important;
   width: 50% !important;
+  min-height: 50% !important;
 }
 .v-dialog {
   margin: 12px !important;
@@ -46,7 +48,6 @@ body {
 .Twitter {
   font-size: 0 !important;
   text-transform: capitalize !important;
-  padding-top: 3px !important;
 }
 .Twitter::first-letter {
   font-size: 24px !important;
@@ -81,6 +82,9 @@ body {
 }
 .cursorPointer {
   cursor: pointer;
+}
+.fs-16 {
+  font-size: 16px !important;
 }
 .fs-18 {
   font-size: 18px !important;
@@ -224,6 +228,7 @@ body {
 }
 .event-cards {
   overflow: hidden;
+  min-height: 75px;
 }
 .event-cards:hover {
   overflow-x: auto;
@@ -288,6 +293,35 @@ body {
 .logo-bitpod {
   width: 30px;
   height: 40px;
+}
+.slide-form-default {
+  min-height: 65% !important;
+  }
+.event-tile {
+  height: 60px;
+  max-width: 200px;
+  min-width: 200px;
+}
+.event-tile-left {
+  width: 75px;
+  min-width: 75px;
+  height: 60px;
+  border-radius: 4px 0 0 4px;
+}
+.event-tile-left .fa {
+  font-size: 24px;
+  color: #fff;
+}
+.event-tile-right {
+  height: 60px;
+  min-width: 125px;
+  border-radius: 0 4px 4px 0;
+}
+.event-tile-value {
+  font-size: 20px;
+}
+.mxcol-name {
+  max-width: 150px;
 }
 @media (max-width: 600px) {
   .slide-form,
