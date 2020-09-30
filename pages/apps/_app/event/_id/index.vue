@@ -1126,9 +1126,9 @@ export default {
         this.newBadge = true
       }
     },
-    getAttendees() {
-      return this.$apollo
-        .query({
+    async getAttendees() {
+      try {
+        const result = await this.$apollo.query({
           query: gql`
             ${eventAttendees}
           `,
@@ -1140,22 +1140,21 @@ export default {
             },
           },
         })
-        .then((result) => {
+        if (result) {
           const attendeesData = formatGQLResult(result.data, 'Attendee')
           this.attendees = attendeesData
           return attendeesData
-        })
-        .catch((e) => {
-          console.log(
-            `Error in apps/event/_id/index.vue while making a GQL call to Attendee model in method getAttendees context: EventId:-${this.$route.params.id}`,
-            e
-          )
-        })
+        }
+      } catch (e) {
+        console.log(
+          `Error in apps/event/_id/index.vue while making a GQL call to Attendee model in method getAttendees context: EventId:-${this.$route.params.id}`,
+          e
+        )
+      }
     },
     getBadge(str) {
       this.getOrgInfo()
-      const logoUrl =
-        'https://res.cloudinary.com/mytestlogo/admin-default-template-logo.png'
+      const logoUrl = nuxtconfig.publicRuntimeConfig.logoUri
       if (str) {
         str = str
           .replace('{{ FullName }}', `${this.$auth.user.data.name}`)
@@ -1198,8 +1197,7 @@ export default {
       }
     },
     getBadgePrinted(str, ele) {
-      const logoUrl =
-        'https://res.cloudinary.com/mytestlogo/admin-default-template-logo.png'
+      const logoUrl = nuxtconfig.publicRuntimeConfig.logoUri
       if (str) {
         str = str
           .replace('{{ FullName }}', `${ele.FullName}`)

@@ -52,8 +52,7 @@ export default {
       }, 1000)
     },
     getBadge(str, items) {
-      const logoUrl =
-        'https://res.cloudinary.com/mytestlogo/admin-default-template-logo.png'
+      const logoUrl = nuxtconfig.publicRuntimeConfig.logoUri
       if (str) {
         str = str
           .replace('{{ FullName }}', `${items.FullName}`)

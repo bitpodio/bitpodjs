@@ -10,6 +10,7 @@
 <script>
 import 'jodit/build/jodit.min.css'
 import { JoditEditor } from 'jodit-vue'
+import nuxtConfig from '~/nuxt.config'
 
 export default {
   components: {
@@ -285,8 +286,7 @@ export default {
         },
         exec: (editor, flag, currentOption) => {
           if (currentOption.control.args) {
-            const qrCode =
-              'https://www.qrcode-monkey.com/img/default-preview-qr.svg'
+            const qrCode = nuxtConfig.publicRuntimeConfig.QRCodeUri
             editor.selection.insertHTML(
               `<img src="${qrCode}" "style"="max-width:200px;height:auto" class="img-responsive"/>`
             )
@@ -298,8 +298,7 @@ export default {
       this._data.config.extraButtons.push({
         name: 'Logo',
         exec: (editor, flag, currentOption) => {
-          const logo =
-            'https://res.cloudinary.com/mytestlogo/admin-default-template-logo.png'
+          const logo = nuxtConfig.publicRuntimeConfig.QRCodeUri
           editor.selection.insertHTML(
             `<img src="${logo}" "style"="max-width:200px;height:auto" class="img-responsive"/>`
           )

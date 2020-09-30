@@ -201,13 +201,12 @@ export default {
     },
     getBadge(str) {
       const logoId = this.$refs.badgeDialog.$parent.$parent.$data.logoId
-      const imgUrl =
-        'https://res.cloudinary.com/mytestlogo/admin-default-template-logo.png'
+      const logoUrl = nuxtconfig.publicRuntimeConfig.logoUri
       str = str
         .replace('{{ FullName }}', `${this.$auth.user.data.name}`)
         .replace('{{ Category }}', `${this.Category}`)
         .replace('{{ Organization }}', `${this.$store.state.currentOrg.name}`)
-        .replace(imgUrl, this.getAttachmentLink(logoId, true))
+        .replace(logoUrl, this.getAttachmentLink(logoId, true))
       if (this.data.event && this.data.event.Title) {
         str = str.replace('{{ EventName }}', `${this.data.event.Title}`)
       }
