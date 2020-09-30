@@ -198,8 +198,7 @@ export default {
                     `${`<a href="`}\${hostURL}${`/events/`}\${Event.id}" target="_blank">Register</a>`
                   )
                 } else if (key === 'QRCode') {
-                  const qrCode =
-                    'https://www.qrcode-monkey.com/img/default-preview-qr.svg'
+                  const qrCode = nuxtConfig.publicRuntimeConfig.QRCodeUri
                   editor.selection.insertHTML(
                     `<img src="${qrCode}" "style"="max-width:200px;height:auto" class="img-responsive"/>`
                   )
