@@ -174,8 +174,7 @@ import registrationtype from '~/config/apps/event/gql/registrationType.gql'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { required } from '~/utility/rules.js'
-import { getApiUrl, getIdFromAtob } from '~/utility'
-import eventTicket from '~/config/apps/event/gql/eventTickets.gql'
+import { getApiUrl } from '~/utility'
 export default {
   props: {
     refresh: {
@@ -211,7 +210,6 @@ export default {
         Type: '',
         ValidateQty: false,
         Status: '',
-        TicketCount: '',
       },
       eventData: {},
       setAttendeeType: {},
@@ -268,7 +266,6 @@ export default {
       this.formData.TicketCount = null
       this.formData.ValidateQty = false
       this.formData.Status = ''
-      this.formData.TicketCount = ''
       this.valid = false
     },
     getAttendeesId() {

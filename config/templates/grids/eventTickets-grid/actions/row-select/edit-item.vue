@@ -176,11 +176,8 @@ import gql from 'graphql-tag'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import registrationtype from '~/config/apps/event/gql/registrationType.gql'
 import { formatGQLResult } from '~/utility/gql.js'
-import nuxtconfig from '~/nuxt.config'
 import { required } from '~/utility/rules.js'
-import { getApiUrl, getIdFromAtob } from '~/utility'
-import eventTicket from '~/config/apps/event/gql/eventTickets.gql'
-import event from '~/config/apps/event/gql/event.gql'
+import { getApiUrl } from '~/utility'
 export default {
   props: {
     refresh: {
@@ -346,7 +343,7 @@ export default {
         .filter((i) => this.registrationType.some((j) => j === i.Name))
         .map((k) => k.id)
     },
-    async getTickets() {
+    getTickets() {
       this.items.map((ele) => {
         this.formData = ele
         this.formData.StartDate = new Date(ele.StartDate)

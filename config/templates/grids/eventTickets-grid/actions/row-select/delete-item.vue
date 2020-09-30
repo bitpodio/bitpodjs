@@ -12,7 +12,6 @@
 </template>
 
 <script>
-import nuxtconfig from '~/nuxt.config'
 import { getApiUrl } from '~/utility'
 export default {
   props: {
