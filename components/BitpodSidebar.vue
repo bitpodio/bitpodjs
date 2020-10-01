@@ -71,7 +71,10 @@
 <script>
 export default {
   props: {
-    source: String,
+    source: {
+      type: String,
+      default: '',
+    },
   },
   data: () => ({
     dialog: false,

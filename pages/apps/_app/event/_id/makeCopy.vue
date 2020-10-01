@@ -326,6 +326,7 @@ export default {
   },
   props: {
     isMakeCopy: {
+      type: Boolean,
       default: false,
       allowSpaces: false,
     },

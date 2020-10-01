@@ -1,13 +1,13 @@
 <template>
   <div>
     <v-chip
-      v-for="value in value"
-      :key="value"
+      v-for="val in value"
+      :key="val"
       class="ma-2"
       small
       color="orange"
       text-color="white"
-      >{{ value }}</v-chip
+      >{{ val }}</v-chip
     >
   </div>
 </template>

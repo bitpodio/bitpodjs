@@ -280,6 +280,7 @@ import templateList from '~/config/apps/event/gql/templateList.gql'
 export default {
   props: {
     siteSetting: {
+      type: Boolean,
       default: false,
     },
   },

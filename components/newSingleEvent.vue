@@ -911,6 +911,7 @@ export default {
               ticketList.push(ticket)
             })
 
+            // eslint-disable-next-line promise/no-nesting
             return this.$axios
               .$post(`${baseUrl}Tickets`, ticketList)
               .then((ticketres) => {

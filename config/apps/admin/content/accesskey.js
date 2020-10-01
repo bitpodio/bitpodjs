@@ -30,8 +30,17 @@ export default {
           columnWidth: '200px',
           type: 'string',
         },
+        expiresat: {
+          displayOrder: 4,
+          caption: 'Expires On',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'datetime',
+        },
       },
       template: {
+        name: 'accessKey-grid',
         context: {
           basePath: '/organization',
         },

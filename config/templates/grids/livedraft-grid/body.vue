@@ -244,7 +244,7 @@
 import nuxtconfig from '~/nuxt.config'
 export default {
   props: {
-    items: String,
+    items: { type: Array, default: () => [] },
   },
   methods: {
     routes(id) {

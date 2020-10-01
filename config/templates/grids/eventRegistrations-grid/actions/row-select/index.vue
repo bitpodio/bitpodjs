@@ -28,7 +28,7 @@ export default {
     },
     viewName: {
       type: String,
-      required: false,
+      default: '',
     },
     content: {
       type: Object,
