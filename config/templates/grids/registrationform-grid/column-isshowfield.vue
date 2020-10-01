@@ -40,7 +40,10 @@ export default {
           return res
         }
       } catch (e) {
-        console.log('Error', e)
+        console.log(
+          `Error in templates/grids/registrationform-grid/column-isshowfield.vue while making a PUT call to RegistrationForm model from method updateRegForm context:-URL:-https://${nuxtconfig.axios.eventUrl}/svc/api/RegistrationForms/${this.item.id}\n `,
+          e
+        )
       }
     },
   },

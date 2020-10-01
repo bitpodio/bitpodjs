@@ -48,7 +48,10 @@ export default {
           this.refresh()
         }
       } catch (e) {
-        console.log('Error', e)
+        console.log(
+          `Error in templates/grids/userRoles-grid/column-rolemappings.vue while making a delete call to organization model from method removeRole context:-URL:-https://${nuxtconfig.axios.eventUrl}/svc/api/Organizations/${this.$store.state.currentOrg.id}/Users/${this.item.email}/Roles/${role}\n `,
+          e
+        )
       }
     },
   },
