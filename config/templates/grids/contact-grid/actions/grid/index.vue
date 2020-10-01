@@ -15,11 +15,13 @@
       />
     </div>
     <invitationHistory />
+    <importContact />
   </div>
 </template>
 
 <script>
 import invitationHistory from './invitationHistory.vue'
+import importContact from './importContact.vue'
 import campaign from '~/config/templates/grids/eventInvites-grid/actions/grid/sendEventInvite.vue'
 import newItem from '~/config/common/templates/grid/actions/grid/new-item.vue'
 export default {
@@ -27,6 +29,7 @@ export default {
     invitationHistory,
     newItem,
     campaign,
+    importContact,
   },
   props: ['content', 'viewName', 'onNewItemSave', 'refresh', 'context'],
 }

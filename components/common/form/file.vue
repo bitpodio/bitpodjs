@@ -21,6 +21,7 @@
         :multiple="field && field.multiple"
         :rules="rules"
         :hide-input="true"
+        :accept="accept"
         prepend-icon="mdi-cloud-upload"
         @change="onChange"
       ></v-file-input>
@@ -70,6 +71,10 @@ export default {
     openFileDialog: {
       type: Boolean,
       default: () => false,
+    },
+    accept: {
+      type: String,
+      default: '',
     },
   },
   data() {
@@ -129,6 +134,7 @@ export default {
         'input',
         this.files.map((i) => i.id)
       )
+      this.$emit('updatedFileList', this.files)
     },
 
     uploadFile(file) {
@@ -150,6 +156,7 @@ export default {
         'input',
         this.files.map((i) => i.id)
       )
+      this.$emit('updatedFileList', this.files)
     },
   },
 }
