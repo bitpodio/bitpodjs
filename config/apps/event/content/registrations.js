@@ -431,6 +431,11 @@ export default {
         context: {
           basePath: '/registration',
         },
+        actions: {
+          new: {
+            caption: 'New Registration',
+          },
+        },
       },
       dataSource: {
         query: registrationList,
@@ -1152,7 +1157,7 @@ export default {
         },
       },
       template: {
-        name: 'registrationSession-grid',
+        name: 'registrationEmails-grid',
         context: {
           basePath: '/registration',
         },

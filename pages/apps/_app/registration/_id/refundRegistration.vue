@@ -112,8 +112,13 @@ import registrationStatusOptions from '~/config/apps/event/gql/registrationStatu
 export default {
   props: {
     isRefund: {
+      type: Boolean,
       default: false,
       allowSpaces: false,
+    },
+    lazy: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {

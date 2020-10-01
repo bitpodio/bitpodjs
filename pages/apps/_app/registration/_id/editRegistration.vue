@@ -196,6 +196,7 @@ import { getIdFromAtob } from '~/utility'
 export default {
   props: {
     isEditReg: {
+      type: Boolean,
       default: false,
       allowSpaces: false,
     },

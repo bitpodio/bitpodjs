@@ -6,7 +6,16 @@
 
 <script>
 export default {
-  props: ['item', 'value'],
+  props: {
+    item: {
+      type: null,
+      default: null,
+    },
+    value: {
+      type: null,
+      default: null,
+    },
+  },
   computed: {
     route() {
       return `${this.params.route}/${this.item.id}`

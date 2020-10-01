@@ -20,20 +20,19 @@
               <v-icon>mdi-close</v-icon>
             </v-btn>
           </div>
+          <v-tabs v-model="tabs" center-active height="36">
+            <v-tabs-slider></v-tabs-slider>
+            <v-tab href="#tab-1" class="px-0 mr-4">
+              <span>Templates</span>
+            </v-tab>
+
+            <v-tab href="#tab-2" class="px-0 mr-4">
+              <span>Section Settings</span>
+            </v-tab>
+          </v-tabs>
         </v-card-title>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-card flat>
-            <v-tabs v-model="tabs" center-active height="36">
-              <v-tabs-slider></v-tabs-slider>
-              <v-tab href="#tab-1" class="px-0 mr-4">
-                <span>Templates</span>
-              </v-tab>
-
-              <v-tab href="#tab-2" class="px-0 mr-4">
-                <span>Section Settings</span>
-              </v-tab>
-            </v-tabs>
-
             <v-tabs-items v-model="tabs">
               <v-tab-item :value="'tab-1'">
                 <v-row>
@@ -63,16 +62,17 @@
                               :src="item.ImageUrl"
                               :lazy-src="item.ImageUrl"
                               aspect-ratio="1"
-                              class="grey lighten-2"
-                              min-height="200"
-                              max-height="200"
+                              class="white"
+                              min-height="230"
+                              max-height="230"
+                              contain
                             >
                               <template v-slot:placeholder>
                                 <v-img
                                   :src="$config.cdnUri + 'invitee-image.png'"
                                   class="grey lighten-2"
-                                  min-height="200"
-                                  max-height="200"
+                                  min-height="230"
+                                  max-height="230"
                                 >
                                 </v-img>
                               </template>
@@ -280,6 +280,7 @@ import templateList from '~/config/apps/event/gql/templateList.gql'
 export default {
   props: {
     siteSetting: {
+      type: Boolean,
       default: false,
     },
   },

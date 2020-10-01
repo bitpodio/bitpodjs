@@ -28,6 +28,7 @@ module.exports = Object.freeze({
   INVALID_PHONE_MSG: 'Please enter valid phone number!',
   ONLINE_MEETING_MSG: 'Please enter online meeting link!',
   LOCATION_MSG: 'Please select location!',
+  TICKET_MSG: 'Please select ticket!',
   START_END_DATE: 'Start Date should be less than End Date',
   END_START_DATE: 'End Date should be greater than Start Date',
   START_END_TIME: 'Start Time should not be greater than End Time',

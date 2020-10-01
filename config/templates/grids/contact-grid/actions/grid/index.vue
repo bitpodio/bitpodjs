@@ -7,7 +7,7 @@
       :refresh="refresh"
       :context="context"
     />
-    <div class="mt-3 px-3">
+    <div>
       <campaign
         button-label="email campaign"
         template="General Template"
@@ -31,6 +31,24 @@ export default {
     campaign,
     importContact,
   },
-  props: ['content', 'viewName', 'onNewItemSave', 'refresh', 'context'],
+  props: {
+    content: {
+      type: null,
+      default: null,
+    },
+    viewName: {
+      type: String,
+      required: true,
+    },
+    refresh: {
+      type: null,
+      default: null,
+    },
+    onNewItemSave: { type: Function, default: () => {} },
+    context: {
+      type: null,
+      default: null,
+    },
+  },
 }
 </script>

@@ -4,7 +4,12 @@
 
 <script>
 export default {
-  props: ['error'],
+  props: {
+    error: {
+      type: null,
+      default: null,
+    },
+  },
   data() {
     return {
       errorMessage: 'error message',

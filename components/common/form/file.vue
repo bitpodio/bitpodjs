@@ -85,21 +85,20 @@ export default {
   },
   computed: {
     allowSecondUpload() {
-      return !this.field.multiple && !!this.value.length
+      if (this.value) {
+        return !this.field.multiple && !!this.value.length
+      } else {
+        return false
+      }
     },
   },
   watch: {
     openFileDialog(newVal, oldVal) {
       this.uploadClicked()
     },
-    value(newVal, oldVal) {
-      if (newVal !== oldVal) {
-        this.files = []
-      }
-    },
   },
   async mounted() {
-    if (this.value.length) {
+    if (this.value && this.value.length) {
       const fileDetailPromises = this.value.map((id) => this.getFileDetails(id))
       const fileDetails = await Promise.all(fileDetailPromises)
       this.files = fileDetails.map(({ data }) => {
