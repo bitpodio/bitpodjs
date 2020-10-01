@@ -172,39 +172,56 @@
         </v-flex>
 
         <v-stepper
+          v-model="Status"
           alt-labels
           class="elevation-0 boxview mt-n3"
           style="max-width: 800px;"
         >
           <v-stepper-header success>
             <v-stepper-step
-              step="3"
-              complete
+              editable
+              step="1"
+              :complete="true"
               color="success"
               class="ml-n13 body-2"
+              @click="changeStatus('Not ready')"
               >Not Ready</v-stepper-step
             >
 
             <v-divider></v-divider>
 
             <v-stepper-step
-              step="4"
-              complete="true"
+              editable
+              step="2"
+              :complete="Status > 1"
               color="success"
               class="body-2"
-              >Open for regsitarion</v-stepper-step
+              @click="changeStatus('Open for registration')"
+              >Open for registration</v-stepper-step
             >
 
             <v-divider></v-divider>
 
-            <v-stepper-step step="4" class="body-2" color="success"
+            <v-stepper-step
+              editable
+              step="3"
+              :complete="Status > 2"
+              class="body-2"
+              color="success"
+              @click="changeStatus('Sold out')"
               >Sold out</v-stepper-step
             >
 
             <v-divider></v-divider>
 
-            <v-stepper-step step="" class="body-2" color="success"
-              >Registarion Closed</v-stepper-step
+            <v-stepper-step
+              editable
+              step="4"
+              :complete="Status > 3"
+              class="body-2"
+              color="success"
+              @click="changeStatus('Registration closed')"
+              >Registration closed</v-stepper-step
             >
           </v-stepper-header>
         </v-stepper>
@@ -982,7 +999,7 @@
           </span>
         </v-flex>
       </div>
-      <v-snackbar v-model="snackbar" :timeout="timeout" top="true">
+      <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
         <div class="toast py-2 pr-1 pl-3">
           {{ snackbarText }}
         </div>
@@ -1039,6 +1056,7 @@ export default {
   props: {
     value: { type: null, default: null },
     field: { type: null, default: null },
+    offset: { type: Boolean, default: false },
   },
   data() {
     return {
@@ -1091,6 +1109,7 @@ export default {
       logoId: '',
       getBadgeCategory: 'Guest',
       attendees: [],
+      Status: '',
     }
   },
   computed: {
@@ -1203,315 +1222,349 @@ export default {
         )
       }
     },
-    async publishEvent() {
-      this.formData.Status = 'Open for registration'
-      const url = getApiUrl()
-      try {
-        const res = await this.$axios.patch(
-          `${url}Events/${this.$route.params.id}`,
-          this.formData
-        )
-        if (res) {
-          this.refresh()
+    methods: {
+      updateStepper() {
+        const status = this.eventData.Status
+        if (status === 'Not ready') {
+          this.Status = 1
+        } else if (status === 'Open for registration') {
+          this.Status = 2
+        } else if (status === 'Sold out') {
+          this.Status = 3
+        } else {
+          this.Status = 4
         }
-      } catch (e) {
-        console.error(
-          `Error in app/Event/_id/index.vue while making a PATCH call to Event model from method publishEvent context:-URL:-${url}\n formData:-${this.formData}\n id:-${this.$route.params.id} `,
-          e
-        )
-      }
-    },
-    getBadgePrinted(str, ele) {
-      const logoUrl =
-        nuxtconfig.publicRuntimeConfig.cdnUri +
-        'admin-default-template-logo.png'
-      if (str) {
-        str = str
-          .replace('{{ FullName }}', `${ele.FullName}`)
-          .replace(
-            '{{ Category }}',
-            `${(ele.regType && ele.regType.Name) || 'Guest'}`
-          )
-          .replace('{{ Organization }}', `${ele.CompanyName}`)
-          .replace(logoUrl, this.getAttachmentLink(this.logoId, true))
-        if (this.data.event && this.data.event.Title) {
-          str = str.replace('{{ EventName }}', `${this.data.event.Title}`)
-        }
-      }
-      return str
-    },
-    async deleteBadge() {
-      const url = getApiUrl()
-      const check = confirm('Are you sure you want to delete this badge?')
-      if (check === true) {
+      },
+      async changeStatus(statusName) {
+        const url = getApiUrl()
         try {
-          const res = await this.$axios.$delete(
-            `https://${nuxtconfig.axios.eventUrl}${
-              nuxtconfig.axios.apiEndpoint
-            }Badges/${getIdFromAtob(this.badgeData.id)}`
+          const res = await this.$axios.$patch(
+            `${url}Events/${this.$route.params.id}`,
+            {
+              Status: statusName,
+            }
           )
           if (res) {
-            this.snackbarText = 'Badges deleted successfully'
-            this.snackbar = true
+            this.refresh()
+          }
+        } catch (e) {
+          console.log(
+            `Error in app/Event/_id/index.vue while making a PATCH call to Event model from method changeStatus context:-URL:-${url}\nInput:-\t Status:-${statusName}\n id:-${this.$route.params.id} `,
+            e
+          )
+        }
+      },
+      async publishEvent() {
+        this.formData.Status = 'Open for registration'
+        const url = getApiUrl()
+        try {
+          const res = await this.$axios.patch(
+            `${url}Events/${this.$route.params.id}`,
+            this.formData
+          )
+          if (res) {
             this.refresh()
           }
         } catch (e) {
           console.error(
-            `Error in apps/event/_id/index.vue while making a DELETE call to Badge model in method deleteBadge context: url:-${url} BadgeId:-${getIdFromAtob(
-              this.badgeData.id
-            )}`,
+            `Error in app/Event/_id/index.vue while making a PATCH call to Event model from method publishEvent context:-URL:-${url}\n formData:-${this.formData}\n id:-${this.$route.params.id} `,
             e
           )
         }
-      }
-    },
-    async getOrgInfo() {
-      try {
-        const result = await this.$apollo.query({
-          query: gql`
-            ${organizationInfo}
-          `,
-          variables: {
-            filters: {
-              where: {},
+      },
+      getBadgePrinted(str, ele) {
+        const logoUrl =
+          nuxtconfig.publicRuntimeConfig.cdnUri +
+          'admin-default-template-logo.png'
+        if (str) {
+          str = str
+            .replace('{{ FullName }}', `${ele.FullName}`)
+            .replace(
+              '{{ Category }}',
+              `${(ele.regType && ele.regType.Name) || 'Guest'}`
+            )
+            .replace('{{ Organization }}', `${ele.CompanyName}`)
+            .replace(logoUrl, this.getAttachmentLink(this.logoId, true))
+          if (this.data.event && this.data.event.Title) {
+            str = str.replace('{{ EventName }}', `${this.data.event.Title}`)
+          }
+        }
+        return str
+      },
+      async deleteBadge() {
+        const url = getApiUrl()
+        const check = confirm('Are you sure you want to delete this badge?')
+        if (check === true) {
+          try {
+            const res = await this.$axios.$delete(
+              `https://${nuxtconfig.axios.eventUrl}${
+                nuxtconfig.axios.apiEndpoint
+              }Badges/${getIdFromAtob(this.badgeData.id)}`
+            )
+            if (res) {
+              this.snackbarText = 'Badges deleted successfully'
+              this.snackbar = true
+              this.refresh()
+            }
+          } catch (e) {
+            console.error(
+              `Error in apps/event/_id/index.vue while making a DELETE call to Badge model in method deleteBadge context: url:-${url} BadgeId:-${getIdFromAtob(
+                this.badgeData.id
+              )}`,
+              e
+            )
+          }
+        }
+      },
+      async getOrgInfo() {
+        try {
+          const result = await this.$apollo.query({
+            query: gql`
+              ${organizationInfo}
+            `,
+            variables: {
+              filters: {
+                where: {},
+              },
             },
-          },
+          })
+          if (result) {
+            const orgInfo = formatGQLResult(result.data, 'OrganizationInfo')
+            this.logoId = orgInfo[0].Image[0]
+          }
+        } catch (e) {
+          console.error(
+            `Error in apps/event/_id/index.vue while making a GQL call to OrganizationInfo model in method getOrgInfo `,
+            e
+          )
+        }
+      },
+      getImageName() {
+        this.eventData.Other.map((id) => {
+          this.getOtherImageName(id)
         })
-        if (result) {
-          const orgInfo = formatGQLResult(result.data, 'OrganizationInfo')
-          this.logoId = orgInfo[0].Image[0]
+      },
+      getImageUrl(imageId) {
+        const downloadLink = this.getAttachmentLink(imageId, true)
+        return downloadLink
+      },
+      async getBannerImageName(imageId) {
+        try {
+          const res = await this.$axios.$get(
+            `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Attachments/${imageId}`
+          )
+          if (res) {
+            this.bannerName = res.fileName
+          }
+        } catch (e) {
+          console.log('Error', e)
         }
-      } catch (e) {
-        console.error(
-          `Error in apps/event/_id/index.vue while making a GQL call to OrganizationInfo model in method getOrgInfo `,
-          e
-        )
-      }
-    },
-    getImageName() {
-      this.eventData.Other.map((id) => {
-        this.getOtherImageName(id)
-      })
-    },
-    getImageUrl(imageId) {
-      const downloadLink = this.getAttachmentLink(imageId, true)
-      return downloadLink
-    },
-    async getBannerImageName(imageId) {
-      try {
-        const res = await this.$axios.$get(
-          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Attachments/${imageId}`
-        )
-        if (res) {
-          this.bannerName = res.fileName
+      },
+      async getLogoName(imageId) {
+        try {
+          const res = await this.$axios.$get(
+            `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Attachments/${imageId}`
+          )
+          if (res) {
+            this.logoName = res.fileName
+          }
+        } catch (e) {
+          console.log('Error', e)
         }
-      } catch (e) {
-        console.log('Error', e)
-      }
-    },
-    async getLogoName(imageId) {
-      try {
-        const res = await this.$axios.$get(
-          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Attachments/${imageId}`
-        )
-        if (res) {
-          this.logoName = res.fileName
+      },
+      async getOtherImageName(imageId) {
+        try {
+          const res = await this.$axios.$get(
+            `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Attachments/${imageId}`
+          )
+          if (res) {
+            this.OtherImageName.push(res.fileName)
+            this.refresh()
+          }
+        } catch (e) {
+          console.log('Error', e)
         }
-      } catch (e) {
-        console.log('Error', e)
-      }
-    },
-    async getOtherImageName(imageId) {
-      try {
-        const res = await this.$axios.$get(
-          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Attachments/${imageId}`
-        )
-        if (res) {
-          this.OtherImageName.push(res.fileName)
-          this.refresh()
-        }
-      } catch (e) {
-        console.log('Error', e)
-      }
-    },
-    refresh() {
-      this.$apollo.queries.data.refresh()
-    },
-    fileUploadedBadgeLogo(data) {
-      this.badgeLogo = false
-      this.formData.Logo = []
-      this.formData.Logo.push(data[0])
-      this.updateEventGallery(this.formData)
-    },
-    fileUploadedEventBanner(data) {
-      this.eventBanner = false
-      const imageUrl = `/svc/api/Attachments/download/${data[0]}`
-      this.formData.Images = []
-      this.formData.ImagesURL = []
-      this.formData.Images.push(data[0])
-      this.formData.ImagesURL.push(imageUrl)
+      },
+      refresh() {
+        this.$apollo.queries.data.refresh()
+      },
+      fileUploadedBadgeLogo(data) {
+        this.badgeLogo = false
+        this.formData.Logo = []
+        this.formData.Logo.push(data[0])
+        this.updateEventGallery(this.formData)
+      },
+      fileUploadedEventBanner(data) {
+        this.eventBanner = false
+        const imageUrl = `/svc/api/Attachments/download/${data[0]}`
+        this.formData.Images = []
+        this.formData.ImagesURL = []
+        this.formData.Images.push(data[0])
+        this.formData.ImagesURL.push(imageUrl)
 
-      this.updateEventGallery(this.formData)
-    },
-    fileUploadedOther(data) {
-      this.otherDialog = false
-      this.formData.Other = []
-      this.formData.Other.push(...data)
-      this.updateOtherImageGallery(this.formData.Other)
-    },
-    async updateEventGallery(formData) {
-      try {
-        const res = await this.$axios.$patch(
-          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`,
-          formData
-        )
-        if (res) {
-          this.snackbarText = 'Attachment added successfully'
-          this.snackbar = true
-          this.refresh()
-        }
-      } catch (e) {
-        console.log('Error', e)
-      }
-    },
-    updateOtherImageGallery(formData) {
-      try {
-        formData.map(async (id) => {
-          const res = await this.$axios.$put(
-            `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/Others/rel/${id}`
+        this.updateEventGallery(this.formData)
+      },
+      fileUploadedOther(data) {
+        this.otherDialog = false
+        this.formData.Other = []
+        this.formData.Other.push(...data)
+        this.updateOtherImageGallery(this.formData.Other)
+      },
+      async updateEventGallery(formData) {
+        try {
+          const res = await this.$axios.$patch(
+            `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`,
+            formData
           )
           if (res) {
             this.snackbarText = 'Attachment added successfully'
             this.snackbar = true
             this.refresh()
           }
-        })
-      } catch (e) {
-        console.log('Error', e)
-      }
-    },
-    viewRegistrationLink() {
-      const regUrl = `https://${nuxtconfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
-      return regUrl
-    },
-    formatDate(date) {
-      return date ? format(new Date(date), 'PPpp') : ''
-    },
-    formatedDate(date, timezone) {
-      if (date) {
-        const formattedDate = new Date(date)
-        const zonedDate = utcToZonedTime(formattedDate, timezone)
-        const pattern = 'PPpp' // 'd.M.YYYY HH:mm:ss.SSS [GMT]Z (z)'
-        const output = format(zonedDate, pattern, { timezone })
-        return output
-      }
-    },
-    formatField(fieldValue) {
-      return fieldValue || '-'
-    },
-    formatAddressField(fieldValue) {
-      return fieldValue || ' '
-    },
-    getAttachmentLink(id, isDownloadLink) {
-      const attachmentUrl = `https://${nuxtconfig.axios.eventUrl}${
-        nuxtconfig.axios.apiEndpoint
-      }Attachments${isDownloadLink ? '/download' : ''}${id ? '/' + id : ''}`
-      return attachmentUrl
-    },
-    viewRegistration() {
-      const regUrl = `https://${nuxtconfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
-      window.open(`${regUrl}`, '_blank')
-    },
-    async deleteBannerFile(e, id) {
-      const checkRes = confirm('Are you sure you want to delete')
-      if (checkRes) {
-        const res = await this.$axios.delete(
-          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/BannerImage/${id}`
-        )
-        if (res) {
-          this.refresh()
-          this.snackbarText = 'Attachment deleted successfully'
-          this.snackbar = true
-        }
-      }
-    },
-    async deleteLogoFile(id) {
-      const checkRes = confirm('Are you sure you want to delete')
-      if (checkRes) {
-        const res = await this.$axios.delete(
-          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/LogoURL/${id}`
-        )
-        if (res) {
-          this.snackbarText = 'Attachment deleted successfully'
-          this.snackbar = true
-          this.refresh()
-        }
-      }
-    },
-    async deleteOtherFile(id) {
-      const checkRes = confirm('Are you sure you want to delete')
-      if (checkRes) {
-        const res = await this.$axios.delete(
-          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/Others/${id}`
-        )
-        if (res) {
-          this.snackbarText = 'Attachment deleted successfully'
-          this.snackbar = true
-          this.refresh()
-        }
-      }
-    },
-  },
-  apollo: {
-    data: {
-      query() {
-        return gql`
-          ${event}
-        `
-      },
-      variables() {
-        return {
-          filters: {
-            where: {
-              id: this.$route.params.id,
-            },
-          },
-          badgeFilter: {
-            where: {
-              EventId: this.$route.params.id,
-            },
-          },
-          eventId: this.$route.params.id,
+        } catch (e) {
+          console.log('Error', e)
         }
       },
-      update(data) {
-        const event = formatGQLResult(data, 'Event')
-        const badge = formatGQLResult(data, 'Badge')
-        const eventSummary = data.Event.EventGetEventSummery
-        this.eventData = event.length > 0 ? event[0] : {}
-        this.badgeData = badge.length > 0 ? badge[0] : {}
+      updateOtherImageGallery(formData) {
+        try {
+          formData.map(async (id) => {
+            const res = await this.$axios.$put(
+              `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/Others/rel/${id}`
+            )
+            if (res) {
+              this.snackbarText = 'Attachment added successfully'
+              this.snackbar = true
+              this.refresh()
+            }
+          })
+        } catch (e) {
+          console.log('Error', e)
+        }
+      },
+      viewRegistrationLink() {
+        const regUrl = `https://${nuxtconfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
+        return regUrl
+      },
+      formatDate(date) {
+        return date ? format(new Date(date), 'PPpp') : ''
+      },
+      formatedDate(date, timezone) {
+        if (date) {
+          const formattedDate = new Date(date)
+          const zonedDate = utcToZonedTime(formattedDate, timezone)
+          const pattern = 'PPpp' // 'd.M.YYYY HH:mm:ss.SSS [GMT]Z (z)'
+          const output = format(zonedDate, pattern, { timezone })
+          return output
+        }
+      },
+      formatField(fieldValue) {
+        return fieldValue || '-'
+      },
+      formatAddressField(fieldValue) {
+        return fieldValue || ' '
+      },
+      getAttachmentLink(id, isDownloadLink) {
+        const attachmentUrl = `https://${nuxtconfig.axios.eventUrl}${
+          nuxtconfig.axios.apiEndpoint
+        }Attachments${isDownloadLink ? '/download' : ''}${id ? '/' + id : ''}`
+        return attachmentUrl
+      },
+      viewRegistration() {
+        const regUrl = `https://${nuxtconfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
+        window.open(`${regUrl}`, '_blank')
+      },
+      async deleteBannerFile(e, id) {
+        const checkRes = confirm('Are you sure you want to delete')
+        if (checkRes) {
+          const res = await this.$axios.delete(
+            `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/BannerImage/${id}`
+          )
+          if (res) {
+            this.refresh()
+            this.snackbarText = 'Attachment deleted successfully'
+            this.snackbar = true
+          }
+        }
+      },
+      async deleteLogoFile(id) {
+        const checkRes = confirm('Are you sure you want to delete')
+        if (checkRes) {
+          const res = await this.$axios.delete(
+            `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/LogoURL/${id}`
+          )
+          if (res) {
+            this.snackbarText = 'Attachment deleted successfully'
+            this.snackbar = true
+            this.refresh()
+          }
+        }
+      },
+      async deleteOtherFile(id) {
+        const checkRes = confirm('Are you sure you want to delete')
+        if (checkRes) {
+          const res = await this.$axios.delete(
+            `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/Others/${id}`
+          )
+          if (res) {
+            this.snackbarText = 'Attachment deleted successfully'
+            this.snackbar = true
+            this.refresh()
+          }
+        }
+      },
+    },
+    apollo: {
+      data: {
+        query() {
+          return gql`
+            ${event}
+          `
+        },
+        variables() {
+          return {
+            filters: {
+              where: {
+                id: this.$route.params.id,
+              },
+            },
+            badgeFilter: {
+              where: {
+                EventId: this.$route.params.id,
+              },
+            },
+            eventId: this.$route.params.id,
+          }
+        },
+        update(data) {
+          const event = formatGQLResult(data, 'Event')
+          const badge = formatGQLResult(data, 'Badge')
+          const eventSummary = data.Event.EventGetEventSummery
+          this.eventData = event.length > 0 ? event[0] : {}
+          this.badgeData = badge.length > 0 ? badge[0] : {}
 
-        if (event[0].Images.length > 0) {
-          this.getBannerImageName(event[0].Images[0])
-        }
-        if (event[0].Logo.length > 0) {
-          this.getLogoName(event[0].Logo[0])
-        }
-        return {
-          event: event.length > 0 ? event[0] : {},
-          badge: badge.length > 0 ? badge[0] : {},
-          eventSummary,
-        }
+          this.updateStepper()
+          if (event[0].Images.length > 0) {
+            this.getBannerImageName(event[0].Images[0])
+          }
+          if (event[0].Logo.length > 0) {
+            this.getLogoName(event[0].Logo[0])
+          }
+          return {
+            event: event.length > 0 ? event[0] : {},
+            badge: badge.length > 0 ? badge[0] : {},
+            eventSummary,
+          }
+        },
+        result({ data, loading, networkStatus }) {},
+        error(error) {
+          this.error = error
+          this.loading = 0
+        },
+        prefetch: false,
+        loadingKey: 'loading',
+        skip: false,
+        pollInterval: 0,
       },
-      result({ data, loading, networkStatus }) {},
-      error(error) {
-        this.error = error
-        this.loading = 0
-      },
-      prefetch: false,
-      loadingKey: 'loading',
-      skip: false,
-      pollInterval: 0,
     },
   },
 }

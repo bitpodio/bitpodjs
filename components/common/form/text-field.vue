@@ -21,9 +21,9 @@ export default {
       type: null,
       default: null,
     },
-    fieldCaption: {
-      type: String,
-      default: '',
+    field: {
+      type: null,
+      default: null,
     },
     rules: {
       type: Array,

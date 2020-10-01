@@ -245,6 +245,7 @@ import nuxtconfig from '~/nuxt.config'
 export default {
   props: {
     items: { type: Array, default: () => [] },
+    offset: { type: Boolean, default: false },
   },
   methods: {
     routes(id) {

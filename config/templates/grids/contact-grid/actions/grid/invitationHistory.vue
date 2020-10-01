@@ -17,6 +17,12 @@
 </template>
 <script>
 export default {
+  props: {
+    dialog: {
+      type: Boolean,
+      default: false,
+    },
+  },
   methods: {
     routeToHistory(ctx) {
       this.$router.push(`/apps/event/list/Contacts/Invites`)
