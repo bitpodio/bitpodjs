@@ -31,7 +31,7 @@ export default {
       type: null,
       default: null,
     },
-    fieldCaption: {
+    field: {
       type: String,
       default: '',
     },
