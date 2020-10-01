@@ -8,6 +8,7 @@ query($filters: JSON) {
           EventName
           EventId
           FirstName
+          SubTotal
           TotalAmount
           TicketQuantity
           CompanyName

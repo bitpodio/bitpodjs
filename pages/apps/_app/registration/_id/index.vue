@@ -153,7 +153,7 @@
             <tbody>
               <tr>
                 <td>Student</td>
-                <td>{{ data.registration.TotalAmount }}</td>
+                <td>{{ data.registration.SubTotal }}</td>
                 <td>{{ data.registration.TicketQuantity }}</td>
                 <td>{{ data.registration.TotalAmount }}</td>
               </tr>
