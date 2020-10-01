@@ -107,10 +107,10 @@
                     <RichText
                       v-model="RTEValue"
                       label="Description"
-                      :showTemplateDropdown="true"
-                      :isBadge="true"
-                      :isQRCode="false"
-                      :isLogo="false"
+                      :show-template-dropdown="true"
+                      :is-badge="true"
+                      :is-q-r-code="false"
+                      :is-logo="false"
                     />
                   </v-col>
                 </v-row>
