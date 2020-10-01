@@ -204,9 +204,6 @@ body {
 .v-timezone .v-autocomplete.v-input > .v-input__control > .v-input__slot {
   min-height: 40px !important;
 }
-.v-timezone .v-application--is-ltr .v-text-field .v-input__append-inner {
-  margin-top: 4px !important;
-}
 .v-tickettype .v-text-field--outlined > .v-input__control > .v-input__slot {
   min-height: 40px;
 }
@@ -215,14 +212,17 @@ body {
   margin-bottom: 10px !important;
   margin-top: 12px !important;
 }
+.v-text-field--enclosed .v-input__append-inner {
+  margin-top: 10px !important;
+}
+.v-timezone .v-application--is-ltr .v-text-field .v-input__append-inner {
+  margin-top: 4px !important;
+}
 .event-table .v-text-field--enclosed .v-input__append-inner {
   margin-top: 8px !important;
 }
 .jodit-ui-group {
   flex-wrap: nowrap !important;
-}
-.v-text-field--enclosed .v-input__append-inner {
-  margin-top: 10px !important;
 }
 .event-table tr:hover {
   background: transparent !important;
