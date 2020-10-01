@@ -248,6 +248,7 @@ export default {
   },
   props: {
     eventForm: {
+      type: Boolean,
       default: false,
     },
   },

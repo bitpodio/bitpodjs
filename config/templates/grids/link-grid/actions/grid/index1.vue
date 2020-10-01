@@ -10,6 +10,15 @@ export default {
   components: {
     customItem1,
   },
-  props: ['onNewItemSave', 'refresh'],
+  props: {
+    onNewItemSave: {
+      type: Function,
+      default: () => {},
+    },
+    refresh: {
+      type: null,
+      default: null,
+    },
+  },
 }
 </script>

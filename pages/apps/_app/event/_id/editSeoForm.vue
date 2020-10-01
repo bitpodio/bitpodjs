@@ -85,6 +85,7 @@ import { formatGQLResult } from '~/utility/gql.js'
 export default {
   props: {
     seoForm: {
+      type: Boolean,
       default: false,
     },
   },

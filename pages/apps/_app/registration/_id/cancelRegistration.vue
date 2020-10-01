@@ -59,6 +59,7 @@ import { getApiUrl } from '~/utility/index.js'
 export default {
   props: {
     isCancelReg: {
+      type: Boolean,
       default: false,
       allowSpaces: false,
     },

@@ -67,6 +67,7 @@
 export default {
   props: {
     newBadge: {
+      type: Boolean,
       default: false,
       allowSpaces: false,
     },

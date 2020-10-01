@@ -28,6 +28,24 @@ export default {
     newItem,
     campaign,
   },
-  props: ['content', 'viewName', 'onNewItemSave', 'refresh', 'context'],
+  props: {
+    content: {
+      type: null,
+      default: null,
+    },
+    viewName: {
+      type: String,
+      required: true,
+    },
+    refresh: {
+      type: null,
+      default: null,
+    },
+    onNewItemSave: { type: Function, default: () => {} },
+    context: {
+      type: null,
+      default: null,
+    },
+  },
 }
 </script>

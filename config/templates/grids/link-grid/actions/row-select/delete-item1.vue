@@ -17,7 +17,20 @@
 
 <script>
 export default {
-  props: ['content', 'viewName', 'items'],
+  props: {
+    content: {
+      type: null,
+      default: null,
+    },
+    viewName: {
+      type: String,
+      default: '',
+    },
+    items: {
+      type: Array,
+      default: () => [],
+    },
+  },
   data() {
     return {
       dialog: false,

@@ -65,7 +65,7 @@ function getAPIErrorMessage(statusCode, msg) {
   return userErrorMsg
 }
 export default {
-  props: ['error'],
+  props: { error: { type: null, default: null } },
   data() {
     return {
       errorMessage: APIErrorMsg(this.error),

@@ -218,7 +218,8 @@ function getGridTemplateInfo(content, viewName) {
 
 function formatResult(content, viewName, data, modelName) {
   if (!data[modelName]) return []
-  let { edges } = data[modelName][`${modelName}Find`]
+  const [modelApi] = Object.getOwnPropertyNames(data[modelName])
+  let { edges } = data[modelName][`${modelApi}`]
   const fields = getGridFields(content, viewName)
   edges = edges.map(({ node }) => {
     const formattedRecord = {}
@@ -248,7 +249,14 @@ function getGridsProps(content, viewName) {
 }
 
 function getIdFromAtob(encodedId) {
-  return encodedId ? atob(encodedId).split(':')[1] : ''
+  if (!encodedId) {
+    return ''
+  }
+  const decodedStr = atob(encodedId)
+  if (decodedStr.split(':')[1]) {
+    return decodedStr.split(':')[1]
+  }
+  return encodedId
 }
 
 function buildMutationCreateQuery(modelName) {
@@ -515,6 +523,7 @@ export default {
           search,
           filters,
         }
+
         const getDataFunc = dataSource.getData.call(this, this)
         this.tableData = await getDataFunc.call(this, options)
       }

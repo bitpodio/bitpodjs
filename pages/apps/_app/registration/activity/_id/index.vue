@@ -110,6 +110,7 @@
         </v-flex>
 
         <v-flex mb-3 d-flex justify-center align-center>
+          <!-- eslint-disable-next-line vue/no-v-html -->
           <div v-html="data.invites.Body" />
         </v-flex>
       </div>
