@@ -766,6 +766,7 @@
         </v-flex>
         <v-divider></v-divider>
         <v-flex my-3 d-flex justify-center align-center>
+          <!-- eslint-disable-next-line vue/no-v-html -->
           <div v-html="data.badge.Template" />
         </v-flex>
       </div>
@@ -992,7 +993,10 @@ export default {
     makeCopy,
   },
   mixins: [configLoaderMixin],
-  props: ['value', 'field'],
+  props: {
+    value: { type: null, default: null },
+    field: { type: null, default: null },
+  },
   data() {
     return {
       loading: 0,

@@ -17,5 +17,7 @@ module.exports = {
   ],
   plugins: ['prettier', 'promise'],
   // add your custom rules here
-  rules: {},
+  rules: {
+    'no-console': 'off',
+  },
 }

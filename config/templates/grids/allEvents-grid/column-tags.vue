@@ -1,8 +1,6 @@
 <template>
   <div>
-    <v-text v-for="value in value" :key="value" class="ma-2">
-      {{ value }},</v-text
-    >
+    <v-text v-for="val in value" :key="val" class="ma-2"> {{ val }},</v-text>
   </div>
 </template>
 

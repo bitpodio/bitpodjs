@@ -56,7 +56,10 @@
 <script>
 export default {
   props: {
-    source: String,
+    source: {
+      type: String,
+      default: '',
+    },
   },
   data: () => ({
     drawer: null,

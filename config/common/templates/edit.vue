@@ -17,6 +17,6 @@
 
 <script>
 export default {
-  props: ['item', 'value'],
+  props: { value: { type: null, default: null } },
 }
 </script>

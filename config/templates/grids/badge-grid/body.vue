@@ -5,6 +5,7 @@
       :key="item.id"
       class="ma-3 ml-0 mt-0 greybg elevation-0 badge-view"
     >
+      <!-- eslint-disable-next-line vue/no-v-html -->
       <div v-html="item.Template" />
     </v-card>
   </v-flex>
@@ -12,7 +13,7 @@
 
 <script>
 export default {
-  props: ['items'],
+  props: { items: { type: Array, default: () => [] } },
 }
 </script>
 
