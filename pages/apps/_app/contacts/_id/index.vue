@@ -6,7 +6,7 @@
       >
         <v-row>
           <v-col class="col-md-6 col-12 pt-0">
-            <v-card class="elevation-0">
+            <v-card class="elevation-0 pt-0">
               <v-list>
                 <v-list-item class="pl-0">
                   <v-list-item-avatar size="62">
@@ -24,7 +24,9 @@
 
                   <v-list-item-content>
                     <v-list-item-title>
-                      <h2>{{ data.contact.FirstName }}</h2>
+                      <h2 class="text-capitalize text-truncate">
+                        {{ data.contact.FullName }}
+                      </h2>
                     </v-list-item-title>
                     <v-list-item-subtitle>{{
                       data.contact.Job
@@ -38,19 +40,19 @@
             </v-card>
           </v-col>
           <v-col class="col-md-6 col-12 pt-0">
-            <div class="text-truncate my-3">
-              <v-icon class="mr-2">mdi-email-outline</v-icon>
+            <div class="text-truncate my-3 pt-0">
+              <v-icon class="mr-2 fs-16">mdi-email-outline</v-icon>
               {{ formatField(data.contact.Email) }}
             </div>
-            <div class="text-truncate my-3">
+            <div class="text-truncate my-3 fs-16">
               <v-icon class="mr-2">mdi-cellphone-iphone</v-icon>
               {{ formatField(data.contact.CellPhone) }}
             </div>
-            <div class="text-truncate my-3">
+            <div class="text-truncate my-3 fs-16">
               <v-icon class="mr-2">mdi-map-marker-outline</v-icon>
               {{ formatField(data.contact.Country) }}
             </div>
-            <div class="text-truncate my-3">
+            <div class="text-truncate my-3 fs-16">
               <v-icon class="mr-2">mdi-calendar-blank</v-icon>
               {{ formatDate(data.contact.createdDate) }}
             </div>

@@ -22,7 +22,9 @@
 
                   <v-list-item-content>
                     <v-list-item-title>
-                      <h2>{{ data.contact.FirstName }}</h2>
+                      <h2 class="text-capitalize text-truncate">
+                        {{ data.contact.FullName }}
+                      </h2>
                     </v-list-item-title>
                     <v-list-item-subtitle>{{
                       data.contact.Job

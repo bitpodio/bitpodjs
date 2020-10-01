@@ -325,9 +325,6 @@
             Information
           </h2>
           <v-spacer></v-spacer>
-          <v-btn text small>
-            <v-icon left class="fs-16">fa-pencil</v-icon>Edit
-          </v-btn>
         </v-flex>
         <v-divider></v-divider>
         <v-flex my-3>
@@ -363,9 +360,6 @@
             Details
           </h2>
           <v-spacer></v-spacer>
-          <v-btn text small>
-            <v-icon left class="fs-16">fa-pencil</v-icon>Edit
-          </v-btn>
         </v-flex>
         <v-divider></v-divider>
         <v-flex my-3>
@@ -421,9 +415,6 @@
             Survey Questions
           </h2>
           <v-spacer></v-spacer>
-          <v-btn text small>
-            <v-icon left class="fs-16">fa-pencil</v-icon>Edit
-          </v-btn>
         </v-flex>
         <v-divider></v-divider>
       </div>

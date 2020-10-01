@@ -194,7 +194,7 @@
               color="success"
               complete="true"
               class="body-2"
-              >Open for regsitarion</v-stepper-step
+              >Open for registration</v-stepper-step
             >
 
             <v-divider></v-divider>
@@ -206,7 +206,7 @@
             <v-divider></v-divider>
 
             <v-stepper-step step="" color="success" class="body-2"
-              >Registarion Closed</v-stepper-step
+              >Registration closed</v-stepper-step
             >
           </v-stepper-header>
         </v-stepper>
