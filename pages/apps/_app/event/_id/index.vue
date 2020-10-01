@@ -13,7 +13,9 @@
             >
           </div>
           <div v-if="data.event.Status === 'Not ready'" class="mr-2">
-            <v-btn outlined color="primary">Publish</v-btn>
+            <v-btn outlined color="primary" @click="publishEvent"
+              >Publish</v-btn
+            >
           </div>
           <v-menu left :offset-y="offset" transition="slide-y-transition">
             <template v-slot:activator="{ on, attrs }">
@@ -977,7 +979,7 @@ import File from '~/components/common/form/file.vue'
 import event from '~/config/apps/event/gql/event.gql'
 import copy from '~/components/common/copy'
 import { formatGQLResult } from '~/utility/gql.js'
-import { configLoaderMixin } from '~/utility'
+import { configLoaderMixin, getApiUrl } from '~/utility'
 
 export default {
   components: {
@@ -1059,6 +1061,24 @@ export default {
   },
 
   methods: {
+    async publishEvent() {
+      this.formData.Status = 'Open for registration'
+      const url = getApiUrl()
+      try {
+        const res = await this.$axios.patch(
+          `${url}Events/${this.$route.params.id}`,
+          this.formData
+        )
+        if (res) {
+          this.refresh()
+        }
+      } catch (e) {
+        console.log(
+          `Error in app/Event/_id/index.vue while making a PATCH call to Event model from method publishEvent context:-URL:-${url}\n formData:-${this.formData}\n id:-${this.$route.params.id} `,
+          e
+        )
+      }
+    },
     getImageName() {
       this.eventData.Other.map((id) => {
         this.getOtherImageName(id)
