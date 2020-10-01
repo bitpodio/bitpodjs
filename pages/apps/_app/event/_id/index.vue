@@ -1257,9 +1257,9 @@ export default {
         }
       }
     },
-    getOrgInfo() {
-      return this.$apollo
-        .query({
+    async getOrgInfo() {
+      try {
+        const result = await this.$apollo.query({
           query: gql`
             ${organizationInfo}
           `,
@@ -1269,17 +1269,16 @@ export default {
             },
           },
         })
-        .then((result) => {
+        if (result) {
           const orgInfo = formatGQLResult(result.data, 'OrganizationInfo')
           this.logoId = orgInfo[0].Image[0]
-          return orgInfo
-        })
-        .catch((e) => {
-          console.log(
-            `Error in apps/event/_id/index.vue while making a GQL call to OrganizationInfo model in method getOrgInfo `,
-            e
-          )
-        })
+        }
+      } catch (e) {
+        console.log(
+          `Error in apps/event/_id/index.vue while making a GQL call to OrganizationInfo model in method getOrgInfo `,
+          e
+        )
+      }
     },
     getImageName() {
       this.eventData.Other.map((id) => {

@@ -114,9 +114,9 @@ export default {
         )
       }
     },
-    editBadge() {
-      return this.$apollo
-        .query({
+    async editBadge() {
+      try {
+        const result = await this.$apollo.query({
           query: gql`
             ${badge}
           `,
@@ -128,19 +128,18 @@ export default {
             },
           },
         })
-        .then((result) => {
+        if (result) {
           const badgeTemplate = formatGQLResult(result.data, 'Badge')
           this.RTEValue = badgeTemplate[0].Template
-          return badgeTemplate
-        })
-        .catch((e) => {
-          console.log(
-            `Error in editBadgeForm.vue while making a GQL call to Badge model in method editBadge context: id:-${getIdFromAtob(
-              this.id
-            )}`,
-            e
-          )
-        })
+        }
+      } catch (e) {
+        console.log(
+          `Error in editBadgeForm.vue while making a GQL call to Badge model in method editBadge context: id:-${getIdFromAtob(
+            this.id
+          )}`,
+          e
+        )
+      }
     },
   },
 

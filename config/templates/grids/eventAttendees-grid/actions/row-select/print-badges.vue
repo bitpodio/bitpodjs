@@ -74,9 +74,9 @@ export default {
       }Attachments${isDownloadLink ? '/download' : ''}${id ? '/' + id : ''}`
       return attachmentUrl
     },
-    getOrgInfo() {
-      return this.$apollo
-        .query({
+    async getOrgInfo() {
+      try {
+        const result = await this.$apollo.query({
           query: gql`
             ${organizationInfo}
           `,
@@ -86,17 +86,16 @@ export default {
             },
           },
         })
-        .then((result) => {
+        if (result) {
           const orgInfo = formatGQLResult(result.data, 'OrganizationInfo')
           this.logoId = orgInfo[0].Image[0]
-          return orgInfo
-        })
-        .catch((e) => {
-          console.log(
-            'Error while fetching data using gql in print-badges.vue using the organizationInfo gql in method getOrgInfo',
-            e
-          )
-        })
+        }
+      } catch (e) {
+        console.log(
+          'Error while fetching data using gql in print-badges.vue using the organizationInfo gql in method getOrgInfo',
+          e
+        )
+      }
     },
   },
   apollo: {
@@ -143,6 +142,10 @@ export default {
       error(error) {
         this.error = error
         this.loading = 0
+        console.log(
+          'Error while fetching data using gql in eventAttendees/actions/row-select/print-badges.vue using the badge gql in apollo data query section',
+          error
+        )
       },
       prefetch: false,
       loadingKey: 'loading',
