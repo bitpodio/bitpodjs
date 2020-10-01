@@ -13,10 +13,8 @@ export const openAuthPopups = (options, callback) => {
 
 function queryParams(source) {
   const array = []
-
   for (const key in source) {
     array.push(encodeURIComponent(key) + '=' + encodeURIComponent(source[key]))
   }
-
   return array.join('&')
 }
