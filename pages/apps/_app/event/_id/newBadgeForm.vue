@@ -201,7 +201,6 @@ export default {
       return attachmentUrl
     },
     getBadge(str) {
-      debugger
       const logoId = this.$refs.badgeDialog.$parent.$parent.$data.logoId
       const logoUrl =
         nuxtconfig.publicRuntimeConfig.cdnUri +

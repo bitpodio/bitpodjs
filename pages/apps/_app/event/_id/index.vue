@@ -71,7 +71,10 @@
             class="pb-1"
             @click="viewRegistration"
           >
-            <a>{{ viewRegistrationLink() }}</a>
+            <a
+              ><v-icon class="fs-16 mr-1 primary--text mt-n1">fa-globe</v-icon
+              >{{ viewRegistrationLink() }}</a
+            >
           </div>
           <div v-else>
             <p class="blue--text body-2">
@@ -245,7 +248,7 @@
         </v-flex>
       </div>
       <div
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-0">
@@ -255,7 +258,7 @@
           <v-menu offset-y>
             <template v-slot:activator="{ on, attrs }">
               <v-btn depressed text small v-bind="attrs" v-on="on">
-                <v-icon left>mdi-upload</v-icon> Upload
+                <v-icon left>fa-upload</v-icon> Upload
               </v-btn>
             </template>
             <v-list dense>
@@ -574,7 +577,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -592,7 +595,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -610,7 +613,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -624,7 +627,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -643,7 +646,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -661,7 +664,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -679,7 +682,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -693,7 +696,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -707,7 +710,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -721,7 +724,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
