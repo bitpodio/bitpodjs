@@ -313,6 +313,7 @@
         </h2>
         <v-divider></v-divider>
         <v-flex my-3 d-flex justify-center align-center>
+          <!-- eslint-disable-next-line vue/no-v-html -->
           <div v-html="data.badge.Template" />
         </v-flex>
       </div>

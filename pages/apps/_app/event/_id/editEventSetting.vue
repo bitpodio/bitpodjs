@@ -179,6 +179,7 @@ export default {
   },
   props: {
     eventSetting: {
+      type: Boolean,
       default: false,
       allowSpaces: false,
     },

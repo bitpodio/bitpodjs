@@ -22,7 +22,7 @@ export default {
   props: {
     viewName: {
       type: String,
-      required: false,
+      default: '',
     },
     content: {
       type: Object,

@@ -94,7 +94,24 @@ export default {
     formTitleMixin,
     gridActionMixin,
   ],
-  props: ['content', 'viewName', 'onNewItemSave', 'context'],
+  props: {
+    content: {
+      type: null,
+      default: null,
+    },
+    viewName: {
+      type: String,
+      required: true,
+    },
+    onNewItemSave: {
+      type: Function,
+      default: () => {},
+    },
+    context: {
+      type: null,
+      default: null,
+    },
+  },
   data() {
     const fields = getGridFields(this.content, this.viewName)
     const intialFormData = getFormDefaultValues(this.content, this.viewName)

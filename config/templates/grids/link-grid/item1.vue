@@ -42,7 +42,12 @@
 
 <script>
 export default {
-  props: ['item'],
+  props: {
+    item: {
+      type: null,
+      default: null,
+    },
+  },
 }
 </script>
 

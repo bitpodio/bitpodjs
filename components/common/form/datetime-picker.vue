@@ -123,12 +123,15 @@ export default {
     },
     textFieldProps: {
       type: Object,
+      default: () => {},
     },
     datePickerProps: {
       type: Object,
+      default: () => {},
     },
     timePickerProps: {
       type: Object,
+      default: () => {},
     },
   },
   data() {

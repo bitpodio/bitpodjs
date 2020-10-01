@@ -11,6 +11,10 @@
 
 <script>
 export default {
-  props: ['item', 'value', 'context'],
+  props: {
+    item: { type: null, default: null },
+    value: { type: null, default: null },
+    context: { type: null, default: null },
+  },
 }
 </script>

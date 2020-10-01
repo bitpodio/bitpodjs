@@ -28,15 +28,27 @@ import { gridActionMixin } from '~/utility/form'
 
 export default {
   mixins: [templateLoaderMixin, gridActionMixin],
-  props: [
-    'content',
-    'viewName',
-    'items',
-    'onUpdateItem',
-    'onDeleteItem',
-    'refresh',
-    'context',
-  ],
+  props: {
+    content: {
+      type: null,
+      default: null,
+    },
+    viewName: {
+      type: String,
+      required: true,
+    },
+    refresh: {
+      type: null,
+      default: null,
+    },
+    items: { type: Array, default: () => [] },
+    onUpdateItem: { type: Function, default: () => {} },
+    onDeleteItem: { type: Function, default: () => {} },
+    context: {
+      type: null,
+      default: null,
+    },
+  },
   data() {
     return {
       editItem: null,
