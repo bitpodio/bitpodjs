@@ -71,7 +71,10 @@
             class="pb-1"
             @click="viewRegistration"
           >
-            <a>{{ viewRegistrationLink() }}</a>
+            <a
+              ><v-icon class="fs-16 mr-1 primary--text mt-n1">fa-globe</v-icon
+              >{{ viewRegistrationLink() }}</a
+            >
           </div>
           <div v-else>
             <p class="blue--text body-2">
