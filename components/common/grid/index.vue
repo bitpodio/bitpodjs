@@ -312,6 +312,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    serveritemslength: {
+      type: null,
+      default: null,
+    },
   },
   data() {
     const headers = getTableHeader(this.content, this.viewName)
