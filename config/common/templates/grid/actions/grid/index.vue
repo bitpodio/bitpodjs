@@ -17,7 +17,28 @@ import { gridActionMixin } from '~/utility/form'
 
 export default {
   mixins: [templateLoaderMixin, gridActionMixin],
-  props: ['content', 'viewName', 'onNewItemSave', 'refresh', 'context'],
+  props: {
+    content: {
+      type: null,
+      default: null,
+    },
+    viewName: {
+      type: String,
+      required: true,
+    },
+    onNewItemSave: {
+      type: Function,
+      default: () => {},
+    },
+    refresh: {
+      type: null,
+      default: null,
+    },
+    context: {
+      type: null,
+      default: null,
+    },
+  },
   data() {
     return {
       newItem: null,

@@ -15,7 +15,28 @@ export default {
   components: {
     JoditEditor,
   },
-  props: ['value', 'field', 'isInvitee', 'isGeneral', 'showTemplateDropdown'],
+  props: {
+    value: {
+      type: null,
+      default: null,
+    },
+    field: {
+      type: Object,
+      default: () => {},
+    },
+    isInvitee: {
+      type: Boolean,
+      default: false,
+    },
+    isGeneral: {
+      type: Boolean,
+      default: false,
+    },
+    showTemplateDropdown: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
       content: this.value || '',

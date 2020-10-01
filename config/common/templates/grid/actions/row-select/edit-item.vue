@@ -83,7 +83,22 @@ export default {
     formTitleMixin,
     gridActionMixin,
   ],
-  props: ['content', 'viewName', 'items', 'onUpdateItem', 'context'],
+  props: {
+    content: {
+      type: null,
+      default: null,
+    },
+    viewName: {
+      type: String,
+      required: true,
+    },
+    items: { type: Array, default: () => [] },
+    onUpdateItem: { type: Function, default: () => {} },
+    context: {
+      type: null,
+      default: null,
+    },
+  },
   data() {
     const fields = getGridFields(this.content, this.viewName, true)
     return {

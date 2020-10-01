@@ -88,6 +88,9 @@ export default {
     '@nuxtjs/vuetify',
     '@nuxtjs/dotenv',
   ],
+  eslint: {
+    cache: true,
+  },
   /*
    ** Nuxt.js modules
    */
@@ -165,6 +168,9 @@ export default {
    */
   build: {
     transpile: /@fullcalendar.*/, // transpile ESM modules within all fullcalendar packages
+    parallel: true,
+    cache: true,
+    hardSource: true,
   },
   vue: {
     config: {

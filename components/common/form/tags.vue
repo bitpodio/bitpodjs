@@ -26,7 +26,28 @@
 import { formFieldMixin } from '~/utility/form-control'
 export default {
   mixins: [formFieldMixin],
-  props: ['value', 'field', 'rules', 'readonly', 'onChange'],
+  props: {
+    value: {
+      type: null,
+      default: null,
+    },
+    fieldCaption: {
+      type: String,
+      default: '',
+    },
+    rules: {
+      type: Array,
+      default: () => [],
+    },
+    readonly: {
+      type: Boolean,
+      default: false,
+    },
+    onChange: {
+      type: Function,
+      default: () => {},
+    },
+  },
   data() {
     return {
       select: this.value || [],

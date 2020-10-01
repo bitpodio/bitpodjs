@@ -93,7 +93,20 @@ export default {
     Lookup,
     Checkbox,
   },
-  props: ['content', 'viewName', 'items'],
+  props: {
+    content: {
+      type: null,
+      default: null,
+    },
+    viewName: {
+      type: String,
+      default: '',
+    },
+    items: {
+      type: Array,
+      default: () => [],
+    },
+  },
   data() {
     const fields = getGridFields(this.content, this.viewName)
     return {
