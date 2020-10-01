@@ -39,11 +39,11 @@ body {
   right: 0 !important;
   bottom: 0 !important;
   width: 50% !important;
-  min-height: 50% !important;
+  min-height: 65% !important;
 }
 .v-dialog {
   margin: 12px !important;
-  margin-bottom: 0px !important;
+  margin-bottom: 0 !important;
 }
 .Twitter {
   font-size: 0 !important;
@@ -170,6 +170,10 @@ body {
 .app-view:hover {
   background-color: #f6fafe;
 }
+.event-tile-left .fa {
+  font-size: 24px;
+  color: #fff;
+}
 .boxview h2.body-1,
 .boxview h2 > .fa,
 .box-grey h2.body-1,
@@ -224,7 +228,7 @@ body {
   background: transparent !important;
 }
 .slide-form-default .col {
-  padding-bottom:  0px !important;
+  padding-bottom:  0 !important;
 }
 .event-cards {
   overflow: hidden;
@@ -234,7 +238,7 @@ body {
   overflow-x: auto;
 }
 .event-datechip {
-  box-shadow: 0px 2px 10px 0 hsla(120, 4%, 84%, .64) inset;
+  box-shadow: 0 2px 10px 0 hsla(120, 4%, 84%, .64) inset;
   background-color: hsl(0, 0%, 100%) !important;
 }
 .boxview .v-data-table__wrapper {
@@ -243,7 +247,7 @@ body {
 }
 .boxview:hover .v-data-table__wrapper {
   overflow-x: auto !important;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 .v-application .boxview .v-data-table {
   padding: 0 !important;
@@ -294,9 +298,6 @@ body {
   width: 30px;
   height: 40px;
 }
-.slide-form-default {
-  min-height: 65% !important;
-  }
 .event-tile {
   height: 60px;
   max-width: 200px;
@@ -307,10 +308,6 @@ body {
   min-width: 75px;
   height: 60px;
   border-radius: 4px 0 0 4px;
-}
-.event-tile-left .fa {
-  font-size: 24px;
-  color: #fff;
 }
 .event-tile-right {
   height: 60px;
