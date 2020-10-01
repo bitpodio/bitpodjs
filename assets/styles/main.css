@@ -215,11 +215,11 @@ body {
 .v-text-field--enclosed .v-input__append-inner {
   margin-top: 10px !important;
 }
-.v-timezone .v-application--is-ltr .v-text-field .v-input__append-inner {
-  margin-top: 4px !important;
-}
 .event-table .v-text-field--enclosed .v-input__append-inner {
   margin-top: 8px !important;
+}
+.v-timezone .v-application--is-ltr .v-text-field .v-input__append-inner {
+  margin-top: 4px !important;
 }
 .jodit-ui-group {
   flex-wrap: nowrap !important;
