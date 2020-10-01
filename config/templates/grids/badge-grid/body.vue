@@ -21,7 +21,7 @@ export default {
 .badge-view > div > div {
   background: #fff;
   margin: 0 !important;
-  padding: 0px !important;
+  padding: 0 !important;
   padding-top: 2px !important;
 }
 </style>
