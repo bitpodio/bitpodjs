@@ -181,6 +181,14 @@ export default {
       type: Function,
       default: () => false,
     },
+    dateRules: {
+      type: null,
+      default: null,
+    },
+    lazy: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {

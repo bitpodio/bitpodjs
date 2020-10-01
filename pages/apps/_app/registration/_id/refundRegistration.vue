@@ -116,6 +116,10 @@ export default {
       default: false,
       allowSpaces: false,
     },
+    lazy: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {

@@ -63,6 +63,14 @@ export default {
       default: false,
       allowSpaces: false,
     },
+    lazy: {
+      type: Boolean,
+      default: false,
+    },
+    Comment: {
+      type: null,
+      default: null,
+    },
   },
   data() {
     return {

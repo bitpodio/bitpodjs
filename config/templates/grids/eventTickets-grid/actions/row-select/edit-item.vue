@@ -190,6 +190,7 @@ export default {
     },
     context: {
       type: Object,
+      default: null,
       required: false,
     },
   },
