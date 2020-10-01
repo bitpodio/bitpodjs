@@ -201,9 +201,6 @@ body {
   text-overflow: ellipsis;
   display: inline-block;
 }
-.v-timezone .v-autocomplete.v-input > .v-input__control > .v-input__slot {
-  min-height: 40px !important;
-}
 .v-tickettype .v-text-field--outlined > .v-input__control > .v-input__slot {
   min-height: 40px;
 }
@@ -211,6 +208,9 @@ body {
   max-height: 50px !important;
   margin-bottom: 10px !important;
   margin-top: 12px !important;
+}
+.v-timezone .v-autocomplete.v-input > .v-input__control > .v-input__slot {
+  min-height: 40px !important;
 }
 .v-text-field--enclosed .v-input__append-inner {
   margin-top: 10px !important;
