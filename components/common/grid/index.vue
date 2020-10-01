@@ -5,7 +5,7 @@
         <component :is="errorTemplate || null" :error="error" />
       </div>
     </template>
-    <v-snackbar v-model="snackbar" :timeout="timeout" top="true">
+    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
       <div class="text-center">{{ snackbarText }}</div>
     </v-snackbar>
     <div v-if="!error" :key="error">
@@ -63,7 +63,7 @@
           :headers="headers"
           :items="tableData.items"
           :single-select="singleSelect"
-          :loading="loading === 1"
+          :loading="loading"
           :options.sync="options"
           :server-items-length="tableData.total"
           :hide-default-header="hideDefaultHeader"
@@ -322,7 +322,7 @@ export default {
         items: [],
         total: 0,
       },
-      loading: 0,
+      loading: true,
       totalCount: 0,
       options: {},
       isFilterApplied: false,
@@ -526,6 +526,7 @@ export default {
 
         const getDataFunc = dataSource.getData.call(this, this)
         this.tableData = await getDataFunc.call(this, options)
+        this.loading = false
       }
     },
   },
@@ -572,10 +573,12 @@ export default {
         if (Object.keys(data).length > 0) this.error = ''
         return tableData
       },
-      result({ data, loading, networkStatus }) {},
+      result({ data, loading, networkStatus }) {
+        this.loading = false
+      },
       error(error) {
         this.error = error
-        this.loading = 0
+        this.loading = false
       },
       prefetch: false,
       loadingKey: 'loading',

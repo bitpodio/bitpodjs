@@ -951,7 +951,7 @@
           </span>
         </v-flex>
       </div>
-      <v-snackbar v-model="snackbar" :timeout="timeout" top="true">
+      <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
         <div class="toast py-2 pr-1 pl-3">
           {{ snackbarText }}
         </div>
@@ -996,6 +996,7 @@ export default {
   props: {
     value: { type: null, default: null },
     field: { type: null, default: null },
+    offset: { type: Boolean, default: false },
   },
   data() {
     return {

@@ -10,7 +10,16 @@
 
 <script>
 export default {
-  props: { column: { type: null, default: null } },
+  props: {
+    column: {
+      type: null,
+      default: null,
+    },
+    value: {
+      type: null,
+      default: null,
+    },
+  },
   data() {
     return {
       columnClass: {

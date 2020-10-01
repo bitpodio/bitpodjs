@@ -113,6 +113,10 @@ export default {
       required: false,
       default: () => false,
     },
+    lazy: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {

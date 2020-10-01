@@ -7,9 +7,8 @@ import nuxtconfig from '~/nuxt.config'
 export default {
   props: {
     value: {
-      type: String,
-      default: '',
-      required: false,
+      type: Number,
+      default: 0,
     },
   },
   data() {

@@ -12,7 +12,7 @@ export default {
   mixins: [formFieldMixin],
   props: {
     value: { type: null, default: null },
-    fieldCaption: { type: String, default: '' },
+    field: { type: String, default: '' },
     rules: { type: Array, default: () => [] },
   },
   data() {
