@@ -225,6 +225,85 @@
         />
       </div>
       <div
+        v-if="data.registration._Refund"
+        class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-credit-card pr-1" aria-hidden="true"></i>
+            Refund Details
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
+        <v-divider></v-divider>
+        <v-row>
+          <v-col class="col-md-6 col-12">
+            <div class="body-2 text--secondary">Transaction ID</div>
+            <div class="body-1">
+              {{
+                formatField(
+                  data.registration._Refund &&
+                    data.registration._Refund.TransactionID
+                )
+              }}
+            </div>
+          </v-col>
+          <v-col class="col-md-6 col-12">
+            <div class="body-2 text--secondary">Amount</div>
+            <div class="body-1">
+              {{
+                formatField(
+                  data.registration._Refund && data.registration._Refund.Amount
+                )
+              }}
+            </div>
+          </v-col>
+          <v-col class="col-md-6 col-12">
+            <div class="body-2 text--secondary">Status</div>
+            <div class="body-1">
+              {{
+                formatField(
+                  data.registration._Refund &&
+                    data.registration._Refund.RefundStatus
+                )
+              }}
+            </div>
+          </v-col>
+          <v-col class="col-md-6 col-12">
+            <div class="body-2 text--secondary">Reason</div>
+            <div class="body-1">
+              {{
+                formatField(
+                  data.registration._Refund && data.registration._Refund.Reason
+                )
+              }}
+            </div>
+          </v-col>
+          <v-col class="col-md-6 col-12">
+            <div class="body-2 text--secondary">Comment</div>
+            <div class="body-1">
+              {{
+                formatField(
+                  data.registration._Refund &&
+                    data.registration._Refund.Comments
+                )
+              }}
+            </div>
+          </v-col>
+          <v-col class="col-md-6 col-12">
+            <div class="body-2 text--secondary">Date</div>
+            <div class="body-1">
+              {{
+                formatField(
+                  data.registration._Refund &&
+                    data.registration._Refund.RefundInitiatedDate
+                )
+              }}
+            </div>
+          </v-col>
+        </v-row>
+      </div>
+      <div
         class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
@@ -404,6 +483,9 @@ export default {
     },
     formatField(fieldValue) {
       return fieldValue || '-'
+    },
+    formatAddressField(fieldValue) {
+      return fieldValue || ' '
     },
   },
   apollo: {

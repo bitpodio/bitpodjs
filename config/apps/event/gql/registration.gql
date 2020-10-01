@@ -38,6 +38,22 @@ query($filters: JSON) {
               Country
             }
           }
+          _Refund {
+            id
+            TransactionType
+            TransactionID
+            RefundStatus
+            RefundRequest
+            RefundMethod
+            Reason
+            Comments
+            Amount
+            RefundInitiatedDate
+            createdDate
+            createdBy
+            modifiedDate
+            modifiedBy
+          }
         }
       }
     }
