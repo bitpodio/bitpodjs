@@ -8,7 +8,8 @@ query ($filters: JSON, $where: JSON) {
                     Phone          
                     Email          
                     Description    
-                    LayoutId      
+                    LayoutId
+                    Type      
                     Name          
                     orgId          
                     PrimeContactId          

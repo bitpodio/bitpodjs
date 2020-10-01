@@ -1,0 +1,9 @@
+query { 
+    OrganizationInfo {
+        OrganizationInfoRoles {
+            edges {
+                node
+            }
+        }
+    }
+}

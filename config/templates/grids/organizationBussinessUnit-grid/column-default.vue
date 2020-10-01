@@ -3,7 +3,7 @@
     v-model="checkbox"
     color="green"
     dense
-    @change="updateRegForm"
+    @change="updateBussinessUnit"
   ></v-checkbox>
 </template>
 
@@ -24,16 +24,16 @@ export default {
   },
   data() {
     return {
-      checkbox: this.item.isAttendeeField,
+      checkbox: this.item.Default,
     }
   },
   methods: {
-    async updateRegForm() {
+    async updateBussinessUnit() {
       try {
-        const res = await this.$axios.$put(
-          `https://${nuxtconfig.axios.eventUrl}/svc/api/RegistrationForms/${this.item.id}`,
+        const res = await this.$axios.$patch(
+          `https://${nuxtconfig.axios.eventUrl}/svc/api/Locations/${this.item.id}`,
           {
-            isAttendeeField: this.checkbox,
+            Default: this.checkbox,
           }
         )
         if (res) {
@@ -41,8 +41,10 @@ export default {
         }
       } catch (e) {
         console.log(
-          `Error in templates/grids/registrationform-grid/column-isattendeefield.vue while making a PUT call to RegistrationForm model from method updateRegForm context:-URL:-https://${nuxtconfig.axios.eventUrl}/svc/api/RegistrationForms/${this.item.id}\n `,
-          e
+          'Error in organizationBussinessUnit-grid/column-default  Default ' +
+            this.checkbox +
+            'Error ' +
+            e
         )
       }
     },
