@@ -6,9 +6,11 @@ import marketingtemplates from './marketingtemplates'
 import userroles from './userroles'
 import users from './users'
 import accesskey from './accesskey'
+import lookup from './lookup'
 
 export default {
   organization,
+  lookup,
   registrationformdetails,
   badge,
   seatmaps,

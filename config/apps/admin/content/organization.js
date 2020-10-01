@@ -1,4 +1,7 @@
 import businessUnit from '../gql/businessUnit.gql'
+import generalConfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
+import contactList from '~/config/apps/event/gql/contact.gql'
+import crmActivity from '~/config/apps/event/gql/eventTasks.gql'
 import { getData } from '~/config/apps/event/rest'
 
 export default {
@@ -9,19 +12,48 @@ export default {
         hideDefaultFooter: false,
         showExpand: false,
         singleExpand: false,
-        showSelect: true,
+        showSelect: false,
         hideFilter: false,
         hideSearch: true,
       },
+      itemTitle: 'Business Unit',
       default: false,
       fields: {
         Name: {
+          form: {
+            caption: 'Name *',
+            displayOrder: 1,
+          },
           displayOrder: 2,
           caption: 'Name',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
           type: 'string',
+          cssClasses: 'col-12 col-md-12',
+          newForm: true,
+          editForm: true,
+          rules: [
+            (v) => {
+              return !!v || 'Name is required'
+            },
+          ],
+        },
+        Description: {
+          form: {
+            caption: 'Description',
+            displayOrder: 2,
+          },
+          displayOrder: 3,
+          caption: 'Description',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '180px',
+          type: 'richtext',
+          cssClasses: 'col-12 col-md-12',
+          hidden: true,
+          newForm: true,
+          editForm: true,
         },
         'child.Name': {
           displayOrder: 3,
@@ -30,6 +62,8 @@ export default {
           sortEnable: true,
           columnWidth: '180px',
           type: 'string',
+          newForm: false,
+          editForm: false,
         },
         'contacts.FullName': {
           displayOrder: 3,
@@ -38,41 +72,215 @@ export default {
           sortEnable: true,
           columnWidth: '180px',
           type: 'string',
+          newForm: false,
+          editForm: false,
         },
         '_CurrentAddress.AddressLine': {
+          form: {
+            caption: 'Address *',
+            displayOrder: 3,
+          },
           displayOrder: 5,
           caption: 'Address Line',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '160px',
           type: 'string',
+          cssClasses: 'col-12 col-md-12',
+          newForm: true,
+          editForm: true,
+          rules: [
+            (v) => {
+              return !!v || 'Address is required'
+            },
+          ],
         },
         '_CurrentAddress.Country': {
+          form: {
+            caption: 'Country',
+            displayOrder: 6,
+          },
           displayOrder: 6,
           caption: 'Country',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '130px',
           type: 'string',
+          cssClasses: 'col-6 col-md-6',
+          newForm: true,
+          editForm: true,
+        },
+        '_CurrentAddress.City': {
+          form: {
+            caption: 'City',
+            displayOrder: 4,
+          },
+          displayOrder: 6,
+          caption: 'City',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '130px',
+          type: 'string',
+          hidden: true,
+          cssClasses: 'col-6 col-md-6',
+          newForm: true,
+          editForm: true,
+        },
+        '_CurrentAddress.State': {
+          form: {
+            caption: 'State',
+            displayOrder: 5,
+          },
+          displayOrder: 6,
+          caption: 'State',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '130px',
+          type: 'string',
+          hidden: true,
+          cssClasses: 'col-6 col-md-6',
+          newForm: true,
+          editForm: true,
+        },
+        '_CurrentAddress.PostalCode': {
+          form: {
+            caption: 'Zip Code',
+            displayOrder: 7,
+          },
+          displayOrder: 7,
+          caption: 'Zip Code',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '130px',
+          type: 'string',
+          hidden: true,
+          cssClasses: 'col-6 col-md-6',
+          newForm: true,
+          editForm: true,
         },
         Email: {
+          form: {
+            caption: 'Email',
+            displayOrder: 9,
+          },
           displayOrder: 7,
           caption: 'Email',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '130px',
           type: 'string',
+          cssClasses: 'col-6 col-md-6',
+          newForm: true,
+          editForm: true,
+          rules: [
+            function (value, data) {
+              return /.+@.+\..+/.test(value) || 'E-mail must be valid'
+            },
+          ],
         },
         Phone: {
+          form: {
+            caption: 'Phone',
+            displayOrder: 8,
+          },
           displayOrder: 8,
           caption: 'Phone',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '130px',
           type: 'string',
+          cssClasses: 'col-6 col-md-6',
+          newForm: true,
+          editForm: true,
+          rules: [
+            function (value, data) {
+              return /^[0-9]\d*$|^$/.test(value) || 'Number must be valid'
+            },
+          ],
+        },
+        Type: {
+          form: {
+            caption: 'Type *',
+            displayOrder: 10,
+          },
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'lookup',
+          cssClasses: 'col-6 col-md-6',
+          hidden: true,
+          inlineEdit: true,
+          newForm: true,
+          editForm: true,
+          rules: [
+            (v) => {
+              return !!v || 'Type should be selected'
+            },
+          ],
+          dataSource: {
+            query: generalConfiguration,
+            itemText: 'value',
+            itemValue: 'key',
+            filter(data) {
+              return {
+                type: 'BusinessTypeLocation',
+              }
+            },
+          },
+        },
+        ParentId: {
+          form: {
+            caption: 'Parent Business Unit',
+            displayOrder: 11,
+          },
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'lookup',
+          cssClasses: 'col-6 col-md-6',
+          hidden: true,
+          inlineEdit: true,
+          newForm: true,
+          editForm: true,
+          dataSource: {
+            query: businessUnit,
+            itemText: 'Name',
+            itemValue: 'id',
+          },
+        },
+        PrimeContactId: {
+          form: {
+            caption: 'Contact',
+            displayOrder: 12,
+          },
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'lookup',
+          cssClasses: 'col-6 col-md-6',
+          hidden: true,
+          inlineEdit: true,
+          newForm: true,
+          editForm: true,
+          dataSource: {
+            query: contactList,
+            itemText: 'FullName',
+            itemValue: 'id',
+          },
+        },
+        Default: {
+          displayOrder: 9,
+          caption: 'Default',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '180px',
+          type: 'string',
+          newForm: false,
+          editForm: false,
         },
       },
       template: {
+        name: 'organizationBussinessUnit-grid',
         context: {
           basePath: '/organization',
         },
@@ -167,7 +375,7 @@ export default {
       },
       dataSource: {
         type: 'rest',
-        getData: (ctx) => getData(`/OrganizationInfos/getSubscription`),
+        getData: (ctx) => getData(`OrganizationInfos/getSubscription`),
       },
       title: 'organizationProductSubscription',
       type: 'list',
@@ -238,7 +446,7 @@ export default {
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
-          type: 'datetime',
+          type: 'string',
         },
         createdDate: {
           displayOrder: 9,
@@ -246,7 +454,7 @@ export default {
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
-          type: 'datetime',
+          type: 'date',
         },
         DueDate: {
           displayOrder: 10,
@@ -263,11 +471,18 @@ export default {
         },
       },
       dataSource: {
-        type: 'rest',
-        getData: (ctx) =>
-          getData(`/CRMACTIVITIES?filter={"where":{"Type":"Template"}}`),
+        query: crmActivity,
+        type: 'graphql',
+        model: 'CRMActivity',
+        filter(ctx) {
+          return {
+            where: {
+              Type: 'Template',
+            },
+          }
+        },
       },
-      title: 'organizationProductSubscription',
+      title: 'Tasks',
       type: 'list',
     },
     organizationIntegration: {

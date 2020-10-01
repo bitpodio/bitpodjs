@@ -11,7 +11,22 @@ import { gridActionMixin } from '~/utility/form'
 
 export default {
   mixins: [gridActionMixin],
-  props: ['content', 'viewName', 'items', 'onDeleteItem', 'context'],
+  props: {
+    content: {
+      type: null,
+      default: null,
+    },
+    viewName: {
+      type: String,
+      required: true,
+    },
+    items: { type: Array, default: () => [] },
+    onDeleteItem: { type: Function, default: () => {} },
+    context: {
+      type: null,
+      default: null,
+    },
+  },
   data() {
     return {
       dialog: false,

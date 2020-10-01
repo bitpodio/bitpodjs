@@ -21,6 +21,8 @@ export default {
           sortEnable: true,
           columnWidth: '150px',
           type: 'string',
+          newForm: false,
+          editForm: false,
         },
         id: {
           displayOrder: 3,
@@ -29,25 +31,44 @@ export default {
           sortEnable: true,
           columnWidth: '150px',
           type: 'string',
+          newForm: false,
+          editForm: false,
         },
         email: {
+          form: {
+            caption: 'Email',
+            displayOrder: 1,
+          },
           displayOrder: 4,
           caption: 'Email',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
           type: 'string',
+          newForm: true,
+          editForm: false,
+          rules: [
+            (v) => {
+              return !!v || 'Email is required'
+            },
+            function (value, data) {
+              return /.+@.+\..+/.test(value) || 'E-mail must be valid'
+            },
+          ],
         },
-        'rolemappings[0].roleId': {
+        rolemappings: {
           displayOrder: 5,
           caption: 'Roles',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
           type: 'string',
+          newForm: false,
+          editForm: false,
         },
       },
       template: {
+        name: 'userRoles-grid',
         context: {
           basePath: '/organization',
         },
@@ -55,9 +76,7 @@ export default {
       dataSource: {
         type: 'rest',
         getData: (ctx) =>
-          getData(
-            `/Organizations/${this.$store.state.currentOrg.id}/Users?filter={"include":{"rolemappings":"role"}}`
-          ),
+          getData(`Organizations/${ctx.$store.state.currentOrg.id}/Users`),
       },
       title: 'Users',
       type: 'list',
