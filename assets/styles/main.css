@@ -249,6 +249,14 @@ body {
   overflow-x: auto !important;
   margin-bottom: 0;
 }
+.boxviewsmall .v-data-table__wrapper {
+  overflow-x: hidden !important;
+  margin-bottom: 0;
+}
+.boxviewsmall:hover .v-data-table__wrapper {
+  overflow-x: auto !important;
+  margin-bottom: 0px;
+}
 .v-application .boxview .v-data-table {
   padding: 0 !important;
 }

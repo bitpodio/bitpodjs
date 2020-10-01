@@ -6,8 +6,8 @@
       >
         <v-row>
           <v-col class="col-md-5 col-12 pt-0">
-            <v-card class="elevation-0">
-              <v-list>
+            <v-card class="elevation-0 mt-n2">
+              <v-list class="pt-0">
                 <v-list-item class="pl-0">
                   <v-list-item-avatar size="62">
                     <v-avatar
@@ -24,7 +24,9 @@
 
                   <v-list-item-content>
                     <v-list-item-title>
-                      <h2>{{ data.registration.FirstName }}</h2>
+                      <h2 class="text-capitalize text-truncate">
+                        {{ data.registration.FirstName }}
+                      </h2>
                     </v-list-item-title>
                     <v-list-item-subtitle>{{
                       data.registration.Status
@@ -35,16 +37,16 @@
             </v-card>
           </v-col>
           <v-col class="col-md-5 col-12 pt-0">
-            <div class="text-truncate my-3">
-              <v-icon class="mr-2">mdi-email-outline</v-icon>
+            <div class="text-truncate my-3 mt-0">
+              <v-icon class="mr-2 fs-16">mdi-email-outline</v-icon>
               {{ data.registration.Email }}
             </div>
             <div class="text-truncate my-3">
-              <v-icon class="mr-2">mdi-cellphone-iphone</v-icon>
+              <v-icon class="mr-2 fs-16">mdi-cellphone-iphone</v-icon>
               {{ data.registration.Phone }}
             </div>
             <div class="text-truncate my-3">
-              <v-icon class="mr-2">mdi-map-marker-outline</v-icon>
+              <v-icon class="mr-2 fs-16">mdi-map-marker-outline</v-icon>
               {{ data.registration.Country }}
             </div>
           </v-col>
@@ -56,8 +58,8 @@
                   Action
                 </v-btn>
               </template>
-              <v-list>
-                <v-list-item>
+              <v-list dense>
+                <v-list-item @click="true">
                   <v-list-item-icon class="mr-2">
                     <i
                       class="fa fa-pencil-square-o mt-1"
@@ -70,7 +72,10 @@
                     >
                   </v-list-item-content>
                 </v-list-item>
-                <v-list-item v-if="data.registration.Status === 'Success'">
+                <v-list-item
+                  v-if="data.registration.Status === 'Success'"
+                  @click="true"
+                >
                   <v-list-item-icon class="mr-2">
                     <i class="fa-cross-circle mt-1" aria-hidden="true"></i>
                   </v-list-item-icon>
@@ -80,7 +85,10 @@
                     >
                   </v-list-item-content>
                 </v-list-item>
-                <v-list-item v-if="data.registration.TotalAmount > 0">
+                <v-list-item
+                  v-if="data.registration.TotalAmount > 0"
+                  @click="true"
+                >
                   <v-list-item-icon class="mr-2">
                     <i class="fa-refresh mt-1" aria-hidden="true"></i>
                   </v-list-item-icon>
@@ -111,6 +119,56 @@
             ></v-subheader
           >
         </v-flex>
+      </div>
+      <div
+        v-if="content"
+        class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-ticket pr-1" aria-hidden="true"></i>
+            Tickets
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
+        <v-divider></v-divider>
+        <v-simple-table dense>
+          <template v-slot:default>
+            <thead>
+              <tr>
+                <th class="text-left">
+                  Name
+                </th>
+                <th class="text-left">
+                  Amount
+                </th>
+                <th class="text-left">
+                  Quantity
+                </th>
+                <th class="text-left">
+                  Total
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Student</td>
+                <td>{{ data.registration.TotalAmount }}</td>
+                <td>{{ data.registration.TicketQuantity }}</td>
+                <td>{{ data.registration.TotalAmount }}</td>
+              </tr>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>Total</td>
+                <td>
+                  {{ data.registration.Currency
+                  }}{{ data.registration.TotalAmount }}
+                </td>
+              </tr>
+            </tbody>
+          </template>
+        </v-simple-table>
       </div>
       <div
         v-if="content"
@@ -188,7 +246,9 @@
             Information
           </h2>
           <v-spacer></v-spacer>
-          <v-btn text small> <v-icon left>fa-pencil</v-icon>Edit </v-btn>
+          <v-btn text small>
+            <v-icon left class="fs-16">fa-pencil</v-icon>Edit
+          </v-btn>
         </v-flex>
         <v-divider></v-divider>
         <v-flex my-3>
@@ -224,7 +284,9 @@
             Details
           </h2>
           <v-spacer></v-spacer>
-          <v-btn text small> <v-icon left>fa-pencil</v-icon>Edit </v-btn>
+          <v-btn text small>
+            <v-icon left class="fs-16">fa-pencil</v-icon>Edit
+          </v-btn>
         </v-flex>
         <v-divider></v-divider>
         <v-flex my-3>
@@ -280,7 +342,9 @@
             Survey Questions
           </h2>
           <v-spacer></v-spacer>
-          <v-btn text small> <v-icon left>fa-pencil</v-icon>Edit </v-btn>
+          <v-btn text small>
+            <v-icon left class="fs-16">fa-pencil</v-icon>Edit
+          </v-btn>
         </v-flex>
         <v-divider></v-divider>
       </div>
