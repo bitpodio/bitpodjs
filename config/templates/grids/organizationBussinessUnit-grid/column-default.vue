@@ -3,7 +3,7 @@
     v-model="checkbox"
     color="green"
     dense
-    @change="updateRegForm"
+    @change="updateBussinessUnit"
   ></v-checkbox>
 </template>
 
@@ -24,23 +24,28 @@ export default {
   },
   data() {
     return {
-      checkbox: this.item.isShowField,
+      checkbox: this.item.Default,
     }
   },
   methods: {
-    async updateRegForm() {
+    async updateBussinessUnit() {
       try {
-        const res = await this.$axios.$put(
-          `https://${nuxtconfig.axios.eventUrl}/svc/api/RegistrationForms/${this.item.id}`,
+        const res = await this.$axios.$patch(
+          `https://${nuxtconfig.axios.eventUrl}/svc/api/Locations/${this.item.id}`,
           {
-            isShowField: this.checkbox,
+            Default: this.checkbox,
           }
         )
         if (res) {
           return res
         }
       } catch (e) {
-        console.log('Error', e)
+        console.log(
+          'Error in organizationBussinessUnit-grid/column-default  Default ' +
+            this.checkbox +
+            'Error ' +
+            e
+        )
       }
     },
   },

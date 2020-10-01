@@ -1,8 +1,8 @@
-import { getData } from '~/config/apps/event/rest'
+import generalConfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 
 export default {
   views: {
-    accesskey: {
+    timezone: {
       ui: {
         hideDefaultHeader: false,
         hideDefaultFooter: false,
@@ -12,45 +12,45 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      default: true,
+      default: false,
       fields: {
-        accesskey: {
+        key: {
           displayOrder: 2,
-          caption: 'Access Key',
+          caption: 'Key',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '200px',
+          columnWidth: '180px',
           type: 'string',
         },
-        accesssecret: {
+        value: {
           displayOrder: 3,
-          caption: 'Access Secret',
+          caption: 'Description',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '200px',
+          columnWidth: '180px',
           type: 'string',
-        },
-        expiresat: {
-          displayOrder: 4,
-          caption: 'Expires On',
-          searchEnable: true,
-          sortEnable: true,
-          columnWidth: '150px',
-          type: 'datetime',
         },
       },
       template: {
-        name: 'accessKey-grid',
+        name: '',
         context: {
           basePath: '/organization',
         },
       },
       dataSource: {
-        type: 'rest',
-        getData: (ctx) =>
-          getData(`/Users/${ctx.$auth.$state.user.data.email}/AccessKey`),
+        query: generalConfiguration,
+        defaultSort: 'createdDate DESC',
+        type: 'graphql',
+        model: 'GeneralConfiguration',
+        filter(ctx) {
+          return {
+            where: {
+              type: 'Currency',
+            },
+          }
+        },
       },
-      title: 'Access keys',
+      title: 'timezone',
       type: 'list',
     },
   },
