@@ -179,7 +179,6 @@ export default {
   props: {
     refresh: {
       type: Function,
-      required: false,
       default: () => false,
     },
   },
@@ -216,30 +215,29 @@ export default {
       Symbol: '',
     }
   },
-  computed: {},
-  mounted() {
-    this.getDropDownData('TicketType')
-      .then((res) => {
+  async mounted() {
+    try {
+      const res = await this.getDropDownData('TicketType')
+      if (res) {
         this.typeDropDown = res.map((i) => i.value)
-        return res
-      })
-      .catch((e) => {
-        console.log(
-          `Error in templates/grids/eventTickets/actions/grid/new-item.vue while making a GQL call to Ticket model from method getDropDownData`,
-          e
-        )
-      })
-    this.getRegistrationType()
-      .then((res) => {
+      }
+    } catch (e) {
+      console.log(
+        `Error in templates/grids/eventTickets/actions/grid/new-item.vue while making a GQL call to Ticket model from method getDropDownData`,
+        e
+      )
+    }
+    try {
+      const res = await this.getRegistrationType()
+      if (res) {
         this.registrationTypeDropdown = res.map((i) => i.Name)
-        return res
-      })
-      .catch((e) => {
-        console.log(
-          `Error in templates/grids/eventTickets/actions/grid/new-item.vue while making a GQL call to Ticket model from method getRegistrationType`,
-          e
-        )
-      })
+      }
+    } catch (e) {
+      console.log(
+        `Error in templates/grids/eventTickets/actions/grid/new-item.vue while making a GQL call to Ticket model from method getRegistrationType`,
+        e
+      )
+    }
     this.getTicketDate()
     this.getAttendeeType()
   },
@@ -386,9 +384,9 @@ export default {
       this.formData.EndDate = addMonths(new Date(), 1)
     },
 
-    getDropDownData(filterType) {
-      return this.$apollo
-        .query({
+    async getDropDownData(filterType) {
+      try {
+        const result = await this.$apollo.query({
           query: gql`
             ${generalconfiguration}
           `,
@@ -400,23 +398,23 @@ export default {
             },
           },
         })
-        .then((result) => {
+        if (result) {
           const generalConfig = formatGQLResult(
             result.data,
             'GeneralConfiguration'
           )
           return generalConfig
-        })
-        .catch((e) => {
-          console.log(
-            `Error in templates/grids/eventTickets/actions/grid/new-item.vue while making a GQL call to GeneralConfiguration model from method getDropDownData Inputs:-filterType:-${filterType} `,
-            e
-          )
-        })
+        }
+      } catch (e) {
+        console.log(
+          `Error in templates/grids/eventTickets/actions/grid/new-item.vue while making a GQL call to GeneralConfiguration model from method getDropDownData Inputs:-filterType:-${filterType} `,
+          e
+        )
+      }
     },
-    getRegistrationType(filterType) {
-      return this.$apollo
-        .query({
+    async getRegistrationType() {
+      try {
+        const result = await this.$apollo.query({
           query: gql`
             ${registrationtype}
           `,
@@ -428,16 +426,16 @@ export default {
             },
           },
         })
-        .then((result) => {
+        if (result) {
           const generalConfig = formatGQLResult(result.data, 'RegistrationType')
           return generalConfig
-        })
-        .catch((e) => {
-          console.log(
-            `Error in templates/grids/eventTickets/actions/grid/new-item.vue while making a GQL call to RegistrationType model from method getRegistrationType Inputs:-filterType:-${filterType}\n EventId:-${this.$route.params.id}\n `,
-            e
-          )
-        })
+        }
+      } catch (e) {
+        console.log(
+          `Error in templates/grids/eventTickets/actions/grid/new-item.vue while making a GQL call to RegistrationType model from method getRegistrationType context:-\n EventId:-${this.$route.params.id}\n `,
+          e
+        )
+      }
     },
   },
   apollo: {
@@ -469,6 +467,10 @@ export default {
       error(error) {
         this.error = error
         this.loading = 0
+        console.log(
+          `Error in templates/grids/eventTickets/actions/grid/new-item.vue while making a GQL call to Event model from apollo data query section context:-EventId:-${this.$route.params.id}\n `,
+          error
+        )
       },
       prefetch: false,
       loadingKey: 'loading',

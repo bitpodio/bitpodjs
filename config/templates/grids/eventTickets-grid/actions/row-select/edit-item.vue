@@ -182,7 +182,6 @@ export default {
   props: {
     refresh: {
       type: Function,
-      required: false,
       default: () => false,
     },
     items: {
@@ -216,41 +215,41 @@ export default {
       Symbol: '',
     }
   },
-  mounted() {
-    this.getRegistrationType()
-      .then((res) => {
-        this.registrationTypeDropdown = res.map((i) => i.Name)
-        return res
-      })
-      .catch((e) => {
-        console.log(
-          `Error in templates/grids/eventTickets/actions/grid/row-select/edit-item.vue while making a GQL call to RegistrationType model from method getRegistrationType`,
-          e
-        )
-      })
-    this.getDropDownData('TicketType')
-      .then((res) => {
+  async mounted() {
+    try {
+      const res = await this.getDropDownData('TicketType')
+      if (res) {
         this.typeDropDown = res.map((i) => i.value)
-        return res
-      })
-      .catch((e) => {
-        console.log(
-          `Error in templates/grids/eventTickets/actions/grid/row-select/edit-item.vue while making a GQL call to Ticket model from method getDropDownData`,
-          e
-        )
-      })
-    this.getDropDownData('TicketStatus')
-      .then((res) => {
+      }
+    } catch (e) {
+      console.log(
+        `Error in templates/grids/eventTickets/actions/grid/row-select/edit-item.vue while making a GQL call to Ticket model from method getDropDownData`,
+        e
+      )
+    }
+    try {
+      const res = await this.getRegistrationType()
+      if (res) {
+        this.registrationTypeDropdown = res.map((i) => i.Name)
+      }
+    } catch (e) {
+      console.log(
+        `Error in templates/grids/eventTickets/actions/grid/row-select/edit-item.vue while making a GQL call to RegistrationType model from method getRegistrationType`,
+        e
+      )
+    }
+    try {
+      const res = await this.getDropDownData('TicketStatus')
+      if (res) {
         this.eventStatusDropDown = res.map((i) => i.value)
         this.eventStatus = this.eventStatusDropDown[0]
-        return res
-      })
-      .catch((e) => {
-        console.log(
-          `Error in templates/grids/eventTickets/actions/grid/row-select/edit-item.vue while making a GQL call to Ticket model from method getDropDownData`,
-          e
-        )
-      })
+      }
+    } catch (e) {
+      console.log(
+        `Error in templates/grids/eventTickets/actions/grid/row-select/edit-item.vue while making a GQL call to Ticket model from method getDropDownData`,
+        e
+      )
+    }
     this.getAttendeeType()
     this.getCurrencySymbol(this.context.event.Currency)
   },
@@ -377,9 +376,9 @@ export default {
         )
       }
     },
-    getDropDownData(filterType) {
-      return this.$apollo
-        .query({
+    async getDropDownData(filterType) {
+      try {
+        const result = await this.$apollo.query({
           query: gql`
             ${generalconfiguration}
           `,
@@ -391,23 +390,23 @@ export default {
             },
           },
         })
-        .then((result) => {
+        if (result) {
           const generalConfig = formatGQLResult(
             result.data,
             'GeneralConfiguration'
           )
           return generalConfig
-        })
-        .catch((e) => {
-          console.log(
-            `Error in templates/grids/eventTickets/actions/grid/new-item.vue while making a GQL call to GeneralConfiguration model from method getDropDownData Inputs:-filterType:-${filterType} `,
-            e
-          )
-        })
+        }
+      } catch (e) {
+        console.log(
+          `Error in templates/grids/eventTickets/actions/grid/wor-select/edit-item.vue while making a GQL call to GeneralConfiguration model from method getDropDownData Inputs:-filterType:-${filterType} `,
+          e
+        )
+      }
     },
-    getRegistrationType(filterType) {
-      return this.$apollo
-        .query({
+    async getRegistrationType() {
+      try {
+        const result = await this.$apollo.query({
           query: gql`
             ${registrationtype}
           `,
@@ -419,16 +418,16 @@ export default {
             },
           },
         })
-        .then((result) => {
+        if (result) {
           const generalConfig = formatGQLResult(result.data, 'RegistrationType')
           return generalConfig
-        })
-        .catch((e) => {
-          console.log(
-            `Error in templates/grids/eventTickets/actions/grid/new-item.vue while making a GQL call to GeneralConfiguration model from method getRegistrationType Inputs:-filterType:-${filterType} `,
-            e
-          )
-        })
+        }
+      } catch (e) {
+        console.log(
+          `Error in templates/grids/eventTickets/actions/grid/row-select/edit-item.vue while making a GQL call to RegistrationType model from method getRegistrationType context:- EventId:-${this.$route.params.id}\n `,
+          e
+        )
+      }
     },
   },
 }
