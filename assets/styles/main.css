@@ -294,6 +294,9 @@ body {
   width: 30px;
   height: 40px;
 }
+.slide-form-default {
+  min-height: 65% !important;
+}
 .event-tile {
   height: 60px;
   max-width: 200px;

@@ -1,5 +1,5 @@
 <template>
-  <div class="d-inline-block text-truncate mxcol-name">
+  <div class="d-inline-block text-truncate eventuser-name">
     <nuxt-link :to="route"> {{ value }}</nuxt-link>
   </div>
 </template>
@@ -30,3 +30,8 @@ export default {
   },
 }
 </script>
+<style scoped>
+.eventuser-name {
+  max-width: 150px;
+}
+</style>
