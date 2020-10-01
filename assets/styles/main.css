@@ -174,6 +174,9 @@ body {
   font-size: 24px;
   color: #fff;
 }
+.v-event-icon .fa {
+  font-size: 20px !important;
+}
 .boxview h2.body-1,
 .boxview h2 > .fa,
 .box-grey h2.body-1,
@@ -217,9 +220,6 @@ body {
 }
 .jodit-ui-group {
   flex-wrap: nowrap !important;
-}
-.v-event-icon .fa {
-  font-size: 20px !important;
 }
 .v-text-field--enclosed .v-input__append-inner {
   margin-top: 10px !important;
