@@ -148,19 +148,22 @@ export default {
                 const socialFields = {
                   'Organization Facebook': {
                     icon:
-                      'https://res.cloudinary.com/mytestlogo/image/upload/Facebook-icon.png',
+                      nuxtConfig.publicRuntimeConfig.cdnUri +
+                      'Facebook-icon.png',
                     modelField: 'OrganizationInfo.Facebook',
                     title: 'Facebook',
                   },
                   'Organization Linkedin': {
                     icon:
-                      'https://res.cloudinary.com/mytestlogo/image/upload/v1571124314/linkedin-45x45.png',
+                      nuxtConfig.publicRuntimeConfig.cdnUri +
+                      'linkedin-45x45.png',
                     modelField: 'OrganizationInfo.LinkedIn',
                     title: 'LinkedIn',
                   },
                   'Organization Twitter': {
                     icon:
-                      'https://res.cloudinary.com/mytestlogo/image/upload/Twitter-icon.png',
+                      nuxtConfig.publicRuntimeConfig.cdnUri +
+                      'Twitter-icon.png',
                     modelField: 'OrganizationInfo.Twitter',
                     title: 'Twitter',
                   },
@@ -191,7 +194,8 @@ export default {
                     )
                   } else if (key === 'Logo') {
                     const logoURL =
-                      'https://res.cloudinary.com/mytestlogo/admin-default-template-logo.png'
+                      nuxtConfig.publicRuntimeConfig.cdnUri +
+                      'admin-default-template-logo.png'
                     editor.selection.insertHTML(
                       `<img src="${logoURL}" "style"="max-width:200px;height:auto" class="img-responsive"/>`
                     )
@@ -200,7 +204,9 @@ export default {
                       `${`<a href="`}\${hostURL}${`/events/`}\${Event.id}" target="_blank">Register</a>`
                     )
                   } else if (key === 'QRCode') {
-                    const qrCode = nuxtConfig.publicRuntimeConfig.QRCodeUri
+                    const qrCode =
+                      nuxtConfig.publicRuntimeConfig.cdnUri +
+                      'default-preview-qr.svg'
                     editor.selection.insertHTML(
                       `<img src="${qrCode}" "style"="max-width:200px;height:auto" class="img-responsive"/>`
                     )
@@ -287,7 +293,8 @@ export default {
           },
           exec: (editor, flag, currentOption) => {
             if (currentOption.control.args) {
-              const qrCode = nuxtConfig.publicRuntimeConfig.QRCodeUri
+              const qrCode =
+                nuxtConfig.publicRuntimeConfig.cdnUri + 'default-preview-qr.svg'
               editor.selection.insertHTML(
                 `<img src="${qrCode}" "style"="max-width:200px;height:auto" class="img-responsive"/>`
               )
@@ -299,7 +306,9 @@ export default {
         this._data.config.extraButtons.push({
           name: 'Logo',
           exec: (editor, flag, currentOption) => {
-            const logo = nuxtConfig.publicRuntimeConfig.QRCodeUri
+            const logo =
+              nuxtConfig.publicRuntimeConfig.cdnUri +
+              'admin-default-template-logo.png'
             editor.selection.insertHTML(
               `<img src="${logo}" "style"="max-width:200px;height:auto" class="img-responsive"/>`
             )

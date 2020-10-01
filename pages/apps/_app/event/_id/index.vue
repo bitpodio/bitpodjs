@@ -1152,7 +1152,7 @@ export default {
           return attendeesData
         }
       } catch (e) {
-        console.log(
+        console.error(
           `Error in apps/event/_id/index.vue while making a GQL call to Attendee model in method getAttendees context: EventId:-${this.$route.params.id}`,
           e
         )
@@ -1160,7 +1160,9 @@ export default {
     },
     getBadge(str) {
       this.getOrgInfo()
-      const logoUrl = nuxtconfig.publicRuntimeConfig.logoUri
+      const logoUrl =
+        nuxtconfig.publicRuntimeConfig.cdnUri +
+        'admin-default-template-logo.png'
       if (str) {
         str = str
           .replace('{{ FullName }}', `${this.$auth.user.data.name}`)
@@ -1194,7 +1196,7 @@ export default {
             : {}
         return badgeCategory
       } catch (e) {
-        console.log(
+        console.error(
           `Error in apps/event/_id/index.vue while making a GQL call to Badge model in method selectedBadge context: id:-${getIdFromAtob(
             id
           )}`
@@ -1213,14 +1215,16 @@ export default {
           this.refresh()
         }
       } catch (e) {
-        console.log(
+        console.error(
           `Error in app/Event/_id/index.vue while making a PATCH call to Event model from method publishEvent context:-URL:-${url}\n formData:-${this.formData}\n id:-${this.$route.params.id} `,
           e
         )
       }
     },
     getBadgePrinted(str, ele) {
-      const logoUrl = nuxtconfig.publicRuntimeConfig.logoUri
+      const logoUrl =
+        nuxtconfig.publicRuntimeConfig.cdnUri +
+        'admin-default-template-logo.png'
       if (str) {
         str = str
           .replace('{{ FullName }}', `${ele.FullName}`)
@@ -1252,7 +1256,7 @@ export default {
             this.refresh()
           }
         } catch (e) {
-          console.log(
+          console.error(
             `Error in apps/event/_id/index.vue while making a DELETE call to Badge model in method deleteBadge context: url:-${url} BadgeId:-${getIdFromAtob(
               this.badgeData.id
             )}`,
@@ -1278,7 +1282,7 @@ export default {
           this.logoId = orgInfo[0].Image[0]
         }
       } catch (e) {
-        console.log(
+        console.error(
           `Error in apps/event/_id/index.vue while making a GQL call to OrganizationInfo model in method getOrgInfo `,
           e
         )

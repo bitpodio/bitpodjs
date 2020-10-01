@@ -52,7 +52,9 @@ export default {
       }, 1000)
     },
     getBadge(str, items) {
-      const logoUrl = nuxtconfig.publicRuntimeConfig.logoUri
+      const logoUrl =
+        nuxtconfig.publicRuntimeConfig.cdnUri +
+        'admin-default-template-logo.png'
       if (str) {
         str = str
           .replace('{{ FullName }}', `${items.FullName}`)
@@ -91,7 +93,7 @@ export default {
           this.logoId = orgInfo[0].Image[0]
         }
       } catch (e) {
-        console.log(
+        console.error(
           'Error while fetching data using gql in print-badges.vue using the organizationInfo gql in method getOrgInfo',
           e
         )
@@ -142,7 +144,7 @@ export default {
       error(error) {
         this.error = error
         this.loading = 0
-        console.log(
+        console.error(
           'Error while fetching data using gql in eventAttendees/actions/row-select/print-badges.vue using the badge gql in apollo data query section',
           error
         )

@@ -107,10 +107,10 @@
                     <RichText
                       v-model="RTEValue"
                       label="Description"
-                      :show-template-dropdown="true"
-                      :is-badge="true"
-                      :is-q-r-code="false"
-                      :is-logo="false"
+                      :showTemplateDropdown="true"
+                      :isBadge="true"
+                      :isQRCode="false"
+                      :isLogo="false"
                     />
                   </v-col>
                 </v-row>
@@ -201,8 +201,11 @@ export default {
       return attachmentUrl
     },
     getBadge(str) {
+      debugger
       const logoId = this.$refs.badgeDialog.$parent.$parent.$data.logoId
-      const logoUrl = nuxtconfig.publicRuntimeConfig.logoUri
+      const logoUrl =
+        nuxtconfig.publicRuntimeConfig.cdnUri +
+        'admin-default-template-logo.png'
       str = str
         .replace('{{ FullName }}', `${this.$auth.user.data.name}`)
         .replace('{{ Category }}', `${this.Category}`)

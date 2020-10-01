@@ -128,9 +128,6 @@ export default {
     },
     cdnUri:
       'https://res.cloudinary.com/mytestlogo/image/upload/bitpodjs/images/',
-    logoUri:
-      'https://res.cloudinary.com/mytestlogo/admin-default-template-logo.png',
-    QRCodeUri: 'https://www.qrcode-monkey.com/img/default-preview-qr.svg',
   },
 
   /*

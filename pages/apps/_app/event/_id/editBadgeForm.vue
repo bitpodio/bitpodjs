@@ -108,7 +108,7 @@ export default {
           this.close()
         }
       } catch (e) {
-        console.log(
+        console.error(
           `Error in editBadgeForm.vue while making a PATCH call in method onSave context: URL:-${url}\n badgeId:${badgeId}`,
           e
         )
@@ -133,7 +133,7 @@ export default {
           this.RTEValue = badgeTemplate[0].Template
         }
       } catch (e) {
-        console.log(
+        console.error(
           `Error in editBadgeForm.vue while making a GQL call to Badge model in method editBadge context: id:-${getIdFromAtob(
             this.id
           )}`,
