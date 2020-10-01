@@ -44,16 +44,16 @@
               <v-icon class="mr-2 fs-16">mdi-email-outline</v-icon>
               {{ formatField(data.contact.Email) }}
             </div>
-            <div class="text-truncate my-3 fs-16">
-              <v-icon class="mr-2">mdi-cellphone-iphone</v-icon>
+            <div class="text-truncate my-3">
+              <v-icon class="mr-2 fs-16">mdi-cellphone-iphone</v-icon>
               {{ formatField(data.contact.CellPhone) }}
             </div>
-            <div class="text-truncate my-3 fs-16">
-              <v-icon class="mr-2">mdi-map-marker-outline</v-icon>
+            <div class="text-truncate my-3">
+              <v-icon class="mr-2 fs-16">mdi-map-marker-outline</v-icon>
               {{ formatField(data.contact.Country) }}
             </div>
-            <div class="text-truncate my-3 fs-16">
-              <v-icon class="mr-2">mdi-calendar-blank</v-icon>
+            <div class="text-truncate my-3">
+              <v-icon class="mr-2 fs-16">mdi-calendar-blank</v-icon>
               {{ formatDate(data.contact.createdDate) }}
             </div>
           </v-col>
@@ -61,7 +61,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -73,14 +73,14 @@
         <v-divider></v-divider>
         <Grid
           view-name="contactRegistration"
-          class="mt-n12"
+          class="mt-12"
           :content="content"
           :filter="filter"
         />
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -90,11 +90,11 @@
           <v-spacer></v-spacer>
         </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="contactInvites" :content="content" class="mt-n12" />
+        <Grid view-name="contactInvites" :content="content" class="mt-12" />
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -104,10 +104,10 @@
           <v-spacer></v-spacer>
         </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="contactEmails" :content="content" class="mt-n12" />
+        <Grid view-name="contactEmails" :content="content" class="mt-12" />
       </div>
       <div
-        class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+        class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
