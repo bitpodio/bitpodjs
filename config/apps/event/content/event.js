@@ -3272,7 +3272,7 @@ export default {
           newForm: false,
           editForm: false,
         },
-        action: {
+        templateAction: {
           displayOrder: 11,
           caption: 'Action',
           searchEnable: true,

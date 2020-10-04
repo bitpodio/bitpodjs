@@ -9,7 +9,7 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on">
-          <v-icon left>mdi-plus</v-icon> Schedule a task
+          <v-icon left>mdi-plus</v-icon> {{ buttonLabel }}
         </v-btn>
       </template>
       <v-card>
@@ -57,7 +57,7 @@
               </v-col>
               <v-col v-if="isAction" cols="12" sm="6" md="4">
                 <Lookup
-                  v-model="task.EventAction"
+                  v-model="task.Action"
                   :field="actionLookupField"
                   :rules="requiredRules"
                   :filter="actionFilter"
@@ -108,13 +108,11 @@
             </v-row>
             <v-row>
               <v-col v-if="isSurvey" cols="12" sm="6" md="6">
-                <v-text-field
+                <Lookup
                   v-model="task.SurveyId"
-                  label="SurveyId*"
-                  required
-                  outlined
-                  dense
-                ></v-text-field>
+                  :field="surveyLookupField"
+                  :rules="requiredRules"
+                />
               </v-col>
             </v-row>
           </v-form>
@@ -137,6 +135,7 @@
 </template>
 
 <script>
+import { getLookupData } from '~/config/apps/event/rest'
 import strings from '~/strings.js'
 import { required } from '~/utility/rules.js'
 import { getApiUrl } from '~/utility/index.js'
@@ -148,22 +147,39 @@ export default {
       required: false,
       default: () => false,
     },
+    dialog: {
+      default: false,
+      allowSpaces: false,
+      type: Boolean,
+    },
+    buttonLabel: {
+      default: 'Schedule a Task',
+      allowSpaces: false,
+      type: String,
+    },
+    item: {
+      default: () => {},
+      allowSpaces: false,
+      type: Object,
+    },
   },
   data() {
+    debugger
+    const isAction = this.item && this.item.Status === 'Wait for an Action'
     return {
       isDay: false,
       isTime: false,
-      isAction: false,
+      isAction,
       isDueDate: false,
       isTimezone: false,
       isSurvey: false,
       isDayDisabled: true,
-      task: {},
+      task: { ...this.item } || {},
       customers: [],
       customerId: '',
       valid: false,
       required: [required],
-      dialog: false,
+      // dialog: false,
       duplicateMessage: '',
       isSaveButtonDisabled: false,
       requiredRules: [required],
@@ -182,6 +198,21 @@ export default {
       //   SurveyId: '',
       //   Type: '',
       // },
+      surveyLookupField: {
+        displayOrder: 9,
+        caption: 'Time*',
+        type: 'lookup',
+        dataSource: {
+          getData: (ctx) => {
+            const regexStr = '.*'
+            const path = `/OrganizationInfos/surveyList?filter={"where":{"or":[{"name":{"like":"${regexStr}","options":"i"}}]}}`
+            return getLookupData(path)
+          },
+          type: 'rest',
+          itemText: 'name',
+          itemValue: 'id',
+        },
+      },
       statusLookupField: {
         displayOrder: 9,
         caption: 'Status*',
@@ -333,11 +364,12 @@ export default {
       this.isDueDate = false
     },
     changeCategory(value) {
-      if (this.task.Status === 'Wait for an Action') {
-        this.isAction = true
-      } else {
-        this.isAction = false
-      }
+      // if (this.task.Status === 'Wait for an Action') {
+      //   this.isAction = true
+      // } else {
+      //   this.isAction = false
+      // }
+      this.isAction = this.task.Status === 'Wait for an Action'
       // if (
       //   this.task.Status === 'Wait for an Action' &&
       //   (value === 'Survey Invite' || value === 'Email')
@@ -346,16 +378,16 @@ export default {
       // } else {
       //   this.hideDayTime()
       // }
+      debugger
       if (
         this.task.Status === 'Wait for an Action' &&
-        (value === 'Survey Invite' || value === 'Email')
+        value === 'Survey Invite'
       ) {
+        this.isSurvey = true
         this.hideDuedateTimezone()
         this.showDayTime()
-      } else if (
-        this.task.Status === 'Schedule' &&
-        (value === 'Survey Invite' || value === 'Email')
-      ) {
+      } else if (this.task.Status === 'Schedule' && value === 'Survey Invite') {
+        this.isSurvey = true
         this.hideDayTime()
         this.showDuedateTimezone()
       } else {
@@ -399,12 +431,21 @@ export default {
       this.task.Day = parseInt(this.task.Day)
       let res = null
       try {
-        res = await this.$axios.$post(
-          `${baseUrl}Events/${eventId}/crmactivity`,
-          {
-            ...this.task,
-          }
-        )
+        if (this.item.id) {
+          res = await this.$axios.$patch(
+            `${baseUrl}CRMACTIVITIES/${this.item.id}`,
+            {
+              ...this.task,
+            }
+          )
+        } else {
+          res = await this.$axios.$post(
+            `${baseUrl}Events/${eventId}/crmactivity`,
+            {
+              ...this.task,
+            }
+          )
+        }
       } catch (error) {
         console.log(
           `Error in task grid schedule a task on Save function - context: eventId - ${eventId} `
