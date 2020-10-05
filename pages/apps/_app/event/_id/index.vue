@@ -160,6 +160,57 @@
           </div>
 
           <div
+            v-if="data.eventSummary.Revenue"
+            class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
+          >
+            <div
+              class="pa-2 warning d-flex justify-center align-center event-tile-left"
+            >
+              <i class="fa fa-banknote" aria-hidden="true"></i>
+            </div>
+            <div class="d-flex flex-column pa-2 event-tile-right greybg">
+              <div class="event-tile-value text-truncate">
+                {{ data.event.Currency }} {{ data.eventSummary.Revenue }}
+              </div>
+              <div class="caption text-truncate">Revenue</div>
+            </div>
+          </div>
+
+          <div
+            v-if="data.eventSummary.TotalSession"
+            class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
+          >
+            <div
+              class="pa-2 primary d-flex justify-center align-center event-tile-left"
+            >
+              <i class="fa fa fa-black-board" aria-hidden="true"></i>
+            </div>
+            <div class="d-flex flex-column pa-2 event-tile-right greybg">
+              <div class="event-tile-value text-truncate">
+                {{ data.eventSummary.TotalSession }}
+              </div>
+              <div class="caption text-truncate">Total Sessions</div>
+            </div>
+          </div>
+
+          <div
+            v-if="data.event.MySpeakers.length > 0"
+            class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
+          >
+            <div
+              class="pa-2 warning d-flex justify-center align-center event-tile-left"
+            >
+              <i class="fa fa-mic1" aria-hidden="true"></i>
+            </div>
+            <div class="d-flex flex-column pa-2 event-tile-right greybg">
+              <div class="event-tile-value text-truncate">
+                {{ data.event.MySpeakers.length }}
+              </div>
+              <div class="caption text-truncate">Total Speakers</div>
+            </div>
+          </div>
+
+          <div
             class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
           >
             <div
@@ -177,7 +228,7 @@
         <v-stepper
           v-model="Status"
           alt-labels
-          class="elevation-0 boxview mt-n3"
+          class="elevation-0 boxview"
           style="max-width: 800px;"
         >
           <v-stepper-header success>

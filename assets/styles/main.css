@@ -328,6 +328,12 @@ body {
 .mxcol-name {
   max-width: 150px;
 }
+.v-stepper__step {
+  padding-top: 12px !important;
+}
+.v-stepper--alt-labels .v-stepper__header .v-divider {
+  margin-top: 24px !important;
+}
 @media (max-width: 600px) {
   .slide-form,
   .slide-form-default {
