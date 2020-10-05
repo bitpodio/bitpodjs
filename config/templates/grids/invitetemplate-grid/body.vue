@@ -102,7 +102,7 @@
           <div v-if="item.Type == 'Registration Email Template'">
             <v-card
               :elevation="hover ? 1 : 0"
-              class="ma-3 ml-0 mt-0 invite-card"
+              class="ma-3 ml-0 mt-0 invite-card positionRelative"
             >
               <div v-if="item.ImageURL !== null" class="pa-1">
                 <v-img

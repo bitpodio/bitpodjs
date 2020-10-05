@@ -29,7 +29,7 @@
             <i class="fa fa-grid-alt fs-36 warning--text"></i>
             <div class="body-1">{{ item.Name }}</div>
           </v-card-text>
-          <div class="positionAbsolute seatmap-actions">
+          <div class="positionAbsolute box-actions">
             <v-menu
               left
               bottom
@@ -83,12 +83,12 @@ export default {
   width: 155px;
   max-width: 155px;
 }
-.seatmap-actions {
+.box-actions {
   bottom: 5px;
   right: 5px;
   display: none;
 }
-.seat-maps:hover .seatmap-actions {
+.seat-maps:hover .box-actions {
   display: block;
 }
 </style>
