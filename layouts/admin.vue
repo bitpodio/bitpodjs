@@ -324,7 +324,7 @@ export default {
       {
         icon: 'fa fa-cog',
         text: 'Lookups',
-        to: '',
+        to: '/apps/admin/list/lookup/lookups',
       },
       {
         icon: 'fa fa-file',
