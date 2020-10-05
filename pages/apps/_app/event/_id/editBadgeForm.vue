@@ -63,11 +63,11 @@ export default {
   props: {
     editBadgeForm: {
       default: false,
-      Type: Boolean,
+      type: Boolean,
     },
     id: {
       default: '',
-      Type: String,
+      type: String,
     },
   },
   data() {
