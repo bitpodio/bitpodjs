@@ -20,7 +20,7 @@
             <h2 class="black--text pt-4 pb-2 text-h5">Import Data</h2>
             <v-spacer></v-spacer>
             <div>
-              <v-btn icon @click="dialog = false">
+              <v-btn icon @click=";(dialog = false), (fileList = [])">
                 <v-icon>mdi-close</v-icon>
               </v-btn>
             </div>
@@ -37,44 +37,48 @@
                 href="https://res.cloudinary.com/mytestlogo/raw/upload/v1573631144/Contact.csv"
                 >Download Sample File</a
               >
-              <v-simple-table dense>
-                <template v-slot:default>
-                  <thead>
-                    <tr>
-                      <th class="text-left">Field Name</th>
-                      <th class="text-left">Data Type</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>FirstName</td>
-                      <td>string</td>
-                    </tr>
-                    <tr>
-                      <td>LastName</td>
-                      <td>string</td>
-                    </tr>
-                    <tr>
-                      <td>Email</td>
-                      <td>string</td>
-                    </tr>
-                    <tr>
-                      <td>Organization</td>
-                      <td>string</td>
-                    </tr>
-                    <tr>
-                      <td>Job</td>
-                      <td>string</td>
-                    </tr>
-                  </tbody>
-                </template>
-              </v-simple-table>
+              <div class="fieldTable my-2">
+                <v-simple-table dense class="wrapper">
+                  <template v-slot:default>
+                    <thead>
+                      <tr>
+                        <th class="text-left">Field Name</th>
+                        <th class="text-left element">Data Type</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>FirstName</td>
+                        <td class="element">string</td>
+                      </tr>
+                      <tr>
+                        <td>LastName</td>
+                        <td class="element">string</td>
+                      </tr>
+                      <tr>
+                        <td>Email</td>
+                        <td class="element">string</td>
+                      </tr>
+                      <tr>
+                        <td>Organization</td>
+                        <td class="element">string</td>
+                      </tr>
+                      <tr>
+                        <td>Job</td>
+                        <td class="element">string</td>
+                      </tr>
+                    </tbody>
+                  </template>
+                </v-simple-table>
+              </div>
               <File
                 :field="fieldProps"
                 :value="resetList"
                 :open-file-dialog="attach"
                 :hide-preview="true"
+                :custom-upload="true"
                 accept=".csv"
+                @customUpload="updateSelectedFile"
                 @updatedFileList="uploaded"
               />
               <div class="d-flex">
@@ -97,9 +101,9 @@
             class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
           >
             <v-btn
-              v-if="curentTab > 0"
               color="primary"
               depressed
+              :disabled="!fileList.length"
               @click="importContacts"
               >Import</v-btn
             >
@@ -111,6 +115,7 @@
 </template>
 <script>
 import File from '~/components/common/form/file.vue'
+import nuxtconfig from '~/nuxt.config'
 export default {
   components: {
     File,
@@ -123,18 +128,54 @@ export default {
       },
       resetList: [],
       fileList: [],
+      selectedFile: {},
     }
   },
   methods: {
     uploaded(data) {
+      debugger
       this.fileList = [...data]
     },
-    importContacts() {},
+    updateSelectedFile(data) {
+      this.selectedFile = data
+    },
+    async importContacts() {
+      try {
+        const formData = new FormData()
+        formData.append('file', this.selectedFile)
+        formData.append('mappingId', nuxtconfig.mappingIds.contact)
+        const res = await this.$axios.post(
+          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}jobDetails/importData`,
+          formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          }
+        )
+        if (res) {
+          this.$parent.$parent.refresh()
+        }
+      } catch (e) {
+        console.log('Error', e)
+      }
+      this.dialog = false
+      this.fileList = []
+    },
   },
 }
 </script>
 <style scoped>
 .iconSize {
   font-size: 15px;
+}
+.fieldTable {
+  width: 220px;
+}
+.wrapper {
+  border: 1px solid lightgray;
+}
+.element {
+  border-left: 1px solid lightgray;
 }
 </style>

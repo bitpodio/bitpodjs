@@ -76,6 +76,10 @@ export default {
       type: String,
       default: '',
     },
+    customUpload: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -95,6 +99,11 @@ export default {
   watch: {
     openFileDialog(newVal, oldVal) {
       this.uploadClicked()
+    },
+    value(newVal, oldVal) {
+      if (!newVal.length) {
+        this.files = []
+      }
     },
   },
   async mounted() {
@@ -137,13 +146,23 @@ export default {
     },
 
     uploadFile(file) {
-      const formData = new FormData()
-      formData.append('file', file)
-      return this.$axios.post(this.getAttachmentLink(), formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      })
+      if (!this.customUpload) {
+        const formData = new FormData()
+        formData.append('file', file)
+        return this.$axios.post(this.getAttachmentLink(), formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+      } else {
+        this.$emit('customUpload', file)
+        return {
+          data: {
+            id: file.size,
+            fileName: file.name,
+          },
+        }
+      }
     },
     getFileDetails(id) {
       return this.$axios.get(this.getAttachmentLink(id))

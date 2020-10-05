@@ -284,4 +284,7 @@ export default {
         process.env.DEFAULT_PUBLIC_DOMAIN || 'event.test.bitpod.io',
     },
   },
+  mappingIds: {
+    contact: '5f7ac71841a664000a774fc0',
+  }
 }

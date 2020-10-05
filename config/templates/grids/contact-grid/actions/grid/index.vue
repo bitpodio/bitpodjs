@@ -21,7 +21,7 @@
 
 <script>
 import invitationHistory from './invitationHistory.vue'
-import importContact from './importContact.vue'
+import importContact from '~/components/common/import'
 import campaign from '~/config/templates/grids/eventInvites-grid/actions/grid/sendEventInvite.vue'
 import newItem from '~/config/common/templates/grid/actions/grid/new-item.vue'
 export default {
