@@ -2,6 +2,8 @@
   <div>
     <v-checkbox
       v-model="checkbox"
+      color="green"
+      dense
       @click.prevent="updateConnection"
     ></v-checkbox>
 

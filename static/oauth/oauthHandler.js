@@ -1,5 +1,5 @@
-import nuxtConfig from '~/nuxt.config'
-const bpmnServerURL = `https://${nuxtConfig.axios.backendBaseUrl}/bpmn`
+// import nuxtConfig from '~/nuxt.config'
+const bpmnServerURL = 'https://wfsdev.p10.io'
 document.addEventListener(
   'DOMContentLoaded',
   () => {

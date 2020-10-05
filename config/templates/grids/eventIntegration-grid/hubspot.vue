@@ -44,6 +44,7 @@ export default {
     },
     dialog: {
       default: false,
+      type: Boolean,
     },
     onClose: {
       required: true,
@@ -52,6 +53,7 @@ export default {
     onSave: {
       required: false,
       type: Function,
+      default: null,
     },
   },
 
