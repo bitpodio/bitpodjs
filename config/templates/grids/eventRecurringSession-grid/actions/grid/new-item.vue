@@ -26,7 +26,7 @@
         </v-card-title>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-form ref="form" v-model="valid" :lazy-validation="lazy">
-            <div class="col-md-12 pl-0">
+            <div class="col-md-12 pl-0 pb-0 pt-0">
               <v-flex class="d-flex justify-center align-center pb-1">
                 <h2 class="body-1 pb-1">
                   <i class="fa fa-info-circle" aria-hidden="true"></i>
@@ -63,7 +63,7 @@
                 ></v-text-field>
               </v-col>
             </v-row>
-            <div class="col-md-12 pl-0">
+            <div class="col-md-12 pl-0 pb-0">
               <v-flex class="d-flex justify-center align-center pb-1">
                 <h2 class="body-1 pb-1">
                   <i class="fa fa-clock" aria-hidden="true"></i>
@@ -126,7 +126,7 @@
                 ></v-text-field>
               </v-col>
             </v-row>
-            <div class="col-md-12 pl-0">
+            <div class="col-md-12 pl-0 pb-0">
               <v-flex class="d-flex justify-center align-center pb-1">
                 <h2 class="body-1 pb-1">
                   <i class="fa fa-location" aria-hidden="true"></i>
@@ -165,6 +165,7 @@
               >
                 <v-checkbox
                   v-model="session.SeatReservation"
+                  class="ma-0"
                   label="Seat Reservation"
                 ></v-checkbox>
               </v-col>
@@ -218,7 +219,11 @@
                   for documentation.
                 </div>
               </v-col>
-              <v-col v-if="session.LocationType === 'Custom'" cols="12">
+              <v-col
+                v-if="session.LocationType === 'Custom'"
+                cols="12"
+                class="pt-0 pb-6"
+              >
                 <no-ssr>
                   <vue-google-autocomplete
                     id="map"
@@ -299,7 +304,7 @@
                 ></v-text-field>
               </v-col>
             </v-row>
-            <div class="col-md-12 pl-0">
+            <div class="col-md-12 pl-0 pb-0">
               <v-flex class="d-flex justify-center align-center pb-1">
                 <h2 class="body-1 pb-1">
                   <i class="fa fa-help-circle" aria-hidden="true"></i>
@@ -309,7 +314,7 @@
               </v-flex>
             </div>
             <v-row>
-              <v-col cols="12" sm="6" md="4">
+              <v-col cols="12" sm="6" md="4" class="pb-0">
                 <Lookup
                   v-model="session.ScheduledType"
                   :value="ScheduledType"
@@ -321,6 +326,7 @@
                 cols="12"
                 sm="6"
                 md="4"
+                class="pb-0"
               >
                 <v-text-field
                   v-model="session.RollingDays"
@@ -356,6 +362,7 @@
                 cols="12"
                 sm="6"
                 md="4"
+                class="pb-0"
               >
                 <CustomDate
                   v-model="session.EndDate"

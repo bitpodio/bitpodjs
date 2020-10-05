@@ -60,7 +60,7 @@
             </v-list>
           </v-menu>
         </v-flex>
-        <v-chip small class="mt-1 mb-3 event-datechip" label>
+        <v-chip small class="mt-1 mb-3 event-datechip greybg" label>
           {{ formatedDate(data.event.StartDate, data.event.Timezone) }} -
           {{ formatedDate(data.event.EndDate, data.event.Timezone) }} -
           {{ formatField(data.event.Timezone) }}
@@ -194,7 +194,7 @@
           </div>
 
           <div
-            v-if="data.event.MySpeakers.length > 0"
+            v-if="data.event.MySpeakers"
             class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
           >
             <div
