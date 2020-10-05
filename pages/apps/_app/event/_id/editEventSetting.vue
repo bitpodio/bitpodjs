@@ -63,7 +63,7 @@
                 label="Event Link*"
                 :rules="linkRules"
                 persistent-hint
-                hint="https://bitpod-event.test.bitpod.io/e/"
+                :hint="getUniqLink"
                 outlined
                 required
                 dense
@@ -200,6 +200,11 @@ export default {
       linkRules: [required, link],
     }
   },
+  computed: {
+    getUniqLink() {
+      return `https://bitpod-event.test.bitpod.io/e/${this.formData.UniqLink}`
+    },
+  },
   mounted() {
     this.getDropDownData('EventPrivacy')
       .then((res) => {
@@ -218,6 +223,7 @@ export default {
         console.log('Error', e)
       })
   },
+
   methods: {
     close() {
       this.$emit('update:eventSetting', false)

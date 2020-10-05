@@ -771,7 +771,10 @@
         </v-flex>
       </div>
 
-      <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pb-0 pr-2 box-grey">
+      <div
+        v-if="data.event.LocationType !== 'Online Event'"
+        class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pb-0 pr-2 box-grey"
+      >
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-0">
             <i class="fa fa-id-badge pr-1" aria-hidden="true"></i> Badge
