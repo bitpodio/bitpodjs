@@ -205,23 +205,29 @@ export default {
       return `https://bitpod-event.test.bitpod.io/e/${this.formData.UniqLink}`
     },
   },
-  mounted() {
-    this.getDropDownData('EventPrivacy')
-      .then((res) => {
+  async mounted() {
+    try {
+      const res = await this.getDropDownData('EventPrivacy')
+      if (res) {
         this.eventPrivacyDropdown = res.map((i) => i.value)
-        return res
-      })
-      .catch((e) => {
-        console.log('Error', e)
-      })
-    this.getDropDownData('Currency')
-      .then((res) => {
+      }
+    } catch (e) {
+      console.log(
+        `Error in pages/apps/event/_id/editEventSettings while making a GQL call to GeneralConfiguration model from method getDropDownData`,
+        e
+      )
+    }
+    try {
+      const res = await this.getDropDownData('Currency')
+      if (res) {
         this.currencyDropdown = res.map((i) => i.value)
-        return res
-      })
-      .catch((e) => {
-        console.log('Error', e)
-      })
+      }
+    } catch (e) {
+      console.log(
+        `Error in pages/apps/event/_id/editEventSettings while making a GQL call to GeneralConfiguration model from method getDropDownData`,
+        e
+      )
+    }
   },
 
   methods: {
@@ -248,12 +254,15 @@ export default {
           this.data.event = res
         }
       } catch (e) {
-        console.log('Error', e)
+        console.log(
+          `Error in pages/apps/event/_id/editEventSettings while making a PATCH call to Event model from method onSave context:-FormData:-${this.formData}`,
+          e
+        )
       }
     },
-    getDropDownData(filterType) {
-      return this.$apollo
-        .query({
+    async getDropDownData(filterType) {
+      try {
+        const result = await this.$apollo.query({
           query: gql`
             ${generalconfiguration}
           `,
@@ -265,16 +274,19 @@ export default {
             },
           },
         })
-        .then((result) => {
+        if (result) {
           const generalConfig = formatGQLResult(
             result.data,
             'GeneralConfiguration'
           )
           return generalConfig
-        })
-        .catch((e) => {
-          console.log('Error', e)
-        })
+        }
+      } catch (e) {
+        console.log(
+          `Error in pages/apps/event/_id/editEventSettings while making a GQL call to GeneralConfiguration model from method getDropDownData`,
+          e
+        )
+      }
     },
     async checkUniqueLink() {
       if (this.formData.UniqLink !== '') {
@@ -328,6 +340,10 @@ export default {
       error(error) {
         this.error = error
         this.loading = 0
+        console.log(
+          `Error in pages/apps/event/_id/editEventSettings while making a GQL call to Event model from method apollo data query section`,
+          error
+        )
       },
       prefetch: false,
       loadingKey: 'loading',
