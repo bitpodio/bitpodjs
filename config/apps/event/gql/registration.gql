@@ -8,6 +8,7 @@ query($filters: JSON) {
           EventName
           EventId
           FirstName
+          SubTotal
           TotalAmount
           TicketQuantity
           CompanyName
@@ -37,6 +38,22 @@ query($filters: JSON) {
               AddressLine
               Country
             }
+          }
+          _Refund {
+            id
+            TransactionType
+            TransactionID
+            RefundStatus
+            RefundRequest
+            RefundMethod
+            Reason
+            Comments
+            Amount
+            RefundInitiatedDate
+            createdDate
+            createdBy
+            modifiedDate
+            modifiedBy
           }
         }
       }

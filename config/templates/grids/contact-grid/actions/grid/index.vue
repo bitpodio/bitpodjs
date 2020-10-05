@@ -7,7 +7,7 @@
       :refresh="refresh"
       :context="context"
     />
-    <div class="mt-3 px-3">
+    <div>
       <campaign
         button-label="email campaign"
         template="General Template"

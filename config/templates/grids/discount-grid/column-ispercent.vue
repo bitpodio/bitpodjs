@@ -1,5 +1,10 @@
 <template>
-  <v-checkbox v-model="checkbox" @change="updateRegForm"></v-checkbox>
+  <v-checkbox
+    v-model="checkbox"
+    class="pa-0 ma-0"
+    dense
+    @change="updateRegForm"
+  ></v-checkbox>
 </template>
 
 <script>

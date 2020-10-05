@@ -14,14 +14,14 @@
           v-bind="attrs"
           v-on="on"
         >
-          <v-icon left> mdi-filter-outline</v-icon> Filter
+          <v-icon left> fa-filter</v-icon> Filter
         </v-btn>
       </template>
 
       <v-card class="filter-dialog-content">
         <div class="mb-2">
           <span class="text--primary body-1">
-            <v-icon class="pr-1">mdi-filter-outline</v-icon> Filter</span
+            <v-icon class="pr-1">fa-filter</v-icon> Filter</span
           >
         </div>
         <div class="filter-fields-container">
