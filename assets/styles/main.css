@@ -334,6 +334,12 @@ body {
 .v-stepper--alt-labels .v-stepper__header .v-divider {
   margin-top: 24px !important;
 }
+.theme--light.v-stepper .v-stepper__step--editable:hover {
+  background: transparent !important;
+}
+.v-stepper__step__step .v-icon.v-icon {
+  font-size: 14px !important;
+}
 @media (max-width: 600px) {
   .slide-form,
   .slide-form-default {

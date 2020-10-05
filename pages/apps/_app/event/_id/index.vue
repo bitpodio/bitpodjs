@@ -840,9 +840,8 @@
             <v-icon left>mdi-plus</v-icon>Create
           </v-btn>
           <v-btn text small class="ml-1" @click="openPrintForm">
-            <v-icon left>mdi-printer</v-icon>Print
+            <v-icon left>fa-printer</v-icon>Print
           </v-btn>
-          <v-spacer></v-spacer>
           <v-menu left :offset-y="offset" transition="slide-y-transition">
             <template v-slot:activator="{ on, attrs }">
               <v-btn icon small v-bind="attrs" v-on="on">
@@ -852,13 +851,13 @@
 
             <v-list dense>
               <v-list-item @click="editBadgeForm = true">
-                <v-icon left>fa-pencil</v-icon>
+                <v-icon left class="fs-16">fa-pencil</v-icon>
                 <v-list-item-content>
                   <v-list-item-title>Edit</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
               <v-list-item @click="deleteBadge">
-                <v-icon left>fa-trash</v-icon>
+                <v-icon left class="fs-16">fa-trash</v-icon>
                 <v-list-item-content>
                   <v-list-item-title>Delete</v-list-item-title>
                 </v-list-item-content>
