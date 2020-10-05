@@ -25,7 +25,7 @@
               <v-text-field
                 v-model="formData.Title"
                 label="Title *"
-                :rules="nameRules"
+                :rules="requiredRule"
                 required
                 outlined
                 dense
@@ -100,7 +100,7 @@
               <v-text-field
                 v-model="formData.Organizer"
                 label="Event organizer *"
-                :rules="nameRules"
+                :rules="requiredRule"
                 outlined
                 required
                 dense
@@ -143,8 +143,32 @@
                 dense
               ></v-select>
             </v-col>
+            <v-col cols="12" class="pb-0">
+              <v-text-field
+                v-if="formData.LocationType === 'Online Event'"
+                v-model="formData.WebinarLink"
+                label="Online Event Link*"
+                :rules="requiredRule"
+                outlined
+                required
+                dense
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" class="pb-0">
+              <v-textarea
+                v-if="formData.LocationType === 'Online Event'"
+                v-model="formData.JoiningInstruction"
+                label="Additional online event joining instructions,URL,phone,etc*"
+                outlined
+                required
+                dense
+              ></v-textarea>
+            </v-col>
             <div
-              v-if="formData.BusinessType !== 'Recurring'"
+              v-if="
+                formData.BusinessType !== 'Recurring' &&
+                formData.LocationType !== 'Online Event'
+              "
               style="display: contents;"
             >
               <v-col cols="12">
@@ -230,7 +254,6 @@
 <script>
 import gql from 'graphql-tag'
 import { utcToZonedTime } from 'date-fns-tz'
-import nuxtconfig from '../../../../../nuxt.config'
 import { email, required } from '~/utility/rules.js'
 import event from '~/config/apps/event/gql/event.gql'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
@@ -238,6 +261,7 @@ import { formatGQLResult } from '~/utility/gql.js'
 import strings from '~/strings.js'
 import Timezone from '~/components/common/form/timezone'
 import { formatTimezoneDateFieldsData } from '~/utility/form.js'
+import { getApiUrl } from '~/utility'
 
 export default {
   components: {
@@ -261,7 +285,7 @@ export default {
       tags: [],
       addressLine: '',
       tagsDropdown: [],
-      nameRules: [required],
+      requiredRule: [required],
       errorAlert: {
         message: '',
         visible: false,
@@ -395,7 +419,7 @@ export default {
       }
     },
     async onSave() {
-      const eventUrl = `https://${nuxtconfig.axios.eventUrl}/${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`
+      const url = getApiUrl()
       this.formData.Tags = this.tags
 
       if (
@@ -419,9 +443,12 @@ export default {
         delete this.formData.VenueAddress
         delete this.formData._VenueAddress.LatLng
         try {
-          const res = await this.$axios.$patch(eventUrl, {
-            ...this.formData,
-          })
+          const res = await this.$axios.$patch(
+            `${url}Events/${this.$route.params.id}`,
+            {
+              ...this.formData,
+            }
+          )
           if (res) {
             this.close()
             this.refresh()
@@ -436,9 +463,12 @@ export default {
         )
         delete this.formData._VenueAddress
         try {
-          const res = await this.$axios.$patch(eventUrl, {
-            ...this.formData,
-          })
+          const res = await this.$axios.$patch(
+            `${url}Events/${this.$route.params.id}`,
+            {
+              ...this.formData,
+            }
+          )
           if (res) {
             this.close()
             this.refresh()
