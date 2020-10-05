@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-btn v-if="status === ''" text @click="dialog = true">Setup</v-btn>
+    <v-btn v-if="status === ''" text @click="onSetup">Setup</v-btn>
     <v-btn
       v-if="status === 'Connected' || status === 'Disconnected'"
       icon
@@ -35,6 +35,7 @@
 <script>
 import { templateLoaderMixin } from '~/utility'
 import nuxtconfig from '~/nuxt.config'
+import { openAuthPopups } from '~/utility/oauth'
 export default {
   mixins: [templateLoaderMixin],
   props: {
@@ -65,7 +66,6 @@ export default {
     },
   },
   data() {
-    debugger
     return {
       category: this.item.MetaData.Category,
       serviceId: this.item.ServiceId,
@@ -76,6 +76,7 @@ export default {
       status: this.item.Status || '',
       itemId: this.item.id,
       formEditData: this.item.MetaData,
+      oauthType: this.item.MetaData.oauthType || '',
     }
   },
   computed: {
@@ -95,7 +96,7 @@ export default {
   methods: {
     onClose() {
       debugger
-      this.item={}
+      this.item = {}
       this.dialog = false
     },
     async onSave(formData) {
@@ -148,6 +149,30 @@ export default {
         } catch (e) {
           console.log('Error', e)
         }
+      }
+    },
+
+    onSetup() {
+      debugger
+      if (this.oauthType === 'Oauth') {
+        const options = {
+          AccessType: 'private',
+          isConnectionModelStore: true,
+          Name: 'xero',
+          ServiceId: 'xero',
+          TenantId: 'event',
+          bpmnServerURL: 'https://bitpod-event.test.bitpod.io/bpmn/',
+          OwnerId: 'lokesh@bitpod.io',
+          loginUser: 'lokesh@bitpod.io',
+          OrgId: 1,
+          accessToken:
+            'eyJhbGciOiJSUzI1NiIsImtpZCI6IjhEMkE0MTczM0QwN0JBNkU2RTYwNTZFRUJDRThDRkQyMDc0NThCMDUiLCJ0eXAiOiJKV1QiLCJ4NXQiOiJqU3BCY3owSHVtNXVZRmJ1dk9qUDBnZEZpd1UifQ.eyJuYmYiOjE2MDE4ODcxNzUsImV4cCI6MTYwMTk3MzU3NSwiaXNzIjoiaHR0cHM6Ly9sb2dpbi5iaXRwb2QuaW8vYXV0aCIsImF1ZCI6WyJodHRwczovL2xvZ2luLmJpdHBvZC5pby9hdXRoL3Jlc291cmNlcyIsIk5vdGlmaWNhdGlvbiIsIlNoYXJlZCJdLCJjbGllbnRfaWQiOiJndHYrcTA0bHUvbDVaZkt5MHZXRkpqRHI5RzdHc0RhV1BpVml3cEowWUpzPSIsInN1YiI6Imxva2VzaEBiaXRwb2QuaW8iLCJhdXRoX3RpbWUiOjE2MDE4ODU3MzcsImlkcCI6ImxvY2FsIiwic2NvcGUiOlsiTm90aWZpY2F0aW9uIiwib3BlbmlkIiwicHJvZmlsZSIsImVtYWlsIiwibm90aWZpY2F0aW9uIiwiYmFhcyIsIm9mZmxpbmVfYWNjZXNzIiwibm90aWZpY2F0aW9uIiwiYmFhcyIsIm9mZmxpbmVfYWNjZXNzIiwibm90aWZpY2F0aW9uIiwiYmFhcyIsIm9mZmxpbmVfYWNjZXNzIiwibm90aWZpY2F0aW9uIiwib2ZmbGluZV9hY2Nlc3MiXSwiYW1yIjpbInB3ZCJdfQ.M1tHq7U6Gn96-miIB4tPwR2zKBQbJ57O-tdRe0DOe8qzIXrS4p2gRampIIfEF7CsYwnSqBXJ-vlwODIHqXio6Ifr2FUbCU8t3_-eGWox4uN6o5UhuNaE1ozfRJ5yQNjJvFbs3blI2slhbLEPwEatK4DebWk3FZcaJqbDxS-rgSCvbtSh4j6qiKpYn-lhvKil9uXl1cqqRRfOolOuMJRWRRMa6keMHlFdXwdpAKQd8fs4qTVehS-wSXOn7Fxq3zTWYSn-6XvJJloLJNnUzlrHlyf6AyE3y6S0b8NvzVxktRoWmJenvIzD-Mc-hL3RHlnFYvLsDZlsYVggK8yhXtUleA',
+        }
+        openAuthPopups(options, function (e) {
+          console.log(e)
+        })
+      } else {
+        this.dialog = true
       }
     },
   },

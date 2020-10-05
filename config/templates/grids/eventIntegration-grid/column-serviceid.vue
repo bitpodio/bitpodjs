@@ -10,7 +10,7 @@
         contain
       ></v-img>
     </div>
-    <div style="font-size: 12px">
+    <div style="font-size: 12px;">
       {{ profileName }}
     </div>
   </div>

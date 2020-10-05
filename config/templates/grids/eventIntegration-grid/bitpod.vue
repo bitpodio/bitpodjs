@@ -90,6 +90,7 @@ export default {
     },
     dialog: {
       default: false,
+      type: Boolean,
     },
     onClose: {
       required: true,
@@ -98,11 +99,11 @@ export default {
     onSave: {
       required: false,
       type: Function,
+      default: null,
     },
   },
 
   data() {
-    debugger
     return {
       valid: false,
       required: [required],
@@ -112,9 +113,8 @@ export default {
 
   methods: {
     onReset() {
-      debugger
-     this.formData={}
-     this.onClose()
+      this.formData = {}
+      this.onClose()
     },
   },
 }

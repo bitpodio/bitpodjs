@@ -1,17 +1,16 @@
 <template>
-<div>
-<v-checkbox v-model="checkbox" @click.prevent="updateConnection"></v-checkbox>
+  <div>
+    <v-checkbox
+      v-model="checkbox"
+      @click.prevent="updateConnection"
+    ></v-checkbox>
 
-<v-snackbar v-model="snackbar" :timeout="timeout" top="true">
+    <v-snackbar v-model="snackbar" :timeout="timeout" top="true">
       <div class="text-center">{{ snackbarText }}</div>
     </v-snackbar>
 
-    <v-dialog
-      v-model="dialog"
-      top
-      max-width="290"
-    >
-    <v-card>
+    <v-dialog v-model="dialog" top max-width="290">
+      <v-card>
         <v-card-text class="mt-1">
           Please setup the connection to make it active.
         </v-card-text>
@@ -19,17 +18,13 @@
         <v-card-actions>
           <v-spacer></v-spacer>
 
-          <v-btn
-            color="green darken-1"
-            text
-            @click="dialog = false"
-          >
+          <v-btn color="green darken-1" text @click="dialog = false">
             ok
           </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
-</div>
+  </div>
 </template>
 
 <script>
@@ -64,7 +59,8 @@ export default {
       console.log('---id', id)
       if (id && this.status) {
         debugger
-        const updateStatus = this.checkbox === true ?  'Disconnected':'Connected'
+        const updateStatus =
+          this.checkbox === true ? 'Disconnected' : 'Connected'
         try {
           const res = await this.$axios.$put(
             `https://${nuxtconfig.axios.eventUrl}/svc/api/Connections/${id}`,
@@ -74,17 +70,21 @@ export default {
           )
           if (res) {
             console.log('res', res)
-            this.checkbox = res.Status === 'Connected' ? true : false
+            this.checkbox = res.Status === 'Connected'
             this.snackbarText = 'Connection Updated Successfully'
             this.snackbar = true
           }
         } catch (e) {
-          console.log('Error in eventIntegration-grid/column-status in updateConnection updateStatus '+ updateStatus +' Error '+ e )
-          this.snackbarText = 'Error has occured'+e
+          console.log(
+            'Error in eventIntegration-grid/column-status in updateConnection updateStatus ' +
+              updateStatus +
+              ' Error ' +
+              e
+          )
+          this.snackbarText = 'Error has occured' + e
           this.snackbar = true
         }
-      }
-      else{
+      } else {
         this.dialog = true
       }
     },
