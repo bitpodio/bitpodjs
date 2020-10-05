@@ -63,18 +63,44 @@
                     </v-btn>
                   </template>
 
-                  <v-list>
-                    <v-list-item>
-                      <v-list-item-title>Edit Metadata</v-list-item-title>
+                  <v-list dense>
+                    <v-list-item @click="true">
+                      <v-list-item-icon class="mr-2">
+                        <i
+                          class="fa fa-pencil-square-o mt-1"
+                          aria-hidden="true"
+                        ></i>
+                      </v-list-item-icon>
+                      <v-list-item-content>
+                        <v-list-item-title>Edit Metadata</v-list-item-title>
+                      </v-list-item-content>
                     </v-list-item>
-                    <v-list-item>
-                      <v-list-item-title>Edit Template</v-list-item-title>
+                    <v-list-item @click="true">
+                      <v-list-item-icon class="mr-2">
+                        <i
+                          class="fa fa-pencil-square-o mt-1"
+                          aria-hidden="true"
+                        ></i>
+                      </v-list-item-icon>
+                      <v-list-item-content>
+                        <v-list-item-title>Edit Template</v-list-item-title>
+                      </v-list-item-content>
                     </v-list-item>
-                    <v-list-item>
-                      <v-list-item-title>View</v-list-item-title>
+                    <v-list-item @click="true">
+                      <v-list-item-icon class="mr-2">
+                        <i class="fa fa-eye mt-1" aria-hidden="true"></i>
+                      </v-list-item-icon>
+                      <v-list-item-content>
+                        <v-list-item-title>View</v-list-item-title>
+                      </v-list-item-content>
                     </v-list-item>
-                    <v-list-item>
-                      <v-list-item-title>Delete</v-list-item-title>
+                    <v-list-item @click="true">
+                      <v-list-item-icon class="mr-2">
+                        <i class="fa fa-trash mt-1" aria-hidden="true"></i>
+                      </v-list-item-icon>
+                      <v-list-item-content>
+                        <v-list-item-title>Delete</v-list-item-title>
+                      </v-list-item-content>
                     </v-list-item>
                   </v-list>
                 </v-menu>

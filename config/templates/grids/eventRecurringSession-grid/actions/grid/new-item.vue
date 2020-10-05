@@ -200,7 +200,7 @@
                   dense
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" class="pb-0">
+              <v-col cols="12" class="pb-0 pt-0">
                 <div v-if="session.LocationType === 'Zoom'">
                   To send Zoom joining info, you must setup Zoom integration,
                   <a href="" @click.stop.prevent="openWindow(zoomDocumentLink)"
