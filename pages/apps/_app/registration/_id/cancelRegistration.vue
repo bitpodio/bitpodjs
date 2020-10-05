@@ -24,7 +24,7 @@
             <v-row>
               <v-col cols="12" sm="12" md="12">
                 <v-textarea
-                  v-model="Comment"
+                  v-model="comment"
                   outlined
                   required
                   :rules="requiredRules"
@@ -67,7 +67,7 @@ export default {
       type: Boolean,
       default: false,
     },
-    Comment: {
+    comment: {
       type: null,
       default: null,
     },
@@ -88,7 +88,7 @@ export default {
     },
     async onSave() {
       const baseUrl = getApiUrl()
-      const requestBody = { Notes: this.Comment }
+      const requestBody = { Notes: this.comment }
       const regId = this.$route.params.id
       let commentRes = null
       let regRes = null

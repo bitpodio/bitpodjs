@@ -1,7 +1,7 @@
 <template>
   <v-col class="px-0">
     <v-btn text small v-bind="attrs" v-on="on" @click="onDelete">
-      <v-icon left>mdi-delete</v-icon>{{ actionCaption('delete') }}
+      <v-icon left class="fs-16">fa-trash</v-icon>{{ actionCaption('delete') }}
     </v-btn>
   </v-col>
 </template>
