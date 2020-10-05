@@ -1,6 +1,10 @@
 <template>
   <div class="d-inline-flex">
-    <importContact />
+    <importContact
+      sample-file-name="v1574252622/Attendee.csv"
+      :template-data="fieldNames"
+      model-name="attendee"
+    />
     <newItem
       :content="content"
       :view-name="viewName"
@@ -56,6 +60,19 @@ export default {
       default: () => {},
       required: false,
     },
+  },
+  data() {
+    return {
+      fieldNames: [
+        'Salutation',
+        'FirstName',
+        'LastName',
+        'Email',
+        'Phone',
+        'CompanyName',
+        'Job Title',
+      ],
+    }
   },
 }
 </script>

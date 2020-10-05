@@ -33,10 +33,7 @@
                 CSV file must have following columns in order these are listed,
                 for import process to work properly.
               </h4>
-              <a
-                href="https://res.cloudinary.com/mytestlogo/raw/upload/v1573631144/Contact.csv"
-                >Download Sample File</a
-              >
+              <a :href="getDownloadLink()">Download Sample File</a>
               <div class="fieldTable my-2">
                 <v-simple-table dense class="wrapper">
                   <template v-slot:default>
@@ -47,24 +44,8 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
-                        <td>FirstName</td>
-                        <td class="element">string</td>
-                      </tr>
-                      <tr>
-                        <td>LastName</td>
-                        <td class="element">string</td>
-                      </tr>
-                      <tr>
-                        <td>Email</td>
-                        <td class="element">string</td>
-                      </tr>
-                      <tr>
-                        <td>Organization</td>
-                        <td class="element">string</td>
-                      </tr>
-                      <tr>
-                        <td>Job</td>
+                      <tr v-for="(item, index) in templateData" :key="index">
+                        <td>{{ item }}</td>
                         <td class="element">string</td>
                       </tr>
                     </tbody>
@@ -120,6 +101,20 @@ export default {
   components: {
     File,
   },
+  props: {
+    sampleFileName: {
+      type: String,
+      default: '',
+    },
+    templateData: {
+      type: Array,
+      default: () => [],
+    },
+    modelName: {
+      type: String,
+      default: '',
+    },
+  },
   data() {
     return {
       dialog: false,
@@ -132,8 +127,10 @@ export default {
     }
   },
   methods: {
+    getDownloadLink() {
+      return this.$config.cdnCsvUri + this.sampleFileName
+    },
     uploaded(data) {
-      debugger
       this.fileList = [...data]
     },
     updateSelectedFile(data) {
@@ -143,7 +140,7 @@ export default {
       try {
         const formData = new FormData()
         formData.append('file', this.selectedFile)
-        formData.append('mappingId', nuxtconfig.mappingIds.contact)
+        formData.append('mappingId', nuxtconfig.mappingIds[this.modelName])
         const res = await this.$axios.post(
           `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}jobDetails/importData`,
           formData,
@@ -154,7 +151,20 @@ export default {
           }
         )
         if (res) {
-          this.$parent.$parent.refresh()
+          if (this.modelName === 'attendee') {
+            const obj = res.data.res
+            const importObj = {
+              Type: obj.modelName,
+              Status: obj.processStatus,
+              JobId: obj.jobId,
+              EventId: this.$route.params.id,
+            }
+            await this.$axios.post(
+              `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}ImportJobs`,
+              importObj
+            )
+            this.$parent.$parent.refresh()
+          }
         }
       } catch (e) {
         console.log('Error', e)

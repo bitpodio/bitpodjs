@@ -15,7 +15,11 @@
       />
     </div>
     <invitationHistory />
-    <importContact />
+    <importContact
+      sample-file-name="v1573631144/Contact.csv"
+      :template-data="fieldNames"
+      model-name="contact"
+    />
   </div>
 </template>
 
@@ -49,6 +53,11 @@ export default {
       type: null,
       default: null,
     },
+  },
+  data() {
+    return {
+      fieldNames: ['FirstName', 'LastName', 'Email', 'Organization', 'Job'],
+    }
   },
 }
 </script>

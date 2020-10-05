@@ -128,6 +128,7 @@ export default {
     },
     cdnUri:
       'https://res.cloudinary.com/mytestlogo/image/upload/bitpodjs/images/',
+    cdnCsvUri: 'https://res.cloudinary.com/mytestlogo/raw/upload/',
   },
 
   /*
@@ -289,5 +290,6 @@ export default {
   },
   mappingIds: {
     contact: '5f7ac71841a664000a774fc0',
-  }
+    attendee: '5f7b46475ca471000bfecf9d',
+  },
 }
