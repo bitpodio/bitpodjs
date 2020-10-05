@@ -269,17 +269,19 @@
         <v-divider></v-divider>
         <v-flex my-3>
           <div class="body-2 text--secondary">Facebook</div>
-          <div class="body-1">
+          <div class="body-1 text-truncate d-block">
             {{ formatField(data.organization.Facebook) }}
           </div>
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">Twitter</div>
-          <div class="body-1">{{ formatField(data.organization.Twitter) }}</div>
+          <div class="body-1 text-truncate d-block">
+            {{ formatField(data.organization.Twitter) }}
+          </div>
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">LinkedIn</div>
-          <div class="body-1">
+          <div class="body-1 text-truncate d-block">
             {{ formatField(data.organization.LinkedIn) }}
           </div>
         </v-flex>
