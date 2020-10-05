@@ -51,7 +51,12 @@
 import { formFieldMixin } from '~/utility/form-control'
 export default {
   mixins: [formFieldMixin],
-  props: ['value', 'field', 'rules', 'onChange'],
+  props: {
+    value: { type: null, default: null },
+    field: { type: String, default: '' },
+    rules: { type: Array, default: () => [] },
+    onChange: { type: Function, default: () => {} },
+  },
   data() {
     const dateTime = this.value || new Date()
     const date =

@@ -335,7 +335,7 @@ export default {
     OrgnaizationList,
   },
   props: {
-    source: String,
+    source: { type: String, default: '' },
   },
   data: () => ({
     date: new Date().toISOString().substr(0, 10),
@@ -383,13 +383,6 @@ export default {
         icon: 'fa fa-address-book-o',
         text: 'Contacts',
         to: '/apps/event/list/Contacts/Contacts',
-      },
-      { heading: 'Task' },
-      { icon: 'fa fa-tasks', text: 'My Task', to: '' },
-      {
-        icon: 'mdi-chart-bubble',
-        text: 'Activities',
-        to: '/list/Activities/Activities',
       },
     ],
   }),

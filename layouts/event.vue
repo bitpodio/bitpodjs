@@ -37,12 +37,22 @@
             </v-btn>
           </template>
 
-          <v-list>
+          <v-list dense>
             <v-list-item @click="dialog1 = !dialog1">
-              <v-list-item-title>Single Event</v-list-item-title>
+              <v-list-item-icon class="mr-2">
+                <v-icon class="fs-16 mr-2">fa-calendar</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title>Single Event</v-list-item-title>
+              </v-list-item-content>
             </v-list-item>
             <v-list-item @click="dialog = !dialog">
-              <v-list-item-title>Recurring Event</v-list-item-title>
+              <v-list-item-icon class="mr-2">
+                <v-icon class="fs-16 mr-2">fa-history</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title>Recurring Event</v-list-item-title>
+              </v-list-item-content>
             </v-list-item>
           </v-list>
         </v-menu>
@@ -335,7 +345,7 @@ export default {
     OrgnaizationList,
   },
   props: {
-    source: String,
+    source: { type: String, default: '' },
   },
   data: () => ({
     date: new Date().toISOString().substr(0, 10),

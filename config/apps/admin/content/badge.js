@@ -15,12 +15,23 @@ export default {
       default: false,
       fields: {
         Size: {
+          form: {
+            caption: 'Size *',
+            displayOrder: 1,
+          },
           displayOrder: 1,
           caption: 'Size',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '250px',
           type: 'string',
+          newForm: true,
+          editForm: false,
+          rules: [
+            (v) => {
+              return !!v || 'Size is required'
+            },
+          ],
         },
         Type: {
           displayOrder: 2,
@@ -29,6 +40,8 @@ export default {
           sortEnable: true,
           columnWidth: '250px',
           type: 'string',
+          newForm: false,
+          editForm: false,
         },
         Category: {
           displayOrder: 3,
@@ -37,6 +50,8 @@ export default {
           sortEnable: true,
           columnWidth: '150px',
           type: 'string',
+          newForm: false,
+          editForm: false,
         },
         Default: {
           displayOrder: 4,
@@ -45,28 +60,55 @@ export default {
           sortEnable: true,
           columnWidth: '150px',
           type: 'string',
+          newForm: false,
+          editForm: false,
         },
         Template: {
+          form: {
+            caption: '',
+            displayOrder: 3,
+          },
           displayOrder: 5,
           caption: 'Template',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
-          type: 'string',
+          type: 'richtext',
+          cssClasses: 'col-12 col-md-12',
+          newForm: true,
+          editForm: true,
         },
         DisplayOrder: {
+          form: {
+            caption: 'Display Order *',
+            displayOrder: 2,
+          },
           displayOrder: 6,
           caption: 'Display Order',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
           type: 'number',
+          newForm: true,
+          editForm: false,
+          minimumValue: '0',
+          rules: [
+            (v) => {
+              return !!v || 'This field is required'
+            },
+          ],
         },
       },
       template: {
         name: 'badge-grid',
         context: {
           basePath: '/badge',
+        },
+        actions: {
+          new: {
+            hidden: false,
+            caption: 'Create Badge',
+          },
         },
       },
       dataSource: {

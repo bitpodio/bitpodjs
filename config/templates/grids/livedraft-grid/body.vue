@@ -62,7 +62,17 @@
                   <div
                     class="text--secondary pa-2 pb-0 pt-0 body-2 text-truncate d-block pl-0"
                   >
-                    {{ item.VenueName }}
+                    {{
+                      formatAddressField(
+                        item._VenueAddress && item._VenueAddress.City
+                      )
+                    }}
+                    {{
+                      formatAddressField(
+                        item._VenueAddress && item._VenueAddress.Country
+                      )
+                    }}
+                    <!-- {{ item._VenueAddress.Country }} -->
                   </div>
                 </v-flex>
               </nuxt-link>
@@ -172,7 +182,16 @@
                   <div
                     class="text--secondary pa-2 pb-0 pt-0 body-2 text-truncate d-block pl-0"
                   >
-                    {{ item.VenueName }}
+                    {{
+                      formatAddressField(
+                        item._VenueAddress && item._VenueAddress.City
+                      )
+                    }}
+                    {{
+                      formatAddressField(
+                        item._VenueAddress && item._VenueAddress.Country
+                      )
+                    }}
                   </div>
                 </v-flex>
               </nuxt-link>
@@ -244,7 +263,8 @@
 import nuxtconfig from '~/nuxt.config'
 export default {
   props: {
-    items: String,
+    items: { type: Array, default: () => [] },
+    offset: { type: Boolean, default: false },
   },
   methods: {
     routes(id) {
@@ -265,6 +285,9 @@ export default {
     viewRegistration(UniqLink) {
       const regUrl = `https://${nuxtconfig.axios.eventUrl}/e/${UniqLink}`
       window.open(`${regUrl}`, '_blank')
+    },
+    formatAddressField(fieldValue) {
+      return fieldValue || ' '
     },
   },
 }

@@ -1,0 +1,21 @@
+query($filters: JSON) {
+  SeatMap {
+    SeatMapFind(filter: $filters) {
+      edges {
+        node {
+          id
+          ImageUrl
+          Name
+          groups
+          layoutProperties
+          shapes
+          orgId
+          createdDate
+          createdBy
+          modifiedDate
+          modifiedBy
+        }
+      }
+    }
+  }
+}

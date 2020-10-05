@@ -5,7 +5,7 @@
         <component :is="errorTemplate || null" :error="error" />
       </div>
     </template>
-    <v-snackbar v-model="snackbar" :timeout="timeout" top="true">
+    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
       <div class="text-center">{{ snackbarText }}</div>
     </v-snackbar>
     <div v-if="!error" :key="error">
@@ -63,11 +63,11 @@
           :headers="headers"
           :items="tableData.items"
           :single-select="singleSelect"
-          :loading="loading === 1"
+          :loading="loading"
           :options.sync="options"
           :server-items-length="tableData.total"
           :hide-default-header="hideDefaultHeader"
-          :hide-default-footer="hideDefaultFooter"
+          :hide-default-footer="isHideDefaultFooter"
           :show-expand="showExpand"
           :single-expand="singleExpand"
           item-key="id"
@@ -217,7 +217,6 @@ function getGridTemplateInfo(content, viewName) {
 }
 
 function formatResult(content, viewName, data, modelName) {
-  debugger
   if (!data[modelName]) return []
   const [modelApi] = Object.getOwnPropertyNames(data[modelName])
   let { edges } = data[modelName][`${modelApi}`]
@@ -237,7 +236,6 @@ function formatResult(content, viewName, data, modelName) {
     formattedRecord.id = getIdFromAtob(node.id)
     return formattedRecord
   })
-  debugger
   return edges
 }
 
@@ -252,7 +250,6 @@ function getGridsProps(content, viewName) {
 }
 
 function getIdFromAtob(encodedId) {
-  debugger
   if (!encodedId) {
     return ''
   }
@@ -316,6 +313,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    serveritemslength: {
+      type: null,
+      default: null,
+    },
   },
   data() {
     const headers = getTableHeader(this.content, this.viewName)
@@ -326,7 +327,7 @@ export default {
         items: [],
         total: 0,
       },
-      loading: 0,
+      loading: true,
       totalCount: 0,
       options: {},
       isFilterApplied: false,
@@ -380,6 +381,10 @@ export default {
           ],
         },
       }
+    },
+    isHideDefaultFooter() {
+      const isLessItems = this.tableData.total > this.options.itemsPerPage
+      return !isLessItems || this.hideDefaultFooter
     },
   },
   watch: {
@@ -523,8 +528,10 @@ export default {
           search,
           filters,
         }
+
         const getDataFunc = dataSource.getData.call(this, this)
         this.tableData = await getDataFunc.call(this, options)
+        this.loading = false
       }
     },
   },
@@ -558,7 +565,6 @@ export default {
         }
       },
       update(data) {
-        debugger
         const { content, viewName } = this
         const modelName =
           getModelName(content, viewName) || content.general.name
@@ -572,10 +578,12 @@ export default {
         if (Object.keys(data).length > 0) this.error = ''
         return tableData
       },
-      result({ data, loading, networkStatus }) {},
+      result({ data, loading, networkStatus }) {
+        this.loading = false
+      },
       error(error) {
         this.error = error
-        this.loading = 0
+        this.loading = false
       },
       prefetch: false,
       loadingKey: 'loading',
