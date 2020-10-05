@@ -5,7 +5,7 @@
         <component :is="errorTemplate || null" :error="error" />
       </div>
     </template>
-    <v-snackbar v-model="snackbar" :timeout="timeout" top="true">
+    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
       <div class="text-center">{{ snackbarText }}</div>
     </v-snackbar>
     <div v-if="!error" :key="error">
@@ -63,7 +63,7 @@
           :headers="headers"
           :items="tableData.items"
           :single-select="singleSelect"
-          :loading="loading === 1"
+          :loading="loading"
           :options.sync="options"
           :server-items-length="tableData.total"
           :hide-default-header="hideDefaultHeader"
@@ -218,7 +218,8 @@ function getGridTemplateInfo(content, viewName) {
 
 function formatResult(content, viewName, data, modelName) {
   if (!data[modelName]) return []
-  let { edges } = data[modelName][`${modelName}Find`]
+  const [modelApi] = Object.getOwnPropertyNames(data[modelName])
+  let { edges } = data[modelName][`${modelApi}`]
   const fields = getGridFields(content, viewName)
   edges = edges.map(({ node }) => {
     const formattedRecord = {}
@@ -248,7 +249,14 @@ function getGridsProps(content, viewName) {
 }
 
 function getIdFromAtob(encodedId) {
-  return encodedId ? atob(encodedId).split(':')[1] : ''
+  if (!encodedId) {
+    return ''
+  }
+  const decodedStr = atob(encodedId)
+  if (decodedStr.split(':')[1]) {
+    return decodedStr.split(':')[1]
+  }
+  return encodedId
 }
 
 function buildMutationCreateQuery(modelName) {
@@ -304,6 +312,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    serveritemslength: {
+      type: null,
+      default: null,
+    },
   },
   data() {
     const headers = getTableHeader(this.content, this.viewName)
@@ -314,7 +326,7 @@ export default {
         items: [],
         total: 0,
       },
-      loading: 0,
+      loading: true,
       totalCount: 0,
       options: {},
       isFilterApplied: false,
@@ -515,8 +527,10 @@ export default {
           search,
           filters,
         }
+
         const getDataFunc = dataSource.getData.call(this, this)
         this.tableData = await getDataFunc.call(this, options)
+        this.loading = false
       }
     },
   },
@@ -563,10 +577,12 @@ export default {
         if (Object.keys(data).length > 0) this.error = ''
         return tableData
       },
-      result({ data, loading, networkStatus }) {},
+      result({ data, loading, networkStatus }) {
+        this.loading = false
+      },
       error(error) {
         this.error = error
-        this.loading = 0
+        this.loading = false
       },
       prefetch: false,
       loadingKey: 'loading',

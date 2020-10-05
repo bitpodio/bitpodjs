@@ -2,7 +2,7 @@
   <div
     :class="columnClass[column.type]"
     class="text-truncate"
-    :style="{ maxWidth: this.column.width }"
+    :style="{ maxWidth: column.width }"
   >
     {{ value }}
   </div>
@@ -10,7 +10,16 @@
 
 <script>
 export default {
-  props: ['item', 'value', 'context', 'type', 'column'],
+  props: {
+    column: {
+      type: null,
+      default: null,
+    },
+    value: {
+      type: null,
+      default: null,
+    },
+  },
   data() {
     return {
       columnClass: {

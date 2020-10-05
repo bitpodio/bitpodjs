@@ -87,7 +87,7 @@
         >
           <v-btn
             color="primary"
-            :disabled="!valid || !this.controlType"
+            :disabled="!valid || !controlType"
             depressed
             @click.native="onSave"
             >Save</v-btn
@@ -112,6 +112,10 @@ export default {
       type: Function,
       required: false,
       default: () => false,
+    },
+    lazy: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {

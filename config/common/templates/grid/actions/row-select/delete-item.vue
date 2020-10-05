@@ -1,7 +1,7 @@
 <template>
   <v-col class="px-0">
     <v-btn text small v-bind="attrs" v-on="on" @click="onDelete">
-      <v-icon left>mdi-delete</v-icon>{{ actionCaption('delete') }}
+      <v-icon left class="fs-16">fa-trash</v-icon>{{ actionCaption('delete') }}
     </v-btn>
   </v-col>
 </template>
@@ -11,7 +11,22 @@ import { gridActionMixin } from '~/utility/form'
 
 export default {
   mixins: [gridActionMixin],
-  props: ['content', 'viewName', 'items', 'onDeleteItem', 'context'],
+  props: {
+    content: {
+      type: null,
+      default: null,
+    },
+    viewName: {
+      type: String,
+      required: true,
+    },
+    items: { type: Array, default: () => [] },
+    onDeleteItem: { type: Function, default: () => {} },
+    context: {
+      type: null,
+      default: null,
+    },
+  },
   data() {
     return {
       dialog: false,

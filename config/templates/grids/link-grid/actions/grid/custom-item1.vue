@@ -98,7 +98,16 @@ function buildMutationCreateQuery(modelName) {
 }
 
 export default {
-  props: ['onNewItemSave', 'refresh'],
+  props: {
+    onNewItemSave: {
+      type: Function,
+      default: () => {},
+    },
+    refresh: {
+      type: null,
+      default: null,
+    },
+  },
   data() {
     return {
       registrations: false,

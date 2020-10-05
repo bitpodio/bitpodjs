@@ -123,7 +123,7 @@
           Recurring Event
         </v-chip>
 
-        <v-flex d-flex flex-md-row flex-lg-row my-2>
+        <v-flex d-flex flex-md-row flex-lg-row my-2 class="event-cards">
           <div
             class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
           >
@@ -157,12 +157,30 @@
           </div>
 
           <div
+            v-if="data.eventSummary.Revenue"
+            class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
+          >
+            <div
+              class="pa-2 warning d-flex justify-center align-center event-tile-left"
+            >
+              <i class="fa fa-banknote" aria-hidden="true"></i>
+            </div>
+            <div class="d-flex flex-column pa-2 event-tile-right greybg">
+              <div class="event-tile-value text-truncate">
+                {{ data.event.Currency }} {{ data.eventSummary.Revenue }}
+              </div>
+              <div class="caption text-truncate">Revenue</div>
+            </div>
+          </div>
+
+          <div
+            v-if="data.eventSummary.TotalSession"
             class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
           >
             <div
               class="pa-2 primary d-flex justify-center align-center event-tile-left"
             >
-              <i class="fa fa-black-board" aria-hidden="true"></i>
+              <i class="fa fa fa-black-board" aria-hidden="true"></i>
             </div>
             <div class="d-flex flex-column pa-2 event-tile-right greybg">
               <div class="event-tile-value text-truncate">
@@ -171,11 +189,42 @@
               <div class="caption text-truncate">Total Sessions</div>
             </div>
           </div>
+
+          <div
+            v-if="data.event.MySpeakers"
+            class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
+          >
+            <div
+              class="pa-2 warning d-flex justify-center align-center event-tile-left"
+            >
+              <i class="fa fa-mic1" aria-hidden="true"></i>
+            </div>
+            <div class="d-flex flex-column pa-2 event-tile-right greybg">
+              <div class="event-tile-value text-truncate">
+                {{ data.event.MySpeakers.length }}
+              </div>
+              <div class="caption text-truncate">Total Speakers</div>
+            </div>
+          </div>
+
+          <div
+            class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
+          >
+            <div
+              class="pa-2 primary d-flex justify-center align-center event-tile-left"
+            >
+              <i class="fa fa-calendar2" aria-hidden="true"></i>
+            </div>
+            <div class="d-flex flex-column pa-2 event-tile-right greybg">
+              <div class="event-tile-value text-truncate">29 Days</div>
+              <div class="caption text-truncate">Opens in</div>
+            </div>
+          </div>
         </v-flex>
 
         <v-stepper
           alt-labels
-          class="elevation-0 boxview mt-n3"
+          class="elevation-0 boxview"
           style="max-width: 800px;"
         >
           <v-stepper-header success>
@@ -194,7 +243,7 @@
               color="success"
               complete="true"
               class="body-2"
-              >Open for regsitarion</v-stepper-step
+              >Open for registration</v-stepper-step
             >
 
             <v-divider></v-divider>
@@ -206,7 +255,7 @@
             <v-divider></v-divider>
 
             <v-stepper-step step="" color="success" class="body-2"
-              >Registarion Closed</v-stepper-step
+              >Registration closed</v-stepper-step
             >
           </v-stepper-header>
         </v-stepper>
@@ -375,7 +424,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -393,7 +442,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -406,7 +455,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -424,7 +473,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -438,7 +487,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -457,7 +506,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -475,7 +524,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -493,7 +542,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -507,7 +556,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -526,7 +575,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">

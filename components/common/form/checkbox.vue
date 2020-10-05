@@ -10,7 +10,11 @@
 import { formFieldMixin } from '~/utility/form-control'
 export default {
   mixins: [formFieldMixin],
-  props: ['value', 'field', 'rules'],
+  props: {
+    value: { type: null, default: null },
+    field: { type: String, default: '' },
+    rules: { type: Array, default: () => [] },
+  },
   data() {
     return {
       checkboxValue: this.value,

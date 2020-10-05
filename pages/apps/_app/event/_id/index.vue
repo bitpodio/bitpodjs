@@ -60,7 +60,7 @@
             </v-list>
           </v-menu>
         </v-flex>
-        <v-chip small class="mt-1 mb-3 event-datechip" label>
+        <v-chip small class="mt-1 mb-3 event-datechip greybg" label>
           {{ formatedDate(data.event.StartDate, data.event.Timezone) }} -
           {{ formatedDate(data.event.EndDate, data.event.Timezone) }} -
           {{ formatField(data.event.Timezone) }}
@@ -71,7 +71,10 @@
             class="pb-1"
             @click="viewRegistration"
           >
-            <a>{{ viewRegistrationLink() }}</a>
+            <a
+              ><v-icon class="fs-16 mr-1 primary--text mt-n1">fa-globe</v-icon
+              >{{ viewRegistrationLink() }}</a
+            >
           </div>
           <div v-else>
             <p class="blue--text body-2">
@@ -157,6 +160,57 @@
           </div>
 
           <div
+            v-if="data.eventSummary.Revenue"
+            class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
+          >
+            <div
+              class="pa-2 warning d-flex justify-center align-center event-tile-left"
+            >
+              <i class="fa fa-banknote" aria-hidden="true"></i>
+            </div>
+            <div class="d-flex flex-column pa-2 event-tile-right greybg">
+              <div class="event-tile-value text-truncate">
+                {{ data.event.Currency }} {{ data.eventSummary.Revenue }}
+              </div>
+              <div class="caption text-truncate">Revenue</div>
+            </div>
+          </div>
+
+          <div
+            v-if="data.eventSummary.TotalSession"
+            class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
+          >
+            <div
+              class="pa-2 primary d-flex justify-center align-center event-tile-left"
+            >
+              <i class="fa fa fa-black-board" aria-hidden="true"></i>
+            </div>
+            <div class="d-flex flex-column pa-2 event-tile-right greybg">
+              <div class="event-tile-value text-truncate">
+                {{ data.eventSummary.TotalSession }}
+              </div>
+              <div class="caption text-truncate">Total Sessions</div>
+            </div>
+          </div>
+
+          <div
+            v-if="data.event.MySpeakers"
+            class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
+          >
+            <div
+              class="pa-2 warning d-flex justify-center align-center event-tile-left"
+            >
+              <i class="fa fa-mic1" aria-hidden="true"></i>
+            </div>
+            <div class="d-flex flex-column pa-2 event-tile-right greybg">
+              <div class="event-tile-value text-truncate">
+                {{ data.event.MySpeakers.length }}
+              </div>
+              <div class="caption text-truncate">Total Speakers</div>
+            </div>
+          </div>
+
+          <div
             class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
           >
             <div
@@ -172,39 +226,56 @@
         </v-flex>
 
         <v-stepper
+          v-model="Status"
           alt-labels
-          class="elevation-0 boxview mt-n3"
+          class="elevation-0 boxview event-steper"
           style="max-width: 800px;"
         >
           <v-stepper-header success>
             <v-stepper-step
-              step="3"
-              complete
+              editable
+              step="1"
+              :complete="true"
               color="success"
               class="ml-n13 body-2"
+              @click="changeStatus('Not ready')"
               >Not Ready</v-stepper-step
             >
 
             <v-divider></v-divider>
 
             <v-stepper-step
-              step="4"
-              complete="true"
+              editable
+              step="2"
+              :complete="Status > 1"
               color="success"
               class="body-2"
-              >Open for regsitarion</v-stepper-step
+              @click="changeStatus('Open for registration')"
+              >Open for registration</v-stepper-step
             >
 
             <v-divider></v-divider>
 
-            <v-stepper-step step="4" class="body-2" color="success"
+            <v-stepper-step
+              editable
+              step="3"
+              :complete="Status > 2"
+              class="body-2"
+              color="success"
+              @click="changeStatus('Sold out')"
               >Sold out</v-stepper-step
             >
 
             <v-divider></v-divider>
 
-            <v-stepper-step step="" class="body-2" color="success"
-              >Registarion Closed</v-stepper-step
+            <v-stepper-step
+              editable
+              step="4"
+              :complete="Status > 3"
+              class="body-2"
+              color="success"
+              @click="changeStatus('Registration closed')"
+              >Registration closed</v-stepper-step
             >
           </v-stepper-header>
         </v-stepper>
@@ -228,7 +299,7 @@
         </v-flex>
       </div>
       <div
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-0">
@@ -238,7 +309,7 @@
           <v-menu offset-y>
             <template v-slot:activator="{ on, attrs }">
               <v-btn depressed text small v-bind="attrs" v-on="on">
-                <v-icon left>mdi-upload</v-icon> Upload
+                <v-icon left>fa-upload</v-icon> Upload
               </v-btn>
             </template>
             <v-list dense>
@@ -557,7 +628,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -566,11 +637,16 @@
           <v-spacer></v-spacer>
         </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="eventAttendees" :content="content" class="mt-n12" />
+        <Grid
+          view-name="eventAttendees"
+          :content="content"
+          :context="data"
+          class="mt-n12"
+        />
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -588,7 +664,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -602,7 +678,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -621,7 +697,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -639,7 +715,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -657,7 +733,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -671,7 +747,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -685,7 +761,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -704,7 +780,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -759,19 +835,48 @@
         </v-flex>
       </div>
 
-      <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pb-0 pr-2 box-grey">
+      <div
+        v-if="data.event.LocationType !== 'Online Event'"
+        class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pb-0 pr-2 box-grey"
+      >
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-0">
             <i class="fa fa-id-badge pr-1" aria-hidden="true"></i> Badge
           </h2>
           <v-spacer></v-spacer>
-          <v-btn text small @click="newbadge = true">
+          <v-btn text small @click="openBadgeForm">
             <v-icon left>mdi-plus</v-icon>Create
           </v-btn>
+          <v-btn text small class="ml-1" @click="openPrintForm">
+            <v-icon left>fa-printer</v-icon>Print
+          </v-btn>
+          <v-menu left :offset-y="offset" transition="slide-y-transition">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn icon small v-bind="attrs" v-on="on">
+                <v-icon>mdi-dots-vertical</v-icon>
+              </v-btn>
+            </template>
+
+            <v-list dense>
+              <v-list-item @click="editBadgeForm = true">
+                <v-icon left class="fs-16">fa-pencil</v-icon>
+                <v-list-item-content>
+                  <v-list-item-title>Edit</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item @click="deleteBadge">
+                <v-icon left class="fs-16">fa-trash</v-icon>
+                <v-list-item-content>
+                  <v-list-item-title>Delete</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
+          </v-menu>
         </v-flex>
         <v-divider></v-divider>
         <v-flex my-3 d-flex justify-center align-center>
-          <div v-html="data.badge.Template" />
+          <!-- eslint-disable-next-line vue/no-v-html -->
+          <div v-html="getBadge(badgeData.Template)" />
         </v-flex>
       </div>
 
@@ -955,7 +1060,7 @@
           </span>
         </v-flex>
       </div>
-      <v-snackbar v-model="snackbar" :timeout="timeout" top="true">
+      <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
         <div class="toast py-2 pr-1 pl-3">
           {{ snackbarText }}
         </div>
@@ -966,6 +1071,8 @@
     <editEventSetting :event-setting.sync="eventSetting" />
     <editSiteSetting :site-setting.sync="siteSetting" />
     <makeCopy :is-make-copy.sync="isMakeCopy" />
+    <newBadgeForm :new-badge.sync="newBadge" />
+    <editBadgeForm :id="badgeData.id" :edit-badge-form.sync="editBadgeForm" />
   </v-flex>
 </template>
 <script>
@@ -976,14 +1083,19 @@ import editSeoForm from './editSeoForm.vue'
 import editEventForm from './editEventForm.vue'
 import editEventSetting from './editEventSetting.vue'
 import editSiteSetting from './editSiteSetting.vue'
+import newBadgeForm from './newBadgeForm.vue'
+import editBadgeForm from './editBadgeForm.vue'
 import makeCopy from './makeCopy.vue'
+import badge from '~/config/apps/event/gql/badge.gql'
+import organizationInfo from '~/config/apps/event/gql/organizationInfo.gql'
+import eventAttendees from '~/config/apps/event/gql/eventAttendees.gql'
 import nuxtconfig from '~/nuxt.config'
 import Grid from '~/components/common/grid'
 import File from '~/components/common/form/file.vue'
 import event from '~/config/apps/event/gql/event.gql'
 import copy from '~/components/common/copy'
 import { formatGQLResult } from '~/utility/gql.js'
-import { configLoaderMixin, getApiUrl } from '~/utility'
+import { configLoaderMixin, getIdFromAtob, getApiUrl } from '~/utility'
 
 export default {
   components: {
@@ -992,12 +1104,18 @@ export default {
     editEventForm,
     editEventSetting,
     editSiteSetting,
+    newBadgeForm,
+    editBadgeForm,
     File,
     copy,
     makeCopy,
   },
   mixins: [configLoaderMixin],
-  props: ['value', 'field'],
+  props: {
+    value: { type: null, default: null },
+    field: { type: null, default: null },
+    offset: { type: Boolean, default: false },
+  },
   data() {
     return {
       loading: 0,
@@ -1005,6 +1123,8 @@ export default {
       editeventform: false,
       editseoform: false,
       eventForm: false,
+      newBadge: false,
+      editBadgeForm: false,
       seoForm: false,
       badgeLogo: false,
       eventBanner: false,
@@ -1031,6 +1151,7 @@ export default {
         badge: {},
         eventSummary: {},
       },
+      badgeData: {},
       fileField: {
         multiple: false,
       },
@@ -1043,6 +1164,10 @@ export default {
       snackbar: false,
       timeout: '1000',
       snackbarText: '',
+      logoId: '',
+      getBadgeCategory: 'Guest',
+      attendees: [],
+      Status: '',
     }
   },
   computed: {
@@ -1060,8 +1185,132 @@ export default {
       }
     },
   },
+  mounted() {
+    this.getAttendees()
+  },
 
   methods: {
+    openPrintForm() {
+      const myWindow = window.open('', '', 'width=900,height=900')
+      this.attendees.map((ele) => {
+        const str = this.getBadgePrinted(this.badgeData.Template, ele)
+        myWindow.document.write(`${str}`)
+      })
+      myWindow.document.close()
+      myWindow.focus()
+      myWindow.print()
+      setTimeout(function () {
+        myWindow.close()
+      }, 1000)
+    },
+    openBadgeForm() {
+      const res = confirm('New badge will replace your existing badge.')
+      if (res) {
+        this.newBadge = true
+      }
+    },
+    async getAttendees() {
+      try {
+        const result = await this.$apollo.query({
+          query: gql`
+            ${eventAttendees}
+          `,
+          variables: {
+            filters: {
+              where: {
+                EventId: this.$route.params.id,
+              },
+            },
+          },
+        })
+        if (result) {
+          const attendeesData = formatGQLResult(result.data, 'Attendee')
+          this.attendees = attendeesData
+          return attendeesData
+        }
+      } catch (e) {
+        console.error(
+          `Error in apps/event/_id/index.vue while making a GQL call to Attendee model in method getAttendees context: EventId:-${this.$route.params.id}`,
+          e
+        )
+      }
+    },
+    getBadge(str) {
+      this.getOrgInfo()
+      const logoUrl =
+        nuxtconfig.publicRuntimeConfig.cdnUri +
+        'admin-default-template-logo.png'
+      if (str) {
+        str = str
+          .replace('{{ FullName }}', `${this.$auth.user.data.name}`)
+          .replace('{{ Category }}', `${this.getBadgeCategory}`)
+          .replace('{{ Organization }}', `${this.$store.state.currentOrg.name}`)
+          .replace(logoUrl, this.getAttachmentLink(this.logoId, true))
+        if (this.data.event && this.data.event.Title) {
+          str = str.replace('{{ EventName }}', `${this.data.event.Title}`)
+        }
+      }
+      return str
+    },
+    async selectedBadge(id) {
+      try {
+        const result = await this.$apollo.query({
+          query: gql`
+            ${badge}
+          `,
+          variables: {
+            filters: {
+              where: {
+                id: getIdFromAtob(id),
+              },
+            },
+          },
+        })
+        const getSelectedBadgeData = formatGQLResult(result.data, 'Badge')
+        const badgeCategory =
+          getSelectedBadgeData.length > 0
+            ? getSelectedBadgeData[0].Category
+            : {}
+        return badgeCategory
+      } catch (e) {
+        console.error(
+          `Error in apps/event/_id/index.vue while making a GQL call to Badge model in method selectedBadge context: id:-${getIdFromAtob(
+            id
+          )}`
+        )
+      }
+    },
+    updateStepper() {
+      const status = this.eventData.Status
+      if (status === 'Not ready') {
+        this.Status = 1
+      } else if (status === 'Open for registration') {
+        this.Status = 2
+      } else if (status === 'Sold out') {
+        this.Status = 3
+      } else {
+        this.Status = 4
+      }
+    },
+    async changeStatus(statusName) {
+      const url = getApiUrl()
+      try {
+        const res = await this.$axios.$patch(
+          `${url}Events/${this.$route.params.id}`,
+          {
+            Status: statusName,
+          }
+        )
+        if (res) {
+          this.refresh()
+        }
+      } catch (e) {
+        console.log(
+          `Error in app/Event/_id/index.vue while making a PATCH call to Event model from method changeStatus context:-URL:-${url}\nInput:-\t Status:-${statusName}\n id:-${this.$route.params.id} `,
+          e
+        )
+      }
+    },
     async publishEvent() {
       this.formData.Status = 'Open for registration'
       const url = getApiUrl()
@@ -1074,8 +1323,75 @@ export default {
           this.refresh()
         }
       } catch (e) {
-        console.log(
+        console.error(
           `Error in app/Event/_id/index.vue while making a PATCH call to Event model from method publishEvent context:-URL:-${url}\n formData:-${this.formData}\n id:-${this.$route.params.id} `,
+          e
+        )
+      }
+    },
+    getBadgePrinted(str, ele) {
+      const logoUrl =
+        nuxtconfig.publicRuntimeConfig.cdnUri +
+        'admin-default-template-logo.png'
+      if (str) {
+        str = str
+          .replace('{{ FullName }}', `${ele.FullName}`)
+          .replace(
+            '{{ Category }}',
+            `${(ele.regType && ele.regType.Name) || 'Guest'}`
+          )
+          .replace('{{ Organization }}', `${ele.CompanyName}`)
+          .replace(logoUrl, this.getAttachmentLink(this.logoId, true))
+        if (this.data.event && this.data.event.Title) {
+          str = str.replace('{{ EventName }}', `${this.data.event.Title}`)
+        }
+      }
+      return str
+    },
+    async deleteBadge() {
+      const url = getApiUrl()
+      const check = confirm('Are you sure you want to delete this badge?')
+      if (check === true) {
+        try {
+          const res = await this.$axios.$delete(
+            `https://${nuxtconfig.axios.eventUrl}${
+              nuxtconfig.axios.apiEndpoint
+            }Badges/${getIdFromAtob(this.badgeData.id)}`
+          )
+          if (res) {
+            this.snackbarText = 'Badges deleted successfully'
+            this.snackbar = true
+            this.refresh()
+          }
+        } catch (e) {
+          console.error(
+            `Error in apps/event/_id/index.vue while making a DELETE call to Badge model in method deleteBadge context: url:-${url} BadgeId:-${getIdFromAtob(
+              this.badgeData.id
+            )}`,
+            e
+          )
+        }
+      }
+    },
+    async getOrgInfo() {
+      try {
+        const result = await this.$apollo.query({
+          query: gql`
+            ${organizationInfo}
+          `,
+          variables: {
+            filters: {
+              where: {},
+            },
+          },
+        })
+        if (result) {
+          const orgInfo = formatGQLResult(result.data, 'OrganizationInfo')
+          this.logoId = orgInfo[0].Image[0]
+        }
+      } catch (e) {
+        console.error(
+          `Error in apps/event/_id/index.vue while making a GQL call to OrganizationInfo model in method getOrgInfo `,
           e
         )
       }
@@ -1281,6 +1597,9 @@ export default {
         const badge = formatGQLResult(data, 'Badge')
         const eventSummary = data.Event.EventGetEventSummery
         this.eventData = event.length > 0 ? event[0] : {}
+        this.badgeData = badge.length > 0 ? badge[0] : {}
+
+        this.updateStepper()
         if (event[0].Images.length > 0) {
           this.getBannerImageName(event[0].Images[0])
         }
