@@ -46,7 +46,7 @@
               <!-- <v-tab class="px-0 mr-4">Basic Info</v-tab>
               <v-tab :disabled="invalid" class="px-0 mr-4">Content</v-tab> -->
               <v-tab class="px-0 mr-4">Content</v-tab>
-              <v-tab class="px-0 mr-4">Basic Info</v-tab>
+              <v-tab :disabled="!RTEValue" class="px-0 mr-4">Basic Info</v-tab>
             </v-tabs>
           </v-card-title>
           <v-card-text
@@ -297,14 +297,14 @@
               @click="curentTab++"
               >Next</v-btn
             >
-            <!-- <v-btn
-              v-if="(curentTab = 1)"
+            <v-btn
+              v-if="(curentTab === 1)"
               color="primary"
-              :disabled="!valid"
+              :disabled="!RTEValue || !subject || !sender || !setReplyTo"
               depressed
               @click.native="onSave"
               >Save</v-btn
-            > -->
+            >
           </v-card-actions>
         </v-card>
       </template>
@@ -351,6 +351,7 @@ import Grid from '~/components/common/grid'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin, getIdFromAtob } from '~/utility'
 import marketingTemplates from '~/config/apps/admin/gql/marketingTemplates.gql'
+import { getApiUrl } from '~/utility/index.js'
 export default {
   components: {
     Grid,
@@ -379,11 +380,21 @@ export default {
       allowSpaces: false,
       type: Object,
     },
+    item: {
+      default: () => {},
+      allowSpaces: false,
+      type: Object,
+    },
+    refresh: {
+      type: Function,
+      required: false,
+      default: () => false,
+    },
   },
   data() {
-    debugger
     return {
       templateItems: [],
+      editItem: [],
       selectedList: [],
       dialog: false,
       curentTab: 0,
@@ -415,10 +426,10 @@ export default {
   },
   watch: {
     curentTab(newVal, oldVal) {
-      if (oldVal === 1) {
-        this.$refs.form.validate()
-        if (!this.subject || !this.setReplyTo || !this.sender) {
-          this.curentTab = 1
+      if (oldVal === 0) {
+        // this.$refs.form.validate()
+        if (!this.RTEValue) {
+          this.curentTab = 0
         }
       }
     },
@@ -492,6 +503,49 @@ export default {
     },
     templateExists() {
       return this.templateItems.find((i) => i.Body === this.RTEValue)
+    },
+    async onSave() {
+      const baseUrl = getApiUrl()
+      let res = null
+      let activityRes = null
+      try {
+        console.log('==if==')
+        res = await this.$axios.$patch(`${baseUrl}MarketingTemplates`, {
+          Body: this.RTEValue,
+          FromName: '',
+          ReplyTo: this.setReplyTo,
+          FromEmail: this.sender,
+          Subject: this.subject,
+          Type: this.myTemplate,
+        })
+      } catch (error) {
+        console.log(
+          `Error in task grid schedule a task on Save function - context: eventId  `
+        )
+      }
+      if (res) {
+        try {
+          activityRes = await this.$axios.$patch(
+            `${baseUrl}CRMACTIVITIES/${this.item.id}`,
+            {
+              TemplateId: res.id,
+            }
+          )
+        } catch (error) {
+          console.log(
+            `Error in task grid schedule a task on Save function - context: eventId  `
+          )
+        }
+        // this.dialog = false
+        // this.refresh()
+        // this.$refs.form.reset()
+        // this.isSaveButtonDisabled = false
+        // return res
+      }
+      if (activityRes) {
+        this.refresh()
+        this.dialog = false
+      }
     },
     sendNow(type) {
       this.disableButton = true
@@ -610,7 +664,43 @@ export default {
           this.choosedTemplate = 1
         }
         this.templateItems = formatGQLResult(data, 'MarketingTemplate')
+
         return formatGQLResult(data, 'MarketingTemplate')
+      },
+      error(error) {
+        this.error = error
+        this.loading = 0
+      },
+      prefetch: false,
+      loadingKey: 'loading',
+      skip: false,
+      pollInterval: 0,
+    },
+    editTemplate: {
+      query() {
+        return gql`
+          ${marketingTemplates}
+        `
+      },
+      variables() {
+        return {
+          filters: {
+            where: {
+              id: this.item.TemplateId,
+            },
+          },
+          where: {},
+        }
+      },
+      update(data) {
+        this.editItem = formatGQLResult(data, 'MarketingTemplate')
+
+        if (this.item.TemplateId) {
+          this.choosedTemplate = 3
+          this.RTEValue = this.editItem[0].Body
+          this.templateID = this.editItem[0].id
+          this.templateSubject = this.editItem[0].Subject
+        }
       },
       error(error) {
         this.error = error

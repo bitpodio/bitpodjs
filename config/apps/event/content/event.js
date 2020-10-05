@@ -3233,9 +3233,9 @@ export default {
           newForm: false,
           editForm: false,
         },
-        createDate: {
+        createdDate: {
           displayOrder: 8,
-          caption: 'Create Date',
+          caption: 'created Date',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -3246,9 +3246,9 @@ export default {
           newForm: false,
           editForm: false,
         },
-        createBy: {
+        createdBy: {
           displayOrder: 9,
-          caption: 'Create By',
+          caption: 'created By',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',

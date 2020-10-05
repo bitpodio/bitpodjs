@@ -517,7 +517,12 @@
           <v-spacer></v-spacer>
         </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="eventTasks" :content="content" class="mt-n12" />
+        <Grid
+          view-name="eventTasks"
+          :content="content"
+          :context="data"
+          class="mt-n12"
+        />
       </div>
       <div
         v-if="content"

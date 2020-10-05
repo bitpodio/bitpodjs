@@ -59,9 +59,13 @@
           :item="item"
         />
         <editTemplate
-          v-if="item.Category === 'Registration Email'"
+          v-if="
+            item.Category === 'Registration Email' ||
+            item.Category === 'Survey Invite'
+          "
           button-label="Edit Template"
           :context="context"
+          :item="item"
         />
         <!-- </v-list-item> -->
         <!-- <v-list-item @click="editTemplate"> -->

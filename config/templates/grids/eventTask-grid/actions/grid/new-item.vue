@@ -82,7 +82,7 @@
             <v-row>
               <v-col v-if="isDay" cols="12" sm="6" md="4">
                 <Lookup
-                  v-model="task.Day"
+                  v-model="Day"
                   :field="dayLookupField"
                   :rules="requiredRules"
                   :disabled="true"
@@ -107,11 +107,12 @@
               </v-col>
             </v-row>
             <v-row>
-              <v-col v-if="isSurvey" cols="12" sm="6" md="6">
+              <v-col v-if="isSurvey" cols="12">
                 <Lookup
                   v-model="task.SurveyId"
                   :field="surveyLookupField"
                   :rules="requiredRules"
+                  :on-change="changeSurvey(itemText)"
                 />
               </v-col>
             </v-row>
@@ -166,15 +167,29 @@ export default {
   data() {
     debugger
     const isAction = this.item && this.item.Status === 'Wait for an Action'
+    let isSurvey = false
+    let isDay = false
+    let isTime = false
+    if (this.item && this.item.Category === 'Survey Invite') {
+      isSurvey = true
+      if (this.item.Status === 'Wait for an Action') {
+        isDay = true
+        isTime = true
+        // this.Day = `0${this.item.Day}`
+        this.Day = '01'
+        debugger
+      }
+    }
     return {
-      isDay: false,
-      isTime: false,
+      isDay,
+      isTime,
       isAction,
       isDueDate: false,
       isTimezone: false,
-      isSurvey: false,
+      isSurvey,
       isDayDisabled: true,
       task: { ...this.item } || {},
+      Day: '',
       customers: [],
       customerId: '',
       valid: false,
@@ -200,7 +215,7 @@ export default {
       // },
       surveyLookupField: {
         displayOrder: 9,
-        caption: 'Time*',
+        caption: 'Search Survey*',
         type: 'lookup',
         dataSource: {
           getData: (ctx) => {
@@ -378,7 +393,7 @@ export default {
       // } else {
       //   this.hideDayTime()
       // }
-      debugger
+      this.isSurvey = value === 'Survey Invite'
       if (
         this.task.Status === 'Wait for an Action' &&
         value === 'Survey Invite'
@@ -403,16 +418,16 @@ export default {
       }
       if (
         value === 'Wait for an Action' &&
-        (this.task.Category === 'Survey Invite' ||
-          this.task.Category === 'Email')
+        this.task.Category === 'Survey Invite'
       ) {
+        this.isSurvey = true
         this.hideDuedateTimezone()
         this.showDayTime()
       } else if (
         value === 'Schedule' &&
-        (this.task.Category === 'Survey Invite' ||
-          this.task.Category === 'Email')
+        this.task.Category === 'Survey Invite'
       ) {
+        this.isSurvey = true
         this.hideDayTime()
         this.showDuedateTimezone()
       } else {
@@ -420,18 +435,27 @@ export default {
         this.hideDayTime()
       }
     },
+    changeSurvey(value) {
+      this.task.SurveyName = value
+    },
     closeForm() {
       this.dialog = false
       // this.$refs.form.reset()
+      // this.isAction = false
+      // this.isDay = false
+      // this.isTime = false
+      // this.isAction = false
     },
     async onSave() {
       this.isSaveButtonDisabled = true
       const eventId = this.$route.params.id
       const baseUrl = getApiUrl()
-      this.task.Day = parseInt(this.task.Day)
+      this.task.Day = parseInt(this.Day)
+      this.task.Type = 'Scheduled'
       let res = null
       try {
-        if (this.item.id) {
+        if (this.item && this.item.id) {
+          console.log('==if==')
           res = await this.$axios.$patch(
             `${baseUrl}CRMACTIVITIES/${this.item.id}`,
             {
@@ -439,6 +463,7 @@ export default {
             }
           )
         } else {
+          console.log('==else==')
           res = await this.$axios.$post(
             `${baseUrl}Events/${eventId}/crmactivity`,
             {
