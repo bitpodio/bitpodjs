@@ -729,15 +729,16 @@
     </v-dialog>
     <v-dialog v-model="previousInviteDialog" width="600px">
       <v-card>
-        <v-toolbar dense flat dark fixed color="accent">
-          <v-toolbar-title class="body-1">Select Prior Invite</v-toolbar-title>
+        <v-card-title class="d-flex align-start px-2 pl-4">
+          <h2 class="black--text pt-0 pb-0 text-h5">Select Prior Invite</h2>
           <v-spacer></v-spacer>
-          <v-btn icon dark @click="previousInviteDialog = false">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </v-toolbar>
-        <v-divider></v-divider>
-        <v-container class="pt-12">
+          <div>
+            <v-btn icon @click="previousInviteDialog = false">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </div>
+        </v-card-title>
+        <v-container class="pt-12 px-4">
           <Grid
             :value="priorInviteeSelected"
             view-name="inviteeEventTasks"

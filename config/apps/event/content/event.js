@@ -4062,6 +4062,14 @@ export default {
         context: {
           basePath: '/event',
         },
+        actions: {
+          new: {
+            hidden: true,
+          },
+          edit: {
+            hidden: true,
+          },
+        },
       },
       dataSource: {
         query: eventTasks,
