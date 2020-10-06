@@ -350,6 +350,9 @@ body {
   min-height: 52px;
   align-items: center;
 }
+.slide-form-default .v-input--selection-controls {
+  margin-top: 0;
+}
 @media (max-width: 600px) {
   .slide-form,
   .slide-form-default {
