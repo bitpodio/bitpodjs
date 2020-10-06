@@ -346,6 +346,10 @@ body {
 .event-steper .mdi-pencil::before {
   content: "\F012C" !important;
 }
+.grid-search-section {
+  min-height: 52px;
+  align-items: center;
+}
 @media (max-width: 600px) {
   .slide-form,
   .slide-form-default {
