@@ -2,7 +2,7 @@
   <div>
     <div v-if="item.CheckIn === null">
       <v-chip
-        class="ma-2"
+        class="ma-1 ml-0"
         color="blue"
         text-color="white"
         label

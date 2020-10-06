@@ -340,6 +340,9 @@ body {
 .v-stepper__step__step .v-icon.v-icon {
   font-size: 14px !important;
 }
+.event-steper .mdi-pencil::before {
+  content: "\F012C" !important;
+}
 @media (max-width: 600px) {
   .slide-form,
   .slide-form-default {
