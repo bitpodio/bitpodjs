@@ -2,7 +2,7 @@
   <div>
     <div v-if="item.CheckIn === null">
       <v-chip
-        class="ma-2"
+        class="ma-1 ml-0"
         color="blue"
         text-color="white"
         label
@@ -13,7 +13,7 @@
       </v-chip>
     </div>
     <div v-else style="display: flex;">
-      <v-icon color="success">mdi-check</v-icon>
+      <v-icon color="success fs-16">mdi-check</v-icon>
       <div>Checked in Just now</div>
     </div>
   </div>

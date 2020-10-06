@@ -8,8 +8,9 @@
         {{ field.caption }}
       </h3>
       <v-btn
-        class="blue white--text uploadFile"
+        class="primary uploadFile"
         small
+        depressed
         :disabled="allowSecondUpload"
         @click="uploadClicked"
         >{{ label }}</v-btn
