@@ -353,6 +353,9 @@ body {
 .slide-form-default .v-input--selection-controls {
   margin-top: 0;
 }
+.v-chip.v-size--small {
+  height: 20px !important;
+}
 @media (max-width: 600px) {
   .slide-form,
   .slide-form-default {
