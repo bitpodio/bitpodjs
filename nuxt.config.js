@@ -128,6 +128,7 @@ export default {
     },
     cdnUri:
       'https://res.cloudinary.com/mytestlogo/image/upload/bitpodjs/images/',
+    cdnCsvUri: 'https://res.cloudinary.com/mytestlogo/raw/upload/',
   },
 
   /*
@@ -170,6 +171,9 @@ export default {
     parallel: true,
     cache: true,
     hardSource: true,
+    filenames: {
+      chunk: ({ isDev }) => (isDev ? '[name].js' : '[chunkhash].js'),
+    },
   },
   vue: {
     config: {
@@ -283,5 +287,9 @@ export default {
       defaultPublicDomain:
         process.env.DEFAULT_PUBLIC_DOMAIN || 'event.test.bitpod.io',
     },
+  },
+  mappingIds: {
+    contact: '5f7ac71841a664000a774fc0',
+    attendee: '5f7b46475ca471000bfecf9d',
   },
 }

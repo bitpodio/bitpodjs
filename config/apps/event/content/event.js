@@ -12,7 +12,7 @@ import eventSession from '../gql/eventSession.gql'
 import eventTasks from '../gql/eventTasks.gql'
 import location from '../gql/location.gql'
 import eventRecurringSession from '../gql/eventRecurringSession.gql'
-import { getData, getLookupData } from '../rest'
+import { getData, getLookupData, getCustomData } from '../rest'
 import marketingTemplates from '~/config/apps/admin/gql/marketingTemplates.gql'
 
 export default {
@@ -4307,7 +4307,7 @@ export default {
       title: 'Invites',
       type: 'list',
     },
-    eventInvitesDetails: {
+    integrations: {
       ui: {
         hideDefaultHeader: false,
         hideDefaultFooter: false,
@@ -4319,95 +4319,48 @@ export default {
       },
       hidden: true,
       fields: {
-        'getContact.FullName': {
+        'MetaData.Category': {
           displayOrder: 2,
-          caption: 'Name',
+          caption: 'Category',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '120px',
           type: 'string',
         },
-        isRegistered: {
+        ServiceId: {
           displayOrder: 3,
-          caption: 'Registered',
+          caption: 'App Name',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '80px',
           type: 'string',
         },
-        'getContact.Email': {
-          displayOrder: 4,
-          caption: 'Email',
-          searchEnable: true,
-          sortEnable: true,
-          columnWidth: '150px',
-          type: 'string',
-        },
-        Sent: {
+        Integrate: {
           displayOrder: 5,
-          caption: 'Sent/Bounce',
+          caption: 'Action',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '180px',
           type: 'string',
         },
-        Click: {
-          displayOrder: 6,
-          caption: 'Click',
+        Status: {
+          displayOrder: 4,
+          caption: 'Status',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '180px',
           type: 'string',
-        },
-        Open: {
-          displayOrder: 7,
-          caption: 'Open',
-          searchEnable: true,
-          sortEnable: true,
-          columnWidth: '150px',
-          type: 'string',
-        },
-        Delivered: {
-          displayOrder: 8,
-          caption: 'Delivered',
-          searchEnable: true,
-          sortEnable: true,
-          columnWidth: '150px',
-          type: 'string',
-        },
-        Unsubscribed: {
-          displayOrder: 9,
-          caption: 'Unsubscribed',
-          searchEnable: true,
-          sortEnable: true,
-          columnWidth: '150px',
-          type: 'string',
-        },
-        SpamReport: {
-          displayOrder: 10,
-          caption: 'Spam',
-          searchEnable: true,
-          sortEnable: true,
-          columnWidth: '150px',
-          type: 'string',
-        },
-        createdDate: {
-          displayOrder: 11,
-          caption: 'Date',
-          searchEnable: true,
-          sortEnable: true,
-          columnWidth: '150px',
-          type: 'date',
         },
       },
       template: {
-        name: 'eventInvitesDetails-grid',
+        name: 'eventIntegration-grid',
         context: {
           basePath: '/event',
         },
         actions: {
           new: {
             hidden: true,
+            caption: 'new field',
           },
           edit: {
             hidden: true,
@@ -4418,19 +4371,13 @@ export default {
         },
       },
       dataSource: {
-        query: eventInvites,
-        defaultSort: 'createdDate DESC',
-        type: 'graphql',
-        model: 'EmailAnalytic',
-        filter(ctx) {
-          return {
-            where: {
-              CRMActivityId: this.$route.params.id,
-            },
-          }
-        },
+        type: 'rest',
+        getData: (ctx) =>
+          getCustomData(
+            `OrganizationInfos/getMyConnections?filter={"where":{"MetaData.eventId": {"like": "${ctx.$route.query.event}", "options": "i"}}}`
+          ),
       },
-      title: 'eventInvites',
+      title: 'Integration',
       type: 'list',
     },
   },

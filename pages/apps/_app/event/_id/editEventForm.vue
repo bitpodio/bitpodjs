@@ -25,7 +25,7 @@
               <v-text-field
                 v-model="formData.Title"
                 label="Title *"
-                :rules="nameRules"
+                :rules="requiredRule"
                 required
                 outlined
                 dense
@@ -46,7 +46,7 @@
                 <v-datetime-picker
                   v-model="formData.StartDate"
                   label="Start Date *"
-                  :text-field-props="textFieldProps"
+                  :text-field-props="startDateTextFieldProps"
                 >
                   <template slot="dateIcon">
                     <v-icon>fas fa-calendar</v-icon>
@@ -55,9 +55,6 @@
                     <v-icon>fas fa-clock</v-icon>
                   </template>
                 </v-datetime-picker>
-                <span v-show="startdateMessage !== ''" class="error-message">{{
-                  startdateMessage
-                }}</span>
               </div>
             </v-col>
             <v-col
@@ -70,7 +67,7 @@
               <v-datetime-picker
                 v-model="formData.EndDate"
                 label="End Date *"
-                :text-field-props="textFieldProps"
+                :text-field-props="endDateTextFieldProps"
               >
                 <template slot="dateIcon">
                   <v-icon>fas fa-calendar</v-icon>
@@ -79,9 +76,6 @@
                   <v-icon>fas fa-clock</v-icon>
                 </template>
               </v-datetime-picker>
-              <span v-show="startdateMessage !== ''" class="error-message">{{
-                startdateMessage
-              }}</span>
             </v-col>
             <v-col
               v-if="formData.BusinessType !== 'Recurring'"
@@ -100,7 +94,7 @@
               <v-text-field
                 v-model="formData.Organizer"
                 label="Event organizer *"
-                :rules="nameRules"
+                :rules="requiredRule"
                 outlined
                 required
                 dense
@@ -128,6 +122,7 @@
                 label="Max registrations per day"
                 min="0"
                 outlined
+                dense
               ></v-text-field>
             </v-col>
             <v-col cols="12">
@@ -143,8 +138,32 @@
                 dense
               ></v-select>
             </v-col>
+            <v-col cols="12" class="pb-0">
+              <v-text-field
+                v-if="formData.LocationType === 'Online Event'"
+                v-model="formData.WebinarLink"
+                label="Online Event Link*"
+                :rules="requiredRule"
+                outlined
+                required
+                dense
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" class="pb-0">
+              <v-textarea
+                v-if="formData.LocationType === 'Online Event'"
+                v-model="formData.JoiningInstruction"
+                label="Additional online event joining instructions,URL,phone,etc*"
+                outlined
+                required
+                dense
+              ></v-textarea>
+            </v-col>
             <div
-              v-if="formData.BusinessType !== 'Recurring'"
+              v-if="
+                formData.BusinessType !== 'Recurring' &&
+                formData.LocationType !== 'Online Event'
+              "
               style="display: contents;"
             >
               <v-col cols="12">
@@ -230,7 +249,6 @@
 <script>
 import gql from 'graphql-tag'
 import { utcToZonedTime } from 'date-fns-tz'
-import nuxtconfig from '../../../../../nuxt.config'
 import { email, required } from '~/utility/rules.js'
 import event from '~/config/apps/event/gql/event.gql'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
@@ -238,6 +256,7 @@ import { formatGQLResult } from '~/utility/gql.js'
 import strings from '~/strings.js'
 import Timezone from '~/components/common/form/timezone'
 import { formatTimezoneDateFieldsData } from '~/utility/form.js'
+import { getApiUrl } from '~/utility'
 
 export default {
   components: {
@@ -251,6 +270,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    id: {
+      type: String,
+      default: '',
+    },
   },
   data() {
     return {
@@ -261,7 +284,7 @@ export default {
       tags: [],
       addressLine: '',
       tagsDropdown: [],
-      nameRules: [required],
+      requiredRule: [required],
       errorAlert: {
         message: '',
         visible: false,
@@ -299,25 +322,38 @@ export default {
     content() {
       return this.contents ? this.contents.Event : null
     },
-    textFieldProps() {
+    startDateTextFieldProps() {
       return {
         appendIcon: 'fa-calendar',
         outlined: true,
         dense: true,
         rules: [
           (v) => {
-            if (this.formData.BusinessType !== 'Recurring') {
-              const StartDate = v && new Date(v)
-              const { EndDate } = this.formData
-              let startdateMessage = ''
-              if (!StartDate) startdateMessage = strings.FIELD_REQUIRED
-              else if (StartDate && EndDate && StartDate > EndDate)
-                startdateMessage = strings.EVENT_START_END_DATE
-              else if (StartDate < new Date())
-                startdateMessage = strings.EVENT_START_DATE
-              else startdateMessage = ''
-              return startdateMessage || true
+            const scheduledDate = v && new Date(v)
+            if (scheduledDate && scheduledDate > this.formData.EndDate) {
+              this.valid = false
+              return 'Ticket start date should be less than Ticket end date'
             } else {
+              this.valid = true
+              return true
+            }
+          },
+        ],
+      }
+    },
+    endDateTextFieldProps() {
+      return {
+        appendIcon: 'fa-calendar',
+        outlined: true,
+        dense: true,
+        rules: [
+          (v) => {
+            const scheduledDate = v && new Date(v)
+            if (scheduledDate && scheduledDate < this.formData.StartDate) {
+              this.valid = false
+              return 'Ticket end Date should be greater than Ticket startdate'
+            } else {
+              this.valid = true
               return true
             }
           },
@@ -334,16 +370,20 @@ export default {
       return true
     },
   },
-  mounted() {
-    this.getTags()
-      .then((res) => {
+  async mounted() {
+    try {
+      const res = await this.getDropDownData('EventTags')
+      if (res) {
         this.tagsDropdown = res.map((i) => i.value)
-        return res
-      })
-      .catch((e) => {
-        console.log('Error', e)
-      })
+      }
+    } catch (e) {
+      console.log(
+        `Error in pages/apps/event/_id/editEventForm while making a GQL call to GeneralConfiguration model from method getDropDownData`,
+        e
+      )
+    }
   },
+
   methods: {
     setErrorAlert(visible, message) {
       this.errorAlert.visible = visible
@@ -395,7 +435,7 @@ export default {
       }
     },
     async onSave() {
-      const eventUrl = `https://${nuxtconfig.axios.eventUrl}/${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`
+      const url = getApiUrl()
       this.formData.Tags = this.tags
 
       if (
@@ -419,16 +459,22 @@ export default {
         delete this.formData.VenueAddress
         delete this.formData._VenueAddress.LatLng
         try {
-          const res = await this.$axios.$patch(eventUrl, {
-            ...this.formData,
-          })
+          const res = await this.$axios.$patch(
+            `${url}Events/${this.$route.params.id || this.id}`,
+            {
+              ...this.formData,
+            }
+          )
           if (res) {
             this.close()
             this.refresh()
             this.data.event = res
           }
         } catch (e) {
-          console.log('error', e)
+          console.log(
+            `Error in pages/apps/event/_id/editEventForm while making a PATCH call to Event model from method onSave context:-Url:-${url},FormData:-${this.formData}`,
+            e
+          )
         }
       } else {
         this.formData.MaxNoRegistrations = parseInt(
@@ -436,43 +482,52 @@ export default {
         )
         delete this.formData._VenueAddress
         try {
-          const res = await this.$axios.$patch(eventUrl, {
-            ...this.formData,
-          })
+          const res = await this.$axios.$patch(
+            `${url}Events/${this.$route.params.id || this.id}`,
+            {
+              ...this.formData,
+            }
+          )
           if (res) {
             this.close()
             this.refresh()
             return (this.data.event = res)
           }
         } catch (e) {
-          console.log('Error', e)
+          console.log(
+            `Error in pages/apps/event/_id/editEventForm while making a PATCH call to Event model from method onSave context:-Url:-${url},FormData:-${this.formData}`,
+            e
+          )
         }
       }
     },
-    getTags() {
-      return this.$apollo
-        .query({
+    async getDropDownData(filterType) {
+      try {
+        const result = await this.$apollo.query({
           query: gql`
             ${generalconfiguration}
           `,
           variables: {
             filters: {
               where: {
-                type: 'EventTags',
+                type: filterType,
               },
             },
           },
         })
-        .then((result) => {
+        if (result) {
           const generalConfig = formatGQLResult(
             result.data,
             'GeneralConfiguration'
           )
           return generalConfig
-        })
-        .catch((e) => {
-          console.log('Error', e)
-        })
+        }
+      } catch (e) {
+        console.log(
+          `Error in pages/apps/event/_id/editEventSettings while making a GQL call to GeneralConfiguration model from method getDropDownData`,
+          e
+        )
+      }
     },
   },
   apollo: {
@@ -486,15 +541,15 @@ export default {
         return {
           filters: {
             where: {
-              id: this.$route.params.id,
+              id: this.$route.params.id || this.id,
             },
           },
           badgeFilter: {
             where: {
-              EventId: this.$route.params.id,
+              EventId: this.$route.params.id || this.id,
             },
           },
-          eventId: this.$route.params.id,
+          eventId: this.$route.params.id || this.id,
         }
       },
       update(data) {

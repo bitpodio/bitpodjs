@@ -62,7 +62,17 @@
                   <div
                     class="text--secondary pa-2 pb-0 pt-0 body-2 text-truncate d-block pl-0"
                   >
-                    {{ item.VenueName }}
+                    {{
+                      formatAddressField(
+                        item._VenueAddress && item._VenueAddress.City
+                      )
+                    }}
+                    {{
+                      formatAddressField(
+                        item._VenueAddress && item._VenueAddress.Country
+                      )
+                    }}
+                    <!-- {{ item._VenueAddress.Country }} -->
                   </div>
                 </v-flex>
               </nuxt-link>
@@ -107,7 +117,7 @@
                           aria-hidden="true"
                         ></i>
                       </v-list-item-icon>
-                      <v-list-item-content>
+                      <v-list-item-content @click="openEventForm(item.id)">
                         <v-list-item-title>Edit</v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
@@ -172,7 +182,16 @@
                   <div
                     class="text--secondary pa-2 pb-0 pt-0 body-2 text-truncate d-block pl-0"
                   >
-                    {{ item.VenueName }}
+                    {{
+                      formatAddressField(
+                        item._VenueAddress && item._VenueAddress.City
+                      )
+                    }}
+                    {{
+                      formatAddressField(
+                        item._VenueAddress && item._VenueAddress.Country
+                      )
+                    }}
                   </div>
                 </v-flex>
               </nuxt-link>
@@ -217,7 +236,10 @@
                           aria-hidden="true"
                         ></i>
                       </v-list-item-icon>
-                      <v-list-item-content>
+                      <v-list-item-content
+                        :key="item.id"
+                        @click="openEventForm(item.id)"
+                      >
                         <v-list-item-title>Edit</v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
@@ -237,17 +259,32 @@
         </v-col>
       </v-row>
     </div>
+    <editEventForm :id="id" :event-form.sync="eventForm" />
   </v-flex>
 </template>
 
 <script>
+import editEventForm from '~/pages/apps/_app/event/_id/editEventForm.vue'
 import nuxtconfig from '~/nuxt.config'
 export default {
+  components: {
+    editEventForm,
+  },
   props: {
     items: { type: Array, default: () => [] },
     offset: { type: Boolean, default: false },
   },
+  data() {
+    return {
+      eventForm: false,
+      id: '',
+    }
+  },
   methods: {
+    openEventForm(itemId) {
+      this.id = itemId
+      this.eventForm = true
+    },
     routes(id) {
       return `/apps/event/event/${id}`
     },
@@ -266,6 +303,9 @@ export default {
     viewRegistration(UniqLink) {
       const regUrl = `https://${nuxtconfig.axios.eventUrl}/e/${UniqLink}`
       window.open(`${regUrl}`, '_blank')
+    },
+    formatAddressField(fieldValue) {
+      return fieldValue || ' '
     },
   },
 }
@@ -299,5 +339,8 @@ export default {
 }
 .overflow-h {
   overflow: hidden;
+}
+.grid-actions-container {
+  visibility: hidden !important;
 }
 </style>

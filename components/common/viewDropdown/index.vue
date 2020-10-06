@@ -9,7 +9,7 @@
       </template>
 
       <v-list>
-        <v-list-item v-for="view in viewList" :key="view.value">
+        <v-list-item v-for="view in viewList" :key="view.value" @click="true">
           <NuxtLink :to="view.path" class="text-decoration-none text--primary">
             {{ view.caption }}
           </NuxtLink>
