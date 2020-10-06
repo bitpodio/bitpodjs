@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div style="min-height: 52px;">
+    <div>
       <v-flex v-if="content" xs12 sm12 md12>
         <ViewDropdown
           :content="content"

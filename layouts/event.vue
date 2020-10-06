@@ -392,7 +392,7 @@ export default {
       {
         icon: 'fa fa-address-book-o',
         text: 'Contacts',
-        to: '/apps/event/static/EventCustomers/Members/page2',
+        to: '/apps/event/static/DiscountCodes/Discount Codes/page2',
       },
     ],
   }),

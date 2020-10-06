@@ -1,7 +1,12 @@
 <template>
-  <div>
-    <span class="fs-18">{{ viewCaption }}</span>
-    <v-menu offset-y transition="slide-y-transition" bottom>
+  <div class="d-flex">
+    <div class="fs-18 min-h20">{{ viewCaption }}</div>
+    <v-menu
+      offset-y
+      transition="slide-y-transition"
+      bottom
+      content-class="min-h20"
+    >
       <template v-slot:activator="{ on, attrs }">
         <v-btn icon v-bind="attrs" v-on="on">
           <v-icon class="fs-30">mdi-chevron-down</v-icon>
@@ -81,3 +86,9 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.min-h20 {
+  min-height: 52px;
+}
+</style>
