@@ -117,7 +117,7 @@
                           aria-hidden="true"
                         ></i>
                       </v-list-item-icon>
-                      <v-list-item-content>
+                      <v-list-item-content @click="openEventForm(item.id)">
                         <v-list-item-title>Edit</v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
@@ -236,7 +236,10 @@
                           aria-hidden="true"
                         ></i>
                       </v-list-item-icon>
-                      <v-list-item-content>
+                      <v-list-item-content
+                        :key="item.id"
+                        @click="openEventForm(item.id)"
+                      >
                         <v-list-item-title>Edit</v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
@@ -256,17 +259,32 @@
         </v-col>
       </v-row>
     </div>
+    <editEventForm :id="id" :event-form.sync="eventForm" />
   </v-flex>
 </template>
 
 <script>
+import editEventForm from '~/pages/apps/_app/event/_id/editEventForm.vue'
 import nuxtconfig from '~/nuxt.config'
 export default {
+  components: {
+    editEventForm,
+  },
   props: {
     items: { type: Array, default: () => [] },
     offset: { type: Boolean, default: false },
   },
+  data() {
+    return {
+      eventForm: false,
+      id: '',
+    }
+  },
   methods: {
+    openEventForm(itemId) {
+      this.id = itemId
+      this.eventForm = true
+    },
     routes(id) {
       return `/apps/event/event/${id}`
     },

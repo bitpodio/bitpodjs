@@ -49,7 +49,7 @@
                   <v-list-item-title>Edit email template</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
-              <v-list-item>
+              <v-list-item @click="redirectIntegration">
                 <v-list-item-icon class="mr-2">
                   <i class="fa fa-link1 mt-1" aria-hidden="true"></i>
                 </v-list-item-icon>
@@ -1636,6 +1636,11 @@ export default {
           this.refresh()
         }
       }
+    },
+    redirectIntegration() {
+      this.$router.push(
+        `/apps/event/list/Event/integrations?event=${this.$route.params.id}`
+      )
     },
   },
   apollo: {
