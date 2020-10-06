@@ -396,7 +396,7 @@
                 </v-row>
               </template>
             </v-img>
-            <v-card-text class="pa-0">Event Banner</v-card-text>
+            <v-card-text class="pa-0 pt-1">Event Banner</v-card-text>
           </v-card>
           <v-dialog v-model="bannerDialog" max-width="600">
             <v-card>
@@ -1006,7 +1006,9 @@
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">Event Link</div>
-          <div class="body-1">{{ formatField(data.event.UniqLink) }}</div>
+          <div class="body-1 d-block text-truncate">
+            {{ formatField(data.event.UniqLink) }}
+          </div>
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">Cancelation Policy</div>

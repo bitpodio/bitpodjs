@@ -13,7 +13,7 @@
       </v-chip>
     </div>
     <div v-else style="display: flex;">
-      <v-icon color="success">mdi-check</v-icon>
+      <v-icon color="success fs-16">mdi-check</v-icon>
       <div>Checked in Just now</div>
     </div>
   </div>

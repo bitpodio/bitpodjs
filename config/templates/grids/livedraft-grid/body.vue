@@ -84,7 +84,7 @@
                     small
                     class="ma-0 mr-1 event-tags body-2"
                   >
-                    {{ Tags }}
+                    #{{ Tags }}
                   </v-text>
                 </div>
 

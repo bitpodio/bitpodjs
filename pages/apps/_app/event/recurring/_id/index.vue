@@ -686,11 +686,15 @@
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">Event Link</div>
-          <div class="body-1">{{ formatField(eventUniqueLink) }}</div>
+          <div class="body-1 d-block text-truncate">
+            {{ formatField(eventUniqueLink) }}
+          </div>
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">Session Link</div>
-          <div class="body-1">{{ formatField(eventSessionLink) }}</div>
+          <div class="body-1 d-block text-truncate">
+            {{ formatField(eventSessionLink) }}
+          </div>
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">Cancelation Policy</div>
