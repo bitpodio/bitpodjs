@@ -3,7 +3,7 @@
     <div class="fs-18 min-h36">{{ viewCaption }}</div>
     <v-menu offset-y transition="slide-y-transition" bottom>
       <template v-slot:activator="{ on, attrs }">
-        <v-btn icon v-bind="attrs" class="mt-n1" v-on="on">
+        <v-btn icon v-bind="attrs" v-on="on">
           <v-icon class="fs-30">mdi-chevron-down</v-icon>
         </v-btn>
       </template>
@@ -85,5 +85,6 @@ export default {
 <style scoped>
 .min-h36 {
   min-height: 36px;
+  line-height: 36px;
 }
 </style>
