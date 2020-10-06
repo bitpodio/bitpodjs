@@ -407,6 +407,7 @@ import timeAgo from '~/utility/get-time-difference.js'
 import eventList from '~/config/apps/event/gql/eventlist.gql'
 import registrationList from '~/config/apps/event/gql/registrationList.gql'
 export default {
+  layout: 'event',
   components: {
     GChart,
   },

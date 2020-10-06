@@ -44,7 +44,7 @@
                   <v-list-item-title>Edit email template</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
-              <v-list-item>
+              <v-list-item @click="redirectIntegration">
                 <v-list-item-icon class="mr-2">
                   <i class="fa fa-link1 mt-1" aria-hidden="true"></i>
                 </v-list-item-icon>
@@ -123,7 +123,7 @@
           Recurring Event
         </v-chip>
 
-        <v-flex d-flex flex-md-row flex-lg-row my-2>
+        <v-flex d-flex flex-md-row flex-lg-row my-2 class="event-cards">
           <div
             class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
           >
@@ -157,12 +157,30 @@
           </div>
 
           <div
+            v-if="data.eventSummary.Revenue"
+            class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
+          >
+            <div
+              class="pa-2 warning d-flex justify-center align-center event-tile-left"
+            >
+              <i class="fa fa-banknote" aria-hidden="true"></i>
+            </div>
+            <div class="d-flex flex-column pa-2 event-tile-right greybg">
+              <div class="event-tile-value text-truncate">
+                {{ data.event.Currency }} {{ data.eventSummary.Revenue }}
+              </div>
+              <div class="caption text-truncate">Revenue</div>
+            </div>
+          </div>
+
+          <div
+            v-if="data.eventSummary.TotalSession"
             class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
           >
             <div
               class="pa-2 primary d-flex justify-center align-center event-tile-left"
             >
-              <i class="fa fa-black-board" aria-hidden="true"></i>
+              <i class="fa fa fa-black-board" aria-hidden="true"></i>
             </div>
             <div class="d-flex flex-column pa-2 event-tile-right greybg">
               <div class="event-tile-value text-truncate">
@@ -171,11 +189,42 @@
               <div class="caption text-truncate">Total Sessions</div>
             </div>
           </div>
+
+          <div
+            v-if="data.event.MySpeakers"
+            class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
+          >
+            <div
+              class="pa-2 warning d-flex justify-center align-center event-tile-left"
+            >
+              <i class="fa fa-mic1" aria-hidden="true"></i>
+            </div>
+            <div class="d-flex flex-column pa-2 event-tile-right greybg">
+              <div class="event-tile-value text-truncate">
+                {{ data.event.MySpeakers.length }}
+              </div>
+              <div class="caption text-truncate">Total Speakers</div>
+            </div>
+          </div>
+
+          <div
+            class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
+          >
+            <div
+              class="pa-2 primary d-flex justify-center align-center event-tile-left"
+            >
+              <i class="fa fa-calendar2" aria-hidden="true"></i>
+            </div>
+            <div class="d-flex flex-column pa-2 event-tile-right greybg">
+              <div class="event-tile-value text-truncate">29 Days</div>
+              <div class="caption text-truncate">Opens in</div>
+            </div>
+          </div>
         </v-flex>
 
         <v-stepper
           alt-labels
-          class="elevation-0 boxview mt-n3"
+          class="elevation-0 boxview"
           style="max-width: 800px;"
         >
           <v-stepper-header success>
@@ -849,6 +898,11 @@ export default {
     embedLink() {
       const regUrl = `<iframe src="https://${nuxtConfig.axios.eventUrl}/embed/t/${this.data.event.UniqLink}"></iframe>`
       return regUrl
+    },
+    redirectIntegration() {
+      this.$router.push(
+        `/apps/event/list/Event/integrations?event=${this.$route.params.id}`
+      )
     },
   },
   apollo: {

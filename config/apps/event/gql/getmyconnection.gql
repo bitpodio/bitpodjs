@@ -1,0 +1,9 @@
+query ($filters: JSON) { 
+   OrganizationInfo { 
+   OrganizationInfoGetMyConnections(filter:$filters) {
+    edges {
+      node 
+    }
+  }
+  }
+}
