@@ -232,6 +232,7 @@ function formatResult(content, viewName, data, modelName) {
           : ''
       else formattedRecord[field] = node[field]
     }
+
     formattedRecord.id = getIdFromAtob(node.id)
     return formattedRecord
   })
