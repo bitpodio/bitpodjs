@@ -241,21 +241,21 @@ body {
   box-shadow: 0 2px 10px 0 hsla(120, 4%, 84%, .64) inset;
   background-color: hsl(0, 0%, 100%) !important;
 }
-.boxview .v-data-table__wrapper {
-  overflow-x: hidden !important;
-  margin-bottom: 6px;
-}
-.boxview:hover .v-data-table__wrapper {
-  overflow-x: auto !important;
-  margin-bottom: 0;
-}
 .boxviewsmall .v-data-table__wrapper {
   overflow-x: hidden !important;
   margin-bottom: 0;
 }
+.boxview .v-data-table__wrapper {
+  overflow-x: hidden !important;
+  margin-bottom: 6px;
+}
 .boxviewsmall:hover .v-data-table__wrapper {
   overflow-x: auto !important;
-  margin-bottom: 0px;
+  margin-bottom: 0;
+}
+.boxview:hover .v-data-table__wrapper {
+  overflow-x: auto !important;
+  margin-bottom: 0;
 }
 .v-application .boxview .v-data-table {
   padding: 0 !important;
@@ -327,6 +327,18 @@ body {
 }
 .mxcol-name {
   max-width: 150px;
+}
+.v-stepper__step {
+  padding-top: 12px !important;
+}
+.v-stepper--alt-labels .v-stepper__header .v-divider {
+  margin-top: 24px !important;
+}
+.theme--light.v-stepper .v-stepper__step--editable:hover {
+  background: transparent !important;
+}
+.v-stepper__step__step .v-icon.v-icon {
+  font-size: 14px !important;
 }
 @media (max-width: 600px) {
   .slide-form,

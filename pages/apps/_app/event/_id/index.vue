@@ -60,7 +60,7 @@
             </v-list>
           </v-menu>
         </v-flex>
-        <v-chip small class="mt-1 mb-3 event-datechip" label>
+        <v-chip small class="mt-1 mb-3 event-datechip greybg" label>
           {{ formatedDate(data.event.StartDate, data.event.Timezone) }} -
           {{ formatedDate(data.event.EndDate, data.event.Timezone) }} -
           {{ formatField(data.event.Timezone) }}
@@ -160,6 +160,57 @@
           </div>
 
           <div
+            v-if="data.eventSummary.Revenue"
+            class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
+          >
+            <div
+              class="pa-2 warning d-flex justify-center align-center event-tile-left"
+            >
+              <i class="fa fa-banknote" aria-hidden="true"></i>
+            </div>
+            <div class="d-flex flex-column pa-2 event-tile-right greybg">
+              <div class="event-tile-value text-truncate">
+                {{ data.event.Currency }} {{ data.eventSummary.Revenue }}
+              </div>
+              <div class="caption text-truncate">Revenue</div>
+            </div>
+          </div>
+
+          <div
+            v-if="data.eventSummary.TotalSession"
+            class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
+          >
+            <div
+              class="pa-2 primary d-flex justify-center align-center event-tile-left"
+            >
+              <i class="fa fa fa-black-board" aria-hidden="true"></i>
+            </div>
+            <div class="d-flex flex-column pa-2 event-tile-right greybg">
+              <div class="event-tile-value text-truncate">
+                {{ data.eventSummary.TotalSession }}
+              </div>
+              <div class="caption text-truncate">Total Sessions</div>
+            </div>
+          </div>
+
+          <div
+            v-if="data.event.MySpeakers"
+            class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
+          >
+            <div
+              class="pa-2 warning d-flex justify-center align-center event-tile-left"
+            >
+              <i class="fa fa-mic1" aria-hidden="true"></i>
+            </div>
+            <div class="d-flex flex-column pa-2 event-tile-right greybg">
+              <div class="event-tile-value text-truncate">
+                {{ data.event.MySpeakers.length }}
+              </div>
+              <div class="caption text-truncate">Total Speakers</div>
+            </div>
+          </div>
+
+          <div
             class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
           >
             <div
@@ -177,7 +228,7 @@
         <v-stepper
           v-model="Status"
           alt-labels
-          class="elevation-0 boxview mt-n3"
+          class="elevation-0 boxview event-steper"
           style="max-width: 800px;"
         >
           <v-stepper-header success>
@@ -779,7 +830,10 @@
         </v-flex>
       </div>
 
-      <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pb-0 pr-2 box-grey">
+      <div
+        v-if="data.event.LocationType !== 'Online Event'"
+        class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pb-0 pr-2 box-grey"
+      >
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-0">
             <i class="fa fa-id-badge pr-1" aria-hidden="true"></i> Badge
@@ -789,9 +843,8 @@
             <v-icon left>mdi-plus</v-icon>Create
           </v-btn>
           <v-btn text small class="ml-1" @click="openPrintForm">
-            <v-icon left>mdi-printer</v-icon>Print
+            <v-icon left>fa-printer</v-icon>Print
           </v-btn>
-          <v-spacer></v-spacer>
           <v-menu left :offset-y="offset" transition="slide-y-transition">
             <template v-slot:activator="{ on, attrs }">
               <v-btn icon small v-bind="attrs" v-on="on">
@@ -801,13 +854,13 @@
 
             <v-list dense>
               <v-list-item @click="editBadgeForm = true">
-                <v-icon left>fa-pencil</v-icon>
+                <v-icon left class="fs-16">fa-pencil</v-icon>
                 <v-list-item-content>
                   <v-list-item-title>Edit</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
               <v-list-item @click="deleteBadge">
-                <v-icon left>fa-trash</v-icon>
+                <v-icon left class="fs-16">fa-trash</v-icon>
                 <v-list-item-content>
                   <v-list-item-title>Delete</v-list-item-title>
                 </v-list-item-content>
