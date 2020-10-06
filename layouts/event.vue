@@ -387,12 +387,12 @@ export default {
       {
         icon: 'fa fa-users',
         text: 'Members',
-        to: '/apps/event/list/EventCustomers/Members',
+        to: '/apps/event/static/EventCustomers/Members/page1',
       },
       {
         icon: 'fa fa-address-book-o',
         text: 'Contacts',
-        to: '/apps/event/list/Contacts/Contacts',
+        to: '/apps/event/static/EventCustomers/Members/page2',
       },
     ],
   }),
