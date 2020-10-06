@@ -151,7 +151,7 @@
                     ></v-textarea>
                   </v-col>
 
-                  <v-col v-if="isVenue" cols="12" class="pb-6">
+                  <v-col v-if="isVenue" cols="12" class="pb-6 positionRelative">
                     <no-ssr>
                       <vue-google-autocomplete
                         id="map"
@@ -166,7 +166,7 @@
                     </no-ssr>
                     <div
                       v-show="addresslineMessage !== ''"
-                      class="red--text pa-3 pt-0 body-1"
+                      class="red--text pa-3 pt-0 pb-0 body-2 positionAbsolute"
                     >
                       {{ addresslineMessage }}
                     </div>

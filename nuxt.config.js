@@ -170,6 +170,9 @@ export default {
     parallel: true,
     cache: true,
     hardSource: true,
+    filenames: {
+      chunk: ({ isDev }) => (isDev ? '[name].js' : '[chunkhash].js'),
+    },
   },
   vue: {
     config: {

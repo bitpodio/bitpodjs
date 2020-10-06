@@ -67,8 +67,10 @@
                         v-if="
                           badges.Size === 'B010 - ID Card Badge (54mm x 76mm)'
                         "
-                        v-html="getBadge(badges.Template)"
-                      />
+                      >
+                        <!-- eslint-disable-next-line vue/no-v-html -->
+                        <div v-html="getBadge(badges.Template)" />
+                      </div>
                     </v-card>
                   </v-flex>
                   <p class="tempId"></p>
@@ -95,8 +97,10 @@
                         v-if="
                           badges.Size === 'B004 - Pin Name Badge (98mm x 52mm)'
                         "
-                        v-html="getBadge(badges.Template)"
-                      />
+                      >
+                        <!-- eslint-disable-next-line vue/no-v-html -->
+                        <div v-html="getBadge(badges.Template)" />
+                      </div>
                     </v-card>
                   </v-flex>
                 </v-row>
