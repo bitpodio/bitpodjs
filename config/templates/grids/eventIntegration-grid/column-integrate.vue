@@ -29,6 +29,9 @@
         />
       </div>
     </v-dialog>
+    <v-snackbar v-model="snackbar" :timeout="timeout" top="true"
+      ><div class="text-center">{{ snackbarText }}</div></v-snackbar
+    >
   </div>
 </template>
 
@@ -67,6 +70,9 @@ export default {
   },
   data() {
     return {
+      snackbar: false,
+      timeout: 1000,
+      snackbarText: '',
       category: this.item.MetaData.Category,
       serviceId: this.item.ServiceId,
       dialog: false,
@@ -113,7 +119,6 @@ export default {
       if (this.item.id) {
         connobj.id = this.item.id
       }
-      console.log('--data=', connobj)
       try {
         const res = await this.$axios.$patch(
           `https://${nuxtconfig.axios.eventUrl}/svc/api/Connections`,
@@ -121,27 +126,35 @@ export default {
         )
         if (res) {
           this.refresh()
+          this.snackbarText = 'Connection Updated Successfully'
+          this.snackbar = true
         }
       } catch (e) {
-        console.log('Error', e)
+        console.log(
+          'Error in config/templates/grid/eventIntegration-grid/column-integrate.vue while making a axios call to Connection model from method onSave',
+          e
+        )
       }
       this.dialog = false
     },
 
     async onDelete() {
-      console.log('+++data item+++', this.item)
       const id = this.item.id
-      console.log('+++data item+++', this.item)
       if (id) {
         try {
           const res = await this.$axios.$delete(
             `https://${nuxtconfig.axios.eventUrl}/svc/api/Connections/${id}`
           )
           if (res) {
+            this.snackbarText = 'Connection deleted Successfully'
+            this.snackbar = true
             this.refresh()
           }
         } catch (e) {
-          console.log('Error', e)
+          console.log(
+            'Error in config/templates/grid/eventIntegration-grid/column-integrate.vue while making a axios call to Connection model from method onDelete',
+            e
+          )
         }
       }
     },
@@ -154,15 +167,18 @@ export default {
           Name: this.serviceId,
           ServiceId: this.serviceId,
           TenantId: 'event',
-          bpmnServerURL: 'https://bitpod-event.test.bitpod.io/bpmn/',
+          bpmnServerURL: `https://${nuxtconfig.axios.backendBaseUrl}/bpmn/`,
           OwnerId: this.profileId,
           loginUser: this.profileId,
           OrgId: 1,
           accessToken: this.accessToken,
+          MetaData: `{"eventId":"${this.eventId}"}`,
         }
-        openAuthPopups(options, function (e) {
+        openAuthPopups(options, (e) => {
           console.log('openAuthPopups response', e)
           this.refresh()
+          this.snackbarText = 'Connection setup Successfully'
+          this.snackbar = true
         })
       } else {
         this.dialog = true

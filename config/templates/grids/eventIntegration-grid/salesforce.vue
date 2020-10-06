@@ -4,7 +4,9 @@
       <v-card-title
         class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
       >
-        <h2 class="black--text pt-10 pb-9">Salesforce Integration Setup</h2>
+        <h2 class="black--text pt-5 pb-3 text-h5">
+          Salesforce Integration Setup
+        </h2>
         <v-spacer></v-spacer>
         <div>
           <v-btn icon @click.native="onClose">
@@ -18,9 +20,9 @@
         site and login with account you want to use for this integration.
         <v-form ref="form" v-model="valid" :lazy-validation="lazy">
           <v-row>
-            <v-col cols="12">
+            <v-col cols="12" class="pb-0">
               <v-text-field
-                v-model="formData.ClientId"
+                v-model="formData.loginUrl"
                 label="Salesforce Login URL *"
                 :rules="required"
                 outlined
@@ -71,7 +73,6 @@ export default {
   },
 
   data() {
-    debugger
     return {
       valid: false,
       required: [required],

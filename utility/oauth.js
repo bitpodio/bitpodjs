@@ -3,7 +3,6 @@ import authenticationPopups from 'authentication-popups'
 const POPUP_DIMENSIONS = { width: 400, height: 640 }
 
 export const openAuthPopups = (options, callback) => {
-  debugger
   const path = `/oauth/index.html?${queryParams(options)}`
   authenticationPopups(path, POPUP_DIMENSIONS)
   window.authAgent.removeAllListeners('suspend')

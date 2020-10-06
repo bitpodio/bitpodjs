@@ -14,7 +14,7 @@
     <v-dialog v-model="dialog" top max-width="290">
       <v-card>
         <v-card-text class="mt-1">
-          Please setup the connection to make it active.
+          {{ dialogText }}
         </v-card-text>
 
         <v-card-actions>
@@ -31,6 +31,7 @@
 
 <script>
 import nuxtconfig from '~/nuxt.config'
+
 export default {
   props: {
     item: {
@@ -52,41 +53,87 @@ export default {
       snackbarText: '',
       timeout: 1000,
       dialog: false,
+      dialogText: '',
     }
   },
   methods: {
     async updateConnection() {
-      debugger
       const id = this.item.id
-      console.log('---id', id)
       if (id && this.status) {
-        debugger
-        const updateStatus =
-          this.checkbox === true ? 'Disconnected' : 'Connected'
-        try {
-          const res = await this.$axios.$put(
-            `https://${nuxtconfig.axios.eventUrl}/svc/api/Connections/${id}`,
-            {
-              Status: updateStatus,
+        const category = this.item.MetaData.Category
+        const url = `https://${nuxtconfig.axios.eventUrl}/svc/api/Connections/${id}`
+        if (this.checkbox) {
+          const data = { Status: 'Disconnected' }
+          try {
+            const res = await this.$axios.$put(url, data)
+            if (res) {
+              this.checkbox = res.Status === 'Connected'
             }
-          )
-          if (res) {
-            console.log('res', res)
-            this.checkbox = res.Status === 'Connected'
-            this.snackbarText = 'Connection Updated Successfully'
-            this.snackbar = true
-          }
-        } catch (e) {
-          console.log(
-            'Error in eventIntegration-grid/column-status in updateConnection updateStatus ' +
-              updateStatus +
-              ' Error ' +
+          } catch (e) {
+            console.log(
+              'Errors in config/templates/grid/eventIntegration-grid/column-status.vue while making a axios call to Connection model from method updateConnection',
               e
-          )
-          this.snackbarText = 'Error has occured' + e
-          this.snackbar = true
+            )
+          }
+        } else {
+          const filter = {
+            where: {
+              and: [
+                { Status: 'Connected' },
+                { 'MetaData.Category': 'Payment' },
+              ],
+            },
+          }
+          const filterurl = `https://${
+            nuxtconfig.axios.eventUrl
+          }/svc/api/Connections?filter=${JSON.stringify(filter)}`
+          const data = { Status: 'Connected' }
+          if (category === 'Payment') {
+            try {
+              const res = await this.$axios.$get(filterurl, data)
+              if (res) {
+                if (res.length) {
+                  this.dialogText =
+                    'Only one Payment connection can be connected.'
+                  this.dialog = true
+                } else {
+                  try {
+                    const res = await this.$axios.$put(url, data)
+                    if (res) {
+                      this.checkbox = res.Status === 'Connected'
+                    }
+                  } catch (e) {
+                    console.log(
+                      'Errors in config/templates/grid/eventIntegration-grid/column-status.vue while making a axios call to Connection model from method updateConnection',
+                      e
+                    )
+                  }
+                }
+              }
+            } catch (e) {
+              console.log(
+                'Errors in config/templates/grid/eventIntegration-grid/column-status.vue while making a axios call to Connection model from method updateConnection',
+                e
+              )
+            }
+          } else {
+            try {
+              const res = await this.$axios.$put(url, data)
+              if (res) {
+                this.checkbox = res.Status === 'Connected'
+                this.snackbarText = 'Connection Updated Successfully'
+                this.snackbar = true
+              }
+            } catch (e) {
+              console.log(
+                'Errors in config/templates/grid/eventIntegration-grid/column-status.vue while making a axios call to Connection model from method updateConnection',
+                e
+              )
+            }
+          }
         }
       } else {
+        this.dialogText = 'Please setup the connection to make it active.'
         this.dialog = true
       }
     },

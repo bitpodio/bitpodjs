@@ -1,5 +1,3 @@
-// import nuxtConfig from '~/nuxt.config'
-const bpmnServerURL = 'https://wfsdev.p10.io'
 document.addEventListener(
   'DOMContentLoaded',
   () => {
@@ -20,7 +18,6 @@ document.addEventListener(
 )
 
 const createUserConnection = (connectionId, newBpmnServerURL, searchParams) => {
-  newBpmnServerURL = newBpmnServerURL || bpmnServerURL
   const accessToken = searchParams.get('accessToken')
   const refreshConnection = connectionId
     ? `&refreshConnectionId=${connectionId}`

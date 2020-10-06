@@ -535,6 +535,18 @@ export default {
         context: {
           basePath: '/organization',
         },
+        actions: {
+          new: {
+            hidden: true,
+            caption: 'new field',
+          },
+          edit: {
+            hidden: true,
+          },
+          delete: {
+            hidden: true,
+          },
+        },
       },
       dataSource: {
         type: 'rest',

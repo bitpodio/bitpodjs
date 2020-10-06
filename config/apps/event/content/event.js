@@ -12,7 +12,6 @@ import eventSession from '../gql/eventSession.gql'
 import eventTasks from '../gql/eventTasks.gql'
 import location from '../gql/location.gql'
 import eventRecurringSession from '../gql/eventRecurringSession.gql'
-// import getmyconnection from '../gql/getmyconnection.gql'
 import { getData, getLookupData, getCustomData } from '../rest'
 import marketingTemplates from '~/config/apps/admin/gql/marketingTemplates.gql'
 
@@ -4371,21 +4370,6 @@ export default {
           },
         },
       },
-      // dataSource: {
-      //   query: getmyconnection,
-      //   type: 'graphql',
-      //   model: 'OrganizationInfo',
-      //   filter(ctx) {
-      //     return {
-      //       where: {
-      //         'MetaData.eventId': {
-      //           like: ctx.$route.query.event,
-      //           options: 'i',
-      //         },
-      //       },
-      //     }
-      //   },
-      // },
       dataSource: {
         type: 'rest',
         getData: (ctx) =>
