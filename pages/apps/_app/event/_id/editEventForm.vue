@@ -122,6 +122,7 @@
                 label="Max registrations per day"
                 min="0"
                 outlined
+                dense
               ></v-text-field>
             </v-col>
             <v-col cols="12">
@@ -351,12 +352,6 @@ export default {
             if (scheduledDate && scheduledDate < this.formData.StartDate) {
               this.valid = false
               return 'Ticket end Date should be greater than Ticket startdate'
-            } else if (
-              scheduledDate &&
-              scheduledDate > new Date(this.data.event.EndDate)
-            ) {
-              this.valid = false
-              return 'Ticket end Date should be less than event end date'
             } else {
               this.valid = true
               return true
