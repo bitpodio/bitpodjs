@@ -322,7 +322,4 @@ export default {
 .overflow-h {
   overflow: hidden;
 }
-.grid-actions-container {
-  visibility: hidden !important;
-}
 </style>

@@ -941,7 +941,8 @@
         <v-flex my-3>
           <div class="body-2 text--secondary">Cancelation Policy</div>
           <div class="body-1">
-            {{ formatField(data.event.CancellationPolicy) }}
+            <!-- eslint-disable-next-line vue/no-v-html -->
+            <div v-html="formatField(data.event.CancellationPolicy)"></div>
           </div>
         </v-flex>
         <v-flex my-3 class="d-block text-truncate">
