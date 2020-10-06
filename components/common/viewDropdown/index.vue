@@ -1,12 +1,7 @@
 <template>
   <div class="d-flex">
     <div class="fs-18 min-h20">{{ viewCaption }}</div>
-    <v-menu
-      offset-y
-      transition="slide-y-transition"
-      bottom
-      content-class="min-h20"
-    >
+    <v-menu offset-y transition="slide-y-transition" bottom>
       <template v-slot:activator="{ on, attrs }">
         <v-btn icon v-bind="attrs" v-on="on">
           <v-icon class="fs-30">mdi-chevron-down</v-icon>
@@ -89,6 +84,6 @@ export default {
 
 <style scoped>
 .min-h20 {
-  min-height: 52px;
+  min-height: 36px;
 }
 </style>
