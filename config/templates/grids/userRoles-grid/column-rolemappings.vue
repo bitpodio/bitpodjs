@@ -29,13 +29,14 @@ export default {
   },
   data() {
     return {
-      roles: [],
       chip: false,
     }
   },
-  mounted() {
-    const r = this.item.rolemappings
-    this.roles = r.map((e) => e.roleId)
+  computed: {
+    roles() {
+      const r = this.item.rolemappings
+      return r.map((e) => e.roleId)
+    },
   },
 
   methods: {
