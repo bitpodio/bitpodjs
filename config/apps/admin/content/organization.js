@@ -466,6 +466,7 @@ export default {
         },
       },
       template: {
+        name: 'organizationTask-grid',
         context: {
           basePath: '/organization',
         },

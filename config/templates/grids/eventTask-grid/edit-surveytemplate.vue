@@ -41,169 +41,14 @@
               </v-btn>
             </div>
             <v-tabs v-model="curentTab" height="36">
-              <v-tab class="px-0 mr-4">Content</v-tab>
-              <v-tab :disabled="!RTEValue" class="px-0 mr-4">Basic Info</v-tab>
+              <v-tab class="px-0 mr-4">Basic Info</v-tab>
+              <v-tab :disabled="invalid" class="px-0 mr-4">Content</v-tab>
             </v-tabs>
           </v-card-title>
           <v-card-text
             class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0 invite-inner"
           >
             <v-tabs-items v-model="curentTab">
-              <v-tab-item>
-                <v-card v-if="choosedTemplate === 0" flat>
-                  <p class="mt-4 mb-3">
-                    Use a pre designed template or editor to design your
-                    content.
-                  </p>
-                  <div class="pr-3 pt-1 tabContent">
-                    <v-row>
-                      <v-hover
-                        v-for="item in MarketingTemplate"
-                        :key="item.id"
-                        v-slot:default="{ hover }"
-                      >
-                        <div style="position: relative;">
-                          <v-card
-                            :elevation="hover ? 4 : 2"
-                            class="ma-3 ml-0 mt-0"
-                            :class="{ 'on-hover': hover }"
-                            height="250"
-                            width="250"
-                          >
-                            <div v-if="item.ImageURL !== null" class="pa-1">
-                              <v-img
-                                :src="item.ImageURL"
-                                :lazy-src="item.ImageURL"
-                                aspect-ratio="1"
-                                min-height="240"
-                                max-height="240"
-                                contain
-                              >
-                                <template v-slot:placeholder>
-                                  <v-img
-                                    :src="$config.cdnUri + 'invitee-image.png'"
-                                    min-height="200"
-                                    max-height="200"
-                                  >
-                                  </v-img>
-                                </template>
-                              </v-img>
-                            </div>
-                            <div v-else class="pa-1">
-                              <v-img
-                                :src="$config.cdnUri + 'invitee-image.png'"
-                                class="grey lighten-2"
-                                min-height="200"
-                                max-height="200"
-                              >
-                              </v-img>
-                            </div>
-                          </v-card>
-                          <div
-                            v-if="hover"
-                            class="align-self-center templateButtons"
-                          >
-                            <v-btn
-                              class="my-2 mx-0"
-                              outlined
-                              color="primary"
-                              @click="
-                                choosedTemplate = 3
-                                RTEValue = item.Body
-                                templateID = item.id
-                                templateSubject = Subject
-                              "
-                              >Select</v-btn
-                            >
-                            <v-btn
-                              class="ma-2"
-                              outlined
-                              color="primary"
-                              @click="
-                                setPreviewImage(
-                                  item.ImageURL !== null
-                                    ? item.ImageURL
-                                    : $config.cdnUri + 'invitee-image.png'
-                                )
-                              "
-                              >View</v-btn
-                            >
-                          </div>
-                          <div
-                            class="text-truncate text-center text-capitalize"
-                          >
-                            {{ item.Name }}
-                          </div>
-                        </div>
-                      </v-hover>
-                      <v-col
-                        class="pl-5 templateTile"
-                        cols="4"
-                        @click="chooseTemplate(3)"
-                      >
-                        <v-card
-                          height="230"
-                          align="center"
-                          justify="center"
-                          class="tileCard cursorPointer pa-2"
-                        >
-                          <v-icon class="py-5" size="48">fa-code1</v-icon>
-                          <h3
-                            class="text-h5 my-2"
-                            style="font-size: 18px !important;"
-                          >
-                            Rich Text Editor
-                          </h3>
-                          <div class="Caption mb-4">
-                            Use editor to design your content.
-                          </div>
-                        </v-card>
-                      </v-col>
-                    </v-row>
-                  </div>
-                </v-card>
-
-                <v-card
-                  v-else-if="choosedTemplate == 4"
-                  class="pa-10 tabContent"
-                  flat
-                  align="center"
-                >
-                  <v-progress-circular
-                    :size="70"
-                    :width="3"
-                    color="grey"
-                    indeterminate
-                  ></v-progress-circular>
-                </v-card>
-                <v-card v-else flat class="tabContent">
-                  <v-flex class="d-flex">
-                    <p class="mt-5 mb-4">
-                      Continue with default content or use editor to change
-                      content.
-                    </p>
-                    <v-spacer></v-spacer>
-                    <v-btn
-                      class="ma-2"
-                      outlined
-                      color="primary"
-                      @click="
-                        choosedTemplate = 0
-                        RTEValue = ''
-                      "
-                      >X Discard</v-btn
-                    >
-                  </v-flex>
-
-                  <RichText
-                    v-model="RTEValue"
-                    class="pl-0"
-                    :is-edit-template="true"
-                    :show-template-dropdown="true"
-                    :is-general="template === 'General Template'"
-                  />
-                </v-card>
-              </v-tab-item>
               <v-tab-item>
                 <v-card flat class="tabContent">
                   <p class="mt-4 mb-2">
@@ -221,7 +66,7 @@
                             dense
                             :rules="[
                               (v) => {
-                                invalid = !subject || !sender || !setReplyTo
+                                invalid = !subject || !sender
                                 return v ? true : 'This field is required'
                               },
                             ]"
@@ -243,38 +88,34 @@
                             dense
                             :rules="[
                               (v) => {
-                                invalid = !subject || !sender || !setReplyTo
+                                invalid = !subject || !sender
                                 return v ? true : 'This field is required'
                               },
                             ]"
                           ></v-text-field>
-                        </v-col>
-                        <v-col cols="12" class="pb-0">
-                          <v-text-field
-                            v-model="setReplyTo"
-                            label="Set reply-to *"
-                            outlined
-                            dense
-                            :rules="[
-                              (v) => {
-                                invalid = !subject || !sender || !setReplyTo
-                                return v ? true : 'This field is required'
-                              },
-                            ]"
-                          ></v-text-field>
-                        </v-col>
-                        <v-col cols="12" class="pb-0">
-                          <v-icon class="amber--text">fa-bulb</v-icon>
-                          <v-card-text class="d-inline pa-0">
-                            You may refer invite members data by using
-                            placeholder expressions in subject line. e.g:
-                            ${Contact.FirstName} ${Contact.LastName}
-                            ${OrganizationInfo.Name}</v-card-text
-                          >
                         </v-col>
                       </v-row>
                     </v-form>
                   </div>
+                </v-card>
+              </v-tab-item>
+              <v-tab-item>
+                <v-card flat class="tabContent">
+                  <v-flex class="d-flex">
+                    <p class="mt-5 mb-4">
+                      Continue with default content or use editor to change
+                      content.
+                    </p>
+                    <v-spacer></v-spacer>
+                  </v-flex>
+
+                  <RichText
+                    v-model="RTEValue"
+                    class="pl-0"
+                    :is-edit-template="true"
+                    :show-template-dropdown="true"
+                    :is-general="template === 'General Template'"
+                  />
                 </v-card>
               </v-tab-item>
             </v-tabs-items>
@@ -296,7 +137,7 @@
             <v-btn
               v-if="(curentTab === 1)"
               color="primary"
-              :disabled="!RTEValue || !subject || !sender || !setReplyTo"
+              :disabled="!RTEValue || !subject || !sender"
               depressed
               @click.native="onSave"
               >Save</v-btn
@@ -410,13 +251,13 @@ export default {
       subject: 'Thank you for registering for ${Event.Title}',
       senderName: (this.$auth && this.$auth.user.data.name) || '',
       sender: (this.$auth && this.$auth.user.data.email) || '',
-      setReplyTo: (this.$auth && this.$auth.user.data.email) || '',
       choosedTemplate: 0,
       preview: false,
       previewURL: '',
-      RTEValue: '',
+      RTEValue:
+        '<table><tbody><div><p>Hi {{name}},</p></div><div> <p>We value your opinion and we would love to hear it,please take a short survey to help us serve you better</p></div><div><p>To get started with Survey,please click here:</p></div><div><p><a style="width: 200px;border-radius: 3px;color: #ffffff;text-align: center;text-decoration: none;background-color: #3869d4;font-size: 16px;padding: 8px 0px;display: inline-block;" href="{{{link}}}"> Fill out a quick survey </a></p></div><div><p>Thank you in advance for your time and feedback</p></div></tbody></table>',
       registrationRadio: '',
-      // openRadio: '',
+      openRadio: '',
       priorInvite: {},
       previousInviteDialog: false,
       templateID: '',
@@ -435,7 +276,8 @@ export default {
   watch: {
     curentTab(newVal, oldVal) {
       if (oldVal === 0) {
-        if (!this.RTEValue) {
+        this.$refs.form.validate()
+        if (!this.subject || !this.sender) {
           this.curentTab = 0
         }
       }
@@ -456,28 +298,28 @@ export default {
     updateList(data) {
       this.selectedList = data
     },
-    // textFieldProps() {
-    //   return {
-    //     appendIcon: 'fa-calendar',
-    //     outlined: true,
-    //     dense: true,
-    //     rules: [
-    //       (v) => {
-    //         const scheduledDate = v && new Date(v)
-    //         if (
-    //           scheduledDate &&
-    //           scheduledDate.getTime() < new Date().getTime()
-    //         ) {
-    //           this.validDate = false
-    //           return 'Invalid date'
-    //         } else {
-    //           this.validDate = true
-    //           return true
-    //         }
-    //       },
-    //     ],
-    //   }
-    // },
+    textFieldProps() {
+      return {
+        appendIcon: 'fa-calendar',
+        outlined: true,
+        dense: true,
+        rules: [
+          (v) => {
+            const scheduledDate = v && new Date(v)
+            if (
+              scheduledDate &&
+              scheduledDate.getTime() < new Date().getTime()
+            ) {
+              this.validDate = false
+              return 'Invalid date'
+            } else {
+              this.validDate = true
+              return true
+            }
+          },
+        ],
+      }
+    },
     resetForm() {
       this.dialog = false
       this.selectedList = []
@@ -485,7 +327,7 @@ export default {
       this.curentTab = 0
       this.RTEValue = ''
       this.registrationRadio = ''
-      // this.openRadio = ''
+      this.openRadio = ''
       this.priorInvite = {}
       this.templateID = ''
       this.templateSubject = ''
@@ -501,29 +343,27 @@ export default {
       }
       this.previousInviteDialog = false
     },
-    // unselectContact(index) {
-    //   this.selectedList = this.selectedList.filter((i, key) => key !== index)
-    // },
+    unselectContact(index) {
+      this.selectedList = this.selectedList.filter((i, key) => key !== index)
+    },
     setPreviewImage(url) {
       this.previewURL = url
       this.preview = true
     },
-    // templateExists() {
-    //   return this.templateItems.find((i) => i.Body === this.RTEValue)
-    // },
+    templateExists() {
+      return this.templateItems.find((i) => i.Body === this.RTEValue)
+    },
     async onSave() {
       const baseUrl = getApiUrl()
       let res = null
       let activityRes = null
       try {
         console.log('==if==')
-        res = await this.$axios.$patch(`${baseUrl}MarketingTemplates`, {
+        res = await this.$axios.$post(`${baseUrl}MarketingTemplates`, {
           Body: this.RTEValue,
-          FromName: '',
-          ReplyTo: this.setReplyTo,
+          FromName: this.senderName,
           FromEmail: this.sender,
           Subject: this.subject,
-          Type: this.myTemplate,
         })
       } catch (error) {
         console.log(
@@ -535,6 +375,8 @@ export default {
           activityRes = await this.$axios.$patch(
             `${baseUrl}CRMACTIVITIES/${this.item.id}`,
             {
+              Owner: this.sender,
+              senderName: this.senderName,
               TemplateId: res.id,
             }
           )
@@ -549,57 +391,8 @@ export default {
         this.dialog = false
       }
     },
-    chooseTemplate(index) {
-      this.choosedTemplate = index
-      switch (index) {
-        case 1:
-          this.choosedTemplate = 4
-          this.$apollo.queries.MarketingTemplate.refresh()
-          break
-      }
-    },
   },
   apollo: {
-    MarketingTemplate: {
-      query() {
-        return gql`
-          ${marketingTemplates}
-        `
-      },
-      variables() {
-        const category =
-          this.context.event.BusinessType === 'Recurring'
-            ? 'Recurring'
-            : this.context.event.BusinessType.LocationType === 'Online event'
-            ? 'Online'
-            : 'General'
-        return {
-          filters: {
-            where: {
-              Type: 'Registration Email Template',
-              Category: category,
-            },
-          },
-          where: {},
-        }
-      },
-      update(data) {
-        if (this.curentTab === 1) {
-          this.choosedTemplate = 1
-        }
-        this.templateItems = formatGQLResult(data, 'MarketingTemplate')
-
-        return formatGQLResult(data, 'MarketingTemplate')
-      },
-      error(error) {
-        this.error = error
-        this.loading = 0
-      },
-      prefetch: false,
-      loadingKey: 'loading',
-      skip: false,
-      pollInterval: 0,
-    },
     editTemplate: {
       query() {
         return gql`

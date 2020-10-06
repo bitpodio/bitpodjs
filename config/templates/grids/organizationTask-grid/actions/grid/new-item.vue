@@ -153,7 +153,7 @@ export default {
       allowSpaces: false,
       type: String,
     },
-    item: {
+    items: {
       default: () => {},
       allowSpaces: false,
       type: Object,
@@ -165,24 +165,21 @@ export default {
     },
   },
   data() {
-    let task = { ...this.item } || {}
-    task = task || {}
-    const intDay = task.Day || 1
-    task.Day =
-      Number(intDay).toString().length === 1 ? `0${intDay}` : `${intDay}`
-    const isAction = this.item && this.item.Status === 'Wait for an Action'
+    const isAction = this.items && this.items[0].Status === 'Wait for an Action'
     let isSurvey = false
     let isDay = false
     let isTime = false
-    if (this.item && this.item.Category === 'Survey Invite') {
+    if (this.items && this.items[0].Category === 'Survey Invite') {
       isSurvey = true
-      if (this.item.Status === 'Wait for an Action') {
+      if (this.items[0].Status === 'Wait for an Action') {
         isDay = true
         isTime = true
         // this.Day = `0${this.item.Day}`
-        // this.Day = '01'
+        this.Day = '01'
       }
     }
+    let task = {}
+    task = this.items ? { ...this.items[0] } : {}
     return {
       isDay,
       isTime,
@@ -192,7 +189,7 @@ export default {
       isSurvey,
       isDayDisabled: true,
       task,
-      Day: task.Day,
+      Day: '',
       customers: [],
       customerId: '',
       valid: false,
@@ -260,7 +257,7 @@ export default {
         dataSource: {
           query: registrationStatusOptions,
           itemText: 'value',
-          itemValue: 'value',
+          itemValue: 'key',
           filter(data) {
             return {
               type: 'Event_AvailableDay',
@@ -325,21 +322,6 @@ export default {
       }
       return {
         type: 'Event_TaskAction',
-      }
-    },
-  },
-  watch: {
-    dialog(newValue, oldValue) {
-      if (newValue) {
-        this.task = { ...this.item } || {}
-      }
-      this.isAction = this.item && this.item.Status === 'Wait for an Action'
-      if (this.item && this.item.Category === 'Survey Invite') {
-        this.isSurvey = true
-        if (this.item.Status === 'Wait for an Action') {
-          this.isDay = true
-          this.isTime = true
-        }
       }
     },
   },
@@ -424,11 +406,8 @@ export default {
         this.hideDayTime()
       }
     },
-    changeSurvey(value, context) {
-      const items = context.items
-      console.log(items)
-      const filterObj = items.filter(({ id }) => id === value)
-      this.task.SurveyName = filterObj.name
+    changeSurvey(value) {
+      this.task.SurveyName = value
     },
     resetForm() {
       this.$refs.form.reset()
@@ -452,14 +431,14 @@ export default {
       const eventId = this.$route.params.id
       const baseUrl = getApiUrl()
       this.task.Day = parseInt(this.Day)
-      this.task.Type = 'Scheduled'
+      this.task.Type = 'Template'
       let res = null
       try {
-        if (this.item && this.item.id) {
+        if (this.items && this.items[0].id) {
           console.log('==if==')
           this.isCreate = false
           res = await this.$axios.$patch(
-            `${baseUrl}CRMACTIVITIES/${this.item.id}`,
+            `${baseUrl}CRMACTIVITIES/${this.items[0].id}`,
             {
               ...this.task,
             }
@@ -467,12 +446,9 @@ export default {
         } else {
           console.log('==else==')
           this.isCreate = true
-          res = await this.$axios.$post(
-            `${baseUrl}Events/${eventId}/crmactivity`,
-            {
-              ...this.task,
-            }
-          )
+          res = await this.$axios.$post(`${baseUrl}CRMACTIVITIES`, {
+            ...this.task,
+          })
         }
       } catch (error) {
         console.log(
@@ -481,15 +457,10 @@ export default {
       }
       if (res) {
         this.dialog = false
+        this.resetForm()
 
         console.log('==this==', this)
-        // console.log('==$data==', this.$parent.$parent.$parent.$data)
-        if (this.isCreate) {
-          this.resetForm()
-          this.$parent.$parent.refresh()
-        } else {
-          this.refresh()
-        }
+        this.refresh()
 
         this.isSaveButtonDisabled = false
         return res

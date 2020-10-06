@@ -53,6 +53,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    isEditTemplate: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -98,8 +102,12 @@ export default {
               const modelFields = {
                 'Event Name': 'Event.Title',
                 Description: 'Event.Description',
-                'Start Date': 'Event.StartDate',
-                'End Date': 'Event.EndDate',
+                'Start Date': this.isEditTemplate
+                  ? 'Event.SDate'
+                  : 'Event.StartDate',
+                'End Date': this.isEditTemplate
+                  ? 'Event.EDate'
+                  : 'Event.EndDate',
                 Timezone: 'Event.Timezone',
                 Organizer: 'Event.Organizer',
                 Venue: 'Event.VenueName',
