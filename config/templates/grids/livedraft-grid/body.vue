@@ -259,7 +259,7 @@
         </v-col>
       </v-row>
     </div>
-    <editEventForm :event-form.sync="eventForm" :id="id" />
+    <editEventForm :id="id" :event-form.sync="eventForm" />
   </v-flex>
 </template>
 
@@ -267,12 +267,12 @@
 import editEventForm from '~/pages/apps/_app/event/_id/editEventForm.vue'
 import nuxtconfig from '~/nuxt.config'
 export default {
+  components: {
+    editEventForm,
+  },
   props: {
     items: { type: Array, default: () => [] },
     offset: { type: Boolean, default: false },
-  },
-  components: {
-    editEventForm,
   },
   data() {
     return {
