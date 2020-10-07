@@ -196,6 +196,10 @@ body {
   max-width: 36px !important;
   max-height: 36px !important;
 }
+.v-application--is-ltr .v-data-table > .v-data-table__wrapper > table > thead > tr > th {
+  height: 33px;
+  line-height: 34px;
+}
 .v-data-table-header-mobile__wrapper {
   flex-direction: row-reverse !important;
 }
