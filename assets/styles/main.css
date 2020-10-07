@@ -343,6 +343,9 @@ body {
 .v-stepper__step__step .v-icon.v-icon {
   font-size: 14px !important;
 }
+.lookup-tabs .theme--light.v-tabs-items {
+  background-color: #f5f5f5;
+}
 .event-steper .mdi-pencil::before {
   content: "\F012C" !important;
 }

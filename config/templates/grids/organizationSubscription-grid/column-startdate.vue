@@ -20,8 +20,7 @@ export default {
     }
   },
   mounted() {
-    const d = this.item.expiresat
-    this.date = d ? format(new Date(d), 'PPp') : ''
+    this.date = format(new Date(this.item.StartDate), 'PPp')
   },
 }
 </script>
