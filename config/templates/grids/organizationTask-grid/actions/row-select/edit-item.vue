@@ -1,11 +1,5 @@
 <template>
   <div>
-    <!-- <template v-slot:activator="{ on, attrs }">
-        <v-btn icon small v-bind="attrs" v-on="on">
-          <v-icon>mdi-dots-vertical</v-icon>
-        </v-btn>
-      </template> -->
-
     <newItem
       :dialog.sync="dialog"
       button-label="Edit"

@@ -157,39 +157,16 @@
         <v-img :src="previewURL"></v-img>
       </v-card>
     </v-dialog>
-    <v-dialog v-model="previousInviteDialog" width="600px">
-      <v-card>
-        <v-toolbar dense flat dark fixed color="accent">
-          <v-toolbar-title class="body-1">Select Prior Invite</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-btn icon dark @click="previousInviteDialog = false">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </v-toolbar>
-        <v-divider></v-divider>
-        <v-container class="pt-12">
-          <Grid
-            :value="priorInviteeSelected"
-            view-name="inviteeEventTasks"
-            :content="CRMcontent()"
-            :single-select="true"
-            @onSelectedListChange="previousInviteSelect"
-          />
-        </v-container>
-      </v-card>
-    </v-dialog>
   </v-flex>
 </template>
 
 <script>
 import gql from 'graphql-tag'
-import Grid from '~/components/common/grid'
 import { formatGQLResult } from '~/utility/gql.js'
 import marketingTemplates from '~/config/apps/admin/gql/marketingTemplates.gql'
 import { getApiUrl } from '~/utility/index.js'
 export default {
   components: {
-    Grid,
     RichText: () =>
       process.client ? import('~/components/common/form/richtext.vue') : false,
   },
@@ -203,16 +180,6 @@ export default {
       default: 'mdi-plus',
       allowSpaces: false,
       type: String,
-    },
-    template: {
-      type: String,
-      default: 'Invitation Template',
-      required: false,
-    },
-    myTemplate: {
-      type: String,
-      default: 'My Template',
-      required: false,
     },
     context: {
       default: () => {},
@@ -254,22 +221,12 @@ export default {
       choosedTemplate: 0,
       preview: false,
       previewURL: '',
-      RTEValue:
-        '<table><tbody><div><p>Hi {{name}},</p></div><div> <p>We value your opinion and we would love to hear it,please take a short survey to help us serve you better</p></div><div><p>To get started with Survey,please click here:</p></div><div><p><a style="width: 200px;border-radius: 3px;color: #ffffff;text-align: center;text-decoration: none;background-color: #3869d4;font-size: 16px;padding: 8px 0px;display: inline-block;" href="{{{link}}}"> Fill out a quick survey </a></p></div><div><p>Thank you in advance for your time and feedback</p></div></tbody></table>',
-      registrationRadio: '',
-      openRadio: '',
+      RTEValue: '',
       priorInvite: {},
-      previousInviteDialog: false,
       templateID: '',
       templateSubject: '',
       snackbar: false,
-      acknowledgement: false,
       disableButton: false,
-      scheduleInvite: false,
-      scheduledTime: '',
-      selectAll: false,
-      priorInviteeSelected: [],
-      validDate: false,
       invalid: true,
     }
   },
@@ -289,76 +246,25 @@ export default {
         this.selectedList = this.$parent.$parent.$data.selectedItems
       }
     },
-    content() {
-      return this.contents ? this.contents.Contacts : null
-    },
-    CRMcontent() {
-      return this.contents ? this.contents.Event : null
-    },
-    updateList(data) {
-      this.selectedList = data
-    },
-    textFieldProps() {
-      return {
-        appendIcon: 'fa-calendar',
-        outlined: true,
-        dense: true,
-        rules: [
-          (v) => {
-            const scheduledDate = v && new Date(v)
-            if (
-              scheduledDate &&
-              scheduledDate.getTime() < new Date().getTime()
-            ) {
-              this.validDate = false
-              return 'Invalid date'
-            } else {
-              this.validDate = true
-              return true
-            }
-          },
-        ],
-      }
-    },
     resetForm() {
       this.dialog = false
       this.selectedList = []
       this.choosedTemplate = 0
       this.curentTab = 0
       this.RTEValue = ''
-      this.registrationRadio = ''
-      this.openRadio = ''
-      this.priorInvite = {}
       this.templateID = ''
       this.templateSubject = ''
-      this.acknowledgement = false
       this.disableButton = false
-      this.priorInviteeSelected = []
-    },
-    previousInviteSelect(data) {
-      if (data && data.length) {
-        this.priorInvite = data[0]
-      } else {
-        this.priorInvite = {}
-      }
-      this.previousInviteDialog = false
-    },
-    unselectContact(index) {
-      this.selectedList = this.selectedList.filter((i, key) => key !== index)
     },
     setPreviewImage(url) {
       this.previewURL = url
       this.preview = true
-    },
-    templateExists() {
-      return this.templateItems.find((i) => i.Body === this.RTEValue)
     },
     async onSave() {
       const baseUrl = getApiUrl()
       let res = null
       let activityRes = null
       try {
-        console.log('==if==')
         res = await this.$axios.$post(`${baseUrl}MarketingTemplates`, {
           Body: this.RTEValue,
           FromName: this.senderName,
@@ -367,7 +273,7 @@ export default {
         })
       } catch (error) {
         console.log(
-          `Error in task grid schedule a task on Save function - context: eventId  `
+          `Error in task grid schedule a task on Save function context : event task`
         )
       }
       if (res) {
@@ -382,7 +288,7 @@ export default {
           )
         } catch (error) {
           console.log(
-            `Error in task grid schedule a task on Save function - context: eventId  `
+            `Error in task grid schedule a task on Save function context : event task`
           )
         }
       }
@@ -393,6 +299,43 @@ export default {
     },
   },
   apollo: {
+    MarketingTemplate: {
+      query() {
+        return gql`
+          ${marketingTemplates}
+        `
+      },
+      variables() {
+        return {
+          filters: {
+            where: {
+              Type: 'Survey Email Template',
+            },
+          },
+          where: {},
+        }
+      },
+      update(data) {
+        if (!this.item.TemplateId) {
+          this.editItem = formatGQLResult(data, 'MarketingTemplate')
+          this.RTEValue = this.editItem[0].Body.replaceAll('<tr>', '<div>')
+            .replaceAll('</tr>', '</div>')
+            .replaceAll('<td>', '')
+            .replaceAll('</td>', '')
+          this.templateID = this.editItem[0].id
+          this.templateSubject = this.editItem[0].Subject
+        }
+        return formatGQLResult(data, 'MarketingTemplate')
+      },
+      error(error) {
+        this.error = error
+        this.loading = 0
+      },
+      prefetch: false,
+      loadingKey: 'loading',
+      skip: false,
+      pollInterval: 0,
+    },
     editTemplate: {
       query() {
         return gql`
@@ -414,7 +357,10 @@ export default {
 
         if (this.item.TemplateId) {
           this.choosedTemplate = 3
-          this.RTEValue = this.editItem[0].Body
+          this.RTEValue = this.editItem[0].Body.replaceAll('<tr>', '<div>')
+            .replaceAll('</tr>', '</div>')
+            .replaceAll('<td>', '')
+            .replaceAll('</td>', '')
           this.templateID = this.editItem[0].id
           this.templateSubject = this.editItem[0].Subject
         }

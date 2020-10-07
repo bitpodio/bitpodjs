@@ -268,7 +268,7 @@
                           <v-card-text class="d-inline pa-0">
                             You may refer invite members data by using
                             placeholder expressions in subject line. e.g:
-                            ${Contact.FirstName} ${Contact.LastName}
+                            ${Registration.FirstName} ${Registration.LastName}
                             ${OrganizationInfo.Name}</v-card-text
                           >
                         </v-col>
@@ -316,39 +316,16 @@
         <v-img :src="previewURL"></v-img>
       </v-card>
     </v-dialog>
-    <v-dialog v-model="previousInviteDialog" width="600px">
-      <v-card>
-        <v-toolbar dense flat dark fixed color="accent">
-          <v-toolbar-title class="body-1">Select Prior Invite</v-toolbar-title>
-          <v-spacer></v-spacer>
-          <v-btn icon dark @click="previousInviteDialog = false">
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </v-toolbar>
-        <v-divider></v-divider>
-        <v-container class="pt-12">
-          <Grid
-            :value="priorInviteeSelected"
-            view-name="inviteeEventTasks"
-            :content="CRMcontent()"
-            :single-select="true"
-            @onSelectedListChange="previousInviteSelect"
-          />
-        </v-container>
-      </v-card>
-    </v-dialog>
   </v-flex>
 </template>
 
 <script>
 import gql from 'graphql-tag'
-import Grid from '~/components/common/grid'
 import { formatGQLResult } from '~/utility/gql.js'
 import marketingTemplates from '~/config/apps/admin/gql/marketingTemplates.gql'
 import { getApiUrl } from '~/utility/index.js'
 export default {
   components: {
-    Grid,
     RichText: () =>
       process.client ? import('~/components/common/form/richtext.vue') : false,
   },
@@ -362,16 +339,6 @@ export default {
       default: 'mdi-plus',
       allowSpaces: false,
       type: String,
-    },
-    template: {
-      type: String,
-      default: 'Invitation Template',
-      required: false,
-    },
-    myTemplate: {
-      type: String,
-      default: 'My Template',
-      required: false,
     },
     context: {
       default: () => {},
@@ -402,6 +369,7 @@ export default {
   data() {
     return {
       templateItems: [],
+      TemplateName: '',
       editItem: [],
       selectedList: [],
       dialog: false,
@@ -415,20 +383,10 @@ export default {
       preview: false,
       previewURL: '',
       RTEValue: '',
-      registrationRadio: '',
-      // openRadio: '',
-      priorInvite: {},
-      previousInviteDialog: false,
       templateID: '',
       templateSubject: '',
       snackbar: false,
-      acknowledgement: false,
       disableButton: false,
-      scheduleInvite: false,
-      scheduledTime: '',
-      selectAll: false,
-      priorInviteeSelected: [],
-      validDate: false,
       invalid: true,
     }
   },
@@ -447,76 +405,25 @@ export default {
         this.selectedList = this.$parent.$parent.$data.selectedItems
       }
     },
-    content() {
-      return this.contents ? this.contents.Contacts : null
-    },
-    CRMcontent() {
-      return this.contents ? this.contents.Event : null
-    },
-    updateList(data) {
-      this.selectedList = data
-    },
-    // textFieldProps() {
-    //   return {
-    //     appendIcon: 'fa-calendar',
-    //     outlined: true,
-    //     dense: true,
-    //     rules: [
-    //       (v) => {
-    //         const scheduledDate = v && new Date(v)
-    //         if (
-    //           scheduledDate &&
-    //           scheduledDate.getTime() < new Date().getTime()
-    //         ) {
-    //           this.validDate = false
-    //           return 'Invalid date'
-    //         } else {
-    //           this.validDate = true
-    //           return true
-    //         }
-    //       },
-    //     ],
-    //   }
-    // },
     resetForm() {
       this.dialog = false
       this.selectedList = []
       this.choosedTemplate = 0
       this.curentTab = 0
       this.RTEValue = ''
-      this.registrationRadio = ''
-      // this.openRadio = ''
-      this.priorInvite = {}
       this.templateID = ''
       this.templateSubject = ''
-      this.acknowledgement = false
       this.disableButton = false
-      this.priorInviteeSelected = []
     },
-    previousInviteSelect(data) {
-      if (data && data.length) {
-        this.priorInvite = data[0]
-      } else {
-        this.priorInvite = {}
-      }
-      this.previousInviteDialog = false
-    },
-    // unselectContact(index) {
-    //   this.selectedList = this.selectedList.filter((i, key) => key !== index)
-    // },
     setPreviewImage(url) {
       this.previewURL = url
       this.preview = true
     },
-    // templateExists() {
-    //   return this.templateItems.find((i) => i.Body === this.RTEValue)
-    // },
     async onSave() {
       const baseUrl = getApiUrl()
       let res = null
       let activityRes = null
       try {
-        console.log('==if==')
         res = await this.$axios.$patch(`${baseUrl}MarketingTemplates`, {
           Body: this.RTEValue,
           FromName: '',
@@ -527,7 +434,7 @@ export default {
         })
       } catch (error) {
         console.log(
-          `Error in task grid schedule a task on Save function - context: eventId  `
+          `Error in task grid schedule a task on Save function - context: template  `
         )
       }
       if (res) {
@@ -536,11 +443,12 @@ export default {
             `${baseUrl}CRMACTIVITIES/${this.item.id}`,
             {
               TemplateId: res.id,
+              TemplateName: this.TemplateName,
             }
           )
         } catch (error) {
           console.log(
-            `Error in task grid schedule a task on Save function - context: eventId  `
+            `Error in task grid schedule a task on Save function - context: template  `
           )
         }
       }
@@ -573,6 +481,7 @@ export default {
             : this.context.event.BusinessType.LocationType === 'Online event'
             ? 'Online'
             : 'General'
+        this.TemplateName = category
         return {
           filters: {
             where: {

@@ -68,21 +68,10 @@ export default {
   },
   data() {
     return {
-      // isEditActivity: false,
-      // isEmailTemplate: false,
-      // Title: '',
       updateCount: 1,
       dialog: false,
     }
   },
-  // methods: {
-  //   editActivity() {
-  //     this.dialog = true
-  //   },
-  //   editTemplate() {
-  //     this.isEmailTemplate = true
-  //   },
-  // },
 }
 </script>
 <style scoped>

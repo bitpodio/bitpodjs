@@ -174,12 +174,13 @@ export default {
       if (this.items[0].Status === 'Wait for an Action') {
         isDay = true
         isTime = true
-        // this.Day = `0${this.item.Day}`
-        this.Day = '01'
       }
     }
     let task = {}
     task = this.items ? { ...this.items[0] } : {}
+    const intDay = task.Day || 1
+    task.Day =
+      Number(intDay).toString().length === 1 ? `0${intDay}` : `${intDay}`
     return {
       isDay,
       isTime,
@@ -189,12 +190,11 @@ export default {
       isSurvey,
       isDayDisabled: true,
       task,
-      Day: '',
+      Day: task.Day,
       customers: [],
       customerId: '',
       valid: false,
       required: [required],
-      // dialog: false,
       duplicateMessage: '',
       isSaveButtonDisabled: false,
       requiredRules: [required],
@@ -428,14 +428,12 @@ export default {
     },
     async onSave() {
       this.isSaveButtonDisabled = true
-      const eventId = this.$route.params.id
       const baseUrl = getApiUrl()
       this.task.Day = parseInt(this.Day)
       this.task.Type = 'Template'
       let res = null
       try {
         if (this.items && this.items[0].id) {
-          console.log('==if==')
           this.isCreate = false
           res = await this.$axios.$patch(
             `${baseUrl}CRMACTIVITIES/${this.items[0].id}`,
@@ -444,24 +442,18 @@ export default {
             }
           )
         } else {
-          console.log('==else==')
           this.isCreate = true
           res = await this.$axios.$post(`${baseUrl}CRMACTIVITIES`, {
             ...this.task,
           })
         }
       } catch (error) {
-        console.log(
-          `Error in task grid schedule a task on Save function - context: eventId - ${eventId} `
-        )
+        console.log(`Error in task grid schedule a task on Save function`)
       }
       if (res) {
         this.dialog = false
         this.resetForm()
-
-        console.log('==this==', this)
         this.refresh()
-
         this.isSaveButtonDisabled = false
         return res
       }

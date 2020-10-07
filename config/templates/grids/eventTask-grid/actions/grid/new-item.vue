@@ -179,8 +179,6 @@ export default {
       if (this.item.Status === 'Wait for an Action') {
         isDay = true
         isTime = true
-        // this.Day = `0${this.item.Day}`
-        // this.Day = '01'
       }
     }
     return {
@@ -197,7 +195,6 @@ export default {
       customerId: '',
       valid: false,
       required: [required],
-      // dialog: false,
       duplicateMessage: '',
       isSaveButtonDisabled: false,
       requiredRules: [required],
@@ -206,7 +203,6 @@ export default {
         type: 'Timezone',
         fieldName: 'task.Timezone',
       },
-      isCreate: false,
       surveyLookupField: {
         displayOrder: 9,
         caption: 'Search Survey*',
@@ -426,9 +422,8 @@ export default {
     },
     changeSurvey(value, context) {
       const items = context.items
-      console.log(items)
       const filterObj = items.filter(({ id }) => id === value)
-      this.task.SurveyName = filterObj.name
+      this.task.SurveyName = filterObj[0].name
     },
     resetForm() {
       this.$refs.form.reset()
@@ -456,8 +451,6 @@ export default {
       let res = null
       try {
         if (this.item && this.item.id) {
-          console.log('==if==')
-          this.isCreate = false
           res = await this.$axios.$patch(
             `${baseUrl}CRMACTIVITIES/${this.item.id}`,
             {
@@ -465,8 +458,6 @@ export default {
             }
           )
         } else {
-          console.log('==else==')
-          this.isCreate = true
           res = await this.$axios.$post(
             `${baseUrl}Events/${eventId}/crmactivity`,
             {
@@ -481,16 +472,7 @@ export default {
       }
       if (res) {
         this.dialog = false
-
-        console.log('==this==', this)
-        // console.log('==$data==', this.$parent.$parent.$parent.$data)
-        if (this.isCreate) {
-          this.resetForm()
-          this.$parent.$parent.refresh()
-        } else {
-          this.refresh()
-        }
-
+        this.refresh()
         this.isSaveButtonDisabled = false
         return res
       }
