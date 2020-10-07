@@ -528,10 +528,10 @@ export default {
           search,
           filters,
         }
-
+        this.loading = false
         const getDataFunc = dataSource.getData.call(this, this)
         this.tableData = await getDataFunc.call(this, options)
-        this.loading = false
+        // this.loading = false
       }
     },
   },

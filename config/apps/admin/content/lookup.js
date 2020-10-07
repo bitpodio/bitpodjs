@@ -12,7 +12,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'details to add Configuration Details',
+      itemTitle: 'Currency',
       default: false,
       fields: {
         type: {
@@ -114,7 +114,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'details to add Configuration Details',
+      itemTitle: 'Timezone',
       default: false,
       fields: {
         type: {
@@ -216,7 +216,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'details to add Configuration Details',
+      itemTitle: 'Event Privacy',
       default: false,
       fields: {
         type: {
@@ -318,7 +318,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'details to add Configuration Details',
+      itemTitle: 'Event Tag',
       default: false,
       fields: {
         type: {
@@ -420,7 +420,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'details to add Configuration Details',
+      itemTitle: 'Ticket Type',
       default: false,
       fields: {
         type: {
@@ -522,7 +522,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'details to add Configuration Details',
+      itemTitle: 'Session Type',
       default: false,
       fields: {
         type: {
@@ -625,7 +625,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'details to add Configuration Details',
+      itemTitle: 'Question Control',
       default: false,
       fields: {
         type: {
@@ -727,7 +727,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'details to add Configuration Details',
+      itemTitle: 'Refund Method',
       default: false,
       fields: {
         type: {
@@ -829,7 +829,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'details to add Configuration Details',
+      itemTitle: 'Reason',
       default: false,
       fields: {
         type: {
@@ -931,7 +931,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'details to add Configuration Details',
+      itemTitle: 'Badge Category',
       default: false,
       fields: {
         type: {
@@ -1044,7 +1044,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'details to add Configuration Details',
+      itemTitle: 'Contact Type',
       default: false,
       fields: {
         type: {
@@ -1146,7 +1146,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'details to add Configuration Details',
+      itemTitle: 'Department',
       default: false,
       fields: {
         type: {
