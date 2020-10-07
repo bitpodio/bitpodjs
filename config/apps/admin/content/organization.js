@@ -305,7 +305,7 @@ export default {
         hideDefaultFooter: false,
         showExpand: false,
         singleExpand: false,
-        showSelect: true,
+        showSelect: false,
         hideFilter: false,
         hideSearch: true,
       },
@@ -369,8 +369,21 @@ export default {
         },
       },
       template: {
+        name: 'organizationSubscription-grid',
         context: {
           basePath: '/organization',
+        },
+        actions: {
+          new: {
+            hidden: true,
+            caption: 'new field',
+          },
+          edit: {
+            hidden: true,
+          },
+          delete: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
@@ -466,6 +479,7 @@ export default {
         },
       },
       template: {
+        name: 'organizationTask-grid',
         context: {
           basePath: '/organization',
         },

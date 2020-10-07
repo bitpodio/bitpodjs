@@ -1,4 +1,4 @@
-query($filters: JSON) {
+query($filters: JSON, $where: JSON) {
   GeneralConfiguration {
     GeneralConfigurationFind(filter: $filters) {
       edges {
@@ -7,8 +7,10 @@ query($filters: JSON) {
           value
           key
           type
+          name
         }
       }
     }
+    GeneralConfigurationCount(where: $where)
   }
 }
