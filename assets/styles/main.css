@@ -109,8 +109,17 @@ body {
   font-size: 24px;
   font-weight: 300;
 }
+.headernew {
+  left: 0 !important
+}
+.appbar-left {
+  width: 292px;
+}
 .nav-drawer {
   display: none !important;
+}
+.nav-bar {
+  top: 55px !important;
 }
 .nav-bar:hover .nav-drawer {
   display: block !important;
@@ -357,7 +366,12 @@ body {
   height: 20px !important;
 }
 .v-toolbar--flat.v-app-bar--is-scrolled {
-  box-shadow: 0px 1px 1px -1px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.10), 0px 1px 1px 0px rgba(0, 0, 0, 0.11) !important;
+  box-shadow: 0px 1px 1px -1px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.10), 0px 0px 1px 0px rgba(0, 0, 0, 0.10) !important;
+}
+@media (max-width: 800px) {
+  .nav-bar {
+    top: 0px !important;
+  }
 }
 @media (max-width: 600px) {
   .slide-form,
