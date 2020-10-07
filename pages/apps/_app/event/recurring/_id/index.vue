@@ -36,7 +36,7 @@
                   <v-list-item-title>Make a copy</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
-              <v-list-item>
+              <v-list-item @click="true">
                 <v-list-item-icon class="mr-2">
                   <i class="fa fa-pencil-square-o mt-1" aria-hidden="true"></i>
                 </v-list-item-icon>
@@ -52,11 +52,11 @@
                   <v-list-item-title>Integrations</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
-              <v-list-item>
+              <v-list-item @click.stop="copylinks = true">
                 <v-list-item-icon class="mr-2">
                   <i class="fa fa-clone mt-1" aria-hidden="true"></i>
                 </v-list-item-icon>
-                <v-list-item-content @click.stop="copylinks = true">
+                <v-list-item-content>
                   <v-list-item-title>Copy Links</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
@@ -686,16 +686,21 @@
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">Event Link</div>
-          <div class="body-1">{{ formatField(eventUniqueLink) }}</div>
+          <div class="body-1 d-block text-truncate">
+            {{ formatField(eventUniqueLink) }}
+          </div>
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">Session Link</div>
-          <div class="body-1">{{ formatField(eventSessionLink) }}</div>
+          <div class="body-1 d-block text-truncate">
+            {{ formatField(eventSessionLink) }}
+          </div>
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">Cancelation Policy</div>
           <div class="body-1">
-            {{ formatField(data.event.CancellationPolicy) }}
+            <!-- eslint-disable-next-line vue/no-v-html -->
+            <div v-html="formatField(data.event.CancellationPolicy)"></div>
           </div>
         </v-flex>
         <v-flex my-3 class="d-block text-truncate">
@@ -833,6 +838,7 @@ import makeCopy from '~/pages/apps/_app/event/_id/makeCopy.vue'
 import Grid from '~/components/common/grid'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
+import { getApiUrl } from '~/utility/index.js'
 import { configLoaderMixin } from '~/utility'
 
 export default {
@@ -888,15 +894,22 @@ export default {
       window.open(`${regUrl}`, '_blank')
     },
     eventLink() {
-      const regUrl = `https://${nuxtConfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
+      const baseUrl = getApiUrl()
+      const regUrl = baseUrl.replace('svc/api', `e/${this.data.event.UniqLink}`)
       return regUrl
     },
     sessionLink() {
-      const regUrl = `https://${nuxtConfig.axios.eventUrl}/t/${this.data.event.UniqLink}`
+      const baseUrl = getApiUrl()
+      const regUrl = baseUrl.replace('svc/api', `t/${this.data.event.UniqLink}`)
       return regUrl
     },
     embedLink() {
-      const regUrl = `<iframe src="https://${nuxtConfig.axios.eventUrl}/embed/t/${this.data.event.UniqLink}"></iframe>`
+      const baseUrl = getApiUrl()
+      const embedLink = baseUrl.replace(
+        'svc/api',
+        `embed/t/${this.data.event.UniqLink}`
+      )
+      const regUrl = `<iframe src="${embedLink}"></iframe>`
       return regUrl
     },
     redirectIntegration() {

@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <span class="fs-18">{{ viewCaption }}</span>
+  <div class="d-flex">
+    <div class="fs-18 min-h36">{{ viewCaption }}</div>
     <v-menu offset-y transition="slide-y-transition" bottom>
       <template v-slot:activator="{ on, attrs }">
         <v-btn icon v-bind="attrs" v-on="on">
@@ -81,3 +81,10 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.min-h36 {
+  min-height: 36px;
+  line-height: 36px;
+}
+</style>

@@ -78,14 +78,14 @@
               </nuxt-link>
               <v-card-actions class="pt-0 pl-4">
                 <div class="text-truncate d-block">
-                  <v-chip
+                  <v-text
                     v-for="Tags in item.Tags"
                     :key="Tags"
                     small
-                    class="ma-0 mr-1"
+                    class="ma-0 mr-1 event-tags body-2"
                   >
-                    {{ Tags }}
-                  </v-chip>
+                    #{{ Tags }}
+                  </v-text>
                 </div>
 
                 <v-spacer></v-spacer>
@@ -197,14 +197,14 @@
               </nuxt-link>
               <v-card-actions class="pt-0 pl-4">
                 <div class="text-truncate d-block">
-                  <v-chip
+                  <v-text
                     v-for="Tags in item.Tags"
                     :key="Tags"
                     small
-                    class="ma-0 mr-1"
+                    class="ma-0 mr-1 event-tags body-2"
                   >
-                    {{ Tags }}
-                  </v-chip>
+                    #{{ Tags }}
+                  </v-text>
                 </div>
 
                 <v-spacer></v-spacer>
@@ -340,7 +340,10 @@ export default {
 .overflow-h {
   overflow: hidden;
 }
-.grid-actions-container {
-  visibility: hidden !important;
+.event-tags:after {
+  content: ', ';
+}
+.event-tags:last-child:after {
+  content: '';
 }
 </style>
