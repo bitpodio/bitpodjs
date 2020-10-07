@@ -50,7 +50,7 @@
             <v-row>
               <v-col cols="12" sm="12" md="12">
                 <v-text-field
-                  v-model="eventData.Title"
+                  v-model="Title"
                   :rules="requiredRules"
                   label="Title*"
                   dense
@@ -89,6 +89,7 @@
                   v-model="UniqLink"
                   label="Event Link*"
                   class="text-links"
+                  :rules="requiredRules"
                   persistent-hint
                   :hint="eventLinkHint"
                   dense
@@ -294,7 +295,7 @@
             class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
           >
             <v-btn
-              :disabled="!valid || isInvalidEventLink"
+              :disabled="!valid || isInvalidEventLink || saveBtnDisabled"
               color="primary"
               depressed
               @click="onSave"
@@ -330,11 +331,17 @@ export default {
       default: false,
       allowSpaces: false,
     },
+    id: {
+      type: String,
+      default: '',
+    },
   },
   data() {
     return {
       valid: false,
       lazy: false,
+      // updateCount: 0,
+      Title: '',
       StartDate: null,
       EndDate: null,
       isSpeakers: true,
@@ -344,10 +351,11 @@ export default {
       isOfferCode: true,
       addresslineMessage: '',
       requiredRules: [required],
-      isVenue: false,
-      isOnline: false,
+      saveBtnDisabled: false,
+      // isVenue: false,
+      // isOnline: false,
       isRecurring: false,
-      isMap: false,
+      // isMap: false,
       copyEventId: '',
       currentLocation: {},
       locationsVisibleOnMap: '',
@@ -387,6 +395,27 @@ export default {
     }
   },
   computed: {
+    isVenue() {
+      return (
+        this.eventData &&
+        this.eventData.BusinessType === 'Single' &&
+        this.eventData.LocationType === 'Venue'
+      )
+    },
+    isMap() {
+      return (
+        this.eventData &&
+        this.eventData.BusinessType === 'Single' &&
+        this.eventData.LocationType === 'Venue'
+      )
+    },
+    isOnline() {
+      return (
+        this.eventData &&
+        this.eventData.BusinessType === 'Single' &&
+        this.eventData.LocationType === 'Online Event'
+      )
+    },
     startDateField() {
       return {
         appendIcon: 'fa-calendar',
@@ -439,6 +468,11 @@ export default {
     },
     gMapCenter() {
       return { lat: this.locations[0].lat, lng: this.locations[0].lng }
+    },
+  },
+  watch: {
+    id() {
+      this.$apollo.queries.data.refresh()
     },
   },
   methods: {
@@ -533,6 +567,7 @@ export default {
     },
     close() {
       this.$emit('update:isMakeCopy', false)
+      this.$refs.form.reset()
     },
     setObjects() {
       this.eventData.isOfferCode = this.isOfferCode
@@ -542,6 +577,7 @@ export default {
       this.eventData.isTickets = this.isTickets
     },
     async onSave() {
+      this.saveBtnDisabled = true
       this.setObjects()
       if (
         this.eventData.BusinessType === 'Single' &&
@@ -551,6 +587,8 @@ export default {
         delete this.eventData._VenueAddress.LatLng.visible
         delete this.eventData._VenueAddress.LatLng.name
       }
+      this.eventData.UniqLink = this.UniqLink
+      this.eventData.Title = this.Title
       const baseUrl = getApiUrl()
       let res = null
       try {
@@ -558,12 +596,14 @@ export default {
           ...this.eventData,
         })
       } catch (e) {
+        this.saveBtnDisabled = false
         console.error('Error', e)
       }
       if (res) {
         this.close()
         this.isViewEvent = true
         this.copyEventId = res.id
+        this.$refs.form.reset()
         return res
       }
     },
@@ -579,16 +619,22 @@ export default {
         return {
           filters: {
             where: {
-              id: this.$route.params.id,
+              id: this.$route.params.id || this.id,
             },
           },
-          eventId: this.$route.params.id,
+          eventId: this.$route.params.id || this.id,
         }
       },
       update(data) {
         const event = formatGQLResult(data, 'Event')
         this.eventData = event.length > 0 ? { ...event[0] } : {}
-        this.eventData.Title = `Copy of ${this.eventData.Title}`
+        if (
+          (this.Title === '' || this.Title === undefined) &&
+          this.eventData.Title
+        ) {
+          this.Title = `Copy of ${this.eventData.Title}`
+        }
+
         this.StartDate = new Date(this.eventData.StartDate)
         this.EndDate = new Date(this.eventData.EndDate)
         this.eventData.UniqLink = ''
@@ -597,8 +643,8 @@ export default {
           this.eventData.BusinessType === 'Single' &&
           this.eventData.LocationType === 'Venue'
         ) {
-          this.isVenue = true
-          this.isMap = true
+          // this.isVenue = true
+          // this.isMap = true
           this.venueAddress = this.eventData._VenueAddress
           if (this.eventData._VenueAddress.LatLng !== null) {
             const latlng = this.eventData._VenueAddress.LatLng
@@ -608,12 +654,13 @@ export default {
             this.locations = newLocations
             this.returnToCenter()
           }
-        } else if (
-          this.eventData.BusinessType === 'Single' &&
-          this.eventData.LocationType === 'Online event'
-        ) {
-          this.isOnline = true
         }
+        //  else if (
+        //   this.eventData.BusinessType === 'Single' &&
+        //   this.eventData.LocationType === 'Online event'
+        // ) {
+        //   this.isOnline = true
+        // }
         return {
           event: event.length > 0 ? event[0] : {},
         }
