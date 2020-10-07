@@ -29,7 +29,7 @@ export default {
           hidden: true,
           cssClasses: 'col-12 col-md-12',
           newForm: false,
-          editForm: true,
+          editForm: false,
           readonly() {
             return true
           },
@@ -131,7 +131,7 @@ export default {
           hidden: true,
           cssClasses: 'col-12 col-md-12',
           newForm: false,
-          editForm: true,
+          editForm: false,
           readonly() {
             return true
           },
@@ -233,7 +233,7 @@ export default {
           hidden: true,
           cssClasses: 'col-12 col-md-12',
           newForm: false,
-          editForm: true,
+          editForm: false,
           readonly() {
             return true
           },
@@ -335,7 +335,7 @@ export default {
           hidden: true,
           cssClasses: 'col-12 col-md-12',
           newForm: false,
-          editForm: true,
+          editForm: false,
           readonly() {
             return true
           },
@@ -437,7 +437,7 @@ export default {
           hidden: true,
           cssClasses: 'col-12 col-md-12',
           newForm: false,
-          editForm: true,
+          editForm: false,
           readonly() {
             return true
           },
@@ -539,7 +539,7 @@ export default {
           hidden: true,
           cssClasses: 'col-12 col-md-12',
           newForm: false,
-          editForm: true,
+          editForm: false,
           default: 'SessionType',
           readonly() {
             return true
@@ -642,7 +642,7 @@ export default {
           hidden: true,
           cssClasses: 'col-12 col-md-12',
           newForm: false,
-          editForm: true,
+          editForm: false,
           readonly() {
             return true
           },
@@ -744,7 +744,7 @@ export default {
           hidden: true,
           cssClasses: 'col-12 col-md-12',
           newForm: false,
-          editForm: true,
+          editForm: false,
           readonly() {
             return true
           },
@@ -846,7 +846,7 @@ export default {
           hidden: true,
           cssClasses: 'col-12 col-md-12',
           newForm: false,
-          editForm: true,
+          editForm: false,
           readonly() {
             return true
           },
@@ -948,7 +948,7 @@ export default {
           hidden: true,
           cssClasses: 'col-12 col-md-12',
           newForm: false,
-          editForm: true,
+          editForm: false,
           readonly() {
             return true
           },
@@ -1001,8 +1001,8 @@ export default {
           columnWidth: '180px',
           type: 'string',
           cssClasses: 'col-12 col-md-12',
-          newForm: true,
-          editForm: true,
+          newForm: false,
+          editForm: false,
         },
       },
       template: {
@@ -1061,7 +1061,7 @@ export default {
           hidden: true,
           cssClasses: 'col-12 col-md-12',
           newForm: false,
-          editForm: true,
+          editForm: false,
           readonly() {
             return true
           },
@@ -1163,7 +1163,7 @@ export default {
           hidden: true,
           cssClasses: 'col-12 col-md-12',
           newForm: false,
-          editForm: true,
+          editForm: false,
           readonly() {
             return true
           },

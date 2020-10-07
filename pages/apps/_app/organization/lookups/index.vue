@@ -1,7 +1,9 @@
 <template>
   <v-flex d-flex flex-md-row flex-lg-row flex-column>
     <v-flex column xs12 sm8 md8 lg8 class="lookup-tabs">
-      <v-toolbar-title class="pl-0 ml-n1 mb-2">Lookups</v-toolbar-title>
+      <v-toolbar-title class="pl-4 ml-n4 mb-6 font-weight-regular"
+        >Lookups</v-toolbar-title
+      >
       <v-spacer></v-spacer>
       <v-tabs v-model="tabs" center-active height="36" class="mb-4">
         <v-tabs-slider></v-tabs-slider>
@@ -214,7 +216,6 @@ export default {
   },
   computed: {
     content() {
-      debugger
       return this.contents ? this.contents.lookup : null
     },
   },
