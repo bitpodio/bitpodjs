@@ -339,7 +339,7 @@ export default {
       },
       {
         icon: 'fa fa-file',
-        text: 'Invite Templates',
+        text: 'Templates',
         to: '/apps/admin/list/marketingtemplates/template',
       },
       {
