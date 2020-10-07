@@ -49,7 +49,7 @@
                   <v-list-item-title>Edit email template</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
-              <v-list-item>
+              <v-list-item @click="redirectIntegration">
                 <v-list-item-icon class="mr-2">
                   <i class="fa fa-link1 mt-1" aria-hidden="true"></i>
                 </v-list-item-icon>
@@ -371,260 +371,330 @@
           </v-menu>
         </v-flex>
         <v-divider></v-divider>
-        <v-card
-          v-for="image in data.event.Images"
-          :key="image"
-          class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0 cardImg rounded cursorPointer"
-          :class="{ 'on-hover': hover }"
-        >
-          <span class="cardDelete">
-            <i
-              class="fa-trash pa-2 cursorPointer"
-              @click="deleteBannerFile(e, image)"
-            ></i>
-          </span>
-          <v-img
-            :src="getAttachmentLink(image, true)"
-            :lazy-src="getAttachmentLink(image, true)"
-            aspect-ratio="1"
-            class="rounded"
-            max-width="150"
-            max-height="150"
-            width="150"
-            @click.stop="bannerDialog = true"
+        <div v-if="data.event.Images && data.event.Images.length === 0">
+          <v-card
+            class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0 cardImg rounded cursorPointer"
+            :class="{ 'on-hover': hover }"
           >
-            <template v-slot:placeholder>
-              <v-row class="fill-height ma-0" align="center" justify="center">
-                <v-progress-circular
-                  indeterminate
-                  color="grey lighten-5"
-                ></v-progress-circular>
-              </v-row>
-            </template>
-          </v-img>
-          <v-flex class="mt-1 d-flex">
-            <v-card-text class="pa-0 pb-1 d-inline-block text-truncate"
-              ><a
-                class="d-inline-block text-truncate anchorTag"
-                :href="getAttachmentLink(image, true)"
-                >{{ bannerName }}</a
-              ></v-card-text
+            <v-img
+              :src="$config.cdnUri + 'default-min.jpg'"
+              :lazy-src="$config.cdnUri + 'default-min.jpg'"
+              aspect-ratio="1"
+              class="rounded"
+              max-width="150"
+              max-height="150"
+              width="150"
+              position="right"
+              @click.stop="bannerDialog = true"
             >
-            <v-spacer></v-spacer>
-            <copy :text-to-copy="getImageUrl(image)" :unique-id="image" />
-          </v-flex>
-          <v-card-text class="pa-0 mt-n2">Event Banner</v-card-text>
-        </v-card>
-        <v-dialog v-model="bannerDialog" max-width="600">
-          <v-card>
-            <v-card-title class="pa-1">
-              <v-spacer></v-spacer>
-              <div>
-                <v-btn icon @click="bannerDialog = false">
-                  <v-icon>mdi-close</v-icon>
-                </v-btn>
-              </div>
-            </v-card-title>
-            <v-card-text class="pa-1">
-              <v-card
-                v-for="image in data.event.Images"
-                :key="image"
-                class="mx-auto elevation-0"
-                @click.stop="bannerDialog = true"
-              >
-                <v-img
-                  :src="getAttachmentLink(image, true)"
-                  :lazy-src="getAttachmentLink(image, true)"
-                  aspect-ratio="1"
-                  class="white"
-                  width="100%"
-                  contain
-                >
-                  <template v-slot:placeholder>
-                    <v-row
-                      class="fill-height ma-0"
-                      align="center"
-                      justify="center"
-                    >
-                      <v-progress-circular
-                        indeterminate
-                        color="grey lighten-5"
-                      ></v-progress-circular>
-                    </v-row>
-                  </template>
-                </v-img>
-              </v-card>
-            </v-card-text>
+              <template v-slot:placeholder>
+                <v-row class="fill-height ma-0" align="center" justify="center">
+                  <v-progress-circular
+                    indeterminate
+                    color="grey lighten-5"
+                  ></v-progress-circular>
+                </v-row>
+              </template>
+            </v-img>
+            <v-card-text class="pa-0 pt-1">Event Banner</v-card-text>
           </v-card>
-        </v-dialog>
-        <v-card
-          v-for="image in data.event.Logo"
-          :key="image"
-          class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0 cardImg rounded"
-        >
-          <span class="cardDelete">
-            <i
-              class="fa-trash pa-2 cursorPointer"
-              @click="deleteLogoFile(image)"
-            ></i>
-          </span>
-          <v-img
-            :src="getAttachmentLink(image, true)"
-            :lazy-src="getAttachmentLink(image, true)"
-            aspect-ratio="1"
-            class="rounded white"
-            max-width="150"
-            max-height="150"
-            width="150"
-            contain
-            @click.stop="logoDialog = true"
+          <v-dialog v-model="bannerDialog" max-width="600">
+            <v-card>
+              <v-card-title class="pa-1">
+                <v-spacer></v-spacer>
+                <div>
+                  <v-btn icon @click="bannerDialog = false">
+                    <v-icon>mdi-close</v-icon>
+                  </v-btn>
+                </div>
+              </v-card-title>
+              <v-card-text class="pa-1">
+                <v-card
+                  class="mx-auto elevation-0"
+                  @click.stop="bannerDialog = true"
+                >
+                  <v-img
+                    :src="$config.cdnUri + 'default-min.jpg'"
+                    :lazy-src="$config.cdnUri + 'default-min.jpg'"
+                    aspect-ratio="1"
+                    class="white"
+                    width="100%"
+                    contain
+                  >
+                    <template v-slot:placeholder>
+                      <v-row
+                        class="fill-height ma-0"
+                        align="center"
+                        justify="center"
+                      >
+                        <v-progress-circular
+                          indeterminate
+                          color="grey lighten-5"
+                        ></v-progress-circular>
+                      </v-row>
+                    </template>
+                  </v-img>
+                </v-card>
+              </v-card-text>
+            </v-card>
+          </v-dialog>
+        </div>
+        <div v-else>
+          <v-card
+            v-for="image in data.event.Images"
+            :key="image"
+            class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0 cardImg rounded cursorPointer"
+            :class="{ 'on-hover': hover }"
           >
-            <template v-slot:placeholder>
-              <v-row class="fill-height ma-0" align="center" justify="center">
-                <v-progress-circular
-                  indeterminate
-                  color="grey lighten-5"
-                ></v-progress-circular>
-              </v-row>
-            </template>
-          </v-img>
-          <v-flex class="mt-1 d-flex">
-            <v-card-text class="pa-0 pb-1 d-inline-block"
-              ><a
-                class="d-inline-block text-truncate anchorTag"
-                :href="getAttachmentLink(image, true)"
-                >{{ logoName }}</a
-              ></v-card-text
+            <span class="cardDelete">
+              <i
+                class="fa-trash pa-2 cursorPointer"
+                @click="deleteBannerFile(e, image)"
+              ></i>
+            </span>
+            <v-img
+              :src="getAttachmentLink(image, true)"
+              :lazy-src="getAttachmentLink(image, true)"
+              aspect-ratio="1"
+              class="rounded"
+              max-width="150"
+              max-height="150"
+              width="150"
+              @click.stop="bannerDialog = true"
             >
-            <copy :text-to-copy="getImageUrl(image)" :unique-id="image" />
-          </v-flex>
-          <v-card-text class="pa-0 mt-n2">Logo Image</v-card-text>
-        </v-card>
-        <v-dialog v-model="logoDialog" max-width="600">
-          <v-card>
-            <v-card-title class="pa-1">
-              <v-spacer></v-spacer>
-              <div>
-                <v-btn icon @click="logoDialog = false">
-                  <v-icon>mdi-close</v-icon>
-                </v-btn>
-              </div>
-            </v-card-title>
-            <v-card-text class="pa-1">
-              <v-card
-                v-for="image in data.event.Logo"
-                :key="image"
-                class="mx-auto elevation-0"
-                @click.stop="logoDialog = true"
+              <template v-slot:placeholder>
+                <v-row class="fill-height ma-0" align="center" justify="center">
+                  <v-progress-circular
+                    indeterminate
+                    color="grey lighten-5"
+                  ></v-progress-circular>
+                </v-row>
+              </template>
+            </v-img>
+            <v-flex class="mt-1 d-flex">
+              <v-card-text class="pa-0 pb-1 d-inline-block text-truncate"
+                ><a
+                  class="d-inline-block text-truncate anchorTag"
+                  :href="getAttachmentLink(image, true)"
+                  >{{ bannerName }}</a
+                ></v-card-text
               >
-                <v-img
-                  :src="getAttachmentLink(image, true)"
-                  :lazy-src="getAttachmentLink(image, true)"
-                  aspect-ratio="1"
-                  class="white"
-                  width="100%"
-                  contain
-                >
-                  <template v-slot:placeholder>
-                    <v-row
-                      class="fill-height ma-0"
-                      align="center"
-                      justify="center"
-                    >
-                      <v-progress-circular
-                        indeterminate
-                        color="grey lighten-5"
-                      ></v-progress-circular>
-                    </v-row>
-                  </template>
-                </v-img>
-              </v-card>
-            </v-card-text>
+              <v-spacer></v-spacer>
+              <copy :text-to-copy="getImageUrl(image)" :unique-id="image" />
+            </v-flex>
+            <v-card-text class="pa-0 mt-n2">Event Banner</v-card-text>
           </v-card>
-        </v-dialog>
-        <v-card
-          v-for="(image, index) in eventData.Other"
-          :key="image"
-          class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0 cardImg rounded"
-        >
-          <span class="cardDelete">
-            <i
-              class="fa-trash pa-2 cursorPointer"
-              @click="deleteOtherFile(image)"
-            ></i>
-          </span>
-          <v-img
-            :src="getAttachmentLink(image, true)"
-            :lazy-src="getAttachmentLink(image, true)"
-            aspect-ratio="1"
-            class="rounded"
-            max-width="150"
-            max-height="150"
-            width="150"
-            @click.stop="otherDialogOpen = true"
+          <v-dialog v-model="bannerDialog" max-width="600">
+            <v-card>
+              <v-card-title class="pa-1">
+                <v-spacer></v-spacer>
+                <div>
+                  <v-btn icon @click="bannerDialog = false">
+                    <v-icon>mdi-close</v-icon>
+                  </v-btn>
+                </div>
+              </v-card-title>
+              <v-card-text class="pa-1">
+                <v-card
+                  v-for="image in data.event.Images"
+                  :key="image"
+                  class="mx-auto elevation-0"
+                  @click.stop="bannerDialog = true"
+                >
+                  <v-img
+                    :src="getAttachmentLink(image, true)"
+                    :lazy-src="getAttachmentLink(image, true)"
+                    aspect-ratio="1"
+                    class="white"
+                    width="100%"
+                    contain
+                  >
+                    <template v-slot:placeholder>
+                      <v-row
+                        class="fill-height ma-0"
+                        align="center"
+                        justify="center"
+                      >
+                        <v-progress-circular
+                          indeterminate
+                          color="grey lighten-5"
+                        ></v-progress-circular>
+                      </v-row>
+                    </template>
+                  </v-img>
+                </v-card>
+              </v-card-text>
+            </v-card>
+          </v-dialog>
+          <v-card
+            v-for="image in data.event.Logo"
+            :key="image"
+            class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0 cardImg rounded"
           >
-            <template v-slot:placeholder>
-              <v-row class="fill-height ma-0" align="center" justify="center">
-                <v-progress-circular
-                  indeterminate
-                  color="grey lighten-5"
-                ></v-progress-circular>
-              </v-row>
-            </template>
-          </v-img>
-          <v-flex class="mt-1 d-flex">
-            <v-card-text class="pa-0 pb-1"
-              ><a
-                class="d-inline-block text-truncate anchorTag"
-                :href="getAttachmentLink(image, true)"
-                >{{ OtherImageName[index] }}</a
-              ></v-card-text
+            <span class="cardDelete">
+              <i
+                class="fa-trash pa-2 cursorPointer"
+                @click="deleteLogoFile(image)"
+              ></i>
+            </span>
+            <v-img
+              :src="getAttachmentLink(image, true)"
+              :lazy-src="getAttachmentLink(image, true)"
+              aspect-ratio="1"
+              class="rounded white"
+              max-width="150"
+              max-height="150"
+              width="150"
+              contain
+              @click.stop="logoDialog = true"
             >
-            <copy :text-to-copy="getImageUrl(image)" :unique-id="image" />
-          </v-flex>
-          <v-card-text class="pa-0 mt-n2 otherImg">Logo Image</v-card-text>
-        </v-card>
-        <v-dialog v-model="otherDialogOpen" max-width="600">
-          <v-card>
-            <v-card-title class="pa-1">
-              <v-spacer></v-spacer>
-              <div>
-                <v-btn icon @click="otherDialogOpen = false">
-                  <v-icon>mdi-close</v-icon>
-                </v-btn>
-              </div>
-            </v-card-title>
-            <v-card-text class="pa-1">
-              <v-card
-                v-for="image in eventData.Other"
-                :key="image"
-                class="mx-auto elevation-0"
+              <template v-slot:placeholder>
+                <v-row class="fill-height ma-0" align="center" justify="center">
+                  <v-progress-circular
+                    indeterminate
+                    color="grey lighten-5"
+                  ></v-progress-circular>
+                </v-row>
+              </template>
+            </v-img>
+            <v-flex class="mt-1 d-flex">
+              <v-card-text class="pa-0 pb-1 d-inline-block"
+                ><a
+                  class="d-inline-block text-truncate anchorTag"
+                  :href="getAttachmentLink(image, true)"
+                  >{{ logoName }}</a
+                ></v-card-text
               >
-                <v-img
-                  :src="getAttachmentLink(image, true)"
-                  :lazy-src="getAttachmentLink(image, true)"
-                  aspect-ratio="1"
-                  class="white"
-                  width="100%"
-                  contain
-                >
-                  <template v-slot:placeholder>
-                    <v-row
-                      class="fill-height ma-0"
-                      align="center"
-                      justify="center"
-                    >
-                      <v-progress-circular
-                        indeterminate
-                        color="grey lighten-5"
-                      ></v-progress-circular>
-                    </v-row>
-                  </template>
-                </v-img>
-              </v-card>
-            </v-card-text>
+              <copy :text-to-copy="getImageUrl(image)" :unique-id="image" />
+            </v-flex>
+            <v-card-text class="pa-0 mt-n2">Logo Image</v-card-text>
           </v-card>
-        </v-dialog>
+          <v-dialog v-model="logoDialog" max-width="600">
+            <v-card>
+              <v-card-title class="pa-1">
+                <v-spacer></v-spacer>
+                <div>
+                  <v-btn icon @click="logoDialog = false">
+                    <v-icon>mdi-close</v-icon>
+                  </v-btn>
+                </div>
+              </v-card-title>
+              <v-card-text class="pa-1">
+                <v-card
+                  v-for="image in data.event.Logo"
+                  :key="image"
+                  class="mx-auto elevation-0"
+                  @click.stop="logoDialog = true"
+                >
+                  <v-img
+                    :src="getAttachmentLink(image, true)"
+                    :lazy-src="getAttachmentLink(image, true)"
+                    aspect-ratio="1"
+                    class="white"
+                    width="100%"
+                    contain
+                  >
+                    <template v-slot:placeholder>
+                      <v-row
+                        class="fill-height ma-0"
+                        align="center"
+                        justify="center"
+                      >
+                        <v-progress-circular
+                          indeterminate
+                          color="grey lighten-5"
+                        ></v-progress-circular>
+                      </v-row>
+                    </template>
+                  </v-img>
+                </v-card>
+              </v-card-text>
+            </v-card>
+          </v-dialog>
+          <v-card
+            v-for="(image, index) in eventData.Other"
+            :key="image"
+            class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0 cardImg rounded"
+          >
+            <span class="cardDelete">
+              <i
+                class="fa-trash pa-2 cursorPointer"
+                @click="deleteOtherFile(image)"
+              ></i>
+            </span>
+            <v-img
+              :src="getAttachmentLink(image, true)"
+              :lazy-src="getAttachmentLink(image, true)"
+              aspect-ratio="1"
+              class="rounded"
+              max-width="150"
+              max-height="150"
+              width="150"
+              @click.stop="otherDialogOpen = true"
+            >
+              <template v-slot:placeholder>
+                <v-row class="fill-height ma-0" align="center" justify="center">
+                  <v-progress-circular
+                    indeterminate
+                    color="grey lighten-5"
+                  ></v-progress-circular>
+                </v-row>
+              </template>
+            </v-img>
+            <v-flex class="mt-1 d-flex">
+              <v-card-text class="pa-0 pb-1"
+                ><a
+                  class="d-inline-block text-truncate anchorTag"
+                  :href="getAttachmentLink(image, true)"
+                  >{{ OtherImageName[index] }}</a
+                ></v-card-text
+              >
+              <copy :text-to-copy="getImageUrl(image)" :unique-id="image" />
+            </v-flex>
+            <v-card-text class="pa-0 mt-n2 otherImg">Logo Image</v-card-text>
+          </v-card>
+          <v-dialog v-model="otherDialogOpen" max-width="600">
+            <v-card>
+              <v-card-title class="pa-1">
+                <v-spacer></v-spacer>
+                <div>
+                  <v-btn icon @click="otherDialogOpen = false">
+                    <v-icon>mdi-close</v-icon>
+                  </v-btn>
+                </div>
+              </v-card-title>
+              <v-card-text class="pa-1">
+                <v-card
+                  v-for="image in eventData.Other"
+                  :key="image"
+                  class="mx-auto elevation-0"
+                >
+                  <v-img
+                    :src="getAttachmentLink(image, true)"
+                    :lazy-src="getAttachmentLink(image, true)"
+                    aspect-ratio="1"
+                    class="white"
+                    width="100%"
+                    contain
+                  >
+                    <template v-slot:placeholder>
+                      <v-row
+                        class="fill-height ma-0"
+                        align="center"
+                        justify="center"
+                      >
+                        <v-progress-circular
+                          indeterminate
+                          color="grey lighten-5"
+                        ></v-progress-circular>
+                      </v-row>
+                    </template>
+                  </v-img>
+                </v-card>
+              </v-card-text>
+            </v-card>
+          </v-dialog>
+        </div>
       </div>
       <div
         v-if="content"
@@ -941,12 +1011,15 @@
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">Event Link</div>
-          <div class="body-1">{{ formatField(data.event.UniqLink) }}</div>
+          <div class="body-1 d-block text-truncate">
+            {{ formatField(data.event.UniqLink) }}
+          </div>
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">Cancelation Policy</div>
           <div class="body-1">
-            {{ formatField(data.event.CancellationPolicy) }}
+            <!-- eslint-disable-next-line vue/no-v-html -->
+            <div v-html="formatField(data.event.CancellationPolicy)"></div>
           </div>
         </v-flex>
         <v-flex my-3 class="d-block text-truncate">
@@ -1568,6 +1641,11 @@ export default {
           this.refresh()
         }
       }
+    },
+    redirectIntegration() {
+      this.$router.push(
+        `/apps/event/list/Event/integrations?event=${this.$route.params.id}`
+      )
     },
   },
   apollo: {
