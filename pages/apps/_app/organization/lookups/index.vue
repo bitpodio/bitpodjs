@@ -1,9 +1,9 @@
 <template>
   <v-flex d-flex flex-md-row flex-lg-row flex-column>
-    <v-flex column xs12 sm8 md8 lg8>
-      <v-toolbar-title class="pl-0 ml-n1">Lookups</v-toolbar-title>
+    <v-flex column xs12 sm8 md8 lg8 class="lookup-tabs">
+      <v-toolbar-title class="pl-0 ml-n1 mb-2">Lookups</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-tabs v-model="tabs" center-active height="36">
+      <v-tabs v-model="tabs" center-active height="36" class="mb-4">
         <v-tabs-slider></v-tabs-slider>
         <v-tab href="#tab-1" class="px-0 mr-4">
           <span>General</span>
@@ -22,7 +22,7 @@
         </v-tab>
       </v-tabs>
 
-      <v-tabs-items v-model="tabs">
+      <v-tabs-items v-model="tabs" class="gerybg">
         <v-tab-item :value="'tab-1'">
           <div
             v-if="content"
