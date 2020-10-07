@@ -3233,9 +3233,9 @@ export default {
           newForm: false,
           editForm: false,
         },
-        createDate: {
+        createdDate: {
           displayOrder: 8,
-          caption: 'Create Date',
+          caption: 'created Date',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -3246,9 +3246,9 @@ export default {
           newForm: false,
           editForm: false,
         },
-        createBy: {
+        createdBy: {
           displayOrder: 9,
-          caption: 'Create By',
+          caption: 'created By',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -3272,7 +3272,7 @@ export default {
           newForm: false,
           editForm: false,
         },
-        action: {
+        templateAction: {
           displayOrder: 11,
           caption: 'Action',
           searchEnable: true,
@@ -3290,6 +3290,11 @@ export default {
         name: 'eventTask-grid',
         context: {
           basePath: '/event',
+        },
+        actions: {
+          edit: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
