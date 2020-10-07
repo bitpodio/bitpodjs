@@ -154,10 +154,16 @@
     </v-flex>
     <v-flex column xs12 sm4 md4 lg4>
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-2 box-grey">
-        <h2 class="body-1 pb-1">
-          <i class="fa fa-location pr-1" aria-hidden="true"></i> Organization
-          Information
-        </h2>
+        <v-flex class="d-flex justify-center align-center pb-2">
+          <h2 class="body-1 pb-1">
+            <i class="fa fa-location pr-1" aria-hidden="true"></i> Organization
+            Information
+          </h2>
+          <v-spacer></v-spacer>
+          <v-btn text small @click="editOrgInfo = true">
+            <v-icon left>mdi-pencil</v-icon>Edit
+          </v-btn>
+        </v-flex>
         <v-divider></v-divider>
         <v-row>
           <v-col class="col-md-12 col-12 pb-0">
@@ -224,7 +230,7 @@
             <i class="fa fa-cog pr-1" aria-hidden="true"></i> Settings
           </h2>
           <v-spacer></v-spacer>
-          <v-btn text small @click="seoForm = true">
+          <v-btn text small @click="editOrgSetting = true">
             <v-icon left>mdi-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
@@ -262,7 +268,7 @@
             Media
           </h2>
           <v-spacer></v-spacer>
-          <v-btn text small @click="seoForm = true">
+          <v-btn text small @click="editSocialMedia = true">
             <v-icon left>mdi-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
@@ -293,7 +299,7 @@
             <i class="fa fa-timer pr-1" aria-hidden="true"></i> Work Timings
           </h2>
           <v-spacer></v-spacer>
-          <v-btn text small @click="seoForm = true">
+          <v-btn text small @click="editWorkTiming = true">
             <v-icon left>mdi-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
@@ -325,12 +331,23 @@
         </v-flex>
       </div>
     </v-flex>
+    <editOrgInfoForm
+      :edit-org-info.sync="editOrgInfo"
+      :items="data.organization"
+    />
+    <editOrgSetting :edit-org-setting.sync="editOrgSetting" />
+    <editSocialMedia :edit-social-media.sync="editSocialMedia" />
+    <editWorkTiming :edit-work-timing.sync="editWorkTiming" />
   </v-flex>
 </template>
 
 <script>
 import gql from 'graphql-tag'
 import format from 'date-fns/format'
+import editOrgInfoForm from './editOrgInfoForm.vue'
+import editOrgSetting from './editOrgSetting.vue'
+import editSocialMedia from './editSocialMedia.vue'
+import editWorkTiming from './editWorkTiming.vue'
 import Grid from '~/components/common/grid'
 import File from '~/components/common/form/file.vue'
 import organization from '~/config/apps/admin/gql/organization.gql'
@@ -342,6 +359,10 @@ export default {
   components: {
     Grid,
     File,
+    editOrgInfoForm,
+    editOrgSetting,
+    editSocialMedia,
+    editWorkTiming,
   },
   mixins: [configLoaderMixin],
   data() {
@@ -358,6 +379,10 @@ export default {
       },
       checkArray: [],
       orgLogo: false,
+      editOrgInfo: false,
+      editOrgSetting: false,
+      editSocialMedia: false,
+      editWorkTiming: false,
     }
   },
   computed: {
