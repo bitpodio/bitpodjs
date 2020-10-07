@@ -256,7 +256,7 @@ body {
 }
 .boxviewsmall .v-data-table__wrapper {
   overflow-x: hidden !important;
-  margin-bottom: 0;
+  margin-bottom: 0 !important;
 }
 .boxview .v-data-table__wrapper {
   overflow-x: hidden !important;
@@ -264,7 +264,7 @@ body {
 }
 .boxviewsmall:hover .v-data-table__wrapper {
   overflow-x: auto !important;
-  margin-bottom: 0;
+  margin-bottom: 0 !important;
 }
 .boxview:hover .v-data-table__wrapper {
   overflow-x: auto !important;
@@ -375,6 +375,9 @@ body {
 .event-table .v-messages__message {
   white-space: nowrap !important;
   position: fixed !important;
+}
+.ps-top6 {
+  top: 6px;
 }
 @media (max-width: 800px) {
   .nav-bar {
