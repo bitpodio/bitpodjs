@@ -1758,6 +1758,14 @@ export default {
         context: {
           basePath: '/event',
         },
+        actions: {
+          edit: {
+            hidden: true,
+          },
+          delete: {
+            hidden: true,
+          },
+        },
       },
       dataSource: {
         query: eventInvites,
@@ -2506,7 +2514,8 @@ export default {
           default: '',
           rules: [
             function (v) {
-              const eventEndDate = this.context.event.EndDate
+              const eventEndDate =
+                this.context && this.context.event && this.context.event.EndDate
               const isValidEndDate =
                 eventEndDate > (v && new Date(v).toISOString())
               return (
@@ -2570,7 +2579,7 @@ export default {
             itemText: 'FirstName',
             itemValue: 'id',
             getData: (ctx) => {
-              const path = `Events/${ctx.$route.params.id}/EventSpeakers`
+              const path = `/Events/${ctx.$route.params.id}/EventSpeakers`
               return getLookupData(path)
             },
           },

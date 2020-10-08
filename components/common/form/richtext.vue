@@ -319,13 +319,13 @@ export default {
         },
       })
     }
-    if (this.isBadge) {
+    if (this.isBadge || this.field.isBadge) {
       this._data.config.extraButtons[0].list = { ...this.badgeButtons }
     }
     if (this.isEditBadge) {
       this._data.config.extraButtons[0].list = { ...this.editBadgeButtons }
     }
-    if (!this.showTemplateDropdown) {
+    if (!this.showTemplateDropdown && !this.field.showTemplateDropdown) {
       delete this.config.extraButtons
     }
     if (this.isGeneral) {

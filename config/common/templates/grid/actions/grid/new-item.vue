@@ -40,6 +40,8 @@
                   :filter="filter[field.fieldName]"
                   :field-name="field.fieldName"
                   :content="content"
+                  :show-template-dropdown="showTemplateDropdown"
+                  :is-badge="isBadge"
                 />
               </v-col>
             </v-row>
@@ -110,6 +112,14 @@ export default {
     context: {
       type: null,
       default: null,
+    },
+    showTemplateDropdown: {
+      type: Boolean,
+      default: false,
+    },
+    isBadge: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
