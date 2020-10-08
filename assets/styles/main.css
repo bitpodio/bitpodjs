@@ -373,7 +373,7 @@ body {
   height: 20px !important;
 }
 .v-toolbar--flat.v-app-bar--is-scrolled {
-  box-shadow: 0px 1px 1px -1px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.10), 0px 0px 1px 0px rgba(0, 0, 0, 0.10) !important;
+  box-shadow: 0 1px 1px -1px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.10), 0 0 1px 0 rgba(0, 0, 0, 0.10) !important;
 }
 .event-table .v-messages__message {
   white-space: nowrap !important;
@@ -384,7 +384,7 @@ body {
 }
 @media (max-width: 800px) {
   .nav-bar {
-    top: 0px !important;
+    top: 0 !important;
   }
 }
 @media (max-width: 600px) {

@@ -340,10 +340,10 @@ export default {
 .overflow-h {
   overflow: hidden;
 }
-.event-tags:after {
+.event-tags::after {
   content: ', ';
 }
-.event-tags:last-child:after {
+.event-tags:last-child::after {
   content: '';
 }
 </style>
