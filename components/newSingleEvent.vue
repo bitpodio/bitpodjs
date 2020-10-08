@@ -1060,7 +1060,7 @@ export default {
         Type: 'Free',
         Amount: 0,
         StartDate: new Date(),
-        EndDate: addDays(addMonths(new Date(), 1), -1),
+        EndDate: addDays(addMonths(new Date(), 1), 3),
         TicketCount: 100,
       })
     },
