@@ -344,6 +344,9 @@ body {
 .mxcol-name {
   max-width: 150px;
 }
+.mxcol-200 {
+  max-width: 200px;
+}
 .v-stepper__step {
   padding-top: 12px !important;
 }

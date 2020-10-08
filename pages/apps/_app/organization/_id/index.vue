@@ -34,7 +34,7 @@
                     }}</v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
-                <v-list class="mt-n4 pl-1"
+                <v-list class="mt-n4 pl-2"
                   ><span
                     class="cursorPointer"
                     @click="
