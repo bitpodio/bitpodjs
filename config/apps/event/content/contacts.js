@@ -824,7 +824,7 @@ export default {
         },
       },
       template: {
-        name: 'registrationSession-grid',
+        name: 'contact-grid',
         context: {
           basePath: '/contact',
         },
