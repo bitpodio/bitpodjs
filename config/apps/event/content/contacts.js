@@ -828,6 +828,17 @@ export default {
         context: {
           basePath: '/contact',
         },
+        actions: {
+          new: {
+            hidden: true,
+          },
+          edit: {
+            hidden: true,
+          },
+          delete: {
+            hidden: true,
+          },
+        },
       },
       dataSource: {
         query: eventTasks,
