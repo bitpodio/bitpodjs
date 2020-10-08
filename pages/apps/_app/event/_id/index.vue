@@ -57,6 +57,17 @@
                   <v-list-item-title>Integrations</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
+              <v-list-item
+                v-if="eventData.LocationType === 'Online event'"
+                @click="goLive"
+              >
+                <v-list-item-icon class="mr-2">
+                  <i class="fa fa-rocket mt-1" aria-hidden="true"></i>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>Start Session</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
             </v-list>
           </v-menu>
         </v-flex>
@@ -791,6 +802,19 @@
           class="mt-12"
         />
       </div>
+      <div
+        class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-comments-alt pr-1" aria-hidden="true"></i>
+            Notes
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
+        <v-divider></v-divider>
+        <Notes model-name="Events" />
+      </div>
     </v-flex>
     <v-flex column xs12 sm4 md4 lg4>
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 py-0 pr-2 box-grey">
@@ -1089,6 +1113,7 @@ import Grid from '~/components/common/grid'
 import File from '~/components/common/form/file.vue'
 import event from '~/config/apps/event/gql/event.gql'
 import copy from '~/components/common/copy'
+import Notes from '~/components/common/notes'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin, getIdFromAtob, getApiUrl } from '~/utility'
 
@@ -1104,6 +1129,7 @@ export default {
     File,
     copy,
     makeCopy,
+    Notes,
   },
   mixins: [configLoaderMixin],
   props: {
@@ -1185,6 +1211,18 @@ export default {
   },
 
   methods: {
+    goLive() {
+      const sdate = new Date(this.eventData.StartDate || null)
+        .toDateString()
+        .split(' ')
+        .join('-')
+      const title = this.eventData.Title.split(' ').join('-')
+      window.open(
+        `/apps/event/live/${sdate}-${title || 'untitled'}?e=${
+          this.$route.params.id
+        }`
+      )
+    },
     openPrintForm() {
       const myWindow = window.open('', '', 'width=900,height=900')
       this.attendees.map((ele) => {
