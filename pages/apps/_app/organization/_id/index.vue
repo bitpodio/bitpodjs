@@ -161,7 +161,7 @@
           </h2>
           <v-spacer></v-spacer>
           <v-btn text small @click="editOrgInfo = true">
-            <v-icon left>mdi-pencil</v-icon>Edit
+            <v-icon left class="fs-16">fa-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
         <v-divider></v-divider>
@@ -231,7 +231,7 @@
           </h2>
           <v-spacer></v-spacer>
           <v-btn text small @click="editOrgSetting = true">
-            <v-icon left>fa-pencil</v-icon>Edit
+            <v-icon left class="fs-16">fa-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
         <v-divider></v-divider>
@@ -269,7 +269,7 @@
           </h2>
           <v-spacer></v-spacer>
           <v-btn text small @click="editSocialMedia = true">
-            <v-icon left>fa-pencil</v-icon>Edit
+            <v-icon left class="fs-16">fa-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
         <v-divider></v-divider>
@@ -300,7 +300,7 @@
           </h2>
           <v-spacer></v-spacer>
           <v-btn text small @click="editWorkTiming = true">
-            <v-icon left>fa-pencil</v-icon>Edit
+            <v-icon left class="fs-16">fa-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
         <v-divider></v-divider>

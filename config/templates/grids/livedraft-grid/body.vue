@@ -76,8 +76,11 @@
                   </div>
                 </v-flex>
               </nuxt-link>
-              <v-card-actions class="pt-0 pl-4">
+              <v-card-actions class="pt-0 pl-4 tiles-action">
                 <div class="text-truncate d-block">
+                  <v-text class="ma-0 mr-1 event-tags body-2"
+                    >#Recurring event</v-text
+                  >
                   <v-text
                     v-for="Tags in item.Tags"
                     :key="Tags"
@@ -195,7 +198,7 @@
                   </div>
                 </v-flex>
               </nuxt-link>
-              <v-card-actions class="pt-0 pl-4">
+              <v-card-actions class="pt-0 pl-4 tiles-action">
                 <div class="text-truncate d-block">
                   <v-text
                     v-for="Tags in item.Tags"
@@ -345,5 +348,8 @@ export default {
 }
 .event-tags:last-child::after {
   content: '';
+}
+.tiles-action {
+  min-height: 36px;
 }
 </style>
