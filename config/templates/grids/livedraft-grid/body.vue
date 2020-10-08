@@ -113,14 +113,14 @@
                         <v-list-item-title>Preview</v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
-                    <v-list-item @click="true">
+                    <v-list-item @click="openEventForm(item.id)">
                       <v-list-item-icon class="mr-2">
                         <i
                           class="fa fa-pencil-square-o mt-1"
                           aria-hidden="true"
                         ></i>
                       </v-list-item-icon>
-                      <v-list-item-content @click="openEventForm(item.id)">
+                      <v-list-item-content>
                         <v-list-item-title>Edit</v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
