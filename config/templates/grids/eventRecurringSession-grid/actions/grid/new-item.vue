@@ -981,12 +981,17 @@ export default {
               EventId: this.$route.params.id,
             },
           },
+          // orgInfoFilters: {
+          //   where: {},
+          // },
         }
       },
       update(data) {
         const locationResult = formatGQLResult(data, 'Location')
         const ticketResult = formatGQLResult(data, 'Ticket')
         this.sessionResult = formatGQLResult(data, 'Session')
+        // const OrganizationInfo = formatGQLResult(data, 'OrganizationInfo')
+        // console.log('=OrganizationInfo=', OrganizationInfo)
         const locId = []
         this.inPersonMeetingOptions = locationResult.map(({ id, ...rest }) => {
           const decryptedId = getIdFromAtob(id)

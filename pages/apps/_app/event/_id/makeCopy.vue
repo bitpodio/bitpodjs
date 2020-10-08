@@ -318,6 +318,7 @@ import eventCount from '~/config/apps/event/gql/eventCount.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { getApiUrl } from '~/utility/index.js'
 import CustomDate from '~/components/common/form/date.vue'
+import { getIdFromAtob } from '~/utility'
 
 export default {
   components: {
@@ -491,7 +492,7 @@ export default {
     viewEvent() {
       const baseUrl = getApiUrl()
       const eventUrl = baseUrl.replace('svc/api', 'e')
-      window.open(`${eventUrl}${this.UniqLink}`, '_blank')
+      window.open(`${eventUrl}${this.eventData.UniqLink}`, '_blank')
     },
     changeUniqueLink(event) {
       this.verifyUniqueLink(event.currentTarget.value)
@@ -638,7 +639,8 @@ export default {
         this.StartDate = new Date(this.eventData.StartDate)
         this.EndDate = new Date(this.eventData.EndDate)
         this.eventData.UniqLink = ''
-        this.eventData.id = atob(this.eventData.id).split(':')[1]
+        // this.eventData.id = atob(this.eventData.id).split(':')[1]
+        this.eventData.id = getIdFromAtob(this.eventData.id)
         if (
           this.eventData.BusinessType === 'Single' &&
           this.eventData.LocationType === 'Venue'

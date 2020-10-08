@@ -349,7 +349,7 @@
                       </td>
                       <td class="pa-2 pt-0">
                         <v-btn icon class="mt-1" @click="deleteTicket(k)">
-                          <v-icon>mdi-24px mdi-delete</v-icon>
+                          <v-icon>fa-trash</v-icon>
                         </v-btn>
                       </td>
                     </tr>
