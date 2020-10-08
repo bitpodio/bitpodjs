@@ -1393,6 +1393,8 @@ export default {
           this.formData
         )
         if (res) {
+          this.snackbarText = 'Congratulations, your event has been published'
+          this.snackbar = true
           this.refresh()
         }
       } catch (e) {

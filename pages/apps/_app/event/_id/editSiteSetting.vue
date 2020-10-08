@@ -259,11 +259,27 @@
         <v-card-actions
           class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
         >
-          <v-btn color="grey lighten-2" depressed @click="tabs = 'tab-1'"
+          <v-btn
+            v-if="tabs === 'tab-2'"
+            color="grey lighten-2"
+            depressed
+            @click="tabs = 'tab-1'"
             >Prev</v-btn
           >
-          <v-btn color="primary" depressed @click="tabs = 'tab-2'">Next</v-btn>
-          <v-btn color="primary" depressed @click.native="onSave">Save</v-btn>
+          <v-btn
+            v-if="tabs === 'tab-1'"
+            color="primary"
+            depressed
+            @click="tabs = 'tab-2'"
+            >Next</v-btn
+          >
+          <v-btn
+            v-if="tabs === 'tab-2'"
+            color="primary"
+            depressed
+            @click.native="onSave"
+            >Save</v-btn
+          >
         </v-card-actions>
       </v-card>
     </v-dialog>
