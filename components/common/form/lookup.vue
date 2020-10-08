@@ -89,7 +89,7 @@ export default {
   methods: {
     onLookupChange() {
       this.$emit('change', this.value)
-      this.onChange && this.onChange(this.value)
+      this.onChange && this.onChange(this.value, this)
     },
     async loadItems() {
       if (!this.field.items) {

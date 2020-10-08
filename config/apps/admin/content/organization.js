@@ -2,7 +2,7 @@ import businessUnit from '../gql/businessUnit.gql'
 import generalConfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import contactList from '~/config/apps/event/gql/contact.gql'
 import crmActivity from '~/config/apps/event/gql/eventTasks.gql'
-import { getData } from '~/config/apps/event/rest'
+import { getCustomData } from '~/config/apps/event/rest'
 
 export default {
   views: {
@@ -305,7 +305,7 @@ export default {
         hideDefaultFooter: false,
         showExpand: false,
         singleExpand: false,
-        showSelect: true,
+        showSelect: false,
         hideFilter: false,
         hideSearch: true,
       },
@@ -369,13 +369,26 @@ export default {
         },
       },
       template: {
+        name: 'organizationSubscription-grid',
         context: {
           basePath: '/organization',
+        },
+        actions: {
+          new: {
+            hidden: true,
+            caption: 'new field',
+          },
+          edit: {
+            hidden: true,
+          },
+          delete: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
         type: 'rest',
-        getData: (ctx) => getData(`OrganizationInfos/getSubscription`),
+        getData: (ctx) => getCustomData(`OrganizationInfos/getSubscription`),
       },
       title: 'organizationProductSubscription',
       type: 'list',
@@ -466,6 +479,7 @@ export default {
         },
       },
       template: {
+        name: 'organizationTask-grid',
         context: {
           basePath: '/organization',
         },
@@ -491,7 +505,7 @@ export default {
         hideDefaultFooter: false,
         showExpand: false,
         singleExpand: false,
-        showSelect: true,
+        showSelect: false,
         hideFilter: false,
         hideSearch: true,
       },
@@ -518,10 +532,10 @@ export default {
           caption: 'Status',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '180px',
+          columnWidth: '120px',
           type: 'string',
         },
-        Action: {
+        Integrate: {
           displayOrder: 5,
           caption: 'Action',
           searchEnable: true,
@@ -531,13 +545,26 @@ export default {
         },
       },
       template: {
+        name: 'eventIntegration-grid',
         context: {
           basePath: '/organization',
+        },
+        actions: {
+          new: {
+            hidden: true,
+            caption: 'new field',
+          },
+          edit: {
+            hidden: true,
+          },
+          delete: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
         type: 'rest',
-        getData: (ctx) => getData(`/OrganizationInfos/getMyConnections`),
+        getData: (ctx) => getCustomData(`OrganizationInfos/getMyConnections`),
       },
       title: 'organizationIntegration',
       type: 'list',

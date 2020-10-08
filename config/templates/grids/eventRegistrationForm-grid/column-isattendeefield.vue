@@ -1,5 +1,26 @@
 <template>
-  <v-checkbox v-model="checkbox" @change="updateRegForm"></v-checkbox>
+  <div class="positionRelative ps-top6">
+    <div v-if="item.isAttendeeField === true">
+      <v-checkbox
+        v-model="checkbox"
+        success
+        dense
+        height="20"
+        class="ma-0 pa-0"
+        @change="updateRegForm"
+      ></v-checkbox>
+    </div>
+    <div v-else>
+      <v-checkbox
+        v-model="checkbox"
+        error
+        dense
+        height="20"
+        class="ma-0 pa-0"
+        @change="updateRegForm"
+      ></v-checkbox>
+    </div>
+  </div>
 </template>
 
 <script>

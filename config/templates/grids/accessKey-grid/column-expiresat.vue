@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import format from 'date-fns/format'
 export default {
   props: {
     item: {
@@ -19,8 +20,8 @@ export default {
     }
   },
   mounted() {
-    const output = new Date(this.item.expiresat).toLocaleString()
-    this.date = output === 'Invalid Date' ? '' : output
+    const d = this.item.expiresat
+    this.date = d ? format(new Date(d), 'PPp') : ''
   },
 }
 </script>

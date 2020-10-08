@@ -38,11 +38,24 @@ export default {
           columnWidth: '150px',
           type: 'datetime',
         },
+        action: {
+          displayOrder: 5,
+          caption: 'Action',
+          columnWidth: '150px',
+        },
       },
       template: {
         name: 'accessKey-grid',
         context: {
           basePath: '/organization',
+        },
+        actions: {
+          edit: {
+            hidden: true,
+          },
+          delete: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
