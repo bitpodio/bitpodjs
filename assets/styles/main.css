@@ -382,6 +382,9 @@ body {
 .ps-top6 {
   top: 6px;
 }
+.grid-actions-container {
+  min-height: 52px !important;
+}
 @media (max-width: 800px) {
   .nav-bar {
     top: 0 !important;
