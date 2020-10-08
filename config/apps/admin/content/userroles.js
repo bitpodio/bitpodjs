@@ -1,4 +1,4 @@
-import { getData } from '~/config/apps/event/rest'
+import { getCustomData } from '~/config/apps/event/rest'
 
 export default {
   views: {
@@ -19,7 +19,7 @@ export default {
           caption: 'Id',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '250px',
+          columnWidth: '100px',
           type: 'string',
         },
         name: {
@@ -35,10 +35,22 @@ export default {
         context: {
           basePath: '/organization',
         },
+        actions: {
+          new: {
+            hidden: true,
+            caption: 'new field',
+          },
+          edit: {
+            hidden: true,
+          },
+          delete: {
+            hidden: true,
+          },
+        },
       },
       dataSource: {
         type: 'rest',
-        getData: (ctx) => getData(`/OrganizationInfos/roles`),
+        getData: (ctx) => getCustomData(`OrganizationInfos/roles`),
       },
       title: 'Roles',
       type: 'list',
