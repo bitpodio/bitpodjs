@@ -73,7 +73,7 @@
         <v-divider></v-divider>
         <Grid
           view-name="contactRegistration"
-          class="mt-12"
+          class="mt-n12"
           :content="content"
           :filter="filter"
         />
@@ -90,7 +90,7 @@
           <v-spacer></v-spacer>
         </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="contactInvites" :content="content" class="mt-12" />
+        <Grid view-name="contactInvites" :content="content" class="mt-n12" />
       </div>
       <div
         v-if="content"
@@ -104,7 +104,7 @@
           <v-spacer></v-spacer>
         </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="contactEmails" :content="content" class="mt-12" />
+        <Grid view-name="contactEmails" :content="content" class="mt-n12" />
       </div>
       <div
         class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
