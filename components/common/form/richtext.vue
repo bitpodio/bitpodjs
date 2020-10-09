@@ -325,7 +325,12 @@ export default {
     if (this.isEditBadge) {
       this._data.config.extraButtons[0].list = { ...this.editBadgeButtons }
     }
-    if (!this.showTemplateDropdown && !this.field.showTemplateDropdown) {
+    if (
+      this.showTemplateDropdown &&
+      !this.showTemplateDropdown &&
+      this.showTemplateDropdown &&
+      !this.field.showTemplateDropdown
+    ) {
       delete this.config.extraButtons
     }
     if (this.isGeneral) {

@@ -562,7 +562,9 @@ export default {
           this.formData.StartDate !== null &&
           this.formData.EndDate !== null
         ) {
-          this.addressLine = this.formData._VenueAddress.AddressLine
+          this.addressLine =
+            this.formData._VenueAddress &&
+            this.formData._VenueAddress.AddressLine
           this.formData.StartDate = this.getZonedDateTime(
             this.formData.StartDate,
             this.formData.Timezone
