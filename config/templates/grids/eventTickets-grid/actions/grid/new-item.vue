@@ -37,34 +37,24 @@
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6" md="6" class="pb-0">
-                <v-datetime-picker
-                  v-model="formData.StartDate"
+                <CustomDate
+                  v-model="StartDate"
                   :label="getDateLabel('Start Date')"
-                  :rules="dateRules"
-                  :text-field-props="startDateTextFieldProps()"
-                >
-                  <template slot="dateIcon">
-                    <v-icon>fas fa-calendar</v-icon>
-                  </template>
-                  <template slot="timeIcon">
-                    <v-icon>fas fa-clock</v-icon>
-                  </template>
-                </v-datetime-picker>
+                  :field="startDateField"
+                  :rules="startDateRule"
+                  :on-change="changeStartDate"
+                  type="datetime"
+                />
               </v-col>
               <v-col cols="12" sm="6" md="6" class="pb-0">
-                <v-datetime-picker
-                  v-model="formData.EndDate"
-                  :rules="dateRules"
+                <CustomDate
+                  v-model="EndDate"
                   :label="getDateLabel('End Date')"
-                  :text-field-props="endDateTextFieldProps()"
-                >
-                  <template slot="dateIcon">
-                    <v-icon>fas fa-calendar</v-icon>
-                  </template>
-                  <template slot="timeIcon">
-                    <v-icon>fas fa-clock</v-icon>
-                  </template>
-                </v-datetime-picker>
+                  :field="endDateField"
+                  :rules="endDateRule"
+                  :on-change="changeEndDate"
+                  type="datetime"
+                />
               </v-col>
               <v-col cols="12" sm="6" md="6">
                 <v-select
@@ -176,7 +166,12 @@ import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { required } from '~/utility/rules.js'
 import { getApiUrl } from '~/utility'
+import CustomDate from '~/components/common/form/date.vue'
+import strings from '~/strings.js'
 export default {
+  components: {
+    CustomDate,
+  },
   props: {
     refresh: {
       type: Function,
@@ -191,6 +186,7 @@ export default {
       default: false,
     },
   },
+
   data() {
     return {
       isDisabled: false,
@@ -222,7 +218,51 @@ export default {
       eventData: {},
       setAttendeeType: {},
       Symbol: '',
+      StartDate: null,
+      EndDate: null,
     }
+  },
+  computed: {
+    startDateField() {
+      return {
+        appendIcon: 'fa-calendar',
+        outlined: true,
+        caption: 'Start Date',
+        type: 'datetime',
+      }
+    },
+    endDateField() {
+      return {
+        appendIcon: 'fa-calendar',
+        outlined: true,
+        caption: 'End Date',
+        type: 'datetime',
+      }
+    },
+    startDateRule() {
+      return [
+        (v) => {
+          const startDate = new Date(v) || new Date(this.StartDate)
+          return startDate > new Date(this.EndDate)
+            ? strings.START_END_DATE
+            : true
+        },
+      ]
+    },
+    endDateRule() {
+      return [
+        (v) => {
+          const endDate = new Date(v)
+          if (new Date(this.StartDate) > endDate) {
+            return strings.END_START_DATE
+          } else if (endDate > new Date(this.data.event.EndDate)) {
+            return 'End date should be less than event end date'
+          } else {
+            return true
+          }
+        },
+      ]
+    },
   },
   async mounted() {
     try {
@@ -253,6 +293,12 @@ export default {
     this.getAttendeeType()
   },
   methods: {
+    changeStartDate(value) {
+      this.$refs.form.validate()
+    },
+    changeEndDate(value) {
+      this.$refs.form.validate()
+    },
     getDateLabel(dateLabel) {
       if (this.eventData.BusinessType === 'Recurring') {
         const label = `${dateLabel}`
@@ -298,76 +344,6 @@ export default {
       this.dialog = false
       this.onReset()
     },
-    startDateTextFieldProps() {
-      return {
-        appendIcon: 'fa-calendar',
-        outlined: true,
-        dense: true,
-        rules: [
-          (v) => {
-            const scheduledDate = v && new Date(v)
-            if (scheduledDate && scheduledDate > this.formData.EndDate) {
-              this.valid = false
-              return 'Ticket start date should be less than Ticket end date'
-            } else {
-              this.valid = true
-              return true
-            }
-          },
-        ],
-      }
-    },
-    endDateTextFieldProps() {
-      return {
-        appendIcon: 'fa-calendar',
-        outlined: true,
-        dense: true,
-        rules: [
-          (v) => {
-            const scheduledDate = v && new Date(v)
-            if (scheduledDate && scheduledDate < this.formData.StartDate) {
-              this.valid = false
-              return 'Ticket end Date should be greater than Ticket startdate'
-            } else if (
-              scheduledDate &&
-              scheduledDate > new Date(this.data.event.EndDate) &&
-              this.eventData.BusinessType !== 'Recurring'
-            ) {
-              this.valid = false
-              return 'Ticket end Date should be less than event end date'
-            } else {
-              this.valid = true
-              return true
-            }
-          },
-        ],
-      }
-    },
-    dateProps() {
-      return {
-        appendIcon: 'fa-calendar',
-        outlined: true,
-        dense: true,
-        rules: [
-          (v) => {
-            const scheduledDate = v && new Date(v)
-            if (scheduledDate && scheduledDate < this.formData.StartDate) {
-              this.valid = false
-              return 'Ticket end Date should be greater than Ticket startdate'
-            } else if (
-              scheduledDate &&
-              scheduledDate > new Date(this.data.event.EndDate)
-            ) {
-              this.valid = false
-              return 'Ticket end Date should be less than event end date'
-            } else {
-              this.valid = true
-              return true
-            }
-          },
-        ],
-      }
-    },
     getCurrencySymbol(Currency) {
       this.Symbol = Number()
         .toLocaleString(Currency, { style: 'currency', currency: Currency })
@@ -404,8 +380,8 @@ export default {
       }
     },
     getTicketDate() {
-      this.formData.StartDate = new Date()
-      this.formData.EndDate = addMonths(new Date(), 1)
+      this.StartDate = new Date()
+      this.EndDate = addMonths(new Date(), 1)
     },
 
     async getDropDownData(filterType) {
