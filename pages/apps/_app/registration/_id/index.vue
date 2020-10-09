@@ -179,7 +179,7 @@
         <Grid
           view-name="registrationSessions"
           :content="content"
-          class="mt-12"
+          class="mt-n12"
         />
       </div>
       <div
@@ -212,7 +212,11 @@
           <v-spacer></v-spacer>
         </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="registrationEmails" :content="content" class="mt-12" />
+        <Grid
+          view-name="registrationEmails"
+          :content="content"
+          class="mt-n12"
+        />
       </div>
       <div
         v-if="data.registration._Refund"

@@ -863,7 +863,7 @@
         <Grid
           view-name="eventRegistrationForm"
           :content="content"
-          class="mt-12"
+          class="mt-n12"
         />
       </div>
     </v-flex>
