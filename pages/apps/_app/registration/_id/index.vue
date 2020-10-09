@@ -59,7 +59,7 @@
                 </v-btn>
               </template>
               <v-list dense>
-                <v-list-item @click="true">
+                <v-list-item @click="isEditReg = true">
                   <v-list-item-icon class="mr-2">
                     <i
                       class="fa fa-pencil-square-o mt-1"
@@ -67,35 +67,29 @@
                     ></i>
                   </v-list-item-icon>
                   <v-list-item-content>
-                    <v-list-item-title @click="isEditReg = true"
-                      >Edit</v-list-item-title
-                    >
+                    <v-list-item-title>Edit</v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
                 <v-list-item
                   v-if="data.registration.Status === 'Success'"
-                  @click="true"
+                  @click="isCancelReg = true"
                 >
                   <v-list-item-icon class="mr-2">
                     <i class="fa-cross-circle mt-1" aria-hidden="true"></i>
                   </v-list-item-icon>
                   <v-list-item-content>
-                    <v-list-item-title @click="isCancelReg = true"
-                      >Cancel</v-list-item-title
-                    >
+                    <v-list-item-title>Cancel</v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
                 <v-list-item
                   v-if="data.registration.TotalAmount > 0"
-                  @click="true"
+                  @click="isRefund = true"
                 >
                   <v-list-item-icon class="mr-2">
                     <i class="fa-refresh mt-1" aria-hidden="true"></i>
                   </v-list-item-icon>
                   <v-list-item-content>
-                    <v-list-item-title @click="isRefund = true"
-                      >Refund</v-list-item-title
-                    >
+                    <v-list-item-title>Refund</v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
               </v-list>
@@ -218,11 +212,7 @@
           <v-spacer></v-spacer>
         </v-flex>
         <v-divider></v-divider>
-        <Grid
-          view-name="registrationEmails"
-          :content="content"
-          class="mt-n12"
-        />
+        <Grid view-name="registrationEmails" :content="content" class="mt-12" />
       </div>
       <div
         v-if="data.registration._Refund"

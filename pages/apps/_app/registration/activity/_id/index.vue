@@ -23,8 +23,8 @@
             <v-col class="col-12 pb-0 pt-0">
               <v-list class="d-inline-block">
                 <v-list-item class="pl-0">
-                  <v-list-item-avatar>
-                    <v-avatar color="primary" size="48">
+                  <v-list-item-avatar size="36">
+                    <v-avatar color="primary" size="36">
                       <span class="white--text Twitter">{{
                         data.invites.Owner
                       }}</span>

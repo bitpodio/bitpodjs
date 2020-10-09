@@ -27,6 +27,7 @@
             outlined
             large
             color="grey"
+            @click="loginGoogle"
           >
             <v-avatar>
               <img :src="$config.cdnUri + 'google.png'" class="login-google" />
@@ -46,6 +47,9 @@ export default {
   methods: {
     async loginBitpod() {
       return await this.$auth.loginWith('bitpod')
+    },
+    async loginGoogle() {
+      return await this.$auth.loginWith('google')
     },
   },
 }

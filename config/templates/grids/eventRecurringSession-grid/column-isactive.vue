@@ -1,5 +1,26 @@
 <template>
-  <v-checkbox v-model="checkbox" @change="updateRecurringSession"></v-checkbox>
+  <div class="positionRelative ps-top6">
+    <div v-if="item.isActive === true">
+      <v-checkbox
+        v-model="checkbox"
+        success
+        dense
+        height="20"
+        class="ma-0 pa-0"
+        @change="updateRecurringSession"
+      ></v-checkbox>
+    </div>
+    <div v-else>
+      <v-checkbox
+        v-model="checkbox"
+        error
+        dense
+        height="20"
+        class="ma-0 pa-0"
+        @change="updateRecurringSession"
+      ></v-checkbox>
+    </div>
+  </div>
 </template>
 
 <script>
