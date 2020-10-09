@@ -319,7 +319,7 @@ export default {
         },
       })
     }
-    if (this.isBadge || this.field.isBadge) {
+    if (this.isBadge || (this.field && this.field.isBadge)) {
       this._data.config.extraButtons[0].list = { ...this.badgeButtons }
     }
     if (this.isEditBadge) {

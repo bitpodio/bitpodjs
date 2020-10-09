@@ -1,6 +1,6 @@
 <template>
   <v-col class="px-0">
-    <v-snackbar v-model="snackbar" :timeout="timeout" top="true"
+    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true"
       ><div class="text-center">Confirmation Email Sent</div></v-snackbar
     >
     <v-btn text small v-bind="attrs" v-on="on" @click="resendRegistrationEmail">
@@ -40,12 +40,15 @@ export default {
             regIds,
           }
         )
-        if (res) {
+        if (res === '') {
           this.snackbar = true
           this.refresh()
         }
       } catch (e) {
-        console.log('Error', e)
+        console.log(
+          'Errors in config/templates/grids/eventegistations-grid/actions/roe-select/resendRegistrationEmail.vue on resendRegistrationEmail method',
+          e
+        )
       }
     },
   },
