@@ -1143,7 +1143,7 @@
     <editSeoForm :seo-form.sync="seoForm" />
     <editEventSetting :event-setting.sync="eventSetting" />
     <editSiteSetting :site-setting.sync="siteSetting" />
-    <makeCopy :is-make-copy.sync="isMakeCopy" />
+    <makeCopy :key="isMakeCopy" :is-make-copy.sync="isMakeCopy" />
     <newBadgeForm :new-badge.sync="newBadge" />
     <editBadgeForm :id="badgeData.id" :edit-badge-form.sync="editBadgeForm" />
   </v-flex>
