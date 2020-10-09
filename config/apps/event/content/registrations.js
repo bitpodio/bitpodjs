@@ -1303,7 +1303,7 @@ export default {
         },
       },
       template: {
-        name: 'eventAttendees-grid',
+        name: 'registrationAttendees-grid',
         context: {
           basePath: '/registration',
         },
