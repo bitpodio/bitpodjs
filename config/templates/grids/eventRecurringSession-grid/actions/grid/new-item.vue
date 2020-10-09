@@ -617,23 +617,23 @@ export default {
         },
         {
           Label: 'Mondays',
-          Value: true,
+          Value: false,
         },
         {
           Label: 'Tuesdays',
-          Value: true,
+          Value: false,
         },
         {
           Label: 'Wednesdays',
-          Value: true,
+          Value: false,
         },
         {
           Label: 'Thursdays',
-          Value: true,
+          Value: false,
         },
         {
           Label: 'Fridays',
-          Value: true,
+          Value: false,
         },
         {
           Label: 'Saturdays',
@@ -713,6 +713,33 @@ export default {
     },
   },
   methods: {
+    setSelectedDays(selectedDays) {
+      selectedDays.map((x) => {
+        this.days.map((day) => {
+          if (x === 'monday' && day.Label === 'Mondays') {
+            day.Value = true
+          }
+          if (x === 'tuesday' && day.Label === 'Tuesdays') {
+            day.Value = true
+          }
+          if (x === 'wednesday' && day.Label === 'Wednesdays') {
+            day.Value = true
+          }
+          if (x === 'thursday' && day.Label === 'Thursdays') {
+            day.Value = true
+          }
+          if (x === 'friday' && day.Label === 'Fridays') {
+            day.Value = true
+          }
+          if (x === 'saturday' && day.Label === 'Saturdays') {
+            day.Value = true
+          }
+          if (x === 'sunday' && day.Label === 'Sundays') {
+            day.Value = true
+          }
+        })
+      })
+    },
     getMaxEnd(arr) {
       if (arr.length === 0) return false
       arr.sort(function (a, b) {
@@ -981,17 +1008,21 @@ export default {
               EventId: this.$route.params.id,
             },
           },
-          // orgInfoFilters: {
-          //   where: {},
-          // },
+          orgInfoFilters: {
+            where: {},
+          },
         }
       },
       update(data) {
         const locationResult = formatGQLResult(data, 'Location')
         const ticketResult = formatGQLResult(data, 'Ticket')
         this.sessionResult = formatGQLResult(data, 'Session')
-        // const OrganizationInfo = formatGQLResult(data, 'OrganizationInfo')
-        // console.log('=OrganizationInfo=', OrganizationInfo)
+        const OrganizationInfo = formatGQLResult(data, 'OrganizationInfo')
+        if (OrganizationInfo[0].weekDay.length > 0) {
+          this.setSelectedDays(OrganizationInfo[0].weekDay)
+        } else {
+          this.setSelectedDays(this.selectedDays)
+        }
         const locId = []
         this.inPersonMeetingOptions = locationResult.map(({ id, ...rest }) => {
           const decryptedId = getIdFromAtob(id)

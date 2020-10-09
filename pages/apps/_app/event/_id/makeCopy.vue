@@ -199,7 +199,10 @@
               <v-col cols="12" sm="6" md="6" class="pb-0 pa-0">
                 <v-col v-if="isMap" class="event-map pa-0">
                   <div class="flex"></div>
-                  <div :key="`${locations[0].lat}-${locations[0].lng}`">
+                  <div
+                    v-if="locations[0] && locations[0].lat"
+                    :key="`${locations[0].lat}-${locations[0].lng}`"
+                  >
                     <GMap
                       ref="gMap"
                       language="en"
@@ -341,7 +344,6 @@ export default {
     return {
       valid: false,
       lazy: false,
-      // updateCount: 0,
       Title: '',
       StartDate: null,
       EndDate: null,
@@ -353,10 +355,7 @@ export default {
       addresslineMessage: '',
       requiredRules: [required],
       saveBtnDisabled: false,
-      // isVenue: false,
-      // isOnline: false,
       isRecurring: false,
-      // isMap: false,
       copyEventId: '',
       currentLocation: {},
       locationsVisibleOnMap: '',
@@ -639,14 +638,11 @@ export default {
         this.StartDate = new Date(this.eventData.StartDate)
         this.EndDate = new Date(this.eventData.EndDate)
         this.eventData.UniqLink = ''
-        // this.eventData.id = atob(this.eventData.id).split(':')[1]
         this.eventData.id = getIdFromAtob(this.eventData.id)
         if (
           this.eventData.BusinessType === 'Single' &&
           this.eventData.LocationType === 'Venue'
         ) {
-          // this.isVenue = true
-          // this.isMap = true
           this.venueAddress = this.eventData._VenueAddress
           if (this.eventData._VenueAddress.LatLng !== null) {
             const latlng = this.eventData._VenueAddress.LatLng
@@ -657,12 +653,6 @@ export default {
             this.returnToCenter()
           }
         }
-        //  else if (
-        //   this.eventData.BusinessType === 'Single' &&
-        //   this.eventData.LocationType === 'Online event'
-        // ) {
-        //   this.isOnline = true
-        // }
         return {
           event: event.length > 0 ? event[0] : {},
         }

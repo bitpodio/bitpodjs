@@ -921,7 +921,6 @@ import { formatTimezoneDateFieldsData } from '~/utility/form.js'
 import { getApiUrl } from '~/utility/index.js'
 import Lookup from '~/components/common/form/lookup.vue'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
-// import location from '~/config/apps/event/gql/location.gql'
 import Timezone from '~/components/common/form/timezone'
 import eventCount from '~/config/apps/event/gql/eventCount.gql'
 import organizationInfo from '~/config/apps/event/gql/organizationInfo.gql'
@@ -1843,7 +1842,16 @@ export default {
     deleteSession(index) {
       if (this.sessions.length > 1) {
         this.sessions.splice(index, 1)
+      } else {
+        this.resetSession()
       }
+    },
+    resetSession() {
+      this.validSessionsForm = false
+      this.isZoom = false
+      this.isGoogleMeet = false
+      const session = this.defaultSession()
+      this.sessions = [session]
     },
     editSession(index) {
       this.isDateRange = true
@@ -2107,8 +2115,8 @@ export default {
         TicketCount: 100,
       })
     },
-    addSession() {
-      this.sessions.push({
+    defaultSession() {
+      return {
         SessionId: this.sessions.length + 1,
         Name: '',
         ScheduledType: 'Over a period of rolling days',
@@ -2127,7 +2135,11 @@ export default {
         EndDat: 0,
         LocationId: [],
         Days: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'],
-      })
+      }
+    },
+    addSession() {
+      const session = this.defaultSession()
+      this.sessions.push(session)
     },
   },
 

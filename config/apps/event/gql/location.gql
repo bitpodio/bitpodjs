@@ -31,4 +31,14 @@ query($filters: JSON, $ticketFilters: JSON, $sessionFilters: JSON) {
       }
     }
   }
+  OrganizationInfo {
+    OrganizationInfoFind(filter: $filters) {
+      edges {
+        node {
+          id
+          weekDay
+        }
+      }
+    }
+  }
 }
