@@ -756,6 +756,8 @@
                             v-model="session.Timezone"
                             :rules="requiredRules"
                             :field="timezonefield"
+                            offset-y
+                            class="st-date"
                           ></Timezone>
                         </td>
                         <td class="pa-2 pb-0 event-timezone">
