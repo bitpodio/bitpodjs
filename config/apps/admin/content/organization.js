@@ -172,11 +172,6 @@ export default {
           cssClasses: 'col-6 col-md-6',
           newForm: true,
           editForm: true,
-          rules: [
-            function (value, data) {
-              return /.+@.+\..+/.test(value) || 'E-mail must be valid'
-            },
-          ],
         },
         Phone: {
           form: {
