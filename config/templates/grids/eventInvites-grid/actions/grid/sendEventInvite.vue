@@ -338,7 +338,6 @@
                     v-model="RTEValue"
                     class="pl-0"
                     :is-invitee="true"
-                    :show-template-dropdown="true"
                     :is-general="template === 'General Template'"
                   />
                 </v-card>
