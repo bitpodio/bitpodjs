@@ -13,7 +13,9 @@
             >
           </div>
           <div v-if="data.event.Status === 'Not ready'" class="mr-2">
-            <v-btn outlined color="primary">Publish</v-btn>
+            <v-btn outlined color="primary" @click="publishEvent"
+              >Publish</v-btn
+            >
           </div>
           <v-menu
             left
@@ -223,38 +225,55 @@
         </v-flex>
 
         <v-stepper
+          v-model="Status"
           alt-labels
-          class="elevation-0 boxview"
+          class="elevation-0 boxview event-steper"
           style="max-width: 800px;"
         >
           <v-stepper-header success>
             <v-stepper-step
-              step="3"
+              editable
+              step="1"
+              :complete="true"
               color="success"
-              complete
               class="ml-n13 body-2"
+              @click="changeStatus('Not ready')"
               >Not Ready</v-stepper-step
             >
 
             <v-divider></v-divider>
 
             <v-stepper-step
-              step="4"
+              editable
+              step="2"
+              :complete="Status > 1"
               color="success"
-              complete="true"
               class="body-2"
+              @click="changeStatus('Open for registration')"
               >Open for registration</v-stepper-step
             >
 
             <v-divider></v-divider>
 
-            <v-stepper-step step="4" color="success" class="body-2"
+            <v-stepper-step
+              editable
+              step="3"
+              :complete="Status > 2"
+              class="body-2"
+              color="success"
+              @click="changeStatus('Sold out')"
               >Sold out</v-stepper-step
             >
 
             <v-divider></v-divider>
 
-            <v-stepper-step step="" color="success" class="body-2"
+            <v-stepper-step
+              editable
+              step="4"
+              :complete="Status > 3"
+              class="body-2"
+              color="success"
+              @click="changeStatus('Registration closed')"
               >Registration closed</v-stepper-step
             >
           </v-stepper-header>
@@ -874,6 +893,8 @@ export default {
       },
       eventUniqueLink: '',
       eventSessionLink: '',
+      Status: '',
+      eventData: {},
     }
   },
   computed: {
@@ -882,6 +903,58 @@ export default {
     },
   },
   methods: {
+    refresh() {
+      this.$apollo.queries.data.refresh()
+    },
+    updateStepper() {
+      const status = this.eventData.Status
+      if (status === 'Not ready') {
+        this.Status = 1
+      } else if (status === 'Open for registration') {
+        this.Status = 2
+      } else if (status === 'Sold out') {
+        this.Status = 3
+      } else {
+        this.Status = 4
+      }
+    },
+    async changeStatus(statusName) {
+      const url = getApiUrl()
+      try {
+        const res = await this.$axios.$patch(
+          `${url}Events/${this.$route.params.id}`,
+          {
+            Status: statusName,
+          }
+        )
+        if (res) {
+          this.refresh()
+        }
+      } catch (e) {
+        console.log(
+          `Error in app/Event/_id/index.vue while making a PATCH call to Event model from method changeStatus context:-URL:-${url}\nInput:-\t Status:-${statusName}\n id:-${this.$route.params.id} `,
+          e
+        )
+      }
+    },
+    async publishEvent() {
+      this.eventData.Status = 'Open for registration'
+      const url = getApiUrl()
+      try {
+        const res = await this.$axios.patch(
+          `${url}Events/${this.$route.params.id}`,
+          this.formData
+        )
+        if (res) {
+          this.refresh()
+        }
+      } catch (e) {
+        console.error(
+          `Error in app/Event/_id/index.vue while making a PATCH call to Event model from method publishEvent context:-URL:-${url}\n formData:-${this.formData}\n id:-${this.$route.params.id} `,
+          e
+        )
+      }
+    },
     formatDate(date) {
       return date ? format(new Date(date), 'PPp') : ''
     },
@@ -949,6 +1022,8 @@ export default {
         const event = formatGQLResult(data, 'Event')
         const badge = formatGQLResult(data, 'Badge')
         const eventSummary = data.Event.EventGetEventSummery
+        this.eventData = event[0]
+        this.updateStepper()
         this.eventUniqueLink = `https://${nuxtConfig.axios.eventUrl}/e/${event[0].UniqLink}`
         this.eventSessionLink = `https://${nuxtConfig.axios.eventUrl}/t/${event[0].UniqLink}`
         return {
