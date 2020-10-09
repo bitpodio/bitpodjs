@@ -38,9 +38,10 @@ export default {
     openPrintForm() {
       const myWindow = window.open('', '', 'width=900,height=900')
       this.items.map((ele) => {
-        const template = this.context.badge.Template
-          ? this.context.badge.Template
-          : this.Template
+        const template =
+          this.context.badge && this.context.badge.Template
+            ? this.context.badge.Template
+            : this.Template
         const str = this.getBadge(template, ele)
         myWindow.document.write(`${str}`)
       })
@@ -94,7 +95,7 @@ export default {
         }
       } catch (e) {
         console.error(
-          'Error while fetching data using gql in print-badges.vue using the organizationInfo gql in method getOrgInfo',
+          `Error in templates/grids/registrationAttendees/actions/row-select/print-badges.vue while making a GQL call to organizationInfo model from method getOrgInfo context: query:${organizationInfo}`,
           e
         )
       }
@@ -145,7 +146,7 @@ export default {
         this.error = error
         this.loading = 0
         console.error(
-          `Error while fetching data using gql in eventAttendees/actions/row-select/print-badges.vue using the badge gql in apollo data query section context:- modelName: Badge \n EventId: ${this.$route.params.id}`,
+          `Error in templates/grids/registrationAttendees/actions/row-select/print-badges.vue while making a GQL call to Badge model from apollo data query section context:-EventId:-${this.$route.params.id}\n`,
           error
         )
       },
