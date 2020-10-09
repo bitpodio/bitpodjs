@@ -15,7 +15,7 @@
       <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
         <v-form ref="form" v-model="valid" :lazy-validation="lazy">
           <v-row>
-            <v-col cols="12">
+            <v-col cols="12" class="pb-0">
               <v-text-field
                 v-model="formData.ConnectionURL"
                 label="Connection Url"
@@ -24,13 +24,18 @@
               ></v-text-field>
             </v-col>
             <v-col cols="12">
-              <v-text @click="additionalSetting">Additional Setting</v-text>
+              <v-text
+                class="mb-2 primary--text cursorPointer"
+                @click="additionalSetting"
+                >Additional Setting</v-text
+              >
               <v-text-field
                 v-if="showField"
                 v-model="formData.InvitationDBURL"
                 label="Invitation DB URL"
                 outlined
                 dense
+                class="mt-4"
               ></v-text-field>
             </v-col>
           </v-row>

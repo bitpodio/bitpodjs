@@ -863,7 +863,7 @@
         <Grid
           view-name="eventRegistrationForm"
           :content="content"
-          class="mt-12"
+          class="mt-n12"
         />
       </div>
     </v-flex>
@@ -1143,7 +1143,7 @@
     <editSeoForm :seo-form.sync="seoForm" />
     <editEventSetting :event-setting.sync="eventSetting" />
     <editSiteSetting :site-setting.sync="siteSetting" />
-    <makeCopy :is-make-copy.sync="isMakeCopy" />
+    <makeCopy :key="isMakeCopy" :is-make-copy.sync="isMakeCopy" />
     <newBadgeForm :new-badge.sync="newBadge" />
     <editBadgeForm :id="badgeData.id" :edit-badge-form.sync="editBadgeForm" />
   </v-flex>
@@ -1578,13 +1578,13 @@ export default {
       return regUrl
     },
     formatDate(date) {
-      return date ? format(new Date(date), 'PPpp') : ''
+      return date ? format(new Date(date), 'PPp') : ''
     },
     formatedDate(date, timezone) {
       if (date) {
         const formattedDate = new Date(date)
         const zonedDate = utcToZonedTime(formattedDate, timezone)
-        const pattern = 'PPpp' // 'd.M.YYYY HH:mm:ss.SSS [GMT]Z (z)'
+        const pattern = 'PPp' // 'd.M.YYYY HH:mm:ss.SSS [GMT]Z (z)'
         const output = format(zonedDate, pattern, { timezone })
         return output
       }

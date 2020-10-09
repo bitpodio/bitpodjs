@@ -6,7 +6,7 @@
       >
         <v-flex class="d-flex justify-center align-center pb-0">
           <div
-            class="text-h4 text-capitalize d-inline-block text-truncate col-md-10 pa-0"
+            class="text-h5 text-capitalize d-inline-block text-truncate col-md-10 pa-0"
           >
             {{ data.invites.Title }}
           </div>

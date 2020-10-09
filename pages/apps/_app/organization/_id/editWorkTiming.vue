@@ -23,7 +23,7 @@
             </div>
           </v-card-title>
           <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
-            <span class="ml-2">Available Hours</span>
+            <span class="ml-0 body-1">Available Hours</span>
             <v-row>
               <v-col cols="12" sm="6" md="5" class="pb-0">
                 <v-select
