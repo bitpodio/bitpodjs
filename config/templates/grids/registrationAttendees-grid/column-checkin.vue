@@ -36,18 +36,19 @@ export default {
   },
   methods: {
     async updateDate() {
+      const URL = `https://${nuxtconfig.axios.eventUrl}/svc/api/Attes/${this.item.id}`
       try {
-        const res = await this.$axios.$put(
-          `https://${nuxtconfig.axios.eventUrl}/svc/api/Attes/${this.item.id}`,
-          {
-            CheckIn: new Date(),
-          }
-        )
+        const res = await this.$axios.$put(URL, {
+          CheckIn: new Date(),
+        })
         if (res) {
           this.refresh()
         }
       } catch (e) {
-        console.log('Error', e)
+        console.error(
+          `Errors in config/templates/grids/registrationAttendees-grid/column-checkin.vue on updateDate method context: API: ${URL}`,
+          e
+        )
       }
     },
   },

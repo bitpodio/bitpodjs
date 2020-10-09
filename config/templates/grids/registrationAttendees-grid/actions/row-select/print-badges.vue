@@ -145,7 +145,7 @@ export default {
         this.error = error
         this.loading = 0
         console.error(
-          'Error while fetching data using gql in eventAttendees/actions/row-select/print-badges.vue using the badge gql in apollo data query section',
+          `Error while fetching data using gql in eventAttendees/actions/row-select/print-badges.vue using the badge gql in apollo data query section context:- modelName: Badge \n EventId: ${this.$route.params.id}`,
           error
         )
       },
