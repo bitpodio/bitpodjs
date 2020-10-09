@@ -21,7 +21,22 @@
                       }}</span>
                     </v-avatar>
                   </v-list-item-avatar>
-                  <span
+
+                  <v-list-item-content>
+                    <v-list-item-title>
+                      <h2>{{ data.organization.Name }}</h2>
+                    </v-list-item-title>
+                    <v-list-item-subtitle class="pb-1">{{
+                      data.organization.Email
+                    }}</v-list-item-subtitle>
+                    <v-list-item-subtitle>{{
+                      data.organization.Mobile
+                    }}</v-list-item-subtitle>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list class="mt-n4 pl-2"
+                  ><span
+                    class="cursorPointer"
                     @click="
                       checkArray = []
                       orgLogo = !orgLogo
@@ -37,20 +52,8 @@
                       @input="uploadOrgLogo"
                     />
                     Upload</span
-                  >
-
-                  <v-list-item-content>
-                    <v-list-item-title>
-                      <h2>{{ data.organization.Name }}</h2>
-                    </v-list-item-title>
-                    <v-list-item-subtitle class="pb-1">{{
-                      data.organization.Email
-                    }}</v-list-item-subtitle>
-                    <v-list-item-subtitle>{{
-                      data.organization.Mobile
-                    }}</v-list-item-subtitle>
-                  </v-list-item-content>
-                </v-list-item>
+                  ></v-list
+                >
               </v-list>
             </v-card>
           </v-col>
@@ -161,7 +164,7 @@
           </h2>
           <v-spacer></v-spacer>
           <v-btn text small @click="editOrgInfo = true">
-            <v-icon left>mdi-pencil</v-icon>Edit
+            <v-icon left class="fs-16">fa-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
         <v-divider></v-divider>
@@ -231,7 +234,7 @@
           </h2>
           <v-spacer></v-spacer>
           <v-btn text small @click="editOrgSetting = true">
-            <v-icon left>fa-pencil</v-icon>Edit
+            <v-icon left class="fs-16">fa-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
         <v-divider></v-divider>
@@ -269,7 +272,7 @@
           </h2>
           <v-spacer></v-spacer>
           <v-btn text small @click="editSocialMedia = true">
-            <v-icon left>fa-pencil</v-icon>Edit
+            <v-icon left class="fs-16">fa-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
         <v-divider></v-divider>
@@ -300,7 +303,7 @@
           </h2>
           <v-spacer></v-spacer>
           <v-btn text small @click="editWorkTiming = true">
-            <v-icon left>fa-pencil</v-icon>Edit
+            <v-icon left class="fs-16">fa-pencil</v-icon>Edit
           </v-btn>
         </v-flex>
         <v-divider></v-divider>
