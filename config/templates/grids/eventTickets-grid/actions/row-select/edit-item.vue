@@ -16,7 +16,7 @@
         <v-card-title
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
-          <h2 class="black--text pt-10 pb-9">Edit Ticket</h2>
+          <h2 class="black--text pt-5 pb-3 text-h5">Edit Ticket</h2>
           <v-spacer></v-spacer>
           <div>
             <v-btn icon @click="onClose">
@@ -36,7 +36,7 @@
                   dense
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" sm="6" md="4" class="pb-0">
+              <v-col class="col-12 col-md-6 pb-0">
                 <v-datetime-picker
                   v-model="formData.StartDate"
                   :label="getDateLabel('StartDate')"
@@ -50,7 +50,7 @@
                   </template>
                 </v-datetime-picker>
               </v-col>
-              <v-col cols="12" sm="6" md="4" class="pb-0">
+              <v-col class="col-12 col-md-6 pb-0">
                 <v-datetime-picker
                   v-model="formData.EndDate"
                   :label="getDateLabel('EndDate')"
@@ -64,7 +64,7 @@
                   </template>
                 </v-datetime-picker>
               </v-col>
-              <v-col cols="12" sm="6" md="4">
+              <v-col class="col-12 col-md-6">
                 <v-select
                   v-model="formData.Type"
                   :items="typeDropDown"
@@ -75,7 +75,7 @@
                   @change="getType"
                 ></v-select>
               </v-col>
-              <v-col cols="12" sm="6" md="4">
+              <v-col class="col-12 col-md-6">
                 <v-text-field
                   v-model="Amount"
                   :label="getCurrencyLabel()"
@@ -86,7 +86,7 @@
                   dense
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" sm="6" md="4">
+              <v-col class="col-12 col-md-6">
                 <v-text-field
                   v-model="formData.TicketCount"
                   label="Ticket Count"
@@ -95,7 +95,7 @@
                   dense
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" sm="6" md="4">
+              <v-col class="col-12 col-md-6">
                 <v-text-field
                   v-model="formData.Group"
                   label="Group Name"
@@ -109,11 +109,14 @@
                   :items="registrationTypeDropdown"
                   label="Registration Type"
                   multiple
+                  outlined
                   chips
+                  dense
+                  small-chips
                   persistent-hint
                 ></v-select>
               </v-col>
-              <v-col cols="12" sm="6" md="4">
+              <v-col class="col-12 col-md-6">
                 <v-text-field
                   v-model="formData.DisplayOrder"
                   label="Display Order"
@@ -123,7 +126,7 @@
                   dense
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" sm="6" md="4">
+              <v-col class="col-12 col-md-6">
                 <v-checkbox
                   v-model="formData.ValidateQty"
                   label="Validate Quantity"
@@ -131,7 +134,7 @@
                   dense
                 ></v-checkbox>
               </v-col>
-              <v-col cols="12" sm="6" md="4">
+              <v-col class="col-12 col-md-6">
                 <v-checkbox
                   v-model="formData.CheckGroupDiscount"
                   label=" Check Group Discount"
@@ -145,6 +148,8 @@
                   :items="eventStatusDropDown"
                   label="Status"
                   persistent-hint
+                  dense
+                  outlined
                 ></v-select>
               </v-col>
             </v-row>
