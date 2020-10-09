@@ -824,9 +824,9 @@ export default {
         },
       },
       template: {
-        name: 'contact-grid',
+        name: 'eventInvitaionHistory-grid',
         context: {
-          basePath: '/contact',
+          basePath: '/event',
         },
         actions: {
           new: {

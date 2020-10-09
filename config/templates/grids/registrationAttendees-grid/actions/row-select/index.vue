@@ -16,17 +16,18 @@
       :refresh="refresh"
       :context="context"
     />
-    <resendRegistrationEmail :items="items" />
+
+    <printBadges :items="items" :context="context" />
   </div>
 </template>
 
 <script>
-import resendRegistrationEmail from './resendRegistrationEmail.vue'
+import printBadges from './print-badges.vue'
 import deleteItem from '~/config/common/templates/grid/actions/row-select/delete-item.vue'
 import editItem from '~/config/common/templates/grid/actions/row-select/edit-item.vue'
 export default {
   components: {
-    resendRegistrationEmail,
+    printBadges,
     deleteItem,
     editItem,
   },
@@ -34,7 +35,6 @@ export default {
     items: {
       type: Array,
       default: () => [],
-      required: false,
     },
     viewName: {
       type: String,
@@ -43,27 +43,22 @@ export default {
     content: {
       type: Object,
       default: () => {},
-      required: false,
     },
     refresh: {
       type: Function,
       default: () => false,
-      required: false,
     },
     onDeleteItem: {
       type: Function,
       default: () => false,
-      required: false,
     },
     onUpdateItem: {
       type: Function,
       default: () => false,
-      required: false,
     },
     context: {
       type: Object,
       default: () => {},
-      required: false,
     },
   },
 }
