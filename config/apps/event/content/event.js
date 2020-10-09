@@ -835,6 +835,17 @@ export default {
         context: {
           basePath: '/event',
         },
+        actions: {
+          new: {
+            hidden: true,
+          },
+          edit: {
+            hidden: true,
+          },
+          delete: {
+            hidden: true,
+          },
+        },
       },
       dataSource: {
         query: liveDraftEvents,

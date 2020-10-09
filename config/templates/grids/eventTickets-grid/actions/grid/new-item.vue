@@ -39,7 +39,7 @@
               <v-col cols="12" sm="6" md="6" class="pb-0">
                 <v-datetime-picker
                   v-model="formData.StartDate"
-                  label="Start Date*"
+                  :label="getDateLabel('Start Date')"
                   :rules="dateRules"
                   :text-field-props="startDateTextFieldProps()"
                 >
@@ -55,7 +55,7 @@
                 <v-datetime-picker
                   v-model="formData.EndDate"
                   :rules="dateRules"
-                  label="End Date*"
+                  :label="getDateLabel('End Date')"
                   :text-field-props="endDateTextFieldProps()"
                 >
                   <template slot="dateIcon">
@@ -68,6 +68,7 @@
               </v-col>
               <v-col cols="12" sm="6" md="6">
                 <v-select
+                  ref="form1"
                   v-model="formData.Type"
                   :items="typeDropDown"
                   :rules="required"
@@ -246,10 +247,21 @@ export default {
         e
       )
     }
-    this.getTicketDate()
+    if (this.eventData.BusinessType !== 'Recurring') {
+      this.getTicketDate()
+    }
     this.getAttendeeType()
   },
   methods: {
+    getDateLabel(dateLabel) {
+      if (this.eventData.BusinessType === 'Recurring') {
+        const label = `${dateLabel}`
+        return label
+      } else {
+        const label = `${dateLabel}*`
+        return label
+      }
+    },
     getCurrencyLabel() {
       const str = `Price*(${this.Symbol})`
       return str
@@ -262,7 +274,9 @@ export default {
       this.setAttendeeType = res
     },
     onReset() {
+      this.$refs.form1.reset()
       this.formData.Attendee = []
+      this.Attendees = []
       this.formData.Amount = ''
       this.formData.CheckGroupDiscount = false
       this.formData.Code = 'General admission'
@@ -316,7 +330,8 @@ export default {
               return 'Ticket end Date should be greater than Ticket startdate'
             } else if (
               scheduledDate &&
-              scheduledDate > new Date(this.data.event.EndDate)
+              scheduledDate > new Date(this.data.event.EndDate) &&
+              this.eventData.BusinessType !== 'Recurring'
             ) {
               this.valid = false
               return 'Ticket end Date should be less than event end date'
@@ -371,6 +386,7 @@ export default {
         if (res) {
           this.dialog = false
           this.onReset()
+          this.formData.Code = 'General admission'
           this.refresh()
         }
       } catch (e) {
