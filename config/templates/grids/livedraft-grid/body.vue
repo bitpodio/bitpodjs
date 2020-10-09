@@ -76,8 +76,11 @@
                   </div>
                 </v-flex>
               </nuxt-link>
-              <v-card-actions class="pt-0 pl-4">
+              <v-card-actions class="pt-0 pl-4 tiles-action">
                 <div class="text-truncate d-block">
+                  <v-text class="ma-0 mr-1 event-tags body-2"
+                    >#Recurring event</v-text
+                  >
                   <v-text
                     v-for="Tags in item.Tags"
                     :key="Tags"
@@ -110,18 +113,18 @@
                         <v-list-item-title>Preview</v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
-                    <v-list-item>
+                    <v-list-item @click="openEventForm(item.id)">
                       <v-list-item-icon class="mr-2">
                         <i
                           class="fa fa-pencil-square-o mt-1"
                           aria-hidden="true"
                         ></i>
                       </v-list-item-icon>
-                      <v-list-item-content @click="openEventForm(item.id)">
+                      <v-list-item-content>
                         <v-list-item-title>Edit</v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
-                    <v-list-item>
+                    <v-list-item @click="true">
                       <v-list-item-icon class="mr-2">
                         <i class="fa fa-clone mt-1" aria-hidden="true"></i>
                       </v-list-item-icon>
@@ -195,7 +198,7 @@
                   </div>
                 </v-flex>
               </nuxt-link>
-              <v-card-actions class="pt-0 pl-4">
+              <v-card-actions class="pt-0 pl-4 tiles-action">
                 <div class="text-truncate d-block">
                   <v-text
                     v-for="Tags in item.Tags"
@@ -229,7 +232,7 @@
                         <v-list-item-title>Preview</v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
-                    <v-list-item>
+                    <v-list-item @click="true">
                       <v-list-item-icon class="mr-2">
                         <i
                           class="fa fa-pencil-square-o mt-1"
@@ -243,7 +246,7 @@
                         <v-list-item-title>Edit</v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
-                    <v-list-item>
+                    <v-list-item @click="true">
                       <v-list-item-icon class="mr-2">
                         <i class="fa fa-clone mt-1" aria-hidden="true"></i>
                       </v-list-item-icon>
@@ -340,10 +343,13 @@ export default {
 .overflow-h {
   overflow: hidden;
 }
-.event-tags:after {
+.event-tags::after {
   content: ', ';
 }
-.event-tags:last-child:after {
+.event-tags:last-child::after {
   content: '';
+}
+.tiles-action {
+  min-height: 36px;
 }
 </style>

@@ -1,10 +1,26 @@
 <template>
-  <v-checkbox
-    v-model="checkbox"
-    color="green"
-    dense
-    @change="updateBussinessUnit"
-  ></v-checkbox>
+  <div class="positionRelative ps-top6">
+    <div v-if="item.Default === true">
+      <v-checkbox
+        v-model="checkbox"
+        success
+        dense
+        height="20"
+        class="ma-0 pa-0"
+        @change="updateBussinessUnit"
+      ></v-checkbox>
+    </div>
+    <div v-else>
+      <v-checkbox
+        v-model="checkbox"
+        error
+        dense
+        height="20"
+        class="ma-0 pa-0"
+        @change="updateBussinessUnit"
+      ></v-checkbox>
+    </div>
+  </div>
 </template>
 
 <script>

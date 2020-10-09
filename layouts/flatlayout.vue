@@ -1,6 +1,6 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer v-model="drawer" app>
+    <v-navigation-drawer v-model="drawer" app fixed top="50">
       <v-toolbar-title class="ml-0 pl-3 logo-ds d-flex align-center">
         <span class="hidden-sm-and-down bitpod-logo logo-ds">
           <v-img
@@ -308,7 +308,7 @@
       </v-card>
     </v-dialog>
 
-    <v-app-bar app flat class="greybg">
+    <v-app-bar fixed app flat class="greybg headernew">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title class="pl-0">Event</v-toolbar-title>
       <v-spacer></v-spacer>
