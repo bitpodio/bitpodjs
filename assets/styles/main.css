@@ -387,6 +387,9 @@ body {
 .grid-actions-container {
   min-height: 52px !important;
 }
+.lookup-tabs .theme--light.v-tabs > .v-tabs-bar {
+  background-color: transparent !important;
+}
 @media (max-width: 800px) {
   .nav-bar {
     top: 0 !important;
