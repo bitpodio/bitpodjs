@@ -103,7 +103,7 @@
                   dense
                 ></v-text-field>
               </v-col>
-              <v-col cols="12">
+              <v-col class="col-12 col-md-6">
                 <v-select
                   v-model="registrationType"
                   :items="registrationTypeDropdown"
@@ -142,7 +142,7 @@
                   dense
                 ></v-checkbox>
               </v-col>
-              <v-col cols="12">
+              <v-col class="col-12 col-md-6">
                 <v-select
                   v-model="eventStatus"
                   :items="eventStatusDropDown"
