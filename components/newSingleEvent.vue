@@ -123,7 +123,7 @@
                   <v-col class="pb-0">
                     <v-select
                       value="Venue"
-                      :items="['Online Event', 'Venue']"
+                      :items="['Online Event', 'Venue', 'Bitpod Virtual']"
                       label="Location Type"
                       required
                       dense=""
@@ -149,6 +149,15 @@
                       required
                       dense
                     ></v-textarea>
+                  </v-col>
+                  <v-col v-if="isBitpodVirtual" cols="12" class="pb-0">
+                    <v-text-field
+                      label="Bitpod Virtual Link"
+                      outlined
+                      dense
+                      disabled
+                      :value="getBitpodVirtualLink()"
+                    ></v-text-field>
                   </v-col>
 
                   <v-col v-if="isVenue" cols="12" class="pb-6 positionRelative">
@@ -594,6 +603,7 @@ export default {
       drawer: true,
       isVenue: true,
       isOnlineEvent: false,
+      isBitpodVirtual: false,
 
       isInalidEventLink: false,
       uniqueLinkMessage: '',
@@ -667,6 +677,11 @@ export default {
     },
   },
   methods: {
+    getBitpodVirtualLink() {
+      return `${strings.BITOPD_VIRTUAL_LINK}/${
+        this.eventLinkHint.split('/')[4]
+      }`
+    },
     isNextDisabled() {
       return this.isUniqLinkValid === false
     },
@@ -1046,11 +1061,19 @@ export default {
       if (value === 'Venue') {
         this.isVenue = true
         this.isOnlineEvent = false
+        this.isBitpodVirtual = false
       }
       if (value === 'Online Event') {
         this.isVenue = false
         this.isOnlineEvent = true
         this.isMap = false
+        this.isBitpodVirtual = false
+      }
+      if (value === 'Bitpod Virtual') {
+        this.isVenue = false
+        this.isOnlineEvent = false
+        this.isMap = false
+        this.isBitpodVirtual = true
       }
     },
     addTicketRow() {
