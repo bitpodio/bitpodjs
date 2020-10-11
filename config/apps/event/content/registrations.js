@@ -240,7 +240,7 @@ export default {
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
-          type: 'lookup',
+          type: 'search',
           cssClasses: 'col-6 col-md-6',
           hidden: true,
           inlineEdit: true,
