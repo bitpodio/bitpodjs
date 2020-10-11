@@ -16,10 +16,10 @@
         <v-card-title
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
-          <h2 class="black--text pt-10 pb-9">Edit Ticket</h2>
+          <h2 class="black--text pt-5 pb-3 text-h5">Edit Ticket</h2>
           <v-spacer></v-spacer>
           <div>
-            <v-btn icon @click="dialog = false">
+            <v-btn icon @click="onClose">
               <v-icon>mdi-close</v-icon>
             </v-btn>
           </div>
@@ -36,10 +36,10 @@
                   dense
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" sm="6" md="4" class="pb-0">
+              <v-col class="col-12 col-md-6 pb-0">
                 <v-datetime-picker
                   v-model="formData.StartDate"
-                  label="Start Date*"
+                  :label="getDateLabel('StartDate')"
                   :text-field-props="startDateTextFieldProps()"
                 >
                   <template slot="dateIcon">
@@ -50,10 +50,10 @@
                   </template>
                 </v-datetime-picker>
               </v-col>
-              <v-col cols="12" sm="6" md="4" class="pb-0">
+              <v-col class="col-12 col-md-6 pb-0">
                 <v-datetime-picker
                   v-model="formData.EndDate"
-                  label="End Date*"
+                  :label="getDateLabel('EndDate')"
                   :text-field-props="endDateTextFieldProps()"
                 >
                   <template slot="dateIcon">
@@ -64,7 +64,7 @@
                   </template>
                 </v-datetime-picker>
               </v-col>
-              <v-col cols="12" sm="6" md="4">
+              <v-col class="col-12 col-md-6">
                 <v-select
                   v-model="formData.Type"
                   :items="typeDropDown"
@@ -75,7 +75,7 @@
                   @change="getType"
                 ></v-select>
               </v-col>
-              <v-col cols="12" sm="6" md="4">
+              <v-col class="col-12 col-md-6">
                 <v-text-field
                   v-model="Amount"
                   :label="getCurrencyLabel()"
@@ -86,7 +86,7 @@
                   dense
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" sm="6" md="4">
+              <v-col class="col-12 col-md-6">
                 <v-text-field
                   v-model="formData.TicketCount"
                   label="Ticket Count"
@@ -95,7 +95,7 @@
                   dense
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" sm="6" md="4">
+              <v-col class="col-12 col-md-6">
                 <v-text-field
                   v-model="formData.Group"
                   label="Group Name"
@@ -103,17 +103,20 @@
                   dense
                 ></v-text-field>
               </v-col>
-              <v-col cols="12">
+              <v-col class="col-12 col-md-6">
                 <v-select
                   v-model="registrationType"
                   :items="registrationTypeDropdown"
                   label="Registration Type"
                   multiple
+                  outlined
                   chips
+                  dense
+                  small-chips
                   persistent-hint
                 ></v-select>
               </v-col>
-              <v-col cols="12" sm="6" md="4">
+              <v-col class="col-12 col-md-6">
                 <v-text-field
                   v-model="formData.DisplayOrder"
                   label="Display Order"
@@ -123,7 +126,7 @@
                   dense
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" sm="6" md="4">
+              <v-col class="col-12 col-md-6">
                 <v-checkbox
                   v-model="formData.ValidateQty"
                   label="Validate Quantity"
@@ -131,7 +134,7 @@
                   dense
                 ></v-checkbox>
               </v-col>
-              <v-col cols="12" sm="6" md="4">
+              <v-col class="col-12 col-md-6">
                 <v-checkbox
                   v-model="formData.CheckGroupDiscount"
                   label=" Check Group Discount"
@@ -139,12 +142,14 @@
                   dense
                 ></v-checkbox>
               </v-col>
-              <v-col cols="12">
+              <v-col class="col-12 col-md-6">
                 <v-select
                   v-model="eventStatus"
                   :items="eventStatusDropDown"
                   label="Status"
                   persistent-hint
+                  dense
+                  outlined
                 ></v-select>
               </v-col>
             </v-row>
@@ -255,6 +260,33 @@ export default {
     this.getCurrencySymbol(this.context.event.Currency)
   },
   methods: {
+    onClose() {
+      this.onReset()
+      this.dialog = false
+    },
+    getDateLabel(dateLabel) {
+      if (this.context.event.BusinessType === 'Recurring') {
+        return `${dateLabel}`
+      } else {
+        return `${dateLabel}*`
+      }
+    },
+    onReset() {
+      this.formData.Attendee = []
+      this.Attendees = []
+      this.formData.Amount = ''
+      this.formData.CheckGroupDiscount = false
+      this.formData.Code = ''
+      this.formData.DisplayOrder = null
+      this.formData.Group = ''
+      this.formData.Type = ''
+      this.formData.TicketCount = null
+      this.formData.ValidateQty = false
+      this.formData.Status = ''
+      this.formData.StartDate = ''
+      this.formData.EndDate = ''
+      this.valid = false
+    },
     async onSave() {
       const url = getApiUrl()
       this.getAttendeesId()
@@ -269,6 +301,7 @@ export default {
           this.formData
         )
         if (res) {
+          this.onReset()
           this.dialog = false
           this.refresh()
         }
@@ -326,7 +359,8 @@ export default {
               return 'Ticket end Date should be greater than Ticket startdate'
             } else if (
               scheduledDate &&
-              scheduledDate > new Date(this.context.event.EndDate)
+              scheduledDate > new Date(this.context.event.EndDate) &&
+              this.context.event.BusinessType !== 'Recurring'
             ) {
               this.valid = false
               return 'Ticket end Date should be less than event end date'
@@ -345,9 +379,17 @@ export default {
     },
     getTickets() {
       this.items.map((ele) => {
-        this.formData = ele
-        this.formData.StartDate = new Date(ele.StartDate)
-        this.formData.EndDate = new Date(ele.EndDate)
+        this.formData = { ...ele }
+        if (
+          this.context.event.BusinessType !== 'Recurring' ||
+          (ele.StartDate !== '' && ele.EndDate !== '')
+        ) {
+          this.formData.StartDate = new Date(ele.StartDate)
+          this.formData.EndDate = new Date(ele.EndDate)
+        } else {
+          this.formData.StartDate = null
+          this.formData.EndDate = null
+        }
         this.Amount = ele.Amount
         this.registrationType = []
         this.setAttendee.forEach((x) => {

@@ -5,13 +5,13 @@
       v-if="status === 'Connected' || status === 'Disconnected'"
       icon
       @click="dialog = true"
-      ><v-icon small color="red">fa-pencil</v-icon></v-btn
+      ><v-icon small>fa-pencil</v-icon></v-btn
     >
     <v-btn
       v-if="status === 'Connected' || status === 'Disconnected'"
       icon
       @click="onDelete()"
-      ><v-icon small color="red">fa-trash</v-icon></v-btn
+      ><v-icon small>fa-trash</v-icon></v-btn
     >
     <v-dialog
       v-model="dialog"

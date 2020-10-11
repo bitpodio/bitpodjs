@@ -835,6 +835,17 @@ export default {
         context: {
           basePath: '/event',
         },
+        actions: {
+          new: {
+            hidden: true,
+          },
+          edit: {
+            hidden: true,
+          },
+          delete: {
+            hidden: true,
+          },
+        },
       },
       dataSource: {
         query: liveDraftEvents,
@@ -2116,6 +2127,14 @@ export default {
         context: {
           basePath: '/event',
         },
+        actions: {
+          edit: {
+            hidden: true,
+          },
+          delete: {
+            hidden: true,
+          },
+        },
       },
       dataSource: {
         query: eventInvites,
@@ -2181,7 +2200,7 @@ export default {
           sortEnable: true,
           columnWidth: '150px',
           type: 'number',
-          cssClasses: 'col-6 col-md-6',
+          cssClasses: 'col-12 col-md-6',
           hidden: false,
           inlineEdit: true,
           newForm: true,
@@ -2218,7 +2237,7 @@ export default {
           sortEnable: true,
           columnWidth: '150px',
           type: 'lookup',
-          cssClasses: 'col-6 col-md-6',
+          cssClasses: 'col-12 col-md-6',
           hidden: false,
           inlineEdit: true,
           newForm: true,
@@ -2251,7 +2270,7 @@ export default {
           sortEnable: true,
           columnWidth: '150px',
           type: 'number',
-          cssClasses: 'col-6 col-md-6',
+          cssClasses: 'col-12 col-md-6',
           hidden: false,
           inlineEdit: true,
           newForm: true,
@@ -2274,7 +2293,7 @@ export default {
           sortEnable: true,
           columnWidth: '150px',
           type: 'string',
-          cssClasses: 'col-6 col-md-6',
+          cssClasses: 'col-12 col-md-6',
           hidden: true,
           inlineEdit: true,
           newForm: true,
@@ -2292,7 +2311,7 @@ export default {
           columnWidth: '150px',
           type: 'lookup',
           multiple: true,
-          cssClasses: 'col-6 col-md-6',
+          cssClasses: 'col-12 col-md-6',
           hidden: true,
           inlineEdit: true,
           newForm: true,
@@ -2319,7 +2338,7 @@ export default {
           sortEnable: true,
           columnWidth: '150px',
           type: 'number',
-          cssClasses: 'col-6 col-md-6',
+          cssClasses: 'col-12 col-md-6',
           hidden: true,
           inlineEdit: true,
           newForm: true,
@@ -2344,7 +2363,7 @@ export default {
           sortEnable: true,
           columnWidth: '150px',
           type: 'string',
-          cssClasses: 'col-6 col-md-6',
+          cssClasses: 'col-12 col-md-6',
           hidden: false,
           inlineEdit: true,
           newForm: false,
@@ -2361,7 +2380,7 @@ export default {
           sortEnable: true,
           columnWidth: '150px',
           type: 'datetime',
-          cssClasses: 'col-6 col-md-6',
+          cssClasses: 'col-12 col-md-6',
           hidden: false,
           inlineEdit: true,
           newForm: true,
@@ -2389,7 +2408,7 @@ export default {
           sortEnable: true,
           columnWidth: '150px',
           type: 'datetime',
-          cssClasses: 'col-6 col-md-6',
+          cssClasses: 'col-12 col-md-6',
           hidden: false,
           inlineEdit: true,
           newForm: true,
@@ -2418,7 +2437,7 @@ export default {
           sortEnable: true,
           columnWidth: '150px',
           type: 'checkbox',
-          cssClasses: 'col-6 col-md-6',
+          cssClasses: 'col-12 col-md-6',
           hidden: true,
           inlineEdit: true,
           newForm: true,
@@ -2435,7 +2454,7 @@ export default {
           sortEnable: true,
           columnWidth: '150px',
           type: 'checkbox',
-          cssClasses: 'col-6 col-md-6',
+          cssClasses: 'col-12 col-md-6',
           hidden: true,
           inlineEdit: true,
           newForm: true,
@@ -2929,7 +2948,7 @@ export default {
             itemText: 'FirstName',
             itemValue: 'id',
             getData: (ctx) => {
-              const path = `Events/${ctx.$route.params.id}/EventSpeakers`
+              const path = `/Events/${ctx.$route.params.id}/EventSpeakers`
               return getLookupData(path)
             },
           },
@@ -4773,6 +4792,132 @@ export default {
           ),
       },
       title: 'Integration',
+      type: 'list',
+    },
+    eventInvitesDetails: {
+      ui: {
+        hideDefaultHeader: false,
+        hideDefaultFooter: false,
+        showExpand: false,
+        singleExpand: false,
+        showSelect: false,
+        hideFilter: false,
+        hideSearch: true,
+      },
+      hidden: true,
+      fields: {
+        'getContact.FullName': {
+          displayOrder: 2,
+          caption: 'Name',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+        },
+        isRegistered: {
+          displayOrder: 3,
+          caption: 'Registered',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+        },
+        'getContact.Email': {
+          displayOrder: 4,
+          caption: 'Email',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+        },
+        Sent: {
+          displayOrder: 5,
+          caption: 'Sent/Bounce',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+        },
+        Click: {
+          displayOrder: 6,
+          caption: 'Click',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+        },
+        Open: {
+          displayOrder: 7,
+          caption: 'Open',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+        },
+        Delivered: {
+          displayOrder: 8,
+          caption: 'Delivered',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+        },
+        Unsubscribed: {
+          displayOrder: 9,
+          caption: 'Unsubscribed',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+        },
+        SpamReport: {
+          displayOrder: 10,
+          caption: 'Spam',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+        },
+        createdDate: {
+          displayOrder: 11,
+          caption: 'Date',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'date',
+        },
+      },
+      template: {
+        name: 'eventInvitesDetails-grid',
+        context: {
+          basePath: '/event',
+        },
+        actions: {
+          new: {
+            hidden: true,
+          },
+          edit: {
+            hidden: true,
+          },
+          delete: {
+            hidden: true,
+          },
+        },
+      },
+      dataSource: {
+        query: eventInvites,
+        defaultSort: 'createdDate DESC',
+        type: 'graphql',
+        model: 'EmailAnalytic',
+        filter(ctx) {
+          return {
+            where: {
+              CRMActivityId: this.$route.params.id,
+            },
+          }
+        },
+      },
+      title: 'eventInvites',
       type: 'list',
     },
   },

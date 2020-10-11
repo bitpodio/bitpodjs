@@ -6,7 +6,7 @@
       >
         <v-flex class="d-flex justify-center align-center pb-0">
           <div
-            class="text-h4 text-capitalize d-inline-block text-truncate col-md-10 pa-0"
+            class="text-h5 text-capitalize d-inline-block text-truncate col-md-10 pa-0"
           >
             {{ data.invites.Title }}
           </div>
@@ -23,8 +23,8 @@
             <v-col class="col-12 pb-0 pt-0">
               <v-list class="d-inline-block">
                 <v-list-item class="pl-0">
-                  <v-list-item-avatar>
-                    <v-avatar color="primary" size="48">
+                  <v-list-item-avatar size="36">
+                    <v-avatar color="primary" size="36">
                       <span class="white--text Twitter">{{
                         data.invites.Owner
                       }}</span>

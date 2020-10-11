@@ -16,7 +16,7 @@
         <v-card-title
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
-          <h2 class="black--text pt-10 pb-9">New Ticket</h2>
+          <h2 class="black--text pt-5 pb-3 text-h5">New Ticket</h2>
           <v-spacer></v-spacer>
           <div>
             <v-btn icon @click="onClose">
@@ -37,37 +37,28 @@
                 ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6" md="6" class="pb-0">
-                <v-datetime-picker
-                  v-model="formData.StartDate"
-                  label="Start Date*"
-                  :rules="dateRules"
-                  :text-field-props="startDateTextFieldProps()"
-                >
-                  <template slot="dateIcon">
-                    <v-icon>fas fa-calendar</v-icon>
-                  </template>
-                  <template slot="timeIcon">
-                    <v-icon>fas fa-clock</v-icon>
-                  </template>
-                </v-datetime-picker>
+                <CustomDate
+                  v-model="StartDate"
+                  :label="getDateLabel('Start Date')"
+                  :field="startDateField"
+                  :rules="startDateRule"
+                  :on-change="changeStartDate"
+                  type="datetime"
+                />
               </v-col>
               <v-col cols="12" sm="6" md="6" class="pb-0">
-                <v-datetime-picker
-                  v-model="formData.EndDate"
-                  :rules="dateRules"
-                  label="End Date*"
-                  :text-field-props="endDateTextFieldProps()"
-                >
-                  <template slot="dateIcon">
-                    <v-icon>fas fa-calendar</v-icon>
-                  </template>
-                  <template slot="timeIcon">
-                    <v-icon>fas fa-clock</v-icon>
-                  </template>
-                </v-datetime-picker>
+                <CustomDate
+                  v-model="EndDate"
+                  :label="getDateLabel('End Date')"
+                  :field="endDateField"
+                  :rules="endDateRule"
+                  :on-change="changeEndDate"
+                  type="datetime"
+                />
               </v-col>
-              <v-col cols="12" sm="6" md="6">
+              <v-col class="col-12 col-md-6">
                 <v-select
+                  ref="form1"
                   v-model="formData.Type"
                   :items="typeDropDown"
                   :rules="required"
@@ -77,7 +68,7 @@
                   @change="getType"
                 ></v-select>
               </v-col>
-              <v-col cols="12" sm="6" md="6">
+              <v-col class="col-12 col-md-6">
                 <v-text-field
                   v-model="formData.Amount"
                   :label="getCurrencyLabel()"
@@ -88,7 +79,7 @@
                   dense
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" sm="6" md="6">
+              <v-col class="col-12 col-md-6">
                 <v-text-field
                   v-model="formData.TicketCount"
                   label="Ticket Count"
@@ -98,7 +89,7 @@
                   dense
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" sm="6" md="6">
+              <v-col class="col-12 col-md-6">
                 <v-text-field
                   v-model="formData.Group"
                   label="Group Name"
@@ -106,17 +97,20 @@
                   dense
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" sm="6" md="6">
+              <v-col class="col-12 col-md-6">
                 <v-select
                   v-model="Attendees"
                   :items="registrationTypeDropdown"
                   label="Registration Type"
                   multiple
                   chips
+                  outlined
+                  small-chips
+                  dense
                   persistent-hint
                 ></v-select>
               </v-col>
-              <v-col cols="12" sm="6" md="6">
+              <v-col class="col-12 col-md-6">
                 <v-text-field
                   v-model="formData.DisplayOrder"
                   label="Display Order"
@@ -126,7 +120,7 @@
                   dense
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" sm="6" md="6">
+              <v-col class="col-12 col-md-6">
                 <v-checkbox
                   v-model="formData.ValidateQty"
                   label="Validate Quantity"
@@ -134,7 +128,7 @@
                   dense
                 ></v-checkbox>
               </v-col>
-              <v-col cols="12" sm="6" md="6">
+              <v-col class="col-12 col-md-6">
                 <v-checkbox
                   v-model="formData.CheckGroupDiscount"
                   label=" Check Group Discount"
@@ -175,7 +169,12 @@ import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { required } from '~/utility/rules.js'
 import { getApiUrl } from '~/utility'
+import CustomDate from '~/components/common/form/date.vue'
+import strings from '~/strings.js'
 export default {
+  components: {
+    CustomDate,
+  },
   props: {
     refresh: {
       type: Function,
@@ -190,6 +189,7 @@ export default {
       default: false,
     },
   },
+
   data() {
     return {
       isDisabled: false,
@@ -221,7 +221,51 @@ export default {
       eventData: {},
       setAttendeeType: {},
       Symbol: '',
+      StartDate: null,
+      EndDate: null,
     }
+  },
+  computed: {
+    startDateField() {
+      return {
+        appendIcon: 'fa-calendar',
+        outlined: true,
+        caption: 'Start Date',
+        type: 'datetime',
+      }
+    },
+    endDateField() {
+      return {
+        appendIcon: 'fa-calendar',
+        outlined: true,
+        caption: 'End Date',
+        type: 'datetime',
+      }
+    },
+    startDateRule() {
+      return [
+        (v) => {
+          const startDate = new Date(v) || new Date(this.StartDate)
+          return startDate > new Date(this.EndDate)
+            ? strings.START_END_DATE
+            : true
+        },
+      ]
+    },
+    endDateRule() {
+      return [
+        (v) => {
+          const endDate = new Date(v)
+          if (new Date(this.StartDate) > endDate) {
+            return strings.END_START_DATE
+          } else if (endDate > new Date(this.data.event.EndDate)) {
+            return 'End date should be less than event end date'
+          } else {
+            return true
+          }
+        },
+      ]
+    },
   },
   async mounted() {
     try {
@@ -246,10 +290,27 @@ export default {
         e
       )
     }
-    this.getTicketDate()
+    if (this.eventData.BusinessType !== 'Recurring') {
+      this.getTicketDate()
+    }
     this.getAttendeeType()
   },
   methods: {
+    changeStartDate(value) {
+      this.$refs.form.validate()
+    },
+    changeEndDate(value) {
+      this.$refs.form.validate()
+    },
+    getDateLabel(dateLabel) {
+      if (this.eventData.BusinessType === 'Recurring') {
+        const label = `${dateLabel}`
+        return label
+      } else {
+        const label = `${dateLabel}*`
+        return label
+      }
+    },
     getCurrencyLabel() {
       const str = `Price*(${this.Symbol})`
       return str
@@ -262,7 +323,9 @@ export default {
       this.setAttendeeType = res
     },
     onReset() {
+      this.$refs.form1.reset()
       this.formData.Attendee = []
+      this.Attendees = []
       this.formData.Amount = ''
       this.formData.CheckGroupDiscount = false
       this.formData.Code = 'General admission'
@@ -284,75 +347,6 @@ export default {
       this.dialog = false
       this.onReset()
     },
-    startDateTextFieldProps() {
-      return {
-        appendIcon: 'fa-calendar',
-        outlined: true,
-        dense: true,
-        rules: [
-          (v) => {
-            const scheduledDate = v && new Date(v)
-            if (scheduledDate && scheduledDate > this.formData.EndDate) {
-              this.valid = false
-              return 'Ticket start date should be less than Ticket end date'
-            } else {
-              this.valid = true
-              return true
-            }
-          },
-        ],
-      }
-    },
-    endDateTextFieldProps() {
-      return {
-        appendIcon: 'fa-calendar',
-        outlined: true,
-        dense: true,
-        rules: [
-          (v) => {
-            const scheduledDate = v && new Date(v)
-            if (scheduledDate && scheduledDate < this.formData.StartDate) {
-              this.valid = false
-              return 'Ticket end Date should be greater than Ticket startdate'
-            } else if (
-              scheduledDate &&
-              scheduledDate > new Date(this.data.event.EndDate)
-            ) {
-              this.valid = false
-              return 'Ticket end Date should be less than event end date'
-            } else {
-              this.valid = true
-              return true
-            }
-          },
-        ],
-      }
-    },
-    dateProps() {
-      return {
-        appendIcon: 'fa-calendar',
-        outlined: true,
-        dense: true,
-        rules: [
-          (v) => {
-            const scheduledDate = v && new Date(v)
-            if (scheduledDate && scheduledDate < this.formData.StartDate) {
-              this.valid = false
-              return 'Ticket end Date should be greater than Ticket startdate'
-            } else if (
-              scheduledDate &&
-              scheduledDate > new Date(this.data.event.EndDate)
-            ) {
-              this.valid = false
-              return 'Ticket end Date should be less than event end date'
-            } else {
-              this.valid = true
-              return true
-            }
-          },
-        ],
-      }
-    },
     getCurrencySymbol(Currency) {
       this.Symbol = Number()
         .toLocaleString(Currency, { style: 'currency', currency: Currency })
@@ -371,6 +365,7 @@ export default {
         if (res) {
           this.dialog = false
           this.onReset()
+          this.formData.Code = 'General admission'
           this.refresh()
         }
       } catch (e) {
@@ -388,8 +383,8 @@ export default {
       }
     },
     getTicketDate() {
-      this.formData.StartDate = new Date()
-      this.formData.EndDate = addMonths(new Date(), 1)
+      this.StartDate = new Date()
+      this.EndDate = addMonths(new Date(), 1)
     },
 
     async getDropDownData(filterType) {

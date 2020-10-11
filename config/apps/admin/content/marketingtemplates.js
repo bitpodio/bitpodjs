@@ -115,6 +115,7 @@ export default {
           cssClasses: 'col-12 col-md-12',
           newForm: true,
           editForm: false,
+          showTemplateDropdown: true,
           rules: [
             (v) => {
               return !!v || 'Body is required'
@@ -329,7 +330,6 @@ export default {
           newForm: true,
           editForm: false,
           showTemplateDropdown: true,
-          isGeneral: true,
           rules: [
             (v) => {
               return !!v || 'Body is required'
