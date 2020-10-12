@@ -40,7 +40,7 @@ export default {
         })
         if (res === '') {
           this.snackbar = true
-          this.refresh()
+          this.$parent.$parent.refresh()
         }
       } catch (e) {
         console.error(

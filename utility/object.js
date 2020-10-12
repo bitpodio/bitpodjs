@@ -57,3 +57,15 @@ export function _isUndefined(value) {
 export function _isNull(value) {
   return value === null
 }
+
+export function debounce(fn, delay) {
+  let timeoutID = null
+  return () => {
+    clearTimeout(timeoutID)
+    const args = arguments
+    const that = this
+    timeoutID = setTimeout(function () {
+      fn.apply(that, args)
+    }, delay)
+  }
+}
