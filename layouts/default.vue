@@ -6,7 +6,9 @@
       class="nav-bar greybg"
       :width="280"
     >
-      <v-toolbar-title class="ml-0 pl-3 px-2 py-1 logo-ds d-flex align-center">
+      <v-toolbar-title
+        class="ml-0 pl-3 px-2 py-1 logo-ds d-none d-sm-flex d-md-none align-center"
+      >
         <span class="bitpod-logo logo-ds">
           <v-img
             :src="$config.cdnUri + 'logo-favicon.png'"
@@ -37,12 +39,22 @@
             </v-btn>
           </template>
 
-          <v-list>
+          <v-list dense>
             <v-list-item @click="dialog1 = !dialog1">
-              <v-list-item-title>Single Event</v-list-item-title>
+              <v-list-item-icon class="mr-2">
+                <v-icon class="fs-16 mr-2">fa-calendar</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title>Single Event</v-list-item-title>
+              </v-list-item-content>
             </v-list-item>
             <v-list-item @click="dialog = !dialog">
-              <v-list-item-title>Recurring Event</v-list-item-title>
+              <v-list-item-icon class="mr-2">
+                <v-icon class="fs-16 mr-2">fa-history</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title>Recurring Event</v-list-item-title>
+              </v-list-item-content>
             </v-list-item>
           </v-list>
         </v-menu>
@@ -122,17 +134,26 @@
       <NewRecurringEvent :on-form-close="closeRecurringEventForm" />
     </v-dialog>
 
-    <v-app-bar app flat class="greybg" height="50">
-      <div
-        v-if="drawer === false"
-        class="ml-xs-0 d-none d-sm-none d-md-flex d-lg-flex d-xl-flex"
-        :class="drawer ? '' : 'ml-md-n4 mr-md-2'"
+    <v-app-bar app flat class="greybg headernew pl-0" height="50">
+      <v-toolbar-title
+        class="ml-n3 pl-0 px-2 py-1 logo-ds d-flex align-center appbar-left"
       >
         <v-app-bar-nav-icon
           :ripple="false"
+          size="24"
+          height="36px"
+          width="36px"
           @click.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
-      </div>
+        <span class="bitpod-logo logo-ds">
+          <v-img
+            :src="$config.cdnUri + 'logo-favicon.png'"
+            class="logo-bitpod"
+          ></v-img>
+        </span>
+        <span d-inline-flex align-center class="mx-2 text-h5">Event</span>
+        <v-spacer></v-spacer>
+      </v-toolbar-title>
       <div class="d-flex d-sm-flex d-md-none ml-n3">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       </div>
@@ -285,12 +306,12 @@
                 </v-list-item-avatar>
 
                 <v-list-item-content>
-                  <!-- <v-list-item-title>{{
+                  <v-list-item-title>{{
                     $auth.user.data.name
                   }}</v-list-item-title>
                   <v-list-item-subtitle>{{
                     $auth.user.data.email
-                  }}</v-list-item-subtitle> -->
+                  }}</v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>
             </v-list>

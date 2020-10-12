@@ -2,7 +2,6 @@ import eventNames from '../gql/eventNames.gql'
 import registrationType from '../gql/registrationType.gql'
 import eventTickets from '../gql/eventTickets.gql'
 import registrationList from '../gql/registrationList.gql'
-import registrationStatusOptions from '../gql/registrationStatusOptions.gql'
 import eventAttendees from '../gql/eventAttendees.gql'
 import eventTasks from '../gql/eventTasks.gql'
 import { getData, getLookupData } from '../rest'
@@ -313,7 +312,7 @@ export default {
                 },
               }
               filter = JSON.stringify(filter)
-              const path = `GeneralConfigurations?filter=${filter}`
+              const path = `/GeneralConfigurations?filter=${filter}`
               return getLookupData(path)
             },
           },
@@ -458,54 +457,300 @@ export default {
         hideSearch: true,
       },
       fields: {
+        FirstName: {
+          displayOrder: 1,
+          caption: 'First Name',
+          form: {
+            caption: 'First Name *',
+            displayOrder: 1,
+          },
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+          hidden: true,
+          inlineEdit: true,
+          newForm: true,
+          editForm: true,
+          rules: [
+            (v) => {
+              return !!v || 'First Name is required'
+            },
+          ],
+        },
+        LastName: {
+          displayOrder: 1,
+          caption: 'Last Name',
+          form: {
+            caption: 'Last Name *',
+            displayOrder: 2,
+          },
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+          hidden: true,
+          inlineEdit: true,
+          newForm: true,
+          editForm: true,
+          rules: [
+            (v) => {
+              return !!v || 'Last Name is required'
+            },
+          ],
+        },
+        PaymentMethod: {
+          displayOrder: 10,
+          caption: 'PaymentMethod',
+          form: {
+            caption: 'PaymentMethod*',
+            displayOrder: 13,
+          },
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+          inlineEdit: false,
+          newForm: false,
+          editForm: false,
+        },
+        CompanyName: {
+          displayOrder: 4,
+          caption: 'Organization',
+          form: {
+            caption: 'Organization',
+            displayOrder: 5,
+          },
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+          hidden: false,
+          inlineEdit: true,
+          newForm: true,
+          editForm: true,
+        },
+        Phone: {
+          displayOrder: 5,
+          caption: 'Phone',
+          form: {
+            caption: 'Phone *',
+            displayOrder: 3,
+          },
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '100px',
+          type: 'string',
+          hidden: false,
+          inlineEdit: true,
+          newForm: true,
+          editForm: true,
+          rules: [
+            (v) => {
+              return !!v || 'Phone is required'
+            },
+            function (value, data) {
+              return /^[0-9]\d*$|^$/.test(value) || 'Number must be valid'
+            },
+          ],
+        },
+        Email: {
+          displayOrder: 3,
+          caption: 'Email',
+          form: {
+            caption: 'Email *',
+            displayOrder: 4,
+          },
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '130px',
+          type: 'string',
+          hidden: false,
+          inlineEdit: true,
+          newForm: true,
+          editForm: true,
+          rules: [
+            (v) => {
+              return !!v || 'Email is required'
+            },
+            function (value, data) {
+              return /.+@.+\..+/.test(value) || 'E-mail must be valid'
+            },
+          ],
+        },
+        '_CurrentAddress.AddressLine': {
+          caption: 'Address',
+          searchEnable: true,
+          form: {
+            caption: 'Address',
+            displayOrder: 7,
+          },
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+          inlineEdit: false,
+          newForm: true,
+          editForm: true,
+          hidden: true,
+        },
+        '_CurrentAddress.City': {
+          caption: 'City',
+          searchEnable: true,
+          form: {
+            caption: 'City',
+            displayOrder: 8,
+          },
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+          inlineEdit: false,
+          newForm: true,
+          editForm: true,
+          hidden: true,
+        },
+        '_CurrentAddress.State': {
+          caption: 'State',
+          form: {
+            caption: 'State',
+            displayOrder: 9,
+          },
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+          inlineEdit: false,
+          newForm: true,
+          editForm: true,
+          hidden: true,
+        },
+        '_CurrentAddress.PostalCode': {
+          caption: 'Zip',
+          form: {
+            caption: 'PostalCode',
+            displayOrder: 10,
+          },
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+          inlineEdit: false,
+          newForm: true,
+          editForm: true,
+          hidden: true,
+        },
+        '_CurrentAddress.Country': {
+          caption: 'Country',
+          form: {
+            caption: 'Country',
+            displayOrder: 11,
+          },
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+          inlineEdit: false,
+          newForm: true,
+          editForm: true,
+          hidden: true,
+        },
         EventName: {
           displayOrder: 6,
-          caption: 'EventName',
+          caption: 'Event Name',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
           type: 'string',
           cssClasses: 'col-12 col-md-12',
+          hidden: false,
+          inlineEdit: true,
+          newForm: false,
+          editForm: false,
         },
-        PaymentMethod: {
-          displayOrder: 10,
-          caption: 'PaymentMethod',
+        EventId: {
+          displayOrder: 6,
+          caption: 'Event',
+          form: {
+            caption: 'Event *',
+            displayOrder: 12,
+          },
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
-          type: 'string',
+          columnWidth: '180px',
+          type: 'lookup',
+          cssClasses: 'col-6 col-md-6',
+          hidden: true,
+          inlineEdit: true,
+          newForm: true,
+          editForm: true,
+          dataSource: {
+            query: eventNames,
+            itemText: 'Title',
+            itemValue: 'id',
+            filter(ctx) {
+              return {
+                and: [
+                  { EndDate: { gte: new Date() } },
+                  { Status: `Open for registration` },
+                ],
+              }
+            },
+          },
         },
-        CompanyName: {
-          displayOrder: 4,
-          caption: 'Organization',
+        AttendeeType: {
+          displayOrder: 6,
+          caption: 'AttendeeType',
+          form: {
+            caption: 'RegistrationType',
+            displayOrder: 15,
+          },
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
-          type: 'richtext',
-        },
-        Phone: {
-          displayOrder: 5,
-          caption: 'Phone',
-          searchEnable: true,
-          sortEnable: true,
-          columnWidth: '100px',
-          type: 'string',
+          columnWidth: '180px',
+          type: 'lookup',
+          cssClasses: 'col-6 col-md-6',
+          hidden: true,
+          inlineEdit: true,
+          newForm: true,
+          editForm: true,
+          dataSource: {
+            query: registrationType,
+            itemText: 'Name',
+            itemValue: 'id',
+            filter(ctx, data) {
+              return {
+                EventId: ctx.EventId,
+              }
+            },
+          },
         },
         Status: {
           displayOrder: 9,
           caption: 'Status',
+          form: {
+            caption: 'Status *',
+            displayOrder: 6,
+          },
           searchEnable: true,
           sortEnable: true,
           columnWidth: '100px',
           type: 'lookup',
+          hidden: false,
+          inlineEdit: true,
+          newForm: true,
+          editForm: true,
           dataSource: {
-            query: registrationStatusOptions,
+            type: 'rest',
             itemText: 'value',
             itemValue: 'key',
-            filter(data) {
-              return {
-                type: data.EventName,
+            getData: (ctx) => {
+              let filter = {
+                where: {
+                  type: 'RegistrationStatus',
+                },
               }
+              filter = JSON.stringify(filter)
+              const path = `/GeneralConfigurations?filter=${filter}`
+              return getLookupData(path)
             },
           },
         },
@@ -528,16 +773,26 @@ export default {
           columnWidth: '150px',
           type: 'date',
           inlineEdit: false,
-          newForm: true,
+          newForm: false,
           editForm: false,
         },
         TicketQuantity: {
           displayOrder: 9,
           caption: 'Attendees',
+          form: {
+            caption: 'Ticket Quantity',
+            displayOrder: 14,
+          },
           searchEnable: true,
           sortEnable: true,
           columnWidth: '130px',
           type: 'number',
+          cssClasses: 'col-6 col-md-6',
+          hidden: false,
+          inlineEdit: true,
+          newForm: true,
+          editForm: true,
+          minimumValue: '1',
         },
         FullName: {
           displayOrder: 2,
@@ -557,26 +812,9 @@ export default {
           sortEnable: true,
           columnWidth: '150px',
           type: 'number',
-        },
-        Email: {
-          displayOrder: 3,
-          caption: 'Email',
-          searchEnable: true,
-          sortEnable: true,
-          columnWidth: '130px',
-          type: 'string',
-          readonly(value, data) {
-            const firstName = data.FirstName
-            return firstName && firstName.length <= 5
-          },
-          rules: [
-            (v) => {
-              return !!v || 'E-mail is required'
-            },
-            function (value, data) {
-              return /.+@.+\..+/.test(value) || 'E-mail must be valid'
-            },
-          ],
+          inlineEdit: false,
+          newForm: false,
+          editForm: false,
         },
         action: {
           displayOrder: 11,
@@ -586,39 +824,53 @@ export default {
           columnWidth: '130px',
           type: 'action',
           inlineEdit: false,
+          hidden: true,
           newForm: false,
           editForm: false,
           condtion: ({ item, items, index }) => {
             return true
           },
         },
-        FirstName: {
-          displayOrder: 2,
-          caption: 'First Name',
+        TicketId: {
+          caption: 'Tickets',
           searchEnable: true,
+          form: {
+            caption: 'Tickets *',
+            displayOrder: 13,
+          },
           sortEnable: true,
           columnWidth: '150px',
-          type: 'string',
-          hidden: true,
-          inlineEdit: true,
+          type: 'lookup',
+          inlineEdit: false,
           newForm: true,
-          editForm: false,
-          rules: [
-            (v) => {
-              return !!v || 'FirstName is required'
+          editForm: true,
+          hidden: true,
+          multiple: true,
+          readonly(value, data) {
+            const id = data.EventId
+            return id === '' || id === null
+          },
+          dataSource: {
+            query: eventTickets,
+            itemText: 'Code',
+            itemValue: 'id',
+            filter(data) {
+              return {
+                Events: data.EventId,
+              }
             },
-            (v) => {
-              return (
-                (v && v.length <= 10) || 'Name must be less than 10 characters'
-              )
-            },
-          ],
+          },
         },
       },
       template: {
-        name: 'registration-grid',
+        name: 'registrationAbondoned-grid',
         context: {
           basePath: '/registration',
+        },
+        actions: {
+          edit: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
@@ -630,6 +882,7 @@ export default {
           where: { Status: 'Failed' },
         },
       },
+      itemTitle: 'Registration',
       title: 'Abandoned Registrations',
       type: 'list',
     },
@@ -1050,7 +1303,7 @@ export default {
         },
       },
       template: {
-        name: 'eventAttendees-grid',
+        name: 'registrationAttendees-grid',
         context: {
           basePath: '/registration',
         },
@@ -1160,6 +1413,17 @@ export default {
         name: 'registrationEmails-grid',
         context: {
           basePath: '/registration',
+        },
+        actions: {
+          new: {
+            hidden: true,
+          },
+          edit: {
+            hidden: true,
+          },
+          delete: {
+            hidden: true,
+          },
         },
       },
       dataSource: {

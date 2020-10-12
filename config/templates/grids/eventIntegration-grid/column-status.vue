@@ -11,16 +11,16 @@
       <div class="text-center">{{ snackbarText }}</div>
     </v-snackbar>
 
-    <v-dialog v-model="dialog" top max-width="290">
+    <v-dialog v-model="dialog" top max-width="400">
       <v-card>
-        <v-card-text class="mt-1">
+        <v-card-text class="pt-4 pb-0 body-1">
           {{ dialogText }}
         </v-card-text>
 
         <v-card-actions>
           <v-spacer></v-spacer>
 
-          <v-btn color="green darken-1" text @click="dialog = false">
+          <v-btn text @click="dialog = false">
             ok
           </v-btn>
         </v-card-actions>

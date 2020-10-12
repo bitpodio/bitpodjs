@@ -39,7 +39,6 @@ body {
   right: 0 !important;
   bottom: 0 !important;
   width: 50% !important;
-  min-height: 65% !important;
 }
 .v-dialog {
   margin: 12px !important;
@@ -109,8 +108,17 @@ body {
   font-size: 24px;
   font-weight: 300;
 }
+.headernew {
+  left: 0 !important
+}
+.appbar-left {
+  width: 292px;
+}
 .nav-drawer {
   display: none !important;
+}
+.nav-bar {
+  top: 55px !important;
 }
 .nav-bar:hover .nav-drawer {
   display: block !important;
@@ -187,6 +195,10 @@ body {
   max-width: 36px !important;
   max-height: 36px !important;
 }
+.v-application--is-ltr .v-data-table > .v-data-table__wrapper > table > thead > tr > th {
+  height: 33px;
+  line-height: 34px;
+}
 .v-data-table-header-mobile__wrapper {
   flex-direction: row-reverse !important;
 }
@@ -243,7 +255,7 @@ body {
 }
 .boxviewsmall .v-data-table__wrapper {
   overflow-x: hidden !important;
-  margin-bottom: 0;
+  margin-bottom: 0 !important;
 }
 .boxview .v-data-table__wrapper {
   overflow-x: hidden !important;
@@ -251,7 +263,7 @@ body {
 }
 .boxviewsmall:hover .v-data-table__wrapper {
   overflow-x: auto !important;
-  margin-bottom: 0;
+  margin-bottom: 0 !important;
 }
 .boxview:hover .v-data-table__wrapper {
   overflow-x: auto !important;
@@ -331,6 +343,9 @@ body {
 .mxcol-name {
   max-width: 150px;
 }
+.mxcol-200 {
+  max-width: 200px;
+}
 .v-stepper__step {
   padding-top: 12px !important;
 }
@@ -358,6 +373,27 @@ body {
 }
 .v-chip.v-size--small {
   height: 20px !important;
+}
+.v-toolbar--flat.v-app-bar--is-scrolled {
+  box-shadow: 0 1px 1px -1px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.10), 0 0 1px 0 rgba(0, 0, 0, 0.10) !important;
+}
+.event-table .v-messages__message {
+  white-space: nowrap !important;
+  position: fixed !important;
+}
+.ps-top6 {
+  top: 6px;
+}
+.grid-actions-container {
+  min-height: 52px !important;
+}
+.lookup-tabs .theme--light.v-tabs > .v-tabs-bar {
+  background-color: transparent !important;
+}
+@media (max-width: 800px) {
+  .nav-bar {
+    top: 0 !important;
+  }
 }
 @media (max-width: 600px) {
   .slide-form,

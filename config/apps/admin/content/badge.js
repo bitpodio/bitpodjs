@@ -77,6 +77,8 @@ export default {
           cssClasses: 'col-12 col-md-12',
           newForm: true,
           editForm: true,
+          isBadge: true,
+          showTemplateDropdown: true,
         },
         DisplayOrder: {
           form: {

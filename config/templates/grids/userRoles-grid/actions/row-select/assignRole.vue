@@ -9,7 +9,7 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on" @click="setUsername">
-          <v-icon left>mdi-pencil</v-icon>Assign Role
+          <v-icon left class="fs-16">fa-pencil</v-icon>Assign Role
         </v-btn>
       </template>
       <v-card>

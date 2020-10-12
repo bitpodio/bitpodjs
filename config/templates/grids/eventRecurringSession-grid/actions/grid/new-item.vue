@@ -16,7 +16,8 @@
         <v-card-title
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
-          <h2 class="black--text pt-10 pb-9">New Session</h2>
+          <h2 class="black--text pt-10 pb-9 text-h5">New Session</h2>
+
           <v-spacer></v-spacer>
           <div>
             <v-btn icon @click="dialog = false">
@@ -26,9 +27,15 @@
         </v-card-title>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-form ref="form" v-model="valid" :lazy-validation="lazy">
+            <div
+              v-show="timeSlotMessage !== ''"
+              class="col-md-12 pl-0 pb-2 red--text pa-3 pt-0 body-1"
+            >
+              {{ timeSlotMessage }}
+            </div>
             <div class="col-md-12 pl-0 pb-0 pt-0">
               <v-flex class="d-flex justify-center align-center pb-1">
-                <h2 class="body-1 pb-1">
+                <h2 class="body-1 pb-1 primary--text">
                   <i class="fa fa-info-circle" aria-hidden="true"></i>
                   Basic Information
                 </h2>
@@ -41,6 +48,7 @@
                   v-model="session.Name"
                   label="Name*"
                   outlined
+                  :rules="requiredRules"
                   dense
                 ></v-text-field>
               </v-col>
@@ -65,7 +73,7 @@
             </v-row>
             <div class="col-md-12 pl-0 pb-0">
               <v-flex class="d-flex justify-center align-center pb-1">
-                <h2 class="body-1 pb-1">
+                <h2 class="body-1 pb-1 primary--text">
                   <i class="fa fa-clock" aria-hidden="true"></i>
                   Session Time
                 </h2>
@@ -87,12 +95,6 @@
                   :rules="required"
                 />
               </v-col>
-              <div
-                v-show="timeSlotMessage !== ''"
-                class="red--text pa-3 pt-0 body-1"
-              >
-                {{ timeSlotMessage }}
-              </div>
             </v-row>
             <v-row>
               <v-col cols="12" sm="6" md="4" class="pb-0">
@@ -128,7 +130,7 @@
             </v-row>
             <div class="col-md-12 pl-0 pb-0">
               <v-flex class="d-flex justify-center align-center pb-1">
-                <h2 class="body-1 pb-1">
+                <h2 class="body-1 pb-1 primary--text">
                   <i class="fa fa-location" aria-hidden="true"></i>
                   Location
                 </h2>
@@ -306,7 +308,7 @@
             </v-row>
             <div class="col-md-12 pl-0 pb-0">
               <v-flex class="d-flex justify-center align-center pb-1">
-                <h2 class="body-1 pb-1">
+                <h2 class="body-1 pb-1 primary--text">
                   <i class="fa fa-help-circle" aria-hidden="true"></i>
                   When can session be scheduled?
                 </h2>
@@ -381,16 +383,12 @@
             </v-row>
             <v-row>
               <v-col cols="12" class="mt-3">
-                <Lookup
-                  v-model="session.SessionTicket"
-                  :field="ticketProps"
-                  :rules="ticketRules"
-                />
+                <Lookup v-model="session.SessionTicket" :field="ticketProps" />
               </v-col>
             </v-row>
             <div class="col-md-12 pl-0">
               <v-flex class="d-flex justify-center align-center pb-1">
-                <h2 class="body-1 pb-1">
+                <h2 class="body-1 pb-1 primary--text">
                   <i class="fa fa-help-circle" aria-hidden="true"></i>
                   Working Day?
                 </h2>
@@ -523,14 +521,6 @@ export default {
           return strings.LOCATION_MSG
         },
       ],
-      ticketRules: [
-        (v) => {
-          if (v.length > 0) {
-            return true
-          }
-          return strings.TICKET_MSG
-        },
-      ],
       typeProps: {
         type: 'lookup',
         caption: 'Type*',
@@ -627,23 +617,23 @@ export default {
         },
         {
           Label: 'Mondays',
-          Value: true,
+          Value: false,
         },
         {
           Label: 'Tuesdays',
-          Value: true,
+          Value: false,
         },
         {
           Label: 'Wednesdays',
-          Value: true,
+          Value: false,
         },
         {
           Label: 'Thursdays',
-          Value: true,
+          Value: false,
         },
         {
           Label: 'Fridays',
-          Value: true,
+          Value: false,
         },
         {
           Label: 'Saturdays',
@@ -723,6 +713,33 @@ export default {
     },
   },
   methods: {
+    setSelectedDays(selectedDays) {
+      selectedDays.map((x) => {
+        this.days.map((day) => {
+          if (x === 'monday' && day.Label === 'Mondays') {
+            day.Value = true
+          }
+          if (x === 'tuesday' && day.Label === 'Tuesdays') {
+            day.Value = true
+          }
+          if (x === 'wednesday' && day.Label === 'Wednesdays') {
+            day.Value = true
+          }
+          if (x === 'thursday' && day.Label === 'Thursdays') {
+            day.Value = true
+          }
+          if (x === 'friday' && day.Label === 'Fridays') {
+            day.Value = true
+          }
+          if (x === 'saturday' && day.Label === 'Saturdays') {
+            day.Value = true
+          }
+          if (x === 'sunday' && day.Label === 'Sundays') {
+            day.Value = true
+          }
+        })
+      })
+    },
     getMaxEnd(arr) {
       if (arr.length === 0) return false
       arr.sort(function (a, b) {
@@ -991,12 +1008,21 @@ export default {
               EventId: this.$route.params.id,
             },
           },
+          orgInfoFilters: {
+            where: {},
+          },
         }
       },
       update(data) {
         const locationResult = formatGQLResult(data, 'Location')
         const ticketResult = formatGQLResult(data, 'Ticket')
         this.sessionResult = formatGQLResult(data, 'Session')
+        const OrganizationInfo = formatGQLResult(data, 'OrganizationInfo')
+        if (OrganizationInfo[0].weekDay.length > 0) {
+          this.setSelectedDays(OrganizationInfo[0].weekDay)
+        } else {
+          this.setSelectedDays(this.selectedDays)
+        }
         const locId = []
         this.inPersonMeetingOptions = locationResult.map(({ id, ...rest }) => {
           const decryptedId = getIdFromAtob(id)

@@ -43,18 +43,14 @@
               class="pb-0"
             >
               <div class="custom-date-time-picker">
-                <v-datetime-picker
-                  v-model="formData.StartDate"
-                  label="Start Date *"
-                  :text-field-props="startDateTextFieldProps"
-                >
-                  <template slot="dateIcon">
-                    <v-icon>fas fa-calendar</v-icon>
-                  </template>
-                  <template slot="timeIcon">
-                    <v-icon>fas fa-clock</v-icon>
-                  </template>
-                </v-datetime-picker>
+                <CustomDate
+                  v-model="StartDate"
+                  label="Start Date*"
+                  :field="startDateField"
+                  :rules="startDateRule"
+                  :on-change="changeStartDate"
+                  type="datetime"
+                />
               </div>
             </v-col>
             <v-col
@@ -64,18 +60,14 @@
               md="4"
               class="pb-0"
             >
-              <v-datetime-picker
-                v-model="formData.EndDate"
-                label="End Date *"
-                :text-field-props="endDateTextFieldProps"
-              >
-                <template slot="dateIcon">
-                  <v-icon>fas fa-calendar</v-icon>
-                </template>
-                <template slot="timeIcon">
-                  <v-icon>fas fa-clock</v-icon>
-                </template>
-              </v-datetime-picker>
+              <CustomDate
+                v-model="EndDate"
+                label="End Date*"
+                :field="endDateField"
+                :rules="endDateRule"
+                :on-change="changeEndDate"
+                type="datetime"
+              />
             </v-col>
             <v-col
               v-if="formData.BusinessType !== 'Recurring'"
@@ -238,7 +230,11 @@
         <v-card-actions
           class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
         >
-          <v-btn :disabled="!valid" color="primary" depressed @click="onSave"
+          <v-btn
+            :disabled="VenueAddress.AddressLine === '' || !valid"
+            color="primary"
+            depressed
+            @click="onSave"
             >Save</v-btn
           >
         </v-card-actions>
@@ -257,6 +253,7 @@ import strings from '~/strings.js'
 import Timezone from '~/components/common/form/timezone'
 import { formatTimezoneDateFieldsData } from '~/utility/form.js'
 import { getApiUrl } from '~/utility'
+import CustomDate from '~/components/common/form/date.vue'
 
 export default {
   components: {
@@ -264,6 +261,7 @@ export default {
       process.client ? import('~/components/common/form/richtext.vue') : false,
     VueGoogleAutocomplete: () => import('vue-google-autocomplete'),
     Timezone,
+    CustomDate,
   },
   props: {
     eventForm: {
@@ -302,6 +300,8 @@ export default {
       },
       formData: {},
       VenueAddress: {},
+      StartDate: null,
+      EndDate: null,
       fields: [
         {
           type: 'timezone',
@@ -322,44 +322,6 @@ export default {
     content() {
       return this.contents ? this.contents.Event : null
     },
-    startDateTextFieldProps() {
-      return {
-        appendIcon: 'fa-calendar',
-        outlined: true,
-        dense: true,
-        rules: [
-          (v) => {
-            const scheduledDate = v && new Date(v)
-            if (scheduledDate && scheduledDate > this.formData.EndDate) {
-              this.valid = false
-              return 'Ticket start date should be less than Ticket end date'
-            } else {
-              this.valid = true
-              return true
-            }
-          },
-        ],
-      }
-    },
-    endDateTextFieldProps() {
-      return {
-        appendIcon: 'fa-calendar',
-        outlined: true,
-        dense: true,
-        rules: [
-          (v) => {
-            const scheduledDate = v && new Date(v)
-            if (scheduledDate && scheduledDate < this.formData.StartDate) {
-              this.valid = false
-              return 'Ticket end Date should be greater than Ticket startdate'
-            } else {
-              this.valid = true
-              return true
-            }
-          },
-        ],
-      }
-    },
     addressValidation() {
       if (this.addressLine === '') {
         const message = strings.FIELD_REQUIRED
@@ -368,6 +330,42 @@ export default {
       }
       this.setErrorAlert(false, '')
       return true
+    },
+    startDateField() {
+      return {
+        appendIcon: 'fa-calendar',
+        outlined: true,
+        caption: 'Start Date',
+        type: 'datetime',
+      }
+    },
+    endDateField() {
+      return {
+        appendIcon: 'fa-calendar',
+        outlined: true,
+        caption: 'End Date',
+        type: 'datetime',
+      }
+    },
+    startDateRule() {
+      return [
+        (v) => {
+          const startDate = new Date(v)
+          return startDate > new Date(this.EndDate)
+            ? strings.START_END_DATE
+            : true
+        },
+      ]
+    },
+    endDateRule() {
+      return [
+        (v) => {
+          const endDate = new Date(v)
+          return new Date(this.StartDate) > endDate
+            ? strings.END_START_DATE
+            : true
+        },
+      ]
     },
   },
   async mounted() {
@@ -385,6 +383,12 @@ export default {
   },
 
   methods: {
+    changeStartDate(value) {
+      this.$refs.form.validate()
+    },
+    changeEndDate(value) {
+      this.$refs.form.validate()
+    },
     setErrorAlert(visible, message) {
       this.errorAlert.visible = visible
       this.errorAlert.message = message
@@ -437,6 +441,8 @@ export default {
     async onSave() {
       const url = getApiUrl()
       this.formData.Tags = this.tags
+      this.formData.StartDate = this.StartDate
+      this.formData.EndDate = this.EndDate
 
       if (
         this.formData.BusinessType !== 'Recurring' ||
@@ -529,6 +535,38 @@ export default {
         )
       }
     },
+    setEventData() {
+      this.formData.id = this.$route.params.id
+      this.tags = this.formData.Tags
+      if (
+        this.formData.BusinessType !== 'Recurring' &&
+        this.formData.StartDate !== null &&
+        this.formData.EndDate !== null
+      ) {
+        this.addressLine =
+          this.formData._VenueAddress && this.formData._VenueAddress.AddressLine
+        this.StartDate = this.getZonedDateTime(
+          this.formData.StartDate,
+          this.formData.Timezone
+        )
+        this.EndDate = this.getZonedDateTime(
+          this.formData.EndDate,
+          this.formData.Timezone
+        )
+        this.VenueAddress =
+          this.formData._VenueAddress != null ? this.formData._VenueAddress : {}
+      } else {
+        this.StartDate = this.formData.StartDate
+          ? this.getZonedDateTime(
+              this.formData.StartDate,
+              this.formData.Timezone
+            )
+          : null
+        this.EndDate = this.formData.EndDate
+          ? this.getZonedDateTime(this.formData.EndDate, this.formData.Timezone)
+          : null
+      }
+    },
   },
   apollo: {
     data: {
@@ -555,40 +593,7 @@ export default {
       update(data) {
         const event = formatGQLResult(data, 'Event')
         this.formData = event.length > 0 ? { ...event[0] } : {}
-        this.formData.id = this.$route.params.id
-        this.tags = this.formData.Tags
-        if (
-          this.formData.BusinessType !== 'Recurring' &&
-          this.formData.StartDate !== null &&
-          this.formData.EndDate !== null
-        ) {
-          this.addressLine = this.formData._VenueAddress.AddressLine
-          this.formData.StartDate = this.getZonedDateTime(
-            this.formData.StartDate,
-            this.formData.Timezone
-          )
-          this.formData.EndDate = this.getZonedDateTime(
-            this.formData.EndDate,
-            this.formData.Timezone
-          )
-          this.VenueAddress =
-            this.formData._VenueAddress != null
-              ? this.formData._VenueAddress
-              : {}
-        } else {
-          this.formData.StartDate = this.formData.StartDate
-            ? this.getZonedDateTime(
-                this.formData.StartDate,
-                this.formData.Timezone
-              )
-            : null
-          this.formData.EndDate = this.formData.EndDate
-            ? this.getZonedDateTime(
-                this.formData.EndDate,
-                this.formData.Timezone
-              )
-            : null
-        }
+        this.setEventData()
         return {
           event: event.length > 0 ? event[0] : {},
         }

@@ -52,6 +52,17 @@ export default {
         context: {
           basePath: '/seatmaps',
         },
+        actions: {
+          new: {
+            hidden: true,
+          },
+          edit: {
+            hidden: true,
+          },
+          delete: {
+            hidden: true,
+          },
+        },
       },
       dataSource: {
         query: seatmapsList,

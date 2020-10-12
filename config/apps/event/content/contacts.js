@@ -824,9 +824,20 @@ export default {
         },
       },
       template: {
-        name: 'registrationSession-grid',
+        name: 'eventInvitaionHistory-grid',
         context: {
-          basePath: '/contact',
+          basePath: '/event',
+        },
+        actions: {
+          new: {
+            hidden: true,
+          },
+          edit: {
+            hidden: true,
+          },
+          delete: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
