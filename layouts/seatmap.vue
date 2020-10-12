@@ -1,5 +1,7 @@
 <template>
-  <adminLayout />
+  <div>
+    <adminLayout :sidebar="false" />
+  </div>
 </template>
 
 <script>
