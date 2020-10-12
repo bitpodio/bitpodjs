@@ -72,6 +72,7 @@
           :single-expand="singleExpand"
           item-key="id"
           class="elevation-0"
+          :class="hideDefaultHeader ? 'px-0 pt-0' : 'px-2 pt-1'"
           :show-select="showSelect"
           @update:options="updatePagination"
           @click:row="onRowClick"
