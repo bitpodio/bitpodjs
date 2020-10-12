@@ -1,14 +1,13 @@
 <template>
-  <div>
+  <div v-if="value">
     <v-chip
       small
       :class="{
-        orange: value === 'Cancelled',
+        warning: value === 'Cancelled',
         red: value === 'Failed',
-        orange: value === 'Pending',
+        warning: value === 'Pending',
         success: value === 'Success',
       }"
-      text-color="white"
     >
       {{ value }}
     </v-chip>

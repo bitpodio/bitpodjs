@@ -124,11 +124,11 @@
                         <v-list-item-title>Edit</v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
-                    <v-list-item @click="true">
+                    <v-list-item>
                       <v-list-item-icon class="mr-2">
                         <i class="fa fa-clone mt-1" aria-hidden="true"></i>
                       </v-list-item-icon>
-                      <v-list-item-content>
+                      <v-list-item-content @click="openMakeCopy(item.id)">
                         <v-list-item-title>Make a copy</v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
@@ -246,11 +246,14 @@
                         <v-list-item-title>Edit</v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
-                    <v-list-item @click="true">
+                    <v-list-item>
                       <v-list-item-icon class="mr-2">
                         <i class="fa fa-clone mt-1" aria-hidden="true"></i>
                       </v-list-item-icon>
-                      <v-list-item-content>
+                      <v-list-item-content
+                        :key="item.id"
+                        @click="openMakeCopy(item.id)"
+                      >
                         <v-list-item-title>Make a copy</v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
@@ -263,15 +266,18 @@
       </v-row>
     </div>
     <editEventForm :id="id" :event-form.sync="eventForm" />
+    <makeCopy :id="id" :key="count" :is-make-copy.sync="isMakeCopy" />
   </v-flex>
 </template>
 
 <script>
 import editEventForm from '~/pages/apps/_app/event/_id/editEventForm.vue'
+import makeCopy from '~/pages/apps/_app/event/_id/makeCopy.vue'
 import nuxtconfig from '~/nuxt.config'
 export default {
   components: {
     editEventForm,
+    makeCopy,
   },
   props: {
     items: { type: Array, default: () => [] },
@@ -280,13 +286,20 @@ export default {
   data() {
     return {
       eventForm: false,
+      isMakeCopy: false,
       id: '',
+      count: 0,
     }
   },
   methods: {
     openEventForm(itemId) {
       this.id = itemId
       this.eventForm = true
+    },
+    openMakeCopy(itemId) {
+      this.id = itemId
+      this.isMakeCopy = true
+      this.count += 1
     },
     routes(id) {
       return `/apps/event/event/${id}`

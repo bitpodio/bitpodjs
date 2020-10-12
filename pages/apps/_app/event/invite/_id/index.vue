@@ -195,7 +195,7 @@
         <Grid
           view-name="eventInvitesDetails"
           :content="content"
-          class="mt-12"
+          class="mt-n12"
         />
       </div>
     </v-flex>

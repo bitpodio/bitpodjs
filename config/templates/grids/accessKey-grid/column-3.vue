@@ -14,8 +14,8 @@
         </template>
 
         <v-list dense>
-          <v-list-item class="cursorPointer">
-            <v-list-item-content @click="openSnackbar">
+          <v-list-item class="cursorPointer" @click="openSnackbar">
+            <v-list-item-content>
               <copy
                 :text-to-copy="getKeyCopied(item.accesskey, item.accesssecret)"
                 label="Copy"
@@ -25,14 +25,14 @@
               />
             </v-list-item-content>
           </v-list-item>
-          <v-list-item class="cursorPointer">
+          <v-list-item
+            class="cursorPointer"
+            @click="onDelete(item.accesskey, item.userId)"
+          >
             <v-list-item-icon class="mr-2">
-              <i class="fa fa-trash mt-1" aria-hidden="true"></i>
+              <i class="fa fa-trash mr-1 mt-1" aria-hidden="true"></i>
             </v-list-item-icon>
-            <v-list-item-content
-              class="ml-n3"
-              @click="onDelete(item.accesskey, item.userId)"
-            >
+            <v-list-item-content class="ml-n3">
               <v-list-item-title>Delete</v-list-item-title>
             </v-list-item-content>
           </v-list-item>

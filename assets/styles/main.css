@@ -39,7 +39,6 @@ body {
   right: 0 !important;
   bottom: 0 !important;
   width: 50% !important;
-  min-height: 65% !important;
 }
 .v-dialog {
   margin: 12px !important;
@@ -387,6 +386,9 @@ body {
 }
 .grid-actions-container {
   min-height: 52px !important;
+}
+.lookup-tabs .theme--light.v-tabs > .v-tabs-bar {
+  background-color: transparent !important;
 }
 @media (max-width: 800px) {
   .nav-bar {

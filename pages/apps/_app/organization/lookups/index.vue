@@ -5,7 +5,13 @@
         >Lookups</v-toolbar-title
       >
       <v-spacer></v-spacer>
-      <v-tabs v-model="tabs" center-active height="36" class="mb-4">
+      <v-tabs
+        v-model="tabs"
+        center-active
+        height="36"
+        class="mb-4"
+        background-color="gerybg"
+      >
         <v-tabs-slider></v-tabs-slider>
         <v-tab href="#tab-1" class="px-0 mr-4">
           <span>General</span>
@@ -28,7 +34,7 @@
         <v-tab-item :value="'tab-1'">
           <div
             v-if="content"
-            class="xs12 sm4 md4 lg4 boxview pa-3 mr-0 mb-4 pb-0 elevation-1 rounded-lg"
+            class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mr-0 mb-4 pb-0 elevation-1 rounded-lg"
           >
             <v-flex class="d-flex justify-center align-center pb-3">
               <h2 class="body-1 pb-0">
