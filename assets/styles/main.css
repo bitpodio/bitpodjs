@@ -112,7 +112,7 @@ body {
   left: 0 !important
 }
 .appbar-left {
-  width: 292px;
+  width: 250px;
 }
 .nav-drawer {
   display: none !important;
@@ -200,8 +200,8 @@ body {
   line-height: 40px;
 }
 .v-application--is-ltr .v-data-footer__select .v-select {
-  margin-top: 2px;
-  margin-bottom: 8px;
+  margin-top: 3px !important;
+  margin-bottom: 9px !important;
 }
 .v-data-table-header-mobile__wrapper {
   flex-direction: row-reverse !important;
@@ -394,6 +394,14 @@ body {
 .lookup-tabs .theme--light.v-tabs > .v-tabs-bar {
   background-color: transparent !important;
 }
+.mxw-w70 {
+  max-width: 70%;
+  width: 70%;
+}
+.mxw-w30 {
+  max-width: 30%;
+  width: 30%;
+}
 @media (max-width: 800px) {
   .nav-bar {
     top: 0 !important;
@@ -412,5 +420,9 @@ body {
   }
   .boxview {
     margin-right: 0 !important;
+  }
+  .mxw-w70, .mxw-w30 {
+    width: 100%;
+    max-width: 100%;
   }
 }

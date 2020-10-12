@@ -4,7 +4,7 @@
       v-model="drawer"
       app
       class="nav-bar greybg"
-      :width="280"
+      :width="240"
     >
       <v-toolbar-title
         class="ml-0 pl-3 px-2 py-1 logo-ds d-none d-sm-flex d-md-none align-center"
