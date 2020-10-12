@@ -313,7 +313,10 @@
               </v-btn>
             </template>
             <v-list dense>
-              <v-list-item @click.native="checkLogoClicked">
+              <v-list-item
+                class="cursorPointer"
+                @click.native="checkLogoClicked"
+              >
                 <v-list-item-title>
                   <File
                     :field="fileField"
@@ -327,7 +330,10 @@
                   Badge Logo
                 </v-list-item-title>
               </v-list-item>
-              <v-list-item @click.native="checkBannerClicked">
+              <v-list-item
+                class="cursorPointer"
+                @click.native="checkBannerClicked"
+              >
                 <v-list-item-title>
                   <File
                     :field="fileField"
@@ -341,7 +347,10 @@
                   Event Banner(680x350)
                 </v-list-item-title>
               </v-list-item>
-              <v-list-item @click.native="checkOtherClicked">
+              <v-list-item
+                class="cursorPointer"
+                @click.native="checkOtherClicked"
+              >
                 <v-list-item-title>
                   <File
                     :field="otherFileField"
@@ -427,7 +436,7 @@
             </v-card>
           </v-dialog>
         </div>
-        <div v-else>
+        <div>
           <v-card
             v-for="image in data.event.Images"
             :key="image"
