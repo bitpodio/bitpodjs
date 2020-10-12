@@ -217,7 +217,7 @@
                   </v-col>
                 </v-col>
                 <v-col cols="12" sm="6" md="6" class="pb-0">
-                  <v-col v-if="isMap">
+                  <v-col v-if="isMap" class="pa-0">
                     <div class="flex"></div>
                     <div :key="`${locations[0].lat}-${locations[0].lng}`">
                       <GMap
@@ -251,6 +251,9 @@
                         <GMapCircle :options="circleOptions" />
                       </GMap>
                     </div>
+                  </v-col>
+                  <v-col v-else class="pa-0">
+                    <v-flex class="grey lighten-2 map-contain"></v-flex>
                   </v-col>
                 </v-col>
               </v-row>
@@ -1106,5 +1109,9 @@ export default {
 }
 .event-inner {
   min-height: 457px;
+}
+.map-contain {
+  height: 400px;
+  max-height: 400px;
 }
 </style>
