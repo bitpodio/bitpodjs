@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mxcol-name d-block text-truncate">
     {{ formatDate }}
   </div>
 </template>
