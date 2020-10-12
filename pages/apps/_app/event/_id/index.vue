@@ -321,7 +321,7 @@
                     :block="true"
                     :open-file-dialog="badgeLogo"
                     :value="checkArray"
-                    :hidePreview="true"
+                    :hide-preview="true"
                     @input="fileUploadedBadgeLogo"
                   />
                   Badge Logo
@@ -335,7 +335,7 @@
                     :block="true"
                     :open-file-dialog="eventBanner"
                     :value="checkArray"
-                    :hidePreview="true"
+                    :hide-preview="true"
                     @input="fileUploadedEventBanner"
                   />
                   Event Banner(680x350)
@@ -349,7 +349,7 @@
                     :block="true"
                     :open-file-dialog="otherDialog"
                     :value="checkArray"
-                    :hidePreview="true"
+                    :hide-preview="true"
                     @input="fileUploadedOther"
                   />
                   Other

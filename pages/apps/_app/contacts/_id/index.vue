@@ -269,9 +269,9 @@ import Notes from '~/components/common/notes'
 import File from '~/components/common/form/file.vue'
 import contact from '~/config/apps/event/gql/contact.gql'
 import { formatGQLResult } from '~/utility/gql.js'
-import { configLoaderMixin } from '~/utility'
+import { configLoaderMixin, getApiUrl } from '~/utility'
 import nuxtconfig from '~/nuxt.config'
-import { getApiUrl } from '~/utility'
+
 export default {
   components: {
     Grid,
