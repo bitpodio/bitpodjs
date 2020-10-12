@@ -457,6 +457,7 @@ export default {
         model: 'Contact',
         defaultSort: 'createdDate DESC',
       },
+      hidden: true,
       title: 'Contacts',
       defaultSort: 'createdDate DESC',
     },
