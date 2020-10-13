@@ -12,9 +12,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-.seatmap .container.container--fluid {
-  padding: 0;
-}
-</style>
