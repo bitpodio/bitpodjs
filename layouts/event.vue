@@ -254,7 +254,10 @@
                   >
                 </v-flex>
               </a>
-              <nuxt-link to="" class="text-decoration-none">
+              <nuxt-link
+                to="/apps/admin/list/seatmaps/seatmaps"
+                class="text-decoration-none"
+              >
                 <v-flex
                   class="d-flex justify-center align-center flex-column app-view"
                 >

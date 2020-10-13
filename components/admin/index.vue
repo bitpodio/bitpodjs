@@ -4,7 +4,7 @@
       v-model="drawer"
       app
       class="nav-bar greybg"
-      :width="280"
+      :width="240"
     >
       <v-toolbar-title
         class="ml-0 pl-3 px-2 py-1 logo-ds d-none d-sm-flex d-md-none align-center"
@@ -173,7 +173,10 @@
                   >
                 </v-flex>
               </nuxt-link>
-              <nuxt-link to="" class="text-decoration-none">
+              <nuxt-link
+                to="/apps/admin/list/seatmaps/seatmaps"
+                class="text-decoration-none"
+              >
                 <v-flex
                   class="d-flex justify-center align-center flex-column app-view"
                 >

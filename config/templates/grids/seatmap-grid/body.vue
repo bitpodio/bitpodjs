@@ -10,7 +10,7 @@
             max-width="155"
             width="155"
           >
-            <v-card-text class="font-weight-medium text-center subtitle-1">
+            <v-card-text class="font-weight-medium text-center subtitle-1 pt-0">
               <i class="fa fa-plus fs-36 warning--text"></i>
               <div class="body-1">New Seatmap</div>
             </v-card-text>
@@ -23,16 +23,21 @@
         v-slot:default="{ hover }"
         open-delay="200"
       >
-        <nuxt-link :to="seatmapRoutes(item.id)" class="text-decoration-none">
-          <v-card
-            :elevation="hover ? 1 : 0"
-            class="ma-3 ml-0 mt-0 d-flex justify-center align-center seat-maps positionRelative"
-          >
-            <v-card-text class="font-weight-medium text-center subtitle-1">
+        <v-card :elevation="hover ? 1 : 0" class="ma-3 ml-0 mt-0 seat-maps">
+          <nuxt-link :to="seatmapRoutes(item.id)" class="text-decoration-none">
+            <v-card-text
+              class="font-weight-medium text-center positionRelative subtitle-1 seat-card pb-0"
+            >
               <i class="fa fa-grid-alt fs-36 warning--text"></i>
-              <div class="body-1">{{ item.Name }}</div>
+              <div class="body-1 grey--text text--darken-1">
+                {{ item.Name }}
+              </div>
             </v-card-text>
-            <div class="positionAbsolute box-actions">
+          </nuxt-link>
+          <v-card-actions class="pa-0 ma-0 pb-1">
+            <div></div>
+            <v-spacer></v-spacer>
+            <div class="box-actions pa-1">
               <v-menu
                 left
                 bottom
@@ -54,7 +59,7 @@
                       <v-list-item-title>More info</v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
-                  <v-list-item @click="routes">
+                  <v-list-item :to="seatmapRoutes(item.id)">
                     <v-list-item-icon class="mr-2">
                       <i
                         class="fa fa-pencil-square-o mt-1"
@@ -68,8 +73,8 @@
                 </v-list>
               </v-menu>
             </div>
-          </v-card>
-        </nuxt-link>
+          </v-card-actions>
+        </v-card>
       </v-hover>
     </v-col>
   </v-flex>
@@ -96,6 +101,9 @@ export default {
   height: 125px;
   width: 155px;
   max-width: 155px;
+}
+.seat-card {
+  top: 12px;
 }
 .box-actions {
   bottom: 5px;
