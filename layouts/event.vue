@@ -40,7 +40,12 @@
           </template>
 
           <v-list dense>
-            <v-list-item @click="dialog1 = !dialog1">
+            <v-list-item
+              @click="
+                triggerReset = !triggerReset
+                dialog1 = !dialog1
+              "
+            >
               <v-list-item-icon class="mr-2">
                 <v-icon class="fs-16 mr-2">fa-calendar</v-icon>
               </v-list-item-icon>
@@ -48,7 +53,12 @@
                 <v-list-item-title>Single Event</v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-            <v-list-item @click="dialog = !dialog">
+            <v-list-item
+              @click="
+                triggerRecEventReset = !triggerRecEventReset
+                dialog = !dialog
+              "
+            >
               <v-list-item-icon class="mr-2">
                 <v-icon class="fs-16 mr-2">fa-history</v-icon>
               </v-list-item-icon>
@@ -121,7 +131,12 @@
       content-class="slide-form"
       transition="dialog-bottom-transition"
     >
-      <NewSingleEvent :on-form-close="closeSingleEventForm" />
+      <div v-if="dialog1">
+        <NewSingleEvent
+          :reset-data="triggerReset"
+          :on-form-close="closeSingleEventForm"
+        />
+      </div>
     </v-dialog>
 
     <v-dialog
@@ -131,7 +146,12 @@
       content-class="slide-form"
       transition="dialog-bottom-transition"
     >
-      <NewRecurringEvent :on-form-close="closeRecurringEventForm" />
+      <div v-if="dialog">
+        <NewRecurringEvent
+          :reset-data="triggerRecEventReset"
+          :on-form-close="closeRecurringEventForm"
+        />
+      </div>
     </v-dialog>
 
     <v-app-bar app flat class="greybg headernew pl-0" height="50">
@@ -371,6 +391,8 @@ export default {
     tabs: null,
     account: false,
     message: false,
+    triggerReset: false,
+    triggerRecEventReset: false,
     items: [
       {
         icon: 'fa fa-grid',
