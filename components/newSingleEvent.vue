@@ -464,7 +464,7 @@
         class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
       >
         <v-btn
-          v-if="currentTab > 1"
+          v-if="currentTab > 1 && !isEventCreate && !isEventPublish"
           depressed
           color="grey lighten-2"
           @click="prev()"
@@ -479,7 +479,7 @@
           >Next</v-btn
         >
         <v-btn
-          v-if="currentTab > 2"
+          v-if="currentTab > 2 && !isEventCreate && !isEventPublish"
           depressed
           color="primary"
           :disabled="isSaveButtonDisabled || !valid || !datevalid"
@@ -625,10 +625,6 @@ export default {
           lng: 0.0,
         },
       },
-      // LatLng: {
-      //   lat: 0.0,
-      //   lng: 0.0,
-      // },
       datetime: new Date().toISOString().substr(0, 10),
       date: new Date().toISOString().substr(0, 10),
       menu: false,
@@ -1161,7 +1157,6 @@ export default {
       }
     },
     changeLocation(value) {
-      // this.eventData.LocationType = value
       if (value === 'Venue') {
         this.isVenue = true
         this.isOnlineEvent = false
