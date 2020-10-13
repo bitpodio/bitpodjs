@@ -402,6 +402,9 @@ body {
   max-width: 30%;
   width: 30%;
 }
+.seatmap .container.container--fluid {
+  padding: 0 !important;
+}
 @media (max-width: 800px) {
   .nav-bar {
     top: 0 !important;
