@@ -408,6 +408,9 @@ body {
 .seatmap .pt-0.col {
   padding-bottom: 0 !important;
 }
+.small-form {
+  min-height: 300px;
+}
 @media (max-width: 800px) {
   .nav-bar {
     top: 0 !important;

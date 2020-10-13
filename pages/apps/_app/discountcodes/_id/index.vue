@@ -73,27 +73,27 @@
         </v-flex>
         <v-divider></v-divider>
         <v-row>
-          <v-col class="col-md-6 col-12">
+          <v-col class="col-md-12 col-12">
             <div class="body-2 text--secondary">Max Usage</div>
             <div class="body-1">
               {{ formatField(data.discount.maxUsageCount) }}
             </div>
           </v-col>
-          <v-col class="col-md-6 col-12">
+          <v-col class="col-md-12 col-12">
             <div class="body-2 text--secondary">Valid Till</div>
             <div class="body-1">{{ formatDate(data.discount.validTill) }}</div>
           </v-col>
-          <v-col class="col-md-6 col-12">
+          <v-col class="col-md-12 col-12">
             <div class="body-2 text--secondary">Created By</div>
             <div class="body-1">{{ formatField(data.discount.createdBy) }}</div>
           </v-col>
-          <v-col class="col-md-6 col-12">
+          <v-col class="col-md-12 col-12">
             <div class="body-2 text--secondary">Created Date</div>
             <div class="body-1">
               {{ formatDate(data.discount.createdDate) }}
             </div>
           </v-col>
-          <v-col class="col-md-6 col-12">
+          <v-col class="col-md-12 col-12">
             <div class="body-2 text--secondary">Description</div>
             <div class="body-1">
               {{ formatField(data.discount.description) }}
