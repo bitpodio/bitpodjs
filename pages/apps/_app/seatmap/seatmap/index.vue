@@ -59,7 +59,7 @@
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
             <i class="fa fa-user-plus pr-1" aria-hidden="true"></i>
-            Bussiness Units
+            Business Units
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
