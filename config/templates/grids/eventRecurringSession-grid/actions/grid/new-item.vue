@@ -712,17 +712,6 @@ export default {
       ]
     },
   },
-  watch: {
-    dialog() {
-      const session = {}
-
-      session.MaxAllow = 5
-      session.Duration = '30'
-      session.ScheduledType = 'Over a period of rolling days'
-      session.RollingDays = 30
-      this.session = session
-    },
-  },
   methods: {
     setDefault() {
       this.session.MaxAllow = 5

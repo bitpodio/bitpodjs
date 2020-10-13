@@ -54,44 +54,57 @@
                     @change="changeEventName($event)"
                   ></v-text-field>
                 </v-col>
-                <v-col cols="12" sm="6" md="4" class="pb-0">
-                  <v-datetime-picker
-                    v-model="eventData.StartDate"
-                    label="Start Date*"
-                    :text-field-props="eventStartDateProps"
-                  >
-                    <template slot="dateIcon">
-                      <v-icon>fas fa-calendar</v-icon>
-                    </template>
-                    <template slot="timeIcon">
-                      <v-icon>fas fa-clock</v-icon>
-                    </template>
-                  </v-datetime-picker>
-                </v-col>
-                <v-col cols="12" sm="6" md="4" class="pb-0">
-                  <v-datetime-picker
-                    v-model="eventData.EndDate"
-                    :rules="requiredRules"
-                    label="End Date*"
-                    :text-field-props="eventEndDateProps"
-                  >
-                    <template slot="dateIcon">
-                      <v-icon>fas fa-calendar</v-icon>
-                    </template>
-                    <template slot="timeIcon">
-                      <v-icon>fas fa-clock</v-icon>
-                    </template>
-                  </v-datetime-picker>
-                </v-col>
-                <v-col cols="12" sm="6" md="4" class="pb-0">
-                  <Timezone
-                    v-model="eventData.Timezone"
-                    :rules="requiredRules"
-                    :field="timezonefield"
-                    dense
-                    class="v-timezone"
-                  ></Timezone>
-                </v-col>
+              </v-row>
+              <v-form
+                ref="dateform"
+                v-model="datevalid"
+                :lazy-validation="lazy"
+              >
+                <v-row>
+                  <v-col cols="12" sm="6" md="4" class="pb-0">
+                    <v-datetime-picker
+                      v-model="eventData.StartDate"
+                      label="Start Date*"
+                      :text-field-props="eventStartDateProps"
+                      :on-change="changeStartDate()"
+                    >
+                      <template slot="dateIcon">
+                        <v-icon>fas fa-calendar</v-icon>
+                      </template>
+                      <template slot="timeIcon">
+                        <v-icon>fas fa-clock</v-icon>
+                      </template>
+                    </v-datetime-picker>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4" class="pb-0">
+                    <v-datetime-picker
+                      v-model="eventData.EndDate"
+                      :rules="requiredRules"
+                      label="End Date*"
+                      :text-field-props="eventEndDateProps"
+                      :on-change="changeEndDate()"
+                    >
+                      <template slot="dateIcon">
+                        <v-icon>fas fa-calendar</v-icon>
+                      </template>
+                      <template slot="timeIcon">
+                        <v-icon>fas fa-clock</v-icon>
+                      </template>
+                    </v-datetime-picker>
+                  </v-col>
+
+                  <v-col cols="12" sm="6" md="4" class="pb-0">
+                    <Timezone
+                      v-model="eventData.Timezone"
+                      :rules="requiredRules"
+                      :field="timezonefield"
+                      dense
+                      class="v-timezone"
+                    ></Timezone>
+                  </v-col>
+                </v-row>
+              </v-form>
+              <v-row>
                 <v-col cols="12" class="pb-4 pt-2">
                   <RichText
                     v-model="eventData.Description"
@@ -469,7 +482,7 @@
           v-if="currentTab > 2"
           depressed
           color="primary"
-          :disabled="isSaveButtonDisabled"
+          :disabled="isSaveButtonDisabled || !valid || !datevalid"
           @click="saveRecord"
           >Save</v-btn
         >
@@ -514,6 +527,7 @@ export default {
     const currentDatetime = new Date(new Date().setSeconds(0))
     return {
       valid: true,
+      datevalid: true,
       lazy: false,
       tabs: null,
       loading: false,
@@ -708,6 +722,12 @@ export default {
     },
   },
   methods: {
+    changeStartDate() {
+      this.$refs.dateform && this.$refs.dateform.validate()
+    },
+    changeEndDate(value) {
+      this.$refs.dateform && this.$refs.dateform.validate()
+    },
     isNextDisabled() {
       return this.isUniqLinkValid === false
     },
