@@ -134,7 +134,7 @@ export default {
 <style scoped>
 iframe {
   width: 100%;
-  height: 85vh;
+  height: calc(100vh - 60px);
   border: none;
 }
 </style>
