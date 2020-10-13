@@ -40,11 +40,11 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-0 mb-4 pb-6 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mr-0 mb-4 pb-6 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
-            <i class="fa fa-mail pr-1" aria-hidden="true"></i>
+            <i class="fa fa-calendar pr-1" aria-hidden="true"></i>
             Events
           </h2>
           <v-spacer></v-spacer>
@@ -54,11 +54,11 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-0 mb-4 pb-6 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mr-0 mb-4 pb-6 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
-            <i class="fa fa-mail pr-1" aria-hidden="true"></i>
+            <i class="fa fa-user-plus pr-1" aria-hidden="true"></i>
             Bussiness Units
           </h2>
           <v-spacer></v-spacer>
