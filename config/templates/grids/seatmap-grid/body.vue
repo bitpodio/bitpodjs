@@ -51,7 +51,7 @@
                 </template>
 
                 <v-list dense>
-                  <v-list-item @click="routes">
+                  <v-list-item @click="seatmapView(item.id)">
                     <v-list-item-icon class="mr-2">
                       <i class="fa fa-eye mt-1" aria-hidden="true"></i>
                     </v-list-item-icon>
@@ -91,6 +91,10 @@ export default {
   methods: {
     seatmapRoutes(id) {
       return `/apps/seatmap/${id}`
+    },
+    seatmapView(id) {
+      debugger
+      this.$router.push(`/apps/event/seatmap/seatmap?id=${id}`)
     },
   },
 }
