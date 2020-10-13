@@ -35,13 +35,7 @@
                   </v-list-item-content>
                 </v-list-item>
                 <v-list class="mt-n4 pl-2"
-                  ><span
-                    class="cursorPointer"
-                    @click="
-                      checkArray = []
-                      orgLogo = !orgLogo
-                    "
-                  >
+                  ><span class="cursorPointer" @click="checkOrgClicked">
                     <File
                       :field="fileField"
                       :no-btn-look="true"
@@ -394,6 +388,7 @@ export default {
       editOrgSetting: false,
       editSocialMedia: false,
       editWorkTiming: false,
+      allow: true,
     }
   },
   computed: {
@@ -405,8 +400,15 @@ export default {
     refresh() {
       this.$apollo.queries.data.refresh()
     },
+    checkOrgClicked() {
+      if (this.allow) {
+        this.checkArray = []
+        this.orgLogo = !this.orgLogo
+        this.allow = false
+      }
+    },
     async uploadOrgLogo(data) {
-      this.orgLogo = false
+      this.allow = true
       this.formData.Image = []
       this.formData.Image.push(data[0])
       try {
