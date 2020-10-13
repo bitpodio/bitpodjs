@@ -74,6 +74,13 @@ export default {
       },
     }
   },
+  watch: {
+    value(newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.date = newVal
+      }
+    },
+  },
   computed: {
     isDateTime() {
       return this.field.type === 'datetime'
