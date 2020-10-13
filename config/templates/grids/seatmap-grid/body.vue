@@ -93,7 +93,7 @@ export default {
       return `/apps/seatmap/${id}`
     },
     seatmapView(id) {
-      this.$router.push(`/apps/event/seatmap/seatmap?id=${id}`)
+      this.$router.push(`/apps/seatmap/seatmap/seatmap?id=${id}`)
     },
   },
 }

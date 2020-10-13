@@ -64,11 +64,11 @@
 import gql from 'graphql-tag'
 import format from 'date-fns/format'
 import Grid from '~/components/common/grid'
-import seatmap from '~/config/apps/admin/gql/seatmapsList.gql'
+import seatmap from '~/config/apps/seatmap/gql/seatmapsList.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin } from '~/utility'
 export default {
-  layout: 'admin',
+  layout: 'seatmap',
   components: {
     Grid,
   },

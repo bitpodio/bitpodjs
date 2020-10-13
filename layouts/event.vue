@@ -255,7 +255,7 @@
                 </v-flex>
               </a>
               <nuxt-link
-                to="/apps/admin/list/seatmaps/seatmaps"
+                to="/apps/seatmap/list/seatmaps/seatmaps"
                 class="text-decoration-none"
               >
                 <v-flex
