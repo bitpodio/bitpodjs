@@ -113,7 +113,7 @@
                         <v-list-item-title>Preview</v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
-                    <v-list-item v-on:click="openEventForm(item.id)">
+                    <v-list-item @click="openEventForm(item.id)">
                       <v-list-item-icon class="mr-2">
                         <i
                           class="fa fa-pencil-square-o mt-1"
