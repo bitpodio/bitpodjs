@@ -66,15 +66,17 @@
           {{ formatField(data.event.Timezone) }}
         </v-chip>
         <v-flex>
-          <div
-            v-if="data.event.LocationType === 'Online Event'"
-            class="pb-1"
-            @click="viewRegistration"
-          >
-            <a
-              ><v-icon class="fs-16 mr-1 primary--text mt-n1">fa-globe</v-icon
-              >{{ viewRegistrationLink() }}</a
-            >
+          <div v-if="data.event.LocationType === 'Online Event'" class="pb-1">
+            <div v-if="data.event.WebinarLink">
+              <v-icon class="fs-16 mr-1 primary--text mt-n1">fa-globe</v-icon>
+              <a
+                :href="data.event.WebinarLink"
+                class="text-decoration-none"
+                target="_blank"
+              >
+                {{ data.event.WebinarLink }}
+              </a>
+            </div>
           </div>
           <div v-else>
             <p class="blue--text body-2">
