@@ -37,7 +37,7 @@
           <v-card-actions class="pa-0 ma-0 pb-1">
             <div></div>
             <v-spacer></v-spacer>
-            <div class="box-actions pa-1">
+            <div class="box-actions pa-1 pb-0">
               <v-menu
                 left
                 bottom
@@ -93,7 +93,6 @@ export default {
       return `/apps/seatmap/${id}`
     },
     seatmapView(id) {
-      debugger
       this.$router.push(`/apps/event/seatmap/seatmap?id=${id}`)
     },
   },
