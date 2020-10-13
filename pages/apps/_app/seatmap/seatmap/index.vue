@@ -45,13 +45,27 @@
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
             <i class="fa fa-mail pr-1" aria-hidden="true"></i>
-            Invites
+            Events
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
+        <v-divider></v-divider>
+        <Grid view-name="Events" :content="content" class="mt-n12" />
+      </div>
+      <div
+        v-if="content"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-0 mb-4 pb-6 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-mail pr-1" aria-hidden="true"></i>
+            Bussiness Units
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
         <v-divider></v-divider>
         <Grid
-          view-name="eventInvitesDetails"
+          view-name="organizationBusinessUnit"
           :content="content"
           class="mt-n12"
         />
@@ -81,8 +95,10 @@ export default {
       },
     }
   },
-  content() {
-    return this.contents ? this.contents.Event : null
+  computed: {
+    content() {
+      return this.contents ? this.contents.seatmaps : null
+    },
   },
   methods: {
     formatDate(date) {
