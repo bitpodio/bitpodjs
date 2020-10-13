@@ -83,67 +83,6 @@
                 placeholder="Description"
               />
             </v-col>
-            <v-col cols="12" sm="6" md="6" class="py-0">
-              <v-checkbox
-                v-model="formData.isRefundable"
-                label=" Allow Cancelation"
-                class="ma-0"
-              ></v-checkbox>
-            </v-col>
-            <v-col cols="12" sm="6" md="6" class="py-0">
-              <v-checkbox
-                v-model="formData.ShowAttendeeForm"
-                label=" Show attendee form for each ticket"
-                class="ma-0"
-              ></v-checkbox>
-            </v-col>
-            <v-col cols="12" sm="6" md="6" class="py-0">
-              <v-checkbox
-                v-model="formData.SessionTimingConflict"
-                label=" Session Timing Conflict"
-                class="ma-0"
-              ></v-checkbox>
-            </v-col>
-            <v-col cols="12" sm="6" md="6" class="py-0">
-              <v-checkbox
-                v-model="formData.ShowRemainingTickets"
-                label=" Show Remaining Tickets"
-                class="ma-0"
-              ></v-checkbox>
-            </v-col>
-            <v-col cols="12" sm="6" md="6" class="py-0">
-              <v-checkbox
-                v-model="formData.NotifyOrganizer"
-                label=" Notify event organizer when someone registers"
-                class="ma-0"
-              ></v-checkbox>
-            </v-col>
-            <v-col
-              v-if="formData.BusinessType === 'Recurring'"
-              cols="12"
-              sm="6"
-              md="6"
-              class="py-0"
-            >
-              <v-checkbox
-                v-model="formData.showTimezone"
-                label="Allow user to select a timezone for recurring event"
-                class="ma-0"
-              ></v-checkbox>
-            </v-col>
-            <v-col
-              v-if="formData.BusinessType !== 'Recurring'"
-              cols="12"
-              sm="6"
-              md="6"
-              class="py-0"
-            >
-              <v-checkbox
-                v-model="formData.SendCalendar"
-                label=" Send calendar invite when registered"
-                class="ma-0"
-              ></v-checkbox>
-            </v-col>
           </v-row>
         </v-card-text>
         <v-divider></v-divider>
