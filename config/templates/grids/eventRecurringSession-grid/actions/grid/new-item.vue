@@ -9,7 +9,8 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on">
-          <v-icon left>mdi-plus</v-icon> New Recurring Session
+          <v-icon left>mdi-plus</v-icon>
+          {{ (actionType === 'New' ? 'New Recurring Session' : 'Edit') }}
         </v-btn>
       </template>
       <v-card>
@@ -80,7 +81,7 @@
                 <v-spacer></v-spacer>
               </v-flex>
             </div>
-            <v-row>
+            <v-row v-if="(type = New)">
               <v-col cols="12" sm="6" md="4" class="pb-0">
                 <Lookup
                   v-model="session.StartTime"
@@ -388,14 +389,24 @@
             </v-row>
             <div class="col-md-12 pl-0">
               <v-flex class="d-flex justify-center align-center pb-1">
-                <h2 class="body-1 pb-1 primary--text">
+                <h2
+                  v-if="actionType === 'New'"
+                  class="body-1 pb-1 primary--text"
+                >
                   <i class="fa fa-help-circle" aria-hidden="true"></i>
                   Working Day?
+                </h2>
+                <h2
+                  v-if="actionType === 'Edit'"
+                  class="body-1 pb-1 primary--text"
+                >
+                  <i class="fa fa-cog" aria-hidden="true"></i>
+                  Advanced Setting
                 </h2>
                 <v-spacer></v-spacer>
               </v-flex>
             </div>
-            <v-row>
+            <v-row v-if="actionType === 'New'">
               <v-col v-for="(day, k) in days" :key="k" cols="4" class="py-0">
                 <v-checkbox
                   v-model="day.Value"
@@ -404,6 +415,51 @@
                   height="20"
                   @change="selectDays(day)"
                 ></v-checkbox>
+              </v-col>
+            </v-row>
+            <v-row v-if="actionType === 'Edit'">
+              <v-col cols="12" sm="6" md="4" class="pb-0">
+                <v-text-field
+                  v-model="session.Frequency"
+                  label="Frequency (min)"
+                  outlined
+                  type="number"
+                  dense
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4" class="pb-0">
+                <v-text-field
+                  v-model="session.MinimumSchedulingNotice"
+                  label="Minimum Scheduling Notice (hr)"
+                  outlined
+                  type="number"
+                  dense
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4" class="pb-0">
+                <v-text-field
+                  v-model="session.BufferBefore"
+                  label="Buffer Before (min)"
+                  outlined
+                  type="number"
+                  dense
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4" class="pb-0">
+                <v-text-field
+                  v-model="session.BufferAfter"
+                  label="Buffer After (min)"
+                  outlined
+                  type="number"
+                  dense
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" class="pb-4 pt-2">
+                <RichText
+                  v-model="session.Description"
+                  class="mb-3"
+                  label="Description"
+                ></RichText>
               </v-col>
             </v-row>
           </v-form>
@@ -439,6 +495,8 @@ export default {
   components: {
     CustomDate,
     VueGoogleAutocomplete: () => import('vue-google-autocomplete'),
+    RichText: () =>
+      process.client ? import('~/components/common/form/richtext.vue') : false,
   },
   props: {
     refresh: {
@@ -446,12 +504,42 @@ export default {
       required: false,
       default: () => false,
     },
+    editDialog: {
+      default: false,
+      allowSpaces: false,
+      type: Boolean,
+    },
+    items: {
+      default: () => [],
+      allowSpaces: false,
+      type: Array,
+    },
+    type: {
+      default: 'New',
+      allowSpaces: false,
+      type: String,
+    },
   },
   data() {
+    console.log('==items==', this.items)
+    console.log('==type==', this.type)
+    const session =
+      this.type === 'Edit'
+        ? { ...this.items[0] }
+        : {
+            MaxAllow: 5,
+            StartDate: '',
+            EndDate: '',
+            Duration: '30',
+            ScheduledType: 'Over a period of rolling days',
+            RollingDays: 30,
+          }
+    const actionType = this.type
     return {
       valid: false,
       required: [required],
       dialog: false,
+      actionType,
       isSaveButtonDisabled: false,
       isCustomMin: false,
       isGroup: false,
@@ -468,14 +556,15 @@ export default {
       endDateMessage: '',
       googleMeetDocumentLink: strings.GOOGLE_MEET_DOCUMENT_LINK,
       sessionResult: [],
-      session: {
-        MaxAllow: 5,
-        StartDate: '',
-        EndDate: '',
-        Duration: '30',
-        ScheduledType: 'Over a period of rolling days',
-        RollingDays: 30,
-      },
+      // session: {
+      //   MaxAllow: 5,
+      //   StartDate: '',
+      //   EndDate: '',
+      //   Duration: '30',
+      //   ScheduledType: 'Over a period of rolling days',
+      //   RollingDays: 30,
+      // },
+      session,
       venueAddress: {
         AddressLine: '',
         City: '',
