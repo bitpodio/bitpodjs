@@ -307,7 +307,10 @@ export default {
       }
     },
     async checkUniqueLink() {
-      if (this.formData.UniqLink !== '') {
+      if (
+        this.formData.UniqLink !== '' &&
+        this.formData.UniqLink !== this.data.event.UniqLink
+      ) {
         const where = { UniqLink: this.formData.UniqLink }
         const result = await this.$apollo.query({
           query: gql`

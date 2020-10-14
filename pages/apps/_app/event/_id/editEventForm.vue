@@ -128,7 +128,7 @@
             </v-col>
             <v-col cols="12" class="pb-0">
               <v-text-field
-                v-if="formData.LocationType === 'Online Event'"
+                v-if="formData.LocationType === 'Online event'"
                 v-model="formData.WebinarLink"
                 label="Online Event Link*"
                 :rules="requiredRule"
@@ -139,7 +139,7 @@
             </v-col>
             <v-col cols="12" class="pb-0">
               <v-textarea
-                v-if="formData.LocationType === 'Online Event'"
+                v-if="formData.LocationType === 'Online event'"
                 v-model="formData.JoiningInstruction"
                 label="Additional online event joining instructions,URL,phone,etc*"
                 outlined
@@ -150,7 +150,7 @@
             <div
               v-if="
                 formData.BusinessType !== 'Recurring' &&
-                formData.LocationType !== 'Online Event'
+                formData.LocationType !== 'Online event'
               "
               style="display: contents;"
             >
