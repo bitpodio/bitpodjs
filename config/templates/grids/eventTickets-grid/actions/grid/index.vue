@@ -2,16 +2,19 @@
   <div class="d-flex">
     <newItem :refresh="refresh" />
     <registrationType />
+    <seatmapTickets />
   </div>
 </template>
 
 <script>
 import registrationType from './registrationType'
 import newItem from './new-item.vue'
+import seatmapTickets from './seatmapTickets.vue'
 export default {
   components: {
     registrationType,
     newItem,
+    seatmapTickets,
   },
   props: {
     viewName: {

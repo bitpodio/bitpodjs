@@ -15,7 +15,7 @@
             class="logo-bitpod"
           ></v-img>
         </span>
-        <span d-inline-flex align-center class="mx-2 text-h5">Event</span>
+        <span d-inline-flex align-center class="mx-2">Event</span>
         <v-spacer></v-spacer>
         <div v-if="drawer === true" class="d-none d-sm-flex">
           <v-app-bar-nav-icon
@@ -25,49 +25,16 @@
         </div>
       </v-toolbar-title>
       <div class="text-center mt-4">
-        <v-menu>
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              v-bind="attrs"
-              color="primary"
-              dark
-              depressed
-              class="ma-3 block wd-full my-0 mb-1 ml-n4"
-              v-on="on"
-            >
-              Create Event
-            </v-btn>
-          </template>
-
-          <v-list dense>
-            <v-list-item
-              @click="
-                triggerReset = !triggerReset
-                dialog1 = !dialog1
-              "
-            >
-              <v-list-item-icon class="mr-2">
-                <v-icon class="fs-16 mr-2">fa-calendar</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title>Single Event</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item
-              @click="
-                triggerRecEventReset = !triggerRecEventReset
-                dialog = !dialog
-              "
-            >
-              <v-list-item-icon class="mr-2">
-                <v-icon class="fs-16 mr-2">fa-history</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title>Recurring Event</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list>
-        </v-menu>
+        <v-btn
+          v-bind="attrs"
+          color="blue darken-2"
+          dark
+          depressed
+          class="ma-3 block wd-full my-0 mb-1 ml-n4"
+          v-on="on"
+        >
+          Create user
+        </v-btn>
       </div>
       <v-list shaped>
         <template v-for="item in items">
@@ -124,36 +91,6 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-dialog
-      v-model="dialog1"
-      persistent
-      scrollable
-      content-class="slide-form"
-      transition="dialog-bottom-transition"
-    >
-      <div v-if="dialog1">
-        <NewSingleEvent
-          :reset-data="triggerReset"
-          :on-form-close="closeSingleEventForm"
-        />
-      </div>
-    </v-dialog>
-
-    <v-dialog
-      v-model="dialog"
-      persistent
-      scrollable
-      content-class="slide-form"
-      transition="dialog-bottom-transition"
-    >
-      <div v-if="dialog">
-        <NewRecurringEvent
-          :reset-data="triggerRecEventReset"
-          :on-form-close="closeRecurringEventForm"
-        />
-      </div>
-    </v-dialog>
-
     <v-app-bar app flat class="greybg headernew pl-0" height="50">
       <v-toolbar-title
         class="ml-n3 pl-0 px-2 py-1 logo-ds d-flex align-center appbar-left"
@@ -177,7 +114,7 @@
       <div class="d-flex d-sm-flex d-md-none ml-n3">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       </div>
-      <v-toolbar-title class="pl-0 ml-n1">Event </v-toolbar-title>
+      <v-toolbar-title class="pl-0 ml-n1">Administration</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
         <v-icon>mdi-invert-colors</v-icon>
@@ -275,7 +212,7 @@
                 </v-flex>
               </a>
               <nuxt-link
-                to="/apps/seatmap/list/seatmaps/seatmaps"
+                to="/apps/admin/list/seatmaps/seatmaps"
                 class="text-decoration-none"
               >
                 <v-flex
@@ -378,77 +315,85 @@ export default {
   components: {
     OrgnaizationList,
   },
-  props: {
-    source: { type: String, default: '' },
-  },
-  data: () => ({
-    date: new Date().toISOString().substr(0, 10),
-    menu: false,
-    modal: false,
-    menu2: false,
-    drawer: null,
-    dialog1: false,
-    dialog: false,
-    notifications: false,
-    sound: true,
-    tabs: null,
-    account: false,
-    message: false,
-    triggerReset: false,
-    triggerRecEventReset: false,
-    items: [
-      {
-        icon: 'fa fa-grid',
-        text: 'Eventboard',
-        to: '/apps/event/eventboard',
-      },
-      { heading: 'Event' },
-      {
-        icon: 'fa fa-calendar',
-        text: 'Events',
-        to: '/apps/event/list/Event/live and draft event',
-      },
-      {
-        icon: 'fa fa-user-plus',
-        text: 'Registrations',
-        to: '/apps/event/list/Registrations/Registrations',
-      },
-      { heading: 'Promotions' },
-      {
-        icon: 'fa fa-building',
-        text: 'Discount Code',
-        to: '/apps/event/list/DiscountCodes/Discount Codes',
-      },
-      { heading: 'Members' },
-      {
-        icon: 'fa fa-users',
-        text: 'Members',
-        to: '/apps/event/list/EventCustomers/Members',
-      },
-      {
-        icon: 'fa fa-address-book-o',
-        text: 'Contacts',
-        to: '/apps/event/list/Contacts/Contacts',
-      },
-    ],
-  }),
-  async created() {
-    let token = this.$auth.strategy.token.get()
-    if (token) {
-      token = token.split(' ')[1]
+  props: { sidebar: { type: Boolean, default: true } },
+  data() {
+    return {
+      date: new Date().toISOString().substr(0, 10),
+      menu: false,
+      modal: false,
+      menu2: false,
+      drawer: this.sidebar,
+      dialog1: false,
+      dialog: false,
+      notifications: false,
+      sound: true,
+      tabs: null,
+      account: false,
+      message: false,
+      items: [
+        { heading: 'Event' },
+        {
+          icon: 'fa fa-network',
+          text: 'Organization',
+          to: '/apps/admin/organization/5cfe026f6ab042000c530105',
+        },
+        {
+          icon: 'fa fa-cog',
+          text: 'Lookups',
+          to: '/apps/admin/organization/lookups',
+        },
+        {
+          icon: 'fa fa-file',
+          text: 'Templates',
+          to: '/apps/admin/list/marketingtemplates/template',
+        },
+        {
+          icon: 'fa fa-grid-alt',
+          text: 'Seat Maps',
+          to: '/apps/admin/list/seatmaps/seatmaps',
+        },
+        {
+          icon: 'fa fa-id-badge',
+          text: 'Badges Templates',
+          to: '/apps/admin/list/badge/badge',
+        },
+        {
+          icon: 'fa fa-file-text-o',
+          text: 'Registration Form',
+          to: '/apps/admin/list/registrationformdetails/registration form',
+        },
+        { heading: 'Security' },
+        {
+          icon: 'fa fa-shield',
+          text: 'Roles',
+          to: '/apps/admin/list/userroles/userroles',
+        },
+        {
+          icon: 'fa fa-users',
+          text: 'Users',
+          to: '/apps/admin/list/users/users',
+        },
+        {
+          icon: 'fa fa-key',
+          text: 'Access Keys',
+          to: '/apps/admin/list/accesskey/accesskey',
+        },
+      ],
     }
-    await this.$apolloHelpers.onLogin(token, undefined, { expires: 7 })
+  },
+  async created() {
+    if (!this.$apolloHelpers.getToken()) {
+      let token = this.$auth.strategy.token.get()
+      if (token) {
+        token = token.split(' ')[1]
+      }
+      await this.$apolloHelpers.onLogin(token, undefined, { expires: 7 })
+    }
   },
   methods: {
     async onLogout() {
-      await this.$apolloHelpers.onLogout()
       this.$auth.logout()
-    },
-    closeSingleEventForm() {
-      this.dialog1 = false
-    },
-    closeRecurringEventForm() {
-      this.dialog = false
+      await this.$apolloHelpers.onLogout()
     },
   },
 }

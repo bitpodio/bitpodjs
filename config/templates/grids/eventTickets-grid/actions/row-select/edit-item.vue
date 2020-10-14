@@ -9,7 +9,7 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on" @click="getTickets">
-          <v-icon left>mdi-plus</v-icon>Edit Item
+          <v-icon left class="fs-16">fa-pencil</v-icon>Edit Item
         </v-btn>
       </template>
       <v-card>

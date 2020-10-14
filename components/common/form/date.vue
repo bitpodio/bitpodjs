@@ -79,6 +79,13 @@ export default {
       return this.field.type === 'datetime'
     },
   },
+  watch: {
+    value(newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.date = newVal
+      }
+    },
+  },
   mounted() {
     this.onCalendarChange()
   },
