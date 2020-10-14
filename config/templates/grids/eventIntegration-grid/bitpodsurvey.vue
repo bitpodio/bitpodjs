@@ -78,6 +78,7 @@ export default {
     return {
       formData: this.item,
       showField: false,
+      lazy: false,
     }
   },
   methods: {

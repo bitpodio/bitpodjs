@@ -7,7 +7,7 @@
       @click.prevent="updateConnection"
     ></v-checkbox>
 
-    <v-snackbar v-model="snackbar" :timeout="timeout" top="true">
+    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
       <div class="text-center">{{ snackbarText }}</div>
     </v-snackbar>
 
