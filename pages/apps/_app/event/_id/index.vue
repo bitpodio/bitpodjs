@@ -903,7 +903,7 @@
       </div>
 
       <div
-        v-if="data.event.LocationType !== 'Online Event'"
+        v-if="data.event.LocationType === 'Venue'"
         class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pb-0 pr-2 box-grey"
       >
         <v-flex class="d-flex justify-center align-center pb-2">
