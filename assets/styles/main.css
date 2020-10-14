@@ -408,11 +408,11 @@ body {
 .seatmap .pt-0.col {
   padding-bottom: 0 !important;
 }
-.seatmap .min-h36 {
-  margin-left: 12px !important;
-}
 .small-form {
   min-height: 300px;
+}
+.seatmap .view-name {
+  visibility: hidden !important;
 }
 @media (max-width: 800px) {
   .nav-bar {

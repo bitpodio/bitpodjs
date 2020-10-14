@@ -1,8 +1,8 @@
 <template>
-  <v-flex d-flex flex-md-row flex-lg-row flex-column class="px-3">
+  <v-flex d-flex flex-md-row flex-lg-row flex-column class="px-3 seatmap-inner">
     <v-flex column xs12 sm12 md12 lg12>
       <div
-        class="xs12 sm8 md8 lg8 boxview pa-3 mr-0 mb-4 pb-2 elevation-1 rounded-lg"
+        class="xs12 sm8 md8 lg8 boxview pa-3 mr-0 mb-4 pb-2 mt-3 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-0">
           <div
@@ -40,7 +40,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mr-0 mb-4 pb-6 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-0 mb-4 pb-6 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -54,7 +54,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mr-0 mb-4 pb-6 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 mr-0 mb-4 pb-6 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -147,5 +147,9 @@ export default {
 <style scoped>
 .boxview:hover .invite-actions {
   display: block !important;
+}
+.seatmap-inner {
+  max-width: 65%;
+  margin: auto;
 }
 </style>

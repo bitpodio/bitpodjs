@@ -1,11 +1,11 @@
 <template>
-  <v-flex>
-    <v-col class="d-flex flex-wrap greybg pa-0 pl-3">
+  <v-flex class="greybg">
+    <v-col class="d-flex flex-wrap greybg pa-0 pl-3 seatmap-inner">
       <v-hover v-slot:default="{ hover }" open-delay="200">
         <nuxt-link :to="seatmapRoute" class="text-decoration-none">
           <v-card
             :elevation="hover ? 1 : 0"
-            class="ma-3 ml-0 mt-0 d-flex justify-center align-center"
+            class="ma-10 ml-0 mt-0 d-flex justify-center align-center"
             height="125"
             max-width="155"
             width="155"
@@ -23,7 +23,7 @@
         v-slot:default="{ hover }"
         open-delay="200"
       >
-        <v-card :elevation="hover ? 1 : 0" class="ma-3 ml-0 mt-0 seat-maps">
+        <v-card :elevation="hover ? 1 : 0" class="ma-10 ml-0 mt-0 seat-maps">
           <nuxt-link :to="seatmapRoutes(item.id)" class="text-decoration-none">
             <v-card-text
               class="font-weight-medium text-center positionRelative subtitle-1 seat-card pb-0"
@@ -116,7 +116,8 @@ export default {
 .seat-maps:hover .box-actions {
   display: block;
 }
-.seatmap .min-h36 {
-  margin-left: 12px !important;
+.seatmap-inner {
+  max-width: 65%;
+  margin: auto;
 }
 </style>
