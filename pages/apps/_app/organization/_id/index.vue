@@ -328,13 +328,21 @@
         </v-flex>
       </div>
     </v-flex>
-    <editOrgInfoForm
-      :edit-org-info.sync="editOrgInfo"
-      :items="data.organization"
-    />
-    <editOrgSetting :edit-org-setting.sync="editOrgSetting" />
-    <editSocialMedia :edit-social-media.sync="editSocialMedia" />
-    <editWorkTiming :edit-work-timing.sync="editWorkTiming" />
+    <div v-if="editOrgInfo">
+      <editOrgInfoForm
+        :edit-org-info.sync="editOrgInfo"
+        :items="data.organization"
+      />
+    </div>
+    <div v-if="editOrgSetting">
+      <editOrgSetting :edit-org-setting.sync="editOrgSetting" />
+    </div>
+    <div v-if="editSocialMedia">
+      <editSocialMedia :edit-social-media.sync="editSocialMedia" />
+    </div>
+    <div v-if="editWorkTiming">
+      <editWorkTiming :edit-work-timing.sync="editWorkTiming" />
+    </div>
   </v-flex>
 </template>
 
@@ -389,6 +397,9 @@ export default {
     },
   },
   methods: {
+    refresh() {
+      this.$apollo.queries.data.refresh()
+    },
     checkOrgClicked() {
       if (this.allow) {
         this.checkArray = []
