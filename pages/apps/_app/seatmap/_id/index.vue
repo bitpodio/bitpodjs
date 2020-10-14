@@ -39,15 +39,13 @@ export default {
   layout: 'seatmap',
   data() {
     const seatmapUrl = getCurrentOrigin()
-    console.log(seatmapUrl)
     return {
       snackbarText: '',
       snackbar: false,
       timeout: 1000,
       seatmapData: null,
       loading: false,
-      // iframe: { src: `${seatmapUrl}/seatmap`, loaded: false },
-      iframe: { src: `http://localhost:8089/seatmap`, loaded: false },
+      iframe: { src: `${seatmapUrl}/seatmap`, loaded: false },
     }
   },
   mounted() {
