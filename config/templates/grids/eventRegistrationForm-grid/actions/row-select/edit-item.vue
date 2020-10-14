@@ -9,7 +9,7 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on" @click="getRegistrations">
-          <v-icon left>mdi-pencil</v-icon>Edit
+          <v-icon left class="fs-16">fa-pencil</v-icon>Edit
         </v-btn>
       </template>
       <v-card>
@@ -62,6 +62,7 @@
                   :rules="required"
                   label="Display Order*"
                   type="number"
+                  min="1"
                   required
                   outlined
                   dense
