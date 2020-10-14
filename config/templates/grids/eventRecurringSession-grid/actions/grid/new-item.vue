@@ -9,7 +9,8 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on">
-          <v-icon left>mdi-plus</v-icon>
+          <v-icon v-if="actionType === 'New'" left>mdi-plus</v-icon>
+          <v-icon v-if="actionType === 'Edit'" left>fa fa-pencil</v-icon>
           {{ (actionType === 'New' ? 'New Recurring Session' : 'Edit') }}
         </v-btn>
       </template>
@@ -17,7 +18,9 @@
         <v-card-title
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
-          <h2 class="black--text pt-10 pb-9 text-h5">New Session</h2>
+          <h2 class="black--text pt-10 pb-9 text-h5">
+            {{ (actionType === 'New' ? 'New Session' : 'Edit Session') }}
+          </h2>
 
           <v-spacer></v-spacer>
           <div>
@@ -81,7 +84,7 @@
                 <v-spacer></v-spacer>
               </v-flex>
             </div>
-            <v-row v-if="(type = New)">
+            <v-row v-if="actionType === 'New'">
               <v-col cols="12" sm="6" md="4" class="pb-0">
                 <Lookup
                   v-model="session.StartTime"
@@ -192,11 +195,11 @@
               <v-col
                 v-if="session.LocationType === 'Online meeting'"
                 cols="12"
-                sm="6"
-                md="4"
+                sm="8"
+                md="8"
               >
                 <v-text-field
-                  v-model="WebinarLink"
+                  v-model="session.WebinarLink"
                   label="online meeting link*"
                   outlined
                   :rules="requiredRules"
@@ -205,6 +208,7 @@
               </v-col>
               <v-col cols="12" class="pb-0 pt-0">
                 <div v-if="session.LocationType === 'Zoom'">
+                  <i class="fa fa-bulb" aria-hidden="true"></i>
                   To send Zoom joining info, you must setup Zoom integration,
                   <a href="" @click.stop.prevent="openWindow(zoomDocumentLink)"
                     >click here</a
@@ -212,6 +216,7 @@
                   for documentation.
                 </div>
                 <div v-if="session.LocationType === 'Google Meet'">
+                  <i class="fa fa-bulb" aria-hidden="true"></i>
                   To send google meet joining info, you must setup google meet
                   integration,
                   <a
@@ -424,6 +429,7 @@
                   label="Frequency (min)"
                   outlined
                   type="number"
+                  :rules="numberRules"
                   dense
                 ></v-text-field>
               </v-col>
@@ -433,6 +439,7 @@
                   label="Minimum Scheduling Notice (hr)"
                   outlined
                   type="number"
+                  :rules="numberRules"
                   dense
                 ></v-text-field>
               </v-col>
@@ -442,6 +449,7 @@
                   label="Buffer Before (min)"
                   outlined
                   type="number"
+                  :rules="numberRules"
                   dense
                 ></v-text-field>
               </v-col>
@@ -451,6 +459,7 @@
                   label="Buffer After (min)"
                   outlined
                   type="number"
+                  :rules="numberRules"
                   dense
                 ></v-text-field>
               </v-col>
@@ -533,16 +542,36 @@ export default {
             Duration: '30',
             ScheduledType: 'Over a period of rolling days',
             RollingDays: 30,
+            Frequency: '30',
           }
     const actionType = this.type
+    session.Duration =
+      this.type === 'Edit' ? `${session.Duration}` : session.Duration
+    const isCustomMin = session.Duration === '0'
+    const isGroup = session.Type === 'Group'
+    const venueAddress =
+      this.type === 'Edit' && this.items[0]._CurrentAddress
+        ? this.items[0]._CurrentAddress
+        : {
+            AddressLine: '',
+            City: '',
+            State: '',
+            Country: '',
+            PostalCode: '',
+            LatLng: {
+              lat: 0.0,
+              lng: 0.0,
+            },
+          }
+
     return {
       valid: false,
       required: [required],
       dialog: false,
       actionType,
       isSaveButtonDisabled: false,
-      isCustomMin: false,
-      isGroup: false,
+      isCustomMin,
+      isGroup,
       InPersonMeeting: [],
       inPersonMeetingOptions: [],
       ticketOptions: [],
@@ -565,18 +594,19 @@ export default {
       //   RollingDays: 30,
       // },
       session,
-      venueAddress: {
-        AddressLine: '',
-        City: '',
-        State: '',
-        Country: '',
-        PostalCode: '',
-        LatLng: {},
-      },
-      LatLng: {
-        lat: 0.0,
-        lng: 0.0,
-      },
+      venueAddress,
+      // venueAddress: {
+      //   AddressLine: '',
+      //   City: '',
+      //   State: '',
+      //   Country: '',
+      //   PostalCode: '',
+      //   LatLng: {},
+      // },
+      // LatLng: {
+      //   lat: 0.0,
+      //   lng: 0.0,
+      // },
       selectedDays: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'],
       phoneRules: [
         (v) => {
@@ -600,6 +630,14 @@ export default {
             return true
           }
           return strings.MAX_ALLOW_MSG
+        },
+      ],
+      numberRules: [
+        (v) => {
+          if (!v || v > -1) {
+            return true
+          }
+          return 'value should not be negative'
         },
       ],
       personMeetingRules: [
@@ -801,6 +839,44 @@ export default {
       ]
     },
   },
+  watch: {
+    items(newVal, oldVal) {
+      this.session =
+        this.type === 'Edit'
+          ? { ...this.items[0] }
+          : {
+              MaxAllow: 5,
+              StartDate: '',
+              EndDate: '',
+              Duration: '30',
+              ScheduledType: 'Over a period of rolling days',
+              RollingDays: 30,
+              Frequency: '30',
+            }
+      this.actionType = this.type
+      this.session.Duration =
+        this.type === 'Edit'
+          ? `${this.session.Duration}`
+          : this.session.Duration
+      this.isCustomMin = this.session.Duration === '0'
+      this.isGroup = this.session.Type === 'Group'
+      this.venueAddress =
+        this.type === 'Edit' && this.items[0]._CurrentAddress
+          ? this.items[0]._CurrentAddress
+          : {
+              AddressLine: '',
+              City: '',
+              State: '',
+              Country: '',
+              PostalCode: '',
+              LatLng: {
+                lat: 0.0,
+                lng: 0.0,
+              },
+            }
+      debugger
+    },
+  },
   methods: {
     setDefault() {
       this.session.MaxAllow = 5
@@ -993,11 +1069,16 @@ export default {
       }
       if (this.session.LocationType === 'Custom') {
         if (this.venueAddress.AddressLine !== '') {
+          this.venueAddress.LatLng.__typename &&
+            delete this.venueAddress.LatLng.__typename
+          // this.venueAddress.__typename && delete this.venueAddress.__typename
           this.session._CurrentAddress = this.venueAddress
         } else {
           this.addresslineMessage = strings.FIELD_REQUIRED
           return
         }
+      } else {
+        delete this.session._CurrentAddress
       }
       const tempData = []
       this.sessionResult.push({
@@ -1014,6 +1095,7 @@ export default {
       })
       const isInvalidSlot = this.partitionIntoOverlappingRanges(tempData)
       if (
+        this.actionType === 'Edit' ||
         isInvalidSlot === false ||
         confirm(
           'This session overlaps with another session, are you sure? click Yes to create and cancel to cancel it.'
@@ -1042,42 +1124,73 @@ export default {
           }
         })
         this.session.RollingDays = parseInt(this.session.RollingDays)
-        this.session.Duration = parseInt(this.session.Duration)
-        this.session.Frequency = parseInt(this.session.Duration)
+        const duration = this.session.Duration
+        this.session.Duration = parseInt(duration)
+        // this.session.Frequency = parseInt(this.session.Duration)
         this.session.MaxAllow = parseInt(this.session.MaxAllow)
         this.session.EventId = this.$route.params.id
+
+        this.session.MinimumSchedulingNotice = parseInt(
+          this.session.MinimumSchedulingNotice
+        )
+        this.session.BufferBefore = parseInt(this.session.BufferBefore)
+        this.session.BufferAfter = parseInt(this.session.BufferAfter)
+        this.session.Frequency = parseInt(this.session.Frequency)
+
         const baseUrl = getApiUrl()
         let res = null
         let exceptionRes = null
-        try {
-          res = await this.$axios.$post(`${baseUrl}Sessions`, {
-            ...this.session,
-          })
-        } catch (e) {
-          console.log(
-            `Error in Recurring session grid new session form on Save function - context: create Recurring session, eventId - ${this.session.EventId}`
-          )
-        }
-        if (res) {
+        if (this.actionType === 'New') {
           try {
-            exceptionRes = await this.$axios.$patch(
-              `${baseUrl}Sessions/${res.id}`,
+            res = await this.$axios.$post(`${baseUrl}Sessions`, {
+              ...this.session,
+            })
+          } catch (e) {
+            console.log(
+              `Error in Recurring session grid new session form on Save function - context: create Recurring session, eventId - ${this.session.EventId}`
+            )
+          }
+          if (res) {
+            try {
+              exceptionRes = await this.$axios.$patch(
+                `${baseUrl}Sessions/${res.id}`,
+                {
+                  _Exceptions,
+                }
+              )
+            } catch (e) {
+              console.log(
+                `Error in Recurring session grid new session form on Save function - context: create Recurring session , Schedules,intervals, eventId - ${this.session.EventId}`
+              )
+            }
+          }
+          if (exceptionRes) {
+            this.dialog = false
+            this.$refs.form && this.$refs.form.reset()
+            this.isGroup = false
+            this.refresh()
+            return exceptionRes
+          }
+        } else if (this.actionType === 'Edit') {
+          try {
+            res = await this.$axios.$patch(
+              `${baseUrl}Sessions/${this.session.id}`,
               {
-                _Exceptions,
+                ...this.session,
               }
             )
           } catch (e) {
             console.log(
-              `Error in Recurring session grid new session form on Save function - context: create Recurring session , Schedules,intervals, eventId - ${this.session.EventId}`
+              `Error in Recurring session grid edit session form on Save function - context: edit Recurring session, eventId - ${this.session.EventId}, sessionId - ${this.session.id}}`
             )
           }
-        }
-        if (exceptionRes) {
-          this.dialog = false
-          this.$refs.form.reset()
-          this.isGroup = false
-          this.refresh()
-          return exceptionRes
+          if (res) {
+            this.dialog = false
+            this.$refs.form && this.$refs.form.reset()
+            this.isGroup = false
+            this.refresh()
+            return res
+          }
         }
       }
     },
