@@ -713,6 +713,12 @@ export default {
     },
   },
   methods: {
+    setDefault() {
+      this.session.MaxAllow = 5
+      this.session.Duration = '30'
+      this.session.ScheduledType = 'Over a period of rolling days'
+      this.session.RollingDays = 30
+    },
     setSelectedDays(selectedDays) {
       selectedDays.map((x) => {
         this.days.map((day) => {
@@ -888,6 +894,7 @@ export default {
     openWindow(link) {
       window.open(link, '_blank')
     },
+
     async onSave() {
       if (this.session.StartTime > this.session.EndTime) {
         this.timeSlotMessage = 'End time should be greater than start time.'

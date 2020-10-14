@@ -6,6 +6,7 @@ query($filters: JSON, $slotFilters: JSON, $inPersonMeetingFilters: JSON) {
           id
           Currency
           Image
+          weekDay
         }
       }
     }

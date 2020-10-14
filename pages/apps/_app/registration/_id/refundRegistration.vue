@@ -124,7 +124,9 @@ export default {
   data() {
     return {
       regData: {},
-      refund: {},
+      refund: {
+        RefundMethod: 'Payment Gateway',
+      },
       refundData: {},
       isAmountDisabled: false,
       valid: false,

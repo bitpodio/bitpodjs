@@ -316,10 +316,8 @@
             </template>
             <v-list dense>
               <v-list-item
-                @click="
-                  checkArray = []
-                  badgeLogo = !badgeLogo
-                "
+                class="cursorPointer"
+                @click.native="checkLogoClicked"
               >
                 <v-list-item-title>
                   <File
@@ -328,16 +326,15 @@
                     :block="true"
                     :open-file-dialog="badgeLogo"
                     :value="checkArray"
+                    :hide-preview="true"
                     @input="fileUploadedBadgeLogo"
                   />
                   Badge Logo
                 </v-list-item-title>
               </v-list-item>
               <v-list-item
-                @click="
-                  checkArray = []
-                  eventBanner = !eventBanner
-                "
+                class="cursorPointer"
+                @click.native="checkBannerClicked"
               >
                 <v-list-item-title>
                   <File
@@ -346,16 +343,15 @@
                     :block="true"
                     :open-file-dialog="eventBanner"
                     :value="checkArray"
+                    :hide-preview="true"
                     @input="fileUploadedEventBanner"
                   />
                   Event Banner(680x350)
                 </v-list-item-title>
               </v-list-item>
               <v-list-item
-                @click="
-                  checkArray = []
-                  otherDialog = !otherDialog
-                "
+                class="cursorPointer"
+                @click.native="checkOtherClicked"
               >
                 <v-list-item-title>
                   <File
@@ -364,6 +360,7 @@
                     :block="true"
                     :open-file-dialog="otherDialog"
                     :value="checkArray"
+                    :hide-preview="true"
                     @input="fileUploadedOther"
                   />
                   Other
@@ -441,7 +438,7 @@
             </v-card>
           </v-dialog>
         </div>
-        <div v-else>
+        <div>
           <v-card
             v-for="image in data.event.Images"
             :key="image"
@@ -1168,10 +1165,18 @@
         </div>
       </v-snackbar>
     </v-flex>
-    <editEventForm :event-form.sync="eventForm" />
-    <editSeoForm :seo-form.sync="seoForm" />
-    <editEventSetting :event-setting.sync="eventSetting" />
-    <editSiteSetting :site-setting.sync="siteSetting" />
+    <div v-if="eventForm">
+      <editEventForm :event-form.sync="eventForm" />
+    </div>
+    <div v-if="seoForm">
+      <editSeoForm :seo-form.sync="seoForm" />
+    </div>
+    <div v-if="eventSetting">
+      <editEventSetting :event-setting.sync="eventSetting" />
+    </div>
+    <div v-if="siteSetting">
+      <editSiteSetting :site-setting.sync="siteSetting" />
+    </div>
     <makeCopy :key="isMakeCopy" :is-make-copy.sync="isMakeCopy" />
     <newBadgeForm :new-badge.sync="newBadge" />
     <editBadgeForm :id="badgeData.id" :edit-badge-form.sync="editBadgeForm" />
@@ -1271,6 +1276,7 @@ export default {
       getBadgeCategory: 'Guest',
       attendees: [],
       Status: '',
+      allow: true,
     }
   },
   computed: {
@@ -1423,7 +1429,7 @@ export default {
           this.formData
         )
         if (res) {
-          this.snackbarText = 'Congratulations, your event has been published'
+          this.snackbarText = 'Congratulations, your event has been published.'
           this.snackbar = true
           this.refresh()
         }
@@ -1550,15 +1556,36 @@ export default {
     refresh() {
       this.$apollo.queries.data.refresh()
     },
+    checkLogoClicked() {
+      if (this.allow) {
+        this.checkArray = []
+        this.badgeLogo = !this.badgeLogo
+        this.allow = false
+      }
+    },
+    checkBannerClicked() {
+      if (this.allow) {
+        this.checkArray = []
+        this.eventBanner = !this.eventBanner
+        this.allow = false
+      }
+    },
+    checkOtherClicked() {
+      if (this.allow) {
+        this.checkArray = []
+        this.otherDialog = !this.otherDialog
+        this.allow = false
+      }
+    },
     fileUploadedBadgeLogo(data) {
-      this.badgeLogo = false
+      this.allow = true
       this.formData.Logo = []
       this.formData.Logo.push(data[0])
       this.updateEventGallery(this.formData)
     },
     fileUploadedEventBanner(data) {
-      this.eventBanner = false
       const imageUrl = `/svc/api/Attachments/download/${data[0]}`
+      this.allow = true
       this.formData.Images = []
       this.formData.ImagesURL = []
       this.formData.Images.push(data[0])
@@ -1567,7 +1594,7 @@ export default {
       this.updateEventGallery(this.formData)
     },
     fileUploadedOther(data) {
-      this.otherDialog = false
+      this.allow = true
       this.formData.Other = []
       this.formData.Other.push(...data)
       this.updateOtherImageGallery(this.formData.Other)

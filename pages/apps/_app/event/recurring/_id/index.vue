@@ -842,6 +842,11 @@
           </span>
         </v-flex>
       </div>
+      <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
+        <div class="toast py-2 pr-1 pl-3">
+          {{ snackbarText }}
+        </div>
+      </v-snackbar>
     </v-flex>
     <editSeoForm :seo-form.sync="seoForm" />
     <editEventForm :event-form.sync="eventForm" />
@@ -895,6 +900,9 @@ export default {
       eventSessionLink: '',
       Status: '',
       eventData: {},
+      snackbar: false,
+      timeout: '1000',
+      snackbarText: '',
     }
   },
   computed: {
@@ -946,6 +954,8 @@ export default {
           this.formData
         )
         if (res) {
+          this.snackbarText = 'Congratulations, your event has been published.'
+          this.snackbar = true
           this.refresh()
         }
       } catch (e) {
