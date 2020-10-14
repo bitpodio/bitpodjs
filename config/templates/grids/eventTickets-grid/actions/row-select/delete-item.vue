@@ -33,13 +33,6 @@ export default {
       default: () => false,
     },
   },
-  watch: {
-    snackbar(newVal) {
-      if (!newVal) {
-        this.refresh()
-      }
-    },
-  },
   data() {
     return {
       dialog: false,
@@ -48,6 +41,13 @@ export default {
       timeout: 1000,
       test: 'querty',
     }
+  },
+  watch: {
+    snackbar(newVal) {
+      if (!newVal) {
+        this.refresh()
+      }
+    },
   },
 
   methods: {
