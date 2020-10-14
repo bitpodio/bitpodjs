@@ -1,6 +1,6 @@
 <template>
   <v-flex>
-    <v-col class="d-flex flex-wrap greybg pa-0">
+    <v-col class="d-flex flex-wrap greybg pa-0 pl-3">
       <v-hover v-slot:default="{ hover }" open-delay="200">
         <nuxt-link :to="seatmapRoute" class="text-decoration-none">
           <v-card
@@ -115,5 +115,8 @@ export default {
 }
 .seat-maps:hover .box-actions {
   display: block;
+}
+.seatmap .min-h36 {
+  margin-left: 12px !important;
 }
 </style>

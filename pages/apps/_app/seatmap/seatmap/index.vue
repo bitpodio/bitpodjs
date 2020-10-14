@@ -1,5 +1,5 @@
 <template>
-  <v-flex d-flex flex-md-row flex-lg-row flex-column>
+  <v-flex d-flex flex-md-row flex-lg-row flex-column class="px-3">
     <v-flex column xs12 sm12 md12 lg12>
       <div
         class="xs12 sm8 md8 lg8 boxview pa-3 mr-0 mb-4 pb-2 elevation-1 rounded-lg"

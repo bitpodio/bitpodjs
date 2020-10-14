@@ -204,7 +204,7 @@
       </div>
     </v-app-bar>
 
-    <v-main class="greybg">
+    <v-main class="greybg seatmap">
       <v-container fluid>
         <v-row>
           <v-col class="pt-0">
