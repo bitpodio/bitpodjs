@@ -1023,45 +1023,36 @@
           <v-checkbox
             v-model="data.event.isRefundable"
             dense
+            debounce="500"
             height="20"
             class="ma-0 pa-0"
             label="Allow Cancelation"
             color="green"
-            @change="
-              updateEvent({
-                isRefundable: data.event.isRefundable,
-              })
-            "
+            @change="updateReg"
           ></v-checkbox>
         </v-flex>
         <v-flex class="d-block text-truncate">
           <v-checkbox
             v-model="data.event.SessionTimingConflict"
             dense
+            debounce="500"
             height="20"
             class="ma-0 pa-0"
             label="Validate Session Timing Conflict"
             color="green"
-            @change="
-              updateEvent({
-                SessionTimingConflict: data.event.SessionTimingConflict,
-              })
-            "
+            @change="updateReg"
           ></v-checkbox>
         </v-flex>
         <v-flex class="d-block text-truncate">
           <v-checkbox
             v-model="data.event.ShowRemainingTickets"
             dense
+            debounce="500"
             height="20"
             class="ma-0 pa-0"
             label="Show Remaining Tickets Count"
             color="green"
-            @change="
-              updateEvent({
-                ShowRemainingTickets: data.event.ShowRemainingTickets,
-              })
-            "
+            @change="updateReg"
           ></v-checkbox>
         </v-flex>
         <v-flex class="d-block text-truncate">
@@ -1070,24 +1061,22 @@
             label="Show Attendee Form"
             color="green"
             dense
+            debounce="500"
             height="20"
             class="ma-0 pa-0"
-            @change="
-              updateEvent({ ShowAttendeeForm: data.event.ShowAttendeeForm })
-            "
+            @change="updateReg"
           ></v-checkbox>
         </v-flex>
         <v-flex class="d-block text-truncate">
           <v-checkbox
             v-model="data.event.NotifyOrganizer"
             dense
+            debounce="500"
             height="20"
             class="ma-0 pa-0"
             label="Notify organizer when someone registers"
             color="green"
-            @change="
-              updateEvent({ NotifyOrganizer: data.event.NotifyOrganizer })
-            "
+            @change="updateReg"
           ></v-checkbox>
         </v-flex>
       </div>
@@ -1117,7 +1106,7 @@
             class="ma-0 pa-0"
             label="Show Image Gallery"
             color="green"
-            @change="updateRegistrationPage"
+            @change="updateReg1()"
           ></v-checkbox>
         </v-flex>
         <v-flex>
@@ -1128,7 +1117,7 @@
             class="ma-0 pa-0"
             label="Show Event Reviews"
             color="green"
-            @change="updateRegistrationPage"
+            @change="updateReg1()"
           ></v-checkbox>
         </v-flex>
       </div>
@@ -1188,7 +1177,6 @@ export default {
     value: { type: null, default: null },
     field: { type: null, default: null },
     offset: { type: Boolean, default: false },
-    updateReg: { type: null, default: null },
   },
   data() {
     return {
@@ -1257,6 +1245,25 @@ export default {
     },
     baseUrl() {
       return nuxtconfig.axios.eventUrl
+    },
+    updateData() {
+      const dataObj = {
+        isRefundable: this.data.event.isRefundable,
+        SessionTimingConflict: this.data.event.SessionTimingConflict,
+        ShowRemainingTickets: this.data.event.ShowRemainingTickets,
+        ShowAttendeeForm: this.data.event.ShowAttendeeForm,
+        NotifyOrganizer: this.data.event.NotifyOrganizer,
+      }
+      return dataObj
+    },
+    updateSectionHeading() {
+      const dataObj = {
+        _sectionHeading: {
+          showimagegallery: this.registrationSetting.showimagegallery,
+          showeventreviews: this.registrationSetting.showeventreviews,
+        },
+      }
+      return dataObj
     },
   },
   watch: {
@@ -1678,19 +1685,6 @@ export default {
         `/apps/event/list/Event/integrations?event=${this.$route.params.id}`
       )
     },
-    async updateEvent(obj) {
-      obj.id = this.$route.params.id
-      const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`
-      try {
-        const res = await this.$axios.$patch(URL, obj)
-        if (res) {
-          console.log('+++++', res)
-          this.updateReg()
-        }
-      } catch (e) {
-        console.log('Error', e)
-      }
-    },
     updateRegistrationSetting(eventData) {
       this.registrationSetting.showimagegallery = this.eventData._sectionHeading
         ? this.eventData._sectionHeading.showimagegallery
@@ -1700,28 +1694,40 @@ export default {
         : false
     },
     async updateRegistrationPage() {
-      const obj = {
-        _sectionHeading: {
-          showimagegallery: this.registrationSetting.showimagegallery,
-          showeventreviews: this.registrationSetting.showeventreviews,
-        },
-      }
+      const obj = this.updateSectionHeading
       const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`
       try {
         const res = await this.$axios.$patch(URL, obj)
         if (res) {
-          console.log('+++++', res)
-          this.refresh()
         }
       } catch (e) {
-        console.log('Error', e)
+        console.error(
+          `Error in apps/event/_id/index.vue while making a Patch call to Event model in method updateRegistrationPage context: EventId:-${this.$route.params.id} \n URL:- ${URL} \n Object:- ${obj}`,
+          e
+        )
       }
     },
-    // eslint-disable-next-line vue/no-dupe-keys
+    async updateEvent() {
+      const obj = this.updateData
+      obj.id = this.$route.params.id
+      const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`
+      try {
+        const res = await this.$axios.$patch(URL, obj)
+        if (res) {
+        }
+      } catch (e) {
+        console.error(
+          `Error in apps/event/_id/index.vue while making a Patch call to Event model in method updateEvent context: EventId:-${this.$route.params.id} \n URL:- ${URL} \n Object:- ${obj}`,
+          e
+        )
+      }
+    },
     updateReg: _.debounce(function () {
-      console.log('checking something...')
-      this.refresh()
-    }, 1000),
+      this.updateEvent()
+    }, 500),
+    updateReg1: _.debounce(function () {
+      this.updateRegistrationPage()
+    }, 500),
   },
   apollo: {
     data: {

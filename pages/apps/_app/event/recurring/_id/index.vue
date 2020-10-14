@@ -735,7 +735,7 @@
             class="ma-0 pa-0"
             label="Allow Cancelation"
             color="green"
-            @change="updateEvent"
+            @change="updateReg()"
           ></v-checkbox>
         </v-flex>
         <v-flex class="d-block text-truncate">
@@ -746,7 +746,7 @@
             class="ma-0 pa-0"
             label="Validate Session Timing Conflict"
             color="green"
-            @change="updateEvent"
+            @change="updateReg()"
           ></v-checkbox>
         </v-flex>
         <v-flex class="d-block text-truncate">
@@ -757,7 +757,7 @@
             class="ma-0 pa-0"
             label="Show Remaining Tickets Count"
             color="green"
-            @change="updateEvent"
+            @change="updateReg()"
           ></v-checkbox>
         </v-flex>
         <v-flex class="d-block text-truncate">
@@ -768,7 +768,7 @@
             class="ma-0 pa-0"
             label="Show Attendee Form"
             color="green"
-            @change="updateEvent"
+            @change="updateReg()"
           ></v-checkbox>
         </v-flex>
         <v-flex class="d-block text-truncate">
@@ -779,7 +779,7 @@
             class="ma-0 pa-0"
             label="Notify organizer when someone registers"
             color="green"
-            @change="updateEvent"
+            @change="updateReg()"
           ></v-checkbox>
         </v-flex>
         <v-flex class="mt-2">
@@ -791,7 +791,7 @@
             label="Allow user to select a time zone for 
             recurring event"
             color="green"
-            @change="updateEvent"
+            @change="updateReg()"
           ></v-checkbox>
         </v-flex>
       </div>
@@ -821,7 +821,7 @@
             class="ma-0 pa-0"
             label="Show Image Gallery"
             color="green"
-            @change="updateRegistrationPage"
+            @change="updateReg1()"
           ></v-checkbox>
         </v-flex>
         <v-flex>
@@ -832,7 +832,7 @@
             class="ma-0 pa-0"
             label="Show Event Reviews"
             color="green"
-            @change="updateRegistrationPage"
+            @change="updateReg1()"
           ></v-checkbox>
         </v-flex>
       </div>
@@ -847,6 +847,7 @@
 <script>
 import gql from 'graphql-tag'
 import format from 'date-fns/format'
+import _ from 'lodash'
 import editEventForm from '../../_id/editEventForm.vue'
 import nuxtConfig from '../../../../../../nuxt.config'
 import editSeoForm from '~/pages/apps/_app/event/_id/editSeoForm.vue'
@@ -898,6 +899,26 @@ export default {
   computed: {
     content() {
       return this.contents ? this.contents.Event : null
+    },
+    updateData() {
+      const dataObj = {
+        isRefundable: this.data.event.isRefundable,
+        SessionTimingConflict: this.data.event.SessionTimingConflict,
+        ShowRemainingTickets: this.data.event.ShowRemainingTickets,
+        ShowAttendeeForm: this.data.event.ShowAttendeeForm,
+        NotifyOrganizer: this.data.event.NotifyOrganizer,
+        showTimezone: this.data.event.showTimezone,
+      }
+      return dataObj
+    },
+    updateSectionHeading() {
+      const dataObj = {
+        _sectionHeading: {
+          showimagegallery: this.registrationSetting.showimagegallery,
+          showeventreviews: this.registrationSetting.showeventreviews,
+        },
+      }
+      return dataObj
     },
   },
   methods: {
@@ -994,18 +1015,18 @@ export default {
       )
     },
     async updateEvent() {
-      this.data.event.id = this.$route.params.id
+      const obj = this.updateData
+      obj.id = this.$route.params.id
       const URL = `https://${nuxtConfig.axios.eventUrl}${nuxtConfig.axios.apiEndpoint}Events/${this.$route.params.id}`
       try {
-        const res = await this.$axios.$patch(URL, {
-          ...this.data.event,
-        })
+        const res = await this.$axios.$patch(URL, obj)
         if (res) {
-          console.log('+++++', res)
-          this.refresh()
         }
       } catch (e) {
-        console.log('Error', e)
+        console.error(
+          `Error in apps/event/_id/index.vue while making a Patch call to Event model in method updateEvent context: EventId:-${this.$route.params.id} \n URL:- ${URL} \n Object:- ${obj}`,
+          e
+        )
       }
     },
     updateRegistrationSetting(eventData) {
@@ -1017,23 +1038,25 @@ export default {
         : false
     },
     async updateRegistrationPage() {
-      const obj = {
-        _sectionHeading: {
-          showimagegallery: this.registrationSetting.showimagegallery,
-          showeventreviews: this.registrationSetting.showeventreviews,
-        },
-      }
+      const obj = this.updateSectionHeading
       const URL = `https://${nuxtConfig.axios.eventUrl}${nuxtConfig.axios.apiEndpoint}Events/${this.$route.params.id}`
       try {
         const res = await this.$axios.$patch(URL, obj)
         if (res) {
-          console.log('+++++', res)
-          this.refresh()
         }
       } catch (e) {
-        console.log('Error', e)
+        console.error(
+          `Error in apps/event/_id/index.vue while making a Patch call to Event model in method updateRegistrationPage context: EventId:-${this.$route.params.id} \n URL:- ${URL} \n Object:- ${obj}`,
+          e
+        )
       }
     },
+    updateReg: _.debounce(function () {
+      this.updateEvent()
+    }, 500),
+    updateReg1: _.debounce(function () {
+      this.updateRegistrationPage()
+    }, 500),
   },
   apollo: {
     data: {
