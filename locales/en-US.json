@@ -1,0 +1,8 @@
+{
+  "Common": {
+    "AppTitle": "Events"
+  },
+  "Drawer": {
+    "CreateEventAction": "Create Event"
+  }
+}

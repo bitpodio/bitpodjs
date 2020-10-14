@@ -15,7 +15,7 @@
             class="logo-bitpod"
           ></v-img>
         </span>
-        <span d-inline-flex align-center class="mx-2">Event</span>
+        <i18n path="Common.AppTitle" class="d-inline-flex align-center mx-2" />
         <v-spacer></v-spacer>
         <div v-if="drawer === true" class="d-none d-sm-flex">
           <v-app-bar-nav-icon
@@ -108,7 +108,10 @@
             class="logo-bitpod"
           ></v-img>
         </span>
-        <span d-inline-flex align-center class="mx-2 text-h5">Event</span>
+        <i18n
+          path="Common.AppTitle"
+          class="d-inline-flex align-center mx-2 text-h5"
+        />
         <v-spacer></v-spacer>
       </v-toolbar-title>
       <div class="d-flex d-sm-flex d-md-none ml-n3">

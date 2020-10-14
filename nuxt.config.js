@@ -69,6 +69,7 @@ export default {
    ** https://nuxtjs.org/guide/plugins
    */
   plugins: [
+    '~/plugins/v-i18n.js',
     '~/plugins/eventBus.js',
     { src: '~/plugins/v-datetime-picker.js', mode: 'client' },
   ],
@@ -95,6 +96,7 @@ export default {
    ** Nuxt.js modules
    */
   modules: [
+    'nuxt-i18n',
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/apollo',
@@ -109,6 +111,31 @@ export default {
       },
     ],
   ],
+  /**
+   * nuxt-i18n options
+   * https://i18n.nuxtjs.org/options-reference
+   */
+  i18n: {
+    locales: [
+      { code: 'en', iso: 'en-US', label: 'English', file: 'en-US.json' },
+      { code: 'hi', iso: 'hi-IN', label: 'हिन्दी', file: 'hi-IN.json' },
+      { code: 'he', iso: 'he', label: 'עִבְרִית', file: 'he.json', rtl: true },
+    ],
+    defaultLocale: 'en',
+    lazy: true,
+    langDir: 'locales/',
+    detectBrowserLanguage: {
+      fallbackLocale: 'en',
+      onlyOnRoot: true,
+    },
+    /**
+     * vue-i18n options
+     * https://kazupon.github.io/vue-i18n/api/#constructor-options
+     */
+    vueI18n: {
+      fallbackLocale: 'en',
+    },
+  },
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options

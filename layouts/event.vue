@@ -15,7 +15,10 @@
             class="logo-bitpod"
           ></v-img>
         </span>
-        <span d-inline-flex align-center class="mx-2 text-h5">Event</span>
+        <i18n
+          path="Common.AppTitle"
+          class="d-inline-flex align-center mx-2 text-h5"
+        />
         <v-spacer></v-spacer>
         <div v-if="drawer === true" class="d-none d-sm-flex">
           <v-app-bar-nav-icon
@@ -35,7 +38,7 @@
               class="ma-3 block wd-full my-0 mb-1 ml-n4"
               v-on="on"
             >
-              Create Event
+              <i18n path="Drawer.CreateEventAction" />
             </v-btn>
           </template>
 
@@ -100,7 +103,14 @@
               </v-list-item-content>
             </v-list-item>
           </v-list-group>
-          <v-list-item v-else :key="item.text" link :to="item.to" router exact>
+          <v-list-item
+            v-else
+            :key="item.text"
+            link
+            :to="localePath(item.to)"
+            router
+            exact
+          >
             <v-list-item-action class="nav-icon">
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-action>
@@ -151,7 +161,10 @@
             class="logo-bitpod"
           ></v-img>
         </span>
-        <span d-inline-flex align-center class="mx-2 text-h5">Event</span>
+        <i18n
+          path="Common.AppTitle"
+          class="d-inline-flex align-center mx-2 text-h5"
+        />
         <v-spacer></v-spacer>
       </v-toolbar-title>
       <div class="d-flex d-sm-flex d-md-none ml-n3">
@@ -159,6 +172,7 @@
       </div>
       <v-toolbar-title class="pl-0 ml-n1">Event </v-toolbar-title>
       <v-spacer></v-spacer>
+      <LanguageSwitcher />
       <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
         <v-icon>mdi-invert-colors</v-icon>
       </v-btn>
@@ -351,9 +365,12 @@
 
 <script>
 import OrgnaizationList from '~/components/common/organization-list'
+import LanguageSwitcher from '~/components/LanguageSwitcher'
+
 export default {
   components: {
     OrgnaizationList,
+    LanguageSwitcher,
   },
   props: {
     source: { type: String, default: '' },
