@@ -134,11 +134,16 @@ export default {
     }
   },
   methods: {
+    onReset() {
+      this.formData.AvailableStartHour = ''
+      this.formData.AvailableEndHour = ''
+    },
     onClose() {
       this.$emit('update:editWorkTiming', false)
+      this.onReset()
     },
     refresh() {
-      this.$apollo.queries.data.refresh()
+      this.$refs.form.$parent.$parent.refresh()
     },
     async onSave() {
       const url = getApiUrl()
@@ -208,10 +213,10 @@ export default {
       },
       update(data) {
         const organization = formatGQLResult(data, 'OrganizationInfo')
-        this.formData = organization[0]
+        this.formData = { ...organization[0] }
         this.formData.id = this.$route.params.id
         this.currency = this.formData.Currency
-        this.venueAddress = organization[0]._CurrentAddress
+        this.venueAddress = { ...organization[0]._CurrentAddress }
         this.formData.weekDay.map((x) => {
           this.selectedDays.map((y) => {
             if (x === y.dayName) {

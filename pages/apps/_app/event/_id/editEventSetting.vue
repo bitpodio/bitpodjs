@@ -231,11 +231,29 @@ export default {
   },
 
   methods: {
+    onReset() {
+      this.valid = true
+      this.privacy = []
+      this.formData.ProjectCode = ''
+      this.formData.CostCenter = ''
+      this.formData.UniqLink = ''
+      this.currency = []
+      this.isInvalidEventLink = false
+      this.formData.CancellationPolicy = ''
+      this.formData.isRefundable = ''
+      this.formData.ShowAttendeeForm = false
+      this.formData.SessionTimingConflict = false
+      this.formData.ShowRemainingTickets = false
+      this.formData.NotifyOrganizer = false
+      this.formData.showTimezone = false
+      this.formData.SendCalendar = false
+    },
     close() {
       this.$emit('update:eventSetting', false)
+      this.onReset()
     },
     refresh() {
-      this.$apollo.queries.data.refresh()
+      this.$refs.form.$parent.$parent.refresh()
     },
     async onSave() {
       this.formData.Currency = this.currency
