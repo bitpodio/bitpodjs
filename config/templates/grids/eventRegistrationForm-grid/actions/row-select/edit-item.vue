@@ -1,0 +1,254 @@
+<template>
+  <v-col class="px-0">
+    <v-dialog
+      v-model="dialog"
+      persistent
+      scrollable
+      content-class="slide-form-default"
+      transition="dialog-bottom-transition"
+    >
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn text small v-bind="attrs" v-on="on" @click="getRegistrations">
+          <v-icon left>mdi-pencil</v-icon>Edit
+        </v-btn>
+      </template>
+      <v-card>
+        <v-card-title
+          class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
+        >
+          <h2 class="black--text pt-10 pb-9 font-weight-regular">
+            Edit Registration Form
+          </h2>
+          <v-spacer></v-spacer>
+          <div>
+            <v-btn icon @click="onClose">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </div>
+        </v-card-title>
+        <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
+          <v-form ref="form" v-model="valid" :lazy-validation="lazy">
+            <v-row>
+              <v-col cols="12">
+                <v-text-field
+                  v-model="formData.Label"
+                  label="Label"
+                  outlined
+                  dense
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-select
+                  v-model="controlType"
+                  :rules="required"
+                  :items="controlTypeDropDown"
+                  label="Control Type*"
+                  outlined
+                  dense
+                ></v-select>
+              </v-col>
+              <v-col v-if="showCsvField" cols="12">
+                <v-text-field
+                  v-model="CsvOptions"
+                  label="Options*"
+                  :rules="required"
+                  outlined
+                  dense
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  v-model="formData.DisplayOrder"
+                  :rules="required"
+                  label="Display Order*"
+                  type="number"
+                  required
+                  outlined
+                  dense
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-form>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions
+          class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
+        >
+          <v-btn
+            color="primary"
+            :disabled="!valid || !controlType || controlType === 'Select'"
+            depressed
+            @click.native="onSave"
+            >Save</v-btn
+          >
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </v-col>
+</template>
+
+<script>
+import gql from 'graphql-tag'
+import nuxtconfig from '~/nuxt.config'
+import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
+import { formatGQLResult } from '~/utility/gql.js'
+import { required } from '~/utility/rules.js'
+export default {
+  props: {
+    content: {
+      type: Object,
+      required: true,
+    },
+    viewName: {
+      type: String,
+      required: true,
+    },
+    items: {
+      type: Object,
+      required: true,
+    },
+    refresh: {
+      type: Function,
+      required: false,
+      default: () => false,
+    },
+  },
+  data() {
+    return {
+      formData: {},
+      valid: false,
+      required: [required],
+      dialog: false,
+      controlType: '',
+      controlTypeDropDown: [],
+      showField: ['checkbox', 'radio', 'dropdown', 'country', 'number'],
+      doNotShowField: ['text', 'date'],
+      CsvOptions: '',
+      id: '',
+    }
+  },
+  computed: {
+    showCsvField() {
+      return (
+        this.controlType === 'checkbox' ||
+        this.controlType === 'radio' ||
+        this.controlType === 'dropdown' ||
+        this.controlType === 'country' ||
+        this.controlType === 'number'
+      )
+    },
+  },
+  async mounted() {
+    try {
+      const res = await this.getDropDownData('ControlType')
+      if (res) {
+        this.controlTypeDropDown = res.map((i) => i.value)
+      }
+    } catch (e) {
+      console.error(
+        `Error in config/templates/grids/eventRegistrationForm-grid/actions/row-select/edit-items while making a GQL call to General Configuration Model`,
+        e
+      )
+    }
+  },
+  methods: {
+    onReset() {
+      this.$refs.form.reset()
+      if (this.controlTypeDropDown.includes('Select')) {
+        this.controlTypeDropDown.shift()
+      }
+    },
+    onClose() {
+      this.dialog = false
+      this.onReset()
+    },
+    async onSave() {
+      this.formData.ControlType = this.controlType
+      this.formData.DisplayOrder = parseInt(this.formData.DisplayOrder)
+      if (
+        this.showField.includes(this.formData.ControlType) &&
+        this.CsvOptions.includes(',')
+      ) {
+        this.formData.Options = this.CsvOptions.split(',')
+      } else {
+        this.formData.Options = []
+        this.formData.Options.push(this.CsvOptions)
+      }
+      if (this.doNotShowField.includes(this.formData.ControlType)) {
+        this.formData.Options = []
+      }
+      try {
+        const res = await this.$axios.put(
+          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/RegistrationForm/${this.id}`,
+          {
+            ...this.formData,
+          }
+        )
+        if (res) {
+          this.dialog = false
+          this.$parent.refresh()
+        }
+      } catch (e) {
+        console.error(
+          `Error in config/templates/grids/eventRegistrationForm-grid/actions/row-select/edit-items while making a PUT call to RegistrationForm Model from method onSave method where context:-\n eventId:-${this.$route.params.id}\n registrationId:-${this.id}\n formData:-${this.formData} `,
+          e
+        )
+      }
+    },
+    async getRegistrations() {
+      this.items.map((ele) => {
+        this.id = ele.id
+      })
+      try {
+        const res = await this.$axios.$get(
+          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/RegistrationForm/${this.id}`
+        )
+
+        if (res) {
+          this.formData = res
+          if (res.ControlType === 'email') {
+            this.controlTypeDropDown.unshift('Select')
+            this.controlType = 'Select'
+          } else {
+            this.controlType = res.ControlType
+          }
+          this.CsvOptions = res.Options.toString()
+        }
+      } catch (e) {
+        console.error(
+          `Error in config/templates/grids/eventRegistrationForm-grid/actions/row-select/edit-items while making a GET call to RegistrationForm Model from method getRegistrations method where context:-\n eventId:-${this.$route.params.id}\n registrationId:-${this.id}\n formData:-${this.formData} `,
+          e
+        )
+      }
+    },
+    async getDropDownData(filterType) {
+      try {
+        const result = await this.$apollo.query({
+          query: gql`
+            ${generalconfiguration}
+          `,
+          variables: {
+            filters: {
+              where: {
+                type: filterType,
+              },
+            },
+          },
+        })
+        if (result) {
+          const generalConfig = formatGQLResult(
+            result.data,
+            'GeneralConfiguration'
+          )
+          return generalConfig
+        }
+      } catch (e) {
+        console.error(
+          `Error in config/templates/grids/eventRegistrationForm-grid/actions/row-select/edit-items while making a GQL call to General Configuration Model from method getDropDownData method where context:-\nfilterType:-${filterType}`,
+          e
+        )
+      }
+    },
+  },
+}
+</script>

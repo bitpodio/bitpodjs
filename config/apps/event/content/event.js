@@ -3433,7 +3433,7 @@ export default {
             caption: 'new field',
           },
           edit: {
-            hidden: true,
+            hidden: false,
           },
           delete: {
             hidden: true,
