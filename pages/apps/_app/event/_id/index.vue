@@ -1,6 +1,6 @@
 <template>
   <v-flex d-flex flex-md-row flex-lg-row flex-column>
-    <v-flex column xs12 sm8 md8 lg8>
+    <v-flex column class="mxw-w70">
       <div
         class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
       >
@@ -66,15 +66,17 @@
           {{ formatField(data.event.Timezone) }}
         </v-chip>
         <v-flex>
-          <div
-            v-if="data.event.LocationType === 'Online Event'"
-            class="pb-1"
-            @click="viewRegistration"
-          >
-            <a
-              ><v-icon class="fs-16 mr-1 primary--text mt-n1">fa-globe</v-icon
-              >{{ viewRegistrationLink() }}</a
-            >
+          <div v-if="data.event.LocationType === 'Online Event'" class="pb-1">
+            <div v-if="data.event.WebinarLink">
+              <v-icon class="fs-16 mr-1 primary--text mt-n1">fa-globe</v-icon>
+              <a
+                :href="data.event.WebinarLink"
+                class="text-decoration-none"
+                target="_blank"
+              >
+                {{ data.event.WebinarLink }}
+              </a>
+            </div>
           </div>
           <div v-else>
             <p class="blue--text body-2">
@@ -695,7 +697,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -713,7 +715,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -731,7 +733,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -745,7 +747,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 positionRelative rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -755,16 +757,43 @@
           <v-spacer></v-spacer>
         </v-flex>
         <v-divider></v-divider>
-        <Grid
-          view-name="eventTickets"
-          :content="content"
-          :context="data"
-          class="mt-n12"
-        />
+        <div class="mt-2">
+          <v-switch
+            v-model="switchSeat"
+            label="Seatmap & Tickets"
+            class="mt-0 ml-2 max-h24 positionAbsolute"
+            height="20"
+          ></v-switch>
+          <div v-if="switchSeat" class="d-flex justify-center">
+            <v-flex
+              class="d-flex flex-column justify-center ma-2 cursorPointer seat-actions pa-2"
+              @click="routeToSeatmap"
+            >
+              <v-icon class="fs-16">mdi-plus</v-icon>
+              <v-text class="text-center body-2 pt-1">New Seat Map</v-text>
+            </v-flex>
+            <v-flex
+              class="d-flex flex-column justify-center ma-2 cursorPointer seat-actions pa-2"
+            >
+              <v-icon class="fs-16">fa-grid</v-icon>
+              <v-text class="text-center body-2 pt-1"
+                >Select Existing Seat Map</v-text
+              >
+            </v-flex>
+          </div>
+          <div v-else>
+            <Grid
+              view-name="eventTickets"
+              :content="content"
+              :context="data"
+              class="mt-n14"
+            />
+          </div>
+        </div>
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -782,7 +811,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -800,7 +829,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -814,7 +843,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -828,7 +857,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -847,7 +876,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -864,7 +893,7 @@
         />
       </div>
     </v-flex>
-    <v-flex column xs12 sm4 md4 lg4>
+    <v-flex column class="mxw-w30">
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 py-0 pr-2 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-0">
@@ -1185,6 +1214,7 @@ export default {
     value: { type: null, default: null },
     field: { type: null, default: null },
     offset: { type: Boolean, default: false },
+    switchSeat: { type: Boolean, required: false },
   },
   data() {
     return {
@@ -1736,6 +1766,9 @@ export default {
     updateReg1: _.debounce(function () {
       this.updateRegistrationPage()
     }, 500),
+    routeToSeatmap() {
+      this.$router.push(`/apps/seatmap/new`)
+    },
   },
   apollo: {
     data: {
@@ -1836,5 +1869,14 @@ export default {
 }
 .anchorTag {
   max-width: 120px;
+}
+.seat-actions {
+  border: 1px dashed #ccc;
+  max-width: 240px;
+}
+.max-h24 {
+  max-height: 24px;
+  right: 12px;
+  top: 10px;
 }
 </style>

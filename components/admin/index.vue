@@ -212,7 +212,7 @@
                 </v-flex>
               </a>
               <nuxt-link
-                to="/apps/seatmap/list/seatmaps/seatmaps"
+                to="/apps/admin/list/seatmaps/seatmaps"
                 class="text-decoration-none"
               >
                 <v-flex
@@ -315,13 +315,14 @@ export default {
   components: {
     OrgnaizationList,
   },
+  props: { sidebar: { type: Boolean, default: true } },
   data() {
     return {
       date: new Date().toISOString().substr(0, 10),
       menu: false,
       modal: false,
       menu2: false,
-      drawer: null,
+      drawer: this.sidebar,
       dialog1: false,
       dialog: false,
       notifications: false,
@@ -345,6 +346,11 @@ export default {
           icon: 'fa fa-file',
           text: 'Templates',
           to: '/apps/admin/list/marketingtemplates/template',
+        },
+        {
+          icon: 'fa fa-grid-alt',
+          text: 'Seat Maps',
+          to: '/apps/admin/list/seatmaps/seatmaps',
         },
         {
           icon: 'fa fa-id-badge',

@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div v-if="item.Sent === true">
-      <v-icon class="success--text fs-18">fa-mail</v-icon>
+    <div v-if="item.Unsubscribed === true">
+      <v-icon class="error--text fs-18">fa-sad</v-icon>
     </div>
     <div v-else>
-      <v-icon class="error--text fs-18">fa-mail</v-icon>
+      <v-icon></v-icon>
     </div>
   </div>
 </template>
