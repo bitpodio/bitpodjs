@@ -750,7 +750,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 positionRelative rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -760,12 +760,39 @@
           <v-spacer></v-spacer>
         </v-flex>
         <v-divider></v-divider>
-        <Grid
-          view-name="eventTickets"
-          :content="content"
-          :context="data"
-          class="mt-n12"
-        />
+        <div class="mt-2">
+          <v-switch
+            v-model="switch2"
+            label="Seatmap & Tickets"
+            class="mt-0 max-h24 positionAbsolute"
+            height="20"
+          ></v-switch>
+          <div v-if="switch2" class="d-flex justify-center">
+            <v-flex
+              class="d-flex flex-column justify-center ma-2 cursorPointer seat-actions pa-2"
+              @click="routeToSeatmap"
+            >
+              <v-icon class="fs-16">mdi-plus</v-icon>
+              <v-text class="text-center body-2 pt-1">New Seat Map</v-text>
+            </v-flex>
+            <v-flex
+              class="d-flex flex-column justify-center ma-2 cursorPointer seat-actions pa-2"
+            >
+              <v-icon class="fs-16">fa-grid</v-icon>
+              <v-text class="text-center body-2 pt-1"
+                >Select Existing Seat Map</v-text
+              >
+            </v-flex>
+          </div>
+          <div v-else>
+            <Grid
+              view-name="eventTickets"
+              :content="content"
+              :context="data"
+              class="mt-n14"
+            />
+          </div>
+        </div>
       </div>
       <div
         v-if="content"
@@ -1190,6 +1217,7 @@ export default {
     value: { type: null, default: null },
     field: { type: null, default: null },
     offset: { type: Boolean, default: false },
+    switch2: { type: Boolean, required: false },
   },
   data() {
     return {
@@ -1651,6 +1679,9 @@ export default {
         `/apps/event/list/Event/integrations?event=${this.$route.params.id}`
       )
     },
+    routeToSeatmap() {
+      this.$router.push(`/apps/seatmap/new`)
+    },
   },
   apollo: {
     data: {
@@ -1750,5 +1781,14 @@ export default {
 }
 .anchorTag {
   max-width: 120px;
+}
+.seat-actions {
+  border: 1px dashed #ccc;
+  max-width: 240px;
+}
+.max-h24 {
+  max-height: 24px;
+  right: 12px;
+  top: 10px;
 }
 </style>

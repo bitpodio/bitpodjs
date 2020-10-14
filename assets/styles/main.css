@@ -414,6 +414,9 @@ body {
 .seatmap .view-name {
   visibility: hidden !important;
 }
+.vs-hidden {
+ visibility: hidden;
+}
 @media (max-width: 800px) {
   .nav-bar {
     top: 0 !important;
