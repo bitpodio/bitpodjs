@@ -1,6 +1,14 @@
 <template>
   <div>
-    <v-chip class="ma-2" small color="orange" text-color="white">
+    <v-chip
+      class="ma-2"
+      small
+      text-color="white"
+      :class="{
+        orange: value === 'Group',
+        success: value === 'Personal',
+      }"
+    >
       {{ value }}
     </v-chip>
   </div>

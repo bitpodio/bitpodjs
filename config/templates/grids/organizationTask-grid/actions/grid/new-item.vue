@@ -163,6 +163,10 @@ export default {
       allowSpaces: false,
       type: String,
     },
+    lazy: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     const isAction = this.items && this.items[0].Status === 'Wait for an Action'
