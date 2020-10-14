@@ -762,12 +762,12 @@
         <v-divider></v-divider>
         <div class="mt-2">
           <v-switch
-            v-model="switch2"
+            v-model="switchSeat"
             label="Seatmap & Tickets"
-            class="mt-0 max-h24 positionAbsolute"
+            class="mt-0 ml-2 max-h24 positionAbsolute"
             height="20"
           ></v-switch>
-          <div v-if="switch2" class="d-flex justify-center">
+          <div v-if="switchSeat" class="d-flex justify-center">
             <v-flex
               class="d-flex flex-column justify-center ma-2 cursorPointer seat-actions pa-2"
               @click="routeToSeatmap"
@@ -1217,7 +1217,7 @@ export default {
     value: { type: null, default: null },
     field: { type: null, default: null },
     offset: { type: Boolean, default: false },
-    switch2: { type: Boolean, required: false },
+    switchSeat: { type: Boolean, required: false },
   },
   data() {
     return {
