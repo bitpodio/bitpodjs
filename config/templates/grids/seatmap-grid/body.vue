@@ -82,7 +82,10 @@
 
 <script>
 export default {
-  props: { items: { type: Array, default: () => [] } },
+  props: {
+    items: { type: Array, default: () => [] },
+    offset: { type: Boolean, default: false },
+  },
   computed: {
     seatmapRoute() {
       return `/apps/seatmap/new`

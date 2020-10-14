@@ -93,6 +93,7 @@ export default {
       valid: false,
       required: [required],
       formData: this.item,
+      lazy: false,
     }
   },
 }
