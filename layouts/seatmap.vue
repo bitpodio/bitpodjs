@@ -1,96 +1,5 @@
 <template>
   <v-app id="inspire">
-    <v-navigation-drawer
-      v-model="drawer"
-      app
-      class="nav-bar greybg"
-      :width="240"
-    >
-      <v-toolbar-title
-        class="ml-0 pl-3 px-2 py-1 logo-ds d-none d-sm-flex d-md-none align-center"
-      >
-        <span class="bitpod-logo logo-ds">
-          <v-img
-            :src="$config.cdnUri + 'logo-favicon.png'"
-            class="logo-bitpod"
-          ></v-img>
-        </span>
-        <span d-inline-flex align-center class="mx-2">Event</span>
-        <v-spacer></v-spacer>
-        <div v-if="drawer === true" class="d-none d-sm-flex">
-          <v-app-bar-nav-icon
-            class="nav-drawer"
-            @click.stop="drawer = !drawer"
-          ></v-app-bar-nav-icon>
-        </div>
-      </v-toolbar-title>
-      <div class="text-center mt-4">
-        <v-btn
-          v-bind="attrs"
-          color="blue darken-2"
-          dark
-          depressed
-          class="ma-3 block wd-full my-0 mb-1 ml-n4"
-          v-on="on"
-        >
-          Create user
-        </v-btn>
-      </div>
-      <v-list shaped>
-        <template v-for="item in items">
-          <v-row v-if="item.heading" :key="item.heading" align="center">
-            <div class="pa-0 pl-5">
-              <v-subheader v-if="item.heading" class="nav-subheader pl-2">
-                {{ item.heading }}
-              </v-subheader>
-            </div>
-          </v-row>
-          <v-list-group
-            v-else-if="item.children"
-            :key="item.text"
-            v-model="item.model"
-            :prepend-icon="item.model ? item.icon : item['icon-alt']"
-            append-icon=""
-          >
-            <template v-slot:activator>
-              <v-list-item-content>
-                <v-list-item-title class="nav-title">
-                  {{ item.text }}
-                </v-list-item-title>
-              </v-list-item-content>
-            </template>
-            <v-list-item
-              v-for="(child, i) in item.children"
-              :key="i"
-              link
-              :to="item.to"
-              router
-              exact
-            >
-              <v-list-item-action v-if="child.icon" class="nav-icon">
-                <v-icon>{{ child.icon }}</v-icon>
-              </v-list-item-action>
-              <v-list-item-content>
-                <v-list-item-title>
-                  {{ child.text }}
-                </v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list-group>
-          <v-list-item v-else :key="item.text" link :to="item.to" router exact>
-            <v-list-item-action class="nav-icon">
-              <v-icon>{{ item.icon }}</v-icon>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title class="nav-title">
-                {{ item.text }}
-              </v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </template>
-      </v-list>
-    </v-navigation-drawer>
-
     <v-app-bar app flat class="greybg headernew pl-0" height="50">
       <v-toolbar-title
         class="ml-n3 pl-0 px-2 py-1 logo-ds d-flex align-center appbar-left"
@@ -114,7 +23,7 @@
       <div class="d-flex d-sm-flex d-md-none ml-n3">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       </div>
-      <v-toolbar-title class="pl-0 ml-n1">Administration</v-toolbar-title>
+      <v-toolbar-title class="pl-0 ml-n1">Seatmaps</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
         <v-icon>mdi-invert-colors</v-icon>
@@ -295,7 +204,7 @@
       </div>
     </v-app-bar>
 
-    <v-main class="greybg">
+    <v-main class="greybg seatmap">
       <v-container fluid>
         <v-row>
           <v-col class="pt-0">
@@ -312,6 +221,7 @@
 <script>
 import OrgnaizationList from '~/components/common/organization-list'
 export default {
+  layout: 'seatmap',
   components: {
     OrgnaizationList,
   },
@@ -329,50 +239,6 @@ export default {
       tabs: null,
       account: false,
       message: false,
-      items: [
-        { heading: 'Event' },
-        {
-          icon: 'fa fa-network',
-          text: 'Organization',
-          to: '/apps/admin/organization/5cfe026f6ab042000c530105',
-        },
-        {
-          icon: 'fa fa-cog',
-          text: 'Lookups',
-          to: '/apps/admin/organization/lookups',
-        },
-        {
-          icon: 'fa fa-file',
-          text: 'Templates',
-          to: '/apps/admin/list/marketingtemplates/template',
-        },
-        {
-          icon: 'fa fa-id-badge',
-          text: 'Badges Templates',
-          to: '/apps/admin/list/badge/badge',
-        },
-        {
-          icon: 'fa fa-file-text-o',
-          text: 'Registration Form',
-          to: '/apps/admin/list/registrationformdetails/registration form',
-        },
-        { heading: 'Security' },
-        {
-          icon: 'fa fa-shield',
-          text: 'Roles',
-          to: '/apps/admin/list/userroles/userroles',
-        },
-        {
-          icon: 'fa fa-users',
-          text: 'Users',
-          to: '/apps/admin/list/users/users',
-        },
-        {
-          icon: 'fa fa-key',
-          text: 'Access Keys',
-          to: '/apps/admin/list/accesskey/accesskey',
-        },
-      ],
     }
   },
   async created() {

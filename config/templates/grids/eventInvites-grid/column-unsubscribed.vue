@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="item.Unsubscribed === true">
-      <v-icon>mdi-emoticon-sad</v-icon>
+      <v-icon class="error--text fs-18">fa-sad</v-icon>
     </div>
     <div v-else>
       <v-icon></v-icon>
