@@ -1675,7 +1675,11 @@ export default {
     },
     selectSessionTickets(index) {
       this.selectedSession = index
-      this.SessionTicket = []
+      this.SessionTicket =
+        this.sessions[index].SessionTicket &&
+        this.sessions[index].SessionTicket.length
+          ? this.sessions[index].SessionTicket
+          : []
       this.isSessionTicket = true
     },
     setSessionTicket() {
