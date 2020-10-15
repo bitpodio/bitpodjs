@@ -58,11 +58,11 @@
                 </v-list-item-content>
               </v-list-item>
               <v-list-item
-                v-if="eventData.LocationType === 'Online event'"
+                v-if="eventData.LocationType === 'Bitpod Virtual'"
                 @click="goLive"
               >
                 <v-list-item-icon class="mr-2">
-                  <i class="fa fa-rocket mt-1" aria-hidden="true"></i>
+                  <i class="fa fa-video mt-1" aria-hidden="true"></i>
                 </v-list-item-icon>
                 <v-list-item-content>
                   <v-list-item-title>Start Session</v-list-item-title>
@@ -86,6 +86,20 @@
               ><v-icon class="fs-16 mr-1 primary--text mt-n1">fa-globe</v-icon
               >{{ viewRegistrationLink() }}</a
             >
+          </div>
+          <div
+            v-else-if="data.event.LocationType === 'Bitpod Virtual'"
+            class="pb-1 d-inline-flex"
+          >
+            <a @click="goLive"
+              ><v-icon class="fs-16 mr-1 primary--text mt-n1">fa-video</v-icon
+              >{{ viewBitpodVirtualLink() }}</a
+            >
+            <copy
+              class="pl-2"
+              :text-to-copy="viewBitpodVirtualLink()"
+              icon-size="20"
+            />
           </div>
           <div v-else>
             <p class="blue--text body-2">
@@ -1194,6 +1208,7 @@ import copy from '~/components/common/copy'
 import Notes from '~/components/common/notes'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin, getIdFromAtob, getApiUrl } from '~/utility'
+import strings from '~/strings'
 
 export default {
   components: {
@@ -1290,15 +1305,8 @@ export default {
 
   methods: {
     goLive() {
-      const sdate = new Date(this.eventData.StartDate || null)
-        .toDateString()
-        .split(' ')
-        .join('-')
-      const title = this.eventData.Title.split(' ').join('-')
       window.open(
-        `/apps/event/live/${sdate}-${title || 'untitled'}?e=${
-          this.$route.params.id
-        }`
+        `/apps/event/live/${this.eventData.UniqLink}?e=${this.$route.params.id}`
       )
     },
     openPrintForm() {
@@ -1614,6 +1622,9 @@ export default {
     viewRegistrationLink() {
       const regUrl = `https://${nuxtconfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
       return regUrl
+    },
+    viewBitpodVirtualLink() {
+      return `${strings.BITOPD_VIRTUAL_LINK}/${this.data.event.UniqLink}`
     },
     formatDate(date) {
       return date ? format(new Date(date), 'PPp') : ''

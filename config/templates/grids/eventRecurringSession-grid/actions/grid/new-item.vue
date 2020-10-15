@@ -146,6 +146,23 @@
                 />
               </v-col>
               <v-col
+                v-if="
+                  session.LocationType === 'Bitpod Virtual' &&
+                  session.Type === 'Group'
+                "
+                cols="12"
+                sm="8"
+              >
+                <v-text-field
+                  v-model="session.BitpodVirtualLink"
+                  label="Bitpod Virtual Link"
+                  outlined
+                  dense
+                  :disabled="true"
+                  :value="getBitpodVirtualLink()"
+                ></v-text-field>
+              </v-col>
+              <v-col
                 v-if="session.LocationType === 'Phone call'"
                 cols="12"
                 sm="6"
@@ -713,6 +730,14 @@ export default {
     },
   },
   methods: {
+    getBitpodVirtualLink() {
+      const randomStr = Math.random().toString(36)
+      const roomName = `/${randomStr.substring(2, 5)}-${randomStr.substring(
+        5,
+        8
+      )}-${randomStr.substring(8, 11)}`
+      this.session.BitpodVirtualLink = `${strings.BITOPD_VIRTUAL_LINK}${roomName}`
+    },
     setSelectedDays(selectedDays) {
       selectedDays.map((x) => {
         this.days.map((day) => {

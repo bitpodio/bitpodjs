@@ -1,12 +1,11 @@
 <template>
-  <div>
-    <a v-if="isOnlineEvent()" :href="route" target="_blank">
-      <v-btn class="primary" small>Start Sessions</v-btn>
-    </a>
-  </div>
+  <a v-if="linkReady" :href="route()" target="_blank">
+    <v-btn x-small color="primary">start</v-btn>
+  </a>
 </template>
 
 <script>
+import nuxtconfig from '~/nuxt.config'
 export default {
   props: {
     item: {
@@ -25,20 +24,49 @@ export default {
       required: false,
     },
   },
-  computed: {
-    route() {
-      return `/apps/event/live/${this.item.FirstName || 'unknown'}-${
-        this.item.LastName || 'user'
-      }-${this.item.RegistrationId || 'room123'}?e=${this.$route.params.id}`
-    },
+  data() {
+    return {
+      linkReady: false,
+      roomname: '',
+      type: '',
+    }
+  },
+  mounted() {
+    this.item.SessionId.map(async (id) => {
+      try {
+        const result = await this.$axios.$get(
+          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Registrations/${this.item.id}/attendee`
+        )
+        const res = await this.$axios.$get(
+          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Sessions/${id}`
+        )
+        if (res && result) {
+          if (res.BitpodVirtualLink) {
+            this.roomname = `${res.BitpodVirtualLink.split('/')[3]}-${new Date(
+              result[0].BookingDate || null
+            )
+              .getTime()
+              .toString(36)}`
+            this.linkReady = true
+          }
+          this.type = res.Type
+        }
+      } catch (e) {
+        console.log('Error', e)
+      }
+    })
   },
   methods: {
-    isOnlineEvent() {
-      const sessionList = this.$parent.$parent.$parent.$parent.$parent.$parent
-        .$refs.recurringGrid._data.tableData.items
-      return !!(
-        sessionList.length && sessionList[0].LocationType === 'Online meeting'
-      )
+    route() {
+      if (this.type === 'Group') {
+        return `/apps/event/live/${this.roomname}?e=${this.$route.params.id}`
+      }
+      const privateRoomName = `${
+        this.item.FirstName.trim().replace(/[^a-zA-Z ]/g, '') || 'unknown'
+      }-${this.item.LastName.trim().replace(/[^a-zA-Z ]/g, '') || 'user'}`
+      return `/apps/event/live/${privateRoomName.toLowerCase()}-${this.item.RegistrationId.toLowerCase()}?e=${
+        this.$route.params.id
+      }`
     },
   },
 }

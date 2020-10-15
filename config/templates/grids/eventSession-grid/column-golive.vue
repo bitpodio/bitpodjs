@@ -1,9 +1,11 @@
 <template>
-  <div>
-    <a v-if="isOnlineEvent()" :href="route" target="_blank">
-      <v-btn class="primary" small>Start session</v-btn>
-    </a>
-  </div>
+  <a
+    v-if="item.LocationType === 'Bitpod Virtual'"
+    :href="route"
+    target="_blank"
+  >
+    <v-btn x-small color="primary">start</v-btn>
+  </a>
 </template>
 
 <script>
@@ -27,21 +29,11 @@ export default {
   },
   computed: {
     route() {
-      const sdate = new Date(this.item.StartDate || null)
-        .toDateString()
-        .split(' ')
-        .join('-')
-      const title = this.item.Name.split(' ').join('-')
-      return `/apps/event/live/${sdate}-${title || 'untitled'}?e=${
-        this.$route.params.id
-      }`
-    },
-  },
-  methods: {
-    isOnlineEvent() {
-      const location = this.$parent.$parent.$parent.$parent.$parent.$parent
-        .$data.eventData
-      return !!(location && location.LocationType === 'Online event')
+      const roomName =
+        (this.item.BitpodVirtualLink &&
+          this.item.BitpodVirtualLink.split('/')[3]) ||
+        'undefined'
+      return `/apps/event/live/${roomName}?e=${this.$route.params.id}`
     },
   },
 }

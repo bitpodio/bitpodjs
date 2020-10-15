@@ -19,14 +19,14 @@
           <h2 class="black--text pt-10 pb-9">New Session</h2>
           <v-spacer></v-spacer>
           <div>
-            <v-btn icon @click="dialog = false">
+            <v-btn icon @click="closeForm">
               <v-icon>mdi-close</v-icon>
             </v-btn>
           </div>
         </v-card-title>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-form ref="form" v-model="valid" :lazy-validation="lazy">
-            <v-row>
+            <v-row v-if="dialog">
               <v-col cols="12" class="pb-0">
                 <v-text-field
                   v-model="session.Name"
@@ -97,17 +97,17 @@
                 />
               </v-col>
               <v-col cols="12" sm="6">
-                <Lookup
-                  v-model="session.MySpeaker"
-                  :field="speakerProps()"
-                  :rules="ticketRules"
-                />
+                <Lookup v-model="session.MySpeaker" :field="speakerProps()" />
               </v-col>
               <v-col cols="12" sm="6">
                 <Lookup
                   v-model="session.SessionTicket"
                   :field="ticketProps()"
-                  :rules="ticketRules"
+                  :rules="[
+                    (v) => {
+                      return v.length ? true : 'This field is required *'
+                    },
+                  ]"
                 />
               </v-col>
               <v-col cols="12" sm="6" class="pb-0">
@@ -116,6 +116,16 @@
                   :field="locationTypeProps"
                   :rules="required"
                 />
+              </v-col>
+              <v-col v-if="session.LocationType === 'Bitpod Virtual'" cols="12">
+                <v-text-field
+                  v-model="session.BitpodVirtualLink"
+                  label="Bitpod Virtual Link"
+                  outlined
+                  dense
+                  :disabled="true"
+                  :value="getBitpodVirtualLink()"
+                ></v-text-field>
               </v-col>
               <v-col
                 v-if="session.LocationType === 'Phone call'"
@@ -436,6 +446,15 @@ export default {
     },
   },
   methods: {
+    getBitpodVirtualLink() {
+      const randomStr = Math.random().toString(36).substring(2, 6)
+      const roomName = `/${this.eventDetails.UniqLink}-${(
+        this.session.Name || 'Session_Name'
+      )
+        .split(' ')[0]
+        .replace(/[^a-zA-Z ]/g, '')}-${randomStr}`
+      this.session.BitpodVirtualLink = `${strings.BITOPD_VIRTUAL_LINK}${roomName}`
+    },
     sdateProps() {
       return {
         appendIcon: 'fa-calendar',
@@ -457,7 +476,7 @@ export default {
       return {
         type: 'lookup',
         multiple: true,
-        caption: 'Tickets',
+        caption: 'Tickets*',
         items,
         dataSource: {
           items,
@@ -505,18 +524,22 @@ export default {
     async onSave() {
       const baseUrl = getApiUrl()
       this.session.EventId = this.$route.params.id
-      this.session.TicketName = this.ticketOptions
-        .filter((i) => this.session.SessionTicket.includes(i.id))
-        .map((j) => {
-          return j.Code
-        })
-        .join(',')
-      this.session.Speaker = this.speakerOptions
-        .filter((i) => this.session.MySpeaker.includes(i.id))
-        .map((j) => {
-          return j.Code
-        })
-        .join(',')
+      if (this.session && this.session.SessionTicket) {
+        this.session.TicketName = this.ticketOptions
+          .filter((i) => this.session.SessionTicket.includes(i.id))
+          .map((j) => {
+            return j.Code
+          })
+          .join(',')
+      }
+      if (this.session && this.session.MySpeaker) {
+        this.session.Speaker = this.speakerOptions
+          .filter((i) => this.session.MySpeaker.includes(i.id))
+          .map((j) => {
+            return j.Code
+          })
+          .join(',')
+      }
       let res = null
       if (this.session.LocationType === 'Custom') {
         if (this.venueAddress.AddressLine !== '') {
@@ -536,12 +559,22 @@ export default {
         )
       }
       if (res) {
-        this.dialog = false
-        this.$refs.form.reset()
-        this.isGroup = false
-        this.session.Description = ''
+        this.closeForm()
         this.refresh()
       }
+    },
+    closeForm() {
+      this.session.Name = ''
+      this.session.Description = ''
+      this.session.StartDate = ''
+      this.session.EndDate = ''
+      this.session.Timezone = 'Asia/Calcutta'
+      this.session.Location = ''
+      this.session.Type = ''
+      this.session.MySpeaker = ''
+      this.session.SessionTicket = ''
+      this.session.LocationType = ''
+      this.dialog = false
     },
   },
   apollo: {

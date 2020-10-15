@@ -1979,7 +1979,7 @@ export default {
           if (res) {
             this.eventId = res.id
             const ticketList = []
-            const sessionList = []
+            let sessionList = []
 
             this.tickets.forEach(function (ticket) {
               ticket.Events = res.id
@@ -2050,7 +2050,19 @@ export default {
                 sessionList.push(session)
               })
             }
-
+            sessionList = sessionList.map((i) => {
+              if (i.LocationType !== 'Bitpod Virtual') {
+                return i
+              }
+              const randomStr = Math.random().toString(36)
+              const roomName = `/${randomStr.substring(
+                2,
+                5
+              )}-${randomStr.substring(5, 8)}-${randomStr.substring(8, 11)}`
+              return Object.assign(i, {
+                BitpodVirtualLink: `${strings.BITOPD_VIRTUAL_LINK}${roomName}`,
+              })
+            })
             const sessionres = await this.$axios
               .$post(`${baseUrl}Sessions`, sessionList)
               .catch((e) => {

@@ -132,6 +132,16 @@
             </v-col>
             <v-col cols="12" class="pb-0">
               <v-text-field
+                v-if="formData.LocationType === 'Bitpod Virtual'"
+                label="Bitpod Virtual Link"
+                outlined
+                dense
+                disabled
+                :value="virtualLink"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" class="pb-0">
+              <v-text-field
                 v-if="formData.LocationType === 'Online Event'"
                 v-model="formData.WebinarLink"
                 label="Online Event Link*"
@@ -154,7 +164,8 @@
             <div
               v-if="
                 formData.BusinessType !== 'Recurring' &&
-                formData.LocationType !== 'Online Event'
+                formData.LocationType !== 'Online Event' &&
+                formData.LocationType !== 'Bitpod Virtual'
               "
               style="display: contents;"
             >
@@ -321,6 +332,9 @@ export default {
   computed: {
     content() {
       return this.contents ? this.contents.Event : null
+    },
+    virtualLink() {
+      return `${strings.BITOPD_VIRTUAL_LINK}/${this.formData.UniqLink}`
     },
     addressValidation() {
       if (this.addressLine === '') {

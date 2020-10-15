@@ -862,11 +862,13 @@ export default {
           (LocationType === 'Venue' &&
             this.$refs['venueAddress.AddressLine'].$data.autocompleteText !==
               '') ||
-          (LocationType === 'Online Event' && WebinarLink !== '')
+          (LocationType === 'Online Event' && WebinarLink !== '') ||
+          LocationType === 'Bitpod Virtual'
         ) {
           this.addresslineMessage = ''
           this.setNextTab()
         } else if (
+          LocationType === 'Venue' &&
           this.$refs['venueAddress.AddressLine'].$data.autocompleteText === ''
         ) {
           this.addresslineMessage = strings.FIELD_REQUIRED
