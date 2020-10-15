@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="item.isRegistered === true">
-      <v-icon>mdi-thumb-up-outline</v-icon>
+      <v-icon class="success--text fs-18">mdi-thumb-up-outline</v-icon>
     </div>
     <div v-else>
       <v-icon color="error"></v-icon>

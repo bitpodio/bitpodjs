@@ -6,6 +6,7 @@ import CustomDate from '~/components/common/form/date.vue'
 import File from '~/components/common/form/file.vue'
 import Timezone from '~/components/common/form/timezone'
 import Tags from '~/components/common/form/tags.vue'
+import Search from '~/components/common/form/search.vue'
 import { _set, _get, isPlainObject } from '~/utility/object'
 
 const FORM_DATE_CONTROLS = ['date', 'datetime']
@@ -114,6 +115,7 @@ export const formControlsMixin = {
       process.client ? import('~/components/common/form/richtext.vue') : false,
     Timezone,
     Tags,
+    Search,
   },
   methods: {
     formControl(field) {
@@ -136,6 +138,8 @@ export const formControlsMixin = {
           return 'Timezone'
         case 'tags':
           return 'Tags'
+        case 'search':
+          return 'Search'
       }
     },
   },

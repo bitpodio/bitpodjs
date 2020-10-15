@@ -1,7 +1,12 @@
 <template>
-  <div class="d-flex">
+  <div class="d-flex view-name">
     <div class="fs-18 min-h36">{{ viewCaption }}</div>
-    <v-menu offset-y transition="slide-y-transition" bottom>
+    <v-menu
+      v-if="viewList.length > 1"
+      offset-y
+      transition="slide-y-transition"
+      bottom
+    >
       <template v-slot:activator="{ on, attrs }">
         <v-btn icon v-bind="attrs" v-on="on">
           <v-icon class="fs-30">mdi-chevron-down</v-icon>

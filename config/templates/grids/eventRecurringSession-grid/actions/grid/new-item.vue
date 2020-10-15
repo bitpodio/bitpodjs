@@ -16,7 +16,7 @@
         <v-card-title
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
-          <h2 class="black--text pt-10 pb-9 text-h5">New Session</h2>
+          <h2 class="black--text pt-5 pb-5 text-h5">New Session</h2>
 
           <v-spacer></v-spacer>
           <div>
@@ -399,7 +399,7 @@
               </v-col>
             </v-row>
             <v-row>
-              <v-col cols="12" class="mt-3">
+              <v-col cols="12" class="mt-0">
                 <Lookup v-model="session.SessionTicket" :field="ticketProps" />
               </v-col>
             </v-row>
@@ -913,6 +913,7 @@ export default {
     openWindow(link) {
       window.open(link, '_blank')
     },
+
     async onSave() {
       if (this.session.StartTime > this.session.EndTime) {
         this.timeSlotMessage = 'End time should be greater than start time.'

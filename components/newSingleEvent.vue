@@ -54,44 +54,57 @@
                     @change="changeEventName($event)"
                   ></v-text-field>
                 </v-col>
-                <v-col cols="12" sm="6" md="4" class="pb-0">
-                  <v-datetime-picker
-                    v-model="eventData.StartDate"
-                    label="Start Date*"
-                    :text-field-props="eventStartDateProps"
-                  >
-                    <template slot="dateIcon">
-                      <v-icon>fas fa-calendar</v-icon>
-                    </template>
-                    <template slot="timeIcon">
-                      <v-icon>fas fa-clock</v-icon>
-                    </template>
-                  </v-datetime-picker>
-                </v-col>
-                <v-col cols="12" sm="6" md="4" class="pb-0">
-                  <v-datetime-picker
-                    v-model="eventData.EndDate"
-                    :rules="requiredRules"
-                    label="End Date*"
-                    :text-field-props="eventEndDateProps"
-                  >
-                    <template slot="dateIcon">
-                      <v-icon>fas fa-calendar</v-icon>
-                    </template>
-                    <template slot="timeIcon">
-                      <v-icon>fas fa-clock</v-icon>
-                    </template>
-                  </v-datetime-picker>
-                </v-col>
-                <v-col cols="12" sm="6" md="4" class="pb-0">
-                  <Timezone
-                    v-model="eventData.Timezone"
-                    :rules="requiredRules"
-                    :field="timezonefield"
-                    dense
-                    class="v-timezone"
-                  ></Timezone>
-                </v-col>
+              </v-row>
+              <v-form
+                ref="dateform"
+                v-model="datevalid"
+                :lazy-validation="lazy"
+              >
+                <v-row>
+                  <v-col cols="12" sm="6" md="4" class="pb-0">
+                    <v-datetime-picker
+                      v-model="eventData.StartDate"
+                      label="Start Date*"
+                      :text-field-props="eventStartDateProps"
+                      :on-change="changeStartDate()"
+                    >
+                      <template slot="dateIcon">
+                        <v-icon>fas fa-calendar</v-icon>
+                      </template>
+                      <template slot="timeIcon">
+                        <v-icon>fas fa-clock</v-icon>
+                      </template>
+                    </v-datetime-picker>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4" class="pb-0">
+                    <v-datetime-picker
+                      v-model="eventData.EndDate"
+                      :rules="requiredRules"
+                      label="End Date*"
+                      :text-field-props="eventEndDateProps"
+                      :on-change="changeEndDate()"
+                    >
+                      <template slot="dateIcon">
+                        <v-icon>fas fa-calendar</v-icon>
+                      </template>
+                      <template slot="timeIcon">
+                        <v-icon>fas fa-clock</v-icon>
+                      </template>
+                    </v-datetime-picker>
+                  </v-col>
+
+                  <v-col cols="12" sm="6" md="4" class="pb-0">
+                    <Timezone
+                      v-model="eventData.Timezone"
+                      :rules="requiredRules"
+                      :field="timezonefield"
+                      dense
+                      class="v-timezone"
+                    ></Timezone>
+                  </v-col>
+                </v-row>
+              </v-form>
+              <v-row>
                 <v-col cols="12" class="pb-4 pt-2">
                   <RichText
                     v-model="eventData.Description"
@@ -121,7 +134,13 @@
               <v-row>
                 <v-col cols="12" sm="6" md="6" class="pl-0 pt-0 pb-0">
                   <v-col class="pb-0">
-                    <v-select
+                    <Lookup
+                      v-model="eventData.LocationType"
+                      :field="locationTypeProps"
+                      class="v-tickettype"
+                      :on-change="changeLocation"
+                    />
+                    <!-- <v-select
                       value="Venue"
                       :items="['Online Event', 'Venue', 'Bitpod Virtual']"
                       label="Location Type"
@@ -129,7 +148,7 @@
                       dense=""
                       outlined
                       @change="changeLocation($event)"
-                    ></v-select>
+                    ></v-select> -->
                   </v-col>
                   <v-col v-if="isOnlineEvent" cols="12" class="pb-0">
                     <v-text-field
@@ -226,7 +245,7 @@
                   </v-col>
                 </v-col>
                 <v-col cols="12" sm="6" md="6" class="pb-0">
-                  <v-col v-if="isMap">
+                  <v-col v-if="isMap" class="pa-0">
                     <div class="flex"></div>
                     <div :key="`${locations[0].lat}-${locations[0].lng}`">
                       <GMap
@@ -261,6 +280,9 @@
                       </GMap>
                     </div>
                   </v-col>
+                  <v-col v-else class="pa-0">
+                    <v-flex class="grey lighten-2 map-contain"></v-flex>
+                  </v-col>
                 </v-col>
               </v-row>
             </v-card>
@@ -285,7 +307,9 @@
                     <tr>
                       <th class="text-left pl-0">Title*</th>
                       <th class="text-left pl-2">Type*</th>
-                      <th class="text-left pl-2">Price</th>
+                      <th class="text-left pl-2">
+                        Price ({{ eventData.Currency }})
+                      </th>
                       <th class="text-left pl-2">Start Date*</th>
                       <th class="text-left pl-2">End Date*</th>
                       <th class="text-left pl-2">Quantity</th>
@@ -452,7 +476,7 @@
         class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
       >
         <v-btn
-          v-if="currentTab > 1"
+          v-if="currentTab > 1 && !isEventCreate && !isEventPublish"
           depressed
           color="grey lighten-2"
           @click="prev()"
@@ -467,10 +491,10 @@
           >Next</v-btn
         >
         <v-btn
-          v-if="currentTab > 2"
+          v-if="currentTab > 2 && !isEventCreate && !isEventPublish"
           depressed
           color="primary"
-          :disabled="isSaveButtonDisabled"
+          :disabled="isSaveButtonDisabled || !valid || !datevalid"
           @click="saveRecord"
           >Save</v-btn
         >
@@ -506,13 +530,19 @@ export default {
       type: Function,
       default: () => null,
     },
+    resetData: {
+      type: Boolean,
+      default: false,
+    },
   },
   data: () => {
     const currentDatetime = new Date(new Date().setSeconds(0))
     return {
       valid: true,
+      datevalid: true,
       lazy: false,
       tabs: null,
+      loading: false,
       isUniqLinkValid: false,
       currentTab: 1,
       isSaveButtonDisabled: false,
@@ -541,6 +571,19 @@ export default {
           filter(data) {
             return {
               type: 'TicketType',
+            }
+          },
+        },
+      },
+      locationTypeProps: {
+        type: 'lookup',
+        dataSource: {
+          query: registrationStatusOptions,
+          itemText: 'value',
+          itemValue: 'key',
+          filter(data) {
+            return {
+              type: 'EventLocationType',
             }
           },
         },
@@ -589,11 +632,10 @@ export default {
         State: '',
         Country: '',
         PostalCode: '',
-        LatLng: {},
-      },
-      LatLng: {
-        lat: 0.0,
-        lng: 0.0,
+        LatLng: {
+          lat: 0.0,
+          lng: 0.0,
+        },
       },
       datetime: new Date().toISOString().substr(0, 10),
       date: new Date().toISOString().substr(0, 10),
@@ -676,11 +718,29 @@ export default {
       return errorMessage
     },
   },
+  watch: {
+    resetData() {
+      if (this.$refs && this.$refs['venueAddress.AddressLine'].$data) {
+        this.$refs['venueAddress.AddressLine'].$data.autocompleteText = ''
+      }
+      const event = this.eventDefaultData()
+      this.eventData = event
+      this.tickets = []
+      const ticket = this.ticketDefaultData()
+      this.tickets = [ticket]
+    },
+  },
   methods: {
     getBitpodVirtualLink() {
       return `${strings.BITOPD_VIRTUAL_LINK}/${
         this.eventLinkHint.split('/')[4]
       }`
+    },
+    changeStartDate() {
+      this.$refs.dateform && this.$refs.dateform.validate()
+    },
+    changeEndDate(value) {
+      this.$refs.dateform && this.$refs.dateform.validate()
     },
     isNextDisabled() {
       return this.isUniqLinkValid === false
@@ -691,11 +751,14 @@ export default {
     close() {
       this.onFormClose()
       this.tabs = 'tab-1'
+      this.resetForm()
     },
     closeForm() {
       this.onFormClose()
       this.tabs = 'tab-1'
       this.$router.push('/apps/event/event/' + this.eventId)
+      this.$refs.form.reset()
+      this.resetForm()
     },
 
     buildMutationUpsertQuery(modelName) {
@@ -706,6 +769,42 @@ export default {
       const regUrl = baseUrl.replace('svc/api', 'e')
       window.open(`${regUrl}${this.eventData.UniqLink}`, '_blank')
     },
+    resetForm() {
+      this.loading = true
+      setTimeout(() => {
+        this.loading = false
+        this.isEventCreate = false
+        this.isEventPublish = false
+        this.isSaveButtonDisabled = false
+        this.isTicket = true
+        this.isMap = false
+        this.valid = false
+        this.currentTab = 1
+      }, 3000)
+    },
+    eventDefaultData() {
+      return {
+        StartDate: addMonths(new Date(), 1),
+        EndDate: addDays(addMonths(new Date(), 1), 4),
+        Timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        LocationType: 'Venue',
+        BusinessType: 'Single',
+        Privacy: 'Public',
+        Status: 'Not ready',
+      }
+    },
+    ticketDefaultData() {
+      return {
+        TicketId: 0,
+        Code: 'General admission',
+        Type: 'Free',
+        Amount: 0,
+        StartDate: new Date(),
+        EndDate: addDays(addMonths(new Date(), 1), 3),
+        TicketCount: 100,
+      }
+    },
+
     async eventPublish() {
       const eventStatus = { Status: 'Open for registration' }
       this.isEventPublish = true
@@ -811,7 +910,7 @@ export default {
           this.$refs['venueAddress.AddressLine'] &&
           this.$refs['venueAddress.AddressLine'].$data.autocompleteText !==
             '') ||
-        (LocationType === 'Online Event' && WebinarLink !== '')
+        (LocationType === 'Online event' && WebinarLink !== '')
       ) {
         return true
       } else if (
@@ -859,18 +958,13 @@ export default {
         this.setNextTab()
       } else if (this.currentTab === 2) {
         if (
-          (LocationType === 'Venue' &&
-            this.$refs['venueAddress.AddressLine'].$data.autocompleteText !==
-              '') ||
-          (LocationType === 'Online Event' && WebinarLink !== '') ||
+          (LocationType === 'Venue' && this.venueAddress.AddressLine !== '') ||
+          (LocationType === 'Online event' && WebinarLink !== '') ||
           LocationType === 'Bitpod Virtual'
         ) {
           this.addresslineMessage = ''
           this.setNextTab()
-        } else if (
-          LocationType === 'Venue' &&
-          this.$refs['venueAddress.AddressLine'].$data.autocompleteText === ''
-        ) {
+        } else if (this.venueAddress.AddressLine === '') {
           this.addresslineMessage = strings.FIELD_REQUIRED
         }
       }
@@ -945,14 +1039,37 @@ export default {
           })
       }
     },
+    isEmptyAddress() {
+      const { City, State, Country, PostalCode } = this.venueAddress
+      const VenueName = this.eventData.VenueName
+      const AddressLine = this.$refs['venueAddress.AddressLine'].$data
+        .autocompleteText
+      if (
+        (AddressLine === '' || AddressLine !== '') &&
+        VenueName === '' &&
+        City === '' &&
+        State === '' &&
+        Country === '' &&
+        PostalCode === ''
+      ) {
+        this.venueAddress.LatLng.lat = 0
+        this.venueAddress.LatLng.lng = 0
+        return false
+      } else {
+        return true
+      }
+    },
     changeAddressData(value) {
       this.addresslineMessage = value === '' ? strings.FIELD_REQUIRED : ''
+      this.venueAddress.AddressLine = value
+      this.isMap = this.isEmptyAddress()
     },
     changeAddress() {
       const { City, State, Country, PostalCode } = this.venueAddress
       const VenueName = this.eventData.VenueName
       const AddressLine = this.$refs['venueAddress.AddressLine'].$data
         .autocompleteText
+      this.isMap = this.isEmptyAddress()
       if (
         AddressLine !== '' &&
         (VenueName !== '' || City !== '' || State !== '' || Country !== '')
@@ -1028,7 +1145,6 @@ export default {
     verifyUniqueLink(value) {
       value = value.toLowerCase().replace(/\s/g, '')
       value = value.trim()
-      this.eventData.UniqLink = value
       const regex = RegExp(/^[0-9a-zA-Z]+$/)
       if (regex.test(value)) {
         if (isNaN(value)) {
@@ -1039,6 +1155,7 @@ export default {
         this.isInalidEventLink = true
         this.uniqueLinkMessage = strings.UNIQUE_LINK_FORMAT
       }
+      this.eventData.UniqLink = value
     },
     async checkUniqueLink(value) {
       const where = { UniqLink: value }
@@ -1059,13 +1176,12 @@ export default {
       }
     },
     changeLocation(value) {
-      this.eventData.LocationType = value
       if (value === 'Venue') {
         this.isVenue = true
         this.isOnlineEvent = false
-        this.isBitpodVirtual = false
+        this.isMap = true
       }
-      if (value === 'Online Event') {
+      if (value === 'Online event') {
         this.isVenue = false
         this.isOnlineEvent = true
         this.isMap = false
@@ -1131,5 +1247,9 @@ export default {
 }
 .event-inner {
   min-height: 457px;
+}
+.map-contain {
+  height: 400px;
+  max-height: 400px;
 }
 </style>

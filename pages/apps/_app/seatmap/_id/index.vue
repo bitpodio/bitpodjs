@@ -36,6 +36,7 @@ const layoutWithType = {
 }
 
 export default {
+  layout: 'seatmap',
   data() {
     const seatmapUrl = getCurrentOrigin()
     return {
@@ -131,7 +132,7 @@ export default {
 <style scoped>
 iframe {
   width: 100%;
-  height: 85vh;
+  height: calc(100vh - 60px);
   border: none;
 }
 </style>
