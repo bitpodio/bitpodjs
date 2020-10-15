@@ -69,9 +69,8 @@
 </template>
 
 <script>
-import nuxtconfig from '~/nuxt.config'
 import gql from 'graphql-tag'
-import printBadges from './actions/row-select/print-badges.vue'
+import nuxtconfig from '~/nuxt.config'
 import badge from '~/config/apps/event/gql/badge.gql'
 import organizationInfo from '~/config/apps/event/gql/organizationInfo.gql'
 import { formatGQLResult } from '~/utility/gql.js'
