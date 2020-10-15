@@ -310,7 +310,14 @@
           <v-spacer></v-spacer>
           <v-menu offset-y>
             <template v-slot:activator="{ on, attrs }">
-              <v-btn depressed text small v-bind="attrs" v-on="on">
+              <v-btn
+                depressed
+                text
+                small
+                v-bind="attrs"
+                v-on="on"
+                @click="allow = true"
+              >
                 <v-icon left>fa-upload</v-icon> Upload
               </v-btn>
             </template>
@@ -1596,25 +1603,31 @@ export default {
     },
     fileUploadedBadgeLogo(data) {
       this.allow = true
-      this.formData.Logo = []
-      this.formData.Logo.push(data[0])
-      this.updateEventGallery(this.formData)
+      if (data.length > 0) {
+        this.formData.Logo = []
+        this.formData.Logo.push(data[0])
+        this.updateEventGallery(this.formData)
+      }
     },
     fileUploadedEventBanner(data) {
-      const imageUrl = `/svc/api/Attachments/download/${data[0]}`
       this.allow = true
-      this.formData.Images = []
-      this.formData.ImagesURL = []
-      this.formData.Images.push(data[0])
-      this.formData.ImagesURL.push(imageUrl)
+      if (data.length > 0) {
+        const imageUrl = `/svc/api/Attachments/download/${data[0]}`
+        this.formData.Images = []
+        this.formData.ImagesURL = []
+        this.formData.Images.push(data[0])
+        this.formData.ImagesURL.push(imageUrl)
 
-      this.updateEventGallery(this.formData)
+        this.updateEventGallery(this.formData)
+      }
     },
     fileUploadedOther(data) {
       this.allow = true
-      this.formData.Other = []
-      this.formData.Other.push(...data)
-      this.updateOtherImageGallery(this.formData.Other)
+      if (data.length > 0) {
+        this.formData.Other = []
+        this.formData.Other.push(...data)
+        this.updateOtherImageGallery(this.formData.Other)
+      }
     },
     async updateEventGallery(formData) {
       try {
