@@ -28,6 +28,7 @@
               <v-text-field
                 v-model="formData.ClientSecret"
                 label="Client Secret *"
+                :rules="required"
                 outlined
                 dense
               ></v-text-field>
@@ -88,7 +89,7 @@ export default {
     return {
       valid: false,
       required: [required],
-      formData: this.item,
+      formData: { ...this.item },
       lazy: false,
     }
   },
