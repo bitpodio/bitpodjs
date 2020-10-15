@@ -568,7 +568,7 @@ export default {
       this.session.Description = ''
       this.session.StartDate = ''
       this.session.EndDate = ''
-      this.session.Timezone = 'Asia/Calcutta'
+      this.session.Timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
       this.session.Location = ''
       this.session.Type = ''
       this.session.MySpeaker = ''
