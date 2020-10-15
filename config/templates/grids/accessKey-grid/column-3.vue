@@ -60,6 +60,7 @@ export default {
       required: false,
       default: () => false,
     },
+    offset: { type: Boolean, default: false },
   },
   data() {
     return {

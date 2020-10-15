@@ -63,8 +63,6 @@ export function getCustomData(modelName) {
     const resPromise = this.$axios.$get(`${apiUrl}${modelName}`)
     // to execute parallel call
     const [res] = await Promise.all([resPromise])
-    console.log('response', res)
-    console.log('response length', res.length)
     return { items: res, total: res.length }
   }
 }

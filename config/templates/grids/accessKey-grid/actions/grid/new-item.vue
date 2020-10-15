@@ -77,6 +77,7 @@ export default {
       formData: {},
       dialog: false,
       value: '',
+      valid: false,
     }
   },
   computed: {

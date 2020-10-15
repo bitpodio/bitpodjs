@@ -29,7 +29,7 @@
         />
       </div>
     </v-dialog>
-    <v-snackbar v-model="snackbar" :timeout="timeout" top="true"
+    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true"
       ><div class="text-center">{{ snackbarText }}</div></v-snackbar
     >
   </div>
@@ -84,6 +84,7 @@ export default {
       formEditData: this.item.MetaData,
       oauthType: this.item.MetaData.oauthType || '',
       accessToken: this.$apolloHelpers.getToken(),
+      serviceForm: '',
     }
   },
   computed: {

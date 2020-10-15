@@ -1,6 +1,6 @@
 <template>
   <v-flex d-flex flex-md-row flex-lg-row flex-column>
-    <v-flex column xs12 sm8 md8 lg8>
+    <v-flex column class="mxw-w70">
       <div
         class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
       >
@@ -55,7 +55,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -73,7 +73,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -90,7 +90,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -103,7 +103,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -119,7 +119,7 @@
         />
       </div>
       <div
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-0">
@@ -149,7 +149,7 @@
         <v-flex class="py-2"></v-flex>
       </div>
     </v-flex>
-    <v-flex column xs12 sm4 md4 lg4>
+    <v-flex column class="mxw-w30">
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-2 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-1">
@@ -328,13 +328,21 @@
         </v-flex>
       </div>
     </v-flex>
-    <editOrgInfoForm
-      :edit-org-info.sync="editOrgInfo"
-      :items="data.organization"
-    />
-    <editOrgSetting :edit-org-setting.sync="editOrgSetting" />
-    <editSocialMedia :edit-social-media.sync="editSocialMedia" />
-    <editWorkTiming :edit-work-timing.sync="editWorkTiming" />
+    <div v-if="editOrgInfo">
+      <editOrgInfoForm
+        :edit-org-info.sync="editOrgInfo"
+        :items="data.organization"
+      />
+    </div>
+    <div v-if="editOrgSetting">
+      <editOrgSetting :edit-org-setting.sync="editOrgSetting" />
+    </div>
+    <div v-if="editSocialMedia">
+      <editSocialMedia :edit-social-media.sync="editSocialMedia" />
+    </div>
+    <div v-if="editWorkTiming">
+      <editWorkTiming :edit-work-timing.sync="editWorkTiming" />
+    </div>
   </v-flex>
 </template>
 
@@ -389,6 +397,9 @@ export default {
     },
   },
   methods: {
+    refresh() {
+      this.$apollo.queries.data.refresh()
+    },
     checkOrgClicked() {
       if (this.allow) {
         this.checkArray = []
