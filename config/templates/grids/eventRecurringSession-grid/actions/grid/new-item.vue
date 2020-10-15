@@ -26,7 +26,7 @@
 
           <v-spacer></v-spacer>
           <div>
-            <v-btn icon @click="dialog = false">
+            <v-btn icon @click="closeForm">
               <v-icon>mdi-close</v-icon>
             </v-btn>
           </div>
@@ -51,7 +51,7 @@
                 <v-spacer></v-spacer>
               </v-flex>
             </div>
-            <v-row>
+            <v-row v-if="dialog">
               <v-col cols="12" sm="6" md="4" class="pb-0">
                 <v-text-field
                   v-model="session.Name"
@@ -89,7 +89,7 @@
                 <v-spacer></v-spacer>
               </v-flex>
             </div>
-            <v-row v-if="actionType === 'New'">
+            <v-row v-if="actionType === 'New' && dialog === true">
               <v-col cols="12" sm="6" md="4" class="pb-0">
                 <Lookup
                   v-model="session.StartTime"
@@ -105,7 +105,7 @@
                 />
               </v-col>
             </v-row>
-            <v-row>
+            <v-row v-if="dialog">
               <v-col cols="12" sm="6" md="4" class="pb-0">
                 <Timezone
                   v-model="session.Timezone"
@@ -116,17 +116,12 @@
                 ></Timezone>
               </v-col>
               <v-col cols="12" sm="6" md="4" class="pb-0">
-                <!-- <Lookup
-                  v-model="Duration"
-                  :field="durationProps"
-                  @change="changeDuration"
-                /> -->
                 <v-autocomplete
                   v-model="Duration"
                   :items="slotLookupOptions"
                   item-text="value"
                   item-value="key"
-                  label="Duration"
+                  label="Duration*"
                   outlined
                   dense
                   class="st-date"
@@ -134,17 +129,16 @@
                 ></v-autocomplete>
               </v-col>
             </v-row>
-            <v-row>
+            <v-row v-if="dialog">
               <v-col v-if="isCustomMin" cols="12" sm="6" md="4" class="pb-0">
                 <v-text-field
                   v-model="customDuration"
-                  label="Duration"
+                  label="Duration*"
                   outlined
                   type="number"
                   min="1"
                   :rules="durationRules"
                   dense
-                  @change="setCustomDuration($event)"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -157,7 +151,7 @@
                 <v-spacer></v-spacer>
               </v-flex>
             </div>
-            <v-row>
+            <v-row v-if="dialog">
               <v-col cols="12" sm="6" md="4" class="pb-0">
                 <Lookup
                   v-model="session.LocationType"
@@ -337,7 +331,7 @@
                 <v-spacer></v-spacer>
               </v-flex>
             </div>
-            <v-row>
+            <v-row v-if="dialog">
               <v-col cols="12" sm="6" md="4" class="pb-0">
                 <Lookup
                   v-model="session.ScheduledType"
@@ -403,7 +397,7 @@
                 </div>
               </v-col>
             </v-row>
-            <v-row>
+            <v-row v-if="dialog">
               <v-col cols="12" class="mt-3">
                 <Lookup
                   v-model="session.SessionTicket"
@@ -430,7 +424,7 @@
                 <v-spacer></v-spacer>
               </v-flex>
             </div>
-            <v-row v-if="actionType === 'New'">
+            <v-row v-if="actionType === 'New' && dialog === true">
               <v-col v-for="(day, k) in days" :key="k" cols="4" class="py-0">
                 <v-checkbox
                   v-model="day.Value"
@@ -549,8 +543,6 @@ export default {
     },
   },
   data() {
-    console.log('==items==', this.items)
-    console.log('==type==', this.type)
     const session =
       this.type === 'Edit'
         ? { ...this.items[0] }
@@ -558,27 +550,11 @@ export default {
             MaxAllow: 5,
             StartDate: '',
             EndDate: '',
-            // Duration: '30',
             ScheduledType: 'Over a period of rolling days',
             RollingDays: 30,
             Frequency: '30',
           }
     const actionType = this.type
-    let Duration = this.type === 'Edit' ? `${session.Duration}` : '30'
-    let isCustomMin = false
-    let customDuration = '15'
-
-    if (this.slotOptions) {
-      const filterOption = this.slotOptions.filter(
-        ({ key }) => key === Duration
-      )
-      if (!filterOption.length) {
-        isCustomMin = true
-        customDuration = Duration
-        Duration = '0'
-      }
-    }
-    // const isCustomMin = !filterOption.length
     const isGroup = session.Type === 'Group'
     const venueAddress =
       this.type === 'Edit' && this.items[0]._CurrentAddress
@@ -601,14 +577,14 @@ export default {
       dialog: false,
       actionType,
       isSaveButtonDisabled: false,
-      isCustomMin,
+      isCustomMin: false,
       isGroup,
       InPersonMeeting: [],
       inPersonMeetingOptions: [],
       slotOptions: [],
       ticketOptions: [],
-      Duration,
-      customDuration,
+      Duration: '30',
+      customDuration: '15',
       timeSlotMessage: '',
       addresslineMessage: '',
       requiredRules: [required],
@@ -618,28 +594,9 @@ export default {
       endDateMessage: '',
       googleMeetDocumentLink: strings.GOOGLE_MEET_DOCUMENT_LINK,
       sessionResult: [],
-      // session: {
-      //   MaxAllow: 5,
-      //   StartDate: '',
-      //   EndDate: '',
-      //   Duration: '30',
-      //   ScheduledType: 'Over a period of rolling days',
-      //   RollingDays: 30,
-      // },
       session,
       venueAddress,
-      // venueAddress: {
-      //   AddressLine: '',
-      //   City: '',
-      //   State: '',
-      //   Country: '',
-      //   PostalCode: '',
-      //   LatLng: {},
-      // },
-      // LatLng: {
-      //   lat: 0.0,
-      //   lng: 0.0,
-      // },
+
       selectedDays: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'],
       phoneRules: [
         (v) => {
@@ -825,20 +782,6 @@ export default {
         },
       }
     },
-    // ticketProps() {
-    //   const items = this.ticketOptions
-    //   return {
-    //     type: 'lookup',
-    //     multiple: true,
-    //     caption: 'Select tickets for this session',
-    //     items,
-    //     dataSource: {
-    //       items,
-    //       itemText: 'Code',
-    //       itemValue: 'id',
-    //     },
-    //   }
-    // },
     startDateField() {
       return {
         appendIcon: 'fa-calendar',
@@ -886,30 +829,11 @@ export default {
               MaxAllow: 5,
               StartDate: '',
               EndDate: '',
-              // Duration: '30',
               ScheduledType: 'Over a period of rolling days',
               RollingDays: 30,
               Frequency: '30',
             }
       this.actionType = this.type
-      this.Duration =
-        this.type === 'Edit' ? `${this.session.Duration}` : this.Duration
-      // let isCustomMin = false
-      if (this.slotOptions) {
-        const filterOption = this.slotOptions.filter(
-          ({ key }) => key === this.Duration
-        )
-        if (!filterOption.length) {
-          this.isCustomMin = true
-          this.customDuration = this.Duration
-          this.Duration = '0'
-        } else {
-          this.isCustomMin = false
-        }
-      }
-      // this.customDuration =
-      //   this.type === 'Edit' ? `${this.session.Duration}` : this.Duration
-      // this.isCustomMin = this.Duration1 === '0'
       this.isGroup = this.session.Type === 'Group'
       this.venueAddress =
         this.type === 'Edit' && this.items[0]._CurrentAddress
@@ -928,12 +852,43 @@ export default {
     },
   },
   methods: {
-    // setDefault() {
-    //   this.session.MaxAllow = 5
-    //   this.session.Duration = '30'
-    //   this.session.ScheduledType = 'Over a period of rolling days'
-    //   this.session.RollingDays = 30
-    // },
+    closeForm() {
+      this.dialog = false
+      this.resetForm()
+    },
+    resetForm() {
+      this.dialog = false
+      this.$apollo.queries.data.refresh()
+      this.session.Name = ''
+      this.session.Type = ''
+      this.session.StartTime = ''
+      this.session.EndTime = ''
+
+      this.session.Timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
+      this.Duration = '30'
+      this.session.LocationType = ''
+      this.session.LocationId = ''
+
+      this.session.SeatReservation = false
+      this.session.Phone = ''
+      this.session.WebinarLink = ''
+      this.session.SessionTicket = ''
+
+      this.session.RollingDays = '30'
+      this.session.MaxAllow = 5
+      this.session.ScheduledType = 'Over a period of rolling days'
+      this.session.Frequency = '30'
+      this.session.SessionTicket = ''
+
+      this.venueAddress.AddressLine = ''
+      this.venueAddress.City = ''
+      this.venueAddress.State = ''
+      this.venueAddress.Country = ''
+      this.venueAddress.PostalCode = ''
+      this.customDuration = ''
+      this.isGroup = false
+      this.isCustomMin = false
+    },
     ticketProps() {
       const items = this.ticketOptions
       return {
@@ -1106,20 +1061,21 @@ export default {
       this.venueAddress.LatLng.lng = addressData.longitude || ''
     },
     changeType(value) {
-      this.session.MaxAllow = parseInt(this.session.MaxAllow) || 5
-      this.isGroup = value === 'Group'
+      if (value === 'Group') {
+        this.isGroup = true
+        this.session.MaxAllow = 5
+      } else {
+        this.isGroup = false
+      }
     },
     changeDuration(value) {
       if (value === '0') {
         this.isCustomMin = true
-        // this.Duration = this.customDuration
       } else {
         this.isCustomMin = false
       }
     },
-    setCustomDuration(value) {
-      // this.Duration = value
-    },
+
     openWindow(link) {
       window.open(link, '_blank')
     },
@@ -1150,7 +1106,6 @@ export default {
         if (this.venueAddress.AddressLine !== '') {
           this.venueAddress.LatLng.__typename &&
             delete this.venueAddress.LatLng.__typename
-          // this.venueAddress.__typename && delete this.venueAddress.__typename
           this.session._CurrentAddress = this.venueAddress
         } else {
           this.addresslineMessage = strings.FIELD_REQUIRED
@@ -1203,12 +1158,10 @@ export default {
           }
         })
         this.session.RollingDays = parseInt(this.session.RollingDays)
-        // const duration = this.session.Duration
         this.session.Duration = this.isCustomMin
           ? parseInt(this.customDuration)
           : parseInt(this.Duration)
 
-        // this.session.Frequency = parseInt(this.session.Duration)
         this.session.MaxAllow = parseInt(this.session.MaxAllow)
         this.session.EventId = this.$route.params.id
 
@@ -1250,9 +1203,9 @@ export default {
           }
           if (exceptionRes) {
             this.dialog = false
-            // this.$refs.form && this.$refs.form.reset()
+            this.resetForm()
             this.isGroup = false
-            // this.refresh()
+            this.refresh()
             return exceptionRes
           }
         } else if (this.actionType === 'Edit') {
@@ -1270,7 +1223,6 @@ export default {
           }
           if (res) {
             this.dialog = false
-            // this.$refs.form && this.$refs.form.reset()
             this.isGroup = false
             this.refresh()
             return res
@@ -1332,10 +1284,45 @@ export default {
           }
         })
         this.session.LocationId = locId
-        // this.ticketOptions = ticketResult.map(({ id, ...rest }) => ({
-        //   id: getIdFromAtob(id),
-        //   ...rest,
-        // }))
+
+        let filterOption
+        if (
+          this.slotOptions &&
+          this.slotOptions.length > 0 &&
+          this.session.Duration
+        ) {
+          filterOption = this.slotOptions.filter(
+            ({ key }) => key === `${this.session.Duration}`
+          )
+        }
+        this.isCustomMin = false
+        if (
+          filterOption &&
+          filterOption.length === 0 &&
+          this.session.Duration &&
+          this.slotOptions &&
+          this.slotOptions.length !== 0
+        ) {
+          this.Duration = '0'
+          this.customDuration = `${this.session.Duration}`
+          this.isCustomMin = true
+        } else if (
+          this.slotOptions &&
+          this.slotOptions.length === 0 &&
+          this.session.Duration
+        ) {
+          if ([15, 30, 45, 60].includes(this.session.Duration)) {
+            this.Duration = `${this.session.Duration}`
+            this.isCustomMin = false
+          } else {
+            this.Duration = '0'
+            this.customDuration = `${this.session.Duration}`
+            this.isCustomMin = true
+          }
+        } else {
+          this.Duration = `${this.session.Duration}`
+          this.isCustomMin = false
+        }
       },
       error(error) {
         this.error = error
