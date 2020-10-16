@@ -9,23 +9,32 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on">
-          <v-icon left>mdi-plus</v-icon> New Recurring Session
+          <v-icon v-if="actionType === 'New'" left>mdi-plus</v-icon>
+          <v-icon v-if="actionType === 'Edit'" left class="fs-16"
+            >fa-pencil</v-icon
+          >
+          {{ (actionType === 'New' ? 'New Recurring Session' : 'Edit') }}
         </v-btn>
       </template>
       <v-card>
         <v-card-title
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
-          <h2 class="black--text pt-5 pb-5 text-h5">New Session</h2>
+          <h2 class="black--text pt-5 pb-4 text-h5">
+            {{ (actionType === 'New' ? 'New Session' : 'Edit Session') }}
+          </h2>
 
           <v-spacer></v-spacer>
           <div>
-            <v-btn icon @click="dialog = false">
+            <v-btn icon @click="closeForm">
               <v-icon>mdi-close</v-icon>
             </v-btn>
           </div>
         </v-card-title>
-        <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
+        <v-card-text
+          v-if="dialog"
+          class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0"
+        >
           <v-form ref="form" v-model="valid" :lazy-validation="lazy">
             <div
               v-show="timeSlotMessage !== ''"
@@ -42,7 +51,7 @@
                 <v-spacer></v-spacer>
               </v-flex>
             </div>
-            <v-row>
+            <v-row v-if="dialog">
               <v-col cols="12" sm="6" md="4" class="pb-0">
                 <v-text-field
                   v-model="session.Name"
@@ -80,7 +89,7 @@
                 <v-spacer></v-spacer>
               </v-flex>
             </div>
-            <v-row>
+            <v-row v-if="actionType === 'New' && dialog === true">
               <v-col cols="12" sm="6" md="4" class="pb-0">
                 <Lookup
                   v-model="session.StartTime"
@@ -96,7 +105,7 @@
                 />
               </v-col>
             </v-row>
-            <v-row>
+            <v-row v-if="dialog">
               <v-col cols="12" sm="6" md="4" class="pb-0">
                 <Timezone
                   v-model="session.Timezone"
@@ -107,24 +116,29 @@
                 ></Timezone>
               </v-col>
               <v-col cols="12" sm="6" md="4" class="pb-0">
-                <Lookup
-                  v-model="session.Duration"
-                  :field="durationProps"
+                <v-autocomplete
+                  v-model="Duration"
+                  :items="slotLookupOptions"
+                  item-text="value"
+                  item-value="key"
+                  label="Duration*"
+                  outlined
+                  dense
+                  class="st-date"
                   @change="changeDuration"
-                />
+                ></v-autocomplete>
               </v-col>
             </v-row>
-            <v-row>
+            <v-row v-if="dialog">
               <v-col v-if="isCustomMin" cols="12" sm="6" md="4" class="pb-0">
                 <v-text-field
                   v-model="customDuration"
-                  label="Duration"
+                  label="Duration*"
                   outlined
                   type="number"
                   min="1"
                   :rules="durationRules"
                   dense
-                  @change="setCustomDuration($event)"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -137,13 +151,30 @@
                 <v-spacer></v-spacer>
               </v-flex>
             </div>
-            <v-row>
+            <v-row v-if="dialog">
               <v-col cols="12" sm="6" md="4" class="pb-0">
                 <Lookup
                   v-model="session.LocationType"
                   :field="locationTypeProps"
                   :rules="required"
                 />
+              </v-col>
+              <v-col
+                v-if="
+                  session.LocationType === 'Bitpod Virtual' &&
+                  session.Type === 'Group'
+                "
+                cols="12"
+                sm="8"
+              >
+                <v-text-field
+                  v-model="session.BitpodVirtualLink"
+                  label="Bitpod Virtual Link"
+                  outlined
+                  dense
+                  :disabled="true"
+                  :value="getBitpodVirtualLink()"
+                ></v-text-field>
               </v-col>
               <v-col
                 v-if="session.LocationType === 'Phone call'"
@@ -191,11 +222,11 @@
               <v-col
                 v-if="session.LocationType === 'Online meeting'"
                 cols="12"
-                sm="6"
-                md="4"
+                sm="8"
+                md="8"
               >
                 <v-text-field
-                  v-model="WebinarLink"
+                  v-model="session.WebinarLink"
                   label="online meeting link*"
                   outlined
                   :rules="requiredRules"
@@ -204,6 +235,7 @@
               </v-col>
               <v-col cols="12" class="pb-0 pt-0">
                 <div v-if="session.LocationType === 'Zoom'">
+                  <i class="fa fa-bulb" aria-hidden="true"></i>
                   To send Zoom joining info, you must setup Zoom integration,
                   <a href="" @click.stop.prevent="openWindow(zoomDocumentLink)"
                     >click here</a
@@ -211,6 +243,7 @@
                   for documentation.
                 </div>
                 <div v-if="session.LocationType === 'Google Meet'">
+                  <i class="fa fa-bulb" aria-hidden="true"></i>
                   To send google meet joining info, you must setup google meet
                   integration,
                   <a
@@ -315,7 +348,7 @@
                 <v-spacer></v-spacer>
               </v-flex>
             </div>
-            <v-row>
+            <v-row v-if="dialog">
               <v-col cols="12" sm="6" md="4" class="pb-0">
                 <Lookup
                   v-model="session.ScheduledType"
@@ -381,21 +414,34 @@
                 </div>
               </v-col>
             </v-row>
-            <v-row>
-              <v-col cols="12" class="mt-0">
-                <Lookup v-model="session.SessionTicket" :field="ticketProps" />
+            <v-row v-if="dialog">
+              <v-col cols="12" class="mt-3">
+                <Lookup
+                  v-model="session.SessionTicket"
+                  :field="ticketProps()"
+                />
               </v-col>
             </v-row>
             <div class="col-md-12 pl-0">
               <v-flex class="d-flex justify-center align-center pb-1">
-                <h2 class="body-1 pb-1 primary--text">
+                <h2
+                  v-if="actionType === 'New'"
+                  class="body-1 pb-1 primary--text"
+                >
                   <i class="fa fa-help-circle" aria-hidden="true"></i>
                   Working Day?
+                </h2>
+                <h2
+                  v-if="actionType === 'Edit'"
+                  class="body-1 pb-1 primary--text"
+                >
+                  <i class="fa fa-cog" aria-hidden="true"></i>
+                  Advanced Setting
                 </h2>
                 <v-spacer></v-spacer>
               </v-flex>
             </div>
-            <v-row>
+            <v-row v-if="actionType === 'New' && dialog === true">
               <v-col v-for="(day, k) in days" :key="k" cols="4" class="py-0">
                 <v-checkbox
                   v-model="day.Value"
@@ -404,6 +450,55 @@
                   height="20"
                   @change="selectDays(day)"
                 ></v-checkbox>
+              </v-col>
+            </v-row>
+            <v-row v-if="actionType === 'Edit'">
+              <v-col cols="12" sm="6" md="4" class="pb-0">
+                <v-text-field
+                  v-model="session.Frequency"
+                  label="Frequency (min)"
+                  outlined
+                  type="number"
+                  :rules="numberRules"
+                  dense
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4" class="pb-0">
+                <v-text-field
+                  v-model="session.MinimumSchedulingNotice"
+                  label="Minimum Scheduling Notice (hr)"
+                  outlined
+                  type="number"
+                  :rules="numberRules"
+                  dense
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4" class="pb-0">
+                <v-text-field
+                  v-model="session.BufferBefore"
+                  label="Buffer Before (min)"
+                  outlined
+                  type="number"
+                  :rules="numberRules"
+                  dense
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="4" class="pb-0">
+                <v-text-field
+                  v-model="session.BufferAfter"
+                  label="Buffer After (min)"
+                  outlined
+                  type="number"
+                  :rules="numberRules"
+                  dense
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" class="pb-4 pt-2">
+                <RichText
+                  v-model="session.Description"
+                  class="mb-3"
+                  label="Description"
+                ></RichText>
               </v-col>
             </v-row>
           </v-form>
@@ -435,10 +530,13 @@ import location from '~/config/apps/event/gql/location.gql'
 import { getIdFromAtob } from '~/utility'
 import CustomDate from '~/components/common/form/date.vue'
 import { getApiUrl } from '~/utility/index.js'
+import nuxtconfig from '~/nuxt.config'
 export default {
   components: {
     CustomDate,
     VueGoogleAutocomplete: () => import('vue-google-autocomplete'),
+    RichText: () =>
+      process.client ? import('~/components/common/form/richtext.vue') : false,
   },
   props: {
     refresh: {
@@ -446,48 +544,78 @@ export default {
       required: false,
       default: () => false,
     },
+    editDialog: {
+      default: false,
+      allowSpaces: false,
+      type: Boolean,
+    },
+    items: {
+      default: () => [],
+      allowSpaces: false,
+      type: Array,
+    },
+    type: {
+      default: 'New',
+      allowSpaces: false,
+      type: String,
+    },
   },
   data() {
+    const session =
+      this.type === 'Edit'
+        ? { ...this.items[0] }
+        : {
+            MaxAllow: 5,
+            StartDate: '',
+            EndDate: '',
+            ScheduledType: 'Over a period of rolling days',
+            RollingDays: 30,
+            Frequency: '30',
+          }
+    const actionType = this.type
+    const isGroup = session.Type === 'Group'
+    const venueAddress =
+      this.type === 'Edit' && this.items[0]._CurrentAddress
+        ? this.items[0]._CurrentAddress
+        : {
+            AddressLine: '',
+            City: '',
+            State: '',
+            Country: '',
+            PostalCode: '',
+            LatLng: {
+              lat: 0.0,
+              lng: 0.0,
+            },
+          }
+
     return {
       valid: false,
       required: [required],
       dialog: false,
+      actionType,
       isSaveButtonDisabled: false,
       isCustomMin: false,
-      isGroup: false,
+      isGroup,
       InPersonMeeting: [],
       inPersonMeetingOptions: [],
+      slotOptions: [],
       ticketOptions: [],
-      customDuration: 15,
+      Duration: '30',
+      customDuration: '15',
       timeSlotMessage: '',
       addresslineMessage: '',
       requiredRules: [required],
       ScheduledType: 'Over a period of rolling days',
-      zoomDocumentLink: strings.ZOOM_DOCUMENT_LINK,
+      zoomDocumentLink: nuxtconfig.integrationLinks.ZOOM_DOCUMENT_LINK,
       startDateMessage: '',
       endDateMessage: '',
-      googleMeetDocumentLink: strings.GOOGLE_MEET_DOCUMENT_LINK,
+      googleMeetDocumentLink:
+        nuxtconfig.integrationLinks.GOOGLE_MEET_DOCUMENT_LINK,
       sessionResult: [],
-      session: {
-        MaxAllow: 5,
-        StartDate: '',
-        EndDate: '',
-        Duration: '30',
-        ScheduledType: 'Over a period of rolling days',
-        RollingDays: 30,
-      },
-      venueAddress: {
-        AddressLine: '',
-        City: '',
-        State: '',
-        Country: '',
-        PostalCode: '',
-        LatLng: {},
-      },
-      LatLng: {
-        lat: 0.0,
-        lng: 0.0,
-      },
+      session,
+      venueAddress,
+
       selectedDays: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'],
       phoneRules: [
         (v) => {
@@ -511,6 +639,14 @@ export default {
             return true
           }
           return strings.MAX_ALLOW_MSG
+        },
+      ],
+      numberRules: [
+        (v) => {
+          if (!v || v > -1) {
+            return true
+          }
+          return 'value should not be negative'
         },
       ],
       personMeetingRules: [
@@ -643,6 +779,10 @@ export default {
     }
   },
   computed: {
+    slotLookupOptions() {
+      const items = this.slotOptions
+      return items
+    },
     locationLookupOptions() {
       const items = this.inPersonMeetingOptions
       return items
@@ -657,20 +797,6 @@ export default {
         dataSource: {
           items,
           itemText: 'Name',
-          itemValue: 'id',
-        },
-      }
-    },
-    ticketProps() {
-      const items = this.ticketOptions
-      return {
-        type: 'lookup',
-        multiple: true,
-        caption: 'Select tickets for this session',
-        items,
-        dataSource: {
-          items,
-          itemText: 'Code',
           itemValue: 'id',
         },
       }
@@ -712,12 +838,97 @@ export default {
       ]
     },
   },
+  watch: {
+    items(newVal, oldVal) {
+      this.$apollo.queries.data.refresh()
+      this.session =
+        this.type === 'Edit'
+          ? { ...this.items[0] }
+          : {
+              MaxAllow: 5,
+              StartDate: '',
+              EndDate: '',
+              ScheduledType: 'Over a period of rolling days',
+              RollingDays: 30,
+              Frequency: '30',
+            }
+      this.actionType = this.type
+      this.isGroup = this.session.Type === 'Group'
+      this.venueAddress =
+        this.type === 'Edit' && this.items[0]._CurrentAddress
+          ? this.items[0]._CurrentAddress
+          : {
+              AddressLine: '',
+              City: '',
+              State: '',
+              Country: '',
+              PostalCode: '',
+              LatLng: {
+                lat: 0.0,
+                lng: 0.0,
+              },
+            }
+    },
+  },
   methods: {
-    setDefault() {
+    getBitpodVirtualLink() {
+      const randomStr = Math.random().toString(36)
+      const roomName = `/${randomStr.substring(2, 5)}-${randomStr.substring(
+        5,
+        8
+      )}-${randomStr.substring(8, 11)}`
+      this.session.BitpodVirtualLink = `${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}${roomName}`
+    },
+    closeForm() {
+      this.dialog = false
+      this.resetForm()
+    },
+    resetForm() {
+      this.dialog = false
+      this.$apollo.queries.data.refresh()
+      this.session.Name = ''
+      this.session.Type = ''
+      this.session.StartTime = ''
+      this.session.EndTime = ''
+
+      this.session.Timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
+      this.Duration = '30'
+      this.session.LocationType = ''
+      this.session.LocationId = ''
+
+      this.session.SeatReservation = false
+      this.session.Phone = ''
+      this.session.WebinarLink = ''
+      this.session.SessionTicket = ''
+
+      this.session.RollingDays = '30'
       this.session.MaxAllow = 5
-      this.session.Duration = '30'
       this.session.ScheduledType = 'Over a period of rolling days'
-      this.session.RollingDays = 30
+      this.session.Frequency = '30'
+      this.session.SessionTicket = ''
+
+      this.venueAddress.AddressLine = ''
+      this.venueAddress.City = ''
+      this.venueAddress.State = ''
+      this.venueAddress.Country = ''
+      this.venueAddress.PostalCode = ''
+      this.customDuration = ''
+      this.isGroup = false
+      this.isCustomMin = false
+    },
+    ticketProps() {
+      const items = this.ticketOptions
+      return {
+        type: 'lookup',
+        multiple: true,
+        caption: 'Select tickets for this session',
+        items,
+        dataSource: {
+          items,
+          itemText: 'Code',
+          itemValue: 'id',
+        },
+      }
     },
     setSelectedDays(selectedDays) {
       selectedDays.map((x) => {
@@ -877,24 +1088,40 @@ export default {
       this.venueAddress.LatLng.lng = addressData.longitude || ''
     },
     changeType(value) {
-      this.session.MaxAllow = parseInt(this.session.MaxAllow) || 5
-      this.isGroup = value === 'Group'
+      if (value === 'Group') {
+        this.isGroup = true
+        this.session.MaxAllow = 5
+      } else {
+        this.isGroup = false
+      }
     },
     changeDuration(value) {
       if (value === '0') {
         this.isCustomMin = true
-        this.Duration = this.customDuration
       } else {
         this.isCustomMin = false
       }
     },
-    setCustomDuration(value) {
-      this.Duration = value
-    },
+
     openWindow(link) {
       window.open(link, '_blank')
     },
-
+    setTicketName() {
+      const cloneTickets = JSON.parse(JSON.stringify(this.ticketOptions))
+      let TicketName = ''
+      this.session.SessionTicket.forEach(function (tid) {
+        cloneTickets.forEach(function (ticket) {
+          if (tid === ticket.id) {
+            if (TicketName === '') {
+              TicketName = ticket.Code
+            } else {
+              TicketName += ',' + ticket.Code
+            }
+          }
+        })
+      })
+      this.session.TicketName = TicketName
+    },
     async onSave() {
       if (this.session.StartTime > this.session.EndTime) {
         this.timeSlotMessage = 'End time should be greater than start time.'
@@ -904,11 +1131,15 @@ export default {
       }
       if (this.session.LocationType === 'Custom') {
         if (this.venueAddress.AddressLine !== '') {
+          this.venueAddress.LatLng.__typename &&
+            delete this.venueAddress.LatLng.__typename
           this.session._CurrentAddress = this.venueAddress
         } else {
           this.addresslineMessage = strings.FIELD_REQUIRED
           return
         }
+      } else {
+        delete this.session._CurrentAddress
       }
       const tempData = []
       this.sessionResult.push({
@@ -925,6 +1156,7 @@ export default {
       })
       const isInvalidSlot = this.partitionIntoOverlappingRanges(tempData)
       if (
+        this.actionType === 'Edit' ||
         isInvalidSlot === false ||
         confirm(
           'This session overlaps with another session, are you sure? click Yes to create and cancel to cancel it.'
@@ -953,42 +1185,75 @@ export default {
           }
         })
         this.session.RollingDays = parseInt(this.session.RollingDays)
-        this.session.Duration = parseInt(this.session.Duration)
-        this.session.Frequency = parseInt(this.session.Duration)
+        this.session.Duration = this.isCustomMin
+          ? parseInt(this.customDuration)
+          : parseInt(this.Duration)
+
         this.session.MaxAllow = parseInt(this.session.MaxAllow)
         this.session.EventId = this.$route.params.id
+
+        this.session.MinimumSchedulingNotice = parseInt(
+          this.session.MinimumSchedulingNotice
+        )
+        this.session.BufferBefore = parseInt(this.session.BufferBefore)
+        this.session.BufferAfter = parseInt(this.session.BufferAfter)
+        this.session.Frequency = parseInt(this.session.Frequency)
+        if (this.session.SessionTicket && this.session.SessionTicket) {
+          this.setTicketName()
+        }
         const baseUrl = getApiUrl()
         let res = null
         let exceptionRes = null
-        try {
-          res = await this.$axios.$post(`${baseUrl}Sessions`, {
-            ...this.session,
-          })
-        } catch (e) {
-          console.log(
-            `Error in Recurring session grid new session form on Save function - context: create Recurring session, eventId - ${this.session.EventId}`
-          )
-        }
-        if (res) {
+        if (this.actionType === 'New') {
           try {
-            exceptionRes = await this.$axios.$patch(
-              `${baseUrl}Sessions/${res.id}`,
+            res = await this.$axios.$post(`${baseUrl}Sessions`, {
+              ...this.session,
+            })
+          } catch (e) {
+            console.log(
+              `Error in Recurring session grid new session form on Save function - context: create Recurring session, eventId - ${this.session.EventId}`
+            )
+          }
+          if (res) {
+            try {
+              exceptionRes = await this.$axios.$patch(
+                `${baseUrl}Sessions/${res.id}`,
+                {
+                  _Exceptions,
+                }
+              )
+            } catch (e) {
+              console.log(
+                `Error in Recurring session grid new session form on Save function - context: create Recurring session , Schedules,intervals, eventId - ${this.session.EventId}`
+              )
+            }
+          }
+          if (exceptionRes) {
+            this.dialog = false
+            this.resetForm()
+            this.isGroup = false
+            this.refresh()
+            return exceptionRes
+          }
+        } else if (this.actionType === 'Edit') {
+          try {
+            res = await this.$axios.$patch(
+              `${baseUrl}Sessions/${this.session.id}`,
               {
-                _Exceptions,
+                ...this.session,
               }
             )
           } catch (e) {
             console.log(
-              `Error in Recurring session grid new session form on Save function - context: create Recurring session , Schedules,intervals, eventId - ${this.session.EventId}`
+              `Error in Recurring session grid edit session form on Save function - context: edit Recurring session, eventId - ${this.session.EventId}, sessionId - ${this.session.id}}`
             )
           }
-        }
-        if (exceptionRes) {
-          this.dialog = false
-          this.$refs.form.reset()
-          this.isGroup = false
-          this.refresh()
-          return exceptionRes
+          if (res) {
+            this.dialog = false
+            this.isGroup = false
+            this.refresh()
+            return res
+          }
         }
       }
     },
@@ -1025,6 +1290,10 @@ export default {
         const ticketResult = formatGQLResult(data, 'Ticket')
         this.sessionResult = formatGQLResult(data, 'Session')
         const OrganizationInfo = formatGQLResult(data, 'OrganizationInfo')
+        this.ticketOptions = ticketResult.map(({ id, ...rest }) => ({
+          id: getIdFromAtob(id),
+          ...rest,
+        }))
         if (OrganizationInfo[0].weekDay.length > 0) {
           this.setSelectedDays(OrganizationInfo[0].weekDay)
         } else {
@@ -1042,14 +1311,78 @@ export default {
           }
         })
         this.session.LocationId = locId
-        this.ticketOptions = ticketResult.map(({ id, ...rest }) => ({
-          id: getIdFromAtob(id),
-          ...rest,
-        }))
+
+        let filterOption
+        if (
+          this.slotOptions &&
+          this.slotOptions.length > 0 &&
+          this.session.Duration
+        ) {
+          filterOption = this.slotOptions.filter(
+            ({ key }) => key === `${this.session.Duration}`
+          )
+        }
+        this.isCustomMin = false
+        if (
+          filterOption &&
+          filterOption.length === 0 &&
+          this.session.Duration &&
+          this.slotOptions &&
+          this.slotOptions.length !== 0
+        ) {
+          this.Duration = '0'
+          this.customDuration = `${this.session.Duration}`
+          this.isCustomMin = true
+        } else if (
+          this.slotOptions &&
+          this.slotOptions.length === 0 &&
+          this.session.Duration
+        ) {
+          if ([15, 30, 45, 60].includes(this.session.Duration)) {
+            this.Duration = `${this.session.Duration}`
+            this.isCustomMin = false
+          } else {
+            this.Duration = '0'
+            this.customDuration = `${this.session.Duration}`
+            this.isCustomMin = true
+          }
+        } else {
+          this.Duration = `${this.session.Duration}`
+          this.isCustomMin = false
+        }
       },
       error(error) {
         this.error = error
       },
+    },
+
+    durationOptions: {
+      query() {
+        return gql`
+          ${registrationStatusOptions}
+        `
+      },
+      variables() {
+        return {
+          filters: {
+            where: {
+              type: 'EventDuration',
+            },
+          },
+          where: {},
+        }
+      },
+      update(data) {
+        this.slotOptions = formatGQLResult(data, 'GeneralConfiguration')
+      },
+      error(error) {
+        this.error = error
+        this.loading = 0
+      },
+      prefetch: false,
+      loadingKey: 'loading',
+      skip: false,
+      pollInterval: 0,
     },
   },
 }

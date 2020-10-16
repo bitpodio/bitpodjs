@@ -21,6 +21,18 @@ query ($filters: JSON, $where: JSON) {
          TicketName
          EventId
          SyncStatus
+         Duration
+         Phone
+         _CurrentAddress { AddressLine City Country LatLng { lat lng  } PostalCode State }
+         WebinarLink
+         MaxAllow
+         SessionTicket
+         LocationId
+         Frequency
+         MinimumSchedulingNotice
+         BufferBefore
+         BufferAfter
+         Description
          createdDate
          createdBy
          modifiedDate

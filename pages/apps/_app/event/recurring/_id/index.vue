@@ -454,6 +454,7 @@
         </v-flex>
         <v-divider></v-divider>
         <Grid
+          ref="recurringGrid"
           view-name="eventRecurringSession"
           :content="content"
           class="mt-n12"
@@ -490,7 +491,7 @@
         </v-flex>
         <v-divider></v-divider>
         <Grid
-          view-name="eventRegistrations"
+          view-name="recurringEventRegistrations"
           :content="content"
           class="mt-n12"
         />
@@ -614,6 +615,19 @@
           :content="content"
           class="mt-n12"
         />
+      </div>
+      <div
+        class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-comments-alt pr-1" aria-hidden="true"></i>
+            Notes
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
+        <v-divider></v-divider>
+        <Notes model-name="Events" />
       </div>
     </v-flex>
     <v-flex column class="mxw-w30">
@@ -776,13 +790,14 @@
             @change="updateReg()"
           ></v-checkbox>
         </v-flex>
-        <v-flex class="d-block text-truncate">
+        <v-flex class="mt-2">
           <v-checkbox
             v-model="data.event.NotifyOrganizer"
             dense
             height="20"
             class="ma-0 pa-0"
-            label="Notify organizer when someone registers"
+            label="Notify organizer when someone 
+            registers"
             color="green"
             @change="updateReg()"
           ></v-checkbox>
@@ -865,6 +880,7 @@ import editEventSetting from '~/pages/apps/_app/event/_id/editEventSetting.vue'
 import editSiteSetting from '~/pages/apps/_app/event/_id/editSiteSetting.vue'
 import makeCopy from '~/pages/apps/_app/event/_id/makeCopy.vue'
 import Grid from '~/components/common/grid'
+import Notes from '~/components/common/notes'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { getApiUrl } from '~/utility/index.js'
@@ -879,6 +895,7 @@ export default {
     editEventSetting,
     editSiteSetting,
     makeCopy,
+    Notes,
   },
   mixins: [configLoaderMixin],
   data() {

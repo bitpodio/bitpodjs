@@ -932,6 +932,7 @@ import { formatGQLResult } from '~/utility/gql.js'
 import { getIdFromAtob } from '~/utility'
 import CustomDate from '~/components/common/form/date.vue'
 import { required } from '~/utility/rules.js'
+import nuxtconfig from '~/nuxt.config'
 
 const ObjectID5 = (
   m = Math,
@@ -1059,8 +1060,9 @@ export default {
       ZipCode: '',
       SessionTicket: [],
       TicketName: '',
-      zoomDocumentLink: strings.ZOOM_DOCUMENT_LINK,
-      googleMeetDocumentLink: strings.GOOGLE_MEET_DOCUMENT_LINK,
+      zoomDocumentLink: nuxtconfig.integrationLinks.ZOOM_DOCUMENT_LINK,
+      googleMeetDocumentLink:
+        nuxtconfig.integrationLinks.GOOGLE_MEET_DOCUMENT_LINK,
       selectedSession: '',
       ScheduledType: '',
       RollingDays: '',
@@ -1269,7 +1271,7 @@ export default {
   },
   computed: {
     eventLinkHint() {
-      return `${strings.EVENT_LINK_HINT}${this.eventData.UniqLink}`
+      return `${nuxtconfig.integrationLinks.EVENT_LINK_HINT}${this.eventData.UniqLink}`
     },
     slotLookupOptions() {
       const items = this.slotOptions
@@ -1523,7 +1525,7 @@ export default {
         }
         if (this.sessions[index].LocationType === 'In-person meeting') {
           this.isPersonMeeting = true
-          this.$refs.personmeetingform.reset()
+          this.$refs.personmeetingform && this.$refs.personmeetingform.reset()
           this.isZoom = false
           this.isGoogleMeet = false
         }
@@ -1675,7 +1677,11 @@ export default {
     },
     selectSessionTickets(index) {
       this.selectedSession = index
-      this.SessionTicket = []
+      this.SessionTicket =
+        this.sessions[index].SessionTicket &&
+        this.sessions[index].SessionTicket.length
+          ? this.sessions[index].SessionTicket
+          : []
       this.isSessionTicket = true
     },
     setSessionTicket() {
@@ -2012,7 +2018,7 @@ export default {
           if (res) {
             this.eventId = res.id
             const ticketList = []
-            const sessionList = []
+            let sessionList = []
 
             this.tickets.forEach(function (ticket) {
               ticket.Events = res.id
@@ -2083,7 +2089,19 @@ export default {
                 sessionList.push(session)
               })
             }
-
+            sessionList = sessionList.map((i) => {
+              if (i.LocationType !== 'Bitpod Virtual') {
+                return i
+              }
+              const randomStr = Math.random().toString(36)
+              const roomName = `/${randomStr.substring(
+                2,
+                5
+              )}-${randomStr.substring(5, 8)}-${randomStr.substring(8, 11)}`
+              return Object.assign(i, {
+                BitpodVirtualLink: `${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}${roomName}`,
+              })
+            })
             const sessionres = await this.$axios
               .$post(`${baseUrl}Sessions`, sessionList)
               .catch((e) => {
