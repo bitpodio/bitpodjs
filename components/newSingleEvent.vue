@@ -140,15 +140,6 @@
                       class="v-tickettype"
                       :on-change="changeLocation"
                     />
-                    <!-- <v-select
-                      value="Venue"
-                      :items="['Online Event', 'Venue', 'Bitpod Virtual']"
-                      label="Location Type"
-                      required
-                      dense=""
-                      outlined
-                      @change="changeLocation($event)"
-                    ></v-select> -->
                   </v-col>
                   <v-col v-if="isOnlineEvent" cols="12" class="pb-0">
                     <v-text-field
