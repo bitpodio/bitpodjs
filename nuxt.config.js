@@ -294,10 +294,8 @@ export default {
   },
   integrationLinks: {
     BITOPD_VIRTUAL_LINK: 'https://meet.bitpod.io',
-    EVENT_LINK_HINT: 'https://bitpod-event.test.bitpod.io/e/',
-    ZOOM_DOCUMENT_LINK:
-      'https://bitpod-event.test.bitpod.io/admin/apps/HelpCenter/Integrations/Zoom/views/Zoom',
-    GOOGLE_MEET_DOCUMENT_LINK:
-      'https://bitpod-event.test.bitpod.io/admin/apps/HelpCenter/Integrations/Gmail/views/Gmail',
+    EVENT_LINK_HINT: `https://${process.env.PUBLIC_DOMAIN}/e/`,
+    ZOOM_DOCUMENT_LINK: `https://${process.env.PUBLIC_DOMAIN}/admin/apps/HelpCenter/Integrations/Zoom/views/Zoom`,
+    GOOGLE_MEET_DOCUMENT_LINK: `https://${process.env.PUBLIC_DOMAIN}/admin/apps/HelpCenter/Integrations/Gmail/views/Gmail`,
   },
 }
