@@ -147,7 +147,7 @@ export default {
           }
         }
       } catch (e) {
-        console.log(
+        console.error(
           `Error in templates/grids/eventAttendees-grid/column-checkin.vue while making a PUT call to Attendees model from method updateDate context:-TicketId:-${this.item.id}`
         )
       }
