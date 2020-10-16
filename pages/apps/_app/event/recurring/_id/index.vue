@@ -790,13 +790,14 @@
             @change="updateReg()"
           ></v-checkbox>
         </v-flex>
-        <v-flex class="d-block text-truncate">
+        <v-flex class="mt-2">
           <v-checkbox
             v-model="data.event.NotifyOrganizer"
             dense
             height="20"
             class="ma-0 pa-0"
-            label="Notify organizer when someone registers"
+            label="Notify organizer when someone 
+            registers"
             color="green"
             @change="updateReg()"
           ></v-checkbox>
