@@ -160,6 +160,23 @@
                 />
               </v-col>
               <v-col
+                v-if="
+                  session.LocationType === 'Bitpod Virtual' &&
+                  session.Type === 'Group'
+                "
+                cols="12"
+                sm="8"
+              >
+                <v-text-field
+                  v-model="session.BitpodVirtualLink"
+                  label="Bitpod Virtual Link"
+                  outlined
+                  dense
+                  :disabled="true"
+                  :value="getBitpodVirtualLink()"
+                ></v-text-field>
+              </v-col>
+              <v-col
                 v-if="session.LocationType === 'Phone call'"
                 cols="12"
                 sm="6"
@@ -513,6 +530,7 @@ import location from '~/config/apps/event/gql/location.gql'
 import { getIdFromAtob } from '~/utility'
 import CustomDate from '~/components/common/form/date.vue'
 import { getApiUrl } from '~/utility/index.js'
+import nuxtconfig from '~/nuxt.config'
 export default {
   components: {
     CustomDate,
@@ -589,10 +607,11 @@ export default {
       addresslineMessage: '',
       requiredRules: [required],
       ScheduledType: 'Over a period of rolling days',
-      zoomDocumentLink: strings.ZOOM_DOCUMENT_LINK,
+      zoomDocumentLink: nuxtconfig.integrationLinks.ZOOM_DOCUMENT_LINK,
       startDateMessage: '',
       endDateMessage: '',
-      googleMeetDocumentLink: strings.GOOGLE_MEET_DOCUMENT_LINK,
+      googleMeetDocumentLink:
+        nuxtconfig.integrationLinks.GOOGLE_MEET_DOCUMENT_LINK,
       sessionResult: [],
       session,
       venueAddress,
@@ -852,6 +871,14 @@ export default {
     },
   },
   methods: {
+    getBitpodVirtualLink() {
+      const randomStr = Math.random().toString(36)
+      const roomName = `/${randomStr.substring(2, 5)}-${randomStr.substring(
+        5,
+        8
+      )}-${randomStr.substring(8, 11)}`
+      this.session.BitpodVirtualLink = `${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}${roomName}`
+    },
     closeForm() {
       this.dialog = false
       this.resetForm()

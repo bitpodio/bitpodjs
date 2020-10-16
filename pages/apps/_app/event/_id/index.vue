@@ -57,6 +57,17 @@
                   <v-list-item-title>Integrations</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
+              <v-list-item
+                v-if="eventData.LocationType === 'Bitpod Virtual'"
+                @click="goLive"
+              >
+                <v-list-item-icon class="mr-2">
+                  <i class="fa fa-video mt-1" aria-hidden="true"></i>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>Start Session</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
             </v-list>
           </v-menu>
         </v-flex>
@@ -77,6 +88,20 @@
                 {{ data.event.WebinarLink }}
               </a>
             </div>
+          </div>
+          <div
+            v-else-if="data.event.LocationType === 'Bitpod Virtual'"
+            class="pb-1 d-inline-flex"
+          >
+            <a @click="goLive"
+              ><v-icon class="fs-16 mr-1 primary--text mt-n1">fa-video</v-icon
+              >{{ viewBitpodVirtualLink() }}</a
+            >
+            <copy
+              class="pl-2"
+              :text-to-copy="viewBitpodVirtualLink()"
+              icon-size="20"
+            />
           </div>
           <div v-else>
             <p class="blue--text body-2">
@@ -899,6 +924,19 @@
           class="mt-n12"
         />
       </div>
+      <div
+        class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-comments-alt pr-1" aria-hidden="true"></i>
+            Notes
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
+        <v-divider></v-divider>
+        <Notes model-name="Events" />
+      </div>
     </v-flex>
     <v-flex column class="mxw-w30">
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 py-0 pr-2 box-grey">
@@ -1200,6 +1238,7 @@ import Grid from '~/components/common/grid'
 import File from '~/components/common/form/file.vue'
 import event from '~/config/apps/event/gql/event.gql'
 import copy from '~/components/common/copy'
+import Notes from '~/components/common/notes'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin, getIdFromAtob, getApiUrl } from '~/utility'
 
@@ -1215,6 +1254,7 @@ export default {
     File,
     copy,
     makeCopy,
+    Notes,
   },
   mixins: [configLoaderMixin],
   props: {
@@ -1323,6 +1363,11 @@ export default {
   },
 
   methods: {
+    goLive() {
+      window.open(
+        `/apps/event/live/${this.eventData.UniqLink}?e=${this.$route.params.id}`
+      )
+    },
     openPrintForm() {
       const myWindow = window.open('', '', 'width=900,height=900')
       this.attendees.map((ele) => {
@@ -1663,6 +1708,9 @@ export default {
     viewRegistrationLink() {
       const regUrl = `https://${nuxtconfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
       return regUrl
+    },
+    viewBitpodVirtualLink() {
+      return `${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}/${this.data.event.UniqLink}`
     },
     formatDate(date) {
       return date ? format(new Date(date), 'PPp') : ''
