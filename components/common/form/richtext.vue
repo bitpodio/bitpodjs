@@ -25,37 +25,17 @@ export default {
       type: Object,
       default: () => {},
     },
-    isInvitee: {
-      type: Boolean,
-      default: false,
+    dropdownOptions: {
+      type: Object,
+      default: () => {},
     },
-    isGeneral: {
+    showLogoButton: {
       type: Boolean,
-      default: false,
+      default: true,
     },
-    showTemplateDropdown: {
+    showQRButton: {
       type: Boolean,
-      default: false,
-    },
-    isBadge: {
-      type: Boolean,
-      default: false,
-    },
-    isEditBadge: {
-      type: Boolean,
-      default: false,
-    },
-    isQRCode: {
-      type: Boolean,
-      default: false,
-    },
-    isLogo: {
-      type: Boolean,
-      default: false,
-    },
-    isEditTemplate: {
-      type: Boolean,
-      default: false,
+      default: true,
     },
   },
   data() {
@@ -67,47 +47,13 @@ export default {
           {
             name: '<h2 class="pb-1">+</h2>',
             tooltip: 'Fields',
-            list: {
-              'Event Name': 'Event Name',
-              Description: 'Description',
-              'Start Date': 'Start Date',
-              'End Date': 'End Date',
-              Timezone: 'Timezone',
-              Organizer: 'Organizer',
-              Venue: 'Venue',
-              Address: 'Address',
-              City: 'City',
-              State: 'State',
-              Country: 'Country',
-              'Postal Code': 'Postal Code',
-              'Event Webinar Link': 'Event Webinar Link',
-              'Event Joining Instruction': 'Event Joining Instruction',
-              'Organization Name': 'Organization Name',
-              'Organization Address': 'Organization Address',
-              'Organization City': 'Organization City',
-              'Organization State': 'Organization State',
-              'Organization Country': 'Organization Country',
-              'Organization Postal Code': 'Organization Postal Code',
-              'Privacy Policy': 'Privacy Policy',
-              'Organization Facebook': 'Organization Facebook',
-              'Organization Linkedin': 'Organization Linkedin',
-              'Organization Twitter': 'Organization Twitter',
-              'Contact First Name': 'Contact First Name',
-              'Contact Last Name': 'Contact Last Name',
-              'Contact Email': 'Contact Email',
-              Register: 'Register',
-              Logo: 'Logo',
-            },
+            list: {},
             exec: (editor, flag, currentOption) => {
               const modelFields = {
                 'Event Name': 'Event.Title',
                 Description: 'Event.Description',
-                'Start Date': this.isEditTemplate
-                  ? 'Event.SDate'
-                  : 'Event.StartDate',
-                'End Date': this.isEditTemplate
-                  ? 'Event.EDate'
-                  : 'Event.EndDate',
+                'Start Date': 'Event.StartDate',
+                'End Date': 'Event.EndDate',
                 Timezone: 'Event.Timezone',
                 Organizer: 'Event.Organizer',
                 Venue: 'Event.VenueName',
@@ -153,6 +99,10 @@ export default {
                 Logo: 'Logo',
                 QRCode: 'QRCode',
               }
+              const editFields = {
+                'Edit Start Date': 'Event.SDate',
+                'Edit End Date': 'Event.EDate',
+              }
               const socialFields = {
                 'Organization Facebook': {
                   icon:
@@ -178,6 +128,8 @@ export default {
                 const key = currentOption.control.args[1]
                 if (modelFields[key]) {
                   editor.selection.insertHTML('${' + modelFields[key] + '}')
+                } else if (editFields[key]) {
+                  editor.selection.insertHTML('${ ' + editFields[key] + ' }')
                 } else if (badgeFields[key]) {
                   editor.selection.insertHTML('{{ ' + badgeFields[key] + ' }}')
                 } else if (socialFields[key]) {
@@ -227,39 +179,6 @@ export default {
         allowResizeY: true,
         zIndex: 99999,
       },
-      generalButtons: {
-        'Organization Name': 'Organization Name',
-        'Organization Address': 'Organization Address',
-        'Organization City': 'Organization City',
-        'Organization State': 'Organization State',
-        'Organization Country': 'Organization Country',
-        'Organization Postal Code': 'Organization Postal Code',
-        'Privacy Policy': 'Privacy Policy',
-        'Organization Facebook': 'Organization Facebook',
-        'Organization Linkedin': 'Organization Linkedin',
-        'Organization Twitter': 'Organization Twitter',
-        'Contact First Name': 'Contact First Name',
-        'Contact Last Name': 'Contact Last Name',
-        'Contact Email': 'Contact Email',
-      },
-      badgeButtons: {
-        'First Name': 'First  Name',
-        'Last Name': 'Last  Name',
-        'Full Name': 'Full  Name',
-        Category: 'Category',
-        'Event Name': 'Event  Name',
-        Organization: 'Organization',
-        Logo: 'Logo',
-        QRCode: 'QRCode',
-      },
-      editBadgeButtons: {
-        'First Name': 'First  Name',
-        'Last Name': 'Last  Name',
-        'Full Name': 'Full  Name',
-        Category: 'Category',
-        'Event Name': 'Event  Name',
-        Organization: 'Organization',
-      },
     }
   },
   watch: {
@@ -268,23 +187,8 @@ export default {
     },
   },
   mounted() {
-    if (!this.isInvitee) {
-      Object.assign(this._data.config.extraButtons[0].list, {
-        'Registration Email': 'Registration Email',
-        'Registration Phone': 'Registration Phone',
-        'Registration Id': 'Registration Id',
-        'Ticket Quantity': 'Ticket Quantity',
-        'Session Location': 'Session Location',
-        'Session Booking Date': 'Session Booking Date',
-        'Session List': 'Session List',
-        'Attendee List': 'Attendee List',
-        'Payment Details': 'Payment Details',
-        'First Name': 'First Name',
-        'Last Name': 'Last Name',
-        'Full Name': 'Full Name',
-      })
-    }
-    if (this.isQRCode) {
+    this._data.config.extraButtons[0].list = { ...this.dropdownOptions }
+    if (this.showQRButton) {
       this._data.config.extraButtons.push({
         name: 'QRCode',
         tooltip: 'Fields',
@@ -306,7 +210,7 @@ export default {
         },
       })
     }
-    if (this.isLogo) {
+    if (this.showLogoButton) {
       this._data.config.extraButtons.push({
         name: 'Logo',
         exec: (editor, flag, currentOption) => {
@@ -318,18 +222,6 @@ export default {
           )
         },
       })
-    }
-    if (this.isBadge || (this.field && this.field.isBadge)) {
-      this._data.config.extraButtons[0].list = { ...this.badgeButtons }
-    }
-    if (this.isEditBadge) {
-      this._data.config.extraButtons[0].list = { ...this.editBadgeButtons }
-    }
-    if (this.showTemplateDropdown && this.field.showTemplateDropdown) {
-      delete this.config.extraButtons
-    }
-    if (this.isGeneral) {
-      this._data.config.extraButtons[0].list = { ...this.generalButtons }
     }
   },
 }

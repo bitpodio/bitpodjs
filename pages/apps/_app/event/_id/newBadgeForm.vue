@@ -111,10 +111,7 @@
                     <RichText
                       v-model="RTEValue"
                       label="Description"
-                      :show-template-dropdown="true"
-                      :is-badge="true"
-                      :is-q-r-code="false"
-                      :is-logo="false"
+                      :dropdown-options="dropdownOptions"
                     />
                   </v-col>
                 </v-row>
@@ -196,6 +193,20 @@ export default {
       Category: 'Guest',
       template: '',
     }
+  },
+  computed: {
+    dropdownOptions() {
+      return {
+        'First Name': 'First  Name',
+        'Last Name': 'Last  Name',
+        'Full Name': 'Full  Name',
+        Category: 'Category',
+        'Event Name': 'Event  Name',
+        Organization: 'Organization',
+        Logo: 'Logo',
+        QRCode: 'QRCode',
+      }
+    },
   },
   methods: {
     getAttachmentLink(id, isDownloadLink) {
