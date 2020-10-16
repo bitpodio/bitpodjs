@@ -3,7 +3,15 @@
     <v-list>
       <v-list-item v-for="item in items" :key="item.id" class="px-1">
         <v-list-item-avatar tile size="48">
-          <v-avatar color="primary" size="48" tile v-bind="attrs" v-on="on">
+          <v-avatar
+            size="48"
+            tile
+            v-bind="attrs"
+            :style="{
+              'background-color': getRandomColor(item.Name),
+            }"
+            v-on="on"
+          >
             <div class="d-flex flex-column">
               <div class="white--text text-h6 pt-0">
                 {{ formatDateDay(item.StartDate) }}
@@ -26,7 +34,7 @@
         </v-list-item-content>
 
         <v-list-item-icon>
-          <v-btn class="ma-2" outlined color="primary">
+          <v-btn class="ma-2" outlined color="success">
             Join<v-icon right>
               mdi-video
             </v-icon>
@@ -53,10 +61,13 @@ export default {
       return date ? format(new Date(date), 'PPp') : ''
     },
     formatDateDay(date) {
-      return date ? format(new Date(date), 'L') : ''
+      return date ? format(new Date(date), 'd') : ''
     },
     formatDateMonth(date) {
       return date ? format(new Date(date), 'LLL') : ''
+    },
+    getRandomColor(name) {
+      return window.GeoPattern.generate(name).color
     },
   },
 }

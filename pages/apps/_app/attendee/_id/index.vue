@@ -17,46 +17,50 @@
       </div>
     </v-flex>
     <v-flex class="public-main public-info">
-      <v-flex class="d-flex elevation-1 mb-4 rounded-lg overflow-hidden">
+      <v-flex
+        class="d-flex flex-column flex-md-row elevation-0 elevation-md-1 mb-4 rounded-lg overflow-hidden"
+      >
         <v-flex class="flex-70">
           <v-img
             :src="$config.cdnUri + 'default-min.jpg'"
             class="eventsite-banner"
           ></v-img>
         </v-flex>
-        <v-flex class="flex-30 justify-center d-flex greybg pa-2">
-          <span class="text-h4 text-center text-capitalize"
-            >{{ formatField(data.registration.EventName) }}
-            {{ data.event && data.event.Title }}
-          </span>
+        <v-flex flex-column class="flex-30 justify-center d-flex greybg pa-2">
+          <div class="text-h4 text-center text-capitalize">
+            {{ formatField(data.registration.EventName) }}
+          </div>
+          <div class="body-1 text-center text-capitalize">
+            By {{ formatField(event && event.organizer) }}
+          </div>
         </v-flex>
-      </v-flex>
-      <v-flex>
-        <div
-          v-if="content"
-          class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
-        >
-          <v-flex class="d-flex justify-center align-center pb-3">
-            <h2 class="body-1 pb-0">
-              <i class="fa fa-black-board pr-1" aria-hidden="true"></i>
-              Sessions
-            </h2>
-            <v-spacer></v-spacer>
-          </v-flex>
-          <v-divider></v-divider>
-          <Grid
-            view-name="registrationSessionsPublic"
-            :content="content"
-            :filter="filter"
-            class="mt-n12"
-          />
-        </div>
       </v-flex>
       <v-flex d-flex flex-md-row flex-lg-row flex-column>
         <v-flex column class="mxw-w70">
+          <div v-if="event && event.sessions">
+            <div
+              v-if="content"
+              class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2 elevation-1 rounded-lg"
+            >
+              <v-flex class="d-flex justify-center align-center pb-3">
+                <h2 class="body-1 pb-0">
+                  <i class="fa fa-black-board pr-1" aria-hidden="true"></i>
+                  Sessions
+                </h2>
+                <v-spacer></v-spacer>
+              </v-flex>
+              <v-divider></v-divider>
+              <Grid
+                view-name="registrationSessionsPublic"
+                :content="content"
+                :filter="filter"
+                class="mt-n12"
+              />
+            </div>
+          </div>
           <div
             v-if="content"
-            class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+            class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2 elevation-1 rounded-lg"
           >
             <v-flex class="d-flex justify-center align-center pb-3">
               <h2 class="body-1 pb-0">
@@ -73,8 +77,109 @@
             />
           </div>
           <div
+            v-if="event && event.speakers && event.speakers.length"
+            class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 mr-0 mb-4 pb-2 elevation-1 rounded-lg"
+          >
+            <v-flex class="d-flex justify-center align-center pb-3">
+              <h2 class="body-1 pb-0">
+                <i class="fa fa-ticket pr-1" aria-hidden="true"></i>
+                Speakers
+              </h2>
+              <v-spacer></v-spacer>
+            </v-flex>
+            <v-divider></v-divider>
+            <div class="d-flex">
+              <div
+                v-for="item in Object.values(event.speakers)"
+                :key="item.id"
+                class="speaker-inner"
+              >
+                <div class="avatar-container">
+                  <img
+                    src="https://res.cloudinary.com/mytestlogo/default_profile"
+                    class="avatar-image avatar"
+                  />
+                </div>
+                <div class="speaker-name">
+                  <span title="Rishi B">{{ item.firstName }}</span>
+                  <div class="middle">
+                    <a
+                      href="https://www.linkedin.com"
+                      target="_blank"
+                      class="social-icons text-decoration-none"
+                    >
+                      <i class="fa fa-linkedin"></i>
+                    </a>
+                    <a
+                      href="https://twitter.com"
+                      target="_blank"
+                      class="social-icons text-decoration-none"
+                    >
+                      <i class="fa fa-twitter"></i>
+                    </a>
+                    <a
+                      href="https://www.facebook.com"
+                      target="_blank"
+                      class="social-icons text-decoration-none"
+                    >
+                      <i class="fa fa-facebook"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div></div>
+          </div>
+          <div>
+            <div
+              v-if="event && event.speakers"
+              class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2 elevation-1 rounded-lg"
+            >
+              <v-flex class="d-flex justify-center align-center pb-3">
+                <h2 class="body-1 pb-0">
+                  <i class="fa fa-black-board pr-1" aria-hidden="true"></i>
+                  Speakers
+                </h2>
+                <v-spacer></v-spacer>
+              </v-flex>
+              <v-divider></v-divider>
+              <div class="d-flex flex-wrap justify-center justify-md-start">
+                <v-card
+                  v-for="item in Object.values(event.speakers)"
+                  :key="item.id"
+                  class="pb-speakers ma-4 ml-0 mb-0 ma-xs-4"
+                >
+                  <v-img
+                    src="https://res.cloudinary.com/mytestlogo/default_profile"
+                    height="160px"
+                    class="positionRelative"
+                  >
+                  </v-img>
+                  <v-text
+                    class="text-center fs-20 d-flex justify-center pt-1"
+                    >{{ item.firstName }}</v-text
+                  >
+                  <v-card-actions class="pa-1 pt-0 d-flex justify-center">
+                    <v-btn icon>
+                      <v-icon class="fs-18">mdi-facebook</v-icon>
+                    </v-btn>
+
+                    <v-btn icon>
+                      <v-icon class="fs-18">mdi-twitter</v-icon>
+                    </v-btn>
+
+                    <v-btn icon>
+                      <v-icon class="fs-18">mdi-linkedin</v-icon>
+                    </v-btn>
+                  </v-card-actions>
+                </v-card>
+              </div>
+            </div>
+          </div>
+
+          <div
             v-if="content"
-            class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+            class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 mr-0 mb-4 pb-2 elevation-1 rounded-lg"
           >
             <v-flex class="d-flex justify-center align-center pb-3">
               <h2 class="body-1 pb-0">
@@ -137,9 +242,9 @@
             <v-divider></v-divider>
             <v-flex my-3>
               <div class="body-1">
-                Sun, Nov 15th, 2020, 11:40 AM -<br />
-                Thu, Nov 19th, 2020, 11:40 AM -<br />
-                (GMT+05:30) India Standard Time
+                {{ formatDate(event && event.startDateTime) }} -<br />
+                {{ formatDate(event && event.endDateTime) }} -<br />
+                {{ formatField(event && event.timeZone) }}
               </div>
             </v-flex>
           </div>
@@ -156,7 +261,7 @@
             <v-divider></v-divider>
             <v-flex my-3>
               <div class="body-1">
-                Mumbai - Pune Expressway
+                {{ formatField(event && event.address && event.address.name) }}
               </div>
             </v-flex>
           </div>
@@ -186,9 +291,9 @@ export default {
       isEditReg: false,
       isCancelReg: false,
       isRefund: false,
+      event: {},
       data: {
         registration: {},
-        event: {},
       },
     }
   },
@@ -215,15 +320,20 @@ export default {
       return fieldValue || ' '
     },
     async getEventData(data) {
-      debugger
       if (data.EventId) {
-        const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${data.EventId}`
+        // const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${data.EventId}`
+        const eventid = data.EventId.toString()
+        console.log('id', eventid)
+        const filter = { id: eventid }
+        const URL = `https://${nuxtconfig.axios.eventUrl}${
+          nuxtconfig.axios.apiEndpoint
+        }Events/findEvent?eventFilter=${JSON.stringify(filter)}`
         try {
           const res = await this.$axios.$get(URL)
           if (res) {
             console.log('res', res)
-            this.data.event = res
-            console.log('eventdata', this.data.event)
+            this.event = res.result
+            console.log('eventdata', this.event)
           }
         } catch (e) {
           console.error(
@@ -251,16 +361,12 @@ export default {
         }
       },
       update(data) {
-        debugger
         const registrationData = formatGQLResult(data, 'Registration')
         if (registrationData.length) {
           const regdata = registrationData.length > 0 ? registrationData[0] : {}
           this.getEventData(regdata)
           return { registration: regdata }
         }
-        // return {
-        //   registration: registration.length > 0 ? registration[0] : {},
-        // }
       },
       result({ data, loading, networkStatus }) {},
       error(error) {
@@ -319,5 +425,34 @@ export default {
 .flex-30 {
   flex: 30%;
   max-width: 30%;
+}
+.pb-speakers {
+  max-width: 200px;
+  width: 200px;
+}
+@media screen and (max-width: 600px) {
+  .background-event-img {
+    display: none;
+  }
+  .public-main {
+    max-width: 100%;
+  }
+  .public-info {
+    top: -20px;
+  }
+  .boxview {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+  .flex-70,
+  .flex-30 {
+    flex: 100% !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  .eventsite-banner {
+    max-height: 160px;
+    min-height: 160px;
+  }
 }
 </style>
