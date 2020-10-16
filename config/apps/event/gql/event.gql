@@ -37,6 +37,7 @@ query($filters: JSON, $badgeFilter: JSON, $eventId: String) {
           Project
           ProjectCode
           SalesforceEventId
+          LayoutId
           SeatReservation
           SessionTimingConflict
           ShowRemainingTickets
