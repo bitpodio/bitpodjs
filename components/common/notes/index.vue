@@ -195,7 +195,9 @@ export default {
     getLink(id) {
       return `https://${nuxtconfig.axios.eventUrl}${
         nuxtconfig.axios.apiEndpoint
-      }${this.modelName}/${this.$route.params.id}/Comment/${id || ''}`
+      }${this.modelName}/${this.$route.params.id}/${
+        this.modelName === 'Events' ? 'Comments' : 'Comment'
+      }/${id || ''}`
     },
     uploaded(data) {
       this.fileList = [...data]

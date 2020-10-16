@@ -57,6 +57,17 @@
                   <v-list-item-title>Integrations</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
+              <v-list-item
+                v-if="eventData.LocationType === 'Bitpod Virtual'"
+                @click="goLive"
+              >
+                <v-list-item-icon class="mr-2">
+                  <i class="fa fa-video mt-1" aria-hidden="true"></i>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>Start Session</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
             </v-list>
           </v-menu>
         </v-flex>
@@ -77,6 +88,20 @@
                 {{ data.event.WebinarLink }}
               </a>
             </div>
+          </div>
+          <div
+            v-else-if="data.event.LocationType === 'Bitpod Virtual'"
+            class="pb-1 d-inline-flex"
+          >
+            <a @click="goLive"
+              ><v-icon class="fs-16 mr-1 primary--text mt-n1">fa-video</v-icon
+              >{{ viewBitpodVirtualLink() }}</a
+            >
+            <copy
+              class="pl-2"
+              :text-to-copy="viewBitpodVirtualLink()"
+              icon-size="20"
+            />
           </div>
           <div v-else>
             <p class="blue--text body-2">
@@ -310,7 +335,14 @@
           <v-spacer></v-spacer>
           <v-menu offset-y>
             <template v-slot:activator="{ on, attrs }">
-              <v-btn depressed text small v-bind="attrs" v-on="on">
+              <v-btn
+                depressed
+                text
+                small
+                v-bind="attrs"
+                v-on="on"
+                @click="allow = true"
+              >
                 <v-icon left>fa-upload</v-icon> Upload
               </v-btn>
             </template>
@@ -892,6 +924,19 @@
           class="mt-n12"
         />
       </div>
+      <div
+        class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-comments-alt pr-1" aria-hidden="true"></i>
+            Notes
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
+        <v-divider></v-divider>
+        <Notes model-name="Events" />
+      </div>
     </v-flex>
     <v-flex column class="mxw-w30">
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 py-0 pr-2 box-grey">
@@ -932,7 +977,7 @@
       </div>
 
       <div
-        v-if="data.event.LocationType !== 'Online Event'"
+        v-if="data.event.LocationType === 'Venue'"
         class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pb-0 pr-2 box-grey"
       >
         <v-flex class="d-flex justify-center align-center pb-2">
@@ -1048,68 +1093,67 @@
             <div v-html="formatField(data.event.CancellationPolicy)"></div>
           </div>
         </v-flex>
-        <v-flex my-3 class="d-block text-truncate">
-          <span v-if="data.event.isRefundable === true">
-            <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
-            <span class="ml-2">Allow Cancelation</span>
-          </span>
-          <span v-else>
-            <v-icon>mdi-checkbox-blank-outline</v-icon>
-            <span class="ml-2">Allow Cancelation</span>
-          </span>
+        <v-flex class="d-block text-truncate">
+          <v-checkbox
+            v-model="data.event.isRefundable"
+            dense
+            debounce="500"
+            height="20"
+            class="ma-0 pa-0"
+            label="Allow Cancelation"
+            color="green"
+            @change="updateReg"
+          ></v-checkbox>
         </v-flex>
-        <v-flex my-3 class="d-block text-truncate">
-          <span v-if="data.event.SessionTimingConflict === true">
-            <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
-            <span class="ml-2">Validate Session Timing Conflict</span>
-          </span>
-          <span v-else>
-            <v-icon>mdi-checkbox-blank-outline</v-icon>
-            <span class="ml-2">Validate Session Timing Conflict</span>
-          </span>
+        <v-flex class="d-block text-truncate">
+          <v-checkbox
+            v-model="data.event.SessionTimingConflict"
+            dense
+            debounce="500"
+            height="20"
+            class="ma-0 pa-0"
+            label="Validate Session Timing Conflict"
+            color="green"
+            @change="updateReg"
+          ></v-checkbox>
         </v-flex>
-        <v-flex my-3 class="d-block text-truncate">
-          <span v-if="data.event.ShowRemainingTickets === true">
-            <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
-            <span class="ml-2">Show Remaining Tickets Count</span>
-          </span>
-          <span v-else>
-            <v-icon>mdi-checkbox-blank-outline</v-icon>
-            <span class="ml-2">Show Remaining Tickets Count</span>
-          </span>
+        <v-flex class="d-block text-truncate">
+          <v-checkbox
+            v-model="data.event.ShowRemainingTickets"
+            dense
+            debounce="500"
+            height="20"
+            class="ma-0 pa-0"
+            label="Show Remaining Tickets Count"
+            color="green"
+            @change="updateReg"
+          ></v-checkbox>
         </v-flex>
-        <v-flex my-3 class="d-block text-truncate">
-          <span v-if="data.event.ShowAttendeeForm === true">
-            <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
-            <span class="ml-2">Show Attendee Form</span>
-          </span>
-          <span v-else>
-            <v-icon>mdi-checkbox-blank-outline</v-icon>
-            <span class="ml-2">Show Attendee Form</span>
-          </span>
+        <v-flex class="d-block text-truncate">
+          <v-checkbox
+            v-model="data.event.ShowAttendeeForm"
+            label="Show Attendee Form"
+            color="green"
+            dense
+            debounce="500"
+            height="20"
+            class="ma-0 pa-0"
+            @change="updateReg"
+          ></v-checkbox>
         </v-flex>
-        <v-flex my-3 class="d-block text-truncate">
-          <span v-if="data.event.NotifyOrganizer === true">
-            <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
-            <span class="ml-2">Notify organizer when someone registers</span>
-          </span>
-          <span v-else>
-            <v-icon>mdi-checkbox-blank-outline</v-icon>
-            <span class="ml-2">Notify organizer when someone registers</span>
-          </span>
-        </v-flex>
-        <v-flex my-3>
-          <span v-if="data.event.SendCalendar === true">
-            <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
-            <span class="ml-2">Send calendar invite when registered</span>
-          </span>
-          <span v-else>
-            <v-icon>mdi-checkbox-blank-outline</v-icon>
-            <span class="ml-2">Send calendar invite when registered</span>
-          </span>
+        <v-flex class="d-block text-truncate">
+          <v-checkbox
+            v-model="data.event.NotifyOrganizer"
+            dense
+            debounce="500"
+            height="20"
+            class="ma-0 pa-0"
+            label="Notify organizer when someone registers"
+            color="green"
+            @change="updateReg"
+          ></v-checkbox>
         </v-flex>
       </div>
-
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-0 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-0">
@@ -1128,35 +1172,27 @@
             {{ formatField(data.event.RegistrationSiteTemplate) }}
           </div>
         </v-flex>
-        <v-flex my-3>
-          <span
-            v-if="
-              data.event._sectionHeading &&
-              data.event._sectionHeading.showimagegallery === true
-            "
-          >
-            <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
-            <span class="ml-2">Show Image Gallery</span>
-          </span>
-          <span v-else>
-            <v-icon>mdi-checkbox-blank-outline</v-icon>
-            <span class="ml-2">Show Image Gallery</span>
-          </span>
+        <v-flex>
+          <v-checkbox
+            v-model="registrationSetting.showimagegallery"
+            dense
+            height="20"
+            class="ma-0 pa-0"
+            label="Show Image Gallery"
+            color="green"
+            @change="updateReg1()"
+          ></v-checkbox>
         </v-flex>
-        <v-flex my-3>
-          <span
-            v-if="
-              data.event._sectionHeading &&
-              data.event._sectionHeading.showeventreviews === true
-            "
-          >
-            <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
-            <span class="ml-2">Show Event Reviews</span>
-          </span>
-          <span v-else>
-            <v-icon>mdi-checkbox-blank-outline</v-icon>
-            <span class="ml-2">Show Event Reviews</span>
-          </span>
+        <v-flex>
+          <v-checkbox
+            v-model="registrationSetting.showeventreviews"
+            dense
+            height="20"
+            class="ma-0 pa-0"
+            label="Show Event Reviews"
+            color="green"
+            @change="updateReg1()"
+          ></v-checkbox>
         </v-flex>
       </div>
       <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
@@ -1186,6 +1222,7 @@
 import gql from 'graphql-tag'
 import format from 'date-fns/format'
 import { utcToZonedTime } from 'date-fns-tz'
+import _ from 'lodash'
 import editSeoForm from './editSeoForm.vue'
 import editEventForm from './editEventForm.vue'
 import editEventSetting from './editEventSetting.vue'
@@ -1201,6 +1238,7 @@ import Grid from '~/components/common/grid'
 import File from '~/components/common/form/file.vue'
 import event from '~/config/apps/event/gql/event.gql'
 import copy from '~/components/common/copy'
+import Notes from '~/components/common/notes'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin, getIdFromAtob, getApiUrl } from '~/utility'
 
@@ -1216,6 +1254,7 @@ export default {
     File,
     copy,
     makeCopy,
+    Notes,
   },
   mixins: [configLoaderMixin],
   props: {
@@ -1276,6 +1315,12 @@ export default {
       getBadgeCategory: 'Guest',
       attendees: [],
       Status: '',
+      registrationSetting: {
+        showimagegallery: false,
+        showeventreviews: false,
+      },
+      hover: {},
+      settingData: {},
       allow: true,
     }
   },
@@ -1285,6 +1330,25 @@ export default {
     },
     baseUrl() {
       return nuxtconfig.axios.eventUrl
+    },
+    updateData() {
+      const dataObj = {
+        isRefundable: this.data.event.isRefundable,
+        SessionTimingConflict: this.data.event.SessionTimingConflict,
+        ShowRemainingTickets: this.data.event.ShowRemainingTickets,
+        ShowAttendeeForm: this.data.event.ShowAttendeeForm,
+        NotifyOrganizer: this.data.event.NotifyOrganizer,
+      }
+      return dataObj
+    },
+    updateSectionHeading() {
+      const dataObj = {
+        _sectionHeading: {
+          showimagegallery: this.registrationSetting.showimagegallery,
+          showeventreviews: this.registrationSetting.showeventreviews,
+        },
+      }
+      return dataObj
     },
   },
   watch: {
@@ -1299,6 +1363,11 @@ export default {
   },
 
   methods: {
+    goLive() {
+      window.open(
+        `/apps/event/live/${this.eventData.UniqLink}?e=${this.$route.params.id}`
+      )
+    },
     openPrintForm() {
       const myWindow = window.open('', '', 'width=900,height=900')
       this.attendees.map((ele) => {
@@ -1579,25 +1648,31 @@ export default {
     },
     fileUploadedBadgeLogo(data) {
       this.allow = true
-      this.formData.Logo = []
-      this.formData.Logo.push(data[0])
-      this.updateEventGallery(this.formData)
+      if (data.length > 0) {
+        this.formData.Logo = []
+        this.formData.Logo.push(data[0])
+        this.updateEventGallery(this.formData)
+      }
     },
     fileUploadedEventBanner(data) {
-      const imageUrl = `/svc/api/Attachments/download/${data[0]}`
       this.allow = true
-      this.formData.Images = []
-      this.formData.ImagesURL = []
-      this.formData.Images.push(data[0])
-      this.formData.ImagesURL.push(imageUrl)
+      if (data.length > 0) {
+        const imageUrl = `/svc/api/Attachments/download/${data[0]}`
+        this.formData.Images = []
+        this.formData.ImagesURL = []
+        this.formData.Images.push(data[0])
+        this.formData.ImagesURL.push(imageUrl)
 
-      this.updateEventGallery(this.formData)
+        this.updateEventGallery(this.formData)
+      }
     },
     fileUploadedOther(data) {
       this.allow = true
-      this.formData.Other = []
-      this.formData.Other.push(...data)
-      this.updateOtherImageGallery(this.formData.Other)
+      if (data.length > 0) {
+        this.formData.Other = []
+        this.formData.Other.push(...data)
+        this.updateOtherImageGallery(this.formData.Other)
+      }
     },
     async updateEventGallery(formData) {
       try {
@@ -1633,6 +1708,9 @@ export default {
     viewRegistrationLink() {
       const regUrl = `https://${nuxtconfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
       return regUrl
+    },
+    viewBitpodVirtualLink() {
+      return `${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}/${this.data.event.UniqLink}`
     },
     formatDate(date) {
       return date ? format(new Date(date), 'PPp') : ''
@@ -1706,6 +1784,49 @@ export default {
         `/apps/event/list/Event/integrations?event=${this.$route.params.id}`
       )
     },
+    updateRegistrationSetting(eventData) {
+      this.registrationSetting.showimagegallery = this.eventData._sectionHeading
+        ? this.eventData._sectionHeading.showimagegallery
+        : false
+      this.registrationSetting.showeventreviews = this.eventData._sectionHeading
+        ? this.eventData._sectionHeading.showeventreviews
+        : false
+    },
+    async updateRegistrationPage() {
+      const obj = this.updateSectionHeading
+      const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`
+      try {
+        const res = await this.$axios.$patch(URL, obj)
+        if (res) {
+        }
+      } catch (e) {
+        console.error(
+          `Error in apps/event/_id/index.vue while making a Patch call to Event model in method updateRegistrationPage context: EventId:-${this.$route.params.id} \n URL:- ${URL} \n Object:- ${obj}`,
+          e
+        )
+      }
+    },
+    async updateEvent() {
+      const obj = this.updateData
+      obj.id = this.$route.params.id
+      const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`
+      try {
+        const res = await this.$axios.$patch(URL, obj)
+        if (res) {
+        }
+      } catch (e) {
+        console.error(
+          `Error in apps/event/_id/index.vue while making a Patch call to Event model in method updateEvent context: EventId:-${this.$route.params.id} \n URL:- ${URL} \n Object:- ${obj}`,
+          e
+        )
+      }
+    },
+    updateReg: _.debounce(function () {
+      this.updateEvent()
+    }, 500),
+    updateReg1: _.debounce(function () {
+      this.updateRegistrationPage()
+    }, 500),
     routeToSeatmap() {
       this.$router.push(`/apps/seatmap/new`)
     },
@@ -1738,6 +1859,7 @@ export default {
         const eventSummary = data.Event.EventGetEventSummery
         this.eventData = event.length > 0 ? event[0] : {}
         this.badgeData = badge.length > 0 ? badge[0] : {}
+        this.updateRegistrationSetting(this.eventData)
 
         this.updateStepper()
         if (event[0].Images.length > 0) {

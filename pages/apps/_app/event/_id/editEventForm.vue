@@ -128,6 +128,16 @@
             </v-col>
             <v-col cols="12" class="pb-0">
               <v-text-field
+                v-if="formData.LocationType === 'Bitpod Virtual'"
+                label="Bitpod Virtual Link"
+                outlined
+                dense
+                disabled
+                :value="virtualLink"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" class="pb-0">
+              <v-text-field
                 v-if="formData.LocationType === 'Online Event'"
                 v-model="formData.WebinarLink"
                 label="Online Event Link*"
@@ -139,7 +149,7 @@
             </v-col>
             <v-col cols="12" class="pb-0">
               <v-textarea
-                v-if="formData.LocationType === 'Online Event'"
+                v-if="formData.LocationType === 'Online event'"
                 v-model="formData.JoiningInstruction"
                 label="Additional online event joining instructions,URL,phone,etc*"
                 outlined
@@ -150,7 +160,8 @@
             <div
               v-if="
                 formData.BusinessType !== 'Recurring' &&
-                formData.LocationType !== 'Online Event'
+                formData.LocationType !== 'Online Event' &&
+                formData.LocationType !== 'Bitpod Virtual'
               "
               style="display: contents;"
             >
@@ -250,6 +261,7 @@ import Timezone from '~/components/common/form/timezone'
 import { formatTimezoneDateFieldsData } from '~/utility/form.js'
 import { getApiUrl } from '~/utility'
 import CustomDate from '~/components/common/form/date.vue'
+import nuxtconfig from '~/nuxt.config'
 
 export default {
   components: {
@@ -317,6 +329,9 @@ export default {
   computed: {
     content() {
       return this.contents ? this.contents.Event : null
+    },
+    virtualLink() {
+      return `${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}/${this.formData.UniqLink}`
     },
     addressValidation() {
       if (this.addressLine === '') {

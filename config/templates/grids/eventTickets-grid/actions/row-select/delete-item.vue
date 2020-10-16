@@ -5,9 +5,9 @@
         <v-icon left class="fs-16">fa-trash</v-icon>Delete
       </v-btn>
     </v-col>
-    <v-snackbar v-model="snackbar" timeout="1000" top="true">
-      {{ snackbarText }}
-    </v-snackbar>
+    <v-snackbar v-model="snackbar" :timeout="timeout" top="true"
+      ><div class="text-center">Record Deleted Successfully</div></v-snackbar
+    >
   </div>
 </template>
 
@@ -38,7 +38,16 @@ export default {
       dialog: false,
       snackbar: false,
       snackbarText: '',
+      timeout: 1000,
+      test: 'querty',
     }
+  },
+  watch: {
+    snackbar(newVal) {
+      if (!newVal) {
+        this.refresh()
+      }
+    },
   },
 
   methods: {
@@ -47,15 +56,8 @@ export default {
       const check = confirm('Are you sure you want to delete this ticket?')
       try {
         if (check) {
-          const res = await this.$axios.$delete(
-            `${url}Tickets/${this.items[0].id}`
-          )
-          if (res) {
-            this.snackbar = true
-            this.snackbarText = 'Record deleted Successfully'
-
-            this.refresh()
-          }
+          await this.$axios.$delete(`${url}Tickets/${this.items[0].id}`)
+          this.snackbar = true
         }
       } catch (e) {
         console.log(

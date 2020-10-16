@@ -237,22 +237,6 @@
                       ></v-select>
                     </v-col>
                     <v-col cols="12"></v-col>
-                    <v-col cols="12" class="py-0">
-                      <v-checkbox
-                        v-model="sectionHeading.showimagegallery"
-                        label=" Show Image Gallery"
-                        height="20"
-                        class="ma-0"
-                      ></v-checkbox>
-                    </v-col>
-                    <v-col cols="12" class="pt-0">
-                      <v-checkbox
-                        v-model="sectionHeading.showeventreviews"
-                        label=" Show Event Reviews"
-                        height="20"
-                        class="ma-0"
-                      ></v-checkbox>
-                    </v-col>
                   </v-row>
                 </v-tab-item>
               </v-tabs-items>

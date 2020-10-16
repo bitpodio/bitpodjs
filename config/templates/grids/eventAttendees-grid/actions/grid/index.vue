@@ -9,7 +9,7 @@
       :content="content"
       :view-name="viewName"
       :items="items"
-      :on-update-item="onUpdateItem"
+      :on-new-item-save="onNewItemSave"
       :refresh="refresh"
       :context="context"
     />
@@ -50,7 +50,7 @@ export default {
       default: () => false,
       required: false,
     },
-    onUpdateItem: {
+    onNewItemSave: {
       type: Function,
       default: () => false,
       required: false,

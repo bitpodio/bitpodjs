@@ -12,6 +12,7 @@ query($filters: JSON) {
           TotalAmount
           TicketQuantity
           CompanyName
+          SessionId
           FullName
           LastName
           _Comment {
