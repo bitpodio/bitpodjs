@@ -297,7 +297,7 @@ body {
   text-align: center;
 }
 .positionAbsolute {
-  position: absolute;
+  position: absolute !important;
 }
 .positionRelative {
   position: relative;
