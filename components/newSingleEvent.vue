@@ -245,7 +245,10 @@
                   </v-col>
                 </v-col>
                 <v-col cols="12" sm="6" md="6" class="pb-0">
-                  <v-col v-if="isMap" class="pa-0">
+                  <v-col
+                    v-if="isMap && locations[0] && locations[0].lat"
+                    class="pa-0"
+                  >
                     <div class="flex"></div>
                     <div :key="`${locations[0].lat}-${locations[0].lng}`">
                       <GMap
@@ -666,7 +669,7 @@ export default {
   },
   computed: {
     eventLinkHint() {
-      return `${strings.EVENT_LINK_HINT}${this.eventData.UniqLink}`
+      return `${nuxtconfig.integrationLinks.EVENT_LINK_HINT}${this.eventData.UniqLink}`
     },
     gMapCenter() {
       return { lat: this.locations[0].lat, lng: this.locations[0].lng }
@@ -732,7 +735,7 @@ export default {
   },
   methods: {
     getBitpodVirtualLink() {
-      return `${strings.BITOPD_VIRTUAL_LINK}/${
+      return `${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}/${
         this.eventLinkHint.split('/')[4]
       }`
     },

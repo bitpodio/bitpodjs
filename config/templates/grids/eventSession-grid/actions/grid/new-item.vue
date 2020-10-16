@@ -318,6 +318,7 @@ import speaker from '~/config/apps/event/gql/eventSpeakers.gql'
 import event from '~/config/apps/event/gql/event.gql'
 import { getIdFromAtob } from '~/utility'
 import { getApiUrl } from '~/utility/index.js'
+import nuxtconfig from '~/nuxt.config'
 export default {
   components: {
     VueGoogleAutocomplete: () => import('vue-google-autocomplete'),
@@ -345,8 +346,9 @@ export default {
       speakerOptions: [],
       addresslineMessage: '',
       requiredRules: [required],
-      zoomDocumentLink: strings.ZOOM_DOCUMENT_LINK,
-      googleMeetDocumentLink: strings.GOOGLE_MEET_DOCUMENT_LINK,
+      zoomDocumentLink: nuxtconfig.integrationLinks.ZOOM_DOCUMENT_LINK,
+      googleMeetDocumentLink:
+        nuxtconfig.integrationLinks.GOOGLE_MEET_DOCUMENT_LINK,
       session: {},
       venueAddress: {
         AddressLine: '',
@@ -453,7 +455,7 @@ export default {
       )
         .split(' ')[0]
         .replace(/[^a-zA-Z ]/g, '')}-${randomStr}`
-      this.session.BitpodVirtualLink = `${strings.BITOPD_VIRTUAL_LINK}${roomName}`
+      this.session.BitpodVirtualLink = `${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}${roomName}`
     },
     sdateProps() {
       return {

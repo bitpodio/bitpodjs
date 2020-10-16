@@ -932,6 +932,7 @@ import { formatGQLResult } from '~/utility/gql.js'
 import { getIdFromAtob } from '~/utility'
 import CustomDate from '~/components/common/form/date.vue'
 import { required } from '~/utility/rules.js'
+import nuxtconfig from '~/nuxt.config'
 
 const ObjectID5 = (
   m = Math,
@@ -1059,8 +1060,9 @@ export default {
       ZipCode: '',
       SessionTicket: [],
       TicketName: '',
-      zoomDocumentLink: strings.ZOOM_DOCUMENT_LINK,
-      googleMeetDocumentLink: strings.GOOGLE_MEET_DOCUMENT_LINK,
+      zoomDocumentLink: nuxtconfig.integrationLinks.ZOOM_DOCUMENT_LINK,
+      googleMeetDocumentLink:
+        nuxtconfig.integrationLinks.GOOGLE_MEET_DOCUMENT_LINK,
       selectedSession: '',
       ScheduledType: '',
       RollingDays: '',
@@ -1269,7 +1271,7 @@ export default {
   },
   computed: {
     eventLinkHint() {
-      return `${strings.EVENT_LINK_HINT}${this.eventData.UniqLink}`
+      return `${nuxtconfig.integrationLinks.EVENT_LINK_HINT}${this.eventData.UniqLink}`
     },
     slotLookupOptions() {
       const items = this.slotOptions
@@ -2093,7 +2095,7 @@ export default {
                 5
               )}-${randomStr.substring(5, 8)}-${randomStr.substring(8, 11)}`
               return Object.assign(i, {
-                BitpodVirtualLink: `${strings.BITOPD_VIRTUAL_LINK}${roomName}`,
+                BitpodVirtualLink: `${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}${roomName}`,
               })
             })
             const sessionres = await this.$axios

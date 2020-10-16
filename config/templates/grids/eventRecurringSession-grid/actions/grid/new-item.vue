@@ -452,6 +452,7 @@ import location from '~/config/apps/event/gql/location.gql'
 import { getIdFromAtob } from '~/utility'
 import CustomDate from '~/components/common/form/date.vue'
 import { getApiUrl } from '~/utility/index.js'
+import nuxtconfig from '~/nuxt.config'
 export default {
   components: {
     CustomDate,
@@ -480,10 +481,11 @@ export default {
       addresslineMessage: '',
       requiredRules: [required],
       ScheduledType: 'Over a period of rolling days',
-      zoomDocumentLink: strings.ZOOM_DOCUMENT_LINK,
+      zoomDocumentLink: nuxtconfig.integrationLinks.ZOOM_DOCUMENT_LINK,
       startDateMessage: '',
       endDateMessage: '',
-      googleMeetDocumentLink: strings.GOOGLE_MEET_DOCUMENT_LINK,
+      googleMeetDocumentLink:
+        nuxtconfig.integrationLinks.GOOGLE_MEET_DOCUMENT_LINK,
       sessionResult: [],
       session: {
         MaxAllow: 5,
@@ -736,7 +738,7 @@ export default {
         5,
         8
       )}-${randomStr.substring(8, 11)}`
-      this.session.BitpodVirtualLink = `${strings.BITOPD_VIRTUAL_LINK}${roomName}`
+      this.session.BitpodVirtualLink = `${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}${roomName}`
     },
     setSelectedDays(selectedDays) {
       selectedDays.map((x) => {

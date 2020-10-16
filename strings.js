@@ -16,13 +16,6 @@ module.exports = Object.freeze({
     'Ticket end date should not be less than current date',
 
   // Recurring Event Messages
-  EVENT_LINK_HINT: 'https://bitpod-event.test.bitpod.io/e/',
-  ZOOM_DOCUMENT_LINK:
-    'https://bitpod-event.test.bitpod.io/admin/apps/HelpCenter/Integrations/Zoom/views/Zoom',
-  GOOGLE_MEET_DOCUMENT_LINK:
-    'https://bitpod-event.test.bitpod.io/admin/apps/HelpCenter/Integrations/Gmail/views/Gmail',
-  BITOPD_VIRTUAL_LINK: 'https://meet.bitpod.io',
-
   MAX_ALLOW_MSG: 'Max Allow should be greater than zero',
   DURATION_RANGE: 'Duration should be greater than zero',
   ROLLING_DAYS_RANGE: 'Rolling days should be greater than zero',

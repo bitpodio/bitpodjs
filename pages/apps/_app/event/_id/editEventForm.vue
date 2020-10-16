@@ -261,6 +261,7 @@ import Timezone from '~/components/common/form/timezone'
 import { formatTimezoneDateFieldsData } from '~/utility/form.js'
 import { getApiUrl } from '~/utility'
 import CustomDate from '~/components/common/form/date.vue'
+import nuxtconfig from '~/nuxt.config'
 
 export default {
   components: {
@@ -330,7 +331,7 @@ export default {
       return this.contents ? this.contents.Event : null
     },
     virtualLink() {
-      return `${strings.BITOPD_VIRTUAL_LINK}/${this.formData.UniqLink}`
+      return `${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}/${this.formData.UniqLink}`
     },
     addressValidation() {
       if (this.addressLine === '') {

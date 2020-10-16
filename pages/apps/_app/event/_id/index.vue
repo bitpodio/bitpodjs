@@ -1241,7 +1241,6 @@ import copy from '~/components/common/copy'
 import Notes from '~/components/common/notes'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin, getIdFromAtob, getApiUrl } from '~/utility'
-import strings from '~/strings'
 
 export default {
   components: {
@@ -1711,7 +1710,7 @@ export default {
       return regUrl
     },
     viewBitpodVirtualLink() {
-      return `${strings.BITOPD_VIRTUAL_LINK}/${this.data.event.UniqLink}`
+      return `${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}/${this.data.event.UniqLink}`
     },
     formatDate(date) {
       return date ? format(new Date(date), 'PPp') : ''
