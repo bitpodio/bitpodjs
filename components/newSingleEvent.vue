@@ -140,15 +140,6 @@
                       class="v-tickettype"
                       :on-change="changeLocation"
                     />
-                    <!-- <v-select
-                      value="Venue"
-                      :items="['Online Event', 'Venue']"
-                      label="Location Type"
-                      required
-                      dense=""
-                      outlined
-                      @change="changeLocation($event)"
-                    ></v-select> -->
                   </v-col>
                   <v-col v-if="isOnlineEvent" cols="12" class="pb-0">
                     <v-text-field
@@ -168,6 +159,15 @@
                       required
                       dense
                     ></v-textarea>
+                  </v-col>
+                  <v-col v-if="isBitpodVirtual" cols="12" class="pb-0">
+                    <v-text-field
+                      label="Bitpod Virtual Link"
+                      outlined
+                      dense
+                      disabled
+                      :value="getBitpodVirtualLink()"
+                    ></v-text-field>
                   </v-col>
 
                   <v-col v-if="isVenue" cols="12" class="pb-6 positionRelative">
@@ -236,7 +236,10 @@
                   </v-col>
                 </v-col>
                 <v-col cols="12" sm="6" md="6" class="pb-0">
-                  <v-col v-if="isMap" class="pa-0">
+                  <v-col
+                    v-if="isMap && locations[0] && locations[0].lat"
+                    class="pa-0"
+                  >
                     <div class="flex"></div>
                     <div :key="`${locations[0].lat}-${locations[0].lng}`">
                       <GMap
@@ -636,6 +639,7 @@ export default {
       drawer: true,
       isVenue: true,
       isOnlineEvent: false,
+      isBitpodVirtual: false,
 
       isInalidEventLink: false,
       uniqueLinkMessage: '',
@@ -656,7 +660,7 @@ export default {
   },
   computed: {
     eventLinkHint() {
-      return `${strings.EVENT_LINK_HINT}${this.eventData.UniqLink}`
+      return `${nuxtconfig.integrationLinks.EVENT_LINK_HINT}${this.eventData.UniqLink}`
     },
     gMapCenter() {
       return { lat: this.locations[0].lat, lng: this.locations[0].lng }
@@ -721,6 +725,11 @@ export default {
     },
   },
   methods: {
+    getBitpodVirtualLink() {
+      return `${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}/${
+        this.eventLinkHint.split('/')[4]
+      }`
+    },
     changeStartDate() {
       this.$refs.dateform && this.$refs.dateform.validate()
     },
@@ -944,7 +953,8 @@ export default {
       } else if (this.currentTab === 2) {
         if (
           (LocationType === 'Venue' && this.venueAddress.AddressLine !== '') ||
-          (LocationType === 'Online event' && WebinarLink !== '')
+          (LocationType === 'Online event' && WebinarLink !== '') ||
+          LocationType === 'Bitpod Virtual'
         ) {
           this.addresslineMessage = ''
           this.setNextTab()
@@ -1169,6 +1179,13 @@ export default {
         this.isVenue = false
         this.isOnlineEvent = true
         this.isMap = false
+        this.isBitpodVirtual = false
+      }
+      if (value === 'Bitpod Virtual') {
+        this.isVenue = false
+        this.isOnlineEvent = false
+        this.isMap = false
+        this.isBitpodVirtual = true
       }
     },
     addTicketRow() {

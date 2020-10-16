@@ -333,6 +333,7 @@ import { formatGQLResult } from '~/utility/gql.js'
 import { getApiUrl } from '~/utility/index.js'
 import CustomDate from '~/components/common/form/date.vue'
 import { getIdFromAtob } from '~/utility'
+import nuxtconfig from '~/nuxt.config'
 
 export default {
   components: {
@@ -476,7 +477,7 @@ export default {
       ]
     },
     eventLinkHint() {
-      return `${strings.EVENT_LINK_HINT}${this.UniqLink}`
+      return `${nuxtconfig.integrationLinks.EVENT_LINK_HINT}${this.UniqLink}`
     },
     gMapCenter() {
       return { lat: this.locations[0].lat, lng: this.locations[0].lng }
