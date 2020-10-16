@@ -24,6 +24,7 @@
         scrollable
         transition="dialog-bottom-transition"
         max-width="600px"
+        max-height="1100px"
       >
         <v-card>
           <v-card-title
