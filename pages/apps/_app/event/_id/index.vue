@@ -770,23 +770,41 @@
             label="Seatmap & Tickets"
             class="mt-0 ml-2 max-h24 positionAbsolute"
             height="20"
+            @change="updateSeatReservation"
           ></v-switch>
           <div v-if="switchSeat" class="d-flex justify-center">
-            <v-flex
-              class="d-flex flex-column justify-center ma-2 cursorPointer seat-actions pa-2"
-              @click="routeToSeatmap"
-            >
-              <v-icon class="fs-16">mdi-plus</v-icon>
-              <v-text class="text-center body-2 pt-1">New Seat Map</v-text>
-            </v-flex>
-            <v-flex
-              class="d-flex flex-column justify-center ma-2 cursorPointer seat-actions pa-2"
-            >
-              <v-icon class="fs-16">fa-grid</v-icon>
-              <v-text class="text-center body-2 pt-1"
-                >Select Existing Seat Map</v-text
+            <div v-if="layoutId && switchDailog" class="text-center">
+              <div>
+                <v-icon size="64" color="warning">fa-grid-alt</v-icon>
+              </div>
+              <div class="mt-1 d-inline-flex">
+                <div class="mr-2 mt-1 body-2">{{ layoutName }}</div>
+                <div class="mr-1" @click="popupDialog = true">
+                  <v-icon small>fa-trash</v-icon>
+                </div>
+                <div @click="onEditSeatMap">
+                  <v-icon small>fa-pencil</v-icon>
+                </div>
+              </div>
+            </div>
+            <div v-else-if="switchDailog" class="d-inline-flex">
+              <v-flex
+                class="d-flex flex-column justify-center ma-2 cursorPointer seat-actions pa-2"
+                @click="routeToSeatmap"
               >
-            </v-flex>
+                <v-icon class="fs-16">mdi-plus</v-icon>
+                <v-text class="text-center body-2 pt-1">New Seat Map</v-text>
+              </v-flex>
+              <v-flex
+                class="d-flex flex-column justify-center ma-2 cursorPointer seat-actions pa-2"
+                @click="selectExistingSeatMap = true"
+              >
+                <v-icon class="fs-16">fa-grid</v-icon>
+                <v-text class="text-center body-2 pt-1"
+                  >Select Existing Seat Map</v-text
+                >
+              </v-flex>
+            </div>
           </div>
           <div v-else>
             <Grid
@@ -1162,6 +1180,28 @@
           {{ snackbarText }}
         </div>
       </v-snackbar>
+      <v-dialog v-model="popupDialog" width="500">
+        <v-card>
+          <v-card-text class="pt-3">
+            are you sure you want to delete layout
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="primary" small dark dense @click="onDeleteSeatMap">
+              OK
+            </v-btn>
+            <v-btn
+              color="primary"
+              small
+              outlined
+              dense
+              @click="popupDialog = false"
+            >
+              Cancel
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-flex>
     <div v-if="eventForm">
       <editEventForm :event-form.sync="eventForm" />
@@ -1178,6 +1218,9 @@
     <makeCopy :key="isMakeCopy" :is-make-copy.sync="isMakeCopy" />
     <newBadgeForm :new-badge.sync="newBadge" />
     <editBadgeForm :id="badgeData.id" :edit-badge-form.sync="editBadgeForm" />
+    <selectExistingSeatMap
+      :select-existing-seat-map.sync="selectExistingSeatMap"
+    />
   </v-flex>
 </template>
 <script>
@@ -1186,6 +1229,7 @@ import format from 'date-fns/format'
 import { utcToZonedTime } from 'date-fns-tz'
 import _ from 'lodash'
 import editSeoForm from './editSeoForm.vue'
+import selectExistingSeatMap from './selectExistingSeatMap.vue'
 import editEventForm from './editEventForm.vue'
 import editEventSetting from './editEventSetting.vue'
 import editSiteSetting from './editSiteSetting.vue'
@@ -1210,6 +1254,7 @@ export default {
     editEventForm,
     editEventSetting,
     editSiteSetting,
+    selectExistingSeatMap,
     newBadgeForm,
     editBadgeForm,
     File,
@@ -1227,6 +1272,7 @@ export default {
     return {
       loading: 0,
       dialog: false,
+      selectExistingSeatMap: false,
       editeventform: false,
       editseoform: false,
       eventForm: false,
@@ -1282,6 +1328,10 @@ export default {
       hover: {},
       settingData: {},
       allow: true,
+      layoutId: '',
+      switchDailog: false,
+      layoutName: '',
+      popupDialog: false,
     }
   },
   computed: {
@@ -1743,6 +1793,13 @@ export default {
       this.registrationSetting.showeventreviews = this.eventData._sectionHeading
         ? this.eventData._sectionHeading.showeventreviews
         : false
+      this.layoutId = this.eventData ? this.eventData.LayoutId : ''
+      this.switchDailog = this.eventData
+        ? this.eventData.SeatReservation
+        : false
+      if (this.layoutId || this.switchDailog) {
+        this.switchSeat = true
+      }
     },
     async updateRegistrationPage() {
       const obj = this.updateSectionHeading
@@ -1780,7 +1837,62 @@ export default {
       this.updateRegistrationPage()
     }, 500),
     routeToSeatmap() {
-      this.$router.push(`/apps/seatmap/new`)
+      this.$router.push(`/apps/seatmap/new?event=${this.$route.params.id}`)
+    },
+    async updateSeatReservation() {
+      const seatReservation = this.switchSeat
+      const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`
+      const obj = { SeatReservation: seatReservation }
+      console.log('Obect', obj)
+      try {
+        const res = await this.$axios.$patch(URL, obj)
+        if (res) {
+          this.refresh()
+        }
+      } catch (e) {
+        console.error(
+          `Error in apps/event/_id/index.vue while making a Patch call to Event model in method updateEvent context: EventId:-${this.$route.params.id} \n URL:- ${URL} \n Object:- ${obj}`,
+          e
+        )
+      }
+    },
+    async getSeatMap(eventData) {
+      const layoutId = this.eventData.LayoutId
+      if (layoutId) {
+        const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}SeatMaps/${layoutId}`
+        try {
+          const res = await this.$axios.$get(URL)
+          if (res) {
+            console.log('res', res)
+            this.layoutName = res.Name
+          }
+        } catch (e) {
+          console.error(
+            `Error in apps/event/_id/index.vue while making a Patch call to Event model in method updateEvent context: EventId:-${this.$route.params.id} \n URL:- ${URL} `,
+            e
+          )
+        }
+      }
+    },
+    async onDeleteSeatMap() {
+      const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`
+      try {
+        const res = await this.$axios.$patch(URL, { LayoutId: '' })
+        if (res) {
+          this.popupDialog = false
+          this.snackbarText = 'Seat Layout deleted successfully'
+          this.snackbar = true
+          this.refresh()
+        }
+      } catch (e) {
+        console.error(
+          `Error in apps/event/_id/index.vue while making a Patch call to Event model in method updateEvent context: EventId:-${this.$route.params.id} \n URL:- ${URL} `,
+          e
+        )
+      }
+    },
+    onEditSeatMap() {
+      this.$router.push(`/apps/seatmap/${this.layoutId}`)
     },
   },
   apollo: {
@@ -1812,6 +1924,7 @@ export default {
         this.eventData = event.length > 0 ? event[0] : {}
         this.badgeData = badge.length > 0 ? badge[0] : {}
         this.updateRegistrationSetting(this.eventData)
+        this.getSeatMap(this.eventData)
 
         this.updateStepper()
         if (event[0].Images.length > 0) {
@@ -1886,6 +1999,7 @@ export default {
 .seat-actions {
   border: 1px dashed #ccc;
   max-width: 240px;
+  min-width: 240px;
 }
 .max-h24 {
   max-height: 24px;
