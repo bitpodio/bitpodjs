@@ -30,7 +30,7 @@
             class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex justify-center font-weight-regular"
           >
             <h4
-              class="black--text justify-center font-weight-regular pt-10 pb-9 ml-5"
+              class="black--text justify-center font-weight-regular pt-10 ml-5"
             >
               <i
                 class="fa fa-checkmark-circle tick-check icon-tick pr-2"
@@ -56,7 +56,14 @@
           <v-card-actions
             class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10 ml-0 justify-center"
           >
-            <v-btn text small v-bind="attrs" v-on="on" @click="openPrintForm">
+            <v-btn
+              v-if="noBadgeFound"
+              text
+              small
+              v-bind="attrs"
+              v-on="on"
+              @click="openPrintForm"
+            >
               <v-icon left>mdi-printer</v-icon>Print Badges
             </v-btn>
             <v-btn text small v-bind="attrs" v-on="on" @click="onClose">
@@ -110,6 +117,7 @@ export default {
       snackbar: false,
       snackbarText: '',
       timeout: 2000,
+      noBadgeFound: true,
     }
   },
   methods: {
@@ -166,6 +174,7 @@ export default {
         return str
       } else {
         const template = '<p>No Badge Found'
+        this.noBadgeFound = false
         return template
       }
     },
