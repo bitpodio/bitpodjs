@@ -799,18 +799,41 @@
           ></v-switch>
           <div v-if="switchSeat" class="d-flex justify-center">
             <div v-if="layoutId && switchDailog" class="text-center">
-              <div>
-                <v-icon size="64" color="warning">fa-grid-alt</v-icon>
-              </div>
-              <div class="mt-1 d-inline-flex">
-                <div class="mr-2 mt-1 body-2">{{ layoutName }}</div>
-                <div class="mr-1" @click="popupDialog = true">
-                  <v-icon small>fa-trash</v-icon>
+              <v-hover v-slot:default="{ hover }">
+                <div>
+                  <v-card
+                    :elevation="hover ? 1 : 0"
+                    class="ma-3 ml-0 mt-0 seatMaptile"
+                    height="110"
+                    max-width="110"
+                    width="110"
+                  >
+                    <v-card-text>
+                      <div>
+                        <v-icon size="64" color="warning">fa-grid</v-icon>
+                      </div>
+                    </v-card-text>
+                    <v-flex
+                      v-if="hover"
+                      class="d-flex justify-center text-center"
+                    >
+                      <v-card-action class="mt-n4">
+                        <div class="d-flex justify-center text-center pb-5">
+                          <div class="mr-1" @click="onEditSeatMap">
+                            <v-icon small color="black">fa-pencil</v-icon>
+                          </div>
+                          <div @click="popupDialog = true">
+                            <v-icon small color="black">fa-trash</v-icon>
+                          </div>
+                        </div>
+                      </v-card-action>
+                    </v-flex>
+                  </v-card>
+                  <div class="text-truncate text-capitalize text-center pr-4">
+                    {{ layoutName }}
+                  </div>
                 </div>
-                <div @click="onEditSeatMap">
-                  <v-icon small>fa-pencil</v-icon>
-                </div>
-              </div>
+              </v-hover>
             </div>
             <div v-else-if="switchDailog" class="d-inline-flex">
               <v-flex
@@ -1159,14 +1182,15 @@
             @change="updateReg"
           ></v-checkbox>
         </v-flex>
-        <v-flex class="d-block text-truncate">
+        <v-flex class="mt-2">
           <v-checkbox
             v-model="data.event.NotifyOrganizer"
             dense
             debounce="500"
             height="20"
             class="ma-0 pa-0"
-            label="Notify organizer when someone registers"
+            label="Notify  organizer when someone 
+            registers"
             color="green"
             @change="updateReg"
           ></v-checkbox>
@@ -1845,7 +1869,7 @@ export default {
       this.switchDailog = this.eventData
         ? this.eventData.SeatReservation
         : false
-      if (this.layoutId || this.switchDailog) {
+      if (this.layoutId && this.switchDailog) {
         this.switchSeat = true
       }
     },
@@ -1891,7 +1915,6 @@ export default {
       const seatReservation = this.switchSeat
       const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`
       const obj = { SeatReservation: seatReservation }
-      console.log('Obect', obj)
       try {
         const res = await this.$axios.$patch(URL, obj)
         if (res) {
@@ -1911,12 +1934,11 @@ export default {
         try {
           const res = await this.$axios.$get(URL)
           if (res) {
-            console.log('res', res)
             this.layoutName = res.Name
           }
         } catch (e) {
           console.error(
-            `Error in apps/event/_id/index.vue while making a Patch call to Event model in method updateEvent context: EventId:-${this.$route.params.id} \n URL:- ${URL} `,
+            `Error in apps/event/_id/index.vue while making a get call to SeatMap model in method getSeatMap context: LayoutId:-${layoutId} \n URL:- ${URL} `,
             e
           )
         }

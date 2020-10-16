@@ -23,7 +23,7 @@
             </div>
           </v-card-title>
           <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
-            <v-card flat>
+            <v-card flat class="pl-2">
               <v-row>
                 <v-col cols="12" class="mb-2">
                   Select an existing seat map.
@@ -117,7 +117,6 @@ export default {
   },
   methods: {
     close() {
-      // this.selectExistingSeatMap = false
       this.$emit('update:selectExistingSeatMap', false)
     },
     async getSeatMaps() {
@@ -131,7 +130,7 @@ export default {
         }
       } catch (e) {
         console.error(
-          `Error in apps/event/_id/index.vue while making a Patch call to Event model in method updateEvent context: \n URL:- ${URL} `,
+          `Error in apps/event/_id/index.vue while making a Get call to SeatMap model in method getSeatMaps context: \n URL:- ${URL} `,
           e
         )
       }
@@ -144,15 +143,14 @@ export default {
       try {
         const res = await this.$axios.$patch(URL, obj)
         if (res) {
-          console.log('res', res)
+          this.$refs.form.$parent.$parent.refresh()
           this.close()
           this.snackbar = true
           this.snackbarText = 'Seat Layout added successfully'
-          this.$refs.form.$parent.$parent.refresh()
         }
       } catch (e) {
         console.error(
-          `Error in apps/event/_id/index.vue while making a Patch call to Event model in method updateEvent context: \n URL:- ${URL} `,
+          `Error in apps/event/_id/index.vue while making a Patch call to Event model in method updateLayoutId context: \n URL:- ${URL} \n Object:- ${obj} `,
           e
         )
       }
