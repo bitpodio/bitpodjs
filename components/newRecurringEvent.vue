@@ -1523,7 +1523,7 @@ export default {
         }
         if (this.sessions[index].LocationType === 'In-person meeting') {
           this.isPersonMeeting = true
-          this.$refs.personmeetingform.reset()
+          this.$refs.personmeetingform && this.$refs.personmeetingform.reset()
           this.isZoom = false
           this.isGoogleMeet = false
         }
@@ -1675,7 +1675,11 @@ export default {
     },
     selectSessionTickets(index) {
       this.selectedSession = index
-      this.SessionTicket = []
+      this.SessionTicket =
+        this.sessions[index].SessionTicket &&
+        this.sessions[index].SessionTicket.length
+          ? this.sessions[index].SessionTicket
+          : []
       this.isSessionTicket = true
     },
     setSessionTicket() {
