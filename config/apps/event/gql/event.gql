@@ -41,6 +41,7 @@ query($filters: JSON, $badgeFilter: JSON, $eventId: String) {
           SeatReservation
           SessionTimingConflict
           ShowRemainingTickets
+          printBadgeOnCheckIn
           StartDate
           Status
           Logo
