@@ -81,7 +81,9 @@ export default {
                 if (res) {
                   this.snackbarText = 'Seatmap Updated Successfully'
                   this.snackbar = true
-                  this.updateEvent(eventData, res)
+                  if (this.$route.params.id === 'new') {
+                    this.updateEvent(eventData, res)
+                  }
                 }
                 this.snackbarText = 'Seatmap Updated Successfully'
                 this.snackbar = true
@@ -94,6 +96,10 @@ export default {
             }
             break
           case 'close':
+            // eslint-disable-next-line no-lone-blocks
+            {
+              this.$router.back()
+            }
             break
         }
       }
@@ -134,11 +140,20 @@ export default {
     },
     async updateEvent(eventData, response) {
       const layoutId = response.id
-      const obj = {
-        LayoutId: layoutId,
-        SeatReservation: true,
+      let obj = {}
+      let URL = ''
+      if (this.$route.query.event) {
+        obj = {
+          LayoutId: layoutId,
+          SeatReservation: true,
+        }
+        URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.query.event}`
+      } else {
+        obj = {
+          LayoutId: layoutId,
+        }
+        URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Locations/${this.$route.query.location}`
       }
-      const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.query.event}`
       try {
         const res = await this.$axios.$patch(URL, obj)
         if (res) {
