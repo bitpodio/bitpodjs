@@ -2099,7 +2099,7 @@ export default {
                 5
               )}-${randomStr.substring(5, 8)}-${randomStr.substring(8, 11)}`
               return Object.assign(i, {
-                BitpodVirtualLink: `${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}${roomName}`,
+                BitpodVirtualLink: `https://${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}${roomName}`,
               })
             })
             const sessionres = await this.$axios

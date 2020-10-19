@@ -1,7 +1,17 @@
 <template>
-  <a v-if="linkReady" :href="route()" target="_blank">
-    <v-btn x-small color="primary">start</v-btn>
-  </a>
+  <v-btn
+    v-if="linkReady"
+    tile
+    color="success"
+    small
+    class="rounded"
+    @click="goLive"
+  >
+    Join Session
+    <v-icon right>
+      mdi-video
+    </v-icon>
+  </v-btn>
 </template>
 
 <script>
@@ -57,16 +67,18 @@ export default {
     })
   },
   methods: {
-    route() {
+    goLive() {
+      let roomName
       if (this.type === 'Group') {
-        return `/apps/event/live/${this.roomname}?e=${this.$route.params.id}`
+        roomName = this.roomname
+      } else {
+        roomName = `${
+          this.item.FirstName.trim().replace(/[^a-zA-Z ]/g, '') || 'unknown'
+        }-${this.item.LastName.trim().replace(/[^a-zA-Z ]/g, '') || 'user'}-${
+          this.item.RegistrationId
+        }`.toLowerCase()
       }
-      const privateRoomName = `${
-        this.item.FirstName.trim().replace(/[^a-zA-Z ]/g, '') || 'unknown'
-      }-${this.item.LastName.trim().replace(/[^a-zA-Z ]/g, '') || 'user'}`
-      return `/apps/event/live/${privateRoomName.toLowerCase()}-${this.item.RegistrationId.toLowerCase()}?e=${
-        this.$route.params.id
-      }`
+      window.open(`apps/event/live/${roomName}?e=${this.$route.params.id}`)
     },
   },
 }

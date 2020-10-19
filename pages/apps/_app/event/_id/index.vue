@@ -8,6 +8,14 @@
           <div class="text-h4 text-capitalize">{{ data.event.Title }}</div>
           <v-spacer></v-spacer>
           <div class="mr-2">
+            <v-btn tile color="success" class="rounded" @click="goLive">
+              Join Event
+              <v-icon right class="fs-22">
+                mdi-video
+              </v-icon>
+            </v-btn>
+          </div>
+          <div class="mr-2">
             <v-btn depressed color="primary" @click="viewRegistration"
               >View</v-btn
             >
@@ -55,17 +63,6 @@
                 </v-list-item-icon>
                 <v-list-item-content>
                   <v-list-item-title>Integrations</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item
-                v-if="eventData.LocationType === 'Bitpod Virtual'"
-                @click="goLive"
-              >
-                <v-list-item-icon class="mr-2">
-                  <i class="fa fa-video mt-1" aria-hidden="true"></i>
-                </v-list-item-icon>
-                <v-list-item-content>
-                  <v-list-item-title>Start Session</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
             </v-list>
@@ -795,23 +792,64 @@
             label="Seatmap & Tickets"
             class="mt-0 ml-2 max-h24 positionAbsolute"
             height="20"
+            @change="updateSeatReservation"
           ></v-switch>
           <div v-if="switchSeat" class="d-flex justify-center">
-            <v-flex
-              class="d-flex flex-column justify-center ma-2 cursorPointer seat-actions pa-2"
-              @click="routeToSeatmap"
-            >
-              <v-icon class="fs-16">mdi-plus</v-icon>
-              <v-text class="text-center body-2 pt-1">New Seat Map</v-text>
-            </v-flex>
-            <v-flex
-              class="d-flex flex-column justify-center ma-2 cursorPointer seat-actions pa-2"
-            >
-              <v-icon class="fs-16">fa-grid</v-icon>
-              <v-text class="text-center body-2 pt-1"
-                >Select Existing Seat Map</v-text
+            <div v-if="layoutId && switchDailog" class="text-center">
+              <v-hover v-slot:default="{ hover }">
+                <div>
+                  <v-card
+                    :elevation="hover ? 1 : 0"
+                    class="ma-3 ml-0 mt-0 seatMaptile"
+                    height="110"
+                    max-width="110"
+                    width="110"
+                  >
+                    <v-card-text>
+                      <div>
+                        <v-icon size="64" color="warning">fa-grid</v-icon>
+                      </div>
+                    </v-card-text>
+                    <v-flex
+                      v-if="hover"
+                      class="d-flex justify-center text-center"
+                    >
+                      <v-card-action class="mt-n4">
+                        <div class="d-flex justify-center text-center pb-5">
+                          <div class="mr-1" @click="onEditSeatMap">
+                            <v-icon small color="black">fa-pencil</v-icon>
+                          </div>
+                          <div @click="popupDialog = true">
+                            <v-icon small color="black">fa-trash</v-icon>
+                          </div>
+                        </div>
+                      </v-card-action>
+                    </v-flex>
+                  </v-card>
+                  <div class="text-truncate text-capitalize text-center pr-4">
+                    {{ layoutName }}
+                  </div>
+                </div>
+              </v-hover>
+            </div>
+            <div v-else-if="switchDailog" class="d-inline-flex">
+              <v-flex
+                class="d-flex flex-column justify-center ma-2 cursorPointer seat-actions pa-2"
+                @click="routeToSeatmap"
               >
-            </v-flex>
+                <v-icon class="fs-16">mdi-plus</v-icon>
+                <v-text class="text-center body-2 pt-1">New Seat Map</v-text>
+              </v-flex>
+              <v-flex
+                class="d-flex flex-column justify-center ma-2 cursorPointer seat-actions pa-2"
+                @click="selectExistingSeatMap = true"
+              >
+                <v-icon class="fs-16">fa-grid</v-icon>
+                <v-text class="text-center body-2 pt-1"
+                  >Select Existing Seat Map</v-text
+                >
+              </v-flex>
+            </div>
           </div>
           <div v-else>
             <Grid
@@ -1141,14 +1179,27 @@
             @change="updateReg"
           ></v-checkbox>
         </v-flex>
-        <v-flex class="d-block text-truncate">
+        <v-flex class="mt-2">
           <v-checkbox
             v-model="data.event.NotifyOrganizer"
             dense
             debounce="500"
             height="20"
             class="ma-0 pa-0"
-            label="Notify organizer when someone registers"
+            label="Notify  organizer when someone 
+            registers"
+            color="green"
+            @change="updateReg"
+          ></v-checkbox>
+        </v-flex>
+        <v-flex class="d-block text-truncate">
+          <v-checkbox
+            v-model="data.event.printBadgeOnCheckIn"
+            dense
+            debounce="500"
+            height="20"
+            class="ma-0 pa-0"
+            label="Ask to print badge after check in"
             color="green"
             @change="updateReg"
           ></v-checkbox>
@@ -1200,6 +1251,28 @@
           {{ snackbarText }}
         </div>
       </v-snackbar>
+      <v-dialog v-model="popupDialog" width="500">
+        <v-card>
+          <v-card-text class="pt-3">
+            are you sure you want to delete layout
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="primary" small dark dense @click="onDeleteSeatMap">
+              OK
+            </v-btn>
+            <v-btn
+              color="primary"
+              small
+              outlined
+              dense
+              @click="popupDialog = false"
+            >
+              Cancel
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-flex>
     <div v-if="eventForm">
       <editEventForm :event-form.sync="eventForm" />
@@ -1216,6 +1289,9 @@
     <makeCopy :key="isMakeCopy" :is-make-copy.sync="isMakeCopy" />
     <newBadgeForm :new-badge.sync="newBadge" />
     <editBadgeForm :id="badgeData.id" :edit-badge-form.sync="editBadgeForm" />
+    <selectExistingSeatMap
+      :select-existing-seat-map.sync="selectExistingSeatMap"
+    />
   </v-flex>
 </template>
 <script>
@@ -1224,6 +1300,7 @@ import format from 'date-fns/format'
 import { utcToZonedTime } from 'date-fns-tz'
 import _ from 'lodash'
 import editSeoForm from './editSeoForm.vue'
+import selectExistingSeatMap from './selectExistingSeatMap.vue'
 import editEventForm from './editEventForm.vue'
 import editEventSetting from './editEventSetting.vue'
 import editSiteSetting from './editSiteSetting.vue'
@@ -1249,6 +1326,7 @@ export default {
     editEventForm,
     editEventSetting,
     editSiteSetting,
+    selectExistingSeatMap,
     newBadgeForm,
     editBadgeForm,
     File,
@@ -1267,6 +1345,7 @@ export default {
     return {
       loading: 0,
       dialog: false,
+      selectExistingSeatMap: false,
       editeventform: false,
       editseoform: false,
       eventForm: false,
@@ -1322,6 +1401,10 @@ export default {
       hover: {},
       settingData: {},
       allow: true,
+      layoutId: '',
+      switchDailog: false,
+      layoutName: '',
+      popupDialog: false,
     }
   },
   computed: {
@@ -1338,6 +1421,7 @@ export default {
         ShowRemainingTickets: this.data.event.ShowRemainingTickets,
         ShowAttendeeForm: this.data.event.ShowAttendeeForm,
         NotifyOrganizer: this.data.event.NotifyOrganizer,
+        printBadgeOnCheckIn: this.data.event.printBadgeOnCheckIn,
       }
       return dataObj
     },
@@ -1365,7 +1449,7 @@ export default {
   methods: {
     goLive() {
       window.open(
-        `/apps/event/live/${this.eventData.UniqLink}?e=${this.$route.params.id}`
+        `apps/event/live/${this.eventData.UniqLink}?e=${this.$route.params.id}`
       )
     },
     openPrintForm() {
@@ -1710,7 +1794,7 @@ export default {
       return regUrl
     },
     viewBitpodVirtualLink() {
-      return `${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}/${this.data.event.UniqLink}`
+      return `https://${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}/${this.data.event.UniqLink}`
     },
     formatDate(date) {
       return date ? format(new Date(date), 'PPp') : ''
@@ -1781,7 +1865,7 @@ export default {
     },
     redirectIntegration() {
       this.$router.push(
-        `/apps/event/list/Event/integrations?event=${this.$route.params.id}`
+        `/apps/event/list/EventIntegration/integrations?event=${this.$route.params.id}`
       )
     },
     updateRegistrationSetting(eventData) {
@@ -1791,6 +1875,13 @@ export default {
       this.registrationSetting.showeventreviews = this.eventData._sectionHeading
         ? this.eventData._sectionHeading.showeventreviews
         : false
+      this.layoutId = this.eventData ? this.eventData.LayoutId : ''
+      this.switchDailog = this.eventData
+        ? this.eventData.SeatReservation
+        : false
+      if (this.layoutId && this.switchDailog) {
+        this.switchSeat = true
+      }
     },
     async updateRegistrationPage() {
       const obj = this.updateSectionHeading
@@ -1828,7 +1919,60 @@ export default {
       this.updateRegistrationPage()
     }, 500),
     routeToSeatmap() {
-      this.$router.push(`/apps/seatmap/new`)
+      this.$router.push(`/apps/seatmap/new?event=${this.$route.params.id}`)
+    },
+    async updateSeatReservation() {
+      const seatReservation = this.switchSeat
+      const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`
+      const obj = { SeatReservation: seatReservation }
+      try {
+        const res = await this.$axios.$patch(URL, obj)
+        if (res) {
+          this.refresh()
+        }
+      } catch (e) {
+        console.error(
+          `Error in apps/event/_id/index.vue while making a Patch call to Event model in method updateEvent context: EventId:-${this.$route.params.id} \n URL:- ${URL} \n Object:- ${obj}`,
+          e
+        )
+      }
+    },
+    async getSeatMap(eventData) {
+      const layoutId = this.eventData.LayoutId
+      if (layoutId) {
+        const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}SeatMaps/${layoutId}`
+        try {
+          const res = await this.$axios.$get(URL)
+          if (res) {
+            this.layoutName = res.Name
+          }
+        } catch (e) {
+          console.error(
+            `Error in apps/event/_id/index.vue while making a get call to SeatMap model in method getSeatMap context: LayoutId:-${layoutId} \n URL:- ${URL} `,
+            e
+          )
+        }
+      }
+    },
+    async onDeleteSeatMap() {
+      const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`
+      try {
+        const res = await this.$axios.$patch(URL, { LayoutId: '' })
+        if (res) {
+          this.popupDialog = false
+          this.snackbarText = 'Seat Layout deleted successfully'
+          this.snackbar = true
+          this.refresh()
+        }
+      } catch (e) {
+        console.error(
+          `Error in apps/event/_id/index.vue while making a Patch call to Event model in method updateEvent context: EventId:-${this.$route.params.id} \n URL:- ${URL} `,
+          e
+        )
+      }
+    },
+    onEditSeatMap() {
+      this.$router.push(`/apps/seatmap/${this.layoutId}`)
     },
   },
   apollo: {
@@ -1860,6 +2004,7 @@ export default {
         this.eventData = event.length > 0 ? event[0] : {}
         this.badgeData = badge.length > 0 ? badge[0] : {}
         this.updateRegistrationSetting(this.eventData)
+        this.getSeatMap(this.eventData)
 
         this.updateStepper()
         if (event[0].Images.length > 0) {
@@ -1934,6 +2079,7 @@ export default {
 .seat-actions {
   border: 1px dashed #ccc;
   max-width: 240px;
+  min-width: 240px;
 }
 .max-h24 {
   max-height: 24px;

@@ -471,7 +471,12 @@
           <v-spacer></v-spacer>
         </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="eventAttendees" :content="content" class="mt-n12" />
+        <Grid
+          view-name="eventRecurringAttendees"
+          :content="content"
+          :context="data"
+          class="mt-n12"
+        />
       </div>
       <div
         v-if="content"
@@ -785,13 +790,14 @@
             @change="updateReg()"
           ></v-checkbox>
         </v-flex>
-        <v-flex class="d-block text-truncate">
+        <v-flex class="mt-2">
           <v-checkbox
             v-model="data.event.NotifyOrganizer"
             dense
             height="20"
             class="ma-0 pa-0"
-            label="Notify organizer when someone registers"
+            label="Notify organizer when someone 
+            registers"
             color="green"
             @change="updateReg()"
           ></v-checkbox>
@@ -1037,7 +1043,7 @@ export default {
     },
     redirectIntegration() {
       this.$router.push(
-        `/apps/event/list/Event/integrations?event=${this.$route.params.id}`
+        `/apps/event/list/EventIntegration/integrations?event=${this.$route.params.id}`
       )
     },
     async updateEvent() {

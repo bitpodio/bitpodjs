@@ -8,6 +8,7 @@
 </template>
 <script>
 import { getApiUrl, getCurrentOrigin } from '~/utility'
+import nuxtconfig from '~/nuxt.config'
 const layoutWithType = {
   shapes: [],
   groups: {
@@ -73,10 +74,15 @@ export default {
                 this.$route.params.id === 'new' ? '' : this.$route.params.id
               layout.Name = layout.layoutProperties.seatMapName || 'untitled'
               try {
-                await this.$axios.$patch(
+                const res = await this.$axios.$patch(
                   `${url}SeatMaps/${seatmapId || ''}`,
                   layout
                 )
+                if (res) {
+                  this.snackbarText = 'Seatmap Updated Successfully'
+                  this.snackbar = true
+                  this.updateEvent(eventData, res)
+                }
                 this.snackbarText = 'Seatmap Updated Successfully'
                 this.snackbar = true
               } catch (e) {
@@ -122,6 +128,24 @@ export default {
       } catch (e) {
         console.error(
           `Error while fetching seatmap with ${this.$route.params.id}`,
+          e
+        )
+      }
+    },
+    async updateEvent(eventData, response) {
+      const layoutId = response.id
+      const obj = {
+        LayoutId: layoutId,
+        SeatReservation: true,
+      }
+      const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.query.event}`
+      try {
+        const res = await this.$axios.$patch(URL, obj)
+        if (res) {
+        }
+      } catch (e) {
+        console.error(
+          `Error in apps/event/_id/index.vue while making a Patch call to Event model in method updateEvent context: EventId:-${this.$route.params.id} \n URL:- ${URL} \n Object:- ${obj}`,
           e
         )
       }
