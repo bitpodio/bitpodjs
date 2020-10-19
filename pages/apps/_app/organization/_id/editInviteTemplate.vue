@@ -26,7 +26,7 @@
             <v-row>
               <v-col cols="12" class="pb-0">
                 <RichText
-                  v-model="selected.Body"
+                  v-model="body"
                   class="pl-0"
                   :is-edit-template="true"
                   :is-general="template === 'General Template'"
@@ -63,14 +63,22 @@ export default {
       allowSpaces: false,
       type: Object,
     },
+    refresh: {
+      type: Function,
+      required: false,
+      default: null,
+    },
   },
   data() {
+    const body = this.selected.Body ? this.selected.Body : ''
     return {
+      body,
       valid: false,
     }
   },
   methods: {
     onClose() {
+      this.body = this.selected.Body ? this.selected.Body : ''
       this.$emit('update:editTemplate', false)
     },
 
@@ -82,7 +90,7 @@ export default {
       try {
         res = await this.$axios.$patch(
           `${url}MarketingTemplates/${this.selected.id}`,
-          { Body: this.selected.Body }
+          { Body: this.body }
         )
       } catch (e) {
         this.isSaveButtonDisabled = false
@@ -92,6 +100,7 @@ export default {
         )
       }
       if (res) {
+        this.$parent.refresh()
         this.onClose()
       }
     },

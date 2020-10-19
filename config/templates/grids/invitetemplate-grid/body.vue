@@ -255,6 +255,7 @@
       <editInviteTemplate
         :edit-template.sync="editTemplate"
         :selected="selected"
+        :refresh="refresh"
       />
     </div>
     <div v-if="editMetadata">
@@ -293,7 +294,14 @@ export default {
     editInviteTemplate,
     editInviteMetadata,
   },
-  props: { items: { type: Array, default: () => [] } },
+  props: {
+    items: { type: Array, default: () => [] },
+    refresh: {
+      type: Function,
+      required: false,
+      default: null,
+    },
+  },
   data() {
     return {
       editTemplate: false,
@@ -319,7 +327,7 @@ export default {
           )
         }
         if (res) {
-          console.log(res)
+          this.refresh()
         }
       }
     },

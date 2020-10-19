@@ -60,7 +60,7 @@
                 <v-col cols="12" sm="6" md="12">
                   <File
                     :field="fileField"
-                    :value="[...selected.Documents]"
+                    :value="[...selected.Documents].filter((i) => i)"
                     label="Upload"
                     @input="getAttachmentId"
                   />
@@ -167,9 +167,6 @@ export default {
     onClose() {
       this.$emit('update:editMetadata', false)
     },
-    refresh() {
-      this.$refs.form.$parent.$parent.refresh()
-    },
     async onSave() {
       this.isSaveButtonDisabled = true
       const url = getApiUrl()
@@ -189,7 +186,6 @@ export default {
       }
       if (res) {
         this.onClose()
-        // this.refresh()
       }
     },
   },

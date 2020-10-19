@@ -49,14 +49,21 @@
               </v-btn>
             </template>
 
-            <v-list>
+            <v-list dense>
               <v-list-item
                 @click="
                   editMetadata = true
                   selected = item
                 "
               >
-                <v-list-item-title>Edit Metadata</v-list-item-title>
+                <v-list-item-icon class="mr-2">
+                  <i class="fa fa-pencil-square-o mt-1" aria-hidden="true"></i>
+                </v-list-item-icon>
+                <v-list-item-content
+                  ><v-list-item-title
+                    >Edit Metadata</v-list-item-title
+                  ></v-list-item-content
+                >
               </v-list-item>
               <v-list-item
                 @click="
@@ -64,7 +71,14 @@
                   selected = item
                 "
               >
-                <v-list-item-title>Edit Template</v-list-item-title>
+                <v-list-item-icon class="mr-2">
+                  <i class="fa fa-pencil-square-o mt-1" aria-hidden="true"></i>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title
+                    >Edit Template</v-list-item-title
+                  ></v-list-item-content
+                >
               </v-list-item>
               <v-list-item
                 v-if="item.ImageURL"
@@ -73,10 +87,22 @@
                   showDialog = true
                 "
               >
-                <v-list-item-title>View</v-list-item-title>
+                <v-list-item-icon class="mr-2">
+                  <i class="fa fa-eye mt-1" aria-hidden="true"></i>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title
+                    >View</v-list-item-title
+                  ></v-list-item-content
+                >
               </v-list-item>
               <v-list-item @click="deleteTemplete(item.id)">
-                <v-list-item-title>Delete</v-list-item-title>
+                <v-list-item-icon class="mr-2">
+                  <i class="fa fa-trash mt-1" aria-hidden="true"></i>
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title>Delete</v-list-item-title>
+                </v-list-item-content>
               </v-list-item>
             </v-list>
           </v-menu>
@@ -124,7 +150,14 @@ export default {
     editInviteTemplate,
     editInviteMetadata,
   },
-  props: { items: { type: Array, default: () => [] } },
+  props: {
+    items: { type: Array, default: () => [] },
+    refresh: {
+      type: Function,
+      required: false,
+      default: null,
+    },
+  },
   data() {
     return {
       editTemplate: false,
@@ -137,7 +170,6 @@ export default {
   methods: {
     async deleteTemplete(id) {
       const url = getApiUrl()
-
       const check = confirm('Are you sure you want to delete this template?')
       let res = null
       if (check === true) {
@@ -150,7 +182,7 @@ export default {
           )
         }
         if (res) {
-          console.log(res)
+          this.refresh()
         }
       }
     },
