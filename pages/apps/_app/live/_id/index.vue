@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-snackbar v-model="snackbar" :timeout="1000" top="true">
+    <v-snackbar v-model="snackbar" :timeout="1000" :top="true">
       <div class="font-weight-regular text-center">
         {{ snackbarText }}
       </div>
@@ -9,7 +9,7 @@
       <vue-jitsi-meet
         ref="jitsiRef"
         class="full-height full-width"
-        domain="meet.bitpod.io"
+        :domain="getDomain"
         :options="jitsiOptions"
       ></vue-jitsi-meet>
     </div>
@@ -39,6 +39,9 @@ export default {
     }
   },
   computed: {
+    getDomain() {
+      return nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK
+    },
     jitsiOptions() {
       return {
         roomName: this.$route.params.id,
