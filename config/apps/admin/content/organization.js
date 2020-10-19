@@ -187,11 +187,6 @@ export default {
           cssClasses: 'col-6 col-md-6',
           newForm: true,
           editForm: true,
-          rules: [
-            function (value, data) {
-              return /^[0-9]\d*$|^$/.test(value) || 'Number must be valid'
-            },
-          ],
         },
         Type: {
           form: {
@@ -266,6 +261,16 @@ export default {
         Default: {
           displayOrder: 9,
           caption: 'Default',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '180px',
+          type: 'string',
+          newForm: false,
+          editForm: false,
+        },
+        Action: {
+          displayOrder: 10,
+          caption: 'Action',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
