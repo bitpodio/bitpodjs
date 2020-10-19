@@ -1,7 +1,7 @@
 <template>
   <v-app id="inspire">
     <v-main class="greybg">
-      <v-container fluid>
+      <v-container fluid class="pt-0">
         <v-row>
           <v-col class="pa-0">
             <div>

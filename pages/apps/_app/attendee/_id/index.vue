@@ -18,26 +18,37 @@
     </v-flex>
     <v-flex class="public-main public-info">
       <v-flex
-        class="d-flex flex-column flex-md-row elevation-0 elevation-md-1 mb-4 rounded-lg overflow-hidden"
+        class="d-flex elevation-0 flex-column elevation-md-1 mb-4 rounded-lg overflow-hidden"
       >
-        <v-flex class="flex-70">
-          <v-img
-            :src="$config.cdnUri + 'default-min.jpg'"
-            class="eventsite-banner"
-          ></v-img>
+        <v-flex class="d-flex flex-column flex-md-row">
+          <v-flex class="flex-70">
+            <v-img
+              :src="$config.cdnUri + 'default-min.jpg'"
+              class="eventsite-banner"
+            ></v-img>
+          </v-flex>
+          <v-flex
+            flex-column
+            class="flex-30 justify-center d-flex event-right-info pa-2"
+          >
+            <div class="text-h4 text-center text-capitalize">
+              {{ formatField(data.registration.EventName) }}
+            </div>
+            <div class="body-1 text-center text-capitalize">
+              By {{ formatField(event && event.organizer) }}
+            </div>
+          </v-flex>
         </v-flex>
-        <v-flex flex-column class="flex-30 justify-center d-flex greybg pa-2">
-          <div class="text-h4 text-center text-capitalize">
-            {{ formatField(data.registration.EventName) }}
-          </div>
-          <div class="body-1 text-center text-capitalize">
-            By {{ formatField(event && event.organizer) }}
-          </div>
+        <v-flex v-if="event && event.description" class="d-flex boxview">
+          <!-- eslint-disable-next-line vue/no-v-html -->
+          <div class="pa-3" v-html="event && event.description" />
         </v-flex>
       </v-flex>
-      <v-flex d-flex flex-md-row flex-lg-row flex-column>
-        <v-flex column class="mxw-w70">
-          <div v-if="event && event.sessions">
+      <v-flex d-flex flex-md-row flex-lg-row flex-column-reverse>
+        <v-flex column class="mxw-w70 mr-0 mr-md-2">
+          <div
+            v-if="event && event.sessions && Object.keys(event.sessions).length"
+          >
             <div
               v-if="content"
               class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2 elevation-1 rounded-lg"
@@ -50,12 +61,59 @@
                 <v-spacer></v-spacer>
               </v-flex>
               <v-divider></v-divider>
-              <Grid
-                view-name="registrationSessionsPublic"
-                :content="content"
-                :filter="filter"
-                class="mt-n12"
-              />
+              <div>
+                <v-list>
+                  <v-list-item
+                    v-for="item in Object.values(event.sessions)"
+                    :key="item.id"
+                    class="px-1 pt-2"
+                  >
+                    <v-list-item-avatar tile size="48" class="my-0">
+                      <v-avatar
+                        size="48"
+                        tile
+                        v-bind="attrs"
+                        :style="{
+                          'background-color': getRandomColor(item.label),
+                        }"
+                        v-on="on"
+                      >
+                        <div class="d-flex flex-column">
+                          <div v-if="item.startDateTime">
+                            <div class="white--text text-h6 pt-0">
+                              {{ formatDateDay(item.startDateTime) }}
+                            </div>
+                            <div class="white--text body-2 mt-n1">
+                              {{ formatDateMonth(item.startDateTime) }}
+                            </div>
+                          </div>
+                          <div v-else>
+                            <v-icon class="white--text">fa-history</v-icon>
+                          </div>
+                        </div>
+                      </v-avatar>
+                    </v-list-item-avatar>
+
+                    <v-list-item-content>
+                      <v-list-item-title class="text-capitalize">{{
+                        item.label
+                      }}</v-list-item-title>
+                      <v-list-item-subtitle
+                        class="session-date"
+                        v-text="formatDate(item.startDateTime)"
+                      ></v-list-item-subtitle>
+                    </v-list-item-content>
+
+                    <v-list-item-icon class="ma-0">
+                      <v-btn class="ma-2 mr-0" outlined color="success">
+                        Join<v-icon right>
+                          mdi-video
+                        </v-icon>
+                      </v-btn>
+                    </v-list-item-icon>
+                  </v-list-item>
+                </v-list>
+              </div>
             </div>
           </div>
           <div
@@ -156,7 +214,7 @@
                   >
                   </v-img>
                   <v-text
-                    class="text-center fs-20 d-flex justify-center pt-1"
+                    class="text-center fs-20 d-flex justify-center pt-1 text-capitalize"
                     >{{ item.firstName }}</v-text
                   >
                   <v-card-actions class="pa-1 pt-0 d-flex justify-center">
@@ -174,6 +232,48 @@
                   </v-card-actions>
                 </v-card>
               </div>
+            </div>
+          </div>
+          <div
+            v-if="event && event.Other && event.Other.length"
+            class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2 elevation-1 rounded-lg"
+          >
+            <v-flex class="d-flex justify-center align-center pb-3">
+              <h2 class="body-1 pb-0">
+                <i class="fa fa-users pr-1" aria-hidden="true"></i> Gallery
+              </h2>
+              <v-spacer></v-spacer>
+            </v-flex>
+            <v-divider></v-divider>
+            <div class="pa-3">
+              <v-row>
+                <v-col
+                  v-for="image in event.Other"
+                  :key="image"
+                  class="d-flex child-flex pl-0 pt-0 rounded-lg"
+                  cols="4"
+                >
+                  <v-img
+                    :src="'https://event.test.bitpod.io' + image"
+                    :lazy-src="'https://event.test.bitpod.io' + image"
+                    aspect-ratio="1"
+                    class="grey lighten-4"
+                  >
+                    <template v-slot:placeholder>
+                      <v-row
+                        class="fill-height ma-0"
+                        align="center"
+                        justify="center"
+                      >
+                        <v-progress-circular
+                          indeterminate
+                          color="grey lighten-5"
+                        ></v-progress-circular>
+                      </v-row>
+                    </template>
+                  </v-img>
+                </v-col>
+              </v-row>
             </div>
           </div>
 
@@ -230,7 +330,7 @@
         </v-flex>
         <v-flex column class="mxw-w30">
           <div
-            class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mb-4 mx-2 pb-2 elevation-1 rounded-lg"
+            class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mb-4 mx-0 mx-md-2 pb-2 elevation-1 rounded-lg"
           >
             <v-flex class="d-flex justify-center align-center pb-2">
               <h2 class="body-1 pb-0">
@@ -240,7 +340,7 @@
               <v-spacer></v-spacer>
             </v-flex>
             <v-divider></v-divider>
-            <v-flex my-3>
+            <v-flex v-if="(event.BusinessType = Single)" my-3>
               <div class="body-1">
                 {{ formatDate(event && event.startDateTime) }} -<br />
                 {{ formatDate(event && event.endDateTime) }} -<br />
@@ -249,7 +349,7 @@
             </v-flex>
           </div>
           <div
-            class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mb-4 mx-2 pb-2 elevation-1 rounded-lg"
+            class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mb-4 mx-0 mx-md-2 pb-2 elevation-1 rounded-lg"
           >
             <v-flex class="d-flex justify-center align-center pb-2">
               <h2 class="body-1 pb-0">
@@ -312,6 +412,18 @@ export default {
   methods: {
     formatDate(date) {
       return date ? format(new Date(date), 'PPp') : ''
+    },
+    formatDateDay(date) {
+      return date ? format(new Date(date), 'd') : ''
+    },
+    formatDateMonth(date) {
+      return date ? format(new Date(date), 'LLL') : ''
+    },
+    formatDateTime(date) {
+      return date ? format(new Date(date), 'p') : ''
+    },
+    getRandomColor(name) {
+      return window.GeoPattern.generate(name).color
     },
     formatField(fieldValue) {
       return fieldValue || '-'
@@ -429,6 +541,12 @@ export default {
 .pb-speakers {
   max-width: 200px;
   width: 200px;
+}
+.event-right-info {
+  background: #f0f0f0 !important;
+}
+.session-date {
+  min-height: 16px;
 }
 @media screen and (max-width: 600px) {
   .background-event-img {
