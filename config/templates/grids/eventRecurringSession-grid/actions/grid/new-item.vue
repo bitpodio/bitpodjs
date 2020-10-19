@@ -877,7 +877,7 @@ export default {
         5,
         8
       )}-${randomStr.substring(8, 11)}`
-      this.session.BitpodVirtualLink = `${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}${roomName}`
+      this.session.BitpodVirtualLink = `https://${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}${roomName}`
     },
     closeForm() {
       this.dialog = false

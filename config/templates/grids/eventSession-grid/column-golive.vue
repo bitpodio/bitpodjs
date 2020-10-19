@@ -1,11 +1,17 @@
 <template>
-  <a
+  <v-btn
     v-if="item.LocationType === 'Bitpod Virtual'"
-    :href="route"
-    target="_blank"
+    tile
+    color="success"
+    small
+    class="rounded"
+    @click="goLive"
   >
-    <v-btn x-small color="primary">start</v-btn>
-  </a>
+    Join Session
+    <v-icon right>
+      mdi-video
+    </v-icon>
+  </v-btn>
 </template>
 
 <script>
@@ -27,13 +33,13 @@ export default {
       required: false,
     },
   },
-  computed: {
-    route() {
+  methods: {
+    goLive() {
       const roomName =
         (this.item.BitpodVirtualLink &&
           this.item.BitpodVirtualLink.split('/')[3]) ||
         'undefined'
-      return `/apps/event/live/${roomName}?e=${this.$route.params.id}`
+      window.open(`apps/event/live/${roomName}?e=${this.$route.params.id}`)
     },
   },
 }
