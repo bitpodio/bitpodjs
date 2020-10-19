@@ -472,7 +472,7 @@
         </v-flex>
         <v-divider></v-divider>
         <Grid
-          view-name="eventAttendees"
+          view-name="eventRecurringAttendees"
           :content="content"
           :context="data"
           class="mt-n12"
@@ -1043,7 +1043,7 @@ export default {
     },
     redirectIntegration() {
       this.$router.push(
-        `/apps/event/list/Event/integrations?event=${this.$route.params.id}`
+        `/apps/event/list/EventIntegration/integrations?event=${this.$route.params.id}`
       )
     },
     async updateEvent() {
