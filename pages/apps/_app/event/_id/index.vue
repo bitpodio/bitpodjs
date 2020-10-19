@@ -1195,6 +1195,18 @@
             @change="updateReg"
           ></v-checkbox>
         </v-flex>
+        <v-flex class="d-block text-truncate">
+          <v-checkbox
+            v-model="data.event.printBadgeOnCheckIn"
+            dense
+            debounce="500"
+            height="20"
+            class="ma-0 pa-0"
+            label="Ask to print badge after check in"
+            color="green"
+            @change="updateReg"
+          ></v-checkbox>
+        </v-flex>
       </div>
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-0 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
@@ -1412,6 +1424,7 @@ export default {
         ShowRemainingTickets: this.data.event.ShowRemainingTickets,
         ShowAttendeeForm: this.data.event.ShowAttendeeForm,
         NotifyOrganizer: this.data.event.NotifyOrganizer,
+        printBadgeOnCheckIn: this.data.event.printBadgeOnCheckIn,
       }
       return dataObj
     },
