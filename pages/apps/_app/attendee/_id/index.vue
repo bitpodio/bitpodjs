@@ -105,11 +105,18 @@
                     </v-list-item-content>
 
                     <v-list-item-icon class="ma-0">
-                      <v-btn class="ma-2 mr-0" outlined color="success">
-                        Join<v-icon right>
-                          mdi-video
-                        </v-icon>
-                      </v-btn>
+                      <div v-if="item.locationType === 'Bitpod Virtual'">
+                        <v-btn
+                          class="ma-2 mr-0"
+                          outlined
+                          color="success"
+                          @click="startEvent(item.bitpodVirtualLink, true)"
+                        >
+                          Join Session<v-icon right>
+                            mdi-video
+                          </v-icon>
+                        </v-btn>
+                      </div>
                     </v-list-item-icon>
                   </v-list-item>
                 </v-list>
@@ -198,7 +205,9 @@
           </div>
           <div>
             <div
-              v-if="event && event.speakers"
+              v-if="
+                event && event.speakers && Object.keys(event.speakers).length
+              "
               class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2 elevation-1 rounded-lg"
             >
               <v-flex class="d-flex justify-center align-center pb-3">
@@ -293,8 +302,8 @@
             </div>
           </div>
           <div
-            v-if="content"
-            class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2 elevation-1 rounded-lg"
+            v-if="event && event.review && event.review.length"
+            class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-1 mr-0 mb-4 pb-2 elevation-1 rounded-lg"
           >
             <v-flex class="d-flex justify-center align-center pb-3">
               <h2 class="body-1 pb-0">
@@ -309,7 +318,7 @@
                 :key="item.id"
                 class="px-0 mb-5"
               >
-                <v-list-item-avatar size="48" class="mr-2 ma-0 mt-n8">
+                <v-list-item-avatar size="48" class="mr-2 ma-0 mt-n6">
                   <v-avatar
                     color="primary"
                     size="36"
@@ -350,7 +359,7 @@
                     ></v-rating>
                   </v-list-item-subtitle>
                   <v-list-item-subtitle
-                    class="body-1"
+                    class="body-2"
                     v-text="item.Description"
                   ></v-list-item-subtitle>
                 </v-list-item-content>
@@ -420,7 +429,7 @@
               <v-spacer></v-spacer>
             </v-flex>
             <v-divider></v-divider>
-            <v-flex v-if="(event.BusinessType = Single)" my-3>
+            <v-flex my-3>
               <div class="body-1">
                 {{ formatDate(event && event.startDateTime) }} -<br />
                 {{ formatDate(event && event.endDateTime) }} -<br />
@@ -444,6 +453,18 @@
                 {{ formatField(event && event.address && event.address.name) }}
               </div>
             </v-flex>
+            <div v-if="event.locationType === 'Bitpod Virtual'">
+              <v-btn
+                class="ma-2 mr-0"
+                outlined
+                color="success"
+                @click="startEvent(event.UniqLink)"
+              >
+                Join Event<v-icon right>
+                  mdi-video
+                </v-icon>
+              </v-btn>
+            </div>
           </div>
         </v-flex>
       </v-flex>
@@ -510,6 +531,13 @@ export default {
     },
     formatAddressField(fieldValue) {
       return fieldValue || ' '
+    },
+    startEvent(roomName, isFullLink) {
+      if (isFullLink) {
+        window.open(`${roomName}?e=${this.event.id}`)
+      } else {
+        window.open(`https://meet.bitpod.io/${roomName}?e=${this.event.id}`)
+      }
     },
     async getEventData(data) {
       if (data.EventId) {
