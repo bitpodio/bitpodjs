@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <client-only>
-      {{ field && field.form && field.form.caption }}
+      <div v-if="label">
+        {{ label }}
+      </div>
       <jodit-editor v-model="content" :config="config" />
     </client-only>
   </div>
@@ -25,17 +27,21 @@ export default {
       type: Object,
       default: () => {},
     },
+    label: {
+      type: String,
+      default: '',
+    },
     dropdownOptions: {
       type: Object,
       default: () => {},
     },
     showLogoButton: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     showQRButton: {
       type: Boolean,
-      default: true,
+      default: false,
     },
   },
   data() {
@@ -187,8 +193,17 @@ export default {
     },
   },
   mounted() {
-    this._data.config.extraButtons[0].list = { ...this.dropdownOptions }
+    if (!this.dropdownOptions && (!this.field || !this.field.dropdownOptions)) {
+      delete this.config.extraButtons
+    } else if (this.dropdownOptions) {
+      this._data.config.extraButtons[0].list = { ...this.dropdownOptions }
+    } else {
+      this._data.config.extraButtons[0].list = { ...this.field.dropdownOptions }
+    }
     if (this.showQRButton) {
+      if (!this._data.config.extraButtons) {
+        this._data.config.extraButtons = []
+      }
       this._data.config.extraButtons.push({
         name: 'QRCode',
         tooltip: 'Fields',
@@ -211,6 +226,9 @@ export default {
       })
     }
     if (this.showLogoButton) {
+      if (!this._data.config.extraButtons) {
+        this._data.config.extraButtons = []
+      }
       this._data.config.extraButtons.push({
         name: 'Logo',
         exec: (editor, flag, currentOption) => {

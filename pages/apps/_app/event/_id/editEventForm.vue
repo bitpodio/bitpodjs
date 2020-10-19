@@ -33,7 +33,7 @@
             </v-col>
             <v-col cols="12" class="mb-5">
               <span>Description</span>
-              <RichText v-model="formData.Description" label="Description" />
+              <RichText v-model="formData.Description" />
             </v-col>
             <v-col
               v-if="formData.BusinessType !== 'Recurring'"
