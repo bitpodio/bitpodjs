@@ -8,6 +8,14 @@
           <div class="text-h4 text-capitalize">{{ data.event.Title }}</div>
           <v-spacer></v-spacer>
           <div class="mr-2">
+            <v-btn tile color="success" class="rounded" @click="goLive">
+              Join Event
+              <v-icon right class="fs-22">
+                mdi-video
+              </v-icon>
+            </v-btn>
+          </div>
+          <div class="mr-2">
             <v-btn depressed color="primary" @click="viewRegistration"
               >View</v-btn
             >
@@ -55,17 +63,6 @@
                 </v-list-item-icon>
                 <v-list-item-content>
                   <v-list-item-title>Integrations</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item
-                v-if="eventData.LocationType === 'Bitpod Virtual'"
-                @click="goLive"
-              >
-                <v-list-item-icon class="mr-2">
-                  <i class="fa fa-video mt-1" aria-hidden="true"></i>
-                </v-list-item-icon>
-                <v-list-item-content>
-                  <v-list-item-title>Start Session</v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
             </v-list>
@@ -1365,7 +1362,7 @@ export default {
   methods: {
     goLive() {
       window.open(
-        `/apps/event/live/${this.eventData.UniqLink}?e=${this.$route.params.id}`
+        `apps/event/live/${this.eventData.UniqLink}?e=${this.$route.params.id}`
       )
     },
     openPrintForm() {
@@ -1710,7 +1707,7 @@ export default {
       return regUrl
     },
     viewBitpodVirtualLink() {
-      return `${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}/${this.data.event.UniqLink}`
+      return `https://${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}/${this.data.event.UniqLink}`
     },
     formatDate(date) {
       return date ? format(new Date(date), 'PPp') : ''

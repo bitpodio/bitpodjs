@@ -726,7 +726,7 @@ export default {
   },
   methods: {
     getBitpodVirtualLink() {
-      return `${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}/${
+      return `https://${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}/${
         this.eventLinkHint.split('/')[4]
       }`
     },
