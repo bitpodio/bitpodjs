@@ -427,6 +427,12 @@ body {
 .vs-hidden {
  visibility: hidden;
 }
+.boxview .v-expansion-panel-content__wrap {
+  padding: 0 !important;
+}
+.boxview .v-expansion-panel--active > .v-expansion-panel-header {
+    min-height: 42px;
+}
 @media (max-width: 800px) {
   .nav-bar {
     top: 0 !important;

@@ -51,7 +51,7 @@
           >
             <div
               v-if="content"
-              class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2 elevation-1 rounded-lg"
+              class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2 rounded-lg"
             >
               <v-flex class="d-flex justify-center align-center pb-3">
                 <h2 class="body-1 pb-0">
@@ -125,7 +125,7 @@
           </div>
           <div
             v-if="content"
-            class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2 elevation-1 rounded-lg"
+            class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2 rounded-lg"
           >
             <v-flex class="d-flex justify-center align-center pb-3">
               <h2 class="body-1 pb-0">
@@ -141,74 +141,12 @@
               class="mt-n12"
             />
           </div>
-          <div
-            v-if="event && event.speakers && event.speakers.length"
-            class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 mr-0 mb-4 pb-2 elevation-1 rounded-lg"
-          >
-            <v-flex class="d-flex justify-center align-center pb-3">
-              <h2 class="body-1 pb-0">
-                <i class="fa fa-ticket pr-1" aria-hidden="true"></i>
-                Speakers
-              </h2>
-              <v-spacer></v-spacer>
-            </v-flex>
-            <v-divider></v-divider>
-            <div class="d-flex">
-              <div
-                v-for="item in Object.values(event.speakers)"
-                :key="item.id"
-                class="speaker-inner"
-              >
-                <div class="avatar-container">
-                  <div v-if="item.imageURL">
-                    <img
-                      :src="'https://event.test.bitpod.io' + item.imageURL"
-                      class="avatar-image avatar"
-                    />
-                  </div>
-                  <div v-else>
-                    <img
-                      src="https://res.cloudinary.com/mytestlogo/default_profile"
-                      class="avatar-image avatar"
-                    />
-                  </div>
-                </div>
-                <div class="speaker-name">
-                  <span title="Rishi B">{{ item.firstName }}</span>
-                  <div class="middle">
-                    <a
-                      href="https://www.linkedin.com"
-                      target="_blank"
-                      class="social-icons text-decoration-none"
-                    >
-                      <i class="fa fa-linkedin"></i>
-                    </a>
-                    <a
-                      href="https://twitter.com"
-                      target="_blank"
-                      class="social-icons text-decoration-none"
-                    >
-                      <i class="fa fa-twitter"></i>
-                    </a>
-                    <a
-                      href="https://www.facebook.com"
-                      target="_blank"
-                      class="social-icons text-decoration-none"
-                    >
-                      <i class="fa fa-facebook"></i>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div></div>
-          </div>
           <div>
             <div
               v-if="
                 event && event.speakers && Object.keys(event.speakers).length
               "
-              class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2 elevation-1 rounded-lg"
+              class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2 rounded-lg"
             >
               <v-flex class="d-flex justify-center align-center pb-3">
                 <h2 class="body-1 pb-0">
@@ -222,7 +160,7 @@
                 <v-card
                   v-for="item in Object.values(event.speakers)"
                   :key="item.id"
-                  class="pb-speakers ma-4 ml-0 mb-0 ma-xs-4"
+                  class="pb-speakers ma-4 ml-0 mb-0 ma-xs-4 elevation-0"
                 >
                   <div v-if="item.imageURL" class="overflow-hidden">
                     <img
@@ -261,7 +199,7 @@
           </div>
           <div
             v-if="event && event.Other && event.Other.length"
-            class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2 elevation-1 rounded-lg"
+            class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2 rounded-lg"
           >
             <v-flex class="d-flex justify-center align-center pb-3">
               <h2 class="body-1 pb-0">
@@ -303,7 +241,7 @@
           </div>
           <div
             v-if="event && event.review && event.review.length"
-            class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-1 mr-0 mb-4 pb-2 elevation-1 rounded-lg"
+            class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-1 mr-0 mb-4 pb-2 rounded-lg d-none"
           >
             <v-flex class="d-flex justify-center align-center pb-3">
               <h2 class="body-1 pb-0">
@@ -368,7 +306,7 @@
           </div>
           <div
             v-if="content"
-            class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 mr-0 mb-4 pb-2 elevation-1 rounded-lg"
+            class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 mr-0 mb-4 pb-2 rounded-lg"
           >
             <v-flex class="d-flex justify-center align-center pb-3">
               <h2 class="body-1 pb-0">
@@ -416,10 +354,71 @@
               </template>
             </v-simple-table>
           </div>
+          <v-expansion-panels
+            accordion
+            flat
+            class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 mr-0 mb-4 pb-2 rounded-lg"
+          >
+            <v-expansion-panel
+              v-for="(item, i) in 1"
+              :key="i"
+              flat
+              class="elevation-0 pa-0"
+            >
+              <v-expansion-panel-header class="elevation-0 pa-0"
+                ><v-flex class="d-flex justify-center align-center pb-0">
+                  <h2 class="body-1 pb-0">
+                    <i class="fa fa-ticket pr-1" aria-hidden="true"></i>
+                    Tickets
+                  </h2>
+                  <v-spacer></v-spacer> </v-flex
+              ></v-expansion-panel-header>
+              <v-expansion-panel-content class="pa-0">
+                <v-divider></v-divider>
+                <v-simple-table dense>
+                  <template v-slot:default>
+                    <thead>
+                      <tr>
+                        <th class="text-left">
+                          Name
+                        </th>
+                        <th class="text-left">
+                          Amount
+                        </th>
+                        <th class="text-left">
+                          Quantity
+                        </th>
+                        <th class="text-left">
+                          Total
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>Student</td>
+                        <td>{{ data.registration.SubTotal }}</td>
+                        <td>{{ data.registration.TicketQuantity }}</td>
+                        <td>{{ data.registration.TotalAmount }}</td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td>Total</td>
+                        <td>
+                          {{ data.registration.Currency
+                          }}{{ data.registration.TotalAmount }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </template>
+                </v-simple-table>
+              </v-expansion-panel-content>
+            </v-expansion-panel>
+          </v-expansion-panels>
         </v-flex>
         <v-flex column class="mxw-w30">
           <div
-            class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mb-4 mx-0 mx-md-2 pb-2 elevation-1 rounded-lg"
+            class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mb-4 mx-0 mx-md-2 mr-0 pb-2 rounded-lg"
           >
             <v-flex class="d-flex justify-center align-center pb-2">
               <h2 class="body-1 pb-0">
@@ -438,7 +437,7 @@
             </v-flex>
           </div>
           <div
-            class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mb-4 mx-0 mx-md-2 pb-2 elevation-1 rounded-lg"
+            class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mb-4 mx-0 mx-md-2 mr-0 pb-2 rounded-lg"
           >
             <v-flex class="d-flex justify-center align-center pb-2">
               <h2 class="body-1 pb-0">
