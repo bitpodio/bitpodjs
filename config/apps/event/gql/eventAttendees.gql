@@ -20,6 +20,7 @@ query ($filters: JSON, $where: JSON) {
                     createdDate 
                     createdBy 
                     modifiedDate
+                    BookingDate
                     _CurrentAddress{
                         AddressLine
                         City

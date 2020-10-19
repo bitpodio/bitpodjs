@@ -97,7 +97,7 @@ export default {
     return {
       valid: false,
       required: [required],
-      formData: this.item,
+      formData: { ...this.item },
       lazy: false,
     }
   },
