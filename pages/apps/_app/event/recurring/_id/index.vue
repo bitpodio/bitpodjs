@@ -856,10 +856,18 @@
         </div>
       </v-snackbar>
     </v-flex>
-    <editSeoForm :seo-form.sync="seoForm" />
-    <editEventForm :event-form.sync="eventForm" />
-    <editEventSetting :event-setting.sync="eventSetting" />
-    <editSiteSetting :site-setting.sync="siteSetting" />
+    <div v-if="seoForm">
+      <editSeoForm :seo-form.sync="seoForm" />
+    </div>
+    <div v-if="eventForm">
+      <editEventForm :event-form.sync="eventForm" />
+    </div>
+    <div v-if="eventSetting">
+      <editEventSetting :event-setting.sync="eventSetting" />
+    </div>
+    <div v-if="siteSetting">
+      <editSiteSetting :site-setting.sync="siteSetting" />
+    </div>
     <makeCopy :is-make-copy.sync="isMakeCopy" />
   </v-flex>
 </template>

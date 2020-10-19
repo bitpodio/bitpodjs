@@ -661,7 +661,7 @@
               max-width="150"
               max-height="150"
               width="150"
-              @click.stop="otherDialogOpen = true"
+              @click.stop="openOtherDialog(image)"
             >
               <template v-slot:placeholder>
                 <v-row class="fill-height ma-0" align="center" justify="center">
@@ -695,14 +695,10 @@
                 </div>
               </v-card-title>
               <v-card-text class="pa-1">
-                <v-card
-                  v-for="image in eventData.Other"
-                  :key="image"
-                  class="mx-auto elevation-0"
-                >
+                <v-card class="mx-auto elevation-0">
                   <v-img
-                    :src="getAttachmentLink(image, true)"
-                    :lazy-src="getAttachmentLink(image, true)"
+                    :src="displaySelectedOtherImage"
+                    :lazy-src="displaySelectedOtherImage"
                     aspect-ratio="1"
                     class="white"
                     width="100%"
@@ -1083,7 +1079,7 @@
         <v-flex my-3>
           <div class="body-2 text--secondary">Event Link</div>
           <div class="body-1 d-block text-truncate">
-            {{ formatField(data.event.UniqLink) }}
+            {{ eventLink(data.event.UniqLink) }}
           </div>
         </v-flex>
         <v-flex my-3>
@@ -1322,6 +1318,7 @@ export default {
       hover: {},
       settingData: {},
       allow: true,
+      displaySelectedOtherImage: '',
     }
   },
   computed: {
@@ -1363,6 +1360,19 @@ export default {
   },
 
   methods: {
+    eventLink() {
+      const baseUrl = getApiUrl()
+      const regUrl = baseUrl.replace(
+        'svc/api/',
+        `e/${this.data.event.UniqLink}`
+      )
+      const url = this.formatField(regUrl)
+      return url
+    },
+    openOtherDialog(image) {
+      this.otherDialogOpen = true
+      this.displaySelectedOtherImage = this.getAttachmentLink(image, true)
+    },
     goLive() {
       window.open(
         `/apps/event/live/${this.eventData.UniqLink}?e=${this.$route.params.id}`
@@ -1794,6 +1804,11 @@ export default {
     },
     async updateRegistrationPage() {
       const obj = this.updateSectionHeading
+      if (this.eventData.RegistrationSiteTemplate === null) {
+        obj.RegistrationSiteTemplate = 'Event'
+      } else {
+        obj.RegistrationSiteTemplate = this.eventData.RegistrationSiteTemplate
+      }
       const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`
       try {
         const res = await this.$axios.$patch(URL, obj)
