@@ -448,14 +448,10 @@
               <v-spacer></v-spacer>
             </v-flex>
             <v-divider></v-divider>
-            <v-flex my-3>
-              <div class="body-1">
-                {{ formatField(event && event.address && event.address.name) }}
-              </div>
-            </v-flex>
+
             <div v-if="event.locationType === 'Bitpod Virtual'">
               <v-btn
-                class="ma-2 mr-0"
+                class="ma-3 ml-0"
                 outlined
                 color="success"
                 @click="startEvent(event.UniqLink)"
@@ -464,6 +460,15 @@
                   mdi-video
                 </v-icon>
               </v-btn>
+            </div>
+            <div v-else>
+              <v-flex my-3>
+                <div class="body-1">
+                  {{
+                    formatField(event && event.address && event.address.name)
+                  }}
+                </div>
+              </v-flex>
             </div>
           </div>
         </v-flex>
