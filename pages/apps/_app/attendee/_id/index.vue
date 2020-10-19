@@ -153,10 +153,18 @@
                 class="speaker-inner"
               >
                 <div class="avatar-container">
-                  <img
-                    src="https://res.cloudinary.com/mytestlogo/default_profile"
-                    class="avatar-image avatar"
-                  />
+                  <div v-if="item.imageURL">
+                    <img
+                      :src="'https://event.test.bitpod.io' + item.imageURL"
+                      class="avatar-image avatar"
+                    />
+                  </div>
+                  <div v-else>
+                    <img
+                      src="https://res.cloudinary.com/mytestlogo/default_profile"
+                      class="avatar-image avatar"
+                    />
+                  </div>
                 </div>
                 <div class="speaker-name">
                   <span title="Rishi B">{{ item.firstName }}</span>
@@ -207,12 +215,20 @@
                   :key="item.id"
                   class="pb-speakers ma-4 ml-0 mb-0 ma-xs-4"
                 >
-                  <v-img
-                    src="https://res.cloudinary.com/mytestlogo/default_profile"
-                    height="160px"
-                    class="positionRelative"
-                  >
-                  </v-img>
+                  <div v-if="item.imageURL" class="overflow-hidden">
+                    <img
+                      :src="'https://event.test.bitpod.io' + item.imageURL"
+                      height="160px"
+                      class="positionRelative speaker-img grey lighten-4"
+                    />
+                  </div>
+                  <div v-else class="overflow-hidden">
+                    <img
+                      src="https://res.cloudinary.com/mytestlogo/default_profile"
+                      height="160px"
+                      class="positionRelative speaker-img grey lighten-4"
+                    />
+                  </div>
                   <v-text
                     class="text-center fs-20 d-flex justify-center pt-1 text-capitalize"
                     >{{ item.firstName }}</v-text
@@ -276,7 +292,71 @@
               </v-row>
             </div>
           </div>
+          <div
+            v-if="content"
+            class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2 elevation-1 rounded-lg"
+          >
+            <v-flex class="d-flex justify-center align-center pb-3">
+              <h2 class="body-1 pb-0">
+                <i class="fa fa-users pr-1" aria-hidden="true"></i> Reviews
+              </h2>
+              <v-spacer></v-spacer>
+            </v-flex>
+            <v-divider></v-divider>
+            <v-list class="mt-2">
+              <v-list-item
+                v-for="item in event.review"
+                :key="item.id"
+                class="px-0 mb-5"
+              >
+                <v-list-item-avatar size="48" class="mr-2 ma-0 mt-n8">
+                  <v-avatar
+                    color="primary"
+                    size="36"
+                    v-bind="attrs"
+                    class="mr-"
+                    v-on="on"
+                  >
+                    <v-avatar
+                      color="primary"
+                      size="36"
+                      v-bind="attrs"
+                      v-on="on"
+                    >
+                      <span class="white--text Twitter-18">{{
+                        item.UserName
+                      }}</span>
+                    </v-avatar>
+                  </v-avatar>
+                </v-list-item-avatar>
 
+                <v-list-item-content class="py-0">
+                  <v-list-item-title
+                    class="fs-18"
+                    v-text="item.UserName"
+                  ></v-list-item-title>
+                  <v-list-item-subtitle class="mb-1">
+                    <v-rating
+                      color="yellow darken-3"
+                      background-color="grey darken-1"
+                      empty-icon="$ratingFull"
+                      large
+                      length="5"
+                      disabled
+                      :value="item.Rating"
+                      dense
+                      small
+                      class="ps-rating"
+                    ></v-rating>
+                  </v-list-item-subtitle>
+                  <v-list-item-subtitle
+                    class="body-1"
+                    v-text="item.Description"
+                  ></v-list-item-subtitle>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
+          </div>
           <div
             v-if="content"
             class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 mr-0 mb-4 pb-2 elevation-1 rounded-lg"
@@ -501,7 +581,7 @@ export default {
 }
 .public-info {
   position: relative;
-  top: -250px;
+  margin-top: -250px;
 }
 .background-event-img {
   height: 350px;
@@ -548,6 +628,12 @@ export default {
 .session-date {
   min-height: 16px;
 }
+.speaker-img {
+  width: 100%;
+}
+.ps-rating {
+  pointer-events: none;
+}
 @media screen and (max-width: 600px) {
   .background-event-img {
     display: none;
@@ -556,7 +642,7 @@ export default {
     max-width: 100%;
   }
   .public-info {
-    top: -20px;
+    margin-top: -20px;
   }
   .boxview {
     border-radius: 0 !important;
