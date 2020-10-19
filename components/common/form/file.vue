@@ -111,12 +111,15 @@ export default {
     if (this.value && this.value.length) {
       const fileDetailPromises = this.value.map((id) => this.getFileDetails(id))
       const fileDetails = await Promise.all(fileDetailPromises)
-      this.files = fileDetails.map(({ data }) => {
-        return {
-          id: data.id,
-          name: data.fileName,
-        }
-      })
+      console.log('==fileDetails==', fileDetails)
+      this.files = fileDetails
+        .filter((i) => i)
+        .map(({ data }) => {
+          return {
+            id: data.id,
+            name: data.fileName,
+          }
+        })
     }
   },
   methods: {
@@ -166,7 +169,9 @@ export default {
       }
     },
     getFileDetails(id) {
-      return this.$axios.get(this.getAttachmentLink(id))
+      return this.$axios.get(this.getAttachmentLink(id)).catch((e) => {
+        console.error(e)
+      })
     },
     async deleteFile(id) {
       await this.$axios.delete(this.getAttachmentLink(id))

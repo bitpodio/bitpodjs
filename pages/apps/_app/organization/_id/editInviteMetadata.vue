@@ -115,6 +115,8 @@ export default {
     },
   },
   data() {
+    let fileList = []
+    fileList = this.selected.Documents ? this.selected.Documents : []
     return {
       valid: false,
       fileField: {
@@ -122,7 +124,7 @@ export default {
         caption: 'Attachment',
       },
       isSaveButtonDisabled: false,
-      fileList: [],
+      fileList,
       orgLogo: false,
       allow: true,
       requiredRules: [required],

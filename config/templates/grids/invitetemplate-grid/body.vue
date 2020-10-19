@@ -110,7 +110,7 @@
                         <v-list-item-title>View</v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
-                    <v-list-item @click="true">
+                    <v-list-item @click="deleteTemplete(item.id)">
                       <v-list-item-icon class="mr-2">
                         <i class="fa fa-trash mt-1" aria-hidden="true"></i>
                       </v-list-item-icon>
@@ -235,7 +235,7 @@
                         <v-list-item-title>View</v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
-                    <v-list-item @click="true">
+                    <v-list-item @click="deleteTemplete(item.id)">
                       <v-list-item-icon class="mr-2">
                         <i class="fa fa-trash mt-1" aria-hidden="true"></i>
                       </v-list-item-icon>
@@ -286,6 +286,7 @@
 <script>
 import editInviteTemplate from '~/pages/apps/_app/organization/_id/editInviteTemplate.vue'
 import editInviteMetadata from '~/pages/apps/_app/organization/_id/editInviteMetadata.vue'
+import { getApiUrl } from '~/utility'
 
 export default {
   components: {
@@ -301,6 +302,27 @@ export default {
       showDialog: false,
       selected: {},
     }
+  },
+  methods: {
+    async deleteTemplete(id) {
+      const url = getApiUrl()
+
+      const check = confirm('Are you sure you want to delete this template?')
+      let res = null
+      if (check === true) {
+        try {
+          res = await this.$axios.$delete(`${url}MarketingTemplates/${id}`)
+        } catch (e) {
+          console.error(
+            `Error in invitetemplate-grid while making a DELETE call to MarketingTemplate model in method deleteTemplete context: url:-${url}`,
+            e
+          )
+        }
+        if (res) {
+          console.log(res)
+        }
+      }
+    },
   },
 }
 </script>
