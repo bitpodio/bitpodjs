@@ -455,7 +455,7 @@ export default {
       )
         .split(' ')[0]
         .replace(/[^a-zA-Z ]/g, '')}-${randomStr}`
-      this.session.BitpodVirtualLink = `${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}${roomName}`
+      this.session.BitpodVirtualLink = `https://${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}${roomName}`
     },
     sdateProps() {
       return {
