@@ -474,7 +474,7 @@ export default {
       }
       return this.apps.filter((app) => {
         const appRoles = [app.name, ...app.roles]
-        return intersection(appRoles, userRoles)
+        return intersection(appRoles, userRoles).length > 0
       })
     },
     userCurrentOrgInfo() {
