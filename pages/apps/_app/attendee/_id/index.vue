@@ -50,7 +50,6 @@
             v-if="event && event.sessions && Object.keys(event.sessions).length"
           >
             <div
-              v-if="content"
               class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2 rounded-lg"
             >
               <v-flex class="d-flex justify-center align-center pb-3">
@@ -98,10 +97,19 @@
                       <v-list-item-title class="text-capitalize">{{
                         item.label
                       }}</v-list-item-title>
-                      <v-list-item-subtitle
-                        class="session-date"
-                        v-text="formatDate(item.startDateTime)"
-                      ></v-list-item-subtitle>
+                      <div v-if="item.startTime">
+                        <v-list-item-subtitle class="session-date">
+                          <v-icon class="fs-16 mr-1">mdi-clock</v-icon>
+                          {{ formatField(item.startTime) }}
+                          {{ formatField(item.endTime) }}
+                        </v-list-item-subtitle>
+                      </div>
+                      <div v-else>
+                        <v-list-item-subtitle
+                          class="session-date"
+                          v-text="formatDate(item.startDateTime)"
+                        ></v-list-item-subtitle>
+                      </div>
                     </v-list-item-content>
 
                     <v-list-item-icon class="ma-0">
@@ -417,7 +425,27 @@
             </v-flex>
             <v-divider></v-divider>
             <v-flex my-3>
-              <div class="body-1">
+              <div
+                v-if="event.BusinessType === 'Recurring'"
+                class="body-1 my-n3"
+              >
+                <v-list class="pa-0">
+                  <v-list-item
+                    v-for="item in registration.SessionListId"
+                    :key="item.id"
+                    class="pa-0"
+                  >
+                    <v-list-item-content class="py-0">
+                      <v-list-item-title>
+                        <v-icon class="fs-16 mr-1">mdi-clock</v-icon>
+                        {{ item.StartTime }} -
+                        {{ item.EndTime }}
+                      </v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                </v-list>
+              </div>
+              <div v-else class="body-1">
                 {{ formatDate(event && event.startDateTime) }} -<br />
                 {{ formatDate(event && event.endDateTime) }} -<br />
                 {{ formatField(event && event.timeZone) }}
@@ -523,7 +551,7 @@ export default {
       }
     },
     async getRegistrationData() {
-      const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}/Registrations/findRegistration?regId=${this.$route.params.id}`
+      const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Registrations/findRegistration?regId=${this.$route.params.id}`
       try {
         const res = await this.$axios.$get(URL)
         if (res) {
@@ -613,7 +641,7 @@ export default {
   background: #f0f0f0 !important;
 }
 .session-date {
-  min-height: 16px;
+  min-height: 18px;
 }
 .speaker-img {
   width: 100%;
