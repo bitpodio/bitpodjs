@@ -32,7 +32,7 @@
             class="flex-30 justify-center d-flex event-right-info pa-2"
           >
             <div class="text-h4 text-center text-capitalize">
-              {{ formatField(data.registration.EventName) }}
+              {{ formatField(registration.EventName) }}
             </div>
             <div class="body-1 text-center text-capitalize">
               By {{ formatField(event && event.organizer) }}
@@ -124,7 +124,6 @@
             </div>
           </div>
           <div
-            v-if="content"
             class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2 rounded-lg"
           >
             <v-flex class="d-flex justify-center align-center pb-3">
@@ -134,12 +133,51 @@
               <v-spacer></v-spacer>
             </v-flex>
             <v-divider></v-divider>
-            <Grid
-              view-name="registrationAttendeesPublic"
-              :content="content"
-              :context="data"
-              class="mt-n12"
-            />
+            <div>
+              <v-list>
+                <v-list-item
+                  v-for="item in registration.attendee"
+                  :key="item.id"
+                  class="px-0"
+                >
+                  <v-list-item-avatar size="48" class="mr-2 ma-0">
+                    <v-avatar
+                      color="primary"
+                      size="36"
+                      v-bind="attrs"
+                      class="mr-"
+                      v-on="on"
+                    >
+                      <v-avatar
+                        color="primary"
+                        size="36"
+                        v-bind="attrs"
+                        v-on="on"
+                      >
+                        <span class="white--text Twitter">{{
+                          item.FullName
+                        }}</span>
+                      </v-avatar>
+                    </v-avatar>
+                  </v-list-item-avatar>
+
+                  <v-list-item-content class="py-0">
+                    <v-list-item-title
+                      v-text="item.FullName"
+                    ></v-list-item-title>
+                    <v-list-item-subtitle
+                      v-text="item.Email"
+                    ></v-list-item-subtitle>
+                  </v-list-item-content>
+
+                  <v-list-item-icon class="ma-0 mt-2">
+                    <v-btn icon disabled>
+                      <v-icon>mdi-message-outline</v-icon>
+                    </v-btn>
+                  </v-list-item-icon>
+                </v-list-item>
+              </v-list>
+            </div>
           </div>
           <div>
             <div
@@ -346,17 +384,17 @@
                     <tbody>
                       <tr>
                         <td>Student</td>
-                        <td>{{ data.registration.SubTotal }}</td>
-                        <td>{{ data.registration.TicketQuantity }}</td>
-                        <td>{{ data.registration.TotalAmount }}</td>
+                        <td>{{ registration.SubTotal }}</td>
+                        <td>{{ registration.TicketQuantity }}</td>
+                        <td>{{ registration.TotalAmount }}</td>
                       </tr>
                       <tr>
                         <td></td>
                         <td></td>
                         <td>Total</td>
                         <td>
-                          {{ data.registration.Currency
-                          }}{{ data.registration.TotalAmount }}
+                          {{ registration.Currency
+                          }}{{ registration.TotalAmount }}
                         </td>
                       </tr>
                     </tbody>
@@ -427,18 +465,11 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
 import format from 'date-fns/format'
-import Grid from '~/components/common/grid'
 import nuxtconfig from '~/nuxt.config'
-import registration from '~/config/apps/event/gql/registration.gql'
-import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin } from '~/utility'
 export default {
   layout: 'public',
-  components: {
-    Grid,
-  },
   mixins: [configLoaderMixin],
   data() {
     return {
@@ -447,22 +478,20 @@ export default {
       isCancelReg: false,
       isRefund: false,
       event: {},
-      data: {
-        registration: {},
-      },
+      registration: {},
     }
   },
   computed: {
-    content() {
-      return this.contents ? this.contents.Registrations : null
-    },
     filter() {
       return {
         where: {
-          EventId: this.data.registration && this.data.registration.EventId,
+          EventId: this.registration && this.registration.EventId,
         },
       }
     },
+  },
+  mounted() {
+    this.getRegistrationData()
   },
   methods: {
     formatDate(date) {
@@ -493,11 +522,24 @@ export default {
         window.open(`https://meet.bitpod.io/${roomName}?e=${this.event.id}`)
       }
     },
+    async getRegistrationData() {
+      const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}/Registrations/findRegistration?regId=${this.$route.params.id}`
+      try {
+        const res = await this.$axios.$get(URL)
+        if (res) {
+          this.registration = res
+          this.getEventData(res.EventId)
+        }
+      } catch (e) {
+        console.error(
+          `Error in apps/event/_id/index.vue while making a Patch call to Event model in method updateEvent context: regId:-${this.$route.params.id} \n URL:- ${URL} `,
+          e
+        )
+      }
+    },
     async getEventData(data) {
-      if (data.EventId) {
-        // const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${data.EventId}`
-        const eventid = data.EventId.toString()
-        console.log('id', eventid)
+      if (data) {
+        const eventid = data.toString()
         const filter = { id: eventid }
         const URL = `https://${nuxtconfig.axios.eventUrl}${
           nuxtconfig.axios.apiEndpoint
@@ -505,9 +547,7 @@ export default {
         try {
           const res = await this.$axios.$get(URL)
           if (res) {
-            console.log('res', res)
             this.event = res.result
-            console.log('eventdata', this.event)
           }
         } catch (e) {
           console.error(
@@ -516,41 +556,6 @@ export default {
           )
         }
       }
-    },
-  },
-  apollo: {
-    data: {
-      query() {
-        return gql`
-          ${registration}
-        `
-      },
-      variables() {
-        return {
-          filters: {
-            where: {
-              id: this.$route.params.id,
-            },
-          },
-        }
-      },
-      update(data) {
-        const registrationData = formatGQLResult(data, 'Registration')
-        if (registrationData.length) {
-          const regdata = registrationData.length > 0 ? registrationData[0] : {}
-          this.getEventData(regdata)
-          return { registration: regdata }
-        }
-      },
-      result({ data, loading, networkStatus }) {},
-      error(error) {
-        this.error = error
-        this.loading = 0
-      },
-      prefetch: false,
-      loadingKey: 'loading',
-      skip: false,
-      pollInterval: 0,
     },
   },
 }
