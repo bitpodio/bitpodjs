@@ -2,7 +2,7 @@
   <div>
     <div v-if="item.CheckIn === null">
       <v-chip
-        class="ma-2 mb-0 pb-0"
+        class="ma-2 pb-0 mt-1"
         height="20"
         color="blue"
         text-color="white"
@@ -13,67 +13,63 @@
         Check In
       </v-chip>
     </div>
-    <div v-else style="display: flex; height: 20px;" class="ma-2 pb-0 mb-0">
+    <div v-else style="display: flex; height: 20px;" class="ma-2 pb-0 mt-1">
       <v-icon color="success fs-16">mdi-check</v-icon>
       <div>Checked in Just now</div>
     </div>
-    <v-col class="px-0">
-      <v-dialog
-        v-model="isCheckedIn"
-        persistent
-        scrollable
-        transition="dialog-bottom-transition"
-        max-width="600px"
-        max-height="1100px"
-      >
-        <v-card>
-          <v-card-title
-            class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex justify-center font-weight-regular"
+    <v-dialog
+      v-model="isCheckedIn"
+      persistent
+      scrollable
+      transition="dialog-bottom-transition"
+      max-width="600px"
+      max-height="1100px"
+    >
+      <v-card>
+        <v-card-title
+          class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex justify-center font-weight-regular"
+        >
+          <h4 class="black--text justify-center font-weight-regular pt-10 ml-5">
+            <i
+              class="fa fa-checkmark-circle tick-check icon-tick pr-2"
+              aria-hidden="true"
+            ></i
+            >You have successfully checked in. Enjoy the event!
+          </h4>
+          <v-spacer></v-spacer>
+        </v-card-title>
+        <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
+          <v-form ref="form" v-model="valid" :lazy-validation="lazy">
+            <v-row style="justify-content: center;">
+              <v-col cols="12" sm="10" md="8" class="pb-0 justify-center">
+                <v-flex my-3 d-flex justify-center align-center>
+                  <!-- eslint-disable-next-line vue/no-v-html -->
+                  <div v-html="setTemplates()" />
+                </v-flex>
+              </v-col>
+            </v-row>
+          </v-form>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions
+          class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10 ml-0 justify-center"
+        >
+          <v-btn
+            v-if="noBadgeFound"
+            color="primary"
+            small
+            v-bind="attrs"
+            v-on="on"
+            @click="openPrintForm"
           >
-            <h4
-              class="black--text justify-center font-weight-regular pt-10 ml-5"
-            >
-              <i
-                class="fa fa-checkmark-circle tick-check icon-tick pr-2"
-                aria-hidden="true"
-              ></i
-              >You have successfully checked in. Enjoy the event!
-            </h4>
-            <v-spacer></v-spacer>
-          </v-card-title>
-          <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
-            <v-form ref="form" v-model="valid" :lazy-validation="lazy">
-              <v-row style="justify-content: center;">
-                <v-col cols="12" sm="10" md="8" class="pb-0 justify-center">
-                  <v-flex my-3 d-flex justify-center align-center>
-                    <!-- eslint-disable-next-line vue/no-v-html -->
-                    <div v-html="setTemplates()" />
-                  </v-flex>
-                </v-col>
-              </v-row>
-            </v-form>
-          </v-card-text>
-          <v-divider></v-divider>
-          <v-card-actions
-            class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10 ml-0 justify-center"
-          >
-            <v-btn
-              v-if="noBadgeFound"
-              text
-              small
-              v-bind="attrs"
-              v-on="on"
-              @click="openPrintForm"
-            >
-              <v-icon left>mdi-printer</v-icon>Print Badges
-            </v-btn>
-            <v-btn text small v-bind="attrs" v-on="on" @click="onClose">
-              Close
-            </v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-    </v-col>
+            <v-icon left>mdi-printer</v-icon>Print Badges
+          </v-btn>
+          <v-btn text small v-bind="attrs" v-on="on" @click="onClose">
+            Close
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <v-snackbar v-model="snackbar" :timeout="timeout" top="true"
       ><div class="text-center">{{ snackbarText }}</div></v-snackbar
     >
