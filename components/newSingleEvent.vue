@@ -641,7 +641,7 @@ export default {
       isOnlineEvent: false,
       isBitpodVirtual: false,
 
-      isInalidEventLink: false,
+      isInvalidEventLink: false,
       uniqueLinkMessage: '',
       currenttimezone: '(GMT+05:30) India Standard Time',
       currentDatetime,
@@ -663,7 +663,10 @@ export default {
       return `${nuxtconfig.integrationLinks.EVENT_LINK_HINT}${this.eventData.UniqLink}`
     },
     gMapCenter() {
-      return { lat: this.locations[0].lat, lng: this.locations[0].lng }
+      return {
+        lat: (this.locations[0] && this.locations[0].lat) || 0.0,
+        lng: (this.locations[0] && this.locations[0].lng) || 0.0,
+      }
     },
     eventStartDateProps() {
       return {
@@ -708,7 +711,7 @@ export default {
       }
     },
     uniqueLinkValidationMsg() {
-      const errorMessage = this.isInalidEventLink ? this.uniqueLinkMessage : ''
+      const errorMessage = this.isInvalidEventLink ? this.uniqueLinkMessage : ''
       return errorMessage
     },
   },
@@ -724,6 +727,7 @@ export default {
       this.tickets = [ticket]
     },
   },
+
   methods: {
     getBitpodVirtualLink() {
       return `https://${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}/${
@@ -881,7 +885,9 @@ export default {
       }
     },
     returnToCenter() {
-      this.$refs.gMap && this.$refs.gMap.map.setCenter(this.locations[0])
+      if (this.locations && this.locations[0]) {
+        this.$refs.gMap && this.$refs.gMap.map.setCenter(this.locations[0])
+      }
     },
     validTab1() {
       const { Title, StartDate, EndDate, Timezone, UniqLink } = this.eventData
@@ -894,7 +900,7 @@ export default {
         StartDate < EndDate &&
         StartDate >= new Date() &&
         EndDate >= new Date() &&
-        this.isInalidEventLink === false
+        this.isInvalidEventLink === false
       )
     },
     validTab2() {
@@ -947,7 +953,7 @@ export default {
         StartDate < EndDate &&
         StartDate >= new Date() &&
         EndDate >= new Date() &&
-        this.isInalidEventLink === false
+        this.isInvalidEventLink === false
       ) {
         this.setNextTab()
       } else if (this.currentTab === 2) {
@@ -975,7 +981,7 @@ export default {
         .join(', ')
     },
 
-    saveRecord() {
+    async saveRecord() {
       const isValidTicket = this.tickets.map((ticket, index) => {
         return (
           ticket.Code !== '' &&
@@ -1000,37 +1006,41 @@ export default {
         this.eventData.Organizer = this.$auth.$state.user.data.name
 
         const baseUrl = getApiUrl()
-        this.$axios
+        let res = null
+        let ticketRes = null
+        res = await this.$axios
           .$post(`${baseUrl}Events`, {
             ...this.eventData,
           })
-          .then((res) => {
-            this.eventId = res.id
-
-            const ticketList = []
-
-            this.tickets.forEach(function (ticket) {
-              ticket.Events = res.id
-              ticket.Amount = parseInt(ticket.Amount)
-              ticket.TicketCount = parseInt(ticket.TicketCount)
-              ticketList.push(ticket)
-            })
-
-            // eslint-disable-next-line promise/no-nesting
-            return this.$axios
-              .$post(`${baseUrl}Tickets`, ticketList)
-              .then((ticketres) => {
-                this.isTicket = false
-                this.isEventCreate = true
-                return ticketres
-              })
-              .catch((e) => {
-                console.log('error', e)
-              })
-          })
           .catch((e) => {
-            console.log('error', e)
+            console.log(
+              `Error in Save function of new single event form  when creating event, fileName - newSingleEvent.vue context: create event , error: ${e}`
+            )
           })
+        if (res) {
+          this.eventId = res.id
+          const ticketList = []
+
+          this.tickets.forEach(function (ticket) {
+            ticket.Events = res.id
+            ticket.Amount = parseInt(ticket.Amount)
+            ticket.TicketCount = parseInt(ticket.TicketCount)
+            ticketList.push(ticket)
+          })
+
+          ticketRes = await this.$axios
+            .$post(`${baseUrl}Tickets`, ticketList)
+            .catch((e) => {
+              console.log(
+                `Error in Save function of new single event form  when creating ticket, fileName - newSingleEvent.vue context: create ticket , eventId: ${this.eventId}, error: ${e}`
+              )
+            })
+          if (ticketRes) {
+            this.isTicket = false
+            this.isEventCreate = true
+            return ticketRes
+          }
+        }
       }
     },
     isEmptyAddress() {
@@ -1099,7 +1109,9 @@ export default {
             return res
           })
           .catch((e) => {
-            console.log('error', e)
+            console.log(
+              `Error in changeAddress function of new single event form  when place search address and updating location on map, fileName - newSingleEvent.vue context: place search address , error: ${e}`
+            )
           })
       }
     },
@@ -1146,7 +1158,7 @@ export default {
           this.checkUniqueLink(this.eventData.UniqLink)
         }
       } else {
-        this.isInalidEventLink = true
+        this.isInvalidEventLink = true
         this.uniqueLinkMessage = strings.UNIQUE_LINK_FORMAT
       }
       this.eventData.UniqLink = value
@@ -1162,10 +1174,10 @@ export default {
         },
       })
       if (result.data.Event.EventCount > 0) {
-        this.isInalidEventLink = true
+        this.isInvalidEventLink = true
         this.uniqueLinkMessage = strings.UNIQUE_LINK_DUPLICATE
       } else {
-        this.isInalidEventLink = false
+        this.isInvalidEventLink = false
         this.isUniqLinkValid = true
       }
     },

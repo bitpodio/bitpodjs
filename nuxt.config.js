@@ -51,7 +51,7 @@ export default {
           'https://maps.googleapis.com/maps/api/js'
         }?key=${
           process.env.GOOGLE_API_KEY ||
-          'AIzaSyCPS6SZlor8qxfpul-dKyN6566XG2R5dFM'
+          'AIzaSyBKle17JR_zpGEzwARF0H8VFU9NeH9nh7c'
         }&libraries=places`,
       },
       {
@@ -104,7 +104,7 @@ export default {
       {
         key:
           process.env.GOOGLE_API_KEY ||
-          'AIzaSyCPS6SZlor8qxfpul-dKyN6566XG2R5dFM',
+          'AIzaSyBKle17JR_zpGEzwARF0H8VFU9NeH9nh7c',
         // you can use libraries: ['places']
       },
     ],
@@ -277,7 +277,7 @@ export default {
   },
   generalConfig: {
     googleMapKey:
-      process.env.GOOGLE_API_KEY || 'AIzaSyCPS6SZlor8qxfpul-dKyN6566XG2R5dFM',
+      process.env.GOOGLE_API_KEY || 'AIzaSyBKle17JR_zpGEzwARF0H8VFU9NeH9nh7c',
     googleMapGeocodeApi:
       process.env.GOOGLE_MAPS_GEOCODE_API ||
       'https://maps.googleapis.com/maps/api/geocode/json',
