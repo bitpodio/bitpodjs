@@ -123,10 +123,8 @@
                         <div v-if="item.StartTime" class="mt-1">
                           <v-list-item-subtitle class="session-date">
                             <v-icon class="fs-16 mr-1">fa-clock</v-icon>
-                            <div class="mt-1">
-                              {{ formatField(item.StartTime) }} -
-                              {{ formatField(item.EndTime) }}
-                            </div>
+                            {{ formatField(item.StartTime) }} -
+                            {{ formatField(item.EndTime) }}
                           </v-list-item-subtitle>
                         </div>
                         <div v-else>
@@ -746,6 +744,9 @@ export default {
   flex-shrink: 0;
   max-width: 100%;
 }
+.eventsite-banner img {
+  min-height: 300px;
+}
 .flex-70 {
   flex: 70%;
   width: 70%;
@@ -791,6 +792,10 @@ export default {
     max-width: 100% !important;
   }
   .eventsite-banner {
+    max-height: 160px;
+    min-height: 160px;
+  }
+  .eventsite-banner img {
     max-height: 160px;
     min-height: 160px;
   }
