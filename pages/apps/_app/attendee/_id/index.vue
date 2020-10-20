@@ -304,56 +304,6 @@
               </v-list-item>
             </v-list>
           </div>
-          <div
-            v-if="content"
-            class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 mr-0 mb-4 pb-2 rounded-lg"
-          >
-            <v-flex class="d-flex justify-center align-center pb-3">
-              <h2 class="body-1 pb-0">
-                <i class="fa fa-ticket pr-1" aria-hidden="true"></i>
-                Tickets
-              </h2>
-              <v-spacer></v-spacer>
-            </v-flex>
-            <v-divider></v-divider>
-            <v-simple-table dense>
-              <template v-slot:default>
-                <thead>
-                  <tr>
-                    <th class="text-left">
-                      Name
-                    </th>
-                    <th class="text-left">
-                      Amount
-                    </th>
-                    <th class="text-left">
-                      Quantity
-                    </th>
-                    <th class="text-left">
-                      Total
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Student</td>
-                    <td>{{ data.registration.SubTotal }}</td>
-                    <td>{{ data.registration.TicketQuantity }}</td>
-                    <td>{{ data.registration.TotalAmount }}</td>
-                  </tr>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td>Total</td>
-                    <td>
-                      {{ data.registration.Currency
-                      }}{{ data.registration.TotalAmount }}
-                    </td>
-                  </tr>
-                </tbody>
-              </template>
-            </v-simple-table>
-          </div>
           <v-expansion-panels
             accordion
             flat
