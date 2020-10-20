@@ -196,27 +196,23 @@
         <v-list>
           <v-list-item>
             <v-list-item-title class="d-flex flex-wrap app-container">
-              <nuxt-link
-                to="/apps/event/list/Event/live and draft event"
-                class="text-decoration-none"
-              >
-                <v-flex
-                  class="d-flex justify-center align-center flex-column app-view"
-                >
-                  <v-flex class="d-flex justify-center align-center">
-                    <i
-                      class="fa fa-calendar fs-36 success--text"
-                      aria-hidden="true"
-                    ></i>
-                  </v-flex>
+              <div v-for="app in aaps" :key="app.name">
+                <nuxt-link :to="app.route" class="text-decoration-none">
                   <v-flex
-                    ><div class="pa-1 caption text--primary">
-                      Event
-                    </div></v-flex
+                    class="d-flex justify-center align-center flex-column app-view"
                   >
-                </v-flex>
-              </nuxt-link>
-              <nuxt-link
+                    <v-flex class="d-flex justify-center align-center">
+                      <i :class="app.class" aria-hidden="true"></i>
+                    </v-flex>
+                    <v-flex
+                      ><div class="pa-1 caption text--primary">
+                        {{ app.label }}
+                      </div></v-flex
+                    >
+                  </v-flex>
+                </nuxt-link>
+              </div>
+              <!-- <nuxt-link
                 to="/apps/admin/organization/5cfe026f6ab042000c530105"
                 class="text-decoration-none"
               >
@@ -293,7 +289,7 @@
                     </div></v-flex
                   >
                 </v-flex>
-              </nuxt-link>
+              </nuxt-link> -->
             </v-list-item-title>
           </v-list-item>
         </v-list>
@@ -396,6 +392,37 @@ export default {
     message: false,
     triggerReset: false,
     triggerRecEventReset: false,
+    apps: [
+      {
+        name: 'Event',
+        label: 'Event',
+        css: 'fa fa-calendar fs-36 success--text',
+        type: 'route',
+        route: '/apps/event/list/Event/live and draft event',
+      },
+      {
+        name: 'Administration',
+        label: 'Administration',
+        css: 'fa fa-cogs fs-36 primary--text',
+        type: 'route',
+        route: '/apps/admin/organization/5cfe026f6ab042000c530105',
+      },
+      {
+        name: 'HelpCenter',
+        label: 'Help Center',
+        css: 'fa fa-help-circle fs-36 warning--text',
+        type: 'route',
+        route: '',
+      },
+      {
+        name: 'Survey',
+        label: 'Survey',
+        css: 'survey-img',
+        type: 'url',
+        icon: 'https://survey.bitpod.io/favicon.ico',
+        href: 'https://dev-survey.bitpod.io/',
+      },
+    ],
     items: [
       {
         icon: 'fa fa-grid',
@@ -432,6 +459,28 @@ export default {
       },
     ],
   }),
+  computed: {
+    userApps() {
+      const userRoles = this.userCurrentOrgInfo.roles
+      if (userRoles.includes('$orgowner')) {
+        return this.apps
+      }
+      return this.apps.filter((app) => {
+        const appRoles = [app.name]
+        return appRoles.includes(userRoles)
+      })
+    },
+    userCurrentOrgInfo() {
+      const currentOrg = this.$store.state.currentOrg
+      const orgList = this.$store.state.auth.user.data.orgList
+      const currentDetails =
+        Array.isArray(orgList) &&
+        orgList.filter((org) => {
+          return org.name === currentOrg.name
+        })
+      return currentDetails ? currentDetails.roles : {}
+    },
+  },
   async created() {
     let token = this.$auth.strategy.token.get()
     if (token) {
