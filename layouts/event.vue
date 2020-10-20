@@ -369,7 +369,7 @@
 </template>
 
 <script>
-import { intersection } from '~/utility/object.js'
+import { intersection, _get } from '~/utility/object.js'
 import OrgnaizationList from '~/components/common/organization-list'
 export default {
   components: {
@@ -466,8 +466,7 @@ export default {
   }),
   computed: {
     userApps() {
-      const userOrgInfo = this.userCurrentOrgInfo || []
-      const userRoles = userOrgInfo.roles
+      const userRoles = this.userCurrentOrgRoles || []
       console.log('userRoles', userRoles)
       if (userRoles.includes('$orgowner')) {
         return this.apps
@@ -477,7 +476,7 @@ export default {
         return intersection(appRoles, userRoles)
       })
     },
-    userCurrentOrgInfo() {
+    userCurrentOrgRoles() {
       const currentOrg = this.$store.state.currentOrg
       const orgList = this.$store.state.auth.user.data.orgList
       const currentDetails =
@@ -485,7 +484,8 @@ export default {
         orgList.filter((org) => {
           return org.name === currentOrg.name
         })
-      return currentDetails && currentDetails.roles ? currentDetails.roles : {}
+      const userRoles = _get(currentDetails, '0.roles')
+      return userRoles || {}
     },
   },
   async created() {
