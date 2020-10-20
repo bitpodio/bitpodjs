@@ -46,16 +46,191 @@
       </v-flex>
       <v-flex d-flex flex-md-row flex-lg-row flex-column-reverse>
         <v-flex column class="mxw-w70 mr-0 mr-md-2">
-          <div
-            v-if="event && event.sessions && Object.keys(event.sessions).length"
-          >
+          <div v-if="event.BusinessType === 'Recurring'">
+            <div
+              v-if="
+                registration &&
+                registration.SessionListId &&
+                registration.SessionListId.length
+              "
+            >
+              <div
+                class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2 rounded-lg"
+              >
+                <v-flex class="d-flex justify-center align-center pb-3">
+                  <h2 class="body-1 pb-0">
+                    <i class="fa fa-black-board pr-1" aria-hidden="true"></i>
+                    Sessions
+                  </h2>
+                  <v-spacer></v-spacer>
+                </v-flex>
+                <v-divider></v-divider>
+                <div>
+                  <v-list>
+                    <v-list-item
+                      v-for="item in registration.SessionListId"
+                      :key="item.id"
+                      class="px-1 pt-2"
+                    >
+                      <v-list-item-avatar tile size="48" class="my-0">
+                        <v-avatar
+                          size="48"
+                          tile
+                          v-bind="attrs"
+                          :style="{
+                            'background-color': getRandomColor(item.Name),
+                          }"
+                          v-on="on"
+                        >
+                          <div class="d-flex flex-column">
+                            <div v-if="item.startDateTime">
+                              <div class="white--text text-h6 pt-0">
+                                {{ formatDateDay(item.startDateTime) }}
+                              </div>
+                              <div class="white--text body-2 mt-n1">
+                                {{ formatDateMonth(item.startDateTime) }}
+                              </div>
+                            </div>
+                            <div v-else>
+                              <v-icon class="white--text">fa-history</v-icon>
+                            </div>
+                          </div>
+                        </v-avatar>
+                      </v-list-item-avatar>
+
+                      <v-list-item-content>
+                        <v-list-item-title class="text-capitalize">{{
+                          item.Name
+                        }}</v-list-item-title>
+                        <div v-if="item.StartTime">
+                          <v-list-item-subtitle class="session-date">
+                            <v-icon class="fs-16 mr-1">fa-clock</v-icon>
+                            {{ formatField(item.StartTime) }} -
+                            {{ formatField(item.EndTime) }}
+                          </v-list-item-subtitle>
+                        </div>
+                        <div v-else>
+                          <v-list-item-subtitle
+                            class="session-date"
+                            v-text="formatDate(item.startDateTime)"
+                          ></v-list-item-subtitle>
+                        </div>
+                      </v-list-item-content>
+
+                      <v-list-item-icon class="ma-0">
+                        <div v-if="item.LocationType === 'Bitpod Virtual'">
+                          <v-btn
+                            class="ma-2 mr-0"
+                            outlined
+                            color="success"
+                            @click="startEvent(item.BitpodVirtualLink, true)"
+                          >
+                            Join Session<v-icon right>
+                              mdi-video
+                            </v-icon>
+                          </v-btn>
+                        </div>
+                      </v-list-item-icon>
+                    </v-list-item>
+                  </v-list>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div v-else>
+            <div
+              v-if="
+                event && event.sessions && Object.keys(event.sessions).length
+              "
+            >
+              <div
+                class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2 rounded-lg"
+              >
+                <v-flex class="d-flex justify-center align-center pb-3">
+                  <h2 class="body-1 pb-0">
+                    <i class="fa fa-black-board pr-1" aria-hidden="true"></i>
+                    Sessions
+                  </h2>
+                  <v-spacer></v-spacer>
+                </v-flex>
+                <v-divider></v-divider>
+                <div>
+                  <v-list>
+                    <v-list-item
+                      v-for="item in Object.values(event.sessions)"
+                      :key="item.id"
+                      class="px-1 pt-2"
+                    >
+                      <v-list-item-avatar tile size="48" class="my-0">
+                        <v-avatar
+                          size="48"
+                          tile
+                          v-bind="attrs"
+                          :style="{
+                            'background-color': getRandomColor(item.label),
+                          }"
+                          v-on="on"
+                        >
+                          <div class="d-flex flex-column">
+                            <div v-if="item.startDateTime">
+                              <div class="white--text text-h6 pt-0">
+                                {{ formatDateDay(item.startDateTime) }}
+                              </div>
+                              <div class="white--text body-2 mt-n1">
+                                {{ formatDateMonth(item.startDateTime) }}
+                              </div>
+                            </div>
+                            <div v-else>
+                              <v-icon class="white--text">fa-history</v-icon>
+                            </div>
+                          </div>
+                        </v-avatar>
+                      </v-list-item-avatar>
+
+                      <v-list-item-content>
+                        <v-list-item-title class="text-capitalize">{{
+                          item.label
+                        }}</v-list-item-title>
+                        <div v-if="item.startTime">
+                          <v-list-item-subtitle class="session-date">
+                            <v-icon class="fs-16 mr-1">fa-clock</v-icon>
+                            {{ formatField(item.startTime) }}
+                            {{ formatField(item.endTime) }}
+                          </v-list-item-subtitle>
+                        </div>
+                        <div v-else>
+                          <v-list-item-subtitle
+                            class="session-date"
+                            v-text="formatDate(item.startDateTime)"
+                          ></v-list-item-subtitle>
+                        </div>
+                      </v-list-item-content>
+
+                      <v-list-item-icon class="ma-0">
+                        <div v-if="item.locationType === 'Bitpod Virtual'">
+                          <v-btn
+                            class="ma-2 mr-0"
+                            outlined
+                            color="success"
+                            @click="startEvent(item.bitpodVirtualLink, true)"
+                          >
+                            Join Session<v-icon right>
+                              mdi-video
+                            </v-icon>
+                          </v-btn>
+                        </div>
+                      </v-list-item-icon>
+                    </v-list-item>
+                  </v-list>
+                </div>
+              </div>
+            </div>
             <div
               class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2 rounded-lg"
             >
               <v-flex class="d-flex justify-center align-center pb-3">
                 <h2 class="body-1 pb-0">
-                  <i class="fa fa-black-board pr-1" aria-hidden="true"></i>
-                  Sessions
+                  <i class="fa fa-users pr-1" aria-hidden="true"></i> Attendees
                 </h2>
                 <v-spacer></v-spacer>
               </v-flex>
@@ -63,128 +238,48 @@
               <div>
                 <v-list>
                   <v-list-item
-                    v-for="item in Object.values(event.sessions)"
+                    v-for="item in registration.attendee"
                     :key="item.id"
-                    class="px-1 pt-2"
+                    class="px-0"
                   >
-                    <v-list-item-avatar tile size="48" class="my-0">
-                      <v-avatar
-                        size="48"
-                        tile
-                        v-bind="attrs"
-                        :style="{
-                          'background-color': getRandomColor(item.label),
-                        }"
-                        v-on="on"
-                      >
-                        <div class="d-flex flex-column">
-                          <div v-if="item.startDateTime">
-                            <div class="white--text text-h6 pt-0">
-                              {{ formatDateDay(item.startDateTime) }}
-                            </div>
-                            <div class="white--text body-2 mt-n1">
-                              {{ formatDateMonth(item.startDateTime) }}
-                            </div>
-                          </div>
-                          <div v-else>
-                            <v-icon class="white--text">fa-history</v-icon>
-                          </div>
-                        </div>
-                      </v-avatar>
-                    </v-list-item-avatar>
-
-                    <v-list-item-content>
-                      <v-list-item-title class="text-capitalize">{{
-                        item.label
-                      }}</v-list-item-title>
-                      <div v-if="item.startTime">
-                        <v-list-item-subtitle class="session-date">
-                          <v-icon class="fs-16 mr-1">mdi-clock</v-icon>
-                          {{ formatField(item.startTime) }}
-                          {{ formatField(item.endTime) }}
-                        </v-list-item-subtitle>
-                      </div>
-                      <div v-else>
-                        <v-list-item-subtitle
-                          class="session-date"
-                          v-text="formatDate(item.startDateTime)"
-                        ></v-list-item-subtitle>
-                      </div>
-                    </v-list-item-content>
-
-                    <v-list-item-icon class="ma-0">
-                      <div v-if="item.locationType === 'Bitpod Virtual'">
-                        <v-btn
-                          class="ma-2 mr-0"
-                          outlined
-                          color="success"
-                          @click="startEvent(item.bitpodVirtualLink, true)"
-                        >
-                          Join Session<v-icon right>
-                            mdi-video
-                          </v-icon>
-                        </v-btn>
-                      </div>
-                    </v-list-item-icon>
-                  </v-list-item>
-                </v-list>
-              </div>
-            </div>
-          </div>
-          <div
-            class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2 rounded-lg"
-          >
-            <v-flex class="d-flex justify-center align-center pb-3">
-              <h2 class="body-1 pb-0">
-                <i class="fa fa-users pr-1" aria-hidden="true"></i> Attendees
-              </h2>
-              <v-spacer></v-spacer>
-            </v-flex>
-            <v-divider></v-divider>
-            <div>
-              <v-list>
-                <v-list-item
-                  v-for="item in registration.attendee"
-                  :key="item.id"
-                  class="px-0"
-                >
-                  <v-list-item-avatar size="48" class="mr-2 ma-0">
-                    <v-avatar
-                      color="primary"
-                      size="36"
-                      v-bind="attrs"
-                      class="mr-"
-                      v-on="on"
-                    >
+                    <v-list-item-avatar size="48" class="mr-2 ma-0">
                       <v-avatar
                         color="primary"
                         size="36"
                         v-bind="attrs"
+                        class="mr-"
                         v-on="on"
                       >
-                        <span class="white--text Twitter">{{
-                          item.FullName
-                        }}</span>
+                        <v-avatar
+                          color="primary"
+                          size="36"
+                          v-bind="attrs"
+                          v-on="on"
+                        >
+                          <span class="white--text Twitter">{{
+                            item.FullName
+                          }}</span>
+                        </v-avatar>
                       </v-avatar>
-                    </v-avatar>
-                  </v-list-item-avatar>
+                    </v-list-item-avatar>
 
-                  <v-list-item-content class="py-0">
-                    <v-list-item-title
-                      v-text="item.FullName"
-                    ></v-list-item-title>
-                    <v-list-item-subtitle
-                      v-text="item.Email"
-                    ></v-list-item-subtitle>
-                  </v-list-item-content>
+                    <v-list-item-content class="py-0">
+                      <v-list-item-title
+                        v-text="item.FullName"
+                      ></v-list-item-title>
+                      <v-list-item-subtitle
+                        v-text="item.Email"
+                      ></v-list-item-subtitle>
+                    </v-list-item-content>
 
-                  <v-list-item-icon class="ma-0 mt-2">
-                    <v-btn icon disabled>
-                      <v-icon>mdi-message-outline</v-icon>
-                    </v-btn>
-                  </v-list-item-icon>
-                </v-list-item>
-              </v-list>
+                    <v-list-item-icon class="ma-0 mt-2">
+                      <v-btn icon disabled>
+                        <v-icon>mdi-message-outline</v-icon>
+                      </v-btn>
+                    </v-list-item-icon>
+                  </v-list-item>
+                </v-list>
+              </div>
             </div>
           </div>
           <div>
@@ -350,71 +445,73 @@
               </v-list-item>
             </v-list>
           </div>
-          <v-expansion-panels
-            accordion
-            flat
-            class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 mr-0 mb-4 pb-2 rounded-lg"
-          >
-            <v-expansion-panel
-              v-for="(item, i) in 1"
-              :key="i"
+          <div v-if="event.BusinessType === 'Single'">
+            <v-expansion-panels
+              accordion
               flat
-              class="elevation-0 pa-0"
+              class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 mr-0 mb-4 pb-2 rounded-lg"
             >
-              <v-expansion-panel-header class="elevation-0 pa-0"
-                ><v-flex class="d-flex justify-center align-center pb-0">
-                  <h2 class="body-1 pb-0">
-                    <i class="fa fa-ticket pr-1" aria-hidden="true"></i>
-                    Tickets
-                  </h2>
-                  <v-spacer></v-spacer> </v-flex
-              ></v-expansion-panel-header>
-              <v-expansion-panel-content class="pa-0">
-                <v-divider></v-divider>
-                <v-simple-table dense>
-                  <template v-slot:default>
-                    <thead>
-                      <tr>
-                        <th class="text-left">
-                          Name
-                        </th>
-                        <th class="text-left">
-                          Amount
-                        </th>
-                        <th class="text-left">
-                          Quantity
-                        </th>
-                        <th class="text-left">
-                          Total
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>Student</td>
-                        <td>{{ registration.SubTotal }}</td>
-                        <td>{{ registration.TicketQuantity }}</td>
-                        <td>{{ registration.TotalAmount }}</td>
-                      </tr>
-                      <tr>
-                        <td></td>
-                        <td></td>
-                        <td>Total</td>
-                        <td>
-                          {{ registration.Currency
-                          }}{{ registration.TotalAmount }}
-                        </td>
-                      </tr>
-                    </tbody>
-                  </template>
-                </v-simple-table>
-              </v-expansion-panel-content>
-            </v-expansion-panel>
-          </v-expansion-panels>
+              <v-expansion-panel
+                v-for="(item, i) in 1"
+                :key="i"
+                flat
+                class="elevation-0 pa-0"
+              >
+                <v-expansion-panel-header class="elevation-0 pa-0"
+                  ><v-flex class="d-flex justify-center align-center pb-0">
+                    <h2 class="body-1 pb-0">
+                      <i class="fa fa-ticket pr-1" aria-hidden="true"></i>
+                      Tickets
+                    </h2>
+                    <v-spacer></v-spacer> </v-flex
+                ></v-expansion-panel-header>
+                <v-expansion-panel-content class="pa-0">
+                  <v-divider></v-divider>
+                  <v-simple-table dense>
+                    <template v-slot:default>
+                      <thead>
+                        <tr>
+                          <th class="text-left">
+                            Name
+                          </th>
+                          <th class="text-left">
+                            Amount
+                          </th>
+                          <th class="text-left">
+                            Quantity
+                          </th>
+                          <th class="text-left">
+                            Total
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Student</td>
+                          <td>{{ registration.SubTotal }}</td>
+                          <td>{{ registration.TicketQuantity }}</td>
+                          <td>{{ registration.TotalAmount }}</td>
+                        </tr>
+                        <tr>
+                          <td></td>
+                          <td></td>
+                          <td>Total</td>
+                          <td>
+                            {{ registration.Currency
+                            }}{{ registration.TotalAmount }}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </template>
+                  </v-simple-table>
+                </v-expansion-panel-content>
+              </v-expansion-panel>
+            </v-expansion-panels>
+          </div>
         </v-flex>
         <v-flex column class="mxw-w30">
           <div
-            class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mb-4 mx-0 mx-md-2 mr-0 pb-2 rounded-lg"
+            class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mb-4 mx-0 ml-md-2 mr-0 pb-2 rounded-lg"
           >
             <v-flex class="d-flex justify-center align-center pb-2">
               <h2 class="body-1 pb-0">
@@ -431,15 +528,13 @@
               >
                 <v-list class="pa-0">
                   <v-list-item
-                    v-for="item in registration.SessionListId"
+                    v-for="item in registration.attendee"
                     :key="item.id"
                     class="pa-0"
                   >
                     <v-list-item-content class="py-0">
                       <v-list-item-title>
-                        <v-icon class="fs-16 mr-1">mdi-clock</v-icon>
-                        {{ item.StartTime }} -
-                        {{ item.EndTime }}
+                        {{ formatDate(item.BookingDate) }}
                       </v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
@@ -453,7 +548,7 @@
             </v-flex>
           </div>
           <div
-            class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mb-4 mx-0 mx-md-2 mr-0 pb-2 rounded-lg"
+            class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mb-4 mx-0 ml-md-2 mr-0 pb-2 rounded-lg"
           >
             <v-flex class="d-flex justify-center align-center pb-2">
               <h2 class="body-1 pb-0">
@@ -475,6 +570,11 @@
                   mdi-video
                 </v-icon>
               </v-btn>
+            </div>
+            <div v-else-if="event.locationType === 'Online event'">
+              <v-chip class="ma-2 ml-0" color="primary" outlined pill>
+                Online Event
+              </v-chip>
             </div>
             <div v-else>
               <v-flex my-3>
