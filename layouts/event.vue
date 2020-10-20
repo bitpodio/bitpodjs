@@ -469,7 +469,7 @@ export default {
       const userInfo = this.userCurrentOrgInfo || {}
       const userRoles = userInfo.roles
       console.log('userRoles', userRoles)
-      if (userRoles.includes('$orgowner')) {
+      if (userRoles.includes('$orgowner') && userInfo && userInfo.id === 1) {
         return this.apps
       }
       return this.apps.filter((app) => {
