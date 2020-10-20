@@ -369,6 +369,7 @@
 </template>
 
 <script>
+import { intersection } from '~/utility/object.js'
 import OrgnaizationList from '~/components/common/organization-list'
 export default {
   components: {
@@ -399,6 +400,7 @@ export default {
         css: 'fa fa-calendar fs-36 success--text',
         type: 'route',
         route: '/apps/event/list/Event/live and draft event',
+        roles: ['$orguser'],
       },
       {
         name: 'Administration',
@@ -406,6 +408,7 @@ export default {
         css: 'fa fa-cogs fs-36 primary--text',
         type: 'route',
         route: '/apps/admin/organization/5cfe026f6ab042000c530105',
+        roles: [],
       },
       {
         name: 'HelpCenter',
@@ -413,6 +416,7 @@ export default {
         css: 'fa fa-help-circle fs-36 warning--text',
         type: 'route',
         route: '',
+        roles: ['$orguser'],
       },
       {
         name: 'Survey',
@@ -421,6 +425,7 @@ export default {
         type: 'url',
         icon: 'https://survey.bitpod.io/favicon.ico',
         href: 'https://dev-survey.bitpod.io/',
+        roles: ['$orguser'],
       },
     ],
     items: [
@@ -466,8 +471,8 @@ export default {
         return this.apps
       }
       return this.apps.filter((app) => {
-        const appRoles = [app.name]
-        return appRoles.includes(userRoles)
+        const appRoles = [app.name, ...app.roles]
+        return intersection(appRoles, userRoles)
       })
     },
     userCurrentOrgInfo() {
