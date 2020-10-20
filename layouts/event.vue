@@ -202,7 +202,7 @@
                     class="d-flex justify-center align-center flex-column app-view"
                   >
                     <v-flex class="d-flex justify-center align-center">
-                      <i :class="app.class" aria-hidden="true"></i>
+                      <i :class="app.css" aria-hidden="true"></i>
                     </v-flex>
                     <v-flex
                       ><div class="pa-1 caption text--primary">
@@ -466,7 +466,8 @@ export default {
   }),
   computed: {
     userApps() {
-      const userRoles = this.userCurrentOrgRoles || []
+      const userInfo = this.userCurrentOrgInfo || {}
+      const userRoles = userInfo.roles
       console.log('userRoles', userRoles)
       if (userRoles.includes('$orgowner')) {
         return this.apps
@@ -476,7 +477,7 @@ export default {
         return intersection(appRoles, userRoles)
       })
     },
-    userCurrentOrgRoles() {
+    userCurrentOrgInfo() {
       const currentOrg = this.$store.state.currentOrg
       const orgList = this.$store.state.auth.user.data.orgList
       const currentDetails =
@@ -484,8 +485,8 @@ export default {
         orgList.filter((org) => {
           return org.name === currentOrg.name
         })
-      const userRoles = _get(currentDetails, '0.roles')
-      return userRoles || {}
+      const userOrgInfo = _get(currentDetails, '0')
+      return userOrgInfo || {}
     },
   },
   async created() {
