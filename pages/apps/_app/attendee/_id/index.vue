@@ -160,7 +160,7 @@
                 <v-card
                   v-for="item in Object.values(event.speakers)"
                   :key="item.id"
-                  class="pb-speakers ma-4 ml-0 mb-0 ma-xs-4 elevation-0"
+                  class="pb-speakers ma-4 ml-0 mb-0 ma-xs-4 elevation-0 greybg"
                 >
                   <div v-if="item.imageURL" class="overflow-hidden">
                     <img
