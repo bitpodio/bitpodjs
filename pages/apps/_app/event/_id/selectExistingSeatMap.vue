@@ -103,6 +103,11 @@ export default {
       default: () => false,
       required: false,
     },
+    layoutId: {
+      type: String,
+      default: null,
+      required: false,
+    },
   },
   data() {
     return {
@@ -124,9 +129,7 @@ export default {
       try {
         const res = await this.$axios.$get(URL)
         if (res) {
-          console.log('res', res)
           this.seatMaps = res
-          console.log('seatMaps', this.seatMaps)
         }
       } catch (e) {
         console.error(
@@ -136,10 +139,19 @@ export default {
       }
     },
     async updateLayoutId(itemId) {
-      const obj = {
-        LayoutId: itemId,
+      let obj
+      let URL
+      if (this.$route.params.app === 'event') {
+        obj = {
+          LayoutId: itemId,
+        }
+        URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`
+      } else {
+        obj = {
+          LayoutId: itemId,
+        }
+        URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Locations/${this.layoutId}`
       }
-      const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`
       try {
         const res = await this.$axios.$patch(URL, obj)
         if (res) {

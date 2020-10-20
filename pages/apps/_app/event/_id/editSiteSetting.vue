@@ -44,7 +44,7 @@
                       class="d-flex flex-wrap pa-0 ml-3 justify-center justify-md-start"
                     >
                       <v-hover
-                        v-for="item in formData"
+                        v-for="(item, index) in formData"
                         :key="item.id"
                         v-slot:default="{ hover }"
                       >
@@ -53,7 +53,7 @@
                             :elevation="hover ? 4 : 2"
                             class="ma-3 ml-0 mt-0"
                             :class="{
-                              'on-hover': selectedItem === item.id,
+                              'on-hover': selectedItem === index,
                             }"
                             height="250"
                             width="250"
@@ -102,7 +102,7 @@
                                   color="primary"
                                   @click="
                                     selectTemplate(item.Name)
-                                    selectedItem = item.id
+                                    selectedItem = index
                                   "
                                   >Select</v-btn
                                 >
@@ -301,7 +301,8 @@ export default {
       themeSelected: '',
       animation: [],
       animationDropDown: [],
-      selectedItem: '',
+      selectedItem: 0,
+      newData: {},
     }
   },
   mounted() {
@@ -316,6 +317,20 @@ export default {
       })
   },
   methods: {
+    setDefaultSelected() {
+      if (this.eventData.BusinessType === 'Recurring') {
+        this.selectedItem = 3
+      } else {
+        this.selectedItem = 0
+      }
+    },
+    getDefaultTemplate() {
+      if (this.eventData.BusinessType === 'Recurring') {
+        this.selectTemplate('Dark')
+      } else {
+        this.selectTemplate('Event')
+      }
+    },
     changeTab() {
       this.tabs = '2'
     },
@@ -331,20 +346,43 @@ export default {
     },
     onReset() {
       this.$refs.form.reset()
+      this.tabs = '1'
+    },
+    setData() {
+      const dataObj = {
+        RegistrationSiteTemplate: this.eventData.RegistrationSiteTemplate,
+        _sectionHeading: {
+          showimagegallery: this.sectionHeading.showimagegallery,
+          showeventreviews: this.sectionHeading.showeventreviews,
+          animation: this.sectionHeading.animation || '',
+          datetimelabel: this.sectionHeading.datetimelabel || '',
+          gallery: this.sectionHeading.gallery || '',
+          registrationTypes: this.sectionHeading.registrationTypes || '',
+          registrationbtn: this.sectionHeading.registrationbtn || '',
+          registrationquestionsectionlabel:
+            this.sectionHeading.registrationquestionsectionlabel || '',
+          review: this.sectionHeading.review || '',
+          session: this.sectionHeading.session || '',
+          sessionsectionlabel: this.sectionHeading.sessionsectionlabel || '',
+          speakers: this.sectionHeading.speakers || '',
+          ticketlabel: this.sectionHeading.ticketlabel || '',
+          ticketsectionlabel: this.sectionHeading.ticketsectionlabel || '',
+        },
+      }
+      return dataObj
     },
     async onSave() {
+      if (this.eventData.RegistrationSiteTemplate === null) {
+        this.getDefaultTemplate()
+      }
       this.sectionHeading.animation =
         this.animation !== 'Select' ? this.animation : ''
-      Object.assign(this.eventData, {
-        _sectionHeading: this.sectionHeading,
-      })
+      const obj = this.setData()
       delete this.eventData._VenueAddress
       try {
         const res = await this.$axios.$patch(
           `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`,
-          {
-            ...this.eventData,
-          }
+          obj
         )
         if (res) {
           this.close()
@@ -446,6 +484,12 @@ export default {
         this.animation = this.sectionHeading.animation
         this.eventData = event.length > 0 ? { ...event[0] } : {}
         this.eventData.id = this.$route.params.id
+        this.setDefaultSelected()
+        this.formData.forEach((ele, index) => {
+          if (ele.Name === this.eventData.RegistrationSiteTemplate) {
+            this.selectedItem = index
+          }
+        })
         return {
           event: event.length > 0 ? event : {},
         }

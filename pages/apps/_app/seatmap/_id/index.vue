@@ -4,6 +4,29 @@
     <v-snackbar v-model="snackbar" :timeout="timeout" top="true">
       <div class="text-center">{{ snackbarText }}</div>
     </v-snackbar>
+    <v-dialog v-model="popupDialog" width="500">
+      <v-card>
+        <v-card-text class="pt-3">
+          There are unsaved changes which will be lost if you close without
+          saving, are you sure?
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="primary" small dark dense @click="closeSeatMap">
+            OK
+          </v-btn>
+          <v-btn
+            color="primary"
+            small
+            outlined
+            dense
+            @click="popupDialog = false"
+          >
+            Cancel
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 <script>
@@ -47,6 +70,7 @@ export default {
       seatmapData: null,
       loading: false,
       iframe: { src: `${seatmapUrl}/seatmap`, loaded: false },
+      popupDialog: false,
     }
   },
   mounted() {
@@ -81,7 +105,9 @@ export default {
                 if (res) {
                   this.snackbarText = 'Seatmap Updated Successfully'
                   this.snackbar = true
-                  this.updateEvent(eventData, res)
+                  if (this.$route.params.id === 'new') {
+                    this.updateEvent(eventData, res)
+                  }
                 }
                 this.snackbarText = 'Seatmap Updated Successfully'
                 this.snackbar = true
@@ -94,6 +120,14 @@ export default {
             }
             break
           case 'close':
+            // eslint-disable-next-line no-lone-blocks
+            {
+              if (eventData.data.dirtyCheck) {
+                this.popupDialog = true
+              } else {
+                this.$router.back()
+              }
+            }
             break
         }
       }
@@ -134,11 +168,20 @@ export default {
     },
     async updateEvent(eventData, response) {
       const layoutId = response.id
-      const obj = {
-        LayoutId: layoutId,
-        SeatReservation: true,
+      let obj = {}
+      let URL = ''
+      if (this.$route.query.event) {
+        obj = {
+          LayoutId: layoutId,
+          SeatReservation: true,
+        }
+        URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.query.event}`
+      } else {
+        obj = {
+          LayoutId: layoutId,
+        }
+        URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Locations/${this.$route.query.location}`
       }
-      const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.query.event}`
       try {
         const res = await this.$axios.$patch(URL, obj)
         if (res) {
@@ -149,6 +192,10 @@ export default {
           e
         )
       }
+    },
+    closeSeatMap() {
+      this.popupDialog = false
+      this.$router.back()
     },
   },
 }
