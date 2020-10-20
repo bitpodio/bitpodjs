@@ -1,7 +1,19 @@
 <template>
   <v-flex>
     <v-flex>
-      <div class="background-event-img">
+      <div v-if="event.ImageURL" class="background-event-img">
+        <picture>
+          <source
+            :srcset="'https://event.test.bitpod.io' + event.ImageURL"
+            sizes="100vw"
+          />
+          <img
+            class="listing-hero-image js-picturefill-img"
+            data-automation="listing-hero-image"
+          />
+        </picture>
+      </div>
+      <div v-else class="background-event-img">
         <picture>
           <source
             srcset="
@@ -23,6 +35,12 @@
         <v-flex class="d-flex flex-column flex-md-row">
           <v-flex class="flex-70">
             <v-img
+              v-if="event.ImageURL"
+              :src="'https://event.test.bitpod.io' + event.ImageURL"
+              class="eventsite-banner"
+            ></v-img>
+            <v-img
+              v-else
               :src="$config.cdnUri + 'default-min.jpg'"
               class="eventsite-banner"
             ></v-img>
@@ -105,8 +123,10 @@
                         <div v-if="item.StartTime" class="mt-1">
                           <v-list-item-subtitle class="session-date">
                             <v-icon class="fs-16 mr-1">fa-clock</v-icon>
-                            {{ formatField(item.StartTime) }} -
-                            {{ formatField(item.EndTime) }}
+                            <div class="mt-1">
+                              {{ formatField(item.StartTime) }} -
+                              {{ formatField(item.EndTime) }}
+                            </div>
                           </v-list-item-subtitle>
                         </div>
                         <div v-else>
@@ -323,15 +343,15 @@
                     >{{ item.firstName }}</v-text
                   >
                   <v-card-actions class="pa-1 pt-0 d-flex justify-center">
-                    <v-btn icon>
+                    <v-btn icon :to="item.socialMedia.facebook" target="_blank">
                       <v-icon class="fs-18">mdi-facebook</v-icon>
                     </v-btn>
 
-                    <v-btn icon>
+                    <v-btn icon :to="item.socialMedia.twitter" target="_blank">
                       <v-icon class="fs-18">mdi-twitter</v-icon>
                     </v-btn>
 
-                    <v-btn icon>
+                    <v-btn icon :to="item.socialMedia.linkdin" target="_blank">
                       <v-icon class="fs-18">mdi-linkedin</v-icon>
                     </v-btn>
                   </v-card-actions>
