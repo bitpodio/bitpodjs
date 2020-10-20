@@ -466,7 +466,8 @@ export default {
   }),
   computed: {
     userApps() {
-      const userRoles = this.userCurrentOrgInfo.roles
+      const userOrgInfo = this.userCurrentOrgInfo || []
+      const userRoles = userOrgInfo.roles
       console.log('userRoles', userRoles)
       if (userRoles.includes('$orgowner')) {
         return this.apps
