@@ -169,7 +169,9 @@ export default {
     },
     getFileDetails(id) {
       return this.$axios.get(this.getAttachmentLink(id)).catch((e) => {
-        console.error(e)
+        console.error(
+          `Failed to fetch attachment/file in getFileDetails method in file.vue context : ${e}`
+        )
       })
     },
     async deleteFile(id) {
