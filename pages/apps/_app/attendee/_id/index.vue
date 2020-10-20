@@ -102,7 +102,7 @@
                         <v-list-item-title class="text-capitalize">{{
                           item.Name
                         }}</v-list-item-title>
-                        <div v-if="item.StartTime">
+                        <div v-if="item.StartTime" class="mt-1">
                           <v-list-item-subtitle class="session-date">
                             <v-icon class="fs-16 mr-1">fa-clock</v-icon>
                             {{ formatField(item.StartTime) }} -
@@ -265,6 +265,7 @@
 
                     <v-list-item-content class="py-0">
                       <v-list-item-title
+                        class="text-capitalize"
                         v-text="item.FullName"
                       ></v-list-item-title>
                       <v-list-item-subtitle
