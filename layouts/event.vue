@@ -196,7 +196,7 @@
         <v-list>
           <v-list-item>
             <v-list-item-title class="d-flex flex-wrap app-container">
-              <div v-for="app in aaps" :key="app.name">
+              <div v-for="app in userApps" :key="app.name">
                 <nuxt-link :to="app.route" class="text-decoration-none">
                   <v-flex
                     class="d-flex justify-center align-center flex-column app-view"
@@ -467,6 +467,7 @@ export default {
   computed: {
     userApps() {
       const userRoles = this.userCurrentOrgInfo.roles
+      console.log('userRoles', userRoles)
       if (userRoles.includes('$orgowner')) {
         return this.apps
       }
@@ -483,7 +484,7 @@ export default {
         orgList.filter((org) => {
           return org.name === currentOrg.name
         })
-      return currentDetails ? currentDetails.roles : {}
+      return currentDetails && currentDetails.roles ? currentDetails.roles : {}
     },
   },
   async created() {
