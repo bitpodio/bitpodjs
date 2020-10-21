@@ -4,7 +4,7 @@
       <div v-if="event.ImageURL" class="background-event-img">
         <picture>
           <source
-            :srcset="'https://event.test.bitpod.io' + event.ImageURL"
+            :srcset="`https://${nuxtconfig.axios.eventUrl}${event.ImageURL}`"
             sizes="100vw"
           />
           <img
@@ -15,12 +15,7 @@
       </div>
       <div v-else class="background-event-img">
         <picture>
-          <source
-            srcset="
-              https://res.cloudinary.com/mytestlogo/image/upload/v1579865731/default-min.jpg
-            "
-            sizes="100vw"
-          />
+          <source :srcset="$config.cdnUri + 'default-min.jpg'" sizes="100vw" />
           <img
             class="listing-hero-image js-picturefill-img"
             data-automation="listing-hero-image"
@@ -36,8 +31,8 @@
           <v-flex class="flex-70">
             <v-img
               v-if="event.ImageURL"
-              :src="'https://event.test.bitpod.io' + event.ImageURL"
-              :lazy-src="'https://event.test.bitpod.io' + event.ImageURL"
+              :src="`https://${nuxtconfig.axios.eventUrl}${event.ImageURL}`"
+              :lazy-src="`https://${nuxtconfig.axios.eventUrl}${event.ImageURL}`"
               class="eventsite-banner"
             ></v-img>
             <v-img
@@ -451,14 +446,14 @@
                 >
                   <div v-if="item.imageURL" class="overflow-hidden">
                     <img
-                      :src="'https://event.test.bitpod.io' + item.imageURL"
+                      :src="`https://${nuxtconfig.axios.eventUrl}${item.imageURL}`"
                       height="160px"
                       class="positionRelative speaker-img grey lighten-4"
                     />
                   </div>
                   <div v-else class="overflow-hidden">
                     <img
-                      src="https://res.cloudinary.com/mytestlogo/default_profile"
+                      :src="$config.cdnUri + 'default_profile.jpg'"
                       height="160px"
                       class="positionRelative speaker-img grey lighten-4"
                     />
@@ -509,8 +504,8 @@
                   cols="4"
                 >
                   <v-img
-                    :src="'https://event.test.bitpod.io' + image"
-                    :lazy-src="'https://event.test.bitpod.io' + image"
+                    :src="`https://${nuxtconfig.axios.eventUrl}${image}`"
+                    :lazy-src="`https://${nuxtconfig.axios.eventUrl}${image}`"
                     aspect-ratio="1"
                     class="grey lighten-4"
                   >
@@ -827,6 +822,7 @@
 import format from 'date-fns/format'
 import nuxtconfig from '~/nuxt.config'
 import { configLoaderMixin } from '~/utility'
+
 export default {
   layout: 'public',
   mixins: [configLoaderMixin],
@@ -922,16 +918,6 @@ export default {
         if (res) {
           this.registration = res
           this.getEventData(res.EventId)
-          // if (res.SessionListId[0].BitpodVirtualLink) {
-          //   this.roomname = `${
-          //     res.SessionListId[0].BitpodVirtualLink.split('/')[3]
-          //   }-${new Date(res.attendee[0].BookingDate || null)
-          //     .getTime()
-          //     .toString(36)}`
-          //   this.showAttndeeBtn =
-          //     true && this.registration.EventList.BusinessType === 'Recurring'
-          // }
-          // this.type = res.Type
         }
       } catch (e) {
         console.error(
