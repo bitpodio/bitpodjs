@@ -51,6 +51,13 @@ body {
 .Twitter::first-letter {
   font-size: 24px !important;
 }
+.Twitter-18 {
+  font-size: 0 !important;
+  text-transform: capitalize !important;
+}
+.Twitter-18::first-letter {
+  font-size: 18px !important;
+}
 .name-initial {
   font-size: 0 !important;
   text-transform: capitalize !important;
@@ -90,6 +97,9 @@ body {
 }
 .fs-18 {
   font-size: 18px !important;
+}
+.fs-20 {
+  font-size: 20px !important;
 }
 .fs-22 {
   font-size: 22px !important;
@@ -429,6 +439,12 @@ body {
 }
 .vs-hidden {
   visibility: hidden;
+}
+.boxview .v-expansion-panel-content__wrap {
+  padding: 0 !important;
+}
+.boxview .v-expansion-panel--active > .v-expansion-panel-header {
+    min-height: 42px;
 }
 @media (max-width: 800px) {
   .nav-bar {
