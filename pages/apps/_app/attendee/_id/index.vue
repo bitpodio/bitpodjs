@@ -37,11 +37,13 @@
             <v-img
               v-if="event.ImageURL"
               :src="'https://event.test.bitpod.io' + event.ImageURL"
+              :lazy-src="'https://event.test.bitpod.io' + event.ImageURL"
               class="eventsite-banner"
             ></v-img>
             <v-img
               v-else
               :src="$config.cdnUri + 'default-min.jpg'"
+              :lazy-src="$config.cdnUri + 'default-min.jpg'"
               class="eventsite-banner"
             ></v-img>
           </v-flex>
@@ -64,7 +66,7 @@
       </v-flex>
       <v-flex d-flex flex-md-row flex-lg-row flex-column-reverse>
         <v-flex column class="mxw-w70 mr-0 mr-md-2">
-          <div v-if="event.BusinessType === 'Recurring'">
+          <div v-if="event.BusinessType">
             <div
               v-if="
                 registration &&
@@ -101,12 +103,12 @@
                           v-on="on"
                         >
                           <div class="d-flex flex-column">
-                            <div v-if="item.startDateTime">
+                            <div v-if="item.StartDate">
                               <div class="white--text text-h6 pt-0">
-                                {{ formatDateDay(item.startDateTime) }}
+                                {{ formatDateDay(item.StartDate) }}
                               </div>
                               <div class="white--text body-2 mt-n1">
-                                {{ formatDateMonth(item.startDateTime) }}
+                                {{ formatDateMonth(item.StartDate) }}
                               </div>
                             </div>
                             <div v-else>
@@ -120,18 +122,10 @@
                         <v-list-item-title class="text-capitalize">{{
                           item.Name
                         }}</v-list-item-title>
-                        <div v-if="item.StartTime" class="mt-1">
+                        <div v-if="item.StartDate" class="mt-1">
                           <v-list-item-subtitle class="session-date">
-                            <v-icon class="fs-16 mr-1">fa-clock</v-icon>
-                            {{ formatField(item.StartTime) }} -
-                            {{ formatField(item.EndTime) }}
+                            {{ formatDateTime(item.StartDate) }}
                           </v-list-item-subtitle>
-                        </div>
-                        <div v-else>
-                          <v-list-item-subtitle
-                            class="session-date"
-                            v-text="formatDate(item.startDateTime)"
-                          ></v-list-item-subtitle>
                         </div>
                       </v-list-item-content>
 
@@ -154,8 +148,75 @@
                 </div>
               </div>
             </div>
+            <div
+              v-if="
+                registration &&
+                registration.attendee &&
+                registration.attendee.length
+              "
+            >
+              <div
+                class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2 rounded-lg"
+              >
+                <v-flex class="d-flex justify-center align-center pb-3">
+                  <h2 class="body-1 pb-0">
+                    <i class="fa fa-black-board pr-1" aria-hidden="true"></i>
+                    Attendee
+                  </h2>
+                  <v-spacer></v-spacer>
+                </v-flex>
+                <v-divider></v-divider>
+                <div>
+                  <v-list>
+                    <v-list-item
+                      v-for="item in registration.attendee"
+                      :key="item.id"
+                      class="pa-0 my-3"
+                    >
+                      <v-list-item-avatar size="36" class="mr-2 ma-0">
+                        <v-avatar
+                          color="primary"
+                          size="36"
+                          v-bind="attrs"
+                          class="mr-"
+                          v-on="on"
+                        >
+                          <v-avatar
+                            color="primary"
+                            size="36"
+                            v-bind="attrs"
+                            v-on="on"
+                          >
+                            <span class="white--text Twitter-18">{{
+                              item.FullName
+                            }}</span>
+                          </v-avatar>
+                        </v-avatar>
+                      </v-list-item-avatar>
+
+                      <v-list-item-content class="py-0">
+                        <v-list-item-title class="text-capitalize">{{
+                          item.FullName
+                        }}</v-list-item-title>
+                        <div v-if="item.Email" class="mt-1">
+                          <v-list-item-subtitle class="session-date">
+                            {{ item.Email }}
+                          </v-list-item-subtitle>
+                        </div>
+                      </v-list-item-content>
+
+                      <v-list-item-icon class="ma-0 mt-2">
+                        <div class="mt-2">
+                          <v-icon>fa-email</v-icon>{{ item.CompanyName }}
+                        </div>
+                      </v-list-item-icon>
+                    </v-list-item>
+                  </v-list>
+                </div>
+              </div>
+            </div>
           </div>
-          <div v-else>
+          <div v-else class="d-none">
             <div
               v-if="
                 event && event.sessions && Object.keys(event.sessions).length
@@ -373,7 +434,7 @@
                 <v-col
                   v-for="image in event.Other"
                   :key="image"
-                  class="d-flex child-flex pl-0 pt-0 rounded-lg"
+                  class="d-flex child-flex pl-0 pt-0 rounded-lg gallery-img"
                   cols="4"
                 >
                   <v-img
@@ -670,7 +731,8 @@ export default {
       }
     },
     async getRegistrationData() {
-      const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Registrations/findRegistration?regId=${this.$route.params.id}`
+      // const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Registrations/findRegistration?regId=${this.$route.params.id}`
+      const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Registrations/${this.$route.params.id}`
       try {
         const res = await this.$axios.$get(URL)
         if (res) {
@@ -770,6 +832,9 @@ export default {
 }
 .ps-rating {
   pointer-events: none;
+}
+.gallery-img {
+  max-width: 220px;
 }
 @media screen and (max-width: 600px) {
   .background-event-img {
