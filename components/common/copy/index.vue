@@ -50,7 +50,7 @@ export default {
       type: Boolean,
     },
     iconSize: {
-      default: '30',
+      default: '20',
       type: String,
       required: false,
     },
