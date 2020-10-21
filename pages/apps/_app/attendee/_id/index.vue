@@ -4,7 +4,7 @@
       <div v-if="event.ImageURL" class="background-event-img">
         <picture>
           <source
-            :srcset="`https://${nuxtconfig.axios.eventUrl}${event.ImageURL}`"
+            :srcset="`https://${baseUrl}${event.ImageURL}`"
             sizes="100vw"
           />
           <img
@@ -31,8 +31,8 @@
           <v-flex class="flex-70">
             <v-img
               v-if="event.ImageURL"
-              :src="`https://${nuxtconfig.axios.eventUrl}${event.ImageURL}`"
-              :lazy-src="`https://${nuxtconfig.axios.eventUrl}${event.ImageURL}`"
+              :src="`https://${baseUrl}${event.ImageURL}`"
+              :lazy-src="`https://${baseUrl}${event.ImageURL}`"
               class="eventsite-banner"
             ></v-img>
             <v-img
@@ -446,14 +446,14 @@
                 >
                   <div v-if="item.imageURL" class="overflow-hidden">
                     <img
-                      :src="`https://${nuxtconfig.axios.eventUrl}${item.imageURL}`"
+                      :src="`https://${baseUrl}${item.imageURL}`"
                       height="160px"
                       class="positionRelative speaker-img grey lighten-4"
                     />
                   </div>
                   <div v-else class="overflow-hidden">
                     <img
-                      :src="$config.cdnUri + 'default_profile.jpg'"
+                      :src="$config.cdnUri + 'default_profile.png'"
                       height="160px"
                       class="positionRelative speaker-img grey lighten-4"
                     />
@@ -504,8 +504,8 @@
                   cols="4"
                 >
                   <v-img
-                    :src="`https://${nuxtconfig.axios.eventUrl}${image}`"
-                    :lazy-src="`https://${nuxtconfig.axios.eventUrl}${image}`"
+                    :src="`https://${baseUrl}${image}`"
+                    :lazy-src="`https://${baseUrl}${image}`"
                     aspect-ratio="1"
                     class="grey lighten-4"
                   >
@@ -843,6 +843,9 @@ export default {
           EventId: this.registration && this.registration.EventId,
         },
       }
+    },
+    baseUrl() {
+      return nuxtconfig.axios.eventUrl
     },
   },
   mounted() {
