@@ -77,11 +77,7 @@
             </v-col>
             <v-col cols="12" class="mb-6">
               <span>Cancellation Policy</span>
-              <RichText
-                v-model="formData.CancellationPolicy"
-                label="Cancellation Policy"
-                placeholder="Description"
-              />
+              <RichText v-model="formData.CancellationPolicy" />
             </v-col>
           </v-row>
         </v-card-text>
