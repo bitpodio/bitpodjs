@@ -55,13 +55,34 @@
               {{ formatField(registration.EventName) }}
             </div>
             <div class="body-1 text-center text-capitalize">
-              By {{ formatField(event && event.organizer) }}
+              By
+              {{
+                formatField(
+                  registration &&
+                    registration.EventList &&
+                    registration.EventList.Organizer
+                )
+              }}
             </div>
           </v-flex>
         </v-flex>
-        <v-flex v-if="event && event.description" class="d-flex boxview">
+        <v-flex
+          v-if="
+            registration &&
+            registration.EventList &&
+            registration.EventList.Description
+          "
+          class="d-flex boxview"
+        >
           <!-- eslint-disable-next-line vue/no-v-html -->
-          <div class="pa-3" v-html="event && event.description" />
+          <div
+            class="pa-3"
+            v-html="
+              registration &&
+              registration.EventList &&
+              registration.EventList.Description
+            "
+          />
         </v-flex>
       </v-flex>
       <v-flex d-flex flex-md-row flex-lg-row flex-column-reverse>
@@ -419,7 +440,12 @@
             </div>
           </div>
           <div
-            v-if="event && event.Other && event.Other.length"
+            v-if="
+              registration &&
+              registration.EventList &&
+              registration.EventList.Other &&
+              registration.EventList.Other.length
+            "
             class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2 rounded-lg"
           >
             <v-flex class="d-flex justify-center align-center pb-3">
@@ -432,7 +458,7 @@
             <div class="pa-3">
               <v-row>
                 <v-col
-                  v-for="image in event.Other"
+                  v-for="image in registration.EventList.Other"
                   :key="image"
                   class="d-flex child-flex pl-0 pt-0 rounded-lg gallery-img"
                   cols="4"
@@ -660,7 +686,34 @@
               <v-flex my-3>
                 <div class="body-1">
                   {{
-                    formatField(event && event.address && event.address.name)
+                    registration &&
+                    registration.EventList &&
+                    registration.EventList._VenueAddress &&
+                    registration.EventList._VenueAddress.AddressLine
+                  }}
+                  {{
+                    registration &&
+                    registration.EventList &&
+                    registration.EventList._VenueAddress &&
+                    registration.EventList._VenueAddress.City
+                  }}
+                  {{
+                    registration &&
+                    registration.EventList &&
+                    registration.EventList._VenueAddress &&
+                    registration.EventList._VenueAddress.State
+                  }}
+                  {{
+                    registration &&
+                    registration.EventList &&
+                    registration.EventList._VenueAddress &&
+                    registration.EventList._VenueAddress.Country
+                  }}
+                  {{
+                    registration &&
+                    registration.EventList &&
+                    registration.EventList._VenueAddress &&
+                    registration.EventList._VenueAddress.PostalCode
                   }}
                 </div>
               </v-flex>
@@ -731,8 +784,8 @@ export default {
       }
     },
     async getRegistrationData() {
-      // const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Registrations/findRegistration?regId=${this.$route.params.id}`
-      const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Registrations/${this.$route.params.id}`
+      const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Registrations/findRegistration?regId=${this.$route.params.id}`
+      // const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Registrations/${this.$route.params.id}`
       try {
         const res = await this.$axios.$get(URL)
         if (res) {
