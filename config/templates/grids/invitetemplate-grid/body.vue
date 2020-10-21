@@ -64,7 +64,12 @@
                   </template>
 
                   <v-list dense>
-                    <v-list-item @click="true">
+                    <v-list-item
+                      @click="
+                        editMetadata = true
+                        selected = item
+                      "
+                    >
                       <v-list-item-icon class="mr-2">
                         <i
                           class="fa fa-pencil-square-o mt-1"
@@ -75,7 +80,12 @@
                         <v-list-item-title>Edit Metadata</v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
-                    <v-list-item @click="true">
+                    <v-list-item
+                      @click="
+                        editTemplate = true
+                        selected = item
+                      "
+                    >
                       <v-list-item-icon class="mr-2">
                         <i
                           class="fa fa-pencil-square-o mt-1"
@@ -86,7 +96,13 @@
                         <v-list-item-title>Edit Template</v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
-                    <v-list-item @click="true">
+                    <v-list-item
+                      v-if="item.ImageURL"
+                      @click="
+                        viewTemplate = item.ImageURL
+                        showDialog = true
+                      "
+                    >
                       <v-list-item-icon class="mr-2">
                         <i class="fa fa-eye mt-1" aria-hidden="true"></i>
                       </v-list-item-icon>
@@ -94,7 +110,7 @@
                         <v-list-item-title>View</v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
-                    <v-list-item @click="true">
+                    <v-list-item @click="deleteTemplete(item.id)">
                       <v-list-item-icon class="mr-2">
                         <i class="fa fa-trash mt-1" aria-hidden="true"></i>
                       </v-list-item-icon>
@@ -173,7 +189,12 @@
                   </template>
 
                   <v-list dense>
-                    <v-list-item @click="true">
+                    <v-list-item
+                      @click="
+                        editMetadata = true
+                        selected = item
+                      "
+                    >
                       <v-list-item-icon class="mr-2">
                         <i
                           class="fa fa-pencil-square-o mt-1"
@@ -184,7 +205,12 @@
                         <v-list-item-title>Edit Metadata</v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
-                    <v-list-item @click="true">
+                    <v-list-item
+                      @click="
+                        editTemplate = true
+                        selected = item
+                      "
+                    >
                       <v-list-item-icon class="mr-2">
                         <i
                           class="fa fa-pencil-square-o mt-1"
@@ -195,7 +221,13 @@
                         <v-list-item-title>Edit Template</v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
-                    <v-list-item @click="true">
+                    <v-list-item
+                      v-if="item.ImageURL"
+                      @click="
+                        viewTemplate = item.ImageURL
+                        showDialog = true
+                      "
+                    >
                       <v-list-item-icon class="mr-2">
                         <i class="fa fa-eye mt-1" aria-hidden="true"></i>
                       </v-list-item-icon>
@@ -203,7 +235,7 @@
                         <v-list-item-title>View</v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
-                    <v-list-item @click="true">
+                    <v-list-item @click="deleteTemplete(item.id)">
                       <v-list-item-icon class="mr-2">
                         <i class="fa fa-trash mt-1" aria-hidden="true"></i>
                       </v-list-item-icon>
@@ -219,12 +251,87 @@
         </v-hover>
       </v-flex>
     </div>
+    <div v-if="editTemplate">
+      <editInviteTemplate
+        :edit-template.sync="editTemplate"
+        :selected="selected"
+        :refresh="refresh"
+      />
+    </div>
+    <div v-if="editMetadata">
+      <editInviteMetadata
+        :edit-metadata.sync="editMetadata"
+        :selected="selected"
+      />
+    </div>
+    <v-dialog v-if="!!viewTemplate" v-model="showDialog" width="600px">
+      <v-card>
+        <v-card-title class="pa-1">
+          <v-spacer></v-spacer>
+          <v-btn
+            icon
+            @click="
+              viewTemplate = false
+              showDialog = false
+            "
+          >
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </v-card-title>
+        <v-img :src="viewTemplate"></v-img>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
 <script>
+import editInviteTemplate from '~/pages/apps/_app/organization/_id/editInviteTemplate.vue'
+import editInviteMetadata from '~/pages/apps/_app/organization/_id/editInviteMetadata.vue'
+import { getApiUrl } from '~/utility'
+
 export default {
-  props: { items: { type: Array, default: () => [] } },
+  components: {
+    editInviteTemplate,
+    editInviteMetadata,
+  },
+  props: {
+    items: { type: Array, default: () => [] },
+    refresh: {
+      type: Function,
+      required: false,
+      default: null,
+    },
+  },
+  data() {
+    return {
+      editTemplate: false,
+      editMetadata: false,
+      viewTemplate: false,
+      showDialog: false,
+      selected: {},
+    }
+  },
+  methods: {
+    async deleteTemplete(id) {
+      const url = getApiUrl()
+
+      const check = confirm('Are you sure you want to delete this template?')
+      let res = null
+      if (check === true) {
+        try {
+          res = await this.$axios.$delete(`${url}MarketingTemplates/${id}`)
+        } catch (e) {
+          console.error(
+            `Error in invitetemplate-grid while making a DELETE call to MarketingTemplate model in method deleteTemplete context: url:-${url}`,
+            e
+          )
+        }
+        if (res) {
+          this.refresh()
+        }
+      }
+    },
+  },
 }
 </script>
 

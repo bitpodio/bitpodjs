@@ -293,6 +293,7 @@ export default {
       this.formData.Amount = parseInt(this.Amount)
       this.formData.DisplayOrder = parseInt(this.formData.DisplayOrder)
       this.formData.TicketCount = parseInt(this.formData.TicketCount)
+      this.formData.AvailableCount = parseInt(this.formData.TicketCount)
       this.formData.Events = this.$route.params.id
       this.formData.Status = this.eventStatus
       try {
