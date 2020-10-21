@@ -151,7 +151,12 @@
                       </v-list-item-content>
 
                       <v-list-item-icon class="ma-0">
-                        <div v-if="item.LocationType === 'Bitpod Virtual'">
+                        <div
+                          v-if="
+                            item.LocationType === 'Bitpod Virtual' &&
+                            event.BusinessType === 'Single'
+                          "
+                        >
                           <v-btn
                             class="ma-2 mr-0"
                             outlined
@@ -228,7 +233,18 @@
 
                       <v-list-item-icon class="ma-0 mt-2">
                         <div class="mt-2">
-                          <v-icon>fa-email</v-icon>{{ item.CompanyName }}
+                          <div v-if="showAttndeeBtn">
+                            <v-btn
+                              class="ma-2 mr-0"
+                              outlined
+                              color="success"
+                              @click="goLive"
+                            >
+                              Join Session<v-icon right>
+                                mdi-video
+                              </v-icon>
+                            </v-btn>
+                          </div>
                         </div>
                       </v-list-item-icon>
                     </v-list-item>
@@ -736,8 +752,11 @@ export default {
     return {
       loading: 0,
       isEditReg: false,
+      showAttndeeBtn: false,
       isCancelReg: false,
       isRefund: false,
+      roomname: '',
+      type: '',
       event: {},
       registration: {},
     }
@@ -783,6 +802,20 @@ export default {
         window.open(`https://meet.bitpod.io/${roomName}?e=${this.event.id}`)
       }
     },
+    goLive() {
+      let roomName
+      if (this.type === 'Group') {
+        roomName = this.roomname
+      } else {
+        roomName = `${
+          this.registration.FirstName.trim().replace(/[^a-zA-Z ]/g, '') ||
+          'unknown'
+        }-${
+          this.registration.LastName.trim().replace(/[^a-zA-Z ]/g, '') || 'user'
+        }-${this.registration.RegistrationId}`.toLowerCase()
+      }
+      window.open(`apps/event/live/${roomName}?e=${this.$route.params.id}`)
+    },
     async getRegistrationData() {
       const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Registrations/findRegistration?regId=${this.$route.params.id}`
       // const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Registrations/${this.$route.params.id}`
@@ -791,6 +824,16 @@ export default {
         if (res) {
           this.registration = res
           this.getEventData(res.EventId)
+          if (res.SessionListId[0].BitpodVirtualLink) {
+            this.roomname = `${
+              res.SessionListId[0].BitpodVirtualLink.split('/')[3]
+            }-${new Date(res.attendee[0].BookingDate || null)
+              .getTime()
+              .toString(36)}`
+            this.showAttndeeBtn =
+              true && this.registration.EventList.BusinessType === 'Recurring'
+          }
+          this.type = res.Type
         }
       } catch (e) {
         console.error(
