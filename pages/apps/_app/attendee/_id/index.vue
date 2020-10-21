@@ -834,11 +834,8 @@ export default {
     return {
       loading: 0,
       isEditReg: false,
-      // showAttndeeBtn: false,
       isCancelReg: false,
       isRefund: false,
-      // roomname: '',
-      // type: '',
       event: {},
       registration: {},
     }
@@ -920,7 +917,6 @@ export default {
     },
     async getRegistrationData() {
       const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Registrations/findRegistration?regId=${this.$route.params.id}`
-      // const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Registrations/${this.$route.params.id}`
       try {
         const res = await this.$axios.$get(URL)
         if (res) {
