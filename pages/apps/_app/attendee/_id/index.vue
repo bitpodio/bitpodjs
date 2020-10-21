@@ -722,7 +722,7 @@
                   :href="event.WebinarLink"
                   target="_blank"
                   class="text-decoration-none"
-                  ><v-btn class="ma-3 ml-0" outlined color="success">
+                  ><v-btn class="ma-2 ml-0" outlined color="success">
                     Join Event<v-icon right>
                       mdi-video
                     </v-icon>
