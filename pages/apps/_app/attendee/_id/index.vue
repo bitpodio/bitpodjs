@@ -235,17 +235,44 @@
 
                       <v-list-item-icon class="ma-0 mt-2">
                         <div class="mt-2">
-                          <div v-if="showAttndeeBtn">
-                            <v-btn
-                              class="ma-2 mr-0"
-                              outlined
-                              color="success"
-                              @click="goLive"
+                          <div
+                            v-if="
+                              registration.EventList.BusinessType ===
+                                'Recurring' && registration.ZoomLink
+                            "
+                          >
+                            <a
+                              :href="registration.ZoomLink"
+                              target="_blank"
+                              class="text-decoration-none"
                             >
-                              Join Session<v-icon right>
-                                mdi-video
-                              </v-icon>
-                            </v-btn>
+                              <v-btn class="ma-2 mr-0" outlined color="success">
+                                Join Session<v-icon right>
+                                  mdi-video
+                                </v-icon>
+                              </v-btn>
+                            </a>
+                          </div>
+                          <div
+                            v-if="
+                              registration.EventList.BusinessType ===
+                                'Recurring' &&
+                              registration.SessionListId[0].LocationType ===
+                                'Online meeting' &&
+                              registration.SessionListId[0].WebinarLink
+                            "
+                          >
+                            <a
+                              :href="registration.SessionListId[0].WebinarLink"
+                              target="_blank"
+                              class="text-decoration-none"
+                            >
+                              <v-btn class="ma-2 mr-0" outlined color="success">
+                                Join Session<v-icon right>
+                                  mdi-video
+                                </v-icon>
+                              </v-btn>
+                            </a>
                           </div>
                         </div>
                       </v-list-item-icon>
@@ -807,11 +834,11 @@ export default {
     return {
       loading: 0,
       isEditReg: false,
-      showAttndeeBtn: false,
+      // showAttndeeBtn: false,
       isCancelReg: false,
       isRefund: false,
-      roomname: '',
-      type: '',
+      // roomname: '',
+      // type: '',
       event: {},
       registration: {},
     }
@@ -899,16 +926,16 @@ export default {
         if (res) {
           this.registration = res
           this.getEventData(res.EventId)
-          if (res.SessionListId[0].BitpodVirtualLink) {
-            this.roomname = `${
-              res.SessionListId[0].BitpodVirtualLink.split('/')[3]
-            }-${new Date(res.attendee[0].BookingDate || null)
-              .getTime()
-              .toString(36)}`
-            this.showAttndeeBtn =
-              true && this.registration.EventList.BusinessType === 'Recurring'
-          }
-          this.type = res.Type
+          // if (res.SessionListId[0].BitpodVirtualLink) {
+          //   this.roomname = `${
+          //     res.SessionListId[0].BitpodVirtualLink.split('/')[3]
+          //   }-${new Date(res.attendee[0].BookingDate || null)
+          //     .getTime()
+          //     .toString(36)}`
+          //   this.showAttndeeBtn =
+          //     true && this.registration.EventList.BusinessType === 'Recurring'
+          // }
+          // this.type = res.Type
         }
       } catch (e) {
         console.error(
