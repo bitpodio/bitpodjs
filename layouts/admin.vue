@@ -4,7 +4,7 @@
       v-model="drawer"
       app
       class="nav-bar greybg"
-      :width="280"
+      :width="240"
     >
       <v-toolbar-title
         class="ml-0 pl-3 px-2 py-1 logo-ds d-none d-sm-flex d-md-none align-center"
@@ -219,7 +219,10 @@
                   </v-flex>
                 </v-flex>
               </a>
-              <nuxt-link to="" class="text-decoration-none">
+              <nuxt-link
+                to="/apps/seatmap/list/seatmaps/seatmaps"
+                class="text-decoration-none"
+              >
                 <v-flex
                   class="d-flex justify-center align-center flex-column app-view"
                 >
@@ -321,69 +324,66 @@ export default {
   components: {
     OrgnaizationList,
   },
-  data: () => ({
-    date: new Date().toISOString().substr(0, 10),
-    menu: false,
-    modal: false,
-    menu2: false,
-    drawer: null,
-    dialog1: false,
-    dialog: false,
-    notifications: false,
-    sound: true,
-    tabs: null,
-    account: false,
-    message: false,
-    items: [
-      { heading: 'Event' },
-      {
-        icon: 'fa fa-network',
-        text: 'Organization',
-        to: '/apps/admin/organization/5cfe026f6ab042000c530105',
-      },
-      {
-        icon: 'fa fa-cog',
-        text: 'Lookups',
-        to: '/apps/admin/organization/lookups',
-      },
-      {
-        icon: 'fa fa-file',
-        text: 'Templates',
-        to: '/apps/admin/list/marketingtemplates/template',
-      },
-      {
-        icon: 'fa fa-grid-alt',
-        text: 'Seat Maps',
-        to: '/apps/admin/list/seatmaps/seatmaps',
-      },
-      {
-        icon: 'fa fa-id-badge',
-        text: 'Badges Templates',
-        to: '/apps/admin/list/badge/badge',
-      },
-      {
-        icon: 'fa fa-file-text-o',
-        text: 'Registration Form',
-        to: '/apps/admin/list/registrationformdetails/registration form',
-      },
-      { heading: 'Security' },
-      {
-        icon: 'fa fa-shield',
-        text: 'Roles',
-        to: '/apps/admin/list/userroles/userroles',
-      },
-      {
-        icon: 'fa fa-users',
-        text: 'Users',
-        to: '/apps/admin/list/users/users',
-      },
-      {
-        icon: 'fa fa-key',
-        text: 'Access Keys',
-        to: '/apps/admin/list/accesskey/accesskey',
-      },
-    ],
-  }),
+  data() {
+    return {
+      date: new Date().toISOString().substr(0, 10),
+      menu: false,
+      modal: false,
+      menu2: false,
+      drawer: null,
+      dialog1: false,
+      dialog: false,
+      notifications: false,
+      sound: true,
+      tabs: null,
+      account: false,
+      message: false,
+      items: [
+        { heading: 'Event' },
+        {
+          icon: 'fa fa-network',
+          text: 'Organization',
+          to: '/apps/admin/organization/5cfe026f6ab042000c530105',
+        },
+        {
+          icon: 'fa fa-cog',
+          text: 'Lookups',
+          to: '/apps/admin/organization/lookups',
+        },
+        {
+          icon: 'fa fa-file',
+          text: 'Templates',
+          to: '/apps/admin/list/marketingtemplates/template',
+        },
+        {
+          icon: 'fa fa-id-badge',
+          text: 'Badges Templates',
+          to: '/apps/admin/list/badge/badge',
+        },
+        {
+          icon: 'fa fa-file-text-o',
+          text: 'Registration Form',
+          to: '/apps/admin/list/registrationformdetails/registration form',
+        },
+        { heading: 'Security' },
+        {
+          icon: 'fa fa-shield',
+          text: 'Roles',
+          to: '/apps/admin/list/userroles/userroles',
+        },
+        {
+          icon: 'fa fa-users',
+          text: 'Users',
+          to: '/apps/admin/list/users/users',
+        },
+        {
+          icon: 'fa fa-key',
+          text: 'Access Keys',
+          to: '/apps/admin/list/accesskey/accesskey',
+        },
+      ],
+    }
+  },
   async created() {
     if (!this.$apolloHelpers.getToken()) {
       let token = this.$auth.strategy.token.get()

@@ -1,6 +1,6 @@
 <template>
   <v-flex d-flex flex-md-row flex-lg-row flex-column>
-    <v-flex column xs12 sm8 md8 lg8>
+    <v-flex column class="mxw-w70">
       <div
         class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
       >
@@ -473,7 +473,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -484,6 +484,7 @@
         </v-flex>
         <v-divider></v-divider>
         <Grid
+          ref="recurringGrid"
           view-name="eventRecurringSession"
           :content="content"
           class="mt-n12"
@@ -491,7 +492,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -501,11 +502,16 @@
           <v-spacer></v-spacer>
         </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="eventAttendees" :content="content" class="mt-n12" />
+        <Grid
+          view-name="eventRecurringAttendees"
+          :content="content"
+          :context="data"
+          class="mt-n12"
+        />
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -516,14 +522,14 @@
         </v-flex>
         <v-divider></v-divider>
         <Grid
-          view-name="eventRegistrations"
+          view-name="recurringEventRegistrations"
           :content="content"
           class="mt-n12"
         />
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -537,7 +543,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -556,7 +562,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -574,7 +580,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -592,7 +598,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -606,7 +612,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -625,7 +631,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -641,8 +647,21 @@
           class="mt-n12"
         />
       </div>
+      <div
+        class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-comments-alt pr-1" aria-hidden="true"></i>
+            Notes
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
+        <v-divider></v-divider>
+        <Notes model-name="Events" />
+      </div>
     </v-flex>
-    <v-flex column xs12 sm4 md4 lg4>
+    <v-flex column class="mxw-w30">
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 py-0 pr-2 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-0">
@@ -778,88 +797,75 @@
             <div v-html="formatField(data.event.CancellationPolicy)"></div>
           </div>
         </v-flex>
-        <v-flex my-3 class="d-block text-truncate">
-          <span v-if="data.event.isRefundable === true">
-            <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
-            <i18n path="Common.AllowCancelation" class="ml-2" />
-          </span>
-          <span v-else>
-            <v-icon>mdi-checkbox-blank-outline</v-icon>
-            <i18n path="Common.AllowCancelation" class="ml-2" />
-          </span>
+        <v-flex class="d-block text-truncate">
+          <v-checkbox
+            v-model="data.event.isRefundable"
+            dense
+            height="20"
+            class="ma-0 pa-0"
+            label="Allow Cancelation"
+            color="green"
+            @change="updateReg()"
+          ></v-checkbox>
         </v-flex>
-        <v-flex my-3 class="d-block text-truncate">
-          <span v-if="data.event.SessionTimingConflict === true">
-            <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
-
-            <i18n path="Common.ValidateSessionTimingConflict" class="ml-2" />
-          </span>
-          <span v-else>
-            <v-icon>mdi-checkbox-blank-outline</v-icon>
-
-            <i18n path="Common.ValidateSessionTimingConflict" class="ml-2" />
-          </span>
+        <v-flex class="d-block text-truncate">
+          <v-checkbox
+            v-model="data.event.SessionTimingConflict"
+            dense
+            height="20"
+            class="ma-0 pa-0"
+            label="Validate Session Timing Conflict"
+            color="green"
+            @change="updateReg()"
+          ></v-checkbox>
         </v-flex>
-        <v-flex my-3 class="d-block text-truncate">
-          <span v-if="data.event.ShowRemainingTickets === true">
-            <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
-
-            <i18n path="Common.ShowRemainingTicketsCount" class="ml-2" />
-          </span>
-          <span v-else>
-            <v-icon>mdi-checkbox-blank-outline</v-icon>
-
-            <i18n path="Common.ShowRemainingTicketsCount" class="ml-2" />
-          </span>
+        <v-flex class="d-block text-truncate">
+          <v-checkbox
+            v-model="data.event.ShowRemainingTickets"
+            dense
+            height="20"
+            class="ma-0 pa-0"
+            label="Show Remaining Tickets Count"
+            color="green"
+            @change="updateReg()"
+          ></v-checkbox>
         </v-flex>
-        <v-flex my-3 class="d-block text-truncate">
-          <span v-if="data.event.ShowAttendeeForm === true">
-            <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
-            <i18n path="Common.ShowAttendeeForm" class="ml-2" />
-          </span>
-          <span v-else>
-            <v-icon>mdi-checkbox-blank-outline</v-icon>
-            <i18n path="Common.ShowAttendeeForm" class="ml-2" />
-          </span>
+        <v-flex class="d-block text-truncate">
+          <v-checkbox
+            v-model="data.event.ShowAttendeeForm"
+            dense
+            height="20"
+            class="ma-0 pa-0"
+            label="Show Attendee Form"
+            color="green"
+            @change="updateReg()"
+          ></v-checkbox>
         </v-flex>
-        <v-flex my-3 class="d-block text-truncate">
-          <span v-if="data.event.NotifyOrganizer === true">
-            <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
-
-            <i18n
-              path="Common.Notifyorganizerwhensomeoneregisters"
-              class="ml-2"
-            />
-          </span>
-          <span v-else>
-            <v-icon>mdi-checkbox-blank-outline</v-icon>
-
-            <i18n
-              path="Common.Notifyorganizerwhensomeoneregisters"
-              class="ml-2"
-            />
-          </span>
+        <v-flex class="mt-2">
+          <v-checkbox
+            v-model="data.event.NotifyOrganizer"
+            dense
+            height="20"
+            class="ma-0 pa-0"
+            label="Notify organizer when someone 
+            registers"
+            color="green"
+            @change="updateReg()"
+          ></v-checkbox>
         </v-flex>
-        <v-flex my-3>
-          <span v-if="data.event.showTimezone === true">
-            <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
-
-            <i18n
-              path="Common.Allowusertoselectatimezoneforrecurringevent"
-              class="ml-2"
-            />
-          </span>
-          <span v-else>
-            <v-icon>mdi-checkbox-blank-outline</v-icon>
-
-            <i18n
-              path="Common.Allowusertoselectatimezoneforrecurringevent"
-              class="ml-2"
-            />
-          </span>
+        <v-flex class="mt-2">
+          <v-checkbox
+            v-model="data.event.showTimezone"
+            dense
+            height="20"
+            class="ma-0 pa-0"
+            label="Allow user to select a time zone for 
+            recurring event"
+            color="green"
+            @change="updateReg()"
+          ></v-checkbox>
         </v-flex>
       </div>
-
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-0 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-0">
@@ -883,48 +889,54 @@
             {{ formatField(data.event.RegistrationSiteTemplate) }}
           </div>
         </v-flex>
-        <v-flex my-3>
-          <span
-            v-if="
-              data.event._sectionHeading &&
-              data.event._sectionHeading.showimagegallery === true
-            "
-          >
-            <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
-            <i18n path="Common.ShowImageGallery" class="ml-2" />
-          </span>
-          <span v-else>
-            <v-icon>mdi-checkbox-blank-outline</v-icon>
-            <i18n path="Common.ShowImageGallery" class="ml-2" />
-          </span>
+        <v-flex>
+          <v-checkbox
+            v-model="registrationSetting.showimagegallery"
+            dense
+            height="20"
+            class="ma-0 pa-0"
+            label="Show Image Gallery"
+            color="green"
+            @change="updateReg1()"
+          ></v-checkbox>
         </v-flex>
-        <v-flex my-3>
-          <span
-            v-if="
-              data.event._sectionHeading &&
-              data.event._sectionHeading.showeventreviews === true
-            "
-          >
-            <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
-            <i18n path="Common.ShowEventReviews" class="ml-2" />
-          </span>
-          <span v-else>
-            <v-icon>mdi-checkbox-blank-outline</v-icon>
-            <i18n path="Common.ShowEventReviews" class="ml-2" />
-          </span>
+        <v-flex>
+          <v-checkbox
+            v-model="registrationSetting.showeventreviews"
+            dense
+            height="20"
+            class="ma-0 pa-0"
+            label="Show Event Reviews"
+            color="green"
+            @change="updateReg1()"
+          ></v-checkbox>
         </v-flex>
       </div>
+      <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
+        <div class="toast py-2 pr-1 pl-3">
+          {{ snackbarText }}
+        </div>
+      </v-snackbar>
     </v-flex>
-    <editSeoForm :seo-form.sync="seoForm" />
-    <editEventForm :event-form.sync="eventForm" />
-    <editEventSetting :event-setting.sync="eventSetting" />
-    <editSiteSetting :site-setting.sync="siteSetting" />
+    <div v-if="seoForm">
+      <editSeoForm :seo-form.sync="seoForm" />
+    </div>
+    <div v-if="eventForm">
+      <editEventForm :event-form.sync="eventForm" />
+    </div>
+    <div v-if="eventSetting">
+      <editEventSetting :event-setting.sync="eventSetting" />
+    </div>
+    <div v-if="siteSetting">
+      <editSiteSetting :site-setting.sync="siteSetting" />
+    </div>
     <makeCopy :is-make-copy.sync="isMakeCopy" />
   </v-flex>
 </template>
 <script>
 import gql from 'graphql-tag'
 import format from 'date-fns/format'
+import _ from 'lodash'
 import editEventForm from '../../_id/editEventForm.vue'
 import nuxtConfig from '../../../../../../nuxt.config'
 import editSeoForm from '~/pages/apps/_app/event/_id/editSeoForm.vue'
@@ -932,6 +944,7 @@ import editEventSetting from '~/pages/apps/_app/event/_id/editEventSetting.vue'
 import editSiteSetting from '~/pages/apps/_app/event/_id/editSiteSetting.vue'
 import makeCopy from '~/pages/apps/_app/event/_id/makeCopy.vue'
 import Grid from '~/components/common/grid'
+import Notes from '~/components/common/notes'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { getApiUrl } from '~/utility/index.js'
@@ -946,6 +959,7 @@ export default {
     editEventSetting,
     editSiteSetting,
     makeCopy,
+    Notes,
   },
   mixins: [configLoaderMixin],
   data() {
@@ -967,11 +981,38 @@ export default {
       eventSessionLink: '',
       Status: '',
       eventData: {},
+      registrationSetting: {
+        showimagegallery: false,
+        showeventreviews: false,
+      },
+      snackbar: false,
+      timeout: '1000',
+      snackbarText: '',
     }
   },
   computed: {
     content() {
       return this.contents ? this.contents.Event : null
+    },
+    updateData() {
+      const dataObj = {
+        isRefundable: this.data.event.isRefundable,
+        SessionTimingConflict: this.data.event.SessionTimingConflict,
+        ShowRemainingTickets: this.data.event.ShowRemainingTickets,
+        ShowAttendeeForm: this.data.event.ShowAttendeeForm,
+        NotifyOrganizer: this.data.event.NotifyOrganizer,
+        showTimezone: this.data.event.showTimezone,
+      }
+      return dataObj
+    },
+    updateSectionHeading() {
+      const dataObj = {
+        _sectionHeading: {
+          showimagegallery: this.registrationSetting.showimagegallery,
+          showeventreviews: this.registrationSetting.showeventreviews,
+        },
+      }
+      return dataObj
     },
   },
   methods: {
@@ -1018,6 +1059,8 @@ export default {
           this.formData
         )
         if (res) {
+          this.snackbarText = 'Congratulations, your event has been published.'
+          this.snackbar = true
           this.refresh()
         }
       } catch (e) {
@@ -1064,9 +1107,52 @@ export default {
     },
     redirectIntegration() {
       this.$router.push(
-        `/apps/event/list/Event/integrations?event=${this.$route.params.id}`
+        `/apps/event/list/EventIntegration/integrations?event=${this.$route.params.id}`
       )
     },
+    async updateEvent() {
+      const obj = this.updateData
+      obj.id = this.$route.params.id
+      const URL = `https://${nuxtConfig.axios.eventUrl}${nuxtConfig.axios.apiEndpoint}Events/${this.$route.params.id}`
+      try {
+        const res = await this.$axios.$patch(URL, obj)
+        if (res) {
+        }
+      } catch (e) {
+        console.error(
+          `Error in apps/event/_id/index.vue while making a Patch call to Event model in method updateEvent context: EventId:-${this.$route.params.id} \n URL:- ${URL} \n Object:- ${obj}`,
+          e
+        )
+      }
+    },
+    updateRegistrationSetting(eventData) {
+      this.registrationSetting.showimagegallery = this.eventData._sectionHeading
+        ? this.eventData._sectionHeading.showimagegallery
+        : false
+      this.registrationSetting.showeventreviews = this.eventData._sectionHeading
+        ? this.eventData._sectionHeading.showeventreviews
+        : false
+    },
+    async updateRegistrationPage() {
+      const obj = this.updateSectionHeading
+      const URL = `https://${nuxtConfig.axios.eventUrl}${nuxtConfig.axios.apiEndpoint}Events/${this.$route.params.id}`
+      try {
+        const res = await this.$axios.$patch(URL, obj)
+        if (res) {
+        }
+      } catch (e) {
+        console.error(
+          `Error in apps/event/_id/index.vue while making a Patch call to Event model in method updateRegistrationPage context: EventId:-${this.$route.params.id} \n URL:- ${URL} \n Object:- ${obj}`,
+          e
+        )
+      }
+    },
+    updateReg: _.debounce(function () {
+      this.updateEvent()
+    }, 500),
+    updateReg1: _.debounce(function () {
+      this.updateRegistrationPage()
+    }, 500),
   },
   apollo: {
     data: {
@@ -1096,6 +1182,7 @@ export default {
         const eventSummary = data.Event.EventGetEventSummery
         this.eventData = event[0]
         this.updateStepper()
+        this.updateRegistrationSetting(this.eventData)
         this.eventUniqueLink = `https://${nuxtConfig.axios.eventUrl}/e/${event[0].UniqLink}`
         this.eventSessionLink = `https://${nuxtConfig.axios.eventUrl}/t/${event[0].UniqLink}`
         return {

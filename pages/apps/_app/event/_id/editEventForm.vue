@@ -78,11 +78,7 @@
               sm="6"
               md="4"
             >
-              <Timezone
-                v-model="formData.Timezone"
-                :rules="[() => !!formData.Timezone || 'This field is required']"
-                :field="timezonefield"
-              />
+              <Timezone v-model="formData.Timezone" :field="timezonefield" />
             </v-col>
             <v-col cols="12" sm="6" md="4" class="pb-0">
               <v-text-field
@@ -134,6 +130,16 @@
             </v-col>
             <v-col cols="12" class="pb-0">
               <v-text-field
+                v-if="formData.LocationType === 'Bitpod Virtual'"
+                label="Bitpod Virtual Link"
+                outlined
+                dense
+                disabled
+                :value="virtualLink"
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" class="pb-0">
+              <v-text-field
                 v-if="formData.LocationType === 'Online Event'"
                 v-model="formData.WebinarLink"
                 label="Online Event Link*"
@@ -145,7 +151,7 @@
             </v-col>
             <v-col cols="12" class="pb-0">
               <v-textarea
-                v-if="formData.LocationType === 'Online Event'"
+                v-if="formData.LocationType === 'Online event'"
                 v-model="formData.JoiningInstruction"
                 label="Additional online event joining instructions,URL,phone,etc*"
                 outlined
@@ -156,7 +162,8 @@
             <div
               v-if="
                 formData.BusinessType !== 'Recurring' &&
-                formData.LocationType !== 'Online Event'
+                formData.LocationType !== 'Online Event' &&
+                formData.LocationType !== 'Bitpod Virtual'
               "
               style="display: contents;"
             >
@@ -256,6 +263,7 @@ import Timezone from '~/components/common/form/timezone'
 import { formatTimezoneDateFieldsData } from '~/utility/form.js'
 import { getApiUrl } from '~/utility'
 import CustomDate from '~/components/common/form/date.vue'
+import nuxtconfig from '~/nuxt.config'
 
 export default {
   components: {
@@ -324,6 +332,9 @@ export default {
     content() {
       return this.contents ? this.contents.Event : null
     },
+    virtualLink() {
+      return `https://${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}/${this.formData.UniqLink}`
+    },
     addressValidation() {
       if (this.addressLine === '') {
         const message = strings.FIELD_REQUIRED
@@ -385,6 +396,9 @@ export default {
   },
 
   methods: {
+    onReset() {
+      this.$refs.form.reset()
+    },
     changeStartDate(value) {
       this.$refs.form.validate()
     },
@@ -416,9 +430,10 @@ export default {
     },
     close() {
       this.$emit('update:eventForm', false)
+      this.onReset()
     },
     refresh() {
-      this.$apollo.queries.data.refresh()
+      this.$refs.form.$parent.$parent.refresh()
     },
     getAddressData(addressData, placeResultData, id) {
       this.VenueAddress.AddressLine = addressData.route
@@ -537,38 +552,6 @@ export default {
         )
       }
     },
-    setEventData() {
-      this.formData.id = this.$route.params.id
-      this.tags = this.formData.Tags
-      if (
-        this.formData.BusinessType !== 'Recurring' &&
-        this.formData.StartDate !== null &&
-        this.formData.EndDate !== null
-      ) {
-        this.addressLine =
-          this.formData._VenueAddress && this.formData._VenueAddress.AddressLine
-        this.StartDate = this.getZonedDateTime(
-          this.formData.StartDate,
-          this.formData.Timezone
-        )
-        this.EndDate = this.getZonedDateTime(
-          this.formData.EndDate,
-          this.formData.Timezone
-        )
-        this.VenueAddress =
-          this.formData._VenueAddress != null ? this.formData._VenueAddress : {}
-      } else {
-        this.StartDate = this.formData.StartDate
-          ? this.getZonedDateTime(
-              this.formData.StartDate,
-              this.formData.Timezone
-            )
-          : null
-        this.EndDate = this.formData.EndDate
-          ? this.getZonedDateTime(this.formData.EndDate, this.formData.Timezone)
-          : null
-      }
-    },
   },
   apollo: {
     data: {
@@ -595,7 +578,43 @@ export default {
       update(data) {
         const event = formatGQLResult(data, 'Event')
         this.formData = event.length > 0 ? { ...event[0] } : {}
-        this.setEventData()
+        this.formData.id = this.$route.params.id
+        this.tags = this.formData.Tags
+        if (
+          this.formData.BusinessType !== 'Recurring' &&
+          this.formData.StartDate !== null &&
+          this.formData.EndDate !== null
+        ) {
+          this.addressLine =
+            this.formData._VenueAddress &&
+            this.formData._VenueAddress.AddressLine
+          this.StartDate = this.getZonedDateTime(
+            this.formData.StartDate,
+            this.formData.Timezone
+          )
+          this.EndDate = this.getZonedDateTime(
+            this.formData.EndDate,
+            this.formData.Timezone
+          )
+          this.VenueAddress =
+            this.formData._VenueAddress != null
+              ? this.formData._VenueAddress
+              : {}
+        } else {
+          this.StartDate = this.formData.StartDate
+            ? this.getZonedDateTime(
+                this.formData.StartDate,
+                this.formData.Timezone
+              )
+            : null
+          this.EndDate = this.formData.EndDate
+            ? this.getZonedDateTime(
+                this.formData.EndDate,
+                this.formData.Timezone
+              )
+            : null
+        }
+        // this.setEventData()
         return {
           event: event.length > 0 ? event[0] : {},
         }

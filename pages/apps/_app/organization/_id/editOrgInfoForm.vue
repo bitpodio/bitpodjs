@@ -147,11 +147,23 @@ export default {
     }
   },
   methods: {
+    onReset() {
+      this.formData.Name = ''
+      this.formData.About = ''
+      this.formData.Email = ''
+      this.formData.Mobile = ''
+      this.venueAddress.AddressLine = ''
+      this.venueAddress.City = ''
+      this.venueAddress.State = ''
+      this.venueAddress.PostalCode = ''
+      this.venueAddress.Country = ''
+    },
     onClose() {
       this.$emit('update:editOrgInfo', false)
+      this.onReset()
     },
     refresh() {
-      this.$apollo.queries.data.refresh()
+      this.$refs.form.$parent.$parent.refresh()
     },
     async onSave() {
       const url = getApiUrl()
@@ -192,9 +204,9 @@ export default {
       },
       update(data) {
         const organization = formatGQLResult(data, 'OrganizationInfo')
-        this.formData = organization[0]
+        this.formData = { ...organization[0] }
         this.formData.id = this.$route.params.id
-        this.venueAddress = organization[0]._CurrentAddress
+        this.venueAddress = { ...organization[0]._CurrentAddress }
         return {
           organization: organization.length > 0 ? organization[0] : {},
         }

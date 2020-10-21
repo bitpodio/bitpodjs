@@ -19,7 +19,7 @@
             >
               <v-skeleton-loader
                 :loading="!eventSummaryLoaded"
-                tile="true"
+                :tile="true"
                 type="avatar"
                 height="60"
                 width="60"
@@ -69,7 +69,7 @@
           >
             <v-skeleton-loader
               :loading="!eventOnSaleLoaded"
-              tile="true"
+              :tile="true"
               type="avatar"
               height="70"
               width="70"
@@ -182,7 +182,7 @@
           >
             <v-skeleton-loader
               :loading="!recentBuyersLoaded"
-              tile="true"
+              :tile="true"
               type="avatar"
               height="50"
               width="50"

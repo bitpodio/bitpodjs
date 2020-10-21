@@ -20,6 +20,8 @@ query ($filters: JSON, $where: JSON) {
                     modifiedDate
                     Description
                     MySpeaker
+                    LocationType
+                    BitpodVirtualLink
                 } 
             } 
         } 

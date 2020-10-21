@@ -598,7 +598,9 @@
                       <tr>
                         <th class="text-left pl-0">Title*</th>
                         <th class="text-left pl-2">Type*</th>
-                        <th class="text-left pl-2">Price</th>
+                        <th class="text-left pl-2">
+                          Price ({{ eventData.Currency }})
+                        </th>
                         <th class="text-left pl-2">Quantity</th>
                         <th class="text-left pl-2"></th>
                       </tr>
@@ -889,7 +891,7 @@
         class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
       >
         <v-btn
-          v-if="currentTab > 1"
+          v-if="currentTab > 1 && !isEventCreate && !isEventPublish"
           depressed
           color="grey lighten-2"
           @click="prev()"
@@ -904,7 +906,7 @@
           >Next</v-btn
         >
         <v-btn
-          v-if="currentTab > 2"
+          v-if="currentTab > 2 && !isEventCreate && !isEventPublish"
           depressed
           color="primary"
           :disabled="isSaveButtonDisabled"
@@ -930,6 +932,7 @@ import { formatGQLResult } from '~/utility/gql.js'
 import { getIdFromAtob } from '~/utility'
 import CustomDate from '~/components/common/form/date.vue'
 import { required } from '~/utility/rules.js'
+import nuxtconfig from '~/nuxt.config'
 
 const ObjectID5 = (
   m = Math,
@@ -950,6 +953,10 @@ export default {
     onFormClose: {
       type: Function,
       default: () => null,
+    },
+    resetData: {
+      type: Boolean,
+      default: false,
     },
   },
   data: () => {
@@ -975,6 +982,7 @@ export default {
       isLocationMessage: false,
       slotOptions: [],
       inPersonMeetingOptions: [],
+      weekDay: [],
       maxAllowRules: [
         (v) => {
           if (!isNaN(parseFloat(v)) && v >= 0) {
@@ -1052,8 +1060,9 @@ export default {
       ZipCode: '',
       SessionTicket: [],
       TicketName: '',
-      zoomDocumentLink: strings.ZOOM_DOCUMENT_LINK,
-      googleMeetDocumentLink: strings.GOOGLE_MEET_DOCUMENT_LINK,
+      zoomDocumentLink: nuxtconfig.integrationLinks.ZOOM_DOCUMENT_LINK,
+      googleMeetDocumentLink:
+        nuxtconfig.integrationLinks.GOOGLE_MEET_DOCUMENT_LINK,
       selectedSession: '',
       ScheduledType: '',
       RollingDays: '',
@@ -1262,7 +1271,7 @@ export default {
   },
   computed: {
     eventLinkHint() {
-      return `${strings.EVENT_LINK_HINT}${this.eventData.UniqLink}`
+      return `${nuxtconfig.integrationLinks.EVENT_LINK_HINT}${this.eventData.UniqLink}`
     },
     slotLookupOptions() {
       const items = this.slotOptions
@@ -1346,7 +1355,17 @@ export default {
       }
     },
   },
+  watch: {
+    resetData() {
+      this.tickets = []
+      const ticket = this.ticketDefaultData()
+      this.tickets = [ticket]
+    },
+  },
   methods: {
+    setSelectedDays(selectedDays) {
+      this.sessions[0].Days = selectedDays
+    },
     getMaxAllow(session) {
       return `${session.Type} ${session.MaxAllow}`
     },
@@ -1505,8 +1524,8 @@ export default {
           this.venueAddress.LatLng = {}
         }
         if (this.sessions[index].LocationType === 'In-person meeting') {
-          this.InPersonMeeting = []
           this.isPersonMeeting = true
+          this.$refs.personmeetingform && this.$refs.personmeetingform.reset()
           this.isZoom = false
           this.isGoogleMeet = false
         }
@@ -1658,7 +1677,11 @@ export default {
     },
     selectSessionTickets(index) {
       this.selectedSession = index
-      this.SessionTicket = []
+      this.SessionTicket =
+        this.sessions[index].SessionTicket &&
+        this.sessions[index].SessionTicket.length
+          ? this.sessions[index].SessionTicket
+          : []
       this.isSessionTicket = true
     },
     setSessionTicket() {
@@ -1795,11 +1818,27 @@ export default {
     close() {
       this.onFormClose()
       this.tabs = 'tab-1'
+      this.resetForm()
     },
     closeForm() {
       this.onFormClose()
       this.tabs = 'tab-1'
       this.$router.push('/apps/event/event/recurring/' + this.eventId)
+      this.resetForm()
+    },
+    resetForm() {
+      this.loading = true
+      this.$refs.validBasicInfoForm.reset()
+      this.$refs.validTicketsForm && this.$refs.validTicketsForm.reset()
+      this.$refs.validSessionsForm && this.$refs.validSessionsForm.reset()
+      setTimeout(() => {
+        this.loading = false
+        this.isEventCreate = false
+        this.isEventPublish = false
+        this.isSaveButtonDisabled = false
+        this.valid = false
+        this.currentTab = 1
+      }, 3000)
     },
 
     buildMutationUpsertQuery(modelName) {
@@ -1979,7 +2018,7 @@ export default {
           if (res) {
             this.eventId = res.id
             const ticketList = []
-            const sessionList = []
+            let sessionList = []
 
             this.tickets.forEach(function (ticket) {
               ticket.Events = res.id
@@ -2050,7 +2089,19 @@ export default {
                 sessionList.push(session)
               })
             }
-
+            sessionList = sessionList.map((i) => {
+              if (i.LocationType !== 'Bitpod Virtual') {
+                return i
+              }
+              const randomStr = Math.random().toString(36)
+              const roomName = `/${randomStr.substring(
+                2,
+                5
+              )}-${randomStr.substring(5, 8)}-${randomStr.substring(8, 11)}`
+              return Object.assign(i, {
+                BitpodVirtualLink: `https://${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}${roomName}`,
+              })
+            })
             const sessionres = await this.$axios
               .$post(`${baseUrl}Sessions`, sessionList)
               .catch((e) => {
@@ -2117,6 +2168,17 @@ export default {
         TicketCount: 100,
       })
     },
+    ticketDefaultData() {
+      return {
+        id: ObjectID5(),
+        TicketId: 0,
+        Code: 'General admission',
+        Type: 'Free',
+        Amount: 0,
+        TicketCount: 100,
+        CodeAmount: 'General admission 0',
+      }
+    },
     defaultSession() {
       return {
         SessionId: this.sessions.length + 1,
@@ -2141,6 +2203,9 @@ export default {
     },
     addSession() {
       const session = this.defaultSession()
+      if (this.weekDay.length > 0) {
+        session.Days = this.weekDay
+      }
       this.sessions.push(session)
     },
   },
@@ -2174,6 +2239,10 @@ export default {
           ...rest,
         }))
         this.eventData.Currency = OrganizationInfo[0].Currency
+        if (OrganizationInfo[0].weekDay.length > 0) {
+          this.setSelectedDays(OrganizationInfo[0].weekDay)
+          this.weekDay = OrganizationInfo[0].weekDay
+        }
       },
       error(error) {
         this.error = error

@@ -9,7 +9,7 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on" @click="getTickets">
-          <v-icon left>mdi-plus</v-icon>Edit Item
+          <v-icon left class="fs-16">fa-pencil</v-icon>Edit Item
         </v-btn>
       </template>
       <v-card>
@@ -293,6 +293,7 @@ export default {
       this.formData.Amount = parseInt(this.Amount)
       this.formData.DisplayOrder = parseInt(this.formData.DisplayOrder)
       this.formData.TicketCount = parseInt(this.formData.TicketCount)
+      this.formData.AvailableCount = parseInt(this.formData.TicketCount)
       this.formData.Events = this.$route.params.id
       this.formData.Status = this.eventStatus
       try {

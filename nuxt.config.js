@@ -319,4 +319,16 @@ export default {
     contact: '5f7ac71841a664000a774fc0',
     attendee: '5f7b46475ca471000bfecf9d',
   },
+  integrationLinks: {
+    BITOPD_VIRTUAL_LINK: 'meet.bitpod.io',
+    EVENT_LINK_HINT: `https://${
+      process.env.PUBLIC_DOMAIN || 'event.test.bitpod.io'
+    }/e/`,
+    ZOOM_DOCUMENT_LINK: `https://${
+      process.env.PUBLIC_DOMAIN || 'event.test.bitpod.io'
+    }/admin/apps/HelpCenter/Integrations/Zoom/views/Zoom`,
+    GOOGLE_MEET_DOCUMENT_LINK: `https://${
+      process.env.PUBLIC_DOMAIN || 'event.test.bitpod.io'
+    }/admin/apps/HelpCenter/Integrations/Gmail/views/Gmail`,
+  },
 }

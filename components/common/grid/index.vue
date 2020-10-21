@@ -72,6 +72,7 @@
           :single-expand="singleExpand"
           item-key="id"
           class="elevation-0"
+          :class="hideDefaultHeader ? 'px-0 pt-0' : 'px-2 pt-1'"
           :show-select="showSelect"
           @update:options="updatePagination"
           @click:row="onRowClick"
@@ -86,6 +87,7 @@
               :context="contentContext"
               :items="tableData.items"
               :content="content"
+              :refresh="refresh"
             />
           </template>
           <template
@@ -122,6 +124,7 @@
               :options="props.options"
               :expand="props.expand"
               :select="props.select"
+              :refresh="refresh"
             />
           </template>
           <template v-if="!!slotTemplates.header" v-slot:header="props">
@@ -357,7 +360,7 @@ export default {
       const fields = getGridFields(this.content, this.viewName)
       const filterEnableFields = {}
       for (const field in fields) {
-        const { filterEnable } = fields[field]
+        const { filterEnable = true } = fields[field]
         if (filterEnable) {
           filterEnableFields[field] = fields[field]
         }

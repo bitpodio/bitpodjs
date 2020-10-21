@@ -117,11 +117,18 @@ export default {
     }
   },
   methods: {
+    onReset() {
+      this.formData.PrivacyPolicy = ''
+      this.formData.EventRegistrationURL = ''
+      this.formData.successTemplateCaption = ''
+      this.currency = []
+    },
     onClose() {
       this.$emit('update:editOrgSetting', false)
+      this.onReset()
     },
     refresh() {
-      this.$apollo.queries.data.refresh()
+      this.$refs.form.$parent.$parent.refresh()
     },
     async onSave() {
       const url = getApiUrl()
@@ -189,10 +196,10 @@ export default {
       },
       update(data) {
         const organization = formatGQLResult(data, 'OrganizationInfo')
-        this.formData = organization[0]
+        this.formData = { ...organization[0] }
         this.formData.id = this.$route.params.id
         this.currency = this.formData.Currency
-        this.venueAddress = organization[0]._CurrentAddress
+        this.venueAddress = { ...organization[0]._CurrentAddress }
         return {
           organization: organization.length > 0 ? organization[0] : {},
         }

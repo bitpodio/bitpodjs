@@ -58,7 +58,6 @@
               </v-col>
               <v-col class="col-12 col-md-6">
                 <v-select
-                  ref="form1"
                   v-model="formData.Type"
                   :items="typeDropDown"
                   :rules="required"
@@ -205,7 +204,7 @@ export default {
       Attendees: [],
       formData: {
         Attendee: [],
-        Amount: '',
+        Amount: 0,
         CheckGroupDiscount: false,
         Code: 'General admission',
         DisplayOrder: null,
@@ -214,7 +213,7 @@ export default {
         Events: '',
         Group: '',
         TicketCount: null,
-        Type: '',
+        Type: 'Free',
         ValidateQty: false,
         Status: '',
       },
@@ -290,9 +289,7 @@ export default {
         e
       )
     }
-    if (this.eventData.BusinessType !== 'Recurring') {
-      this.getTicketDate()
-    }
+    this.getTicketDate()
     this.getAttendeeType()
   },
   methods: {
@@ -323,19 +320,20 @@ export default {
       this.setAttendeeType = res
     },
     onReset() {
-      this.$refs.form1.reset()
       this.formData.Attendee = []
       this.Attendees = []
-      this.formData.Amount = ''
+      this.formData.Amount = 0
       this.formData.CheckGroupDiscount = false
       this.formData.Code = 'General admission'
       this.formData.DisplayOrder = null
       this.formData.Group = ''
-      this.formData.Type = ''
+      this.formData.Type = 'Free'
       this.formData.TicketCount = null
       this.formData.ValidateQty = false
       this.formData.Status = ''
-      this.valid = false
+      this.valid = true
+      this.StartDate = null
+      this.EndDate = null
     },
     getAttendeesId() {
       this.formData.Attendee = this.setAttendeeType
@@ -358,6 +356,7 @@ export default {
       this.formData.Amount = parseInt(this.formData.Amount)
       this.formData.DisplayOrder = parseInt(this.formData.DisplayOrder)
       this.formData.TicketCount = parseInt(this.formData.TicketCount)
+      this.formData.AvailableCount = parseInt(this.formData.TicketCount)
       this.formData.Events = this.$route.params.id
       this.formData.Status = this.eventData.Status
       try {
@@ -383,8 +382,17 @@ export default {
       }
     },
     getTicketDate() {
-      this.StartDate = new Date()
-      this.EndDate = addMonths(new Date(), 1)
+      if (
+        this.eventData.BusinessType === 'Recurring' &&
+        this.eventData.StartDate === null &&
+        this.eventData.EndDate === null
+      ) {
+        this.StartDate = null
+        this.EndDate = null
+      } else {
+        this.StartDate = new Date()
+        this.EndDate = addMonths(new Date(), 1)
+      }
     },
 
     async getDropDownData(filterType) {

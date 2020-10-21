@@ -16,10 +16,12 @@
         <v-card-title
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
-          <h2 class="black--text pt-10 pb-9">New Registration Question</h2>
+          <h2 class="black--text pt-10 pb-9 font-weight-regular">
+            New Registration Question
+          </h2>
           <v-spacer></v-spacer>
           <div>
-            <v-btn icon @click="dialog = false">
+            <v-btn icon @click="onClose">
               <v-icon>mdi-close</v-icon>
             </v-btn>
           </div>
@@ -33,6 +35,7 @@
                   label="Question*"
                   :rules="required"
                   outlined
+                  dense
                 ></v-text-field>
               </v-col>
               <v-col cols="12">
@@ -41,6 +44,7 @@
                   :items="controlTypeDropDown"
                   label="Control Type*"
                   outlined
+                  dense
                 ></v-select>
               </v-col>
               <v-col v-if="showCsvField" cols="12">
@@ -49,6 +53,7 @@
                   label="Options, use CSV format*"
                   :rules="required"
                   outlined
+                  dense
                 ></v-text-field>
               </v-col>
               <v-col cols="12">
@@ -59,6 +64,7 @@
                   type="number"
                   min="1"
                   outlined
+                  dense
                 ></v-text-field>
               </v-col>
               <v-col cols="12">
@@ -66,6 +72,7 @@
                   v-model="formData.isRequired"
                   label=" Required"
                   class="ma-0"
+                  dense
                 ></v-checkbox>
               </v-col>
               <v-col cols="12">
@@ -76,6 +83,7 @@
                   multiple
                   chips
                   persistent-hint
+                  dense
                 ></v-select>
               </v-col>
             </v-row>
@@ -178,9 +186,20 @@ export default {
   },
   methods: {
     onReset() {
-      this.formData.Options = []
-      this.formData.TicketName = []
+      this.formData.Question = ''
+      this.controlType = ''
+      this.CsvOptions = ''
+      this.formData.DisplayOrder = ''
+      this.formData.isRequired = false
+      this.tickets = []
+      // this.valid = false
+      // this.formData.Options = []
+      // this.formData.TicketName = []
       this.$refs.form.reset()
+    },
+    onClose() {
+      this.dialog = false
+      this.onReset()
     },
     async onSave() {
       this.formData.ControlType = this.controlType

@@ -193,7 +193,7 @@
           >
             <v-flex class="d-flex justify-center align-center pb-3">
               <h2 class="body-1 pb-0">
-                <i18n path="Common.Departments" />
+                Departments
               </h2>
               <v-spacer></v-spacer>
             </v-flex>

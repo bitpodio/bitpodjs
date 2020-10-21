@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="item.Delivered === true">
-      <v-icon>mdi-send</v-icon>
+      <v-icon class="success--text fs-18">fa-paperplane</v-icon>
     </div>
     <div v-else>
       <v-icon></v-icon>

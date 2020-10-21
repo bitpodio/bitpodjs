@@ -4,7 +4,7 @@
       <v-icon class="success--text fs-18">fa-mail</v-icon>
     </div>
     <div v-else>
-      <v-icon class="success--text fs-18">fa-mail</v-icon>
+      <v-icon class="error--text fs-18">fa-mail</v-icon>
     </div>
   </div>
 </template>

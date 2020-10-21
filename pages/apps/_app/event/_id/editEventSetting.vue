@@ -59,7 +59,7 @@
                 dense
               ></v-text-field>
             </v-col>
-            <v-col cols="8" sm="6" md="6">
+            <v-col cols="12" sm="6" md="12">
               <v-text-field
                 v-model="formData.UniqLink"
                 label="Event Link*"
@@ -84,67 +84,6 @@
                 label="Cancellation Policy"
                 placeholder="Description"
               />
-            </v-col>
-            <v-col cols="12" sm="6" md="6" class="py-0">
-              <v-checkbox
-                v-model="formData.isRefundable"
-                label=" Allow Cancelation"
-                class="ma-0"
-              ></v-checkbox>
-            </v-col>
-            <v-col cols="12" sm="6" md="6" class="py-0">
-              <v-checkbox
-                v-model="formData.ShowAttendeeForm"
-                label=" Show attendee form for each ticket"
-                class="ma-0"
-              ></v-checkbox>
-            </v-col>
-            <v-col cols="12" sm="6" md="6" class="py-0">
-              <v-checkbox
-                v-model="formData.SessionTimingConflict"
-                label=" Session Timing Conflict"
-                class="ma-0"
-              ></v-checkbox>
-            </v-col>
-            <v-col cols="12" sm="6" md="6" class="py-0">
-              <v-checkbox
-                v-model="formData.ShowRemainingTickets"
-                label=" Show Remaining Tickets"
-                class="ma-0"
-              ></v-checkbox>
-            </v-col>
-            <v-col cols="12" sm="6" md="6" class="py-0">
-              <v-checkbox
-                v-model="formData.NotifyOrganizer"
-                label=" Notify event organizer when someone registers"
-                class="ma-0"
-              ></v-checkbox>
-            </v-col>
-            <v-col
-              v-if="formData.BusinessType === 'Recurring'"
-              cols="12"
-              sm="6"
-              md="6"
-              class="py-0"
-            >
-              <v-checkbox
-                v-model="formData.showTimezone"
-                label="Allow user to select a timezone for recurring event"
-                class="ma-0"
-              ></v-checkbox>
-            </v-col>
-            <v-col
-              v-if="formData.BusinessType !== 'Recurring'"
-              cols="12"
-              sm="6"
-              md="6"
-              class="py-0"
-            >
-              <v-checkbox
-                v-model="formData.SendCalendar"
-                label=" Send calendar invite when registered"
-                class="ma-0"
-              ></v-checkbox>
             </v-col>
           </v-row>
         </v-card-text>
@@ -233,11 +172,29 @@ export default {
   },
 
   methods: {
+    onReset() {
+      this.valid = true
+      this.privacy = []
+      this.formData.ProjectCode = ''
+      this.formData.CostCenter = ''
+      this.formData.UniqLink = ''
+      this.currency = []
+      this.isInvalidEventLink = false
+      this.formData.CancellationPolicy = ''
+      this.formData.isRefundable = ''
+      this.formData.ShowAttendeeForm = false
+      this.formData.SessionTimingConflict = false
+      this.formData.ShowRemainingTickets = false
+      this.formData.NotifyOrganizer = false
+      this.formData.showTimezone = false
+      this.formData.SendCalendar = false
+    },
     close() {
       this.$emit('update:eventSetting', false)
+      this.onReset()
     },
     refresh() {
-      this.$apollo.queries.data.refresh()
+      this.$refs.form.$parent.$parent.refresh()
     },
     async onSave() {
       this.formData.Currency = this.currency
@@ -291,7 +248,10 @@ export default {
       }
     },
     async checkUniqueLink() {
-      if (this.formData.UniqLink !== '') {
+      if (
+        this.formData.UniqLink !== '' &&
+        this.formData.UniqLink !== this.data.event.UniqLink
+      ) {
         const where = { UniqLink: this.formData.UniqLink }
         const result = await this.$apollo.query({
           query: gql`

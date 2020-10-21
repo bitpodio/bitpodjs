@@ -90,7 +90,6 @@ export default {
     },
     async onSave() {
       const baseUrl = getApiUrl()
-      const requestBody = { Notes: this.comment }
       const regId = this.$route.params.id
       let commentRes = null
       let regRes = null
@@ -98,7 +97,7 @@ export default {
         commentRes = await this.$axios.$post(
           `${baseUrl}Registrations/${regId}/Comment`,
           {
-            requestBody,
+            Notes: this.comment,
           }
         )
       } catch (e) {

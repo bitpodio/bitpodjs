@@ -62,33 +62,42 @@
                   outlined
                 ></v-text-field>
               </v-col>
-              <v-col v-if="isVenue || isOnline" cols="12" sm="6" md="4">
-                <CustomDate
-                  v-model="StartDate"
-                  label="Start Date*"
-                  :field="startDateField"
-                  :rules="startDateRule"
-                  :on-change="changeStartDate()"
-                  type="datetime"
-                />
-              </v-col>
-              <v-col v-if="isVenue || isOnline" cols="12" sm="6" md="4">
-                <CustomDate
-                  v-model="EndDate"
-                  label="End Date*"
-                  :field="endDateField"
-                  :rules="endDateRule"
-                  :on-change="changeEndDate()"
-                  type="datetime"
-                />
-              </v-col>
-              <v-col v-if="isVenue || isOnline" cols="12" sm="6" md="4">
-                <Timezone
-                  v-model="eventData.Timezone"
-                  :field="timezonefield"
-                  class="v-timezone"
-                ></Timezone>
-              </v-col>
+            </v-row>
+
+            <v-form ref="dateform" v-model="datevalid" :lazy-validation="lazy">
+              <v-row>
+                <v-col v-if="isVenue || isOnline" cols="12" sm="4" md="4">
+                  <CustomDate
+                    v-model="StartDate"
+                    label="Start Date*"
+                    :field="startDateField"
+                    :rules="startDateRule"
+                    :on-change="changeStartDate()"
+                    type="datetime"
+                  />
+                </v-col>
+                <v-col v-if="isVenue || isOnline" cols="12" sm="4" md="4">
+                  <CustomDate
+                    v-model="EndDate"
+                    label="End Date*"
+                    :field="endDateField"
+                    :rules="endDateRule"
+                    :on-change="changeEndDate()"
+                    type="datetime"
+                  />
+                </v-col>
+
+                <v-col v-if="isVenue || isOnline" cols="12" sm="4" md="4">
+                  <Timezone
+                    v-model="eventData.Timezone"
+                    :field="timezonefield"
+                    class="v-timezone"
+                  ></Timezone>
+                </v-col>
+              </v-row>
+            </v-form>
+
+            <v-row>
               <v-col cols="12">
                 <v-text-field
                   v-model="UniqLink"
@@ -303,7 +312,9 @@
             class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
           >
             <v-btn
-              :disabled="!valid || isInvalidEventLink || saveBtnDisabled"
+              :disabled="
+                !valid || !datevalid || isInvalidEventLink || saveBtnDisabled
+              "
               color="primary"
               depressed
               @click="onSave"
@@ -327,6 +338,7 @@ import { formatGQLResult } from '~/utility/gql.js'
 import { getApiUrl } from '~/utility/index.js'
 import CustomDate from '~/components/common/form/date.vue'
 import { getIdFromAtob } from '~/utility'
+import nuxtconfig from '~/nuxt.config'
 
 export default {
   components: {
@@ -347,6 +359,7 @@ export default {
   },
   data() {
     return {
+      datevalid: false,
       valid: false,
       lazy: false,
       Title: '',
@@ -469,7 +482,7 @@ export default {
       ]
     },
     eventLinkHint() {
-      return `${strings.EVENT_LINK_HINT}${this.UniqLink}`
+      return `${nuxtconfig.integrationLinks.EVENT_LINK_HINT}${this.UniqLink}`
     },
     gMapCenter() {
       return { lat: this.locations[0].lat, lng: this.locations[0].lng }
@@ -482,11 +495,11 @@ export default {
   },
   methods: {
     changeStartDate() {
-      this.$refs.form.validate()
+      this.$refs.dateform && this.$refs.dateform.validate()
       this.eventData.StartDate = this.StartDate
     },
     changeEndDate(value) {
-      this.$refs.form.validate()
+      this.$refs.dateform && this.$refs.dateform.validate()
       this.eventData.EndDate = this.EndDate
     },
     closeForm() {

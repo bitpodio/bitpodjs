@@ -1,6 +1,6 @@
 <template>
   <v-flex d-flex flex-md-row flex-lg-row flex-column>
-    <v-flex column xs12 sm8 md8 lg8>
+    <v-flex class="mxw-w70">
       <div
         class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
       >
@@ -36,6 +36,20 @@
                     }}</v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
+                <v-list class="mt-n4 pl-2"
+                  ><span class="cursorPointer" @click="checkContactClicked">
+                    <File
+                      :field="fileField"
+                      :no-btn-look="true"
+                      :block="true"
+                      :open-file-dialog="orgLogo"
+                      :value="checkArray"
+                      :hide-preview="true"
+                      @input="uploadContactImg"
+                    />
+                    Upload</span
+                  ></v-list
+                >
               </v-list>
             </v-card>
           </v-col>
@@ -61,7 +75,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -80,7 +94,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -94,7 +108,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -107,7 +121,7 @@
         <Grid view-name="contactEmails" :content="content" class="mt-n12" />
       </div>
       <div
-        class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm8 md8 lg8 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -120,7 +134,7 @@
         <Notes model-name="Contacts" />
       </div>
     </v-flex>
-    <v-flex column xs12 sm4 md4 lg4>
+    <v-flex class="mxw-w30">
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 py-0 box-grey">
         <h2 class="body-1 pb-1">
           <i class="fa fa-info-circle pr-1" aria-hidden="true"></i>
@@ -252,13 +266,17 @@ import gql from 'graphql-tag'
 import format from 'date-fns/format'
 import Grid from '~/components/common/grid'
 import Notes from '~/components/common/notes'
+import File from '~/components/common/form/file.vue'
 import contact from '~/config/apps/event/gql/contact.gql'
 import { formatGQLResult } from '~/utility/gql.js'
-import { configLoaderMixin } from '~/utility'
+import { configLoaderMixin, getApiUrl } from '~/utility'
+import nuxtconfig from '~/nuxt.config'
+
 export default {
   components: {
     Grid,
     Notes,
+    File,
   },
   mixins: [configLoaderMixin],
   data() {
@@ -267,6 +285,15 @@ export default {
       data: {
         contact: {},
       },
+      fileField: {
+        multiple: false,
+      },
+      formData: {
+        Image: [],
+      },
+      checkArray: [],
+      orgLogo: false,
+      allow: true,
     }
   },
   computed: {
@@ -282,6 +309,35 @@ export default {
     },
   },
   methods: {
+    checkContactClicked() {
+      if (this.allow) {
+        this.checkArray = []
+        this.orgLogo = !this.orgLogo
+        this.allow = false
+      }
+    },
+    async uploadContactImg(data) {
+      this.allow = true
+      this.formData.Image = []
+      this.formData.Image.push(data[0])
+      const url = getApiUrl()
+      try {
+        await this.$axios.$put(
+          `${url}Contacts/${this.$route.params.id}/contactImg/rel/${data[0]}`,
+          this.formData
+        )
+      } catch (e) {
+        console.log(
+          `Error in pages/apps/_app/contacts/_id/index.vue while making a PUT call to Contact model context:-\n data:-${data}`
+        )
+      }
+    },
+    getAttachmentLink(id, isDownloadLink) {
+      const attachmentUrl = `https://${nuxtconfig.axios.eventUrl}${
+        nuxtconfig.axios.apiEndpoint
+      }Attachments${isDownloadLink ? '/download' : ''}${id ? '/' + id : ''}`
+      return attachmentUrl
+    },
     formatDate(date) {
       return date ? format(new Date(date), 'PPp') : ''
     },

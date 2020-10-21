@@ -1,12 +1,20 @@
 <template>
   <v-flex d-flex flex-md-row flex-lg-row flex-column>
-    <v-flex column xs12 sm8 md8 lg8>
+    <v-flex column class="mxw-w70">
       <div
         class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-1">
           <div class="text-h4 text-capitalize">{{ data.event.Title }}</div>
           <v-spacer></v-spacer>
+          <div class="mr-2">
+            <v-btn tile color="success" class="rounded" @click="goLive">
+              Join Event
+              <v-icon right class="fs-22">
+                mdi-video
+              </v-icon>
+            </v-btn>
+          </div>
           <div class="mr-2">
             <v-btn depressed color="primary" @click="viewRegistration"
               ><i18n path="Drawer.View"
@@ -74,15 +82,31 @@
           {{ formatField(data.event.Timezone) }}
         </v-chip>
         <v-flex>
+          <div v-if="data.event.LocationType === 'Online Event'" class="pb-1">
+            <div v-if="data.event.WebinarLink">
+              <v-icon class="fs-16 mr-1 primary--text mt-n1">fa-globe</v-icon>
+              <a
+                :href="data.event.WebinarLink"
+                class="text-decoration-none"
+                target="_blank"
+              >
+                {{ data.event.WebinarLink }}
+              </a>
+            </div>
+          </div>
           <div
-            v-if="data.event.LocationType === 'Online Event'"
-            class="pb-1"
-            @click="viewRegistration"
+            v-else-if="data.event.LocationType === 'Bitpod Virtual'"
+            class="pb-1 d-inline-flex"
           >
-            <a
-              ><v-icon class="fs-16 mr-1 primary--text mt-n1">fa-globe</v-icon
-              >{{ viewRegistrationLink() }}</a
+            <a @click="goLive"
+              ><v-icon class="fs-16 mr-1 primary--text mt-n1">fa-video</v-icon
+              >{{ viewBitpodVirtualLink() }}</a
             >
+            <copy
+              class="pl-2"
+              :text-to-copy="viewBitpodVirtualLink()"
+              icon-size="20"
+            />
           </div>
           <div v-else>
             <p class="blue--text body-2">
@@ -330,16 +354,21 @@
           <v-spacer></v-spacer>
           <v-menu offset-y>
             <template v-slot:activator="{ on, attrs }">
-              <v-btn depressed text small v-bind="attrs" v-on="on">
-                <v-icon left>fa-upload</v-icon> <i18n path="Drawer.Upload" />
+              <v-btn
+                depressed
+                text
+                small
+                v-bind="attrs"
+                v-on="on"
+                @click="allow = true"
+              >
+                <v-icon left>fa-upload</v-icon> Upload
               </v-btn>
             </template>
             <v-list dense>
               <v-list-item
-                @click="
-                  checkArray = []
-                  badgeLogo = !badgeLogo
-                "
+                class="cursorPointer"
+                @click.native="checkLogoClicked"
               >
                 <v-list-item-title>
                   <File
@@ -348,16 +377,15 @@
                     :block="true"
                     :open-file-dialog="badgeLogo"
                     :value="checkArray"
+                    :hide-preview="true"
                     @input="fileUploadedBadgeLogo"
                   />
                   <i18n path="Common.BadgeLogo" />
                 </v-list-item-title>
               </v-list-item>
               <v-list-item
-                @click="
-                  checkArray = []
-                  eventBanner = !eventBanner
-                "
+                class="cursorPointer"
+                @click.native="checkBannerClicked"
               >
                 <v-list-item-title>
                   <File
@@ -366,16 +394,15 @@
                     :block="true"
                     :open-file-dialog="eventBanner"
                     :value="checkArray"
+                    :hide-preview="true"
                     @input="fileUploadedEventBanner"
                   />
                   <i18n path="Common.EventBanner(680x350)" />
                 </v-list-item-title>
               </v-list-item>
               <v-list-item
-                @click="
-                  checkArray = []
-                  otherDialog = !otherDialog
-                "
+                class="cursorPointer"
+                @click.native="checkOtherClicked"
               >
                 <v-list-item-title>
                   <File
@@ -384,6 +411,7 @@
                     :block="true"
                     :open-file-dialog="otherDialog"
                     :value="checkArray"
+                    :hide-preview="true"
                     @input="fileUploadedOther"
                   />
                   <i18n path="Common.Other" />
@@ -463,7 +491,7 @@
             </v-card>
           </v-dialog>
         </div>
-        <div v-else>
+        <div>
           <v-card
             v-for="image in data.event.Images"
             :key="image"
@@ -658,7 +686,7 @@
               max-width="150"
               max-height="150"
               width="150"
-              @click.stop="otherDialogOpen = true"
+              @click.stop="openOtherDialog(image)"
             >
               <template v-slot:placeholder>
                 <v-row class="fill-height ma-0" align="center" justify="center">
@@ -694,14 +722,10 @@
                 </div>
               </v-card-title>
               <v-card-text class="pa-1">
-                <v-card
-                  v-for="image in eventData.Other"
-                  :key="image"
-                  class="mx-auto elevation-0"
-                >
+                <v-card class="mx-auto elevation-0">
                   <v-img
-                    :src="getAttachmentLink(image, true)"
-                    :lazy-src="getAttachmentLink(image, true)"
+                    :src="displaySelectedOtherImage"
+                    :lazy-src="displaySelectedOtherImage"
                     aspect-ratio="1"
                     class="white"
                     width="100%"
@@ -728,7 +752,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -747,7 +771,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -765,7 +789,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -779,7 +803,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 positionRelative rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -789,16 +813,84 @@
           <v-spacer></v-spacer>
         </v-flex>
         <v-divider></v-divider>
-        <Grid
-          view-name="eventTickets"
-          :content="content"
-          :context="data"
-          class="mt-n12"
-        />
+        <div class="mt-2">
+          <v-switch
+            v-model="switchSeat"
+            label="Seatmap & Tickets"
+            class="mt-0 ml-2 max-h24 positionAbsolute"
+            height="20"
+            @change="updateSeatReservation"
+          ></v-switch>
+          <div v-if="switchSeat" class="d-flex justify-center">
+            <div v-if="layoutId && switchDailog" class="text-center">
+              <v-hover v-slot:default="{ hover }">
+                <div>
+                  <v-card
+                    :elevation="hover ? 1 : 0"
+                    class="ma-3 ml-0 mt-0 seatMaptile"
+                    height="110"
+                    max-width="110"
+                    width="110"
+                  >
+                    <v-card-text>
+                      <div>
+                        <v-icon size="64" color="warning">fa-grid</v-icon>
+                      </div>
+                    </v-card-text>
+                    <v-flex
+                      v-if="hover"
+                      class="d-flex justify-center text-center"
+                    >
+                      <v-card-action class="mt-n4">
+                        <div class="d-flex justify-center text-center pb-5">
+                          <div class="mr-1" @click="onEditSeatMap">
+                            <v-icon small color="black">fa-pencil</v-icon>
+                          </div>
+                          <div @click="popupDialog = true">
+                            <v-icon small color="black">fa-trash</v-icon>
+                          </div>
+                        </div>
+                      </v-card-action>
+                    </v-flex>
+                  </v-card>
+                  <div class="text-truncate text-capitalize text-center pr-4">
+                    {{ layoutName }}
+                  </div>
+                </div>
+              </v-hover>
+            </div>
+            <div v-else-if="switchDailog" class="d-inline-flex">
+              <v-flex
+                class="d-flex flex-column justify-center ma-2 cursorPointer seat-actions pa-2"
+                @click="routeToSeatmap"
+              >
+                <v-icon class="fs-16">mdi-plus</v-icon>
+                <v-text class="text-center body-2 pt-1">New Seat Map</v-text>
+              </v-flex>
+              <v-flex
+                class="d-flex flex-column justify-center ma-2 cursorPointer seat-actions pa-2"
+                @click="selectExistingSeatMap = true"
+              >
+                <v-icon class="fs-16">fa-grid</v-icon>
+                <v-text class="text-center body-2 pt-1"
+                  >Select Existing Seat Map</v-text
+                >
+              </v-flex>
+            </div>
+          </div>
+          <div v-else>
+            <Grid
+              view-name="eventTickets"
+              :content="content"
+              :context="data"
+              class="mt-n14"
+            />
+          </div>
+        </div>
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -816,7 +908,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -834,7 +926,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -848,7 +940,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -862,7 +954,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -881,7 +973,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -897,8 +989,21 @@
           class="mt-n12"
         />
       </div>
+      <div
+        class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-comments-alt pr-1" aria-hidden="true"></i>
+            Notes
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
+        <v-divider></v-divider>
+        <Notes model-name="Events" />
+      </div>
     </v-flex>
-    <v-flex column xs12 sm4 md4 lg4>
+    <v-flex column class="mxw-w30">
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 py-0 pr-2 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-0">
@@ -940,7 +1045,7 @@
       </div>
 
       <div
-        v-if="data.event.LocationType !== 'Online Event'"
+        v-if="data.event.LocationType === 'Venue'"
         class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pb-0 pr-2 box-grey"
       >
         <v-flex class="d-flex justify-center align-center pb-2">
@@ -1063,7 +1168,7 @@
           <i18n path="Common.EventLink" class="body-2 text--secondary" />
 
           <div class="body-1 d-block text-truncate">
-            {{ formatField(data.event.UniqLink) }}
+            {{ eventLink(data.event.UniqLink) }}
           </div>
         </v-flex>
         <v-flex my-3>
@@ -1077,77 +1182,80 @@
             <div v-html="formatField(data.event.CancellationPolicy)"></div>
           </div>
         </v-flex>
-        <v-flex my-3 class="d-block text-truncate">
-          <span v-if="data.event.isRefundable === true">
-            <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
-            <i18n path="Common.AllowCancelation" class="ml-2" />
-          </span>
-          <span v-else>
-            <v-icon>mdi-checkbox-blank-outline</v-icon>
-            <i18n path="Common.AllowCancelation" class="ml-2" />
-          </span>
+        <v-flex class="d-block text-truncate">
+          <v-checkbox
+            v-model="data.event.isRefundable"
+            dense
+            debounce="500"
+            height="20"
+            class="ma-0 pa-0"
+            label="Allow Cancelation"
+            color="green"
+            @change="updateReg"
+          ></v-checkbox>
         </v-flex>
-        <v-flex my-3 class="d-block text-truncate">
-          <span v-if="data.event.SessionTimingConflict === true">
-            <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
-            <span class="ml-2"
-              ><i18n path="Common.ValidateSessionTimingConflict"
-            /></span>
-          </span>
-          <span v-else>
-            <v-icon>mdi-checkbox-blank-outline</v-icon>
-            <i18n path="Common.ValidateSessionTimingConflict" class="ml-2" />
-          </span>
+        <v-flex class="d-block text-truncate">
+          <v-checkbox
+            v-model="data.event.SessionTimingConflict"
+            dense
+            debounce="500"
+            height="20"
+            class="ma-0 pa-0"
+            label="Validate Session Timing Conflict"
+            color="green"
+            @change="updateReg"
+          ></v-checkbox>
         </v-flex>
-        <v-flex my-3 class="d-block text-truncate">
-          <span v-if="data.event.ShowRemainingTickets === true">
-            <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
-            <i18n path="Common.ShowRemainingTicketsCount" class="ml-2" />
-          </span>
-          <span v-else>
-            <v-icon>mdi-checkbox-blank-outline</v-icon>
-            <i18n path="Common.ShowRemainingTicketsCount" class="ml-2" />
-          </span>
+        <v-flex class="d-block text-truncate">
+          <v-checkbox
+            v-model="data.event.ShowRemainingTickets"
+            dense
+            debounce="500"
+            height="20"
+            class="ma-0 pa-0"
+            label="Show Remaining Tickets Count"
+            color="green"
+            @change="updateReg"
+          ></v-checkbox>
         </v-flex>
-        <v-flex my-3 class="d-block text-truncate">
-          <span v-if="data.event.ShowAttendeeForm === true">
-            <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
-            <i18n path="Common.ShowAttendeeForm" class="ml-2" />
-          </span>
-          <span v-else>
-            <v-icon>mdi-checkbox-blank-outline</v-icon>
-            <i18n path="Common.ShowAttendeeForm" class="ml-2" />
-          </span>
+        <v-flex class="d-block text-truncate">
+          <v-checkbox
+            v-model="data.event.ShowAttendeeForm"
+            label="Show Attendee Form"
+            color="green"
+            dense
+            debounce="500"
+            height="20"
+            class="ma-0 pa-0"
+            @change="updateReg"
+          ></v-checkbox>
         </v-flex>
-        <v-flex my-3 class="d-block text-truncate">
-          <span v-if="data.event.NotifyOrganizer === true">
-            <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
-            <i18n
-              path="Common.Notifyorganizerwhensomeoneregisters"
-              class="ml-2"
-            />
-          </span>
-          <span v-else>
-            <v-icon>mdi-checkbox-blank-outline</v-icon>
-            <i18n
-              path="Common.Notifyorganizerwhensomeoneregisters"
-              class="ml-2"
-            />
-          </span>
+        <v-flex class="mt-2">
+          <v-checkbox
+            v-model="data.event.NotifyOrganizer"
+            dense
+            debounce="500"
+            height="20"
+            class="ma-0 pa-0"
+            label="Notify  organizer when someone 
+            registers"
+            color="green"
+            @change="updateReg"
+          ></v-checkbox>
         </v-flex>
-        <v-flex my-3>
-          <span v-if="data.event.SendCalendar === true">
-            <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
-            <i18n path="Common.Sendcalendarinvitewhenregistered" class="ml-2" />
-          </span>
-          <span v-else>
-            <v-icon>mdi-checkbox-blank-outline</v-icon>
-
-            <i18n path="Common.Sendcalendarinvitewhenregistered" class="ml-2" />
-          </span>
+        <v-flex class="d-block text-truncate">
+          <v-checkbox
+            v-model="data.event.printBadgeOnCheckIn"
+            dense
+            debounce="500"
+            height="20"
+            class="ma-0 pa-0"
+            label="Ask to print badge after check in"
+            color="green"
+            @change="updateReg"
+          ></v-checkbox>
         </v-flex>
       </div>
-
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-0 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-0">
@@ -1171,35 +1279,27 @@
             {{ formatField(data.event.RegistrationSiteTemplate) }}
           </div>
         </v-flex>
-        <v-flex my-3>
-          <span
-            v-if="
-              data.event._sectionHeading &&
-              data.event._sectionHeading.showimagegallery === true
-            "
-          >
-            <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
-            <i18n path="Common.ShowImageGallery" class="ml-2" />
-          </span>
-          <span v-else>
-            <v-icon>mdi-checkbox-blank-outline</v-icon>
-            <i18n path="Common.ShowImageGallery" class="ml-2" />
-          </span>
+        <v-flex>
+          <v-checkbox
+            v-model="registrationSetting.showimagegallery"
+            dense
+            height="20"
+            class="ma-0 pa-0"
+            label="Show Image Gallery"
+            color="green"
+            @change="updateReg1()"
+          ></v-checkbox>
         </v-flex>
-        <v-flex my-3>
-          <span
-            v-if="
-              data.event._sectionHeading &&
-              data.event._sectionHeading.showeventreviews === true
-            "
-          >
-            <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
-            <i18n path="Common.ShowEventReviews" class="ml-2" />
-          </span>
-          <span v-else>
-            <v-icon>mdi-checkbox-blank-outline</v-icon>
-            <i18n path="Common.ShowEventReviews" class="ml-2" />
-          </span>
+        <v-flex>
+          <v-checkbox
+            v-model="registrationSetting.showeventreviews"
+            dense
+            height="20"
+            class="ma-0 pa-0"
+            label="Show Event Reviews"
+            color="green"
+            @change="updateReg1()"
+          ></v-checkbox>
         </v-flex>
       </div>
       <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
@@ -1207,21 +1307,56 @@
           {{ snackbarText }}
         </div>
       </v-snackbar>
+      <v-dialog v-model="popupDialog" width="500">
+        <v-card>
+          <v-card-text class="pt-3">
+            are you sure you want to delete layout
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="primary" small dark dense @click="onDeleteSeatMap">
+              OK
+            </v-btn>
+            <v-btn
+              color="primary"
+              small
+              outlined
+              dense
+              @click="popupDialog = false"
+            >
+              Cancel
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-flex>
-    <editEventForm :event-form.sync="eventForm" />
-    <editSeoForm :seo-form.sync="seoForm" />
-    <editEventSetting :event-setting.sync="eventSetting" />
-    <editSiteSetting :site-setting.sync="siteSetting" />
+    <div v-if="eventForm">
+      <editEventForm :event-form.sync="eventForm" />
+    </div>
+    <div v-if="seoForm">
+      <editSeoForm :seo-form.sync="seoForm" />
+    </div>
+    <div v-if="eventSetting">
+      <editEventSetting :event-setting.sync="eventSetting" />
+    </div>
+    <div v-if="siteSetting">
+      <editSiteSetting :site-setting.sync="siteSetting" />
+    </div>
     <makeCopy :key="isMakeCopy" :is-make-copy.sync="isMakeCopy" />
     <newBadgeForm :new-badge.sync="newBadge" />
     <editBadgeForm :id="badgeData.id" :edit-badge-form.sync="editBadgeForm" />
+    <selectExistingSeatMap
+      :select-existing-seat-map.sync="selectExistingSeatMap"
+    />
   </v-flex>
 </template>
 <script>
 import gql from 'graphql-tag'
 import format from 'date-fns/format'
 import { utcToZonedTime } from 'date-fns-tz'
+import _ from 'lodash'
 import editSeoForm from './editSeoForm.vue'
+import selectExistingSeatMap from './selectExistingSeatMap.vue'
 import editEventForm from './editEventForm.vue'
 import editEventSetting from './editEventSetting.vue'
 import editSiteSetting from './editSiteSetting.vue'
@@ -1236,6 +1371,7 @@ import Grid from '~/components/common/grid'
 import File from '~/components/common/form/file.vue'
 import event from '~/config/apps/event/gql/event.gql'
 import copy from '~/components/common/copy'
+import Notes from '~/components/common/notes'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin, getIdFromAtob, getApiUrl } from '~/utility'
 
@@ -1246,22 +1382,26 @@ export default {
     editEventForm,
     editEventSetting,
     editSiteSetting,
+    selectExistingSeatMap,
     newBadgeForm,
     editBadgeForm,
     File,
     copy,
     makeCopy,
+    Notes,
   },
   mixins: [configLoaderMixin],
   props: {
     value: { type: null, default: null },
     field: { type: null, default: null },
     offset: { type: Boolean, default: false },
+    switchSeat: { type: Boolean, required: false },
   },
   data() {
     return {
       loading: 0,
       dialog: false,
+      selectExistingSeatMap: false,
       editeventform: false,
       editseoform: false,
       eventForm: false,
@@ -1310,6 +1450,18 @@ export default {
       getBadgeCategory: 'Guest',
       attendees: [],
       Status: '',
+      registrationSetting: {
+        showimagegallery: false,
+        showeventreviews: false,
+      },
+      hover: {},
+      settingData: {},
+      allow: true,
+      displaySelectedOtherImage: '',
+      layoutId: '',
+      switchDailog: false,
+      layoutName: '',
+      popupDialog: false,
     }
   },
   computed: {
@@ -1318,6 +1470,26 @@ export default {
     },
     baseUrl() {
       return nuxtconfig.axios.eventUrl
+    },
+    updateData() {
+      const dataObj = {
+        isRefundable: this.data.event.isRefundable,
+        SessionTimingConflict: this.data.event.SessionTimingConflict,
+        ShowRemainingTickets: this.data.event.ShowRemainingTickets,
+        ShowAttendeeForm: this.data.event.ShowAttendeeForm,
+        NotifyOrganizer: this.data.event.NotifyOrganizer,
+        printBadgeOnCheckIn: this.data.event.printBadgeOnCheckIn,
+      }
+      return dataObj
+    },
+    updateSectionHeading() {
+      const dataObj = {
+        _sectionHeading: {
+          showimagegallery: this.registrationSetting.showimagegallery,
+          showeventreviews: this.registrationSetting.showeventreviews,
+        },
+      }
+      return dataObj
     },
   },
   watch: {
@@ -1332,6 +1504,24 @@ export default {
   },
 
   methods: {
+    eventLink() {
+      const baseUrl = getApiUrl()
+      const regUrl = baseUrl.replace(
+        'svc/api/',
+        `e/${this.data.event.UniqLink}`
+      )
+      const url = this.formatField(regUrl)
+      return url
+    },
+    openOtherDialog(image) {
+      this.otherDialogOpen = true
+      this.displaySelectedOtherImage = this.getAttachmentLink(image, true)
+    },
+    goLive() {
+      window.open(
+        `apps/event/live/${this.eventData.UniqLink}?e=${this.$route.params.id}`
+      )
+    },
     openPrintForm() {
       const myWindow = window.open('', '', 'width=900,height=900')
       this.attendees.map((ele) => {
@@ -1462,7 +1652,7 @@ export default {
           this.formData
         )
         if (res) {
-          this.snackbarText = 'Congratulations, your event has been published'
+          this.snackbarText = 'Congratulations, your event has been published.'
           this.snackbar = true
           this.refresh()
         }
@@ -1589,27 +1779,54 @@ export default {
     refresh() {
       this.$apollo.queries.data.refresh()
     },
+    checkLogoClicked() {
+      if (this.allow) {
+        this.checkArray = []
+        this.badgeLogo = !this.badgeLogo
+        this.allow = false
+      }
+    },
+    checkBannerClicked() {
+      if (this.allow) {
+        this.checkArray = []
+        this.eventBanner = !this.eventBanner
+        this.allow = false
+      }
+    },
+    checkOtherClicked() {
+      if (this.allow) {
+        this.checkArray = []
+        this.otherDialog = !this.otherDialog
+        this.allow = false
+      }
+    },
     fileUploadedBadgeLogo(data) {
-      this.badgeLogo = false
-      this.formData.Logo = []
-      this.formData.Logo.push(data[0])
-      this.updateEventGallery(this.formData)
+      this.allow = true
+      if (data.length > 0) {
+        this.formData.Logo = []
+        this.formData.Logo.push(data[0])
+        this.updateEventGallery(this.formData)
+      }
     },
     fileUploadedEventBanner(data) {
-      this.eventBanner = false
-      const imageUrl = `/svc/api/Attachments/download/${data[0]}`
-      this.formData.Images = []
-      this.formData.ImagesURL = []
-      this.formData.Images.push(data[0])
-      this.formData.ImagesURL.push(imageUrl)
+      this.allow = true
+      if (data.length > 0) {
+        const imageUrl = `/svc/api/Attachments/download/${data[0]}`
+        this.formData.Images = []
+        this.formData.ImagesURL = []
+        this.formData.Images.push(data[0])
+        this.formData.ImagesURL.push(imageUrl)
 
-      this.updateEventGallery(this.formData)
+        this.updateEventGallery(this.formData)
+      }
     },
     fileUploadedOther(data) {
-      this.otherDialog = false
-      this.formData.Other = []
-      this.formData.Other.push(...data)
-      this.updateOtherImageGallery(this.formData.Other)
+      this.allow = true
+      if (data.length > 0) {
+        this.formData.Other = []
+        this.formData.Other.push(...data)
+        this.updateOtherImageGallery(this.formData.Other)
+      }
     },
     async updateEventGallery(formData) {
       try {
@@ -1645,6 +1862,9 @@ export default {
     viewRegistrationLink() {
       const regUrl = `https://${nuxtconfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
       return regUrl
+    },
+    viewBitpodVirtualLink() {
+      return `https://${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}/${this.data.event.UniqLink}`
     },
     formatDate(date) {
       return date ? format(new Date(date), 'PPp') : ''
@@ -1715,8 +1935,119 @@ export default {
     },
     redirectIntegration() {
       this.$router.push(
-        `/apps/event/list/Event/integrations?event=${this.$route.params.id}`
+        `/apps/event/list/EventIntegration/integrations?event=${this.$route.params.id}`
       )
+    },
+    updateRegistrationSetting(eventData) {
+      this.registrationSetting.showimagegallery = this.eventData._sectionHeading
+        ? this.eventData._sectionHeading.showimagegallery
+        : false
+      this.registrationSetting.showeventreviews = this.eventData._sectionHeading
+        ? this.eventData._sectionHeading.showeventreviews
+        : false
+      this.layoutId = this.eventData ? this.eventData.LayoutId : ''
+      this.switchDailog = this.eventData
+        ? this.eventData.SeatReservation
+        : false
+      if (this.layoutId && this.switchDailog) {
+        this.switchSeat = true
+      }
+    },
+    async updateRegistrationPage() {
+      const obj = this.updateSectionHeading
+      if (this.eventData.RegistrationSiteTemplate === null) {
+        obj.RegistrationSiteTemplate = 'Event'
+      } else {
+        obj.RegistrationSiteTemplate = this.eventData.RegistrationSiteTemplate
+      }
+      const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`
+      try {
+        const res = await this.$axios.$patch(URL, obj)
+        if (res) {
+        }
+      } catch (e) {
+        console.error(
+          `Error in apps/event/_id/index.vue while making a Patch call to Event model in method updateRegistrationPage context: EventId:-${this.$route.params.id} \n URL:- ${URL} \n Object:- ${obj}`,
+          e
+        )
+      }
+    },
+    async updateEvent() {
+      const obj = this.updateData
+      obj.id = this.$route.params.id
+      const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`
+      try {
+        const res = await this.$axios.$patch(URL, obj)
+        if (res) {
+        }
+      } catch (e) {
+        console.error(
+          `Error in apps/event/_id/index.vue while making a Patch call to Event model in method updateEvent context: EventId:-${this.$route.params.id} \n URL:- ${URL} \n Object:- ${obj}`,
+          e
+        )
+      }
+    },
+    updateReg: _.debounce(function () {
+      this.updateEvent()
+    }, 500),
+    updateReg1: _.debounce(function () {
+      this.updateRegistrationPage()
+    }, 500),
+    routeToSeatmap() {
+      this.$router.push(`/apps/seatmap/new?event=${this.$route.params.id}`)
+    },
+    async updateSeatReservation() {
+      const seatReservation = this.switchSeat
+      const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`
+      const obj = { SeatReservation: seatReservation }
+      try {
+        const res = await this.$axios.$patch(URL, obj)
+        if (res) {
+          this.refresh()
+        }
+      } catch (e) {
+        console.error(
+          `Error in apps/event/_id/index.vue while making a Patch call to Event model in method updateEvent context: EventId:-${this.$route.params.id} \n URL:- ${URL} \n Object:- ${obj}`,
+          e
+        )
+      }
+    },
+    async getSeatMap(eventData) {
+      const layoutId = this.eventData.LayoutId
+      if (layoutId) {
+        const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}SeatMaps/${layoutId}`
+        try {
+          const res = await this.$axios.$get(URL)
+          if (res) {
+            this.layoutName = res.Name
+          }
+        } catch (e) {
+          console.error(
+            `Error in apps/event/_id/index.vue while making a get call to SeatMap model in method getSeatMap context: LayoutId:-${layoutId} \n URL:- ${URL} `,
+            e
+          )
+        }
+      }
+    },
+    async onDeleteSeatMap() {
+      const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`
+      try {
+        const res = await this.$axios.$patch(URL, { LayoutId: '' })
+        if (res) {
+          this.popupDialog = false
+          this.snackbarText = 'Seat Layout deleted successfully'
+          this.snackbar = true
+          this.refresh()
+        }
+      } catch (e) {
+        console.error(
+          `Error in apps/event/_id/index.vue while making a Patch call to Event model in method updateEvent context: EventId:-${this.$route.params.id} \n URL:- ${URL} `,
+          e
+        )
+      }
+    },
+    onEditSeatMap() {
+      this.$router.push(`/apps/seatmap/${this.layoutId}`)
     },
   },
   apollo: {
@@ -1747,6 +2078,8 @@ export default {
         const eventSummary = data.Event.EventGetEventSummery
         this.eventData = event.length > 0 ? event[0] : {}
         this.badgeData = badge.length > 0 ? badge[0] : {}
+        this.updateRegistrationSetting(this.eventData)
+        this.getSeatMap(this.eventData)
 
         this.updateStepper()
         if (event[0].Images.length > 0) {
@@ -1817,5 +2150,15 @@ export default {
 }
 .anchorTag {
   max-width: 120px;
+}
+.seat-actions {
+  border: 1px dashed #ccc;
+  max-width: 240px;
+  min-width: 240px;
+}
+.max-h24 {
+  max-height: 24px;
+  right: 12px;
+  top: 10px;
 }
 </style>

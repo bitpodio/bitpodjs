@@ -76,8 +76,9 @@ export default {
 
   data() {
     return {
-      formData: this.item,
+      formData: { ...this.item },
       showField: false,
+      lazy: false,
     }
   },
   methods: {

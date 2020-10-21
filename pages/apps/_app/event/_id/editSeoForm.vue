@@ -111,9 +111,16 @@ export default {
   methods: {
     close() {
       this.$emit('update:seoForm', false)
+      this.onReset()
     },
     refresh() {
-      this.$apollo.queries.data.refresh()
+      this.$refs.form.$parent.$parent.refresh()
+    },
+    onReset() {
+      this.seoData.SEOTitle = ''
+      this.SEODesc = ''
+      this.SEOKeywords = ''
+      this.AutoUpdateSEOElements = ''
     },
     async onSave() {
       delete this.formData._VenueAddress

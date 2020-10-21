@@ -1,6 +1,6 @@
 <template>
   <v-flex d-flex flex-md-row flex-lg-row flex-column>
-    <v-flex column xs12 sm8 md8 lg8>
+    <v-flex column class="mxw-w70">
       <div
         class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
       >
@@ -172,7 +172,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+        class="xs12 sm8 md8 lg8 boxview pa-3 pb-6 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -190,7 +190,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+        class="xs12 sm8 md8 lg8 boxview pa-3 pb-6 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -209,7 +209,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+        class="xs12 sm8 md8 lg8 boxview pa-3 pb-6 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -227,7 +227,7 @@
       </div>
       <div
         v-if="data.registration._Refund"
-        class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+        class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -311,7 +311,7 @@
         </v-row>
       </div>
       <div
-        class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+        class="xs12 sm8 md8 lg8 boxview pa-3 pb-6 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -324,7 +324,7 @@
         <Notes model-name="Registrations" />
       </div>
     </v-flex>
-    <v-flex column xs12 sm4 md4 lg4>
+    <v-flex column class="mxw-w30">
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 py-0 pr-2 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-0">
