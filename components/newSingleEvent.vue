@@ -12,11 +12,11 @@
           </v-btn>
         </div>
         <v-tabs v-model="tabs" height="36" class="mb-6 mt-2 v-event-icon">
-          <v-tab href="#tab-1" class="px-0 mr-4" @click="selectTab(1)">
+          <v-tab href="#1" class="px-0 mr-4" @click="selectTab(1)">
             <v-icon left>fa-info-circle</v-icon><span>Basic Info</span>
           </v-tab>
           <v-tab
-            href="#tab-2"
+            href="#2"
             class="px-0 mr-4"
             :disabled="!validTab1()"
             @click="selectTab(2)"
@@ -24,7 +24,7 @@
             <v-icon left>fa-map-marker</v-icon><span>Location</span>
           </v-tab>
           <v-tab
-            href="#tab-3"
+            href="#3"
             class="px-0 mr-4"
             :disabled="!validTab1() || !validTab2()"
             @click="selectTab(3)"
@@ -35,7 +35,7 @@
       </v-card-title>
       <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0 event-inner">
         <v-tabs-items v-model="tabs">
-          <v-tab-item :value="'tab-1'">
+          <v-tab-item :value="'1'">
             <v-card flat>
               <p>
                 Enter event name and details to help your audience learn about
@@ -129,7 +129,7 @@
             </v-card>
           </v-tab-item>
 
-          <v-tab-item :value="'tab-2'">
+          <v-tab-item :value="'2'">
             <v-card flat>
               <v-row>
                 <v-col cols="12" sm="6" md="6" class="pl-0 pt-0 pb-0">
@@ -282,7 +282,7 @@
             </v-card>
           </v-tab-item>
 
-          <v-tab-item :value="'tab-3'">
+          <v-tab-item :value="'3'">
             <v-card v-if="isTicket" flat>
               <p>
                 Setup event tickets and price, you can also set tickets validity
@@ -325,6 +325,7 @@
                           v-model="ticket.Type"
                           :field="ticketTypeProps"
                           class="v-tickettype"
+                          :on-change="changeTicketType(k)"
                         />
                       </td>
                       <td class="pa-2 pb-0">
@@ -748,12 +749,12 @@ export default {
     },
     close() {
       this.onFormClose()
-      this.tabs = 'tab-1'
+      this.tabs = '1'
       this.resetForm()
     },
     closeForm() {
       this.onFormClose()
-      this.tabs = 'tab-1'
+      this.tabs = '1'
       this.$router.push('/apps/event/event/' + this.eventId)
       this.$refs.form.reset()
       this.resetForm()
@@ -823,11 +824,13 @@ export default {
         },
       })
     },
-    isPriceDisabled(index) {
+    changeTicketType(index) {
       if (this.tickets[index].Type === 'Free') {
         this.tickets[index].Amount = 0
-        return true
-      } else return false
+      }
+    },
+    isPriceDisabled(index) {
+      return this.tickets[index].Type === 'Free'
     },
     deleteTicket(index) {
       if (this.tickets.length > 1) {
@@ -910,7 +913,8 @@ export default {
           this.$refs['venueAddress.AddressLine'] &&
           this.$refs['venueAddress.AddressLine'].$data.autocompleteText !==
             '') ||
-        (LocationType === 'Online event' && WebinarLink !== '')
+        (LocationType === 'Online event' && WebinarLink !== '') ||
+        LocationType === 'Bitpod Virtual'
       ) {
         return true
       } else if (
@@ -921,16 +925,12 @@ export default {
       }
     },
     prev(value) {
-      this.currentTab = parseInt(this.tabs.split('-')[1])
-      this.currentTab -= 1
-      const tabValue = `tab-${this.currentTab}`
-      this.tabs = tabValue
+      this.currentTab = parseInt(this.tabs) - 1
+      this.tabs = `${this.currentTab}`
     },
     setNextTab() {
-      this.currentTab = parseInt(this.tabs.split('-')[1])
-      this.currentTab += 1
-      const tabValue = `tab-${this.currentTab}`
-      this.tabs = tabValue
+      this.currentTab = parseInt(this.tabs) + 1
+      this.tabs = `${this.currentTab}`
     },
     next() {
       const {
@@ -980,7 +980,18 @@ export default {
         .map((l) => l.name)
         .join(', ')
     },
-
+    setLoationType() {
+      if (
+        this.venueAddress.AddressLine !== '' &&
+        this.eventData.LocationType === 'Venue'
+      ) {
+        this.eventData._VenueAddress = this.venueAddress
+      }
+      if (this.eventData.LocationType !== 'Online event') {
+        this.eventData.JoiningInstruction = ''
+        this.eventData.WebinarLink = ''
+      }
+    },
     async saveRecord() {
       const isValidTicket = this.tickets.map((ticket, index) => {
         return (
@@ -993,9 +1004,7 @@ export default {
       this.$refs.form.validate()
       if (!isValidTicket.includes(false)) {
         this.isSaveButtonDisabled = true
-        if (this.venueAddress.AddressLine !== '')
-          this.eventData._VenueAddress = this.venueAddress
-
+        this.setLoationType()
         const convertedEventRecord = formatTimezoneDateFieldsData(
           this.eventData,
           this.fields
@@ -1100,10 +1109,7 @@ export default {
             this.venueAddress.LatLng.lat = latlng.lat || ''
             this.venueAddress.LatLng.lng = latlng.lng || ''
 
-            const newLocations = []
-            newLocations[0] = latlng
-
-            this.locations = newLocations
+            this.locations = [latlng]
             this.isMap = true
             this.returnToCenter()
             return res
@@ -1135,10 +1141,8 @@ export default {
         addressData.locality +
         ' ' +
         addressData.country
-      const newLocations = []
-      newLocations[0] = latlng
 
-      this.locations = newLocations
+      this.locations = [latlng]
       this.isMap = true
       this.returnToCenter()
     },
@@ -1185,6 +1189,7 @@ export default {
       if (value === 'Venue') {
         this.isVenue = true
         this.isOnlineEvent = false
+        this.isBitpodVirtual = false
         this.isMap = true
       }
       if (value === 'Online event') {

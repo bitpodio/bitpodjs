@@ -502,11 +502,11 @@
         </div>
         <v-tabs v-model="tabs" height="36" class="mb-6 mt-2 v-event-icon">
           <v-tabs-slider></v-tabs-slider>
-          <v-tab href="#tab-1" class="px-0 mr-4" @click="selectTab(1)">
+          <v-tab href="#1" class="px-0 mr-4" @click="selectTab(1)">
             <v-icon left>fa-info-circle</v-icon><span>Basic Info</span>
           </v-tab>
           <v-tab
-            href="#tab-2"
+            href="#2"
             class="px-0 mr-4"
             :disabled="!validTab1()"
             @click="selectTab(2)"
@@ -514,7 +514,7 @@
             <v-icon left>fa-ticket</v-icon><span>Tickets</span>
           </v-tab>
           <v-tab
-            href="#tab-3"
+            href="#3"
             class="px-0 mr-4"
             :disabled="!validTab1() || !validTab2()"
             @click="selectTab(3)"
@@ -525,7 +525,7 @@
       </v-card-title>
       <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0 event-inner">
         <v-tabs-items v-model="tabs">
-          <v-tab-item :value="'tab-1'">
+          <v-tab-item :value="'1'">
             <v-card flat>
               <p>
                 Enter event name and details to help your audience learn about
@@ -574,7 +574,7 @@
             </v-card>
           </v-tab-item>
 
-          <v-tab-item :value="'tab-2'">
+          <v-tab-item :value="'2'">
             <v-card flat>
               <v-form
                 ref="validTicketsForm"
@@ -620,6 +620,7 @@
                           <Lookup
                             v-model="ticket.Type"
                             :field="ticketTypeProps"
+                            :on-change="changeTicketType(k)"
                           />
                         </td>
                         <td class="pa-2 pb-0">
@@ -657,7 +658,7 @@
             </v-card>
           </v-tab-item>
 
-          <v-tab-item :value="'tab-3'">
+          <v-tab-item :value="'3'">
             <v-card v-if="isSession" flat>
               <v-form
                 ref="validSessionsForm"
@@ -1817,12 +1818,12 @@ export default {
     },
     close() {
       this.onFormClose()
-      this.tabs = 'tab-1'
+      this.tabs = '1'
       this.resetForm()
     },
     closeForm() {
       this.onFormClose()
-      this.tabs = 'tab-1'
+      this.tabs = '1'
       this.$router.push('/apps/event/event/recurring/' + this.eventId)
       this.resetForm()
     },
@@ -1869,11 +1870,13 @@ export default {
         },
       })
     },
-    isPriceDisabled(index) {
+    changeTicketType(index) {
       if (this.tickets[index].Type === 'Free') {
         this.tickets[index].Amount = 0
-        return true
-      } else return false
+      }
+    },
+    isPriceDisabled(index) {
+      return this.tickets[index].Type === 'Free'
     },
     deleteTicket(index) {
       if (this.tickets.length > 1) {
@@ -1917,16 +1920,12 @@ export default {
       return !isValidTicket.includes(false)
     },
     prev() {
-      this.currentTab = parseInt(this.tabs.split('-')[1])
-      this.currentTab -= 1
-      const tabValue = `tab-${this.currentTab}`
-      this.tabs = tabValue
+      this.currentTab = parseInt(this.tabs) - 1
+      this.tabs = `${this.currentTab}`
     },
     setNextTab() {
-      this.currentTab = parseInt(this.tabs.split('-')[1])
-      this.currentTab += 1
-      const tabValue = `tab-${this.currentTab}`
-      this.tabs = tabValue
+      this.currentTab = parseInt(this.tabs) + 1
+      this.tabs = `${this.currentTab}`
     },
     next() {
       const { Title, UniqLink } = this.eventData
@@ -2011,7 +2010,9 @@ export default {
               ...this.eventData,
             })
             .catch((e) => {
-              console.log('error', e)
+              console.log(
+                `Error in Save function of new recurring event form  when creating event, fileName - newRecurringEvent.vue context: create event , error: ${e}`
+              )
               this.isSaveButtonDisabled = false
             })
 
@@ -2029,7 +2030,9 @@ export default {
             const ticketres = await this.$axios
               .$post(`${baseUrl}Tickets`, ticketList)
               .catch((e) => {
-                console.log('error', e)
+                console.log(
+                  `Error in Save function of new recurring event form  when creating ticket, fileName - newRecurringEvent.vue context: create ticket , error: ${e}`
+                )
                 this.isSaveButtonDisabled = false
               })
             if (ticketres) {
@@ -2105,7 +2108,9 @@ export default {
             const sessionres = await this.$axios
               .$post(`${baseUrl}Sessions`, sessionList)
               .catch((e) => {
-                console.log('error', e)
+                console.log(
+                  `Error in Save function of new recurring event form  when creating session, fileName - newRecurringEvent.vue context: create session , error: ${e}`
+                )
                 this.isSaveButtonDisabled = false
               })
             if (sessionres) {
