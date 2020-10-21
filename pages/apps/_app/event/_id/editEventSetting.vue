@@ -266,6 +266,9 @@ export default {
           this.isInvalidEventLink = false
           this.uniqueLinkMessage = ''
         }
+      } else {
+        this.isInvalidEventLink = false
+        this.uniqueLinkMessage = ''
       }
     },
   },
