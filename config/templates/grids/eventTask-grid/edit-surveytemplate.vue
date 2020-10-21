@@ -109,13 +109,7 @@
                     <v-spacer></v-spacer>
                   </v-flex>
 
-                  <RichText
-                    v-model="RTEValue"
-                    class="pl-0"
-                    :is-edit-template="true"
-                    :show-template-dropdown="true"
-                    :is-general="template === 'General Template'"
-                  />
+                  <RichText v-model="RTEValue" class="pl-0" />
                 </v-card>
               </v-tab-item>
             </v-tabs-items>
