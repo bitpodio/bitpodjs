@@ -28,11 +28,9 @@
               <v-col cols="12" class="mb-5">
                 <RichText
                   v-model="RTEValue"
-                  label="Description"
-                  :show-template-dropdown="true"
-                  :is-edit-badge="true"
-                  :is-q-r-code="true"
-                  :is-logo="true"
+                  :dropdown-options="dropdownOptions"
+                  :show-logo-button="true"
+                  :show-q-r-button="true"
                 />
               </v-col>
             </v-row>
@@ -81,6 +79,18 @@ export default {
       RTEValue: '',
       RTEContent: '',
     }
+  },
+  computed: {
+    dropdownOptions() {
+      return {
+        'First Name': 'First  Name',
+        'Last Name': 'Last  Name',
+        'Full Name': 'Full  Name',
+        Category: 'Category',
+        'Event Name': 'Event  Name',
+        Organization: 'Organization',
+      }
+    },
   },
   watch: {
     id(newVal, oldVal) {
