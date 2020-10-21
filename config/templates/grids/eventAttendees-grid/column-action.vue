@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="positionRelative position">
     <div v-if="item.CheckIn">
       <v-chip
         class="ma-2"
@@ -55,3 +55,8 @@ export default {
   },
 }
 </script>
+<style scoped>
+.position {
+  right: 10px;
+}
+</style>

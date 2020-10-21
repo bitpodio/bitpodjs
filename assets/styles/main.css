@@ -51,6 +51,13 @@ body {
 .Twitter::first-letter {
   font-size: 24px !important;
 }
+.Twitter-18 {
+  font-size: 0 !important;
+  text-transform: capitalize !important;
+}
+.Twitter-18::first-letter {
+  font-size: 18px !important;
+}
 .name-initial {
   font-size: 0 !important;
   text-transform: capitalize !important;
@@ -58,35 +65,41 @@ body {
 .name-initial::first-letter {
   font-size: 14px !important;
 }
-.unavilable{
+.unavilable {
   font-size: 20px;
   border: 2px dashed lightgrey;
 }
-.unavilableText{
+.unavilableText {
   width: 108px;
 }
-.fc-icon{
+.fc-icon {
   position: relative;
   bottom: 3px;
 }
-.uploadFile{
+.uploadFile {
   position: absolute !important;
   z-index: 1;
   top: 18px;
   left: 8px;
 }
-.participantButton{
+.participantButton {
   position: absolute !important;
   left: 4px;
 }
 .cursorPointer {
   cursor: pointer;
 }
+.fs-14 {
+  font-size: 14px !important;
+}
 .fs-16 {
   font-size: 16px !important;
 }
 .fs-18 {
   font-size: 18px !important;
+}
+.fs-20 {
+  font-size: 20px !important;
 }
 .fs-22 {
   font-size: 22px !important;
@@ -112,7 +125,7 @@ body {
   font-weight: 300;
 }
 .headernew {
-  left: 0 !important
+  left: 0 !important;
 }
 .appbar-left {
   width: 250px;
@@ -198,7 +211,13 @@ body {
   max-width: 36px !important;
   max-height: 36px !important;
 }
-.v-application--is-ltr .v-data-table > .v-data-table__wrapper > table > thead > tr > th {
+.v-application--is-ltr
+  .v-data-table
+  > .v-data-table__wrapper
+  > table
+  > thead
+  > tr
+  > th {
   height: 40px;
   line-height: 40px;
 }
@@ -247,7 +266,7 @@ body {
   background: transparent !important;
 }
 .slide-form-default .col {
-  padding-bottom:  0 !important;
+  padding-bottom: 0 !important;
 }
 .event-cards {
   overflow: hidden;
@@ -257,7 +276,7 @@ body {
   overflow-x: auto;
 }
 .event-datechip {
-  box-shadow: 0 2px 10px 0 hsla(120, 4%, 84%, .64) inset;
+  box-shadow: 0 2px 10px 0 hsla(120, 4%, 84%, 0.64) inset;
   background-color: hsl(0, 0%, 100%) !important;
 }
 .boxviewsmall .v-data-table__wrapper {
@@ -288,7 +307,7 @@ body {
   overflow-y: auto;
 }
 .tempCard {
-  transition: opacity .4s ease-in-out;
+  transition: opacity 0.4s ease-in-out;
 }
 .on-hover {
   opacity: 0.3;
@@ -315,7 +334,7 @@ body {
   overflow: hidden;
 }
 .v-skeleton-loader__bone {
-  width: 100% !important; 
+  width: 100% !important;
   height: 100% !important;
 }
 .invite-form .v-tab {
@@ -369,7 +388,7 @@ body {
   background-color: #f5f5f5;
 }
 .event-steper .mdi-pencil::before {
-  content: "\F012C" !important;
+  content: '\F012C' !important;
 }
 .grid-search-section {
   min-height: 52px;
@@ -382,7 +401,8 @@ body {
   height: 20px !important;
 }
 .v-toolbar--flat.v-app-bar--is-scrolled {
-  box-shadow: 0 1px 1px -1px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.10), 0 0 1px 0 rgba(0, 0, 0, 0.10) !important;
+  box-shadow: 0 1px 1px -1px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.1),
+    0 0 1px 0 rgba(0, 0, 0, 0.1) !important;
 }
 .event-table .v-messages__message {
   white-space: nowrap !important;
@@ -418,7 +438,13 @@ body {
   visibility: hidden !important;
 }
 .vs-hidden {
- visibility: hidden;
+  visibility: hidden;
+}
+.boxview .v-expansion-panel-content__wrap {
+  padding: 0 !important;
+}
+.boxview .v-expansion-panel--active > .v-expansion-panel-header {
+    min-height: 42px;
 }
 @media (max-width: 800px) {
   .nav-bar {
@@ -432,14 +458,15 @@ body {
     position: unset !important;
   }
   .app-drawer {
-    min-width: fit-content !IMPORTANT;
+    min-width: fit-content !important;
     left: unset !important;
     right: 20px !important;
   }
   .boxview {
     margin-right: 0 !important;
   }
-  .mxw-w70, .mxw-w30 {
+  .mxw-w70,
+  .mxw-w30 {
     width: 100%;
     max-width: 100%;
   }
