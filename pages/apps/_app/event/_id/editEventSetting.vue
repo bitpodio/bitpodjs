@@ -11,7 +11,9 @@
         <v-card-title
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
-          <h2 class="black--text pt-5 pb-2 text-h5">Edit Event Settings</h2>
+          <h2 class="black--text pt-5 pb-2 text-h5">
+            <i18n path="Common.EditEventSettings" />
+          </h2>
           <v-spacer></v-spacer>
           <div>
             <v-btn icon @click.native="close">
@@ -76,7 +78,7 @@
               >
             </v-col>
             <v-col cols="12" class="mb-6">
-              <span>Cancellation Policy</span>
+              <span><i18n path="Common.CancellationPolicy" /></span>
               <RichText
                 v-model="formData.CancellationPolicy"
                 label="Cancellation Policy"
@@ -155,8 +157,8 @@
             color="primary"
             depressed
             @click="onSave"
-            >Save</v-btn
-          >
+            ><i18n path="Drawer.Save"
+          /></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

@@ -13,7 +13,7 @@
             class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
           >
             <h2 class="black--text pt-5 pb-2 text-h5">
-              Edit Organization Setting
+              <i18n path="Common.EditOrganizationSetting" />
             </h2>
             <v-spacer></v-spacer>
             <div>
@@ -23,7 +23,7 @@
             </div>
           </v-card-title>
           <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
-            <span class="ml-0 body-1">Available Hours</span>
+            <i18n path="Common.AvailableHours" class="ml-0 body-1" />
             <v-row>
               <v-col cols="12" sm="6" md="5" class="pb-0">
                 <v-select
@@ -46,8 +46,8 @@
               <div class="col-md-12">
                 <v-flex class="d-flex justify-center align-center pb-1">
                   <h2 class="body-1 pb-1">
-                    <i class="fa-repeat pr-1" aria-hidden="true"></i> Working
-                    Days
+                    <i class="fa-repeat pr-1" aria-hidden="true"></i>
+                    <i18n path="Common.WorkingDays" />
                   </h2>
                   <v-spacer></v-spacer>
                 </v-flex>
@@ -72,7 +72,9 @@
           <v-card-actions
             class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
           >
-            <v-btn color="primary" depressed @click.native="onSave">Save</v-btn>
+            <v-btn color="primary" depressed @click.native="onSave"
+              ><i18n path="Drawer.Save"
+            /></v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>

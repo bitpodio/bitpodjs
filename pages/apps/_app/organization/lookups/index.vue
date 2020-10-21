@@ -2,8 +2,8 @@
   <v-flex d-flex flex-md-row flex-lg-row flex-column>
     <v-flex column xs12 sm8 md8 lg8 class="lookup-tabs">
       <v-toolbar-title class="pl-4 ml-n4 mb-6 font-weight-regular"
-        >Lookups</v-toolbar-title
-      >
+        ><i18n path="Common.Lookups"
+      /></v-toolbar-title>
       <v-spacer></v-spacer>
       <v-tabs
         v-model="tabs"
@@ -14,19 +14,19 @@
       >
         <v-tabs-slider></v-tabs-slider>
         <v-tab href="#tab-1" class="px-0 mr-4">
-          <span>General</span>
+          <span><i18n path="Common.General" /></span>
         </v-tab>
         <v-tab href="#tab-2" class="px-0 mr-4">
-          <span>Events</span>
+          <span><i18n path="Common.AppTitle" /></span>
         </v-tab>
         <v-tab href="#tab-3" class="px-0 mr-4">
-          <span>Refund</span>
+          <span><i18n path="Common.Refund" /></span>
         </v-tab>
         <v-tab href="#tab-4" class="px-0 mr-4">
-          <span>Badge</span>
+          <span><i18n path="Common.Badge" /></span>
         </v-tab>
         <v-tab href="#tab-5" class="px-0 mr-4">
-          <span>Contact</span>
+          <span><i18n path="Common.Contact" /></span>
         </v-tab>
       </v-tabs>
 
@@ -38,7 +38,7 @@
           >
             <v-flex class="d-flex justify-center align-center pb-3">
               <h2 class="body-1 pb-0">
-                Currency
+                <i18n path="Common.Currency" />
               </h2>
               <v-spacer></v-spacer>
             </v-flex>
@@ -51,7 +51,7 @@
           >
             <v-flex class="d-flex justify-center align-center pb-3">
               <h2 class="body-1 pb-0">
-                TimeZone
+                <i18n path="Common.TimeZone" />
               </h2>
               <v-spacer></v-spacer>
             </v-flex>
@@ -66,7 +66,7 @@
           >
             <v-flex class="d-flex justify-center align-center pb-3">
               <h2 class="body-1 pb-0">
-                Event Privacy
+                <i18n path="Common.EventPrivacy" />
               </h2>
               <v-spacer></v-spacer>
             </v-flex>
@@ -79,7 +79,7 @@
           >
             <v-flex class="d-flex justify-center align-center pb-3">
               <h2 class="body-1 pb-0">
-                Event Tag
+                <i18n path="Common.EventTag" />
               </h2>
               <v-spacer></v-spacer>
             </v-flex>
@@ -92,7 +92,7 @@
           >
             <v-flex class="d-flex justify-center align-center pb-3">
               <h2 class="body-1 pb-0">
-                Ticket Type
+                <i18n path="Common.TicketType" />
               </h2>
               <v-spacer></v-spacer>
             </v-flex>
@@ -105,7 +105,7 @@
           >
             <v-flex class="d-flex justify-center align-center pb-3">
               <h2 class="body-1 pb-0">
-                Session Type
+                <i18n path="Common.SessionType" />
               </h2>
               <v-spacer></v-spacer>
             </v-flex>
@@ -118,7 +118,7 @@
           >
             <v-flex class="d-flex justify-center align-center pb-3">
               <h2 class="body-1 pb-0">
-                Question Control
+                <i18n path="Common.QuestionControl" />
               </h2>
               <v-spacer></v-spacer>
             </v-flex>
@@ -137,7 +137,7 @@
           >
             <v-flex class="d-flex justify-center align-center pb-3">
               <h2 class="body-1 pb-0">
-                Refund Method
+                <i18n path="Common.RefundMethod" />
               </h2>
               <v-spacer></v-spacer>
             </v-flex>
@@ -150,7 +150,7 @@
           >
             <v-flex class="d-flex justify-center align-center pb-3">
               <h2 class="body-1 pb-0">
-                Reason
+                <i18n path="Common.Reason" />
               </h2>
               <v-spacer></v-spacer>
             </v-flex>
@@ -165,7 +165,7 @@
           >
             <v-flex class="d-flex justify-center align-center pb-3">
               <h2 class="body-1 pb-0">
-                Badge Category
+                <i18n path="Common.BadgeCategory" />
               </h2>
               <v-spacer></v-spacer>
             </v-flex>
@@ -180,7 +180,7 @@
           >
             <v-flex class="d-flex justify-center align-center pb-3">
               <h2 class="body-1 pb-0">
-                Contact Types
+                <i18n path="Common.ContactTypes" />
               </h2>
               <v-spacer></v-spacer>
             </v-flex>
@@ -193,7 +193,7 @@
           >
             <v-flex class="d-flex justify-center align-center pb-3">
               <h2 class="body-1 pb-0">
-                Deparrtments
+                <i18n path="Common.Departments" />
               </h2>
               <v-spacer></v-spacer>
             </v-flex>

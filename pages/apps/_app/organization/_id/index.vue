@@ -49,11 +49,9 @@
                       :open-file-dialog="orgLogo"
                       :value="checkArray"
                       :hide-preview="true"
-                      @input="uploadOrgLogo"
-                    />
-                    Upload</span
-                  ></v-list
-                >
+                      @input="uploadOrgLogo" />
+                    <i18n path="Drawer.Upload" /></span
+                ></v-list>
               </v-list>
             </v-card>
           </v-col>
@@ -65,8 +63,8 @@
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
-            <i class="fa fa-user-plus pr-1" aria-hidden="true"></i> Business
-            Units
+            <i class="fa fa-user-plus pr-1" aria-hidden="true"></i>
+            <i18n path="Common.BusinessUnits" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
@@ -83,7 +81,8 @@
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
-            <i class="fa fa-server pr-1" aria-hidden="true"></i> Subscriptions
+            <i class="fa fa-server pr-1" aria-hidden="true"></i>
+            <i18n path="Common.Subscriptions" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
@@ -100,7 +99,8 @@
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
-            <i class="fa fa-external-link pr-1" aria-hidden="true"></i> Tasks
+            <i class="fa fa-external-link pr-1" aria-hidden="true"></i>
+            <i18n path="Common.Tasks" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
@@ -113,7 +113,8 @@
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
-            <i class="fa fa-link1 pr-1" aria-hidden="true"></i> Integrations
+            <i class="fa fa-link1 pr-1" aria-hidden="true"></i>
+            <i18n path="Common.Integrations" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
@@ -129,24 +130,31 @@
       >
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-0">
-            <i class="fa fa-image pr-1" aria-hidden="true"></i> Image Gallery
+            <i class="fa fa-image pr-1" aria-hidden="true"></i>
+            <i18n path="Common.ImageGallery" />
           </h2>
           <v-spacer></v-spacer>
           <v-menu offset-y>
             <template v-slot:activator="{ on, attrs }">
               <v-btn depressed text small v-bind="attrs" v-on="on">
-                <v-icon left>mdi-upload</v-icon> Upload
+                <v-icon left>mdi-upload</v-icon> <i18n path="Drawer.Upload" />
               </v-btn>
             </template>
             <v-list dense>
               <v-list-item>
-                <v-list-item-title>Badge Logo</v-list-item-title>
+                <v-list-item-title
+                  ><i18n path="Common.BadgeLogo"
+                /></v-list-item-title>
               </v-list-item>
               <v-list-item>
-                <v-list-item-title>Event Banner (680x350)</v-list-item-title>
+                <v-list-item-title
+                  ><i18n path="Common.EventBanner(680x350)"
+                /></v-list-item-title>
               </v-list-item>
               <v-list-item>
-                <v-list-item-title>Other</v-list-item-title>
+                <v-list-item-title
+                  ><i18n path="Common.Other"
+                /></v-list-item-title>
               </v-list-item>
             </v-list>
           </v-menu>
@@ -159,18 +167,20 @@
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-2 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-1">
-            <i class="fa fa-location pr-1" aria-hidden="true"></i> Organization
-            Information
+            <i class="fa fa-location pr-1" aria-hidden="true"></i>
+            <i18n path="Common.OrganizationInformation" />
           </h2>
           <v-spacer></v-spacer>
           <v-btn text small @click="editOrgInfo = true">
-            <v-icon left class="fs-16">fa-pencil</v-icon>Edit
+            <v-icon left class="fs-16">fa-pencil</v-icon
+            ><i18n path="Drawer.Edit" />
           </v-btn>
         </v-flex>
         <v-divider></v-divider>
         <v-row>
           <v-col class="col-md-12 col-12 pb-0">
-            <div class="body-2 text--secondary">Address</div>
+            <i18n path="Common.Address" class="body-2 text--secondary" />
+
             <div class="body-1">
               {{
                 formatField(
@@ -181,7 +191,8 @@
             </div>
           </v-col>
           <v-col class="col-md-6 col-12 pb-0">
-            <div class="body-2 text--secondary">City</div>
+            <i18n path="Common.City" class="body-2 text--secondary" />
+
             <div class="body-1">
               {{
                 formatField(
@@ -192,7 +203,8 @@
             </div>
           </v-col>
           <v-col class="col-md-6 col-12 pb-0">
-            <div class="body-2 text--secondary">State</div>
+            <i18n path="Common.State" class="body-2 text--secondary" />
+
             <div class="body-1">
               {{
                 formatField(
@@ -203,7 +215,7 @@
             </div>
           </v-col>
           <v-col class="col-md-6 col-12 pb-0">
-            <div class="body-2 text--secondary">Zip</div>
+            <div class="body-2 text--secondary"><i18n path="Common.Zip" /></div>
             <div class="body-1">
               {{
                 formatField(
@@ -214,7 +226,8 @@
             </div>
           </v-col>
           <v-col class="col-md-12 col-12 pb-0">
-            <div class="body-2 text--secondary">Country</div>
+            <i18n path="Common.Country" class="body-2 text--secondary" />
+
             <div class="body-1">
               {{
                 formatField(
@@ -230,34 +243,46 @@
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-2 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-1">
-            <i class="fa fa-cog pr-1" aria-hidden="true"></i> Settings
+            <i class="fa fa-cog pr-1" aria-hidden="true"></i>
+            <i18n path="Common.Settings" />
           </h2>
           <v-spacer></v-spacer>
           <v-btn text small @click="editOrgSetting = true">
-            <v-icon left class="fs-16">fa-pencil</v-icon>Edit
+            <v-icon left class="fs-16">fa-pencil</v-icon
+            ><i18n path="Drawer.Edit" />
           </v-btn>
         </v-flex>
         <v-divider></v-divider>
         <v-flex my-3>
-          <div class="body-2 text--secondary">Event Registration URL</div>
+          <i18n
+            path="Common.EventRegistrationURL"
+            class="body-2 text--secondary"
+          />
+
           <div class="body-1">
             {{ formatField(data.organization.EventRegistrationURL) }}
           </div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">Success Template Caption</div>
+          <i18n
+            path="Common.SuccessTemplateCaption"
+            class="body-2 text--secondary"
+          />
+
           <div class="body-1">
             {{ formatField(data.organization.successTemplateCaption) }}
           </div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">Currency</div>
+          <i18n path="Common.Currency" class="body-2 text--secondary" />
+
           <div class="body-1">
             {{ formatField(data.organization.Currency) }}
           </div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">Privacy Policy</div>
+          <i18n path="Common.PrivacyPolicy" class="body-2 text--secondary" />
+
           <div class="body-1">
             {{ formatField(data.organization.PrivacyPolicy) }}
           </div>
@@ -267,29 +292,33 @@
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-2 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-1">
-            <i class="fa fa-share-square-o pr-1" aria-hidden="true"></i> Social
-            Media
+            <i class="fa fa-share-square-o pr-1" aria-hidden="true"></i>
+            <i18n path="Common.SocialMedia" />
           </h2>
           <v-spacer></v-spacer>
           <v-btn text small @click="editSocialMedia = true">
-            <v-icon left class="fs-16">fa-pencil</v-icon>Edit
+            <v-icon left class="fs-16">fa-pencil</v-icon
+            ><i18n path="Drawer.Edit" />
           </v-btn>
         </v-flex>
         <v-divider></v-divider>
         <v-flex my-3>
-          <div class="body-2 text--secondary">Facebook</div>
+          <i18n path="Common.Facebook" class="body-2 text--secondary" />
+
           <div class="body-1 text-truncate d-block">
             {{ formatField(data.organization.Facebook) }}
           </div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">Twitter</div>
+          <i18n path="Common.Twitter" class="body-2 text--secondary" />
+
           <div class="body-1 text-truncate d-block">
             {{ formatField(data.organization.Twitter) }}
           </div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">LinkedIn</div>
+          <i18n path="Common.LinkedIn" class="body-2 text--secondary" />
+
           <div class="body-1 text-truncate d-block">
             {{ formatField(data.organization.LinkedIn) }}
           </div>
@@ -299,28 +328,33 @@
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-2 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-1">
-            <i class="fa fa-timer pr-1" aria-hidden="true"></i> Work Timings
+            <i class="fa fa-timer pr-1" aria-hidden="true"></i>
+            <i18n path="Common.WorkTimings" />
           </h2>
           <v-spacer></v-spacer>
           <v-btn text small @click="editWorkTiming = true">
-            <v-icon left class="fs-16">fa-pencil</v-icon>Edit
+            <v-icon left class="fs-16">fa-pencil</v-icon
+            ><i18n path="Drawer.Edit" />
           </v-btn>
         </v-flex>
         <v-divider></v-divider>
         <v-flex my-3>
-          <div class="body-2 text--secondary">Start Time</div>
+          <i18n path="Common.StartTime" class="body-2 text--secondary" />
+
           <div class="body-1">
             {{ formatField(data.organization.AvailableStartHour) }}
           </div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">End Time</div>
+          <i18n path="Common.EndTime" class="body-2 text--secondary" />
+
           <div class="body-1">
             {{ formatField(data.organization.AvailableEndHour) }}
           </div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">working Days</div>
+          <i18n path="Common.WorkingDays" class="body-2 text--secondary" />
+
           <div class="body-1">
             <v-chip
               v-for="weekDay in data.organization.weekDay"

@@ -47,14 +47,14 @@
                         <v-icon>mdi-chevron-down</v-icon>
                       </v-btn>
                     </template>
-
                     <v-list dense>
                       <v-list-item>
                         <v-list-item-title>
                           <v-flex class="d-flex">
-                            <div class="col-md-3 text-right pa-0">
-                              from:
-                            </div>
+                            <i18n
+                              path="Common.from"
+                              class="col-md-3 text-right pa-0"
+                            />
                             <div
                               class="col pa-0 pl-3 d-inline-block text-truncate"
                             >
@@ -66,9 +66,10 @@
                       <v-list-item>
                         <v-list-item-title>
                           <v-flex class="d-flex">
-                            <div class="col-md-3 text-right pa-0">
-                              subject:
-                            </div>
+                            <i18n
+                              path="Common.subject"
+                              class="col-md-3 text-right pa-0"
+                            />
                             <div
                               class="col pa-0 pl-3 d-inline-block text-truncate"
                             >
@@ -80,9 +81,10 @@
                       <v-list-item>
                         <v-list-item-title>
                           <v-flex class="d-flex">
-                            <div class="col-md-3 text-right pa-0">
-                              date:
-                            </div>
+                            <i18n
+                              path="Common.date"
+                              class="col-md-3 text-right pa-0"
+                            />
                             <div class="col pa-0 pl-3">
                               {{ formatDate(data.invites.createdDate) }}
                             </div>
@@ -92,9 +94,10 @@
                       <v-list-item>
                         <v-list-item-title>
                           <v-flex class="d-flex">
-                            <div class="col-md-3 text-right pa-0">
-                              status:
-                            </div>
+                            <i18n
+                              path="Common.status"
+                              class="col-md-3 text-right pa-0"
+                            />
                             <div class="col pa-0 pl-3">
                               {{ data.invites.Status }}
                             </div>

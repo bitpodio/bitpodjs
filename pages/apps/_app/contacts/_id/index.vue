@@ -66,7 +66,7 @@
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
             <i class="fa fa-user-plus pr-1" aria-hidden="true"></i>
-            Registrations
+            <i18n path="Common.Registrations" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
@@ -85,7 +85,7 @@
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
             <i class="fa fa-mail pr-1" aria-hidden="true"></i>
-            Invites
+            <i18n path="Common.Invites" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
@@ -99,7 +99,7 @@
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
             <i class="fa fa-mail pr-1" aria-hidden="true"></i>
-            Emails
+            <i18n path="Common.Emails" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
@@ -112,7 +112,7 @@
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
             <i class="fa fa-comments-alt pr-1" aria-hidden="true"></i>
-            Notes
+            <i18n path="Common.Notes" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
@@ -123,55 +123,55 @@
     <v-flex column xs12 sm4 md4 lg4>
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 py-0 box-grey">
         <h2 class="body-1 pb-1">
-          <i class="fa fa-info-circle pr-1" aria-hidden="true"></i> Contact
-          Information
+          <i class="fa fa-info-circle pr-1" aria-hidden="true"></i>
+          <i18n path="Common.ContactInformation" />
         </h2>
         <v-divider></v-divider>
         <v-row>
           <v-col class="col-md-6 col-12">
-            <div class="body-2 text--secondary">Date of Birth</div>
+            <i18n path="Common.DateofBirth" class="body-2 text--secondary" />
             <div class="body-1">{{ formatField(data.contact.BirthDate) }}</div>
           </v-col>
           <v-col class="col-md-6 col-12">
-            <div class="body-2 text--secondary">Department</div>
+            <i18n path="Common.Department" class="body-2 text--secondary" />
             <div class="body-1">{{ formatField(data.contact.Job) }}</div>
           </v-col>
           <v-col class="col-md-6 col-12">
-            <div class="body-2 text--secondary">Other Phone</div>
+            <i18n path="Common.OtherPhone" class="body-2 text--secondary" />
             <div class="body-1">{{ formatField(data.contact.WorkPhone) }}</div>
           </v-col>
           <v-col class="col-md-6 col-12">
-            <div class="body-2 text--secondary">Reports To</div>
+            <i18n path="Common.ReportsTo" class="body-2 text--secondary" />
             <div class="body-1">{{ formatField(data.contact.ReportsTo) }}</div>
           </v-col>
           <v-col class="col-md-6 col-12">
-            <div class="body-2 text--secondary">Assistant</div>
+            <i18n path="Common.Assistant" class="body-2 text--secondary" />
             <div class="body-1">{{ formatField(data.contact.Assistant) }}</div>
           </v-col>
           <v-col class="col-md-6 col-12">
-            <div class="body-2 text--secondary">Asst Phone</div>
+            <i18n path="Common.AsstPhone" class="body-2 text--secondary" />
             <div class="body-1">{{ formatField(data.contact.AsstPhone) }}</div>
           </v-col>
           <v-col class="col-md-6 col-12">
-            <div class="body-2 text--secondary">Contact Owner</div>
+            <i18n path="Common.ContactOwner" class="body-2 text--secondary" />
             <div class="body-1">{{ formatField(data.contact.Owner) }}</div>
           </v-col>
           <v-col class="col-md-6 col-12">
-            <div class="body-2 text--secondary">Created By</div>
+            <i18n path="Common.CreatedBy" class="body-2 text--secondary" />
             <div class="body-1">{{ formatField(data.contact.modifiedBy) }}</div>
           </v-col>
           <v-col class="col-md-6 col-12">
-            <div class="body-2 text--secondary">Modified By</div>
+            <i18n path="Common.ModifiedBy" class="body-2 text--secondary" />
             <div class="body-1">{{ formatField(data.contact.modifiedBy) }}</div>
           </v-col>
           <v-col class="col-md-6 col-12">
-            <div class="body-2 text--secondary">Modified Date</div>
+            <i18n path="Common.ModifiedDate" class="body-2 text--secondary" />
             <div class="body-1">
               {{ formatDate(data.contact.modifiedDate) }}
             </div>
           </v-col>
           <v-col class="col-md-12 col-12">
-            <div class="body-2 text--secondary">Description</div>
+            <i18n path="Common.Description" class="body-2 text--secondary" />
             <div class="body-1">
               {{ formatField(data.contact.Description) }}
             </div>
@@ -181,13 +181,13 @@
 
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 py-0 box-grey">
         <h2 class="body-1 pb-1">
-          <i class="fa fa-location pr-1" aria-hidden="true"></i> Address
-          Information
+          <i class="fa fa-location pr-1" aria-hidden="true"></i>
+          <i18n path="Common.AddressInformation" />
         </h2>
         <v-divider></v-divider>
         <v-row>
           <v-col class="col-md-6 col-12">
-            <div class="body-2 text--secondary">Mailing Street</div>
+            <i18n path="Common.MailingStreet" class="body-2 text--secondary" />
             <div class="body-1">
               {{
                 formatField(
@@ -198,7 +198,7 @@
             </div>
           </v-col>
           <v-col class="col-md-6 col-12">
-            <div class="body-2 text--secondary">Mailing City</div>
+            <i18n path="Common.MailingCity" class="body-2 text--secondary" />
             <div class="body-1">
               {{
                 formatField(
@@ -209,7 +209,7 @@
             </div>
           </v-col>
           <v-col class="col-md-6 col-12">
-            <div class="body-2 text--secondary">Mailing State</div>
+            <i18n path="Common.MailingState" class="body-2 text--secondary" />
             <div class="body-1">
               {{
                 formatField(
@@ -220,7 +220,7 @@
             </div>
           </v-col>
           <v-col class="col-md-6 col-12">
-            <div class="body-2 text--secondary">Mailing Zip</div>
+            <i18n path="Common.MailingZip" class="body-2 text--secondary" />
             <div class="body-1">
               {{
                 formatField(
@@ -231,7 +231,7 @@
             </div>
           </v-col>
           <v-col class="col-md-12 col-12">
-            <div class="body-2 text--secondary">Mailing Country</div>
+            <i18n path="Common.MailingCountry" class="body-2 text--secondary" />
             <div class="body-1">
               {{
                 formatField(

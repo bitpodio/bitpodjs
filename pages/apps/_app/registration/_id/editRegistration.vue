@@ -12,7 +12,9 @@
           <v-card-title
             class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
           >
-            <h2 class="black--text pt-5 pb-4 text-h5">Edit Registration</h2>
+            <h2 class="black--text pt-5 pb-4 text-h5">
+              <i18n path="Common.EditRegistration" />
+            </h2>
             <v-spacer></v-spacer>
             <div>
               <v-btn icon @click="close">
@@ -77,7 +79,9 @@
               </v-col>
               <div class="col-md-12 pl-3">
                 <v-flex class="d-flex justify-center align-center pb-1">
-                  <h2 class="body-1 pb-1">Physical Address</h2>
+                  <h2 class="body-1 pb-1">
+                    <i18n path="Common.PhysicalAddress" />
+                  </h2>
                   <v-spacer></v-spacer>
                 </v-flex>
               </div>
@@ -173,8 +177,8 @@
             class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
           >
             <v-btn :disabled="!valid" color="primary" depressed @click="onSave"
-              >Save</v-btn
-            >
+              ><i18n path="Drawer.Save"
+            /></v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>

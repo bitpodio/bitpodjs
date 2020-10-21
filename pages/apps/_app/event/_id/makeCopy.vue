@@ -10,18 +10,21 @@
       <v-card>
         <div class="flex">
           <div class="pb-2 text-center pa-4">
-            <span class="text-h5"> Event has been copied successfully.</span>
+            <i18n path="Common.copiedSuccessfully" class="text-h5" />
           </div>
-          <div class="pb-2 text--primary text-center">
-            We recommend you click the preview button to verify your event page.
-          </div>
+
+          <i18n
+            path="Common.clickPreviewButtont"
+            class="pb-2 text--primary text-center"
+          />
+
           <div class="pb-2 text-center">
             <v-btn depressed color="primary" class="ma-1" @click="viewEvent"
-              ><v-icon left>mdi-eye-outline</v-icon>Preview</v-btn
-            >
+              ><v-icon left>mdi-eye-outline</v-icon><i18n path="Drawer.Preview"
+            /></v-btn>
             <v-btn text color="primary" class="ma-1" @click="closeForm"
-              >Close</v-btn
-            >
+              ><i18n path="Drawer.Close"
+            /></v-btn>
           </div>
         </div>
       </v-card>
@@ -38,7 +41,9 @@
           <v-card-title
             class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
           >
-            <h2 class="black--text pt-5 pb-4 text-h5">Copy Event</h2>
+            <h2 class="black--text pt-5 pb-4 text-h5">
+              <i18n path="Common.CopyEvent" />
+            </h2>
             <v-spacer></v-spacer>
             <div>
               <v-btn icon @click="close">
@@ -126,7 +131,7 @@
               <v-flex class="d-flex justify-center align-center pb-1">
                 <h2 class="body-1 pb-1">
                   <i class="fa fa-map-marker" aria-hidden="true"></i>
-                  Venue
+                  <i18n path="Common.Venue" />
                 </h2>
                 <v-spacer></v-spacer>
               </v-flex>
@@ -241,8 +246,8 @@
             <div class="col-md-12 pl-0">
               <v-flex class="d-flex justify-center align-center pb-1">
                 <h2 class="body-1 pb-1">
-                  <i class="fa fa-network pr-1" aria-hidden="true"></i> I would
-                  like to copy following event objects as well
+                  <i class="fa fa-network pr-1" aria-hidden="true"></i
+                  ><i18n path="Common.copyEventObjects" />
                 </h2>
                 <v-spacer></v-spacer>
               </v-flex>
@@ -302,8 +307,8 @@
               color="primary"
               depressed
               @click="onSave"
-              >Copy</v-btn
-            >
+              ><i18n path="Drawer.Copy"
+            /></v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>

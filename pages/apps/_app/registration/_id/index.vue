@@ -55,7 +55,7 @@
             <v-menu bottom origin="center center" transition="scale-transition">
               <template v-slot:activator="{ on, attrs }">
                 <v-btn depressed color="primary" v-bind="attrs" v-on="on">
-                  Action
+                  <i18n path="Drawer.Action" />
                 </v-btn>
               </template>
               <v-list dense>
@@ -67,7 +67,9 @@
                     ></i>
                   </v-list-item-icon>
                   <v-list-item-content>
-                    <v-list-item-title>Edit</v-list-item-title>
+                    <v-list-item-title
+                      ><i18n path="Drawer.Edit"
+                    /></v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
                 <v-list-item
@@ -78,7 +80,9 @@
                     <i class="fa-cross-circle mt-1" aria-hidden="true"></i>
                   </v-list-item-icon>
                   <v-list-item-content>
-                    <v-list-item-title>Cancel</v-list-item-title>
+                    <v-list-item-title
+                      ><i18n path="Drawer.Cancel"
+                    /></v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
                 <v-list-item
@@ -89,7 +93,9 @@
                     <i class="fa-refresh mt-1" aria-hidden="true"></i>
                   </v-list-item-icon>
                   <v-list-item-content>
-                    <v-list-item-title>Refund</v-list-item-title>
+                    <v-list-item-title
+                      ><i18n path="Common.Refund"
+                    /></v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
               </v-list>
@@ -121,7 +127,7 @@
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
             <i class="fa fa-ticket pr-1" aria-hidden="true"></i>
-            Tickets
+            <i18n path="Common.Tickets" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
@@ -131,22 +137,22 @@
             <thead>
               <tr>
                 <th class="text-left">
-                  Name
+                  <i18n path="Common.Name" />
                 </th>
                 <th class="text-left">
-                  Amount
+                  <i18n path="Common.Amount" />
                 </th>
                 <th class="text-left">
-                  Quantity
+                  <i18n path="Common.Quantity" />
                 </th>
                 <th class="text-left">
-                  Total
+                  <i18n path="Common.Total" />
                 </th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Student</td>
+                <td><i18n path="Common.Student" /></td>
                 <td>{{ data.registration.SubTotal }}</td>
                 <td>{{ data.registration.TicketQuantity }}</td>
                 <td>{{ data.registration.TotalAmount }}</td>
@@ -154,7 +160,7 @@
               <tr>
                 <td></td>
                 <td></td>
-                <td>Total</td>
+                <td><i18n path="Common.Total" /></td>
                 <td>
                   {{ data.registration.Currency
                   }}{{ data.registration.TotalAmount }}
@@ -171,7 +177,7 @@
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
             <i class="fa fa-black-board pr-1" aria-hidden="true"></i>
-            Sessions
+            <i18n path="Common.Sessions" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
@@ -188,7 +194,8 @@
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
-            <i class="fa fa-users pr-1" aria-hidden="true"></i> Attendees
+            <i class="fa fa-users pr-1" aria-hidden="true"></i>
+            <i18n path="Common.Attendees" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
@@ -207,7 +214,7 @@
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
             <i class="fa fa-mail pr-1" aria-hidden="true"></i>
-            Emails
+            <i18n path="Common.Emails" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
@@ -225,14 +232,15 @@
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
             <i class="fa fa-credit-card pr-1" aria-hidden="true"></i>
-            Refund Details
+            <i18n path="Common.RefundDetails" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
         <v-divider></v-divider>
         <v-row>
           <v-col class="col-md-6 col-12">
-            <div class="body-2 text--secondary">Transaction ID</div>
+            <i18n path="Common.TransactionID" class="body-2 text--secondary" />
+
             <div class="body-1">
               {{
                 formatField(
@@ -243,7 +251,8 @@
             </div>
           </v-col>
           <v-col class="col-md-6 col-12">
-            <div class="body-2 text--secondary">Amount</div>
+            <i18n path="Common.Amount" class="body-2 text--secondary" />
+
             <div class="body-1">
               {{
                 formatField(
@@ -253,7 +262,8 @@
             </div>
           </v-col>
           <v-col class="col-md-6 col-12">
-            <div class="body-2 text--secondary">Status</div>
+            <i18n path="Common.Status" class="body-2 text--secondary" />
+
             <div class="body-1">
               {{
                 formatField(
@@ -264,7 +274,8 @@
             </div>
           </v-col>
           <v-col class="col-md-6 col-12">
-            <div class="body-2 text--secondary">Reason</div>
+            <i18n path="Common.Reason" class="body-2 text--secondary" />
+
             <div class="body-1">
               {{
                 formatField(
@@ -274,7 +285,8 @@
             </div>
           </v-col>
           <v-col class="col-md-6 col-12">
-            <div class="body-2 text--secondary">Comment</div>
+            <i18n path="Common.Comment" class="body-2 text--secondary" />
+
             <div class="body-1">
               {{
                 formatField(
@@ -285,7 +297,8 @@
             </div>
           </v-col>
           <v-col class="col-md-6 col-12">
-            <div class="body-2 text--secondary">Date</div>
+            <i18n path="Common.Date" class="body-2 text--secondary" />
+
             <div class="body-1">
               {{
                 formatField(
@@ -303,7 +316,7 @@
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
             <i class="fa fa-comments-alt pr-1" aria-hidden="true"></i>
-            Notes
+            <i18n path="Common.Notes" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
@@ -315,32 +328,36 @@
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 py-0 pr-2 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-0">
-            <i class="fa fa-info-circle pr-1" aria-hidden="true"></i> Event
-            Information
+            <i class="fa fa-info-circle pr-1" aria-hidden="true"></i>
+            <i18n path="Common.EventInformation" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
         <v-divider></v-divider>
         <v-flex my-3>
-          <div class="body-2 text--secondary">Event Name</div>
+          <i18n path="Common.EventName" class="body-2 text--secondary" />
+
           <div class="body-1">
             {{ formatField(data.registration.EventName) }}
           </div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">Start Date</div>
+          <i18n path="Common.StartDate" class="body-2 text--secondary" />
+
           <div class="body-1 text--primary">
             {{ formatField(data.registration.BookingDate) }}
           </div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">End Date</div>
+          <i18n path="Common.EndDate" class="body-2 text--secondary" />
+
           <div class="body-1">
             {{ formatField(data.registration.ExpiryYear) }}
           </div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">Address</div>
+          <i18n path="Common.Address" class="body-2 text--secondary" />
+
           <div class="body-1">
             -
           </div>
@@ -350,14 +367,15 @@
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 py-0 pr-2 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-0">
-            <i class="fa fa-banknote pr-1" aria-hidden="true"></i> Payment
-            Details
+            <i class="fa fa-banknote pr-1" aria-hidden="true"></i>
+            <i18n path="Common.PaymentDetails" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
         <v-divider></v-divider>
         <v-flex my-3>
-          <div class="body-2 text--secondary">Card Type</div>
+          <i18n path="Common.CardType" class="body-2 text--secondary" />
+
           <div class="body-1">
             {{
               formatField(
@@ -368,7 +386,8 @@
           </div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">Name on Card</div>
+          <i18n path="Common.NameonCard" class="body-2 text--secondary" />
+
           <div class="body-1">
             {{
               formatField(
@@ -379,7 +398,8 @@
           </div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">Card Number (Last 4 Digit)</div>
+          <i18n path="Common.CardNumber" class="body-2 text--secondary" />
+
           <div class="body-1">
             {{
               formatField(
@@ -390,7 +410,8 @@
           </div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">Transaction Id</div>
+          <i18n path="Common.TransactionId" class="body-2 text--secondary" />
+
           <div class="body-1">
             {{
               formatField(
@@ -406,7 +427,7 @@
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-0">
             <i class="fa fa-question-circle pr-1" aria-hidden="true"></i>
-            Survey Questions
+            <i18n path="Common.SurveyQuestions" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>

@@ -12,7 +12,9 @@
           <v-card-title
             class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
           >
-            <h2 class="black--text pt-5 pb-2 text-h5">Edit Seo Details</h2>
+            <h2 class="black--text pt-5 pb-2 text-h5">
+              <i18n path="Common.EditSeoDetails" />
+            </h2>
             <v-spacer></v-spacer>
             <div>
               <v-btn icon @click.native="close">
@@ -66,8 +68,8 @@
               :disabled="!valid"
               depressed
               @click.native="onSave"
-              >Save</v-btn
-            >
+              ><i18n path="Drawer.Save"
+            /></v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>

@@ -58,7 +58,9 @@
       </v-row>
       <v-row>
         <v-col class="col-12 col-sm-6 col-md-4">
-          <h3 class="font-weight-regular pb-2">Events on Sale</h3>
+          <h3 class="font-weight-regular pb-2">
+            <i18n path="Common.EventsonSale" />
+          </h3>
           <div
             v-for="(data, index) in eventOnSaleData"
             :key="index"
@@ -141,12 +143,14 @@
               }"
               @click="routeToLiveEvents"
             >
-              View all
+              <i18n path="Common.Viewall" />
             </h4>
           </v-hover>
         </v-col>
         <v-col class="col-12 col-sm-6 col-md-4">
-          <h3 class="font-weight-regular pb-2">10 Days Tickets Sale</h3>
+          <h3 class="font-weight-regular pb-2">
+            <i18n path="Common.10DaysTicketsSale" />
+          </h3>
           <div
             v-if="!ticketSoldLoaded"
             class="rounded white elevation-2 chartHeight"
@@ -167,7 +171,9 @@
           </div>
         </v-col>
         <v-col class="col-12 col-sm-6 col-md-4">
-          <h3 class="font-weight-regular pb-2">Recent Buyers</h3>
+          <h3 class="font-weight-regular pb-2">
+            <i18n path="Common.RecentBuyers" />
+          </h3>
           <div
             v-for="(data, index) in recentBuyersData"
             :key="index"
@@ -238,7 +244,7 @@
               }"
               @click="routeToRegistrations"
             >
-              View all
+              <i18n path="Common.Viewall" />
             </h4>
           </v-hover>
         </v-col>
@@ -246,7 +252,7 @@
       <v-row>
         <v-col class="col-12 col-sm-6 col-md-4">
           <h3 class="font-weight-regular pb-2">
-            Invitations Conversion by Event
+            <i18n path="Common.InvitationsConversionbyEvent" />
           </h3>
           <div
             v-if="!conversionLoaded"
@@ -269,7 +275,7 @@
         </v-col>
         <v-col class="col-12 col-sm-6 col-md-4">
           <h3 class="font-weight-regular pb-2">
-            Sale by Geo Location
+            <i18n path="Common.SalebyGeoLocation" />
           </h3>
           <div
             v-if="!geoLocationLoaded"
@@ -296,7 +302,7 @@
         ></v-col>
         <v-col class="col-12 col-sm-6 col-md-4">
           <h3 class="font-weight-regular pb-2">
-            Tickets Sold
+            <i18n path="Common.TicketsSold" />
           </h3>
           <div v-if="!pieLoaded" class="rounded white elevation-2 chartHeight">
             <div class="pt-11 positionRelative text-center">
@@ -318,7 +324,7 @@
       <v-row>
         <v-col class="col-12 col-sm-6 col-md-4">
           <h3 class="font-weight-regular pb-2">
-            Invitations Conversion Trend
+            <i18n path="Common.InvitationsConversionTrend" />
           </h3>
           <div
             v-if="!conversionTrendLoaded"
@@ -341,7 +347,7 @@
         </v-col>
         <v-col class="col-12 col-sm-6 col-md-4">
           <h3 class="font-weight-regular pb-2">
-            Sessions Sold
+            <i18n path="Common.SessionsSold" />
           </h3>
           <div
             v-if="!sessionLoaded"
@@ -364,7 +370,7 @@
         </v-col>
         <v-col class="col-12 col-sm-6 col-md-4">
           <h3 class="font-weight-regular pb-2">
-            Events Timeline
+            <i18n path="Common.EventsTimeline" />
           </h3>
           <div
             v-if="!eventTimelineLoaded"

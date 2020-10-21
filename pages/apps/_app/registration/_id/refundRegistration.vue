@@ -12,7 +12,9 @@
           <v-card-title
             class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
           >
-            <h2 class="black--text pt-5 pb-4 text-h5">Refund Request</h2>
+            <h2 class="black--text pt-5 pb-4 text-h5">
+              <i18n path="Common.RefundRequest" />
+            </h2>
 
             <v-spacer></v-spacer>
             <div>
@@ -31,9 +33,7 @@
               class="body-2"
             >
               <v-icon class="amber--text" size="18">fa-bulb</v-icon>
-              You are submitting a refund request for a payment which was
-              charged less than 24 hours ago, if funds are not settled, this
-              refund will be pending until funds are settled.
+              <i18n path="Common.submittingRefundRequest" />
             </v-alert>
             <v-row>
               <v-col cols="12" sm="12" md="12">
@@ -90,8 +90,8 @@
             class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
           >
             <v-btn :disabled="!valid" color="primary" depressed @click="onSave"
-              >Submit</v-btn
-            >
+              ><i18n path="Drawer.Submit"
+            /></v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>

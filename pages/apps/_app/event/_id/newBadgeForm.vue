@@ -15,7 +15,7 @@
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
           <h2 class="black--text pt-5 pb-3 text-h5">
-            New Badge
+            <i18n path="Common.NewBadge" />
           </h2>
           <v-spacer></v-spacer>
           <div>
@@ -29,11 +29,11 @@
             <v-tabs v-model="tabs" center-active height="36">
               <v-tabs-slider></v-tabs-slider>
               <v-tab href="#tab-1" class="px-0 mr-4">
-                <span>Templates</span>
+                <span><i18n path="Common.Templates" /></span>
               </v-tab>
 
               <v-tab href="#tab-2" class="px-0 mr-4">
-                <span>Designer</span>
+                <span><i18n path="Common.Designer" /></span>
               </v-tab>
             </v-tabs>
 
@@ -41,11 +41,11 @@
               <v-tab-item :value="'tab-1'">
                 <v-row>
                   <v-col cols="12" class="mb-2">
-                    Select a template
+                    <i18n path="Common.Selectatemplate" />
                   </v-col>
                   <div id="template" class="pa-0">
                     <i class="fa fa-id-badge pl-1" aria-hidden="true"></i>
-                    ID Card Badge
+                    <i18n path="Common.IDCardBadge" />
                   </div>
                   <v-flex
                     class="d-flex flex-wrap pa-0 justify-center justify-md-start"
@@ -76,7 +76,7 @@
                   <p class="tempId"></p>
                   <div class="pa-0">
                     <i class="fa fa-id-badge pl-1 ml-2" aria-hidden="true"></i>
-                    Pin Name Badge
+                    <i18n path="Common.PinNameBadge" />
                   </div>
                   <v-flex
                     class="d-flex flex-wrap pa-0 justify-center justify-md-start"
@@ -134,22 +134,22 @@
               tabs = 'tab-1'
               RTEValue = ''
             "
-            >Prev</v-btn
-          >
+            ><i18n path="Drawer.Prev"
+          /></v-btn>
           <v-btn
             v-if="tabs === 'tab-1'"
             color="primary"
             depressed
             @click="tabs = 'tab-2'"
-            >Next</v-btn
-          >
+            ><i18n path="Drawer.Next"
+          /></v-btn>
           <v-btn
             v-if="tabs === 'tab-2'"
             color="primary"
             depressed
             @click.native="onSave"
-            >Save</v-btn
-          >
+            ><i18n path="Drawer.Save"
+          /></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

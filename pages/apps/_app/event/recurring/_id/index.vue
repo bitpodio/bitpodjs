@@ -9,13 +9,13 @@
           <v-spacer></v-spacer>
           <div class="mr-2">
             <v-btn depressed color="primary" @click="viewRegistration"
-              >View</v-btn
-            >
+              ><i18n path="Drawer.View"
+            /></v-btn>
           </div>
           <div v-if="data.event.Status === 'Not ready'" class="mr-2">
             <v-btn outlined color="primary" @click="publishEvent"
-              >Publish</v-btn
-            >
+              ><i18n path="Drawer.Publish"
+            /></v-btn>
           </div>
           <v-menu
             left
@@ -35,7 +35,9 @@
                   <i class="fa fa-clone mt-1" aria-hidden="true"></i>
                 </v-list-item-icon>
                 <v-list-item-content>
-                  <v-list-item-title>Make a copy</v-list-item-title>
+                  <v-list-item-title
+                    ><i18n path="Drawer.MakeaCopy"
+                  /></v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
               <v-list-item @click="true">
@@ -43,7 +45,9 @@
                   <i class="fa fa-pencil-square-o mt-1" aria-hidden="true"></i>
                 </v-list-item-icon>
                 <v-list-item-content>
-                  <v-list-item-title>Edit email template</v-list-item-title>
+                  <v-list-item-title
+                    ><i18n path="Drawer.Editemailtemplate"
+                  /></v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
               <v-list-item @click="redirectIntegration">
@@ -51,7 +55,9 @@
                   <i class="fa fa-link1 mt-1" aria-hidden="true"></i>
                 </v-list-item-icon>
                 <v-list-item-content>
-                  <v-list-item-title>Integrations</v-list-item-title>
+                  <v-list-item-title
+                    ><i18n path="Drawer.Integrations"
+                  /></v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
               <v-list-item @click.stop="copylinks = true">
@@ -59,7 +65,9 @@
                   <i class="fa fa-clone mt-1" aria-hidden="true"></i>
                 </v-list-item-icon>
                 <v-list-item-content>
-                  <v-list-item-title>Copy Links</v-list-item-title>
+                  <v-list-item-title
+                    ><i18n path="Drawer.CopyLinks"
+                  /></v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
             </v-list>
@@ -68,7 +76,7 @@
             <v-card>
               <v-card-title class="pa-4 pr-2">
                 <h2 class="black--text text--lighten-1 pt-1 pb-0 text-h5">
-                  Copy Links
+                  <i18n path="Drawer.CopyLinks" />
                 </h2>
                 <v-spacer></v-spacer>
                 <div>
@@ -122,7 +130,7 @@
           </v-dialog>
         </v-flex>
         <v-chip class="my-2 mt-1 greybg">
-          Recurring Event
+          <i18n path="Drawer.RecurringEvent" />
         </v-chip>
 
         <v-flex d-flex flex-md-row flex-lg-row my-2 class="event-cards">
@@ -138,7 +146,11 @@
               <div class="event-tile-value text-truncate">
                 {{ data.eventSummary.totalRegistration }}
               </div>
-              <div class="caption text-truncate">Total Registration</div>
+
+              <i18n
+                path="Common.TotalRegistration"
+                class="caption text-truncate"
+              />
             </div>
           </div>
 
@@ -154,7 +166,11 @@
               <div class="event-tile-value text-truncate">
                 {{ data.eventSummary.totalFailed }}
               </div>
-              <div class="caption text-truncate">Abandoned Registration</div>
+
+              <i18n
+                path="Common.AbandonedRegistration"
+                class="caption text-truncate"
+              />
             </div>
           </div>
 
@@ -171,7 +187,8 @@
               <div class="event-tile-value text-truncate">
                 {{ data.event.Currency }} {{ data.eventSummary.Revenue }}
               </div>
-              <div class="caption text-truncate">Revenue</div>
+
+              <i18n path="Common.Revenue" class="caption text-truncate" />
             </div>
           </div>
 
@@ -188,7 +205,8 @@
               <div class="event-tile-value text-truncate">
                 {{ data.eventSummary.TotalSession }}
               </div>
-              <div class="caption text-truncate">Total Sessions</div>
+
+              <i18n path="Common.TotalSessions" class="caption text-truncate" />
             </div>
           </div>
 
@@ -205,7 +223,8 @@
               <div class="event-tile-value text-truncate">
                 {{ data.event.MySpeakers.length }}
               </div>
-              <div class="caption text-truncate">Total Speakers</div>
+
+              <i18n path="Common.TotalSpeakers" class="caption text-truncate" />
             </div>
           </div>
 
@@ -218,8 +237,12 @@
               <i class="fa fa-calendar2" aria-hidden="true"></i>
             </div>
             <div class="d-flex flex-column pa-2 event-tile-right greybg">
-              <div class="event-tile-value text-truncate">29 Days</div>
-              <div class="caption text-truncate">Opens in</div>
+              <i18n
+                path="Common.29Days"
+                class="event-tile-value text-truncate"
+              />
+
+              <i18n path="Common.Opensin" class="caption text-truncate" />
             </div>
           </div>
         </v-flex>
@@ -238,8 +261,8 @@
               color="success"
               class="ml-n13 body-2"
               @click="changeStatus('Not ready')"
-              >Not Ready</v-stepper-step
-            >
+              ><i18n path="Common.NotReady"
+            /></v-stepper-step>
 
             <v-divider></v-divider>
 
@@ -250,8 +273,8 @@
               color="success"
               class="body-2"
               @click="changeStatus('Open for registration')"
-              >Open for registration</v-stepper-step
-            >
+              ><i18n path="Common.Openforregistration"
+            /></v-stepper-step>
 
             <v-divider></v-divider>
 
@@ -262,8 +285,8 @@
               class="body-2"
               color="success"
               @click="changeStatus('Sold out')"
-              >Sold out</v-stepper-step
-            >
+              ><i18n path="Common.Soldout"
+            /></v-stepper-step>
 
             <v-divider></v-divider>
 
@@ -274,8 +297,8 @@
               class="body-2"
               color="success"
               @click="changeStatus('Registration closed')"
-              >Registration closed</v-stepper-step
-            >
+              ><i18n path="Common.Registrationclosed"
+            /></v-stepper-step>
           </v-stepper-header>
         </v-stepper>
 
@@ -302,24 +325,31 @@
       >
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-0">
-            <i class="fa fa-image pr-1" aria-hidden="true"></i> Image Gallery
+            <i class="fa fa-image pr-1" aria-hidden="true"></i>
+            <i18n path="Common.ImageGallery" />
           </h2>
           <v-spacer></v-spacer>
           <v-menu offset-y>
             <template v-slot:activator="{ on, attrs }">
               <v-btn depressed text small v-bind="attrs" v-on="on">
-                <v-icon left>mdi-upload</v-icon> Upload
+                <v-icon left>mdi-upload</v-icon> <i18n path="Drawer.Upload" />
               </v-btn>
             </template>
             <v-list dense>
               <v-list-item>
-                <v-list-item-title>Badge Logo</v-list-item-title>
+                <v-list-item-title
+                  ><i18n path="Common.BadgeLogo"
+                /></v-list-item-title>
               </v-list-item>
               <v-list-item>
-                <v-list-item-title>Event Banner (680x350)</v-list-item-title>
+                <v-list-item-title
+                  ><i18n path="Common.EventBanner(680x350)"
+                /></v-list-item-title>
               </v-list-item>
               <v-list-item>
-                <v-list-item-title>Other</v-list-item-title>
+                <v-list-item-title
+                  ><i18n path="Common.Other"
+                /></v-list-item-title>
               </v-list-item>
             </v-list>
           </v-menu>
@@ -447,8 +477,8 @@
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
-            <i class="fa fa-black-board pr-1" aria-hidden="true"></i> Recurring
-            Sessions
+            <i class="fa fa-black-board pr-1" aria-hidden="true"></i>
+            <i18n path="Common.RecurringSessions" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
@@ -465,7 +495,8 @@
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
-            <i class="fa fa-users pr-1" aria-hidden="true"></i> Attendees
+            <i class="fa fa-users pr-1" aria-hidden="true"></i>
+            <i18n path="Common.Attendees" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
@@ -479,7 +510,7 @@
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
             <i class="fa fa-user-plus pr-1" aria-hidden="true"></i>
-            Registrations
+            <i18n path="Common.Registrations" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
@@ -497,7 +528,7 @@
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
             <i class="fa fa-mail pr-1" aria-hidden="true"></i>
-            Invites
+            <i18n path="Common.Invites" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
@@ -511,7 +542,7 @@
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
             <i class="fa fa-ticketalt pr-1" aria-hidden="true"></i>
-            Tickets
+            <i18n path="Common.Tickets" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
@@ -530,7 +561,7 @@
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
             <i class="fa fa-settings1 pr-1" aria-hidden="true"></i>
-            Discount Codes
+            <i18n path="Common.DiscountCodes" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
@@ -548,7 +579,7 @@
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
             <i class="fa fa-question-circle pr-1" aria-hidden="true"></i>
-            Registration Questions
+            <i18n path="Common.RegistrationQuestions" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
@@ -566,7 +597,7 @@
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
             <i class="fa fa-mic pr-1" aria-hidden="true"></i>
-            Speakers
+            <i18n path="Common.Speakers" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
@@ -580,7 +611,7 @@
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
             <i class="fa fa-external-link pr-1" aria-hidden="true"></i>
-            Tasks
+            <i18n path="Common.Tasks" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
@@ -599,7 +630,7 @@
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
             <i class="fa fa-file-text-o pr-1" aria-hidden="true"></i>
-            Registration Form
+            <i18n path="Common.RegistrationForm" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
@@ -615,27 +646,30 @@
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 py-0 pr-2 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-0">
-            <i class="fa fa-info-circle pr-1" aria-hidden="true"></i> Event
-            Information
+            <i class="fa fa-info-circle pr-1" aria-hidden="true"></i>
+            <i18n path="Common.EventInformation" />
           </h2>
           <v-spacer></v-spacer>
           <v-btn text small @click.stop="eventForm = true">
-            <v-icon left class="fs-16">fa-pencil</v-icon>Edit
+            <v-icon left class="fs-16">fa-pencil</v-icon
+            ><i18n path="Drawer.Edit" />
           </v-btn>
         </v-flex>
         <v-divider></v-divider>
         <v-flex my-3>
-          <div class="body-2 text--secondary">Organizer</div>
+          <i18n path="Common.Organizer" class="body-2 text--secondary" />
+
           <div class="body-1">{{ formatField(data.event.Organizer) }}</div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">Event Manager</div>
+          <i18n path="Common.EventManager" class="body-2 text--secondary" />
+
           <div class="body-1 text--primary">
             {{ formatField(data.event.EventManager) }}
           </div>
         </v-flex>
         <v-flex v-if="data.event.Tags" my-3>
-          <div class="body-2 text--secondary">Tags</div>
+          <i18n path="Common.Tags" class="body-2 text--secondary" />
           <div class="body-1 v-tags">
             <v-chip
               v-for="Tags in data.event.Tags"
@@ -652,26 +686,31 @@
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-0 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-0">
-            <i class="fa fa-tag pr-1" aria-hidden="true"></i> SEO Details
+            <i class="fa fa-tag pr-1" aria-hidden="true"></i>
+            <i18n path="Common.SEODetails" />
           </h2>
           <v-spacer></v-spacer>
           <v-btn text small @click="seoForm = true">
-            <v-icon left class="fs-16">fa-pencil</v-icon>Edit
+            <v-icon left class="fs-16">fa-pencil</v-icon
+            ><i18n path="Drawer.Edit" />
           </v-btn>
         </v-flex>
         <v-divider></v-divider>
         <v-flex my-3>
-          <div class="body-2 text--secondary">SEO Title</div>
+          <i18n path="Common.SEOTitle" class="body-2 text--secondary" />
+
           <div class="body-1">
             {{ formatField(data.event.SEOTitle) }}
           </div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">SEO Description</div>
+          <i18n path="Common.SEODescription" class="body-2 text--secondary" />
+
           <div class="body-1">{{ formatField(data.event.SEODesc) }}</div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">SEO Keywords</div>
+          <i18n path="Common.SEOKeywords" class="body-2 text--secondary" />
+
           <div class="body-1">{{ formatField(data.event.SEOKeywords) }}</div>
         </v-flex>
       </div>
@@ -679,49 +718,61 @@
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-0 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-0">
-            <i class="fa fa-settings pr-1" aria-hidden="true"></i> Event
-            Settings
+            <i class="fa fa-settings pr-1" aria-hidden="true"></i>
+            <i18n path="Common.EventSettings" />
           </h2>
           <v-spacer></v-spacer>
           <v-btn text small @click="eventSetting = true">
-            <v-icon left class="fs-16">fa-pencil</v-icon>Edit
+            <v-icon left class="fs-16">fa-pencil</v-icon
+            ><i18n path="Drawer.Edit" />
           </v-btn>
         </v-flex>
         <v-divider></v-divider>
         <v-flex my-3>
-          <div class="body-2 text--secondary">Privacy</div>
+          <i18n path="Common.Privacy" class="body-2 text--secondary" />
+
           <div class="body-1">{{ formatField(data.event.Privacy) }}</div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">Currency</div>
+          <i18n path="Common.Currency" class="body-2 text--secondary" />
+
           <div class="body-1">{{ formatField(data.event.Currency) }}</div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">GL Account Code</div>
+          <i18n path="Common.GLAccountCode" class="body-2 text--secondary" />
+
           <div class="body-1">{{ formatField(data.event.ProjectCode) }}</div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">Cost Center</div>
+          <i18n path="Common.CostCenter" class="body-2 text--secondary" />
+
           <div class="body-1">{{ formatField(data.event.CostCenter) }}</div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">Business Type</div>
+          <i18n path="Common.BusinessType" class="body-2 text--secondary" />
+
           <div class="body-1">{{ formatField(data.event.BusinessType) }}</div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">Event Link</div>
+          <i18n path="Common.EventLink" class="body-2 text--secondary" />
+
           <div class="body-1 d-block text-truncate">
             {{ formatField(eventUniqueLink) }}
           </div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">Session Link</div>
+          <i18n path="Common.SessionLink" class="body-2 text--secondary" />
+
           <div class="body-1 d-block text-truncate">
             {{ formatField(eventSessionLink) }}
           </div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">Cancelation Policy</div>
+          <i18n
+            path="Common.CancellationPolicy"
+            class="body-2 text--secondary"
+          />
+
           <div class="body-1">
             <!-- eslint-disable-next-line vue/no-v-html -->
             <div v-html="formatField(data.event.CancellationPolicy)"></div>
@@ -730,65 +781,81 @@
         <v-flex my-3 class="d-block text-truncate">
           <span v-if="data.event.isRefundable === true">
             <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
-            <span class="ml-2">Allow Cancelation</span>
+            <i18n path="Common.AllowCancelation" class="ml-2" />
           </span>
           <span v-else>
             <v-icon>mdi-checkbox-blank-outline</v-icon>
-            <span class="ml-2">Allow Cancelation</span>
+            <i18n path="Common.AllowCancelation" class="ml-2" />
           </span>
         </v-flex>
         <v-flex my-3 class="d-block text-truncate">
           <span v-if="data.event.SessionTimingConflict === true">
             <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
-            <span class="ml-2">Validate Session Timing Conflict</span>
+
+            <i18n path="Common.ValidateSessionTimingConflict" class="ml-2" />
           </span>
           <span v-else>
             <v-icon>mdi-checkbox-blank-outline</v-icon>
-            <span class="ml-2">Validate Session Timing Conflict</span>
+
+            <i18n path="Common.ValidateSessionTimingConflict" class="ml-2" />
           </span>
         </v-flex>
         <v-flex my-3 class="d-block text-truncate">
           <span v-if="data.event.ShowRemainingTickets === true">
             <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
-            <span class="ml-2">Show Remaining Tickets Count</span>
+
+            <i18n path="Common.ShowRemainingTicketsCount" class="ml-2" />
           </span>
           <span v-else>
             <v-icon>mdi-checkbox-blank-outline</v-icon>
-            <span class="ml-2">Show Remaining Tickets Count</span>
+
+            <i18n path="Common.ShowRemainingTicketsCount" class="ml-2" />
           </span>
         </v-flex>
         <v-flex my-3 class="d-block text-truncate">
           <span v-if="data.event.ShowAttendeeForm === true">
             <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
-            <span class="ml-2">Show Attendee Form</span>
+            <i18n path="Common.ShowAttendeeForm" class="ml-2" />
           </span>
           <span v-else>
             <v-icon>mdi-checkbox-blank-outline</v-icon>
-            <span class="ml-2">Show Attendee Form</span>
+            <i18n path="Common.ShowAttendeeForm" class="ml-2" />
           </span>
         </v-flex>
         <v-flex my-3 class="d-block text-truncate">
           <span v-if="data.event.NotifyOrganizer === true">
             <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
-            <span class="ml-2">Notify organizer when someone registers</span>
+
+            <i18n
+              path="Common.Notifyorganizerwhensomeoneregisters"
+              class="ml-2"
+            />
           </span>
           <span v-else>
             <v-icon>mdi-checkbox-blank-outline</v-icon>
-            <span class="ml-2">Notify organizer when someone registers</span>
+
+            <i18n
+              path="Common.Notifyorganizerwhensomeoneregisters"
+              class="ml-2"
+            />
           </span>
         </v-flex>
         <v-flex my-3>
           <span v-if="data.event.showTimezone === true">
             <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
-            <span class="ml-2"
-              >Allow user to select a time zone for recurring event</span
-            >
+
+            <i18n
+              path="Common.Allowusertoselectatimezoneforrecurringevent"
+              class="ml-2"
+            />
           </span>
           <span v-else>
             <v-icon>mdi-checkbox-blank-outline</v-icon>
-            <span class="ml-2"
-              >Allow user to select a time zone for recurring event</span
-            >
+
+            <i18n
+              path="Common.Allowusertoselectatimezoneforrecurringevent"
+              class="ml-2"
+            />
           </span>
         </v-flex>
       </div>
@@ -797,16 +864,21 @@
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-0">
             <i class="fa fa-settings pr-1" aria-hidden="true"></i>
-            Registration Page Settings
+            <i18n path="Common.RegistrationPageSettings" />
           </h2>
           <v-spacer></v-spacer>
           <v-btn text small @click="siteSetting = true">
-            <v-icon left class="fs-16">fa-pencil</v-icon>Edit
+            <v-icon left class="fs-16">fa-pencil</v-icon
+            ><i18n path="Drawer.Edit" />
           </v-btn>
         </v-flex>
         <v-divider></v-divider>
         <v-flex my-3>
-          <div class="body-2 text--secondary">Registration Site Template</div>
+          <i18n
+            path="Common.RegistrationSiteTemplate"
+            class="body-2 text--secondary"
+          />
+
           <div class="body-1">
             {{ formatField(data.event.RegistrationSiteTemplate) }}
           </div>
@@ -819,11 +891,11 @@
             "
           >
             <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
-            <span class="ml-2">Show Image Gallery</span>
+            <i18n path="Common.ShowImageGallery" class="ml-2" />
           </span>
           <span v-else>
             <v-icon>mdi-checkbox-blank-outline</v-icon>
-            <span class="ml-2">Show Image Gallery</span>
+            <i18n path="Common.ShowImageGallery" class="ml-2" />
           </span>
         </v-flex>
         <v-flex my-3>
@@ -834,11 +906,11 @@
             "
           >
             <v-icon color="success">mdi-checkbox-marked-outline</v-icon>
-            <span class="ml-2">Show Event Reviews</span>
+            <i18n path="Common.ShowEventReviews" class="ml-2" />
           </span>
           <span v-else>
             <v-icon>mdi-checkbox-blank-outline</v-icon>
-            <span class="ml-2">Show Event Reviews</span>
+            <i18n path="Common.ShowEventReviews" class="ml-2" />
           </span>
         </v-flex>
       </div>
