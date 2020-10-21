@@ -8,6 +8,14 @@
           <div class="text-h4 text-capitalize">{{ data.event.Title }}</div>
           <v-spacer></v-spacer>
           <div class="mr-2">
+            <v-btn tile color="success" class="rounded" @click="goLive">
+              Join Event
+              <v-icon right class="fs-22">
+                mdi-video
+              </v-icon>
+            </v-btn>
+          </div>
+          <div class="mr-2">
             <v-btn depressed color="primary" @click="viewRegistration"
               >View</v-btn
             >
@@ -77,6 +85,20 @@
                 {{ data.event.WebinarLink }}
               </a>
             </div>
+          </div>
+          <div
+            v-else-if="data.event.LocationType === 'Bitpod Virtual'"
+            class="pb-1 d-inline-flex"
+          >
+            <a @click="goLive"
+              ><v-icon class="fs-16 mr-1 primary--text mt-n1">fa-video</v-icon
+              >{{ viewBitpodVirtualLink() }}</a
+            >
+            <copy
+              class="pl-2"
+              :text-to-copy="viewBitpodVirtualLink()"
+              icon-size="20"
+            />
           </div>
           <div v-else>
             <p class="blue--text body-2">
@@ -310,7 +332,14 @@
           <v-spacer></v-spacer>
           <v-menu offset-y>
             <template v-slot:activator="{ on, attrs }">
-              <v-btn depressed text small v-bind="attrs" v-on="on">
+              <v-btn
+                depressed
+                text
+                small
+                v-bind="attrs"
+                v-on="on"
+                @click="allow = true"
+              >
                 <v-icon left>fa-upload</v-icon> Upload
               </v-btn>
             </template>
@@ -629,7 +658,7 @@
               max-width="150"
               max-height="150"
               width="150"
-              @click.stop="otherDialogOpen = true"
+              @click.stop="openOtherDialog(image)"
             >
               <template v-slot:placeholder>
                 <v-row class="fill-height ma-0" align="center" justify="center">
@@ -663,14 +692,10 @@
                 </div>
               </v-card-title>
               <v-card-text class="pa-1">
-                <v-card
-                  v-for="image in eventData.Other"
-                  :key="image"
-                  class="mx-auto elevation-0"
-                >
+                <v-card class="mx-auto elevation-0">
                   <v-img
-                    :src="getAttachmentLink(image, true)"
-                    :lazy-src="getAttachmentLink(image, true)"
+                    :src="displaySelectedOtherImage"
+                    :lazy-src="displaySelectedOtherImage"
                     aspect-ratio="1"
                     class="white"
                     width="100%"
@@ -763,23 +788,64 @@
             label="Seatmap & Tickets"
             class="mt-0 ml-2 max-h24 positionAbsolute"
             height="20"
+            @change="updateSeatReservation"
           ></v-switch>
           <div v-if="switchSeat" class="d-flex justify-center">
-            <v-flex
-              class="d-flex flex-column justify-center ma-2 cursorPointer seat-actions pa-2"
-              @click="routeToSeatmap"
-            >
-              <v-icon class="fs-16">mdi-plus</v-icon>
-              <v-text class="text-center body-2 pt-1">New Seat Map</v-text>
-            </v-flex>
-            <v-flex
-              class="d-flex flex-column justify-center ma-2 cursorPointer seat-actions pa-2"
-            >
-              <v-icon class="fs-16">fa-grid</v-icon>
-              <v-text class="text-center body-2 pt-1"
-                >Select Existing Seat Map</v-text
+            <div v-if="layoutId && switchDailog" class="text-center">
+              <v-hover v-slot:default="{ hover }">
+                <div>
+                  <v-card
+                    :elevation="hover ? 1 : 0"
+                    class="ma-3 ml-0 mt-0 seatMaptile"
+                    height="110"
+                    max-width="110"
+                    width="110"
+                  >
+                    <v-card-text>
+                      <div>
+                        <v-icon size="64" color="warning">fa-grid</v-icon>
+                      </div>
+                    </v-card-text>
+                    <v-flex
+                      v-if="hover"
+                      class="d-flex justify-center text-center"
+                    >
+                      <v-card-action class="mt-n4">
+                        <div class="d-flex justify-center text-center pb-5">
+                          <div class="mr-1" @click="onEditSeatMap">
+                            <v-icon small color="black">fa-pencil</v-icon>
+                          </div>
+                          <div @click="popupDialog = true">
+                            <v-icon small color="black">fa-trash</v-icon>
+                          </div>
+                        </div>
+                      </v-card-action>
+                    </v-flex>
+                  </v-card>
+                  <div class="text-truncate text-capitalize text-center pr-4">
+                    {{ layoutName }}
+                  </div>
+                </div>
+              </v-hover>
+            </div>
+            <div v-else-if="switchDailog" class="d-inline-flex">
+              <v-flex
+                class="d-flex flex-column justify-center ma-2 cursorPointer seat-actions pa-2"
+                @click="routeToSeatmap"
               >
-            </v-flex>
+                <v-icon class="fs-16">mdi-plus</v-icon>
+                <v-text class="text-center body-2 pt-1">New Seat Map</v-text>
+              </v-flex>
+              <v-flex
+                class="d-flex flex-column justify-center ma-2 cursorPointer seat-actions pa-2"
+                @click="selectExistingSeatMap = true"
+              >
+                <v-icon class="fs-16">fa-grid</v-icon>
+                <v-text class="text-center body-2 pt-1"
+                  >Select Existing Seat Map</v-text
+                >
+              </v-flex>
+            </div>
           </div>
           <div v-else>
             <Grid
@@ -892,6 +958,19 @@
           class="mt-n12"
         />
       </div>
+      <div
+        class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+      >
+        <v-flex class="d-flex justify-center align-center pb-3">
+          <h2 class="body-1 pb-0">
+            <i class="fa fa-comments-alt pr-1" aria-hidden="true"></i>
+            Notes
+          </h2>
+          <v-spacer></v-spacer>
+        </v-flex>
+        <v-divider></v-divider>
+        <Notes model-name="Events" />
+      </div>
     </v-flex>
     <v-flex column class="mxw-w30">
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 py-0 pr-2 box-grey">
@@ -932,7 +1011,7 @@
       </div>
 
       <div
-        v-if="data.event.LocationType !== 'Online Event'"
+        v-if="data.event.LocationType === 'Venue'"
         class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pb-0 pr-2 box-grey"
       >
         <v-flex class="d-flex justify-center align-center pb-2">
@@ -1038,7 +1117,7 @@
         <v-flex my-3>
           <div class="body-2 text--secondary">Event Link</div>
           <div class="body-1 d-block text-truncate">
-            {{ formatField(data.event.UniqLink) }}
+            {{ eventLink(data.event.UniqLink) }}
           </div>
         </v-flex>
         <v-flex my-3>
@@ -1096,14 +1175,27 @@
             @change="updateReg"
           ></v-checkbox>
         </v-flex>
-        <v-flex class="d-block text-truncate">
+        <v-flex class="mt-2">
           <v-checkbox
             v-model="data.event.NotifyOrganizer"
             dense
             debounce="500"
             height="20"
             class="ma-0 pa-0"
-            label="Notify organizer when someone registers"
+            label="Notify  organizer when someone 
+            registers"
+            color="green"
+            @change="updateReg"
+          ></v-checkbox>
+        </v-flex>
+        <v-flex class="d-block text-truncate">
+          <v-checkbox
+            v-model="data.event.printBadgeOnCheckIn"
+            dense
+            debounce="500"
+            height="20"
+            class="ma-0 pa-0"
+            label="Ask to print badge after check in"
             color="green"
             @change="updateReg"
           ></v-checkbox>
@@ -1155,6 +1247,28 @@
           {{ snackbarText }}
         </div>
       </v-snackbar>
+      <v-dialog v-model="popupDialog" width="500">
+        <v-card>
+          <v-card-text class="pt-3">
+            are you sure you want to delete layout
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="primary" small dark dense @click="onDeleteSeatMap">
+              OK
+            </v-btn>
+            <v-btn
+              color="primary"
+              small
+              outlined
+              dense
+              @click="popupDialog = false"
+            >
+              Cancel
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
     </v-flex>
     <div v-if="eventForm">
       <editEventForm :event-form.sync="eventForm" />
@@ -1171,6 +1285,9 @@
     <makeCopy :key="isMakeCopy" :is-make-copy.sync="isMakeCopy" />
     <newBadgeForm :new-badge.sync="newBadge" />
     <editBadgeForm :id="badgeData.id" :edit-badge-form.sync="editBadgeForm" />
+    <selectExistingSeatMap
+      :select-existing-seat-map.sync="selectExistingSeatMap"
+    />
   </v-flex>
 </template>
 <script>
@@ -1179,6 +1296,7 @@ import format from 'date-fns/format'
 import { utcToZonedTime } from 'date-fns-tz'
 import _ from 'lodash'
 import editSeoForm from './editSeoForm.vue'
+import selectExistingSeatMap from './selectExistingSeatMap.vue'
 import editEventForm from './editEventForm.vue'
 import editEventSetting from './editEventSetting.vue'
 import editSiteSetting from './editSiteSetting.vue'
@@ -1193,6 +1311,7 @@ import Grid from '~/components/common/grid'
 import File from '~/components/common/form/file.vue'
 import event from '~/config/apps/event/gql/event.gql'
 import copy from '~/components/common/copy'
+import Notes from '~/components/common/notes'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin, getIdFromAtob, getApiUrl } from '~/utility'
 
@@ -1203,11 +1322,13 @@ export default {
     editEventForm,
     editEventSetting,
     editSiteSetting,
+    selectExistingSeatMap,
     newBadgeForm,
     editBadgeForm,
     File,
     copy,
     makeCopy,
+    Notes,
   },
   mixins: [configLoaderMixin],
   props: {
@@ -1220,6 +1341,7 @@ export default {
     return {
       loading: 0,
       dialog: false,
+      selectExistingSeatMap: false,
       editeventform: false,
       editseoform: false,
       eventForm: false,
@@ -1275,6 +1397,11 @@ export default {
       hover: {},
       settingData: {},
       allow: true,
+      displaySelectedOtherImage: '',
+      layoutId: '',
+      switchDailog: false,
+      layoutName: '',
+      popupDialog: false,
     }
   },
   computed: {
@@ -1291,6 +1418,7 @@ export default {
         ShowRemainingTickets: this.data.event.ShowRemainingTickets,
         ShowAttendeeForm: this.data.event.ShowAttendeeForm,
         NotifyOrganizer: this.data.event.NotifyOrganizer,
+        printBadgeOnCheckIn: this.data.event.printBadgeOnCheckIn,
       }
       return dataObj
     },
@@ -1316,6 +1444,24 @@ export default {
   },
 
   methods: {
+    eventLink() {
+      const baseUrl = getApiUrl()
+      const regUrl = baseUrl.replace(
+        'svc/api/',
+        `e/${this.data.event.UniqLink}`
+      )
+      const url = this.formatField(regUrl)
+      return url
+    },
+    openOtherDialog(image) {
+      this.otherDialogOpen = true
+      this.displaySelectedOtherImage = this.getAttachmentLink(image, true)
+    },
+    goLive() {
+      window.open(
+        `apps/event/live/${this.eventData.UniqLink}?e=${this.$route.params.id}`
+      )
+    },
     openPrintForm() {
       const myWindow = window.open('', '', 'width=900,height=900')
       this.attendees.map((ele) => {
@@ -1596,25 +1742,31 @@ export default {
     },
     fileUploadedBadgeLogo(data) {
       this.allow = true
-      this.formData.Logo = []
-      this.formData.Logo.push(data[0])
-      this.updateEventGallery(this.formData)
+      if (data.length > 0) {
+        this.formData.Logo = []
+        this.formData.Logo.push(data[0])
+        this.updateEventGallery(this.formData)
+      }
     },
     fileUploadedEventBanner(data) {
-      const imageUrl = `/svc/api/Attachments/download/${data[0]}`
       this.allow = true
-      this.formData.Images = []
-      this.formData.ImagesURL = []
-      this.formData.Images.push(data[0])
-      this.formData.ImagesURL.push(imageUrl)
+      if (data.length > 0) {
+        const imageUrl = `/svc/api/Attachments/download/${data[0]}`
+        this.formData.Images = []
+        this.formData.ImagesURL = []
+        this.formData.Images.push(data[0])
+        this.formData.ImagesURL.push(imageUrl)
 
-      this.updateEventGallery(this.formData)
+        this.updateEventGallery(this.formData)
+      }
     },
     fileUploadedOther(data) {
       this.allow = true
-      this.formData.Other = []
-      this.formData.Other.push(...data)
-      this.updateOtherImageGallery(this.formData.Other)
+      if (data.length > 0) {
+        this.formData.Other = []
+        this.formData.Other.push(...data)
+        this.updateOtherImageGallery(this.formData.Other)
+      }
     },
     async updateEventGallery(formData) {
       try {
@@ -1650,6 +1802,9 @@ export default {
     viewRegistrationLink() {
       const regUrl = `https://${nuxtconfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
       return regUrl
+    },
+    viewBitpodVirtualLink() {
+      return `https://${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}/${this.data.event.UniqLink}`
     },
     formatDate(date) {
       return date ? format(new Date(date), 'PPp') : ''
@@ -1720,7 +1875,7 @@ export default {
     },
     redirectIntegration() {
       this.$router.push(
-        `/apps/event/list/Event/integrations?event=${this.$route.params.id}`
+        `/apps/event/list/EventIntegration/integrations?event=${this.$route.params.id}`
       )
     },
     updateRegistrationSetting(eventData) {
@@ -1730,9 +1885,21 @@ export default {
       this.registrationSetting.showeventreviews = this.eventData._sectionHeading
         ? this.eventData._sectionHeading.showeventreviews
         : false
+      this.layoutId = this.eventData ? this.eventData.LayoutId : ''
+      this.switchDailog = this.eventData
+        ? this.eventData.SeatReservation
+        : false
+      if (this.layoutId && this.switchDailog) {
+        this.switchSeat = true
+      }
     },
     async updateRegistrationPage() {
       const obj = this.updateSectionHeading
+      if (this.eventData.RegistrationSiteTemplate === null) {
+        obj.RegistrationSiteTemplate = 'Event'
+      } else {
+        obj.RegistrationSiteTemplate = this.eventData.RegistrationSiteTemplate
+      }
       const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`
       try {
         const res = await this.$axios.$patch(URL, obj)
@@ -1767,7 +1934,60 @@ export default {
       this.updateRegistrationPage()
     }, 500),
     routeToSeatmap() {
-      this.$router.push(`/apps/seatmap/new`)
+      this.$router.push(`/apps/seatmap/new?event=${this.$route.params.id}`)
+    },
+    async updateSeatReservation() {
+      const seatReservation = this.switchSeat
+      const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`
+      const obj = { SeatReservation: seatReservation }
+      try {
+        const res = await this.$axios.$patch(URL, obj)
+        if (res) {
+          this.refresh()
+        }
+      } catch (e) {
+        console.error(
+          `Error in apps/event/_id/index.vue while making a Patch call to Event model in method updateEvent context: EventId:-${this.$route.params.id} \n URL:- ${URL} \n Object:- ${obj}`,
+          e
+        )
+      }
+    },
+    async getSeatMap(eventData) {
+      const layoutId = this.eventData.LayoutId
+      if (layoutId) {
+        const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}SeatMaps/${layoutId}`
+        try {
+          const res = await this.$axios.$get(URL)
+          if (res) {
+            this.layoutName = res.Name
+          }
+        } catch (e) {
+          console.error(
+            `Error in apps/event/_id/index.vue while making a get call to SeatMap model in method getSeatMap context: LayoutId:-${layoutId} \n URL:- ${URL} `,
+            e
+          )
+        }
+      }
+    },
+    async onDeleteSeatMap() {
+      const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`
+      try {
+        const res = await this.$axios.$patch(URL, { LayoutId: '' })
+        if (res) {
+          this.popupDialog = false
+          this.snackbarText = 'Seat Layout deleted successfully'
+          this.snackbar = true
+          this.refresh()
+        }
+      } catch (e) {
+        console.error(
+          `Error in apps/event/_id/index.vue while making a Patch call to Event model in method updateEvent context: EventId:-${this.$route.params.id} \n URL:- ${URL} `,
+          e
+        )
+      }
+    },
+    onEditSeatMap() {
+      this.$router.push(`/apps/seatmap/${this.layoutId}`)
     },
   },
   apollo: {
@@ -1799,6 +2019,7 @@ export default {
         this.eventData = event.length > 0 ? event[0] : {}
         this.badgeData = badge.length > 0 ? badge[0] : {}
         this.updateRegistrationSetting(this.eventData)
+        this.getSeatMap(this.eventData)
 
         this.updateStepper()
         if (event[0].Images.length > 0) {
@@ -1873,6 +2094,7 @@ export default {
 .seat-actions {
   border: 1px dashed #ccc;
   max-width: 240px;
+  min-width: 240px;
 }
 .max-h24 {
   max-height: 24px;

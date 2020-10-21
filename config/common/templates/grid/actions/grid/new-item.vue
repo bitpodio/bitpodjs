@@ -22,6 +22,9 @@
             </v-btn>
           </div>
         </v-card-title>
+        <div v-if="errorMessage !== ''" class="red--text ml-10">
+          {{ errorMessage }}
+        </div>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-form ref="form" v-model="valid" :lazy-validation="lazy">
             <v-row>
@@ -121,6 +124,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    errorMessage: {
+      type: String,
+      default: '',
+    },
   },
   data() {
     const fields = getGridFields(this.content, this.viewName)
@@ -149,8 +156,16 @@ export default {
         )
         const newFormData = buildEmbededFieldData(formData)
         const newItemFormData = { ...mutationObject.new, ...newFormData }
-        await this.onNewItemSave(newItemFormData)
-        this.dialog = false
+        try {
+          await this.onNewItemSave(newItemFormData)
+          this.dialog = false
+        } catch (error) {
+          console.error(
+            `Errors in config/common/templates/grid/actions/grid/new-item.vue on onSave method context:-${newItemFormData} `,
+            error
+          )
+          this.errorMessage = error.message.split(':')[1]
+        }
       }
     },
     onNewClick() {
@@ -158,6 +173,7 @@ export default {
       this.formData = intialFormData
       this.updateCount = this.updateCount + 1
       this.dialog = true
+      this.errorMessage = ''
     },
   },
 }

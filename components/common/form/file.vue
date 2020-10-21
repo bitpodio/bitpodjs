@@ -111,12 +111,14 @@ export default {
     if (this.value && this.value.length) {
       const fileDetailPromises = this.value.map((id) => this.getFileDetails(id))
       const fileDetails = await Promise.all(fileDetailPromises)
-      this.files = fileDetails.map(({ data }) => {
-        return {
-          id: data.id,
-          name: data.fileName,
-        }
-      })
+      this.files = fileDetails
+        .filter((i) => i)
+        .map(({ data }) => {
+          return {
+            id: data.id,
+            name: data.fileName,
+          }
+        })
     }
   },
   methods: {
@@ -166,7 +168,11 @@ export default {
       }
     },
     getFileDetails(id) {
-      return this.$axios.get(this.getAttachmentLink(id))
+      return this.$axios.get(this.getAttachmentLink(id)).catch((e) => {
+        console.error(
+          `Failed to fetch attachment/file in getFileDetails method in file.vue context : ${e} \n id : ${id}`
+        )
+      })
     },
     async deleteFile(id) {
       await this.$axios.delete(this.getAttachmentLink(id))

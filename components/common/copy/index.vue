@@ -21,7 +21,7 @@
     />
 
     <div :class="uniqueId ? `${uniqueId}btn` : 'write-btn'">
-      <v-icon :size="iconSize">mdi-content-copy</v-icon>
+      <v-icon :size="iconSize" class="cursorPointer">mdi-content-copy</v-icon>
       {{ label ? label : '' }}
     </div>
   </div>

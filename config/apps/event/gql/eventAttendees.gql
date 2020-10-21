@@ -6,6 +6,10 @@ query($filters: JSON, $where: JSON) {
           FirstName
           Status
           FullName
+<<<<<<< HEAD
+=======
+          EventId
+>>>>>>> 189c4a840fee1932d6a108cd688ac20d1447e295
           TicketName
           TicketAmount
           categoryId
@@ -48,4 +52,8 @@ query($filters: JSON, $where: JSON) {
     AttendeeCount(where: $where)
     __typename
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 189c4a840fee1932d6a108cd688ac20d1447e295
