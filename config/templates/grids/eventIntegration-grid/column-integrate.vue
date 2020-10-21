@@ -4,7 +4,7 @@
     <v-btn
       v-if="status === 'Connected' || status === 'Disconnected'"
       icon
-      @click="dialog = true"
+      @click="onEdit()"
       ><v-icon small>fa-pencil</v-icon></v-btn
     >
     <v-btn
@@ -20,7 +20,7 @@
       content-class="slide-form-default"
       transition="dialog-bottom-transition"
     >
-      <div>
+      <div v-if="dialog">
         <component
           :is="serviceForm || null"
           :on-close="onClose"
@@ -103,7 +103,7 @@ export default {
 
   methods: {
     onClose() {
-      this.item = {}
+      this.formEditData = {}
       this.dialog = false
     },
     async onSave(formData) {
@@ -182,8 +182,13 @@ export default {
           this.snackbar = true
         })
       } else {
+        this.item = {}
         this.dialog = true
       }
+    },
+    onEdit() {
+      this.formEditData = this.item.MetaData
+      this.dialog = true
     },
   },
 }

@@ -1,4 +1,4 @@
-query($filters: JSON) {
+query($filters: JSON, $where: JSON) {
   RegistrationForm {
     RegistrationFormFind(filter: $filters) {
       edges {
@@ -18,5 +18,6 @@ query($filters: JSON) {
         }
       }
     }
+    RegistrationFormCount(where: $where)
   }
 }

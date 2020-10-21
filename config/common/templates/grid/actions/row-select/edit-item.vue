@@ -25,6 +25,9 @@
             </v-btn>
           </div>
         </v-card-title>
+        <div v-if="errorMessage !== ''" class="red--text ml-10">
+          {{ errorMessage }}
+        </div>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-container>
             <v-form ref="form" v-model="valid" :lazy-validation="lazy">
@@ -98,6 +101,10 @@ export default {
       type: null,
       default: null,
     },
+    errorMessage: {
+      type: String,
+      default: '',
+    },
   },
   data() {
     const fields = getGridFields(this.content, this.viewName, true)
@@ -131,8 +138,17 @@ export default {
         )
         const newFormData = buildEmbededFieldData(formData)
         const newEditFormData = { ...mutationObject.edit, ...newFormData }
-        await this.onUpdateItem(newEditFormData)
-        this.dialog = false
+
+        try {
+          await this.onUpdateItem(newEditFormData)
+          this.dialog = false
+        } catch (error) {
+          console.error(
+            `Errors in config/common/templates/grid/actions/grid/edit-item.vue on onSave method context:-${newEditFormData} `,
+            error
+          )
+          this.errorMessage = error.message.split(':')[1]
+        }
       }
     },
   },

@@ -4,10 +4,34 @@
     <v-snackbar v-model="snackbar" :timeout="timeout" top="true">
       <div class="text-center">{{ snackbarText }}</div>
     </v-snackbar>
+    <v-dialog v-model="popupDialog" width="500">
+      <v-card>
+        <v-card-text class="pt-3">
+          There are unsaved changes which will be lost if you close without
+          saving, are you sure?
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="primary" small dark dense @click="closeSeatMap">
+            OK
+          </v-btn>
+          <v-btn
+            color="primary"
+            small
+            outlined
+            dense
+            @click="popupDialog = false"
+          >
+            Cancel
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 <script>
 import { getApiUrl, getCurrentOrigin } from '~/utility'
+import nuxtconfig from '~/nuxt.config'
 const layoutWithType = {
   shapes: [],
   groups: {
@@ -46,6 +70,7 @@ export default {
       seatmapData: null,
       loading: false,
       iframe: { src: `${seatmapUrl}/seatmap`, loaded: false },
+      popupDialog: false,
     }
   },
   mounted() {
@@ -73,10 +98,17 @@ export default {
                 this.$route.params.id === 'new' ? '' : this.$route.params.id
               layout.Name = layout.layoutProperties.seatMapName || 'untitled'
               try {
-                await this.$axios.$patch(
+                const res = await this.$axios.$patch(
                   `${url}SeatMaps/${seatmapId || ''}`,
                   layout
                 )
+                if (res) {
+                  this.snackbarText = 'Seatmap Updated Successfully'
+                  this.snackbar = true
+                  if (this.$route.params.id === 'new') {
+                    this.updateEvent(eventData, res)
+                  }
+                }
                 this.snackbarText = 'Seatmap Updated Successfully'
                 this.snackbar = true
               } catch (e) {
@@ -88,6 +120,14 @@ export default {
             }
             break
           case 'close':
+            // eslint-disable-next-line no-lone-blocks
+            {
+              if (eventData.data.dirtyCheck) {
+                this.popupDialog = true
+              } else {
+                this.$router.back()
+              }
+            }
             break
         }
       }
@@ -125,6 +165,37 @@ export default {
           e
         )
       }
+    },
+    async updateEvent(eventData, response) {
+      const layoutId = response.id
+      let obj = {}
+      let URL = ''
+      if (this.$route.query.event) {
+        obj = {
+          LayoutId: layoutId,
+          SeatReservation: true,
+        }
+        URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.query.event}`
+      } else {
+        obj = {
+          LayoutId: layoutId,
+        }
+        URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Locations/${this.$route.query.location}`
+      }
+      try {
+        const res = await this.$axios.$patch(URL, obj)
+        if (res) {
+        }
+      } catch (e) {
+        console.error(
+          `Error in apps/event/_id/index.vue while making a Patch call to Event model in method updateEvent context: EventId:-${this.$route.params.id} \n URL:- ${URL} \n Object:- ${obj}`,
+          e
+        )
+      }
+    },
+    closeSeatMap() {
+      this.popupDialog = false
+      this.$router.back()
     },
   },
 }

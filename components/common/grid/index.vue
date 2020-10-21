@@ -87,6 +87,7 @@
               :context="contentContext"
               :items="tableData.items"
               :content="content"
+              :refresh="refresh"
             />
           </template>
           <template
@@ -123,6 +124,7 @@
               :options="props.options"
               :expand="props.expand"
               :select="props.select"
+              :refresh="refresh"
             />
           </template>
           <template v-if="!!slotTemplates.header" v-slot:header="props">
