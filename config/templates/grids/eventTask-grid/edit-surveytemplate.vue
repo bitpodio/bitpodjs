@@ -109,11 +109,7 @@
                     <v-spacer></v-spacer>
                   </v-flex>
 
-                  <RichText
-                    v-model="RTEValue"
-                    class="pl-0"
-                    :dropdown-options="dropdownOptions"
-                  />
+                  <RichText v-model="RTEValue" class="pl-0" />
                 </v-card>
               </v-tab-item>
             </v-tabs-items>
@@ -227,41 +223,6 @@ export default {
       disableButton: false,
       invalid: true,
     }
-  },
-  computed: {
-    dropdownOptions() {
-      return {
-        'Event Name': 'Event Name',
-        Description: 'Description',
-        'Start Date': 'Edit Start Date',
-        'End Date': 'Edit End Date',
-        Timezone: 'Timezone',
-        Organizer: 'Organizer',
-        Venue: 'Venue',
-        Address: 'Address',
-        City: 'City',
-        State: 'State',
-        Country: 'Country',
-        'Postal Code': 'Postal Code',
-        'Event Webinar Link': 'Event Webinar Link',
-        'Event Joining Instruction': 'Event Joining Instruction',
-        'Organization Name': 'Organization Name',
-        'Organization Address': 'Organization Address',
-        'Organization City': 'Organization City',
-        'Organization State': 'Organization State',
-        'Organization Country': 'Organization Country',
-        'Organization Postal Code': 'Organization Postal Code',
-        'Privacy Policy': 'Privacy Policy',
-        'Organization Facebook': 'Organization Facebook',
-        'Organization Linkedin': 'Organization Linkedin',
-        'Organization Twitter': 'Organization Twitter',
-        'Contact First Name': 'Contact First Name',
-        'Contact Last Name': 'Contact Last Name',
-        'Contact Email': 'Contact Email',
-        Register: 'Register',
-        Logo: 'Logo',
-      }
-    },
   },
   watch: {
     curentTab(newVal, oldVal) {

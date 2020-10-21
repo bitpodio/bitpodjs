@@ -814,7 +814,7 @@ export default {
   },
   computed: {
     dropdownOptions() {
-      return this.template === 'General Template'
+      return this.template !== 'General Template'
         ? {
             'Event Name': 'Event Name',
             Description: 'Description',
@@ -860,6 +860,7 @@ export default {
             'Contact First Name': 'Contact First Name',
             'Contact Last Name': 'Contact Last Name',
             'Contact Email': 'Contact Email',
+            Logo: 'Logo',
           }
     },
   },

@@ -102,12 +102,10 @@ export default {
                 'Full  Name': 'FullName',
                 Organization: 'Organization',
                 'Event  Name': 'EventName',
-                Logo: 'Logo',
-                QRCode: 'QRCode',
               }
               const editFields = {
-                'Edit Start Date': 'Event.SDate',
-                'Edit End Date': 'Event.EDate',
+                'Start date': 'Event.SDate',
+                'End date': 'Event.EDate',
               }
               const socialFields = {
                 'Organization Facebook': {
