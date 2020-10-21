@@ -7,8 +7,20 @@
         <v-flex class="d-flex justify-center align-center pb-1">
           <div class="text-h4 text-capitalize">{{ data.event.Title }}</div>
           <v-spacer></v-spacer>
-          <div class="mr-2">
-            <v-btn tile color="success" class="rounded" @click="goLive">
+          <div
+            v-if="
+              eventData.LocationType === 'Bitpod Virtual' &&
+              data.event.Status !== 'Not ready'
+            "
+            class="mr-2"
+          >
+            <v-btn
+              depressed
+              tile
+              color="success"
+              class="rounded"
+              @click="goLive"
+            >
               Join Event
               <v-icon right class="fs-22">
                 mdi-video

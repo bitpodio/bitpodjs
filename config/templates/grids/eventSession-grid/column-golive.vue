@@ -1,10 +1,11 @@
 <template>
   <v-btn
-    v-if="item.LocationType === 'Bitpod Virtual'"
+    v-if="allowSession"
     tile
+    depressed
     color="success"
-    small
-    class="rounded"
+    x-small
+    class="rounded text-capitalize"
     @click="goLive"
   >
     Join Session
@@ -31,6 +32,16 @@ export default {
       type: Object,
       default: () => {},
       required: false,
+    },
+  },
+  computed: {
+    allowSession() {
+      const endDate = new Date(this.item.StartDate)
+      endDate.setMinutes(endDate.getMinutes() + this.item.Duration)
+      return (
+        this.item.LocationType === 'Bitpod Virtual' &&
+        endDate.getTime() > new Date().getTime()
+      )
     },
   },
   methods: {

@@ -2,9 +2,10 @@
   <v-btn
     v-if="linkReady"
     tile
+    depressed
     color="success"
-    small
-    class="rounded"
+    x-small
+    class="rounded text-capitalize"
     @click="goLive"
   >
     Join Session

@@ -152,7 +152,20 @@
               </v-flex>
             </div>
             <v-row v-if="dialog">
-              <v-col cols="12" sm="6" md="4" class="pb-0">
+              <v-col
+                v-if="session.Type === 'Group'"
+                cols="12"
+                sm="6"
+                md="4"
+                class="pb-0"
+              >
+                <Lookup
+                  v-model="session.LocationType"
+                  :field="smalllocationTypeProps"
+                  :rules="required"
+                />
+              </v-col>
+              <v-col v-else cols="12" sm="6" md="4" class="pb-0">
                 <Lookup
                   v-model="session.LocationType"
                   :field="locationTypeProps"
@@ -723,6 +736,19 @@ export default {
           filter(data) {
             return {
               type: 'LocationType',
+            }
+          },
+        },
+      },
+      smalllocationTypeProps: {
+        type: 'lookup',
+        caption: 'Location type*',
+        dataSource: {
+          itemText: 'value',
+          itemValue: 'key',
+          filter(data) {
+            return {
+              type: 'EventLocationType',
             }
           },
         },

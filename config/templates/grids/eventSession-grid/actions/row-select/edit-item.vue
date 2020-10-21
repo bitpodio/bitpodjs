@@ -1,14 +1,18 @@
 <template>
-  <newForm :refresh="refresh" />
+  <editForm :is-edit="true" :item="items" :refresh="refresh" />
 </template>
 
 <script>
-import newForm from '../form.vue'
+import editForm from '../form.vue'
 export default {
   components: {
-    newForm,
+    editForm,
   },
   props: {
+    items: {
+      type: Array,
+      required: true,
+    },
     refresh: {
       type: Function,
       required: false,
