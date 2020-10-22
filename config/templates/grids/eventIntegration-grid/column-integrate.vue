@@ -1,6 +1,8 @@
 <template>
   <div>
-    <v-btn v-if="status === ''" text small @click="onSetup">Setup</v-btn>
+    <v-btn v-if="status === ''" text small @click="onSetup"
+      ><i18n path="Drawer.Setup"
+    /></v-btn>
     <v-btn
       v-if="status === 'Connected' || status === 'Disconnected'"
       icon

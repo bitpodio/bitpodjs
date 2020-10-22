@@ -9,10 +9,10 @@
 
       <v-list>
         <v-list-item>
-          <v-list-item-title>Edit</v-list-item-title>
+          <v-list-item-title><i18n path="Drawer.Edit" /></v-list-item-title>
         </v-list-item>
         <v-list-item>
-          <v-list-item-title>Delete</v-list-item-title>
+          <v-list-item-title><i18n path="Drawer.Delete" /></v-list-item-title>
         </v-list-item>
       </v-list>
     </v-menu>

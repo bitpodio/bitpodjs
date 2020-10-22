@@ -9,7 +9,8 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on" @click="routeToHistory">
-          <v-icon left>mdi-history</v-icon> Invitation History
+          <v-icon left>mdi-history</v-icon>
+          <i18n path="Common.InvitationHistory" />
         </v-btn>
       </template>
     </v-dialog>

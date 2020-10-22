@@ -13,7 +13,7 @@
             class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
           >
             <h2 class="black--text pt-5 pb-3 text-h5">
-              Select Existing Seatmap Layout
+              <i18n path="Common.SelectExistingSeatmapLayout" />
             </h2>
             <v-spacer></v-spacer>
             <div>
@@ -26,7 +26,7 @@
             <v-card flat class="pl-2">
               <v-row>
                 <v-col cols="12" class="mb-2">
-                  Select an existing seat map.
+                  <i18n path="Common.Selectanexistingseatmap" />
                 </v-col>
                 <v-spacer></v-spacer>
                 <v-flex
@@ -62,8 +62,8 @@
                               small
                               color="primary"
                               @click="updateLayoutId(item.id)"
-                              >Select</v-btn
-                            >
+                              ><i18n path="Common.Select"
+                            /></v-btn>
                           </div>
                         </v-flex>
                       </v-card>

@@ -10,13 +10,15 @@
             class="ma-3 block wd-full"
             v-on="on"
           >
-            Custom Forms
+            <i18n path="Common.CustomForms" />
           </v-btn>
         </template>
 
         <v-list>
           <v-list-item @click="registrations = !registrations">
-            <v-list-item-title>New Registrations</v-list-item-title>
+            <v-list-item-title
+              ><i18n path="Common.NewRegistration"
+            /></v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
@@ -31,7 +33,9 @@
     >
       <v-card>
         <v-toolbar dense flat dark fixed color="accent">
-          <v-toolbar-title class="body-1">New Registration</v-toolbar-title>
+          <v-toolbar-title class="body-1"
+            ><i18n path="Common.NewRegistration"
+          /></v-toolbar-title>
           <v-spacer></v-spacer>
           <v-btn icon dark @click="registrations = false">
             <v-icon>mdi-close</v-icon>

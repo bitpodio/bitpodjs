@@ -3,21 +3,23 @@
     <v-flex xs12 sm8 md6 class="login-box">
       <v-card class="elevation-0">
         <v-card-title class="headline justify-center">
-          Login
+          <i18n path="Common.Login" />
         </v-card-title>
         <v-card-text class="justify-center text-center">
           <v-btn class="ma-2" tile outlined x-large @click="loginBitpod">
             <v-avatar>
               <img :src="$config.cdnUri + 'logo-favicon.png'" />
             </v-avatar>
-            Sign in with Bitpod
+            <i18n path="Common.SigninwithBitpod" />
           </v-btn>
-          <v-flex justify-center align-center d-flex class="ma-2">or</v-flex>
+          <v-flex justify-center align-center d-flex class="ma-2"
+            ><i18n path="Common.or"
+          /></v-flex>
           <v-btn class="ma-2" tile outlined x-large @click="loginGoogle">
             <v-avatar>
               <img :src="$config.cdnUri + 'google.png'" class="login-google" />
             </v-avatar>
-            Sign in with Google
+            <i18n path="Common.SigninwithGoogle" />
           </v-btn>
         </v-card-text>
       </v-card>

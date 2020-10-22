@@ -33,7 +33,9 @@
               <i class="fa fa-trash mr-1 mt-1" aria-hidden="true"></i>
             </v-list-item-icon>
             <v-list-item-content class="ml-n3">
-              <v-list-item-title>Delete</v-list-item-title>
+              <v-list-item-title
+                ><i18n path="Drawer.Delete"
+              /></v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list>

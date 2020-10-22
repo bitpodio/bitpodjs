@@ -2,8 +2,8 @@
   <div>
     <div>
       <div class="subtitle-1 py-2 greybg">
-        <i class="fa fa-pencil-square-o mr-1" aria-hidden="true"></i>Invite
-        Templates
+        <i class="fa fa-pencil-square-o mr-1" aria-hidden="true"></i
+        ><i18n path="Common.InviteTemplates" />
       </div>
       <v-flex
         class="d-flex flex-wrap greybg pa-0 justify-center justify-md-start"
@@ -77,7 +77,9 @@
                         ></i>
                       </v-list-item-icon>
                       <v-list-item-content>
-                        <v-list-item-title>Edit Metadata</v-list-item-title>
+                        <v-list-item-title
+                          ><i18n path="Common.EditMetadata"
+                        /></v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
                     <v-list-item
@@ -93,7 +95,9 @@
                         ></i>
                       </v-list-item-icon>
                       <v-list-item-content>
-                        <v-list-item-title>Edit Template</v-list-item-title>
+                        <v-list-item-title
+                          ><i18n path="Common.EditTemplate"
+                        /></v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
                     <v-list-item
@@ -107,7 +111,9 @@
                         <i class="fa fa-eye mt-1" aria-hidden="true"></i>
                       </v-list-item-icon>
                       <v-list-item-content>
-                        <v-list-item-title>View</v-list-item-title>
+                        <v-list-item-title
+                          ><i18n path="Drawer.View"
+                        /></v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
                     <v-list-item @click="deleteTemplete(item.id)">
@@ -115,7 +121,9 @@
                         <i class="fa fa-trash mt-1" aria-hidden="true"></i>
                       </v-list-item-icon>
                       <v-list-item-content>
-                        <v-list-item-title>Delete</v-list-item-title>
+                        <v-list-item-title
+                          ><i18n path="Drawer.Delete"
+                        /></v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
                   </v-list>
@@ -130,7 +138,7 @@
     <div>
       <div class="subtitle-1 py-2 greybg">
         <i class="fa fa-pencil-square-o mr-1" aria-hidden="true"></i
-        >Registration Templates
+        ><i18n path="Common.RegistrationTemplates" />
       </div>
       <v-flex
         class="d-flex flex-wrap greybg pa-0 justify-center justify-md-start"
@@ -202,7 +210,9 @@
                         ></i>
                       </v-list-item-icon>
                       <v-list-item-content>
-                        <v-list-item-title>Edit Metadata</v-list-item-title>
+                        <v-list-item-title
+                          ><i18n path="Common.EditMetadata"
+                        /></v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
                     <v-list-item
@@ -218,7 +228,9 @@
                         ></i>
                       </v-list-item-icon>
                       <v-list-item-content>
-                        <v-list-item-title>Edit Template</v-list-item-title>
+                        <v-list-item-title
+                          ><i18n path="Common.EditTemplate"
+                        /></v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
                     <v-list-item
@@ -232,7 +244,9 @@
                         <i class="fa fa-eye mt-1" aria-hidden="true"></i>
                       </v-list-item-icon>
                       <v-list-item-content>
-                        <v-list-item-title>View</v-list-item-title>
+                        <v-list-item-title
+                          ><i18n path="Drawer.View"
+                        /></v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
                     <v-list-item @click="deleteTemplete(item.id)">
@@ -240,7 +254,9 @@
                         <i class="fa fa-trash mt-1" aria-hidden="true"></i>
                       </v-list-item-icon>
                       <v-list-item-content>
-                        <v-list-item-title>Delete</v-list-item-title>
+                        <v-list-item-title
+                          ><i18n path="Drawer.Delete"
+                        /></v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
                   </v-list>

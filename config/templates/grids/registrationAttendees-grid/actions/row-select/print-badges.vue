@@ -1,7 +1,7 @@
 <template>
   <v-col class="px-0">
     <v-btn text small v-bind="attrs" v-on="on" @click="openPrintForm">
-      <v-icon left>mdi-printer</v-icon>Print Badges
+      <v-icon left>mdi-printer</v-icon><i18n path="Common.PrintBadges" />
     </v-btn>
   </v-col>
 </template>

@@ -16,7 +16,9 @@
         <v-card-title
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
-          <h2 class="black--text pt-5 pb-4 text-h5">Schedule a Task</h2>
+          <h2 class="black--text pt-5 pb-4 text-h5">
+            <i18n path="Common.ScheduleaTask" />
+          </h2>
           <v-spacer></v-spacer>
           <div>
             <v-btn icon @click="closeForm">
@@ -122,8 +124,8 @@
             :disabled="!valid || isSaveButtonDisabled"
             depressed
             @click.native="onSave"
-            >Save</v-btn
-          >
+            ><i18n path="Drawer.Save"
+          /></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

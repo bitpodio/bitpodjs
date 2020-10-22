@@ -9,7 +9,7 @@
         small
         @click="updateDate"
       >
-        Cancel Checkin
+        <i18n path="Common.CancelCheckin" />
       </v-chip>
     </div>
     <div v-else>

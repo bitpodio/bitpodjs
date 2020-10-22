@@ -9,14 +9,16 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on">
-          <v-icon left>mdi-plus</v-icon> New Session
+          <v-icon left>mdi-plus</v-icon> <i18n path="Common.NewSession" />
         </v-btn>
       </template>
       <v-card>
         <v-card-title
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
-          <h2 class="black--text pt-10 pb-9">New Session</h2>
+          <h2 class="black--text pt-10 pb-9">
+            <i18n path="Common.NewSession" />
+          </h2>
           <v-spacer></v-spacer>
           <div>
             <v-btn icon @click="closeForm">
@@ -186,21 +188,21 @@
               </v-col>
               <v-col cols="12" class="pb-0 pt-0">
                 <div v-if="session.LocationType === 'Zoom'">
-                  To send Zoom joining info, you must setup Zoom integration,
+                  <i18n path="Common.sendZoomjoininginfo" />
+
                   <a href="" @click.stop.prevent="openWindow(zoomDocumentLink)"
-                    >click here</a
-                  >
-                  for documentation.
+                    ><i18n path="Common.clickhere"
+                  /></a>
+                  <i18n path="Common.fordocumentation" />
                 </div>
                 <div v-if="session.LocationType === 'Google Meet'">
-                  To send google meet joining info, you must setup google meet
-                  integration,
+                  <i18n path="Common.sendgooglemeetjoininginfo" />
                   <a
                     href=""
                     @click.stop.prevent="openWindow(googleMeetDocumentLink)"
-                    >click here</a
-                  >
-                  for documentation.
+                    ><i18n path="Common.clickhere"
+                  /></a>
+                  <i18n path="Common.fordocumentation" />
                 </div>
               </v-col>
               <v-col
@@ -299,8 +301,8 @@
             :disabled="!valid"
             depressed
             @click.native="onSave"
-            >Save</v-btn
-          >
+            ><i18n path="Drawer.Save"
+          /></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

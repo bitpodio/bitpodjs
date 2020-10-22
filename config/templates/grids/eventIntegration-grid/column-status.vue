@@ -21,7 +21,7 @@
           <v-spacer></v-spacer>
 
           <v-btn text @click="dialog = false">
-            ok
+            <i18n path="Common.ok" />
           </v-btn>
         </v-card-actions>
       </v-card>

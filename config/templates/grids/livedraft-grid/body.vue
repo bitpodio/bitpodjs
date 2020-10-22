@@ -79,8 +79,8 @@
               <v-card-actions class="pt-0 pl-4 tiles-action">
                 <div class="text-truncate d-block">
                   <v-text class="ma-0 mr-1 event-tags body-2"
-                    >#Recurring event</v-text
-                  >
+                    ><i18n path="Common.#Recurringevent"
+                  /></v-text>
                   <v-text
                     v-for="Tags in item.Tags"
                     :key="Tags"
@@ -110,7 +110,9 @@
                         <i class="fa fa-eye mt-1" aria-hidden="true"></i>
                       </v-list-item-icon>
                       <v-list-item-content>
-                        <v-list-item-title>Preview</v-list-item-title>
+                        <v-list-item-title
+                          ><i18n path="Drawer.Preview"
+                        /></v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
                     <v-list-item @click="openEventForm(item.id)">
@@ -121,7 +123,9 @@
                         ></i>
                       </v-list-item-icon>
                       <v-list-item-content>
-                        <v-list-item-title>Edit</v-list-item-title>
+                        <v-list-item-title
+                          ><i18n path="Drawer.Edit"
+                        /></v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
                     <v-list-item>
@@ -129,7 +133,9 @@
                         <i class="fa fa-clone mt-1" aria-hidden="true"></i>
                       </v-list-item-icon>
                       <v-list-item-content @click="openMakeCopy(item.id)">
-                        <v-list-item-title>Make a copy</v-list-item-title>
+                        <v-list-item-title
+                          ><i18n path="Drawer.MakeaCopy"
+                        /></v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
                   </v-list>
@@ -229,7 +235,9 @@
                         <i class="fa fa-eye mt-1" aria-hidden="true"></i>
                       </v-list-item-icon>
                       <v-list-item-content>
-                        <v-list-item-title>Preview</v-list-item-title>
+                        <v-list-item-title
+                          ><i18n path="Drawer.Preview"
+                        /></v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
                     <v-list-item :key="item.id" @click="openEventForm(item.id)">
@@ -240,7 +248,9 @@
                         ></i>
                       </v-list-item-icon>
                       <v-list-item-content>
-                        <v-list-item-title>Edit</v-list-item-title>
+                        <v-list-item-title
+                          ><i18n path="Drawer.Edit"
+                        /></v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
                     <v-list-item>
@@ -251,7 +261,9 @@
                         :key="item.id"
                         @click="openMakeCopy(item.id)"
                       >
-                        <v-list-item-title>Make a copy</v-list-item-title>
+                        <v-list-item-title
+                          ><i18n path="Drawer.MakeaCopy"
+                        /></v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
                   </v-list>

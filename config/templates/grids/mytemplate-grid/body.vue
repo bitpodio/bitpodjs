@@ -61,9 +61,8 @@
                 </v-list-item-icon>
                 <v-list-item-content
                   ><v-list-item-title
-                    >Edit Metadata</v-list-item-title
-                  ></v-list-item-content
-                >
+                    ><i18n path="Common.EditMetadata" /></v-list-item-title
+                ></v-list-item-content>
               </v-list-item>
               <v-list-item
                 @click="
@@ -76,9 +75,8 @@
                 </v-list-item-icon>
                 <v-list-item-content>
                   <v-list-item-title
-                    >Edit Template</v-list-item-title
-                  ></v-list-item-content
-                >
+                    ><i18n path="Common.EditTemplate" /></v-list-item-title
+                ></v-list-item-content>
               </v-list-item>
               <v-list-item
                 v-if="item.ImageURL"
@@ -92,16 +90,17 @@
                 </v-list-item-icon>
                 <v-list-item-content>
                   <v-list-item-title
-                    >View</v-list-item-title
-                  ></v-list-item-content
-                >
+                    ><i18n path="Drawer.View" /></v-list-item-title
+                ></v-list-item-content>
               </v-list-item>
               <v-list-item @click="deleteTemplete(item.id)">
                 <v-list-item-icon class="mr-2">
                   <i class="fa fa-trash mt-1" aria-hidden="true"></i>
                 </v-list-item-icon>
                 <v-list-item-content>
-                  <v-list-item-title>Delete</v-list-item-title>
+                  <v-list-item-title
+                    ><i18n path="Drawer.Delete"
+                  /></v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
             </v-list>

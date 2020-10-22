@@ -46,7 +46,7 @@
               <v-flex class="d-flex justify-center align-center pb-1">
                 <h2 class="body-1 pb-1 primary--text">
                   <i class="fa fa-info-circle" aria-hidden="true"></i>
-                  Basic Information
+                  <i18n path="Common.BasicInformation" />
                 </h2>
                 <v-spacer></v-spacer>
               </v-flex>
@@ -84,7 +84,7 @@
               <v-flex class="d-flex justify-center align-center pb-1">
                 <h2 class="body-1 pb-1 primary--text">
                   <i class="fa fa-clock" aria-hidden="true"></i>
-                  Session Time
+                  <i18n path="Common.SessionTime" />
                 </h2>
                 <v-spacer></v-spacer>
               </v-flex>
@@ -146,7 +146,7 @@
               <v-flex class="d-flex justify-center align-center pb-1">
                 <h2 class="body-1 pb-1 primary--text">
                   <i class="fa fa-location" aria-hidden="true"></i>
-                  Location
+                  <i18n path="Common.Location" />
                 </h2>
                 <v-spacer></v-spacer>
               </v-flex>
@@ -236,22 +236,21 @@
               <v-col cols="12" class="pb-0 pt-0">
                 <div v-if="session.LocationType === 'Zoom'">
                   <i class="fa fa-bulb" aria-hidden="true"></i>
-                  To send Zoom joining info, you must setup Zoom integration,
+                  <i18n path="Common.sendZoomjoininginfo" />
                   <a href="" @click.stop.prevent="openWindow(zoomDocumentLink)"
-                    >click here</a
-                  >
-                  for documentation.
+                    ><i18n path="Common.clickhere"
+                  /></a>
+                  <i18n path="Common.fordocumentation" />
                 </div>
                 <div v-if="session.LocationType === 'Google Meet'">
                   <i class="fa fa-bulb" aria-hidden="true"></i>
-                  To send google meet joining info, you must setup google meet
-                  integration,
+                  <i18n path="Common.sendgooglemeetjoininginfo" />
                   <a
                     href=""
                     @click.stop.prevent="openWindow(googleMeetDocumentLink)"
-                    >click here</a
-                  >
-                  for documentation.
+                    ><i18n path="Common.clickhere"
+                  /></a>
+                  <i18n path="Common.fordocumentation" />
                 </div>
               </v-col>
               <v-col
@@ -343,7 +342,7 @@
               <v-flex class="d-flex justify-center align-center pb-1">
                 <h2 class="body-1 pb-1 primary--text">
                   <i class="fa fa-help-circle" aria-hidden="true"></i>
-                  When can session be scheduled?
+                  <i18n path="Common.sessionscheduled" />
                 </h2>
                 <v-spacer></v-spacer>
               </v-flex>
@@ -429,14 +428,14 @@
                   class="body-1 pb-1 primary--text"
                 >
                   <i class="fa fa-help-circle" aria-hidden="true"></i>
-                  Working Day?
+                  <i18n path="Common.WorkingDay" />
                 </h2>
                 <h2
                   v-if="actionType === 'Edit'"
                   class="body-1 pb-1 primary--text"
                 >
                   <i class="fa fa-cog" aria-hidden="true"></i>
-                  Advanced Setting
+                  <i18n path="Common.AdvancedSetting" />
                 </h2>
                 <v-spacer></v-spacer>
               </v-flex>
@@ -512,8 +511,8 @@
             :disabled="!valid"
             depressed
             @click.native="onSave"
-            >Save</v-btn
-          >
+            ><i18n path="Drawer.Save"
+          /></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

@@ -1,9 +1,7 @@
 <template>
   <v-flex>
     <v-snackbar v-model="snackbar" :top="true" :timeout="1000">
-      <div class="toast py-2 pr-1 pl-3">
-        Some Error Occured, Please contact Administrator.
-      </div>
+      <i18n path="Common.SomeErrorOccured" class="toast py-2 pr-1 pl-3" />
     </v-snackbar>
     <v-dialog
       v-model="dialog"
@@ -33,7 +31,9 @@
           <v-card-title
             class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
           >
-            <h2 class="black--text pt-4 pb-2 text-h5">New Email Invite</h2>
+            <h2 class="black--text pt-4 pb-2 text-h5">
+              <i18n path="Common.NewEmailInvite" />
+            </h2>
             <v-spacer></v-spacer>
             <div>
               <v-btn icon @click="resetForm">
@@ -41,10 +41,16 @@
               </v-btn>
             </div>
             <v-tabs v-model="curentTab" height="36">
-              <v-tab class="px-0 mr-4">Basic Info</v-tab>
-              <v-tab :disabled="invalid" class="px-0 mr-4">Content</v-tab>
-              <v-tab :disabled="invalid" class="px-0 mr-4">Contacts</v-tab>
-              <v-tab :disabled="invalid" class="px-0 mr-4">Verify</v-tab>
+              <v-tab class="px-0 mr-4"><i18n path="Common.BasicInfo" /></v-tab>
+              <v-tab :disabled="invalid" class="px-0 mr-4"
+                ><i18n path="Common.Content"
+              /></v-tab>
+              <v-tab :disabled="invalid" class="px-0 mr-4"
+                ><i18n path="Common.Contacts"
+              /></v-tab>
+              <v-tab :disabled="invalid" class="px-0 mr-4"
+                ><i18n path="Common.Verify"
+              /></v-tab>
             </v-tabs>
           </v-card-title>
           <v-card-text
@@ -54,8 +60,7 @@
               <v-tab-item>
                 <v-card flat class="tabContent">
                   <p class="mt-4 mb-2">
-                    Start with entering basic information about your email
-                    invite and then press next.
+                    <i18n path="Common.enteringbasicinformation" />
                   </p>
                   <div class="pr-3 pt-1">
                     <v-form ref="form">
@@ -127,8 +132,7 @@
               <v-tab-item>
                 <v-card v-if="choosedTemplate === 0" flat>
                   <p class="mt-4 mb-3">
-                    Use a pre designed template or editor to design your
-                    content.
+                    <i18n path="Common.predesignedtemplate" />
                   </p>
                   <div class="pr-3 pt-1 tabContent">
                     <v-row>
@@ -148,11 +152,12 @@
                             class="text-h5 my-2"
                             style="font-size: 18px !important;"
                           >
-                            My Templates
+                            <i18n path="Common.MyTemplates" />
                           </h3>
-                          <div class="Caption mb-4">
-                            A place where you can save templates for future use.
-                          </div>
+                          <i18n
+                            path="Common.savetemplates"
+                            class="Caption mb-4"
+                          />
                         </v-card>
                       </v-col>
 
@@ -172,10 +177,10 @@
                             class="text-h5 my-2"
                             style="font-size: 18px !important;"
                           >
-                            Pre-designed Templates
+                            <i18n path="Common.Pre-designedTemplates" />
                           </h3>
                           <div class="Caption mb-4">
-                            Ready-to-use templates to send emails quickly.
+                            <i18n path="Common.Ready-to-usetemplates" />
                           </div>
                         </v-card>
                       </v-col>
@@ -196,10 +201,10 @@
                             class="text-h5 my-2"
                             style="font-size: 18px !important;"
                           >
-                            Rich Text Editor
+                            <i18n path="Common.RichTextEditor" />
                           </h3>
                           <div class="Caption mb-4">
-                            Use editor to design your content.
+                            <i18n path="Common.Useeditor" />
                           </div>
                         </v-card>
                       </v-col>
@@ -212,12 +217,12 @@
                   class="tabContent"
                 >
                   <p class="mt-4 mb-4">
-                    Select a template to continue.
+                    <i18n path="Common.Selecttemplatetocontinue" />
                     <span
                       class="blue--text cursorPointer"
                       @click="choosedTemplate = 0"
                     >
-                      Back
+                      <i18n path="Drawer.Back" />
                     </span>
                   </p>
                   <v-flex
@@ -279,8 +284,8 @@
                               templateID = item.id
                               templateSubject = Subject
                             "
-                            >Select</v-btn
-                          >
+                            ><i18n path="Drawer.Select"
+                          /></v-btn>
                           <v-btn
                             class="ma-2"
                             outlined
@@ -292,8 +297,8 @@
                                   : $config.cdnUri + 'invitee-image.png'
                               )
                             "
-                            >View</v-btn
-                          >
+                            ><i18n path="Drawer.View"
+                          /></v-btn>
                         </div>
                         <div class="text-truncate text-center text-capitalize">
                           {{ item.Name }}
@@ -318,8 +323,7 @@
                 <v-card v-else flat class="tabContent">
                   <v-flex class="d-flex">
                     <p class="mt-5 mb-4">
-                      Continue with default content or use editor to change
-                      content.
+                      <i18n path="Common.defaultcontent" />
                     </p>
                     <v-spacer></v-spacer>
                     <v-btn
@@ -330,8 +334,8 @@
                         choosedTemplate = 0
                         RTEValue = ''
                       "
-                      >X Discard</v-btn
-                    >
+                      ><i18n path="Drawer.XDiscard"
+                    /></v-btn>
                   </v-flex>
 
                   <RichText
@@ -345,8 +349,7 @@
               <v-tab-item class="tabContent">
                 <v-card flat>
                   <p class="mt-5 mb-4">
-                    From contact list below, select contacts who should receive
-                    your invite and add them to invitees list.
+                    <i18n path="Common.selectcontacts" />
                   </p>
                 </v-card>
                 <v-row>
@@ -359,7 +362,9 @@
                       >
                       </v-checkbox>
                       <v-icon size="18" class="mr-1">fa-address-book-o</v-icon>
-                      <h4 class="d-inline body-1">Contacts</h4>
+                      <h4 class="d-inline body-1">
+                        <i18n path="Common.Contacts" />
+                      </h4>
                     </div>
                     <div class="borderRightGrey pr-3 mr-n3">
                       <Grid
@@ -374,7 +379,7 @@
                     <div class="borderBottomGrey pb-1">
                       <v-icon size="18">mdi-email-outline</v-icon>
                       <h4 class="d-inline body-1">
-                        Invitees List
+                        <i18n path="Common.InviteesList" />
                       </h4>
                     </div>
                     <div>
@@ -399,7 +404,7 @@
                     <div class="borderBottomGrey pb-1 mb-3">
                       <v-icon>mdi-filter-outline</v-icon>
                       <h4 class="d-inline body-1">
-                        Advance Filters
+                        <i18n path="Common.AdvanceFilters" />
                       </h4>
                       <v-btn
                         class="ml-10"
@@ -413,13 +418,15 @@
                         "
                       >
                         <v-icon dark left>mdi-replay</v-icon>
-                        Reset
+                        <i18n path="Drawer.Reset" />
                       </v-btn>
                     </div>
-                    <h4 class="body-1">Check prior registrations</h4>
+                    <h4 class="body-1">
+                      <i18n path="Common.Checkpriorregistrations" />
+                    </h4>
                     <v-flex class="d-flex">
                       <h4 class="body-1 mr-3 mt-1">
-                        Send to those who have
+                        <i18n path="Common.Sendtothosewhohave" />
                       </h4>
                       <v-radio-group
                         v-model="registrationRadio"
@@ -435,7 +442,7 @@
                       </v-radio-group>
                     </v-flex>
                     <h4 class="d-inline body-1">
-                      Check prior invite ( To use this filter
+                      <i18n path="Common.Checkpriorinvite" />
                     </h4>
                     <h4
                       class="blue--text d-inline cursorPointer"
@@ -454,7 +461,7 @@
                     </h4>
                     <v-flex class="d-flex">
                       <h4 class="body-1 mr-3 mt-1">
-                        Send to those who have
+                        <i18n path="Common.Sendtothosewhohave" />
                       </h4>
                       <v-radio-group
                         v-model="openRadio"
@@ -479,16 +486,14 @@
                   <v-col cols="12" class="px-0 mb-4">
                     <v-card align="center" justify="center" class="pb-3">
                       <h3 class="text-h5 ma-2 pt-5">
-                        Thank you for submitting your email invite.
+                        <i18n path="Common.submittingemailinvite" />
                       </h3>
                       <h5 class="body-2 ma-2 py-3">
-                        If approval is turned on it will be sent for approval to
-                        administrator and you will be notified status through
-                        email.
+                        <i18n path="Common.Ifapprovalisturnedon" />
                       </h5>
                       <v-btn depressed color="primary" @click="resetForm"
-                        >close</v-btn
-                      >
+                        ><i18n path="Drawer.Close"
+                      /></v-btn>
                     </v-card>
                   </v-col>
                 </v-row>
@@ -500,11 +505,10 @@
                         class="text-h5 my-2"
                         style="font-size: 20px !important;"
                       >
-                        Fixed Time and Time Zone
+                        <i18n path="Common.FixedTimeandTimeZone" />
                       </h3>
                       <h5 class="body-2 ma-2 mb-5">
-                        We'll launch your invite on the date and time you
-                        specify.
+                        <i18n path="Common.launchyourinvite" />
                       </h5>
                       <div style="width: 200px;">
                         <v-datetime-picker
@@ -527,16 +531,16 @@
                           disableButton || !scheduledTime || !validDate
                         "
                         @click="sendNow('Schedule')"
-                        >Schedule</v-btn
-                      >
+                        ><i18n path="Drawer.Schedule"
+                      /></v-btn>
                       <v-btn
                         class="ml-1"
                         color="grey lighten-2"
                         depressed
                         :disabled="disableButton"
                         @click="scheduleInvite = false"
-                        >Cancel</v-btn
-                      >
+                        ><i18n path="Drawer.Cancel"
+                      /></v-btn>
                     </v-card>
                   </v-col>
                 </v-row>
@@ -545,27 +549,31 @@
                   class="ma-3 ml-0 mb-6"
                 >
                   <v-col cols="12" class="red lighten-5">
-                    <h4 class="body-1 py-2">CONTACT DETAILS</h4>
+                    <h4 class="body-1 py-2">
+                      <i18n path="Common.notaddedcontact" />
+                    </h4>
                     <v-flex class="d-flex">
                       <h5 class="body-2 mt-2 mr-2">
-                        You have not added any contact yet.
+                        <i18n path="Common.Logout" />
                       </h5>
                       <v-btn color="blue" outlined @click="curentTab = 2"
-                        >Select Contact</v-btn
-                      >
+                        ><i18n path="Common.SelectContact"
+                      /></v-btn>
                     </v-flex>
                   </v-col>
                 </v-row>
                 <v-row v-else-if="!RTEValue" class="ma-3 ml-0 mb-6">
                   <v-col cols="12" class="red lighten-5">
-                    <h4 class="body-1 py-2">CONTENT DETAILS</h4>
+                    <h4 class="body-1 py-2">
+                      <i18n path="Common.ContactDetails" />
+                    </h4>
                     <v-flex class="d-flex">
                       <h5 class="body-2 mt-2 mr-2">
-                        You have not added any content yet.
+                        <i18n path="Common.notaddedcontent" />
                       </h5>
                       <v-btn color="blue" outlined @click="curentTab = 1"
-                        >Select Content</v-btn
-                      >
+                        ><i18n path="Common.SelectContent"
+                      /></v-btn>
                     </v-flex>
                   </v-col>
                 </v-row>
@@ -577,18 +585,18 @@
                         class="text-h5 my-2"
                         style="font-size: 20px !important;"
                       >
-                        Send Now
+                        <i18n path="Common.SendNow" />
                       </h3>
                       <h5 class="body-2 my-2 mb-5">
-                        Send email invite right away.
+                        <i18n path="Common.Sendemailinviterightaway" />
                       </h5>
                       <v-btn
                         depressed
                         color="primary"
                         :disabled="disableButton"
                         @click="sendNow"
-                        >Send</v-btn
-                      >
+                        ><i18n path="Drawer.Send"
+                      /></v-btn>
                     </v-card>
                   </v-col>
                   <v-col cols="4" class="templateverify">
@@ -598,18 +606,18 @@
                         class="text-h5 my-2"
                         style="font-size: 20px !important;"
                       >
-                        Schedule Invite
+                        <i18n path="Common.ScheduleInvite" />
                       </h3>
                       <h5 class="body-2 my-2 mb-5">
-                        Schedule your invite the way you prefer.
+                        <i18n path="Common.Scheduleinvitewayyouprefer" />
                       </h5>
                       <v-btn
                         depressed
                         color="primary"
                         :disabled="disableButton"
                         @click="scheduleInvite = true"
-                        >Schedule</v-btn
-                      >
+                        ><i18n path="Drawer.Schedule"
+                      /></v-btn>
                     </v-card>
                   </v-col>
                   <v-col cols="4" class="templateverify">
@@ -619,18 +627,18 @@
                         class="text-h5 my-2"
                         style="font-size: 20px !important;"
                       >
-                        Save as Draft
+                        <i18n path="Common.SaveasDraft" />
                       </h3>
                       <h5 class="body-2 my-2 mb-5">
-                        Save your email as draft.
+                        <i18n path="Common.Saveemailasdraft" />
                       </h5>
                       <v-btn
                         depressed
                         color="primary"
                         :disabled="disableButton"
                         @click="sendNow('Draft')"
-                        >Save as Draft</v-btn
-                      >
+                        ><i18n path="Common.SaveasDraft"
+                      /></v-btn>
                     </v-card>
                   </v-col>
                 </v-row>
@@ -642,27 +650,27 @@
                           >mdi-information-outline</v-icon
                         >
                         <h4 class="body-1 mt-1">
-                          Subject and Sender
+                          <i18n path="Common.SubjectandSender" />
                         </h4>
                         <v-btn class="ml-10" text small @click="curentTab = 0">
                           <v-icon dark left>mdi-pencil</v-icon>
-                          Edit
+                          <i18n path="Drawer.Edit" />
                         </v-btn>
                       </v-flex>
                     </div>
                   </v-col>
                   <v-col cols="6" class="pl-0 pt-0">
-                    <div>Name</div>
+                    <div><i18n path="Common.Name" /></div>
                     <div class="blue--text pt-1 pb-4 body-1">
                       {{ senderName }}
                     </div>
-                    <div>Subject</div>
+                    <div><i18n path="Common.Subject" /></div>
                     <div class="blue--text pt-1 body-1">{{ subject }}</div>
                   </v-col>
                   <v-col cols="6" class="pl-0">
-                    <div>Sender Address</div>
+                    <div><i18n path="Common.SenderAddress" /></div>
                     <div class="blue--text pt-1 pb-4 body-1">{{ sender }}</div>
-                    <div>Reply-to Address</div>
+                    <div><i18n path="Common.ReplyAddress" /></div>
                     <div class="blue--text pt-1 body-1">{{ setReplyTo }}</div>
                   </v-col>
                   <v-col cols="12" class="pl-0">
@@ -672,7 +680,7 @@
                           >fa-address-book-o</v-icon
                         >
                         <h4 class="mt-1 body-1">
-                          Contact Details
+                          <i18n path="Common.ContactDetail" />
                         </h4>
                       </v-flex>
                     </div>
@@ -702,15 +710,15 @@
             class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
           >
             <v-btn v-if="curentTab > 0" depressed @click="curentTab--"
-              >Prev</v-btn
-            >
+              ><i18n path="Drawer.Prev"
+            /></v-btn>
             <v-btn
               v-if="curentTab < 3"
               color="primary"
               depressed
               @click="curentTab++"
-              >Next</v-btn
-            >
+              ><i18n path="Drawer.Next"
+            /></v-btn>
           </v-card-actions>
         </v-card>
       </template>
@@ -729,7 +737,9 @@
     <v-dialog v-model="previousInviteDialog" width="600px">
       <v-card>
         <v-card-title class="d-flex align-start px-2 pl-4">
-          <h2 class="black--text pt-0 pb-0 text-h5">Select Prior Invite</h2>
+          <h2 class="black--text pt-0 pb-0 text-h5">
+            <i18n path="Common.SelectPriorInvite" />
+          </h2>
           <v-spacer></v-spacer>
           <div>
             <v-btn icon @click="previousInviteDialog = false">

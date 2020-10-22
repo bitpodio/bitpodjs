@@ -1,6 +1,6 @@
 <template>
   <div>
-    Live & Draft Events
+    <i18n path="Common.LiveDraftEvents" />
     <v-row>
       <v-col
         v-for="item in items"
@@ -38,7 +38,7 @@
           <v-divider></v-divider>
           <v-card-actions>
             <v-chip class="ma-1" small>
-              Recurring event
+              <i18n path="Drawer.RecurringEventAction" />
             </v-chip>
 
             <v-spacer></v-spacer>
@@ -51,10 +51,14 @@
 
               <v-list>
                 <v-list-item @click="method">
-                  <v-list-item-title>Preview</v-list-item-title>
+                  <v-list-item-title
+                    ><i18n path="Drawer.Preview"
+                  /></v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="method">
-                  <v-list-item-title>Edit</v-list-item-title>
+                  <v-list-item-title
+                    ><i18n path="Drawer.Edit"
+                  /></v-list-item-title>
                 </v-list-item>
               </v-list>
             </v-menu>

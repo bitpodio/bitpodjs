@@ -8,12 +8,14 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on">
-          <v-icon left>mdi-plus</v-icon> New Registration
+          <v-icon left>mdi-plus</v-icon> <i18n path="Common.NewRegistration" />
         </v-btn>
       </template>
       <v-card>
         <v-toolbar dense flat dark fixed color="accent">
-          <v-toolbar-title class="body-1">New Registration</v-toolbar-title>
+          <v-toolbar-title class="body-1"
+            ><i18n path="Common.NewRegistration"
+          /></v-toolbar-title>
           <v-spacer></v-spacer>
           <v-btn icon dark @click="dialog = false">
             <v-icon>mdi-close</v-icon>
@@ -51,7 +53,7 @@
             </v-col>
             <v-col cols="12" sm="12" md="12">
               <p class="body-1">
-                Physical Address
+                <i18n path="Common.PhysicalAddress" />
               </p>
             </v-col>
             <v-col cols="12" sm="6" md="6">
@@ -129,8 +131,8 @@
         <v-divider></v-divider>
         <v-card-actions class="pl-4">
           <v-btn color="primary" depressed @click="registrations = false"
-            >Save</v-btn
-          >
+            ><i18n path="Drawer.Save"
+          /></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

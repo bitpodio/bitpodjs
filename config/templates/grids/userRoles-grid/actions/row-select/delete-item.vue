@@ -2,15 +2,16 @@
   <div>
     <v-col class="px-0">
       <v-btn text small v-bind="attrs" v-on="on" @click="onDelete">
-        <v-icon left class="fs-16">fa-trash</v-icon>Delete
+        <v-icon left class="fs-16">fa-trash</v-icon
+        ><i18n path="Drawer.Delete" />
       </v-btn>
     </v-col>
     <v-snackbar v-model="snackbar" timeout="2000" top="true">
-      Item deleted successfully.
+      <i18n path="Common.Itemdeletedsuccessfully" />
 
       <template v-slot:action="{ attrs }">
         <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">
-          Close
+          <i18n path="Drawer.Close" />
         </v-btn>
       </template>
     </v-snackbar>

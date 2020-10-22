@@ -9,14 +9,16 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on">
-          <v-icon left>mdi-plus</v-icon> New Ticket
+          <v-icon left>mdi-plus</v-icon> <i18n path="Common.NewTicket" />
         </v-btn>
       </template>
       <v-card>
         <v-card-title
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
-          <h2 class="black--text pt-5 pb-3 text-h5">New Ticket</h2>
+          <h2 class="black--text pt-5 pb-3 text-h5">
+            <i18n path="Common.NewTicket" />
+          </h2>
           <v-spacer></v-spacer>
           <div>
             <v-btn icon @click="onClose">
@@ -151,8 +153,8 @@
             "
             depressed
             @click.native="onSave"
-            >Save</v-btn
-          >
+            ><i18n path="Drawer.Save"
+          /></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

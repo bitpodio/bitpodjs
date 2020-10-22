@@ -5,7 +5,7 @@
         class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
       >
         <h2 class="black--text pt-5 pb-3 text-h5">
-          Salesforce Integration Setup
+          <i18n path="Common.SalesforceIntegrationSetup" />
         </h2>
         <v-spacer></v-spacer>
         <div>
@@ -15,9 +15,7 @@
         </div>
       </v-card-title>
       <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
-        To integrate with salesforce, you will need to authenticate using
-        salesforce credentials, click button below to go to salesforce login
-        site and login with account you want to use for this integration.
+        <i18n path="Common.integratewithsalesforce" />
         <v-form ref="form" v-model="valid" :lazy-validation="lazy">
           <v-row>
             <v-col cols="12" class="pb-0">
@@ -41,8 +39,8 @@
           :disabled="!valid"
           depressed
           @click="onSave(formData)"
-          >Save</v-btn
-        >
+          ><i18n path="Drawer.Save"
+        /></v-btn>
       </v-card-actions>
     </v-card>
   </v-col>

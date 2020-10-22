@@ -45,11 +45,9 @@
                       :open-file-dialog="orgLogo"
                       :value="checkArray"
                       :hide-preview="true"
-                      @input="uploadContactImg"
-                    />
-                    Upload</span
-                  ></v-list
-                >
+                      @input="uploadContactImg" />
+                    <i18n path="Drawer.Upload" /></span
+                ></v-list>
               </v-list>
             </v-card>
           </v-col>

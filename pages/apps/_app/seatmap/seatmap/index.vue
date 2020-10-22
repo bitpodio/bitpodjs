@@ -45,7 +45,7 @@
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
             <i class="fa fa-calendar pr-1" aria-hidden="true"></i>
-            Events
+            <i18n path="Common.AppTitle" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
@@ -59,7 +59,7 @@
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
             <i class="fa fa-user-plus pr-1" aria-hidden="true"></i>
-            Business Units
+            <i18n path="Common.BusinessUnits" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>

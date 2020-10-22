@@ -9,7 +9,8 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on" @click="setUsername">
-          <v-icon left class="fs-16">fa-pencil</v-icon>Assign Role
+          <v-icon left class="fs-16">fa-pencil</v-icon
+          ><i18n path="Common.AssignRole" />
         </v-btn>
       </template>
       <v-card>
@@ -17,7 +18,7 @@
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start font-weight-regular"
         >
           <h2 class="black--text pt-10 pb-9 font-weight-regular">
-            Assign role
+            <i18n path="Common.AssignRole" />
           </h2>
           <v-spacer></v-spacer>
           <div>
@@ -62,8 +63,8 @@
             :disabled="!valid || roles === ''"
             depressed
             @click="onSave"
-            >Save</v-btn
-          >
+            ><i18n path="Drawer.Save"
+          /></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

@@ -9,14 +9,16 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on" @click="dialog = true">
-          <v-icon left>mdi-plus</v-icon> Create User
+          <v-icon left>mdi-plus</v-icon> <i18n path="Drawer.CreateUser" />
         </v-btn>
       </template>
       <v-card>
         <v-card-title
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start font-weight-regular"
         >
-          <h2 class="black--text pt-10 pb-9 font-weight-regular">New User</h2>
+          <h2 class="black--text pt-10 pb-9 font-weight-regular">
+            <i18n path="Common.NewUser" />
+          </h2>
           <v-spacer></v-spacer>
           <div>
             <v-btn icon @click="onClose">
@@ -44,8 +46,8 @@
           class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
         >
           <v-btn color="primary" :disabled="!valid" depressed @click="onSave"
-            >Save</v-btn
-          >
+            ><i18n path="Drawer.Save"
+          /></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

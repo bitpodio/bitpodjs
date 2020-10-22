@@ -653,7 +653,7 @@
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
             <i class="fa fa-comments-alt pr-1" aria-hidden="true"></i>
-            Notes
+            <i18n path="Common.Notes" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>

@@ -73,27 +73,27 @@
         <v-divider></v-divider>
         <v-row>
           <v-col class="col-md-12 col-12">
-            <div class="body-2 text--secondary">Max Usage</div>
+            <i18n path="Common.MaxUsage" class="body-2 text--secondary" />
             <div class="body-1">
               {{ formatField(data.discount.maxUsageCount) }}
             </div>
           </v-col>
           <v-col class="col-md-12 col-12">
-            <div class="body-2 text--secondary">Valid Till</div>
+            <i18n path="Common.ValidTill" class="body-2 text--secondary" />
             <div class="body-1">{{ formatDate(data.discount.validTill) }}</div>
           </v-col>
           <v-col class="col-md-12 col-12">
-            <div class="body-2 text--secondary">Created By</div>
+            <i18n path="Common.CreatedBy" class="body-2 text--secondary" />
             <div class="body-1">{{ formatField(data.discount.createdBy) }}</div>
           </v-col>
           <v-col class="col-md-12 col-12">
-            <div class="body-2 text--secondary">Created Date</div>
+            <i18n path="Common.CreatedDate" class="body-2 text--secondary" />
             <div class="body-1">
               {{ formatDate(data.discount.createdDate) }}
             </div>
           </v-col>
           <v-col class="col-md-12 col-12">
-            <div class="body-2 text--secondary">Description</div>
+            <i18n path="Common.Description" class="body-2 text--secondary" />
             <div class="body-1">
               {{ formatField(data.discount.description) }}
             </div>

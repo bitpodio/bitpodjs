@@ -10,7 +10,7 @@
             outlined
             text-color="success"
           >
-            Active
+            <i18n path="Common.Active" />
           </v-chip>
         </div>
         <div v-else>
@@ -22,7 +22,7 @@
             pill
             text-color="primary"
           >
-            Inactive
+            <i18n path="Common.Inactive" />
           </v-chip>
         </div>
         <v-list-item-title class="headline mb-1 text-capitalize">{{
@@ -34,7 +34,7 @@
     <v-divider></v-divider>
     <v-card-actions class="mt-3">
       <v-badge color="primary" content="6">
-        Max Use
+        <i18n path="Common.MaxUse" />
       </v-badge>
     </v-card-actions>
   </v-card>

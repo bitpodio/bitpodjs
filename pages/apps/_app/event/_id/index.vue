@@ -9,7 +9,7 @@
           <v-spacer></v-spacer>
           <div class="mr-2">
             <v-btn tile color="success" class="rounded" @click="goLive">
-              Join Event
+              <i18n path="Common.JoinEvent" />
               <v-icon right class="fs-22">
                 mdi-video
               </v-icon>
@@ -362,7 +362,7 @@
                 v-on="on"
                 @click="allow = true"
               >
-                <v-icon left>fa-upload</v-icon> Upload
+                <v-icon left>fa-upload</v-icon> <i18n path="Drawer.Upload" />
               </v-btn>
             </template>
             <v-list dense>
@@ -865,7 +865,9 @@
                 @click="routeToSeatmap"
               >
                 <v-icon class="fs-16">mdi-plus</v-icon>
-                <v-text class="text-center body-2 pt-1">New Seat Map</v-text>
+                <v-text class="text-center body-2 pt-1"
+                  ><i18n path="Common.NewSeatMap"
+                /></v-text>
               </v-flex>
               <v-flex
                 class="d-flex flex-column justify-center ma-2 cursorPointer seat-actions pa-2"
@@ -873,8 +875,8 @@
               >
                 <v-icon class="fs-16">fa-grid</v-icon>
                 <v-text class="text-center body-2 pt-1"
-                  >Select Existing Seat Map</v-text
-                >
+                  ><i18n path="Common.SelectExistingSeatMap"
+                /></v-text>
               </v-flex>
             </div>
           </div>
@@ -995,7 +997,7 @@
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
             <i class="fa fa-comments-alt pr-1" aria-hidden="true"></i>
-            Notes
+            <i18n path="Common.Notes" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
@@ -1310,12 +1312,12 @@
       <v-dialog v-model="popupDialog" width="500">
         <v-card>
           <v-card-text class="pt-3">
-            are you sure you want to delete layout
+            <i18n path="Common.deletelayout" />
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="primary" small dark dense @click="onDeleteSeatMap">
-              OK
+              <i18n path="Drawer.OK" />
             </v-btn>
             <v-btn
               color="primary"
@@ -1324,7 +1326,7 @@
               dense
               @click="popupDialog = false"
             >
-              Cancel
+              <i18n path="Drawer.Cancel" />
             </v-btn>
           </v-card-actions>
         </v-card>
