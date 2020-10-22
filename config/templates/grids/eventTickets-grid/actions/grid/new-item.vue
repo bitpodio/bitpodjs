@@ -36,26 +36,46 @@
                   dense
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" sm="6" md="6" class="pb-0">
-                <CustomDate
-                  v-model="StartDate"
-                  :label="getDateLabel('Start Date')"
-                  :field="startDateField"
-                  :rules="startDateRule"
-                  :on-change="changeStartDate"
-                  type="datetime"
-                />
-              </v-col>
-              <v-col cols="12" sm="6" md="6" class="pb-0">
-                <CustomDate
-                  v-model="EndDate"
-                  :label="getDateLabel('End Date')"
-                  :field="endDateField"
-                  :rules="endDateRule"
-                  :on-change="changeEndDate"
-                  type="datetime"
-                />
-              </v-col>
+
+              <v-form
+                ref="dateform"
+                v-model="datevalid"
+                :lazy-validation="lazy"
+              >
+                <v-row>
+                  <v-col cols="12" sm="6" md="6" class="pb-0">
+                    <v-datetime-picker
+                      v-model="eventData.StartDate"
+                      label="Start Date*"
+                      :text-field-props="eventStartDateProps"
+                      :on-change="changeStartDate()"
+                    >
+                      <template slot="dateIcon">
+                        <v-icon>fas fa-calendar</v-icon>
+                      </template>
+                      <template slot="timeIcon">
+                        <v-icon>fas fa-clock</v-icon>
+                      </template>
+                    </v-datetime-picker>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="6" class="pb-0">
+                    <v-datetime-picker
+                      v-model="eventData.EndDate"
+                      :rules="requiredRules"
+                      label="End Date*"
+                      :text-field-props="eventEndDateProps"
+                      :on-change="changeEndDate()"
+                    >
+                      <template slot="dateIcon">
+                        <v-icon>fas fa-calendar</v-icon>
+                      </template>
+                      <template slot="timeIcon">
+                        <v-icon>fas fa-clock</v-icon>
+                      </template>
+                    </v-datetime-picker>
+                  </v-col>
+                </v-row>
+              </v-form>
               <v-col class="col-12 col-md-6">
                 <v-select
                   v-model="formData.Type"
@@ -145,6 +165,7 @@
           <v-btn
             color="primary"
             :disabled="
+              !datevalid ||
               !valid ||
               (formData.Type !== 'Free' && formData.Amount < 1) ||
               formData.Code === ''
@@ -168,12 +189,8 @@ import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { required } from '~/utility/rules.js'
 import { getApiUrl } from '~/utility'
-import CustomDate from '~/components/common/form/date.vue'
 import strings from '~/strings.js'
 export default {
-  components: {
-    CustomDate,
-  },
   props: {
     refresh: {
       type: Function,
@@ -194,6 +211,7 @@ export default {
       isDisabled: false,
       valid: false,
       dialog: false,
+      datevalid: true,
       typeDropDown: [],
       type: [],
       registrationTypeDropdown: [],
@@ -225,45 +243,59 @@ export default {
     }
   },
   computed: {
-    startDateField() {
+    eventStartDateProps() {
       return {
         appendIcon: 'fa-calendar',
         outlined: true,
-        caption: 'Start Date',
-        type: 'datetime',
+        dense: true,
+        rules: [
+          (v) => {
+            const StartDate = v && new Date(v)
+            const { EndDate } = this.eventData
+            let startDateMessage = ''
+            if (this.eventData.BusinessType !== 'Recurring') {
+              if (!StartDate) startDateMessage = strings.FIELD_REQUIRED
+              else if (StartDate && EndDate && StartDate > EndDate)
+                startDateMessage = strings.EVENT_START_END_DATE
+              else startDateMessage = ''
+              return startDateMessage || true
+            } else {
+              if (StartDate && EndDate && StartDate > EndDate)
+                startDateMessage = 'Start date is greater than End Date'
+              else startDateMessage = ''
+              return startDateMessage || true
+            }
+          },
+        ],
       }
     },
-    endDateField() {
+    eventEndDateProps() {
       return {
         appendIcon: 'fa-calendar',
         outlined: true,
-        caption: 'End Date',
-        type: 'datetime',
+        dense: true,
+        rules: [
+          (v) => {
+            const EndDate = v && new Date(v)
+            const { StartDate } = this.eventData
+            let endDateMessage = ''
+            if (this.eventData.BusinessType !== 'Recurring') {
+              if (!EndDate) endDateMessage = strings.FIELD_REQUIRED
+              else if (StartDate && EndDate && StartDate > EndDate)
+                endDateMessage = strings.EVENT_START_END_DATE
+              else if (EndDate < new Date())
+                endDateMessage = strings.EVENT_END_DATE
+              else endDateMessage = ''
+              return endDateMessage || true
+            } else {
+              if (StartDate && EndDate && EndDate < StartDate)
+                endDateMessage = 'End Date is less than StartDate'
+              else endDateMessage = ''
+              return endDateMessage || true
+            }
+          },
+        ],
       }
-    },
-    startDateRule() {
-      return [
-        (v) => {
-          const startDate = new Date(v) || new Date(this.StartDate)
-          return startDate > new Date(this.EndDate)
-            ? strings.START_END_DATE
-            : true
-        },
-      ]
-    },
-    endDateRule() {
-      return [
-        (v) => {
-          const endDate = new Date(v)
-          if (new Date(this.StartDate) > endDate) {
-            return strings.END_START_DATE
-          } else if (endDate > new Date(this.data.event.EndDate)) {
-            return 'End date should be less than event end date'
-          } else {
-            return true
-          }
-        },
-      ]
     },
   },
   async mounted() {
@@ -289,15 +321,25 @@ export default {
         e
       )
     }
-    this.getTicketDate()
+
     this.getAttendeeType()
   },
   methods: {
-    changeStartDate(value) {
-      this.$refs.form.validate()
+    changeStartDate() {
+      if (
+        this.eventData.BusinessType !== 'Recurring' ||
+        this.eventData.StartDate !== ''
+      ) {
+        this.$refs.dateform && this.$refs.dateform.validate()
+      }
     },
     changeEndDate(value) {
-      this.$refs.form.validate()
+      if (
+        this.eventData.BusinessType !== 'Recurring' ||
+        this.eventData.EndDate !== ''
+      ) {
+        this.$refs.dateform && this.$refs.dateform.validate()
+      }
     },
     getDateLabel(dateLabel) {
       if (this.eventData.BusinessType === 'Recurring') {
@@ -359,8 +401,8 @@ export default {
       this.formData.AvailableCount = parseInt(this.formData.TicketCount)
       this.formData.Events = this.$route.params.id
       this.formData.Status = this.eventData.Status
-      this.formData.StartDate = this.StartDate
-      this.formData.EndDate = this.EndDate
+      this.formData.StartDate = this.eventData.StartDate
+      this.formData.EndDate = this.eventData.EndDate
       try {
         const res = await this.$axios.$post(`${url}Tickets`, this.formData)
         if (res) {
@@ -385,15 +427,15 @@ export default {
     },
     getTicketDate() {
       if (
-        this.eventData.BusinessType === 'Recurring' &&
-        this.eventData.StartDate === null &&
+        this.eventData.BusinessType === 'Recurring' ||
+        this.eventData.StartDate === null ||
         this.eventData.EndDate === null
       ) {
-        this.StartDate = null
-        this.EndDate = null
+        this.eventData.StartDate = null
+        this.eventData.EndDate = null
       } else {
-        this.StartDate = new Date()
-        this.EndDate = addMonths(new Date(), 1)
+        this.eventData.StartDate = new Date()
+        this.eventData.EndDate = addMonths(new Date(), 1)
       }
     },
 
@@ -472,6 +514,7 @@ export default {
         const event = formatGQLResult(data, 'Event')
         this.eventData = event.length > 0 ? event[0] : {}
         this.getCurrencySymbol(this.eventData.Currency)
+        this.getTicketDate()
         return {
           event: event.length > 0 ? event[0] : {},
         }

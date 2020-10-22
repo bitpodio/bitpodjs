@@ -36,34 +36,40 @@
                   dense
                 ></v-text-field>
               </v-col>
-              <v-col class="col-12 col-md-6 pb-0">
-                <v-datetime-picker
-                  v-model="formData.StartDate"
-                  :label="getDateLabel('StartDate')"
-                  :text-field-props="startDateTextFieldProps()"
-                >
-                  <template slot="dateIcon">
-                    <v-icon>fas fa-calendar</v-icon>
-                  </template>
-                  <template slot="timeIcon">
-                    <v-icon>fas fa-clock</v-icon>
-                  </template>
-                </v-datetime-picker>
-              </v-col>
-              <v-col class="col-12 col-md-6 pb-0">
-                <v-datetime-picker
-                  v-model="formData.EndDate"
-                  :label="getDateLabel('EndDate')"
-                  :text-field-props="endDateTextFieldProps()"
-                >
-                  <template slot="dateIcon">
-                    <v-icon>fas fa-calendar</v-icon>
-                  </template>
-                  <template slot="timeIcon">
-                    <v-icon>fas fa-clock</v-icon>
-                  </template>
-                </v-datetime-picker>
-              </v-col>
+              <v-form
+                ref="dateform"
+                v-model="datevalid"
+                :lazy-validation="lazy"
+              >
+                <v-col class="col-12 col-md-6 pb-0">
+                  <v-datetime-picker
+                    v-model="formData.StartDate"
+                    :label="getDateLabel('StartDate')"
+                    :text-field-props="eventStartDateProps()"
+                  >
+                    <template slot="dateIcon">
+                      <v-icon>fas fa-calendar</v-icon>
+                    </template>
+                    <template slot="timeIcon">
+                      <v-icon>fas fa-clock</v-icon>
+                    </template>
+                  </v-datetime-picker>
+                </v-col>
+                <v-col class="col-12 col-md-6 pb-0">
+                  <v-datetime-picker
+                    v-model="formData.EndDate"
+                    :label="getDateLabel('EndDate')"
+                    :text-field-props="eventEndDateProps()"
+                  >
+                    <template slot="dateIcon">
+                      <v-icon>fas fa-calendar</v-icon>
+                    </template>
+                    <template slot="timeIcon">
+                      <v-icon>fas fa-clock</v-icon>
+                    </template>
+                  </v-datetime-picker>
+                </v-col>
+              </v-form>
               <v-col class="col-12 col-md-6">
                 <v-select
                   v-model="formData.Type"
@@ -163,6 +169,7 @@
             color="primary"
             depressed
             :disabled="
+              !datevalid ||
               !valid ||
               (formData.Type !== 'Free' && Amount < 1) ||
               formData.Code === ''
@@ -183,6 +190,7 @@ import registrationtype from '~/config/apps/event/gql/registrationType.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { required } from '~/utility/rules.js'
 import { getApiUrl } from '~/utility'
+import strings from '~/strings.js'
 export default {
   props: {
     refresh: {
@@ -210,6 +218,7 @@ export default {
       required: [required],
       Amount: 0,
       dialog: false,
+      datevalid: true,
       id: '',
       formData: {},
       eventData: {},
@@ -260,6 +269,22 @@ export default {
     this.getCurrencySymbol(this.context.event.Currency)
   },
   methods: {
+    changeStartDate() {
+      if (
+        this.formData.BusinessType !== 'Recurring' ||
+        this.formData.StartDate !== ''
+      ) {
+        this.$refs.dateform && this.$refs.dateform.validate()
+      }
+    },
+    changeEndDate(value) {
+      if (
+        this.formData.BusinessType !== 'Recurring' ||
+        this.formData.EndDate !== ''
+      ) {
+        this.$refs.dateform && this.$refs.dateform.validate()
+      }
+    },
     onClose() {
       this.onReset()
       this.dialog = false
@@ -296,8 +321,6 @@ export default {
       this.formData.AvailableCount = parseInt(this.formData.TicketCount)
       this.formData.Events = this.$route.params.id
       this.formData.Status = this.eventStatus
-      this.formData.StartDate = this.StartDate
-      this.formData.EndDate = this.EndDate
       try {
         const res = await this.$axios.$patch(
           `${url}Tickets/${this.items[0].id}`,
@@ -330,46 +353,55 @@ export default {
         this.Amount = 1
       }
     },
-    startDateTextFieldProps() {
+    eventStartDateProps() {
       return {
         appendIcon: 'fa-calendar',
         outlined: true,
         dense: true,
         rules: [
           (v) => {
-            const scheduledDate = v && new Date(v)
-            if (scheduledDate && scheduledDate > this.formData.EndDate) {
-              this.valid = false
-              return 'Ticket start date should be less than Ticket end date'
+            const StartDate = v && new Date(v)
+            const { EndDate } = this.formData
+            let startDateMessage = ''
+            if (this.formData.BusinessType !== 'Recurring') {
+              if (!StartDate) startDateMessage = strings.FIELD_REQUIRED
+              else if (StartDate && EndDate && StartDate > EndDate)
+                startDateMessage = strings.EVENT_START_END_DATE
+              else startDateMessage = ''
+              return startDateMessage || true
             } else {
-              this.valid = true
-              return true
+              if (StartDate && EndDate && StartDate > EndDate)
+                startDateMessage = 'Start date is greater'
+              else startDateMessage = ''
+              return startDateMessage || true
             }
           },
         ],
       }
     },
-    endDateTextFieldProps() {
+    eventEndDateProps() {
       return {
         appendIcon: 'fa-calendar',
         outlined: true,
         dense: true,
         rules: [
           (v) => {
-            const scheduledDate = v && new Date(v)
-            if (scheduledDate && scheduledDate < this.formData.StartDate) {
-              this.valid = false
-              return 'Ticket end Date should be greater than Ticket startdate'
-            } else if (
-              scheduledDate &&
-              scheduledDate > new Date(this.context.event.EndDate) &&
-              this.context.event.BusinessType !== 'Recurring'
-            ) {
-              this.valid = false
-              return 'Ticket end Date should be less than event end date'
+            const EndDate = v && new Date(v)
+            const { StartDate } = this.formData
+            let endDateMessage = ''
+            if (this.formData.BusinessType !== 'Recurring') {
+              if (!EndDate) endDateMessage = strings.FIELD_REQUIRED
+              else if (StartDate && EndDate && StartDate > EndDate)
+                endDateMessage = strings.EVENT_START_END_DATE
+              else if (EndDate < new Date())
+                endDateMessage = strings.EVENT_END_DATE
+              else endDateMessage = ''
+              return endDateMessage || true
             } else {
-              this.valid = true
-              return true
+              if (StartDate && EndDate && EndDate < StartDate)
+                endDateMessage = 'End Date is greter'
+              else endDateMessage = ''
+              return endDateMessage || true
             }
           },
         ],
