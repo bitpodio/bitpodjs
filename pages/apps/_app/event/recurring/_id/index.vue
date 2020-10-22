@@ -951,7 +951,59 @@ export default {
     },
     updateSectionHeading() {
       const dataObj = {
+        RegistrationSiteTemplate: this.eventData.RegistrationSiteTemplate
+          ? this.eventData.RegistrationSiteTemplate
+          : 'Dark',
         _sectionHeading: {
+          animation:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.animation) ||
+            '',
+          datetimelabel:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.datetimelabel) ||
+            '',
+          gallery:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.gallery) ||
+            '',
+          registrationTypes:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.registrationTypes) ||
+            '',
+          registrationbtn:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.registrationbtn) ||
+            '',
+          registrationquestionsectionlabel:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading
+                .registrationquestionsectionlabel) ||
+            '',
+          review:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.review) ||
+            '',
+          session:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.session) ||
+            '',
+          sessionsectionlabel:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.sessionsectionlabel) ||
+            '',
+          speakers:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.speakers) ||
+            '',
+          ticketlabel:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.ticketlabel) ||
+            '',
+          ticketsectionlabel:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.ticketsectionlabel) ||
+            '',
           showimagegallery: this.registrationSetting.showimagegallery,
           showeventreviews: this.registrationSetting.showeventreviews,
         },
@@ -1125,6 +1177,10 @@ export default {
         const badge = formatGQLResult(data, 'Badge')
         const eventSummary = data.Event.EventGetEventSummery
         this.eventData = event[0]
+        this.eventData_sectionHeading =
+          this.eventData._sectionHeading !== null
+            ? this.eventData._sectionHeading
+            : {}
         this.updateStepper()
         this.updateRegistrationSetting(this.eventData)
         this.eventUniqueLink = `https://${nuxtConfig.axios.eventUrl}/e/${event[0].UniqLink}`
