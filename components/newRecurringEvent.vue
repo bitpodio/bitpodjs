@@ -2010,8 +2010,8 @@ export default {
               ...this.eventData,
             })
             .catch((e) => {
-              console.log(
-                `Error in Save function of new recurring event form  when creating event, fileName - newRecurringEvent.vue context: create event , error: ${e}`
+              console.error(
+                `Error in Save function of new recurring event form , context: create event , error: ${e}`
               )
               this.isSaveButtonDisabled = false
             })
@@ -2030,8 +2030,8 @@ export default {
             const ticketres = await this.$axios
               .$post(`${baseUrl}Tickets`, ticketList)
               .catch((e) => {
-                console.log(
-                  `Error in Save function of new recurring event form  when creating ticket, fileName - newRecurringEvent.vue context: create ticket , error: ${e}`
+                console.error(
+                  `Error in Save function of new recurring event form, context: create ticket, eventId: ${this.eventId} error: ${e}`
                 )
                 this.isSaveButtonDisabled = false
               })
@@ -2108,8 +2108,8 @@ export default {
             const sessionres = await this.$axios
               .$post(`${baseUrl}Sessions`, sessionList)
               .catch((e) => {
-                console.log(
-                  `Error in Save function of new recurring event form  when creating session, fileName - newRecurringEvent.vue context: create session , error: ${e}`
+                console.error(
+                  `Error in Save function of new recurring event form, context: create session, eventId: ${this.eventId} error: ${e}`
                 )
                 this.isSaveButtonDisabled = false
               })

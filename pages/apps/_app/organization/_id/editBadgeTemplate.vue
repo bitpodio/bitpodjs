@@ -182,8 +182,8 @@ export default {
         )
       } catch (e) {
         this.isSaveButtonDisabled = false
-        console.log(
-          `Error in pages/apps/organization/_id/editBatchTemplte while making a PATCH call to Badges model from method onSave context:- badgeId - ${this.badge.id}`,
+        console.error(
+          `Error in edit Batch Template form while updating Badge, context:- badgeId - ${this.badge.id} error: ${e}`,
           e
         )
       }

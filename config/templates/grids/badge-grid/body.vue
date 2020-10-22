@@ -77,7 +77,7 @@ export default {
           res = await this.$axios.$delete(`${url}Badges/${id}`)
         } catch (e) {
           console.error(
-            `Error in badge-grid while making a DELETE call to Badge model in method deleteBadge context: badgeid:-${id}`,
+            `Error in badge-grid while DELETE a Badge context: badgeid:- ${id} error: ${e}`,
             e
           )
         }

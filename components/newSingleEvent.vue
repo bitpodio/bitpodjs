@@ -1022,8 +1022,8 @@ export default {
             ...this.eventData,
           })
           .catch((e) => {
-            console.log(
-              `Error in Save function of new single event form  when creating event, fileName - newSingleEvent.vue context: create event , error: ${e}`
+            console.error(
+              `Error in Save function of new single event form, context: create event , error: ${e}`
             )
           })
         if (res) {
@@ -1041,8 +1041,8 @@ export default {
           ticketRes = await this.$axios
             .$post(`${baseUrl}Tickets`, ticketList)
             .catch((e) => {
-              console.log(
-                `Error in Save function of new single event form  when creating ticket, fileName - newSingleEvent.vue context: create ticket , eventId: ${this.eventId}, error: ${e}`
+              console.error(
+                `Error in Save function of new single event form, context: create ticket , eventId: ${this.eventId}, error: ${e}`
               )
             })
           if (ticketRes) {
@@ -1116,8 +1116,8 @@ export default {
             return res
           })
           .catch((e) => {
-            console.log(
-              `Error in changeAddress function of new single event form  when place search address and updating location on map, fileName - newSingleEvent.vue context: place search address , error: ${e}`
+            console.error(
+              `Error in changeAddress function of new single event form when place search address and updating location on map, context: place search address, venueAddress: ${this.venueAddress} error: ${e}`
             )
           })
       }
