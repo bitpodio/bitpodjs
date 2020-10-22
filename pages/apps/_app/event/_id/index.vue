@@ -399,10 +399,10 @@
           </v-menu>
         </v-flex>
         <v-divider></v-divider>
-        <div v-if="data.event.Images && data.event.Images.length === 0">
+        <div>
           <v-card
-            class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0 cardImg rounded cursorPointer"
-            :class="{ 'on-hover': hover }"
+            v-if="data.event.Images && data.event.Images.length === 0"
+            class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-5 pr-3 elevation-0 cardImg rounded cursorPointer"
           >
             <v-img
               :src="$config.cdnUri + 'default-min.jpg'"
@@ -424,7 +424,17 @@
                 </v-row>
               </template>
             </v-img>
-            <v-card-text class="pa-0 pt-1">Event Banner</v-card-text>
+            <v-flex class="mt-1 d-flex otherImg">
+              <v-card-text class="pa-0 pb-1"
+                ><a
+                  class="d-inline-block text-truncate anchorTag"
+                  :href="getAttachmentLink(image, true)"
+                  >{{ OtherImageName[index] }}</a
+                ></v-card-text
+              >
+              <copy :text-to-copy="getImageUrl(image)" :unique-id="image" />
+            </v-flex>
+            <v-card-text class="pa-0 mt-n2">Banner Image</v-card-text>
           </v-card>
           <v-dialog v-model="bannerDialog" max-width="600">
             <v-card>
@@ -466,13 +476,10 @@
               </v-card-text>
             </v-card>
           </v-dialog>
-        </div>
-        <div>
           <v-card
             v-for="image in data.event.Images"
             :key="image"
-            class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0 cardImg rounded cursorPointer"
-            :class="{ 'on-hover': hover }"
+            class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-5 pr-3 elevation-0 cardImg rounded cursorPointer"
           >
             <span class="cardDelete">
               <i
@@ -557,7 +564,7 @@
           <v-card
             v-for="image in data.event.Logo"
             :key="image"
-            class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0 cardImg rounded"
+            class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-5 pr-3 elevation-0 cardImg rounded"
           >
             <span class="cardDelete">
               <i
@@ -642,7 +649,7 @@
           <v-card
             v-for="(image, index) in eventData.Other"
             :key="image"
-            class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0 cardImg rounded"
+            class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-5 pr-3 elevation-0 cardImg rounded"
           >
             <span class="cardDelete">
               <i
@@ -1508,7 +1515,6 @@ export default {
       }
     },
     getBadge(str) {
-      this.getOrgInfo()
       const logoUrl =
         nuxtconfig.publicRuntimeConfig.cdnUri +
         'admin-default-template-logo.png'
@@ -1661,7 +1667,7 @@ export default {
         })
         if (result) {
           const orgInfo = formatGQLResult(result.data, 'OrganizationInfo')
-          this.logoId = orgInfo[0].Image[0]
+          this.logoId = this.eventData.Logo[0] || orgInfo[0].Image[0]
         }
       } catch (e) {
         console.error(
@@ -1763,9 +1769,9 @@ export default {
     fileUploadedOther(data) {
       this.allow = true
       if (data.length > 0) {
-        this.formData.Other = []
+        // this.formData.Other = []
         this.formData.Other.push(...data)
-        this.updateOtherImageGallery(this.formData.Other)
+        this.updateOtherImageGallery(data)
       }
     },
     async updateEventGallery(formData) {
@@ -2018,6 +2024,7 @@ export default {
         const eventSummary = data.Event.EventGetEventSummery
         this.eventData = event.length > 0 ? event[0] : {}
         this.badgeData = badge.length > 0 ? badge[0] : {}
+        this.getOrgInfo()
         this.updateRegistrationSetting(this.eventData)
         this.getSeatMap(this.eventData)
 

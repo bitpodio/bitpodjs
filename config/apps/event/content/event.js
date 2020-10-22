@@ -3155,7 +3155,7 @@ export default {
           caption: 'Question',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '180px',
           type: 'string',
         },
         ControlType: {
@@ -3171,7 +3171,7 @@ export default {
           caption: 'Options',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '220px',
           type: 'string',
         },
         DisplayOrder: {
@@ -3187,7 +3187,7 @@ export default {
           caption: 'Tickets',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '180px',
           type: 'string',
         },
       },
