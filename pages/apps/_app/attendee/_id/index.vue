@@ -27,40 +27,74 @@
       <v-flex
         class="d-flex elevation-0 flex-column elevation-md-1 mb-4 rounded-lg overflow-hidden"
       >
-        <v-flex class="d-flex flex-column flex-md-row">
-          <v-flex class="flex-70">
-            <v-img
-              v-if="event.ImageURL"
-              :src="`https://${baseUrl}${event.ImageURL}`"
-              :lazy-src="`https://${baseUrl}${event.ImageURL}`"
-              class="eventsite-banner"
-            ></v-img>
-            <v-img
-              v-else
-              :src="$config.cdnUri + 'default-min.jpg'"
-              :lazy-src="$config.cdnUri + 'default-min.jpg'"
-              class="eventsite-banner"
-            ></v-img>
+        <v-skeleton-loader
+          :loading="!eventImage"
+          :tile="true"
+          type="avatar"
+          height="300px"
+          width="100%"
+        >
+          <v-flex class="d-flex flex-column flex-md-row">
+            <v-flex class="flex-70">
+              <v-img
+                v-if="event.ImageURL"
+                :src="`https://${baseUrl}${event.ImageURL}`"
+                :lazy-src="`https://${baseUrl}${event.ImageURL}`"
+                class="eventsite-banner"
+              >
+                <template v-slot:placeholder>
+                  <v-row
+                    class="fill-height ma-0"
+                    align="center"
+                    justify="center"
+                  >
+                    <v-progress-circular
+                      indeterminate
+                      color="grey lighten-5"
+                    ></v-progress-circular>
+                  </v-row>
+                </template>
+              </v-img>
+              <v-img
+                v-else
+                :src="$config.cdnUri + 'default-min.jpg'"
+                :lazy-src="$config.cdnUri + 'default-min.jpg'"
+                class="eventsite-banner"
+              >
+                <template v-slot:placeholder>
+                  <v-row
+                    class="fill-height ma-0"
+                    align="center"
+                    justify="center"
+                  >
+                    <v-progress-circular
+                      indeterminate
+                      color="grey lighten-5"
+                    ></v-progress-circular>
+                  </v-row>
+                </template>
+              </v-img>
+            </v-flex>
+            <v-flex
+              flex-column
+              class="flex-30 justify-center d-flex event-right-info pa-2"
+            >
+              <div class="text-h4 text-center text-capitalize">
+                {{ formatField(registration.EventName) }}
+              </div>
+              <div class="body-1 text-center text-capitalize">
+                By
+                {{
+                  formatField(
+                    registration &&
+                      registration.EventList &&
+                      registration.EventList.Organizer
+                  )
+                }}
+              </div>
+            </v-flex>
           </v-flex>
-          <v-flex
-            flex-column
-            class="flex-30 justify-center d-flex event-right-info pa-2"
-          >
-            <div class="text-h4 text-center text-capitalize">
-              {{ formatField(registration.EventName) }}
-            </div>
-            <div class="body-1 text-center text-capitalize">
-              By
-              {{
-                formatField(
-                  registration &&
-                    registration.EventList &&
-                    registration.EventList.Organizer
-                )
-              }}
-            </div>
-          </v-flex>
-        </v-flex>
+        </v-skeleton-loader>
         <v-flex
           v-if="
             registration &&
@@ -82,13 +116,231 @@
       </v-flex>
       <v-flex d-flex flex-md-row flex-lg-row flex-column-reverse>
         <v-flex column class="mxw-w70 mr-0 mr-md-2">
-          <div v-if="event.BusinessType">
-            <div v-if="event.BusinessType === 'Single'">
+          <v-skeleton-loader
+            :loading="!eventImage"
+            :tile="true"
+            type="avatar"
+            height="200px"
+            width="100%"
+            class="rounded-lg"
+          >
+            <div v-if="event.BusinessType">
+              <div v-if="event.BusinessType === 'Single'">
+                <div
+                  v-if="
+                    registration &&
+                    registration.SessionListId &&
+                    registration.SessionListId.length
+                  "
+                >
+                  <div
+                    class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2 rounded-lg"
+                  >
+                    <v-flex class="d-flex justify-center align-center pb-3">
+                      <h2 class="body-1 pb-0">
+                        <i
+                          class="fa fa-black-board pr-1"
+                          aria-hidden="true"
+                        ></i>
+                        Sessions
+                      </h2>
+                      <v-spacer></v-spacer>
+                    </v-flex>
+                    <v-divider></v-divider>
+                    <div>
+                      <v-list>
+                        <v-list-item
+                          v-for="item in registration.SessionListId"
+                          :key="item.id"
+                          class="px-1 pt-2"
+                        >
+                          <v-list-item-avatar tile size="48" class="my-0">
+                            <v-avatar
+                              size="48"
+                              tile
+                              v-bind="attrs"
+                              :style="{
+                                'background-color': getRandomColor(item.Name),
+                              }"
+                              v-on="on"
+                            >
+                              <div class="d-flex flex-column">
+                                <div v-if="item.StartDate">
+                                  <div class="white--text text-h6 pt-0">
+                                    {{ formatDateDay(item.StartDate) }}
+                                  </div>
+                                  <div class="white--text body-2 mt-n1">
+                                    {{ formatDateMonth(item.StartDate) }}
+                                  </div>
+                                </div>
+                                <div v-else>
+                                  <v-icon class="white--text"
+                                    >fa-history</v-icon
+                                  >
+                                </div>
+                              </div>
+                            </v-avatar>
+                          </v-list-item-avatar>
+
+                          <v-list-item-content>
+                            <v-list-item-title class="text-capitalize">{{
+                              item.Name
+                            }}</v-list-item-title>
+                            <div v-if="item.StartDate" class="mt-1">
+                              <v-list-item-subtitle class="session-date">
+                                {{ formatDateTime(item.StartDate) }}
+                              </v-list-item-subtitle>
+                            </div>
+                          </v-list-item-content>
+
+                          <v-list-item-icon class="ma-0">
+                            <div
+                              v-if="
+                                item.LocationType === 'Bitpod Virtual' &&
+                                event.BusinessType === 'Single'
+                              "
+                            >
+                              <v-btn
+                                class="ma-2 mr-0"
+                                outlined
+                                color="success"
+                                @click="
+                                  startEvent(item.BitpodVirtualLink, true)
+                                "
+                              >
+                                Join Session<v-icon right>
+                                  mdi-video
+                                </v-icon>
+                              </v-btn>
+                            </div>
+                          </v-list-item-icon>
+                        </v-list-item>
+                      </v-list>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div
                 v-if="
                   registration &&
-                  registration.SessionListId &&
-                  registration.SessionListId.length
+                  registration.attendee &&
+                  registration.attendee.length
+                "
+              >
+                <div
+                  class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2 rounded-lg"
+                >
+                  <v-flex class="d-flex justify-center align-center pb-3">
+                    <h2 class="body-1 pb-0">
+                      <i class="fa fa-users pr-1" aria-hidden="true"></i>
+                      Attendee
+                    </h2>
+                    <v-spacer></v-spacer>
+                  </v-flex>
+                  <v-divider></v-divider>
+                  <div>
+                    <v-list>
+                      <v-list-item
+                        v-for="item in registration.attendee"
+                        :key="item.id"
+                        class="pa-0 my-3"
+                      >
+                        <v-list-item-avatar size="36" class="mr-2 ma-0">
+                          <v-avatar
+                            color="primary"
+                            size="36"
+                            v-bind="attrs"
+                            class="mr-"
+                            v-on="on"
+                          >
+                            <v-avatar
+                              color="primary"
+                              size="36"
+                              v-bind="attrs"
+                              v-on="on"
+                            >
+                              <span class="white--text Twitter-18">{{
+                                item.FullName
+                              }}</span>
+                            </v-avatar>
+                          </v-avatar>
+                        </v-list-item-avatar>
+
+                        <v-list-item-content class="py-0">
+                          <v-list-item-title class="text-capitalize">{{
+                            item.FullName
+                          }}</v-list-item-title>
+                          <div v-if="item.Email" class="mt-1">
+                            <v-list-item-subtitle class="session-date">
+                              {{ item.Email }}
+                            </v-list-item-subtitle>
+                          </div>
+                        </v-list-item-content>
+
+                        <v-list-item-icon class="ma-0 mt-2">
+                          <div class="mt-2">
+                            <div
+                              v-if="
+                                registration.EventList.BusinessType ===
+                                  'Recurring' && registration.ZoomLink
+                              "
+                            >
+                              <a
+                                :href="registration.ZoomLink"
+                                target="_blank"
+                                class="text-decoration-none"
+                              >
+                                <v-btn
+                                  class="ma-2 mr-0"
+                                  outlined
+                                  color="success"
+                                >
+                                  Join Session<v-icon right>
+                                    mdi-video
+                                  </v-icon>
+                                </v-btn>
+                              </a>
+                            </div>
+                            <div
+                              v-if="
+                                registration.EventList.BusinessType ===
+                                  'Recurring' &&
+                                registration.SessionListId[0].LocationType ===
+                                  'Online meeting' &&
+                                registration.SessionListId[0].WebinarLink
+                              "
+                            >
+                              <a
+                                :href="
+                                  registration.SessionListId[0].WebinarLink
+                                "
+                                target="_blank"
+                                class="text-decoration-none"
+                              >
+                                <v-btn
+                                  class="ma-2 mr-0"
+                                  outlined
+                                  color="success"
+                                >
+                                  Join Session<v-icon right>
+                                    mdi-video
+                                  </v-icon>
+                                </v-btn>
+                              </a>
+                            </div>
+                          </div>
+                        </v-list-item-icon>
+                      </v-list-item>
+                    </v-list>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div v-else class="d-none">
+              <div
+                v-if="
+                  event && event.sessions && Object.keys(event.sessions).length
                 "
               >
                 <div
@@ -105,7 +357,7 @@
                   <div>
                     <v-list>
                       <v-list-item
-                        v-for="item in registration.SessionListId"
+                        v-for="item in Object.values(event.sessions)"
                         :key="item.id"
                         class="px-1 pt-2"
                       >
@@ -115,17 +367,17 @@
                             tile
                             v-bind="attrs"
                             :style="{
-                              'background-color': getRandomColor(item.Name),
+                              'background-color': getRandomColor(item.label),
                             }"
                             v-on="on"
                           >
                             <div class="d-flex flex-column">
-                              <div v-if="item.StartDate">
+                              <div v-if="item.startDateTime">
                                 <div class="white--text text-h6 pt-0">
-                                  {{ formatDateDay(item.StartDate) }}
+                                  {{ formatDateDay(item.startDateTime) }}
                                 </div>
                                 <div class="white--text body-2 mt-n1">
-                                  {{ formatDateMonth(item.StartDate) }}
+                                  {{ formatDateMonth(item.startDateTime) }}
                                 </div>
                               </div>
                               <div v-else>
@@ -137,27 +389,30 @@
 
                         <v-list-item-content>
                           <v-list-item-title class="text-capitalize">{{
-                            item.Name
+                            item.label
                           }}</v-list-item-title>
-                          <div v-if="item.StartDate" class="mt-1">
+                          <div v-if="item.startTime">
                             <v-list-item-subtitle class="session-date">
-                              {{ formatDateTime(item.StartDate) }}
+                              <v-icon class="fs-16 mr-1">fa-clock</v-icon>
+                              {{ formatField(item.startTime) }}
+                              {{ formatField(item.endTime) }}
                             </v-list-item-subtitle>
+                          </div>
+                          <div v-else>
+                            <v-list-item-subtitle
+                              class="session-date"
+                              v-text="formatDate(item.startDateTime)"
+                            ></v-list-item-subtitle>
                           </div>
                         </v-list-item-content>
 
                         <v-list-item-icon class="ma-0">
-                          <div
-                            v-if="
-                              item.LocationType === 'Bitpod Virtual' &&
-                              event.BusinessType === 'Single'
-                            "
-                          >
+                          <div v-if="item.locationType === 'Bitpod Virtual'">
                             <v-btn
                               class="ma-2 mr-0"
                               outlined
                               color="success"
-                              @click="startEvent(item.BitpodVirtualLink, true)"
+                              @click="startEvent(item.bitpodVirtualLink, true)"
                             >
                               Join Session<v-icon right>
                                 mdi-video
@@ -170,21 +425,13 @@
                   </div>
                 </div>
               </div>
-            </div>
-            <div
-              v-if="
-                registration &&
-                registration.attendee &&
-                registration.attendee.length
-              "
-            >
               <div
                 class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2 rounded-lg"
               >
                 <v-flex class="d-flex justify-center align-center pb-3">
                   <h2 class="body-1 pb-0">
-                    <i class="fa fa-black-board pr-1" aria-hidden="true"></i>
-                    Attendee
+                    <i class="fa fa-users pr-1" aria-hidden="true"></i>
+                    Attendees
                   </h2>
                   <v-spacer></v-spacer>
                 </v-flex>
@@ -194,9 +441,9 @@
                     <v-list-item
                       v-for="item in registration.attendee"
                       :key="item.id"
-                      class="pa-0 my-3"
+                      class="px-0"
                     >
-                      <v-list-item-avatar size="36" class="mr-2 ma-0">
+                      <v-list-item-avatar size="48" class="mr-2 ma-0">
                         <v-avatar
                           color="primary"
                           size="36"
@@ -210,7 +457,7 @@
                             v-bind="attrs"
                             v-on="on"
                           >
-                            <span class="white--text Twitter-18">{{
+                            <span class="white--text Twitter">{{
                               item.FullName
                             }}</span>
                           </v-avatar>
@@ -218,211 +465,26 @@
                       </v-list-item-avatar>
 
                       <v-list-item-content class="py-0">
-                        <v-list-item-title class="text-capitalize">{{
-                          item.FullName
-                        }}</v-list-item-title>
-                        <div v-if="item.Email" class="mt-1">
-                          <v-list-item-subtitle class="session-date">
-                            {{ item.Email }}
-                          </v-list-item-subtitle>
-                        </div>
+                        <v-list-item-title
+                          class="text-capitalize"
+                          v-text="item.FullName"
+                        ></v-list-item-title>
+                        <v-list-item-subtitle
+                          v-text="item.Email"
+                        ></v-list-item-subtitle>
                       </v-list-item-content>
 
                       <v-list-item-icon class="ma-0 mt-2">
-                        <div class="mt-2">
-                          <div
-                            v-if="
-                              registration.EventList.BusinessType ===
-                                'Recurring' && registration.ZoomLink
-                            "
-                          >
-                            <a
-                              :href="registration.ZoomLink"
-                              target="_blank"
-                              class="text-decoration-none"
-                            >
-                              <v-btn class="ma-2 mr-0" outlined color="success">
-                                Join Session<v-icon right>
-                                  mdi-video
-                                </v-icon>
-                              </v-btn>
-                            </a>
-                          </div>
-                          <div
-                            v-if="
-                              registration.EventList.BusinessType ===
-                                'Recurring' &&
-                              registration.SessionListId[0].LocationType ===
-                                'Online meeting' &&
-                              registration.SessionListId[0].WebinarLink
-                            "
-                          >
-                            <a
-                              :href="registration.SessionListId[0].WebinarLink"
-                              target="_blank"
-                              class="text-decoration-none"
-                            >
-                              <v-btn class="ma-2 mr-0" outlined color="success">
-                                Join Session<v-icon right>
-                                  mdi-video
-                                </v-icon>
-                              </v-btn>
-                            </a>
-                          </div>
-                        </div>
+                        <v-btn icon disabled>
+                          <v-icon>mdi-message-outline</v-icon>
+                        </v-btn>
                       </v-list-item-icon>
                     </v-list-item>
                   </v-list>
                 </div>
               </div>
             </div>
-          </div>
-          <div v-else class="d-none">
-            <div
-              v-if="
-                event && event.sessions && Object.keys(event.sessions).length
-              "
-            >
-              <div
-                class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2 rounded-lg"
-              >
-                <v-flex class="d-flex justify-center align-center pb-3">
-                  <h2 class="body-1 pb-0">
-                    <i class="fa fa-black-board pr-1" aria-hidden="true"></i>
-                    Sessions
-                  </h2>
-                  <v-spacer></v-spacer>
-                </v-flex>
-                <v-divider></v-divider>
-                <div>
-                  <v-list>
-                    <v-list-item
-                      v-for="item in Object.values(event.sessions)"
-                      :key="item.id"
-                      class="px-1 pt-2"
-                    >
-                      <v-list-item-avatar tile size="48" class="my-0">
-                        <v-avatar
-                          size="48"
-                          tile
-                          v-bind="attrs"
-                          :style="{
-                            'background-color': getRandomColor(item.label),
-                          }"
-                          v-on="on"
-                        >
-                          <div class="d-flex flex-column">
-                            <div v-if="item.startDateTime">
-                              <div class="white--text text-h6 pt-0">
-                                {{ formatDateDay(item.startDateTime) }}
-                              </div>
-                              <div class="white--text body-2 mt-n1">
-                                {{ formatDateMonth(item.startDateTime) }}
-                              </div>
-                            </div>
-                            <div v-else>
-                              <v-icon class="white--text">fa-history</v-icon>
-                            </div>
-                          </div>
-                        </v-avatar>
-                      </v-list-item-avatar>
-
-                      <v-list-item-content>
-                        <v-list-item-title class="text-capitalize">{{
-                          item.label
-                        }}</v-list-item-title>
-                        <div v-if="item.startTime">
-                          <v-list-item-subtitle class="session-date">
-                            <v-icon class="fs-16 mr-1">fa-clock</v-icon>
-                            {{ formatField(item.startTime) }}
-                            {{ formatField(item.endTime) }}
-                          </v-list-item-subtitle>
-                        </div>
-                        <div v-else>
-                          <v-list-item-subtitle
-                            class="session-date"
-                            v-text="formatDate(item.startDateTime)"
-                          ></v-list-item-subtitle>
-                        </div>
-                      </v-list-item-content>
-
-                      <v-list-item-icon class="ma-0">
-                        <div v-if="item.locationType === 'Bitpod Virtual'">
-                          <v-btn
-                            class="ma-2 mr-0"
-                            outlined
-                            color="success"
-                            @click="startEvent(item.bitpodVirtualLink, true)"
-                          >
-                            Join Session<v-icon right>
-                              mdi-video
-                            </v-icon>
-                          </v-btn>
-                        </div>
-                      </v-list-item-icon>
-                    </v-list-item>
-                  </v-list>
-                </div>
-              </div>
-            </div>
-            <div
-              class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2 rounded-lg"
-            >
-              <v-flex class="d-flex justify-center align-center pb-3">
-                <h2 class="body-1 pb-0">
-                  <i class="fa fa-users pr-1" aria-hidden="true"></i> Attendees
-                </h2>
-                <v-spacer></v-spacer>
-              </v-flex>
-              <v-divider></v-divider>
-              <div>
-                <v-list>
-                  <v-list-item
-                    v-for="item in registration.attendee"
-                    :key="item.id"
-                    class="px-0"
-                  >
-                    <v-list-item-avatar size="48" class="mr-2 ma-0">
-                      <v-avatar
-                        color="primary"
-                        size="36"
-                        v-bind="attrs"
-                        class="mr-"
-                        v-on="on"
-                      >
-                        <v-avatar
-                          color="primary"
-                          size="36"
-                          v-bind="attrs"
-                          v-on="on"
-                        >
-                          <span class="white--text Twitter">{{
-                            item.FullName
-                          }}</span>
-                        </v-avatar>
-                      </v-avatar>
-                    </v-list-item-avatar>
-
-                    <v-list-item-content class="py-0">
-                      <v-list-item-title
-                        class="text-capitalize"
-                        v-text="item.FullName"
-                      ></v-list-item-title>
-                      <v-list-item-subtitle
-                        v-text="item.Email"
-                      ></v-list-item-subtitle>
-                    </v-list-item-content>
-
-                    <v-list-item-icon class="ma-0 mt-2">
-                      <v-btn icon disabled>
-                        <v-icon>mdi-message-outline</v-icon>
-                      </v-btn>
-                    </v-list-item-icon>
-                  </v-list-item>
-                </v-list>
-              </div>
-            </div>
-          </div>
+          </v-skeleton-loader>
           <div>
             <div
               v-if="
@@ -432,7 +494,7 @@
             >
               <v-flex class="d-flex justify-center align-center pb-3">
                 <h2 class="body-1 pb-0">
-                  <i class="fa fa-black-board pr-1" aria-hidden="true"></i>
+                  <i class="fa fa-mic pr-1" aria-hidden="true"></i>
                   Speakers
                 </h2>
                 <v-spacer></v-spacer>
@@ -667,30 +729,38 @@
               <v-spacer></v-spacer>
             </v-flex>
             <v-divider></v-divider>
+
             <v-flex my-3>
-              <div
-                v-if="event.BusinessType === 'Recurring'"
-                class="body-1 my-n3"
+              <v-skeleton-loader
+                :loading="!eventImage"
+                type="list-item-two-line"
+                height="20"
+                width="100%"
               >
-                <v-list class="pa-0">
-                  <v-list-item
-                    v-for="item in registration.attendee"
-                    :key="item.id"
-                    class="pa-0"
-                  >
-                    <v-list-item-content class="py-0">
-                      <v-list-item-title>
-                        {{ formatDate(item.BookingDate) }}
-                      </v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                </v-list>
-              </div>
-              <div v-else class="body-1">
-                {{ formatDate(event && event.startDateTime) }} -<br />
-                {{ formatDate(event && event.endDateTime) }} -<br />
-                {{ formatField(event && event.timeZone) }}
-              </div>
+                <div
+                  v-if="event.BusinessType === 'Recurring'"
+                  class="body-1 my-n3"
+                >
+                  <v-list class="pa-0">
+                    <v-list-item
+                      v-for="item in registration.attendee"
+                      :key="item.id"
+                      class="pa-0"
+                    >
+                      <v-list-item-content class="py-0">
+                        <v-list-item-title>
+                          {{ formatDate(item.BookingDate) }}
+                        </v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+                  </v-list>
+                </div>
+                <div v-else class="body-1">
+                  {{ formatDate(event && event.startDateTime) }} -<br />
+                  {{ formatDate(event && event.endDateTime) }} -<br />
+                  {{ formatField(event && event.timeZone) }}
+                </div>
+              </v-skeleton-loader>
             </v-flex>
           </div>
           <div
@@ -704,112 +774,128 @@
               <v-spacer></v-spacer>
             </v-flex>
             <v-divider></v-divider>
-            <div v-if="event.BusinessType === 'Recurring'">
-              <div
-                v-if="
-                  registration &&
-                  registration.SessionListId &&
-                  registration.SessionListId.length
-                "
-              >
+            <v-skeleton-loader
+              :loading="!eventImage"
+              type="list-item-two-line"
+              height="20"
+              width="100%"
+              class="my-3"
+            >
+              <div v-if="event.BusinessType === 'Recurring'">
                 <div
-                  v-for="item in registration.SessionListId"
-                  :key="item.id"
-                  class="pt-2"
+                  v-if="
+                    registration &&
+                    registration.SessionListId &&
+                    registration.SessionListId.length
+                  "
                 >
-                  <v-text>{{ item.LocationType }}</v-text>
+                  <div
+                    v-for="item in registration.SessionListId"
+                    :key="item.id"
+                    class="pt-2"
+                  >
+                    <v-text>{{ item.LocationType }}</v-text>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div v-if="showJoinBtn()">
-              <v-btn
-                class="ma-3 ml-0"
-                outlined
-                color="success"
-                @click="startEvent(event.UniqLink)"
-              >
-                Join Event<v-icon right>
-                  mdi-video
-                </v-icon>
-              </v-btn>
-            </div>
-            <div v-else-if="event.locationType === 'Online event'">
-              <div>
-                <v-chip class="ma-2 ml-0" color="primary" outlined pill>
-                  Online Event
-                </v-chip>
-              </div>
-              <div v-if="showOnlineJoinBtn()">
-                <a
-                  :href="event.WebinarLink"
-                  target="_blank"
-                  class="text-decoration-none"
-                  ><v-btn class="ma-2 ml-0" outlined color="success">
-                    Join Event<v-icon right>
-                      mdi-video
-                    </v-icon>
-                  </v-btn></a
+              <div v-if="showJoinBtn()">
+                <v-btn
+                  class="ma-3 ml-0"
+                  outlined
+                  color="success"
+                  @click="startEvent(event.UniqLink)"
                 >
+                  Join Event<v-icon right>
+                    mdi-video
+                  </v-icon>
+                </v-btn>
               </div>
-            </div>
-            <div v-else>
-              <v-flex my-3>
-                <div class="body-1">
-                  {{
-                    registration &&
-                    registration.EventList &&
-                    registration.EventList._VenueAddress &&
-                    registration.EventList._VenueAddress.AddressLine
-                  }}
-                  {{
-                    registration &&
-                    registration.EventList &&
-                    registration.EventList._VenueAddress &&
-                    registration.EventList._VenueAddress.City
-                  }}
-                  {{
-                    registration &&
-                    registration.EventList &&
-                    registration.EventList._VenueAddress &&
-                    registration.EventList._VenueAddress.State
-                  }}
-                  {{
-                    registration &&
-                    registration.EventList &&
-                    registration.EventList._VenueAddress &&
-                    registration.EventList._VenueAddress.Country
-                  }}
-                  {{
-                    registration &&
-                    registration.EventList &&
-                    registration.EventList._VenueAddress &&
-                    registration.EventList._VenueAddress.PostalCode
-                  }}
+              <div v-else-if="event.locationType === 'Online event'">
+                <div>
+                  <v-chip class="ma-2 ml-0" color="primary" outlined pill>
+                    Online Event
+                  </v-chip>
                 </div>
-              </v-flex>
-            </div>
+                <div v-if="showOnlineJoinBtn()">
+                  <a
+                    :href="event.WebinarLink"
+                    target="_blank"
+                    class="text-decoration-none"
+                    ><v-btn class="ma-2 ml-0" outlined color="success">
+                      Join Event<v-icon right>
+                        mdi-video
+                      </v-icon>
+                    </v-btn></a
+                  >
+                </div>
+              </div>
+              <div v-else>
+                <v-flex my-3>
+                  <div class="body-1">
+                    {{
+                      registration &&
+                      registration.EventList &&
+                      registration.EventList._VenueAddress &&
+                      registration.EventList._VenueAddress.AddressLine
+                    }}
+                    {{
+                      registration &&
+                      registration.EventList &&
+                      registration.EventList._VenueAddress &&
+                      registration.EventList._VenueAddress.City
+                    }}
+                    {{
+                      registration &&
+                      registration.EventList &&
+                      registration.EventList._VenueAddress &&
+                      registration.EventList._VenueAddress.State
+                    }}
+                    {{
+                      registration &&
+                      registration.EventList &&
+                      registration.EventList._VenueAddress &&
+                      registration.EventList._VenueAddress.Country
+                    }}
+                    {{
+                      registration &&
+                      registration.EventList &&
+                      registration.EventList._VenueAddress &&
+                      registration.EventList._VenueAddress.PostalCode
+                    }}
+                  </div>
+                </v-flex>
+              </div>
+            </v-skeleton-loader>
           </div>
           <div
             class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mb-4 mx-0 ml-md-2 mr-0 pb-2 rounded-lg"
           >
             <v-flex class="d-flex justify-center align-center pb-2">
               <h2 class="body-1 pb-0">
-                <i class="fa-calendar pr-1" aria-hidden="true"></i>
+                <i class="fa-user pr-1" aria-hidden="true"></i>
                 Organizer
               </h2>
               <v-spacer></v-spacer>
             </v-flex>
             <v-divider></v-divider>
+
             <v-flex my-3>
-              <div class="body-1">
-                {{
-                  formatField(
-                    registration &&
-                      registration.EventList &&
-                      registration.EventList.Organizer
-                  )
-                }}
-              </div>
+              <v-skeleton-loader
+                :loading="!eventImage"
+                type="list-item-two-line"
+                height="20"
+                width="100%"
+              >
+                <div class="body-1">
+                  {{
+                    formatField(
+                      registration &&
+                        registration.EventList &&
+                        registration.EventList.Organizer
+                    )
+                  }}
+                </div>
+              </v-skeleton-loader>
             </v-flex>
           </div>
         </v-flex>
@@ -834,6 +920,7 @@ export default {
       isRefund: false,
       event: {},
       registration: {},
+      eventImage: false,
     }
   },
   computed: {
@@ -940,6 +1027,7 @@ export default {
           const res = await this.$axios.$get(URL)
           if (res) {
             this.event = res.result
+            this.eventImage = true
           }
         } catch (e) {
           console.error(
@@ -1006,6 +1094,7 @@ export default {
 }
 .event-right-info {
   background: #f0f0f0 !important;
+  min-height: 300px !important;
 }
 .session-date {
   min-height: 18px;
@@ -1046,6 +1135,9 @@ export default {
   .eventsite-banner img {
     max-height: 160px;
     min-height: 160px;
+  }
+  .event-right-info {
+    min-height: auto !important;
   }
 }
 </style>
