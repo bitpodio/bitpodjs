@@ -46,6 +46,13 @@ export default {
       timezone: this.value || Intl.DateTimeFormat().resolvedOptions().timeZone,
     }
   },
+  watch: {
+    value(newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.timezone = newVal
+      }
+    },
+  },
   mounted() {
     this.onChange()
   },

@@ -76,7 +76,11 @@
               sm="6"
               md="4"
             >
-              <Timezone v-model="formData.Timezone" :field="timezonefield" />
+              <Timezone
+                v-model="formData.Timezone"
+                :field="timezonefield"
+                :value="formData.Timezone"
+              />
             </v-col>
             <v-col cols="12" sm="6" md="4" class="pb-0">
               <v-text-field
@@ -138,7 +142,7 @@
             </v-col>
             <v-col cols="12" class="pb-0">
               <v-text-field
-                v-if="formData.LocationType === 'Online Event'"
+                v-if="formData.LocationType === 'Online event'"
                 v-model="formData.WebinarLink"
                 label="Online Event Link*"
                 :rules="requiredRule"
@@ -158,14 +162,10 @@
               ></v-textarea>
             </v-col>
             <div
-              v-if="
-                formData.BusinessType !== 'Recurring' &&
-                formData.LocationType !== 'Online Event' &&
-                formData.LocationType !== 'Bitpod Virtual'
-              "
+              v-if="formData.LocationType === 'Venue'"
               style="display: contents;"
             >
-              <v-col cols="12">
+              <v-col cols="12" class="mt-n6">
                 <no-ssr>
                   <vue-google-autocomplete
                     id="map"

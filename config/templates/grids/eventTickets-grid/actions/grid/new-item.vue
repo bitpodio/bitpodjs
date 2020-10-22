@@ -359,6 +359,8 @@ export default {
       this.formData.AvailableCount = parseInt(this.formData.TicketCount)
       this.formData.Events = this.$route.params.id
       this.formData.Status = this.eventData.Status
+      this.formData.StartDate = this.StartDate
+      this.formData.EndDate = this.EndDate
       try {
         const res = await this.$axios.$post(`${url}Tickets`, this.formData)
         if (res) {
