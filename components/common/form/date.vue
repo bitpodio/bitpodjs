@@ -2,6 +2,7 @@
   <div class="custom-date-time-picker">
     <div v-if="isDateTime">
       <v-datetime-picker
+        ref="dateTimeComponent"
         v-model="date"
         :label="fieldCaption"
         :text-field-props="textFieldProps"
@@ -88,8 +89,14 @@ export default {
   },
   mounted() {
     this.onCalendarChange()
+    if (this.field.type === 'datetime') {
+      this.$refs.dateTimeComponent.$children[0].onClickOutside = this.outsideClicked
+    }
   },
   methods: {
+    outsideClicked() {
+      this.$refs.dateTimeComponent.okHandler()
+    },
     onCalendarChange() {
       this.$emit('input', this.date)
       this.onChange && this.onChange(this.date)
