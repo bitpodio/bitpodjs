@@ -3291,7 +3291,7 @@ export default {
             displayOrder: 3,
           },
           displayOrder: 3,
-          caption: 'Start Date',
+          caption: 'Start Date Time',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '220px',
@@ -3313,67 +3313,19 @@ export default {
             },
           ],
         },
-        EndDate: {
-          form: {
-            caption: 'End Date *',
-            displayOrder: 4,
-          },
+        Duration: {
           displayOrder: 4,
-          caption: 'End Date',
-          searchEnable: true,
-          sortEnable: true,
-          columnWidth: '220px',
-          type: 'datetime',
+          caption: 'Duration',
+          searchEnable: false,
+          sortEnable: false,
+          columnWidth: '100px',
+          type: 'string',
           cssClasses: 'col-6 col-md-6',
           hidden: false,
           inlineEdit: true,
           newForm: true,
           editForm: true,
           default: '',
-          rules: [
-            function (v) {
-              const eventEndDate =
-                this.context && this.context.event && this.context.event.EndDate
-              const isValidEndDate =
-                eventEndDate > (v && new Date(v).toISOString())
-              return (
-                !!isValidEndDate ||
-                'Session End date should be in between event date.'
-              )
-            },
-          ],
-        },
-        Type: {
-          form: {
-            caption: 'Type *',
-            displayOrder: 7,
-          },
-          displayOrder: 6,
-          caption: 'Type',
-          searchEnable: true,
-          sortEnable: true,
-          columnWidth: '150px',
-          type: 'lookup',
-          cssClasses: 'col-6 col-md-6',
-          hidden: false,
-          inlineEdit: true,
-          newForm: true,
-          editForm: true,
-          dataSource: {
-            query: registrationStatusOptions,
-            itemText: 'value',
-            itemValue: 'key',
-            filter(data) {
-              return {
-                type: 'SessionType',
-              }
-            },
-          },
-          rules: [
-            (v) => {
-              return !!v || 'Type is required'
-            },
-          ],
         },
         MySpeaker: {
           form: {
@@ -3414,23 +3366,6 @@ export default {
           inlineEdit: true,
           newForm: false,
           editForm: false,
-        },
-        Location: {
-          form: {
-            caption: 'Location',
-            displayOrder: 6,
-          },
-          displayOrder: 8,
-          caption: 'Location',
-          searchEnable: true,
-          sortEnable: true,
-          columnWidth: '150px',
-          type: 'string',
-          cssClasses: 'col-6 col-md-6',
-          hidden: false,
-          inlineEdit: true,
-          newForm: true,
-          editForm: true,
         },
         SessionTicket: {
           displayOrder: 9,
@@ -3702,6 +3637,7 @@ export default {
           inlineEdit: true,
           newForm: true,
           editForm: true,
+          default: [],
         },
       },
       template: {

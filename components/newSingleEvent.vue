@@ -1174,6 +1174,7 @@ export default {
         this.isVenue = true
         this.isOnlineEvent = false
         this.isMap = true
+        this.isBitpodVirtual = false
       }
       if (value === 'Online event') {
         this.isVenue = false
