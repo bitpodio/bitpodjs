@@ -1431,7 +1431,59 @@ export default {
     },
     updateSectionHeading() {
       const dataObj = {
+        RegistrationSiteTemplate: this.eventData.RegistrationSiteTemplate
+          ? this.eventData.RegistrationSiteTemplate
+          : 'event',
         _sectionHeading: {
+          animation:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.animation) ||
+            '',
+          datetimelabel:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.datetimelabel) ||
+            '',
+          gallery:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.gallery) ||
+            '',
+          registrationTypes:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.registrationTypes) ||
+            '',
+          registrationbtn:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.registrationbtn) ||
+            '',
+          registrationquestionsectionlabel:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading
+                .registrationquestionsectionlabel) ||
+            '',
+          review:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.review) ||
+            '',
+          session:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.session) ||
+            '',
+          sessionsectionlabel:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.sessionsectionlabel) ||
+            '',
+          speakers:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.speakers) ||
+            '',
+          ticketlabel:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.ticketlabel) ||
+            '',
+          ticketsectionlabel:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.ticketsectionlabel) ||
+            '',
           showimagegallery: this.registrationSetting.showimagegallery,
           showeventreviews: this.registrationSetting.showeventreviews,
         },
@@ -1901,11 +1953,6 @@ export default {
     },
     async updateRegistrationPage() {
       const obj = this.updateSectionHeading
-      if (this.eventData.RegistrationSiteTemplate === null) {
-        obj.RegistrationSiteTemplate = 'Event'
-      } else {
-        obj.RegistrationSiteTemplate = this.eventData.RegistrationSiteTemplate
-      }
       const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`
       try {
         const res = await this.$axios.$patch(URL, obj)
@@ -2024,6 +2071,10 @@ export default {
         const eventSummary = data.Event.EventGetEventSummery
         this.eventData = event.length > 0 ? event[0] : {}
         this.badgeData = badge.length > 0 ? badge[0] : {}
+        this.eventData_sectionHeading =
+          this.eventData._sectionHeading !== null
+            ? this.eventData._sectionHeading
+            : {}
         this.getOrgInfo()
         this.updateRegistrationSetting(this.eventData)
         this.getSeatMap(this.eventData)
