@@ -30,6 +30,7 @@ query($filters: JSON, $where: JSON) {
           RegistrationId
           Status
           createdDate
+          ZoomLink
           EventList {
             _VenueAddress {
               id

@@ -38,29 +38,30 @@ export default {
   data() {
     return {
       linkReady: false,
-      roomname: '',
-      type: '',
+      link: '',
     }
   },
   mounted() {
     this.item.SessionId.map(async (id) => {
       try {
-        const result = await this.$axios.$get(
-          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Registrations/${this.item.id}/attendee`
-        )
         const res = await this.$axios.$get(
           `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Sessions/${id}`
         )
-        if (res && result) {
-          if (res.BitpodVirtualLink) {
-            this.roomname = `${res.BitpodVirtualLink.split('/')[3]}-${new Date(
-              result[0].BookingDate || null
-            )
-              .getTime()
-              .toString(36)}`
+        if (res) {
+          if (res.LocationType === 'Bitpod Virtual') {
+            this.link = `apps/event/live/${
+              this.item.ZoomLink.split('/')[3]
+            }?e=${this.$route.params.id}`
             this.linkReady = true
           }
-          this.type = res.Type
+          if (res.LocationType === 'Zoom') {
+            this.link = this.item.ZoomLink
+            this.linkReady = true
+          }
+          if (res.LocationType === 'Online meeting') {
+            this.link = res.WebinarLink
+            this.linkReady = true
+          }
         }
       } catch (e) {
         console.log('Error', e)
@@ -69,17 +70,7 @@ export default {
   },
   methods: {
     goLive() {
-      let roomName
-      if (this.type === 'Group') {
-        roomName = this.roomname
-      } else {
-        roomName = `${
-          this.item.FirstName.trim().replace(/[^a-zA-Z ]/g, '') || 'unknown'
-        }-${this.item.LastName.trim().replace(/[^a-zA-Z ]/g, '') || 'user'}-${
-          this.item.RegistrationId
-        }`.toLowerCase()
-      }
-      window.open(`apps/event/live/${roomName}?e=${this.$route.params.id}`)
+      window.open(this.link)
     },
   },
 }

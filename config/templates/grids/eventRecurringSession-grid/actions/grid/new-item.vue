@@ -242,7 +242,15 @@
                   v-model="session.WebinarLink"
                   label="online meeting link*"
                   outlined
-                  :rules="requiredRules"
+                  :rules="[
+                    (v) => {
+                      return !v
+                        ? 'This field is required'
+                        : !v.startsWith('https://')
+                        ? 'Invalid Protocol'
+                        : true
+                    },
+                  ]"
                   dense
                 ></v-text-field>
               </v-col>

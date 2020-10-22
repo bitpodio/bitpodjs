@@ -23,6 +23,7 @@ query ($filters: JSON, $where: JSON) {
                     LocationType
                     BitpodVirtualLink
                     Duration
+                    WebinarLink
                 } 
             } 
         } 

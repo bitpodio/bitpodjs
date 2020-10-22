@@ -7,6 +7,10 @@
         {{ snackbarText }}
       </div>
     </v-snackbar>
+    <v-btn text small @click="openDialog">
+      <v-icon left>{{ isEdit ? 'mdi-pencil' : 'mdi-plus' }}</v-icon>
+      {{ isEdit ? 'Edit Session' : 'New Session' }}
+    </v-btn>
     <v-dialog
       v-model="dialog"
       persistent
@@ -14,12 +18,6 @@
       content-class="slide-form-default"
       transition="dialog-bottom-transition"
     >
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn text small v-bind="attrs" v-on="on">
-          <v-icon left>{{ isEdit ? 'mdi-pencil' : 'mdi-plus' }}</v-icon>
-          {{ isEdit ? 'Edit Session' : 'New Session' }}
-        </v-btn>
-      </template>
       <v-card>
         <v-card-title
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
@@ -148,10 +146,18 @@
               </v-col>
               <v-col v-if="session.LocationType === 'Online event'" cols="12">
                 <v-text-field
-                  v-model="WebinarLink"
+                  v-model="session.WebinarLink"
                   label="Online event link*"
                   outlined
-                  :rules="requiredRules"
+                  :rules="[
+                    (v) => {
+                      return !v
+                        ? 'This field is required'
+                        : !v.startsWith('https://')
+                        ? 'Invalid Protocol'
+                        : true
+                    },
+                  ]"
                   dense
                 ></v-text-field>
               </v-col>
@@ -326,9 +332,9 @@ export default {
       default: false,
     },
     item: {
-      type: Object,
+      type: Array,
       required: false,
-      default: () => {},
+      default: () => [],
     },
   },
   data() {
@@ -458,16 +464,19 @@ export default {
       ]
     },
   },
-  watch: {
-    item(newVal) {
-      const container = Object.keys(newVal[0]).length ? { ...newVal[0] } : {}
-      container.StartDate = container.StartDate
-        ? new Date(container.StartDate)
-        : ''
-      this.session = { ...container }
-    },
-  },
   methods: {
+    openDialog() {
+      if (this.isEdit) {
+        const container = Object.keys(this.item[0]).length
+          ? { ...this.item[0] }
+          : {}
+        container.StartDate = container.StartDate
+          ? new Date(container.StartDate)
+          : ''
+        this.session = { ...container }
+      }
+      this.dialog = true
+    },
     changeDuration(value) {
       if (value === '0') {
         this.isCustomMin = true
@@ -598,9 +607,7 @@ export default {
     closeForm() {
       this.session.Name = ''
       this.session.Description = ''
-      if (!this.isEdit) {
-        this.session.StartDate = new Date(this.eventDetails.StartDate)
-      }
+      this.session.StartDate = ''
       this.session.Timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
       this.session.Location = ''
       this.session.Type = ''
@@ -712,6 +719,11 @@ export default {
         this.eventDetails = formatGQLResult(data, 'Event')[0]
         if (!this.isEdit) {
           this.session.StartDate = new Date(this.eventDetails.StartDate)
+          if (this.session.StartDate.getSeconds()) {
+            this.session.StartDate.setMinutes(
+              this.session.StartDate.getMinutes() + 1
+            )
+          }
         }
       },
       error(error) {
