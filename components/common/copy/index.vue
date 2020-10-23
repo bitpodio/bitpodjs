@@ -19,8 +19,22 @@
       :class="uniqueId ? uniqueId : 'to-copy'"
       :value="textToCopy"
     />
-
-    <div :class="uniqueId ? `${uniqueId}btn` : 'write-btn'">
+    <v-tooltip v-if="tooltip" bottom>
+      <template v-slot:activator="{ on, attrs }">
+        <div
+          :class="uniqueId ? `${uniqueId}btn` : 'write-btn'"
+          v-bind="attrs"
+          v-on="on"
+        >
+          <v-icon :size="iconSize" class="cursorPointer"
+            >mdi-content-copy</v-icon
+          >
+          {{ label ? label : '' }}
+        </div>
+      </template>
+      <span>{{ tooltip }}</span>
+    </v-tooltip>
+    <div v-else :class="uniqueId ? `${uniqueId}btn` : 'write-btn'">
       <v-icon :size="iconSize" class="cursorPointer">mdi-content-copy</v-icon>
       {{ label ? label : '' }}
     </div>
@@ -52,6 +66,11 @@ export default {
     iconSize: {
       default: '20',
       type: String,
+      required: false,
+    },
+    tooltip: {
+      type: String,
+      default: '',
       required: false,
     },
   },

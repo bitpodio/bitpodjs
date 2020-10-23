@@ -110,6 +110,7 @@
               class="pl-2"
               :text-to-copy="viewBitpodVirtualLink()"
               icon-size="20"
+              tooltip="Copy attendee link"
             />
           </div>
           <div v-else>
