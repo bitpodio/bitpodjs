@@ -215,7 +215,7 @@
               <v-col cols="12" class="mt-3">
                 <v-text-field
                   v-model="WebinarLink"
-                  label="Online meeting link"
+                  label="Online event link (https)*"
                   :rules="onlineMeetingRules"
                   outlined
                   dense
@@ -932,7 +932,7 @@ import organizationInfo from '~/config/apps/event/gql/organizationInfo.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { getIdFromAtob } from '~/utility'
 import CustomDate from '~/components/common/form/date.vue'
-import { required } from '~/utility/rules.js'
+import { required, onlineEventLink } from '~/utility/rules.js'
 import nuxtconfig from '~/nuxt.config'
 
 const ObjectID5 = (
@@ -1019,14 +1019,7 @@ export default {
           return strings.INVALID_PHONE_MSG
         },
       ],
-      onlineMeetingRules: [
-        (v) => {
-          if (v) {
-            return true
-          }
-          return strings.ONLINE_MEETING_MSG
-        },
-      ],
+      onlineMeetingRules: [onlineEventLink],
       personMeetingRules: [
         (v) => {
           if (v.length > 0) {
