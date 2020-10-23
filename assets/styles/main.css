@@ -446,6 +446,9 @@ body {
 .boxview .v-expansion-panel--active > .v-expansion-panel-header {
     min-height: 42px;
 }
+.event-title {
+  max-width: calc(100% - 230px);
+}
 @media (max-width: 800px) {
   .nav-bar {
     top: 0 !important;

@@ -4,81 +4,88 @@
       <div
         class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
       >
-        <v-flex class="d-flex justify-center align-center pb-1">
-          <div class="text-h4 text-capitalize">{{ data.event.Title }}</div>
+        <v-flex class="d-flex pb-1">
+          <div class="text-h4 text-capitalize event-title">
+            {{ data.event.Title }}
+          </div>
           <v-spacer></v-spacer>
-          <div
-            v-if="
-              eventData.LocationType === 'Bitpod Virtual' &&
-              data.event.Status !== 'Not ready'
-            "
-            class="mr-2"
-          >
-            <v-btn
-              depressed
-              tile
-              color="success"
-              class="rounded"
-              @click="goLive"
+          <div class="d-flex">
+            <div
+              v-if="
+                eventData.LocationType === 'Bitpod Virtual' &&
+                data.event.Status !== 'Not ready'
+              "
+              class="mr-2"
             >
-              Join Event
-              <v-icon right class="fs-22">
-                mdi-video
-              </v-icon>
-            </v-btn>
-          </div>
-          <div class="mr-2">
-            <v-btn depressed color="primary" @click="viewRegistration"
-              >View</v-btn
-            >
-          </div>
-          <div v-if="data.event.Status === 'Not ready'" class="mr-2">
-            <v-btn outlined color="primary" @click="publishEvent"
-              >Publish</v-btn
-            >
-          </div>
-          <v-menu left :offset-y="offset" transition="slide-y-transition">
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn icon small v-bind="attrs" v-on="on">
-                <v-icon>mdi-dots-vertical</v-icon>
+              <v-btn
+                depressed
+                tile
+                color="success"
+                class="rounded"
+                @click="goLive"
+              >
+                Join Event
+                <v-icon right class="fs-22">
+                  mdi-video
+                </v-icon>
               </v-btn>
-            </template>
+            </div>
+            <div class="mr-2">
+              <v-btn depressed color="primary" @click="viewRegistration"
+                >View</v-btn
+              >
+            </div>
+            <div v-if="data.event.Status === 'Not ready'" class="mr-2">
+              <v-btn outlined color="primary" @click="publishEvent"
+                >Publish</v-btn
+              >
+            </div>
+            <v-menu left :offset-y="offset" transition="slide-y-transition">
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn icon small v-bind="attrs" v-on="on">
+                  <v-icon>mdi-dots-vertical</v-icon>
+                </v-btn>
+              </template>
 
-            <v-list dense>
-              <v-list-item>
-                <v-list-item-icon class="mr-2">
-                  <i class="fa fa-paperplane mt-1" aria-hidden="true"></i>
-                </v-list-item-icon>
-                <v-list-item-content>
-                  <v-list-item-title>Publish to eventbrite</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item @click="isMakeCopy = true">
-                <v-list-item-icon class="mr-2">
-                  <i class="fa fa-clone mt-1" aria-hidden="true"></i>
-                </v-list-item-icon>
-                <v-list-item-content>
-                  <v-list-item-title>Make a copy</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item>
-                <v-list-item-icon class="mr-2">
-                  <i class="fa fa-pencil-square-o mt-1" aria-hidden="true"></i>
-                </v-list-item-icon>
-                <v-list-item-content>
-                  <v-list-item-title>Edit email template</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item @click="redirectIntegration">
-                <v-list-item-icon class="mr-2">
-                  <i class="fa fa-link1 mt-1" aria-hidden="true"></i>
-                </v-list-item-icon>
-                <v-list-item-content>
-                  <v-list-item-title>Integrations</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list>
-          </v-menu>
+              <v-list dense>
+                <v-list-item>
+                  <v-list-item-icon class="mr-2">
+                    <i class="fa fa-paperplane mt-1" aria-hidden="true"></i>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title>Publish to eventbrite</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item @click="isMakeCopy = true">
+                  <v-list-item-icon class="mr-2">
+                    <i class="fa fa-clone mt-1" aria-hidden="true"></i>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title>Make a copy</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item>
+                  <v-list-item-icon class="mr-2">
+                    <i
+                      class="fa fa-pencil-square-o mt-1"
+                      aria-hidden="true"
+                    ></i>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title>Edit email template</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item @click="redirectIntegration">
+                  <v-list-item-icon class="mr-2">
+                    <i class="fa fa-link1 mt-1" aria-hidden="true"></i>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title>Integrations</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list>
+            </v-menu>
+          </div>
         </v-flex>
         <v-chip small class="mt-1 mb-3 event-datechip greybg" label>
           {{ formatedDate(data.event.StartDate, data.event.Timezone) }} -
@@ -1093,7 +1100,9 @@
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">SEO Description</div>
-          <div class="body-1">{{ formatField(data.event.SEODesc) }}</div>
+          <div class="body-1 d-flex flex-wrap">
+            {{ formatField(data.event.SEODesc) }}
+          </div>
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">SEO Keywords</div>

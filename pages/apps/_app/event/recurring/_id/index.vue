@@ -4,122 +4,129 @@
       <div
         class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
       >
-        <v-flex class="d-flex justify-center align-center pb-2">
-          <div class="text-h4 text-capitalize">{{ data.event.Title }}</div>
+        <v-flex class="d-flex pb-2">
+          <div class="text-h4 text-capitalize event-title">
+            {{ data.event.Title }}
+          </div>
           <v-spacer></v-spacer>
-          <div class="mr-2">
-            <v-btn depressed color="primary" @click="viewRegistration"
-              >View</v-btn
+          <div class="d-flex">
+            <div class="mr-2">
+              <v-btn depressed color="primary" @click="viewRegistration"
+                >View</v-btn
+              >
+            </div>
+            <div v-if="data.event.Status === 'Not ready'" class="mr-2">
+              <v-btn outlined color="primary" @click="publishEvent"
+                >Publish</v-btn
+              >
+            </div>
+            <v-menu
+              left
+              :close-on-click="closeOnClick"
+              :offset-y="offset"
+              transition="slide-y-transition"
             >
-          </div>
-          <div v-if="data.event.Status === 'Not ready'" class="mr-2">
-            <v-btn outlined color="primary" @click="publishEvent"
-              >Publish</v-btn
-            >
-          </div>
-          <v-menu
-            left
-            :close-on-click="closeOnClick"
-            :offset-y="offset"
-            transition="slide-y-transition"
-          >
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn icon small v-bind="attrs" v-on="on">
-                <v-icon>mdi-dots-vertical</v-icon>
-              </v-btn>
-            </template>
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn icon small v-bind="attrs" v-on="on">
+                  <v-icon>mdi-dots-vertical</v-icon>
+                </v-btn>
+              </template>
 
-            <v-list dense>
-              <v-list-item @click="isMakeCopy = true">
-                <v-list-item-icon class="mr-2">
-                  <i class="fa fa-clone mt-1" aria-hidden="true"></i>
-                </v-list-item-icon>
-                <v-list-item-content>
-                  <v-list-item-title>Make a copy</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item @click="true">
-                <v-list-item-icon class="mr-2">
-                  <i class="fa fa-pencil-square-o mt-1" aria-hidden="true"></i>
-                </v-list-item-icon>
-                <v-list-item-content>
-                  <v-list-item-title>Edit email template</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item @click="redirectIntegration">
-                <v-list-item-icon class="mr-2">
-                  <i class="fa fa-link1 mt-1" aria-hidden="true"></i>
-                </v-list-item-icon>
-                <v-list-item-content>
-                  <v-list-item-title>Integrations</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item @click.stop="copylinks = true">
-                <v-list-item-icon class="mr-2">
-                  <i class="fa fa-clone mt-1" aria-hidden="true"></i>
-                </v-list-item-icon>
-                <v-list-item-content>
-                  <v-list-item-title>Copy Links</v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-          <v-dialog v-model="copylinks" max-width="800">
-            <v-card>
-              <v-card-title class="pa-4 pr-2">
-                <h2 class="black--text text--lighten-1 pt-1 pb-0 text-h5">
-                  Copy Links
-                </h2>
-                <v-spacer></v-spacer>
-                <div>
-                  <v-btn icon @click="copylinks = false">
-                    <v-icon>mdi-close</v-icon>
-                  </v-btn>
-                </div>
-              </v-card-title>
-              <v-card-text class="pa-4 pt-0">
-                <v-col cols="12" sm="12" class="pl-0 pb-0 d-flex">
-                  <v-text-field
-                    id="eventLink"
-                    :value="eventLink()"
-                    label="Event Link"
-                    outlined
-                    readonly
-                    dense
-                  ></v-text-field>
-                  <v-btn icon class="ml-2">
-                    <v-icon>mdi-18px mdi-content-copy</v-icon>
-                  </v-btn>
-                </v-col>
-                <v-col cols="12" sm="12" class="pl-0 pb-0 d-flex">
-                  <v-text-field
-                    :value="sessionLink()"
-                    label="Recurring sessions Link"
-                    outlined
-                    readonly
-                    dense
-                  ></v-text-field>
-                  <v-btn icon class="ml-2">
-                    <v-icon>mdi-18px mdi-content-copy</v-icon>
-                  </v-btn>
-                </v-col>
-                <v-col cols="12" sm="12" class="pl-0 pb-0 d-flex">
-                  <v-text-field
-                    :value="embedLink()"
-                    label="Embed Recurring Sessions"
-                    outlined
-                    hint="You will need to contact Bitpod support to whitelist your domain, if you would like to embed it, into any of your website."
-                    persistent-hint
-                    readonly
-                    dense
-                  ></v-text-field>
-                  <v-btn icon class="ml-2">
-                    <v-icon>mdi-18px mdi-content-copy</v-icon>
-                  </v-btn>
-                </v-col>
-              </v-card-text>
-            </v-card>
-          </v-dialog>
+              <v-list dense>
+                <v-list-item @click="isMakeCopy = true">
+                  <v-list-item-icon class="mr-2">
+                    <i class="fa fa-clone mt-1" aria-hidden="true"></i>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title>Make a copy</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item @click="true">
+                  <v-list-item-icon class="mr-2">
+                    <i
+                      class="fa fa-pencil-square-o mt-1"
+                      aria-hidden="true"
+                    ></i>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title>Edit email template</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item @click="redirectIntegration">
+                  <v-list-item-icon class="mr-2">
+                    <i class="fa fa-link1 mt-1" aria-hidden="true"></i>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title>Integrations</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item @click.stop="copylinks = true">
+                  <v-list-item-icon class="mr-2">
+                    <i class="fa fa-clone mt-1" aria-hidden="true"></i>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title>Copy Links</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list>
+            </v-menu>
+            <v-dialog v-model="copylinks" max-width="800">
+              <v-card>
+                <v-card-title class="pa-4 pr-2">
+                  <h2 class="black--text text--lighten-1 pt-1 pb-0 text-h5">
+                    Copy Links
+                  </h2>
+                  <v-spacer></v-spacer>
+                  <div>
+                    <v-btn icon @click="copylinks = false">
+                      <v-icon>mdi-close</v-icon>
+                    </v-btn>
+                  </div>
+                </v-card-title>
+                <v-card-text class="pa-4 pt-0">
+                  <v-col cols="12" sm="12" class="pl-0 pb-0 d-flex">
+                    <v-text-field
+                      id="eventLink"
+                      :value="eventLink()"
+                      label="Event Link"
+                      outlined
+                      readonly
+                      dense
+                    ></v-text-field>
+                    <v-btn icon class="ml-2">
+                      <v-icon>mdi-18px mdi-content-copy</v-icon>
+                    </v-btn>
+                  </v-col>
+                  <v-col cols="12" sm="12" class="pl-0 pb-0 d-flex">
+                    <v-text-field
+                      :value="sessionLink()"
+                      label="Recurring sessions Link"
+                      outlined
+                      readonly
+                      dense
+                    ></v-text-field>
+                    <v-btn icon class="ml-2">
+                      <v-icon>mdi-18px mdi-content-copy</v-icon>
+                    </v-btn>
+                  </v-col>
+                  <v-col cols="12" sm="12" class="pl-0 pb-0 d-flex">
+                    <v-text-field
+                      :value="embedLink()"
+                      label="Embed Recurring Sessions"
+                      outlined
+                      hint="You will need to contact Bitpod support to whitelist your domain, if you would like to embed it, into any of your website."
+                      persistent-hint
+                      readonly
+                      dense
+                    ></v-text-field>
+                    <v-btn icon class="ml-2">
+                      <v-icon>mdi-18px mdi-content-copy</v-icon>
+                    </v-btn>
+                  </v-col>
+                </v-card-text>
+              </v-card>
+            </v-dialog>
+          </div>
         </v-flex>
         <v-chip class="my-2 mt-1 greybg">
           Recurring Event
