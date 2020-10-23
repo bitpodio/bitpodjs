@@ -2011,7 +2011,7 @@ export default {
             })
             .catch((e) => {
               console.error(
-                `Error in Save function of new recurring event form , context: create event , error: ${e}`
+                `Error in Save function of new recurring event form , context: create event, baseUrl: ${baseUrl} eventData: ${this.eventData} error: ${e}`
               )
               this.isSaveButtonDisabled = false
             })
@@ -2031,7 +2031,7 @@ export default {
               .$post(`${baseUrl}Tickets`, ticketList)
               .catch((e) => {
                 console.error(
-                  `Error in Save function of new recurring event form, context: create ticket, eventId: ${this.eventId} error: ${e}`
+                  `Error in Save function of new recurring event form, context: create ticket, eventId: ${this.eventId} baseUrl: ${baseUrl} ticketList: ${this.ticketList} error: ${e}`
                 )
                 this.isSaveButtonDisabled = false
               })
@@ -2109,7 +2109,7 @@ export default {
               .$post(`${baseUrl}Sessions`, sessionList)
               .catch((e) => {
                 console.error(
-                  `Error in Save function of new recurring event form, context: create session, eventId: ${this.eventId} error: ${e}`
+                  `Error in Save function of new recurring event form, context: create session, eventId: ${this.eventId} baseUrl: ${baseUrl} sessionList: ${this.sessionList} error: ${e}`
                 )
                 this.isSaveButtonDisabled = false
               })

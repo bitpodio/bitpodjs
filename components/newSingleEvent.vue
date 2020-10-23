@@ -1023,7 +1023,7 @@ export default {
           })
           .catch((e) => {
             console.error(
-              `Error in Save function of new single event form, context: create event , error: ${e}`
+              `Error in Save function of new single event form, context: create event , baseUrl: ${baseUrl} eventData: ${this.eventData}  error: ${e}`
             )
           })
         if (res) {
@@ -1042,7 +1042,7 @@ export default {
             .$post(`${baseUrl}Tickets`, ticketList)
             .catch((e) => {
               console.error(
-                `Error in Save function of new single event form, context: create ticket , eventId: ${this.eventId}, error: ${e}`
+                `Error in Save function of new single event form, context: create ticket , eventId: ${this.eventId},  baseUrl: ${baseUrl} ticketList: ${this.ticketList} error: ${e}`
               )
             })
           if (ticketRes) {
@@ -1117,7 +1117,7 @@ export default {
           })
           .catch((e) => {
             console.error(
-              `Error in changeAddress function of new single event form when place search address and updating location on map, context: place search address, venueAddress: ${this.venueAddress} error: ${e}`
+              `Error in changeAddress function of new single event form when place search address and updating location on map, context: place search address, addressObj: ${addressObj} key: ${key} baseUrl: ${nuxtconfig.generalConfig.googleMapGeocodeApi}?address=${addressObj}&key=${key}, error: ${e}`
             )
           })
       }

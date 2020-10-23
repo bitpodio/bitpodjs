@@ -183,7 +183,7 @@ export default {
       } catch (e) {
         this.isSaveButtonDisabled = false
         console.error(
-          `Error in edit Batch Template form while updating Badge, context:- badgeId - ${this.badge.id} error: ${e}`,
+          `Error in edit Batch Template form while updating Badge, context:- badgeId - ${this.badge.id} badgeData: ${this.badge} baseUrl: ${url} error: ${e}`,
           e
         )
       }
