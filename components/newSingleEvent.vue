@@ -63,6 +63,7 @@
                 <v-row>
                   <v-col cols="12" sm="6" md="4" class="pb-0">
                     <v-datetime-picker
+                      ref="eventStartDate"
                       v-model="eventData.StartDate"
                       label="Start Date*"
                       :text-field-props="eventStartDateProps"
@@ -78,6 +79,7 @@
                   </v-col>
                   <v-col cols="12" sm="6" md="4" class="pb-0">
                     <v-datetime-picker
+                      ref="eventEndDate"
                       v-model="eventData.EndDate"
                       :rules="requiredRules"
                       label="End Date*"
@@ -343,6 +345,7 @@
                         <v-datetime-picker
                           v-model="ticket.StartDate"
                           :text-field-props="ticketStartDateProps(k)"
+                          :on-change="changeTicketStartDate()"
                         >
                           <template slot="dateIcon">
                             <v-icon>fas fa-calendar</v-icon>
@@ -356,6 +359,7 @@
                         <v-datetime-picker
                           v-model="ticket.EndDate"
                           :text-field-props="ticketEndDateProps(k)"
+                          :on-change="changeTicketEndDate()"
                         >
                           <template slot="dateIcon">
                             <v-icon>fas fa-calendar</v-icon>
@@ -500,6 +504,9 @@
 <script>
 import addMonths from 'date-fns/addMonths'
 import addDays from 'date-fns/addDays'
+import subDays from 'date-fns/subDays'
+import subSeconds from 'date-fns/subSeconds'
+import differenceInDays from 'date-fns/differenceInDays'
 import gql from 'graphql-tag'
 import strings from '../strings.js'
 import { formatTimezoneDateFieldsData } from '~/utility/form.js'
@@ -735,11 +742,50 @@ export default {
         this.eventLinkHint.split('/')[4]
       }`
     },
+    calculateTicketEndDate() {
+      const diff = differenceInDays(
+        new Date(this.eventData.EndDate),
+        new Date(this.eventData.StartDate)
+      )
+      console.log(diff)
+      if (diff > 1) {
+        this.tickets[0].EndDate = subDays(new Date(this.eventData.EndDate), 1)
+      } else {
+        this.tickets[0].EndDate = subSeconds(
+          new Date(this.eventData.EndDate),
+          5
+        )
+      }
+    },
+    outsideClicked() {
+      this.$refs.eventStartDate && this.$refs.eventStartDate.okHandler()
+      this.$refs.eventEndDate && this.$refs.eventEndDate.okHandler()
+      this.$refs.ticketStartDate && this.$refs.ticketStartDate.okHandler()
+      this.$refs.ticketEndDate && this.$refs.ticketEndDate.okHandler()
+    },
     changeStartDate() {
       this.$refs.dateform && this.$refs.dateform.validate()
+      if (this.$refs.eventStartDate) {
+        this.$refs.eventStartDate.$children[0].onClickOutside = this.outsideClicked
+      }
+      this.calculateTicketEndDate()
     },
     changeEndDate(value) {
       this.$refs.dateform && this.$refs.dateform.validate()
+      if (this.$refs.eventEndDate) {
+        this.$refs.eventEndDate.$children[0].onClickOutside = this.outsideClicked
+      }
+      this.calculateTicketEndDate()
+    },
+    changeTicketStartDate() {
+      if (this.$refs.ticketStartDate) {
+        this.$refs.ticketStartDate.$children[0].onClickOutside = this.outsideClicked
+      }
+    },
+    changeTicketEndDate() {
+      if (this.$refs.ticketEndDate) {
+        this.$refs.ticketEndDate.$children[0].onClickOutside = this.outsideClicked
+      }
     },
     isNextDisabled() {
       return this.isUniqLinkValid === false
@@ -910,17 +956,13 @@ export default {
       const { LocationType, WebinarLink } = this.eventData
       if (
         (LocationType === 'Venue' &&
-          this.$refs['venueAddress.AddressLine'] &&
-          this.$refs['venueAddress.AddressLine'].$data.autocompleteText !==
-            '') ||
+          this.venueAddress &&
+          this.venueAddress.AddressLine !== '') ||
         (LocationType === 'Online event' && WebinarLink !== '') ||
         LocationType === 'Bitpod Virtual'
       ) {
         return true
-      } else if (
-        this.$refs['venueAddress.AddressLine'] &&
-        this.$refs['venueAddress.AddressLine'].$data.autocompleteText === ''
-      ) {
+      } else {
         return false
       }
     },

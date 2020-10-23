@@ -205,6 +205,7 @@ export default {
     return {
       requiredRules: [required],
       regData: {},
+      regDetails: {},
       events: [],
       tickets: [],
       sessions: [],
@@ -314,6 +315,11 @@ export default {
       this.isSessionLoading = false
     },
     close() {
+      this.regData = { ...this.regDetails }
+      if (this.regDetails._CurrentAddress) {
+        this.venueAddress = {}
+        this.venueAddress = { ...this.regDetails._CurrentAddress }
+      }
       this.$emit('update:isEditReg', false)
     },
     refresh() {
@@ -401,6 +407,7 @@ export default {
       update(data) {
         const registration = formatGQLResult(data, 'Registration')
         this.regData = registration.length > 0 ? { ...registration[0] } : {}
+        this.regDetails = registration.length > 0 ? { ...registration[0] } : {}
         let events = formatGQLResult(data, 'Event')
         events = events.length > 0 ? events : []
         this.events = events.map(({ id, ...rest }) => ({

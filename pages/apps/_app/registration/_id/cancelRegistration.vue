@@ -50,10 +50,10 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
+// import gql from 'graphql-tag'
 import { required } from '~/utility/rules.js'
-import registration from '~/config/apps/event/gql/registration.gql'
-import { formatGQLResult } from '~/utility/gql.js'
+// import registration from '~/config/apps/event/gql/registration.gql'
+// import { formatGQLResult } from '~/utility/gql.js'
 import { getApiUrl } from '~/utility/index.js'
 
 export default {
@@ -82,10 +82,11 @@ export default {
   methods: {
     close() {
       this.$emit('update:isCancelReg', false)
+      this.$refs.form.reset()
     },
-    refresh() {
-      this.$apollo.queries.data.refresh()
-    },
+    // refresh() {
+    //   this.$apollo.queries.data.refresh()
+    // },
     async onSave() {
       const baseUrl = getApiUrl()
       const regId = this.$route.params.id
@@ -115,44 +116,9 @@ export default {
       }
       if (regRes) {
         this.close()
-        this.refresh()
+        // this.refresh()
         return regRes
       }
-    },
-  },
-  apollo: {
-    data: {
-      query() {
-        return gql`
-          ${registration}
-        `
-      },
-      variables() {
-        return {
-          filters: {
-            where: {
-              id: this.$route.params.id,
-            },
-          },
-        }
-      },
-      update(data) {
-        const registration = formatGQLResult(data, 'Registration')
-        this.regData = registration.length > 0 ? { ...registration[0] } : {}
-
-        return {
-          event: {},
-        }
-      },
-      result({ data, loading, networkStatus }) {},
-      error(error) {
-        this.error = error
-        this.loading = 0
-      },
-      prefetch: false,
-      loadingKey: 'loading',
-      skip: false,
-      pollInterval: 0,
     },
   },
 }
