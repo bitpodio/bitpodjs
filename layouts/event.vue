@@ -131,12 +131,11 @@
       content-class="slide-form"
       transition="dialog-bottom-transition"
     >
-      <div v-if="dialog1">
-        <NewSingleEvent
-          :reset-data="triggerReset"
-          :on-form-close="closeSingleEventForm"
-        />
-      </div>
+      <NewSingleEvent
+        v-if="dialog1"
+        :reset-data="triggerReset"
+        :on-form-close="closeSingleEventForm"
+      />
     </v-dialog>
 
     <v-dialog
@@ -146,12 +145,11 @@
       content-class="slide-form"
       transition="dialog-bottom-transition"
     >
-      <div v-if="dialog">
-        <NewRecurringEvent
-          :reset-data="triggerRecEventReset"
-          :on-form-close="closeRecurringEventForm"
-        />
-      </div>
+      <NewRecurringEvent
+        v-if="dialog"
+        :reset-data="triggerRecEventReset"
+        :on-form-close="closeRecurringEventForm"
+      />
     </v-dialog>
 
     <v-app-bar app flat class="greybg headernew pl-0" height="50">
