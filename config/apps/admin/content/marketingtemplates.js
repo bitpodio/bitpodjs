@@ -86,7 +86,7 @@ export default {
             },
           },
         },
-        ImageUrl: {
+        ImageURL: {
           form: {
             caption: 'Image URL',
             displayOrder: 6,
@@ -342,7 +342,7 @@ export default {
             },
           },
         },
-        ImageUrl: {
+        ImageURL: {
           form: {
             caption: 'Image URL',
             displayOrder: 6,

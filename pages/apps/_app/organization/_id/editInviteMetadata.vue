@@ -27,7 +27,7 @@
               <v-row>
                 <v-col cols="12" sm="6" md="6">
                   <v-text-field
-                    v-model="selected.Name"
+                    v-model="template.Name"
                     label="Template Name*"
                     :rules="requiredRules"
                     outlined
@@ -36,14 +36,14 @@
                 </v-col>
                 <v-col cols="12" sm="6" md="6">
                   <Lookup
-                    v-model="selected.Type"
+                    v-model="template.Type"
                     :field="typeLookupField"
                     :rules="requiredRules"
                   />
                 </v-col>
                 <v-col cols="12" sm="6" md="6">
                   <v-text-field
-                    v-model="selected.Subject"
+                    v-model="template.Subject"
                     label="Subject*"
                     :rules="requiredRules"
                     outlined
@@ -52,7 +52,7 @@
                 </v-col>
                 <v-col cols="12" sm="6" md="6">
                   <Lookup
-                    v-model="selected.Category"
+                    v-model="template.Category"
                     :field="categoryLookupField"
                     :rules="requiredRules"
                   />
@@ -60,14 +60,14 @@
                 <v-col cols="12" sm="6" md="12">
                   <File
                     :field="fileField"
-                    :value="[...selected.Documents].filter((i) => i)"
+                    :value="[...template.Documents].filter((i) => i)"
                     label="Upload"
                     @input="getAttachmentId"
                   />
                 </v-col>
                 <v-col cols="12" sm="6" md="12">
                   <v-text-field
-                    v-model="selected.ImageURL"
+                    v-model="template.ImageURL"
                     label="Image URL"
                     outlined
                     dense
@@ -113,12 +113,19 @@ export default {
       allowSpaces: false,
       type: Object,
     },
+    refresh: {
+      type: Function,
+      required: false,
+      default: null,
+    },
   },
   data() {
     let fileList = []
     fileList = this.selected.Documents ? this.selected.Documents : []
+    const template = { ...this.selected }
     return {
       valid: false,
+      template,
       fileField: {
         multiple: true,
         caption: 'Attachment',
@@ -170,21 +177,22 @@ export default {
     async onSave() {
       this.isSaveButtonDisabled = true
       const url = getApiUrl()
-      this.selected.Documents = this.fileList
+      this.template.Documents = this.fileList
       let res = null
       try {
         res = await this.$axios.$patch(
-          `${url}MarketingTemplates/${this.selected.id}`,
-          this.selected
+          `${url}MarketingTemplates/${this.template.id}`,
+          this.template
         )
       } catch (e) {
         this.isSaveButtonDisabled = false
         console.log(
-          `Error in pages/apps/organization/_id/editMetadata while making a PATCH call to MarketingTemplates model from method onSave context:-${this.selected}`,
+          `Error in pages/apps/organization/_id/editMetadata while making a PATCH call to MarketingTemplates model from method onSave context:-${this.template}`,
           e
         )
       }
       if (res) {
+        this.$parent.refresh()
         this.onClose()
       }
     },

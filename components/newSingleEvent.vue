@@ -12,11 +12,11 @@
           </v-btn>
         </div>
         <v-tabs v-model="tabs" height="36" class="mb-6 mt-2 v-event-icon">
-          <v-tab href="#tab-1" class="px-0 mr-4" @click="selectTab(1)">
+          <v-tab href="#1" class="px-0 mr-4" @click="selectTab(1)">
             <v-icon left>fa-info-circle</v-icon><span>Basic Info</span>
           </v-tab>
           <v-tab
-            href="#tab-2"
+            href="#2"
             class="px-0 mr-4"
             :disabled="!validTab1()"
             @click="selectTab(2)"
@@ -24,7 +24,7 @@
             <v-icon left>fa-map-marker</v-icon><span>Location</span>
           </v-tab>
           <v-tab
-            href="#tab-3"
+            href="#3"
             class="px-0 mr-4"
             :disabled="!validTab1() || !validTab2()"
             @click="selectTab(3)"
@@ -35,7 +35,7 @@
       </v-card-title>
       <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0 event-inner">
         <v-tabs-items v-model="tabs">
-          <v-tab-item :value="'tab-1'">
+          <v-tab-item :value="'1'">
             <v-card flat>
               <p>
                 Enter event name and details to help your audience learn about
@@ -129,7 +129,7 @@
             </v-card>
           </v-tab-item>
 
-          <v-tab-item :value="'tab-2'">
+          <v-tab-item :value="'2'">
             <v-card flat>
               <v-row>
                 <v-col cols="12" sm="6" md="6" class="pl-0 pt-0 pb-0">
@@ -282,7 +282,7 @@
             </v-card>
           </v-tab-item>
 
-          <v-tab-item :value="'tab-3'">
+          <v-tab-item :value="'3'">
             <v-card v-if="isTicket" flat>
               <p>
                 Setup event tickets and price, you can also set tickets validity
@@ -325,6 +325,7 @@
                           v-model="ticket.Type"
                           :field="ticketTypeProps"
                           class="v-tickettype"
+                          :on-change="changeTicketType(k)"
                         />
                       </td>
                       <td class="pa-2 pb-0">
@@ -641,7 +642,7 @@ export default {
       isOnlineEvent: false,
       isBitpodVirtual: false,
 
-      isInalidEventLink: false,
+      isInvalidEventLink: false,
       uniqueLinkMessage: '',
       currenttimezone: '(GMT+05:30) India Standard Time',
       currentDatetime,
@@ -663,7 +664,10 @@ export default {
       return `${nuxtconfig.integrationLinks.EVENT_LINK_HINT}${this.eventData.UniqLink}`
     },
     gMapCenter() {
-      return { lat: this.locations[0].lat, lng: this.locations[0].lng }
+      return {
+        lat: (this.locations[0] && this.locations[0].lat) || 0.0,
+        lng: (this.locations[0] && this.locations[0].lng) || 0.0,
+      }
     },
     eventStartDateProps() {
       return {
@@ -708,7 +712,7 @@ export default {
       }
     },
     uniqueLinkValidationMsg() {
-      const errorMessage = this.isInalidEventLink ? this.uniqueLinkMessage : ''
+      const errorMessage = this.isInvalidEventLink ? this.uniqueLinkMessage : ''
       return errorMessage
     },
   },
@@ -724,6 +728,7 @@ export default {
       this.tickets = [ticket]
     },
   },
+
   methods: {
     getBitpodVirtualLink() {
       return `https://${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}/${
@@ -744,12 +749,12 @@ export default {
     },
     close() {
       this.onFormClose()
-      this.tabs = 'tab-1'
+      this.tabs = '1'
       this.resetForm()
     },
     closeForm() {
       this.onFormClose()
-      this.tabs = 'tab-1'
+      this.tabs = '1'
       this.$router.push('/apps/event/event/' + this.eventId)
       this.$refs.form.reset()
       this.resetForm()
@@ -819,11 +824,13 @@ export default {
         },
       })
     },
-    isPriceDisabled(index) {
+    changeTicketType(index) {
       if (this.tickets[index].Type === 'Free') {
         this.tickets[index].Amount = 0
-        return true
-      } else return false
+      }
+    },
+    isPriceDisabled(index) {
+      return this.tickets[index].Type === 'Free'
     },
     deleteTicket(index) {
       if (this.tickets.length > 1) {
@@ -881,7 +888,9 @@ export default {
       }
     },
     returnToCenter() {
-      this.$refs.gMap && this.$refs.gMap.map.setCenter(this.locations[0])
+      if (this.locations && this.locations[0]) {
+        this.$refs.gMap && this.$refs.gMap.map.setCenter(this.locations[0])
+      }
     },
     validTab1() {
       const { Title, StartDate, EndDate, Timezone, UniqLink } = this.eventData
@@ -894,7 +903,7 @@ export default {
         StartDate < EndDate &&
         StartDate >= new Date() &&
         EndDate >= new Date() &&
-        this.isInalidEventLink === false
+        this.isInvalidEventLink === false
       )
     },
     validTab2() {
@@ -904,7 +913,8 @@ export default {
           this.$refs['venueAddress.AddressLine'] &&
           this.$refs['venueAddress.AddressLine'].$data.autocompleteText !==
             '') ||
-        (LocationType === 'Online event' && WebinarLink !== '')
+        (LocationType === 'Online event' && WebinarLink !== '') ||
+        LocationType === 'Bitpod Virtual'
       ) {
         return true
       } else if (
@@ -915,16 +925,12 @@ export default {
       }
     },
     prev(value) {
-      this.currentTab = parseInt(this.tabs.split('-')[1])
-      this.currentTab -= 1
-      const tabValue = `tab-${this.currentTab}`
-      this.tabs = tabValue
+      this.currentTab = parseInt(this.tabs) - 1
+      this.tabs = `${this.currentTab}`
     },
     setNextTab() {
-      this.currentTab = parseInt(this.tabs.split('-')[1])
-      this.currentTab += 1
-      const tabValue = `tab-${this.currentTab}`
-      this.tabs = tabValue
+      this.currentTab = parseInt(this.tabs) + 1
+      this.tabs = `${this.currentTab}`
     },
     next() {
       const {
@@ -947,7 +953,7 @@ export default {
         StartDate < EndDate &&
         StartDate >= new Date() &&
         EndDate >= new Date() &&
-        this.isInalidEventLink === false
+        this.isInvalidEventLink === false
       ) {
         this.setNextTab()
       } else if (this.currentTab === 2) {
@@ -974,8 +980,19 @@ export default {
         .map((l) => l.name)
         .join(', ')
     },
-
-    saveRecord() {
+    setLoationType() {
+      if (
+        this.venueAddress.AddressLine !== '' &&
+        this.eventData.LocationType === 'Venue'
+      ) {
+        this.eventData._VenueAddress = this.venueAddress
+      }
+      if (this.eventData.LocationType !== 'Online event') {
+        this.eventData.JoiningInstruction = ''
+        this.eventData.WebinarLink = ''
+      }
+    },
+    async saveRecord() {
       const isValidTicket = this.tickets.map((ticket, index) => {
         return (
           ticket.Code !== '' &&
@@ -987,9 +1004,7 @@ export default {
       this.$refs.form.validate()
       if (!isValidTicket.includes(false)) {
         this.isSaveButtonDisabled = true
-        if (this.venueAddress.AddressLine !== '')
-          this.eventData._VenueAddress = this.venueAddress
-
+        this.setLoationType()
         const convertedEventRecord = formatTimezoneDateFieldsData(
           this.eventData,
           this.fields
@@ -1000,37 +1015,42 @@ export default {
         this.eventData.Organizer = this.$auth.$state.user.data.name
 
         const baseUrl = getApiUrl()
-        this.$axios
+        let res = null
+        let ticketRes = null
+        res = await this.$axios
           .$post(`${baseUrl}Events`, {
             ...this.eventData,
           })
-          .then((res) => {
-            this.eventId = res.id
-
-            const ticketList = []
-
-            this.tickets.forEach(function (ticket) {
-              ticket.Events = res.id
-              ticket.Amount = parseInt(ticket.Amount)
-              ticket.TicketCount = parseInt(ticket.TicketCount)
-              ticketList.push(ticket)
-            })
-
-            // eslint-disable-next-line promise/no-nesting
-            return this.$axios
-              .$post(`${baseUrl}Tickets`, ticketList)
-              .then((ticketres) => {
-                this.isTicket = false
-                this.isEventCreate = true
-                return ticketres
-              })
-              .catch((e) => {
-                console.log('error', e)
-              })
-          })
           .catch((e) => {
-            console.log('error', e)
+            console.error(
+              `Error in Save function of new single event form, context: create event , baseUrl: ${baseUrl} eventData: ${this.eventData}  error: ${e}`
+            )
           })
+        if (res) {
+          this.eventId = res.id
+          const ticketList = []
+
+          this.tickets.forEach(function (ticket) {
+            ticket.Events = res.id
+            ticket.Amount = parseInt(ticket.Amount)
+            ticket.TicketCount = parseInt(ticket.TicketCount)
+            ticket.AvailableCount = parseInt(ticket.TicketCount)
+            ticketList.push(ticket)
+          })
+
+          ticketRes = await this.$axios
+            .$post(`${baseUrl}Tickets`, ticketList)
+            .catch((e) => {
+              console.error(
+                `Error in Save function of new single event form, context: create ticket , eventId: ${this.eventId},  baseUrl: ${baseUrl} ticketList: ${this.ticketList} error: ${e}`
+              )
+            })
+          if (ticketRes) {
+            this.isTicket = false
+            this.isEventCreate = true
+            return ticketRes
+          }
+        }
       }
     },
     isEmptyAddress() {
@@ -1090,16 +1110,15 @@ export default {
             this.venueAddress.LatLng.lat = latlng.lat || ''
             this.venueAddress.LatLng.lng = latlng.lng || ''
 
-            const newLocations = []
-            newLocations[0] = latlng
-
-            this.locations = newLocations
+            this.locations = [latlng]
             this.isMap = true
             this.returnToCenter()
             return res
           })
           .catch((e) => {
-            console.log('error', e)
+            console.error(
+              `Error in changeAddress function of new single event form when place search address and updating location on map, context: place search address, addressObj: ${addressObj} key: ${key} baseUrl: ${nuxtconfig.generalConfig.googleMapGeocodeApi}?address=${addressObj}&key=${key}, error: ${e}`
+            )
           })
       }
     },
@@ -1123,10 +1142,8 @@ export default {
         addressData.locality +
         ' ' +
         addressData.country
-      const newLocations = []
-      newLocations[0] = latlng
 
-      this.locations = newLocations
+      this.locations = [latlng]
       this.isMap = true
       this.returnToCenter()
     },
@@ -1146,7 +1163,7 @@ export default {
           this.checkUniqueLink(this.eventData.UniqLink)
         }
       } else {
-        this.isInalidEventLink = true
+        this.isInvalidEventLink = true
         this.uniqueLinkMessage = strings.UNIQUE_LINK_FORMAT
       }
       this.eventData.UniqLink = value
@@ -1162,10 +1179,10 @@ export default {
         },
       })
       if (result.data.Event.EventCount > 0) {
-        this.isInalidEventLink = true
+        this.isInvalidEventLink = true
         this.uniqueLinkMessage = strings.UNIQUE_LINK_DUPLICATE
       } else {
-        this.isInalidEventLink = false
+        this.isInvalidEventLink = false
         this.isUniqLinkValid = true
       }
     },
@@ -1173,6 +1190,7 @@ export default {
       if (value === 'Venue') {
         this.isVenue = true
         this.isOnlineEvent = false
+        this.isBitpodVirtual = false
         this.isMap = true
         this.isBitpodVirtual = false
       }
