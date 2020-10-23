@@ -1,21 +1,32 @@
 <template>
-  <v-btn
-    v-if="allowSession"
-    tile
-    depressed
-    color="success"
-    x-small
-    class="rounded text-capitalize"
-    @click="goLive"
-  >
-    Join Session
-    <v-icon right>
-      mdi-video
-    </v-icon>
-  </v-btn>
+  <div class="d-inline-flex">
+    <v-btn
+      v-if="allowSession()"
+      tile
+      depressed
+      color="success"
+      x-small
+      class="rounded"
+      @click="goLive"
+    >
+      Join Session
+      <v-icon right>
+        mdi-video
+      </v-icon>
+    </v-btn>
+    <copy
+      v-if="link"
+      class="pl-2"
+      :text-to-copy="copyLink"
+      icon-size="15"
+      :unique-id="`btn${item.id}`"
+      tooltip="Copy attendee link"
+    />
+  </div>
 </template>
 
 <script>
+import nuxtconfig from '~/nuxt.config'
 export default {
   props: {
     item: {
@@ -34,23 +45,36 @@ export default {
       required: false,
     },
   },
-  computed: {
+  data() {
+    return {
+      link: '',
+      copyLink: '',
+    }
+  },
+  methods: {
     allowSession() {
+      if (this.item.LocationType === 'Bitpod Virtual') {
+        const roomName =
+          (this.item.BitpodVirtualLink &&
+            this.item.BitpodVirtualLink.split('/')[3]) ||
+          'undefined'
+        this.link = `apps/event/live/${roomName}?e=${this.$route.params.id}`
+        this.copyLink = `https://${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}/${roomName}`
+      }
+      if (this.item.LocationType === 'Online event') {
+        this.link = this.item.WebinarLink || ''
+        this.copyLink = this.link
+      }
       const endDate = new Date(this.item.StartDate)
       endDate.setMinutes(endDate.getMinutes() + this.item.Duration)
       return (
-        this.item.LocationType === 'Bitpod Virtual' &&
+        (this.item.LocationType === 'Bitpod Virtual' ||
+          this.item.LocationType === 'Online event') &&
         endDate.getTime() > new Date().getTime()
       )
     },
-  },
-  methods: {
     goLive() {
-      const roomName =
-        (this.item.BitpodVirtualLink &&
-          this.item.BitpodVirtualLink.split('/')[3]) ||
-        'undefined'
-      window.open(`apps/event/live/${roomName}?e=${this.$route.params.id}`)
+      window.open(this.link)
     },
   },
 }
