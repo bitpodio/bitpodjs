@@ -40,35 +40,42 @@
                 ref="dateform"
                 v-model="datevalid"
                 :lazy-validation="lazy"
+                class="px-3 v-data-table__wrapper"
               >
-                <v-col class="col-12 col-md-6 pb-0">
-                  <v-datetime-picker
-                    v-model="formData.StartDate"
-                    :label="getDateLabel('StartDate')"
-                    :text-field-props="eventStartDateProps()"
-                  >
-                    <template slot="dateIcon">
-                      <v-icon>fas fa-calendar</v-icon>
-                    </template>
-                    <template slot="timeIcon">
-                      <v-icon>fas fa-clock</v-icon>
-                    </template>
-                  </v-datetime-picker>
-                </v-col>
-                <v-col class="col-12 col-md-6 pb-0">
-                  <v-datetime-picker
-                    v-model="formData.EndDate"
-                    :label="getDateLabel('EndDate')"
-                    :text-field-props="eventEndDateProps()"
-                  >
-                    <template slot="dateIcon">
-                      <v-icon>fas fa-calendar</v-icon>
-                    </template>
-                    <template slot="timeIcon">
-                      <v-icon>fas fa-clock</v-icon>
-                    </template>
-                  </v-datetime-picker>
-                </v-col>
+                <v-row>
+                  <v-col class="col-12 col-md-6">
+                    <v-datetime-picker
+                      ref="dateTimeComponent"
+                      v-model="formData.StartDate"
+                      :label="getDateLabel('StartDate')"
+                      :text-field-props="eventStartDateProps"
+                      :on-change="changeStartDate()"
+                    >
+                      <template slot="dateIcon">
+                        <v-icon>fas fa-calendar</v-icon>
+                      </template>
+                      <template slot="timeIcon">
+                        <v-icon>fas fa-clock</v-icon>
+                      </template>
+                    </v-datetime-picker>
+                  </v-col>
+                  <v-col class="col-12 col-md-6">
+                    <v-datetime-picker
+                      ref="dateTimeComponent1"
+                      v-model="formData.EndDate"
+                      :label="getDateLabel('EndDate')"
+                      :text-field-props="eventEndDateProps"
+                      :on-change="changeEndDate()"
+                    >
+                      <template slot="dateIcon">
+                        <v-icon>fas fa-calendar</v-icon>
+                      </template>
+                      <template slot="timeIcon">
+                        <v-icon>fas fa-clock</v-icon>
+                      </template>
+                    </v-datetime-picker>
+                  </v-col>
+                </v-row>
               </v-form>
               <v-col class="col-12 col-md-6">
                 <v-select
@@ -228,7 +235,66 @@ export default {
         event: {},
       },
       Symbol: '',
+      CheckEndDate: '',
     }
+  },
+  computed: {
+    eventStartDateProps() {
+      return {
+        appendIcon: 'fa-calendar',
+        outlined: true,
+        dense: true,
+        rules: [
+          (v) => {
+            const StartDate = v && new Date(v)
+            const { EndDate } = this.formData
+            let startDateMessage = ''
+            if (this.context.event.BusinessType !== 'Recurring') {
+              if (!StartDate) startDateMessage = strings.FIELD_REQUIRED
+              else if (StartDate && EndDate && StartDate > EndDate)
+                startDateMessage = strings.START_END_DATE
+              else startDateMessage = ''
+              return startDateMessage || true
+            } else {
+              if (StartDate && EndDate && StartDate > EndDate)
+                startDateMessage = strings.START_END_DATE
+              else startDateMessage = ''
+              return startDateMessage || true
+            }
+          },
+        ],
+      }
+    },
+    eventEndDateProps() {
+      return {
+        appendIcon: 'fa-calendar',
+        outlined: true,
+        dense: true,
+        rules: [
+          (v) => {
+            const EndDate = v && new Date(v)
+            const { StartDate } = this.formData
+            let endDateMessage = ''
+            if (this.context.event.BusinessType !== 'Recurring') {
+              if (!EndDate) endDateMessage = strings.FIELD_REQUIRED
+              else if (StartDate && EndDate && StartDate > EndDate)
+                endDateMessage = strings.END_START_DATE
+              else if (EndDate < new Date())
+                endDateMessage = strings.TICKET_END_DT_CURRENT_DT
+              else if (EndDate > new Date(this.CheckEndDate))
+                endDateMessage = strings.TICKET_END_DT_MSG
+              else endDateMessage = ''
+              return endDateMessage || true
+            } else {
+              if (StartDate && EndDate && EndDate < StartDate)
+                endDateMessage = strings.END_START_DATE
+              else endDateMessage = ''
+              return endDateMessage || true
+            }
+          },
+        ],
+      }
+    },
   },
   async mounted() {
     try {
@@ -269,20 +335,30 @@ export default {
     this.getCurrencySymbol(this.context.event.Currency)
   },
   methods: {
+    outsideClicked() {
+      this.$refs.dateTimeComponent.okHandler()
+      this.$refs.dateTimeComponent1.okHandler()
+    },
     changeStartDate() {
       if (
-        this.formData.BusinessType !== 'Recurring' ||
+        this.context.event.BusinessType !== 'Recurring' ||
         this.formData.StartDate !== ''
       ) {
         this.$refs.dateform && this.$refs.dateform.validate()
+        if (this.$refs.dateTimeComponent) {
+          this.$refs.dateTimeComponent.$children[0].onClickOutside = this.outsideClicked
+        }
       }
     },
-    changeEndDate(value) {
+    changeEndDate() {
       if (
-        this.formData.BusinessType !== 'Recurring' ||
+        this.context.event.BusinessType !== 'Recurring' ||
         this.formData.EndDate !== ''
       ) {
         this.$refs.dateform && this.$refs.dateform.validate()
+        if (this.$refs.dateTimeComponent1) {
+          this.$refs.dateTimeComponent1.$children[0].onClickOutside = this.outsideClicked
+        }
       }
     },
     onClose() {
@@ -353,60 +429,7 @@ export default {
         this.Amount = 1
       }
     },
-    eventStartDateProps() {
-      return {
-        appendIcon: 'fa-calendar',
-        outlined: true,
-        dense: true,
-        rules: [
-          (v) => {
-            const StartDate = v && new Date(v)
-            const { EndDate } = this.formData
-            let startDateMessage = ''
-            if (this.formData.BusinessType !== 'Recurring') {
-              if (!StartDate) startDateMessage = strings.FIELD_REQUIRED
-              else if (StartDate && EndDate && StartDate > EndDate)
-                startDateMessage = strings.EVENT_START_END_DATE
-              else startDateMessage = ''
-              return startDateMessage || true
-            } else {
-              if (StartDate && EndDate && StartDate > EndDate)
-                startDateMessage = 'Start date is greater'
-              else startDateMessage = ''
-              return startDateMessage || true
-            }
-          },
-        ],
-      }
-    },
-    eventEndDateProps() {
-      return {
-        appendIcon: 'fa-calendar',
-        outlined: true,
-        dense: true,
-        rules: [
-          (v) => {
-            const EndDate = v && new Date(v)
-            const { StartDate } = this.formData
-            let endDateMessage = ''
-            if (this.formData.BusinessType !== 'Recurring') {
-              if (!EndDate) endDateMessage = strings.FIELD_REQUIRED
-              else if (StartDate && EndDate && StartDate > EndDate)
-                endDateMessage = strings.EVENT_START_END_DATE
-              else if (EndDate < new Date())
-                endDateMessage = strings.EVENT_END_DATE
-              else endDateMessage = ''
-              return endDateMessage || true
-            } else {
-              if (StartDate && EndDate && EndDate < StartDate)
-                endDateMessage = 'End Date is greter'
-              else endDateMessage = ''
-              return endDateMessage || true
-            }
-          },
-        ],
-      }
-    },
+
     getAttendeesId() {
       this.formData.Attendee = this.setAttendee
         .filter((i) => this.registrationType.some((j) => j === i.Name))
@@ -414,6 +437,7 @@ export default {
     },
     getTickets() {
       this.items.map((ele) => {
+        this.CheckEndDate = this.context.event.EndDate
         this.formData = { ...ele }
         if (
           this.context.event.BusinessType !== 'Recurring' ||

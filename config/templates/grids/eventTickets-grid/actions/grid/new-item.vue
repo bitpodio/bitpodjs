@@ -41,12 +41,14 @@
                 ref="dateform"
                 v-model="datevalid"
                 :lazy-validation="lazy"
+                class="px-3 v-data-table__wrapper"
               >
                 <v-row>
-                  <v-col cols="12" sm="6" md="6" class="pb-0">
+                  <v-col class="col-12 col-md-6">
                     <v-datetime-picker
+                      ref="dateTimeComponent"
                       v-model="eventData.StartDate"
-                      label="Start Date*"
+                      :label="getDateLabel('StartDate')"
                       :text-field-props="eventStartDateProps"
                       :on-change="changeStartDate()"
                     >
@@ -58,11 +60,11 @@
                       </template>
                     </v-datetime-picker>
                   </v-col>
-                  <v-col cols="12" sm="6" md="6" class="pb-0">
+                  <v-col class="col-12 col-md-6">
                     <v-datetime-picker
+                      ref="dateTimeComponent1"
                       v-model="eventData.EndDate"
-                      :rules="requiredRules"
-                      label="End Date*"
+                      :label="getDateLabel('EndDate')"
                       :text-field-props="eventEndDateProps"
                       :on-change="changeEndDate()"
                     >
@@ -240,6 +242,7 @@ export default {
       Symbol: '',
       StartDate: null,
       EndDate: null,
+      CheckEndDate: '',
     }
   },
   computed: {
@@ -256,12 +259,12 @@ export default {
             if (this.eventData.BusinessType !== 'Recurring') {
               if (!StartDate) startDateMessage = strings.FIELD_REQUIRED
               else if (StartDate && EndDate && StartDate > EndDate)
-                startDateMessage = strings.EVENT_START_END_DATE
+                startDateMessage = strings.START_END_DATE
               else startDateMessage = ''
               return startDateMessage || true
             } else {
               if (StartDate && EndDate && StartDate > EndDate)
-                startDateMessage = 'Start date is greater than End Date'
+                startDateMessage = strings.START_END_DATE
               else startDateMessage = ''
               return startDateMessage || true
             }
@@ -282,14 +285,16 @@ export default {
             if (this.eventData.BusinessType !== 'Recurring') {
               if (!EndDate) endDateMessage = strings.FIELD_REQUIRED
               else if (StartDate && EndDate && StartDate > EndDate)
-                endDateMessage = strings.EVENT_START_END_DATE
+                endDateMessage = strings.END_START_DATE
+              else if (EndDate > new Date(this.CheckEndDate))
+                endDateMessage = strings.TICKET_END_DT_MSG
               else if (EndDate < new Date())
-                endDateMessage = strings.EVENT_END_DATE
+                endDateMessage = strings.TICKET_END_DT_CURRENT_DT
               else endDateMessage = ''
               return endDateMessage || true
             } else {
               if (StartDate && EndDate && EndDate < StartDate)
-                endDateMessage = 'End Date is less than StartDate'
+                endDateMessage = strings.END_START_DATE
               else endDateMessage = ''
               return endDateMessage || true
             }
@@ -321,24 +326,33 @@ export default {
         e
       )
     }
-
     this.getAttendeeType()
   },
   methods: {
+    outsideClicked() {
+      this.$refs.dateTimeComponent.okHandler()
+      this.$refs.dateTimeComponent1.okHandler()
+    },
     changeStartDate() {
       if (
         this.eventData.BusinessType !== 'Recurring' ||
         this.eventData.StartDate !== ''
       ) {
         this.$refs.dateform && this.$refs.dateform.validate()
+        if (this.$refs.dateTimeComponent) {
+          this.$refs.dateTimeComponent.$children[0].onClickOutside = this.outsideClicked
+        }
       }
     },
-    changeEndDate(value) {
+    changeEndDate() {
       if (
         this.eventData.BusinessType !== 'Recurring' ||
         this.eventData.EndDate !== ''
       ) {
         this.$refs.dateform && this.$refs.dateform.validate()
+        if (this.$refs.dateTimeComponent1) {
+          this.$refs.dateTimeComponent1.$children[0].onClickOutside = this.outsideClicked
+        }
       }
     },
     getDateLabel(dateLabel) {
@@ -374,8 +388,6 @@ export default {
       this.formData.ValidateQty = false
       this.formData.Status = ''
       this.valid = true
-      this.StartDate = null
-      this.EndDate = null
     },
     getAttendeesId() {
       this.formData.Attendee = this.setAttendeeType
@@ -512,7 +524,8 @@ export default {
       },
       update(data) {
         const event = formatGQLResult(data, 'Event')
-        this.eventData = event.length > 0 ? event[0] : {}
+        this.eventData = event.length > 0 ? { ...event[0] } : {}
+        this.CheckEndDate = this.eventData.EndDate
         this.getCurrencySymbol(this.eventData.Currency)
         this.getTicketDate()
         return {
