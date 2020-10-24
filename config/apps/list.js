@@ -5,7 +5,7 @@ export const appList = [
     css: 'fa fa-calendar fs-36 success--text',
     type: 'route',
     route: '/apps/event/list/Event/live and draft event',
-    roles: ['$orguser'],
+    roles: ['$orguser', '$orgowner', 'EventAdmin', 'EventManager'],
   },
   {
     name: 'admin',
@@ -13,7 +13,7 @@ export const appList = [
     css: 'fa fa-cogs fs-36 primary--text',
     type: 'route',
     route: '/apps/admin/organization/5cfe026f6ab042000c530105',
-    roles: [],
+    roles: ['EventAdmin', '$orgowner'],
   },
   {
     name: 'HelpCenter',
