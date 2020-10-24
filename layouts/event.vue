@@ -182,141 +182,7 @@
       <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
         <v-icon>mdi-invert-colors</v-icon>
       </v-btn>
-      <v-menu
-        offset-y
-        transition="slide-y-transition"
-        bottom
-        content-class="app-drawer"
-      >
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn icon v-bind="attrs" v-on="on">
-            <v-icon>mdi-apps</v-icon>
-          </v-btn>
-        </template>
-        <v-list>
-          <v-list-item>
-            <v-list-item-title class="d-flex flex-wrap app-container">
-              <div v-for="app in userApps" :key="app.name">
-                <nuxt-link
-                  v-if="app.route"
-                  :to="app.route"
-                  class="text-decoration-none"
-                >
-                  <v-flex
-                    class="d-flex justify-center align-center flex-column app-view"
-                  >
-                    <v-flex class="d-flex justify-center align-center">
-                      <i :class="app.css" aria-hidden="true"></i>
-                    </v-flex>
-                    <v-flex
-                      ><div class="pa-1 caption text--primary">
-                        {{ app.label }}
-                      </div></v-flex
-                    >
-                  </v-flex>
-                </nuxt-link>
-                <a
-                  v-if="app.href"
-                  :href="app.href"
-                  class="text-decoration-none"
-                  target="_blank"
-                >
-                  <v-flex
-                    class="d-flex justify-center align-center flex-column app-view"
-                  >
-                    <v-flex class="d-flex justify-center align-center">
-                      <v-img :src="app.icon" class="survey-img"></v-img>
-                    </v-flex>
-                    <v-flex
-                      ><div class="pa-1 caption text--primary">
-                        Survey
-                      </div></v-flex
-                    >
-                  </v-flex>
-                </a>
-              </div>
-              <!-- <nuxt-link
-                to="/apps/admin/organization/5cfe026f6ab042000c530105"
-                class="text-decoration-none"
-              >
-                <v-flex
-                  class="d-flex justify-center align-center flex-column app-view"
-                >
-                  <v-flex class="d-flex justify-center align-center">
-                    <i
-                      class="fa fa-cogs fs-36 primary--text"
-                      aria-hidden="true"
-                    ></i>
-                  </v-flex>
-                  <v-flex
-                    ><div class="pa-1 caption text--primary">
-                      Administration
-                    </div></v-flex
-                  >
-                </v-flex>
-              </nuxt-link>
-              <nuxt-link to="" class="text-decoration-none">
-                <v-flex
-                  class="d-flex justify-center align-center flex-column app-view"
-                >
-                  <v-flex class="d-flex justify-center align-center">
-                    <i
-                      class="fa fa-help-circle fs-36 warning--text"
-                      aria-hidden="true"
-                    ></i>
-                  </v-flex>
-                  <v-flex
-                    ><div class="pa-1 caption text--primary">
-                      Help Center
-                    </div></v-flex
-                  >
-                </v-flex>
-              </nuxt-link>
-              <a
-                href="https://dev-survey.bitpod.io/"
-                class="text-decoration-none"
-                target="_blank"
-              >
-                <v-flex
-                  class="d-flex justify-center align-center flex-column app-view"
-                >
-                  <v-flex class="d-flex justify-center align-center">
-                    <v-img
-                      src="https://survey.bitpod.io/favicon.ico"
-                      class="survey-img"
-                    ></v-img>
-                  </v-flex>
-                  <v-flex
-                    ><div class="pa-1 caption text--primary">
-                      Survey
-                    </div></v-flex
-                  >
-                </v-flex>
-              </a>
-              <nuxt-link
-                to="/apps/seatmap/list/seatmaps/seatmaps"
-                class="text-decoration-none"
-              >
-                <v-flex
-                  class="d-flex justify-center align-center flex-column app-view"
-                >
-                  <v-flex class="d-flex justify-center align-center">
-                    <i
-                      class="fa fa-grid-alt fs-36 primary--text"
-                      aria-hidden="true"
-                    ></i>
-                  </v-flex>
-                  <v-flex
-                    ><div class="pa-1 caption text--primary">
-                      Seat Map
-                    </div></v-flex
-                  >
-                </v-flex>
-              </nuxt-link> -->
-            </v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
+      <AppDrawer />
       <div v-if="$auth.$state.loggedIn">
         <v-menu
           v-model="account"
@@ -392,12 +258,12 @@
 </template>
 
 <script>
-import { intersection, _get } from '~/utility/object.js'
 import OrgnaizationList from '~/components/common/organization-list'
-import { appList } from '~/config/apps/list'
+import AppDrawer from '~/components/common/app-drawer'
 export default {
   components: {
     OrgnaizationList,
+    AppDrawer,
   },
   props: {
     source: { type: String, default: '' },
@@ -417,7 +283,6 @@ export default {
     message: false,
     triggerReset: false,
     triggerRecEventReset: false,
-    apps: appList,
     items: [
       {
         icon: 'fa fa-grid',
@@ -454,31 +319,6 @@ export default {
       },
     ],
   }),
-  computed: {
-    userApps() {
-      const userInfo = this.userCurrentOrgInfo || {}
-      const userRoles = userInfo.roles
-      console.log('userRoles', userRoles)
-      if (userRoles.includes('$orgowner') && userInfo && userInfo.id === 1) {
-        return this.apps
-      }
-      return this.apps.filter((app) => {
-        const appRoles = [app.name, ...app.roles]
-        return intersection(appRoles, userRoles).length > 0
-      })
-    },
-    userCurrentOrgInfo() {
-      const currentOrg = this.$store.state.currentOrg
-      const orgList = this.$store.state.auth.user.data.orgList
-      const currentDetails =
-        Array.isArray(orgList) &&
-        orgList.filter((org) => {
-          return org.name === currentOrg.name
-        })
-      const userOrgInfo = _get(currentDetails, '0')
-      return userOrgInfo || {}
-    },
-  },
   async created() {
     let token = this.$auth.strategy.token.get()
     if (token) {
