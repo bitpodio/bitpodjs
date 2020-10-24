@@ -6,6 +6,12 @@
   </div>
 </template>
 
+<script>
+export default {
+  layout: 'only-page',
+}
+</script>
+
 <style scoped>
 .container {
   min-height: 70vh;
