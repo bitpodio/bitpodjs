@@ -19,7 +19,7 @@ import ViewDropdown from '~/components/common/viewDropdown'
 import { configLoaderMixin } from '~/utility'
 
 export default {
-  middleware: ['auth'],
+  middleware: ['auth', 'authorization'],
   components: {
     Grid,
     ViewDropdown,

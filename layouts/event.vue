@@ -197,7 +197,11 @@
           <v-list-item>
             <v-list-item-title class="d-flex flex-wrap app-container">
               <div v-for="app in userApps" :key="app.name">
-                <nuxt-link :to="app.route" class="text-decoration-none">
+                <nuxt-link
+                  v-if="app.route"
+                  :to="app.route"
+                  class="text-decoration-none"
+                >
                   <v-flex
                     class="d-flex justify-center align-center flex-column app-view"
                   >
@@ -211,6 +215,25 @@
                     >
                   </v-flex>
                 </nuxt-link>
+                <a
+                  v-if="app.href"
+                  :href="app.href"
+                  class="text-decoration-none"
+                  target="_blank"
+                >
+                  <v-flex
+                    class="d-flex justify-center align-center flex-column app-view"
+                  >
+                    <v-flex class="d-flex justify-center align-center">
+                      <v-img :src="app.icon" class="survey-img"></v-img>
+                    </v-flex>
+                    <v-flex
+                      ><div class="pa-1 caption text--primary">
+                        Survey
+                      </div></v-flex
+                    >
+                  </v-flex>
+                </a>
               </div>
               <!-- <nuxt-link
                 to="/apps/admin/organization/5cfe026f6ab042000c530105"
@@ -371,6 +394,7 @@
 <script>
 import { intersection, _get } from '~/utility/object.js'
 import OrgnaizationList from '~/components/common/organization-list'
+import { appList } from '~/config/apps/list'
 export default {
   components: {
     OrgnaizationList,
@@ -393,41 +417,7 @@ export default {
     message: false,
     triggerReset: false,
     triggerRecEventReset: false,
-    apps: [
-      {
-        name: 'Event',
-        label: 'Event',
-        css: 'fa fa-calendar fs-36 success--text',
-        type: 'route',
-        route: '/apps/event/list/Event/live and draft event',
-        roles: ['$orguser'],
-      },
-      {
-        name: 'Administration',
-        label: 'Administration',
-        css: 'fa fa-cogs fs-36 primary--text',
-        type: 'route',
-        route: '/apps/admin/organization/5cfe026f6ab042000c530105',
-        roles: [],
-      },
-      {
-        name: 'HelpCenter',
-        label: 'Help Center',
-        css: 'fa fa-help-circle fs-36 warning--text',
-        type: 'route',
-        route: '',
-        roles: ['$orguser'],
-      },
-      {
-        name: 'Survey',
-        label: 'Survey',
-        css: 'survey-img',
-        type: 'url',
-        icon: 'https://survey.bitpod.io/favicon.ico',
-        href: 'https://dev-survey.bitpod.io/',
-        roles: ['$orguser'],
-      },
-    ],
+    apps: appList,
     items: [
       {
         icon: 'fa fa-grid',
