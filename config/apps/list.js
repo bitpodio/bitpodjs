@@ -1,6 +1,6 @@
 export const appList = [
   {
-    name: 'Event',
+    name: 'event',
     label: 'Event',
     css: 'fa fa-calendar fs-36 success--text',
     type: 'route',
@@ -8,7 +8,7 @@ export const appList = [
     roles: ['$orguser'],
   },
   {
-    name: 'Administration',
+    name: 'admin',
     label: 'Administration',
     css: 'fa fa-cogs fs-36 primary--text',
     type: 'route',
