@@ -73,10 +73,13 @@ export default {
       if (userRoles.includes('$orgowner') && userInfo && userInfo.id === 1) {
         return this.apps
       }
-      return this.apps.filter((app) => {
+      const filteredApps = this.apps.filter((app) => {
         const appRoles = [app.name, ...app.roles]
+        console.log(appRoles)
         return intersection(appRoles, userRoles).length > 0
       })
+      console.log(filteredApps)
+      return filteredApps
     },
   },
 }
