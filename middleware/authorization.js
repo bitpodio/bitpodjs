@@ -7,7 +7,7 @@ const isValidPage = (store, route) => {
     return true
   }
   const userCurrentOrg = userCurrentOrgInfo(store) || {}
-  const userRoles = userCurrentOrg.roles
+  const userRoles = userCurrentOrg.roles || []
   if (
     userRoles.includes('$orgowner') &&
     userCurrentOrg &&
