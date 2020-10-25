@@ -23,6 +23,13 @@ const isValidPage = (store, route) => {
   return isAuthorizedApp
 }
 
+const getUsersOrg = (store) => {
+  const orgList = store.state.auth.user
+    ? store.state.auth.user.data.orgList
+    : []
+  return orgList[0] || {}
+}
+
 export default function (context) {
   const { store, route, redirect, $auth } = context
 
@@ -32,10 +39,10 @@ export default function (context) {
     const publicDomain = process.env.PUBLIC_DOMAIN
     if (hostName === publicDomain) {
       const provider = $auth.strategy.name
-      const currentOrgName = store.state.currentOrg.name
+      const userFirstOrgName = getUsersOrg(store).name || ''
       const basePath = process.env.PUBLIC_PATH || ''
       return redirect(
-        `http://${currentOrgName}-${publicDomain}${basePath}/login?p=${provider}`
+        `http://${userFirstOrgName}-${publicDomain}${basePath}/login?p=${provider}`
       )
     }
   }
