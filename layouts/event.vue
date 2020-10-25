@@ -261,6 +261,7 @@
 import OrgnaizationList from '~/components/common/organization-list'
 import AppDrawer from '~/components/common/app-drawer'
 export default {
+  middleware: ['auth', 'authorization'],
   components: {
     OrgnaizationList,
     AppDrawer,
