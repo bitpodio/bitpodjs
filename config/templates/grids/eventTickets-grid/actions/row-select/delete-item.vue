@@ -6,7 +6,7 @@
       </v-btn>
     </v-col>
     <v-snackbar v-model="snackbar" :timeout="timeout" top="true"
-      ><div class="text-center">Record Deleted Successfully</div></v-snackbar
+      ><div class="text-center">Ticket Deleted Successfully</div></v-snackbar
     >
   </div>
 </template>

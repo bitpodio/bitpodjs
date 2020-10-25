@@ -198,9 +198,7 @@
                   <RichText
                     v-model="RTEValue"
                     class="pl-0"
-                    :is-edit-template="true"
-                    :show-template-dropdown="true"
-                    :is-general="template === 'General Template'"
+                    :dropdown-options="dropdownOptions"
                   />
                 </v-card>
               </v-tab-item>
@@ -389,6 +387,50 @@ export default {
       disableButton: false,
       invalid: true,
     }
+  },
+  computed: {
+    dropdownOptions() {
+      return {
+        'Event Name': 'Event Name',
+        Description: 'Description',
+        'Start Date': 'Start date',
+        'End Date': 'End date',
+        Timezone: 'Timezone',
+        Organizer: 'Organizer',
+        Venue: 'Venue',
+        Address: 'Address',
+        City: 'City',
+        State: 'State',
+        Country: 'Country',
+        'Postal Code': 'Postal Code',
+        'Event Webinar Link': 'Event Webinar Link',
+        'Event Joining Instruction': 'Event Joining Instruction',
+        'Organization Name': 'Organization Name',
+        'Organization Address': 'Organization Address',
+        'Organization City': 'Organization City',
+        'Organization State': 'Organization State',
+        'Organization Country': 'Organization Country',
+        'Organization Postal Code': 'Organization Postal Code',
+        'Privacy Policy': 'Privacy Policy',
+        'Organization Facebook': 'Organization Facebook',
+        'Organization Linkedin': 'Organization Linkedin',
+        'Organization Twitter': 'Organization Twitter',
+        Register: 'Register',
+        Logo: 'Logo',
+        'Registration Email': 'Registration Email',
+        'Registration Phone': 'Registration Phone',
+        'Registration Id': 'Registration Id',
+        'Ticket Quantity': 'Ticket Quantity',
+        'Session Location': 'Session Location',
+        'Session Booking Date': 'Session Booking Date',
+        'Session List': 'Session List',
+        'Attendee List': 'Attendee List',
+        'Payment Details': 'Payment Details',
+        'First Name': 'First Name',
+        'Last Name': 'Last Name',
+        'Full Name': 'Full Name',
+      }
+    },
   },
   watch: {
     curentTab(newVal, oldVal) {

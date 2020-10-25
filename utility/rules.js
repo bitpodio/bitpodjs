@@ -5,4 +5,11 @@ module.exports = Object.freeze({
       v
     ) || 'Email is invalid',
   link: (v) => /^[a-z0-9]+$/i.test(v) || 'Lower case alphanumeric letters only',
+  onlineEventLink: (v) => {
+    return !v
+      ? 'This field is required'
+      : !v.startsWith('https://')
+      ? 'This must be a https url'
+      : true
+  },
 })

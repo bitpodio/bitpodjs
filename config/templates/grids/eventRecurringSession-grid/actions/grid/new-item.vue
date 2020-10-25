@@ -152,7 +152,20 @@
               </v-flex>
             </div>
             <v-row v-if="dialog">
-              <v-col cols="12" sm="6" md="4" class="pb-0">
+              <v-col
+                v-if="session.Type === 'Group'"
+                cols="12"
+                sm="6"
+                md="4"
+                class="pb-0"
+              >
+                <Lookup
+                  v-model="session.LocationType"
+                  :field="smalllocationTypeProps"
+                  :rules="required"
+                />
+              </v-col>
+              <v-col v-else cols="12" sm="6" md="4" class="pb-0">
                 <Lookup
                   v-model="session.LocationType"
                   :field="locationTypeProps"
@@ -227,9 +240,9 @@
               >
                 <v-text-field
                   v-model="session.WebinarLink"
-                  label="online meeting link*"
+                  label="online meeting link (https)*"
                   outlined
-                  :rules="requiredRules"
+                  :rules="onlineEventLink"
                   dense
                 ></v-text-field>
               </v-col>
@@ -524,7 +537,7 @@
 import gql from 'graphql-tag'
 import { formatGQLResult } from '~/utility/gql.js'
 import strings from '~/strings.js'
-import { required } from '~/utility/rules.js'
+import { required, onlineEventLink } from '~/utility/rules.js'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import location from '~/config/apps/event/gql/location.gql'
 import { getIdFromAtob } from '~/utility'
@@ -592,6 +605,7 @@ export default {
     return {
       valid: false,
       required: [required],
+      onlineEventLink: [onlineEventLink],
       dialog: false,
       actionType,
       isSaveButtonDisabled: false,
@@ -723,6 +737,19 @@ export default {
           filter(data) {
             return {
               type: 'LocationType',
+            }
+          },
+        },
+      },
+      smalllocationTypeProps: {
+        type: 'lookup',
+        caption: 'Location type*',
+        dataSource: {
+          itemText: 'value',
+          itemValue: 'key',
+          filter(data) {
+            return {
+              type: 'EventLocationType',
             }
           },
         },
