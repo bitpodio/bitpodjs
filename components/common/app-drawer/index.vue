@@ -69,7 +69,7 @@ export default {
   computed: {
     userApps() {
       const userInfo = userCurrentOrgInfo(this.$store) || {}
-      const userRoles = userInfo.roles
+      const userRoles = userInfo.roles || []
       if (userRoles.includes('$orgowner') && userInfo && userInfo.id === 1) {
         return this.apps
       }
