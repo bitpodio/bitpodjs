@@ -1,5 +1,7 @@
 import { _get } from '~/utility/object.js'
-export const userCurrentOrgInfo = (store) => {
+import nuxtconfig from '~/nuxt.config'
+
+const userCurrentOrgInfo = (store) => {
   const currentOrg = store.state.currentOrg
   const orgList = store.state.auth.user
     ? store.state.auth.user.data.orgList
@@ -12,3 +14,18 @@ export const userCurrentOrgInfo = (store) => {
   const userOrgInfo = _get(currentDetails, '0')
   return userOrgInfo || {}
 }
+
+const getCurrentHostname = (req) => {
+  const host = req.get('host')
+  if (host && host.includes('localhost')) {
+    return nuxtconfig.axios.backendBaseUrl
+  }
+  return host
+}
+
+const userUtils = {
+  getCurrentHostname,
+  userCurrentOrgInfo,
+}
+
+export default userUtils

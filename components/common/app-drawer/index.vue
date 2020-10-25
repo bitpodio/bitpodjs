@@ -61,14 +61,14 @@
 <script>
 import { intersection } from '~/utility/object.js'
 import { appList } from '~/config/apps/list'
-import { userCurrentOrgInfo } from '~/utility/userApps'
+import userUtils from '~/utility/userApps'
 export default {
   data: () => ({
     apps: appList,
   }),
   computed: {
     userApps() {
-      const userInfo = userCurrentOrgInfo(this.$store) || {}
+      const userInfo = userUtils.userCurrentOrgInfo(this.$store) || {}
       const userRoles = userInfo.roles || []
       if (userRoles.includes('$orgowner') && userInfo && userInfo.id === 1) {
         return this.apps
