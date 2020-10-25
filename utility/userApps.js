@@ -1,5 +1,4 @@
 import { _get } from '~/utility/object.js'
-import nuxtconfig from '~/nuxt.config'
 
 const userCurrentOrgInfo = (store) => {
   const currentOrg = store.state.currentOrg
@@ -15,16 +14,7 @@ const userCurrentOrgInfo = (store) => {
   return userOrgInfo || {}
 }
 
-const getCurrentHostname = (req) => {
-  const host = req.get('host')
-  if (host && host.includes('localhost')) {
-    return nuxtconfig.axios.backendBaseUrl
-  }
-  return host
-}
-
 const userUtils = {
-  getCurrentHostname,
   userCurrentOrgInfo,
 }
 
