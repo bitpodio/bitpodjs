@@ -49,10 +49,10 @@ export default {
         src: `${
           process.env.GOOGLE_MAPS_API ||
           'https://maps.googleapis.com/maps/api/js'
-        }?key=${
+        }?key = ${
           process.env.GOOGLE_API_KEY ||
           'AIzaSyBKle17JR_zpGEzwARF0H8VFU9NeH9nh7c'
-        }&libraries=places`,
+        }& libraries=places`,
       },
       {
         src:
@@ -82,9 +82,9 @@ export default {
    */
   buildModules: [
     // Doc: https://github.com/nuxt-community/eslint-module
-    // '@nuxtjs/eslint-module',
+    '@nuxtjs/eslint-module',
     // Doc: https://github.com/nuxt-community/stylelint-module
-    // '@nuxtjs/stylelint-module',
+    '@nuxtjs/stylelint-module',
     '@nuxtjs/vuetify',
     '@nuxtjs/dotenv',
   ],
@@ -117,7 +117,6 @@ export default {
   axios: {
     apiEndpoint: '/svc/api/',
     backendBaseUrl: process.env.PUBLIC_DOMAIN || 'event.test.bitpod.io',
-    // baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
     baseURL: `http://localhost:3000${basePath}`,
     eventUrl: process.env.GET_EVENT_URL || 'event.test.bitpod.io',
   },
@@ -186,7 +185,7 @@ export default {
     clientConfigs: {
       default: {
         httpEndpoint: `https://${process.env.PUBLIC_DOMAIN}/svc/graphql`,
-        browserHttpEndpoint: '/svc/graphql',
+        // browserHttpEndpoint: '/svc/graphql',
       },
     },
     defaultOptions: {
