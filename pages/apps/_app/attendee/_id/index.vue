@@ -786,6 +786,9 @@
               width="100%"
               class="my-3"
             >
+              <div v-if="event.BusinessType === 'Single' && event.locationType">
+                <v-text>{{ event.LocationType }}</v-text>
+              </div>
               <div v-if="event.BusinessType === 'Recurring'">
                 <div
                   v-if="

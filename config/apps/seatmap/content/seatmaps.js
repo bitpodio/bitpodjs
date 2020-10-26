@@ -6,7 +6,7 @@ export default {
     seatmaps: {
       ui: {
         hideDefaultHeader: true,
-        hideDefaultFooter: true,
+        hideDefaultFooter: false,
         showExpand: false,
         singleExpand: false,
         showSelect: true,
