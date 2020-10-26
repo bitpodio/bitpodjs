@@ -135,10 +135,10 @@ function getAxiosConfig(req) {
 
 function getApiUrl(req) {
   const host = req.get('host')
-  if (host && host.includes('localhost')) {
-    return nuxtconfig.axios.backendBaseUrl
-  }
   const protocol = req.protocol
+  if (host && host.includes('localhost')) {
+    return `${protocol}://${nuxtconfig.axios.backendBaseUrl}`
+  }
   return `${protocol}://${host}`
 }
 

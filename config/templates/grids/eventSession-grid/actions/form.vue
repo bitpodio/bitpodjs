@@ -147,17 +147,9 @@
               <v-col v-if="session.LocationType === 'Online event'" cols="12">
                 <v-text-field
                   v-model="session.WebinarLink"
-                  label="Online event link*"
+                  label="Online event link (https)*"
                   outlined
-                  :rules="[
-                    (v) => {
-                      return !v
-                        ? 'This field is required'
-                        : !v.startsWith('https://')
-                        ? 'Invalid Protocol'
-                        : true
-                    },
-                  ]"
+                  :rules="onlineEventLink"
                   dense
                 ></v-text-field>
               </v-col>
@@ -274,11 +266,7 @@
                 </v-flex>
               </div>
               <v-col cols="12">
-                <RichText
-                  v-model="session.Description"
-                  label="Description"
-                  class="mb-5"
-                />
+                <RichText v-model="session.Description" class="mb-5" />
               </v-col>
             </v-row>
           </v-form>
@@ -302,9 +290,10 @@
 
 <script>
 import gql from 'graphql-tag'
+import { utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz'
 import { formatGQLResult } from '~/utility/gql.js'
 import strings from '~/strings.js'
-import { required } from '~/utility/rules.js'
+import { required, onlineEventLink } from '~/utility/rules.js'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import location from '~/config/apps/event/gql/location.gql'
 import speaker from '~/config/apps/event/gql/eventSpeakers.gql'
@@ -338,17 +327,15 @@ export default {
     },
   },
   data() {
-    const session =
-      this.item && Object.keys(this.item).length ? { ...this.item[0] } : {}
-    session.StartDate = session.StartDate ? new Date(session.StartDate) : ''
     return {
-      customDuration: '15',
+      customDuration: '50',
       isCustomMin: false,
       snackbar: false,
       snackbarText: '',
       eventDetails: {},
       valid: false,
       required: [required],
+      onlineEventLink: [onlineEventLink],
       dialog: false,
       isSaveButtonDisabled: false,
       isGroup: false,
@@ -471,9 +458,31 @@ export default {
           ? { ...this.item[0] }
           : {}
         container.StartDate = container.StartDate
-          ? new Date(container.StartDate)
+          ? new Date(
+              utcToZonedTime(new Date(container.StartDate), container.Timezone)
+            )
           : ''
+        if (
+          container.Duration === 15 ||
+          container.Duration === 30 ||
+          container.Duration === 45 ||
+          container.Duration === 60
+        ) {
+          container.Duration += ''
+        } else {
+          this.isCustomMin = true
+          this.customDuration = container.Duration
+          container.Duration = '0'
+        }
         this.session = { ...container }
+      } else {
+        this.session.StartDate = new Date(this.eventDetails.StartDate)
+        if (this.session.StartDate.getSeconds()) {
+          this.session.StartDate.setMinutes(
+            this.session.StartDate.getMinutes() + 1
+          )
+          this.session.Duration = '60'
+        }
       }
       this.dialog = true
     },
@@ -485,13 +494,15 @@ export default {
       }
     },
     getBitpodVirtualLink() {
-      const randomStr = Math.random().toString(36).substring(2, 6)
-      const roomName = `/${this.eventDetails.UniqLink}-${(
-        this.session.Name || 'Session_Name'
-      )
-        .split(' ')[0]
-        .replace(/[^a-zA-Z ]/g, '')}-${randomStr}`
-      this.session.BitpodVirtualLink = `https://${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}${roomName}`
+      if (!this.isEdit) {
+        const randomStr = Math.random().toString(36).substring(2, 6)
+        const roomName = `/${this.eventDetails.UniqLink}-${(
+          this.session.Name || 'Session_Name'
+        )
+          .split(' ')[0]
+          .replace(/[^a-zA-Z ]/g, '')}-${randomStr}`
+        this.session.BitpodVirtualLink = `https://${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}${roomName}`
+      }
     },
     ticketProps() {
       const items = this.ticketOptions
@@ -571,6 +582,9 @@ export default {
           return
         }
       }
+      this.session.StartDate = new Date(
+        zonedTimeToUtc(this.session.StartDate, this.session.Timezone)
+      )
       try {
         if (this.session.Duration === '0') {
           this.session.Duration = this.customDuration
@@ -614,6 +628,9 @@ export default {
       this.session.MySpeaker = ''
       this.session.SessionTicket = ''
       this.session.LocationType = ''
+      this.session.WebinarLink = ''
+      this.customDuration = '50'
+      this.isCustomMin = false
       this.dialog = false
     },
   },
@@ -717,14 +734,6 @@ export default {
       },
       update(data) {
         this.eventDetails = formatGQLResult(data, 'Event')[0]
-        if (!this.isEdit) {
-          this.session.StartDate = new Date(this.eventDetails.StartDate)
-          if (this.session.StartDate.getSeconds()) {
-            this.session.StartDate.setMinutes(
-              this.session.StartDate.getMinutes() + 1
-            )
-          }
-        }
       },
       error(error) {
         this.error = error

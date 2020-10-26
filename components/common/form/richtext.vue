@@ -189,6 +189,9 @@ export default {
     content() {
       this.$emit('input', this.content)
     },
+    value(newVal) {
+      this.content = newVal
+    },
   },
   mounted() {
     if (!this.dropdownOptions && (!this.field || !this.field.dropdownOptions)) {

@@ -240,17 +240,9 @@
               >
                 <v-text-field
                   v-model="session.WebinarLink"
-                  label="online meeting link*"
+                  label="online meeting link (https)*"
                   outlined
-                  :rules="[
-                    (v) => {
-                      return !v
-                        ? 'This field is required'
-                        : !v.startsWith('https://')
-                        ? 'Invalid Protocol'
-                        : true
-                    },
-                  ]"
+                  :rules="onlineEventLink"
                   dense
                 ></v-text-field>
               </v-col>
@@ -545,7 +537,7 @@
 import gql from 'graphql-tag'
 import { formatGQLResult } from '~/utility/gql.js'
 import strings from '~/strings.js'
-import { required } from '~/utility/rules.js'
+import { required, onlineEventLink } from '~/utility/rules.js'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import location from '~/config/apps/event/gql/location.gql'
 import { getIdFromAtob } from '~/utility'
@@ -613,6 +605,7 @@ export default {
     return {
       valid: false,
       required: [required],
+      onlineEventLink: [onlineEventLink],
       dialog: false,
       actionType,
       isSaveButtonDisabled: false,
