@@ -1342,7 +1342,7 @@ import event from '~/config/apps/event/gql/event.gql'
 import copy from '~/components/common/copy'
 import Notes from '~/components/common/notes'
 import { formatGQLResult } from '~/utility/gql.js'
-import { configLoaderMixin, getIdFromAtob, getApiUrl } from '~/utility'
+import { configLoaderMixin, getIdFromAtob } from '~/utility'
 
 export default {
   components: {
@@ -1526,7 +1526,7 @@ export default {
 
   methods: {
     eventLink() {
-      const baseUrl = getApiUrl()
+      const baseUrl = this.$bitpod.getApiUrl()
       const regUrl = baseUrl.replace(
         'svc/api/',
         `e/${this.data.event.UniqLink}`
@@ -1645,7 +1645,7 @@ export default {
       }
     },
     async changeStatus(statusName) {
-      const url = getApiUrl()
+      const url = this.$bitpod.getApiUrl()
       try {
         const res = await this.$axios.$patch(
           `${url}Events/${this.$route.params.id}`,
@@ -1665,7 +1665,7 @@ export default {
     },
     async publishEvent() {
       this.formData.Status = 'Open for registration'
-      const url = getApiUrl()
+      const url = this.$bitpod.getApiUrl()
       try {
         const res = await this.$axios.patch(
           `${url}Events/${this.$route.params.id}`,
@@ -1703,14 +1703,12 @@ export default {
       return str
     },
     async deleteBadge() {
-      const url = getApiUrl()
+      const url = this.$bitpod.getApiUrl()
       const check = confirm('Are you sure you want to delete this badge?')
       if (check === true) {
         try {
           const res = await this.$axios.$delete(
-            `https://${nuxtconfig.axios.eventUrl}${
-              nuxtconfig.axios.apiEndpoint
-            }Badges/${getIdFromAtob(this.badgeData.id)}`
+            `${url}Badges/${getIdFromAtob(this.badgeData.id)}`
           )
           if (res) {
             this.snackbarText = 'Badges deleted successfully'
@@ -1760,10 +1758,9 @@ export default {
       return downloadLink
     },
     async getBannerImageName(imageId) {
+      const url = this.$bitpod.getApiUrl()
       try {
-        const res = await this.$axios.$get(
-          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Attachments/${imageId}`
-        )
+        const res = await this.$axios.$get(`${url}Attachments/${imageId}`)
         if (res) {
           this.bannerName = res.fileName
         }
@@ -1772,10 +1769,9 @@ export default {
       }
     },
     async getLogoName(imageId) {
+      const url = this.$bitpod.getApiUrl()
       try {
-        const res = await this.$axios.$get(
-          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Attachments/${imageId}`
-        )
+        const res = await this.$axios.$get(`${url}Attachments/${imageId}`)
         if (res) {
           this.logoName = res.fileName
         }
@@ -1784,10 +1780,9 @@ export default {
       }
     },
     async getOtherImageName(imageId) {
+      const url = this.$bitpod.getApiUrl()
       try {
-        const res = await this.$axios.$get(
-          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Attachments/${imageId}`
-        )
+        const res = await this.$axios.$get(`${url}Attachments/${imageId}`)
         if (res) {
           this.OtherImageName.push(res.fileName)
           this.refresh()
@@ -1849,9 +1844,10 @@ export default {
       }
     },
     async updateEventGallery(formData) {
+      const url = this.$bitpod.getApiUrl()
       try {
         const res = await this.$axios.$patch(
-          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`,
+          `${url}Events/${this.$route.params.id}`,
           formData
         )
         if (res) {
@@ -1864,10 +1860,11 @@ export default {
       }
     },
     updateOtherImageGallery(formData) {
+      const url = this.$bitpod.getApiUrl()
       try {
         formData.map(async (id) => {
           const res = await this.$axios.$put(
-            `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/Others/rel/${id}`
+            `${url}Events/${this.$route.params.id}/Others/rel/${id}`
           )
           if (res) {
             this.snackbarText = 'Attachment added successfully'
@@ -1905,9 +1902,10 @@ export default {
       return fieldValue || ' '
     },
     getAttachmentLink(id, isDownloadLink) {
-      const attachmentUrl = `https://${nuxtconfig.axios.eventUrl}${
-        nuxtconfig.axios.apiEndpoint
-      }Attachments${isDownloadLink ? '/download' : ''}${id ? '/' + id : ''}`
+      const url = this.$bitpod.getApiUrl()
+      const attachmentUrl = `${url}Attachments${
+        isDownloadLink ? '/download' : ''
+      }${id ? '/' + id : ''}`
       return attachmentUrl
     },
     viewRegistration() {
@@ -1915,10 +1913,11 @@ export default {
       window.open(`${regUrl}`, '_blank')
     },
     async deleteBannerFile(e, id) {
+      const url = this.$bitpod.getApiUrl()
       const checkRes = confirm('Are you sure you want to delete')
       if (checkRes) {
         const res = await this.$axios.delete(
-          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/BannerImage/${id}`
+          `${url}Events/${this.$route.params.id}/BannerImage/${id}`
         )
         if (res) {
           this.refresh()
@@ -1928,10 +1927,11 @@ export default {
       }
     },
     async deleteLogoFile(id) {
+      const url = this.$bitpod.getApiUrl()
       const checkRes = confirm('Are you sure you want to delete')
       if (checkRes) {
         const res = await this.$axios.delete(
-          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/LogoURL/${id}`
+          `${url}Events/${this.$route.params.id}/LogoURL/${id}`
         )
         if (res) {
           this.snackbarText = 'Attachment deleted successfully'
@@ -1941,10 +1941,11 @@ export default {
       }
     },
     async deleteOtherFile(id) {
+      const url = this.$bitpod.getApiUrl()
       const checkRes = confirm('Are you sure you want to delete')
       if (checkRes) {
         const res = await this.$axios.delete(
-          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/Others/${id}`
+          `${url}Events/${this.$route.params.id}/Others/${id}`
         )
         if (res) {
           this.snackbarText = 'Attachment deleted successfully'
@@ -1975,7 +1976,7 @@ export default {
     },
     async updateRegistrationPage() {
       const obj = this.updateSectionHeading
-      const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`
+      const URL = `${this.$bitpod.getApiUrl()}Events/${this.$route.params.id}`
       try {
         const res = await this.$axios.$patch(URL, obj)
         if (res) {
@@ -1990,7 +1991,7 @@ export default {
     async updateEvent() {
       const obj = this.updateData
       obj.id = this.$route.params.id
-      const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`
+      const URL = `${this.$bitpod.getApiUrl()}Events/${this.$route.params.id}`
       try {
         const res = await this.$axios.$patch(URL, obj)
         if (res) {
@@ -2013,7 +2014,7 @@ export default {
     },
     async updateSeatReservation() {
       const seatReservation = this.switchSeat
-      const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`
+      const URL = `${this.$bitpod.getApiUrl()}Events/${this.$route.params.id}`
       const obj = { SeatReservation: seatReservation }
       try {
         const res = await this.$axios.$patch(URL, obj)
@@ -2030,7 +2031,7 @@ export default {
     async getSeatMap(eventData) {
       const layoutId = this.eventData.LayoutId
       if (layoutId) {
-        const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}SeatMaps/${layoutId}`
+        const URL = `${this.$bitpod.getApiUrl()}SeatMaps/${layoutId}`
         try {
           const res = await this.$axios.$get(URL)
           if (res) {
@@ -2045,7 +2046,7 @@ export default {
       }
     },
     async onDeleteSeatMap() {
-      const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`
+      const URL = `${this.$bitpod.getApiUrl()}Events/${this.$route.params.id}`
       try {
         const res = await this.$axios.$patch(URL, { LayoutId: '' })
         if (res) {

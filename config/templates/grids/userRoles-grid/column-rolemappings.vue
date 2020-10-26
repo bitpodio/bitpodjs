@@ -13,7 +13,6 @@
 </template>
 
 <script>
-import nuxtconfig from '~/nuxt.config'
 export default {
   props: {
     item: {
@@ -43,14 +42,18 @@ export default {
     async removeRole(role) {
       try {
         const res = await this.$axios.$delete(
-          `https://${nuxtconfig.axios.eventUrl}/svc/api/Organizations/${this.$store.state.currentOrg.id}/Users/${this.item.email}/Roles/${role}`
+          `${this.$bitpod.getApiUrl()}Organizations/${
+            this.$store.state.currentOrg.id
+          }/Users/${this.item.email}/Roles/${role}`
         )
         if (res) {
           this.refresh()
         }
       } catch (e) {
         console.log(
-          `Error in templates/grids/userRoles-grid/column-rolemappings.vue while making a delete call to organization model from method removeRole context:-URL:-https://${nuxtconfig.axios.eventUrl}/svc/api/Organizations/${this.$store.state.currentOrg.id}/Users/${this.item.email}/Roles/${role}\n `,
+          `Error in templates/grids/userRoles-grid/column-rolemappings.vue while making a delete call to organization model from method removeRole context:-URL:-${this.$bitpod.getApiUrl()}Organizations/${
+            this.$store.state.currentOrg.id
+          }/Users/${this.item.email}/Roles/${role}\n `,
           e
         )
       }

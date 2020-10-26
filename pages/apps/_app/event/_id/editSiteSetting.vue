@@ -276,7 +276,6 @@
 
 <script>
 import gql from 'graphql-tag'
-import nuxtconfig from '~/nuxt.config'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
@@ -380,8 +379,9 @@ export default {
       const obj = this.setData()
       delete this.eventData._VenueAddress
       try {
+        const url = this.$bitpod.getApiUrl()
         const res = await this.$axios.$patch(
-          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`,
+          `${url}Events/${this.$route.params.id}`,
           obj
         )
         if (res) {

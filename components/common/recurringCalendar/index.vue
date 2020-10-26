@@ -213,7 +213,6 @@ import rrulePlugin from '@fullcalendar/rrule'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
-import nuxtConfig from '~/nuxt.config'
 import Grid from '~/components/common/grid'
 import { formatGQLResult } from '~/utility/gql.js'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
@@ -402,9 +401,10 @@ export default {
           const existingEvent = this.exceptionDates.find(
             (i) => i.type === 'wday' && i.wday === day
           )
-          const exceptionURL = `https://${nuxtConfig.axios.eventUrl}${
-            nuxtConfig.axios.apiEndpoint
-          }Sessions/${this.$route.params.id}/Exceptions/${
+          const url = this.$bitpod.getApiUrl()
+          const exceptionURL = `${url}Sessions/${
+            this.$route.params.id
+          }/Exceptions/${
             existingEvent ? atob(existingEvent.id).split(':')[1] : ''
           }`
           if (i.selected) {
@@ -429,11 +429,10 @@ export default {
       const existingEvent = this.exceptionDates.find(
         (i) => i.type === 'date' && i.date === this.clickedDate.toISOString()
       )
-      const exceptionURL = `https://${nuxtConfig.axios.eventUrl}${
-        nuxtConfig.axios.apiEndpoint
-      }Sessions/${this.$route.params.id}/Exceptions/${
-        existingEvent ? atob(existingEvent.id).split(':')[1] : ''
-      }`
+      const url = this.$bitpod.getApiUrl()
+      const exceptionURL = `${url}Sessions/${
+        this.$route.params.id
+      }/Exceptions/${existingEvent ? atob(existingEvent.id).split(':')[1] : ''}`
       return this.$axios({
         method: existingEvent ? 'PUT' : 'POST',
         url: exceptionURL,

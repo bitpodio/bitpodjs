@@ -98,7 +98,6 @@
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import File from '~/components/common/form/file.vue'
 import { required } from '~/utility/rules.js'
-import { getApiUrl } from '~/utility'
 export default {
   components: {
     File,
@@ -176,7 +175,7 @@ export default {
     },
     async onSave() {
       this.isSaveButtonDisabled = true
-      const url = getApiUrl()
+      const url = this.$bitpod.getApiUrl()
       this.template.Documents = this.fileList
       let res = null
       try {

@@ -3,7 +3,6 @@
 </template>
 
 <script>
-import nuxtconfig from '~/nuxt.config'
 export default {
   props: {
     value: {
@@ -23,7 +22,7 @@ export default {
     async getCurrency() {
       try {
         const res = await this.$axios.$get(
-          `https://${nuxtconfig.axios.eventUrl}/svc/api/Events/${this.$route.params.id}`
+          `${this.$bitpod.getApiUrl()}Events/${this.$route.params.id}`
         )
         if (res) {
           this.getCurrencySymbol(res.Currency)

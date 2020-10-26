@@ -61,7 +61,9 @@ export default {
   async mounted() {
     try {
       const res = await this.$axios.get(
-        `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/getToken?room=${this.$route.params.id}`
+        `${this.$bitpod.getApiUrl()}Events/getToken?room=${
+          this.$route.params.id
+        }`
       )
       this.jwtToken = res.data.token
       this.jwtAcquired = true
@@ -78,7 +80,7 @@ export default {
         info.email ? '[' + info.email + ']' : ''
       }has ${message} Room ${this.$route.params.id}`
       this.$axios.post(
-        `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.query.e}/Comments`,
+        `${this.$bitpod.getApiUrl()}Events/${this.$route.query.e}/Comments`,
         {
           Notes: note,
         }

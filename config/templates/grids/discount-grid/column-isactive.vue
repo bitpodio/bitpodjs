@@ -15,7 +15,6 @@
 </template>
 
 <script>
-import nuxtconfig from '~/nuxt.config'
 export default {
   props: {
     item: {
@@ -36,13 +35,11 @@ export default {
   },
   methods: {
     async updateRegForm() {
+      const url = this.$bitpod.getApiUrl()
       try {
-        const res = await this.$axios.$put(
-          `https://${nuxtconfig.axios.eventUrl}/svc/api/OfferCodes/${this.item.id}`,
-          {
-            isActive: this.checkbox,
-          }
-        )
+        const res = await this.$axios.$put(`${url}OfferCodes/${this.item.id}`, {
+          isActive: this.checkbox,
+        })
         if (res) {
           this.refresh()
         }

@@ -898,7 +898,6 @@ import Grid from '~/components/common/grid'
 import Notes from '~/components/common/notes'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
-import { getApiUrl } from '~/utility/index.js'
 import { configLoaderMixin } from '~/utility'
 
 export default {
@@ -1035,7 +1034,7 @@ export default {
       }
     },
     async changeStatus(statusName) {
-      const url = getApiUrl()
+      const url = this.$bitpod.getApiUrl()
       try {
         const res = await this.$axios.$patch(
           `${url}Events/${this.$route.params.id}`,
@@ -1055,7 +1054,7 @@ export default {
     },
     async publishEvent() {
       this.eventData.Status = 'Open for registration'
-      const url = getApiUrl()
+      const url = this.$bitpod.getApiUrl()
       try {
         const res = await this.$axios.patch(
           `${url}Events/${this.$route.params.id}`,
@@ -1080,9 +1079,10 @@ export default {
       return fieldValue || '-'
     },
     getAttachmentLink(id, isDownloadLink) {
-      const attachmentUrl = `https://${nuxtConfig.axios.eventUrl}${
-        nuxtConfig.axios.apiEndpoint
-      }Attachments${isDownloadLink ? '/download' : ''}${id ? '/' + id : ''}`
+      const url = this.$bitpod.getApiUrl()
+      const attachmentUrl = `${url}Attachments${
+        isDownloadLink ? '/download' : ''
+      }${id ? '/' + id : ''}`
       return attachmentUrl
     },
     viewRegistration() {
@@ -1090,17 +1090,17 @@ export default {
       window.open(`${regUrl}`, '_blank')
     },
     eventLink() {
-      const baseUrl = getApiUrl()
+      const baseUrl = this.$bitpod.getApiUrl()
       const regUrl = baseUrl.replace('svc/api', `e/${this.data.event.UniqLink}`)
       return regUrl
     },
     sessionLink() {
-      const baseUrl = getApiUrl()
+      const baseUrl = this.$bitpod.getApiUrl()
       const regUrl = baseUrl.replace('svc/api', `t/${this.data.event.UniqLink}`)
       return regUrl
     },
     embedLink() {
-      const baseUrl = getApiUrl()
+      const baseUrl = this.$bitpod.getApiUrl()
       const embedLink = baseUrl.replace(
         'svc/api',
         `embed/t/${this.data.event.UniqLink}`
@@ -1116,7 +1116,7 @@ export default {
     async updateEvent() {
       const obj = this.updateData
       obj.id = this.$route.params.id
-      const URL = `https://${nuxtConfig.axios.eventUrl}${nuxtConfig.axios.apiEndpoint}Events/${this.$route.params.id}`
+      const URL = `${this.$bitpod.getApiUrl()}Events/${this.$route.params.id}`
       try {
         const res = await this.$axios.$patch(URL, obj)
         if (res) {
@@ -1138,7 +1138,9 @@ export default {
     },
     async updateRegistrationPage() {
       const obj = this.updateSectionHeading
-      const URL = `https://${nuxtConfig.axios.eventUrl}${nuxtConfig.axios.apiEndpoint}Events/${this.$route.params.id}`
+      const URL = `https://${this.$bitpod.getApiUrl()}Events/${
+        this.$route.params.id
+      }`
       try {
         const res = await this.$axios.$patch(URL, obj)
         if (res) {

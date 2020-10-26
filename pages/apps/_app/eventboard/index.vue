@@ -402,7 +402,6 @@ import {
 } from './aggregateFilters.js'
 import { formatGQLResult } from '~/utility/gql.js'
 import { getIdFromAtob } from '~/utility'
-import nuxtconfig from '~/nuxt.config'
 import timeAgo from '~/utility/get-time-difference.js'
 import eventList from '~/config/apps/event/gql/eventlist.gql'
 import registrationList from '~/config/apps/event/gql/registrationList.gql'
@@ -605,14 +604,12 @@ export default {
       this.hasScroll = block.scrollWidth > block.clientWidth
     },
     getURL(id) {
-      const attachmentUrl = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Attachments/download/${id}`
+      const attachmentUrl = `${this.$bitpod.getApiUrl()}Attachments/download/${id}`
       return attachmentUrl
     },
     getSummaryData() {
       this.$axios
-        .get(
-          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/getEventSummery`
-        )
+        .get(`${this.$bitpod.getApiUrl()}Events/getEventSummery`)
         .then((data) => {
           this.eventSummaryData[0].data = data.data.result.totalRegistration
           this.eventSummaryData[1].data = data.data.result.totalFailed
@@ -629,9 +626,9 @@ export default {
     getSessionSoldData() {
       this.$axios
         .get(
-          `https://${nuxtconfig.axios.eventUrl}${
-            nuxtconfig.axios.apiEndpoint
-          }Events/aggregate?filter=${JSON.stringify(sessionSoldData())}`
+          `${this.$bitpod.getApiUrl()}Events/aggregate?filter=${JSON.stringify(
+            sessionSoldData()
+          )}`
         )
         .then((data) => {
           if (data.data.data.length) {
@@ -661,9 +658,9 @@ export default {
     getTicketSoldData() {
       this.$axios
         .get(
-          `https://${nuxtconfig.axios.eventUrl}${
-            nuxtconfig.axios.apiEndpoint
-          }Registrations/aggregate?filter=${JSON.stringify(ticketSoldData())}`
+          `${this.$bitpod.getApiUrl()}Registrations/aggregate?filter=${JSON.stringify(
+            ticketSoldData()
+          )}`
         )
         .then((data) => {
           if (data.data.data.length) {
@@ -703,9 +700,9 @@ export default {
     getConversionData() {
       this.$axios
         .get(
-          `https://${nuxtconfig.axios.eventUrl}${
-            nuxtconfig.axios.apiEndpoint
-          }Events/aggregate?filter=${JSON.stringify(conversionData())}`
+          `${this.$bitpod.getApiUrl()}Events/aggregate?filter=${JSON.stringify(
+            conversionData()
+          )}`
         )
         .then((data) => {
           if (data.data.data.length) {
@@ -735,9 +732,9 @@ export default {
     getGeoData() {
       this.$axios
         .get(
-          `https://${nuxtconfig.axios.eventUrl}${
-            nuxtconfig.axios.apiEndpoint
-          }Registrations/aggregate?filter=${JSON.stringify(geoData())}`
+          `${this.$bitpod.getApiUrl()}Registrations/aggregate?filter=${JSON.stringify(
+            geoData()
+          )}`
         )
         .then((data) => {
           if (data.data.data.length) {
@@ -755,9 +752,9 @@ export default {
     getPieData() {
       this.$axios
         .get(
-          `https://${nuxtconfig.axios.eventUrl}${
-            nuxtconfig.axios.apiEndpoint
-          }Events/aggregate?filter=${JSON.stringify(pieData())}`
+          `${this.$bitpod.getApiUrl()}Events/aggregate?filter=${JSON.stringify(
+            pieData()
+          )}`
         )
         .then((data) => {
           if (data.data.data.length) {
