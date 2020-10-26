@@ -125,7 +125,6 @@ import gql from 'graphql-tag'
 import { email, required } from '~/utility/rules.js'
 import { formatGQLResult } from '~/utility/gql.js'
 import organization from '~/config/apps/admin/gql/organization.gql'
-import { getApiUrl } from '~/utility'
 export default {
   props: {
     editOrgInfo: {
@@ -173,7 +172,7 @@ export default {
       this.formData._CurrentAddress.Country = this.venueAddress.Country
     },
     async onSave() {
-      const url = getApiUrl()
+      const url = this.$bitpod.getApiUrl()
       this.setAddress()
       delete this.formData._CurrentAddress.LatLng
       try {

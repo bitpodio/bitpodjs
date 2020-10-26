@@ -70,6 +70,7 @@ export default {
    */
   plugins: [
     '~/plugins/eventBus.js',
+    '~/plugins/bitpod',
     { src: '~/plugins/v-datetime-picker.js', mode: 'client' },
   ],
   /*
