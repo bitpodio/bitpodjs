@@ -787,7 +787,7 @@
               class="my-3"
             >
               <div v-if="event.BusinessType === 'Single' && event.locationType">
-                <v-text>{{ event.LocationType }}</v-text>
+                <v-text>{{ event.locationType }}</v-text>
               </div>
               <div v-if="event.BusinessType === 'Recurring'">
                 <div
