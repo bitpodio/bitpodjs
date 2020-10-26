@@ -185,8 +185,8 @@ export default {
   apollo: {
     clientConfigs: {
       default: {
-        httpEndpoint: 'https://event.test.bitpod.io/svc/graphql',
-        // browserHttpEndpoint: '/svc/graphql',
+        httpEndpoint: `https://${process.env.PUBLIC_DOMAIN}/svc/graphql`,
+        browserHttpEndpoint: '/svc/graphql',
       },
     },
     defaultOptions: {

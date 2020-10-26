@@ -144,8 +144,8 @@
                   <v-col v-if="isOnlineEvent" cols="12" class="pb-0">
                     <v-text-field
                       v-model="eventData.WebinarLink"
-                      :rules="requiredRules"
-                      label="Online Event Link*"
+                      :rules="onlineEventLink"
+                      label="Online event link (https)*"
                       outlined
                       dense
                       required
@@ -511,7 +511,7 @@ import eventCount from '~/config/apps/event/gql/eventCount.gql'
 import organizationInfo from '~/config/apps/event/gql/organizationInfo.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import nuxtconfig from '~/nuxt.config'
-import { required } from '~/utility/rules.js'
+import { required, onlineEventLink } from '~/utility/rules.js'
 export default {
   components: {
     RichText: () =>
@@ -534,6 +534,7 @@ export default {
     const currentDatetime = new Date(new Date().setSeconds(0))
     return {
       valid: true,
+      onlineEventLink: [onlineEventLink],
       datevalid: true,
       lazy: false,
       tabs: null,
