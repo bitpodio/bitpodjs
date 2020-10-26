@@ -259,7 +259,6 @@ import { formatGQLResult } from '~/utility/gql.js'
 import strings from '~/strings.js'
 import Timezone from '~/components/common/form/timezone'
 import { formatTimezoneDateFieldsData } from '~/utility/form.js'
-import { getApiUrl } from '~/utility'
 import CustomDate from '~/components/common/form/date.vue'
 import nuxtconfig from '~/nuxt.config'
 
@@ -454,7 +453,7 @@ export default {
       }
     },
     async onSave() {
-      const url = getApiUrl()
+      const url = this.$bitpod.getApiUrl()
       this.formData.Tags = this.tags
       this.formData.StartDate = this.StartDate
       this.formData.EndDate = this.EndDate

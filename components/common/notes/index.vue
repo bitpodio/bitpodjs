@@ -134,7 +134,6 @@
 </template>
 <script>
 import File from '../form/file.vue'
-import nuxtconfig from '~/nuxt.config'
 import timeAgo from '~/utility/get-time-difference.js'
 export default {
   components: {
@@ -187,15 +186,15 @@ export default {
       return timeAgo(date)
     },
     getAttachmentLink(id, isDownloadLink) {
-      const attachmentUrl = `https://${nuxtconfig.axios.eventUrl}${
-        nuxtconfig.axios.apiEndpoint
-      }Attachments${isDownloadLink ? '/download' : ''}${id ? '/' + id : ''}`
+      const url = this.$bitpod.getApiUrl()
+      const attachmentUrl = `${url}Attachments${
+        isDownloadLink ? '/download' : ''
+      }${id ? '/' + id : ''}`
       return attachmentUrl
     },
     getLink(id) {
-      return `https://${nuxtconfig.axios.eventUrl}${
-        nuxtconfig.axios.apiEndpoint
-      }${this.modelName}/${this.$route.params.id}/${
+      const url = this.$bitpod.getApiUrl()
+      return `${url}${this.modelName}/${this.$route.params.id}/${
         this.modelName === 'Events' ? 'Comments' : 'Comment'
       }/${id || ''}`
     },

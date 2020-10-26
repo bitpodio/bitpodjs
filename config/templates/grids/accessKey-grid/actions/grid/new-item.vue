@@ -58,7 +58,6 @@
 </template>
 
 <script>
-import { getApiUrl } from '~/utility'
 export default {
   props: {
     refresh: {
@@ -110,7 +109,7 @@ export default {
       this.dialog = false
     },
     async onSave() {
-      const url = getApiUrl()
+      const url = this.$bitpod.getApiUrl()
       this.formData.expiresat = this.accessKeyDate
       const userId = this.$auth.$state.user.data.email
       try {

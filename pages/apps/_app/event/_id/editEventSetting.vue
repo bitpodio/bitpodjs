@@ -100,7 +100,6 @@
 
 <script>
 import gql from 'graphql-tag'
-import nuxtConfig from '../../../../../nuxt.config'
 import { required, link } from '~/utility/rules.js'
 import event from '~/config/apps/event/gql/event.gql'
 import eventCount from '~/config/apps/event/gql/eventCount.gql'
@@ -193,10 +192,11 @@ export default {
     async onSave() {
       this.formData.Currency = this.currency
       this.formData.Privacy = this.privacy
+      const url = this.$bitpod.getApiUrl()
       delete this.formData._VenueAddress
       try {
         const res = await this.$axios.$patch(
-          `https://${nuxtConfig.axios.eventUrl}${nuxtConfig.axios.apiEndpoint}Events/${this.$route.params.id}`,
+          `${url}Events/${this.$route.params.id}`,
           {
             ...this.formData,
           }

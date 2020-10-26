@@ -44,7 +44,6 @@
 
 <script>
 import copy from '~/components/common/copy'
-import { getApiUrl } from '~/utility'
 export default {
   components: {
     copy,
@@ -78,7 +77,7 @@ export default {
       return key
     },
     async onDelete(accessKey, userName) {
-      const url = getApiUrl()
+      const url = this.$bitpod.getApiUrl()
       const check = confirm('Are you sure you want to delete')
       if (check === true) {
         try {

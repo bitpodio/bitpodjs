@@ -73,7 +73,6 @@
 
 <script>
 import strings from '~/strings.js'
-import { getApiUrl } from '~/utility'
 import { required } from '~/utility/rules.js'
 export default {
   components: {
@@ -172,7 +171,7 @@ export default {
 
     async onSave() {
       this.isSaveButtonDisabled = true
-      const url = getApiUrl()
+      const url = this.$bitpod.getApiUrl()
       this.badge.DisplayOrder = parseInt(this.badge.DisplayOrder)
       let res = null
       try {

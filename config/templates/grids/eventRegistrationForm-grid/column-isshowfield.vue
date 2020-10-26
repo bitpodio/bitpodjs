@@ -24,7 +24,6 @@
 </template>
 
 <script>
-import nuxtconfig from '~/nuxt.config'
 export default {
   props: {
     item: {
@@ -45,9 +44,10 @@ export default {
   },
   methods: {
     async updateRegForm() {
+      const url = this.$bitpod.getApiUrl()
       try {
         const res = await this.$axios.$put(
-          `https://${nuxtconfig.axios.eventUrl}/svc/api/Events/${this.$route.params.id}/RegistrationForm/${this.item.id}`,
+          `${url}Events/${this.$route.params.id}/RegistrationForm/${this.item.id}`,
           {
             isShowField: this.checkbox,
           }

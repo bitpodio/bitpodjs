@@ -302,7 +302,6 @@ import speaker from '~/config/apps/event/gql/eventSpeakers.gql'
 import event from '~/config/apps/event/gql/event.gql'
 import { getIdFromAtob } from '~/utility'
 import CustomDate from '~/components/common/form/date.vue'
-import { getApiUrl } from '~/utility/index.js'
 import nuxtconfig from '~/nuxt.config'
 export default {
   components: {
@@ -569,7 +568,7 @@ export default {
       window.open(link, '_blank')
     },
     async onSave() {
-      const baseUrl = getApiUrl()
+      const baseUrl = this.$bitpod.getApiUrl()
       this.session.EventId = this.$route.params.id
       if (this.session && this.session.SessionTicket) {
         this.session.TicketName = this.ticketOptions

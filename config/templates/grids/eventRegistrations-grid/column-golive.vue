@@ -54,10 +54,9 @@ export default {
   },
   mounted() {
     this.item.SessionId.map(async (id) => {
+      const url = this.$bitpod.getApiUrl()
       try {
-        const res = await this.$axios.$get(
-          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Sessions/${id}`
-        )
+        const res = await this.$axios.$get(`${url}Sessions/${id}`)
         if (res) {
           if (res.LocationType === 'Bitpod Virtual') {
             const roomName = this.item.ZoomLink.split('/')[3]

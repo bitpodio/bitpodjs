@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import nuxtconfig from '~/nuxt.config'
 export default {
   props: {
     item: {
@@ -29,9 +28,10 @@ export default {
   },
   methods: {
     async updateRegForm() {
+      const url = this.$bitpod.getApiUrl()
       try {
         const res = await this.$axios.$put(
-          `https://${nuxtconfig.axios.eventUrl}/svc/api/RegistrationForms/${this.item.id}`,
+          `${url}RegistrationForms/${this.item.id}`,
           {
             isShowField: this.checkbox,
           }
@@ -41,7 +41,7 @@ export default {
         }
       } catch (e) {
         console.log(
-          `Error in templates/grids/registrationform-grid/column-isshowfield.vue while making a PUT call to RegistrationForm model from method updateRegForm context:-URL:-https://${nuxtconfig.axios.eventUrl}/svc/api/RegistrationForms/${this.item.id}\n `,
+          `Error in templates/grids/registrationform-grid/column-isshowfield.vue while making a PUT call to RegistrationForm model from method updateRegForm context:-URL:-${url}RegistrationForms/${this.item.id}\n `,
           e
         )
       }

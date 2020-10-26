@@ -196,7 +196,6 @@ import generalconfiguration from '~/config/apps/event/gql/registrationStatusOpti
 import registrationtype from '~/config/apps/event/gql/registrationType.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { required } from '~/utility/rules.js'
-import { getApiUrl } from '~/utility'
 import strings from '~/strings.js'
 export default {
   props: {
@@ -389,7 +388,7 @@ export default {
       this.valid = false
     },
     async onSave() {
-      const url = getApiUrl()
+      const url = this.$bitpod.getApiUrl()
       this.getAttendeesId()
       this.formData.Amount = parseInt(this.Amount)
       this.formData.DisplayOrder = parseInt(this.formData.DisplayOrder)
@@ -462,7 +461,7 @@ export default {
       })
     },
     async getAttendeeType() {
-      const url = getApiUrl()
+      const url = this.$bitpod.getApiUrl()
       try {
         const res = await this.$axios.$get(
           `${url}Events/${this.$route.params.id}/AttendeeType`

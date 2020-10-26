@@ -12,7 +12,6 @@
 </template>
 
 <script>
-import { getApiUrl } from '~/utility'
 export default {
   props: {
     content: {
@@ -52,7 +51,7 @@ export default {
 
   methods: {
     async onDeleteItem() {
-      const url = getApiUrl()
+      const url = this.$bitpod.getApiUrl()
       const check = confirm('Are you sure you want to delete this ticket?')
       try {
         if (check) {

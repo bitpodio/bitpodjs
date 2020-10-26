@@ -48,11 +48,10 @@
 
 <script>
 import gql from 'graphql-tag'
-import nuxtconfig from '~/nuxt.config'
 import event from '~/config/apps/event/gql/event.gql'
 import badge from '~/config/apps/event/gql/badge.gql'
 import { formatGQLResult } from '~/utility/gql.js'
-import { getIdFromAtob, getApiUrl } from '~/utility'
+import { getIdFromAtob } from '~/utility'
 export default {
   components: {
     RichText: () =>
@@ -104,15 +103,12 @@ export default {
       this.$emit('update:editBadgeForm', false)
     },
     async onSave() {
-      const url = getApiUrl()
+      const url = this.$bitpod.getApiUrl()
       const badgeId = getIdFromAtob(this.id)
       try {
-        const res = await this.$axios.$patch(
-          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Badges/${badgeId}`,
-          {
-            Template: this.RTEValue,
-          }
-        )
+        const res = await this.$axios.$patch(`${url}Badges/${badgeId}`, {
+          Template: this.RTEValue,
+        })
         if (res) {
           this.$refs.editBadgeDialog.$parent.$parent.refresh()
           this.close()

@@ -1,6 +1,5 @@
 // import nuxtconfig from '~/nuxt.config'
 import { getOrderQuery, buildQueryVariables } from '~/utility'
-import { getApiUrl } from '~/utility/index.js'
 
 export function getData(modelName) {
   return async function query(options) {
@@ -28,7 +27,7 @@ export function getData(modelName) {
       ctx: this,
     })
     const filter = { limit, skip, order, where }
-    const apiUrl = getApiUrl()
+    const apiUrl = this.$bitpod.getApiUrl()
 
     const resPromise = this.$axios.$get(
       `${apiUrl}${modelName}?filter=${JSON.stringify(filter)}`
@@ -50,7 +49,7 @@ export function getData(modelName) {
 export const getAllUsers = getData.bind(null, 'users')
 
 export function getLookupData(path) {
-  const URL = `https://event.test.bitpod.io/svc/api`
+  const URL = `${this.$bitpod.getApiUrl()}`
   return async function query(field) {
     const res = await this.$axios.$get(`${URL}${path}`)
     return res
@@ -59,7 +58,7 @@ export function getLookupData(path) {
 
 export function getCustomData(modelName) {
   return async function query(options) {
-    const apiUrl = getApiUrl()
+    const apiUrl = this.$bitpod.getApiUrl()
     const resPromise = this.$axios.$get(`${apiUrl}${modelName}`)
     // to execute parallel call
     const [res] = await Promise.all([resPromise])

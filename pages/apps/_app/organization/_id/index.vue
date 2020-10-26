@@ -356,7 +356,6 @@ import editWorkTiming from './editWorkTiming.vue'
 import Grid from '~/components/common/grid'
 import File from '~/components/common/form/file.vue'
 import organization from '~/config/apps/admin/gql/organization.gql'
-import nuxtconfig from '~/nuxt.config'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin } from '~/utility'
 export default {
@@ -413,7 +412,9 @@ export default {
       this.formData.Image.push(data[0])
       try {
         await this.$axios.$patch(
-          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}OrganizationInfos/${this.$route.params.id}`,
+          `${this.$bitpod.getApiUrl()}OrganizationInfos/${
+            this.$route.params.id
+          }`,
           this.formData
         )
       } catch (e) {

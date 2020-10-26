@@ -66,7 +66,6 @@
 import gql from 'graphql-tag'
 import { formatGQLResult } from '~/utility/gql.js'
 import organization from '~/config/apps/admin/gql/organization.gql'
-import { getApiUrl } from '~/utility'
 export default {
   props: {
     editSocialMedia: {
@@ -102,7 +101,7 @@ export default {
       this.$refs.form.$parent.$parent.refresh()
     },
     async onSave() {
-      const url = getApiUrl()
+      const url = this.$bitpod.getApiUrl()
       this.formData.Currency = this.currency
       try {
         const res = await this.$axios.$patch(

@@ -54,7 +54,6 @@ import gql from 'graphql-tag'
 import { required } from '~/utility/rules.js'
 import registration from '~/config/apps/event/gql/registration.gql'
 import { formatGQLResult } from '~/utility/gql.js'
-import { getApiUrl } from '~/utility/index.js'
 
 export default {
   props: {
@@ -87,7 +86,7 @@ export default {
       this.$apollo.queries.data.refresh()
     },
     async onSave() {
-      const baseUrl = getApiUrl()
+      const baseUrl = this.$bitpod.getApiUrl()
       const regId = this.$route.params.id
       let commentRes = null
       let regRes = null
