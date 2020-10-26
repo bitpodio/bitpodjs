@@ -2,7 +2,7 @@
   <div
     class="container d-flex align-items-center justify-content-center flex-column"
   >
-    You are not authorized for this page
+    Access not granted, contact support to request access.
   </div>
 </template>
 
