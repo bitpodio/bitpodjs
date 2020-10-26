@@ -100,7 +100,9 @@ export default {
           }
         )
       } catch (e) {
-        console.error('Error', e)
+        console.error(
+          `Error in Save function of cancel registration form, context: create comment , baseUrl: ${baseUrl} regId: ${regId} comment: ${this.comment} error: ${e}`
+        )
       }
       if (commentRes) {
         try {
@@ -111,7 +113,9 @@ export default {
             }
           )
         } catch (e) {
-          console.error('Error', e)
+          console.error(
+            `Error in Save function of cancel registration form, context: cancel registration , baseUrl: ${baseUrl} registrationId: ${regId} status: Cancelled, error: ${e}`
+          )
         }
       }
       if (regRes) {

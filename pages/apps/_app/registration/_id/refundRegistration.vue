@@ -226,7 +226,9 @@ export default {
           }
         )
       } catch (e) {
-        console.error('Error', e)
+        console.error(
+          `Error in Save function of refund registration form, context: refund registration , baseUrl: ${baseUrl} registrationId: ${regId} refundData: ${this.refundData} error: ${e}`
+        )
       }
       if (res) {
         this.$emit('update:isRefund', false)

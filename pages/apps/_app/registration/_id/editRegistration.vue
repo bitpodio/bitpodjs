@@ -367,7 +367,9 @@ export default {
           }
         )
       } catch (e) {
-        console.error('Error', e)
+        console.error(
+          `Error in Save function of edit registration form, context: edit registration , baseUrl: ${baseUrl} registrationId: ${this.regData.id} registrationData: ${this.regData} error: ${e}`
+        )
       }
       if (res) {
         this.close()
