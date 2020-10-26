@@ -175,7 +175,7 @@
               <v-col
                 v-if="session.LocationType === 'Venue'"
                 cols="12"
-                class="pt-0 pb-6"
+                class="pt-0"
               >
                 <no-ssr>
                   <vue-google-autocomplete
@@ -190,10 +190,13 @@
                   ></vue-google-autocomplete>
                 </no-ssr>
                 <div
-                  v-show="addresslineMessage !== ''"
-                  class="red--text pa-3 pt-0 body-1"
+                  v-if="addresslineMessage !== ''"
+                  class="red--text pl-3 pb-2 caption"
                 >
-                  {{ addresslineMessage }}
+                  {{ addresslineMessage }}*
+                </div>
+                <div v-else class="transparent--text pl-3 pb-2 caption">
+                  {{ required }}
                 </div>
               </v-col>
               <v-col
@@ -208,7 +211,6 @@
                   label="City"
                   outlined
                   dense
-                  @change="changeAddress()"
                 ></v-text-field>
               </v-col>
               <v-col
@@ -223,7 +225,6 @@
                   label="State"
                   outlined
                   dense
-                  @change="changeAddress()"
                 ></v-text-field>
               </v-col>
               <v-col
@@ -238,7 +239,6 @@
                   label="Country"
                   outlined
                   dense
-                  @change="changeAddress()"
                 ></v-text-field>
               </v-col>
               <v-col
@@ -249,11 +249,10 @@
                 class="pb-0"
               >
                 <v-text-field
-                  v-model="venueAddress.ZipCode"
+                  v-model="venueAddress.PostalCode"
                   label="Zip Code"
                   outlined
                   dense
-                  @change="changeAddress()"
                 ></v-text-field>
               </v-col>
               <div class="col-md-12 pl-0 pb-0 pt-0">
@@ -277,7 +276,10 @@
         >
           <v-btn
             color="primary"
-            :disabled="!valid"
+            :disabled="
+              !valid ||
+              (session.LocationType === 'Venue' && !venueAddress.AddressLine)
+            "
             depressed
             @click.native="onSave"
             >Save</v-btn
@@ -363,7 +365,7 @@ export default {
         State: '',
         Country: '',
         PostalCode: '',
-        LatLng: {},
+        LatLng: { lat: 0.0, lng: 0.0 },
       },
       LatLng: {
         lat: 0.0,
@@ -475,6 +477,11 @@ export default {
           container.Duration = '0'
         }
         this.session = { ...container }
+        if (container.LocationType === 'Venue') {
+          this.venueAddress = { ...container._CurrentAddress }
+          delete this.venueAddress.id
+          delete this.venueAddress.LatLng
+        }
       } else {
         this.session.StartDate = new Date(this.eventDetails.StartDate)
         if (this.session.StartDate.getSeconds()) {
@@ -494,7 +501,7 @@ export default {
       }
     },
     getBitpodVirtualLink() {
-      if (!this.isEdit) {
+      if (!this.isEdit || !this.session.BitpodVirtualLink) {
         const randomStr = Math.random().toString(36).substring(2, 6)
         const roomName = `/${this.eventDetails.UniqLink}-${(
           this.session.Name || 'Session_Name'
@@ -535,6 +542,7 @@ export default {
     changeAddressData(value) {
       this.addresslineMessage =
         value === ' ' || value === '' ? strings.FIELD_REQUIRED : ''
+      this.venueAddress.AddressLine = value
     },
     getAddressData(addressData, placeResultData, id) {
       this.venueAddress.AddressLine =
@@ -544,6 +552,12 @@ export default {
       this.venueAddress.Country = addressData.country || ''
       this.venueAddress.City = addressData.locality || ''
       this.venueAddress.State = addressData.administrative_area_level_1 || ''
+      if (!this.venueAddress.LatLng) {
+        this.venueAddress.LatLng = {
+          lat: '',
+          lng: '',
+        }
+      }
       this.venueAddress.LatLng.lat = addressData.latitude || ''
       this.venueAddress.LatLng.lng = addressData.longitude || ''
     },
@@ -581,6 +595,8 @@ export default {
           this.addresslineMessage = strings.FIELD_REQUIRED
           return
         }
+      } else {
+        delete this.session._CurrentAddress
       }
       this.session.StartDate = new Date(
         zonedTimeToUtc(this.session.StartDate, this.session.Timezone)
@@ -632,6 +648,14 @@ export default {
       this.customDuration = '50'
       this.isCustomMin = false
       this.dialog = false
+      this.venueAddress = {
+        AddressLine: '',
+        City: '',
+        State: '',
+        Country: '',
+        PostalCode: '',
+        LatLng: { lat: 0.0, lng: 0.0 },
+      }
     },
   },
   apollo: {
