@@ -1002,7 +1002,9 @@ export default {
       )
     },
     async getRegistrationData() {
-      const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Registrations/findRegistration?regId=${this.$route.params.id}`
+      const URL = `${this.$bitpod.getApiUrl()}Registrations/findRegistration?regId=${
+        this.$route.params.id
+      }`
       try {
         const res = await this.$axios.$get(URL)
         if (res) {
@@ -1020,9 +1022,9 @@ export default {
       if (data) {
         const eventid = data.toString()
         const filter = { id: eventid }
-        const URL = `https://${nuxtconfig.axios.eventUrl}${
-          nuxtconfig.axios.apiEndpoint
-        }Events/findEvent?eventFilter=${JSON.stringify(filter)}`
+        const URL = `${this.$bitpod.getApiUrl()}Events/findEvent?eventFilter=${JSON.stringify(
+          filter
+        )}`
         try {
           const res = await this.$axios.$get(URL)
           if (res) {

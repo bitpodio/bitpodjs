@@ -189,7 +189,6 @@ import eventRegistrationTicketSlot from '~/config/apps/event/gql/eventRegistrati
 import ticket from '~/config/apps/event/gql/ticket.gql'
 import eventSession from '~/config/apps/event/gql/eventSession.gql'
 import { formatGQLResult } from '~/utility/gql.js'
-import { getApiUrl } from '~/utility/index.js'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import { getIdFromAtob } from '~/utility'
 
@@ -351,7 +350,7 @@ export default {
       }
       this.regData.TicketQuantity = parseInt(this.regData.TicketQuantity)
       this.regData.id = atob(this.regData.id).split(':')[1]
-      const baseUrl = getApiUrl()
+      const baseUrl = this.$bitpod.getApiUrl()
       let res = null
       try {
         res = await this.$axios.$patch(

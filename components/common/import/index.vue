@@ -137,12 +137,13 @@ export default {
       this.selectedFile = data
     },
     async importContacts() {
+      const url = this.$bitpod.getApiUrl()
       try {
         const formData = new FormData()
         formData.append('file', this.selectedFile)
         formData.append('mappingId', nuxtconfig.mappingIds[this.modelName])
         const res = await this.$axios.post(
-          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}jobDetails/importData`,
+          `${url}jobDetails/importData`,
           formData,
           {
             headers: {
@@ -159,10 +160,7 @@ export default {
               JobId: obj.jobId,
               EventId: this.$route.params.id,
             }
-            await this.$axios.post(
-              `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}ImportJobs`,
-              importObj
-            )
+            await this.$axios.post(`${url}ImportJobs`, importObj)
             this.$parent.$parent.refresh()
           }
         }

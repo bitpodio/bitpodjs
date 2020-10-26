@@ -134,7 +134,6 @@
 import { getLookupData } from '~/config/apps/event/rest'
 import strings from '~/strings.js'
 import { required } from '~/utility/rules.js'
-import { getApiUrl } from '~/utility/index.js'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
 export default {
   props: {
@@ -445,7 +444,7 @@ export default {
     async onSave() {
       this.isSaveButtonDisabled = true
       const eventId = this.$route.params.id
-      const baseUrl = getApiUrl()
+      const baseUrl = this.$bitpod.getApiUrl()
       this.task.Day = parseInt(this.Day)
       this.task.Type = 'Scheduled'
       let res = null

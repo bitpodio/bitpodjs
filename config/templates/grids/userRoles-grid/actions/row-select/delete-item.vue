@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import { getApiUrl } from '~/utility'
 export default {
   props: {
     items: {
@@ -39,7 +38,7 @@ export default {
   },
   methods: {
     async onDelete() {
-      const url = getApiUrl()
+      const url = this.$bitpod.getApiUrl()
       try {
         const res = await this.$axios.$delete(
           `${url}Organizations/${this.items[0].orgId}/Users/${this.items[0].email}

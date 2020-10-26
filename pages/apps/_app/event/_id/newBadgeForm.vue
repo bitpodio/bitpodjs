@@ -159,7 +159,7 @@ import nuxtconfig from '~/nuxt.config'
 import event from '~/config/apps/event/gql/event.gql'
 import badge from '~/config/apps/event/gql/badge.gql'
 import { formatGQLResult } from '~/utility/gql.js'
-import { getIdFromAtob, getApiUrl } from '~/utility'
+import { getIdFromAtob } from '~/utility'
 export default {
   components: {
     RichText: () =>
@@ -210,9 +210,10 @@ export default {
   },
   methods: {
     getAttachmentLink(id, isDownloadLink) {
-      const attachmentUrl = `https://${nuxtconfig.axios.eventUrl}${
-        nuxtconfig.axios.apiEndpoint
-      }Attachments${isDownloadLink ? '/download' : ''}${id ? '/' + id : ''}`
+      const url = this.$bitpod.getApiUrl()
+      const attachmentUrl = `${url}Attachments${
+        isDownloadLink ? '/download' : ''
+      }${id ? '/' + id : ''}`
       return attachmentUrl
     },
     getBadge(str) {
@@ -232,7 +233,7 @@ export default {
       return str
     },
     async onSave() {
-      const url = getApiUrl()
+      const url = this.$bitpod.getApiUrl()
       this.formData.EventId = this.$route.params.id
       this.formData.DisplayOrder = this.selectedBadge.DisplayOrder
       this.formData.Size = this.selectedBadge.Size

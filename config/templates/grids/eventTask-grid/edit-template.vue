@@ -321,7 +321,6 @@
 import gql from 'graphql-tag'
 import { formatGQLResult } from '~/utility/gql.js'
 import marketingTemplates from '~/config/apps/admin/gql/marketingTemplates.gql'
-import { getApiUrl } from '~/utility/index.js'
 export default {
   components: {
     RichText: () =>
@@ -462,7 +461,7 @@ export default {
       this.preview = true
     },
     async onSave() {
-      const baseUrl = getApiUrl()
+      const baseUrl = this.$bitpod.getApiUrl()
       let res = null
       let activityRes = null
       try {

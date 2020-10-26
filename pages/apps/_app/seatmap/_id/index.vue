@@ -30,8 +30,7 @@
   </div>
 </template>
 <script>
-import { getApiUrl, getCurrentOrigin } from '~/utility'
-import nuxtconfig from '~/nuxt.config'
+import { getCurrentOrigin } from '~/utility'
 const layoutWithType = {
   shapes: [],
   groups: {
@@ -93,7 +92,7 @@ export default {
           case 'save':
             {
               const { layout } = data
-              const url = getApiUrl()
+              const url = this.$bitpod.getApiUrl()
               const seatmapId =
                 this.$route.params.id === 'new' ? '' : this.$route.params.id
               layout.Name = layout.layoutProperties.seatMapName || 'untitled'
@@ -154,7 +153,7 @@ export default {
     },
     async loadSeatmap() {
       let res = null
-      const url = getApiUrl()
+      const url = this.$bitpod.getApiUrl()
       const seatmapId = this.$route.params.id
       try {
         res = await this.$axios.get(`${url}SeatMaps/${seatmapId || ''}`)
@@ -175,12 +174,14 @@ export default {
           LayoutId: layoutId,
           SeatReservation: true,
         }
-        URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.query.event}`
+        URL = `${this.$bitpod.getApiUrl()}Events/${this.$route.query.event}`
       } else {
         obj = {
           LayoutId: layoutId,
         }
-        URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Locations/${this.$route.query.location}`
+        URL = `${this.$bitpod.getApiUrl()}Locations/${
+          this.$route.query.location
+        }`
       }
       try {
         const res = await this.$axios.$patch(URL, obj)
