@@ -437,6 +437,14 @@ body {
 .seatmap .view-name {
   visibility: hidden !important;
 }
+.seatmap .theme--light.v-data-table {
+    background: transparent !important;
+}
+.seatmap .v-data-footer {
+  width: 65% !important;
+  max-width: 65% !important;
+  margin: 0 auto !important;
+}
 .vs-hidden {
   visibility: hidden;
 }
