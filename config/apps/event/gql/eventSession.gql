@@ -24,6 +24,21 @@ query ($filters: JSON, $where: JSON) {
                     BitpodVirtualLink
                     Duration
                     WebinarLink
+                    _CurrentAddress{            
+                        State            
+                        PostalCode            
+                        LatLng {              
+                            lat              
+                            lng                   
+                        }            
+                        Country            
+                        City            
+                        AddressLine            
+                        createdDate            
+                        createdBy            
+                        modifiedDate            
+                        modifiedBy           
+                    }   
                 } 
             } 
         } 
