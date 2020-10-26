@@ -60,10 +60,12 @@ export default {
           'undefined'
         this.link = `apps/event/live/${roomName}?e=${this.$route.params.id}`
         this.copyLink = `https://${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}/${roomName}`
-      }
-      if (this.item.LocationType === 'Online event') {
+      } else if (this.item.LocationType === 'Online event') {
         this.link = this.item.WebinarLink || ''
         this.copyLink = this.link
+      } else {
+        this.link = ''
+        this.copyLink = ''
       }
       const endDate = new Date(this.item.StartDate)
       endDate.setMinutes(endDate.getMinutes() + this.item.Duration)
