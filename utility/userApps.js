@@ -1,5 +1,6 @@
 import { _get } from '~/utility/object.js'
-export const userCurrentOrgInfo = (store) => {
+
+const userCurrentOrgInfo = (store) => {
   const currentOrg = store.state.currentOrg
   const orgList = store.state.auth.user
     ? store.state.auth.user.data.orgList
@@ -12,3 +13,9 @@ export const userCurrentOrgInfo = (store) => {
   const userOrgInfo = _get(currentDetails, '0')
   return userOrgInfo || {}
 }
+
+const userUtils = {
+  userCurrentOrgInfo,
+}
+
+export default userUtils
