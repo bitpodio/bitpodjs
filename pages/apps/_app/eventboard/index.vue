@@ -43,7 +43,10 @@
                   <div class="pl-2 pt-1">
                     <h3 class="font-weight-regular text-truncate summaryTile">
                       {{ data.caption === 'Total Revenue' ? '$' : ''
-                      }}{{ data.data
+                      }}{{
+                        data.caption === 'Total Revenue'
+                          ? parseFloat(data.data).toFixed(2)
+                          : data.data
                       }}{{ data.caption === 'Email Conversion' ? '%' : '' }}
                     </h3>
                     <h5 class="font-weight-regular text-truncate summaryTile">
@@ -57,13 +60,13 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col class="col-12 col-sm-6 col-md-4">
+        <v-col class="col-12 col-sm-6 col-md-4 parentWidth">
           <h3 class="font-weight-regular pb-2">Events on Sale</h3>
           <div
             v-for="(data, index) in eventOnSaleData"
             :key="index"
             class="white elevation-2 rounded mb-3 cursorPointer dataTile"
-            @click="routeToEvent(data.id)"
+            @click="routeToEvent(data)"
           >
             <v-skeleton-loader
               :loading="!eventOnSaleLoaded"
@@ -92,18 +95,13 @@
                     </h4>
                   </div>
                 </div>
-                <div
-                  v-if="data.imageUrl"
-                  style="width: 40px;"
-                  class="py-4 px-1 ml-2"
-                >
+                <div v-if="data.imageUrl" style="width: 60px;">
                   <v-img
                     :src="getURL(data.imageUrl)"
                     :lazy-src="getURL(data.imageUrl)"
                     aspect-ratio="1"
-                    min-height="40"
-                    max-height="40"
-                    contain
+                    min-height="70"
+                    max-height="70"
                   >
                   </v-img>
                 </div>
@@ -145,11 +143,11 @@
             </h4>
           </v-hover>
         </v-col>
-        <v-col class="col-12 col-sm-6 col-md-4">
+        <v-col class="col-12 col-sm-6 col-md-4 parentWidth">
           <h3 class="font-weight-regular pb-2">10 Days Tickets Sale</h3>
           <div
-            v-if="!ticketSoldLoaded"
-            class="rounded white elevation-2 chartHeight"
+            v-if="!ticketSoldLoaded || !ticketSoldReady"
+            class="rounded white elevation-2 chartHeight positionRelative"
           >
             <div
               v-for="i in 5"
@@ -157,16 +155,22 @@
               class="mx-14 borderBottomGrey dummyChart"
             ></div>
           </div>
-          <div v-else class="elevation-2 rounded overflowHidden">
+          <div
+            class="elevation-2 rounded overflowHidden"
+            :class="{
+              visiblityNone: !(ticketSoldLoaded && ticketSoldReady),
+            }"
+          >
             <GChart
               type="LineChart"
               :data="ticketSaleData"
               :options="ticketSalechartOptions"
               :resize-debounce="100"
+              :events="lineChartEvents"
             />
           </div>
         </v-col>
-        <v-col class="col-12 col-sm-6 col-md-4">
+        <v-col class="col-12 col-sm-6 col-md-4 parentWidth">
           <h3 class="font-weight-regular pb-2">Recent Buyers</h3>
           <div
             v-for="(data, index) in recentBuyersData"
@@ -192,7 +196,7 @@
                 >
                   <v-avatar :class="data.class">
                     <span class="white--text headline text-uppercase">{{
-                      data.creatorName[0]
+                      data.creatorName.trim()[0]
                     }}</span>
                   </v-avatar>
                 </div>
@@ -244,12 +248,12 @@
         </v-col>
       </v-row>
       <v-row>
-        <v-col class="col-12 col-sm-6 col-md-4">
+        <v-col class="col-12 col-sm-6 col-md-4 parentWidth">
           <h3 class="font-weight-regular pb-2">
             Invitations Conversion by Event
           </h3>
           <div
-            v-if="!conversionLoaded"
+            v-if="!conversionLoaded || !conversionReady"
             class="rounded white elevation-2 chartHeight"
           >
             <div
@@ -258,21 +262,27 @@
               class="mx-14 borderBottomGrey dummyChart"
             ></div>
           </div>
-          <div v-else class="elevation-2 rounded overflowHidden">
+          <div
+            class="elevation-2 rounded overflowHidden"
+            :class="{
+              visiblityNone: !(conversionLoaded && conversionReady),
+            }"
+          >
             <GChart
               type="BubbleChart"
               :data="conversionBubbleData"
               :options="conversionBubbleOptions"
               :resize-debounce="100"
+              :events="bubbleChartEvents"
             />
           </div>
         </v-col>
-        <v-col class="col-12 col-sm-6 col-md-4">
+        <v-col class="col-12 col-sm-6 col-md-4 parentWidth">
           <h3 class="font-weight-regular pb-2">
             Sale by Geo Location
           </h3>
           <div
-            v-if="!geoLocationLoaded"
+            v-if="!geoLocationLoaded || !geoLocationReady"
             class="rounded white elevation-2 chartHeight"
           >
             <v-img
@@ -285,20 +295,29 @@
             >
             </v-img>
           </div>
-          <div v-else class="elevation-2 rounded overflowHidden">
+          <div
+            class="elevation-2 rounded overflowHidden"
+            :class="{
+              visiblityNone: !(geoLocationLoaded && geoLocationReady),
+            }"
+          >
             <GChart
               type="GeoChart"
               :data="geoLocationData"
               :options="geoLocationOptions"
               :resize-debounce="100"
+              :events="geoChartEvents"
               :settings="{ packages: ['geochart'] }"
             /></div
         ></v-col>
-        <v-col class="col-12 col-sm-6 col-md-4">
+        <v-col class="col-12 col-sm-6 col-md-4 parentWidth">
           <h3 class="font-weight-regular pb-2">
             Tickets Sold
           </h3>
-          <div v-if="!pieLoaded" class="rounded white elevation-2 chartHeight">
+          <div
+            v-if="!pieLoaded || !pieReady"
+            class="rounded white elevation-2 chartHeight"
+          >
             <div class="pt-11 positionRelative text-center">
               <div class="pt-15 holeWrapper">
                 <div class="pieHole white d-inline-block rounded-circle"></div>
@@ -306,22 +325,28 @@
               <div class="pie-dummy rounded-circle mx-auto"></div>
             </div>
           </div>
-          <div v-else class="elevation-2 rounded overflowHidden">
+          <div
+            class="elevation-2 rounded overflowHidden"
+            :class="{
+              visiblityNone: !(pieLoaded && pieReady),
+            }"
+          >
             <GChart
               type="PieChart"
               :data="pieChartData"
               :options="pieChartOptions"
               :resize-debounce="100"
+              :events="pieChartEvents"
             /></div
         ></v-col>
       </v-row>
       <v-row>
-        <v-col class="col-12 col-sm-6 col-md-4">
+        <v-col class="col-12 col-sm-6 col-md-4 parentWidth">
           <h3 class="font-weight-regular pb-2">
             Invitations Conversion Trend
           </h3>
           <div
-            v-if="!conversionTrendLoaded"
+            v-if="!conversionTrendLoaded || !conversionTrendReady"
             class="rounded white elevation-2 chartHeight"
           >
             <div
@@ -330,21 +355,27 @@
               class="mx-14 borderBottomGrey dummyChart"
             ></div>
           </div>
-          <div v-else class="elevation-2 rounded overflowHidden">
+          <div
+            class="elevation-2 rounded overflowHidden"
+            :class="{
+              visiblityNone: !(conversionTrendLoaded && conversionTrendReady),
+            }"
+          >
             <GChart
               type="AreaChart"
               :data="conversionAreaData"
               :options="conversionAreaOptions"
               :resize-debounce="100"
+              :events="areaChartEvents"
             />
           </div>
         </v-col>
-        <v-col class="col-12 col-sm-6 col-md-4">
+        <v-col class="col-12 col-sm-6 col-md-4 parentWidth">
           <h3 class="font-weight-regular pb-2">
             Sessions Sold
           </h3>
           <div
-            v-if="!sessionLoaded"
+            v-if="!sessionLoaded || !sessionReady"
             class="rounded white elevation-2 chartHeight"
           >
             <div
@@ -353,21 +384,27 @@
               class="mx-14 borderBottomGrey dummyChart"
             ></div>
           </div>
-          <div v-else class="elevation-2 rounded overflowHidden">
+          <div
+            class="elevation-2 rounded overflowHidden"
+            :class="{
+              visiblityNone: !(sessionLoaded && sessionReady),
+            }"
+          >
             <GChart
               type="LineChart"
               :data="sessionSaleData"
               :options="sessionSalechartOptions"
               :resize-debounce="100"
+              :events="sessionlineChartEvents"
             />
           </div>
         </v-col>
-        <v-col class="col-12 col-sm-6 col-md-4">
+        <v-col class="col-12 col-sm-6 col-md-4 parentWidth">
           <h3 class="font-weight-regular pb-2">
             Events Timeline
           </h3>
           <div
-            v-if="!eventTimelineLoaded"
+            v-if="!eventTimelineLoaded || !eventTimelineReady"
             class="rounded white elevation-2 chartHeight"
           >
             <div
@@ -376,12 +413,18 @@
               class="mx-14 borderBottomGrey dummyChart"
             ></div>
           </div>
-          <div v-else class="elevation-2 rounded overflowHidden white">
+          <div
+            class="elevation-2 rounded overflowHidden white pa-6"
+            :class="{
+              visiblityNone: !(eventTimelineLoaded && eventTimelineReady),
+            }"
+          >
             <GChart
               type="Timeline"
               :data="timelineData"
               :options="timelineOptions"
               :resize-debounce="100"
+              :events="timelineChartEvents"
               :settings="{ packages: ['timeline'] }"
             />
           </div>
@@ -412,12 +455,59 @@ export default {
   },
   data() {
     return {
+      lineChartEvents: {
+        ready: () => {
+          this.ticketSoldReady = true
+        },
+      },
+      bubbleChartEvents: {
+        ready: () => {
+          this.conversionReady = true
+        },
+      },
+      geoChartEvents: {
+        ready: () => {
+          this.geoLocationReady = true
+        },
+      },
+      pieChartEvents: {
+        ready: () => {
+          this.pieReady = true
+        },
+      },
+      areaChartEvents: {
+        ready: () => {
+          this.conversionTrendReady = true
+        },
+      },
+      sessionlineChartEvents: {
+        ready: () => {
+          this.sessionReady = true
+        },
+      },
+      timelineChartEvents: {
+        ready: () => {
+          this.eventTimelineReady = true
+        },
+      },
       ticketSaleData: [['Date', 'Ticket Sold']],
       ticketSalechartOptions: {
         curveType: 'function',
         legend: 'none',
         height: '316',
-        hAxis: { logscale: true },
+        width: '350',
+        hAxis: {
+          logscale: true,
+          viewWindow: {
+            min: 0,
+          },
+        },
+        vAxis: {
+          logscale: true,
+          viewWindow: {
+            min: 0,
+          },
+        },
         chartArea: { width: '80%', height: '70%' },
         animation: {
           startup: true,
@@ -429,6 +519,17 @@ export default {
       conversionBubbleOptions: {
         legend: 'none',
         height: '316',
+        width: '350',
+        vAxis: {
+          viewWindow: {
+            min: 0,
+          },
+        },
+        hAxis: {
+          viewWindow: {
+            min: 0,
+          },
+        },
         chartArea: { width: '80%', height: '70%' },
         animation: {
           startup: true,
@@ -440,6 +541,7 @@ export default {
       geoLocationOptions: {
         legend: 'none',
         height: '316',
+        width: '350',
         displayMode: 'markers',
         chartArea: { width: '80%', height: '70%' },
         colorAxis: { colors: ['green', 'yellow'] },
@@ -453,6 +555,7 @@ export default {
       pieChartOptions: {
         legend: 'none',
         height: '316',
+        width: '350',
         pieHole: 0.4,
         chartArea: { width: '80%', height: '70%' },
         colorAxis: { colors: ['green', 'yellow'] },
@@ -466,6 +569,7 @@ export default {
       conversionAreaOptions: {
         legend: 'none',
         height: '316',
+        width: '350',
         chartArea: { width: '80%', height: '70%' },
         animation: {
           startup: true,
@@ -478,7 +582,13 @@ export default {
         curveType: 'function',
         legend: 'none',
         height: '316',
+        width: '350',
         hAxis: { logscale: true },
+        vAxis: {
+          viewWindow: {
+            min: 0,
+          },
+        },
         chartArea: { width: '80%', height: '70%' },
         animation: {
           startup: true,
@@ -489,8 +599,8 @@ export default {
       timelineData: [],
       timelineOptions: {
         legend: 'none',
-        height: '316',
-        chartArea: { width: '80%', height: '70%' },
+        height: '268',
+        width: '300',
         animation: {
           startup: true,
           duration: 1000,
@@ -569,6 +679,13 @@ export default {
       sessionLoaded: false,
       eventTimelineLoaded: false,
       hasScroll: false,
+      ticketSoldReady: false,
+      conversionReady: false,
+      geoLocationReady: false,
+      pieReady: false,
+      conversionTrendReady: false,
+      sessionReady: false,
+      eventTimelineReady: false,
     }
   },
   mounted() {
@@ -593,8 +710,12 @@ export default {
         )
       }
     },
-    routeToEvent(id) {
-      this.$router.push(`/apps/event/event/recurring/${id}`)
+    routeToEvent(data) {
+      this.$router.push(
+        `/apps/event/event${
+          data.BusinessType === 'Single' ? '' : '/recurring'
+        }/${data.id}`
+      )
     },
     routeToRegistration(id) {
       this.$router.push(`/apps/event/registration/${id}`)
@@ -821,7 +942,17 @@ export default {
               month: item.StartDate
                 ? new Date(item.StartDate).toString().split(' ')[1]
                 : '',
-              location: item.VenueName ? item.VenueName : '',
+              location:
+                item.LocationType === 'Venue'
+                  ? item._VenueAddress.AddressLine
+                    ? item._VenueAddress.AddressLine
+                    : item._VenueAddress.City
+                    ? item._VenueAddress.City
+                    : item._VenueAddress.Country
+                    ? item._VenueAddress.Country
+                    : ''
+                  : '',
+              BusinessType: item.BusinessType,
             }
           })
           this.eventOnSaleLoaded = true
@@ -877,7 +1008,7 @@ export default {
       },
       update(data) {
         const eventData = formatGQLResult(data, 'Event')
-        this.timelineData = []
+        this.timelineData = [['dummy', new Date(), new Date()]]
         if (eventData.length) {
           eventData.forEach((element) => {
             this.timelineData.push([
@@ -917,7 +1048,7 @@ export default {
             return {
               title: item.Title,
               eventName: item.EventName,
-              creatorName: item.FullName,
+              creatorName: item.FullName || 'Unknown',
               status: item.Status,
               time: timeAgo(item.createdDate),
               class: this.recentBuyersData[index].class,
@@ -973,7 +1104,7 @@ export default {
   height: 316px;
 }
 .dummyChart {
-  height: 316px;
+  height: 52px;
 }
 .summaryTile {
   width: 132px;
@@ -983,5 +1114,12 @@ export default {
 }
 .tileCaption {
   width: 200px;
+}
+.visiblityNone {
+  visibility: hidden;
+  position: absolute;
+}
+.parentWidth {
+  max-width: 370px;
 }
 </style>
