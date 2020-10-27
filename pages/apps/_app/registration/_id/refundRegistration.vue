@@ -192,12 +192,22 @@ export default {
         this.refund.Amount = this.refundData.TotalAmount
         this.isAmountDisabled = true
       } else if (value === 'PartialRefund') {
-        this.refund.Amount = ''
+        this.refund.Amount = 1
         this.isAmountDisabled = false
       }
     },
     close() {
       this.$emit('update:isRefund', false)
+      if (this.regData._Refund !== null) {
+        this.refund = { ...this.regData._Refund }
+      } else {
+        this.refund = {}
+        const resetData = {}
+        resetData.RefundMethod = 'Payment Gateway'
+        resetData.Amount = this.refundData.TotalAmount
+        resetData.RefundRequest = 'FullRefund'
+        this.refund = { ...resetData }
+      }
     },
     refresh() {
       this.$apollo.queries.data.refresh()
@@ -215,10 +225,12 @@ export default {
           }
         )
       } catch (e) {
-        console.error('Error', e)
+        console.error(
+          `Error in Save function of refund registration form, context: refund registration , baseUrl: ${baseUrl} registrationId: ${regId} refundData: ${this.refundData} error: ${e}`
+        )
       }
       if (res) {
-        this.close()
+        this.$emit('update:isRefund', false)
         this.refresh()
         return res
       }
@@ -250,7 +262,7 @@ export default {
           this.isWarningMsg = false
         }
         if (this.regData._Refund) {
-          this.refund = this.regData._Refund
+          this.refund = { ...this.regData._Refund }
           this.refundData.TransactionReferenceId = this.regData.TransactionReferenceId
           this.refundData.RefundAttempt = this.regData.RefundAttempt
         } else {

@@ -204,6 +204,7 @@ export default {
     return {
       requiredRules: [required],
       regData: {},
+      regDetails: {},
       events: [],
       tickets: [],
       sessions: [],
@@ -214,6 +215,7 @@ export default {
         event: {},
       },
       eventData: {},
+      currentAddress: {},
       venueAddress: {
         AddressLine: '',
         City: '',
@@ -313,6 +315,11 @@ export default {
       this.isSessionLoading = false
     },
     close() {
+      this.regData = { ...this.regDetails }
+      if (this.regDetails._CurrentAddress) {
+        this.venueAddress = {}
+        this.venueAddress = { ...this.currentAddress }
+      }
       this.$emit('update:isEditReg', false)
     },
     refresh() {
@@ -360,7 +367,9 @@ export default {
           }
         )
       } catch (e) {
-        console.error('Error', e)
+        console.error(
+          `Error in Save function of edit registration form, context: edit registration , baseUrl: ${baseUrl} registrationId: ${this.regData.id} registrationData: ${this.regData} error: ${e}`
+        )
       }
       if (res) {
         this.close()
@@ -400,6 +409,7 @@ export default {
       update(data) {
         const registration = formatGQLResult(data, 'Registration')
         this.regData = registration.length > 0 ? { ...registration[0] } : {}
+        this.regDetails = registration.length > 0 ? { ...registration[0] } : {}
         let events = formatGQLResult(data, 'Event')
         events = events.length > 0 ? events : []
         this.events = events.map(({ id, ...rest }) => ({
@@ -408,6 +418,7 @@ export default {
         }))
         if (this.regData._CurrentAddress) {
           this.venueAddress = this.regData._CurrentAddress
+          this.currentAddress = { ...this.regData._CurrentAddress }
         }
         this.regData.EventId && this.eventChange(this.regData.EventId, true)
         return {
