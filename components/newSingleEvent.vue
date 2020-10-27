@@ -753,11 +753,9 @@ export default {
       }
     },
     changeStartDate() {
-      console.log('==changeStartDate==')
       this.$refs.dateform && this.$refs.dateform.validate()
     },
     changeEndDate(value) {
-      console.log('==changeEndDate==', value)
       this.$refs.dateform && this.$refs.dateform.validate()
       this.calculateTicketEndDate()
     },

@@ -318,9 +318,6 @@ export default {
       this.regData = { ...this.regDetails }
       if (this.regDetails._CurrentAddress) {
         this.venueAddress = {}
-        console.log(this.regDetails._CurrentAddress)
-        console.log(this.regData._CurrentAddress)
-        console.log(this.currentAddress)
         this.venueAddress = { ...this.currentAddress }
       }
       this.$emit('update:isEditReg', false)

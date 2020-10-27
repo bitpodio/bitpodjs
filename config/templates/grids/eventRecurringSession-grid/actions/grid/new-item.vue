@@ -1227,8 +1227,8 @@ export default {
               ...this.session,
             })
           } catch (e) {
-            console.log(
-              `Error in Recurring session grid new session form on Save function - context: create Recurring session, eventId - ${this.session.EventId}`
+            console.error(
+              `Error in Recurring session grid new session form on Save function - context: create Recurring session, eventId - ${this.session.EventId} baseUrl - ${baseUrl} session - ${this.session}, error:${e}`
             )
           }
           if (res) {
@@ -1240,8 +1240,8 @@ export default {
                 }
               )
             } catch (e) {
-              console.log(
-                `Error in Recurring session grid new session form on Save function - context: create Recurring session , Schedules,intervals, eventId - ${this.session.EventId}`
+              console.error(
+                `Error in Recurring session grid new session form on Save function - context: create Recurring session , Schedules,intervals, eventId - ${this.session.EventId} sessionId -${res.id}, baseUrl - ${baseUrl} schedules - ${_Exceptions}, error:${e}`
               )
             }
           }
@@ -1261,8 +1261,8 @@ export default {
               }
             )
           } catch (e) {
-            console.log(
-              `Error in Recurring session grid edit session form on Save function - context: edit Recurring session, eventId - ${this.session.EventId}, sessionId - ${this.session.id}}`
+            console.error(
+              `Error in Recurring session grid edit session form on Save function - context: edit Recurring session, eventId - ${this.session.EventId}, sessionId - ${this.session.id} baseUrl - ${baseUrl} session - ${this.session}, error:${e}`
             )
           }
           if (res) {
