@@ -437,6 +437,14 @@ body {
 .seatmap .view-name {
   visibility: hidden !important;
 }
+.seatmap .theme--light.v-data-table {
+  background: transparent !important;
+}
+.seatmap .v-data-footer {
+  width: 65% !important;
+  max-width: 65% !important;
+  margin: 0 auto !important;
+}
 .vs-hidden {
   visibility: hidden;
 }
@@ -445,6 +453,12 @@ body {
 }
 .boxview .v-expansion-panel--active > .v-expansion-panel-header {
     min-height: 42px;
+}
+.event-title {
+  max-width: calc(100% - 230px);
+}
+.istemplate .v-data-footer {
+  background: #f5f5f5 !important;
 }
 @media (max-width: 800px) {
   .nav-bar {
