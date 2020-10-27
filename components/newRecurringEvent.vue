@@ -741,7 +741,7 @@
                             :rules="validEndTimeRule(k)"
                           />
                         </td>
-                        <td class="pa-2 pb-0">
+                        <td class="pa-2 pb-0 st-date">
                           <v-autocomplete
                             v-model="session.Duration"
                             :items="slotLookupOptions"
@@ -750,7 +750,6 @@
                             label="Slot Size"
                             outlined
                             dense
-                            class="st-date"
                             @change="changeDuration(k)"
                           ></v-autocomplete>
                         </td>
@@ -759,8 +758,6 @@
                             v-model="session.Timezone"
                             :rules="requiredRules"
                             :field="timezonefield"
-                            offset-y
-                            class="st-date"
                           ></Timezone>
                         </td>
                         <td class="pa-2 pb-0 event-timezone">
