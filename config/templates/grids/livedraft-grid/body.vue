@@ -1,15 +1,11 @@
 <template>
   <v-flex class="greybg">
-    <div>
+    <div class="pt-4">
       <v-row class="ma-0">
         <v-col
           v-for="item in items"
           :key="item.id"
-          class="pa-4 pl-0 pt-0 eventtiles"
-          cols="12"
-          sm="4"
-          md="4"
-          lg="3"
+          class="pa-4 pl-0 pt-0 eventtiles ma-4 ml-0 mt-0"
         >
           <div v-if="item.BusinessType === 'Recurring'">
             <v-card class="elevation-0 pa-0">
@@ -20,7 +16,7 @@
                 <div class="positionRelative">
                   <v-btn
                     v-if="item.Status === 'Not ready'"
-                    class="ma-2 positionAbsolute draft-event grey--text text--lighten-1"
+                    class="ma-2 positionAbsolute draft-event grey--text text--darken-2"
                     depressed
                     small
                     color="white"
@@ -154,7 +150,7 @@
                 <div class="positionRelative">
                   <v-btn
                     v-if="item.Status === 'Not ready'"
-                    class="ma-2 positionAbsolute draft-event grey--text text--lighten-1"
+                    class="ma-2 positionAbsolute draft-event grey--text text--darken-2"
                     depressed
                     small
                     color="white"
