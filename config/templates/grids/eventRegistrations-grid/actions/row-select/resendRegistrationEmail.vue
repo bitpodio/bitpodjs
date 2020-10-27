@@ -9,7 +9,6 @@
   </v-col>
 </template>
 <script>
-import nuxtconfig from '~/nuxt.config'
 export default {
   props: {
     items: {
@@ -32,7 +31,8 @@ export default {
   methods: {
     async resendRegistrationEmail() {
       const regIds = this.items.map((e) => e.id)
-      const URL = `https://${nuxtconfig.axios.eventUrl}/svc/api/CRMACTIVITIES/cloneActivityForResendEmail`
+      const url = this.$bitpod.getApiUrl()
+      const URL = `${url}CRMACTIVITIES/cloneActivityForResendEmail`
       alert('are you sure, you want to resend confirmation emails ?')
       try {
         const res = await this.$axios.$post(URL, {

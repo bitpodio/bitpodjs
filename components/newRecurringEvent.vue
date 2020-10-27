@@ -923,7 +923,6 @@ import gql from 'graphql-tag'
 import format from 'date-fns/format'
 import strings from '../strings.js'
 import { formatTimezoneDateFieldsData } from '~/utility/form.js'
-import { getApiUrl } from '~/utility/index.js'
 import Lookup from '~/components/common/form/lookup.vue'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import Timezone from '~/components/common/form/timezone'
@@ -1841,7 +1840,7 @@ export default {
       return `mutation($Inputs : ${modelName}UpsertWithWhereInput!){ ${modelName}{ ${modelName}UpsertWithWhere(input:$Inputs){ clientMutationId obj{ id } } } }`
     },
     viewRegistration() {
-      const baseUrl = getApiUrl()
+      const baseUrl = this.$bitpod.getApiUrl()
       const regUrl = baseUrl.replace('svc/api', 'e')
       window.open(`${regUrl}${this.eventData.UniqLink}`, '_blank')
     },
@@ -1999,7 +1998,7 @@ export default {
           this.isSaveButtonDisabled = true
           this.eventData.EventManager = this.$auth.$state.user.data.email
           this.eventData.Organizer = this.$auth.$state.user.data.name
-          const baseUrl = getApiUrl()
+          const baseUrl = this.$bitpod.getApiUrl()
           const res = await this.$axios
             .$post(`${baseUrl}Events`, {
               ...this.eventData,
@@ -2274,7 +2273,7 @@ export default {
   min-height: 300px;
 }
 .event-inner {
-  min-height: 455px;
+  min-height: 437px;
 }
 .st-date {
   max-width: 125px !important;

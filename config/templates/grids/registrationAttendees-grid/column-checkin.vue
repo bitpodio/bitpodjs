@@ -83,7 +83,6 @@ import nuxtconfig from '~/nuxt.config'
 import organizationInfo from '~/config/apps/event/gql/organizationInfo.gql'
 import badge from '~/config/apps/event/gql/badge.gql'
 import { formatGQLResult } from '~/utility/gql.js'
-import { getApiUrl } from '~/utility'
 
 export default {
   props: {
@@ -134,7 +133,7 @@ export default {
       this.id = ''
     },
     async updateDate(ele) {
-      const URL = `https://${nuxtconfig.axios.eventUrl}/svc/api/Attes/${this.item.id}`
+      const URL = `${this.$bitpod.getApiUrl()}Attes/${this.item.id}`
       try {
         const res = await this.$axios.$patch(URL, {
           CheckIn: new Date(),
@@ -162,7 +161,7 @@ export default {
       }
     },
     async getEventId() {
-      const url = getApiUrl()
+      const url = this.$bitpod.getApiUrl()
       try {
         const res = await this.$axios.get(
           `${url}Registrations/${this.$route.params.id}/EventList`
@@ -239,9 +238,10 @@ export default {
       return str
     },
     getAttachmentLink(id, isDownloadLink) {
-      const attachmentUrl = `https://${nuxtconfig.axios.eventUrl}${
-        nuxtconfig.axios.apiEndpoint
-      }Attachments${isDownloadLink ? '/download' : ''}${id ? '/' + id : ''}`
+      const url = this.$bitpod.getApiUrl()
+      const attachmentUrl = `${url}Attachments${
+        isDownloadLink ? '/download' : ''
+      }${id ? '/' + id : ''}`
       return attachmentUrl
     },
     async getOrgInfo() {

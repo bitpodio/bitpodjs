@@ -24,7 +24,6 @@
 </template>
 
 <script>
-import nuxtconfig from '~/nuxt.config'
 export default {
   props: {
     item: {
@@ -47,7 +46,7 @@ export default {
     async updateBussinessUnit() {
       try {
         const res = await this.$axios.$patch(
-          `https://${nuxtconfig.axios.eventUrl}/svc/api/Locations/${this.item.id}`,
+          `${this.$bitpod.getApiUrl()}Locations/${this.item.id}`,
           {
             Default: this.checkbox,
           }

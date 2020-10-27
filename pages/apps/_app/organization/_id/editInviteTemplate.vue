@@ -46,7 +46,6 @@
 </template>
 
 <script>
-import { getApiUrl } from '~/utility'
 export default {
   components: {
     RichText: () =>
@@ -130,7 +129,7 @@ export default {
 
     async onSave() {
       this.isSaveButtonDisabled = true
-      const url = getApiUrl()
+      const url = this.$bitpod.getApiUrl()
       this.selected.Documents = this.fileList
       let res = null
       try {

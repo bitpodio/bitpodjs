@@ -3273,7 +3273,7 @@ export default {
             caption: 'Timezone *',
             displayOrder: 5,
           },
-          displayOrder: 5,
+          displayOrder: 4,
           caption: 'Timezone',
           searchEnable: true,
           sortEnable: true,

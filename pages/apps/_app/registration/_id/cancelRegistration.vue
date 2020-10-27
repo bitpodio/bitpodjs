@@ -50,12 +50,7 @@
 </template>
 
 <script>
-// import gql from 'graphql-tag'
 import { required } from '~/utility/rules.js'
-// import registration from '~/config/apps/event/gql/registration.gql'
-// import { formatGQLResult } from '~/utility/gql.js'
-import { getApiUrl } from '~/utility/index.js'
-
 export default {
   props: {
     isCancelReg: {
@@ -84,11 +79,8 @@ export default {
       this.$emit('update:isCancelReg', false)
       this.$refs.form.reset()
     },
-    // refresh() {
-    //   this.$apollo.queries.data.refresh()
-    // },
     async onSave() {
-      const baseUrl = getApiUrl()
+      const baseUrl = this.$bitpod.getApiUrl()
       const regId = this.$route.params.id
       let commentRes = null
       let regRes = null
@@ -120,7 +112,6 @@ export default {
       }
       if (regRes) {
         this.close()
-        // this.refresh()
         return regRes
       }
     },

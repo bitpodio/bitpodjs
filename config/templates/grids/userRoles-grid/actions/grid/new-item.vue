@@ -54,7 +54,6 @@
 
 <script>
 import { email, required } from '~/utility/rules.js'
-import { getApiUrl } from '~/utility'
 
 export default {
   props: {
@@ -103,7 +102,7 @@ export default {
       this.dialog = false
     },
     async onSave() {
-      const url = getApiUrl()
+      const url = this.$bitpod.getApiUrl()
       this.formData.emailId = this.email
       const orgId = this.$store.state.currentOrg.id
       this.formData.id = orgId

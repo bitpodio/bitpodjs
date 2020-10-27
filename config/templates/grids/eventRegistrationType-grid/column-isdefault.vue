@@ -25,7 +25,6 @@
 
 <script>
 import gql from 'graphql-tag'
-import nuxtconfig from '~/nuxt.config'
 import registrationType from '~/config/apps/event/gql/registrationType.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 export default {
@@ -67,7 +66,7 @@ export default {
       } else {
         try {
           const res = await this.$axios.$put(
-            `https://${nuxtconfig.axios.eventUrl}/svc/api/RegistrationTypes/${this.item.id}`,
+            `${this.$bitpod.getApiUrl()}RegistrationTypes/${this.item.id}`,
             {
               isDefault: this.checkbox,
             }

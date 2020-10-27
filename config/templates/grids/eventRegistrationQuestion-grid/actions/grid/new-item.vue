@@ -110,7 +110,6 @@
 
 <script>
 import gql from 'graphql-tag'
-import nuxtconfig from '~/nuxt.config'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import eventTicket from '~/config/apps/event/gql/eventTickets.gql'
 import { formatGQLResult } from '~/utility/gql.js'
@@ -221,13 +220,11 @@ export default {
             .filter((i) => this.tickets.some((j) => j === i.name))
             .map((k) => k.id)
         : []
+      const url = this.$bitpod.getApiUrl()
       const res = await this.$axios
-        .$post(
-          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/Survey`,
-          {
-            ...this.formData,
-          }
-        )
+        .$post(`${url}Events/${this.$route.params.id}/Survey`, {
+          ...this.formData,
+        })
         .catch((e) => console.log('Error', e))
       if (res) {
         this.dialog = false

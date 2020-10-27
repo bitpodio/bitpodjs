@@ -105,7 +105,6 @@ import addHours from 'date-fns/addHours'
 import { required } from '~/utility/rules.js'
 import eventRegistrationTicketSlot from '~/config/apps/event/gql/eventRegistrationTicketSlot.gql'
 import { formatGQLResult } from '~/utility/gql.js'
-import { getApiUrl } from '~/utility/index.js'
 import strings from '~/strings.js'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
 
@@ -214,7 +213,7 @@ export default {
       this.$apollo.queries.data.refresh()
     },
     async onSave() {
-      const baseUrl = getApiUrl()
+      const baseUrl = this.$bitpod.getApiUrl()
       this.refundData._Refund = this.refund
       const regId = this.$route.params.id
       let res = null

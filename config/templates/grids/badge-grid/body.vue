@@ -47,7 +47,6 @@
 
 <script>
 import editBadgeTemplate from '~/pages/apps/_app/organization/_id/editBadgeTemplate.vue'
-import { getApiUrl } from '~/utility'
 export default {
   components: {
     editBadgeTemplate,
@@ -68,7 +67,7 @@ export default {
   },
   methods: {
     async deleteBadge(id) {
-      const url = getApiUrl()
+      const url = this.$bitpod.getApiUrl()
 
       const check = confirm('Are you sure you want to delete this badge?')
       let res = null

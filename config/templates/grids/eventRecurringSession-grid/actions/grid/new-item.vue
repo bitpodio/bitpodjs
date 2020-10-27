@@ -542,7 +542,6 @@ import registrationStatusOptions from '~/config/apps/event/gql/registrationStatu
 import location from '~/config/apps/event/gql/location.gql'
 import { getIdFromAtob } from '~/utility'
 import CustomDate from '~/components/common/form/date.vue'
-import { getApiUrl } from '~/utility/index.js'
 import nuxtconfig from '~/nuxt.config'
 export default {
   components: {
@@ -1228,7 +1227,7 @@ export default {
         if (this.session.SessionTicket && this.session.SessionTicket) {
           this.setTicketName()
         }
-        const baseUrl = getApiUrl()
+        const baseUrl = this.$bitpod.getApiUrl()
         let res = null
         let exceptionRes = null
         if (this.actionType === 'New') {

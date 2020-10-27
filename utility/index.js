@@ -8,7 +8,6 @@ import endOfYesterday from 'date-fns/endOfYesterday'
 import startOfDay from 'date-fns/startOfDay'
 import endOfDay from 'date-fns/endOfDay'
 import MissingComponent from './missing-component.vue'
-import nuxtconfig from '~/nuxt.config'
 
 export function importTemplate(templatePath) {
   return () => import(`~/config/${templatePath}`)
@@ -48,24 +47,6 @@ export const templateLoaderMixin = {
         )
       }
   },
-}
-
-export function getCurrentOrigin() {
-  let currentOrigin = ''
-  if (
-    typeof window === 'undefined' ||
-    window.location.origin.includes('localhost')
-  ) {
-    currentOrigin = `https://${nuxtconfig.axios.backendBaseUrl}`
-  } else {
-    currentOrigin = `${window.location.origin}`
-  }
-  return currentOrigin
-}
-
-export function getApiUrl() {
-  const currentOrigin = getCurrentOrigin()
-  return `${currentOrigin}${nuxtconfig.axios.apiEndpoint}`
 }
 
 export function getGridTemplateInfo(content, viewName) {

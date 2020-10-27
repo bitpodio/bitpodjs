@@ -24,7 +24,6 @@
 </template>
 
 <script>
-import nuxtconfig from '~/nuxt.config'
 export default {
   props: {
     item: {
@@ -45,13 +44,11 @@ export default {
   },
   methods: {
     async updateRecurringSession() {
+      const url = this.$bitpod.getApiUrl()
       try {
-        const res = await this.$axios.$patch(
-          `https://${nuxtconfig.axios.eventUrl}/svc/api/Sessions/${this.item.id}`,
-          {
-            isActive: this.checkbox,
-          }
-        )
+        const res = await this.$axios.$patch(`${url}Sessions/${this.item.id}`, {
+          isActive: this.checkbox,
+        })
         if (res) {
           this.refresh()
         }

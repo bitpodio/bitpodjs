@@ -1,19 +1,10 @@
 <template>
   <div class="positionRelative ps-top6">
-    <div v-if="item.isActive === true">
+    <div>
       <v-checkbox
         v-model="checkbox"
-        success
-        dense
-        height="20"
-        class="ma-0 pa-0"
-        @change="updateRegForm"
-      ></v-checkbox>
-    </div>
-    <div v-else>
-      <v-checkbox
-        v-model="checkbox"
-        error
+        :success="item.isActive"
+        :error="!item.isActive"
         dense
         height="20"
         class="ma-0 pa-0"
@@ -24,7 +15,6 @@
 </template>
 
 <script>
-import nuxtconfig from '~/nuxt.config'
 export default {
   props: {
     item: {
@@ -45,13 +35,11 @@ export default {
   },
   methods: {
     async updateRegForm() {
+      const url = this.$bitpod.getApiUrl()
       try {
-        const res = await this.$axios.$put(
-          `https://${nuxtconfig.axios.eventUrl}/svc/api/OfferCodes/${this.item.id}`,
-          {
-            isActive: this.checkbox,
-          }
-        )
+        const res = await this.$axios.$put(`${url}OfferCodes/${this.item.id}`, {
+          isActive: this.checkbox,
+        })
         if (res) {
           this.refresh()
         }
