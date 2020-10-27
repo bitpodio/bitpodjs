@@ -17,38 +17,49 @@
                 :to="recurringRoutes(item.id)"
                 class="text-decoration-none"
               >
-                <div v-if="!item.Images.length" class="overflow-h rounded-t">
-                  <v-flex
-                    class="tile-img tile-pattern rounded-0"
-                    :style="{
-                      'background-image': getRandomImage(item.Title),
-                    }"
-                  ></v-flex>
-                </div>
-                <div class="overflow-h rounded-t">
-                  <v-img
-                    v-for="image in item.Images"
-                    :key="image"
-                    :src="getAttachmentLink(image, true)"
-                    :lazy-src="getAttachmentLink(image, true)"
-                    aspect-ratio="1"
-                    class="tile-img rounded-0"
+                <div class="positionRelative">
+                  <v-btn
+                    v-if="item.Status === 'Not ready'"
+                    class="ma-2 positionAbsolute draft-event grey--text text--lighten-1"
+                    depressed
+                    small
+                    color="white"
                   >
-                    <template v-slot:placeholder>
-                      <v-row
-                        class="fill-height ma-0"
-                        align="center"
-                        justify="center"
-                      >
-                        <v-flex
-                          class="tile-img tile-pattern rounded-0"
-                          :style="{
-                            'background-image': getRandomImage(item.Title),
-                          }"
-                        ></v-flex>
-                      </v-row>
-                    </template>
-                  </v-img>
+                    Draft
+                  </v-btn>
+                  <div v-if="!item.Images.length" class="overflow-h rounded-t">
+                    <v-flex
+                      class="tile-img tile-pattern rounded-0"
+                      :style="{
+                        'background-image': getRandomImage(item.Title),
+                      }"
+                    ></v-flex>
+                  </div>
+                  <div class="overflow-h rounded-t">
+                    <v-img
+                      v-for="image in item.Images"
+                      :key="image"
+                      :src="getAttachmentLink(image, true)"
+                      :lazy-src="getAttachmentLink(image, true)"
+                      aspect-ratio="1"
+                      class="tile-img rounded-0"
+                    >
+                      <template v-slot:placeholder>
+                        <v-row
+                          class="fill-height ma-0"
+                          align="center"
+                          justify="center"
+                        >
+                          <v-flex
+                            class="tile-img tile-pattern rounded-0"
+                            :style="{
+                              'background-image': getRandomImage(item.Title),
+                            }"
+                          ></v-flex>
+                        </v-row>
+                      </template>
+                    </v-img>
+                  </div>
                 </div>
                 <v-flex class="tile-info pa-4 pb-0">
                   <div class="text--secondary pa-2 pb-0 body-2 pl-0 pt-0">
@@ -140,38 +151,49 @@
           <div v-else>
             <v-card class="elevation-0 pa-0">
               <nuxt-link :to="routes(item.id)" class="text-decoration-none">
-                <div v-if="!item.Images.length" class="overflow-h rounded-t">
-                  <v-flex
-                    class="tile-img tile-pattern rounded-0"
-                    :style="{
-                      'background-image': getRandomImage(item.Title),
-                    }"
-                  ></v-flex>
-                </div>
-                <div class="overflow-h rounded-t">
-                  <v-img
-                    v-for="image in item.Images"
-                    :key="image"
-                    :src="getAttachmentLink(image, true)"
-                    :lazy-src="getAttachmentLink(image, true)"
-                    aspect-ratio="1"
-                    class="tile-img rounded-0"
+                <div class="positionRelative">
+                  <v-btn
+                    v-if="item.Status === 'Not ready'"
+                    class="ma-2 positionAbsolute draft-event grey--text text--lighten-1"
+                    depressed
+                    small
+                    color="white"
                   >
-                    <template v-slot:placeholder>
-                      <v-row
-                        class="fill-height ma-0"
-                        align="center"
-                        justify="center"
-                      >
-                        <v-flex
-                          class="tile-img tile-pattern rounded-0"
-                          :style="{
-                            'background-image': getRandomImage(item.Title),
-                          }"
-                        ></v-flex>
-                      </v-row>
-                    </template>
-                  </v-img>
+                    Draft
+                  </v-btn>
+                  <div v-if="!item.Images.length" class="overflow-h rounded-t">
+                    <v-flex
+                      class="tile-img tile-pattern rounded-0"
+                      :style="{
+                        'background-image': getRandomImage(item.Title),
+                      }"
+                    ></v-flex>
+                  </div>
+                  <div class="overflow-h rounded-t">
+                    <v-img
+                      v-for="image in item.Images"
+                      :key="image"
+                      :src="getAttachmentLink(image, true)"
+                      :lazy-src="getAttachmentLink(image, true)"
+                      aspect-ratio="1"
+                      class="tile-img rounded-0"
+                    >
+                      <template v-slot:placeholder>
+                        <v-row
+                          class="fill-height ma-0"
+                          align="center"
+                          justify="center"
+                        >
+                          <v-flex
+                            class="tile-img tile-pattern rounded-0"
+                            :style="{
+                              'background-image': getRandomImage(item.Title),
+                            }"
+                          ></v-flex>
+                        </v-row>
+                      </template>
+                    </v-img>
+                  </div>
                 </div>
                 <v-flex class="tile-info pa-4 pb-0">
                   <div class="text--secondary pa-2 pb-0 body-2 pl-0 pt-0">
@@ -364,5 +386,11 @@ export default {
 }
 .tiles-action {
   min-height: 36px;
+}
+.draft-event {
+  right: -15px;
+  top: 5px;
+  z-index: 4;
+  pointer-events: none;
 }
 </style>
