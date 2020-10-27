@@ -424,7 +424,11 @@ export default {
           return this.refresh()
         })
         .catch((e) => {
-          console.error(e)
+          console.error(
+            `Failed to update Exception slots in session ${
+              this.$route.params.id
+            }, context :\n ${this.$bitpod.getApiUrl()},\n${e} `
+          )
         })
     },
     applyToOnly() {
