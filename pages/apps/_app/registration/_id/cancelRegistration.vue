@@ -49,11 +49,7 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
 import { required } from '~/utility/rules.js'
-import registration from '~/config/apps/event/gql/registration.gql'
-import { formatGQLResult } from '~/utility/gql.js'
-
 export default {
   props: {
     isCancelReg: {
@@ -80,9 +76,7 @@ export default {
   methods: {
     close() {
       this.$emit('update:isCancelReg', false)
-    },
-    refresh() {
-      this.$apollo.queries.data.refresh()
+      this.$refs.form.reset()
     },
     async onSave() {
       const baseUrl = this.$bitpod.getApiUrl()
@@ -97,7 +91,9 @@ export default {
           }
         )
       } catch (e) {
-        console.error('Error', e)
+        console.error(
+          `Error in Save function of cancel registration form, context: create comment , baseUrl: ${baseUrl} regId: ${regId} comment: ${this.comment} error: ${e}`
+        )
       }
       if (commentRes) {
         try {
@@ -108,49 +104,15 @@ export default {
             }
           )
         } catch (e) {
-          console.error('Error', e)
+          console.error(
+            `Error in Save function of cancel registration form, context: cancel registration , baseUrl: ${baseUrl} registrationId: ${regId} status: Cancelled, error: ${e}`
+          )
         }
       }
       if (regRes) {
         this.close()
-        this.refresh()
         return regRes
       }
-    },
-  },
-  apollo: {
-    data: {
-      query() {
-        return gql`
-          ${registration}
-        `
-      },
-      variables() {
-        return {
-          filters: {
-            where: {
-              id: this.$route.params.id,
-            },
-          },
-        }
-      },
-      update(data) {
-        const registration = formatGQLResult(data, 'Registration')
-        this.regData = registration.length > 0 ? { ...registration[0] } : {}
-
-        return {
-          event: {},
-        }
-      },
-      result({ data, loading, networkStatus }) {},
-      error(error) {
-        this.error = error
-        this.loading = 0
-      },
-      prefetch: false,
-      loadingKey: 'loading',
-      skip: false,
-      pollInterval: 0,
     },
   },
 }

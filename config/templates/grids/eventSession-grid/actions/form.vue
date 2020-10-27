@@ -8,7 +8,7 @@
       </div>
     </v-snackbar>
     <v-btn text small @click="openDialog">
-      <v-icon left>{{ isEdit ? 'mdi-pencil' : 'mdi-plus' }}</v-icon>
+      <v-icon left>{{ isEdit ? 'fa-pencil' : 'mdi-plus' }}</v-icon>
       {{ isEdit ? 'Edit Session' : 'New Session' }}
     </v-btn>
     <v-dialog
@@ -21,7 +21,7 @@
         <v-card-title
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
-          <h2 class="black--text pt-10 pb-9">
+          <h2 class="black--text pt-5 pb-3 text-h5">
             {{ isEdit ? 'Edit Session' : 'New Session' }}
           </h2>
           <v-spacer></v-spacer>
@@ -96,11 +96,6 @@
                 <Lookup
                   v-model="session.SessionTicket"
                   :field="ticketProps()"
-                  :rules="[
-                    (v) => {
-                      return v.length ? true : 'This field is required *'
-                    },
-                  ]"
                 />
               </v-col>
               <div class="col-md-12 pl-0 pb-0 pt-0">
@@ -117,6 +112,7 @@
                   v-model="session.LocationType"
                   :field="locationTypeProps"
                   :rules="required"
+                  @change="locationChanged"
                 />
               </v-col>
               <v-col v-if="session.LocationType === 'Bitpod Virtual'" cols="12">
@@ -452,6 +448,22 @@ export default {
     },
   },
   methods: {
+    locationChanged(value) {
+      if (value !== 'Venue') {
+        this.venueAddress = {
+          AddressLine: '',
+          City: '',
+          State: '',
+          Country: '',
+          PostalCode: '',
+          LatLng: { lat: 0.0, lng: 0.0 },
+        }
+        this.addresslineMessage = ''
+      }
+      if (value !== 'Online event') {
+        this.session.WebinarLink = ''
+      }
+    },
     openDialog() {
       if (this.isEdit) {
         const container = Object.keys(this.item[0]).length
@@ -486,8 +498,8 @@ export default {
           this.session.StartDate.setMinutes(
             this.session.StartDate.getMinutes() + 1
           )
-          this.session.Duration = '60'
         }
+        this.session.Duration = '60'
       }
       this.dialog = true
     },
@@ -514,7 +526,7 @@ export default {
       return {
         type: 'lookup',
         multiple: true,
-        caption: 'Tickets*',
+        caption: 'Tickets',
         items,
         dataSource: {
           items,

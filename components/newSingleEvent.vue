@@ -62,35 +62,24 @@
               >
                 <v-row>
                   <v-col cols="12" sm="6" md="4" class="pb-0">
-                    <v-datetime-picker
+                    <CustomDate
                       v-model="eventData.StartDate"
                       label="Start Date*"
-                      :text-field-props="eventStartDateProps"
+                      :field="startDateField"
+                      :rules="startDateRule"
                       :on-change="changeStartDate()"
-                    >
-                      <template slot="dateIcon">
-                        <v-icon>fas fa-calendar</v-icon>
-                      </template>
-                      <template slot="timeIcon">
-                        <v-icon>fas fa-clock</v-icon>
-                      </template>
-                    </v-datetime-picker>
+                      type="datetime"
+                    />
                   </v-col>
                   <v-col cols="12" sm="6" md="4" class="pb-0">
-                    <v-datetime-picker
+                    <CustomDate
                       v-model="eventData.EndDate"
-                      :rules="requiredRules"
                       label="End Date*"
-                      :text-field-props="eventEndDateProps"
-                      :on-change="changeEndDate()"
-                    >
-                      <template slot="dateIcon">
-                        <v-icon>fas fa-calendar</v-icon>
-                      </template>
-                      <template slot="timeIcon">
-                        <v-icon>fas fa-clock</v-icon>
-                      </template>
-                    </v-datetime-picker>
+                      :field="endDateField"
+                      :rules="endDateRule"
+                      :on-change="changeEndDate"
+                      type="datetime"
+                    />
                   </v-col>
 
                   <v-col cols="12" sm="6" md="4" class="pb-0">
@@ -340,30 +329,24 @@
                         ></v-text-field>
                       </td>
                       <td class="pa-2 pb-0">
-                        <v-datetime-picker
+                        <CustomDate
                           v-model="ticket.StartDate"
-                          :text-field-props="ticketStartDateProps(k)"
-                        >
-                          <template slot="dateIcon">
-                            <v-icon>fas fa-calendar</v-icon>
-                          </template>
-                          <template slot="timeIcon">
-                            <v-icon>fas fa-clock</v-icon>
-                          </template>
-                        </v-datetime-picker>
+                          label="Start Date*"
+                          :field="ticketStartDateField"
+                          :rules="ticketStartDateRule(k)"
+                          :on-change="changeTicketStartDate()"
+                          type="datetime"
+                        />
                       </td>
                       <td class="pa-2 pb-0">
-                        <v-datetime-picker
+                        <CustomDate
                           v-model="ticket.EndDate"
-                          :text-field-props="ticketEndDateProps(k)"
-                        >
-                          <template slot="dateIcon">
-                            <v-icon>fas fa-calendar</v-icon>
-                          </template>
-                          <template slot="timeIcon">
-                            <v-icon>fas fa-clock</v-icon>
-                          </template>
-                        </v-datetime-picker>
+                          label="End Date*"
+                          :field="ticketEndDateField"
+                          :rules="ticketEndDateRule(k)"
+                          :on-change="changeTicketEndDate()"
+                          type="datetime"
+                        />
                       </td>
                       <td class="pa-2 pb-0">
                         <v-text-field
@@ -502,6 +485,7 @@ import addMonths from 'date-fns/addMonths'
 import addDays from 'date-fns/addDays'
 import gql from 'graphql-tag'
 import strings from '../strings.js'
+import CustomDate from '~/components/common/form/date.vue'
 import { formatTimezoneDateFieldsData } from '~/utility/form.js'
 import Lookup from '~/components/common/form/lookup.vue'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
@@ -517,6 +501,7 @@ export default {
       process.client ? import('~/components/common/form/richtext.vue') : false,
     Lookup,
     Timezone,
+    CustomDate,
     VueGoogleAutocomplete: () => import('vue-google-autocomplete'),
   },
   props: {
@@ -557,6 +542,7 @@ export default {
       },
       mapStyle: [],
       clusterStyle: [],
+
       ticketTypeProps: {
         type: 'lookup',
         dataSource: {
@@ -653,13 +639,77 @@ export default {
           Type: 'Free',
           Amount: 0,
           StartDate: currentDatetime,
-          EndDate: addDays(addMonths(new Date(), 1), 3),
+          EndDate: addDays(addMonths(new Date(), 1), 4),
           TicketCount: 100,
         },
       ],
     }
   },
   computed: {
+    startDateField() {
+      return {
+        appendIcon: 'fa-calendar',
+        outlined: true,
+        caption: 'Start Date*',
+        type: 'datetime',
+      }
+    },
+    endDateField() {
+      return {
+        appendIcon: 'fa-calendar',
+        outlined: true,
+        caption: 'End Date*',
+        type: 'datetime',
+      }
+    },
+    ticketStartDateField() {
+      return {
+        appendIcon: 'fa-calendar',
+        outlined: true,
+        caption: 'Start Date*',
+        type: 'datetime',
+      }
+    },
+    ticketEndDateField() {
+      return {
+        appendIcon: 'fa-calendar',
+        outlined: true,
+        caption: 'End Date*',
+        type: 'datetime',
+      }
+    },
+    startDateRule() {
+      return [
+        (v) => {
+          const StartDate = v && new Date(v)
+          const { EndDate } = this.eventData
+          let startDateMessage = ''
+          if (!StartDate) startDateMessage = strings.FIELD_REQUIRED
+          else if (StartDate && EndDate && StartDate > EndDate)
+            startDateMessage = strings.EVENT_START_END_DATE
+          else if (StartDate < new Date())
+            startDateMessage = strings.EVENT_START_DATE
+          else startDateMessage = ''
+          return startDateMessage || true
+        },
+      ]
+    },
+    endDateRule() {
+      return [
+        (v) => {
+          const EndDate = v && new Date(v)
+          const { StartDate } = this.eventData
+          let endDateMessage = ''
+          if (!EndDate) endDateMessage = strings.FIELD_REQUIRED
+          else if (StartDate && EndDate && StartDate > EndDate)
+            endDateMessage = strings.EVENT_START_END_DATE
+          else if (EndDate < new Date()) endDateMessage = strings.EVENT_END_DATE
+          else endDateMessage = ''
+          return endDateMessage || true
+        },
+      ]
+    },
+
     eventLinkHint() {
       return `${nuxtconfig.integrationLinks.EVENT_LINK_HINT}${this.eventData.UniqLink}`
     },
@@ -669,53 +719,12 @@ export default {
         lng: (this.locations[0] && this.locations[0].lng) || 0.0,
       }
     },
-    eventStartDateProps() {
-      return {
-        appendIcon: 'fa-calendar',
-        outlined: true,
-        dense: true,
-        rules: [
-          (v) => {
-            const StartDate = v && new Date(v)
-            const { EndDate } = this.eventData
-            let startDateMessage = ''
-            if (!StartDate) startDateMessage = strings.FIELD_REQUIRED
-            else if (StartDate && EndDate && StartDate > EndDate)
-              startDateMessage = strings.EVENT_START_END_DATE
-            else if (StartDate < new Date())
-              startDateMessage = strings.EVENT_START_DATE
-            else startDateMessage = ''
-            return startDateMessage || true
-          },
-        ],
-      }
-    },
-    eventEndDateProps() {
-      return {
-        appendIcon: 'fa-calendar',
-        outlined: true,
-        dense: true,
-        rules: [
-          (v) => {
-            const EndDate = v && new Date(v)
-            const { StartDate } = this.eventData
-            let endDateMessage = ''
-            if (!EndDate) endDateMessage = strings.FIELD_REQUIRED
-            else if (StartDate && EndDate && StartDate > EndDate)
-              endDateMessage = strings.EVENT_START_END_DATE
-            else if (EndDate < new Date())
-              endDateMessage = strings.EVENT_END_DATE
-            else endDateMessage = ''
-            return endDateMessage || true
-          },
-        ],
-      }
-    },
     uniqueLinkValidationMsg() {
       const errorMessage = this.isInvalidEventLink ? this.uniqueLinkMessage : ''
       return errorMessage
     },
   },
+
   watch: {
     resetData() {
       if (this.$refs && this.$refs['venueAddress.AddressLine'].$data) {
@@ -735,11 +744,26 @@ export default {
         this.eventLinkHint.split('/')[4]
       }`
     },
+    calculateTicketEndDate() {
+      const endDate = this.eventData.EndDate
+      if (endDate) {
+        this.tickets.forEach(function (ticket) {
+          ticket.EndDate = endDate
+        })
+      }
+    },
     changeStartDate() {
       this.$refs.dateform && this.$refs.dateform.validate()
     },
     changeEndDate(value) {
       this.$refs.dateform && this.$refs.dateform.validate()
+      this.calculateTicketEndDate()
+    },
+    changeTicketStartDate() {
+      this.$refs.form && this.$refs.form.validate()
+    },
+    changeTicketEndDate() {
+      this.$refs.form && this.$refs.form.validate()
     },
     isNextDisabled() {
       return this.isUniqLinkValid === false
@@ -837,55 +861,45 @@ export default {
         this.tickets.splice(index, 1)
       }
     },
-    ticketStartDateProps(index) {
-      return {
-        appendIcon: 'fa-calendar',
-        outlined: true,
-        dense: true,
-        rules: [
-          (v) => {
-            const StartDate = v && new Date(v)
-            const { EndDate } = this.tickets[index]
-            let startDateMessage = ''
-            if (!StartDate && this.tickets[index].StartDate === null)
-              startDateMessage = strings.FIELD_REQUIRED
-            else if (StartDate && EndDate && StartDate > EndDate)
-              startDateMessage = strings.TICKET_START_DT_MSG
-            else if (
-              StartDate &&
-              new Date(StartDate.setSeconds(1)) < this.currentDatetime
-            ) {
-              startDateMessage = strings.TICKET_START_DT_CURRENT_DT
-            } else startDateMessage = ''
-            return startDateMessage || true
-          },
-        ],
-      }
+    ticketStartDateRule(index) {
+      return [
+        (v) => {
+          const StartDate = v && new Date(v)
+          const { EndDate } = this.tickets[index]
+          let startDateMessage = ''
+          if (!StartDate && this.tickets[index].StartDate === null)
+            startDateMessage = strings.FIELD_REQUIRED
+          else if (StartDate && EndDate && StartDate > EndDate)
+            startDateMessage = strings.TICKET_START_DT_MSG
+          else if (
+            StartDate &&
+            new Date(StartDate.setSeconds(1)) < this.currentDatetime
+          ) {
+            startDateMessage = strings.TICKET_START_DT_CURRENT_DT
+          } else startDateMessage = ''
+          return startDateMessage || true
+        },
+      ]
     },
-    ticketEndDateProps(index) {
-      return {
-        appendIcon: 'fa-calendar',
-        outlined: true,
-        dense: true,
-        rules: [
-          (v) => {
-            const EndDate = v && new Date(v)
-            const { StartDate } = this.tickets[index]
-            let endDateMessage = ''
+    ticketEndDateRule(index) {
+      return [
+        (v) => {
+          const EndDate = v && new Date(v)
+          const { StartDate } = this.tickets[index]
+          let endDateMessage = ''
 
-            if (!EndDate && this.tickets[index].EndDate === null)
-              endDateMessage = strings.FIELD_REQUIRED
-            else if (StartDate && EndDate && StartDate > EndDate)
-              endDateMessage = strings.TICKET_START_DT_MSG
-            else if (new Date(EndDate) < this.currentDatetime) {
-              endDateMessage = strings.TICKET_END_DT_CURRENT_DT
-            } else if (new Date(EndDate) > this.eventData.EndDate) {
-              endDateMessage = strings.TICKET_END_DT_MSG
-            } else endDateMessage = ''
-            return endDateMessage || true
-          },
-        ],
-      }
+          if (!EndDate && this.tickets[index].EndDate === null)
+            endDateMessage = strings.FIELD_REQUIRED
+          else if (StartDate && EndDate && StartDate > EndDate)
+            endDateMessage = strings.TICKET_START_DT_MSG
+          else if (new Date(EndDate) < this.currentDatetime) {
+            endDateMessage = strings.TICKET_END_DT_CURRENT_DT
+          } else if (new Date(EndDate) > this.eventData.EndDate) {
+            endDateMessage = strings.TICKET_END_DT_MSG
+          } else endDateMessage = ''
+          return endDateMessage || true
+        },
+      ]
     },
     returnToCenter() {
       if (this.locations && this.locations[0]) {
@@ -910,17 +924,13 @@ export default {
       const { LocationType, WebinarLink } = this.eventData
       if (
         (LocationType === 'Venue' &&
-          this.$refs['venueAddress.AddressLine'] &&
-          this.$refs['venueAddress.AddressLine'].$data.autocompleteText !==
-            '') ||
+          this.venueAddress &&
+          this.venueAddress.AddressLine !== '') ||
         (LocationType === 'Online event' && WebinarLink !== '') ||
         LocationType === 'Bitpod Virtual'
       ) {
         return true
-      } else if (
-        this.$refs['venueAddress.AddressLine'] &&
-        this.$refs['venueAddress.AddressLine'].$data.autocompleteText === ''
-      ) {
+      } else {
         return false
       }
     },
@@ -1009,17 +1019,18 @@ export default {
           this.eventData,
           this.fields
         )
-        this.eventData.StartDate = convertedEventRecord.StartDate
-        this.eventData.EndDate = convertedEventRecord.EndDate
-        this.eventData.EventManager = this.$auth.$state.user.data.email
-        this.eventData.Organizer = this.$auth.$state.user.data.name
+        const eventInfo = JSON.parse(JSON.stringify(this.eventData))
+        eventInfo.StartDate = convertedEventRecord.StartDate
+        eventInfo.EndDate = convertedEventRecord.EndDate
+        eventInfo.EventManager = this.$auth.$state.user.data.email
+        eventInfo.Organizer = this.$auth.$state.user.data.name
 
         const baseUrl = this.$bitpod.getApiUrl()
         let res = null
         let ticketRes = null
         res = await this.$axios
           .$post(`${baseUrl}Events`, {
-            ...this.eventData,
+            ...eventInfo,
           })
           .catch((e) => {
             console.error(
@@ -1187,6 +1198,7 @@ export default {
       }
     },
     changeLocation(value) {
+      this.addresslineMessage = ''
       if (value === 'Venue') {
         this.isVenue = true
         this.isOnlineEvent = false

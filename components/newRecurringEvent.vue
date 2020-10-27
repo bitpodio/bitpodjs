@@ -1064,6 +1064,8 @@ export default {
       isEventCreate: false,
       isEventPublish: false,
       requiredRules: [required],
+      AvailableStartHour: '',
+      AvailableEndHour: '',
       isMap: false,
       ticketTypeProps: {
         type: 'lookup',
@@ -2179,8 +2181,8 @@ export default {
         Name: '',
         ScheduledType: 'Over a period of rolling days',
         CustomScheduledType: 'over 30 rolling days ',
-        StartTime: '10:00',
-        EndTime: '19:00',
+        StartTime: this.AvailableStartHour || '10:00',
+        EndTime: this.AvailableEndHour || '19:00',
         Duration: '30',
         Timezone: '',
         LocationType: '',
@@ -2237,6 +2239,17 @@ export default {
           this.setSelectedDays(OrganizationInfo[0].weekDay)
           this.weekDay = OrganizationInfo[0].weekDay
         }
+        this.AvailableStartHour =
+          OrganizationInfo[0] && OrganizationInfo[0].AvailableStartHour
+            ? OrganizationInfo[0].AvailableStartHour
+            : ''
+        this.AvailableEndHour =
+          OrganizationInfo[0] && OrganizationInfo[0].AvailableEndHour
+            ? OrganizationInfo[0].AvailableEndHour
+            : ''
+
+        this.sessions[0].StartTime = this.AvailableStartHour || '10:00'
+        this.sessions[0].EndTime = this.AvailableEndHour || '19:00'
       },
       error(error) {
         this.error = error
