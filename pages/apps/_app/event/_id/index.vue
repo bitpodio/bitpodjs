@@ -809,11 +809,11 @@
           <v-spacer></v-spacer>
         </v-flex>
         <v-divider></v-divider>
-        <div class="mt-2">
+        <div class="mt-2 seatmap-btn">
           <v-switch
             v-model="switchSeat"
             label="Seatmap & Tickets"
-            class="mt-0 ml-2 max-h24 positionAbsolute"
+            class="mt-0 ml-0 max-h24 positionAbsolute"
             height="20"
             @change="updateSeatReservation"
           ></v-switch>

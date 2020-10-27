@@ -27,7 +27,6 @@
       persistent
       scrollable
       content-class="slide-form-default"
-      transition="dialog-bottom-transition"
     >
       <v-card>
         <v-toolbar dense flat dark fixed color="accent">

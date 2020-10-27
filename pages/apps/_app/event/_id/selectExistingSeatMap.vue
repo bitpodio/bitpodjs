@@ -6,7 +6,6 @@
         persistent
         scrollable
         content-class="slide-form"
-        transition="dialog-bottom-transition"
       >
         <v-card>
           <v-card-title
