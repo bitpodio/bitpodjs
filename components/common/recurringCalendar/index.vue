@@ -173,10 +173,10 @@
             </v-container>
           </v-card-text>
           <v-card-text v-else>
-            <v-container v-if="content()">
+            <v-container v-if="contents && contents.Event">
               <Grid
-                view-name="eventAttendees"
-                :content="content()"
+                view-name="eventAttendeePerDay"
+                :content="contents.Event"
                 :filter="filterData()"
               />
             </v-container>
@@ -186,14 +186,14 @@
               outlined
               color="primary"
               depressed
-              :disabled="validSlots()"
+              :disabled="validSlots() || disabledButton"
               @click="applyToOnly"
               >Apply to Only {{ selectedDate }}
             </v-btn>
             <v-btn
               color="primary"
               depressed
-              :disabled="validSlots()"
+              :disabled="validSlots() || disabledButton"
               @click="applyToRepeating"
               >Apply To Repeating Week Days</v-btn
             >
@@ -225,6 +225,7 @@ export default {
   mixins: [configLoaderMixin],
   data() {
     return {
+      disabledButton: false,
       isParticipant: false,
       snackbar: false,
       exisistingEventId: '',
@@ -335,18 +336,6 @@ export default {
     this.getTimeSlots()
   },
   methods: {
-    content() {
-      if (this.contents) {
-        const startDate =
-          this.clickedDate === '' ? new Date() : new Date(this.clickedDate)
-        const endDate =
-          this.clickedDate === '' ? new Date() : new Date(this.clickedDate)
-        endDate.setDate(endDate.getDate() + 1)
-        this.contents.Event.startDate = startDate.toISOString()
-        this.contents.Event.endDate = endDate.toISOString()
-      }
-      return this.contents ? this.contents.Event : null
-    },
     filterData() {
       const startDate =
         this.clickedDate === '' ? new Date() : new Date(this.clickedDate)
@@ -357,8 +346,16 @@ export default {
         where: {
           and: [
             { SessionId: this.$route.params.id },
-            { BookingDate: { gte: startDate.toISOString() } },
-            { BookingDate: { lte: endDate.toISOString() } },
+            {
+              BookingDate: {
+                gte: new Date(startDate.toLocaleDateString()).toISOString(),
+              },
+            },
+            {
+              BookingDate: {
+                lte: new Date(endDate.toLocaleDateString()).toISOString(),
+              },
+            },
           ],
         },
       }
@@ -379,6 +376,7 @@ export default {
       this.dialog = false
       this.$apollo.queries.dropdownData.refresh()
       this.$apollo.queries.eventData.refresh()
+      this.disabledButton = false
     },
     ObjectID5(m = Math, d = Date, h = 16, s = (s) => m.floor(s).toString(h)) {
       return (
@@ -395,37 +393,43 @@ export default {
       })
     },
     applyToRepeating() {
-      return Promise.all(
-        this.selectedDays.map((i) => {
-          const day = i.dayName.slice(0, -1).toLocaleLowerCase()
-          const existingEvent = this.exceptionDates.find(
-            (i) => i.type === 'wday' && i.wday === day
-          )
-          const url = this.$bitpod.getApiUrl()
-          const exceptionURL = `${url}Sessions/${
-            this.$route.params.id
-          }/Exceptions/${
-            existingEvent ? atob(existingEvent.id).split(':')[1] : ''
-          }`
-          if (i.selected) {
-            return this.$axios({
-              method: existingEvent ? 'PUT' : 'POST',
-              url: exceptionURL,
-              data: {
-                type: 'wday',
-                wday: day,
-                _intervals: this.getSelectedIntervals(),
-              },
-            })
-          } else {
-            return Promise.resolve
-          }
+      this.disabledButton = true
+      this.selectedDays
+        .reduce((acc, i) => {
+          return acc.then(() => {
+            const day = i.dayName.slice(0, -1).toLocaleLowerCase()
+            const existingEvent = this.exceptionDates.find(
+              (i) => i.type === 'wday' && i.wday === day
+            )
+            const url = this.$bitpod.getApiUrl()
+            const exceptionURL = `${url}Sessions/${
+              this.$route.params.id
+            }/Exceptions/${
+              existingEvent ? atob(existingEvent.id).split(':')[1] : ''
+            }`
+            if (i.selected) {
+              return this.$axios({
+                method: existingEvent ? 'PUT' : 'POST',
+                url: exceptionURL,
+                data: {
+                  type: 'wday',
+                  wday: day,
+                  _intervals: this.getSelectedIntervals(),
+                },
+              })
+            }
+            return acc
+          })
+        }, Promise.resolve())
+        .then(() => {
+          return this.refresh()
         })
-      ).then(() => {
-        return this.refresh()
-      })
+        .catch((e) => {
+          console.error(e)
+        })
     },
     applyToOnly() {
+      this.disabledButton = true
       const existingEvent = this.exceptionDates.find(
         (i) => i.type === 'date' && i.date === this.clickedDate.toISOString()
       )

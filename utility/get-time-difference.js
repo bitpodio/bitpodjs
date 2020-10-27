@@ -18,7 +18,17 @@ export default function timeAgo(dateParam) {
         if (c < 1) {
           return Math.floor(c * 24) + ' hours ago'
         } else {
-          return Math.floor(c) + ' days ago'
+          c /= 30
+          if (c < 1) {
+            return Math.floor(c * 30) + ' days ago'
+          } else {
+            c /= 12
+            if (c < 1) {
+              return Math.floor(c * 12) + ' months ago'
+            } else {
+              return Math.floor(c) + ' years ago'
+            }
+          }
         }
       }
     }
