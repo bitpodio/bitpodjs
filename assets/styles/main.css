@@ -456,6 +456,12 @@ body {
   justify-content: flex-start !important;
   border: none !important;
 }
+.seatmap-btn .theme--light.v-label {
+  color: rgba(0, 0, 0, 0.87) !important;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 500;
+}
 @media (max-width: 800px) {
   .nav-bar {
     top: 0 !important;

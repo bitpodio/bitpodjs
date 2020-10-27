@@ -5,12 +5,7 @@
         Some Error Occured, Please contact Administrator.
       </div>
     </v-snackbar>
-    <v-dialog
-      v-model="dialog"
-      persistent
-      scrollable
-      content-class="slide-form"
-    >
+    <v-dialog v-model="dialog" persistent scrollable content-class="slide-form">
       <template v-slot:activator="{ on, attrs }">
         <v-col class="px-0">
           <v-btn
