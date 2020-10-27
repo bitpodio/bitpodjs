@@ -24,8 +24,9 @@ body {
 }
 
 .slide-form {
-  max-height: calc(100% - 15px) !important;
-  min-height: calc(100% - 15px) !important;
+  max-height: calc(100% - 30px) !important;
+  min-height: calc(100% - 30px) !important;
+  max-width: 1250px !important;
 }
 .stepper-box {
   min-height: 650px;
