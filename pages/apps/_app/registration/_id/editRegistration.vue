@@ -215,6 +215,7 @@ export default {
         event: {},
       },
       eventData: {},
+      currentAddress: {},
       venueAddress: {
         AddressLine: '',
         City: '',
@@ -317,7 +318,10 @@ export default {
       this.regData = { ...this.regDetails }
       if (this.regDetails._CurrentAddress) {
         this.venueAddress = {}
-        this.venueAddress = { ...this.regDetails._CurrentAddress }
+        console.log(this.regDetails._CurrentAddress)
+        console.log(this.regData._CurrentAddress)
+        console.log(this.currentAddress)
+        this.venueAddress = { ...this.currentAddress }
       }
       this.$emit('update:isEditReg', false)
     },
@@ -417,6 +421,7 @@ export default {
         }))
         if (this.regData._CurrentAddress) {
           this.venueAddress = this.regData._CurrentAddress
+          this.currentAddress = { ...this.regData._CurrentAddress }
         }
         this.regData.EventId && this.eventChange(this.regData.EventId, true)
         return {

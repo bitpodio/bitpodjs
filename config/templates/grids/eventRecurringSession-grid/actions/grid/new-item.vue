@@ -117,7 +117,7 @@
               </v-col>
               <v-col cols="12" sm="6" md="4" class="pb-0">
                 <v-autocomplete
-                  v-model="Duration"
+                  v-model="Duration1"
                   :items="slotLookupOptions"
                   item-text="value"
                   item-value="key"
@@ -152,19 +152,6 @@
               </v-flex>
             </div>
             <v-row v-if="dialog">
-              <!-- <v-col
-                v-if="session.Type === 'Group'"
-                cols="12"
-                sm="6"
-                md="4"
-                class="pb-0"
-              >
-                <Lookup
-                  v-model="session.LocationType"
-                  :field="smalllocationTypeProps"
-                  :rules="required"
-                />
-              </v-col> -->
               <v-col cols="12" sm="6" md="4" class="pb-0">
                 <Lookup
                   v-model="session.LocationType"
@@ -583,6 +570,7 @@ export default {
             ScheduledType: 'Over a period of rolling days',
             RollingDays: 30,
             Frequency: '30',
+            Duration: '30',
           }
     const actionType = this.type
     const isGroup = session.Type === 'Group'
@@ -600,7 +588,6 @@ export default {
               lng: 0.0,
             },
           }
-
     return {
       valid: false,
       required: [required],
@@ -614,7 +601,7 @@ export default {
       inPersonMeetingOptions: [],
       slotOptions: [],
       ticketOptions: [],
-      Duration: '30',
+      Duration1: '30',
       customDuration: '15',
       timeSlotMessage: '',
       addresslineMessage: '',
@@ -1184,9 +1171,7 @@ export default {
       if (
         this.actionType === 'Edit' ||
         isInvalidSlot === false ||
-        confirm(
-          'This session overlaps with another session, are you sure? click Yes to create and cancel to cancel it.'
-        )
+        confirm(strings.OVERLAP_SESSION_MSG)
       ) {
         const ObjectID5 = (
           m = Math,
@@ -1210,26 +1195,32 @@ export default {
             ],
           }
         })
-        this.session.RollingDays = parseInt(this.session.RollingDays)
+        this.session.RollingDays =
+          this.session.RollingDays && parseInt(this.session.RollingDays)
         this.session.Duration = this.isCustomMin
           ? parseInt(this.customDuration)
-          : parseInt(this.Duration)
-
-        this.session.MaxAllow = parseInt(this.session.MaxAllow)
+          : parseInt(this.Duration1)
+        this.session.MaxAllow =
+          this.session.MaxAllow && parseInt(this.session.MaxAllow)
         this.session.EventId = this.$route.params.id
 
         this.session.MinimumSchedulingNotice = parseInt(
           this.session.MinimumSchedulingNotice
         )
-        this.session.BufferBefore = parseInt(this.session.BufferBefore)
-        this.session.BufferAfter = parseInt(this.session.BufferAfter)
-        this.session.Frequency = parseInt(this.session.Frequency)
+
+        this.session.BufferBefore =
+          this.session.BufferBefore && parseInt(this.session.BufferBefore)
+        this.session.BufferAfter =
+          this.session.BufferAfter && parseInt(this.session.BufferAfter)
+        this.session.Frequency =
+          this.session.Frequency && parseInt(this.session.Frequency)
         if (this.session.SessionTicket && this.session.SessionTicket) {
           this.setTicketName()
         }
         const baseUrl = this.$bitpod.getApiUrl()
         let res = null
         let exceptionRes = null
+
         if (this.actionType === 'New') {
           try {
             res = await this.$axios.$post(`${baseUrl}Sessions`, {
@@ -1356,7 +1347,7 @@ export default {
           this.slotOptions &&
           this.slotOptions.length !== 0
         ) {
-          this.Duration = '0'
+          this.Duration1 = '0'
           this.customDuration = `${this.session.Duration}`
           this.isCustomMin = true
         } else if (
@@ -1365,15 +1356,15 @@ export default {
           this.session.Duration
         ) {
           if ([15, 30, 45, 60].includes(this.session.Duration)) {
-            this.Duration = `${this.session.Duration}`
+            this.Duration1 = `${this.session.Duration}`
             this.isCustomMin = false
           } else {
-            this.Duration = '0'
+            this.Duration1 = '0'
             this.customDuration = `${this.session.Duration}`
             this.isCustomMin = true
           }
         } else {
-          this.Duration = `${this.session.Duration}`
+          this.Duration1 = `${this.session.Duration}`
           this.isCustomMin = false
         }
       },

@@ -70,20 +70,6 @@
                       :on-change="changeStartDate()"
                       type="datetime"
                     />
-                    <!-- <v-datetime-picker
-                      ref="eventStartDate"
-                      v-model="eventData.StartDate"
-                      label="Start Date*"
-                      :text-field-props="eventStartDateProps"
-                      :on-change="changeStartDate()"
-                    >
-                      <template slot="dateIcon">
-                        <v-icon>fas fa-calendar</v-icon>
-                      </template>
-                      <template slot="timeIcon">
-                        <v-icon>fas fa-clock</v-icon>
-                      </template>
-                    </v-datetime-picker> -->
                   </v-col>
                   <v-col cols="12" sm="6" md="4" class="pb-0">
                     <CustomDate
@@ -94,21 +80,6 @@
                       :on-change="changeEndDate"
                       type="datetime"
                     />
-                    <!-- <v-datetime-picker
-                      ref="eventEndDate"
-                      v-model="eventData.EndDate"
-                      :rules="requiredRules"
-                      label="End Date*"
-                      :text-field-props="eventEndDateProps"
-                      :on-change="changeEndDate()"
-                    >
-                      <template slot="dateIcon">
-                        <v-icon>fas fa-calendar</v-icon>
-                      </template>
-                      <template slot="timeIcon">
-                        <v-icon>fas fa-clock</v-icon>
-                      </template>
-                    </v-datetime-picker> -->
                   </v-col>
 
                   <v-col cols="12" sm="6" md="4" class="pb-0">
@@ -366,18 +337,6 @@
                           :on-change="changeTicketStartDate()"
                           type="datetime"
                         />
-                        <!-- <v-datetime-picker
-                          v-model="ticket.StartDate"
-                          :text-field-props="ticketStartDateProps(k)"
-                          :on-change="changeTicketStartDate()"
-                        >
-                          <template slot="dateIcon">
-                            <v-icon>fas fa-calendar</v-icon>
-                          </template>
-                          <template slot="timeIcon">
-                            <v-icon>fas fa-clock</v-icon>
-                          </template>
-                        </v-datetime-picker> -->
                       </td>
                       <td class="pa-2 pb-0">
                         <CustomDate
@@ -388,18 +347,6 @@
                           :on-change="changeTicketEndDate()"
                           type="datetime"
                         />
-                        <!-- <v-datetime-picker
-                          v-model="ticket.EndDate"
-                          :text-field-props="ticketEndDateProps(k)"
-                          :on-change="changeTicketEndDate()"
-                        >
-                          <template slot="dateIcon">
-                            <v-icon>fas fa-calendar</v-icon>
-                          </template>
-                          <template slot="timeIcon">
-                            <v-icon>fas fa-clock</v-icon>
-                          </template>
-                        </v-datetime-picker> -->
                       </td>
                       <td class="pa-2 pb-0">
                         <v-text-field
