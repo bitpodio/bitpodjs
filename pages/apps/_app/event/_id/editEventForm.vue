@@ -430,6 +430,7 @@ export default {
     },
     refresh() {
       this.$refs.form.$parent.$parent.refresh()
+      this.$apollo.queries.data.refresh()
     },
     getAddressData(addressData, placeResultData, id) {
       this.VenueAddress.AddressLine = addressData.route
@@ -482,7 +483,7 @@ export default {
         this.formData.EndDate = null
       }
       if (this.formData.BusinessType !== 'Recurring') {
-        Object.assign({}, this.formData, { _VenueAddress: this.VenueAddress })
+        this.formData._VenueAddress = { ...this.VenueAddress }
         delete this.formData.VenueAddress
         delete this.formData._VenueAddress.LatLng
         try {
@@ -602,7 +603,7 @@ export default {
           )
           this.VenueAddress =
             this.formData._VenueAddress != null
-              ? this.formData._VenueAddress
+              ? { ...this.formData._VenueAddress }
               : {}
         } else {
           this.StartDate = this.formData.StartDate
@@ -618,7 +619,6 @@ export default {
               )
             : null
         }
-        // this.setEventData()
         return {
           event: event.length > 0 ? event[0] : {},
         }
