@@ -49,10 +49,10 @@ export default {
         src: `${
           process.env.GOOGLE_MAPS_API ||
           'https://maps.googleapis.com/maps/api/js'
-        }?key=${
+        }?key = ${
           process.env.GOOGLE_API_KEY ||
           'AIzaSyBKle17JR_zpGEzwARF0H8VFU9NeH9nh7c'
-        }&libraries=places`,
+        }& libraries=places`,
       },
       {
         src:
@@ -185,8 +185,10 @@ export default {
   apollo: {
     clientConfigs: {
       default: {
-        httpEndpoint: `https://${process.env.PUBLIC_DOMAIN}/svc/graphql`,
-        browserHttpEndpoint: '/svc/graphql',
+        httpEndpoint: `https://${
+          process.env.PUBLIC_DOMAIN || 'event.test.bitpod.io'
+        }/svc/graphql`,
+        // browserHttpEndpoint: '/svc/graphql',
       },
     },
     defaultOptions: {

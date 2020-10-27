@@ -659,12 +659,7 @@
               flat
               class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 mr-0 mb-4 pb-2 rounded-lg"
             >
-              <v-expansion-panel
-                v-for="(item, i) in 1"
-                :key="i"
-                flat
-                class="elevation-0 pa-0"
-              >
+              <v-expansion-panel flat class="elevation-0 pa-0">
                 <v-expansion-panel-header class="elevation-0 pa-0"
                   ><v-flex class="d-flex justify-center align-center pb-0">
                     <h2 class="body-1 pb-0">
@@ -694,19 +689,29 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>Student</td>
-                          <td>{{ registration.SubTotal }}</td>
-                          <td>{{ registration.TicketQuantity }}</td>
-                          <td>{{ registration.TotalAmount }}</td>
+                        <tr
+                          v-for="item in registration.TicketListId"
+                          :key="item"
+                        >
+                          <td>{{ item.Code }}</td>
+                          <td>{{ item.Amount }}</td>
+                          <td>{{ item.TicketQuantity }}</td>
+                          <td>{{ item.Amount }}</td>
                         </tr>
+                        <tr>
+                          <td></td>
+                          <td></td>
+                          <td>Total {{ registration.TicketQuantity }}</td>
+                          <td></td>
+                        </tr>
+
                         <tr>
                           <td></td>
                           <td></td>
                           <td>Total</td>
                           <td>
-                            {{ registration.Currency
-                            }}{{ registration.TotalAmount }}
+                            {{ registration.Currency }}
+                            {{ registration.TotalAmount }}
                           </td>
                         </tr>
                       </tbody>
@@ -781,6 +786,9 @@
               width="100%"
               class="my-3"
             >
+              <div v-if="event.BusinessType === 'Single' && event.locationType">
+                <v-text>{{ event.locationType }}</v-text>
+              </div>
               <div v-if="event.BusinessType === 'Recurring'">
                 <div
                   v-if="
