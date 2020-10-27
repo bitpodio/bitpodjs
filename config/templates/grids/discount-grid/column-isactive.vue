@@ -3,8 +3,8 @@
     <div>
       <v-checkbox
         v-model="checkbox"
-        :success="item.isActive ? true : false"
-        :error="item.isActive ? false : true"
+        :success="item.isActive"
+        :error="!item.isActive"
         dense
         height="20"
         class="ma-0 pa-0"
