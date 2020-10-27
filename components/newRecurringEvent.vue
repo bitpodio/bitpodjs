@@ -741,7 +741,7 @@
                             :rules="validEndTimeRule(k)"
                           />
                         </td>
-                        <td class="pa-2 pb-0">
+                        <td class="pa-2 pb-0 st-date">
                           <v-autocomplete
                             v-model="session.Duration"
                             :items="slotLookupOptions"
@@ -750,7 +750,6 @@
                             label="Slot Size"
                             outlined
                             dense
-                            class="st-date"
                             @change="changeDuration(k)"
                           ></v-autocomplete>
                         </td>
@@ -759,8 +758,6 @@
                             v-model="session.Timezone"
                             :rules="requiredRules"
                             :field="timezonefield"
-                            offset-y
-                            class="st-date"
                           ></Timezone>
                         </td>
                         <td class="pa-2 pb-0 event-timezone">
@@ -1067,6 +1064,8 @@ export default {
       isEventCreate: false,
       isEventPublish: false,
       requiredRules: [required],
+      AvailableStartHour: '',
+      AvailableEndHour: '',
       isMap: false,
       ticketTypeProps: {
         type: 'lookup',
@@ -2182,8 +2181,8 @@ export default {
         Name: '',
         ScheduledType: 'Over a period of rolling days',
         CustomScheduledType: 'over 30 rolling days ',
-        StartTime: '10:00',
-        EndTime: '19:00',
+        StartTime: this.AvailableStartHour || '10:00',
+        EndTime: this.AvailableEndHour || '19:00',
         Duration: '30',
         Timezone: '',
         LocationType: '',
@@ -2240,6 +2239,17 @@ export default {
           this.setSelectedDays(OrganizationInfo[0].weekDay)
           this.weekDay = OrganizationInfo[0].weekDay
         }
+        this.AvailableStartHour =
+          OrganizationInfo[0] && OrganizationInfo[0].AvailableStartHour
+            ? OrganizationInfo[0].AvailableStartHour
+            : ''
+        this.AvailableEndHour =
+          OrganizationInfo[0] && OrganizationInfo[0].AvailableEndHour
+            ? OrganizationInfo[0].AvailableEndHour
+            : ''
+
+        this.sessions[0].StartTime = this.AvailableStartHour || '10:00'
+        this.sessions[0].EndTime = this.AvailableEndHour || '19:00'
       },
       error(error) {
         this.error = error
@@ -2260,7 +2270,7 @@ export default {
   min-height: 300px;
 }
 .event-inner {
-  min-height: 437px;
+  min-height: 410px;
 }
 .st-date {
   max-width: 125px !important;

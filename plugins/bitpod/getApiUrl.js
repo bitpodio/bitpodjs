@@ -1,5 +1,5 @@
 import nuxtconfig from '~/nuxt.config'
-function getCurrentOrigin() {
+export function getCurrentOrigin() {
   let currentOrigin = ''
   if (
     typeof window === 'undefined' ||

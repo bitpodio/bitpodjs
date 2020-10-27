@@ -6,7 +6,6 @@
       persistent
       scrollable
       content-class="slide-form-default"
-      transition="dialog-bottom-transition"
       max-width="900px"
       max-height="350px"
     >

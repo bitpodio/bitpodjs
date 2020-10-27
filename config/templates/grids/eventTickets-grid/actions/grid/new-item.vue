@@ -5,7 +5,6 @@
       persistent
       scrollable
       content-class="slide-form-default"
-      transition="dialog-bottom-transition"
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on">
@@ -184,7 +183,7 @@
 
 <script>
 import gql from 'graphql-tag'
-import addMonths from 'date-fns/addMonths'
+import { utcToZonedTime } from 'date-fns-tz'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import registrationtype from '~/config/apps/event/gql/registrationType.gql'
 import event from '~/config/apps/event/gql/event.gql'
@@ -446,7 +445,10 @@ export default {
         this.eventData.EndDate = null
       } else {
         this.eventData.StartDate = new Date()
-        this.eventData.EndDate = addMonths(new Date(), 1)
+        this.eventData.EndDate = utcToZonedTime(
+          this.eventData.EndDate,
+          this.eventData.Timezone
+        )
       }
     },
 

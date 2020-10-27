@@ -129,7 +129,6 @@
       persistent
       scrollable
       content-class="slide-form"
-      transition="dialog-bottom-transition"
     >
       <NewSingleEvent
         v-if="dialog1"
@@ -138,13 +137,7 @@
       />
     </v-dialog>
 
-    <v-dialog
-      v-model="dialog"
-      persistent
-      scrollable
-      content-class="slide-form"
-      transition="dialog-bottom-transition"
-    >
+    <v-dialog v-model="dialog" persistent scrollable content-class="slide-form">
       <NewRecurringEvent
         v-if="dialog"
         :reset-data="triggerRecEventReset"
@@ -175,7 +168,6 @@
       <div class="d-flex d-sm-flex d-md-none ml-n3">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       </div>
-      <v-toolbar-title class="pl-0 ml-n1">Event </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
         <v-icon>mdi-invert-colors</v-icon>

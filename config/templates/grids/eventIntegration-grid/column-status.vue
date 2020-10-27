@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="d-inline-block">
     <v-checkbox
       v-model="checkbox"
       color="green"

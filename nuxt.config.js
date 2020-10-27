@@ -49,10 +49,10 @@ export default {
         src: `${
           process.env.GOOGLE_MAPS_API ||
           'https://maps.googleapis.com/maps/api/js'
-        }?key = ${
+        }?key=${
           process.env.GOOGLE_API_KEY ||
           'AIzaSyBKle17JR_zpGEzwARF0H8VFU9NeH9nh7c'
-        }& libraries=places`,
+        }&libraries=places`,
       },
       {
         src:
@@ -208,7 +208,7 @@ export default {
     redirect: {
       login: '/login',
       callback: '/callback',
-      home: `${basePath}/apps/event/list/Event/live and draft event`,
+      home: `${basePath}/apps/event/eventboard`,
       logout: '/',
     },
     strategies: {
