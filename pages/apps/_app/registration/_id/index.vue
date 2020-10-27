@@ -330,19 +330,19 @@
         <v-flex my-3>
           <div class="body-2 text--secondary">Start Date</div>
           <div class="body-1 text--primary">
-            {{ formatField(data.registration.BookingDate) }}
+            {{ StartDate }}
           </div>
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">End Date</div>
           <div class="body-1">
-            {{ formatField(data.registration.ExpiryYear) }}
+            {{ EndDate }}
           </div>
         </v-flex>
         <v-flex my-3>
           <div class="body-2 text--secondary">Address</div>
           <div class="body-1">
-            -
+            {{ AddressLine }}
           </div>
         </v-flex>
       </div>
@@ -395,7 +395,7 @@
             {{
               formatField(
                 data.registration._CustomerPayment &&
-                  data.registration._CustomerPayment.id
+                  data.registration._CustomerPayment.processorAuthorizationCode
               )
             }}
           </div>
@@ -447,7 +447,11 @@ export default {
       isRefund: false,
       data: {
         registration: {},
+        event: {},
       },
+      StartDate: '-',
+      EndDate: '-',
+      AddressLine: '-',
     }
   },
   computed: {
@@ -464,13 +468,36 @@ export default {
   },
   methods: {
     formatDate(date) {
-      return date ? format(new Date(date), 'PPp') : ''
+      return date ? format(new Date(date), 'PP') : ''
     },
     formatField(fieldValue) {
       return fieldValue || '-'
     },
     formatAddressField(fieldValue) {
       return fieldValue || ' '
+    },
+    async getEventInfo() {
+      const url = this.$bitpod.getApiUrl()
+      try {
+        const res = await this.$axios.get(
+          `${url}Registrations/${this.$route.params.id}/EventList`
+        )
+        if (res) {
+          this.data.event = res.data
+          this.StartDate = this.formatDate(this.data.event.StartDate)
+          this.EndDate = this.formatDate(this.data.event.EndDate)
+          this.AddressLine = this.formatField(
+            this.data.event.VenueName +
+              ',' +
+              this.data.event._VenueAddress.AddressLine
+          )
+        }
+      } catch (e) {
+        console.error(
+          `Error while fetching data using GET call in registration/_id/index.vue in method getEventInfo context:-url:${url}\n registrationId:${this.$route.params.id}`,
+          e
+        )
+      }
     },
   },
   apollo: {
@@ -491,6 +518,7 @@ export default {
       },
       update(data) {
         const registration = formatGQLResult(data, 'Registration')
+        this.getEventInfo()
         return {
           registration: registration.length > 0 ? registration[0] : {},
         }
