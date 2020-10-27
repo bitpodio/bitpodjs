@@ -1,19 +1,10 @@
 <template>
   <div class="positionRelative ps-top6">
-    <div v-if="item.isActive === true">
+    <div>
       <v-checkbox
         v-model="checkbox"
-        success
-        dense
-        height="20"
-        class="ma-0 pa-0"
-        @change="updateRegForm"
-      ></v-checkbox>
-    </div>
-    <div v-else>
-      <v-checkbox
-        v-model="checkbox"
-        error
+        :success="item.isActive"
+        :error="!item.isActive"
         dense
         height="20"
         class="ma-0 pa-0"

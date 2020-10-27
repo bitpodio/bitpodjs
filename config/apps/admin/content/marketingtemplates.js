@@ -6,7 +6,7 @@ export default {
     template: {
       ui: {
         hideDefaultHeader: true,
-        hideDefaultFooter: true,
+        hideDefaultFooter: false,
         showExpand: false,
         singleExpand: false,
         showSelect: true,
@@ -262,7 +262,7 @@ export default {
     mytemplate: {
       ui: {
         hideDefaultHeader: true,
-        hideDefaultFooter: true,
+        hideDefaultFooter: false,
         showExpand: false,
         singleExpand: false,
         showSelect: true,
