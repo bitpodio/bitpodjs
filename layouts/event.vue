@@ -129,7 +129,6 @@
       persistent
       scrollable
       content-class="slide-form"
-      transition="dialog-bottom-transition"
     >
       <NewSingleEvent
         v-if="dialog1"
@@ -138,13 +137,7 @@
       />
     </v-dialog>
 
-    <v-dialog
-      v-model="dialog"
-      persistent
-      scrollable
-      content-class="slide-form"
-      transition="dialog-bottom-transition"
-    >
+    <v-dialog v-model="dialog" persistent scrollable content-class="slide-form">
       <NewRecurringEvent
         v-if="dialog"
         :reset-data="triggerRecEventReset"

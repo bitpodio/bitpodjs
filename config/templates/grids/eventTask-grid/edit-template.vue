@@ -10,7 +10,6 @@
       persistent
       scrollable
       content-class="slide-form"
-      transition="dialog-bottom-transition"
     >
       <template v-slot:activator="{ on, attrs }">
         <v-col class="px-0">
