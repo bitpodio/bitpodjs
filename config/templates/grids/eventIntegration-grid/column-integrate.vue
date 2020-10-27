@@ -18,7 +18,6 @@
       persistent
       scrollable
       content-class="slide-form-default"
-      transition="dialog-bottom-transition"
     >
       <div v-if="dialog">
         <component
