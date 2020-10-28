@@ -101,6 +101,9 @@ body {
 .fs-30 {
   font-size: 30px !important;
 }
+.text-break-word {
+  overflow-wrap: break-word;
+}
 .bitpod-logo img {
   max-width: 130px;
 }

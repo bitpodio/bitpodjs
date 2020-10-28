@@ -17,8 +17,9 @@
           row-height="18"
           auto-grow
         ></v-textarea>
-        <div class="px-2 mb-3">
+        <div class="mb-3">
           <v-btn
+            v-if="!fileList || !fileList.length"
             class="float-right"
             small
             color="primary"
@@ -27,7 +28,7 @@
             >Save</v-btn
           >
           <div
-            class="grey--text cursorPointer d-flex"
+            class="grey--text cursorPointer d-flex tile"
             @click="attach = !attach"
           >
             <v-icon class="mdi-rotate-315" medium>mdi-attachment</v-icon>
@@ -40,6 +41,15 @@
           :open-file-dialog="attach"
           @input="uploaded"
         />
+        <v-btn
+          v-if="fileList && fileList.length"
+          class="float-right mt-2"
+          small
+          color="primary"
+          :disabled="!message"
+          @click="uploadNote"
+          >Save</v-btn
+        >
         <div v-for="(comment, index) in existingComments" :key="comment.id">
           <v-hover v-slot:default="{ hover }">
             <div
@@ -66,9 +76,12 @@
                       />
                     </v-avatar>
                   </div>
-                  <div>
+                  <div
+                    class="v-data-table__wrapper"
+                    :class="{ 'mr-9': !hover }"
+                  >
                     <div class="blue--text">{{ comment.modifiedBy }}</div>
-                    <div>{{ comment.Notes }}</div>
+                    <div class="text-break-word">{{ comment.Notes }}</div>
                     <div v-if="comment.AttachmentId.length" class="gallery">
                       <div
                         v-for="attachment in comment.AttachmentId"

@@ -31,7 +31,7 @@
       <div
         v-for="file in files"
         :key="file.id"
-        class="ma-2 grey lighten-2 pa-2 rounded-sm"
+        class="my-2 grey lighten-2 pa-2 rounded-sm"
       >
         <v-icon class="float-right" @click="deleteFile(file.id)"
           >mdi-close</v-icon
