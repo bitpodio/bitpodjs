@@ -465,6 +465,10 @@ body {
   text-transform: uppercase;
   font-weight: 500;
 }
+.v-snack__wrapper {
+  min-width: auto !important;
+  padding-left: 10px !important;
+}
 @media (max-width: 800px) {
   .nav-bar {
     top: 0 !important;
