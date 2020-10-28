@@ -30,15 +30,13 @@ query($filters: JSON) {
           RegistrationId
           Status
           createdDate
-          EventList {
-            _VenueAddress {
-              id
-              City
-              State
-              PostalCode
-              AddressLine
-              Country
-            }
+          _CurrentAddress {
+            id
+            City
+            State
+            PostalCode
+            AddressLine
+            Country
           }
           _Refund {
             id
