@@ -76,9 +76,17 @@
             </v-list>
           </v-menu>
         </v-flex>
-        <v-chip small class="mt-1 mb-3 event-datechip greybg" label>
-          {{ formatedDate(data.event.StartDate, data.event.Timezone) }} -
-          {{ formatedDate(data.event.EndDate, data.event.Timezone) }} -
+        <v-chip
+          v-if="
+            data.event.StartDate !== undefined &&
+            data.event.EndDate !== undefined
+          "
+          small
+          class="mt-1 mb-3 event-datechip greybg"
+          label
+        >
+          {{ $d(new Date(data.event.StartDate), 'long', $i18n.locale) }} -
+          {{ $d(new Date(data.event.EndDate), 'long', $i18n.locale) }} -
           {{ formatField(data.event.Timezone) }}
         </v-chip>
         <v-flex>
@@ -335,12 +343,19 @@
             </v-avatar>
             <span>{{ data.event.createdBy }}</span>
           </v-chip>
-          <v-subheader class="d-inline-flex pl-1"
-            ><span class="pl-1"
-              >Created this event on
-              {{ formatDate(data.event.createdDate) }}.</span
-            ></v-subheader
-          >
+          <v-subheader
+            v-if="data.event.createdDate !== undefined"
+            class="d-inline-flex pl-1"
+            >{{
+              $t('Common.CreatedThisEventOn', {
+                date: $d(
+                  new Date(data.event.createdDate),
+                  'short',
+                  $i18n.locale
+                ),
+              })
+            }}
+          </v-subheader>
         </v-flex>
       </div>
       <div
@@ -1032,7 +1047,7 @@
           </div>
         </v-flex>
         <v-flex v-if="data.event.Tags" my-3>
-          <i18n path="Common.Tags" class="body-2 text--secondary" />
+          {{ $tc('Common.Tags', data.event.Tags.length) }}
           <div class="body-1 v-tags">
             <v-chip
               v-for="Tags in data.event.Tags"
@@ -1191,7 +1206,7 @@
             debounce="500"
             height="20"
             class="ma-0 pa-0"
-            label="Allow Cancelation"
+            :label="$t('Common.AllowCancelation')"
             color="green"
             @change="updateReg"
           ></v-checkbox>
@@ -1203,7 +1218,7 @@
             debounce="500"
             height="20"
             class="ma-0 pa-0"
-            label="Validate Session Timing Conflict"
+            :label="$t('Common.ValidateSessionTimingConflict')"
             color="green"
             @change="updateReg"
           ></v-checkbox>
@@ -1215,7 +1230,7 @@
             debounce="500"
             height="20"
             class="ma-0 pa-0"
-            label="Show Remaining Tickets Count"
+            :label="$t('Common.ShowRemainingTicketsCount')"
             color="green"
             @change="updateReg"
           ></v-checkbox>
@@ -1223,7 +1238,7 @@
         <v-flex class="d-block text-truncate">
           <v-checkbox
             v-model="data.event.ShowAttendeeForm"
-            label="Show Attendee Form"
+            :label="$t('Common.ShowAttendeeForm')"
             color="green"
             dense
             debounce="500"
@@ -1239,8 +1254,7 @@
             debounce="500"
             height="20"
             class="ma-0 pa-0"
-            label="Notify  organizer when someone 
-            registers"
+            :label="$t('Common.Notifyorganizerwhensomeoneregisters')"
             color="green"
             @change="updateReg"
           ></v-checkbox>
@@ -1252,7 +1266,7 @@
             debounce="500"
             height="20"
             class="ma-0 pa-0"
-            label="Ask to print badge after check in"
+            :label="$t('Common.Asktoprintbadgeaftercheckin')"
             color="green"
             @change="updateReg"
           ></v-checkbox>
@@ -1287,7 +1301,7 @@
             dense
             height="20"
             class="ma-0 pa-0"
-            label="Show Image Gallery"
+            :label="$t('Common.ShowImageGallery')"
             color="green"
             @change="updateReg1()"
           ></v-checkbox>
@@ -1298,7 +1312,7 @@
             dense
             height="20"
             class="ma-0 pa-0"
-            label="Show Event Reviews"
+            :label="$t('Common.ShowEventReviews')"
             color="green"
             @change="updateReg1()"
           ></v-checkbox>

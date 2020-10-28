@@ -130,7 +130,7 @@
           </v-dialog>
         </v-flex>
         <v-chip class="my-2 mt-1 greybg">
-          <i18n path="Drawer.RecurringEvent" />
+          <i18n path="Common.RecurringEvent" />
         </v-chip>
 
         <v-flex d-flex flex-md-row flex-lg-row my-2 class="event-cards">
@@ -312,11 +312,18 @@
             </v-avatar>
             <span>{{ data.event.createdBy }}</span>
           </v-chip>
-          <v-subheader class="d-inline-flex pl-1"
-            ><span class="pl-1"
-              >Created this event on
-              {{ formatDate(data.event.createdDate) }}.</span
-            ></v-subheader
+          <v-subheader
+            v-if="data.event.createdDate !== undefined"
+            class="d-inline-flex pl-1"
+            >{{
+              $t('Common.CreatedThisEventOn', {
+                date: $d(
+                  new Date(data.event.createdDate),
+                  'long',
+                  $i18n.locale
+                ),
+              })
+            }}</v-subheader
           >
         </v-flex>
       </div>

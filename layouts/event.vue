@@ -81,7 +81,12 @@
           <v-row v-if="item.heading" :key="item.heading" align="center">
             <div class="pa-0 pl-5">
               <v-subheader v-if="item.heading" class="nav-subheader pl-2">
-                {{ item.heading }}
+                <i18n v-if="item.heading === 'Event'" path="Common.EventApp" />
+                <i18n
+                  v-if="item.heading === 'Promotions'"
+                  path="Common.Promotions"
+                />
+                <i18n v-if="item.heading === 'Members'" path="Common.Members" />
               </v-subheader>
             </div>
           </v-row>
@@ -130,7 +135,21 @@
             </v-list-item-action>
             <v-list-item-content>
               <v-list-item-title class="nav-title">
-                {{ item.text }}
+                <i18n
+                  v-if="item.text === 'Eventboard'"
+                  path="Drawer.Eventboard"
+                />
+                <i18n v-if="item.text === 'Events'" path="Drawer.Events" />
+                <i18n
+                  v-if="item.text === 'Registrations'"
+                  path="Drawer.Registrations"
+                />
+                <i18n
+                  v-if="item.text === 'Discount Code'"
+                  path="Drawer.DiscountCode"
+                />
+                <i18n v-if="item.text === 'Members'" path="Drawer.Members" />
+                <i18n v-if="item.text === 'Contacts'" path="Drawer.Contacts" />
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>

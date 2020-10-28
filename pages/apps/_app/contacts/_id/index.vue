@@ -64,9 +64,12 @@
               <v-icon class="mr-2 fs-16">mdi-map-marker-outline</v-icon>
               {{ formatField(data.contact.Country) }}
             </div>
-            <div class="text-truncate my-3">
+            <div
+              v-if="data.contact.createdDate !== undefined"
+              class="text-truncate my-3"
+            >
               <v-icon class="mr-2 fs-16">mdi-calendar-blank</v-icon>
-              {{ formatDate(data.contact.createdDate) }}
+              {{ $d(new Date(data.contact.createdDate), 'long', $i18n.locale) }}
             </div>
           </v-col>
         </v-row>
@@ -178,8 +181,10 @@
           </v-col>
           <v-col class="col-md-6 col-12">
             <i18n path="Common.ModifiedDate" class="body-2 text--secondary" />
-            <div class="body-1">
-              {{ formatDate(data.contact.modifiedDate) }}
+            <div v-if="data.contact.modifiedDate !== undefined" class="body-1">
+              {{
+                $d(new Date(data.contact.modifiedDate), 'long', $i18n.locale)
+              }}
             </div>
           </v-col>
           <v-col class="col-md-12 col-12">

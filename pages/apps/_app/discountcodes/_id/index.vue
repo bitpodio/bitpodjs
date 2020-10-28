@@ -80,7 +80,9 @@
           </v-col>
           <v-col class="col-md-12 col-12">
             <i18n path="Common.ValidTill" class="body-2 text--secondary" />
-            <div class="body-1">{{ formatDate(data.discount.validTill) }}</div>
+            <div v-if="data.discount.validTill !== undefined" class="body-1">
+              {{ $d(new Date(data.discount.validTill), 'long', $i18n.locale) }}
+            </div>
           </v-col>
           <v-col class="col-md-12 col-12">
             <i18n path="Common.CreatedBy" class="body-2 text--secondary" />
@@ -88,8 +90,10 @@
           </v-col>
           <v-col class="col-md-12 col-12">
             <i18n path="Common.CreatedDate" class="body-2 text--secondary" />
-            <div class="body-1">
-              {{ formatDate(data.discount.createdDate) }}
+            <div v-if="data.discount.createdDate !== undefined" class="body-1">
+              {{
+                $d(new Date(data.discount.createdDate), 'long', $i18n.locale)
+              }}
             </div>
           </v-col>
           <v-col class="col-md-12 col-12">

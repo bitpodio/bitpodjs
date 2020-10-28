@@ -134,6 +134,52 @@ export default {
      */
     vueI18n: {
       fallbackLocale: 'en',
+      dateTimeFormats: {
+        en: {
+          short: {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+          },
+          long: {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true,
+          },
+        },
+        hi: {
+          short: {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+          },
+          long: {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true,
+          },
+        },
+      },
+      numberFormats: {
+        en: {
+          currency: {
+            style: 'currency',
+            currency: 'USD',
+          },
+        },
+        hi: {
+          currency: {
+            style: 'currency',
+            currency: 'INR',
+          },
+        },
+      },
     },
   },
   /*

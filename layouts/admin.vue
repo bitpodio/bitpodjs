@@ -41,7 +41,11 @@
           <v-row v-if="item.heading" :key="item.heading" align="center">
             <div class="pa-0 pl-5">
               <v-subheader v-if="item.heading" class="nav-subheader pl-2">
-                {{ item.heading }}
+                <i18n v-if="item.heading === 'Event'" path="Common.EventApp" />
+                <i18n
+                  v-if="item.heading === 'Security'"
+                  path="Common.Security"
+                />
               </v-subheader>
             </div>
           </v-row>
@@ -121,6 +125,7 @@
         ><i18n path="Common.AdminApp"
       /></v-toolbar-title>
       <v-spacer></v-spacer>
+      <LanguageSwitcher />
       <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
         <v-icon>mdi-invert-colors</v-icon>
       </v-btn>
@@ -320,9 +325,11 @@
 
 <script>
 import OrgnaizationList from '~/components/common/organization-list'
+import LanguageSwitcher from '~/components/LanguageSwitcher'
 export default {
   components: {
     OrgnaizationList,
+    LanguageSwitcher,
   },
   data() {
     return {

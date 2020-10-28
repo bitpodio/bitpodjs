@@ -35,15 +35,17 @@
             <v-col class="col-12 pb-0">
               <i18n path="Common.DueDate" class="body-2 text--secondary" />
 
-              <div class="body-1">
-                {{ formatField(data.invites.DueDate) }}
+              <div v-if="data.invites.DueDate !== undefined" class="body-1">
+                {{ $d(new Date(data.invites.DueDate), 'long', $i18n.locale) }}
               </div>
             </v-col>
             <v-col class="col-12 pb-0">
               <i18n path="Common.SentDate" class="body-2 text--secondary" />
 
-              <div class="body-1">
-                {{ formatDate(data.invites.createdDate) }}
+              <div v-if="data.invites.createdDate !== undefined" class="body-1">
+                {{
+                  $d(new Date(data.invites.createdDate), 'long', $i18n.locale)
+                }}
               </div>
             </v-col>
           </v-row>
@@ -181,11 +183,18 @@
             </v-avatar>
             <span>{{ data.invites.Owner }}</span>
           </v-chip>
-          <v-subheader class="d-inline-flex pl-1"
-            ><span class="pl-1"
-              >send this invite on
-              {{ formatDate(data.invites.createdDate) }}.</span
-            ></v-subheader
+          <v-subheader
+            v-if="data.invites.createdDate !== undefined"
+            class="d-inline-flex pl-1"
+            >{{
+              $t('Common.SendThisInviteOn', {
+                date: $d(
+                  new Date(data.invites.createdDate),
+                  'long',
+                  $i18n.locale
+                ),
+              })
+            }}</v-subheader
           >
         </v-flex>
       </div>

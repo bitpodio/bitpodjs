@@ -1,11 +1,10 @@
 <template>
-  <div>
-    {{ formatDate }}
+  <div v-if="date !== undefined && date">
+    {{ $d(new Date(date), 'long', $i18n.locale) }}
   </div>
 </template>
 
 <script>
-import { formatedDate } from '~/utility/form.js'
 export default {
   props: {
     item: {
@@ -14,13 +13,10 @@ export default {
       required: false,
     },
   },
-  computed: {
-    formatDate() {
-      const date = this.item.EndDate
-      const timezone = this.item.Timezone
-      const output = formatedDate(date, timezone)
-      return output
-    },
+  data() {
+    return {
+      date: this.item.EndDate,
+    }
   },
 }
 </script>

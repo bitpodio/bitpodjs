@@ -180,8 +180,11 @@
                   </v-img>
                 </div>
                 <v-flex class="tile-info pa-4 pb-0">
-                  <div class="text--secondary pa-2 pb-0 body-2 pl-0 pt-0">
-                    {{ item.StartDate }}
+                  <div
+                    v-if="item.StartDate !== undefined && item.StartDate"
+                    class="text--secondary pa-2 pb-0 body-2 pl-0 pt-0"
+                  >
+                    {{ $d(new Date(item.StartDate), 'long', $i18n.locale) }}
                   </div>
                   <v-card-title
                     class="text-h5 grey--text text--darken-4 text-truncate d-block text-capitalize pa-2 pt-0 pb-1 pl-0"
@@ -313,7 +316,9 @@ export default {
       this.count += 1
     },
     routes(id) {
-      return `/apps/event/event/${id}`
+      return this.$i18n.locale === 'en'
+        ? `/apps/event/event/${id}`
+        : `/${this.$i18n.locale}/apps/event/event/${id}`
     },
     getAttachmentLink(id, isDownloadLink) {
       const attachmentUrl = `https://${nuxtconfig.axios.eventUrl}${

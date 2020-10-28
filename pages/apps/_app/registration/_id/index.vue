@@ -112,12 +112,20 @@
             </v-avatar>
             <span>{{ data.registration.FirstName }}</span>
           </v-chip>
-          <v-subheader class="d-inline-flex pl-1"
-            ><span class="pl-1"
-              >Registered on
-              {{ formatDate(data.registration.createdDate) }}.</span
-            ></v-subheader
+          <v-subheader
+            v-if="data.registration.createdDate !== undefined"
+            class="d-inline-flex pl-1"
           >
+            {{
+              $t('Common.RegisteredOn', {
+                date: $d(
+                  new Date(data.registration.createdDate),
+                  'long',
+                  $i18n.locale
+                ),
+              })
+            }}
+          </v-subheader>
         </v-flex>
       </div>
       <div
