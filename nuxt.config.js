@@ -118,7 +118,8 @@ export default {
   axios: {
     apiEndpoint: '/svc/api/',
     backendBaseUrl: process.env.PUBLIC_DOMAIN || 'event.test.bitpod.io',
-    baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
+    // baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
+    baseURL: `http://localhost:3000${basePath}`,
     eventUrl: process.env.GET_EVENT_URL || 'event.test.bitpod.io',
   },
 
@@ -188,7 +189,7 @@ export default {
         httpEndpoint: `https://${
           process.env.PUBLIC_DOMAIN || 'event.test.bitpod.io'
         }/svc/graphql`,
-        browserHttpEndpoint: '/svc/graphql',
+        // browserHttpEndpoint: '/svc/graphql',
       },
     },
     defaultOptions: {
