@@ -51,7 +51,7 @@
                     required
                     dense
                     outlined
-                    @change="changeEventName($event)"
+                    @keyup="changeEventName($event)"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -1167,12 +1167,13 @@ export default {
       this.returnToCenter()
     },
     changeEventName(value) {
-      this.verifyUniqueLink(value)
+      this.verifyUniqueLink(event.currentTarget.value)
     },
     changeUniqueLink(event) {
       this.verifyUniqueLink(event.currentTarget.value)
     },
     verifyUniqueLink(value) {
+      this.isUniqLinkValid = false
       value = value.toLowerCase().replace(/\s/g, '')
       value = value.trim()
       const regex = RegExp(/^[0-9a-zA-Z]+$/)
@@ -1188,6 +1189,7 @@ export default {
       this.eventData.UniqLink = value
     },
     async checkUniqueLink(value) {
+      this.isUniqLinkValid = true
       const where = { UniqLink: value }
       const result = await this.$apollo.query({
         query: gql`
@@ -1199,6 +1201,7 @@ export default {
         fetchPolicy: 'no-cache',
       })
       if (result.data.Event.EventCount > 0) {
+        this.isUniqLinkValid = false
         this.isInvalidEventLink = true
         this.uniqueLinkMessage = strings.UNIQUE_LINK_DUPLICATE
       } else {
