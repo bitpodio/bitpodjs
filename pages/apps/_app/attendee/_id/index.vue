@@ -566,8 +566,8 @@
                   cols="4"
                 >
                   <v-img
-                    :src="`https://${baseUrl}${image}`"
-                    :lazy-src="`https://${baseUrl}${image}`"
+                    :src="getAttachmentLink(image, true)"
+                    :lazy-src="getAttachmentLink(image, true)"
                     aspect-ratio="1"
                     class="grey lighten-4"
                   >
@@ -1008,6 +1008,13 @@ export default {
           return i.LocationType === 'Online event'
         }).length
       )
+    },
+    getAttachmentLink(id, isDownloadLink) {
+      const url = this.$bitpod.getApiUrl()
+      const attachmentUrl = `${url}Attachments${
+        isDownloadLink ? '/download' : ''
+      }${id ? '/' + id : ''}`
+      return attachmentUrl
     },
     async getRegistrationData() {
       const URL = `${this.$bitpod.getApiUrl()}Registrations/findRegistration?regId=${

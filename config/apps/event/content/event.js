@@ -722,7 +722,7 @@ export default {
         singleExpand: false,
         showSelect: true,
         hideFilter: false,
-        hideSearch: true,
+        hideSearch: false,
       },
       default: true,
       fields: {
@@ -1297,6 +1297,106 @@ export default {
       },
       template: {
         name: 'eventAttendees-grid',
+        context: {
+          basePath: '/registration',
+        },
+      },
+      dataSource: {
+        query: eventAttendees,
+        defaultSort: 'createdDate DESC',
+        type: 'graphql',
+        model: 'Attendee',
+        filter(ctx) {
+          return {
+            where: {
+              EventId: ctx.$route.params.id,
+            },
+          }
+        },
+        mutation(ctx, data) {
+          return {
+            new: {
+              EventId: ctx.$route.params.id,
+              Status: 'Success',
+            },
+            edit: {},
+          }
+        },
+      },
+      title: 'eventAttendees',
+      type: 'list',
+    },
+    eventAttendeePerDay: {
+      ui: {
+        hideDefaultHeader: false,
+        hideDefaultFooter: false,
+        showExpand: false,
+        singleExpand: false,
+        showSelect: false,
+        hideFilter: false,
+        hideSearch: true,
+      },
+      itemTitle: 'Attendee',
+      hidden: true,
+      fields: {
+        FullName: {
+          displayOrder: 2,
+          caption: 'Full Name',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+          hidden: false,
+          inlineEdit: true,
+          newForm: false,
+          editForm: false,
+        },
+        Email: {
+          displayOrder: 3,
+          caption: 'Email',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+          form: {
+            caption: 'Email *',
+            displayOrder: 4,
+          },
+          cssClasses: 'col-6 col-md-6',
+          hidden: false,
+          inlineEdit: true,
+          newForm: true,
+          editForm: true,
+        },
+        BookingDate: {
+          displayOrder: 4,
+          caption: 'Session Booked',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'datetime',
+          cssClasses: 'col-6 col-md-6',
+          hidden: false,
+          inlineEdit: true,
+          newForm: false,
+          editForm: false,
+          filterEnable: false,
+        },
+        Status: {
+          displayOrder: 5,
+          caption: 'Status',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+          hidden: false,
+          inlineEdit: true,
+          newForm: false,
+          editForm: false,
+        },
+      },
+      template: {
+        name: 'eventSingleDayAttendees-grid',
         context: {
           basePath: '/registration',
         },

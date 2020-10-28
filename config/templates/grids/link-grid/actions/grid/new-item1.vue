@@ -5,7 +5,6 @@
       persistent
       scrollable
       content-class="slide-form-default"
-      transition="dialog-bottom-transition"
     >
       <template v-slot:activator="{ on, attrs }">
         <v-flex xs12 sm12 md12 mx-3>

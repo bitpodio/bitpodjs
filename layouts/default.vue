@@ -119,18 +119,11 @@
       persistent
       scrollable
       content-class="slide-form"
-      transition="dialog-bottom-transition"
     >
       <NewSingleEvent :on-form-close="closeSingleEventForm" />
     </v-dialog>
 
-    <v-dialog
-      v-model="dialog"
-      persistent
-      scrollable
-      content-class="slide-form"
-      transition="dialog-bottom-transition"
-    >
+    <v-dialog v-model="dialog" persistent scrollable content-class="slide-form">
       <NewRecurringEvent :on-form-close="closeRecurringEventForm" />
     </v-dialog>
 

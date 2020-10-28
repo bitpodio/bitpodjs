@@ -30,7 +30,7 @@
   </div>
 </template>
 <script>
-import { getCurrentOrigin } from '~/utility'
+import { getCurrentOrigin } from '~/plugins/bitpod/getApiUrl.js'
 const layoutWithType = {
   shapes: [],
   groups: {

@@ -1280,7 +1280,7 @@ export default {
   top: 55px;
 }
 .event-inner {
-  min-height: 437px;
+  min-height: 410px;
 }
 .map-contain {
   height: 400px;
