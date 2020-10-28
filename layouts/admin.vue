@@ -32,7 +32,6 @@
           depressed
           class="ma-3 block wd-full my-0 mb-1 ml-n4"
           v-on="on"
-          @click.native="dialog = true"
         >
           Create user
         </v-btn>
@@ -172,55 +171,6 @@
             </v-list>
           </v-card>
         </v-menu>
-        <v-dialog
-          v-model="dialog"
-          persistent
-          scrollable
-          content-class="slide-form-default"
-        >
-          <v-card>
-            <v-card-title
-              class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start font-weight-regular"
-            >
-              <h2 class="black--text pt-10 pb-9 font-weight-regular">
-                New User
-              </h2>
-              <v-spacer></v-spacer>
-              <div>
-                <v-btn icon @click="onClose">
-                  <v-icon>mdi-close</v-icon>
-                </v-btn>
-              </div>
-            </v-card-title>
-            <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
-              <v-form ref="form" v-model="valid" :lazy-validation="lazy">
-                <v-row>
-                  <v-col cols="12" sm="10" md="8" class="pb-0">
-                    <v-text-field
-                      v-model="email"
-                      label="Enter Email *"
-                      :rules="emailRules"
-                      outlined
-                      dense
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-              </v-form>
-            </v-card-text>
-            <v-divider></v-divider>
-            <v-card-actions
-              class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
-            >
-              <v-btn
-                color="primary"
-                :disabled="!valid"
-                depressed
-                @click="onSave"
-                >Save</v-btn
-              >
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
       </div>
       <div v-else>
         <v-btn class="ma-2" outlined color="primary" to="/login">
@@ -246,7 +196,6 @@
 <script>
 import OrgnaizationList from '~/components/common/organization-list'
 import AppDrawer from '~/components/common/app-drawer'
-import { email, required } from '~/utility/rules.js'
 export default {
   middleware: ['auth', 'authorization'],
   components: {
@@ -267,12 +216,6 @@ export default {
       tabs: null,
       account: false,
       message: false,
-      valid: false,
-      emailRules: [required, email],
-      formData: {
-        emailId: '',
-      },
-      email: '',
       items: [
         { heading: 'Event' },
         {
@@ -332,34 +275,6 @@ export default {
     async onLogout() {
       this.$auth.logout()
       await this.$apolloHelpers.onLogout()
-    },
-    onClose() {
-      this.dialog = false
-    },
-    onReset() {
-      this.$refs.form.reset()
-    },
-    async onSave() {
-      const url = this.$bitpod.getApiUrl()
-      this.formData.emailId = this.email
-      const orgId = this.$store.state.currentOrg.id
-      this.formData.id = orgId
-      try {
-        const res = await this.$axios.$post(
-          `${url}Organizations/${orgId}/Users`,
-          this.formData
-        )
-        if (res) {
-          this.dialog = false
-          this.onReset()
-          this.refresh()
-        }
-      } catch (e) {
-        console.log(
-          `Error in templates/grids/userRoles-grid/actions/grid/new-item.vue while making a POST call to Users model from method onSave context:-URL:-${url}\n OrgId:-${orgId}\n formData:-${this.formData} `,
-          e
-        )
-      }
     },
   },
 }
