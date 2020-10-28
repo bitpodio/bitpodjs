@@ -5,7 +5,6 @@
       persistent
       scrollable
       content-class="slide-form-default"
-      transition="dialog-bottom-transition"
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on" @click="getRegistrations">
@@ -91,7 +90,6 @@
 
 <script>
 import gql from 'graphql-tag'
-import nuxtconfig from '~/nuxt.config'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { required } from '~/utility/rules.js'
@@ -180,8 +178,9 @@ export default {
         this.formData.Options = []
       }
       try {
+        const url = this.$bitpod.getApiUrl()
         const res = await this.$axios.put(
-          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/RegistrationForm/${this.id}`,
+          `${url}Events/${this.$route.params.id}/RegistrationForm/${this.id}`,
           {
             ...this.formData,
           }
@@ -202,8 +201,9 @@ export default {
         this.id = ele.id
       })
       try {
+        const url = this.$bitpod.getApiUrl()
         const res = await this.$axios.$get(
-          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/RegistrationForm/${this.id}`
+          `${url}Events/${this.$route.params.id}/RegistrationForm/${this.id}`
         )
 
         if (res) {

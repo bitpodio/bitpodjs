@@ -5,7 +5,6 @@
       persistent
       scrollable
       content-class="slide-form-default"
-      transition="dialog-bottom-transition"
     >
       <v-card>
         <v-card-title
@@ -78,12 +77,8 @@
               >
             </v-col>
             <v-col cols="12" class="mb-6">
-              <span><i18n path="Common.CancellationPolicy" /></span>
-              <RichText
-                v-model="formData.CancellationPolicy"
-                label="Cancellation Policy"
-                placeholder="Description"
-              />
+              <span>Cancellation Policy</span>
+              <RichText v-model="formData.CancellationPolicy" />
             </v-col>
           </v-row>
         </v-card-text>
@@ -106,7 +101,6 @@
 
 <script>
 import gql from 'graphql-tag'
-import nuxtConfig from '../../../../../nuxt.config'
 import { required, link } from '~/utility/rules.js'
 import event from '~/config/apps/event/gql/event.gql'
 import eventCount from '~/config/apps/event/gql/eventCount.gql'
@@ -199,10 +193,11 @@ export default {
     async onSave() {
       this.formData.Currency = this.currency
       this.formData.Privacy = this.privacy
+      const url = this.$bitpod.getApiUrl()
       delete this.formData._VenueAddress
       try {
         const res = await this.$axios.$patch(
-          `https://${nuxtConfig.axios.eventUrl}${nuxtConfig.axios.apiEndpoint}Events/${this.$route.params.id}`,
+          `${url}Events/${this.$route.params.id}`,
           {
             ...this.formData,
           }
@@ -268,6 +263,9 @@ export default {
           this.isInvalidEventLink = false
           this.uniqueLinkMessage = ''
         }
+      } else {
+        this.isInvalidEventLink = false
+        this.uniqueLinkMessage = ''
       }
     },
   },

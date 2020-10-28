@@ -28,11 +28,9 @@
               <v-col cols="12" class="mb-5">
                 <RichText
                   v-model="RTEValue"
-                  label="Description"
-                  :show-template-dropdown="true"
-                  :is-edit-badge="true"
-                  :is-q-r-code="true"
-                  :is-logo="true"
+                  :dropdown-options="dropdownOptions"
+                  :show-logo-button="true"
+                  :show-q-r-button="true"
                 />
               </v-col>
             </v-row>
@@ -52,11 +50,10 @@
 
 <script>
 import gql from 'graphql-tag'
-import nuxtconfig from '~/nuxt.config'
 import event from '~/config/apps/event/gql/event.gql'
 import badge from '~/config/apps/event/gql/badge.gql'
 import { formatGQLResult } from '~/utility/gql.js'
-import { getIdFromAtob, getApiUrl } from '~/utility'
+import { getIdFromAtob } from '~/utility'
 export default {
   components: {
     RichText: () =>
@@ -84,6 +81,18 @@ export default {
       RTEContent: '',
     }
   },
+  computed: {
+    dropdownOptions() {
+      return {
+        'First Name': 'First  Name',
+        'Last Name': 'Last  Name',
+        'Full Name': 'Full  Name',
+        Category: 'Category',
+        'Event Name': 'Event  Name',
+        Organization: 'Organization',
+      }
+    },
+  },
   watch: {
     id(newVal, oldVal) {
       if (newVal !== '') {
@@ -96,15 +105,12 @@ export default {
       this.$emit('update:editBadgeForm', false)
     },
     async onSave() {
-      const url = getApiUrl()
+      const url = this.$bitpod.getApiUrl()
       const badgeId = getIdFromAtob(this.id)
       try {
-        const res = await this.$axios.$patch(
-          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Badges/${badgeId}`,
-          {
-            Template: this.RTEValue,
-          }
-        )
+        const res = await this.$axios.$patch(`${url}Badges/${badgeId}`, {
+          Template: this.RTEValue,
+        })
         if (res) {
           this.$refs.editBadgeDialog.$parent.$parent.refresh()
           this.close()

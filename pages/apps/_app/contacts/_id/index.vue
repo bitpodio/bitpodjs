@@ -272,8 +272,7 @@ import Notes from '~/components/common/notes'
 import File from '~/components/common/form/file.vue'
 import contact from '~/config/apps/event/gql/contact.gql'
 import { formatGQLResult } from '~/utility/gql.js'
-import { configLoaderMixin, getApiUrl } from '~/utility'
-import nuxtconfig from '~/nuxt.config'
+import { configLoaderMixin } from '~/utility'
 
 export default {
   components: {
@@ -323,7 +322,7 @@ export default {
       this.allow = true
       this.formData.Image = []
       this.formData.Image.push(data[0])
-      const url = getApiUrl()
+      const url = this.$bitpod.getApiUrl()
       try {
         await this.$axios.$put(
           `${url}Contacts/${this.$route.params.id}/contactImg/rel/${data[0]}`,
@@ -336,9 +335,10 @@ export default {
       }
     },
     getAttachmentLink(id, isDownloadLink) {
-      const attachmentUrl = `https://${nuxtconfig.axios.eventUrl}${
-        nuxtconfig.axios.apiEndpoint
-      }Attachments${isDownloadLink ? '/download' : ''}${id ? '/' + id : ''}`
+      const url = this.$bitpod.getApiUrl()
+      const attachmentUrl = `${url}Attachments${
+        isDownloadLink ? '/download' : ''
+      }${id ? '/' + id : ''}`
       return attachmentUrl
     },
     formatDate(date) {

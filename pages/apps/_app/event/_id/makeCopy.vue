@@ -35,7 +35,6 @@
         persistent
         scrollable
         content-class="slide-form-default"
-        transition="dialog-bottom-transition"
       >
         <v-card>
           <v-card-title
@@ -335,7 +334,6 @@ import { required } from '~/utility/rules.js'
 import event from '~/config/apps/event/gql/event.gql'
 import eventCount from '~/config/apps/event/gql/eventCount.gql'
 import { formatGQLResult } from '~/utility/gql.js'
-import { getApiUrl } from '~/utility/index.js'
 import CustomDate from '~/components/common/form/date.vue'
 import { getIdFromAtob } from '~/utility'
 import nuxtconfig from '~/nuxt.config'
@@ -507,7 +505,7 @@ export default {
       this.$router.push('/apps/event/event/' + this.copyEventId)
     },
     viewEvent() {
-      const baseUrl = getApiUrl()
+      const baseUrl = this.$bitpod.getApiUrl()
       const eventUrl = baseUrl.replace('svc/api', 'e')
       window.open(`${eventUrl}${this.eventData.UniqLink}`, '_blank')
     },
@@ -607,7 +605,7 @@ export default {
       }
       this.eventData.UniqLink = this.UniqLink
       this.eventData.Title = this.Title
-      const baseUrl = getApiUrl()
+      const baseUrl = this.$bitpod.getApiUrl()
       let res = null
       try {
         res = await this.$axios.$post(`${baseUrl}Events/cloneEvent`, {

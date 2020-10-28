@@ -88,7 +88,6 @@
 </template>
 
 <script>
-import nuxtconfig from '~/nuxt.config'
 import selectExistingSeatMap from '~/pages/apps/_app/event/_id/selectExistingSeatMap.vue'
 export default {
   components: {
@@ -126,7 +125,7 @@ export default {
       this.selectExistingSeatMap = true
     },
     async deleteSeatMap() {
-      const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Locations/${this.item.id}`
+      const URL = `${this.$bitpod.getApiUrl()}Locations/${this.item.id}`
       try {
         const res = await this.$axios.$patch(URL, { LayoutId: '' })
         if (res) {

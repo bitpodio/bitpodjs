@@ -5,7 +5,6 @@
       persistent
       scrollable
       content-class="slide-form-default"
-      transition="dialog-bottom-transition"
     >
       <v-card>
         <v-card-title
@@ -34,8 +33,8 @@
               ></v-text-field>
             </v-col>
             <v-col cols="12" class="mb-5">
-              <span><i18n path="Common.Description" /></span>
-              <RichText v-model="formData.Description" label="Description" />
+              <span>Description</span>
+              <RichText v-model="formData.Description" />
             </v-col>
             <v-col
               v-if="formData.BusinessType !== 'Recurring'"
@@ -78,7 +77,11 @@
               sm="6"
               md="4"
             >
-              <Timezone v-model="formData.Timezone" :field="timezonefield" />
+              <Timezone
+                v-model="formData.Timezone"
+                :field="timezonefield"
+                :value="formData.Timezone"
+              />
             </v-col>
             <v-col cols="12" sm="6" md="4" class="pb-0">
               <v-text-field
@@ -140,7 +143,7 @@
             </v-col>
             <v-col cols="12" class="pb-0">
               <v-text-field
-                v-if="formData.LocationType === 'Online Event'"
+                v-if="formData.LocationType === 'Online event'"
                 v-model="formData.WebinarLink"
                 label="Online Event Link*"
                 :rules="requiredRule"
@@ -160,14 +163,10 @@
               ></v-textarea>
             </v-col>
             <div
-              v-if="
-                formData.BusinessType !== 'Recurring' &&
-                formData.LocationType !== 'Online Event' &&
-                formData.LocationType !== 'Bitpod Virtual'
-              "
+              v-if="formData.LocationType === 'Venue'"
               style="display: contents;"
             >
-              <v-col cols="12">
+              <v-col cols="12" class="mt-n6">
                 <no-ssr>
                   <vue-google-autocomplete
                     id="map"
@@ -253,15 +252,13 @@
 </template>
 <script>
 import gql from 'graphql-tag'
-import { utcToZonedTime } from 'date-fns-tz'
+import { utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz'
 import { email, required } from '~/utility/rules.js'
 import event from '~/config/apps/event/gql/event.gql'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import strings from '~/strings.js'
 import Timezone from '~/components/common/form/timezone'
-import { formatTimezoneDateFieldsData } from '~/utility/form.js'
-import { getApiUrl } from '~/utility'
 import CustomDate from '~/components/common/form/date.vue'
 import nuxtconfig from '~/nuxt.config'
 
@@ -434,6 +431,7 @@ export default {
     },
     refresh() {
       this.$refs.form.$parent.$parent.refresh()
+      this.$apollo.queries.data.refresh()
     },
     getAddressData(addressData, placeResultData, id) {
       this.VenueAddress.AddressLine = addressData.route
@@ -455,8 +453,15 @@ export default {
         return zonedDate
       }
     },
+    getUtcToZonedDateTime(date, timezone) {
+      if (date) {
+        const formattedDate = new Date(date)
+        const zonedDate = zonedTimeToUtc(formattedDate, timezone)
+        return zonedDate
+      }
+    },
     async onSave() {
-      const url = getApiUrl()
+      const url = this.$bitpod.getApiUrl()
       this.formData.Tags = this.tags
       this.formData.StartDate = this.StartDate
       this.formData.EndDate = this.EndDate
@@ -466,19 +471,20 @@ export default {
         this.formData.StartDate !== null ||
         this.formData.EndDate !== null
       ) {
-        const convertedEventRecord = formatTimezoneDateFieldsData(
-          this.formData,
-          this.fields
+        this.formData.StartDate = this.getUtcToZonedDateTime(
+          this.formData.StartDate,
+          this.formData.Timezone
         )
-        this.formData.StartDate = convertedEventRecord.StartDate
-        this.formData.EndDate = convertedEventRecord.EndDate
-        this.formData.Timezone = convertedEventRecord.Timezone
+        this.formData.EndDate = this.getUtcToZonedDateTime(
+          this.formData.EndDate,
+          this.formData.Timezone
+        )
       } else {
         this.formData.StartDate = null
         this.formData.EndDate = null
       }
       if (this.formData.BusinessType !== 'Recurring') {
-        Object.assign({}, this.formData, { _VenueAddress: this.VenueAddress })
+        this.formData._VenueAddress = { ...this.VenueAddress }
         delete this.formData.VenueAddress
         delete this.formData._VenueAddress.LatLng
         try {
@@ -598,7 +604,7 @@ export default {
           )
           this.VenueAddress =
             this.formData._VenueAddress != null
-              ? this.formData._VenueAddress
+              ? { ...this.formData._VenueAddress }
               : {}
         } else {
           this.StartDate = this.formData.StartDate
@@ -614,7 +620,6 @@ export default {
               )
             : null
         }
-        // this.setEventData()
         return {
           event: event.length > 0 ? event[0] : {},
         }

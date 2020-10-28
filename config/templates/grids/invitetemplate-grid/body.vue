@@ -303,7 +303,6 @@
 <script>
 import editInviteTemplate from '~/pages/apps/_app/organization/_id/editInviteTemplate.vue'
 import editInviteMetadata from '~/pages/apps/_app/organization/_id/editInviteMetadata.vue'
-import { getApiUrl } from '~/utility'
 
 export default {
   components: {
@@ -329,7 +328,7 @@ export default {
   },
   methods: {
     async deleteTemplete(id) {
-      const url = getApiUrl()
+      const url = this.$bitpod.getApiUrl()
 
       const check = confirm('Are you sure you want to delete this template?')
       let res = null

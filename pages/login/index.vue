@@ -1,6 +1,6 @@
 <template>
   <v-layout column justify-center align-center>
-    <v-flex xs12 sm8 md6 class="login-box">
+    <v-flex v-if="!$route.query.p" xs12 sm8 md6 class="login-box">
       <v-card class="elevation-0">
         <v-card-title class="headline justify-center">
           <i18n path="Common.Login" />
@@ -32,6 +32,12 @@ export default {
   layout: 'logoutlayout',
   components: {},
   middleware: ['auth'],
+  async beforeMount() {
+    const provider = this.$route.query.p
+    if (provider) {
+      return await this.$auth.loginWith(provider)
+    }
+  },
   methods: {
     async loginGoogle() {
       return await this.$auth.loginWith('google')

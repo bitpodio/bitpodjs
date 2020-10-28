@@ -6,7 +6,6 @@
         persistent
         scrollable
         content-class="slide-form"
-        transition="dialog-bottom-transition"
       >
         <v-card>
           <v-card-title
@@ -91,7 +90,6 @@
 </template>
 
 <script>
-import nuxtconfig from '~/nuxt.config'
 export default {
   props: {
     selectExistingSeatMap: {
@@ -125,7 +123,7 @@ export default {
       this.$emit('update:selectExistingSeatMap', false)
     },
     async getSeatMaps() {
-      const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}SeatMaps`
+      const URL = `${this.$bitpod.getApiUrl()}SeatMaps`
       try {
         const res = await this.$axios.$get(URL)
         if (res) {
@@ -145,12 +143,12 @@ export default {
         obj = {
           LayoutId: itemId,
         }
-        URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`
+        URL = `${this.$bitpod.getApiUrl()}Events/${this.$route.params.id}`
       } else {
         obj = {
           LayoutId: itemId,
         }
-        URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Locations/${this.layoutId}`
+        URL = `${this.$bitpod.getApiUrl()}Locations/${this.layoutId}`
       }
       try {
         const res = await this.$axios.$patch(URL, obj)

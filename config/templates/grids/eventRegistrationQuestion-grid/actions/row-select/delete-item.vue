@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import nuxtconfig from '~/nuxt.config'
 export default {
   props: {
     content: {
@@ -54,7 +53,9 @@ export default {
           return acc
             .then(() => {
               return this.$axios.$delete(
-                `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/Survey/${e.id}`
+                `${this.$bitpod.getApiUrl()}Events/${
+                  this.$route.params.id
+                }/Survey/${e.id}`
               )
             })
             .then((res) => {

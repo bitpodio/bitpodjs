@@ -6,7 +6,6 @@
         persistent
         scrollable
         content-class="slide-form-default"
-        transition="dialog-bottom-transition"
       >
         <v-card>
           <v-card-title
@@ -193,7 +192,6 @@ import eventRegistrationTicketSlot from '~/config/apps/event/gql/eventRegistrati
 import ticket from '~/config/apps/event/gql/ticket.gql'
 import eventSession from '~/config/apps/event/gql/eventSession.gql'
 import { formatGQLResult } from '~/utility/gql.js'
-import { getApiUrl } from '~/utility/index.js'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import { getIdFromAtob } from '~/utility'
 
@@ -209,6 +207,7 @@ export default {
     return {
       requiredRules: [required],
       regData: {},
+      regDetails: {},
       events: [],
       tickets: [],
       sessions: [],
@@ -219,6 +218,7 @@ export default {
         event: {},
       },
       eventData: {},
+      currentAddress: {},
       venueAddress: {
         AddressLine: '',
         City: '',
@@ -318,6 +318,11 @@ export default {
       this.isSessionLoading = false
     },
     close() {
+      this.regData = { ...this.regDetails }
+      if (this.regDetails._CurrentAddress) {
+        this.venueAddress = {}
+        this.venueAddress = { ...this.currentAddress }
+      }
       this.$emit('update:isEditReg', false)
     },
     refresh() {
@@ -355,7 +360,7 @@ export default {
       }
       this.regData.TicketQuantity = parseInt(this.regData.TicketQuantity)
       this.regData.id = atob(this.regData.id).split(':')[1]
-      const baseUrl = getApiUrl()
+      const baseUrl = this.$bitpod.getApiUrl()
       let res = null
       try {
         res = await this.$axios.$patch(
@@ -365,7 +370,9 @@ export default {
           }
         )
       } catch (e) {
-        console.error('Error', e)
+        console.error(
+          `Error in Save function of edit registration form, context: edit registration , baseUrl: ${baseUrl} registrationId: ${this.regData.id} registrationData: ${this.regData} error: ${e}`
+        )
       }
       if (res) {
         this.close()
@@ -405,6 +412,7 @@ export default {
       update(data) {
         const registration = formatGQLResult(data, 'Registration')
         this.regData = registration.length > 0 ? { ...registration[0] } : {}
+        this.regDetails = registration.length > 0 ? { ...registration[0] } : {}
         let events = formatGQLResult(data, 'Event')
         events = events.length > 0 ? events : []
         this.events = events.map(({ id, ...rest }) => ({
@@ -413,6 +421,7 @@ export default {
         }))
         if (this.regData._CurrentAddress) {
           this.venueAddress = this.regData._CurrentAddress
+          this.currentAddress = { ...this.regData._CurrentAddress }
         }
         this.regData.EventId && this.eventChange(this.regData.EventId, true)
         return {

@@ -4,130 +4,129 @@
       <div
         class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
       >
-        <v-flex class="d-flex justify-center align-center pb-2">
-          <div class="text-h4 text-capitalize">{{ data.event.Title }}</div>
+        <v-flex class="d-flex pb-2">
+          <div class="text-h4 text-capitalize event-title">
+            {{ data.event.Title }}
+          </div>
           <v-spacer></v-spacer>
-          <div class="mr-2">
-            <v-btn depressed color="primary" @click="viewRegistration"
-              ><i18n path="Drawer.View"
-            /></v-btn>
-          </div>
-          <div v-if="data.event.Status === 'Not ready'" class="mr-2">
-            <v-btn outlined color="primary" @click="publishEvent"
-              ><i18n path="Drawer.Publish"
-            /></v-btn>
-          </div>
-          <v-menu
-            left
-            :close-on-click="closeOnClick"
-            :offset-y="offset"
-            transition="slide-y-transition"
-          >
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn icon small v-bind="attrs" v-on="on">
-                <v-icon>mdi-dots-vertical</v-icon>
-              </v-btn>
-            </template>
+          <div class="d-flex">
+            <div class="mr-2">
+              <v-btn depressed color="primary" @click="viewRegistration"
+                >View</v-btn
+              >
+            </div>
+            <div v-if="data.event.Status === 'Not ready'" class="mr-2">
+              <v-btn outlined color="primary" @click="publishEvent"
+                >Publish</v-btn
+              >
+            </div>
+            <v-menu
+              left
+              :close-on-click="closeOnClick"
+              :offset-y="offset"
+              transition="slide-y-transition"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn icon small v-bind="attrs" v-on="on">
+                  <v-icon>mdi-dots-vertical</v-icon>
+                </v-btn>
+              </template>
 
-            <v-list dense>
-              <v-list-item @click="isMakeCopy = true">
-                <v-list-item-icon class="mr-2">
-                  <i class="fa fa-clone mt-1" aria-hidden="true"></i>
-                </v-list-item-icon>
-                <v-list-item-content>
-                  <v-list-item-title
-                    ><i18n path="Drawer.MakeaCopy"
-                  /></v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item @click="true">
-                <v-list-item-icon class="mr-2">
-                  <i class="fa fa-pencil-square-o mt-1" aria-hidden="true"></i>
-                </v-list-item-icon>
-                <v-list-item-content>
-                  <v-list-item-title
-                    ><i18n path="Drawer.Editemailtemplate"
-                  /></v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item @click="redirectIntegration">
-                <v-list-item-icon class="mr-2">
-                  <i class="fa fa-link1 mt-1" aria-hidden="true"></i>
-                </v-list-item-icon>
-                <v-list-item-content>
-                  <v-list-item-title
-                    ><i18n path="Drawer.Integrations"
-                  /></v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item @click.stop="copylinks = true">
-                <v-list-item-icon class="mr-2">
-                  <i class="fa fa-clone mt-1" aria-hidden="true"></i>
-                </v-list-item-icon>
-                <v-list-item-content>
-                  <v-list-item-title
-                    ><i18n path="Drawer.CopyLinks"
-                  /></v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-          <v-dialog v-model="copylinks" max-width="800">
-            <v-card>
-              <v-card-title class="pa-4 pr-2">
-                <h2 class="black--text text--lighten-1 pt-1 pb-0 text-h5">
-                  <i18n path="Drawer.CopyLinks" />
-                </h2>
-                <v-spacer></v-spacer>
-                <div>
-                  <v-btn icon @click="copylinks = false">
-                    <v-icon>mdi-close</v-icon>
-                  </v-btn>
-                </div>
-              </v-card-title>
-              <v-card-text class="pa-4 pt-0">
-                <v-col cols="12" sm="12" class="pl-0 pb-0 d-flex">
-                  <v-text-field
-                    id="eventLink"
-                    :value="eventLink()"
-                    label="Event Link"
-                    outlined
-                    readonly
-                    dense
-                  ></v-text-field>
-                  <v-btn icon class="ml-2">
-                    <v-icon>mdi-18px mdi-content-copy</v-icon>
-                  </v-btn>
-                </v-col>
-                <v-col cols="12" sm="12" class="pl-0 pb-0 d-flex">
-                  <v-text-field
-                    :value="sessionLink()"
-                    label="Recurring sessions Link"
-                    outlined
-                    readonly
-                    dense
-                  ></v-text-field>
-                  <v-btn icon class="ml-2">
-                    <v-icon>mdi-18px mdi-content-copy</v-icon>
-                  </v-btn>
-                </v-col>
-                <v-col cols="12" sm="12" class="pl-0 pb-0 d-flex">
-                  <v-text-field
-                    :value="embedLink()"
-                    label="Embed Recurring Sessions"
-                    outlined
-                    hint="You will need to contact Bitpod support to whitelist your domain, if you would like to embed it, into any of your website."
-                    persistent-hint
-                    readonly
-                    dense
-                  ></v-text-field>
-                  <v-btn icon class="ml-2">
-                    <v-icon>mdi-18px mdi-content-copy</v-icon>
-                  </v-btn>
-                </v-col>
-              </v-card-text>
-            </v-card>
-          </v-dialog>
+              <v-list dense>
+                <v-list-item @click="isMakeCopy = true">
+                  <v-list-item-icon class="mr-2">
+                    <i class="fa fa-clone mt-1" aria-hidden="true"></i>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title>Make a copy</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item @click="true">
+                  <v-list-item-icon class="mr-2">
+                    <i
+                      class="fa fa-pencil-square-o mt-1"
+                      aria-hidden="true"
+                    ></i>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title>Edit email template</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item @click="redirectIntegration">
+                  <v-list-item-icon class="mr-2">
+                    <i class="fa fa-link1 mt-1" aria-hidden="true"></i>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title>Integrations</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item @click.stop="copylinks = true">
+                  <v-list-item-icon class="mr-2">
+                    <i class="fa fa-clone mt-1" aria-hidden="true"></i>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title>Copy Links</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list>
+            </v-menu>
+            <v-dialog v-model="copylinks" max-width="800">
+              <v-card>
+                <v-card-title class="pa-4 pr-2">
+                  <h2 class="black--text text--lighten-1 pt-1 pb-0 text-h5">
+                    Copy Links
+                  </h2>
+                  <v-spacer></v-spacer>
+                  <div>
+                    <v-btn icon @click="copylinks = false">
+                      <v-icon>mdi-close</v-icon>
+                    </v-btn>
+                  </div>
+                </v-card-title>
+                <v-card-text class="pa-4 pt-0">
+                  <v-col cols="12" sm="12" class="pl-0 pb-0 d-flex">
+                    <v-text-field
+                      id="eventLink"
+                      :value="eventLink()"
+                      label="Event Link"
+                      outlined
+                      readonly
+                      dense
+                    ></v-text-field>
+                    <v-btn icon class="ml-2">
+                      <v-icon>mdi-18px mdi-content-copy</v-icon>
+                    </v-btn>
+                  </v-col>
+                  <v-col cols="12" sm="12" class="pl-0 pb-0 d-flex">
+                    <v-text-field
+                      :value="sessionLink()"
+                      label="Recurring sessions Link"
+                      outlined
+                      readonly
+                      dense
+                    ></v-text-field>
+                    <v-btn icon class="ml-2">
+                      <v-icon>mdi-18px mdi-content-copy</v-icon>
+                    </v-btn>
+                  </v-col>
+                  <v-col cols="12" sm="12" class="pl-0 pb-0 d-flex">
+                    <v-text-field
+                      :value="embedLink()"
+                      label="Embed Recurring Sessions"
+                      outlined
+                      hint="You will need to contact Bitpod support to whitelist your domain, if you would like to embed it, into any of your website."
+                      persistent-hint
+                      readonly
+                      dense
+                    ></v-text-field>
+                    <v-btn icon class="ml-2">
+                      <v-icon>mdi-18px mdi-content-copy</v-icon>
+                    </v-btn>
+                  </v-col>
+                </v-card-text>
+              </v-card>
+            </v-dialog>
+          </div>
         </v-flex>
         <v-chip class="my-2 mt-1 greybg">
           <i18n path="Common.RecurringEvent" />
@@ -954,7 +953,6 @@ import Grid from '~/components/common/grid'
 import Notes from '~/components/common/notes'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
-import { getApiUrl } from '~/utility/index.js'
 import { configLoaderMixin } from '~/utility'
 
 export default {
@@ -1014,7 +1012,59 @@ export default {
     },
     updateSectionHeading() {
       const dataObj = {
+        RegistrationSiteTemplate: this.eventData.RegistrationSiteTemplate
+          ? this.eventData.RegistrationSiteTemplate
+          : 'Dark',
         _sectionHeading: {
+          animation:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.animation) ||
+            '',
+          datetimelabel:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.datetimelabel) ||
+            '',
+          gallery:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.gallery) ||
+            '',
+          registrationTypes:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.registrationTypes) ||
+            '',
+          registrationbtn:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.registrationbtn) ||
+            '',
+          registrationquestionsectionlabel:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading
+                .registrationquestionsectionlabel) ||
+            '',
+          review:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.review) ||
+            '',
+          session:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.session) ||
+            '',
+          sessionsectionlabel:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.sessionsectionlabel) ||
+            '',
+          speakers:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.speakers) ||
+            '',
+          ticketlabel:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.ticketlabel) ||
+            '',
+          ticketsectionlabel:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.ticketsectionlabel) ||
+            '',
           showimagegallery: this.registrationSetting.showimagegallery,
           showeventreviews: this.registrationSetting.showeventreviews,
         },
@@ -1039,7 +1089,7 @@ export default {
       }
     },
     async changeStatus(statusName) {
-      const url = getApiUrl()
+      const url = this.$bitpod.getApiUrl()
       try {
         const res = await this.$axios.$patch(
           `${url}Events/${this.$route.params.id}`,
@@ -1059,7 +1109,7 @@ export default {
     },
     async publishEvent() {
       this.eventData.Status = 'Open for registration'
-      const url = getApiUrl()
+      const url = this.$bitpod.getApiUrl()
       try {
         const res = await this.$axios.patch(
           `${url}Events/${this.$route.params.id}`,
@@ -1084,9 +1134,10 @@ export default {
       return fieldValue || '-'
     },
     getAttachmentLink(id, isDownloadLink) {
-      const attachmentUrl = `https://${nuxtConfig.axios.eventUrl}${
-        nuxtConfig.axios.apiEndpoint
-      }Attachments${isDownloadLink ? '/download' : ''}${id ? '/' + id : ''}`
+      const url = this.$bitpod.getApiUrl()
+      const attachmentUrl = `${url}Attachments${
+        isDownloadLink ? '/download' : ''
+      }${id ? '/' + id : ''}`
       return attachmentUrl
     },
     viewRegistration() {
@@ -1094,17 +1145,17 @@ export default {
       window.open(`${regUrl}`, '_blank')
     },
     eventLink() {
-      const baseUrl = getApiUrl()
+      const baseUrl = this.$bitpod.getApiUrl()
       const regUrl = baseUrl.replace('svc/api', `e/${this.data.event.UniqLink}`)
       return regUrl
     },
     sessionLink() {
-      const baseUrl = getApiUrl()
+      const baseUrl = this.$bitpod.getApiUrl()
       const regUrl = baseUrl.replace('svc/api', `t/${this.data.event.UniqLink}`)
       return regUrl
     },
     embedLink() {
-      const baseUrl = getApiUrl()
+      const baseUrl = this.$bitpod.getApiUrl()
       const embedLink = baseUrl.replace(
         'svc/api',
         `embed/t/${this.data.event.UniqLink}`
@@ -1120,7 +1171,7 @@ export default {
     async updateEvent() {
       const obj = this.updateData
       obj.id = this.$route.params.id
-      const URL = `https://${nuxtConfig.axios.eventUrl}${nuxtConfig.axios.apiEndpoint}Events/${this.$route.params.id}`
+      const URL = `${this.$bitpod.getApiUrl()}Events/${this.$route.params.id}`
       try {
         const res = await this.$axios.$patch(URL, obj)
         if (res) {
@@ -1142,7 +1193,9 @@ export default {
     },
     async updateRegistrationPage() {
       const obj = this.updateSectionHeading
-      const URL = `https://${nuxtConfig.axios.eventUrl}${nuxtConfig.axios.apiEndpoint}Events/${this.$route.params.id}`
+      const URL = `https://${this.$bitpod.getApiUrl()}Events/${
+        this.$route.params.id
+      }`
       try {
         const res = await this.$axios.$patch(URL, obj)
         if (res) {
@@ -1188,6 +1241,10 @@ export default {
         const badge = formatGQLResult(data, 'Badge')
         const eventSummary = data.Event.EventGetEventSummery
         this.eventData = event[0]
+        this.eventData_sectionHeading =
+          this.eventData._sectionHeading !== null
+            ? this.eventData._sectionHeading
+            : {}
         this.updateStepper()
         this.updateRegistrationSetting(this.eventData)
         this.eventUniqueLink = `https://${nuxtConfig.axios.eventUrl}/e/${event[0].UniqLink}`

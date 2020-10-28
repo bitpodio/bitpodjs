@@ -722,7 +722,7 @@ export default {
         singleExpand: false,
         showSelect: true,
         hideFilter: false,
-        hideSearch: true,
+        hideSearch: false,
       },
       default: true,
       fields: {
@@ -1297,6 +1297,106 @@ export default {
       },
       template: {
         name: 'eventAttendees-grid',
+        context: {
+          basePath: '/registration',
+        },
+      },
+      dataSource: {
+        query: eventAttendees,
+        defaultSort: 'createdDate DESC',
+        type: 'graphql',
+        model: 'Attendee',
+        filter(ctx) {
+          return {
+            where: {
+              EventId: ctx.$route.params.id,
+            },
+          }
+        },
+        mutation(ctx, data) {
+          return {
+            new: {
+              EventId: ctx.$route.params.id,
+              Status: 'Success',
+            },
+            edit: {},
+          }
+        },
+      },
+      title: 'eventAttendees',
+      type: 'list',
+    },
+    eventAttendeePerDay: {
+      ui: {
+        hideDefaultHeader: false,
+        hideDefaultFooter: false,
+        showExpand: false,
+        singleExpand: false,
+        showSelect: false,
+        hideFilter: false,
+        hideSearch: true,
+      },
+      itemTitle: 'Attendee',
+      hidden: true,
+      fields: {
+        FullName: {
+          displayOrder: 2,
+          caption: 'Full Name',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+          hidden: false,
+          inlineEdit: true,
+          newForm: false,
+          editForm: false,
+        },
+        Email: {
+          displayOrder: 3,
+          caption: 'Email',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+          form: {
+            caption: 'Email *',
+            displayOrder: 4,
+          },
+          cssClasses: 'col-6 col-md-6',
+          hidden: false,
+          inlineEdit: true,
+          newForm: true,
+          editForm: true,
+        },
+        BookingDate: {
+          displayOrder: 4,
+          caption: 'Session Booked',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'datetime',
+          cssClasses: 'col-6 col-md-6',
+          hidden: false,
+          inlineEdit: true,
+          newForm: false,
+          editForm: false,
+          filterEnable: false,
+        },
+        Status: {
+          displayOrder: 5,
+          caption: 'Status',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+          hidden: false,
+          inlineEdit: true,
+          newForm: false,
+          editForm: false,
+        },
+      },
+      template: {
+        name: 'eventSingleDayAttendees-grid',
         context: {
           basePath: '/registration',
         },
@@ -3155,7 +3255,7 @@ export default {
           caption: 'Question',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '180px',
           type: 'string',
         },
         ControlType: {
@@ -3171,7 +3271,7 @@ export default {
           caption: 'Options',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '220px',
           type: 'string',
         },
         DisplayOrder: {
@@ -3187,7 +3287,7 @@ export default {
           caption: 'Tickets',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '180px',
           type: 'string',
         },
       },
@@ -3273,7 +3373,7 @@ export default {
             caption: 'Timezone *',
             displayOrder: 5,
           },
-          displayOrder: 5,
+          displayOrder: 4,
           caption: 'Timezone',
           searchEnable: true,
           sortEnable: true,
@@ -3291,7 +3391,7 @@ export default {
             displayOrder: 3,
           },
           displayOrder: 3,
-          caption: 'Start Date',
+          caption: 'Start Date Time',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '220px',
@@ -3313,67 +3413,19 @@ export default {
             },
           ],
         },
-        EndDate: {
-          form: {
-            caption: 'End Date *',
-            displayOrder: 4,
-          },
+        Duration: {
           displayOrder: 4,
-          caption: 'End Date',
-          searchEnable: true,
-          sortEnable: true,
-          columnWidth: '220px',
-          type: 'datetime',
+          caption: 'Duration',
+          searchEnable: false,
+          sortEnable: false,
+          columnWidth: '100px',
+          type: 'string',
           cssClasses: 'col-6 col-md-6',
           hidden: false,
           inlineEdit: true,
           newForm: true,
           editForm: true,
           default: '',
-          rules: [
-            function (v) {
-              const eventEndDate =
-                this.context && this.context.event && this.context.event.EndDate
-              const isValidEndDate =
-                eventEndDate > (v && new Date(v).toISOString())
-              return (
-                !!isValidEndDate ||
-                'Session End date should be in between event date.'
-              )
-            },
-          ],
-        },
-        Type: {
-          form: {
-            caption: 'Type *',
-            displayOrder: 7,
-          },
-          displayOrder: 6,
-          caption: 'Type',
-          searchEnable: true,
-          sortEnable: true,
-          columnWidth: '150px',
-          type: 'lookup',
-          cssClasses: 'col-6 col-md-6',
-          hidden: false,
-          inlineEdit: true,
-          newForm: true,
-          editForm: true,
-          dataSource: {
-            query: registrationStatusOptions,
-            itemText: 'value',
-            itemValue: 'key',
-            filter(data) {
-              return {
-                type: 'SessionType',
-              }
-            },
-          },
-          rules: [
-            (v) => {
-              return !!v || 'Type is required'
-            },
-          ],
         },
         MySpeaker: {
           form: {
@@ -3414,23 +3466,6 @@ export default {
           inlineEdit: true,
           newForm: false,
           editForm: false,
-        },
-        Location: {
-          form: {
-            caption: 'Location',
-            displayOrder: 6,
-          },
-          displayOrder: 8,
-          caption: 'Location',
-          searchEnable: true,
-          sortEnable: true,
-          columnWidth: '150px',
-          type: 'string',
-          cssClasses: 'col-6 col-md-6',
-          hidden: false,
-          inlineEdit: true,
-          newForm: true,
-          editForm: true,
         },
         SessionTicket: {
           displayOrder: 9,
@@ -3702,6 +3737,7 @@ export default {
           inlineEdit: true,
           newForm: true,
           editForm: true,
+          default: [],
         },
       },
       template: {

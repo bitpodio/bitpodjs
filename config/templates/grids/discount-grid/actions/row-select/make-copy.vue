@@ -1,11 +1,6 @@
 <template>
   <v-col class="px-0">
-    <v-dialog
-      v-model="dialog"
-      persistent
-      content-class="slide-form-default"
-      transition="dialog-bottom-transition"
-    >
+    <v-dialog v-model="dialog" persistent content-class="slide-form-default">
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on">
           <v-icon left>mdi-plus</v-icon> <i18n path="Common.NewRegistration" />

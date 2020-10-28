@@ -126,18 +126,11 @@
       persistent
       scrollable
       content-class="slide-form"
-      transition="dialog-bottom-transition"
     >
       <NewSingleEvent :on-form-close="closeSingleEventForm" />
     </v-dialog>
 
-    <v-dialog
-      v-model="dialog"
-      persistent
-      scrollable
-      content-class="slide-form"
-      transition="dialog-bottom-transition"
-    >
+    <v-dialog v-model="dialog" persistent scrollable content-class="slide-form">
       <NewRecurringEvent :on-form-close="closeRecurringEventForm" />
     </v-dialog>
 
@@ -174,124 +167,7 @@
       <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
         <v-icon>mdi-invert-colors</v-icon>
       </v-btn>
-      <v-menu
-        offset-y
-        transition="slide-y-transition"
-        bottom
-        content-class="app-drawer"
-      >
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn icon v-bind="attrs" v-on="on">
-            <v-icon>mdi-apps</v-icon>
-          </v-btn>
-        </template>
-        <v-list>
-          <v-list-item>
-            <v-list-item-title class="d-flex flex-wrap app-container">
-              <nuxt-link
-                to="/apps/event/list/Event/live and draft event"
-                class="text-decoration-none"
-              >
-                <v-flex
-                  class="d-flex justify-center align-center flex-column app-view"
-                >
-                  <v-flex class="d-flex justify-center align-center">
-                    <i
-                      class="fa fa-calendar fs-36 success--text"
-                      aria-hidden="true"
-                    ></i>
-                  </v-flex>
-                  <v-flex>
-                    <i18n
-                      path="Common.EventApp"
-                      class="pa-1 caption text--primary"
-                    />
-                  </v-flex>
-                </v-flex>
-              </nuxt-link>
-              <nuxt-link
-                to="/apps/admin/organization/5cfe026f6ab042000c530105"
-                class="text-decoration-none"
-              >
-                <v-flex
-                  class="d-flex justify-center align-center flex-column app-view"
-                >
-                  <v-flex class="d-flex justify-center align-center">
-                    <i
-                      class="fa fa-cogs fs-36 primary--text"
-                      aria-hidden="true"
-                    ></i>
-                  </v-flex>
-                  <v-flex>
-                    <i18n
-                      path="Common.AdminApp"
-                      class="pa-1 caption text--primary"
-                    />
-                  </v-flex>
-                </v-flex>
-              </nuxt-link>
-              <nuxt-link to="" class="text-decoration-none">
-                <v-flex
-                  class="d-flex justify-center align-center flex-column app-view"
-                >
-                  <v-flex class="d-flex justify-center align-center">
-                    <i
-                      class="fa fa-help-circle fs-36 warning--text"
-                      aria-hidden="true"
-                    ></i>
-                  </v-flex>
-                  <v-flex>
-                    <i18n
-                      path="Common.HelpCenterMap"
-                      class="pa-1 caption text--primary"
-                    />
-                  </v-flex>
-                </v-flex>
-              </nuxt-link>
-              <a
-                href="https://dev-survey.bitpod.io/"
-                class="text-decoration-none"
-                target="_blank"
-              >
-                <v-flex
-                  class="d-flex justify-center align-center flex-column app-view"
-                >
-                  <v-flex class="d-flex justify-center align-center">
-                    <v-img
-                      src="https://survey.bitpod.io/favicon.ico"
-                      class="survey-img"
-                    ></v-img>
-                  </v-flex>
-                  <v-flex>
-                    <i18n
-                      path="Common.SurveyApp"
-                      class="pa-1 caption text--primary"
-                    />
-                  </v-flex>
-                </v-flex>
-              </a>
-              <nuxt-link to="" class="text-decoration-none">
-                <v-flex
-                  class="d-flex justify-center align-center flex-column app-view"
-                >
-                  <v-flex class="d-flex justify-center align-center">
-                    <i
-                      class="fa fa-grid-alt fs-36 primary--text"
-                      aria-hidden="true"
-                    ></i>
-                  </v-flex>
-                  <v-flex>
-                    <i18n
-                      path="Common.SeatMap"
-                      class="pa-1 caption text--primary"
-                    />
-                  </v-flex>
-                </v-flex>
-              </nuxt-link>
-            </v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
+      <AppDrawer />
       <div v-if="$auth.$state.loggedIn">
         <v-menu
           v-model="account"
@@ -368,9 +244,11 @@
 
 <script>
 import OrgnaizationList from '~/components/common/organization-list'
+import AppDrawer from '~/components/common/app-drawer'
 export default {
   components: {
     OrgnaizationList,
+    AppDrawer,
   },
   props: {
     source: { type: String, default: '' },

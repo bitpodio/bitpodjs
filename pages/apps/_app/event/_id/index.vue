@@ -4,77 +4,88 @@
       <div
         class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
       >
-        <v-flex class="d-flex justify-center align-center pb-1">
-          <div class="text-h4 text-capitalize">{{ data.event.Title }}</div>
+        <v-flex class="d-flex pb-1">
+          <div class="text-h4 text-capitalize event-title">
+            {{ data.event.Title }}
+          </div>
           <v-spacer></v-spacer>
-          <div class="mr-2">
-            <v-btn tile color="success" class="rounded" @click="goLive">
-              <i18n path="Common.JoinEvent" />
-              <v-icon right class="fs-22">
-                mdi-video
-              </v-icon>
-            </v-btn>
-          </div>
-          <div class="mr-2">
-            <v-btn depressed color="primary" @click="viewRegistration"
-              ><i18n path="Drawer.View"
-            /></v-btn>
-          </div>
-          <div v-if="data.event.Status === 'Not ready'" class="mr-2">
-            <v-btn outlined color="primary" @click="publishEvent"
-              ><i18n path="Drawer.Publish"
-            /></v-btn>
-          </div>
-          <v-menu left :offset-y="offset" transition="slide-y-transition">
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn icon small v-bind="attrs" v-on="on">
-                <v-icon>mdi-dots-vertical</v-icon>
+          <div class="d-flex">
+            <div
+              v-if="
+                eventData.LocationType === 'Bitpod Virtual' &&
+                data.event.Status !== 'Not ready'
+              "
+              class="mr-2"
+            >
+              <v-btn
+                depressed
+                tile
+                color="success"
+                class="rounded"
+                @click="goLive"
+              >
+                Join Event
+                <v-icon right class="fs-22">
+                  mdi-video
+                </v-icon>
               </v-btn>
-            </template>
+            </div>
+            <div class="mr-2">
+              <v-btn depressed color="primary" @click="viewRegistration"
+                >View</v-btn
+              >
+            </div>
+            <div v-if="data.event.Status === 'Not ready'" class="mr-2">
+              <v-btn outlined color="primary" @click="publishEvent"
+                >Publish</v-btn
+              >
+            </div>
+            <v-menu left :offset-y="offset" transition="slide-y-transition">
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn icon small v-bind="attrs" v-on="on">
+                  <v-icon>mdi-dots-vertical</v-icon>
+                </v-btn>
+              </template>
 
-            <v-list dense>
-              <v-list-item>
-                <v-list-item-icon class="mr-2">
-                  <i class="fa fa-paperplane mt-1" aria-hidden="true"></i>
-                </v-list-item-icon>
-                <v-list-item-content>
-                  <v-list-item-title
-                    ><i18n path="Drawer.Publishtoeventbrite"
-                  /></v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item @click="isMakeCopy = true">
-                <v-list-item-icon class="mr-2">
-                  <i class="fa fa-clone mt-1" aria-hidden="true"></i>
-                </v-list-item-icon>
-                <v-list-item-content>
-                  <v-list-item-title
-                    ><i18n path="Drawer.MakeaCopy"
-                  /></v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item>
-                <v-list-item-icon class="mr-2">
-                  <i class="fa fa-pencil-square-o mt-1" aria-hidden="true"></i>
-                </v-list-item-icon>
-                <v-list-item-content>
-                  <v-list-item-title
-                    ><i18n path="Drawer.Editemailtemplate"
-                  /></v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-              <v-list-item @click="redirectIntegration">
-                <v-list-item-icon class="mr-2">
-                  <i class="fa fa-link1 mt-1" aria-hidden="true"></i>
-                </v-list-item-icon>
-                <v-list-item-content>
-                  <v-list-item-title
-                    ><i18n path="Drawer.Integrations"
-                  /></v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list>
-          </v-menu>
+              <v-list dense>
+                <v-list-item>
+                  <v-list-item-icon class="mr-2">
+                    <i class="fa fa-paperplane mt-1" aria-hidden="true"></i>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title>Publish to eventbrite</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item @click="isMakeCopy = true">
+                  <v-list-item-icon class="mr-2">
+                    <i class="fa fa-clone mt-1" aria-hidden="true"></i>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title>Make a copy</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item>
+                  <v-list-item-icon class="mr-2">
+                    <i
+                      class="fa fa-pencil-square-o mt-1"
+                      aria-hidden="true"
+                    ></i>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title>Edit email template</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+                <v-list-item @click="redirectIntegration">
+                  <v-list-item-icon class="mr-2">
+                    <i class="fa fa-link1 mt-1" aria-hidden="true"></i>
+                  </v-list-item-icon>
+                  <v-list-item-content>
+                    <v-list-item-title>Integrations</v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list>
+            </v-menu>
+          </div>
         </v-flex>
         <v-chip
           v-if="
@@ -114,6 +125,7 @@
               class="pl-2"
               :text-to-copy="viewBitpodVirtualLink()"
               icon-size="20"
+              tooltip="Copy attendee link"
             />
           </div>
           <div v-else>
@@ -436,10 +448,10 @@
           </v-menu>
         </v-flex>
         <v-divider></v-divider>
-        <div v-if="data.event.Images && data.event.Images.length === 0">
+        <div>
           <v-card
-            class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0 cardImg rounded cursorPointer"
-            :class="{ 'on-hover': hover }"
+            v-if="data.event.Images && data.event.Images.length === 0"
+            class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-5 pr-3 elevation-0 cardImg rounded cursorPointer"
           >
             <v-img
               :src="$config.cdnUri + 'default-min.jpg'"
@@ -461,9 +473,17 @@
                 </v-row>
               </template>
             </v-img>
-            <v-card-text class="pa-0 pt-1"
-              ><i18n path="Common.EventBanner"
-            /></v-card-text>
+            <v-flex class="mt-1 d-flex otherImg">
+              <v-card-text class="pa-0 pb-1"
+                ><a
+                  class="d-inline-block text-truncate anchorTag"
+                  :href="getAttachmentLink(image, true)"
+                  >{{ OtherImageName[index] }}</a
+                ></v-card-text
+              >
+              <copy :text-to-copy="getImageUrl(image)" :unique-id="image" />
+            </v-flex>
+            <v-card-text class="pa-0 mt-n2">Banner Image</v-card-text>
           </v-card>
           <v-dialog v-model="bannerDialog" max-width="600">
             <v-card>
@@ -505,13 +525,10 @@
               </v-card-text>
             </v-card>
           </v-dialog>
-        </div>
-        <div>
           <v-card
             v-for="image in data.event.Images"
             :key="image"
-            class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0 cardImg rounded cursorPointer"
-            :class="{ 'on-hover': hover }"
+            class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-5 pr-3 elevation-0 cardImg rounded cursorPointer"
           >
             <span class="cardDelete">
               <i
@@ -598,7 +615,7 @@
           <v-card
             v-for="image in data.event.Logo"
             :key="image"
-            class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0 cardImg rounded"
+            class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-5 pr-3 elevation-0 cardImg rounded"
           >
             <span class="cardDelete">
               <i
@@ -685,7 +702,7 @@
           <v-card
             v-for="(image, index) in eventData.Other"
             :key="image"
-            class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-1 elevation-0 cardImg rounded"
+            class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-5 pr-3 elevation-0 cardImg rounded"
           >
             <span class="cardDelete">
               <i
@@ -828,11 +845,11 @@
           <v-spacer></v-spacer>
         </v-flex>
         <v-divider></v-divider>
-        <div class="mt-2">
+        <div class="mt-2 seatmap-btn">
           <v-switch
             v-model="switchSeat"
             label="Seatmap & Tickets"
-            class="mt-0 ml-2 max-h24 positionAbsolute"
+            class="mt-0 ml-0 max-h24 positionAbsolute"
             height="20"
             @change="updateSeatReservation"
           ></v-switch>
@@ -1132,9 +1149,10 @@
           </div>
         </v-flex>
         <v-flex my-3>
-          <i18n path="Common.SEODescription" class="body-2 text--secondary" />
-
-          <div class="body-1">{{ formatField(data.event.SEODesc) }}</div>
+          <div class="body-2 text--secondary">SEO Description</div>
+          <div class="body-1 d-flex flex-wrap">
+            {{ formatField(data.event.SEODesc) }}
+          </div>
         </v-flex>
         <v-flex my-3>
           <i18n path="Common.SEOKeywords" class="body-2 text--secondary" />
@@ -1389,7 +1407,7 @@ import event from '~/config/apps/event/gql/event.gql'
 import copy from '~/components/common/copy'
 import Notes from '~/components/common/notes'
 import { formatGQLResult } from '~/utility/gql.js'
-import { configLoaderMixin, getIdFromAtob, getApiUrl } from '~/utility'
+import { configLoaderMixin, getIdFromAtob } from '~/utility'
 
 export default {
   components: {
@@ -1500,7 +1518,59 @@ export default {
     },
     updateSectionHeading() {
       const dataObj = {
+        RegistrationSiteTemplate: this.eventData.RegistrationSiteTemplate
+          ? this.eventData.RegistrationSiteTemplate
+          : 'event',
         _sectionHeading: {
+          animation:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.animation) ||
+            '',
+          datetimelabel:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.datetimelabel) ||
+            '',
+          gallery:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.gallery) ||
+            '',
+          registrationTypes:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.registrationTypes) ||
+            '',
+          registrationbtn:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.registrationbtn) ||
+            '',
+          registrationquestionsectionlabel:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading
+                .registrationquestionsectionlabel) ||
+            '',
+          review:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.review) ||
+            '',
+          session:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.session) ||
+            '',
+          sessionsectionlabel:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.sessionsectionlabel) ||
+            '',
+          speakers:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.speakers) ||
+            '',
+          ticketlabel:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.ticketlabel) ||
+            '',
+          ticketsectionlabel:
+            (this.eventData._sectionHeading &&
+              this.eventData._sectionHeading.ticketsectionlabel) ||
+            '',
           showimagegallery: this.registrationSetting.showimagegallery,
           showeventreviews: this.registrationSetting.showeventreviews,
         },
@@ -1521,7 +1591,7 @@ export default {
 
   methods: {
     eventLink() {
-      const baseUrl = getApiUrl()
+      const baseUrl = this.$bitpod.getApiUrl()
       const regUrl = baseUrl.replace(
         'svc/api/',
         `e/${this.data.event.UniqLink}`
@@ -1584,7 +1654,6 @@ export default {
       }
     },
     getBadge(str) {
-      this.getOrgInfo()
       const logoUrl =
         nuxtconfig.publicRuntimeConfig.cdnUri +
         'admin-default-template-logo.png'
@@ -1641,7 +1710,7 @@ export default {
       }
     },
     async changeStatus(statusName) {
-      const url = getApiUrl()
+      const url = this.$bitpod.getApiUrl()
       try {
         const res = await this.$axios.$patch(
           `${url}Events/${this.$route.params.id}`,
@@ -1661,7 +1730,7 @@ export default {
     },
     async publishEvent() {
       this.formData.Status = 'Open for registration'
-      const url = getApiUrl()
+      const url = this.$bitpod.getApiUrl()
       try {
         const res = await this.$axios.patch(
           `${url}Events/${this.$route.params.id}`,
@@ -1699,14 +1768,12 @@ export default {
       return str
     },
     async deleteBadge() {
-      const url = getApiUrl()
+      const url = this.$bitpod.getApiUrl()
       const check = confirm('Are you sure you want to delete this badge?')
       if (check === true) {
         try {
           const res = await this.$axios.$delete(
-            `https://${nuxtconfig.axios.eventUrl}${
-              nuxtconfig.axios.apiEndpoint
-            }Badges/${getIdFromAtob(this.badgeData.id)}`
+            `${url}Badges/${getIdFromAtob(this.badgeData.id)}`
           )
           if (res) {
             this.snackbarText = 'Badges deleted successfully'
@@ -1737,7 +1804,7 @@ export default {
         })
         if (result) {
           const orgInfo = formatGQLResult(result.data, 'OrganizationInfo')
-          this.logoId = orgInfo[0].Image[0]
+          this.logoId = this.eventData.Logo[0] || orgInfo[0].Image[0]
         }
       } catch (e) {
         console.error(
@@ -1756,10 +1823,9 @@ export default {
       return downloadLink
     },
     async getBannerImageName(imageId) {
+      const url = this.$bitpod.getApiUrl()
       try {
-        const res = await this.$axios.$get(
-          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Attachments/${imageId}`
-        )
+        const res = await this.$axios.$get(`${url}Attachments/${imageId}`)
         if (res) {
           this.bannerName = res.fileName
         }
@@ -1768,10 +1834,9 @@ export default {
       }
     },
     async getLogoName(imageId) {
+      const url = this.$bitpod.getApiUrl()
       try {
-        const res = await this.$axios.$get(
-          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Attachments/${imageId}`
-        )
+        const res = await this.$axios.$get(`${url}Attachments/${imageId}`)
         if (res) {
           this.logoName = res.fileName
         }
@@ -1780,10 +1845,9 @@ export default {
       }
     },
     async getOtherImageName(imageId) {
+      const url = this.$bitpod.getApiUrl()
       try {
-        const res = await this.$axios.$get(
-          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Attachments/${imageId}`
-        )
+        const res = await this.$axios.$get(`${url}Attachments/${imageId}`)
         if (res) {
           this.OtherImageName.push(res.fileName)
           this.refresh()
@@ -1839,15 +1903,16 @@ export default {
     fileUploadedOther(data) {
       this.allow = true
       if (data.length > 0) {
-        this.formData.Other = []
+        // this.formData.Other = []
         this.formData.Other.push(...data)
-        this.updateOtherImageGallery(this.formData.Other)
+        this.updateOtherImageGallery(data)
       }
     },
     async updateEventGallery(formData) {
+      const url = this.$bitpod.getApiUrl()
       try {
         const res = await this.$axios.$patch(
-          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`,
+          `${url}Events/${this.$route.params.id}`,
           formData
         )
         if (res) {
@@ -1860,10 +1925,11 @@ export default {
       }
     },
     updateOtherImageGallery(formData) {
+      const url = this.$bitpod.getApiUrl()
       try {
         formData.map(async (id) => {
           const res = await this.$axios.$put(
-            `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/Others/rel/${id}`
+            `${url}Events/${this.$route.params.id}/Others/rel/${id}`
           )
           if (res) {
             this.snackbarText = 'Attachment added successfully'
@@ -1901,9 +1967,10 @@ export default {
       return fieldValue || ' '
     },
     getAttachmentLink(id, isDownloadLink) {
-      const attachmentUrl = `https://${nuxtconfig.axios.eventUrl}${
-        nuxtconfig.axios.apiEndpoint
-      }Attachments${isDownloadLink ? '/download' : ''}${id ? '/' + id : ''}`
+      const url = this.$bitpod.getApiUrl()
+      const attachmentUrl = `${url}Attachments${
+        isDownloadLink ? '/download' : ''
+      }${id ? '/' + id : ''}`
       return attachmentUrl
     },
     viewRegistration() {
@@ -1911,10 +1978,11 @@ export default {
       window.open(`${regUrl}`, '_blank')
     },
     async deleteBannerFile(e, id) {
+      const url = this.$bitpod.getApiUrl()
       const checkRes = confirm('Are you sure you want to delete')
       if (checkRes) {
         const res = await this.$axios.delete(
-          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/BannerImage/${id}`
+          `${url}Events/${this.$route.params.id}/BannerImage/${id}`
         )
         if (res) {
           this.refresh()
@@ -1924,10 +1992,11 @@ export default {
       }
     },
     async deleteLogoFile(id) {
+      const url = this.$bitpod.getApiUrl()
       const checkRes = confirm('Are you sure you want to delete')
       if (checkRes) {
         const res = await this.$axios.delete(
-          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/LogoURL/${id}`
+          `${url}Events/${this.$route.params.id}/LogoURL/${id}`
         )
         if (res) {
           this.snackbarText = 'Attachment deleted successfully'
@@ -1937,10 +2006,11 @@ export default {
       }
     },
     async deleteOtherFile(id) {
+      const url = this.$bitpod.getApiUrl()
       const checkRes = confirm('Are you sure you want to delete')
       if (checkRes) {
         const res = await this.$axios.delete(
-          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/Others/${id}`
+          `${url}Events/${this.$route.params.id}/Others/${id}`
         )
         if (res) {
           this.snackbarText = 'Attachment deleted successfully'
@@ -1971,12 +2041,7 @@ export default {
     },
     async updateRegistrationPage() {
       const obj = this.updateSectionHeading
-      if (this.eventData.RegistrationSiteTemplate === null) {
-        obj.RegistrationSiteTemplate = 'Event'
-      } else {
-        obj.RegistrationSiteTemplate = this.eventData.RegistrationSiteTemplate
-      }
-      const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`
+      const URL = `${this.$bitpod.getApiUrl()}Events/${this.$route.params.id}`
       try {
         const res = await this.$axios.$patch(URL, obj)
         if (res) {
@@ -1991,7 +2056,7 @@ export default {
     async updateEvent() {
       const obj = this.updateData
       obj.id = this.$route.params.id
-      const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`
+      const URL = `${this.$bitpod.getApiUrl()}Events/${this.$route.params.id}`
       try {
         const res = await this.$axios.$patch(URL, obj)
         if (res) {
@@ -2014,7 +2079,7 @@ export default {
     },
     async updateSeatReservation() {
       const seatReservation = this.switchSeat
-      const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`
+      const URL = `${this.$bitpod.getApiUrl()}Events/${this.$route.params.id}`
       const obj = { SeatReservation: seatReservation }
       try {
         const res = await this.$axios.$patch(URL, obj)
@@ -2031,7 +2096,7 @@ export default {
     async getSeatMap(eventData) {
       const layoutId = this.eventData.LayoutId
       if (layoutId) {
-        const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}SeatMaps/${layoutId}`
+        const URL = `${this.$bitpod.getApiUrl()}SeatMaps/${layoutId}`
         try {
           const res = await this.$axios.$get(URL)
           if (res) {
@@ -2046,7 +2111,7 @@ export default {
       }
     },
     async onDeleteSeatMap() {
-      const URL = `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}`
+      const URL = `${this.$bitpod.getApiUrl()}Events/${this.$route.params.id}`
       try {
         const res = await this.$axios.$patch(URL, { LayoutId: '' })
         if (res) {
@@ -2094,6 +2159,11 @@ export default {
         const eventSummary = data.Event.EventGetEventSummery
         this.eventData = event.length > 0 ? event[0] : {}
         this.badgeData = badge.length > 0 ? badge[0] : {}
+        this.eventData_sectionHeading =
+          this.eventData._sectionHeading !== null
+            ? this.eventData._sectionHeading
+            : {}
+        this.getOrgInfo()
         this.updateRegistrationSetting(this.eventData)
         this.getSeatMap(this.eventData)
 

@@ -5,7 +5,6 @@
       persistent
       scrollable
       content-class="slide-form-default"
-      transition="dialog-bottom-transition"
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on">
@@ -117,7 +116,7 @@
               </v-col>
               <v-col cols="12" sm="6" md="4" class="pb-0">
                 <v-autocomplete
-                  v-model="Duration"
+                  v-model="Duration1"
                   :items="slotLookupOptions"
                   item-text="value"
                   item-value="key"
@@ -227,9 +226,9 @@
               >
                 <v-text-field
                   v-model="session.WebinarLink"
-                  label="online meeting link*"
+                  label="online meeting link (https)*"
                   outlined
-                  :rules="requiredRules"
+                  :rules="onlineEventLink"
                   dense
                 ></v-text-field>
               </v-col>
@@ -523,12 +522,11 @@
 import gql from 'graphql-tag'
 import { formatGQLResult } from '~/utility/gql.js'
 import strings from '~/strings.js'
-import { required } from '~/utility/rules.js'
+import { required, onlineEventLink } from '~/utility/rules.js'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import location from '~/config/apps/event/gql/location.gql'
 import { getIdFromAtob } from '~/utility'
 import CustomDate from '~/components/common/form/date.vue'
-import { getApiUrl } from '~/utility/index.js'
 import nuxtconfig from '~/nuxt.config'
 export default {
   components: {
@@ -570,6 +568,7 @@ export default {
             ScheduledType: 'Over a period of rolling days',
             RollingDays: 30,
             Frequency: '30',
+            Duration: '30',
           }
     const actionType = this.type
     const isGroup = session.Type === 'Group'
@@ -587,10 +586,10 @@ export default {
               lng: 0.0,
             },
           }
-
     return {
       valid: false,
       required: [required],
+      onlineEventLink: [onlineEventLink],
       dialog: false,
       actionType,
       isSaveButtonDisabled: false,
@@ -600,7 +599,7 @@ export default {
       inPersonMeetingOptions: [],
       slotOptions: [],
       ticketOptions: [],
-      Duration: '30',
+      Duration1: '30',
       customDuration: '15',
       timeSlotMessage: '',
       addresslineMessage: '',
@@ -722,6 +721,19 @@ export default {
           filter(data) {
             return {
               type: 'LocationType',
+            }
+          },
+        },
+      },
+      smalllocationTypeProps: {
+        type: 'lookup',
+        caption: 'Location type*',
+        dataSource: {
+          itemText: 'value',
+          itemValue: 'key',
+          filter(data) {
+            return {
+              type: 'EventLocationType',
             }
           },
         },
@@ -1146,8 +1158,8 @@ export default {
         EndTime: this.session.EndTime,
       })
       this.sessionResult.forEach((row) => {
-        let startTime = row.StartTime.replace(':', '.')
-        let endTime = row.EndTime.replace(':', '.')
+        let startTime = row.StartTime && row.StartTime.replace(':', '.')
+        let endTime = row.EndTime && row.EndTime.replace(':', '.')
         startTime = parseInt(startTime)
         endTime = parseInt(endTime)
         const newsObject = { start: startTime, end: endTime }
@@ -1157,9 +1169,7 @@ export default {
       if (
         this.actionType === 'Edit' ||
         isInvalidSlot === false ||
-        confirm(
-          'This session overlaps with another session, are you sure? click Yes to create and cancel to cancel it.'
-        )
+        confirm(strings.OVERLAP_SESSION_MSG)
       ) {
         const ObjectID5 = (
           m = Math,
@@ -1183,34 +1193,40 @@ export default {
             ],
           }
         })
-        this.session.RollingDays = parseInt(this.session.RollingDays)
+        this.session.RollingDays =
+          this.session.RollingDays && parseInt(this.session.RollingDays)
         this.session.Duration = this.isCustomMin
           ? parseInt(this.customDuration)
-          : parseInt(this.Duration)
-
-        this.session.MaxAllow = parseInt(this.session.MaxAllow)
+          : parseInt(this.Duration1)
+        this.session.MaxAllow =
+          this.session.MaxAllow && parseInt(this.session.MaxAllow)
         this.session.EventId = this.$route.params.id
 
         this.session.MinimumSchedulingNotice = parseInt(
           this.session.MinimumSchedulingNotice
         )
-        this.session.BufferBefore = parseInt(this.session.BufferBefore)
-        this.session.BufferAfter = parseInt(this.session.BufferAfter)
-        this.session.Frequency = parseInt(this.session.Frequency)
+
+        this.session.BufferBefore =
+          this.session.BufferBefore && parseInt(this.session.BufferBefore)
+        this.session.BufferAfter =
+          this.session.BufferAfter && parseInt(this.session.BufferAfter)
+        this.session.Frequency =
+          this.session.Frequency && parseInt(this.session.Frequency)
         if (this.session.SessionTicket && this.session.SessionTicket) {
           this.setTicketName()
         }
-        const baseUrl = getApiUrl()
+        const baseUrl = this.$bitpod.getApiUrl()
         let res = null
         let exceptionRes = null
+
         if (this.actionType === 'New') {
           try {
             res = await this.$axios.$post(`${baseUrl}Sessions`, {
               ...this.session,
             })
           } catch (e) {
-            console.log(
-              `Error in Recurring session grid new session form on Save function - context: create Recurring session, eventId - ${this.session.EventId}`
+            console.error(
+              `Error in Recurring session grid new session form on Save function - context: create Recurring session, eventId - ${this.session.EventId} baseUrl - ${baseUrl} session - ${this.session}, error:${e}`
             )
           }
           if (res) {
@@ -1222,8 +1238,8 @@ export default {
                 }
               )
             } catch (e) {
-              console.log(
-                `Error in Recurring session grid new session form on Save function - context: create Recurring session , Schedules,intervals, eventId - ${this.session.EventId}`
+              console.error(
+                `Error in Recurring session grid new session form on Save function - context: create Recurring session , Schedules,intervals, eventId - ${this.session.EventId} sessionId -${res.id}, baseUrl - ${baseUrl} schedules - ${_Exceptions}, error:${e}`
               )
             }
           }
@@ -1243,8 +1259,8 @@ export default {
               }
             )
           } catch (e) {
-            console.log(
-              `Error in Recurring session grid edit session form on Save function - context: edit Recurring session, eventId - ${this.session.EventId}, sessionId - ${this.session.id}}`
+            console.error(
+              `Error in Recurring session grid edit session form on Save function - context: edit Recurring session, eventId - ${this.session.EventId}, sessionId - ${this.session.id} baseUrl - ${baseUrl} session - ${this.session}, error:${e}`
             )
           }
           if (res) {
@@ -1329,7 +1345,7 @@ export default {
           this.slotOptions &&
           this.slotOptions.length !== 0
         ) {
-          this.Duration = '0'
+          this.Duration1 = '0'
           this.customDuration = `${this.session.Duration}`
           this.isCustomMin = true
         } else if (
@@ -1338,15 +1354,15 @@ export default {
           this.session.Duration
         ) {
           if ([15, 30, 45, 60].includes(this.session.Duration)) {
-            this.Duration = `${this.session.Duration}`
+            this.Duration1 = `${this.session.Duration}`
             this.isCustomMin = false
           } else {
-            this.Duration = '0'
+            this.Duration1 = '0'
             this.customDuration = `${this.session.Duration}`
             this.isCustomMin = true
           }
         } else {
-          this.Duration = `${this.session.Duration}`
+          this.Duration1 = `${this.session.Duration}`
           this.isCustomMin = false
         }
       },

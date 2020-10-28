@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import nuxtconfig from '~/nuxt.config'
 export default {
   props: {
     item: {
@@ -31,7 +30,7 @@ export default {
     async updateRegForm() {
       try {
         const res = await this.$axios.$put(
-          `https://${nuxtconfig.axios.eventUrl}/svc/api/RegistrationForms/${this.item.id}`,
+          `${this.$bitpod.getApiUrl()}RegistrationForms/${this.item.id}`,
           {
             isAttendeeField: this.checkbox,
           }
@@ -41,7 +40,9 @@ export default {
         }
       } catch (e) {
         console.log(
-          `Error in templates/grids/registrationform-grid/column-isattendeefield.vue while making a PUT call to RegistrationForm model from method updateRegForm context:-URL:-https://${nuxtconfig.axios.eventUrl}/svc/api/RegistrationForms/${this.item.id}\n `,
+          `Error in templates/grids/registrationform-grid/column-isattendeefield.vue while making a PUT call to RegistrationForm model from method updateRegForm context:-URL:-https://${this.bitpod.getApiUrl()}RegistrationForms/${
+            this.item.id
+          }\n `,
           e
         )
       }

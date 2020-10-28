@@ -6,7 +6,6 @@
         persistent
         scrollable
         content-class="slide-form-default"
-        transition="dialog-bottom-transition"
       >
         <v-card>
           <v-card-title
@@ -105,7 +104,6 @@ import addHours from 'date-fns/addHours'
 import { required } from '~/utility/rules.js'
 import eventRegistrationTicketSlot from '~/config/apps/event/gql/eventRegistrationTicketSlot.gql'
 import { formatGQLResult } from '~/utility/gql.js'
-import { getApiUrl } from '~/utility/index.js'
 import strings from '~/strings.js'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
 
@@ -193,18 +191,28 @@ export default {
         this.refund.Amount = this.refundData.TotalAmount
         this.isAmountDisabled = true
       } else if (value === 'PartialRefund') {
-        this.refund.Amount = ''
+        this.refund.Amount = 1
         this.isAmountDisabled = false
       }
     },
     close() {
       this.$emit('update:isRefund', false)
+      if (this.regData._Refund !== null) {
+        this.refund = { ...this.regData._Refund }
+      } else {
+        this.refund = {}
+        const resetData = {}
+        resetData.RefundMethod = 'Payment Gateway'
+        resetData.Amount = this.refundData.TotalAmount
+        resetData.RefundRequest = 'FullRefund'
+        this.refund = { ...resetData }
+      }
     },
     refresh() {
       this.$apollo.queries.data.refresh()
     },
     async onSave() {
-      const baseUrl = getApiUrl()
+      const baseUrl = this.$bitpod.getApiUrl()
       this.refundData._Refund = this.refund
       const regId = this.$route.params.id
       let res = null
@@ -216,10 +224,12 @@ export default {
           }
         )
       } catch (e) {
-        console.error('Error', e)
+        console.error(
+          `Error in Save function of refund registration form, context: refund registration , baseUrl: ${baseUrl} registrationId: ${regId} refundData: ${this.refundData} error: ${e}`
+        )
       }
       if (res) {
-        this.close()
+        this.$emit('update:isRefund', false)
         this.refresh()
         return res
       }
@@ -251,7 +261,7 @@ export default {
           this.isWarningMsg = false
         }
         if (this.regData._Refund) {
-          this.refund = this.regData._Refund
+          this.refund = { ...this.regData._Refund }
           this.refundData.TransactionReferenceId = this.regData.TransactionReferenceId
           this.refundData.RefundAttempt = this.regData.RefundAttempt
         } else {

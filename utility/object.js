@@ -69,3 +69,5 @@ export function debounce(fn, delay) {
     }, delay)
   }
 }
+
+export const intersection = (arrA, arrB) => arrA.filter((x) => arrB.includes(x))

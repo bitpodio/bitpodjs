@@ -215,7 +215,7 @@
               <v-col cols="12" class="mt-3">
                 <v-text-field
                   v-model="WebinarLink"
-                  label="Online meeting link"
+                  label="Online event link (https)*"
                   :rules="onlineMeetingRules"
                   outlined
                   dense
@@ -502,11 +502,11 @@
         </div>
         <v-tabs v-model="tabs" height="36" class="mb-6 mt-2 v-event-icon">
           <v-tabs-slider></v-tabs-slider>
-          <v-tab href="#tab-1" class="px-0 mr-4" @click="selectTab(1)">
+          <v-tab href="#1" class="px-0 mr-4" @click="selectTab(1)">
             <v-icon left>fa-info-circle</v-icon><span>Basic Info</span>
           </v-tab>
           <v-tab
-            href="#tab-2"
+            href="#2"
             class="px-0 mr-4"
             :disabled="!validTab1()"
             @click="selectTab(2)"
@@ -514,7 +514,7 @@
             <v-icon left>fa-ticket</v-icon><span>Tickets</span>
           </v-tab>
           <v-tab
-            href="#tab-3"
+            href="#3"
             class="px-0 mr-4"
             :disabled="!validTab1() || !validTab2()"
             @click="selectTab(3)"
@@ -525,7 +525,7 @@
       </v-card-title>
       <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0 event-inner">
         <v-tabs-items v-model="tabs">
-          <v-tab-item :value="'tab-1'">
+          <v-tab-item :value="'1'">
             <v-card flat>
               <p>
                 Enter event name and details to help your audience learn about
@@ -574,7 +574,7 @@
             </v-card>
           </v-tab-item>
 
-          <v-tab-item :value="'tab-2'">
+          <v-tab-item :value="'2'">
             <v-card flat>
               <v-form
                 ref="validTicketsForm"
@@ -620,6 +620,7 @@
                           <Lookup
                             v-model="ticket.Type"
                             :field="ticketTypeProps"
+                            :on-change="changeTicketType(k)"
                           />
                         </td>
                         <td class="pa-2 pb-0">
@@ -657,7 +658,7 @@
             </v-card>
           </v-tab-item>
 
-          <v-tab-item :value="'tab-3'">
+          <v-tab-item :value="'3'">
             <v-card v-if="isSession" flat>
               <v-form
                 ref="validSessionsForm"
@@ -740,7 +741,7 @@
                             :rules="validEndTimeRule(k)"
                           />
                         </td>
-                        <td class="pa-2 pb-0">
+                        <td class="pa-2 pb-0 st-date">
                           <v-autocomplete
                             v-model="session.Duration"
                             :items="slotLookupOptions"
@@ -749,7 +750,6 @@
                             label="Slot Size"
                             outlined
                             dense
-                            class="st-date"
                             @change="changeDuration(k)"
                           ></v-autocomplete>
                         </td>
@@ -758,8 +758,6 @@
                             v-model="session.Timezone"
                             :rules="requiredRules"
                             :field="timezonefield"
-                            offset-y
-                            class="st-date"
                           ></Timezone>
                         </td>
                         <td class="pa-2 pb-0 event-timezone">
@@ -922,7 +920,6 @@ import gql from 'graphql-tag'
 import format from 'date-fns/format'
 import strings from '../strings.js'
 import { formatTimezoneDateFieldsData } from '~/utility/form.js'
-import { getApiUrl } from '~/utility/index.js'
 import Lookup from '~/components/common/form/lookup.vue'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import Timezone from '~/components/common/form/timezone'
@@ -931,7 +928,7 @@ import organizationInfo from '~/config/apps/event/gql/organizationInfo.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { getIdFromAtob } from '~/utility'
 import CustomDate from '~/components/common/form/date.vue'
-import { required } from '~/utility/rules.js'
+import { required, onlineEventLink } from '~/utility/rules.js'
 import nuxtconfig from '~/nuxt.config'
 
 const ObjectID5 = (
@@ -1018,14 +1015,7 @@ export default {
           return strings.INVALID_PHONE_MSG
         },
       ],
-      onlineMeetingRules: [
-        (v) => {
-          if (v) {
-            return true
-          }
-          return strings.ONLINE_MEETING_MSG
-        },
-      ],
+      onlineMeetingRules: [onlineEventLink],
       personMeetingRules: [
         (v) => {
           if (v.length > 0) {
@@ -1074,6 +1064,8 @@ export default {
       isEventCreate: false,
       isEventPublish: false,
       requiredRules: [required],
+      AvailableStartHour: '',
+      AvailableEndHour: '',
       isMap: false,
       ticketTypeProps: {
         type: 'lookup',
@@ -1817,12 +1809,12 @@ export default {
     },
     close() {
       this.onFormClose()
-      this.tabs = 'tab-1'
+      this.tabs = '1'
       this.resetForm()
     },
     closeForm() {
       this.onFormClose()
-      this.tabs = 'tab-1'
+      this.tabs = '1'
       this.$router.push('/apps/event/event/recurring/' + this.eventId)
       this.resetForm()
     },
@@ -1845,7 +1837,7 @@ export default {
       return `mutation($Inputs : ${modelName}UpsertWithWhereInput!){ ${modelName}{ ${modelName}UpsertWithWhere(input:$Inputs){ clientMutationId obj{ id } } } }`
     },
     viewRegistration() {
-      const baseUrl = getApiUrl()
+      const baseUrl = this.$bitpod.getApiUrl()
       const regUrl = baseUrl.replace('svc/api', 'e')
       window.open(`${regUrl}${this.eventData.UniqLink}`, '_blank')
     },
@@ -1869,11 +1861,13 @@ export default {
         },
       })
     },
-    isPriceDisabled(index) {
+    changeTicketType(index) {
       if (this.tickets[index].Type === 'Free') {
         this.tickets[index].Amount = 0
-        return true
-      } else return false
+      }
+    },
+    isPriceDisabled(index) {
+      return this.tickets[index].Type === 'Free'
     },
     deleteTicket(index) {
       if (this.tickets.length > 1) {
@@ -1917,16 +1911,12 @@ export default {
       return !isValidTicket.includes(false)
     },
     prev() {
-      this.currentTab = parseInt(this.tabs.split('-')[1])
-      this.currentTab -= 1
-      const tabValue = `tab-${this.currentTab}`
-      this.tabs = tabValue
+      this.currentTab = parseInt(this.tabs) - 1
+      this.tabs = `${this.currentTab}`
     },
     setNextTab() {
-      this.currentTab = parseInt(this.tabs.split('-')[1])
-      this.currentTab += 1
-      const tabValue = `tab-${this.currentTab}`
-      this.tabs = tabValue
+      this.currentTab = parseInt(this.tabs) + 1
+      this.tabs = `${this.currentTab}`
     },
     next() {
       const { Title, UniqLink } = this.eventData
@@ -2005,13 +1995,15 @@ export default {
           this.isSaveButtonDisabled = true
           this.eventData.EventManager = this.$auth.$state.user.data.email
           this.eventData.Organizer = this.$auth.$state.user.data.name
-          const baseUrl = getApiUrl()
+          const baseUrl = this.$bitpod.getApiUrl()
           const res = await this.$axios
             .$post(`${baseUrl}Events`, {
               ...this.eventData,
             })
             .catch((e) => {
-              console.log('error', e)
+              console.error(
+                `Error in Save function of new recurring event form , context: create event, baseUrl: ${baseUrl} eventData: ${this.eventData} error: ${e}`
+              )
               this.isSaveButtonDisabled = false
             })
 
@@ -2029,7 +2021,9 @@ export default {
             const ticketres = await this.$axios
               .$post(`${baseUrl}Tickets`, ticketList)
               .catch((e) => {
-                console.log('error', e)
+                console.error(
+                  `Error in Save function of new recurring event form, context: create ticket, eventId: ${this.eventId} baseUrl: ${baseUrl} ticketList: ${this.ticketList} error: ${e}`
+                )
                 this.isSaveButtonDisabled = false
               })
             if (ticketres) {
@@ -2105,7 +2099,9 @@ export default {
             const sessionres = await this.$axios
               .$post(`${baseUrl}Sessions`, sessionList)
               .catch((e) => {
-                console.log('error', e)
+                console.error(
+                  `Error in Save function of new recurring event form, context: create session, eventId: ${this.eventId} baseUrl: ${baseUrl} sessionList: ${this.sessionList} error: ${e}`
+                )
                 this.isSaveButtonDisabled = false
               })
             if (sessionres) {
@@ -2185,8 +2181,8 @@ export default {
         Name: '',
         ScheduledType: 'Over a period of rolling days',
         CustomScheduledType: 'over 30 rolling days ',
-        StartTime: '10:00',
-        EndTime: '19:00',
+        StartTime: this.AvailableStartHour || '10:00',
+        EndTime: this.AvailableEndHour || '19:00',
         Duration: '30',
         Timezone: '',
         LocationType: '',
@@ -2243,6 +2239,17 @@ export default {
           this.setSelectedDays(OrganizationInfo[0].weekDay)
           this.weekDay = OrganizationInfo[0].weekDay
         }
+        this.AvailableStartHour =
+          OrganizationInfo[0] && OrganizationInfo[0].AvailableStartHour
+            ? OrganizationInfo[0].AvailableStartHour
+            : ''
+        this.AvailableEndHour =
+          OrganizationInfo[0] && OrganizationInfo[0].AvailableEndHour
+            ? OrganizationInfo[0].AvailableEndHour
+            : ''
+
+        this.sessions[0].StartTime = this.AvailableStartHour || '10:00'
+        this.sessions[0].EndTime = this.AvailableEndHour || '19:00'
       },
       error(error) {
         this.error = error
@@ -2263,7 +2270,7 @@ export default {
   min-height: 300px;
 }
 .event-inner {
-  min-height: 455px;
+  min-height: 410px;
 }
 .st-date {
   max-width: 125px !important;

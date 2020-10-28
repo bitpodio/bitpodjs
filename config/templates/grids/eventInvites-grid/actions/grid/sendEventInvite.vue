@@ -3,13 +3,7 @@
     <v-snackbar v-model="snackbar" :top="true" :timeout="1000">
       <i18n path="Common.SomeErrorOccured" class="toast py-2 pr-1 pl-3" />
     </v-snackbar>
-    <v-dialog
-      v-model="dialog"
-      persistent
-      scrollable
-      content-class="slide-form"
-      transition="dialog-bottom-transition"
-    >
+    <v-dialog v-model="dialog" persistent scrollable content-class="slide-form">
       <template v-slot:activator="{ on, attrs }">
         <v-col class="px-0">
           <v-btn
@@ -341,8 +335,7 @@
                   <RichText
                     v-model="RTEValue"
                     class="pl-0"
-                    :is-invitee="true"
-                    :is-general="template === 'General Template'"
+                    :dropdown-options="dropdownOptions"
                   />
                 </v-card>
               </v-tab-item>
@@ -763,7 +756,6 @@
 
 <script>
 import gql from 'graphql-tag'
-import nuxtConfig from '~/nuxt.config'
 import Grid from '~/components/common/grid'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin, getIdFromAtob } from '~/utility'
@@ -822,6 +814,58 @@ export default {
       validDate: false,
       invalid: true,
     }
+  },
+  computed: {
+    dropdownOptions() {
+      return this.template !== 'General Template'
+        ? {
+            'Event Name': 'Event Name',
+            Description: 'Description',
+            'Start Date': 'Start Date',
+            'End Date': 'End Date',
+            Timezone: 'Timezone',
+            Organizer: 'Organizer',
+            Venue: 'Venue',
+            Address: 'Address',
+            City: 'City',
+            State: 'State',
+            Country: 'Country',
+            'Postal Code': 'Postal Code',
+            'Event Webinar Link': 'Event Webinar Link',
+            'Event Joining Instruction': 'Event Joining Instruction',
+            'Organization Name': 'Organization Name',
+            'Organization Address': 'Organization Address',
+            'Organization City': 'Organization City',
+            'Organization State': 'Organization State',
+            'Organization Country': 'Organization Country',
+            'Organization Postal Code': 'Organization Postal Code',
+            'Privacy Policy': 'Privacy Policy',
+            'Organization Facebook': 'Organization Facebook',
+            'Organization Linkedin': 'Organization Linkedin',
+            'Organization Twitter': 'Organization Twitter',
+            'Contact First Name': 'Contact First Name',
+            'Contact Last Name': 'Contact Last Name',
+            'Contact Email': 'Contact Email',
+            Register: 'Register',
+            Logo: 'Logo',
+          }
+        : {
+            'Organization Name': 'Organization Name',
+            'Organization Address': 'Organization Address',
+            'Organization City': 'Organization City',
+            'Organization State': 'Organization State',
+            'Organization Country': 'Organization Country',
+            'Organization Postal Code': 'Organization Postal Code',
+            'Privacy Policy': 'Privacy Policy',
+            'Organization Facebook': 'Organization Facebook',
+            'Organization Linkedin': 'Organization Linkedin',
+            'Organization Twitter': 'Organization Twitter',
+            'Contact First Name': 'Contact First Name',
+            'Contact Last Name': 'Contact Last Name',
+            'Contact Email': 'Contact Email',
+            Logo: 'Logo',
+          }
+    },
   },
   watch: {
     curentTab(newVal, oldVal) {
@@ -904,8 +948,9 @@ export default {
       return this.templateItems.find((i) => i.Body === this.RTEValue)
     },
     sendNow(type) {
+      const url = this.$bitpod.getApiUrl()
       this.disableButton = true
-      const exceptionURL = `https://${nuxtConfig.axios.eventUrl}${nuxtConfig.axios.apiEndpoint}/CRMACTIVITIES`
+      const exceptionURL = `${url}CRMACTIVITIES`
       const postData = {
         ContactId: this.selectedList.map((i) => i.id),
         DueDate: null,
@@ -943,7 +988,7 @@ export default {
           if (!this.templateExists()) {
             return this.$axios({
               method: 'POST',
-              url: `https://${nuxtConfig.axios.eventUrl}${nuxtConfig.axios.apiEndpoint}MarketingTemplates`,
+              url: `${this.$bitpod.getApiUrl()}MarketingTemplates`,
               data: {
                 Body: this.RTEValue,
                 Name: '',

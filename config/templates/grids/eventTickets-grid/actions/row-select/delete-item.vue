@@ -6,14 +6,13 @@
         ><i18n path="Drawer.Delete" />
       </v-btn>
     </v-col>
-    <v-snackbar v-model="snackbar" :timeout="timeout" top="true">
-      <i18n path="Common.RecordDeletedSuccessfully" class="text-center" />
-    </v-snackbar>
+    <v-snackbar v-model="snackbar" :timeout="timeout" top="true"
+      ><div class="text-center">Ticket Deleted Successfully</div></v-snackbar
+    >
   </div>
 </template>
 
 <script>
-import { getApiUrl } from '~/utility'
 export default {
   props: {
     content: {
@@ -53,7 +52,7 @@ export default {
 
   methods: {
     async onDeleteItem() {
-      const url = getApiUrl()
+      const url = this.$bitpod.getApiUrl()
       const check = confirm('Are you sure you want to delete this ticket?')
       try {
         if (check) {

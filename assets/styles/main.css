@@ -24,25 +24,19 @@ body {
 }
 
 .slide-form {
-  position: fixed !important;
-  right: 0 !important;
-  bottom: 0 !important;
-  width: calc(100% - 230px) !important;
-  max-height: calc(100% - 15px) !important;
-  min-height: calc(100% - 15px) !important;
+  max-height: calc(100% - 30px) !important;
+  min-height: calc(100% - 30px) !important;
+  max-width: 1340px !important;
 }
 .stepper-box {
   min-height: 650px;
+  max-width: 1340px !important;
 }
 .slide-form-default {
-  position: fixed !important;
-  right: 0 !important;
-  bottom: 0 !important;
-  width: 50% !important;
+  width: 60% !important;
 }
 .v-dialog {
-  margin: 12px !important;
-  margin-bottom: 0 !important;
+  margin: 0 12px !important;
 }
 .Twitter {
   font-size: 0 !important;
@@ -50,6 +44,13 @@ body {
 }
 .Twitter::first-letter {
   font-size: 24px !important;
+}
+.Twitter-18 {
+  font-size: 0 !important;
+  text-transform: capitalize !important;
+}
+.Twitter-18::first-letter {
+  font-size: 18px !important;
 }
 .name-initial {
   font-size: 0 !important;
@@ -91,11 +92,17 @@ body {
 .fs-18 {
   font-size: 18px !important;
 }
+.fs-20 {
+  font-size: 20px !important;
+}
 .fs-22 {
   font-size: 22px !important;
 }
 .fs-30 {
   font-size: 30px !important;
+}
+.text-break-word {
+  overflow-wrap: break-word;
 }
 .bitpod-logo img {
   max-width: 130px;
@@ -427,8 +434,36 @@ body {
 .seatmap .view-name {
   visibility: hidden !important;
 }
+.seatmap .theme--light.v-data-table {
+  background: transparent !important;
+}
+.seatmap .v-data-footer {
+  width: 65% !important;
+  max-width: 65% !important;
+  margin: 0 auto !important;
+}
 .vs-hidden {
   visibility: hidden;
+}
+.boxview .v-expansion-panel-content__wrap {
+  padding: 0 !important;
+}
+.boxview .v-expansion-panel--active > .v-expansion-panel-header {
+    min-height: 42px;
+}
+.event-title {
+  max-width: calc(100% - 230px);
+}
+.istemplate .v-data-footer {
+  background: #f5f5f5 !important;
+  justify-content: flex-start !important;
+  border: none !important;
+}
+.seatmap-btn .theme--light.v-label {
+  color: rgba(0, 0, 0, 0.87) !important;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: 500;
 }
 @media (max-width: 800px) {
   .nav-bar {

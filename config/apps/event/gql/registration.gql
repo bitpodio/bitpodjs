@@ -56,6 +56,18 @@ query($filters: JSON) {
             modifiedDate
             modifiedBy
           }
+          _CustomerPayment {
+            brand
+            card_holder_name
+            last4
+            token
+            processorAuthorizationCode
+            id
+            createdDate
+            createdBy
+            modifiedDate
+            modifiedBy
+          }
         }
       }
     }

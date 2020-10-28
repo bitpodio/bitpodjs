@@ -31,7 +31,7 @@
       <div
         v-for="file in files"
         :key="file.id"
-        class="ma-2 grey lighten-2 pa-2 rounded-sm"
+        class="my-2 grey lighten-2 pa-2 rounded-sm"
       >
         <v-icon class="float-right" @click="deleteFile(file.id)"
           >mdi-close</v-icon
@@ -45,7 +45,6 @@
 </template>
 <script>
 import { formFieldMixin } from '~/utility/form-control'
-import nuxtconfig from '~/nuxt.config'
 export default {
   mixins: [formFieldMixin],
   props: {
@@ -123,9 +122,10 @@ export default {
   },
   methods: {
     getAttachmentLink(id, isDownloadLink) {
-      const attachmentUrl = `https://${nuxtconfig.axios.eventUrl}${
-        nuxtconfig.axios.apiEndpoint
-      }Attachments${isDownloadLink ? '/download' : ''}${id ? '/' + id : ''}`
+      const url = this.$bitpod.getApiUrl()
+      const attachmentUrl = `${url}Attachments${
+        isDownloadLink ? '/download' : ''
+      }${id ? '/' + id : ''}`
       return attachmentUrl
     },
     uploadClicked() {

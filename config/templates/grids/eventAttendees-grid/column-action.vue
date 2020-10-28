@@ -19,7 +19,6 @@
 </template>
 
 <script>
-import nuxtconfig from '~/nuxt.config'
 export default {
   props: {
     item: {
@@ -36,14 +35,12 @@ export default {
   methods: {
     async updateDate() {
       const res = confirm('are you sure, you want to cancel check in?')
+      const url = this.$bitpod.getApiUrl()
       if (res) {
         try {
-          const res = await this.$axios.$put(
-            `https://${nuxtconfig.axios.eventUrl}/svc/api/Attes/${this.item.id}`,
-            {
-              CheckIn: null,
-            }
-          )
+          const res = await this.$axios.$put(`${url}Attes/${this.item.id}`, {
+            CheckIn: null,
+          })
           if (res) {
             this.refresh()
           }

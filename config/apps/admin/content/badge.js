@@ -77,8 +77,16 @@ export default {
           cssClasses: 'col-12 col-md-12',
           newForm: true,
           editForm: true,
-          isBadge: true,
-          showTemplateDropdown: true,
+          dropdownOptions: {
+            'First Name': 'First  Name',
+            'Last Name': 'Last  Name',
+            'Full Name': 'Full  Name',
+            Category: 'Category',
+            'Event Name': 'Event  Name',
+            Organization: 'Organization',
+            Logo: 'Logo',
+            QRCode: 'QRCode',
+          },
         },
         DisplayOrder: {
           form: {

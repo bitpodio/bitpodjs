@@ -162,29 +162,20 @@
       persistent
       scrollable
       content-class="slide-form"
-      transition="dialog-bottom-transition"
     >
-      <div v-if="dialog1">
-        <NewSingleEvent
-          :reset-data="triggerReset"
-          :on-form-close="closeSingleEventForm"
-        />
-      </div>
+      <NewSingleEvent
+        v-if="dialog1"
+        :reset-data="triggerReset"
+        :on-form-close="closeSingleEventForm"
+      />
     </v-dialog>
 
-    <v-dialog
-      v-model="dialog"
-      persistent
-      scrollable
-      content-class="slide-form"
-      transition="dialog-bottom-transition"
-    >
-      <div v-if="dialog">
-        <NewRecurringEvent
-          :reset-data="triggerRecEventReset"
-          :on-form-close="closeRecurringEventForm"
-        />
-      </div>
+    <v-dialog v-model="dialog" persistent scrollable content-class="slide-form">
+      <NewRecurringEvent
+        v-if="dialog"
+        :reset-data="triggerRecEventReset"
+        :on-form-close="closeRecurringEventForm"
+      />
     </v-dialog>
 
     <v-app-bar app flat class="greybg headernew pl-0" height="50">
@@ -213,135 +204,12 @@
       <div class="d-flex d-sm-flex d-md-none ml-n3">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       </div>
-      <v-toolbar-title class="pl-0 ml-n1"
-        ><i18n path="Common.EventApp" />
-      </v-toolbar-title>
       <v-spacer></v-spacer>
       <LanguageSwitcher />
       <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
         <v-icon>mdi-invert-colors</v-icon>
       </v-btn>
-      <v-menu
-        offset-y
-        transition="slide-y-transition"
-        bottom
-        content-class="app-drawer"
-      >
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn icon v-bind="attrs" v-on="on">
-            <v-icon>mdi-apps</v-icon>
-          </v-btn>
-        </template>
-        <v-list>
-          <v-list-item>
-            <v-list-item-title class="d-flex flex-wrap app-container">
-              <nuxt-link
-                to="/apps/event/list/Event/live and draft event"
-                class="text-decoration-none"
-              >
-                <v-flex
-                  class="d-flex justify-center align-center flex-column app-view"
-                >
-                  <v-flex class="d-flex justify-center align-center">
-                    <i
-                      class="fa fa-calendar fs-36 success--text"
-                      aria-hidden="true"
-                    ></i>
-                  </v-flex>
-                  <v-flex>
-                    <i18n
-                      path="Common.EventApp"
-                      class="pa-1 caption text--primary"
-                    />
-                  </v-flex>
-                </v-flex>
-              </nuxt-link>
-              <nuxt-link
-                to="/apps/admin/organization/5cfe026f6ab042000c530105"
-                class="text-decoration-none"
-              >
-                <v-flex
-                  class="d-flex justify-center align-center flex-column app-view"
-                >
-                  <v-flex class="d-flex justify-center align-center">
-                    <i
-                      class="fa fa-cogs fs-36 primary--text"
-                      aria-hidden="true"
-                    ></i>
-                  </v-flex>
-                  <v-flex>
-                    <i18n
-                      path="Common.AdminApp"
-                      class="pa-1 caption text--primary"
-                    />
-                  </v-flex>
-                </v-flex>
-              </nuxt-link>
-              <nuxt-link to="" class="text-decoration-none">
-                <v-flex
-                  class="d-flex justify-center align-center flex-column app-view"
-                >
-                  <v-flex class="d-flex justify-center align-center">
-                    <i
-                      class="fa fa-help-circle fs-36 warning--text"
-                      aria-hidden="true"
-                    ></i>
-                  </v-flex>
-                  <v-flex>
-                    <i18n
-                      path="Common.HelpCenterMap"
-                      class="pa-1 caption text--primary"
-                    />
-                  </v-flex>
-                </v-flex>
-              </nuxt-link>
-              <a
-                href="https://dev-survey.bitpod.io/"
-                class="text-decoration-none"
-                target="_blank"
-              >
-                <v-flex
-                  class="d-flex justify-center align-center flex-column app-view"
-                >
-                  <v-flex class="d-flex justify-center align-center">
-                    <v-img
-                      src="https://survey.bitpod.io/favicon.ico"
-                      class="survey-img"
-                    ></v-img>
-                  </v-flex>
-                  <v-flex>
-                    <i18n
-                      path="Common.SurveyApp"
-                      class="pa-1 caption text--primary"
-                    />
-                  </v-flex>
-                </v-flex>
-              </a>
-              <nuxt-link
-                to="/apps/seatmap/list/seatmaps/seatmaps"
-                class="text-decoration-none"
-              >
-                <v-flex
-                  class="d-flex justify-center align-center flex-column app-view"
-                >
-                  <v-flex class="d-flex justify-center align-center">
-                    <i
-                      class="fa fa-grid-alt fs-36 primary--text"
-                      aria-hidden="true"
-                    ></i>
-                  </v-flex>
-                  <v-flex>
-                    <i18n
-                      path="Common.SeatMap"
-                      class="pa-1 caption text--primary"
-                    />
-                  </v-flex>
-                </v-flex>
-              </nuxt-link>
-            </v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
+      <AppDrawer />
       <div v-if="$auth.$state.loggedIn">
         <v-menu
           v-model="account"
@@ -418,12 +286,12 @@
 
 <script>
 import OrgnaizationList from '~/components/common/organization-list'
-import LanguageSwitcher from '~/components/LanguageSwitcher'
-
+import AppDrawer from '~/components/common/app-drawer'
 export default {
+  middleware: ['auth', 'authorization'],
   components: {
     OrgnaizationList,
-    LanguageSwitcher,
+    AppDrawer,
   },
   props: {
     source: { type: String, default: '' },

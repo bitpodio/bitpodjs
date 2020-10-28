@@ -5,7 +5,6 @@
       persistent
       scrollable
       content-class="slide-form-default"
-      transition="dialog-bottom-transition"
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on">
@@ -65,7 +64,6 @@
 <script>
 import member from '~/config/apps/event/gql/member.gql'
 import { required } from '~/utility/rules.js'
-import { getApiUrl } from '~/utility/index.js'
 export default {
   props: {
     refresh: {
@@ -107,7 +105,7 @@ export default {
       this.duplicateMessage = ''
       this.isSaveButtonDisabled = true
       const offerCodeId = this.$route.params.id
-      const baseUrl = getApiUrl()
+      const baseUrl = this.$bitpod.getApiUrl()
       let res = null
       try {
         res = await this.$axios.$put(

@@ -6,7 +6,6 @@
         persistent
         scrollable
         content-class="slide-form-default"
-        transition="dialog-bottom-transition"
       >
         <v-card>
           <v-card-title
@@ -87,7 +86,6 @@ import gql from 'graphql-tag'
 import { formatGQLResult } from '~/utility/gql.js'
 import organization from '~/config/apps/admin/gql/organization.gql'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
-import { getApiUrl } from '~/utility'
 export default {
   props: {
     editWorkTiming: {
@@ -148,7 +146,7 @@ export default {
       this.$refs.form.$parent.$parent.refresh()
     },
     async onSave() {
-      const url = getApiUrl()
+      const url = this.$bitpod.getApiUrl()
       this.formData.weekDay = this.selectedDays
         .filter((x) => x.selected)
         .map((y) => y.dayName)

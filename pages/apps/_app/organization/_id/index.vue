@@ -103,7 +103,7 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -390,7 +390,6 @@ import editWorkTiming from './editWorkTiming.vue'
 import Grid from '~/components/common/grid'
 import File from '~/components/common/form/file.vue'
 import organization from '~/config/apps/admin/gql/organization.gql'
-import nuxtconfig from '~/nuxt.config'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin } from '~/utility'
 export default {
@@ -447,7 +446,9 @@ export default {
       this.formData.Image.push(data[0])
       try {
         await this.$axios.$patch(
-          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}OrganizationInfos/${this.$route.params.id}`,
+          `${this.$bitpod.getApiUrl()}OrganizationInfos/${
+            this.$route.params.id
+          }`,
           this.formData
         )
       } catch (e) {

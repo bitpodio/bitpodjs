@@ -225,7 +225,6 @@ import gql from 'graphql-tag'
 import format from 'date-fns/format'
 import Grid from '~/components/common/grid'
 import invites from '~/config/apps/event/gql/eventInviteSummary.gql'
-import nuxtconfig from '~/nuxt.config'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin } from '~/utility'
 export default {
@@ -292,9 +291,9 @@ export default {
         ],
       }
       const res = await this.$axios.$get(
-        `https://${
-          nuxtconfig.axios.eventUrl
-        }/svc/api/EmailAnalytics/aggregate?filter=${JSON.stringify(filter)}`
+        `${this.$bitpod.getApiUrl()}EmailAnalytics/aggregate?filter=${JSON.stringify(
+          filter
+        )}`
       )
       if (res) {
         this.analytics = res.data[0]

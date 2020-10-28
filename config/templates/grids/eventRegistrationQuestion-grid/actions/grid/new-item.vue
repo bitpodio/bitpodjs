@@ -5,7 +5,6 @@
       persistent
       scrollable
       content-class="slide-form-default"
-      transition="dialog-bottom-transition"
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on">
@@ -16,8 +15,8 @@
         <v-card-title
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
-          <h2 class="black--text pt-10 pb-9 font-weight-regular">
-            <i18n path="Common.NewRegistrationQuestion" />
+          <h2 class="black--text pt-5 pb-4 font-weight-regular text-h5">
+            New Registration Question
           </h2>
           <v-spacer></v-spacer>
           <div>
@@ -82,7 +81,9 @@
                   :items="ticketsDropDown"
                   multiple
                   chips
+                  small-chips
                   persistent-hint
+                  outlined
                   dense
                 ></v-select>
               </v-col>
@@ -108,7 +109,6 @@
 
 <script>
 import gql from 'graphql-tag'
-import nuxtconfig from '~/nuxt.config'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import eventTicket from '~/config/apps/event/gql/eventTickets.gql'
 import { formatGQLResult } from '~/utility/gql.js'
@@ -219,13 +219,11 @@ export default {
             .filter((i) => this.tickets.some((j) => j === i.name))
             .map((k) => k.id)
         : []
+      const url = this.$bitpod.getApiUrl()
       const res = await this.$axios
-        .$post(
-          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/Survey`,
-          {
-            ...this.formData,
-          }
-        )
+        .$post(`${url}Events/${this.$route.params.id}/Survey`, {
+          ...this.formData,
+        })
         .catch((e) => console.log('Error', e))
       if (res) {
         this.dialog = false

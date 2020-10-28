@@ -17,8 +17,9 @@
           row-height="18"
           auto-grow
         ></v-textarea>
-        <div class="px-2 mb-3">
+        <div class="mb-3">
           <v-btn
+            v-if="!fileList || !fileList.length"
             class="float-right"
             small
             color="primary"
@@ -27,7 +28,7 @@
             >Save</v-btn
           >
           <div
-            class="grey--text cursorPointer d-flex"
+            class="grey--text cursorPointer d-flex tile"
             @click="attach = !attach"
           >
             <v-icon class="mdi-rotate-315" medium>mdi-attachment</v-icon>
@@ -40,6 +41,15 @@
           :open-file-dialog="attach"
           @input="uploaded"
         />
+        <v-btn
+          v-if="fileList && fileList.length"
+          class="float-right mt-2"
+          small
+          color="primary"
+          :disabled="!message"
+          @click="uploadNote"
+          >Save</v-btn
+        >
         <div v-for="(comment, index) in existingComments" :key="comment.id">
           <v-hover v-slot:default="{ hover }">
             <div
@@ -66,9 +76,12 @@
                       />
                     </v-avatar>
                   </div>
-                  <div>
+                  <div
+                    class="v-data-table__wrapper"
+                    :class="{ 'mr-9': !hover }"
+                  >
                     <div class="blue--text">{{ comment.modifiedBy }}</div>
-                    <div>{{ comment.Notes }}</div>
+                    <div class="text-break-word">{{ comment.Notes }}</div>
                     <div v-if="comment.AttachmentId.length" class="gallery">
                       <div
                         v-for="attachment in comment.AttachmentId"
@@ -134,7 +147,6 @@
 </template>
 <script>
 import File from '../form/file.vue'
-import nuxtconfig from '~/nuxt.config'
 import timeAgo from '~/utility/get-time-difference.js'
 export default {
   components: {
@@ -187,15 +199,15 @@ export default {
       return timeAgo(date)
     },
     getAttachmentLink(id, isDownloadLink) {
-      const attachmentUrl = `https://${nuxtconfig.axios.eventUrl}${
-        nuxtconfig.axios.apiEndpoint
-      }Attachments${isDownloadLink ? '/download' : ''}${id ? '/' + id : ''}`
+      const url = this.$bitpod.getApiUrl()
+      const attachmentUrl = `${url}Attachments${
+        isDownloadLink ? '/download' : ''
+      }${id ? '/' + id : ''}`
       return attachmentUrl
     },
     getLink(id) {
-      return `https://${nuxtconfig.axios.eventUrl}${
-        nuxtconfig.axios.apiEndpoint
-      }${this.modelName}/${this.$route.params.id}/${
+      const url = this.$bitpod.getApiUrl()
+      return `${url}${this.modelName}/${this.$route.params.id}/${
         this.modelName === 'Events' ? 'Comments' : 'Comment'
       }/${id || ''}`
     },

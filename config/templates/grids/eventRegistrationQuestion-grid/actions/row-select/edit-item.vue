@@ -5,7 +5,6 @@
       persistent
       scrollable
       content-class="slide-form-default"
-      transition="dialog-bottom-transition"
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on" @click="getQuestions">
@@ -110,7 +109,6 @@
 
 <script>
 import gql from 'graphql-tag'
-import nuxtconfig from '~/nuxt.config'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import eventTicket from '~/config/apps/event/gql/eventTickets.gql'
 import { formatGQLResult } from '~/utility/gql.js'
@@ -215,13 +213,11 @@ export default {
             .filter((i) => this.tickets.some((j) => j === i.name))
             .map((k) => k.id)
         : []
+      const url = this.$bitpod.getApiUrl()
       const res = await this.$axios
-        .put(
-          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/Survey/${this.id}`,
-          {
-            ...this.formData,
-          }
-        )
+        .put(`${url}Events/${this.$route.params.id}/Survey/${this.id}`, {
+          ...this.formData,
+        })
         .catch((e) => console.log('Error', e))
 
       if (res) {
@@ -233,10 +229,9 @@ export default {
       this.items.map((ele) => {
         this.id = ele.id
       })
+      const url = this.$bitpod.getApiUrl()
       const res = await this.$axios
-        .$get(
-          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Events/${this.$route.params.id}/Survey/${this.id}`
-        )
+        .$get(`${url}Events/${this.$route.params.id}/Survey/${this.id}`)
         .catch((e) => console.log('Error', e))
       if (res) {
         this.formData = res

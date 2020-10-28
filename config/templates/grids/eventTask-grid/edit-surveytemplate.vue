@@ -3,13 +3,7 @@
     <v-snackbar v-model="snackbar" :top="true" :timeout="1000">
       <i18n path="Common.SomeErrorOccured" class="toast py-2 pr-1 pl-3" />
     </v-snackbar>
-    <v-dialog
-      v-model="dialog"
-      persistent
-      scrollable
-      content-class="slide-form"
-      transition="dialog-bottom-transition"
-    >
+    <v-dialog v-model="dialog" persistent scrollable content-class="slide-form">
       <template v-slot:activator="{ on, attrs }">
         <v-col class="px-0">
           <v-btn
@@ -107,13 +101,7 @@
                     <v-spacer></v-spacer>
                   </v-flex>
 
-                  <RichText
-                    v-model="RTEValue"
-                    class="pl-0"
-                    :is-edit-template="true"
-                    :show-template-dropdown="true"
-                    :is-general="template === 'General Template'"
-                  />
+                  <RichText v-model="RTEValue" class="pl-0" />
                 </v-card>
               </v-tab-item>
             </v-tabs-items>
@@ -162,7 +150,6 @@
 import gql from 'graphql-tag'
 import { formatGQLResult } from '~/utility/gql.js'
 import marketingTemplates from '~/config/apps/admin/gql/marketingTemplates.gql'
-import { getApiUrl } from '~/utility/index.js'
 export default {
   components: {
     RichText: () =>
@@ -259,7 +246,7 @@ export default {
       this.preview = true
     },
     async onSave() {
-      const baseUrl = getApiUrl()
+      const baseUrl = this.$bitpod.getApiUrl()
       let res = null
       let activityRes = null
       try {

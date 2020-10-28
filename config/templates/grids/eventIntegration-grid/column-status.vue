@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="d-inline-block">
     <v-checkbox
       v-model="checkbox"
       color="green"
@@ -30,8 +30,6 @@
 </template>
 
 <script>
-import nuxtconfig from '~/nuxt.config'
-
 export default {
   props: {
     item: {
@@ -61,7 +59,7 @@ export default {
       const id = this.item.id
       if (id && this.status) {
         const category = this.item.MetaData.Category
-        const url = `https://${nuxtconfig.axios.eventUrl}/svc/api/Connections/${id}`
+        const url = `${this.$bitpod.getApiUrl()}Connections/${id}`
         if (this.checkbox) {
           const data = { Status: 'Disconnected' }
           try {
@@ -84,9 +82,9 @@ export default {
               ],
             },
           }
-          const filterurl = `https://${
-            nuxtconfig.axios.eventUrl
-          }/svc/api/Connections?filter=${JSON.stringify(filter)}`
+          const filterurl = `${this.$bitpod.getApiUrl()}Connections?filter=${JSON.stringify(
+            filter
+          )}`
           const data = { Status: 'Connected' }
           if (category === 'Payment') {
             try {

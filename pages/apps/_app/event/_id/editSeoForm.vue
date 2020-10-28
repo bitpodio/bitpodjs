@@ -6,15 +6,12 @@
         persistent
         scrollable
         content-class="slide-form-default"
-        transition="dialog-bottom-transition"
       >
         <v-card>
           <v-card-title
             class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
           >
-            <h2 class="black--text pt-5 pb-2 text-h5">
-              <i18n path="Common.EditSeoDetails" />
-            </h2>
+            <h2 class="black--text pt-5 pb-2 text-h5">Edit SEO Details</h2>
             <v-spacer></v-spacer>
             <div>
               <v-btn icon @click.native="close">
@@ -79,7 +76,6 @@
 
 <script>
 import gql from 'graphql-tag'
-import nuxtConfig from '../../../../../nuxt.config'
 import { required } from '~/utility/rules.js'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
@@ -126,8 +122,9 @@ export default {
       delete this.formData._VenueAddress
       this.formData.SEOTitle = this.seoTitle
       try {
+        const url = this.$bitpod.getApiUrl()
         const res = await this.$axios.$patch(
-          `https://${nuxtConfig.axios.eventUrl}/svc/api/Events/${this.$route.params.id}`,
+          `${url}Events/${this.$route.params.id}`,
           {
             ...this.seoData,
           }

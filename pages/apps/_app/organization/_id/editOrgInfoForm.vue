@@ -6,7 +6,6 @@
         persistent
         scrollable
         content-class="slide-form-default"
-        transition="dialog-bottom-transition"
       >
         <v-card>
           <v-card-title
@@ -125,7 +124,6 @@ import gql from 'graphql-tag'
 import { email, required } from '~/utility/rules.js'
 import { formatGQLResult } from '~/utility/gql.js'
 import organization from '~/config/apps/admin/gql/organization.gql'
-import { getApiUrl } from '~/utility'
 export default {
   props: {
     editOrgInfo: {
@@ -165,9 +163,16 @@ export default {
     refresh() {
       this.$refs.form.$parent.$parent.refresh()
     },
+    setAddress() {
+      this.formData._CurrentAddress.AddressLine = this.venueAddress.AddressLine
+      this.formData._CurrentAddress.City = this.venueAddress.City
+      this.formData._CurrentAddress.State = this.venueAddress.State
+      this.formData._CurrentAddress.PostalCode = this.venueAddress.PostalCode
+      this.formData._CurrentAddress.Country = this.venueAddress.Country
+    },
     async onSave() {
-      const url = getApiUrl()
-      Object.assign({}, this.formData, { _CurrentAddress: this.venueAddress })
+      const url = this.$bitpod.getApiUrl()
+      this.setAddress()
       delete this.formData._CurrentAddress.LatLng
       try {
         const res = await this.$axios.$patch(

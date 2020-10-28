@@ -5,7 +5,6 @@
       persistent
       scrollable
       content-class="slide-form-default"
-      transition="dialog-bottom-transition"
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on" @click="setUsername">
@@ -72,7 +71,6 @@
 </template>
 
 <script>
-import { getApiUrl } from '~/utility'
 import { required } from '~/utility/rules.js'
 export default {
   props: {
@@ -108,7 +106,7 @@ export default {
       if (this.roles !== '') {
         this.message = ''
       }
-      const url = getApiUrl()
+      const url = this.$bitpod.getApiUrl()
       this.formData.fk = this.userName
       this.formData.id = this.$attrs.items[0].orgId
       this.formData.roleId = this.roles
@@ -133,7 +131,7 @@ export default {
       }
     },
     async getRoles() {
-      const url = getApiUrl()
+      const url = this.$bitpod.getApiUrl()
       try {
         const res = await this.$axios.$get(`${url}OrganizationInfos/roles`)
         if (res) {

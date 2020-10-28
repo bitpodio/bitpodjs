@@ -14,12 +14,11 @@
           </v-btn>
         </div>
         <v-tabs v-model="tabs" height="36" class="mb-6 mt-2 v-event-icon">
-          <v-tab href="#tab-1" class="px-0 mr-4" @click="selectTab(1)">
-            <v-icon left>fa-info-circle</v-icon
-            ><span><i18n path="Common.BasicInfo" /></span>
+          <v-tab href="#1" class="px-0 mr-4" @click="selectTab(1)">
+            <v-icon left>fa-info-circle</v-icon><span>Basic Info</span>
           </v-tab>
           <v-tab
-            href="#tab-2"
+            href="#2"
             class="px-0 mr-4"
             :disabled="!validTab1()"
             @click="selectTab(2)"
@@ -28,7 +27,7 @@
             ><span><i18n path="Common.Location" /></span>
           </v-tab>
           <v-tab
-            href="#tab-3"
+            href="#3"
             class="px-0 mr-4"
             :disabled="!validTab1() || !validTab2()"
             @click="selectTab(3)"
@@ -40,7 +39,7 @@
       </v-card-title>
       <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0 event-inner">
         <v-tabs-items v-model="tabs">
-          <v-tab-item :value="'tab-1'">
+          <v-tab-item :value="'1'">
             <v-card flat>
               <p>
                 <i18n path="Common.Entereventname" />
@@ -65,39 +64,24 @@
               >
                 <v-row>
                   <v-col cols="12" sm="6" md="4" class="pb-0">
-                    <v-datetime-picker
+                    <CustomDate
                       v-model="eventData.StartDate"
-                      time-format="hh:mm a"
-                      date-format="MMMM dd, yyyy"
-                      :label="$t('Common.StartD')"
-                      :text-field-props="eventStartDateProps"
+                      label="Start Date*"
+                      :field="startDateField"
+                      :rules="startDateRule"
                       :on-change="changeStartDate()"
-                    >
-                      <template slot="dateIcon">
-                        <v-icon>fas fa-calendar</v-icon>
-                      </template>
-                      <template slot="timeIcon">
-                        <v-icon>fas fa-clock</v-icon>
-                      </template>
-                    </v-datetime-picker>
+                      type="datetime"
+                    />
                   </v-col>
                   <v-col cols="12" sm="6" md="4" class="pb-0">
-                    <v-datetime-picker
+                    <CustomDate
                       v-model="eventData.EndDate"
-                      time-format="hh:mm a"
-                      date-format="MMMM dd, yyyy"
-                      :rules="requiredRules"
-                      :label="$t('Common.EndD')"
-                      :text-field-props="eventEndDateProps"
-                      :on-change="changeEndDate()"
-                    >
-                      <template slot="dateIcon">
-                        <v-icon>fas fa-calendar</v-icon>
-                      </template>
-                      <template slot="timeIcon">
-                        <v-icon>fas fa-clock</v-icon>
-                      </template>
-                    </v-datetime-picker>
+                      label="End Date*"
+                      :field="endDateField"
+                      :rules="endDateRule"
+                      :on-change="changeEndDate"
+                      type="datetime"
+                    />
                   </v-col>
 
                   <v-col cols="12" sm="6" md="4" class="pb-0">
@@ -136,7 +120,7 @@
             </v-card>
           </v-tab-item>
 
-          <v-tab-item :value="'tab-2'">
+          <v-tab-item :value="'2'">
             <v-card flat>
               <v-row>
                 <v-col cols="12" sm="6" md="6" class="pl-0 pt-0 pb-0">
@@ -151,8 +135,8 @@
                   <v-col v-if="isOnlineEvent" cols="12" class="pb-0">
                     <v-text-field
                       v-model="eventData.WebinarLink"
-                      :rules="requiredRules"
-                      label="Online Event Link*"
+                      :rules="onlineEventLink"
+                      label="Online event link (https)*"
                       outlined
                       dense
                       required
@@ -289,7 +273,7 @@
             </v-card>
           </v-tab-item>
 
-          <v-tab-item :value="'tab-3'">
+          <v-tab-item :value="'3'">
             <v-card v-if="isTicket" flat>
               <p>
                 <i18n path="Common.Setupeventtickets" />
@@ -343,6 +327,7 @@
                           v-model="ticket.Type"
                           :field="ticketTypeProps"
                           class="v-tickettype"
+                          :on-change="changeTicketType(k)"
                         />
                       </td>
                       <td class="pa-2 pb-0">
@@ -357,30 +342,24 @@
                         ></v-text-field>
                       </td>
                       <td class="pa-2 pb-0">
-                        <v-datetime-picker
+                        <CustomDate
                           v-model="ticket.StartDate"
-                          :text-field-props="ticketStartDateProps(k)"
-                        >
-                          <template slot="dateIcon">
-                            <v-icon>fas fa-calendar</v-icon>
-                          </template>
-                          <template slot="timeIcon">
-                            <v-icon>fas fa-clock</v-icon>
-                          </template>
-                        </v-datetime-picker>
+                          label="Start Date*"
+                          :field="ticketStartDateField"
+                          :rules="ticketStartDateRule(k)"
+                          :on-change="changeTicketStartDate()"
+                          type="datetime"
+                        />
                       </td>
                       <td class="pa-2 pb-0">
-                        <v-datetime-picker
+                        <CustomDate
                           v-model="ticket.EndDate"
-                          :text-field-props="ticketEndDateProps(k)"
-                        >
-                          <template slot="dateIcon">
-                            <v-icon>fas fa-calendar</v-icon>
-                          </template>
-                          <template slot="timeIcon">
-                            <v-icon>fas fa-clock</v-icon>
-                          </template>
-                        </v-datetime-picker>
+                          label="End Date*"
+                          :field="ticketEndDateField"
+                          :rules="ticketEndDateRule(k)"
+                          :on-change="changeTicketEndDate()"
+                          type="datetime"
+                        />
                       </td>
                       <td class="pa-2 pb-0">
                         <v-text-field
@@ -517,8 +496,8 @@ import addMonths from 'date-fns/addMonths'
 import addDays from 'date-fns/addDays'
 import gql from 'graphql-tag'
 import strings from '../strings.js'
+import CustomDate from '~/components/common/form/date.vue'
 import { formatTimezoneDateFieldsData } from '~/utility/form.js'
-import { getApiUrl } from '~/utility/index.js'
 import Lookup from '~/components/common/form/lookup.vue'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import Timezone from '~/components/common/form/timezone'
@@ -526,13 +505,14 @@ import eventCount from '~/config/apps/event/gql/eventCount.gql'
 import organizationInfo from '~/config/apps/event/gql/organizationInfo.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import nuxtconfig from '~/nuxt.config'
-import { required } from '~/utility/rules.js'
+import { required, onlineEventLink } from '~/utility/rules.js'
 export default {
   components: {
     RichText: () =>
       process.client ? import('~/components/common/form/richtext.vue') : false,
     Lookup,
     Timezone,
+    CustomDate,
     VueGoogleAutocomplete: () => import('vue-google-autocomplete'),
   },
   props: {
@@ -549,6 +529,7 @@ export default {
     const currentDatetime = new Date(new Date().setSeconds(0))
     return {
       valid: true,
+      onlineEventLink: [onlineEventLink],
       datevalid: true,
       lazy: false,
       tabs: null,
@@ -572,6 +553,7 @@ export default {
       },
       mapStyle: [],
       clusterStyle: [],
+
       ticketTypeProps: {
         type: 'lookup',
         dataSource: {
@@ -656,7 +638,8 @@ export default {
       isVenue: true,
       isOnlineEvent: false,
       isBitpodVirtual: false,
-      isInalidEventLink: false,
+
+      isInvalidEventLink: false,
       uniqueLinkMessage: '',
       currenttimezone: '(GMT+05:30) India Standard Time',
       currentDatetime,
@@ -667,66 +650,92 @@ export default {
           Type: 'Free',
           Amount: 0,
           StartDate: currentDatetime,
-          EndDate: addDays(addMonths(new Date(), 1), 3),
+          EndDate: addDays(addMonths(new Date(), 1), 4),
           TicketCount: 100,
         },
       ],
     }
   },
   computed: {
+    startDateField() {
+      return {
+        appendIcon: 'fa-calendar',
+        outlined: true,
+        caption: 'Start Date*',
+        type: 'datetime',
+      }
+    },
+    endDateField() {
+      return {
+        appendIcon: 'fa-calendar',
+        outlined: true,
+        caption: 'End Date*',
+        type: 'datetime',
+      }
+    },
+    ticketStartDateField() {
+      return {
+        appendIcon: 'fa-calendar',
+        outlined: true,
+        caption: 'Start Date*',
+        type: 'datetime',
+      }
+    },
+    ticketEndDateField() {
+      return {
+        appendIcon: 'fa-calendar',
+        outlined: true,
+        caption: 'End Date*',
+        type: 'datetime',
+      }
+    },
+    startDateRule() {
+      return [
+        (v) => {
+          const StartDate = v && new Date(v)
+          const { EndDate } = this.eventData
+          let startDateMessage = ''
+          if (!StartDate) startDateMessage = strings.FIELD_REQUIRED
+          else if (StartDate && EndDate && StartDate > EndDate)
+            startDateMessage = strings.EVENT_START_END_DATE
+          else if (StartDate < new Date())
+            startDateMessage = strings.EVENT_START_DATE
+          else startDateMessage = ''
+          return startDateMessage || true
+        },
+      ]
+    },
+    endDateRule() {
+      return [
+        (v) => {
+          const EndDate = v && new Date(v)
+          const { StartDate } = this.eventData
+          let endDateMessage = ''
+          if (!EndDate) endDateMessage = strings.FIELD_REQUIRED
+          else if (StartDate && EndDate && StartDate > EndDate)
+            endDateMessage = strings.EVENT_START_END_DATE
+          else if (EndDate < new Date()) endDateMessage = strings.EVENT_END_DATE
+          else endDateMessage = ''
+          return endDateMessage || true
+        },
+      ]
+    },
+
     eventLinkHint() {
       return `${nuxtconfig.integrationLinks.EVENT_LINK_HINT}${this.eventData.UniqLink}`
     },
     gMapCenter() {
-      return { lat: this.locations[0].lat, lng: this.locations[0].lng }
-    },
-    eventStartDateProps() {
       return {
-        appendIcon: 'fa-calendar',
-        outlined: true,
-        dense: true,
-        rules: [
-          (v) => {
-            const StartDate = v && new Date(v)
-            const { EndDate } = this.eventData
-            let startDateMessage = ''
-            if (!StartDate) startDateMessage = strings.FIELD_REQUIRED
-            else if (StartDate && EndDate && StartDate > EndDate)
-              startDateMessage = strings.EVENT_START_END_DATE
-            else if (StartDate < new Date())
-              startDateMessage = strings.EVENT_START_DATE
-            else startDateMessage = ''
-            return startDateMessage || true
-          },
-        ],
-      }
-    },
-    eventEndDateProps() {
-      return {
-        appendIcon: 'fa-calendar',
-        outlined: true,
-        dense: true,
-        rules: [
-          (v) => {
-            const EndDate = v && new Date(v)
-            const { StartDate } = this.eventData
-            let endDateMessage = ''
-            if (!EndDate) endDateMessage = strings.FIELD_REQUIRED
-            else if (StartDate && EndDate && StartDate > EndDate)
-              endDateMessage = strings.EVENT_START_END_DATE
-            else if (EndDate < new Date())
-              endDateMessage = strings.EVENT_END_DATE
-            else endDateMessage = ''
-            return endDateMessage || true
-          },
-        ],
+        lat: (this.locations[0] && this.locations[0].lat) || 0.0,
+        lng: (this.locations[0] && this.locations[0].lng) || 0.0,
       }
     },
     uniqueLinkValidationMsg() {
-      const errorMessage = this.isInalidEventLink ? this.uniqueLinkMessage : ''
+      const errorMessage = this.isInvalidEventLink ? this.uniqueLinkMessage : ''
       return errorMessage
     },
   },
+
   watch: {
     resetData() {
       if (this.$refs && this.$refs['venueAddress.AddressLine'].$data) {
@@ -739,17 +748,33 @@ export default {
       this.tickets = [ticket]
     },
   },
+
   methods: {
     getBitpodVirtualLink() {
       return `https://${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}/${
         this.eventLinkHint.split('/')[4]
       }`
     },
+    calculateTicketEndDate() {
+      const endDate = this.eventData.EndDate
+      if (endDate) {
+        this.tickets.forEach(function (ticket) {
+          ticket.EndDate = endDate
+        })
+      }
+    },
     changeStartDate() {
       this.$refs.dateform && this.$refs.dateform.validate()
     },
     changeEndDate(value) {
       this.$refs.dateform && this.$refs.dateform.validate()
+      this.calculateTicketEndDate()
+    },
+    changeTicketStartDate() {
+      this.$refs.form && this.$refs.form.validate()
+    },
+    changeTicketEndDate() {
+      this.$refs.form && this.$refs.form.validate()
     },
     isNextDisabled() {
       return this.isUniqLinkValid === false
@@ -759,12 +784,12 @@ export default {
     },
     close() {
       this.onFormClose()
-      this.tabs = 'tab-1'
+      this.tabs = '1'
       this.resetForm()
     },
     closeForm() {
       this.onFormClose()
-      this.tabs = 'tab-1'
+      this.tabs = '1'
       this.$router.push('/apps/event/event/' + this.eventId)
       this.$refs.form.reset()
       this.resetForm()
@@ -774,7 +799,7 @@ export default {
       return `mutation($Inputs : ${modelName}UpsertWithWhereInput!){ ${modelName}{ ${modelName}UpsertWithWhere(input:$Inputs){ clientMutationId obj{ id } } } }`
     },
     viewRegistration() {
-      const baseUrl = getApiUrl()
+      const baseUrl = this.$bitpod.getApiUrl()
       const regUrl = baseUrl.replace('svc/api', 'e')
       window.open(`${regUrl}${this.eventData.UniqLink}`, '_blank')
     },
@@ -834,69 +859,63 @@ export default {
         },
       })
     },
-    isPriceDisabled(index) {
+    changeTicketType(index) {
       if (this.tickets[index].Type === 'Free') {
         this.tickets[index].Amount = 0
-        return true
-      } else return false
+      }
+    },
+    isPriceDisabled(index) {
+      return this.tickets[index].Type === 'Free'
     },
     deleteTicket(index) {
       if (this.tickets.length > 1) {
         this.tickets.splice(index, 1)
       }
     },
-    ticketStartDateProps(index) {
-      return {
-        appendIcon: 'fa-calendar',
-        outlined: true,
-        dense: true,
-        rules: [
-          (v) => {
-            const StartDate = v && new Date(v)
-            const { EndDate } = this.tickets[index]
-            let startDateMessage = ''
-            if (!StartDate && this.tickets[index].StartDate === null)
-              startDateMessage = strings.FIELD_REQUIRED
-            else if (StartDate && EndDate && StartDate > EndDate)
-              startDateMessage = strings.TICKET_START_DT_MSG
-            else if (
-              StartDate &&
-              new Date(StartDate.setSeconds(1)) < this.currentDatetime
-            ) {
-              startDateMessage = strings.TICKET_START_DT_CURRENT_DT
-            } else startDateMessage = ''
-            return startDateMessage || true
-          },
-        ],
-      }
+    ticketStartDateRule(index) {
+      return [
+        (v) => {
+          const StartDate = v && new Date(v)
+          const { EndDate } = this.tickets[index]
+          let startDateMessage = ''
+          if (!StartDate && this.tickets[index].StartDate === null)
+            startDateMessage = strings.FIELD_REQUIRED
+          else if (StartDate && EndDate && StartDate > EndDate)
+            startDateMessage = strings.TICKET_START_DT_MSG
+          else if (
+            StartDate &&
+            new Date(StartDate.setSeconds(1)) < this.currentDatetime
+          ) {
+            startDateMessage = strings.TICKET_START_DT_CURRENT_DT
+          } else startDateMessage = ''
+          return startDateMessage || true
+        },
+      ]
     },
-    ticketEndDateProps(index) {
-      return {
-        appendIcon: 'fa-calendar',
-        outlined: true,
-        dense: true,
-        rules: [
-          (v) => {
-            const EndDate = v && new Date(v)
-            const { StartDate } = this.tickets[index]
-            let endDateMessage = ''
+    ticketEndDateRule(index) {
+      return [
+        (v) => {
+          const EndDate = v && new Date(v)
+          const { StartDate } = this.tickets[index]
+          let endDateMessage = ''
 
-            if (!EndDate && this.tickets[index].EndDate === null)
-              endDateMessage = strings.FIELD_REQUIRED
-            else if (StartDate && EndDate && StartDate > EndDate)
-              endDateMessage = strings.TICKET_START_DT_MSG
-            else if (new Date(EndDate) < this.currentDatetime) {
-              endDateMessage = strings.TICKET_END_DT_CURRENT_DT
-            } else if (new Date(EndDate) > this.eventData.EndDate) {
-              endDateMessage = strings.TICKET_END_DT_MSG
-            } else endDateMessage = ''
-            return endDateMessage || true
-          },
-        ],
-      }
+          if (!EndDate && this.tickets[index].EndDate === null)
+            endDateMessage = strings.FIELD_REQUIRED
+          else if (StartDate && EndDate && StartDate > EndDate)
+            endDateMessage = strings.TICKET_START_DT_MSG
+          else if (new Date(EndDate) < this.currentDatetime) {
+            endDateMessage = strings.TICKET_END_DT_CURRENT_DT
+          } else if (new Date(EndDate) > this.eventData.EndDate) {
+            endDateMessage = strings.TICKET_END_DT_MSG
+          } else endDateMessage = ''
+          return endDateMessage || true
+        },
+      ]
     },
     returnToCenter() {
-      this.$refs.gMap && this.$refs.gMap.map.setCenter(this.locations[0])
+      if (this.locations && this.locations[0]) {
+        this.$refs.gMap && this.$refs.gMap.map.setCenter(this.locations[0])
+      }
     },
     validTab1() {
       const { Title, StartDate, EndDate, Timezone, UniqLink } = this.eventData
@@ -909,37 +928,30 @@ export default {
         StartDate < EndDate &&
         StartDate >= new Date() &&
         EndDate >= new Date() &&
-        this.isInalidEventLink === false
+        this.isInvalidEventLink === false
       )
     },
     validTab2() {
       const { LocationType, WebinarLink } = this.eventData
       if (
         (LocationType === 'Venue' &&
-          this.$refs['venueAddress.AddressLine'] &&
-          this.$refs['venueAddress.AddressLine'].$data.autocompleteText !==
-            '') ||
-        (LocationType === 'Online event' && WebinarLink !== '')
+          this.venueAddress &&
+          this.venueAddress.AddressLine !== '') ||
+        (LocationType === 'Online event' && WebinarLink !== '') ||
+        LocationType === 'Bitpod Virtual'
       ) {
         return true
-      } else if (
-        this.$refs['venueAddress.AddressLine'] &&
-        this.$refs['venueAddress.AddressLine'].$data.autocompleteText === ''
-      ) {
+      } else {
         return false
       }
     },
     prev(value) {
-      this.currentTab = parseInt(this.tabs.split('-')[1])
-      this.currentTab -= 1
-      const tabValue = `tab-${this.currentTab}`
-      this.tabs = tabValue
+      this.currentTab = parseInt(this.tabs) - 1
+      this.tabs = `${this.currentTab}`
     },
     setNextTab() {
-      this.currentTab = parseInt(this.tabs.split('-')[1])
-      this.currentTab += 1
-      const tabValue = `tab-${this.currentTab}`
-      this.tabs = tabValue
+      this.currentTab = parseInt(this.tabs) + 1
+      this.tabs = `${this.currentTab}`
     },
     next() {
       const {
@@ -962,7 +974,7 @@ export default {
         StartDate < EndDate &&
         StartDate >= new Date() &&
         EndDate >= new Date() &&
-        this.isInalidEventLink === false
+        this.isInvalidEventLink === false
       ) {
         this.setNextTab()
       } else if (this.currentTab === 2) {
@@ -989,8 +1001,19 @@ export default {
         .map((l) => l.name)
         .join(', ')
     },
-
-    saveRecord() {
+    setLoationType() {
+      if (
+        this.venueAddress.AddressLine !== '' &&
+        this.eventData.LocationType === 'Venue'
+      ) {
+        this.eventData._VenueAddress = this.venueAddress
+      }
+      if (this.eventData.LocationType !== 'Online event') {
+        this.eventData.JoiningInstruction = ''
+        this.eventData.WebinarLink = ''
+      }
+    },
+    async saveRecord() {
       const isValidTicket = this.tickets.map((ticket, index) => {
         return (
           ticket.Code !== '' &&
@@ -1002,50 +1025,54 @@ export default {
       this.$refs.form.validate()
       if (!isValidTicket.includes(false)) {
         this.isSaveButtonDisabled = true
-        if (this.venueAddress.AddressLine !== '')
-          this.eventData._VenueAddress = this.venueAddress
-
+        this.setLoationType()
         const convertedEventRecord = formatTimezoneDateFieldsData(
           this.eventData,
           this.fields
         )
-        this.eventData.StartDate = convertedEventRecord.StartDate
-        this.eventData.EndDate = convertedEventRecord.EndDate
-        this.eventData.EventManager = this.$auth.$state.user.data.email
-        this.eventData.Organizer = this.$auth.$state.user.data.name
+        const eventInfo = JSON.parse(JSON.stringify(this.eventData))
+        eventInfo.StartDate = convertedEventRecord.StartDate
+        eventInfo.EndDate = convertedEventRecord.EndDate
+        eventInfo.EventManager = this.$auth.$state.user.data.email
+        eventInfo.Organizer = this.$auth.$state.user.data.name
 
-        const baseUrl = getApiUrl()
-        this.$axios
+        const baseUrl = this.$bitpod.getApiUrl()
+        let res = null
+        let ticketRes = null
+        res = await this.$axios
           .$post(`${baseUrl}Events`, {
-            ...this.eventData,
-          })
-          .then((res) => {
-            this.eventId = res.id
-
-            const ticketList = []
-
-            this.tickets.forEach(function (ticket) {
-              ticket.Events = res.id
-              ticket.Amount = parseInt(ticket.Amount)
-              ticket.TicketCount = parseInt(ticket.TicketCount)
-              ticketList.push(ticket)
-            })
-
-            // eslint-disable-next-line promise/no-nesting
-            return this.$axios
-              .$post(`${baseUrl}Tickets`, ticketList)
-              .then((ticketres) => {
-                this.isTicket = false
-                this.isEventCreate = true
-                return ticketres
-              })
-              .catch((e) => {
-                console.log('error', e)
-              })
+            ...eventInfo,
           })
           .catch((e) => {
-            console.log('error', e)
+            console.error(
+              `Error in Save function of new single event form, context: create event , baseUrl: ${baseUrl} eventData: ${this.eventData}  error: ${e}`
+            )
           })
+        if (res) {
+          this.eventId = res.id
+          const ticketList = []
+
+          this.tickets.forEach(function (ticket) {
+            ticket.Events = res.id
+            ticket.Amount = parseInt(ticket.Amount)
+            ticket.TicketCount = parseInt(ticket.TicketCount)
+            ticket.AvailableCount = parseInt(ticket.TicketCount)
+            ticketList.push(ticket)
+          })
+
+          ticketRes = await this.$axios
+            .$post(`${baseUrl}Tickets`, ticketList)
+            .catch((e) => {
+              console.error(
+                `Error in Save function of new single event form, context: create ticket , eventId: ${this.eventId},  baseUrl: ${baseUrl} ticketList: ${this.ticketList} error: ${e}`
+              )
+            })
+          if (ticketRes) {
+            this.isTicket = false
+            this.isEventCreate = true
+            return ticketRes
+          }
+        }
       }
     },
     isEmptyAddress() {
@@ -1105,16 +1132,15 @@ export default {
             this.venueAddress.LatLng.lat = latlng.lat || ''
             this.venueAddress.LatLng.lng = latlng.lng || ''
 
-            const newLocations = []
-            newLocations[0] = latlng
-
-            this.locations = newLocations
+            this.locations = [latlng]
             this.isMap = true
             this.returnToCenter()
             return res
           })
           .catch((e) => {
-            console.log('error', e)
+            console.error(
+              `Error in changeAddress function of new single event form when place search address and updating location on map, context: place search address, addressObj: ${addressObj} key: ${key} baseUrl: ${nuxtconfig.generalConfig.googleMapGeocodeApi}?address=${addressObj}&key=${key}, error: ${e}`
+            )
           })
       }
     },
@@ -1138,10 +1164,8 @@ export default {
         addressData.locality +
         ' ' +
         addressData.country
-      const newLocations = []
-      newLocations[0] = latlng
 
-      this.locations = newLocations
+      this.locations = [latlng]
       this.isMap = true
       this.returnToCenter()
     },
@@ -1161,7 +1185,7 @@ export default {
           this.checkUniqueLink(this.eventData.UniqLink)
         }
       } else {
-        this.isInalidEventLink = true
+        this.isInvalidEventLink = true
         this.uniqueLinkMessage = strings.UNIQUE_LINK_FORMAT
       }
       this.eventData.UniqLink = value
@@ -1177,18 +1201,21 @@ export default {
         },
       })
       if (result.data.Event.EventCount > 0) {
-        this.isInalidEventLink = true
+        this.isInvalidEventLink = true
         this.uniqueLinkMessage = strings.UNIQUE_LINK_DUPLICATE
       } else {
-        this.isInalidEventLink = false
+        this.isInvalidEventLink = false
         this.isUniqLinkValid = true
       }
     },
     changeLocation(value) {
+      this.addresslineMessage = ''
       if (value === 'Venue') {
         this.isVenue = true
         this.isOnlineEvent = false
+        this.isBitpodVirtual = false
         this.isMap = true
+        this.isBitpodVirtual = false
       }
       if (value === 'Online event') {
         this.isVenue = false
@@ -1255,7 +1282,7 @@ export default {
   top: 55px;
 }
 .event-inner {
-  min-height: 457px;
+  min-height: 410px;
 }
 .map-contain {
   height: 400px;

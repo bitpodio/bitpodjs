@@ -51,7 +51,7 @@ export default {
           'https://maps.googleapis.com/maps/api/js'
         }?key=${
           process.env.GOOGLE_API_KEY ||
-          'AIzaSyCPS6SZlor8qxfpul-dKyN6566XG2R5dFM'
+          'AIzaSyBKle17JR_zpGEzwARF0H8VFU9NeH9nh7c'
         }&libraries=places`,
       },
       {
@@ -71,6 +71,7 @@ export default {
   plugins: [
     '~/plugins/v-i18n.js',
     '~/plugins/eventBus.js',
+    '~/plugins/bitpod',
     { src: '~/plugins/v-datetime-picker.js', mode: 'client' },
   ],
   /*
@@ -106,7 +107,7 @@ export default {
       {
         key:
           process.env.GOOGLE_API_KEY ||
-          'AIzaSyCPS6SZlor8qxfpul-dKyN6566XG2R5dFM',
+          'AIzaSyBKle17JR_zpGEzwARF0H8VFU9NeH9nh7c',
         // you can use libraries: ['places']
       },
     ],
@@ -257,8 +258,10 @@ export default {
   apollo: {
     clientConfigs: {
       default: {
-        httpEndpoint: 'https://event.test.bitpod.io/svc/graphql',
-        // browserHttpEndpoint: '/svc/graphql',
+        httpEndpoint: `https://${
+          process.env.PUBLIC_DOMAIN || 'event.test.bitpod.io'
+        }/svc/graphql`,
+        browserHttpEndpoint: '/svc/graphql',
       },
     },
     defaultOptions: {
@@ -278,7 +281,7 @@ export default {
     redirect: {
       login: '/login',
       callback: '/callback',
-      home: `${basePath}/apps/event/list/Event/live and draft event`,
+      home: `${basePath}/apps/event/eventboard`,
       logout: '/',
     },
     strategies: {
@@ -350,7 +353,7 @@ export default {
   },
   generalConfig: {
     googleMapKey:
-      process.env.GOOGLE_API_KEY || 'AIzaSyCPS6SZlor8qxfpul-dKyN6566XG2R5dFM',
+      process.env.GOOGLE_API_KEY || 'AIzaSyBKle17JR_zpGEzwARF0H8VFU9NeH9nh7c',
     googleMapGeocodeApi:
       process.env.GOOGLE_MAPS_GEOCODE_API ||
       'https://maps.googleapis.com/maps/api/geocode/json',

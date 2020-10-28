@@ -1,17 +1,28 @@
 <template>
-  <v-btn
-    v-if="linkReady"
-    tile
-    color="success"
-    small
-    class="rounded"
-    @click="goLive"
-  >
-    <i18n path="Common.JoinSession" />
-    <v-icon right>
-      mdi-video
-    </v-icon>
-  </v-btn>
+  <div class="d-inline-flex">
+    <v-btn
+      v-if="linkReady"
+      tile
+      depressed
+      color="success"
+      x-small
+      class="rounded"
+      @click="goLive"
+    >
+      Join Session
+      <v-icon right>
+        mdi-video
+      </v-icon>
+    </v-btn>
+    <copy
+      v-if="linkReady"
+      class="pl-2"
+      :text-to-copy="copyLink"
+      icon-size="15"
+      :unique-id="`btn${item.id}`"
+      tooltip="Copy attendee link"
+    />
+  </div>
 </template>
 
 <script>
@@ -37,29 +48,32 @@ export default {
   data() {
     return {
       linkReady: false,
-      roomname: '',
-      type: '',
+      link: '',
+      copyLink: '',
     }
   },
   mounted() {
     this.item.SessionId.map(async (id) => {
+      const url = this.$bitpod.getApiUrl()
       try {
-        const result = await this.$axios.$get(
-          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Registrations/${this.item.id}/attendee`
-        )
-        const res = await this.$axios.$get(
-          `https://${nuxtconfig.axios.eventUrl}${nuxtconfig.axios.apiEndpoint}Sessions/${id}`
-        )
-        if (res && result) {
-          if (res.BitpodVirtualLink) {
-            this.roomname = `${res.BitpodVirtualLink.split('/')[3]}-${new Date(
-              result[0].BookingDate || null
-            )
-              .getTime()
-              .toString(36)}`
+        const res = await this.$axios.$get(`${url}Sessions/${id}`)
+        if (res) {
+          if (res.LocationType === 'Bitpod Virtual') {
+            const roomName = this.item.ZoomLink.split('/')[3]
+            this.link = `apps/event/live/${roomName}?e=${this.$route.params.id}`
+            this.copyLink = `https://${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}/${roomName}`
             this.linkReady = true
           }
-          this.type = res.Type
+          if (res.LocationType === 'Zoom') {
+            this.link = this.item.ZoomLink
+            this.copyLink = this.link
+            this.linkReady = true
+          }
+          if (res.LocationType === 'Online meeting') {
+            this.link = res.WebinarLink
+            this.copyLink = this.link
+            this.linkReady = true
+          }
         }
       } catch (e) {
         console.log('Error', e)
@@ -68,17 +82,7 @@ export default {
   },
   methods: {
     goLive() {
-      let roomName
-      if (this.type === 'Group') {
-        roomName = this.roomname
-      } else {
-        roomName = `${
-          this.item.FirstName.trim().replace(/[^a-zA-Z ]/g, '') || 'unknown'
-        }-${this.item.LastName.trim().replace(/[^a-zA-Z ]/g, '') || 'user'}-${
-          this.item.RegistrationId
-        }`.toLowerCase()
-      }
-      window.open(`apps/event/live/${roomName}?e=${this.$route.params.id}`)
+      window.open(this.link)
     },
   },
 }

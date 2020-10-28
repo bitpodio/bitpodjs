@@ -21,7 +21,6 @@
       v-model="isCheckedIn"
       persistent
       scrollable
-      transition="dialog-bottom-transition"
       max-width="600px"
       max-height="1100px"
     >
@@ -119,13 +118,11 @@ export default {
   },
   methods: {
     async updateDate(ele) {
+      const url = this.$bitpod.getApiUrl()
       try {
-        const res = await this.$axios.$put(
-          `https://${nuxtconfig.axios.eventUrl}/svc/api/Attes/${this.item.id}`,
-          {
-            CheckIn: new Date(),
-          }
-        )
+        const res = await this.$axios.$put(`${url}Attes/${this.item.id}`, {
+          CheckIn: new Date(),
+        })
         if (res) {
           this.refresh()
           if (
@@ -195,9 +192,10 @@ export default {
       return str
     },
     getAttachmentLink(id, isDownloadLink) {
-      const attachmentUrl = `https://${nuxtconfig.axios.eventUrl}${
-        nuxtconfig.axios.apiEndpoint
-      }Attachments${isDownloadLink ? '/download' : ''}${id ? '/' + id : ''}`
+      const url = this.$bitpod.getApiUrl()
+      const attachmentUrl = `${url}Attachments${
+        isDownloadLink ? '/download' : ''
+      }${id ? '/' + id : ''}`
       return attachmentUrl
     },
     async getOrgInfo() {

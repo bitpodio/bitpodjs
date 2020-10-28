@@ -5,7 +5,6 @@
       persistent
       scrollable
       content-class="slide-form-default"
-      transition="dialog-bottom-transition"
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on" @click="dialog = true">
@@ -60,7 +59,6 @@
 </template>
 
 <script>
-import { getApiUrl } from '~/utility'
 export default {
   props: {
     refresh: {
@@ -112,7 +110,7 @@ export default {
       this.dialog = false
     },
     async onSave() {
-      const url = getApiUrl()
+      const url = this.$bitpod.getApiUrl()
       this.formData.expiresat = this.accessKeyDate
       const userId = this.$auth.$state.user.data.email
       try {

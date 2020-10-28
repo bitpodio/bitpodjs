@@ -34,4 +34,9 @@ module.exports = Object.freeze({
   REFUND_PAID_AMT:
     'Refunded Amount can not be greater or equal than total paid amount',
   REFUND_AMT_MSG: 'Amount should not be less than or equal to  0',
+
+  INVALID_DISPLAY_ORDER: 'Display order should not be blank and less than 1',
+
+  OVERLAP_SESSION_MSG:
+    'This session overlaps with another session, are you sure? click Yes to create and cancel to cancel it.',
 })

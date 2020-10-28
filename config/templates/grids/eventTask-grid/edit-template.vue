@@ -3,13 +3,7 @@
     <v-snackbar v-model="snackbar" :top="true" :timeout="1000">
       <i18n path="Common.SomeErrorOccured" class="toast py-2 pr-1 pl-3" />
     </v-snackbar>
-    <v-dialog
-      v-model="dialog"
-      persistent
-      scrollable
-      content-class="slide-form"
-      transition="dialog-bottom-transition"
-    >
+    <v-dialog v-model="dialog" persistent scrollable content-class="slide-form">
       <template v-slot:activator="{ on, attrs }">
         <v-col class="px-0">
           <v-btn
@@ -199,9 +193,7 @@
                   <RichText
                     v-model="RTEValue"
                     class="pl-0"
-                    :is-edit-template="true"
-                    :show-template-dropdown="true"
-                    :is-general="template === 'General Template'"
+                    :dropdown-options="dropdownOptions"
                   />
                 </v-card>
               </v-tab-item>
@@ -323,7 +315,6 @@
 import gql from 'graphql-tag'
 import { formatGQLResult } from '~/utility/gql.js'
 import marketingTemplates from '~/config/apps/admin/gql/marketingTemplates.gql'
-import { getApiUrl } from '~/utility/index.js'
 export default {
   components: {
     RichText: () =>
@@ -390,6 +381,50 @@ export default {
       invalid: true,
     }
   },
+  computed: {
+    dropdownOptions() {
+      return {
+        'Event Name': 'Event Name',
+        Description: 'Description',
+        'Start Date': 'Start date',
+        'End Date': 'End date',
+        Timezone: 'Timezone',
+        Organizer: 'Organizer',
+        Venue: 'Venue',
+        Address: 'Address',
+        City: 'City',
+        State: 'State',
+        Country: 'Country',
+        'Postal Code': 'Postal Code',
+        'Event Webinar Link': 'Event Webinar Link',
+        'Event Joining Instruction': 'Event Joining Instruction',
+        'Organization Name': 'Organization Name',
+        'Organization Address': 'Organization Address',
+        'Organization City': 'Organization City',
+        'Organization State': 'Organization State',
+        'Organization Country': 'Organization Country',
+        'Organization Postal Code': 'Organization Postal Code',
+        'Privacy Policy': 'Privacy Policy',
+        'Organization Facebook': 'Organization Facebook',
+        'Organization Linkedin': 'Organization Linkedin',
+        'Organization Twitter': 'Organization Twitter',
+        Register: 'Register',
+        Logo: 'Logo',
+        'Registration Email': 'Registration Email',
+        'Registration Phone': 'Registration Phone',
+        'Registration Id': 'Registration Id',
+        'Ticket Quantity': 'Ticket Quantity',
+        'Session Location': 'Session Location',
+        'Session Booking Date': 'Session Booking Date',
+        'Session List': 'Session List',
+        'Attendee List': 'Attendee List',
+        'Payment Details': 'Payment Details',
+        'First Name': 'First Name',
+        'Last Name': 'Last Name',
+        'Full Name': 'Full Name',
+      }
+    },
+  },
   watch: {
     curentTab(newVal, oldVal) {
       if (oldVal === 0) {
@@ -420,7 +455,7 @@ export default {
       this.preview = true
     },
     async onSave() {
-      const baseUrl = getApiUrl()
+      const baseUrl = this.$bitpod.getApiUrl()
       let res = null
       let activityRes = null
       try {

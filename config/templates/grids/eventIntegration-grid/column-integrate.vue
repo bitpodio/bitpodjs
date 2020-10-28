@@ -20,7 +20,6 @@
       persistent
       scrollable
       content-class="slide-form-default"
-      transition="dialog-bottom-transition"
     >
       <div v-if="dialog">
         <component
@@ -123,10 +122,8 @@ export default {
         connobj.id = this.item.id
       }
       try {
-        const res = await this.$axios.$patch(
-          `https://${nuxtconfig.axios.eventUrl}/svc/api/Connections`,
-          connobj
-        )
+        const url = this.$bitpod.getApiUrl()
+        const res = await this.$axios.$patch(`${url}Connections`, connobj)
         if (res) {
           this.refresh()
           this.snackbarText = 'Connection Updated Successfully'
@@ -145,9 +142,8 @@ export default {
       const id = this.item.id
       if (id) {
         try {
-          const res = await this.$axios.$delete(
-            `https://${nuxtconfig.axios.eventUrl}/svc/api/Connections/${id}`
-          )
+          const url = this.$bitpod.getApiUrl()
+          const res = await this.$axios.$delete(`${url}Connections/${id}`)
           if (res) {
             this.snackbarText = 'Connection deleted Successfully'
             this.snackbar = true
