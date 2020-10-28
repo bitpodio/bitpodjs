@@ -2147,6 +2147,7 @@ export default {
         variables: {
           where,
         },
+        fetchPolicy: 'no-cache',
       })
       if (result.data.Event.EventCount > 0) {
         this.isInalidEventLink = true
