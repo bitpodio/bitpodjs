@@ -298,6 +298,25 @@ export default {
               dateBox.appendChild(participantIcon)
             }
           }
+          if (propsdata.view.type === 'listWeek') {
+            propsdata.el.previousElementSibling.onclick = () => {
+              const calendarApi = this.$refs.calendar.getApi()
+              calendarApi.changeView('timeGridDay')
+              calendarApi.gotoDate(propsdata.event.startStr)
+            }
+          }
+          if (
+            propsdata.view.type === 'timeGridDay' ||
+            propsdata.view.type === 'timeGridWeek'
+          ) {
+            const participantIcon = document.createElement('i')
+            participantIcon.className =
+              'v-icon notranslate v-icon--left mdi mdi-account-multiple-outline participantButton cursorPointer'
+            participantIcon.onclick = () => {
+              this.isParticipant = true
+            }
+            propsdata.el.parentNode.parentNode.appendChild(participantIcon)
+          }
         },
         dateClick: (propsdata) => {
           this.clickedDate = propsdata.date
