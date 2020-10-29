@@ -359,7 +359,7 @@
                         <i18n path="Common.Contacts" />
                       </h4>
                     </div>
-                    <div class="borderRightGrey pr-3 mr-n3">
+                    <div v-if="dialog" class="borderRightGrey pr-3 mr-n3">
                       <Grid
                         :value="selectedList"
                         view-name="InviteContacts"
@@ -928,6 +928,8 @@ export default {
       this.acknowledgement = false
       this.disableButton = false
       this.priorInviteeSelected = []
+      this.scheduledTime = ''
+      this.scheduleInvite = false
     },
     previousInviteSelect(data) {
       if (data && data.length) {

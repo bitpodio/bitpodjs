@@ -47,7 +47,18 @@
             </div>
             <div class="text-truncate my-3">
               <v-icon class="mr-2 fs-16">mdi-map-marker-outline</v-icon>
-              {{ data.registration.Country }}
+              {{
+                formatField(
+                  data.registration._CurrentAddress &&
+                    data.registration._CurrentAddress.AddressLine
+                )
+              }}
+              {{
+                formatField(
+                  data.registration._CurrentAddress &&
+                    data.registration._CurrentAddress.State
+                )
+              }}
             </div>
           </v-col>
 
@@ -364,11 +375,8 @@
           </div>
         </v-flex>
         <v-flex my-3>
-          <i18n path="Common.Address" class="body-2 text--secondary" />
-
-          <div class="body-1">
-            {{ AddressLine }}
-          </div>
+          <div class="body-2 text--secondary">Address</div>
+          <div class="body-1">{{ VenueName }}{{ AddressLine }}</div>
         </v-flex>
       </div>
 
@@ -480,7 +488,8 @@ export default {
       },
       StartDate: '-',
       EndDate: '-',
-      AddressLine: '-',
+      AddressLine: '',
+      VenueName: '',
     }
   },
   computed: {
@@ -515,11 +524,14 @@ export default {
           this.data.event = res.data
           this.StartDate = this.formatDate(this.data.event.StartDate)
           this.EndDate = this.formatDate(this.data.event.EndDate)
-          this.AddressLine = this.formatField(
-            this.data.event.VenueName +
-              ',' +
+          if (this.data.event.VenueName !== '') {
+            this.VenueName = this.formatAddressField(this.data.event.VenueName)
+          }
+          if (this.data.event._VenueAddress.length > 0) {
+            this.AddressLine = this.formatAddressField(
               this.data.event._VenueAddress.AddressLine
-          )
+            )
+          }
         }
       } catch (e) {
         console.error(
