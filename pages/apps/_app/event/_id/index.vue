@@ -811,6 +811,7 @@
         <v-divider></v-divider>
         <div class="mt-2 seatmap-btn">
           <v-switch
+            v-if="data.event.LocationType === 'Venue'"
             v-model="switchSeat"
             label="Seatmap & Tickets"
             class="mt-0 ml-0 max-h24 positionAbsolute"

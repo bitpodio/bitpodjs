@@ -466,6 +466,8 @@ export default {
         },
       })
       this.$apollo.queries.tableData.refresh()
+      this.snackbarText = `${modelName} Created Successfully`
+      this.snackbar = true
       return userCreated
     },
     async onUpdateItem(data) {
@@ -485,7 +487,7 @@ export default {
         },
       })
       this.refresh()
-      this.snackbarText = 'Record Updated Successfully'
+      this.snackbarText = `${modelName} Updated Successfully`
       this.snackbar = true
       return itemUpdated
     },
@@ -506,7 +508,7 @@ export default {
         },
       })
       this.refresh()
-      this.snackbarText = 'Record deleted Successfully'
+      this.snackbarText = `${modelName} deleted Successfully`
       this.snackbar = true
       return itemDeleted
     },
@@ -533,8 +535,16 @@ export default {
         }
 
         const getDataFunc = dataSource.getData.call(this, this)
-        this.tableData = await getDataFunc.call(this, options)
-        this.loading = false
+        try {
+          this.tableData = await getDataFunc.call(this, options)
+          this.loading = false
+        } catch (e) {
+          console.error(
+            `Errors in components/common/grid/index.vue while calling method loadRestData`,
+            e
+          )
+          this.loading = false
+        }
       }
     },
   },

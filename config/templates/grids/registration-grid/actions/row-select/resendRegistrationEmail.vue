@@ -28,23 +28,30 @@ export default {
       timeout: 1000,
     }
   },
+  watch: {
+    snackbar(newVal) {
+      if (!newVal) {
+        this.$parent.$parent.refresh()
+      }
+    },
+  },
   methods: {
     async resendRegistrationEmail() {
       const regIds = this.items.map((e) => e.id)
       alert('are you sure, you want to resend confirmation emails ?')
       try {
-        const res = await this.$axios.$post(
+        await this.$axios.$post(
           `${this.$bitpod.getApiUrl()}CRMACTIVITIES/cloneActivityForResendEmail`,
           {
             regIds,
           }
         )
-        if (res) {
-          this.snackbar = true
-          this.refresh()
-        }
+        this.snackbar = true
       } catch (e) {
-        console.log('Error', e)
+        console.log(
+          `Errors in config/templates/grids/registations-grid/actions/row-select/resendRegistrationEmail.vue on resendRegistrationEmail method context: regIds ${regIds}`,
+          e
+        )
       }
     },
   },
