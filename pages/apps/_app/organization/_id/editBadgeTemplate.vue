@@ -121,8 +121,8 @@ export default {
       return {
         'Event Name': 'Event Name',
         Description: 'Description',
-        'Start Date': 'Edit Start Date',
-        'End Date': 'Edit End Date',
+        'Start Date': 'Start Date',
+        'End Date': 'End Date',
         Timezone: 'Timezone',
         Organizer: 'Organizer',
         Venue: 'Venue',
