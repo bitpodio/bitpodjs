@@ -2016,6 +2016,7 @@ export default {
               ticket.Events = res.id
               ticket.Amount = parseInt(ticket.Amount)
               ticket.TicketCount = parseInt(ticket.TicketCount)
+              ticket.AvailableCount = parseInt(ticket.TicketCount)
               ticketList.push(ticket)
             })
             const ticketres = await this.$axios
