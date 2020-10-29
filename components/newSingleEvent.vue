@@ -1166,7 +1166,7 @@ export default {
       this.isMap = true
       this.returnToCenter()
     },
-    changeEventName(value) {
+    changeEventName(event) {
       this.verifyUniqueLink(event.currentTarget.value)
     },
     changeUniqueLink(event) {
