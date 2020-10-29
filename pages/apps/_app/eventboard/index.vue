@@ -62,76 +62,91 @@
       <v-row>
         <v-col class="col-12 col-sm-6 col-md-4 parentWidth">
           <h3 class="font-weight-regular pb-2">Events on Sale</h3>
-          <div
-            v-for="(data, index) in eventOnSaleData"
-            :key="index"
-            class="white elevation-2 rounded mb-3 cursorPointer dataTile"
-            @click="routeToEvent(data)"
-          >
-            <v-skeleton-loader
-              :loading="!eventOnSaleLoaded"
-              :tile="true"
-              type="avatar"
-              height="70"
-              width="70"
+          <div v-if="!eventOnSaleEmpty">
+            <div
+              v-for="(data, index) in eventOnSaleData"
+              :key="index"
+              class="white elevation-2 rounded mb-3 cursorPointer dataTile"
+              @click="routeToEvent(data)"
             >
-              <div class="d-flex">
-                <div
-                  style="width: 70px; height: 70px;"
-                  :class="data.class"
-                  class="rounded-l"
-                >
-                  <v-icon
-                    v-if="data.type === 'Recurring'"
-                    style="font-size: 28px;"
-                    class="pl-5 pt-5 white--text fa fa-timer rec-event"
-                  ></v-icon>
-                  <div v-else class="pt-3 positionRelative text-center pt-2">
-                    <h2 class="white--text font-weight-regular">
-                      {{ data.date }}
-                    </h2>
-                    <h4 class="white--text font-weight-regular mt-n2">
-                      {{ data.month }}
+              <v-skeleton-loader
+                :loading="!eventOnSaleLoaded"
+                :tile="true"
+                type="avatar"
+                height="70"
+                width="70"
+              >
+                <div class="d-flex">
+                  <div
+                    style="width: 70px; height: 70px;"
+                    :class="data.class"
+                    class="rounded-l"
+                  >
+                    <v-icon
+                      v-if="data.type === 'Recurring'"
+                      style="font-size: 28px;"
+                      class="pl-5 pt-5 white--text fa fa-timer rec-event"
+                    ></v-icon>
+                    <div v-else class="pt-3 positionRelative text-center pt-2">
+                      <h2 class="white--text font-weight-regular">
+                        {{ data.date }}
+                      </h2>
+                      <h4 class="white--text font-weight-regular mt-n2">
+                        {{ data.month }}
+                      </h4>
+                    </div>
+                  </div>
+                  <div v-if="data.imageUrl" style="width: 60px;">
+                    <v-img
+                      :src="getURL(data.imageUrl)"
+                      :lazy-src="getURL(data.imageUrl)"
+                      aspect-ratio="1"
+                      min-height="70"
+                      max-height="70"
+                    >
+                    </v-img>
+                  </div>
+                  <div class="pl-2 pt-1">
+                    <h3
+                      class="font-weight-regular text-truncate pl-1 text-capitalize tileCaption"
+                    >
+                      {{ data.title }}
+                    </h3>
+                    <h4
+                      v-if="data.location"
+                      class="font-weight-regular text-truncate d-inline-flex pt-1"
+                    >
+                      <v-icon class="fs-18">mdi-map-marker-outline</v-icon>
+                      <div
+                        class="fs-14 font-weight-regular text-truncate"
+                        style="width: 140px;"
+                      >
+                        {{ data.location }}
+                      </div>
                     </h4>
+                    <h5 class="attendeeCount grey--text">
+                      <v-icon class="fs-18"
+                        >mdi-account-multiple-outline</v-icon
+                      >
+                      {{ data.attendeeCount }}
+                    </h5>
                   </div>
                 </div>
-                <div v-if="data.imageUrl" style="width: 60px;">
-                  <v-img
-                    :src="getURL(data.imageUrl)"
-                    :lazy-src="getURL(data.imageUrl)"
-                    aspect-ratio="1"
-                    min-height="70"
-                    max-height="70"
-                  >
-                  </v-img>
-                </div>
-                <div class="pl-2 pt-1">
-                  <h3
-                    class="font-weight-regular text-truncate pl-1 text-capitalize tileCaption"
-                  >
-                    {{ data.title }}
-                  </h3>
-                  <h4
-                    v-if="data.location"
-                    class="font-weight-regular text-truncate d-inline-flex pt-1"
-                    style="width: 170px;"
-                  >
-                    <v-icon>mdi-map-marker-outline</v-icon>
-                    <div>
-                      {{ data.location }}
-                    </div>
-                  </h4>
-                  <h5 class="attendeeCount grey--text">
-                    <v-icon>mdi-account-multiple-outline</v-icon>
-                    {{ data.attendeeCount }}
-                  </h5>
-                </div>
-              </div>
-            </v-skeleton-loader>
+              </v-skeleton-loader>
+            </div>
+          </div>
+          <div v-else>
+            <div class="text-center">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+            </div>
+            <div class="text-center">
+              There aren't any live events, to start setting up your event use
+              Create Event link
+            </div>
           </div>
           <v-hover v-slot:default="{ hover }">
             <h4
-              v-if="eventOnSaleLoaded"
+              v-if="eventOnSaleLoaded && saleEventCount > 4"
               class="font-weight-regular float-right viewAll cursorPointer"
               :class="{
                 'grey--text': !hover,
@@ -172,69 +187,79 @@
         </v-col>
         <v-col class="col-12 col-sm-6 col-md-4 parentWidth">
           <h3 class="font-weight-regular pb-2">Recent Buyers</h3>
-          <div
-            v-for="(data, index) in recentBuyersData"
-            :key="index"
-            class="white elevation-2 rounded mb-3 cursorPointer dataTile"
-            @click="routeToRegistration(data.id)"
-          >
-            <v-skeleton-loader
-              :loading="!recentBuyersLoaded"
-              :tile="true"
-              type="avatar"
-              height="50"
-              width="50"
-              style="position: relative; top: 10px; left: 10px;"
-              class="rounded"
+          <div v-if="!recentBuyersEmpty">
+            <div
+              v-for="(data, index) in recentBuyersData"
+              :key="index"
+              class="white elevation-2 rounded mb-3 cursorPointer dataTile"
+              @click="routeToRegistration(data.id)"
             >
-              <div class="d-flex">
-                <div
-                  v-if="recentBuyersLoaded"
-                  style="width: 50px; height: 50px;"
-                  class="rounded"
-                  :class="data.class"
-                >
-                  <v-avatar :class="data.class">
-                    <span class="white--text headline text-uppercase">{{
-                      data.creatorName.trim()[0]
-                    }}</span>
-                  </v-avatar>
-                </div>
-                <div class="pl-2 pt-1">
-                  <h3
-                    class="font-weight-regular text-truncate text-capitalize tileCaption"
+              <v-skeleton-loader
+                :loading="!recentBuyersLoaded"
+                :tile="true"
+                type="avatar"
+                height="50"
+                width="50"
+                style="position: relative; top: 10px; left: 10px;"
+                class="rounded"
+              >
+                <div class="d-flex">
+                  <div
+                    v-if="recentBuyersLoaded"
+                    style="width: 50px; height: 50px;"
+                    class="rounded"
+                    :class="data.class"
                   >
-                    {{ data.creatorName }}
-                  </h3>
-                  <h5 class="font-weight-regular text-truncate tileCaption">
-                    {{ data.eventName }}
-                  </h5>
+                    <v-avatar :class="data.class">
+                      <span class="white--text headline text-uppercase">{{
+                        data.creatorName.trim()[0]
+                      }}</span>
+                    </v-avatar>
+                  </div>
+                  <div class="pl-2 pt-1">
+                    <h3
+                      class="font-weight-regular text-truncate text-capitalize tileCaption"
+                    >
+                      {{ data.creatorName }}
+                    </h3>
+                    <h5 class="font-weight-regular text-truncate tileCaption">
+                      {{ data.eventName }}
+                    </h5>
+                  </div>
+                  <div class="attendeeCount mb-n2">
+                    <v-chip
+                      class="ma-2"
+                      :color="
+                        data.status === 'Success'
+                          ? 'green'
+                          : data.status === 'Failed'
+                          ? 'red'
+                          : data.status === 'Cancelled'
+                          ? 'grey'
+                          : 'orange'
+                      "
+                      text-color="white"
+                      small
+                    >
+                      {{ data.status }}
+                    </v-chip>
+                    <h5 class="font-weight-regular px-2">{{ data.time }}</h5>
+                  </div>
                 </div>
-                <div class="attendeeCount mb-n2">
-                  <v-chip
-                    class="ma-2"
-                    :color="
-                      data.status === 'Success'
-                        ? 'green'
-                        : data.status === 'Failed'
-                        ? 'red'
-                        : data.status === 'Cancelled'
-                        ? 'grey'
-                        : 'orange'
-                    "
-                    text-color="white"
-                    small
-                  >
-                    {{ data.status }}
-                  </v-chip>
-                  <h5 class="font-weight-regular px-2">{{ data.time }}</h5>
-                </div>
-              </div>
-            </v-skeleton-loader>
+              </v-skeleton-loader>
+            </div>
+          </div>
+          <div v-else>
+            <div class="text-center">
+              <i class="fa fa-user" aria-hidden="true"></i>
+            </div>
+            <div class="text-center">
+              No Recent Buyer
+            </div>
           </div>
           <v-hover v-slot:default="{ hover }">
             <h4
-              v-if="eventOnSaleLoaded"
+              v-if="eventOnSaleLoaded && buyersCount > 4"
               class="font-weight-regular float-right viewAll cursorPointer"
               :class="{
                 'grey--text': !hover,
@@ -686,6 +711,10 @@ export default {
       conversionTrendReady: false,
       sessionReady: false,
       eventTimelineReady: false,
+      eventOnSaleEmpty: false,
+      recentBuyersEmpty: false,
+      saleEventCount: 0,
+      buyersCount: 0,
     }
   },
   mounted() {
@@ -732,11 +761,17 @@ export default {
       this.$axios
         .get(`${this.$bitpod.getApiUrl()}Events/getEventSummery`)
         .then((data) => {
-          this.eventSummaryData[0].data = data.data.result.totalRegistration
-          this.eventSummaryData[1].data = data.data.result.totalFailed
-          this.eventSummaryData[2].data = data.data.result.Revenue
-          this.eventSummaryData[3].data = data.data.result.TotalTickets
-          this.eventSummaryData[4].data = data.data.result._id
+          const summaryData = data.data.result
+          this.eventSummaryData[0].data = summaryData.totalRegistration || 0
+          this.eventSummaryData[1].data = summaryData.totalFailed || 0
+          this.eventSummaryData[2].data = summaryData.Revenue || 0
+          this.eventSummaryData[3].data = summaryData.TotalTickets || 0
+          this.eventSummaryData[4].data =
+            !summaryData.Sent || summaryData.Sent === 0
+              ? 0
+              : Math.floor(
+                  ((summaryData.isRegistered || 0) / summaryData.Sent) * 100
+                )
           this.eventSummaryLoaded = true
           return data
         })
@@ -927,6 +962,11 @@ export default {
       },
       update(data) {
         const eventData = formatGQLResult(data, 'Event')
+        this.saleEventCount =
+          data && data.Event ? data.Event.EventCount || 0 : 0
+        if (data && data.Event && data.Event.EventCount === 0) {
+          this.eventOnSaleEmpty = true
+        }
         if (eventData.length) {
           this.eventOnSaleData = eventData.map((item, index) => {
             return {
@@ -956,6 +996,7 @@ export default {
             }
           })
           this.eventOnSaleLoaded = true
+          this.eventOnSaleEmpty = false
         }
       },
       error(error) {
@@ -1042,6 +1083,17 @@ export default {
         }
       },
       update(data) {
+        this.buyersCount =
+          data && data.Registration
+            ? data.Registration.RegistrationCount || 0
+            : 0
+        if (
+          data &&
+          data.Registration &&
+          data.Registration.RegistrationCount === 0
+        ) {
+          this.recentBuyersEmpty = true
+        }
         const registrationData = formatGQLResult(data, 'Registration')
         if (registrationData.length) {
           this.recentBuyersData = registrationData.map((item, index) => {
@@ -1056,6 +1108,7 @@ export default {
             }
           })
           this.recentBuyersLoaded = true
+          this.recentBuyersEmpty = false
         }
       },
       error(error) {
@@ -1118,6 +1171,7 @@ export default {
 .visiblityNone {
   visibility: hidden;
   position: absolute;
+  top: 0;
 }
 .parentWidth {
   max-width: 370px;

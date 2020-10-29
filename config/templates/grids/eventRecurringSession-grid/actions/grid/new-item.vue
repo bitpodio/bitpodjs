@@ -115,17 +115,12 @@
                 ></Timezone>
               </v-col>
               <v-col cols="12" sm="6" md="4" class="pb-0">
-                <v-autocomplete
+                <Lookup
                   v-model="Duration1"
-                  :items="slotLookupOptions"
-                  item-text="value"
-                  item-value="key"
-                  label="Duration*"
-                  outlined
-                  dense
-                  class="st-date"
+                  :field="durationProps"
+                  :rules="required"
                   @change="changeDuration"
-                ></v-autocomplete>
+                />
               </v-col>
             </v-row>
             <v-row v-if="dialog">
@@ -568,7 +563,6 @@ export default {
             ScheduledType: 'Over a period of rolling days',
             RollingDays: 30,
             Frequency: '30',
-            Duration: '30',
           }
     const actionType = this.type
     const isGroup = session.Type === 'Group'
@@ -903,7 +897,7 @@ export default {
       this.session.EndTime = ''
 
       this.session.Timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
-      this.Duration = '30'
+      this.Duration1 = '30'
       this.session.LocationType = ''
       this.session.LocationId = ''
 
@@ -923,7 +917,7 @@ export default {
       this.venueAddress.State = ''
       this.venueAddress.Country = ''
       this.venueAddress.PostalCode = ''
-      this.customDuration = ''
+      this.customDuration = '15'
       this.isGroup = false
       this.isCustomMin = false
     },
@@ -1361,7 +1355,7 @@ export default {
             this.customDuration = `${this.session.Duration}`
             this.isCustomMin = true
           }
-        } else {
+        } else if (this.session.Duration) {
           this.Duration1 = `${this.session.Duration}`
           this.isCustomMin = false
         }

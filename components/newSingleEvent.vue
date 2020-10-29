@@ -53,7 +53,7 @@
                     required
                     dense
                     outlined
-                    @change="changeEventName($event)"
+                    @keyup="changeEventName($event)"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -875,40 +875,48 @@ export default {
     ticketStartDateRule(index) {
       return [
         (v) => {
-          const StartDate = v && new Date(v)
-          const { EndDate } = this.tickets[index]
-          let startDateMessage = ''
-          if (!StartDate && this.tickets[index].StartDate === null)
-            startDateMessage = strings.FIELD_REQUIRED
-          else if (StartDate && EndDate && StartDate > EndDate)
-            startDateMessage = strings.TICKET_START_DT_MSG
-          else if (
-            StartDate &&
-            new Date(StartDate.setSeconds(1)) < this.currentDatetime
-          ) {
-            startDateMessage = strings.TICKET_START_DT_CURRENT_DT
-          } else startDateMessage = ''
-          return startDateMessage || true
+          if (this.tickets[index]) {
+            const StartDate = v && new Date(v)
+            const { EndDate } = this.tickets[index]
+            let startDateMessage = ''
+            if (!StartDate && this.tickets[index].StartDate === null)
+              startDateMessage = strings.FIELD_REQUIRED
+            else if (StartDate && EndDate && StartDate > EndDate)
+              startDateMessage = strings.TICKET_START_DT_MSG
+            else if (
+              StartDate &&
+              new Date(StartDate.setSeconds(1)) < this.currentDatetime
+            ) {
+              startDateMessage = strings.TICKET_START_DT_CURRENT_DT
+            } else startDateMessage = ''
+            return startDateMessage || true
+          } else {
+            return true
+          }
         },
       ]
     },
     ticketEndDateRule(index) {
       return [
         (v) => {
-          const EndDate = v && new Date(v)
-          const { StartDate } = this.tickets[index]
-          let endDateMessage = ''
+          if (this.tickets[index]) {
+            const EndDate = v && new Date(v)
+            const { StartDate } = this.tickets[index]
+            let endDateMessage = ''
 
-          if (!EndDate && this.tickets[index].EndDate === null)
-            endDateMessage = strings.FIELD_REQUIRED
-          else if (StartDate && EndDate && StartDate > EndDate)
-            endDateMessage = strings.TICKET_START_DT_MSG
-          else if (new Date(EndDate) < this.currentDatetime) {
-            endDateMessage = strings.TICKET_END_DT_CURRENT_DT
-          } else if (new Date(EndDate) > this.eventData.EndDate) {
-            endDateMessage = strings.TICKET_END_DT_MSG
-          } else endDateMessage = ''
-          return endDateMessage || true
+            if (!EndDate && this.tickets[index].EndDate === null)
+              endDateMessage = strings.FIELD_REQUIRED
+            else if (StartDate && EndDate && StartDate > EndDate)
+              endDateMessage = strings.TICKET_START_DT_MSG
+            else if (new Date(EndDate) < this.currentDatetime) {
+              endDateMessage = strings.TICKET_END_DT_CURRENT_DT
+            } else if (new Date(EndDate) > this.eventData.EndDate) {
+              endDateMessage = strings.TICKET_END_DT_MSG
+            } else endDateMessage = ''
+            return endDateMessage || true
+          } else {
+            return true
+          }
         },
       ]
     },
@@ -1169,13 +1177,14 @@ export default {
       this.isMap = true
       this.returnToCenter()
     },
-    changeEventName(value) {
-      this.verifyUniqueLink(value)
+    changeEventName(event) {
+      this.verifyUniqueLink(event.currentTarget.value)
     },
     changeUniqueLink(event) {
       this.verifyUniqueLink(event.currentTarget.value)
     },
     verifyUniqueLink(value) {
+      this.isUniqLinkValid = false
       value = value.toLowerCase().replace(/\s/g, '')
       value = value.trim()
       const regex = RegExp(/^[0-9a-zA-Z]+$/)
@@ -1191,6 +1200,7 @@ export default {
       this.eventData.UniqLink = value
     },
     async checkUniqueLink(value) {
+      this.isUniqLinkValid = true
       const where = { UniqLink: value }
       const result = await this.$apollo.query({
         query: gql`
@@ -1199,8 +1209,10 @@ export default {
         variables: {
           where,
         },
+        fetchPolicy: 'no-cache',
       })
       if (result.data.Event.EventCount > 0) {
+        this.isUniqLinkValid = false
         this.isInvalidEventLink = true
         this.uniqueLinkMessage = strings.UNIQUE_LINK_DUPLICATE
       } else {
@@ -1237,7 +1249,7 @@ export default {
         Type: 'Free',
         Amount: 0,
         StartDate: new Date(),
-        EndDate: addDays(addMonths(new Date(), 1), 3),
+        EndDate: this.eventData.EndDate,
         TicketCount: 100,
       })
     },
