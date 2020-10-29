@@ -424,7 +424,7 @@ export default {
       return (
         this.eventData &&
         this.eventData.BusinessType === 'Single' &&
-        this.eventData.LocationType === 'Online Event'
+        this.eventData.LocationType === 'Online event'
       )
     },
     startDateField() {
@@ -531,6 +531,7 @@ export default {
         variables: {
           where,
         },
+        fetchPolicy: 'no-cache',
       })
       if (result.data.Event.EventCount > 0) {
         this.isInvalidEventLink = true
@@ -608,13 +609,14 @@ export default {
         })
       } catch (e) {
         this.saveBtnDisabled = false
-        console.error('Error', e)
+        console.error(
+          `Error in Save function of makecopy form, context: clone event , baseUrl: ${baseUrl} eventData: ${this.eventData}  error: ${e}`
+        )
       }
       if (res) {
-        this.close()
+        this.isMakeCopy = false
         this.isViewEvent = true
         this.copyEventId = res.id
-        this.$refs.form.reset()
         return res
       }
     },

@@ -131,11 +131,11 @@
                         <v-list-item-title>Edit</v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
-                    <v-list-item>
+                    <v-list-item @click="openMakeCopy(item.id)">
                       <v-list-item-icon class="mr-2">
                         <i class="fa fa-clone mt-1" aria-hidden="true"></i>
                       </v-list-item-icon>
-                      <v-list-item-content @click="openMakeCopy(item.id)">
+                      <v-list-item-content>
                         <v-list-item-title>Make a copy</v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
@@ -261,14 +261,11 @@
                         <v-list-item-title>Edit</v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
-                    <v-list-item>
+                    <v-list-item :key="item.id" @click="openMakeCopy(item.id)">
                       <v-list-item-icon class="mr-2">
                         <i class="fa fa-clone mt-1" aria-hidden="true"></i>
                       </v-list-item-icon>
-                      <v-list-item-content
-                        :key="item.id"
-                        @click="openMakeCopy(item.id)"
-                      >
+                      <v-list-item-content>
                         <v-list-item-title>Make a copy</v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>

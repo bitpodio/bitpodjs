@@ -70,6 +70,9 @@ body {
   position: relative;
   bottom: 3px;
 }
+.fc-view-harness-active{
+ height: 1160px !important;
+}
 .uploadFile {
   position: absolute !important;
   z-index: 1;
