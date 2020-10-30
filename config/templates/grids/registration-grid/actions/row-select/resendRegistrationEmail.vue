@@ -48,7 +48,7 @@ export default {
         )
         this.snackbar = true
       } catch (e) {
-        console.log(
+        console.error(
           `Errors in config/templates/grids/registations-grid/actions/row-select/resendRegistrationEmail.vue on resendRegistrationEmail method context: regIds ${regIds}`,
           e
         )
