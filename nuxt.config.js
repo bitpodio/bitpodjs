@@ -120,6 +120,7 @@ export default {
     locales: [
       { code: 'en', iso: 'en-US', label: 'English', file: 'en-US.json' },
       { code: 'hi', iso: 'hi-IN', label: 'हिन्दी', file: 'hi-IN.json' },
+      { code: 'fr', iso: 'fr', label: 'Française', file: 'fr.json' },
       { code: 'he', iso: 'he', label: 'עִבְרִית', file: 'he.json', rtl: true },
     ],
     defaultLocale: 'en',
