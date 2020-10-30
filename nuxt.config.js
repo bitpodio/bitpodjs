@@ -8,7 +8,7 @@ export default {
    */
   mode: 'universal',
   router: {
-    base: basePath || '/nuxt',
+    base: basePath || '/',
   },
   /*
    ** Nuxt target
@@ -208,7 +208,7 @@ export default {
     redirect: {
       login: '/login',
       callback: '/callback',
-      home: `${basePath}/apps/event/eventboard`,
+      home: `${basePath}/nuxt/apps/event/eventboard`,
       logout: '/',
     },
     strategies: {
