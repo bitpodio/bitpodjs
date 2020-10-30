@@ -3,6 +3,13 @@
     <v-btn text small v-bind="attrs" v-on="on" @click="openPrintForm">
       <v-icon left>mdi-printer</v-icon><i18n path="Common.PrintBadges" />
     </v-btn>
+    <iframe
+      v-show="false"
+      id="print"
+      ref="iframe"
+      style="width: 500px; position: relative; height: 500px;"
+    >
+    </iframe>
   </v-col>
 </template>
 <script>
@@ -35,21 +42,38 @@ export default {
     }
   },
   methods: {
+    getDefaultBadge(str) {
+      const logoUrl =
+        nuxtconfig.publicRuntimeConfig.cdnUri +
+        'admin-default-template-logo.png'
+      if (str) {
+        str = str
+          .replace('{{ FullName }}', `${this.$auth.user.data.name}`)
+          .replace('{{ Category }}', `${this.getBadgeCategory}`)
+          .replace('{{ Organization }}', `${this.$store.state.currentOrg.name}`)
+          .replace(logoUrl, this.getAttachmentLink(this.logoId, true))
+        if (this.data.event && this.data.event.Title) {
+          str = str.replace('{{ EventName }}', `${this.data.event.Title}`)
+        }
+      }
+      return str
+    },
     openPrintForm() {
-      const myWindow = window.open('', '', 'width=900,height=900')
       this.items.map((ele) => {
         const template = this.context.badge.Template
           ? this.context.badge.Template
           : this.Template
         const str = this.getBadge(template, ele)
-        myWindow.document.write(`${str}`)
+        this.$refs.iframe.contentWindow.document.write(
+          `<div style="display:flex">${str}</div>`
+        )
       })
-      myWindow.document.close()
-      myWindow.focus()
-      myWindow.print()
-      setTimeout(function () {
-        myWindow.close()
-      }, 1000)
+      setTimeout(this.printBadge, 2000)
+    },
+    printBadge() {
+      this.$refs.iframe.contentWindow.print()
+      this.$refs.iframe.contentWindow.close()
+      this.$refs.iframe.contentWindow.document.close()
     },
     getBadge(str, items) {
       const logoUrl =

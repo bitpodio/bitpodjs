@@ -277,6 +277,7 @@
                               RTEValue = item.Body
                               templateID = item.id
                               templateSubject = Subject
+                              templateObject = { ...item }
                             "
                             ><i18n path="Drawer.Select"
                           /></v-btn>
@@ -327,6 +328,7 @@
                       @click="
                         choosedTemplate = 0
                         RTEValue = ''
+                        templateObject = ''
                       "
                       ><i18n path="Drawer.XDiscard"
                     /></v-btn>
@@ -813,6 +815,7 @@ export default {
       priorInviteeSelected: [],
       validDate: false,
       invalid: true,
+      templateObject: '',
     }
   },
   computed: {
@@ -988,15 +991,25 @@ export default {
       Promise.all([])
         .then(() => {
           if (!this.templateExists()) {
+            const newTemplateData = {
+              Body: this.RTEValue,
+              Subject: this.subject,
+              Type: this.myTemplate,
+            }
+            if (this.templateObject && this.templateObject.Name) {
+              newTemplateData.Name = `${this.templateObject.Name.split(
+                '-'
+              )[0].trim()} - ${new Date().toLocaleString()}`
+              if (this.templateObject.ImageURL) {
+                newTemplateData.ImageURL = this.templateObject.ImageURL
+              }
+            } else {
+              newTemplateData.Name = `Custom - ${new Date().toLocaleString()}`
+            }
             return this.$axios({
               method: 'POST',
               url: `${this.$bitpod.getApiUrl()}MarketingTemplates`,
-              data: {
-                Body: this.RTEValue,
-                Name: '',
-                Subject: this.subject,
-                Type: this.myTemplate,
-              },
+              data: newTemplateData,
             })
           } else {
             return false
