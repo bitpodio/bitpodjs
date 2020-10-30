@@ -8,7 +8,7 @@ export default {
    */
   mode: 'universal',
   router: {
-    base: basePath || '/',
+    base: basePath || '/nuxt',
   },
   /*
    ** Nuxt target
