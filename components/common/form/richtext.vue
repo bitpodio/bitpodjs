@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <client-only>
-      <div v-if="label || field.form.caption">
+      <div v-if="label || (field && field.form && field.form.caption)">
         {{ label || field.form.caption }}
       </div>
       <jodit-editor v-model="content" :config="config" />

@@ -390,6 +390,9 @@ body {
 .event-steper .mdi-pencil::before {
   content: '\F012C' !important;
 }
+.v-dialog__content--active{
+z-index: 205 !important;
+}
 .grid-search-section {
   min-height: 52px;
   align-items: center;
