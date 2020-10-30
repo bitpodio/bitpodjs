@@ -24,6 +24,7 @@ query ($filters: JSON, $where: JSON) {
                     }          
                     OrganizationId          
                     _CurrentAddress {
+                        id
                         State            
                         PostalCode            
                         LatLng {              
