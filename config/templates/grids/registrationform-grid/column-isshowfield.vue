@@ -1,10 +1,16 @@
 <template>
-  <v-checkbox
-    v-model="checkbox"
-    color="green"
-    dense
-    @change="updateRegForm"
-  ></v-checkbox>
+  <div class="positionRelative ps-top6">
+    <div>
+      <v-checkbox
+        v-model="checkbox"
+        color="green"
+        dense
+        height="20"
+        class="ma-0 pa-0"
+        @change="updateRegForm"
+      ></v-checkbox>
+    </div>
+  </div>
 </template>
 
 <script>
