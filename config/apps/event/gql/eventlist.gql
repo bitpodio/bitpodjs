@@ -65,6 +65,7 @@ query($filters: JSON, $where: JSON) {
           AvailableEndHour
           MySpeakers
           _VenueAddress {
+            id
             State
             PostalCode
             LatLng {
