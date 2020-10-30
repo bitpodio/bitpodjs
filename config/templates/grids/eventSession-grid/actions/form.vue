@@ -8,7 +8,9 @@
       </div>
     </v-snackbar>
     <v-btn text small @click="openDialog">
-      <v-icon left>{{ isEdit ? 'fa-pencil' : 'mdi-plus' }}</v-icon>
+      <v-icon class="fs-18" left>{{
+        isEdit ? 'fa-pencil' : 'mdi-plus'
+      }}</v-icon>
       {{ isEdit ? 'Edit Session' : 'New Session' }}
     </v-btn>
     <v-dialog
