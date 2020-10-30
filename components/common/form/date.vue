@@ -88,6 +88,11 @@ export default {
     },
   },
   mounted() {
+    if (this.field.type === 'datetime') {
+      this.$refs.dateTimeComponent.$children[0].$children[0].$children[0].$el.onclick = () => {
+        this.$refs.dateTimeComponent.display = true
+      }
+    }
     this.onCalendarChange()
     if (this.field.type === 'datetime') {
       this.$refs.dateTimeComponent.$children[0].onClickOutside = this.outsideClicked
