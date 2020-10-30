@@ -141,7 +141,7 @@
             </div>
             <v-row>
               <v-col cols="12" sm="6" md="6" class="pl-0 pt-0 pb-0">
-                <v-col v-if="isVenue" cols="12" class="pb-6">
+                <v-col v-if="isVenue" cols="12" class="pb-6 pt-0">
                   <no-ssr>
                     <vue-google-autocomplete
                       id="map"
