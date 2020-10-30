@@ -484,6 +484,9 @@ body {
 .v-btn__content .v-icon--left, .v-btn__content .v-icon--right {
     font-size: 18px !important;
 }
+.custom-date-time-picker .v-text-field__slot {
+  cursor: pointer !important;
+}
 @media (max-width: 800px) {
   .nav-bar {
     top: 0 !important;
