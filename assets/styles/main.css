@@ -410,6 +410,10 @@ body {
 }
 .grid-actions-container {
   min-height: 52px !important;
+  margin-bottom: 20px;
+}
+.boxview .grid-actions-container {
+  margin-bottom: 0 !important;
 }
 .lookup-tabs .theme--light.v-tabs > .v-tabs-bar {
   background-color: transparent !important;

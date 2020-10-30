@@ -1,6 +1,6 @@
 <template>
   <v-flex class="greybg">
-    <div class="pt-4">
+    <div>
       <v-row class="ma-0">
         <v-col
           v-for="item in items"
