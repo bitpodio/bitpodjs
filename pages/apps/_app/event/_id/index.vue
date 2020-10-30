@@ -811,6 +811,7 @@
         <v-divider></v-divider>
         <div class="mt-2 seatmap-btn">
           <v-switch
+            v-if="data.event.LocationType === 'Venue'"
             v-model="switchSeat"
             label="Seatmap & Tickets"
             class="mt-0 ml-0 max-h24 positionAbsolute"
@@ -1076,7 +1077,14 @@
           </v-menu>
         </v-flex>
         <v-divider></v-divider>
-        <v-flex my-3 d-flex justify-center align-center>
+        <iframe
+          v-show="false"
+          id="print"
+          ref="iframe"
+          style="width: 500px; position: relative; right: 252px; height: 500px;"
+        >
+        </iframe>
+        <v-flex ref="printForm" my-3 d-flex justify-center align-center>
           <!-- eslint-disable-next-line vue/no-v-html -->
           <div v-html="getBadge(badgeData.Template)" />
         </v-flex>
@@ -1522,6 +1530,7 @@ export default {
   },
   mounted() {
     this.getAttendees()
+    setTimeout(this.openPrint, 5000)
   },
 
   methods: {
@@ -1544,17 +1553,26 @@ export default {
       )
     },
     openPrintForm() {
-      const myWindow = window.open('', '', 'width=900,height=900')
+      this.getAttendees()
       this.attendees.map((ele) => {
         const str = this.getBadgePrinted(this.badgeData.Template, ele)
-        myWindow.document.write(`${str}`)
+
+        if (
+          this.eventData.LocationType === 'Venue' &&
+          this.$refs.iframe &&
+          this.$refs.printForm
+        ) {
+          this.$refs.iframe.contentWindow.document.write(
+            `<div style="display:flex">${str}</div>`
+          )
+        }
       })
-      myWindow.document.close()
-      myWindow.focus()
-      myWindow.print()
-      setTimeout(function () {
-        myWindow.close()
-      }, 1000)
+      this.$refs.iframe.contentWindow.print()
+      this.$refs.iframe.contentWindow.close()
+      this.$refs.iframe.contentWindow.document.close()
+    },
+    openPrint() {
+      this.$refs.iframe.contentWindow.document.firstChild.innerHTML = this.$refs.printForm.innerHTML
     },
     openBadgeForm() {
       const res = confirm('New badge will replace your existing badge.')
@@ -1909,8 +1927,14 @@ export default {
       return attachmentUrl
     },
     viewRegistration() {
-      const regUrl = `https://${nuxtconfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
-      window.open(`${regUrl}`, '_blank')
+      const orgName = this.$store.state.currentOrg.name
+      if (orgName === 'bitpod') {
+        const regUrl = `https://${nuxtconfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
+        window.open(`${regUrl}`, '_blank')
+      } else {
+        const regUrl = `https://${orgName}-${nuxtconfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
+        window.open(`${regUrl}`, '_blank')
+      }
     },
     async deleteBannerFile(e, id) {
       const url = this.$bitpod.getApiUrl()
@@ -2101,7 +2125,6 @@ export default {
         this.getOrgInfo()
         this.updateRegistrationSetting(this.eventData)
         this.getSeatMap(this.eventData)
-
         this.updateStepper()
         if (event[0].Images.length > 0) {
           this.getBannerImageName(event[0].Images[0])

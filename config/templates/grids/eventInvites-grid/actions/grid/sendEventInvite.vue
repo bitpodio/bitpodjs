@@ -272,6 +272,7 @@
                               RTEValue = item.Body
                               templateID = item.id
                               templateSubject = Subject
+                              templateObject = { ...item }
                             "
                             >Select</v-btn
                           >
@@ -323,6 +324,7 @@
                       @click="
                         choosedTemplate = 0
                         RTEValue = ''
+                        templateObject = ''
                       "
                       >X Discard</v-btn
                     >
@@ -354,7 +356,7 @@
                       <v-icon size="18" class="mr-1">fa-address-book-o</v-icon>
                       <h4 class="d-inline body-1">Contacts</h4>
                     </div>
-                    <div class="borderRightGrey pr-3 mr-n3">
+                    <div v-if="dialog" class="borderRightGrey pr-3 mr-n3">
                       <Grid
                         :value="selectedList"
                         view-name="InviteContacts"
@@ -803,6 +805,7 @@ export default {
       priorInviteeSelected: [],
       validDate: false,
       invalid: true,
+      templateObject: '',
     }
   },
   computed: {
@@ -918,6 +921,8 @@ export default {
       this.acknowledgement = false
       this.disableButton = false
       this.priorInviteeSelected = []
+      this.scheduledTime = ''
+      this.scheduleInvite = false
     },
     previousInviteSelect(data) {
       if (data && data.length) {
@@ -976,15 +981,25 @@ export default {
       Promise.all([])
         .then(() => {
           if (!this.templateExists()) {
+            const newTemplateData = {
+              Body: this.RTEValue,
+              Subject: this.subject,
+              Type: this.myTemplate,
+            }
+            if (this.templateObject && this.templateObject.Name) {
+              newTemplateData.Name = `${this.templateObject.Name.split(
+                '-'
+              )[0].trim()} - ${new Date().toLocaleString()}`
+              if (this.templateObject.ImageURL) {
+                newTemplateData.ImageURL = this.templateObject.ImageURL
+              }
+            } else {
+              newTemplateData.Name = `Custom - ${new Date().toLocaleString()}`
+            }
             return this.$axios({
               method: 'POST',
               url: `${this.$bitpod.getApiUrl()}MarketingTemplates`,
-              data: {
-                Body: this.RTEValue,
-                Name: '',
-                Subject: this.subject,
-                Type: this.myTemplate,
-              },
+              data: newTemplateData,
             })
           } else {
             return false

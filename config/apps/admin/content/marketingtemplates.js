@@ -220,7 +220,7 @@ export default {
             displayOrder: 7,
           },
           displayOrder: 7,
-          caption: 'Created By',
+          caption: 'Attachments',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
