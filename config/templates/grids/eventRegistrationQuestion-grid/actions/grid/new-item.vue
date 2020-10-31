@@ -67,14 +67,6 @@
                 ></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-checkbox
-                  v-model="formData.isRequired"
-                  label=" Required"
-                  class="ma-0"
-                  dense
-                ></v-checkbox>
-              </v-col>
-              <v-col cols="12">
                 <span>Only ask when one of these tickets are purchased</span>
                 <v-select
                   v-model="tickets"
@@ -86,6 +78,14 @@
                   outlined
                   dense
                 ></v-select>
+              </v-col>
+              <v-col cols="12">
+                <v-checkbox
+                  v-model="formData.isRequired"
+                  label=" Required"
+                  class="ma-0"
+                  dense
+                ></v-checkbox>
               </v-col>
             </v-row>
           </v-form>

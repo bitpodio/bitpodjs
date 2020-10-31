@@ -9,7 +9,7 @@
         ></v-img>
       </span>
       <v-spacer></v-spacer>
-      <v-btn class="ma-2" outlined color="primary" to="/login">
+      <v-btn class="ma-2" outlined color="primary" to="/">
         Sign in
       </v-btn>
     </v-app-bar>
