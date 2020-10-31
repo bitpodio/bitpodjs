@@ -1,10 +1,12 @@
 <template>
   <div id="app">
     <client-only>
-      <div v-if="label || field.form.caption">
+      <div v-if="label || (field && field.form && field.form.caption)">
         {{ label || field.form.caption }}
       </div>
-      <jodit-editor v-model="content" :config="config" />
+      <div @click="rteClicked">
+        <jodit-editor ref="rte" v-model="content" :config="config" />
+      </div>
     </client-only>
   </div>
 </template>
@@ -242,6 +244,24 @@ export default {
         },
       })
     }
+  },
+  methods: {
+    exitFullScreen() {
+      if (this.$refs.rte) {
+        if (this.$refs.rte.editor.isFullSize) {
+          this.$refs.rte.editor.toggleFullSize()
+        }
+        this.$router.beforeHooks.shift()
+        this.$router.forward()
+      }
+    },
+    rteClicked() {
+      if (this.$refs.rte.editor.isFullSize) {
+        this.$router.beforeHooks.unshift(this.exitFullScreen)
+      } else {
+        this.$router.beforeHooks.shift()
+      }
+    },
   },
 }
 </script>

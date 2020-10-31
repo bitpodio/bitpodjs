@@ -11,13 +11,13 @@
       <v-col class="col-12 col-sm-8">
         <v-textarea
           v-model="message"
-          label="Add a note"
+          label="Add a note *"
           outlined
           dense
           row-height="18"
           auto-grow
         ></v-textarea>
-        <div class="mb-3">
+        <div class="mt-n5">
           <v-btn
             v-if="!fileList || !fileList.length"
             class="float-right"
