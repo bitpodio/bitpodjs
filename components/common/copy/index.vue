@@ -7,9 +7,7 @@
       :top="true"
       width="2px"
     >
-      <div
-        class="toast py-2 pr-1 pl-5 text-h6 light font-weight-regular text-center"
-      >
+      <div class="fs-16 text-center">
         {{ snackbarText }}
       </div>
     </v-snackbar>
@@ -78,7 +76,7 @@ export default {
     return {
       snackbar: false,
       snackbarText: 'Copied to clipboard',
-      timeout: 1000,
+      timeout: 3000,
     }
   },
   mounted() {

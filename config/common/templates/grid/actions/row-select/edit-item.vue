@@ -127,6 +127,7 @@ export default {
   methods: {
     async onSave() {
       this.$refs.form.validate()
+      this.errorMessage = ''
       if (this.valid) {
         const formData = formatTimezoneDateFieldsData(
           this.formData,

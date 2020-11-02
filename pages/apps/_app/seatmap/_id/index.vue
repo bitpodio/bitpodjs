@@ -36,6 +36,7 @@ const layoutWithType = {
     gold: {
       color: '#FCB900',
       label: 'Gold',
+      price: 100,
       data: {
         price: 100,
       },
@@ -43,6 +44,7 @@ const layoutWithType = {
     silver: {
       color: '#00D084',
       label: 'Silver',
+      price: 100,
       data: {
         price: 100,
       },
@@ -50,6 +52,7 @@ const layoutWithType = {
     platinum: {
       color: '#FF6900',
       label: 'Platinum',
+      price: 100,
       data: {
         price: 100,
       },

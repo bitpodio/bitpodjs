@@ -2,7 +2,8 @@
   <div>
     <v-col class="px-0">
       <v-btn text small v-bind="attrs" v-on="on" @click="onDelete">
-        <v-icon left>mdi-delete</v-icon><i18n path="Drawer.Delete" />
+        <v-icon left class="fs-16">mdi-delete</v-icon
+        ><i18n path="Drawer.Delete" />
       </v-btn>
     </v-col>
     <v-snackbar v-model="snackbar" timeout="2000" top="true">

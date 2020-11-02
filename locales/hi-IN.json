@@ -408,7 +408,7 @@
     "LastName": "Last Name*",
     "PhoneRequired": "Phone*",
     "EnterValue": "Enter a value",
-    "AddNote": "Add a note",
+    "AddNote": "Add a note *",
     "Organizations": "Organizations",
     "ExpiresOn": "Expires On",
     "AdditionalOnlineEvent": "Additional online event joining instructions, URL, phone etc.",

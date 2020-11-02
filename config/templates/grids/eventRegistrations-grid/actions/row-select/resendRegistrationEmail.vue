@@ -30,6 +30,13 @@ export default {
       timeout: 1000,
     }
   },
+  watch: {
+    snackbar(newVal) {
+      if (!newVal) {
+        this.$parent.$parent.refresh()
+      }
+    },
+  },
   methods: {
     async resendRegistrationEmail() {
       const regIds = this.items.map((e) => e.id)
@@ -37,13 +44,10 @@ export default {
       const URL = `${url}CRMACTIVITIES/cloneActivityForResendEmail`
       alert('are you sure, you want to resend confirmation emails ?')
       try {
-        const res = await this.$axios.$post(URL, {
+        await this.$axios.$post(URL, {
           regIds,
         })
-        if (res === '') {
-          this.snackbar = true
-          this.$parent.$parent.refresh()
-        }
+        this.snackbar = true
       } catch (e) {
         console.error(
           `Errors in config/templates/grids/eventegistations-grid/actions/row-select/resendRegistrationEmail.vue on resendRegistrationEmail method context: API: ${URL} \n regIds ${regIds}`,

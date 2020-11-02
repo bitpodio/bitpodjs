@@ -17,7 +17,7 @@
           row-height="18"
           auto-grow
         ></v-textarea>
-        <div class="mb-3">
+        <div class="mt-n5">
           <v-btn
             v-if="!fileList || !fileList.length"
             class="float-right"

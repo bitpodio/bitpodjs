@@ -137,7 +137,7 @@
             </v-row>
             <div v-if="isVenue" class="col-md-12 pl-0">
               <v-flex class="d-flex justify-center align-center pb-1">
-                <h2 class="body-1 pb-1">
+                <h2 class="body-1 pb-1 primary--text">
                   <i class="fa fa-map-marker" aria-hidden="true"></i>
                   <i18n path="Common.Venue" />
                 </h2>
@@ -146,7 +146,7 @@
             </div>
             <v-row>
               <v-col cols="12" sm="6" md="6" class="pl-0 pt-0 pb-0">
-                <v-col v-if="isVenue" cols="12" class="pb-6">
+                <v-col v-if="isVenue" cols="12" class="pb-6 pt-0">
                   <no-ssr>
                     <vue-google-autocomplete
                       id="map"
@@ -253,7 +253,7 @@
             </v-row>
             <div class="col-md-12 pl-0">
               <v-flex class="d-flex justify-center align-center pb-1">
-                <h2 class="body-1 pb-1">
+                <h2 class="body-1 pb-1 fs-16">
                   <i class="fa fa-network pr-1" aria-hidden="true"></i
                   ><i18n path="Common.CopyEventObjects" />
                 </h2>
@@ -261,43 +261,35 @@
               </v-flex>
             </div>
             <v-row>
-              <v-col cols="12" sm="6" md="6" class="py-0">
+              <v-col cols="12" sm="4" md="4" class="py-0">
                 <v-checkbox
                   v-model="isSpeakers"
                   :label="$t('Common.Speakers')"
                   class="ma-0"
                 ></v-checkbox>
               </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="12" sm="6" md="6" class="py-0">
+              <v-col cols="12" sm="4" md="4" class="py-0">
                 <v-checkbox
                   v-model="isTickets"
                   :label="$t('Common.Tickets')"
                   class="ma-0"
                 ></v-checkbox>
               </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="12" sm="6" md="6" class="py-0">
+              <v-col cols="12" sm="4" md="4" class="py-0">
                 <v-checkbox
                   v-model="isSessions"
                   :label="$t('Common.Sessions')"
                   class="ma-0"
                 ></v-checkbox>
               </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="12" sm="6" md="6" class="py-0">
+              <v-col cols="12" sm="4" md="4" class="py-0">
                 <v-checkbox
                   v-model="isRegistrationTypes"
                   :label="$t('Common.RegistrationTypes')"
                   class="ma-0"
                 ></v-checkbox>
               </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="12" sm="6" md="6" class="py-0">
+              <v-col cols="12" sm="4" md="4" class="py-0">
                 <v-checkbox
                   v-model="isOfferCode"
                   :label="$t('Common.OfferCode')"

@@ -1,5 +1,8 @@
 <template>
-  <div class="positionRelative ps-top6">
+  <div
+    v-if="item.LocationType === 'In-person meeting'"
+    class="positionRelative ps-top6"
+  >
     <div v-if="item.SeatReservation === true">
       <v-checkbox
         v-model="checkbox"

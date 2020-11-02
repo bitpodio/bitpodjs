@@ -305,7 +305,7 @@ export default {
   },
   methods: {
     formatDate(date) {
-      return date ? format(new Date(date), 'PPp') : ''
+      return date ? format(new Date(date), 'PPp') : '-'
     },
     formatField(fieldValue) {
       return fieldValue || '-'

@@ -1,5 +1,5 @@
 <template>
-  <div class="mxcol-200 text-truncate">
+  <div class="mxcol-200">
     <v-chip
       v-for="val in value"
       :key="val"

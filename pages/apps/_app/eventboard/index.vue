@@ -1083,7 +1083,7 @@ export default {
       },
       variables() {
         return {
-          filters: { limit: 4, order: 'id DESC', skip: 0 },
+          filters: { limit: 4, order: 'createdDate DESC', skip: 0 },
           where: {},
         }
       },

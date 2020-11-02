@@ -8,7 +8,8 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on" @click="getQuestions">
-          <v-icon left>mdi-pencil</v-icon><i18n path="Common.EditItem" />
+          <v-icon left class="fs-16">mdi-pencil</v-icon
+          ><i18n path="Common.EditItem" />
         </v-btn>
       </template>
       <v-card>

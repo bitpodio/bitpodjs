@@ -390,6 +390,9 @@ body {
 .event-steper .mdi-pencil::before {
   content: '\F012C' !important;
 }
+.v-dialog__content--active{
+z-index: 205 !important;
+}
 .grid-search-section {
   min-height: 52px;
   align-items: center;
@@ -409,10 +412,14 @@ body {
   position: fixed !important;
 }
 .ps-top6 {
-  top: 6px;
+  top: 9px;
 }
 .grid-actions-container {
   min-height: 52px !important;
+  margin-bottom: 20px;
+}
+.boxview .grid-actions-container {
+  margin-bottom: 0 !important;
 }
 .lookup-tabs .theme--light.v-tabs > .v-tabs-bar {
   background-color: transparent !important;
@@ -467,6 +474,24 @@ body {
   font-size: 12px;
   text-transform: uppercase;
   font-weight: 500;
+}
+.v-snack__wrapper {
+  min-width: auto !important;
+  padding-left: 10px !important;
+}
+.v-input__icon {
+  cursor: pointer;
+}
+.reg-status .v-chip .v-chip__content {
+    min-width: 50px !important;
+    text-align: center !important;
+    justify-content: center !important;
+}
+.v-btn__content .v-icon--left, .v-btn__content .v-icon--right {
+    font-size: 18px !important;
+}
+.custom-date-time-picker .v-input input {
+  cursor: pointer !important;
 }
 @media (max-width: 800px) {
   .nav-bar {
