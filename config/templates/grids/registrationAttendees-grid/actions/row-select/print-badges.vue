@@ -88,7 +88,7 @@ export default {
             '{{ Category }}',
             `${(items.regType && items.regType.Name) || 'Guest'}`
           )
-          .replace('{{ Organization }}', `${items.CompanyName}`)
+          .replace('{{ Organization }}', `${items.CompanyName || ''}`)
           .replace(logoUrl, this.getAttachmentLink(this.logoId, true))
         if (this.context.event && this.context.event.Title) {
           str = str.replace('{{ EventName }}', `${this.context.event.Title}`)

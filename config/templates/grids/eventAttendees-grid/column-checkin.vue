@@ -123,6 +123,9 @@ export default {
       noBadgeFound: true,
     }
   },
+  mounted() {
+    this.getOrgInfo()
+  },
   methods: {
     async updateDate(ele) {
       const url = this.$bitpod.getApiUrl()
@@ -169,7 +172,6 @@ export default {
       return str
     },
     openPrintForm() {
-      this.getOrgInfo()
       const str = this.setTemplates()
       this.$refs.iframe.contentWindow.document.write(
         `<div style="display:flex">${str}</div>`
@@ -187,6 +189,7 @@ export default {
       this.id = ''
     },
     setTemplates() {
+      this.getOrgInfo()
       if (Object.keys(this.context.badge).length > 0) {
         const template = this.context.badge.Template
         const str = this.getBadge(template, this.item)
@@ -208,7 +211,7 @@ export default {
             '{{ Category }}',
             `${(items.regType && items.regType.Name) || 'Guest'}`
           )
-          .replace('{{ Organization }}', `${items.CompanyName}`)
+          .replace('{{ Organization }}', `${items.CompanyName || ''}`)
           .replace(logoUrl, this.getAttachmentLink(this.logoId, true))
         if (this.context.event && this.context.event.Title) {
           str = str.replace('{{ EventName }}', `${this.context.event.Title}`)

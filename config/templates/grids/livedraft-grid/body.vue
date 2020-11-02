@@ -344,8 +344,14 @@ export default {
       return `/apps/event/event/recurring/${id}`
     },
     viewRegistration(UniqLink) {
-      const regUrl = `https://${nuxtconfig.axios.eventUrl}/e/${UniqLink}`
-      window.open(`${regUrl}`, '_blank')
+      const orgName = this.$store.state.currentOrg.name
+      if (orgName === 'bitpod') {
+        const regUrl = `https://${nuxtconfig.axios.eventUrl}/e/${UniqLink}`
+        window.open(`${regUrl}`, '_blank')
+      } else {
+        const regUrl = `https://${orgName}-${nuxtconfig.axios.eventUrl}/e/${UniqLink}`
+        window.open(`${regUrl}`, '_blank')
+      }
     },
     formatAddressField(fieldValue) {
       return fieldValue || ' '

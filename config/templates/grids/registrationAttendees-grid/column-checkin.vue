@@ -1,9 +1,9 @@
 <template>
   <div class="positionRelative position">
-    <div v-if="item.CheckIn === null" class="pt-1">
+    <div v-if="item.CheckIn === null" class="pt-1" style="height: 10px;">
       <v-chip
         class="ma-2 pb-0 mt-1"
-        height="20"
+        height="13"
         color="blue"
         text-color="white"
         label
@@ -13,8 +13,8 @@
         Check In
       </v-chip>
     </div>
-    <div v-else style="display: flex; height: 20px;" class="ma-2 pb-0 mt-1">
-      <v-icon color="success fs-14" class="pr-1 fs-14">mdi-check</v-icon>
+    <div v-else style="display: flex; height: 13px;" class="ma-2 pb-0 mt-1">
+      <v-icon color="success" class="pr-1 fs-14">mdi-check</v-icon>
       <div>Checked in Just now</div>
     </div>
     <v-dialog
@@ -132,6 +132,7 @@ export default {
   },
   mounted() {
     this.getEventId()
+    this.getOrgInfo()
     setTimeout(this.openPrint, 5000)
   },
   methods: {
