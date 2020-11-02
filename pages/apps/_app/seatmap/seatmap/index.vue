@@ -34,8 +34,8 @@
             <span>{{ data.seatmap.createdBy }}</span>
           </v-chip>
           <v-subheader class="d-inline-flex pl-1"
-            ><span class="pl-1">created on 16 March 2020.</span></v-subheader
-          >
+            ><span class="pl-1"></span
+          ></v-subheader>
         </v-flex>
       </div>
       <div

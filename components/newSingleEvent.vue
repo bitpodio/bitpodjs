@@ -15,7 +15,8 @@
         </div>
         <v-tabs v-model="tabs" height="36" class="mb-6 mt-2 v-event-icon">
           <v-tab href="#1" class="px-0 mr-4" @click="selectTab(1)">
-            <v-icon left>fa-info-circle</v-icon><span>Basic Info</span>
+            <v-icon left>fa-info-circle</v-icon
+            ><span><i18n path="Common.BasicInfo" /></span>
           </v-tab>
           <v-tab
             href="#2"
@@ -168,7 +169,7 @@
                         ref="venueAddress.AddressLine"
                         v-model="venueAddress.AddressLine"
                         class="form-control pa-3 d-block rounded"
-                        :placeholder="$t('Common.Address*')"
+                        :placeholder="$t('Common.Address')"
                         :required="true"
                         @placechanged="getAddressData"
                         @change="changeAddressData($event)"
@@ -495,7 +496,6 @@
 import addMonths from 'date-fns/addMonths'
 import addDays from 'date-fns/addDays'
 import gql from 'graphql-tag'
-import strings from '../strings.js'
 import CustomDate from '~/components/common/form/date.vue'
 import { formatTimezoneDateFieldsData } from '~/utility/form.js'
 import Lookup from '~/components/common/form/lookup.vue'
@@ -716,7 +716,8 @@ export default {
             endDateMessage = this.$t('Messages.Error.ThisFieldRequired')
           else if (StartDate && EndDate && StartDate > EndDate)
             endDateMessage = this.$t('Messages.Error.EventStartEndDate')
-          else if (EndDate < new Date()) endDateMessage = strings.EVENT_END_DATE
+          else if (EndDate < new Date())
+            endDateMessage = this.$t('Messages.Error.EventEndDate')
           else endDateMessage = ''
           return endDateMessage || true
         },

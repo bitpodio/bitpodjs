@@ -107,7 +107,6 @@ import addHours from 'date-fns/addHours'
 import { required } from '~/utility/rules.js'
 import eventRegistrationTicketSlot from '~/config/apps/event/gql/eventRegistrationTicketSlot.gql'
 import { formatGQLResult } from '~/utility/gql.js'
-import strings from '~/strings.js'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
 
 export default {

@@ -36,7 +36,7 @@
         <i class="fa fa fa-banknote" aria-hidden="true"></i>
       </div>
       <div class="d-flex flex-column pa-2 event-tile-right greybg">
-        <div class="event-tile-value text-truncate">$ 3.00</div>
+        <div class="event-tile-value text-truncate"></div>
         <i18n path="Common.Revenue" class="caption text-truncate" />
       </div>
     </div>

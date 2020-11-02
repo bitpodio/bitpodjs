@@ -449,14 +449,18 @@
                       class="blue--text d-inline cursorPointer"
                       @click="previousInviteDialog = true"
                     >
-                      {{ !!priorInvite.id ? priorInvite.Title : 'Click here' }}
+                      {{
+                        !!priorInvite.id
+                          ? priorInvite.Title
+                          : $t('Common.ClickHere')
+                      }}
                     </h4>
                     <h4 class="d-inline body-1">
                       {{
                         !!priorInvite.id
                           ? ' - ' +
                             new Date(priorInvite.createdDate).toDateString()
-                          : 'to select one of the prior invite'
+                          : $t('Common.SelectOnePriorInvite')
                       }}
                       )
                     </h4>

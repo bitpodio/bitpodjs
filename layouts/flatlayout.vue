@@ -324,7 +324,7 @@
       /></v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn class="ma-2" tile outlined>
-        <i18n path="Common.Upgrade" />
+        <i18n path="Drawer.Upgrade" />
       </v-btn>
       <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
         <v-icon>mdi-invert-colors</v-icon>
@@ -367,8 +367,8 @@
               </v-list-item-avatar>
 
               <v-list-item-content>
-                <v-list-item-title>Rishi Belhekar</v-list-item-title>
-                <v-list-item-subtitle>rishikesh@bitpod.io</v-list-item-subtitle>
+                <v-list-item-title></v-list-item-title>
+                <v-list-item-subtitle></v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
           </v-list>

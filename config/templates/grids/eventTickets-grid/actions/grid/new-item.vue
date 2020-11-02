@@ -191,7 +191,6 @@ import registrationtype from '~/config/apps/event/gql/registrationType.gql'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { required } from '~/utility/rules.js'
-import strings from '~/strings.js'
 export default {
   props: {
     refresh: {

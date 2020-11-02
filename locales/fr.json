@@ -321,15 +321,15 @@
     "MoreInfo" : "Plus d'infos",
     "NewUser" : "Nouvel utilisateur",
     "AssignRole" : "Affecter un rôle",
-    "CreatedThisEventOn" : "Cet événement a été créé le { date }",
-    "SendThisInviteOn" : "Envoyer cette invitation le { date }",
-    "RegisteredOn" : "Enregistra le { date }",
+    "CreatedThisEventOn" : "Cet événement a été créé le {date}",
+    "SendThisInviteOn" : "Envoyer cette invitation le {date}",
+    "RegisteredOn" : "Enregistra le {date}",
     "EnterEventName" : "Entrez le nom de l'événement et les détails pour aider votre public à en savoir plus sur votre événement, ajoutez des détails qui mettent en évidence les raisons pour lesquelles quelqu'un devrait y assister.",
     "SetupEventTickets" : "Configurez les tickets d'événement et le prix, vous pouvez également définir la validité des tickets pour que les premiers oiseaux puissent se voir offrir une meilleure tarification.",
     "AddTickets" : "Ajouter des tickets",
     "Title" : "Titre *",
     "Type" : "Type *",
-    "Price" : "Prix { devise }",
+    "Price" : "Prix {currency}",
     "StartD" : "Date de début *",
     "EndD" : "Date de fin *",
     "EventHasBeenCreated" : "L'ÉVÉNEMENT A ÉTÉ CRÉÉ.",
@@ -383,8 +383,8 @@
     "SlotSize" : "Taille de l'emplacement *",
     "Timezone" : "Fuseau horaire",
     "RecurringEventLocation" : "Emplacement *",
-    "NewDefaultForm" : "Nouveau { sous-titre }",
-    "EditDefaultForm" : "Editer { sous-titre }",
+    "NewDefaultForm" : "Nouveau {subTitle}",
+    "EditDefaultForm" : "Editer {subTitle}",
     "YouMayReferInviteMembers" : "Vous pouvez consulter les données des membres d'invite en utilisant des expressions de marque de réservation dans la ligne d'objet.  E.g: $ {Contact.FirstName } $ {Contact.LastName } $ {OrganizationInfo.Name }",
     "SessionInformation" : "Informations sur la session",
     "YouMayReferInviteMembersData" : "Vous pouvez consulter les données des membres d'invite en utilisant des expressions de marque de réservation dans la ligne d'objet.  E.g: $ {Registration.FirstName } $ {Registration.LastName } $ {OrganizationInfo.Name }",
@@ -511,7 +511,7 @@
     "AdditionalOnlineEventJoining" : "Autres instructions de jointure d'événements en ligne, URL, téléphone, etc. *",
     "VenueAddress" : "Adresse du site",
     "CurrencyReq" : "Devise *",
-    "SEOElements " : "Les éléments SEO sont automatiquement dérivés des éléments d'événement lors de la création ou de la modification d'un événement.  Cochez cette option si vous souhaitez désactiver la mise à jour automatique",
+    "SEOElements" : "Les éléments SEO sont automatiquement dérivés des éléments d'événement lors de la création ou de la modification d'un événement.  Cochez cette option si vous souhaitez désactiver la mise à jour automatique",
     "MetaDescription" : "Description Meta",
     "MetaKeywords" : "Mots clés de métadonnées",
     "LabelForSpeakers" : "Section Libellé pour haut-parleurs",
@@ -644,7 +644,21 @@
     "IsActiveField" : "Est actif",
     "OfferValueRequired" : "Valeur de l'offre *",
     "MinApplicableOrderAmount" : "Montant du bon de commande minimal",
-    "VenueRequired" : "Lieu *"
+    "VenueRequired" : "Lieu *",
+    "FileChosen": "Aucun fichier choisi",
+    "ShowLess": "Montrer moins",
+    "ShowMore": "Montre plus",
+    "SelectOnePriorInvite": "pour sélectionner l'une des invitations précédentes",
+    "NewRecurringSession": "Nouvelle session récurrente",
+    "EditSession": "Modifier la session",
+    "CustomErrorMessage": "Douane {errorMessage}",
+    "MoreAbout": "Plus d'infos sur",
+    "HeaderTemplate": "modèle d'en-tête",
+    "BitpodVirtual": "#Bitpod Virtuel",
+    "OnlineEventText": "# Événement en ligne",
+    "Gallery": "Galerie",
+    "Reviews": "Commentaires",
+    "DateTime": "Date et l'heure"
   },
   "Drawer" : {
     "CreateEventAction" : "Créer un événement",
@@ -738,7 +752,8 @@
       "SessionStartDate" : "La date de début de la session doit être comprise entre la date de l'événement",
       "RefundPaidAmount" : "Le montant remboursé ne peut être supérieur ou égal au montant total payé",
       "RefundAmountMsg" : "Le montant ne doit pas être inférieur ou égal à 0",
-      "InvalidDisplayOrder" : "L'ordre d'affichage ne doit pas être vide et inférieur à 1"
+      "InvalidDisplayOrder" : "L'ordre d'affichage ne doit pas être vide et inférieur à 1",
+      "EventEndDate": "La date de fin de l'événement ne doit pas être inférieure à la date actuelle" 
     },
     "Warn" : {
       "UniqueLinkFormat" : "Minuscules lettres alphanumériques uniquement",
@@ -765,5 +780,69 @@
       "FailedFetchToken" : "Impossible d'extraire le jeton JWT.",
       "SeatmapUpdateSuccess" : "Seatmap a été mis à jour avec succès"
     }
-  }
+  },
+  "$vuetify": {
+    "badge":"Badge",
+   "close":"Fermer",
+   "dataIterator":{
+      "noResultsText":"Aucun enregistrement correspondant trouvé",
+      "loadingText":"`Chargement de l'élément...`"
+   },
+   "dataTable":{
+      "itemsPerPageText":"Lignes par page:",
+      "ariaLabel":{
+         "sortDescending":"Tri décroissant.",
+         "sortAscending":"Tri croissant.",
+         "sortNone":"Non trié.",
+         "activateNone":"Activer pour supprimer le tri.",
+         "activateDescending":"Activer pour trier par ordre décroissant.",
+         "activateAscending":"Activer pour trier par ordre croissant."
+      },
+      "sortBy":"Trier par"
+   },
+   "dataFooter":{
+      "itemsPerPageText":"Élements par page:",
+      "itemsPerPageAll":"Tous",
+      "nextPage":"Page suivante",
+      "prevPage":"Page précédente",
+      "firstPage":"Première page",
+      "lastPage":"Dernière page",
+      "pageText":"{0}-{1} de {2}"
+   },
+   "datePicker":{
+      "itemsSelected":"{0} sélectionnés",
+      "nextMonthAriaLabel":"Le mois prochain",
+      "nextYearAriaLabel":"`L'année prochaine`",
+      "prevMonthAriaLabel":"Le mois précédent",
+      "prevYearAriaLabel":"Année précédente"
+   },
+   "noDataText":"Aucune donnée disponible",
+   "carousel":{
+      "prev":"Visuel précédent",
+      "next":"Visuel suivant",
+      "ariaLabel":{
+         "delimiter":"Carousel slide {0} of {1}"
+      }
+   },
+   "calendar":{
+      "moreEvents":"{0} plus"
+   },
+   "fileInput":{
+      "counter":"{0} fichiers",
+      "counterSize":"{0} fichiers ({1} au total)"
+   },
+   "timePicker":{
+      "am":"AM",
+      "pm":"PM"
+   },
+   "pagination":{
+      "ariaLabel":{
+         "wrapper":"Navigation de pagination",
+         "next":"Page suivante",
+         "previous":"Page précédente",
+         "page":"Aller à la page {0}",
+         "currentPage":"Page actuelle, Page {0}"
+      }
+   }
+}
 }

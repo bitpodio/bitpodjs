@@ -133,7 +133,6 @@
 
 <script>
 import { getLookupData } from '~/config/apps/event/rest'
-import strings from '~/strings.js'
 import { required } from '~/utility/rules.js'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
 export default {

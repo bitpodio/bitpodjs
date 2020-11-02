@@ -39,6 +39,7 @@ export default {
       (i) => i.code === this.$i18n.locale
     )
     this.$vuetify.rtl = rtl
+    this.$vuetify.lang.current = this.$i18n.locale
   },
 }
 </script>

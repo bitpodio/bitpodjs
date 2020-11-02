@@ -80,7 +80,7 @@
             <v-list dense class="pt-0">
               <v-list-item>
                 <v-btn text small color="primary" @click="onLogout">
-                  <i18n path="Drawer.Logout" />
+                  <i18n path="Common.Logout" />
                 </v-btn>
               </v-list-item>
             </v-list>
@@ -89,7 +89,7 @@
       </div>
       <div v-else>
         <v-btn class="ma-2" outlined color="primary" to="/login">
-          <i18n path="Drawer.Login" />
+          <i18n path="Common.Login" />
         </v-btn>
       </div>
     </v-app-bar>

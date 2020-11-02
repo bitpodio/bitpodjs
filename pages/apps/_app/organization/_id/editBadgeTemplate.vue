@@ -71,7 +71,6 @@
 </template>
 
 <script>
-import strings from '~/strings.js'
 import { required } from '~/utility/rules.js'
 export default {
   components: {

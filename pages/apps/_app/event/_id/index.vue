@@ -2036,10 +2036,10 @@ export default {
           `${url}Events/${this.$route.params.id}/LogoURL/${id}`
         )
         if (res) {
-          ;(this.snackbarText = this.$t(
+          this.snackbarText = this.$t(
             'Messages.Success.AttachmentDeleteSuccess'
-          )),
-            (this.snackbar = true)
+          )
+          this.snackbar = true
           this.refresh()
         }
       }
@@ -2052,10 +2052,10 @@ export default {
           `${url}Events/${this.$route.params.id}/Others/${id}`
         )
         if (res) {
-          ;(this.snackbarText = this.$t(
+          this.snackbarText = this.$t(
             'Messages.Success.AttachmentDeleteSuccess'
-          )),
-            (this.snackbar = true)
+          )
+          this.snackbar = true
           this.refresh()
         }
       }

@@ -952,7 +952,6 @@
 <script>
 import gql from 'graphql-tag'
 import format from 'date-fns/format'
-import strings from '../strings.js'
 import { formatTimezoneDateFieldsData } from '~/utility/form.js'
 import Lookup from '~/components/common/form/lookup.vue'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'

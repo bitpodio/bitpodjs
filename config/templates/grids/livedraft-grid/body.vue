@@ -229,13 +229,13 @@
                 <div class="text-truncate d-block">
                   <span v-if="item.LocationType === 'Bitpod Virtual'">
                     <v-text class="ma-0 mr-1 event-tags body-2"
-                      >#Bitpod Virtual</v-text
-                    >
+                      ><i18n path="Common.BitpodVirtual"
+                    /></v-text>
                   </span>
                   <span v-else-if="item.LocationType === 'Online event'">
                     <v-text class="ma-0 mr-1 event-tags body-2"
-                      >#Online event</v-text
-                    >
+                      ><i18n path="Common.OnlineEventText"
+                    /></v-text>
                   </span>
                   <span v-else>
                     <v-text

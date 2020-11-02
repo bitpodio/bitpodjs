@@ -320,7 +320,6 @@
 
 <script>
 import gql from 'graphql-tag'
-import strings from '~/strings.js'
 import Timezone from '~/components/common/form/timezone'
 import { required } from '~/utility/rules.js'
 import event from '~/config/apps/event/gql/event.gql'
@@ -466,7 +465,8 @@ export default {
           if (!EndDate) endDateMessage = this.requiredRules
           else if (StartDate && EndDate && StartDate > EndDate)
             endDateMessage = this.$t('Messages.Error.EventStartEndDate')
-          else if (EndDate < new Date()) endDateMessage = strings.EVENT_END_DATE
+          else if (EndDate < new Date())
+            endDateMessage = this.$t('Messages.Error.EventEndDate')
           else endDateMessage = ''
           return endDateMessage || true
         },

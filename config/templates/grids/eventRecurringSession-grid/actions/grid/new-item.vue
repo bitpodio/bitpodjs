@@ -12,7 +12,7 @@
           <v-icon v-if="actionType === 'Edit'" left class="fs-16"
             >fa-pencil</v-icon
           >
-          {{ (actionType === 'New' ? 'New Recurring Session' : 'Edit') }}
+          {{ (actionType === 'New' ? $t('Common.NewRecurringSession') : $t('Drawer.Edit')) }}
         </v-btn>
       </template>
       <v-card>
@@ -20,7 +20,7 @@
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
           <h2 class="black--text pt-5 pb-4 text-h5">
-            {{ (actionType === 'New' ? 'New Session' : 'Edit Session') }}
+            {{ (actionType === 'New' ? $t('Common.NewSession') : $t('Common.EditSession')) }}
           </h2>
 
           <v-spacer></v-spacer>
@@ -516,7 +516,6 @@
 <script>
 import gql from 'graphql-tag'
 import { formatGQLResult } from '~/utility/gql.js'
-import strings from '~/strings.js'
 import { required, onlineEventLink } from '~/utility/rules.js'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import location from '~/config/apps/event/gql/location.gql'

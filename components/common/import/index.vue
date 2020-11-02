@@ -79,7 +79,9 @@
                   ><i18n path="Common.ChooseFile"
                 /></v-btn>
                 <div class="pt-1 pl-2">
-                  {{ fileList.length ? fileList[0].name : 'No file chosen' }}
+                  {{
+                    fileList.length ? fileList[0].name : $t('Common.FileChosen')
+                  }}
                 </div>
               </div>
             </div>

@@ -12,6 +12,7 @@ export default function ({ app, $vuetify }) {
     // console.log({ oldLocale, newLocale })
     i18n.setLocaleCookie(newLocale)
     $vuetify.rtl = getRTL(newLocale, app)
+    $vuetify.lang.current = newLocale
   }
 
   function getRTL(locale, app) {

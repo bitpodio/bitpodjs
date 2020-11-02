@@ -511,7 +511,7 @@
     "AdditionalOnlineEventJoining": "Additional online event joining instructions,URL,phone,etc*",
     "VenueAddress": "Venue Address",
     "CurrencyReq": "Currency*",
-    "SEOElements ": "SEO elements are auto derived from event elements when event is created or edited. Check this if you want to Turn off auto update",
+    "SEOElements": "SEO elements are auto derived from event elements when event is created or edited. Check this if you want to Turn off auto update",
     "MetaDescription": "Meta Description",
     "MetaKeywords": "Meta Keywords",
     "LabelForSpeakers": "Label for Speakers section",
@@ -644,7 +644,21 @@
     "IsActiveField": "Is Active",
     "OfferValueRequired": "Offer Value *",
     "MinApplicableOrderAmount": "Min Applicable Order Amount",
-    "VenueRequired": "Venue *"
+    "VenueRequired": "Venue *",
+    "FileChosen": "No file chosen",
+    "ShowLess": "Show Less",
+    "ShowMore": "Show More",
+    "SelectOnePriorInvite": "to select one of the prior invite",
+    "NewRecurringSession": "New Recurring Session",
+    "EditSession": "Edit Session",
+    "CustomErrorMessage": "custom {errorMessage}",
+    "MoreAbout": "More info about",
+    "HeaderTemplate": "header Template",
+    "BitpodVirtual": "#Bitpod Virtual",
+    "OnlineEventText": "#Online event",
+    "Gallery": "Gallery",
+    "Reviews": "Reviews",
+    "DateTime": "Date and Time"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",
@@ -738,7 +752,8 @@
       "SessionStartDate": "Session start date should be in between event date",
       "RefundPaidAmount": "Refunded Amount can not be greater or equal than total paid amount",
       "RefundAmountMsg": "Amount should not be less than or equal to  0",
-      "InvalidDisplayOrder": "Display order should not be blank and less than 1" 
+      "InvalidDisplayOrder": "Display order should not be blank and less than 1",
+      "EventEndDate": "Event end date should not be less than current date"  
     },
     "Warn": {
       "UniqueLinkFormat": "Lower case alphanumeric letters only",
@@ -750,7 +765,7 @@
       "FailedDeleteComment": "Failed to delete comment.",
       "AccessKeySecretCopied": "Access Key and Secret copied to clipboard",
       "DeletedSuccessfully": "Item deleted successfully",
-      "SuccessfulCheckedIn.": "Congratulations, You have successfully checked in.",
+      "SuccessfulCheckedIn": "Congratulations, You have successfully checked in.",
       "ConnectionSuccessfully": "Connection Updated Successfully",
       "ConnectionDeletedSuccessfully": "Connection deleted Successfully",
       "ConnectionSetupSuccessfully": "Connection setup Successfully",
@@ -765,5 +780,69 @@
       "FailedFetchToken": "Failed to fetch JWT token.",
       "SeatmapUpdateSuccess": "Seatmap Updated Successfully"
     }
+  },
+  "$vuetify": {
+    "badge":"Badge",
+    "close":"Close",
+    "dataIterator":{
+      "noResultsText":"No matching records found",
+      "loadingText":"Loading items..."
+    },
+   "dataTable":{
+      "itemsPerPageText":"Rows per page:",
+      "ariaLabel":{
+         "sortDescending":"Sorted descending.",
+         "sortAscending":"Sorted ascending.",
+         "sortNone":"Not sorted.",
+         "activateNone":"Activate to remove sorting.",
+         "activateDescending":"Activate to sort descending.",
+         "activateAscending":"Activate to sort ascending."
+      },
+      "sortBy":"Sort by"
+   },
+   "dataFooter":{
+      "itemsPerPageText":"Items per page:",
+      "itemsPerPageAll":"All",
+      "nextPage":"Next page",
+      "prevPage":"Previous page",
+      "firstPage":"First page",
+      "lastPage":"Last page",
+      "pageText":"{0}-{1} of {2}"
+   },
+   "datePicker":{
+      "itemsSelected":"{0} selected",
+      "nextMonthAriaLabel":"Next month",
+      "nextYearAriaLabel":"Next year",
+      "prevMonthAriaLabel":"Previous month",
+      "prevYearAriaLabel":"Previous year"
+   },
+   "noDataText":"No data available",
+   "carousel":{
+      "prev":"Previous visual",
+      "next":"Next visual",
+      "ariaLabel":{
+         "delimiter":"Carousel slide {0} of {1}"
+      }
+   },
+   "calendar":{
+      "moreEvents":"{0} more"
+   },
+   "fileInput":{
+      "counter":"{0} files",
+      "counterSize":"{0} files ({1} in total)"
+   },
+   "timePicker":{
+      "am":"AM",
+      "pm":"PM"
+   },
+   "pagination":{
+      "ariaLabel":{
+         "wrapper":"Pagination Navigation",
+         "next":"Next page",
+         "previous":"Previous page",
+         "page":"Goto Page {0}",
+         "currentPage":"Current Page, Page {0}"
+      }
+   }
   }
 }

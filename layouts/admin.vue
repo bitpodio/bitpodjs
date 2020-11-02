@@ -224,8 +224,8 @@
                 :disabled="!valid"
                 depressed
                 @click="onSave"
-                >Save</v-btn
-              >
+                ><i18n path="Drawer.Save"
+              /></v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>

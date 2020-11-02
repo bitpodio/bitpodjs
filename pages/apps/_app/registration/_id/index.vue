@@ -375,7 +375,7 @@
           </div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">Address</div>
+          <i18n path="Common.Address" class="body-2 text--secondary" />
           <div class="body-1">{{ VenueName }}{{ AddressLine }}</div>
         </v-flex>
       </div>

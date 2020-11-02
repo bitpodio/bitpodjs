@@ -11,7 +11,7 @@
       <v-icon class="fs-18" left>{{
         isEdit ? 'fa-pencil' : 'mdi-plus'
       }}</v-icon>
-      {{ isEdit ? 'Edit Session' : 'New Session' }}
+      {{ isEdit ? $t('Common.EditSession') : $t('Common.NewSession') }}
     </v-btn>
     <v-dialog
       v-model="dialog"
@@ -24,7 +24,7 @@
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
           <h2 class="black--text pt-5 pb-3 text-h5">
-            {{ isEdit ? 'Edit Session' : 'New Session' }}
+            {{ isEdit ? $t('Common.EditSession') : $t('Common.NewSession') }}
           </h2>
           <v-spacer></v-spacer>
           <div>
@@ -290,7 +290,6 @@
 import gql from 'graphql-tag'
 import { utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz'
 import { formatGQLResult } from '~/utility/gql.js'
-import strings from '~/strings.js'
 import { required, onlineEventLink } from '~/utility/rules.js'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import location from '~/config/apps/event/gql/location.gql'

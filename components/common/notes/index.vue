@@ -141,7 +141,7 @@
           class="blue--text cursorPointer"
           @click="showMore = !showMore"
         >
-          {{ showMore ? 'Show Less' : 'Show More' }}
+          {{ showMore ? $t('Common.ShowLess') : $t('Common.ShowMore') }}
         </div>
       </v-col>
     </v-row>
