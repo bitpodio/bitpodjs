@@ -47,7 +47,7 @@
             <v-text-field
               v-model="search"
               append-icon="mdi-magnify"
-              label="Search"
+              :label="$t('Common.Search')"
               hide-details
               class="grid-search-input ml-2"
               outlined
@@ -60,7 +60,7 @@
         <v-data-table
           v-model="selectedItems"
           dense
-          :headers="headers"
+          :headers="translate(headers)"
           :items="tableData.items"
           :single-select="singleSelect"
           :loading="loading"
@@ -71,7 +71,7 @@
           :show-expand="showExpand"
           :single-expand="singleExpand"
           item-key="id"
-          class="elevation-0"
+          class="elevation-0 v-grid"
           :class="hideDefaultHeader ? 'px-0 pt-0 istemplate' : 'px-2 pt-1'"
           :show-select="showSelect"
           @update:options="updatePagination"
@@ -322,7 +322,7 @@ export default {
     },
   },
   data() {
-    const headers = getTableHeader(this.content, this.viewName)
+    const headers = getTableHeader(this.content, this.viewName, this)
     const gridProps = getGridsProps(this.content, this.viewName)
     return {
       headers,
@@ -546,6 +546,14 @@ export default {
           this.loading = false
         }
       }
+    },
+    translate(headers) {
+      const headerObj = []
+      headers.map((e) => {
+        e.text = this.$t(e.text)
+        headerObj.push(e)
+      })
+      return headerObj
     },
   },
   apollo: {

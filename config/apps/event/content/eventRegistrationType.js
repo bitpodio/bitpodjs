@@ -16,11 +16,11 @@ export default {
       fields: {
         Name: {
           form: {
-            caption: 'Name',
+            caption: 'Common.Name',
             displayOrder: 1,
           },
           displayOrder: 1,
-          caption: 'Name',
+          caption: 'Common.Name',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -30,18 +30,18 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Name is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.NameRequired')
             },
           ],
         },
         MaxQuantityAllowed: {
           form: {
-            caption: 'Max Quantity Allowed',
+            caption: 'Common.MaxQuantityAllowed',
             displayOrder: 2,
           },
           displayOrder: 2,
-          caption: 'Max Quantity Allowed',
+          caption: 'Common.MaxQuantityAllowed',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -55,11 +55,11 @@ export default {
         },
         DisplayOrder: {
           form: {
-            caption: 'Display Order',
+            caption: 'Common.DisplayOrd',
             displayOrder: 3,
           },
           displayOrder: 3,
-          caption: 'Display Order',
+          caption: 'Common.DisplayOrd',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -72,11 +72,11 @@ export default {
         },
         ColorCode: {
           form: {
-            caption: 'Color Code',
+            caption: 'Common.ColorCode',
             displayOrder: 5,
           },
           displayOrder: 4,
-          caption: 'Color Code',
+          caption: 'Common.ColorCode',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -88,11 +88,11 @@ export default {
         },
         AllowMultiple: {
           form: {
-            caption: 'Allow Multiple',
+            caption: 'Common.AllowMultiple',
             displayOrder: 4,
           },
           displayOrder: 5,
-          caption: 'Allow Multiple',
+          caption: 'Common.AllowMultiple',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -102,7 +102,7 @@ export default {
         },
         isDefault: {
           displayOrder: 6,
-          caption: 'Default',
+          caption: 'Common.Default',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',

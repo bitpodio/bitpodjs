@@ -10,7 +10,11 @@
       {{ value }}
     </v-chip>
     <template v-slot:input>
-      <v-text-field v-model="value" label="Edit" single-line></v-text-field>
+      <v-text-field
+        v-model="value"
+        :label="$t('Drawer.Edit')"
+        single-line
+      ></v-text-field>
     </template>
   </v-edit-dialog>
 </template>

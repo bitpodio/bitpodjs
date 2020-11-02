@@ -1,9 +1,7 @@
 <template>
   <v-flex>
     <v-snackbar v-model="snackbar" :top="true" :timeout="1000">
-      <div class="toast py-2 pr-1 pl-3">
-        Some Error Occured, Please contact Administrator.
-      </div>
+      <i18n path="Common.SomeErrorOccured" class="toast py-2 pr-1 pl-3" />
     </v-snackbar>
     <v-dialog v-model="dialog" persistent scrollable content-class="slide-form">
       <template v-slot:activator="{ on, attrs }">
@@ -26,7 +24,7 @@
             class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
           >
             <h2 class="black--text pt-4 pb-2 text-h5">
-              New Email Confirmation Template
+              <i18n path="Common.NewEmailConfirmationTemplate" />
             </h2>
             <v-spacer></v-spacer>
             <div>
@@ -35,8 +33,10 @@
               </v-btn>
             </div>
             <v-tabs v-model="curentTab" height="36">
-              <v-tab class="px-0 mr-4">Content</v-tab>
-              <v-tab :disabled="!RTEValue" class="px-0 mr-4">Basic Info</v-tab>
+              <v-tab class="px-0 mr-4"><i18n path="Common.Content" /></v-tab>
+              <v-tab :disabled="!RTEValue" class="px-0 mr-4"
+                ><i18n path="Common.BasicInfo"
+              /></v-tab>
             </v-tabs>
           </v-card-title>
           <v-card-text
@@ -46,8 +46,7 @@
               <v-tab-item>
                 <v-card v-if="choosedTemplate === 0" flat>
                   <p class="mt-4 mb-3">
-                    Use a pre designed template or editor to design your
-                    content.
+                    <i18n path="Common.PredesignedTemplate" />
                   </p>
                   <div class="pr-3 pt-1 tabContent">
                     <v-row>
@@ -107,8 +106,8 @@
                                 templateID = item.id
                                 templateSubject = Subject
                               "
-                              >Select</v-btn
-                            >
+                              ><i18n path="Common.Select"
+                            /></v-btn>
                             <v-btn
                               class="ma-2"
                               outlined
@@ -120,8 +119,8 @@
                                     : $config.cdnUri + 'invitee-image.png'
                                 )
                               "
-                              >View</v-btn
-                            >
+                              ><i18n path="Drawer.View"
+                            /></v-btn>
                           </div>
                           <div
                             class="text-truncate text-center text-capitalize"
@@ -146,10 +145,13 @@
                             class="text-h5 my-2"
                             style="font-size: 18px !important;"
                           >
-                            Rich Text Editor
+                            <i18n path="Common.RichTextEditor" />
                           </h3>
                           <div class="Caption mb-4">
-                            Use editor to design your content.
+                            <i18n
+                              path="Common.UseEditor"
+                              class="Caption mb-4"
+                            />
                           </div>
                         </v-card>
                       </v-col>
@@ -173,8 +175,7 @@
                 <v-card v-else flat class="tabContent">
                   <v-flex class="d-flex">
                     <p class="mt-5 mb-4">
-                      Continue with default content or use editor to change
-                      content.
+                      <i18n path="Common.DefaultContent" />
                     </p>
                     <v-spacer></v-spacer>
                     <v-btn
@@ -185,8 +186,8 @@
                         choosedTemplate = 0
                         RTEValue = ''
                       "
-                      >X Discard</v-btn
-                    >
+                      ><i18n path="Drawer.XDiscard"
+                    /></v-btn>
                   </v-flex>
 
                   <RichText
@@ -199,8 +200,7 @@
               <v-tab-item>
                 <v-card flat class="tabContent">
                   <p class="mt-4 mb-2">
-                    Start with entering basic information about your email
-                    invite and then press next.
+                    <i18n path="Common.EnteringBasicInformation" />
                   </p>
                   <div class="pr-3 pt-1">
                     <v-form ref="form">
@@ -208,13 +208,15 @@
                         <v-col cols="12" class="pb-0">
                           <v-text-field
                             v-model="subject"
-                            label="Subject *"
+                            :label="$t('Common.SubjectRequired')"
                             outlined
                             dense
                             :rules="[
                               (v) => {
                                 invalid = !subject || !sender || !setReplyTo
-                                return v ? true : 'This field is required'
+                                return v
+                                  ? true
+                                  : $t('Messages.Error.ThisFieldRequired')
                               },
                             ]"
                           ></v-text-field>
@@ -222,7 +224,7 @@
                         <v-col cols="12" class="pb-0">
                           <v-text-field
                             v-model="senderName"
-                            label="Sender Name"
+                            :label="$t('Common.SenderName')"
                             outlined
                             dense
                           ></v-text-field>
@@ -230,13 +232,15 @@
                         <v-col cols="12" class="pb-0">
                           <v-text-field
                             v-model="sender"
-                            label="Sender *"
+                            :label="$t('Common.SenderRequired')"
                             outlined
                             dense
                             :rules="[
                               (v) => {
                                 invalid = !subject || !sender || !setReplyTo
-                                return v ? true : 'This field is required'
+                                return v
+                                  ? true
+                                  : $t('Messages.Error.ThisFieldRequired')
                               },
                             ]"
                           ></v-text-field>
@@ -244,13 +248,15 @@
                         <v-col cols="12" class="pb-0">
                           <v-text-field
                             v-model="setReplyTo"
-                            label="Set reply-to *"
+                            :label="$t('Common.SetReply')"
                             outlined
                             dense
                             :rules="[
                               (v) => {
                                 invalid = !subject || !sender || !setReplyTo
-                                return v ? true : 'This field is required'
+                                return v
+                                  ? true
+                                  : $t('Messages.Error.ThisFieldRequired')
                               },
                             ]"
                           ></v-text-field>
@@ -258,11 +264,8 @@
                         <v-col cols="12" class="pb-0">
                           <v-icon class="amber--text">fa-bulb</v-icon>
                           <v-card-text class="d-inline pa-0">
-                            You may refer invite members data by using
-                            placeholder expressions in subject line. e.g:
-                            ${Registration.FirstName} ${Registration.LastName}
-                            ${OrganizationInfo.Name}</v-card-text
-                          >
+                            <i18n path="Common.YouMayReferInviteMembersData"
+                          /></v-card-text>
                         </v-col>
                       </v-row>
                     </v-form>
@@ -276,23 +279,23 @@
             class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
           >
             <v-btn v-if="curentTab > 0" depressed @click="curentTab--"
-              >Prev</v-btn
-            >
+              ><i18n path="Drawer.Prev"
+            /></v-btn>
             <v-btn
               v-if="curentTab < 1"
               color="primary"
               depressed
               @click="curentTab++"
-              >Next</v-btn
-            >
+              ><i18n path="Drawer.Next"
+            /></v-btn>
             <v-btn
               v-if="(curentTab === 1)"
               color="primary"
               :disabled="!RTEValue || !subject || !sender || !setReplyTo"
               depressed
               @click.native="onSave"
-              >Save</v-btn
-            >
+              ><i18n path="Drawer.Save"
+            /></v-btn>
           </v-card-actions>
         </v-card>
       </template>

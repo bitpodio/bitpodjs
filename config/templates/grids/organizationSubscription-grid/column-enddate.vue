@@ -1,11 +1,10 @@
 <template>
-  <div>
-    {{ date }}
+  <div v-if="date !== undefined && date">
+    {{ $d(new Date(date), 'long', $i18n.locale) }}
   </div>
 </template>
 
 <script>
-import format from 'date-fns/format'
 export default {
   props: {
     item: {
@@ -16,11 +15,8 @@ export default {
   },
   data() {
     return {
-      date: '',
+      date: this.item.EndDate,
     }
-  },
-  mounted() {
-    this.date = format(new Date(this.item.EndDate), 'PPp')
   },
 }
 </script>

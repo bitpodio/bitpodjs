@@ -1,9 +1,7 @@
 <template>
   <v-flex>
     <v-snackbar v-model="snackbar" :top="true" :timeout="1000">
-      <div class="toast py-2 pr-1 pl-3">
-        Some Error Occured, Please contact Administrator.
-      </div>
+      <i18n path="Common.SomeErrorOccured" class="toast py-2 pr-1 pl-3" />
     </v-snackbar>
     <v-dialog v-model="dialog" persistent scrollable content-class="slide-form">
       <template v-slot:activator="{ on, attrs }">
@@ -26,7 +24,7 @@
             class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
           >
             <h2 class="black--text pt-4 pb-2 text-h5">
-              New Email Confirmation Template
+              <i18n path="Common.NewEmailConfirmationTemplate" />
             </h2>
             <v-spacer></v-spacer>
             <div>
@@ -35,8 +33,10 @@
               </v-btn>
             </div>
             <v-tabs v-model="curentTab" height="36">
-              <v-tab class="px-0 mr-4">Basic Info</v-tab>
-              <v-tab :disabled="invalid" class="px-0 mr-4">Content</v-tab>
+              <v-tab class="px-0 mr-4"><i18n path="Common.BasicInfo" /></v-tab>
+              <v-tab :disabled="invalid" class="px-0 mr-4"
+                ><i18n path="Common.Content"
+              /></v-tab>
             </v-tabs>
           </v-card-title>
           <v-card-text
@@ -46,8 +46,7 @@
               <v-tab-item>
                 <v-card flat class="tabContent">
                   <p class="mt-4 mb-2">
-                    Start with entering basic information about your email
-                    invite and then press next.
+                    <i18n path="Common.EnteringBasicInformation" />
                   </p>
                   <div class="pr-3 pt-1">
                     <v-form ref="form">
@@ -55,13 +54,15 @@
                         <v-col cols="12" class="pb-0">
                           <v-text-field
                             v-model="subject"
-                            label="Subject *"
+                            :label="$t('Common.SubjectRequired')"
                             outlined
                             dense
                             :rules="[
                               (v) => {
                                 invalid = !subject || !sender
-                                return v ? true : 'This field is required'
+                                return v
+                                  ? true
+                                  : $t('Messages.Error.ThisFieldRequired')
                               },
                             ]"
                           ></v-text-field>
@@ -69,7 +70,7 @@
                         <v-col cols="12" class="pb-0">
                           <v-text-field
                             v-model="senderName"
-                            label="Sender Name"
+                            :label="$t('Common.SenderName')"
                             outlined
                             dense
                           ></v-text-field>
@@ -77,13 +78,15 @@
                         <v-col cols="12" class="pb-0">
                           <v-text-field
                             v-model="sender"
-                            label="Sender *"
+                            :label="$t('Common.SenderRequired')"
                             outlined
                             dense
                             :rules="[
                               (v) => {
                                 invalid = !subject || !sender
-                                return v ? true : 'This field is required'
+                                return v
+                                  ? true
+                                  : $t('Messages.Error.ThisFieldRequired')
                               },
                             ]"
                           ></v-text-field>
@@ -97,8 +100,7 @@
                 <v-card flat class="tabContent">
                   <v-flex class="d-flex">
                     <p class="mt-5 mb-4">
-                      Continue with default content or use editor to change
-                      content.
+                      <i18n path="Common.DefaultContent" />
                     </p>
                     <v-spacer></v-spacer>
                   </v-flex>
@@ -113,23 +115,23 @@
             class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
           >
             <v-btn v-if="curentTab > 0" depressed @click="curentTab--"
-              >Prev</v-btn
-            >
+              ><i18n path="Drawer.Prev"
+            /></v-btn>
             <v-btn
               v-if="curentTab < 1"
               color="primary"
               depressed
               @click="curentTab++"
-              >Next</v-btn
-            >
+              ><i18n path="Drawer.Next"
+            /></v-btn>
             <v-btn
               v-if="(curentTab === 1)"
               color="primary"
               :disabled="!RTEValue || !subject || !sender"
               depressed
               @click.native="onSave"
-              >Save</v-btn
-            >
+              ><i18n path="Drawer.Save"
+            /></v-btn>
           </v-card-actions>
         </v-card>
       </template>

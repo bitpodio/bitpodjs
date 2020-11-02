@@ -15,7 +15,7 @@
             class="logo-bitpod"
           ></v-img>
         </span>
-        <span d-inline-flex align-center class="mx-2">Event</span>
+        <i18n path="Common.AppTitle" class="d-inline-flex align-center mx-2" />
         <v-spacer></v-spacer>
         <div v-if="drawer === true" class="d-none d-sm-flex">
           <v-app-bar-nav-icon
@@ -34,7 +34,7 @@
           v-on="on"
           @click.native="dialog = true"
         >
-          Create user
+          <i18n path="Drawer.CreateUser" />
         </v-btn>
       </div>
       <v-list shaped>
@@ -42,7 +42,11 @@
           <v-row v-if="item.heading" :key="item.heading" align="center">
             <div class="pa-0 pl-5">
               <v-subheader v-if="item.heading" class="nav-subheader pl-2">
-                {{ item.heading }}
+                <i18n v-if="item.heading === 'Event'" path="Common.EventApp" />
+                <i18n
+                  v-if="item.heading === 'Security'"
+                  path="Common.Security"
+                />
               </v-subheader>
             </div>
           </v-row>
@@ -56,7 +60,29 @@
             <template v-slot:activator>
               <v-list-item-content>
                 <v-list-item-title class="nav-title">
-                  {{ item.text }}
+                  <i18n
+                    v-if="item.text === 'Organization'"
+                    path="Common.Organization"
+                  />
+                  <i18n v-if="item.text === 'Lookups'" path="Common.Lookups" />
+                  <i18n
+                    v-if="item.text === 'Templates'"
+                    path="Common.Templates"
+                  />
+                  <i18n
+                    v-if="item.text === 'Badges Templates'"
+                    path="Common.BadgesTemplates"
+                  />
+                  <i18n
+                    v-if="item.text === 'Registration Form'"
+                    path="Common.RegistrationForm"
+                  />
+                  <i18n v-if="item.text === 'Roles'" path="Common.Roles" />
+                  <i18n v-if="item.text === 'Users'" path="Common.Users" />
+                  <i18n
+                    v-if="item.text === 'Access Keys'"
+                    path="Common.AccessKeys"
+                  />
                 </v-list-item-title>
               </v-list-item-content>
             </template>
@@ -64,7 +90,7 @@
               v-for="(child, i) in item.children"
               :key="i"
               link
-              :to="item.to"
+              :to="localePath(item.to)"
               router
               exact
             >
@@ -78,7 +104,14 @@
               </v-list-item-content>
             </v-list-item>
           </v-list-group>
-          <v-list-item v-else :key="item.text" link :to="item.to" router exact>
+          <v-list-item
+            v-else
+            :key="item.text"
+            link
+            :to="localePath(item.to)"
+            router
+            exact
+          >
             <v-list-item-action class="nav-icon">
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-action>
@@ -109,13 +142,17 @@
             class="logo-bitpod"
           ></v-img>
         </span>
-        <span d-inline-flex align-center class="mx-2 text-h5">Event</span>
+        <i18n
+          path="Common.AppTitle"
+          class="d-inline-flex align-center mx-2 text-h5"
+        />
         <v-spacer></v-spacer>
       </v-toolbar-title>
       <div class="d-flex d-sm-flex d-md-none ml-n3">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       </div>
       <v-spacer></v-spacer>
+      <LanguageSwitcher />
       <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
         <v-icon>mdi-invert-colors</v-icon>
       </v-btn>
@@ -166,7 +203,7 @@
             <v-list dense class="pt-0">
               <v-list-item>
                 <v-btn text small color="primary" @click="onLogout">
-                  Logout
+                  <i18n path="Common.Logout" />
                 </v-btn>
               </v-list-item>
             </v-list>
@@ -183,7 +220,7 @@
               class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start font-weight-regular"
             >
               <h2 class="black--text pt-10 pb-9 font-weight-regular">
-                New User
+                <i18n path="Common.NewUser" />
               </h2>
               <v-spacer></v-spacer>
               <div>
@@ -198,7 +235,7 @@
                   <v-col cols="12" sm="10" md="8" class="pb-0">
                     <v-text-field
                       v-model="email"
-                      label="Enter Email *"
+                      :label="$t('Common.EnterEmail')"
                       :rules="emailRules"
                       outlined
                       dense
@@ -216,15 +253,15 @@
                 :disabled="!valid"
                 depressed
                 @click="onSave"
-                >Save</v-btn
-              >
+                ><i18n path="Drawer.Save"
+              /></v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
       </div>
       <div v-else>
         <v-btn class="ma-2" outlined color="primary" to="/login">
-          Login
+          <i18n path="Common.Login" />
         </v-btn>
       </div>
     </v-app-bar>

@@ -142,7 +142,7 @@
                           class="fa fa-black-board pr-1"
                           aria-hidden="true"
                         ></i>
-                        Sessions
+                        <i18n path="Common.Sessions" />
                       </h2>
                       <v-spacer></v-spacer>
                     </v-flex>
@@ -208,7 +208,7 @@
                                   startEvent(item.BitpodVirtualLink, true)
                                 "
                               >
-                                Join Session<v-icon right>
+                                <i18n path="Common.JoinSession" /><v-icon right>
                                   mdi-video
                                 </v-icon>
                               </v-btn>
@@ -233,7 +233,7 @@
                   <v-flex class="d-flex justify-center align-center pb-3">
                     <h2 class="body-1 pb-0">
                       <i class="fa fa-users pr-1" aria-hidden="true"></i>
-                      Attendee
+                      <i18n path="Common.Attendee" />
                     </h2>
                     <v-spacer></v-spacer>
                   </v-flex>
@@ -295,7 +295,9 @@
                                   outlined
                                   color="success"
                                 >
-                                  Join Session<v-icon right>
+                                  <i18n path="Common.JoinSession" /><v-icon
+                                    right
+                                  >
                                     mdi-video
                                   </v-icon>
                                 </v-btn>
@@ -322,7 +324,9 @@
                                   outlined
                                   color="success"
                                 >
-                                  Join Session<v-icon right>
+                                  <i18n path="Common.JoinSession" /><v-icon
+                                    right
+                                  >
                                     mdi-video
                                   </v-icon>
                                 </v-btn>
@@ -349,7 +353,7 @@
                   <v-flex class="d-flex justify-center align-center pb-3">
                     <h2 class="body-1 pb-0">
                       <i class="fa fa-black-board pr-1" aria-hidden="true"></i>
-                      Sessions
+                      <i18n path="Common.Sessions" />
                     </h2>
                     <v-spacer></v-spacer>
                   </v-flex>
@@ -414,7 +418,7 @@
                               color="success"
                               @click="startEvent(item.bitpodVirtualLink, true)"
                             >
-                              Join Session<v-icon right>
+                              <i18n path="Common.JoinSession" /><v-icon right>
                                 mdi-video
                               </v-icon>
                             </v-btn>
@@ -431,7 +435,7 @@
                 <v-flex class="d-flex justify-center align-center pb-3">
                   <h2 class="body-1 pb-0">
                     <i class="fa fa-users pr-1" aria-hidden="true"></i>
-                    Attendees
+                    <i18n path="Common.Attendees" />
                   </h2>
                   <v-spacer></v-spacer>
                 </v-flex>
@@ -495,7 +499,7 @@
               <v-flex class="d-flex justify-center align-center pb-3">
                 <h2 class="body-1 pb-0">
                   <i class="fa fa-mic pr-1" aria-hidden="true"></i>
-                  Speakers
+                  <i18n path="Common.Speakers" />
                 </h2>
                 <v-spacer></v-spacer>
               </v-flex>
@@ -552,7 +556,8 @@
           >
             <v-flex class="d-flex justify-center align-center pb-3">
               <h2 class="body-1 pb-0">
-                <i class="fa fa-users pr-1" aria-hidden="true"></i> Gallery
+                <i class="fa fa-users pr-1" aria-hidden="true"></i>
+                <i18n path="Common.Gallery" />
               </h2>
               <v-spacer></v-spacer>
             </v-flex>
@@ -594,7 +599,8 @@
           >
             <v-flex class="d-flex justify-center align-center pb-3">
               <h2 class="body-1 pb-0">
-                <i class="fa fa-users pr-1" aria-hidden="true"></i> Reviews
+                <i class="fa fa-users pr-1" aria-hidden="true"></i>
+                <i18n path="Common.Reviews" />
               </h2>
               <v-spacer></v-spacer>
             </v-flex>
@@ -664,7 +670,7 @@
                   ><v-flex class="d-flex justify-center align-center pb-0">
                     <h2 class="body-1 pb-0">
                       <i class="fa fa-ticket pr-1" aria-hidden="true"></i>
-                      Tickets
+                      <i18n path="Common.Tickets" />
                     </h2>
                     <v-spacer></v-spacer> </v-flex
                 ></v-expansion-panel-header>
@@ -675,16 +681,16 @@
                       <thead>
                         <tr>
                           <th class="text-left">
-                            Name
+                            <i18n path="Common.Name" />
                           </th>
                           <th class="text-left">
-                            Amount
+                            <i18n path="Common.Amount" />
                           </th>
                           <th class="text-left">
-                            Quantity
+                            <i18n path="Common.Quantity" />
                           </th>
                           <th class="text-left">
-                            Total
+                            <i18n path="Common.Total" />
                           </th>
                         </tr>
                       </thead>
@@ -708,7 +714,7 @@
                         <tr>
                           <td></td>
                           <td></td>
-                          <td>Total</td>
+                          <td><i18n path="Common.Total" /></td>
                           <td>
                             {{ registration.Currency }}
                             {{ registration.TotalAmount }}
@@ -729,7 +735,7 @@
             <v-flex class="d-flex justify-center align-center pb-2">
               <h2 class="body-1 pb-0">
                 <i class="fa-calendar pr-1" aria-hidden="true"></i>
-                Date and Time
+                <i18n path="Common.DateTime" />
               </h2>
               <v-spacer></v-spacer>
             </v-flex>
@@ -774,7 +780,7 @@
             <v-flex class="d-flex justify-center align-center pb-2">
               <h2 class="body-1 pb-0">
                 <i class="fa-location pr-1" aria-hidden="true"></i>
-                Venue
+                <i18n path="Common.Venue" />
               </h2>
               <v-spacer></v-spacer>
             </v-flex>
@@ -813,7 +819,7 @@
                   color="success"
                   @click="startEvent(event.UniqLink)"
                 >
-                  Join Event<v-icon right>
+                  <i18n path="Common.JoinEvent" /><v-icon right>
                     mdi-video
                   </v-icon>
                 </v-btn>
@@ -821,7 +827,7 @@
               <div v-else-if="event.locationType === 'Online event'">
                 <div>
                   <v-chip class="ma-2 ml-0" color="primary" outlined pill>
-                    Online Event
+                    <i18n path="Common.OnlineEvent" />
                   </v-chip>
                 </div>
                 <div v-if="showOnlineJoinBtn()">
@@ -830,7 +836,7 @@
                     target="_blank"
                     class="text-decoration-none"
                     ><v-btn class="ma-2 ml-0" outlined color="success">
-                      Join Event<v-icon right>
+                      <i18n path="Common.JoinEvent" /><v-icon right>
                         mdi-video
                       </v-icon>
                     </v-btn></a
@@ -881,7 +887,7 @@
             <v-flex class="d-flex justify-center align-center pb-2">
               <h2 class="body-1 pb-0">
                 <i class="fa-user pr-1" aria-hidden="true"></i>
-                Organizer
+                <i18n path="Common.Organizer" />
               </h2>
               <v-spacer></v-spacer>
             </v-flex>

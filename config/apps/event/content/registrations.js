@@ -22,9 +22,9 @@ export default {
       fields: {
         FirstName: {
           displayOrder: 1,
-          caption: 'First Name',
+          caption: 'Common.FirstNameCaption',
           form: {
-            caption: 'First Name *',
+            caption: 'Common.FirstName',
             displayOrder: 1,
           },
           searchEnable: true,
@@ -36,16 +36,16 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'First Name is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.FirstNameRequired')
             },
           ],
         },
         LastName: {
           displayOrder: 1,
-          caption: 'Last Name',
+          caption: 'Common.LastNameCaption',
           form: {
-            caption: 'Last Name *',
+            caption: 'Common.LastName',
             displayOrder: 2,
           },
           searchEnable: true,
@@ -57,14 +57,14 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Last Name is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.LastNameRequired')
             },
           ],
         },
         PaymentMethod: {
           displayOrder: 10,
-          caption: 'PaymentMethod',
+          caption: 'Common.PaymentMethod',
           form: {
             caption: 'PaymentMethod*',
             displayOrder: 13,
@@ -79,9 +79,9 @@ export default {
         },
         CompanyName: {
           displayOrder: 4,
-          caption: 'Organization',
+          caption: 'Common.Organization',
           form: {
-            caption: 'Organization',
+            caption: 'Common.Organization',
             displayOrder: 5,
           },
           searchEnable: true,
@@ -95,9 +95,9 @@ export default {
         },
         Phone: {
           displayOrder: 5,
-          caption: 'Phone',
+          caption: 'Common.Phone',
           form: {
-            caption: 'Phone *',
+            caption: 'Common.PhoneRequired',
             displayOrder: 3,
           },
           searchEnable: true,
@@ -109,19 +109,22 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Phone is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.PhoneRequired')
             },
             function (value, data) {
-              return /^[0-9]\d*$|^$/.test(value) || 'Number must be valid'
+              return (
+                /^[0-9]\d*$|^$/.test(value) ||
+                this.$t('Messages.Error.NumberValid')
+              )
             },
           ],
         },
         Email: {
           displayOrder: 3,
-          caption: 'Email',
+          caption: 'Common.EmailCaption',
           form: {
-            caption: 'Email *',
+            caption: 'Common.Email',
             displayOrder: 4,
           },
           searchEnable: true,
@@ -133,19 +136,22 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Email is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.EmailRequired')
             },
             function (value, data) {
-              return /.+@.+\..+/.test(value) || 'E-mail must be valid'
+              return (
+                /.+@.+\..+/.test(value) ||
+                this.$t('Messages.Error.EmailRequired')
+              )
             },
           ],
         },
         '_CurrentAddress.AddressLine': {
-          caption: 'Address',
+          caption: 'Common.Address',
           searchEnable: true,
           form: {
-            caption: 'Address',
+            caption: 'Common.Address',
             displayOrder: 7,
           },
           sortEnable: true,
@@ -157,10 +163,10 @@ export default {
           hidden: true,
         },
         '_CurrentAddress.City': {
-          caption: 'City',
+          caption: 'Common.City',
           searchEnable: true,
           form: {
-            caption: 'City',
+            caption: 'Common.City',
             displayOrder: 8,
           },
           sortEnable: true,
@@ -172,9 +178,9 @@ export default {
           hidden: true,
         },
         '_CurrentAddress.State': {
-          caption: 'State',
+          caption: 'Common.State',
           form: {
-            caption: 'State',
+            caption: 'Common.State',
             displayOrder: 9,
           },
           searchEnable: true,
@@ -187,7 +193,7 @@ export default {
           hidden: true,
         },
         '_CurrentAddress.PostalCode': {
-          caption: 'Zip',
+          caption: 'Common.Zip',
           form: {
             caption: 'PostalCode',
             displayOrder: 10,
@@ -202,9 +208,9 @@ export default {
           hidden: true,
         },
         '_CurrentAddress.Country': {
-          caption: 'Country',
+          caption: 'Common.Country',
           form: {
-            caption: 'Country',
+            caption: 'Common.Country',
             displayOrder: 11,
           },
           searchEnable: true,
@@ -218,7 +224,7 @@ export default {
         },
         EventName: {
           displayOrder: 6,
-          caption: 'Event Name',
+          caption: 'Common.EventName',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -231,7 +237,7 @@ export default {
         },
         EventId: {
           displayOrder: 6,
-          caption: 'Event',
+          caption: 'Common.EventApp',
           form: {
             caption: 'Event *',
             displayOrder: 12,
@@ -261,7 +267,7 @@ export default {
         },
         AttendeeType: {
           displayOrder: 6,
-          caption: 'AttendeeType',
+          caption: 'Common.AttendeeType',
           form: {
             caption: 'RegistrationType',
             displayOrder: 15,
@@ -288,9 +294,9 @@ export default {
         },
         Status: {
           displayOrder: 9,
-          caption: 'Status',
+          caption: 'Common.Status',
           form: {
-            caption: 'Status *',
+            caption: 'Common.StatusRequired',
             displayOrder: 6,
           },
           searchEnable: true,
@@ -319,7 +325,7 @@ export default {
         },
         RegistrationId: {
           displayOrder: 6,
-          caption: 'RegistrationId',
+          caption: 'Common.RegistrationId',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -330,7 +336,7 @@ export default {
         },
         createdDate: {
           displayOrder: 11,
-          caption: 'createdDate',
+          caption: 'Common.CreatedDate',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -341,7 +347,7 @@ export default {
         },
         TicketQuantity: {
           displayOrder: 9,
-          caption: 'Attendees',
+          caption: 'Common.Attendees',
           form: {
             caption: 'Ticket Quantity',
             displayOrder: 14,
@@ -359,7 +365,7 @@ export default {
         },
         FullName: {
           displayOrder: 2,
-          caption: 'Full Name',
+          caption: 'Common.FullName',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -370,7 +376,7 @@ export default {
         },
         TotalAmount: {
           displayOrder: 8,
-          caption: 'TotalAmount',
+          caption: 'Common.TotalAmount',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -381,7 +387,7 @@ export default {
         },
         action: {
           displayOrder: 11,
-          caption: 'Action',
+          caption: 'Drawer.Action',
           searchEnable: false,
           sortEnable: false,
           columnWidth: '130px',
@@ -395,10 +401,10 @@ export default {
           },
         },
         TicketId: {
-          caption: 'Tickets',
+          caption: 'Common.Tickets',
           searchEnable: true,
           form: {
-            caption: 'Tickets *',
+            caption: 'Common.TicketsRequired',
             displayOrder: 13,
           },
           sortEnable: true,
@@ -443,7 +449,7 @@ export default {
         model: 'Registration',
       },
       itemTitle: 'Registration',
-      title: 'Registrations',
+      title: 'Common.Registrations',
       type: 'list',
     },
     'Abandoned Registrations': {
@@ -459,9 +465,9 @@ export default {
       fields: {
         FirstName: {
           displayOrder: 1,
-          caption: 'First Name',
+          caption: 'Common.FirstNameCaption',
           form: {
-            caption: 'First Name *',
+            caption: 'Common.FirstName',
             displayOrder: 1,
           },
           searchEnable: true,
@@ -473,16 +479,16 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'First Name is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.FirstNameRequired')
             },
           ],
         },
         LastName: {
           displayOrder: 1,
-          caption: 'Last Name',
+          caption: 'Common.LastNameCaption',
           form: {
-            caption: 'Last Name *',
+            caption: 'Common.LastName',
             displayOrder: 2,
           },
           searchEnable: true,
@@ -494,14 +500,14 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Last Name is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.LastNameRequired')
             },
           ],
         },
         PaymentMethod: {
           displayOrder: 10,
-          caption: 'PaymentMethod',
+          caption: 'Common.PaymentMethod',
           form: {
             caption: 'PaymentMethod*',
             displayOrder: 13,
@@ -516,9 +522,9 @@ export default {
         },
         CompanyName: {
           displayOrder: 4,
-          caption: 'Organization',
+          caption: 'Common.Organization',
           form: {
-            caption: 'Organization',
+            caption: 'Common.Organization',
             displayOrder: 5,
           },
           searchEnable: true,
@@ -532,9 +538,9 @@ export default {
         },
         Phone: {
           displayOrder: 5,
-          caption: 'Phone',
+          caption: 'Common.Phone',
           form: {
-            caption: 'Phone *',
+            caption: 'Common.PhoneRequired',
             displayOrder: 3,
           },
           searchEnable: true,
@@ -546,19 +552,22 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Phone is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.PhoneRequired')
             },
             function (value, data) {
-              return /^[0-9]\d*$|^$/.test(value) || 'Number must be valid'
+              return (
+                /^[0-9]\d*$|^$/.test(value) ||
+                this.$t('Messages.Error.NumberValid')
+              )
             },
           ],
         },
         Email: {
           displayOrder: 3,
-          caption: 'Email',
+          caption: 'Common.EmailCaption',
           form: {
-            caption: 'Email *',
+            caption: 'Common.Email',
             displayOrder: 4,
           },
           searchEnable: true,
@@ -570,19 +579,22 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Email is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.EmailRequired')
             },
             function (value, data) {
-              return /.+@.+\..+/.test(value) || 'E-mail must be valid'
+              return (
+                /.+@.+\..+/.test(value) ||
+                this.$t('Messages.Error.EmailRequired')
+              )
             },
           ],
         },
         '_CurrentAddress.AddressLine': {
-          caption: 'Address',
+          caption: 'Common.Address',
           searchEnable: true,
           form: {
-            caption: 'Address',
+            caption: 'Common.Address',
             displayOrder: 7,
           },
           sortEnable: true,
@@ -594,10 +606,10 @@ export default {
           hidden: true,
         },
         '_CurrentAddress.City': {
-          caption: 'City',
+          caption: 'Common.City',
           searchEnable: true,
           form: {
-            caption: 'City',
+            caption: 'Common.City',
             displayOrder: 8,
           },
           sortEnable: true,
@@ -609,9 +621,9 @@ export default {
           hidden: true,
         },
         '_CurrentAddress.State': {
-          caption: 'State',
+          caption: 'Common.State',
           form: {
-            caption: 'State',
+            caption: 'Common.State',
             displayOrder: 9,
           },
           searchEnable: true,
@@ -624,7 +636,7 @@ export default {
           hidden: true,
         },
         '_CurrentAddress.PostalCode': {
-          caption: 'Zip',
+          caption: 'Common.Zip',
           form: {
             caption: 'PostalCode',
             displayOrder: 10,
@@ -639,9 +651,9 @@ export default {
           hidden: true,
         },
         '_CurrentAddress.Country': {
-          caption: 'Country',
+          caption: 'Common.Country',
           form: {
-            caption: 'Country',
+            caption: 'Common.Country',
             displayOrder: 11,
           },
           searchEnable: true,
@@ -655,7 +667,7 @@ export default {
         },
         EventName: {
           displayOrder: 6,
-          caption: 'Event Name',
+          caption: 'Common.EventName',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -668,7 +680,7 @@ export default {
         },
         EventId: {
           displayOrder: 6,
-          caption: 'Event',
+          caption: 'Common.EventApp',
           form: {
             caption: 'Event *',
             displayOrder: 12,
@@ -698,7 +710,7 @@ export default {
         },
         AttendeeType: {
           displayOrder: 6,
-          caption: 'AttendeeType',
+          caption: 'Common.AttendeeType',
           form: {
             caption: 'RegistrationType',
             displayOrder: 15,
@@ -725,9 +737,9 @@ export default {
         },
         Status: {
           displayOrder: 9,
-          caption: 'Status',
+          caption: 'Common.Status',
           form: {
-            caption: 'Status *',
+            caption: 'Common.StatusRequired',
             displayOrder: 6,
           },
           searchEnable: true,
@@ -756,7 +768,7 @@ export default {
         },
         RegistrationId: {
           displayOrder: 6,
-          caption: 'RegistrationId',
+          caption: 'Common.RegistrationId',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -767,7 +779,7 @@ export default {
         },
         createdDate: {
           displayOrder: 11,
-          caption: 'createdDate',
+          caption: 'Common.CreatedDate',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -778,7 +790,7 @@ export default {
         },
         TicketQuantity: {
           displayOrder: 9,
-          caption: 'Attendees',
+          caption: 'Common.Attendees',
           form: {
             caption: 'Ticket Quantity',
             displayOrder: 14,
@@ -796,7 +808,7 @@ export default {
         },
         FullName: {
           displayOrder: 2,
-          caption: 'Full Name',
+          caption: 'Common.FullName',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -807,7 +819,7 @@ export default {
         },
         TotalAmount: {
           displayOrder: 8,
-          caption: 'TotalAmount',
+          caption: 'Common.TotalAmount',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -818,7 +830,7 @@ export default {
         },
         action: {
           displayOrder: 11,
-          caption: 'Action',
+          caption: 'Drawer.Action',
           searchEnable: false,
           sortEnable: false,
           columnWidth: '130px',
@@ -832,10 +844,10 @@ export default {
           },
         },
         TicketId: {
-          caption: 'Tickets',
+          caption: 'Common.Tickets',
           searchEnable: true,
           form: {
-            caption: 'Tickets *',
+            caption: 'Common.TicketsRequired',
             displayOrder: 13,
           },
           sortEnable: true,
@@ -883,7 +895,7 @@ export default {
         },
       },
       itemTitle: 'Registration',
-      title: 'Abandoned Registrations',
+      title: 'Common.AbandonedRegistrations',
       type: 'list',
     },
     registrationSessions: {
@@ -901,7 +913,7 @@ export default {
       fields: {
         Name: {
           displayOrder: 1,
-          caption: 'Name',
+          caption: 'Common.Name',
           searchEnable: false,
           sortEnable: false,
           columnWidth: '150px',
@@ -909,7 +921,7 @@ export default {
         },
         StartTime: {
           displayOrder: 2,
-          caption: 'Start Time',
+          caption: 'Common.StartTime',
           searchEnable: false,
           sortEnable: false,
           columnWidth: '130px',
@@ -917,7 +929,7 @@ export default {
         },
         EndTime: {
           displayOrder: 3,
-          caption: 'End Time',
+          caption: 'Common.EndTime',
           searchEnable: false,
           sortEnable: false,
           columnWidth: '130px',
@@ -925,7 +937,7 @@ export default {
         },
         Type: {
           displayOrder: 6,
-          caption: 'Type',
+          caption: 'Common.TypeCaption',
           searchEnable: false,
           sortEnable: false,
           columnWidth: '100px',
@@ -933,7 +945,7 @@ export default {
         },
         Location: {
           displayOrder: 7,
-          caption: 'Location',
+          caption: 'Common.Location',
           searchEnable: false,
           sortEnable: false,
           columnWidth: '180px',
@@ -941,7 +953,7 @@ export default {
         },
         StartDate: {
           displayOrder: 4,
-          caption: 'Start Date',
+          caption: 'Common.StartDate',
           searchEnable: false,
           sortEnable: false,
           columnWidth: '200px',
@@ -953,7 +965,7 @@ export default {
         },
         EndDate: {
           displayOrder: 5,
-          caption: 'End Date',
+          caption: 'Common.EndDate',
           searchEnable: false,
           sortEnable: false,
           columnWidth: '220px',
@@ -965,7 +977,7 @@ export default {
         },
         Timezone: {
           displayOrder: 5,
-          caption: 'Timezone',
+          caption: 'Common.Timezone',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -1018,7 +1030,7 @@ export default {
       fields: {
         FullName: {
           displayOrder: 2,
-          caption: 'Full Name',
+          caption: 'Common.FullName',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -1030,7 +1042,7 @@ export default {
         },
         FirstName: {
           form: {
-            caption: 'First Name *',
+            caption: 'Common.FirstName',
             displayOrder: 1,
           },
           searchEnable: true,
@@ -1043,14 +1055,14 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'First Name is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.FirstNameRequired')
             },
           ],
         },
         LastName: {
           form: {
-            caption: 'Last Name *',
+            caption: 'Common.LastName',
             displayOrder: 2,
           },
           searchEnable: true,
@@ -1063,14 +1075,14 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Last Name is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.LastNameRequired')
             },
           ],
         },
         Phone: {
           form: {
-            caption: 'Phone *',
+            caption: 'Common.PhoneRequired',
             displayOrder: 3,
           },
           searchEnable: true,
@@ -1083,23 +1095,26 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Phone is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.PhoneRequired')
             },
             function (value, data) {
-              return /^[0-9]\d*$|^$/.test(value) || 'Number must be valid'
+              return (
+                /^[0-9]\d*$|^$/.test(value) ||
+                this.$t('Messages.Error.NumberValid')
+              )
             },
           ],
         },
         Email: {
           displayOrder: 3,
-          caption: 'Email',
+          caption: 'Common.EmailCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
           type: 'string',
           form: {
-            caption: 'Email *',
+            caption: 'Common.Email',
             displayOrder: 4,
           },
           cssClasses: 'col-6 col-md-6',
@@ -1108,17 +1123,20 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Email is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.EmailRequired')
             },
             function (value, data) {
-              return /.+@.+\..+/.test(value) || 'E-mail must be valid'
+              return (
+                /.+@.+\..+/.test(value) ||
+                this.$t('Messages.Error.EmailRequired')
+              )
             },
           ],
         },
         'attendeeTicket.Code': {
           displayOrder: 4,
-          caption: 'Ticket',
+          caption: 'Common.Ticket',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -1130,7 +1148,7 @@ export default {
         },
         TicketAmount: {
           displayOrder: 5,
-          caption: 'Ticket Amount',
+          caption: 'Common.TicketAmount',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -1142,7 +1160,7 @@ export default {
         },
         SeatNumber: {
           displayOrder: 6,
-          caption: 'Seat Number',
+          caption: 'Common.SeatNumber',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -1154,7 +1172,7 @@ export default {
         },
         CompanyName: {
           displayOrder: 7,
-          caption: 'Organization',
+          caption: 'Common.Organization',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -1167,7 +1185,7 @@ export default {
         },
         CheckIn: {
           displayOrder: 8,
-          caption: 'Check In',
+          caption: 'Common.CheckIn',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '250px',
@@ -1179,7 +1197,7 @@ export default {
         },
         createdDate: {
           displayOrder: 9,
-          caption: 'Created Date',
+          caption: 'Common.CreatedDate',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -1191,7 +1209,7 @@ export default {
         },
         '_CurrentAddress.AddressLine': {
           form: {
-            caption: 'Address',
+            caption: 'Common.Address',
             displayOrder: 5,
           },
           searchEnable: true,
@@ -1206,7 +1224,7 @@ export default {
         },
         '_CurrentAddress.City': {
           form: {
-            caption: 'City',
+            caption: 'Common.City',
             displayOrder: 6,
           },
           searchEnable: true,
@@ -1221,7 +1239,7 @@ export default {
         },
         '_CurrentAddress.State': {
           form: {
-            caption: 'State',
+            caption: 'Common.State',
             displayOrder: 7,
           },
           searchEnable: true,
@@ -1236,7 +1254,7 @@ export default {
         },
         '_CurrentAddress.PostalCode': {
           form: {
-            caption: 'Zip',
+            caption: 'Common.Zip',
             displayOrder: 8,
           },
           searchEnable: true,
@@ -1251,7 +1269,7 @@ export default {
         },
         '_CurrentAddress.Country': {
           form: {
-            caption: 'Country',
+            caption: 'Common.Country',
             displayOrder: 9,
           },
           searchEnable: true,
@@ -1266,7 +1284,7 @@ export default {
         },
         TicketId: {
           form: {
-            caption: 'Tickets *',
+            caption: 'Common.TicketsRequired',
             displayOrder: 11,
           },
           searchEnable: true,
@@ -1291,7 +1309,7 @@ export default {
         },
         categoryId: {
           form: {
-            caption: 'Registration Type',
+            caption: 'Common.RegistrationType',
             displayOrder: 12,
           },
           searchEnable: true,
@@ -1359,7 +1377,7 @@ export default {
       fields: {
         Title: {
           displayOrder: 1,
-          caption: 'Title',
+          caption: 'Common.Title',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -1367,7 +1385,7 @@ export default {
         },
         Status: {
           displayOrder: 2,
-          caption: 'Status',
+          caption: 'Common.Status',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '130px',
@@ -1375,7 +1393,7 @@ export default {
         },
         Action: {
           displayOrder: 3,
-          caption: 'Wait For',
+          caption: 'Common.WaitFor',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '130px',
@@ -1383,7 +1401,7 @@ export default {
         },
         Category: {
           displayOrder: 4,
-          caption: 'Category',
+          caption: 'Common.Category',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '130px',
@@ -1399,7 +1417,7 @@ export default {
         },
         createdBy: {
           displayOrder: 7,
-          caption: 'createdBy',
+          caption: 'Common.CreatedBy',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '130px',
@@ -1407,7 +1425,7 @@ export default {
         },
         createdDate: {
           displayOrder: 6,
-          caption: 'createdDate',
+          caption: 'Common.CreatedDate',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '130px',
@@ -1415,7 +1433,7 @@ export default {
         },
         DueDate: {
           displayOrder: 5,
-          caption: 'DueDate',
+          caption: 'Common.DueDate',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '130px',
@@ -1470,7 +1488,7 @@ export default {
       fields: {
         Name: {
           displayOrder: 1,
-          caption: 'Name',
+          caption: 'Common.Name',
           searchEnable: false,
           sortEnable: false,
           columnWidth: '150px',
@@ -1478,7 +1496,7 @@ export default {
         },
         StartTime: {
           displayOrder: 2,
-          caption: 'Start Time',
+          caption: 'Common.StartTime',
           searchEnable: false,
           sortEnable: false,
           columnWidth: '130px',
@@ -1486,7 +1504,7 @@ export default {
         },
         EndTime: {
           displayOrder: 3,
-          caption: 'End Time',
+          caption: 'Common.EndTime',
           searchEnable: false,
           sortEnable: false,
           columnWidth: '130px',
@@ -1494,7 +1512,7 @@ export default {
         },
         Type: {
           displayOrder: 6,
-          caption: 'Type',
+          caption: 'Common.TypeCaption',
           searchEnable: false,
           sortEnable: false,
           columnWidth: '100px',
@@ -1502,7 +1520,7 @@ export default {
         },
         Location: {
           displayOrder: 7,
-          caption: 'Location',
+          caption: 'Common.Location',
           searchEnable: false,
           sortEnable: false,
           columnWidth: '180px',
@@ -1510,7 +1528,7 @@ export default {
         },
         StartDate: {
           displayOrder: 4,
-          caption: 'Start Date',
+          caption: 'Common.StartDate',
           searchEnable: false,
           sortEnable: false,
           columnWidth: '130px',
@@ -1522,7 +1540,7 @@ export default {
         },
         EndDate: {
           displayOrder: 5,
-          caption: 'End Date',
+          caption: 'Common.EndDate',
           searchEnable: false,
           sortEnable: false,
           columnWidth: '130px',
@@ -1574,7 +1592,7 @@ export default {
       fields: {
         FullName: {
           displayOrder: 2,
-          caption: 'Full Name',
+          caption: 'Common.FullName',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -1586,7 +1604,7 @@ export default {
         },
         FirstName: {
           form: {
-            caption: 'First Name *',
+            caption: 'Common.FirstName',
             displayOrder: 1,
           },
           searchEnable: true,
@@ -1599,14 +1617,14 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'First Name is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.FirstNameRequired')
             },
           ],
         },
         LastName: {
           form: {
-            caption: 'Last Name *',
+            caption: 'Common.LastName',
             displayOrder: 2,
           },
           searchEnable: true,
@@ -1619,14 +1637,14 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Last Name is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.LastNameRequired')
             },
           ],
         },
         Phone: {
           form: {
-            caption: 'Phone *',
+            caption: 'Common.PhoneRequired',
             displayOrder: 3,
           },
           searchEnable: true,
@@ -1639,23 +1657,26 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Phone is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.PhoneRequired')
             },
             function (value, data) {
-              return /^[0-9]\d*$|^$/.test(value) || 'Number must be valid'
+              return (
+                /^[0-9]\d*$|^$/.test(value) ||
+                this.$t('Messages.Error.PhoneRequired')
+              )
             },
           ],
         },
         Email: {
           displayOrder: 3,
-          caption: 'Email',
+          caption: 'Common.EmailCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
           type: 'string',
           form: {
-            caption: 'Email *',
+            caption: 'Common.Email',
             displayOrder: 4,
           },
           cssClasses: 'col-6 col-md-6',
@@ -1664,17 +1685,20 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Email is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.EmailRequired')
             },
             function (value, data) {
-              return /.+@.+\..+/.test(value) || 'E-mail must be valid'
+              return (
+                /.+@.+\..+/.test(value) ||
+                this.$t('Messages.Error.EmailRequired')
+              )
             },
           ],
         },
         'attendeeTicket.Code': {
           displayOrder: 4,
-          caption: 'Ticket',
+          caption: 'Common.Ticket',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -1686,7 +1710,7 @@ export default {
         },
         TicketAmount: {
           displayOrder: 5,
-          caption: 'Ticket Amount',
+          caption: 'Common.TicketAmount',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -1698,7 +1722,7 @@ export default {
         },
         SeatNumber: {
           displayOrder: 6,
-          caption: 'Seat Number',
+          caption: 'Common.SeatNumber',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -1710,7 +1734,7 @@ export default {
         },
         CompanyName: {
           displayOrder: 7,
-          caption: 'Organization',
+          caption: 'Common.Organization',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -1723,7 +1747,7 @@ export default {
         },
         CheckIn: {
           displayOrder: 8,
-          caption: 'Check In',
+          caption: 'Common.CheckIn',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '250px',
@@ -1735,7 +1759,7 @@ export default {
         },
         createdDate: {
           displayOrder: 9,
-          caption: 'Created Date',
+          caption: 'Common.CreatedDate',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -1747,7 +1771,7 @@ export default {
         },
         '_CurrentAddress.AddressLine': {
           form: {
-            caption: 'Address',
+            caption: 'Common.Address',
             displayOrder: 5,
           },
           searchEnable: true,
@@ -1762,7 +1786,7 @@ export default {
         },
         '_CurrentAddress.City': {
           form: {
-            caption: 'City',
+            caption: 'Common.City',
             displayOrder: 6,
           },
           searchEnable: true,
@@ -1777,7 +1801,7 @@ export default {
         },
         '_CurrentAddress.State': {
           form: {
-            caption: 'State',
+            caption: 'Common.State',
             displayOrder: 7,
           },
           searchEnable: true,
@@ -1792,7 +1816,7 @@ export default {
         },
         '_CurrentAddress.PostalCode': {
           form: {
-            caption: 'Zip',
+            caption: 'Common.Zip',
             displayOrder: 8,
           },
           searchEnable: true,
@@ -1807,7 +1831,7 @@ export default {
         },
         '_CurrentAddress.Country': {
           form: {
-            caption: 'Country',
+            caption: 'Common.Country',
             displayOrder: 9,
           },
           searchEnable: true,
@@ -1822,7 +1846,7 @@ export default {
         },
         TicketId: {
           form: {
-            caption: 'Tickets *',
+            caption: 'Common.TicketsRequired',
             displayOrder: 11,
           },
           searchEnable: true,
@@ -1847,7 +1871,7 @@ export default {
         },
         categoryId: {
           form: {
-            caption: 'Registration Type',
+            caption: 'Common.RegistrationType',
             displayOrder: 12,
           },
           searchEnable: true,

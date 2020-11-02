@@ -10,13 +10,15 @@
             class="ma-3 block wd-full"
             v-on="on"
           >
-            Custom Forms
+            <i18n path="Common.CustomForms" />
           </v-btn>
         </template>
 
         <v-list>
           <v-list-item @click="registrations = !registrations">
-            <v-list-item-title>New Registrations</v-list-item-title>
+            <v-list-item-title
+              ><i18n path="Common.NewRegistration"
+            /></v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
@@ -30,7 +32,9 @@
     >
       <v-card>
         <v-toolbar dense flat dark fixed color="accent">
-          <v-toolbar-title class="body-1">New Registration</v-toolbar-title>
+          <v-toolbar-title class="body-1"
+            ><i18n path="Common.NewRegistration"
+          /></v-toolbar-title>
           <v-spacer></v-spacer>
           <v-btn icon dark @click="registrations = false">
             <v-icon>mdi-close</v-icon>
@@ -42,7 +46,7 @@
             <v-col cols="12" sm="6" md="6" class="mt-2">
               <v-text-field
                 v-model="FormData.FirstName"
-                label="First Name*"
+                :label="$t('Common.FirstN')"
                 required
                 outlined
               ></v-text-field>
@@ -50,7 +54,7 @@
             <v-col cols="12" sm="6" md="6" class="mt-2">
               <v-text-field
                 v-model="FormData.LastName"
-                label="Last Name*"
+                :label="$t('Common.LastName')"
                 required
                 outlined
               ></v-text-field>
@@ -58,7 +62,7 @@
             <v-col cols="12" sm="6" md="6">
               <v-text-field
                 v-model="FormData.CellPhone"
-                label="Phone*"
+                :label="$t('Common.PhoneRequired')"
                 required
                 outlined
               ></v-text-field>
@@ -66,7 +70,7 @@
             <v-col cols="12" sm="6" md="6">
               <v-text-field
                 v-model="FormData.Email"
-                label="Email*"
+                :label="$t('Common.Email')"
                 required
                 outlined
               ></v-text-field>
@@ -74,7 +78,7 @@
             <v-col cols="12" sm="6" md="6">
               <v-text-field
                 v-model="FormData.Organization"
-                label="Organization"
+                :label="$t('Common.Organization')"
                 outlined
               ></v-text-field>
             </v-col>
@@ -82,7 +86,9 @@
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions class="pl-4">
-          <v-btn color="primary" depressed @click="onSave">Save</v-btn>
+          <v-btn color="primary" depressed @click="onSave"
+            ><i18n path="Drawer.Save"
+          /></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

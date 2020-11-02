@@ -1,5 +1,5 @@
 <template>
   <div>
-    <div>Make a copy</div>
+    <div><i18n path="Drawer.MakeaCopy" /></div>
   </div>
 </template>

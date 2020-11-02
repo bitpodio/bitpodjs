@@ -16,7 +16,7 @@ export default {
       fields: {
         accesskey: {
           displayOrder: 2,
-          caption: 'Access Key',
+          caption: 'Common.AccessKeyCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '200px',
@@ -24,7 +24,7 @@ export default {
         },
         accesssecret: {
           displayOrder: 3,
-          caption: 'Access Secret',
+          caption: 'Common.AccessSecretCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '200px',
@@ -32,7 +32,7 @@ export default {
         },
         expiresat: {
           displayOrder: 4,
-          caption: 'Expires On',
+          caption: 'Common.ExpiresOn',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -40,7 +40,7 @@ export default {
         },
         action: {
           displayOrder: 5,
-          caption: 'Action',
+          caption: 'Drawer.Action',
           columnWidth: '150px',
         },
       },
@@ -63,7 +63,7 @@ export default {
         getData: (ctx) =>
           getData(`/Users/${ctx.$auth.$state.user.data.email}/AccessKey`),
       },
-      title: 'Access keys',
+      title: 'Common.AccessKeys',
       type: 'list',
     },
   },

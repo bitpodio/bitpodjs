@@ -26,21 +26,26 @@
         <v-flex>
           <v-row>
             <v-col class="col-12 pb-0">
-              <div class="body-2 text--secondary">Sender</div>
+              <i18n path="Common.Sender" class="body-2 text--secondary" />
+
               <div class="body-1">
                 {{ formatField(data.invites.SenderName) }}
               </div>
             </v-col>
             <v-col class="col-12 pb-0">
-              <div class="body-2 text--secondary">Due Date</div>
-              <div class="body-1">
-                {{ formatDate(data.invites.DueDate) }}
+              <i18n path="Common.DueDate" class="body-2 text--secondary" />
+
+              <div v-if="data.invites.DueDate !== undefined" class="body-1">
+                {{ $d(new Date(data.invites.DueDate), 'long', $i18n.locale) }}
               </div>
             </v-col>
             <v-col class="col-12 pb-0">
-              <div class="body-2 text--secondary">Sent Date</div>
-              <div class="body-1">
-                {{ formatDate(data.invites.createdDate) }}
+              <i18n path="Common.SentDate" class="body-2 text--secondary" />
+
+              <div v-if="data.invites.createdDate !== undefined" class="body-1">
+                {{
+                  $d(new Date(data.invites.createdDate), 'long', $i18n.locale)
+                }}
               </div>
             </v-col>
           </v-row>
@@ -60,9 +65,10 @@
                 <span v-if="data.invites.Status === 'Completed'">
                   {{ analytics.Sent }}
                 </span>
-                <span v-else>0</span>
+                <span v-else><i18n path="Common.0" /></span>
               </div>
-              <div class="caption text-truncate">Sent</div>
+
+              <i18n path="Common.Sent" class="caption text-truncate" />
             </div>
           </div>
 
@@ -79,9 +85,10 @@
                 <span v-if="data.invites.Status === 'Completed'">
                   {{ analytics.Delivered }}
                 </span>
-                <span v-else>0</span>
+                <span v-else><i18n path="Common.0" /></span>
               </div>
-              <div class="caption text-truncate">Delivered</div>
+
+              <i18n path="Common.Delivered" class="caption text-truncate" />
             </div>
           </div>
 
@@ -98,9 +105,10 @@
                 <span v-if="data.invites.Status === 'Completed'">
                   {{ analytics.Open }}
                 </span>
-                <span v-else>0</span>
+                <span v-else><i18n path="Common.0" /></span>
               </div>
-              <div class="caption text-truncate">Open</div>
+
+              <i18n path="Common.Open" class="caption text-truncate" />
             </div>
           </div>
 
@@ -117,9 +125,10 @@
                 <span v-if="data.invites.Status === 'Completed'">
                   {{ analytics.SpamReport }}
                 </span>
-                <span v-else>0</span>
+                <span v-else><i18n path="Common.0" /></span>
               </div>
-              <div class="caption text-truncate">Bounce</div>
+
+              <i18n path="Common.Bounce" class="caption text-truncate" />
             </div>
           </div>
 
@@ -136,9 +145,10 @@
                 <span v-if="data.invites.Status === 'Completed'">
                   {{ analytics.Unsubscribed }}
                 </span>
-                <span v-else>0</span>
+                <span v-else><i18n path="Common.0" /></span>
               </div>
-              <div class="caption text-truncate">Unsubscribe</div>
+
+              <i18n path="Common.Unsubscribe" class="caption text-truncate" />
             </div>
           </div>
 
@@ -155,9 +165,10 @@
                 <span v-if="data.invites.Status === 'Completed'">
                   {{ analytics.isRegistered }}
                 </span>
-                <span v-else>0</span>
+                <span v-else><i18n path="Common.0" /></span>
               </div>
-              <div class="caption text-truncate">Register</div>
+
+              <i18n path="Common.Register" class="caption text-truncate" />
             </div>
           </div>
         </v-flex>
@@ -172,11 +183,18 @@
             </v-avatar>
             <span>{{ data.invites.Owner }}</span>
           </v-chip>
-          <v-subheader class="d-inline-flex pl-1"
-            ><span class="pl-1"
-              >send this invite on
-              {{ formatDate(data.invites.createdDate) }}.</span
-            ></v-subheader
+          <v-subheader
+            v-if="data.invites.createdDate !== undefined"
+            class="d-inline-flex pl-1"
+            >{{
+              $t('Common.SendThisInviteOn', {
+                date: $d(
+                  new Date(data.invites.createdDate),
+                  'long',
+                  $i18n.locale
+                ),
+              })
+            }}</v-subheader
           >
         </v-flex>
       </div>
@@ -187,7 +205,7 @@
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
             <i class="fa fa-mail pr-1" aria-hidden="true"></i>
-            Invites
+            <i18n path="Common.Invites" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>

@@ -9,7 +9,7 @@
             width="30"
           ></v-img>
         </span>
-        <span d-inline-flex align-center class="mx-2">Event</span>
+        <i18n path="Common.EventApp" class="d-inline-flex align-center mx-2" />
       </v-toolbar-title>
       <div class="text-center">
         <v-menu>
@@ -21,16 +21,20 @@
               class="ma-3 block wd-full"
               v-on="on"
             >
-              Create Event
+              <i18n path="Drawer.CreateEventAction" />
             </v-btn>
           </template>
 
           <v-list>
             <v-list-item @click="dialog1 = !dialog1">
-              <v-list-item-title>Single Event</v-list-item-title>
+              <v-list-item-title
+                ><i18n path="Drawer.SingleEventAction"
+              /></v-list-item-title>
             </v-list-item>
             <v-list-item @click="dialog = !dialog">
-              <v-list-item-title>Recurring Event</v-list-item-title>
+              <v-list-item-title
+                ><i18n path="Drawer.RecurringEventAction"
+              /></v-list-item-title>
             </v-list-item>
           </v-list>
         </v-menu>
@@ -62,7 +66,7 @@
               v-for="(child, i) in item.children"
               :key="i"
               link
-              :to="item.to"
+              :to="localePath(item.to)"
               router
               exact
             >
@@ -76,7 +80,14 @@
               </v-list-item-content>
             </v-list-item>
           </v-list-group>
-          <v-list-item v-else :key="item.text" link :to="item.to" router exact>
+          <v-list-item
+            v-else
+            :key="item.text"
+            link
+            :to="localePath(item.to)"
+            router
+            exact
+          >
             <v-list-item-action class="nav-icon">
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-action>
@@ -93,18 +104,18 @@
     <v-dialog v-model="dialog1" persistent max-width="850px">
       <template v-slot:activator="{ on, attrs }">
         <v-btn color="primary" dark v-bind="attrs" v-on="on">
-          Open Dialog
+          <i18n path="Common.OpenDialog" />
         </v-btn>
       </template>
       <v-card>
         <v-card-title>
-          <span class="headline">New Event</span>
+          <i18n path="Common.NewEvent" class="headline" />
         </v-card-title>
         <v-card-text>
           <v-row>
             <v-col cols="12">
               <v-text-field
-                label="Event Name*"
+                :label="$t('Common.EventNameRequired')"
                 required
                 outlined
               ></v-text-field>
@@ -121,7 +132,7 @@
                   <v-text-field
                     v-model="date"
                     outlined
-                    label="Start Date"
+                    :label="$t('Common.StartDate')"
                     append-icon="fa-calendar"
                     readonly
                     v-bind="attrs"
@@ -131,11 +142,11 @@
                 <v-date-picker v-model="date" scrollable>
                   <v-spacer></v-spacer>
                   <v-btn text color="primary" @click="modal = false"
-                    >Cancel</v-btn
-                  >
+                    ><i18n path="Drawer.Cancel"
+                  /></v-btn>
                   <v-btn text color="primary" @click="$refs.dialog.save(date)"
-                    >OK</v-btn
-                  >
+                    ><i18n path="Drawer.OK"
+                  /></v-btn>
                 </v-date-picker>
               </v-dialog>
             </v-col>
@@ -152,7 +163,7 @@
                   <v-text-field
                     v-model="date"
                     outlined
-                    label="End Date"
+                    :label="$t('Common.EndDate')"
                     append-icon="fa-calendar"
                     readonly
                     v-bind="attrs"
@@ -168,7 +179,7 @@
             <v-col cols="12" sm="6" md="4">
               <v-select
                 :items="['0-17', '18-29', '30-54', '54+']"
-                label="Timezone*"
+                :label="$t('Common.TimezoneRequired')"
                 required
                 outlined
               ></v-select>
@@ -178,13 +189,13 @@
                 clearable
                 outlined
                 clear-icon="fa fa-close"
-                label="Description"
+                :label="$t('Common.Description')"
                 value=""
               ></v-textarea>
             </v-col>
             <v-col cols="12" sm="6" md="6">
               <v-text-field
-                label="Event Link*"
+                :label="$t('Common.EventL')"
                 hint="https://bitpod-event.test.bitpod.io/e/"
                 persistent-hint
                 outlined
@@ -192,16 +203,16 @@
               ></v-text-field>
             </v-col>
           </v-row>
-          <small>*indicates required field</small>
+          <small><i18n path="Common.IndicatesRequiredField" /></small>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" text @click="dialog1 = false"
-            >Close</v-btn
-          >
+            ><i18n path="Drawer.Close"
+          /></v-btn>
           <v-btn color="blue darken-1" text @click="dialog1 = false"
-            >Save</v-btn
-          >
+            ><i18n path="Drawer.Save"
+          /></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -212,17 +223,22 @@
           <v-btn icon dark @click="dialog = false">
             <v-icon>mdi-close</v-icon>
           </v-btn>
-          <v-toolbar-title>New Event</v-toolbar-title>
+          <v-toolbar-title><i18n path="Common.NewEvent" /></v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <v-btn dark text @click="dialog = false">Save</v-btn>
+            <v-btn dark text @click="dialog = false"
+              ><i18n path="Drawer.Save"
+            /></v-btn>
           </v-toolbar-items>
         </v-toolbar>
         <v-card-text>
           <v-container>
             <v-row>
               <v-col cols="12">
-                <v-text-field label="Event Name*" required></v-text-field>
+                <v-text-field
+                  :label="$t('Common.EventNameRequired')"
+                  required
+                ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6" md="4">
                 <v-dialog
@@ -235,7 +251,7 @@
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
                       v-model="date"
-                      label="Start Date"
+                      :label="$t('Common.StartDate')"
                       append-icon="fa-calendar"
                       readonly
                       v-bind="attrs"
@@ -245,11 +261,11 @@
                   <v-date-picker v-model="date" scrollable>
                     <v-spacer></v-spacer>
                     <v-btn text color="primary" @click="modal = false"
-                      >Cancel</v-btn
-                    >
+                      ><i18n path="Drawer.Cancel"
+                    /></v-btn>
                     <v-btn text color="primary" @click="$refs.dialog.save(date)"
-                      >OK</v-btn
-                    >
+                      ><i18n path="Drawer.OK"
+                    /></v-btn>
                   </v-date-picker>
                 </v-dialog>
               </v-col>
@@ -265,7 +281,7 @@
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
                       v-model="date"
-                      label="End Date"
+                      :label="$t('Common.EndDate')"
                       append-icon="fa-calendar"
                       readonly
                       v-bind="attrs"
@@ -281,7 +297,7 @@
               <v-col cols="12" sm="6" md="4">
                 <v-select
                   :items="['0-17', '18-29', '30-54', '54+']"
-                  label="Timezone*"
+                  :label="$t('Common.TimezoneRequired')"
                   required
                 ></v-select>
               </v-col>
@@ -289,13 +305,13 @@
                 <v-textarea
                   clearable
                   clear-icon="fa-close"
-                  label="Description"
+                  :label="$t('Common.Description')"
                   value=""
                 ></v-textarea>
               </v-col>
               <v-col cols="12" sm="6" md="6">
                 <v-text-field
-                  label="Event Link*"
+                  :label="$t('Common.EventL')"
                   hint="https://bitpod-event.test.bitpod.io/e/"
                   persistent-hint
                   required
@@ -303,17 +319,19 @@
               </v-col>
             </v-row>
           </v-container>
-          <small>*indicates required field</small>
+          <small><i18n path="Common.IndicatesRequiredField" /></small>
         </v-card-text>
       </v-card>
     </v-dialog>
 
     <v-app-bar fixed app flat class="greybg headernew">
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title class="pl-0">Event</v-toolbar-title>
+      <v-toolbar-title class="pl-0"
+        ><i18n path="Common.EventApp"
+      /></v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn class="ma-2" tile outlined>
-        UPGARDE
+        <i18n path="Drawer.Upgrade" />
       </v-btn>
       <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
         <v-icon>mdi-invert-colors</v-icon>
@@ -343,7 +361,7 @@
           </v-avatar>
         </template>
         <template v-else>
-          <v-btn to="/login">Login</v-btn>
+          <v-btn to="/login"><i18n path="Common.Login" /></v-btn>
         </template>
         <v-card>
           <v-list>
@@ -356,8 +374,8 @@
               </v-list-item-avatar>
 
               <v-list-item-content>
-                <v-list-item-title>Rishi Belhekar</v-list-item-title>
-                <v-list-item-subtitle>rishikesh@bitpod.io</v-list-item-subtitle>
+                <v-list-item-title></v-list-item-title>
+                <v-list-item-subtitle></v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
           </v-list>
@@ -372,7 +390,7 @@
                 color="primary"
                 @click="$auth.logout()"
               >
-                Logout
+                <i18n path="Common.Logout" />
               </v-btn>
             </v-list-item>
           </v-list>

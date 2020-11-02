@@ -9,13 +9,12 @@
             class="col-md-2 col-lg-2 col-4 d-flex flex-column justify-center align-center grey lighten-2"
           >
             <div class="body-2 text--secondary">
-              <i class="fa fa-tag pr-1" aria-hidden="true"></i> Save
+              <i class="fa fa-tag pr-1" aria-hidden="true"></i>
+              <i18n path="Drawer.Save" />
             </div>
             <h1>
               {{ formatField(data.discount.offerValue) }}
-              <span v-if="data.discount.isPercent === true">
-                %
-              </span>
+              <i18n v-if="data.discount.isPercent === true" path="Common.%" />
             </h1>
           </v-col>
           <v-col class="col-md-10 col-lg-10 col-8">
@@ -25,7 +24,7 @@
                   class="fa fa-thumbs-up pr-1 success--text"
                   aria-hidden="true"
                 ></i>
-                <span class="ml-2">Active</span>
+                <i18n path="Common.Active" class="ml-2" />
               </span>
               <span v-else>
                 <i
@@ -33,7 +32,7 @@
                   text-color="error"
                   aria-hidden="true"
                 ></i>
-                <span class="ml-2">Inactive</span>
+                <i18n path="Common.Inactive" class="ml-2" />
               </span>
             </div>
             <div class="col-md-12 pt-2 pb-0">
@@ -54,7 +53,7 @@
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
             <i class="fa fa-user-plus pr-1" aria-hidden="true"></i>
-            Members
+            <i18n path="Common.Members" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
@@ -67,34 +66,38 @@
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-0">
             <i class="fa fa-info-circle pr-1" aria-hidden="true"></i>
-            Information
+            <i18n path="Common.Information" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
         <v-divider></v-divider>
         <v-row>
           <v-col class="col-md-12 col-12">
-            <div class="body-2 text--secondary">Max Usage</div>
+            <i18n path="Common.MaxUsage" class="body-2 text--secondary" />
             <div class="body-1">
               {{ formatField(data.discount.maxUsageCount) }}
             </div>
           </v-col>
           <v-col class="col-md-12 col-12">
-            <div class="body-2 text--secondary">Valid Till</div>
-            <div class="body-1">{{ formatDate(data.discount.validTill) }}</div>
-          </v-col>
-          <v-col class="col-md-12 col-12">
-            <div class="body-2 text--secondary">Created By</div>
-            <div class="body-1">{{ formatField(data.discount.createdBy) }}</div>
-          </v-col>
-          <v-col class="col-md-12 col-12">
-            <div class="body-2 text--secondary">Created Date</div>
-            <div class="body-1">
-              {{ formatDate(data.discount.createdDate) }}
+            <i18n path="Common.ValidTill" class="body-2 text--secondary" />
+            <div v-if="data.discount.validTill !== undefined" class="body-1">
+              {{ $d(new Date(data.discount.validTill), 'long', $i18n.locale) }}
             </div>
           </v-col>
           <v-col class="col-md-12 col-12">
-            <div class="body-2 text--secondary">Description</div>
+            <i18n path="Common.CreatedBy" class="body-2 text--secondary" />
+            <div class="body-1">{{ formatField(data.discount.createdBy) }}</div>
+          </v-col>
+          <v-col class="col-md-12 col-12">
+            <i18n path="Common.CreatedDate" class="body-2 text--secondary" />
+            <div v-if="data.discount.createdDate !== undefined" class="body-1">
+              {{
+                $d(new Date(data.discount.createdDate), 'long', $i18n.locale)
+              }}
+            </div>
+          </v-col>
+          <v-col class="col-md-12 col-12">
+            <i18n path="Common.Description" class="body-2 text--secondary" />
             <div class="body-1">
               {{ formatField(data.discount.description) }}
             </div>

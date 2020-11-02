@@ -11,7 +11,9 @@
           <v-card-title
             class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
           >
-            <h2 class="black--text pt-5 pb-4 text-h5">Refund Request</h2>
+            <h2 class="black--text pt-5 pb-4 text-h5">
+              <i18n path="Common.RefundRequest" />
+            </h2>
 
             <v-spacer></v-spacer>
             <div>
@@ -30,9 +32,7 @@
               class="body-2"
             >
               <v-icon class="amber--text" size="18">fa-bulb</v-icon>
-              You are submitting a refund request for a payment which was
-              charged less than 24 hours ago, if funds are not settled, this
-              refund will be pending until funds are settled.
+              <i18n path="Common.SubmittingRefundRequest" />
             </v-alert>
             <v-row>
               <v-col cols="12" sm="12" md="12">
@@ -51,9 +51,12 @@
                   :rules="requiredRules"
                   @change="changeRefundRequest($event)"
                 >
-                  <v-radio label="Full Refund" value="FullRefund"></v-radio>
                   <v-radio
-                    label="Partial Refund"
+                    :label="$t('Common.FullRefund')"
+                    value="FullRefund"
+                  ></v-radio>
+                  <v-radio
+                    :label="$t('Common.PartialRefund')"
                     value="PartialRefund"
                   ></v-radio>
                 </v-radio-group>
@@ -61,7 +64,7 @@
               <v-col cols="12" sm="12" md="12">
                 <v-text-field
                   v-model="refund.Amount"
-                  label="Amount*"
+                  :label="$t('Common.AmountReq')"
                   dense
                   outlined
                   min="1"
@@ -73,7 +76,7 @@
               <v-col cols="12" sm="12" md="12">
                 <v-text-field
                   v-model="refund.Comments"
-                  label="Comments"
+                  :label="$t('Common.Comments')"
                   dense
                   outlined
                   min="1"
@@ -89,8 +92,8 @@
             class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
           >
             <v-btn :disabled="!valid" color="primary" depressed @click="onSave"
-              >Submit</v-btn
-            >
+              ><i18n path="Drawer.Submit"
+            /></v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -104,7 +107,6 @@ import addHours from 'date-fns/addHours'
 import { required } from '~/utility/rules.js'
 import eventRegistrationTicketSlot from '~/config/apps/event/gql/eventRegistrationTicketSlot.gql'
 import { formatGQLResult } from '~/utility/gql.js'
-import strings from '~/strings.js'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
 
 export default {
@@ -169,11 +171,11 @@ export default {
       return [
         (v) => {
           if (parseInt(v) > parseInt(this.refundData.TotalAmount)) {
-            return strings.REFUND_PAID_AMT
+            return this.$t('Messages.Error.RefundPaidAmount')
           } else if (v === '') {
-            return strings.FIELD_REQUIRED
+            return this.$t('Messages.Error.ThisFieldRequired')
           } else if (parseInt(v) < 1) {
-            return strings.REFUND_AMT_MSG
+            return this.$t('Messages.Error.RefundAmountMsg')
           }
         },
       ]

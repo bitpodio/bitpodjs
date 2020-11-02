@@ -7,13 +7,12 @@
     <v-dialog v-model="popupDialog" width="500">
       <v-card>
         <v-card-text class="pt-3">
-          There are unsaved changes which will be lost if you close without
-          saving, are you sure?
+          <i18n path="Common.UnsavedChanges" />
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="primary" small dark dense @click="closeSeatMap">
-            OK
+            <i18n path="Drawer.OK" />
           </v-btn>
           <v-btn
             color="primary"
@@ -22,7 +21,7 @@
             dense
             @click="popupDialog = false"
           >
-            Cancel
+            <i18n path="Drawer.Cancel" />
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -105,13 +104,17 @@ export default {
                   layout
                 )
                 if (res) {
-                  this.snackbarText = 'Seatmap Updated Successfully'
+                  this.snackbarText = this.$t(
+                    'Messages.Success.SeatmapUpdateSuccess'
+                  )
                   this.snackbar = true
                   if (this.$route.params.id === 'new') {
                     this.updateEvent(eventData, res)
                   }
                 }
-                this.snackbarText = 'Seatmap Updated Successfully'
+                this.snackbarText = this.$t(
+                  'Messages.Success.SeatmapUpdateSuccess'
+                )
                 this.snackbar = true
               } catch (e) {
                 console.error(

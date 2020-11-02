@@ -11,7 +11,7 @@
       <v-col class="col-12 col-sm-8">
         <v-textarea
           v-model="message"
-          label="Add a note *"
+          :label="$t('Common.AddNote')"
           outlined
           dense
           row-height="18"
@@ -25,14 +25,16 @@
             color="primary"
             :disabled="!message"
             @click="uploadNote"
-            >Save</v-btn
-          >
+            ><i18n path="Drawer.Save"
+          /></v-btn>
           <div
             class="grey--text cursorPointer d-flex tile"
             @click="attach = !attach"
           >
             <v-icon class="mdi-rotate-315" medium>mdi-attachment</v-icon>
-            <h4 class="font-weight-regular ml-1 mt-1">Attach File</h4>
+            <h4 class="font-weight-regular ml-1 mt-1">
+              <i18n path="Common.AttachFile" />
+            </h4>
           </div>
         </div>
         <File
@@ -48,8 +50,8 @@
           color="primary"
           :disabled="!message"
           @click="uploadNote"
-          >Save</v-btn
-        >
+          ><i18n path="Drawer.Save"
+        /></v-btn>
         <div v-for="(comment, index) in existingComments" :key="comment.id">
           <v-hover v-slot:default="{ hover }">
             <div
@@ -139,7 +141,7 @@
           class="blue--text cursorPointer"
           @click="showMore = !showMore"
         >
-          {{ showMore ? 'Show Less' : 'Show More' }}
+          {{ showMore ? $t('Common.ShowLess') : $t('Common.ShowMore') }}
         </div>
       </v-col>
     </v-row>
@@ -185,11 +187,13 @@ export default {
       if (confirmDeletion) {
         try {
           await this.$axios.delete(this.getLink(id))
-          this.snackbarText = 'Comment deleted successfully.'
+          this.snackbarText = this.$t(
+            'Messages.Success.CommentDeletedSuccessfully'
+          )
           this.snackbar = true
           this.fetchAllComments()
         } catch (err) {
-          this.snackbarText = 'Failed to delete comment.'
+          this.snackbarText = this.$t('Messages.Success.FailedDeleteComment')
           this.snackbar = true
           return err
         }

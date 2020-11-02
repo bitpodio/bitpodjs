@@ -17,13 +17,18 @@
             class="logo-bitpod"
           ></v-img>
         </span>
-        <span d-inline-flex align-center class="mx-2 text-h5">Event</span>
+        <i18n
+          path="Common.EventApp"
+          class="d-inline-flex align-center mx-2 text-h5"
+        />
         <v-spacer></v-spacer>
       </v-toolbar-title>
       <div class="d-flex d-sm-flex d-md-none ml-n3">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       </div>
-      <v-toolbar-title class="pl-0 ml-n1">Seatmaps</v-toolbar-title>
+      <v-toolbar-title class="pl-0 ml-n1"
+        ><i18n path="Common.Seatmaps"
+      /></v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
         <v-icon>mdi-invert-colors</v-icon>
@@ -75,7 +80,7 @@
             <v-list dense class="pt-0">
               <v-list-item>
                 <v-btn text small color="primary" @click="onLogout">
-                  Logout
+                  <i18n path="Common.Logout" />
                 </v-btn>
               </v-list-item>
             </v-list>
@@ -84,7 +89,7 @@
       </div>
       <div v-else>
         <v-btn class="ma-2" outlined color="primary" to="/login">
-          Login
+          <i18n path="Common.Login" />
         </v-btn>
       </div>
     </v-app-bar>

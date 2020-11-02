@@ -1,7 +1,7 @@
 <template>
   <v-col class="px-0">
     <v-btn text small v-bind="attrs" v-on="on" @click="refreshInvites">
-      <v-icon left>fa-refresh-ccw</v-icon> Refresh
+      <v-icon left>fa-refresh-ccw</v-icon> <i18n path="Common.Refresh" />
     </v-btn>
   </v-col>
 </template>

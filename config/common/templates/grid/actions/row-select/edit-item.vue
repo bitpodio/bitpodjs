@@ -16,7 +16,9 @@
         <v-card-title
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
-          <h2 class="black--text pt-5 pb-3 text-h5">Edit {{ subTitle }}</h2>
+          <h2 class="black--text pt-5 pb-3 text-h5">
+            {{ $t('Common.EditDefaultForm', { subTitle: subTitle }) }}
+          </h2>
           <v-spacer></v-spacer>
           <div>
             <v-btn icon @click="dialog = false">
@@ -57,8 +59,8 @@
           class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
         >
           <v-btn color="primary" :disabled="!valid" depressed @click="onSave"
-            >Save</v-btn
-          >
+            ><i18n path="Drawer.Save"
+          /></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

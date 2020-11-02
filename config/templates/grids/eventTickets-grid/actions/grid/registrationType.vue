@@ -1,7 +1,8 @@
 <template>
   <v-col class="px-0">
     <v-btn text small v-bind="attrs" v-on="on" @click="routeToHistory">
-      <v-icon left>mdi-file-outline</v-icon> Registration Type
+      <v-icon left>mdi-file-outline</v-icon>
+      <i18n path="Common.RegistrationType" />
     </v-btn>
   </v-col>
 </template>
@@ -10,7 +11,9 @@ export default {
   methods: {
     routeToHistory(ctx) {
       this.$router.push(
-        `/apps/event/list/RegistrationType/eventRegistrationType?event=${this.$route.params.id}`
+        this.localePath(
+          `/apps/event/list/RegistrationType/eventRegistrationType?event=${this.$route.params.id}`
+        )
       )
     },
   },

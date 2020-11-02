@@ -15,7 +15,10 @@
             class="logo-bitpod"
           ></v-img>
         </span>
-        <span d-inline-flex align-center class="mx-2 text-h5">Event</span>
+        <i18n
+          path="Common.AppTitle"
+          class="d-inline-flex align-center mx-2 text-h5"
+        />
         <v-spacer></v-spacer>
         <div v-if="drawer === true" class="d-none d-sm-flex">
           <v-app-bar-nav-icon
@@ -35,7 +38,7 @@
               class="ma-3 block wd-full my-0 mb-1 ml-n4"
               v-on="on"
             >
-              Create Event
+              <i18n path="Drawer.CreateEventAction" />
             </v-btn>
           </template>
 
@@ -50,7 +53,9 @@
                 <v-icon class="fs-16 mr-2">fa-calendar</v-icon>
               </v-list-item-icon>
               <v-list-item-content>
-                <v-list-item-title>Single Event</v-list-item-title>
+                <v-list-item-title
+                  ><i18n path="Drawer.SingleEventAction"
+                /></v-list-item-title>
               </v-list-item-content>
             </v-list-item>
             <v-list-item
@@ -63,7 +68,9 @@
                 <v-icon class="fs-16 mr-2">fa-history</v-icon>
               </v-list-item-icon>
               <v-list-item-content>
-                <v-list-item-title>Recurring Event</v-list-item-title>
+                <v-list-item-title
+                  ><i18n path="Drawer.RecurringEventAction"
+                /></v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </v-list>
@@ -74,7 +81,12 @@
           <v-row v-if="item.heading" :key="item.heading" align="center">
             <div class="pa-0 pl-5">
               <v-subheader v-if="item.heading" class="nav-subheader pl-2">
-                {{ item.heading }}
+                <i18n v-if="item.heading === 'Event'" path="Common.EventApp" />
+                <i18n
+                  v-if="item.heading === 'Promotions'"
+                  path="Common.Promotions"
+                />
+                <i18n v-if="item.heading === 'Members'" path="Common.Members" />
               </v-subheader>
             </div>
           </v-row>
@@ -96,7 +108,7 @@
               v-for="(child, i) in item.children"
               :key="i"
               link
-              :to="item.to"
+              :to="localePath(item.to)"
               router
               exact
             >
@@ -110,13 +122,34 @@
               </v-list-item-content>
             </v-list-item>
           </v-list-group>
-          <v-list-item v-else :key="item.text" link :to="item.to" router exact>
+          <v-list-item
+            v-else
+            :key="item.text"
+            link
+            :to="localePath(item.to)"
+            router
+            exact
+          >
             <v-list-item-action class="nav-icon">
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-action>
             <v-list-item-content>
               <v-list-item-title class="nav-title">
-                {{ item.text }}
+                <i18n
+                  v-if="item.text === 'Eventboard'"
+                  path="Drawer.Eventboard"
+                />
+                <i18n v-if="item.text === 'Events'" path="Drawer.Events" />
+                <i18n
+                  v-if="item.text === 'Registrations'"
+                  path="Drawer.Registrations"
+                />
+                <i18n
+                  v-if="item.text === 'Discount Code'"
+                  path="Drawer.DiscountCode"
+                />
+                <i18n v-if="item.text === 'Members'" path="Drawer.Members" />
+                <i18n v-if="item.text === 'Contacts'" path="Drawer.Contacts" />
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -162,13 +195,17 @@
             class="logo-bitpod"
           ></v-img>
         </span>
-        <span d-inline-flex align-center class="mx-2 text-h5">Event</span>
+        <i18n
+          path="Common.AppTitle"
+          class="d-inline-flex align-center mx-2 text-h5"
+        />
         <v-spacer></v-spacer>
       </v-toolbar-title>
       <div class="d-flex d-sm-flex d-md-none ml-n3">
         <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       </div>
       <v-spacer></v-spacer>
+      <LanguageSwitcher />
       <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
         <v-icon>mdi-invert-colors</v-icon>
       </v-btn>
@@ -219,7 +256,7 @@
             <v-list dense class="pt-0">
               <v-list-item>
                 <v-btn text small color="primary" @click="onLogout">
-                  Logout
+                  <i18n path="Common.Logout" />
                 </v-btn>
               </v-list-item>
             </v-list>
@@ -228,7 +265,7 @@
       </div>
       <div v-else>
         <v-btn class="ma-2" outlined color="primary" to="/login">
-          Login
+          <i18n path="Common.Login" />
         </v-btn>
       </div>
     </v-app-bar>

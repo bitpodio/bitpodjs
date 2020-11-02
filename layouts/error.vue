@@ -7,7 +7,7 @@
       {{ otherError }}
     </h1>
     <NuxtLink to="/">
-      Home page
+      <i18n path="Common.HomePage" />
     </NuxtLink>
   </v-app>
 </template>

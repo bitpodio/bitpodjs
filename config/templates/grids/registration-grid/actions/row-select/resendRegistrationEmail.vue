@@ -1,10 +1,12 @@
 <template>
   <v-col class="px-0">
     <v-snackbar v-model="snackbar" :timeout="timeout" :top="true"
-      ><div class="text-center">Confirmation Email Sent</div></v-snackbar
-    >
+      ><div class="text-center">
+        <i18n path="Common.ConfirmationEmailSent" /></div
+    ></v-snackbar>
     <v-btn text small v-bind="attrs" v-on="on" @click="resendRegistrationEmail">
-      <v-icon left>mdi-email-outline</v-icon> Resend Registration Email
+      <v-icon left>mdi-email-outline</v-icon>
+      <i18n path="Common.ResendRegistrationEmail" />
     </v-btn>
   </v-col>
 </template>

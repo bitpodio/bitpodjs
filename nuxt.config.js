@@ -1,4 +1,3 @@
-import colors from 'vuetify/es5/util/colors'
 const basePath = process.env.PUBLIC_PATH || ''
 
 export default {
@@ -69,6 +68,7 @@ export default {
    ** https://nuxtjs.org/guide/plugins
    */
   plugins: [
+    '~/plugins/v-i18n.js',
     '~/plugins/eventBus.js',
     '~/plugins/bitpod',
     { src: '~/plugins/v-confirm', mode: 'client' },
@@ -97,6 +97,7 @@ export default {
    ** Nuxt.js modules
    */
   modules: [
+    'nuxt-i18n',
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/apollo',
@@ -111,6 +112,120 @@ export default {
       },
     ],
   ],
+  /**
+   * nuxt-i18n options
+   * https://i18n.nuxtjs.org/options-reference
+   */
+  i18n: {
+    locales: [
+      { code: 'en', iso: 'en-US', label: 'English', file: 'en-US.json' },
+      { code: 'hi', iso: 'hi-IN', label: 'हिन्दी', file: 'hi-IN.json' },
+      { code: 'fr', iso: 'fr', label: 'Française', file: 'fr.json' },
+      { code: 'he', iso: 'he', label: 'עִבְרִית', file: 'he.json', rtl: true },
+    ],
+    defaultLocale: 'en',
+    lazy: true,
+    langDir: 'locales/',
+    detectBrowserLanguage: {
+      fallbackLocale: 'en',
+      onlyOnRoot: true,
+    },
+    /**
+     * vue-i18n options
+     * https://kazupon.github.io/vue-i18n/api/#constructor-options
+     */
+    vueI18n: {
+      fallbackLocale: 'en',
+      dateTimeFormats: {
+        en: {
+          short: {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+          },
+          long: {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true,
+          },
+        },
+        hi: {
+          short: {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+          },
+          long: {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true,
+          },
+        },
+        fr: {
+          short: {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+          },
+          long: {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true,
+          },
+        },
+        he: {
+          short: {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+          },
+          long: {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true,
+          },
+        },
+      },
+      numberFormats: {
+        en: {
+          currency: {
+            style: 'currency',
+            currency: 'USD',
+          },
+        },
+        hi: {
+          currency: {
+            style: 'currency',
+            currency: 'INR',
+          },
+        },
+        fr: {
+          currency: {
+            style: 'currency',
+            currency: 'USD',
+          },
+        },
+        he: {
+          currency: {
+            style: 'currency',
+            currency: 'USD',
+          },
+        },
+      },
+    },
+  },
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
@@ -138,31 +253,7 @@ export default {
    ** https://github.com/nuxt-community/vuetify-module
    */
   vuetify: {
-    customVariables: ['~/assets/variables.scss'],
-    theme: {
-      light: true,
-      themes: {
-        dark: {
-          primary: '#1a73e8',
-          accent: colors.grey.darken3,
-          secondary: colors.amber.darken3,
-          info: colors.teal.lighten1,
-          warning: colors.amber.base,
-          error: colors.deepOrange.accent4,
-          success: colors.green.accent3,
-          boxview: '#1e1e1e',
-          greybg: '#000000',
-        },
-        light: {
-          primary: '#1a73e8',
-          secondary: colors.grey.darken1,
-          accent: colors.shades.black,
-          error: colors.red.accent3,
-          greybg: '#f5f5f5',
-          boxview: '#ffffff',
-        },
-      },
-    },
+    optionsPath: './vuetify.options.js',
   },
   /*
    ** Build configuration

@@ -14,15 +14,15 @@
           v-bind="attrs"
           v-on="on"
         >
-          <v-icon left> fa-filter</v-icon> Filter
+          <v-icon left> fa-filter</v-icon> <i18n path="Common.Filter" />
         </v-btn>
       </template>
 
       <v-card class="filter-dialog-content">
         <div class="mb-2">
           <span class="text--primary body-1">
-            <v-icon class="pr-1">fa-filter</v-icon> Filter</span
-          >
+            <v-icon class="pr-1">fa-filter</v-icon> <i18n path="Common.Filter"
+          /></span>
         </div>
         <div class="filter-fields-container">
           <div
@@ -47,24 +47,32 @@
               <v-list>
                 <v-list-item @click="onRuleDelete(index)">
                   <v-icon class="pr-2">mdi-delete</v-icon>
-                  <v-list-item-title>Delete</v-list-item-title>
+                  <v-list-item-title
+                    ><i18n path="Drawer.Delete"
+                  /></v-list-item-title>
                 </v-list-item>
                 <v-list-item @click="onRuleDuplicate(index)">
                   <v-icon class="pr-2">mdi-content-copy</v-icon>
-                  <v-list-item-title>Duplicate</v-list-item-title>
+                  <v-list-item-title
+                    ><i18n path="Common.Duplicate"
+                  /></v-list-item-title>
                 </v-list-item>
               </v-list>
             </v-menu>
           </div>
           <v-spacer></v-spacer>
           <v-btn text color="primary" class="filter-btn" @click="onAddFilter"
-            >+ Add a filter</v-btn
-          >
+            ><i18n path="Common.AddFilter"
+          /></v-btn>
         </div>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn text @click="menu = false">Cancel</v-btn>
-          <v-btn color="primary" text @click="onApply">Apply</v-btn>
+          <v-btn text @click="menu = false"
+            ><i18n path="Drawer.Cancel"
+          /></v-btn>
+          <v-btn color="primary" text @click="onApply"
+            ><i18n path="Common.Apply"
+          /></v-btn>
         </v-card-actions>
       </v-card>
     </v-menu>

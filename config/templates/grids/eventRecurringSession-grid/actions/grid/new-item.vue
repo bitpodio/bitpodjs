@@ -12,7 +12,7 @@
           <v-icon v-if="actionType === 'Edit'" left class="fs-16"
             >fa-pencil</v-icon
           >
-          {{ (actionType === 'New' ? 'New Recurring Session' : 'Edit') }}
+          {{ (actionType === 'New' ? $t('Common.NewRecurringSession') : $t('Drawer.Edit')) }}
         </v-btn>
       </template>
       <v-card>
@@ -20,7 +20,7 @@
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
           <h2 class="black--text pt-5 pb-4 text-h5">
-            {{ (actionType === 'New' ? 'New Session' : 'Edit Session') }}
+            {{ (actionType === 'New' ? $t('Common.NewSession') : $t('Common.EditSession')) }}
           </h2>
 
           <v-spacer></v-spacer>
@@ -45,7 +45,7 @@
               <v-flex class="d-flex justify-center align-center pb-1">
                 <h2 class="body-1 pb-1 primary--text">
                   <i class="fa fa-info-circle" aria-hidden="true"></i>
-                  Basic Information
+                  <i18n path="Common.BasicInformation" />
                 </h2>
                 <v-spacer></v-spacer>
               </v-flex>
@@ -54,7 +54,7 @@
               <v-col cols="12" sm="6" md="4" class="pb-0">
                 <v-text-field
                   v-model="session.Name"
-                  label="Name*"
+                  :label="$t('Common.NameRequired')"
                   outlined
                   :rules="requiredRules"
                   dense
@@ -71,7 +71,7 @@
               <v-col v-if="isGroup" cols="12" sm="6" md="4" class="pb-0">
                 <v-text-field
                   v-model="session.MaxAllow"
-                  label="Max Allow*"
+                  :label="$t('Common.MaxAllow')"
                   outlined
                   type="number"
                   :rules="maxAllowRules"
@@ -83,7 +83,7 @@
               <v-flex class="d-flex justify-center align-center pb-1">
                 <h2 class="body-1 pb-1 primary--text">
                   <i class="fa fa-clock" aria-hidden="true"></i>
-                  Session Time
+                  <i18n path="Common.SessionTime" />
                 </h2>
                 <v-spacer></v-spacer>
               </v-flex>
@@ -127,7 +127,7 @@
               <v-col v-if="isCustomMin" cols="12" sm="6" md="4" class="pb-0">
                 <v-text-field
                   v-model="customDuration"
-                  label="Duration*"
+                  :label="$t('Common.DurationRequired')"
                   outlined
                   type="number"
                   min="1"
@@ -140,7 +140,7 @@
               <v-flex class="d-flex justify-center align-center pb-1">
                 <h2 class="body-1 pb-1 primary--text">
                   <i class="fa fa-location" aria-hidden="true"></i>
-                  Location
+                  <i18n path="Common.Location" />
                 </h2>
                 <v-spacer></v-spacer>
               </v-flex>
@@ -163,7 +163,7 @@
               >
                 <v-text-field
                   v-model="session.BitpodVirtualLink"
-                  label="Bitpod Virtual Link"
+                  :label="$t('Common.BitpodVirtualLink')"
                   outlined
                   dense
                   :disabled="true"
@@ -178,7 +178,7 @@
               >
                 <v-text-field
                   v-model="session.Phone"
-                  label="Phone*"
+                  :label="$t('Common.PhoneRequired')"
                   outlined
                   dense
                   :rules="phoneRules"
@@ -193,7 +193,7 @@
                 <v-checkbox
                   v-model="session.SeatReservation"
                   class="ma-0"
-                  label="Seat Reservation"
+                  :label="$t('Common.SeatReservation')"
                 ></v-checkbox>
               </v-col>
               <v-col
@@ -206,7 +206,7 @@
                   :items="locationLookupOptions"
                   item-text="Name"
                   item-value="id"
-                  label="Location"
+                  :label="$t('Common.Location')"
                   outlined
                   dense
                   class="st-date"
@@ -221,7 +221,7 @@
               >
                 <v-text-field
                   v-model="session.WebinarLink"
-                  label="online meeting link (https)*"
+                  :label="$t('Common.OnlineMeetingLink')"
                   outlined
                   :rules="onlineEventLink"
                   dense
@@ -230,22 +230,21 @@
               <v-col cols="12" class="pb-0 pt-0">
                 <div v-if="session.LocationType === 'Zoom'">
                   <i class="fa fa-bulb" aria-hidden="true"></i>
-                  To send Zoom joining info, you must setup Zoom integration,
+                  <i18n path="Common.SendZoomJoiningInfo" />
                   <a href="" @click.stop.prevent="openWindow(zoomDocumentLink)"
-                    >click here</a
-                  >
-                  for documentation.
+                    ><i18n path="Common.ClickHere"
+                  /></a>
+                  <i18n path="Common.ForDocumentation" />
                 </div>
                 <div v-if="session.LocationType === 'Google Meet'">
                   <i class="fa fa-bulb" aria-hidden="true"></i>
-                  To send google meet joining info, you must setup google meet
-                  integration,
+                  <i18n path="Common.SendGoogleMeetJoiningInfo" />
                   <a
                     href=""
                     @click.stop.prevent="openWindow(googleMeetDocumentLink)"
-                    >click here</a
-                  >
-                  for documentation.
+                    ><i18n path="Common.ClickHere"
+                  /></a>
+                  <i18n path="Common.ForDocumentation" />
                 </div>
               </v-col>
               <v-col
@@ -281,7 +280,7 @@
               >
                 <v-text-field
                   v-model="venueAddress.City"
-                  label="City"
+                  :label="$t('Common.City')"
                   outlined
                   dense
                   @change="changeAddress()"
@@ -296,7 +295,7 @@
               >
                 <v-text-field
                   v-model="venueAddress.State"
-                  label="State"
+                  :label="$t('Common.State')"
                   outlined
                   dense
                   @change="changeAddress()"
@@ -311,7 +310,7 @@
               >
                 <v-text-field
                   v-model="venueAddress.Country"
-                  label="Country"
+                  :label="$t('Common.Country')"
                   outlined
                   dense
                   @change="changeAddress()"
@@ -326,7 +325,7 @@
               >
                 <v-text-field
                   v-model="venueAddress.ZipCode"
-                  label="Zip Code"
+                  :label="$t('Common.ZipCode')"
                   outlined
                   dense
                   @change="changeAddress()"
@@ -337,7 +336,7 @@
               <v-flex class="d-flex justify-center align-center pb-1">
                 <h2 class="body-1 pb-1 primary--text">
                   <i class="fa fa-help-circle" aria-hidden="true"></i>
-                  When can session be scheduled?
+                  <i18n path="Common.SessionScheduled" />
                 </h2>
                 <v-spacer></v-spacer>
               </v-flex>
@@ -359,7 +358,7 @@
               >
                 <v-text-field
                   v-model="session.RollingDays"
-                  label="Rolling Days"
+                  :label="$t('Common.RollingDays')"
                   outlined
                   type="number"
                   dense
@@ -374,7 +373,7 @@
               >
                 <CustomDate
                   v-model="session.StartDate"
-                  label="Start Date*"
+                  :label="$t('Common.StartD')"
                   :field="startDateField"
                   type="date"
                   :on-change="changeStartDate"
@@ -395,7 +394,7 @@
               >
                 <CustomDate
                   v-model="session.EndDate"
-                  label="End Date*"
+                  :label="$t('Common.EndD')"
                   :field="endDateField"
                   type="date"
                   :on-change="changeEndDate"
@@ -423,14 +422,14 @@
                   class="body-1 pb-1 primary--text"
                 >
                   <i class="fa fa-help-circle" aria-hidden="true"></i>
-                  Working Day?
+                  <i18n path="Common.WorkingDay" />
                 </h2>
                 <h2
                   v-if="actionType === 'Edit'"
                   class="body-1 pb-1 primary--text"
                 >
                   <i class="fa fa-cog" aria-hidden="true"></i>
-                  Advanced Setting
+                  <i18n path="Common.AdvancedSetting" />
                 </h2>
                 <v-spacer></v-spacer>
               </v-flex>
@@ -450,7 +449,7 @@
               <v-col cols="12" sm="6" md="4" class="pb-0">
                 <v-text-field
                   v-model="session.Frequency"
-                  label="Frequency (min)"
+                  :label="$t('Common.Frequency')"
                   outlined
                   type="number"
                   :rules="numberRules"
@@ -460,7 +459,7 @@
               <v-col cols="12" sm="6" md="4" class="pb-0">
                 <v-text-field
                   v-model="session.MinimumSchedulingNotice"
-                  label="Minimum Scheduling Notice (hr)"
+                  :label="$t('Common.MinimumSchedulingNotice')"
                   outlined
                   type="number"
                   :rules="numberRules"
@@ -470,7 +469,7 @@
               <v-col cols="12" sm="6" md="4" class="pb-0">
                 <v-text-field
                   v-model="session.BufferBefore"
-                  label="Buffer Before (min)"
+                  :label="$t('Common.BufferBefore')"
                   outlined
                   type="number"
                   :rules="numberRules"
@@ -480,7 +479,7 @@
               <v-col cols="12" sm="6" md="4" class="pb-0">
                 <v-text-field
                   v-model="session.BufferAfter"
-                  label="Buffer After (min)"
+                  :label="$t('Common.BufferAfter')"
                   outlined
                   type="number"
                   :rules="numberRules"
@@ -491,7 +490,7 @@
                 <RichText
                   v-model="session.Description"
                   class="mb-3"
-                  label="Description"
+                  :label="$t('Common.Description')"
                 ></RichText>
               </v-col>
             </v-row>
@@ -506,8 +505,8 @@
             :disabled="!valid"
             depressed
             @click.native="onSave"
-            >Save</v-btn
-          >
+            ><i18n path="Drawer.Save"
+          /></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -517,7 +516,6 @@
 <script>
 import gql from 'graphql-tag'
 import { formatGQLResult } from '~/utility/gql.js'
-import strings from '~/strings.js'
 import { required, onlineEventLink } from '~/utility/rules.js'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import location from '~/config/apps/event/gql/location.gql'
@@ -615,7 +613,7 @@ export default {
           if (v && !isNaN(v)) {
             return true
           }
-          return strings.INVALID_PHONE_MSG
+          return this.$t('Messages.Error.PleaseEnterValidPhone')
         },
       ],
       durationRules: [
@@ -623,7 +621,7 @@ export default {
           if (!isNaN(parseFloat(v)) && v > 0) {
             return true
           }
-          return strings.DURATION_RANGE
+          return this.$t('Messages.Error.DurationGreaterMsg')
         },
       ],
       maxAllowRules: [
@@ -631,7 +629,7 @@ export default {
           if (!isNaN(parseFloat(v)) && v > 0) {
             return true
           }
-          return strings.MAX_ALLOW_MSG
+          return this.$t('Messages.Error.MaxAllowMsg')
         },
       ],
       numberRules: [
@@ -647,7 +645,7 @@ export default {
           if (v.length > 0) {
             return true
           }
-          return strings.LOCATION_MSG
+          return this.$t('Messages.Error.SelectLocation')
         },
       ],
       typeProps: {
@@ -694,7 +692,7 @@ export default {
       },
       durationProps: {
         type: 'lookup',
-        caption: 'Duration',
+        caption: 'Common.Duration',
         dataSource: {
           query: registrationStatusOptions,
           itemText: 'value',
@@ -828,7 +826,7 @@ export default {
         (v) => {
           const startDate = new Date(v)
           return startDate > new Date(this.session.EndDate)
-            ? strings.START_END_DATE
+            ? this.$t('Messages.Error.StartEndDate')
             : true
         },
       ]
@@ -838,7 +836,7 @@ export default {
         (v) => {
           const endDate = new Date(v)
           return new Date(this.session.StartDate) > endDate
-            ? strings.END_START_DATE
+            ? this.$t('Messages.Error.EndStartDate')
             : true
         },
       ]
@@ -1065,7 +1063,9 @@ export default {
     changeStartDate(v) {
       const startDate = new Date(v)
       this.startDateMessage =
-        startDate > new Date(this.session.EndDate) ? strings.START_END_DATE : ''
+        startDate > new Date(this.session.EndDate)
+          ? this.$t('Messages.Error.StartEndDate')
+          : ''
       if (this.startDateMessage === '') {
         this.endDateMessage = ''
       }
@@ -1073,14 +1073,18 @@ export default {
     changeEndDate(v) {
       const endDate = new Date(v)
       this.endDateMessage =
-        new Date(this.session.StartDate) > endDate ? strings.END_START_DATE : ''
+        new Date(this.session.StartDate) > endDate
+          ? this.$t('Messages.Error.EndStartDate')
+          : ''
       if (this.endDateMessage === '') {
         this.startDateMessage = ''
       }
     },
     changeAddressData(value) {
       this.addresslineMessage =
-        value === ' ' || value === '' ? strings.FIELD_REQUIRED : ''
+        value === ' ' || value === ''
+          ? this.$t('Messages.Error.ThisFieldRequired')
+          : ''
     },
     getAddressData(addressData, placeResultData, id) {
       this.venueAddress.AddressLine =
@@ -1141,7 +1145,7 @@ export default {
             delete this.venueAddress.LatLng.__typename
           this.session._CurrentAddress = this.venueAddress
         } else {
-          this.addresslineMessage = strings.FIELD_REQUIRED
+          this.addresslineMessage = this.$t('Messages.Error.ThisFieldRequired')
           return
         }
       } else {
@@ -1164,7 +1168,7 @@ export default {
       if (
         this.actionType === 'Edit' ||
         isInvalidSlot === false ||
-        confirm(strings.OVERLAP_SESSION_MSG)
+        confirm(this.$t('Messages.Warn.OverLapSessionMsg'))
       ) {
         const ObjectID5 = (
           m = Math,

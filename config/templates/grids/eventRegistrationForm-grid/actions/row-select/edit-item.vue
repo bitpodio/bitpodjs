@@ -8,7 +8,8 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on" @click="getRegistrations">
-          <v-icon left class="fs-16">fa-pencil</v-icon>Edit
+          <v-icon left class="fs-16">fa-pencil</v-icon
+          ><i18n path="Drawer.Edit" />
         </v-btn>
       </template>
       <v-card>
@@ -16,7 +17,7 @@
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
           <h2 class="black--text pt-10 pb-9 font-weight-regular">
-            Edit Registration Form
+            <i18n path="Common.EditRegistrationForm" />
           </h2>
           <v-spacer></v-spacer>
           <div>
@@ -31,7 +32,7 @@
               <v-col cols="12">
                 <v-text-field
                   v-model="formData.Label"
-                  label="Label"
+                  :label="$t('Common.Label')"
                   outlined
                   dense
                 ></v-text-field>
@@ -41,7 +42,7 @@
                   v-model="controlType"
                   :rules="required"
                   :items="controlTypeDropDown"
-                  label="Control Type*"
+                  :label="$t('Common.ControlType')"
                   outlined
                   dense
                 ></v-select>
@@ -49,7 +50,7 @@
               <v-col v-if="showCsvField" cols="12">
                 <v-text-field
                   v-model="CsvOptions"
-                  label="Options*"
+                  :label="$t('Common.Options')"
                   :rules="required"
                   outlined
                   dense
@@ -59,7 +60,7 @@
                 <v-text-field
                   v-model="formData.DisplayOrder"
                   :rules="required"
-                  label="Display Order*"
+                  :label="$t('Common.DisplayOrder')"
                   type="number"
                   min="1"
                   required
@@ -79,8 +80,8 @@
             :disabled="!valid || !controlType || controlType === 'Select'"
             depressed
             @click.native="onSave"
-            >Save</v-btn
-          >
+            ><i18n path="Drawer.Save"
+          /></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

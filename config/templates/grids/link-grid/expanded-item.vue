@@ -1,3 +1,3 @@
 <template>
-  <td>More info about</td>
+  <td><i18n path="Common.MoreAbout" /></td>
 </template>

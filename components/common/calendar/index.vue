@@ -11,7 +11,7 @@
         outlined
         hide-details
         class="ma-2"
-        label="type"
+        :label="$t('Common.CalendarType')"
       ></v-select>
       <v-select
         v-model="mode"
@@ -19,7 +19,7 @@
         dense
         outlined
         hide-details
-        label="event-overlap-mode"
+        :label="$t('Common.EventOverlapMode')"
         class="ma-2"
       ></v-select>
       <v-select
@@ -28,7 +28,7 @@
         dense
         outlined
         hide-details
-        label="weekdays"
+        :label="$t('Common.Weekdays')"
         class="ma-2"
       ></v-select>
       <v-spacer></v-spacer>

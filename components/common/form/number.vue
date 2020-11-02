@@ -1,7 +1,7 @@
 <template>
   <v-text-field
     v-model="filterRule.value"
-    label="Enter a value"
+    :label="$t('Common.EnterValue')"
     type="number"
     outlined
     dense

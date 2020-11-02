@@ -16,7 +16,7 @@ export default {
       fields: {
         Name: {
           displayOrder: 1,
-          caption: 'Name',
+          caption: 'Common.Name',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '250px',
@@ -24,7 +24,7 @@ export default {
         },
         ImageUrl: {
           displayOrder: 2,
-          caption: 'Image Url',
+          caption: 'Common.ImageUrl',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '250px',
@@ -32,7 +32,7 @@ export default {
         },
         createdDate: {
           displayOrder: 3,
-          caption: 'Date',
+          caption: 'Common.Date',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -40,7 +40,7 @@ export default {
         },
         createdBy: {
           displayOrder: 4,
-          caption: 'Created By',
+          caption: 'Common.CreatedBy',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -76,7 +76,7 @@ export default {
           where: {},
         },
       },
-      title: 'Seat Maps',
+      title: 'Common.SeatMaps',
       type: 'list',
     },
   },
