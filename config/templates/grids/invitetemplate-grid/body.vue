@@ -314,7 +314,9 @@ export default {
     async deleteTemplete(id) {
       const url = this.$bitpod.getApiUrl()
 
-      const check = confirm('Are you sure you want to delete this template?')
+      const check = await this.$confirm(
+        'Are you sure you want to delete this template?'
+      )
       let res = null
       if (check === true) {
         try {

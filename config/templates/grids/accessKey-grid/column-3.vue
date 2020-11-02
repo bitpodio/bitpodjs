@@ -78,7 +78,7 @@ export default {
     },
     async onDelete(accessKey, userName) {
       const url = this.$bitpod.getApiUrl()
-      const check = confirm('Are you sure you want to delete')
+      const check = await this.$confirm('Are you sure you want to delete?')
       if (check === true) {
         try {
           const res = await this.$axios.$delete(

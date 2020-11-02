@@ -34,7 +34,9 @@ export default {
   },
   methods: {
     async updateDate() {
-      const res = confirm('are you sure, you want to cancel check in?')
+      const res = await this.$confirm(
+        'are you sure, you want to cancel check in?'
+      )
       const url = this.$bitpod.getApiUrl()
       if (res) {
         try {
