@@ -1,6 +1,6 @@
 <template>
   <v-flex class="greybg">
-    <div class="pt-4">
+    <div>
       <v-row class="ma-0">
         <v-col
           v-for="item in items"
@@ -218,14 +218,26 @@
               </nuxt-link>
               <v-card-actions class="pt-0 pl-4 tiles-action">
                 <div class="text-truncate d-block">
-                  <v-text
-                    v-for="Tags in item.Tags"
-                    :key="Tags"
-                    small
-                    class="ma-0 mr-1 event-tags body-2"
-                  >
-                    #{{ Tags }}
-                  </v-text>
+                  <span v-if="item.LocationType === 'Bitpod Virtual'">
+                    <v-text class="ma-0 mr-1 event-tags body-2"
+                      >#Bitpod Virtual</v-text
+                    >
+                  </span>
+                  <span v-else-if="item.LocationType === 'Online event'">
+                    <v-text class="ma-0 mr-1 event-tags body-2"
+                      >#Online event</v-text
+                    >
+                  </span>
+                  <span v-else>
+                    <v-text
+                      v-for="Tags in item.Tags"
+                      :key="Tags"
+                      small
+                      class="ma-0 mr-1 event-tags body-2"
+                    >
+                      #{{ Tags }}
+                    </v-text>
+                  </span>
                 </div>
 
                 <v-spacer></v-spacer>

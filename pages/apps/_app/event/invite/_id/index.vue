@@ -34,7 +34,7 @@
             <v-col class="col-12 pb-0">
               <div class="body-2 text--secondary">Due Date</div>
               <div class="body-1">
-                {{ formatField(data.invites.DueDate) }}
+                {{ formatDate(data.invites.DueDate) }}
               </div>
             </v-col>
             <v-col class="col-12 pb-0">
@@ -287,7 +287,7 @@ export default {
   },
   methods: {
     formatDate(date) {
-      return date ? format(new Date(date), 'PPp') : ''
+      return date ? format(new Date(date), 'PPp') : '-'
     },
     formatField(fieldValue) {
       return fieldValue || '-'

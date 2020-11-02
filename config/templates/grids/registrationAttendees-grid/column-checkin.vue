@@ -73,6 +73,24 @@
     <v-snackbar v-model="snackbar" :timeout="timeout" top="true"
       ><div class="text-center">{{ snackbarText }}</div></v-snackbar
     >
+    <iframe
+      v-show="false"
+      id="print"
+      ref="iframe"
+      style="width: 500px; position: relative; height: 500px;"
+    >
+    </iframe>
+    <v-flex
+      v-show="false"
+      ref="printForm"
+      my-3
+      d-flex
+      justify-center
+      align-center
+    >
+      <!-- eslint-disable-next-line vue/no-v-html -->
+      <div v-show="false" v-html="getDefaultBadge(Template)" />
+    </v-flex>
   </div>
 </template>
 
@@ -114,8 +132,25 @@ export default {
   },
   mounted() {
     this.getEventId()
+    setTimeout(this.openPrint, 5000)
   },
   methods: {
+    getDefaultBadge(str) {
+      const logoUrl =
+        nuxtconfig.publicRuntimeConfig.cdnUri +
+        'admin-default-template-logo.png'
+      if (str) {
+        str = str
+          .replace('{{ FullName }}', `${this.$auth.user.data.name}`)
+          .replace('{{ Category }}', `${this.getBadgeCategory}`)
+          .replace('{{ Organization }}', `${this.$store.state.currentOrg.name}`)
+          .replace(logoUrl, this.getAttachmentLink(this.logoId, true))
+        if (this.eventTitle) {
+          str = str.replace('{{ EventName }}', `${this.eventTitle}`)
+        }
+      }
+      return str
+    },
     setTemplates() {
       if (this.Template !== '') {
         const str = this.getBadge(this.Template, this.item)
@@ -207,15 +242,19 @@ export default {
       }
     },
     openPrintForm() {
-      const myWindow = window.open('', '', 'width=900,height=900')
       const str = this.getBadge(this.Template, this.item)
-      myWindow.document.write(`${str}`)
-      myWindow.document.close()
-      myWindow.focus()
-      myWindow.print()
-      setTimeout(function () {
-        myWindow.close()
-      }, 1000)
+      this.$refs.iframe.contentWindow.document.write(
+        `<div style="display:flex">${str}</div>`
+      )
+      setTimeout(this.printBadge, 3000)
+    },
+    printBadge() {
+      this.$refs.iframe.contentWindow.print()
+      this.$refs.iframe.contentWindow.close()
+      this.$refs.iframe.contentWindow.document.close()
+    },
+    openPrint() {
+      this.$refs.iframe.contentWindow.document.firstChild.innerHTML = this.$refs.printForm.innerHTML
     },
     getBadge(str, items) {
       const logoUrl =

@@ -1,10 +1,10 @@
 <template>
-  <div v-if="value">
+  <div v-if="value" class="reg-status">
     <v-chip
       small
       :class="{
         warning: value === 'Cancelled',
-        red: value === 'Failed',
+        error: value === 'Failed',
         warning: value === 'Pending',
         success: value === 'Success',
       }"

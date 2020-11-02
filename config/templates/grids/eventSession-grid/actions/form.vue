@@ -8,7 +8,9 @@
       </div>
     </v-snackbar>
     <v-btn text small @click="openDialog">
-      <v-icon left>{{ isEdit ? 'fa-pencil' : 'mdi-plus' }}</v-icon>
+      <v-icon class="fs-18" left>{{
+        isEdit ? 'fa-pencil' : 'mdi-plus'
+      }}</v-icon>
       {{ isEdit ? 'Edit Session' : 'New Session' }}
     </v-btn>
     <v-dialog
@@ -43,7 +45,7 @@
                   dense
                 ></v-text-field>
               </v-col>
-              <div class="col-md-12 pl-0 pb-0 pt-0">
+              <div class="col-md-12 pb-0 pt-0">
                 <v-flex class="d-flex justify-center align-center pb-1">
                   <h2 class="body-1 pb-1 primary--text">
                     <i class="fa fa-clock" aria-hidden="true"></i>
@@ -98,7 +100,7 @@
                   :field="ticketProps()"
                 />
               </v-col>
-              <div class="col-md-12 pl-0 pb-0 pt-0">
+              <div class="col-md-12 pb-0 pt-0">
                 <v-flex class="d-flex justify-center align-center pb-1">
                   <h2 class="body-1 pb-1 primary--text">
                     <i class="fa fa-location" aria-hidden="true"></i>
@@ -250,7 +252,7 @@
                   dense
                 ></v-text-field>
               </v-col>
-              <div class="col-md-12 pl-0 pb-0 pt-0">
+              <div class="col-md-12 pb-0 pt-0">
                 <v-flex class="d-flex justify-center align-center pb-1">
                   <h2 class="body-1 pb-1 primary--text">
                     <i class="fa fa-file-text" aria-hidden="true"></i>
