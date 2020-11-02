@@ -153,6 +153,7 @@ export default {
     },
     setTemplates() {
       if (this.Template !== '') {
+        this.getOrgInfo()
         const str = this.getBadge(this.Template, this.item)
         this.noBadgeFound = true
         return str
@@ -205,6 +206,7 @@ export default {
           this.eventTitle = res.data.Title
           this.eventType = res.data.BusinessType
           this.printBadgeOnCheckIn = res.data.printBadgeOnCheckIn
+          this.logoId = res.data.Logo[0]
           this.getEventSelectedBadge()
         }
         return res
@@ -242,6 +244,7 @@ export default {
       }
     },
     openPrintForm() {
+      this.getOrgInfo()
       const str = this.getBadge(this.Template, this.item)
       this.$refs.iframe.contentWindow.document.write(
         `<div style="display:flex">${str}</div>`
@@ -296,7 +299,11 @@ export default {
         })
         if (result) {
           const orgInfo = formatGQLResult(result.data, 'OrganizationInfo')
-          this.logoId = orgInfo[0].Image[0]
+          if (this.$attrs.context.event.Logo.length > 0) {
+            this.logoId = this.$attrs.context.event.Logo[0]
+          } else {
+            this.logoId = orgInfo[0].Image[0]
+          }
         }
       } catch (e) {
         console.error(

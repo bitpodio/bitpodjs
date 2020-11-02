@@ -169,6 +169,7 @@ export default {
       return str
     },
     openPrintForm() {
+      this.getOrgInfo()
       const str = this.setTemplates()
       this.$refs.iframe.contentWindow.document.write(
         `<div style="display:flex">${str}</div>`
@@ -236,7 +237,11 @@ export default {
         })
         if (result) {
           const orgInfo = formatGQLResult(result.data, 'OrganizationInfo')
-          this.logoId = orgInfo[0].Image[0]
+          if (this.context.event.Logo.length > 0) {
+            this.logoId = this.context.event.Logo[0]
+          } else {
+            this.logoId = orgInfo[0].Image[0]
+          }
         }
       } catch (e) {
         console.error(

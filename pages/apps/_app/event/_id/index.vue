@@ -1553,7 +1553,6 @@ export default {
       )
     },
     openPrintForm() {
-      this.getAttendees()
       this.attendees.map((ele) => {
         const str = this.getBadgePrinted(this.badgeData.Template, ele)
 
@@ -1567,6 +1566,9 @@ export default {
           )
         }
       })
+      setTimeout(this.getPrinted, 3000)
+    },
+    getPrinted() {
       this.$refs.iframe.contentWindow.print()
       this.$refs.iframe.contentWindow.close()
       this.$refs.iframe.contentWindow.document.close()
@@ -1595,6 +1597,7 @@ export default {
           },
         })
         if (result) {
+          debugger
           const attendeesData = formatGQLResult(result.data, 'Attendee')
           this.attendees = attendeesData
           return attendeesData
