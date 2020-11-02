@@ -1,5 +1,6 @@
 import colors from 'vuetify/es5/util/colors'
 const basePath = process.env.PUBLIC_PATH || ''
+console.log('===>Base Path', process.env.PUBLIC_PATH)
 
 export default {
   /*
