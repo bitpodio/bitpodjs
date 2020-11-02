@@ -26,7 +26,7 @@
               <v-col cols="12" class="pb-0">
                 <v-text-field
                   v-model="formData.Facebook"
-                  label="Facebook"
+                  :label="$t('Common.Facebook')"
                   outlined
                   dense
                 ></v-text-field>
@@ -34,7 +34,7 @@
               <v-col cols="12" class="pb-0">
                 <v-text-field
                   v-model="formData.Twitter"
-                  label="Twitter"
+                  :label="$t('Common.Twitter')"
                   outlined
                   dense
                 ></v-text-field>
@@ -42,7 +42,7 @@
               <v-col cols="12" class="pb-0">
                 <v-text-field
                   v-model="formData.LinkedIn"
-                  label="Linkdln"
+                  :label="$t('Common.LinkedIn')"
                   outlined
                   dense
                 ></v-text-field>

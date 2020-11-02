@@ -54,7 +54,7 @@
               <v-tab-item>
                 <v-card flat class="tabContent">
                   <p class="mt-4 mb-2">
-                    <i18n path="Common.enteringbasicinformation" />
+                    <i18n path="Common.EnteringBasicInformation" />
                   </p>
                   <div class="pr-3 pt-1">
                     <v-form ref="form">
@@ -62,7 +62,7 @@
                         <v-col cols="12" class="pb-0">
                           <v-text-field
                             v-model="subject"
-                            label="Subject *"
+                            :label="$t('Common.SubjectRequired')"
                             outlined
                             dense
                             :rules="[
@@ -76,7 +76,7 @@
                         <v-col cols="12" class="pb-0">
                           <v-text-field
                             v-model="senderName"
-                            label="Sender Name"
+                            :label="$t('Common.SenderName')"
                             outlined
                             dense
                           ></v-text-field>
@@ -84,7 +84,7 @@
                         <v-col cols="12" class="pb-0">
                           <v-text-field
                             v-model="sender"
-                            label="Sender *"
+                            :label="$t('Common.SenderRequired')"
                             outlined
                             dense
                             :rules="[
@@ -98,7 +98,7 @@
                         <v-col cols="12" class="pb-0">
                           <v-text-field
                             v-model="setReplyTo"
-                            label="Set reply-to *"
+                            :label="$t('Common.SetReply')"
                             outlined
                             dense
                             :rules="[
@@ -112,11 +112,8 @@
                         <v-col cols="12" class="pb-0">
                           <v-icon class="amber--text">fa-bulb</v-icon>
                           <v-card-text class="d-inline pa-0">
-                            You may refer invite members data by using
-                            placeholder expressions in subject line. e.g:
-                            ${Contact.FirstName} ${Contact.LastName}
-                            ${OrganizationInfo.Name}</v-card-text
-                          >
+                            <i18n path="Common.YouMayReferInviteMembers"
+                          /></v-card-text>
                         </v-col>
                       </v-row>
                     </v-form>
@@ -126,7 +123,7 @@
               <v-tab-item>
                 <v-card v-if="choosedTemplate === 0" flat>
                   <p class="mt-4 mb-3">
-                    <i18n path="Common.predesignedtemplate" />
+                    <i18n path="Common.PredesignedTemplate" />
                   </p>
                   <div class="pr-3 pt-1 tabContent">
                     <v-row>
@@ -149,7 +146,7 @@
                             <i18n path="Common.MyTemplates" />
                           </h3>
                           <i18n
-                            path="Common.savetemplates"
+                            path="Common.SaveTemplates"
                             class="Caption mb-4"
                           />
                         </v-card>
@@ -171,10 +168,10 @@
                             class="text-h5 my-2"
                             style="font-size: 18px !important;"
                           >
-                            <i18n path="Common.Pre-designedTemplates" />
+                            <i18n path="Common.PreDesignedTemplates" />
                           </h3>
                           <div class="Caption mb-4">
-                            <i18n path="Common.Ready-to-usetemplates" />
+                            <i18n path="Common.ReadyToUseTemplates" />
                           </div>
                         </v-card>
                       </v-col>
@@ -198,7 +195,7 @@
                             <i18n path="Common.RichTextEditor" />
                           </h3>
                           <div class="Caption mb-4">
-                            <i18n path="Common.Useeditor" />
+                            <i18n path="Common.UseEditor" />
                           </div>
                         </v-card>
                       </v-col>
@@ -211,7 +208,7 @@
                   class="tabContent"
                 >
                   <p class="mt-4 mb-4">
-                    <i18n path="Common.Selecttemplatetocontinue" />
+                    <i18n path="Common.SelectTemplateToContinue" />
                     <span
                       class="blue--text cursorPointer"
                       @click="choosedTemplate = 0"
@@ -279,7 +276,7 @@
                               templateSubject = Subject
                               templateObject = { ...item }
                             "
-                            ><i18n path="Drawer.Select"
+                            ><i18n path="Common.Select"
                           /></v-btn>
                           <v-btn
                             class="ma-2"
@@ -318,7 +315,7 @@
                 <v-card v-else flat class="tabContent">
                   <v-flex class="d-flex">
                     <p class="mt-5 mb-4">
-                      <i18n path="Common.defaultcontent" />
+                      <i18n path="Common.DefaultContent" />
                     </p>
                     <v-spacer></v-spacer>
                     <v-btn
@@ -344,7 +341,7 @@
               <v-tab-item class="tabContent">
                 <v-card flat>
                   <p class="mt-5 mb-4">
-                    <i18n path="Common.selectcontacts" />
+                    <i18n path="Common.SelectContacts" />
                   </p>
                 </v-card>
                 <v-row>
@@ -353,7 +350,7 @@
                       <v-checkbox
                         v-model="selectAll"
                         class="ma-0 pa-0 float-right"
-                        label="Select All"
+                        :label="$t('Common.SelectAll')"
                       >
                       </v-checkbox>
                       <v-icon size="18" class="mr-1">fa-address-book-o</v-icon>
@@ -417,11 +414,11 @@
                       </v-btn>
                     </div>
                     <h4 class="body-1">
-                      <i18n path="Common.Checkpriorregistrations" />
+                      <i18n path="Common.CheckPriorRegistrations" />
                     </h4>
                     <v-flex class="d-flex">
                       <h4 class="body-1 mr-3 mt-1">
-                        <i18n path="Common.Sendtothosewhohave" />
+                        <i18n path="Common.SendToThoseWhoHave" />
                       </h4>
                       <v-radio-group
                         v-model="registrationRadio"
@@ -430,14 +427,17 @@
                         class="mt-0"
                       >
                         <v-radio
-                          label="Not Registered"
+                          :label="$t('Common.NotRegistered')"
                           value="NotRegister"
                         ></v-radio>
-                        <v-radio label="Registered" value="Register"></v-radio>
+                        <v-radio
+                          :label="$t('Common.Registered')"
+                          value="Register"
+                        ></v-radio>
                       </v-radio-group>
                     </v-flex>
                     <h4 class="d-inline body-1">
-                      <i18n path="Common.Checkpriorinvite" />
+                      <i18n path="Common.CheckPriorInvite" />
                     </h4>
                     <h4
                       class="blue--text d-inline cursorPointer"
@@ -456,7 +456,7 @@
                     </h4>
                     <v-flex class="d-flex">
                       <h4 class="body-1 mr-3 mt-1">
-                        <i18n path="Common.Sendtothosewhohave" />
+                        <i18n path="Common.SendToThoseWhoHave" />
                       </h4>
                       <v-radio-group
                         v-model="openRadio"
@@ -465,10 +465,16 @@
                         class="mt-0"
                         :disabled="!priorInvite.id"
                       >
-                        <v-radio label="Not Opened" value="NotRead"></v-radio>
-                        <v-radio label="Opened" value="Read"></v-radio>
                         <v-radio
-                          label="Opened & Clicked"
+                          :label="$t('Common.NotOpened')"
+                          value="NotRead"
+                        ></v-radio>
+                        <v-radio
+                          :label="$t('Common.Opened')"
+                          value="Read"
+                        ></v-radio>
+                        <v-radio
+                          :label="$t('Common.OpenedClicked')"
                           value="clicked"
                         ></v-radio>
                       </v-radio-group>
@@ -481,10 +487,10 @@
                   <v-col cols="12" class="px-0 mb-4">
                     <v-card align="center" justify="center" class="pb-3">
                       <h3 class="text-h5 ma-2 pt-5">
-                        <i18n path="Common.submittingemailinvite" />
+                        <i18n path="Common.SubmittingEmailInvite" />
                       </h3>
                       <h5 class="body-2 ma-2 py-3">
-                        <i18n path="Common.Ifapprovalisturnedon" />
+                        <i18n path="Common.IfApprovalIsTurned" />
                       </h5>
                       <v-btn depressed color="primary" @click="resetForm"
                         ><i18n path="Drawer.Close"
@@ -500,15 +506,15 @@
                         class="text-h5 my-2"
                         style="font-size: 20px !important;"
                       >
-                        <i18n path="Common.FixedTimeandTimeZone" />
+                        <i18n path="Common.FixedTimeAndTimeZone" />
                       </h3>
                       <h5 class="body-2 ma-2 mb-5">
-                        <i18n path="Common.launchyourinvite" />
+                        <i18n path="Common.LaunchYourInvite" />
                       </h5>
                       <div style="width: 200px;">
                         <v-datetime-picker
                           v-model="scheduledTime"
-                          label="Schedule Date *"
+                          :label="$t('Common.ScheduleDate')"
                           :text-field-props="textFieldProps()"
                         >
                           <template slot="dateIcon">
@@ -545,7 +551,7 @@
                 >
                   <v-col cols="12" class="red lighten-5">
                     <h4 class="body-1 py-2">
-                      <i18n path="Common.notaddedcontact" />
+                      <i18n path="Common.NotAddedContact" />
                     </h4>
                     <v-flex class="d-flex">
                       <h5 class="body-2 mt-2 mr-2">
@@ -564,7 +570,7 @@
                     </h4>
                     <v-flex class="d-flex">
                       <h5 class="body-2 mt-2 mr-2">
-                        <i18n path="Common.notaddedcontent" />
+                        <i18n path="Common.NotAddedContent" />
                       </h5>
                       <v-btn color="blue" outlined @click="curentTab = 1"
                         ><i18n path="Common.SelectContent"
@@ -583,7 +589,7 @@
                         <i18n path="Common.SendNow" />
                       </h3>
                       <h5 class="body-2 my-2 mb-5">
-                        <i18n path="Common.Sendemailinviterightaway" />
+                        <i18n path="Common.SendEmailInviteRightaway" />
                       </h5>
                       <v-btn
                         depressed
@@ -604,7 +610,7 @@
                         <i18n path="Common.ScheduleInvite" />
                       </h3>
                       <h5 class="body-2 my-2 mb-5">
-                        <i18n path="Common.Scheduleinvitewayyouprefer" />
+                        <i18n path="Common.ScheduleInviteWayYouPrefer" />
                       </h5>
                       <v-btn
                         depressed
@@ -622,17 +628,17 @@
                         class="text-h5 my-2"
                         style="font-size: 20px !important;"
                       >
-                        <i18n path="Common.SaveasDraft" />
+                        <i18n path="Common.SaveAsDraft" />
                       </h3>
                       <h5 class="body-2 my-2 mb-5">
-                        <i18n path="Common.Saveemailasdraft" />
+                        <i18n path="Common.SaveEmailAsDraft" />
                       </h5>
                       <v-btn
                         depressed
                         color="primary"
                         :disabled="disableButton"
                         @click="sendNow('Draft')"
-                        ><i18n path="Common.SaveasDraft"
+                        ><i18n path="Common.SaveAsDraft"
                       /></v-btn>
                     </v-card>
                   </v-col>
@@ -645,7 +651,7 @@
                           >mdi-information-outline</v-icon
                         >
                         <h4 class="body-1 mt-1">
-                          <i18n path="Common.SubjectandSender" />
+                          <i18n path="Common.SubjectAndSender" />
                         </h4>
                         <v-btn class="ml-10" text small @click="curentTab = 0">
                           <v-icon dark left>mdi-pencil</v-icon>

@@ -16,7 +16,7 @@
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
           <h2 class="black--text pt-5 pb-4 text-h5">
-            <i18n path="Common.ScheduleaTask" />
+            <i18n path="Common.ScheduleATask" />
           </h2>
           <v-spacer></v-spacer>
           <div>
@@ -31,7 +31,7 @@
               <v-col cols="12" sm="6" md="12">
                 <v-text-field
                   v-model="task.Title"
-                  label="Title*"
+                  :label="$t('Common.Title')"
                   :rules="requiredRules"
                   outlined
                   dense
@@ -69,7 +69,7 @@
                   v-model="task.DueDate"
                   :text-field-props="dueDateProps()"
                   :rules="requiredRules"
-                  label="Due Date*"
+                  :label="$t('Common.DueDateRequired')"
                 >
                   <template slot="dateIcon">
                     <v-icon>fas fa-calendar</v-icon>

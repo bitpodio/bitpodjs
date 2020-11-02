@@ -31,7 +31,7 @@
               <v-col cols="12">
                 <v-text-field
                   v-model="formData.Code"
-                  label="Title*"
+                  :label="$t('Common.Title')"
                   :rules="required"
                   outlined
                   dense
@@ -84,7 +84,7 @@
                   v-model="formData.Type"
                   :items="typeDropDown"
                   :rules="required"
-                  label="Type*"
+                  :label="$t('Common.Type')"
                   outlined
                   dense
                   @change="getType"
@@ -104,7 +104,7 @@
               <v-col class="col-12 col-md-6">
                 <v-text-field
                   v-model="formData.TicketCount"
-                  label="Ticket Count"
+                  :label="$t('Common.TicketCount')"
                   type="number"
                   min="1"
                   outlined
@@ -114,7 +114,7 @@
               <v-col class="col-12 col-md-6">
                 <v-text-field
                   v-model="formData.Group"
-                  label="Group Name"
+                  :label="$t('Common.GroupName')"
                   outlined
                   dense
                 ></v-text-field>
@@ -123,7 +123,7 @@
                 <v-select
                   v-model="Attendees"
                   :items="registrationTypeDropdown"
-                  label="Registration Type"
+                  :label="$t('Common.RegistrationType')"
                   multiple
                   chips
                   outlined
@@ -135,7 +135,7 @@
               <v-col class="col-12 col-md-6">
                 <v-text-field
                   v-model="formData.DisplayOrder"
-                  label="Display Order"
+                  :label="$t('Common.DisplayOrd')"
                   type="number"
                   min="1"
                   outlined
@@ -145,7 +145,7 @@
               <v-col class="col-12 col-md-6">
                 <v-checkbox
                   v-model="formData.ValidateQty"
-                  label="Validate Quantity"
+                  :label="$t('Common.ValidateQuantity')"
                   class="ma-0"
                   dense
                 ></v-checkbox>
@@ -153,7 +153,7 @@
               <v-col class="col-12 col-md-6">
                 <v-checkbox
                   v-model="formData.CheckGroupDiscount"
-                  label=" Check Group Discount"
+                  :label="$t('Common.CheckGroupDiscount')"
                   class="ma-0"
                   dense
                 ></v-checkbox>

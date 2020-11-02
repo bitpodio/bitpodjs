@@ -41,7 +41,7 @@
               </v-col>
             </v-row>
           </v-container>
-          <small><i18n path="Common.indicatesrequiredfield" /></small>
+          <small><i18n path="Common.IndicatesRequiredField" /></small>
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions class="pl-4">

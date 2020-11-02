@@ -31,7 +31,7 @@
               <v-col cols="12" sm="10" md="8" class="pb-0">
                 <v-datetime-picker
                   v-model="accessKeyDate"
-                  label="Expires On"
+                  :label="$t('Common.ExpiresOn')"
                   :text-field-props="startDateTextFieldProps"
                 >
                   <template slot="dateIcon">

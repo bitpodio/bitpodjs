@@ -40,7 +40,7 @@
               <v-tab-item :value="'tab-1'">
                 <v-row>
                   <v-col cols="12" class="mb-2">
-                    <i18n path="Common.Selectatemplate" />
+                    <i18n path="Common.SelectTemplate" />
                   </v-col>
                   <div id="template" class="pa-0">
                     <i class="fa fa-id-badge pl-1" aria-hidden="true"></i>
@@ -109,7 +109,7 @@
                   <v-col v-if="tabs === 'tab-2'" cols="12" class="mb-5">
                     <RichText
                       v-model="RTEValue"
-                      label="Description"
+                      :label="$t('Common.Description')"
                       :dropdown-options="dropdownOptions"
                     />
                   </v-col>

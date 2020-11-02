@@ -20,7 +20,7 @@
             <v-col cols="12">
               <v-text-field
                 v-model="formData.RefreshToken"
-                label="Refresh Token *"
+                :label="$t('Common.RefreshToken')"
                 :rules="required"
                 outlined
                 dense

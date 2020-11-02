@@ -15,7 +15,7 @@ export default {
       fields: {
         'MetaData.Category': {
           displayOrder: 2,
-          caption: 'Category',
+          caption: 'Common.Category',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '120px',
@@ -23,7 +23,7 @@ export default {
         },
         ServiceId: {
           displayOrder: 3,
-          caption: 'App Name',
+          caption: 'Common.AppName',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '80px',
@@ -31,7 +31,7 @@ export default {
         },
         Integrate: {
           displayOrder: 5,
-          caption: 'Action',
+          caption: 'Drawer.Action',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -39,7 +39,7 @@ export default {
         },
         Status: {
           displayOrder: 4,
-          caption: 'Status',
+          caption: 'Common.Status',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',

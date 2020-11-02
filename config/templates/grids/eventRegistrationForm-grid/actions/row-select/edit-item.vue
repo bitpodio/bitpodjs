@@ -32,7 +32,7 @@
               <v-col cols="12">
                 <v-text-field
                   v-model="formData.Label"
-                  label="Label"
+                  :label="$t('Common.Label')"
                   outlined
                   dense
                 ></v-text-field>
@@ -42,7 +42,7 @@
                   v-model="controlType"
                   :rules="required"
                   :items="controlTypeDropDown"
-                  label="Control Type*"
+                  :label="$t('Common.ControlType')"
                   outlined
                   dense
                 ></v-select>
@@ -50,7 +50,7 @@
               <v-col v-if="showCsvField" cols="12">
                 <v-text-field
                   v-model="CsvOptions"
-                  label="Options*"
+                  :label="$t('Common.Options')"
                   :rules="required"
                   outlined
                   dense
@@ -60,7 +60,7 @@
                 <v-text-field
                   v-model="formData.DisplayOrder"
                   :rules="required"
-                  label="Display Order*"
+                  :label="$t('Common.DisplayOrder')"
                   type="number"
                   min="1"
                   required

@@ -142,7 +142,7 @@
               </v-list-item>
               <v-list-item>
                 <v-list-item-title
-                  ><i18n path="Common.EventBanner(680x350)"
+                  ><i18n path="Common.EventB"
                 /></v-list-item-title>
               </v-list-item>
               <v-list-item>

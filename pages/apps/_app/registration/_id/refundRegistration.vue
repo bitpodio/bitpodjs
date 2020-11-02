@@ -32,7 +32,7 @@
               class="body-2"
             >
               <v-icon class="amber--text" size="18">fa-bulb</v-icon>
-              <i18n path="Common.submittingRefundRequest" />
+              <i18n path="Common.SubmittingRefundRequest" />
             </v-alert>
             <v-row>
               <v-col cols="12" sm="12" md="12">
@@ -51,9 +51,12 @@
                   :rules="requiredRules"
                   @change="changeRefundRequest($event)"
                 >
-                  <v-radio label="Full Refund" value="FullRefund"></v-radio>
                   <v-radio
-                    label="Partial Refund"
+                    :label="$t('Common.FullRefund')"
+                    value="FullRefund"
+                  ></v-radio>
+                  <v-radio
+                    :label="$t('Common.PartialRefund')"
                     value="PartialRefund"
                   ></v-radio>
                 </v-radio-group>
@@ -61,7 +64,7 @@
               <v-col cols="12" sm="12" md="12">
                 <v-text-field
                   v-model="refund.Amount"
-                  label="Amount*"
+                  :label="$t('Common.AmountReq')"
                   dense
                   outlined
                   min="1"
@@ -73,7 +76,7 @@
               <v-col cols="12" sm="12" md="12">
                 <v-text-field
                   v-model="refund.Comments"
-                  label="Comments"
+                  :label="$t('Common.Comments')"
                   dense
                   outlined
                   min="1"

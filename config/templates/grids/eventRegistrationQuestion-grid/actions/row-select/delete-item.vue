@@ -6,7 +6,7 @@
       </v-btn>
     </v-col>
     <v-snackbar v-model="snackbar" timeout="2000" top="true">
-      <i18n path="Common.Itemdeletedsuccessfully" />
+      <i18n path="Common.ItemDeletedSuccessfully" />
 
       <template v-slot:action="{ attrs }">
         <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">

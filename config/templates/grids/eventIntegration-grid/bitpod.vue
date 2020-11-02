@@ -20,7 +20,7 @@
             <v-col cols="12" class="pb-0">
               <v-text-field
                 v-model="formData.URL"
-                label="URL *"
+                :label="$t('Common.Url')"
                 :rules="required"
                 outlined
                 dense
@@ -29,7 +29,7 @@
             <v-col cols="12" class="pb-0">
               <v-text-field
                 v-model="formData.Host"
-                label="Host *"
+                :label="$t('Common.Host')"
                 :rules="required"
                 outlined
                 dense
@@ -38,7 +38,7 @@
             <v-col cols="12" class="pb-0">
               <v-text-field
                 v-model="formData.Path"
-                label="Path *"
+                :label="$t('Common.Path')"
                 :rules="required"
                 outlined
                 dense
@@ -47,7 +47,7 @@
             <v-col cols="12" class="pb-0">
               <v-text-field
                 v-model="formData.AccessKeyId"
-                label="Access Key *"
+                :label="$t('Common.AccessKey')"
                 :rules="required"
                 outlined
                 dense
@@ -56,7 +56,7 @@
             <v-col cols="12">
               <v-text-field
                 v-model="formData.AccessSecret"
-                label="Access Secret *"
+                :label="$t('Common.AccessSecret')"
                 :rules="required"
                 outlined
                 dense

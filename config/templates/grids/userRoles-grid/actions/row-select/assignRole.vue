@@ -33,7 +33,7 @@
                 <v-text-field
                   v-model="userName"
                   disabled="true"
-                  label="Username"
+                  :label="$t('Common.Username')"
                   :rules="required"
                   outlined
                 ></v-text-field>
@@ -43,7 +43,7 @@
                   v-model="roles"
                   :rules="fieldRules"
                   :items="rolesDropDown"
-                  label="Role*"
+                  :label="$t('Common.Role')"
                   outlined
                 ></v-select>
               </v-col>

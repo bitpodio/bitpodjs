@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex view-name">
-    <div class="fs-18 min-h36">{{ viewCaption }}</div>
+    <div class="fs-18 min-h36">{{ $t(viewCaption()) }}</div>
     <v-menu
       v-if="viewList.length > 1"
       offset-y
@@ -16,7 +16,7 @@
       <v-list>
         <v-list-item v-for="view in viewList" :key="view.value" @click="true">
           <NuxtLink :to="view.path" class="text-decoration-none text--primary">
-            {{ view.caption }}
+            {{ $t(view.caption) }}
           </NuxtLink>
         </v-list-item>
       </v-list>
@@ -71,17 +71,16 @@ export default {
   data() {
     return {
       viewList: getContentViews(this.content, this.contentName),
+      selectedViewName: '',
     }
-  },
-  computed: {
-    viewCaption() {
-      const views = this.content.views
-      return views[this.viewName] ? views[this.viewName].title : ''
-    },
   },
   methods: {
     onViewChange(value) {
       this.viewName = value
+    },
+    viewCaption() {
+      const views = this.content.views
+      return views[this.viewName] ? views[this.viewName].title : ''
     },
   },
 }

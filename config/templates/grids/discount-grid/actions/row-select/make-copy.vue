@@ -21,27 +21,42 @@
           <v-row>
             <v-col cols="12" sm="6" md="6" class="mt-2">
               <v-text-field
-                label="First Name*"
+                :label="$t('Common.FirstN')"
                 required
                 outlined
               ></v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="6" class="mt-2">
-              <v-text-field label="Last Name*" required outlined></v-text-field>
+              <v-text-field
+                :label="$t('Common.LastName')"
+                required
+                outlined
+              ></v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="6">
-              <v-text-field label="Phone*" required outlined></v-text-field>
+              <v-text-field
+                :label="$t('Common.PhoneRequired')"
+                required
+                outlined
+              ></v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="6">
-              <v-text-field label="Email*" required outlined></v-text-field>
+              <v-text-field
+                :label="$t('Common.Email')"
+                required
+                outlined
+              ></v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="6">
-              <v-text-field label="Organization" outlined></v-text-field>
+              <v-text-field
+                :label="$t('Common.Organization')"
+                outlined
+              ></v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="6">
               <v-select
                 :items="['Success', 'Pending', 'Failed', 'Cancelled']"
-                label="Status*"
+                :label="$t('Common.StatusRequired')"
                 required
                 outlined
               ></v-select>
@@ -52,16 +67,19 @@
               </p>
             </v-col>
             <v-col cols="12" sm="6" md="6">
-              <v-text-field label="Address" outlined></v-text-field>
+              <v-text-field
+                :label="$t('Common.Address')"
+                outlined
+              ></v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="6">
-              <v-text-field label="City" outlined></v-text-field>
+              <v-text-field :label="$t('Common.City')" outlined></v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="6">
-              <v-text-field label="State" outlined></v-text-field>
+              <v-text-field :label="$t('Common.State')" outlined></v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="6">
-              <v-text-field label="Zip" outlined></v-text-field>
+              <v-text-field :label="$t('Common.Zip')" outlined></v-text-field>
             </v-col>
             <v-col cols="12" sm="6" md="6">
               <v-autocomplete
@@ -69,7 +87,7 @@
                 v-model="country"
                 :rules="[() => !!country || 'This field is required']"
                 :items="countries"
-                label="Country"
+                :label="$t('Common.Country')"
                 placeholder="Select..."
                 outlined
                 required
@@ -83,7 +101,7 @@
                   'Event Name 3',
                   'Event Name 4',
                 ]"
-                label="Event*"
+                :label="$t('Common.Event')"
                 required
                 outlined
               ></v-select>
@@ -91,7 +109,7 @@
             <v-col cols="12" sm="6" md="6">
               <v-select
                 :items="['General Tickets', 'Gold Tickets', 'Silver Tickets']"
-                label="Tickets*"
+                :label="$t('Common.TicketsRequired')"
                 required
                 outlined
               ></v-select>
@@ -100,7 +118,7 @@
               <v-text-field
                 v-model="number"
                 type="number"
-                label="Ticket Quantity*"
+                :label="$t('Common.TicketQuantity')"
                 required
                 outlined
               ></v-text-field>
@@ -108,7 +126,7 @@
             <v-col cols="12" sm="6" md="6">
               <v-select
                 :items="['Session1', 'Session2', 'Session3', 'Session4']"
-                label="Session*"
+                :label="$t('Common.Session')"
                 required
                 outlined
               ></v-select>
@@ -116,7 +134,7 @@
             <v-col cols="12" sm="6" md="6">
               <v-select
                 :items="['Group', 'Free', 'paid']"
-                label="Registration Type*"
+                :label="$t('Common.RegistrationTypeRequired')"
                 required
                 outlined
               ></v-select>

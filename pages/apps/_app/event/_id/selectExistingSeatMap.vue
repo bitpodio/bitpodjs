@@ -25,7 +25,7 @@
             <v-card flat class="pl-2">
               <v-row>
                 <v-col cols="12" class="mb-2">
-                  <i18n path="Common.Selectanexistingseatmap" />
+                  <i18n path="Common.SelectAnExistingSeatmap" />
                 </v-col>
                 <v-spacer></v-spacer>
                 <v-flex

@@ -61,7 +61,9 @@
       </v-row>
       <v-row>
         <v-col class="col-12 col-sm-6 col-md-4 parentWidth">
-          <h3 class="font-weight-regular pb-2">Events on Sale</h3>
+          <h3 class="font-weight-regular pb-2">
+            <i18n path="Common.EventsonSale" />
+          </h3>
           <div v-if="!eventOnSaleEmpty">
             <div
               v-for="(data, index) in eventOnSaleData"
@@ -140,8 +142,7 @@
               <i class="fa fa-calendar" aria-hidden="true"></i>
             </div>
             <div class="text-center">
-              There aren't any live events, to start setting up your event use
-              Create Event link
+              <i18n path="Common.StartSettingUpYourEvent" />
             </div>
           </div>
           <v-hover v-slot:default="{ hover }">
@@ -154,12 +155,14 @@
               }"
               @click="routeToLiveEvents"
             >
-              <i18n path="Common.Viewall" />
+              <i18n path="Common.ViewAll" />
             </h4>
           </v-hover>
         </v-col>
         <v-col class="col-12 col-sm-6 col-md-4 parentWidth">
-          <h3 class="font-weight-regular pb-2">10 Days Tickets Sale</h3>
+          <h3 class="font-weight-regular pb-2">
+            <i18n path="Common.10DaysTicketsSale" />
+          </h3>
           <div
             v-if="!ticketSoldLoaded || !ticketSoldReady"
             class="rounded white elevation-2 chartHeight positionRelative"
@@ -186,7 +189,9 @@
           </div>
         </v-col>
         <v-col class="col-12 col-sm-6 col-md-4 parentWidth">
-          <h3 class="font-weight-regular pb-2">Recent Buyers</h3>
+          <h3 class="font-weight-regular pb-2">
+            <i18n path="Common.RecentBuyers" />
+          </h3>
           <div v-if="!recentBuyersEmpty">
             <div
               v-for="(data, index) in recentBuyersData"
@@ -254,7 +259,7 @@
               <i class="fa fa-user" aria-hidden="true"></i>
             </div>
             <div class="text-center">
-              No Recent Buyer
+              <i18n path="Common.NoRecentBuyer" />
             </div>
           </div>
           <v-hover v-slot:default="{ hover }">
@@ -267,7 +272,7 @@
               }"
               @click="routeToRegistrations"
             >
-              <i18n path="Common.Viewall" />
+              <i18n path="Common.ViewAll" />
             </h4>
           </v-hover>
         </v-col>
@@ -275,7 +280,7 @@
       <v-row>
         <v-col class="col-12 col-sm-6 col-md-4 parentWidth">
           <h3 class="font-weight-regular pb-2">
-            <i18n path="Common.InvitationsConversionbyEvent" />
+            <i18n path="Common.InvitationsConversionByEvent" />
           </h3>
           <div
             v-if="!conversionLoaded || !conversionReady"
@@ -304,7 +309,7 @@
         </v-col>
         <v-col class="col-12 col-sm-6 col-md-4 parentWidth">
           <h3 class="font-weight-regular pb-2">
-            <i18n path="Common.SalebyGeoLocation" />
+            <i18n path="Common.SaleByGeoLocation" />
           </h3>
           <div
             v-if="!geoLocationLoaded || !geoLocationReady"

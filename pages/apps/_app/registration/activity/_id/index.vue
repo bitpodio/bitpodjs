@@ -52,7 +52,7 @@
                         <v-list-item-title>
                           <v-flex class="d-flex">
                             <i18n
-                              path="Common.from"
+                              path="Common.From"
                               class="col-md-3 text-right pa-0"
                             />
                             <div
@@ -67,7 +67,7 @@
                         <v-list-item-title>
                           <v-flex class="d-flex">
                             <i18n
-                              path="Common.subject"
+                              path="Common.EmailSubject"
                               class="col-md-3 text-right pa-0"
                             />
                             <div
@@ -82,7 +82,7 @@
                         <v-list-item-title>
                           <v-flex class="d-flex">
                             <i18n
-                              path="Common.date"
+                              path="Common.EmailDate"
                               class="col-md-3 text-right pa-0"
                             />
                             <div class="col pa-0 pl-3">
@@ -95,7 +95,7 @@
                         <v-list-item-title>
                           <v-flex class="d-flex">
                             <i18n
-                              path="Common.status"
+                              path="Common.EmailStatus"
                               class="col-md-3 text-right pa-0"
                             />
                             <div class="col pa-0 pl-3">

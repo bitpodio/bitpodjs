@@ -16,12 +16,12 @@
       </v-card-title>
       <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
         <v-form ref="form" v-model="valid" :lazy-validation="lazy">
-          <i18n path="Common.integratewithgoogledrive" />
+          <i18n path="Common.IntegrateWithGoogleDrive" />
           <v-row>
             <v-col cols="12">
               <v-text-field
                 v-model="formData.maxFileSize"
-                label="Max File Size Allowed (in bytes) *"
+                :label="$t('Common.MaxFileSizeAllowed')"
                 :rules="required"
                 outlined
                 dense
@@ -30,7 +30,7 @@
             <v-col cols="12">
               <v-text-field
                 v-model="formData.fileExtention"
-                label="File Extentions Allowed(eg, csv,txt,xls) *"
+                :label="$t('Common.FileExtentionsAllowed')"
                 :rules="required"
                 outlined
                 dense
@@ -39,7 +39,7 @@
             <v-col cols="12">
               <v-text-field
                 v-model="formData.fileNameRgex"
-                label="Filename Regex"
+                :label="$t('Common.FilenameRegex')"
                 outlined
                 dense
               ></v-text-field>

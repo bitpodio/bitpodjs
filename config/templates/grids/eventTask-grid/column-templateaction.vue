@@ -16,21 +16,21 @@
         <newItem
           :key="updateCount"
           :dialog.sync="dialog"
-          button-label="Edit Activity"
+          :button-label="$t('Common.EditActivity')"
           button-icon="fa fa-pencil-square-o"
           :item="item"
           :refresh="refresh"
         />
         <editTemplate
           v-if="item.Category === 'Registration Email'"
-          button-label="Edit Template"
+          :button-label="$t('Common.EditTemplate')"
           button-icon="fa fa-pencil-square-o"
           :context="context"
           :item="item"
         />
         <editSurveytemplate
           v-if="item.Category === 'Survey Invite'"
-          button-label="Edit Template"
+          :button-label="$t('Common.EditTemplate')"
           button-icon="fa fa-pencil-square-o"
           :context="context"
           :item="item"

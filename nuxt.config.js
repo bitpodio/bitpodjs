@@ -167,6 +167,36 @@ export default {
             hour12: true,
           },
         },
+        fr: {
+          short: {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+          },
+          long: {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true,
+          },
+        },
+        he: {
+          short: {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+          },
+          long: {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+            hour12: true,
+          },
+        },
       },
       numberFormats: {
         en: {
@@ -176,6 +206,18 @@ export default {
           },
         },
         hi: {
+          currency: {
+            style: 'currency',
+            currency: 'INR',
+          },
+        },
+        fr: {
+          currency: {
+            style: 'currency',
+            currency: 'INR',
+          },
+        },
+        he: {
           currency: {
             style: 'currency',
             currency: 'INR',

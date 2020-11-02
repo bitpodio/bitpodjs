@@ -31,7 +31,7 @@
               <v-col cols="12">
                 <v-text-field
                   v-model="formData.Question"
-                  label="Question*"
+                  :label="$t('Common.Question')"
                   :rules="required"
                   outlined
                   dense
@@ -42,7 +42,7 @@
                   v-model="controlType"
                   :rules="required"
                   :items="controlTypeDropDown"
-                  label="Control Type*"
+                  :label="$t('Common.ControlType')"
                   outlined
                   dense
                 ></v-select>
@@ -50,7 +50,7 @@
               <v-col v-if="showCsvField" cols="12">
                 <v-text-field
                   v-model="CsvOptions"
-                  label="Options, use CSV format*"
+                  :label="$t('Common.OptionsCsvFormat')"
                   :rules="required"
                   outlined
                   dense
@@ -60,7 +60,7 @@
                 <v-text-field
                   v-model="formData.DisplayOrder"
                   :rules="required"
-                  label="Display Order*"
+                  :label="$t('Common.DisplayOrder')"
                   type="number"
                   min="1"
                   required
@@ -71,13 +71,13 @@
               <v-col cols="12">
                 <v-checkbox
                   v-model="formData.isRequired"
-                  label=" Required"
+                  :label="$t('Common.Required')"
                   class="ma-0"
                   dense
                 ></v-checkbox>
               </v-col>
               <v-col cols="12">
-                <span><i18n path="Common.Onlyaskwhen" /></span>
+                <span><i18n path="Common.OnlyAskWhen" /></span>
                 <v-select
                   v-model="tickets"
                   :items="ticketsDropDown"

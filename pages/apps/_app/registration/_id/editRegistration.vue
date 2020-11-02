@@ -27,7 +27,7 @@
                 <v-text-field
                   v-model="regData.FirstName"
                   :rules="requiredRules"
-                  label="First Name*"
+                  :label="$t('Common.FirstN')"
                   dense
                   outlined
                 ></v-text-field>
@@ -36,7 +36,7 @@
                 <v-text-field
                   v-model="regData.LastName"
                   :rules="requiredRules"
-                  label="Last Name*"
+                  :label="$t('Common.LastName')"
                   dense
                   outlined
                 ></v-text-field>
@@ -45,7 +45,7 @@
                 <v-text-field
                   v-model="regData.Phone"
                   :rules="requiredRules"
-                  label="Phone*"
+                  :label="$t('Common.PhoneRequired')"
                   dense
                   type="Number"
                   outlined
@@ -55,7 +55,7 @@
                 <v-text-field
                   v-model="regData.Email"
                   :rules="requiredRules"
-                  label="Email*"
+                  :label="$t('Common.Email')"
                   dense
                   outlined
                 ></v-text-field>
@@ -64,7 +64,7 @@
               <v-col cols="12" sm="6" md="6">
                 <v-text-field
                   v-model="regData.CompanyName"
-                  label="Organization"
+                  :label="$t('Common.Organization')"
                   dense
                   outlined
                 ></v-text-field>
@@ -87,7 +87,7 @@
               <v-col cols="12" sm="6" md="6">
                 <v-text-field
                   v-model="venueAddress.AddressLine"
-                  label="Address"
+                  :label="$t('Common.Address')"
                   dense
                   outlined
                 ></v-text-field>
@@ -95,7 +95,7 @@
               <v-col cols="12" sm="6" md="6">
                 <v-text-field
                   v-model="venueAddress.City"
-                  label="City"
+                  :label="$t('Common.City')"
                   dense
                   outlined
                 ></v-text-field>
@@ -103,7 +103,7 @@
               <v-col cols="12" sm="6" md="6">
                 <v-text-field
                   v-model="venueAddress.State"
-                  label="State"
+                  :label="$t('Common.State')"
                   dense
                   outlined
                 ></v-text-field>
@@ -111,7 +111,7 @@
               <v-col cols="12" sm="6" md="6">
                 <v-text-field
                   v-model="venueAddress.PostalCode"
-                  label="Zip"
+                  :label="$t('Common.Zip')"
                   dense
                   outlined
                 ></v-text-field>
@@ -119,7 +119,7 @@
               <v-col cols="12" sm="6" md="6">
                 <v-text-field
                   v-model="venueAddress.Country"
-                  label="Country"
+                  :label="$t('Common.Country')"
                   dense
                   outlined
                 ></v-text-field>
@@ -139,7 +139,7 @@
                   :items="tickets"
                   item-text="codeAmount"
                   item-value="id"
-                  label="Tickets"
+                  :label="$t('Common.Tickets')"
                   multiple
                   outlined
                   dense
@@ -149,7 +149,7 @@
               <v-col cols="12" sm="6" md="6">
                 <v-text-field
                   v-model="regData.TicketQuantity"
-                  label="Ticket Quantity"
+                  :label="$t('Common.TicketQty')"
                   dense
                   outlined
                   min="1"
@@ -162,7 +162,7 @@
                   :items="sessions"
                   item-text="Name"
                   item-value="id"
-                  label="Sessions"
+                  :label="$t('Common.Sessions')"
                   :loading="isSessionLoading"
                   multiple
                   outlined
@@ -228,7 +228,7 @@ export default {
       },
       statusProps: {
         type: 'lookup',
-        caption: 'Status',
+        caption: 'Common.Status',
         dataSource: {
           query: registrationStatusOptions,
           itemText: 'value',

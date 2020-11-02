@@ -21,7 +21,7 @@
                     small
                     color="white"
                   >
-                    Draft
+                    <i18n path="Common.Draft" />
                   </v-btn>
                   <div v-if="!item.Images.length" class="overflow-h rounded-t">
                     <v-flex
@@ -86,7 +86,7 @@
               <v-card-actions class="pt-0 pl-4 tiles-action">
                 <div class="text-truncate d-block">
                   <v-text class="ma-0 mr-1 event-tags body-2"
-                    ><i18n path="Common.#Recurringevent"
+                    ><i18n path="Common.RecurringE"
                   /></v-text>
                   <v-text
                     v-for="Tags in item.Tags"
@@ -140,7 +140,9 @@
                         <i class="fa fa-clone mt-1" aria-hidden="true"></i>
                       </v-list-item-icon>
                       <v-list-item-content>
-                        <v-list-item-title>Make a copy</v-list-item-title>
+                        <v-list-item-title
+                          ><i18n path="Drawer.MakeaCopy"
+                        /></v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
                   </v-list>
@@ -159,7 +161,7 @@
                     small
                     color="white"
                   >
-                    Draft
+                    <i18n path="Common.Draft" />
                   </v-btn>
                   <div v-if="!item.Images.length" class="overflow-h rounded-t">
                     <v-flex
@@ -277,7 +279,9 @@
                         <i class="fa fa-clone mt-1" aria-hidden="true"></i>
                       </v-list-item-icon>
                       <v-list-item-content>
-                        <v-list-item-title>Make a copy</v-list-item-title>
+                        <v-list-item-title
+                          ><i18n path="Drawer.MakeaCopy"
+                        /></v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
                   </v-list>

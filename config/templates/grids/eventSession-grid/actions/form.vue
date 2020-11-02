@@ -39,7 +39,7 @@
               <v-col cols="12" class="pb-0">
                 <v-text-field
                   v-model="session.Name"
-                  label="Session Name*"
+                  :label="$t('Common.SessionName')"
                   outlined
                   :rules="required"
                   dense
@@ -49,7 +49,7 @@
                 <v-flex class="d-flex justify-center align-center pb-1">
                   <h2 class="body-1 pb-1 primary--text">
                     <i class="fa fa-clock" aria-hidden="true"></i>
-                    Session Information
+                    <i18n path="Common.SessionInformation" />
                   </h2>
                   <v-spacer></v-spacer>
                 </v-flex>
@@ -57,7 +57,7 @@
               <v-col v-if="dialog" cols="12" sm="6" md="4">
                 <CustomDate
                   v-model="session.StartDate"
-                  label="Start Date Time*"
+                  :label="$t('Common.StartDateTime')"
                   :field="startField"
                   :rules="startDateRule"
                   type="datetime"
@@ -74,7 +74,7 @@
               <v-col v-if="isCustomMin" cols="12" sm="6" md="4" class="pb-0">
                 <v-text-field
                   v-model="customDuration"
-                  label="Custom Duration*"
+                  :label="$t('Common.CustomDuration')"
                   outlined
                   type="number"
                   min="1"
@@ -104,7 +104,7 @@
                 <v-flex class="d-flex justify-center align-center pb-1">
                   <h2 class="body-1 pb-1 primary--text">
                     <i class="fa fa-location" aria-hidden="true"></i>
-                    Location
+                    <i18n path="Common.Location" />
                   </h2>
                   <v-spacer></v-spacer>
                 </v-flex>
@@ -120,7 +120,7 @@
               <v-col v-if="session.LocationType === 'Bitpod Virtual'" cols="12">
                 <v-text-field
                   v-model="session.BitpodVirtualLink"
-                  label="Bitpod Virtual Link"
+                  :label="$t('Common.BitpodVirtualLink')"
                   outlined
                   dense
                   :disabled="true"
@@ -135,7 +135,7 @@
               >
                 <v-text-field
                   v-model="session.Phone"
-                  label="Phone*"
+                  :label="$t('Common.PhoneRequired')"
                   outlined
                   dense
                   :rules="phoneRules"
@@ -144,7 +144,7 @@
               <v-col v-if="session.LocationType === 'Online event'" cols="12">
                 <v-text-field
                   v-model="session.WebinarLink"
-                  label="Online event link (https)*"
+                  :label="$t('Common.OnlineEventLink')"
                   outlined
                   :rules="onlineEventLink"
                   dense
@@ -152,21 +152,20 @@
               </v-col>
               <v-col cols="12" class="pb-0 pt-0">
                 <div v-if="session.LocationType === 'Zoom'">
-                  To send Zoom joining info, you must setup Zoom integration,
+                  <i18n path="Common.SendZoomJoiningInfo" />
                   <a href="" @click.stop.prevent="openWindow(zoomDocumentLink)"
-                    >click here</a
-                  >
-                  for documentation.
+                    ><i18n path="Common.ClickHere"
+                  /></a>
+                  <i18n path="Common.ForDocumentation" />
                 </div>
                 <div v-if="session.LocationType === 'Google Meet'">
-                  To send google meet joining info, you must setup google meet
-                  integration,
+                  <i18n path="Common.SendGoogleMeetJoiningInfo" />
                   <a
                     href=""
                     @click.stop.prevent="openWindow(googleMeetDocumentLink)"
-                    >click here</a
-                  >
-                  for documentation.
+                    ><i18n path="Common.ClickHere"
+                  /></a>
+                  <i18n path="Common.ForDocumentation" />
                 </div>
               </v-col>
               <v-col
@@ -205,7 +204,7 @@
               >
                 <v-text-field
                   v-model="venueAddress.City"
-                  label="City"
+                  :label="$t('Common.City')"
                   outlined
                   dense
                 ></v-text-field>
@@ -219,7 +218,7 @@
               >
                 <v-text-field
                   v-model="venueAddress.State"
-                  label="State"
+                  :label="$t('Common.State')"
                   outlined
                   dense
                 ></v-text-field>
@@ -233,7 +232,7 @@
               >
                 <v-text-field
                   v-model="venueAddress.Country"
-                  label="Country"
+                  :label="$t('Common.Country')"
                   outlined
                   dense
                 ></v-text-field>
@@ -247,7 +246,7 @@
               >
                 <v-text-field
                   v-model="venueAddress.PostalCode"
-                  label="Zip Code"
+                  :label="$t('Common.ZipCode')"
                   outlined
                   dense
                 ></v-text-field>
@@ -256,7 +255,7 @@
                 <v-flex class="d-flex justify-center align-center pb-1">
                   <h2 class="body-1 pb-1 primary--text">
                     <i class="fa fa-file-text" aria-hidden="true"></i>
-                    Description
+                    <i18n path="Common.Description" />
                   </h2>
                   <v-spacer></v-spacer>
                 </v-flex>
@@ -279,8 +278,8 @@
             "
             depressed
             @click.native="onSave"
-            >Save</v-btn
-          >
+            ><i18n path="Drawer.Save"
+          /></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

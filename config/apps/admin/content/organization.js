@@ -21,11 +21,11 @@ export default {
       fields: {
         Name: {
           form: {
-            caption: 'Name *',
+            caption: 'Common.NameRequired',
             displayOrder: 1,
           },
           displayOrder: 2,
-          caption: 'Name',
+          caption: 'Common.Name',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -41,11 +41,11 @@ export default {
         },
         Description: {
           form: {
-            caption: 'Description',
+            caption: 'Common.Description',
             displayOrder: 2,
           },
           displayOrder: 3,
-          caption: 'Description',
+          caption: 'Common.Description',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -57,7 +57,7 @@ export default {
         },
         'child.Name': {
           displayOrder: 3,
-          caption: 'Parent BU',
+          caption: 'Common.ParentBu',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -67,7 +67,7 @@ export default {
         },
         'contacts.FullName': {
           displayOrder: 3,
-          caption: 'Primary Contact',
+          caption: 'Common.PrimaryContact',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -77,11 +77,11 @@ export default {
         },
         '_CurrentAddress.AddressLine': {
           form: {
-            caption: 'Address *',
+            caption: 'Common.AddressRequired',
             displayOrder: 3,
           },
           displayOrder: 5,
-          caption: 'Address Line',
+          caption: 'Common.AddressLine',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '160px',
@@ -97,11 +97,11 @@ export default {
         },
         '_CurrentAddress.Country': {
           form: {
-            caption: 'Country',
+            caption: 'Common.Country',
             displayOrder: 6,
           },
           displayOrder: 6,
-          caption: 'Country',
+          caption: 'Common.Country',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '130px',
@@ -112,11 +112,11 @@ export default {
         },
         '_CurrentAddress.City': {
           form: {
-            caption: 'City',
+            caption: 'Common.City',
             displayOrder: 4,
           },
           displayOrder: 6,
-          caption: 'City',
+          caption: 'Common.City',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '130px',
@@ -128,11 +128,11 @@ export default {
         },
         '_CurrentAddress.State': {
           form: {
-            caption: 'State',
+            caption: 'Common.State',
             displayOrder: 5,
           },
           displayOrder: 6,
-          caption: 'State',
+          caption: 'Common.State',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '130px',
@@ -144,11 +144,11 @@ export default {
         },
         '_CurrentAddress.PostalCode': {
           form: {
-            caption: 'Zip Code',
+            caption: 'Common.ZipCode',
             displayOrder: 7,
           },
           displayOrder: 7,
-          caption: 'Zip Code',
+          caption: 'Common.ZipCode',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '130px',
@@ -160,11 +160,11 @@ export default {
         },
         Email: {
           form: {
-            caption: 'Email',
+            caption: 'Common.EmailCaption',
             displayOrder: 9,
           },
           displayOrder: 7,
-          caption: 'Email',
+          caption: 'Common.EmailCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '130px',
@@ -175,11 +175,11 @@ export default {
         },
         Phone: {
           form: {
-            caption: 'Phone',
+            caption: 'Common.Phone',
             displayOrder: 8,
           },
           displayOrder: 8,
-          caption: 'Phone',
+          caption: 'Common.Phone',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '130px',
@@ -190,7 +190,7 @@ export default {
         },
         Type: {
           form: {
-            caption: 'Type *',
+            caption: 'Common.Type',
             displayOrder: 10,
           },
           searchEnable: true,
@@ -220,7 +220,7 @@ export default {
         },
         ParentId: {
           form: {
-            caption: 'Parent Business Unit',
+            caption: 'Common.ParentBusinessUnit',
             displayOrder: 11,
           },
           searchEnable: true,
@@ -240,7 +240,7 @@ export default {
         },
         PrimeContactId: {
           form: {
-            caption: 'Contact',
+            caption: 'Common.Contact',
             displayOrder: 12,
           },
           searchEnable: true,
@@ -260,7 +260,7 @@ export default {
         },
         Default: {
           displayOrder: 9,
-          caption: 'Default',
+          caption: 'Common.Default',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -270,7 +270,7 @@ export default {
         },
         Action: {
           displayOrder: 10,
-          caption: 'Action',
+          caption: 'Drawer.Action',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -313,7 +313,7 @@ export default {
       fields: {
         'SubProduct.DisplayName': {
           displayOrder: 2,
-          caption: 'Product',
+          caption: 'Common.Product',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '200px',
@@ -321,7 +321,7 @@ export default {
         },
         StartDate: {
           displayOrder: 3,
-          caption: 'Start Date',
+          caption: 'Common.StartDate',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -329,7 +329,7 @@ export default {
         },
         EndDate: {
           displayOrder: 4,
-          caption: 'End Date',
+          caption: 'Common.EndDate',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -337,7 +337,7 @@ export default {
         },
         Cost: {
           displayOrder: 5,
-          caption: 'Price',
+          caption: 'Common.Price',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '130px',
@@ -345,7 +345,7 @@ export default {
         },
         Unit: {
           displayOrder: 6,
-          caption: 'Unit',
+          caption: 'Common.Unit',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '120px',
@@ -353,7 +353,7 @@ export default {
         },
         isActive: {
           displayOrder: 7,
-          caption: 'Active',
+          caption: 'Common.Active',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '120px',
@@ -361,7 +361,7 @@ export default {
         },
         AutoRenew: {
           displayOrder: 8,
-          caption: 'Auto Renew',
+          caption: 'Common.AutoRenew',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -407,7 +407,7 @@ export default {
       fields: {
         Title: {
           displayOrder: 2,
-          caption: 'Title',
+          caption: 'Common.Title',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -415,7 +415,7 @@ export default {
         },
         Status: {
           displayOrder: 3,
-          caption: 'Status',
+          caption: 'Common.Status',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -423,7 +423,7 @@ export default {
         },
         Action: {
           displayOrder: 4,
-          caption: 'Wait For',
+          caption: 'Common.WaitFor',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -431,7 +431,7 @@ export default {
         },
         Category: {
           displayOrder: 5,
-          caption: 'Category',
+          caption: 'Common.Category',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -439,7 +439,7 @@ export default {
         },
         Type: {
           displayOrder: 6,
-          caption: 'Type',
+          caption: 'Common.TypeCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -447,7 +447,7 @@ export default {
         },
         TemplateName: {
           displayOrder: 7,
-          caption: 'Template Name',
+          caption: 'Common.TemplateNameCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -455,7 +455,7 @@ export default {
         },
         createdBy: {
           displayOrder: 8,
-          caption: 'Created By',
+          caption: 'Common.CreatedBy',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -463,7 +463,7 @@ export default {
         },
         createdDate: {
           displayOrder: 9,
-          caption: 'Created Date',
+          caption: 'Common.CreatedDate',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -471,7 +471,7 @@ export default {
         },
         DueDate: {
           displayOrder: 10,
-          caption: 'Due Date',
+          caption: 'Common.DueDate',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -513,7 +513,7 @@ export default {
       fields: {
         'MetaData.Category': {
           displayOrder: 2,
-          caption: 'Category',
+          caption: 'Common.Category',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -521,7 +521,7 @@ export default {
         },
         ServiceId: {
           displayOrder: 3,
-          caption: 'App Name',
+          caption: 'Common.AppName',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -529,7 +529,7 @@ export default {
         },
         Status: {
           displayOrder: 4,
-          caption: 'Status',
+          caption: 'Common.Status',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '120px',
@@ -537,7 +537,7 @@ export default {
         },
         Integrate: {
           displayOrder: 5,
-          caption: 'Action',
+          caption: 'Drawer.Action',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',

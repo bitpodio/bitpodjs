@@ -10,16 +10,16 @@
             <v-avatar>
               <img :src="$config.cdnUri + 'logo-favicon.png'" />
             </v-avatar>
-            <i18n path="Common.SigninwithBitpod" />
+            <i18n path="Common.SignInWithBitpod" />
           </v-btn>
           <v-flex justify-center align-center d-flex class="ma-2"
-            ><i18n path="Common.or"
+            ><i18n path="Common.Or"
           /></v-flex>
           <v-btn class="ma-2" tile outlined x-large @click="loginGoogle">
             <v-avatar>
               <img :src="$config.cdnUri + 'google.png'" class="login-google" />
             </v-avatar>
-            <i18n path="Common.SigninwithGoogle" />
+            <i18n path="Common.SignInWithGoogle" />
           </v-btn>
         </v-card-text>
       </v-card>

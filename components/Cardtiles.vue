@@ -7,8 +7,8 @@
         <i class="fa fa-user-check" aria-hidden="true"></i>
       </div>
       <div class="d-flex flex-column pa-2 event-tile-right greybg">
-        <div class="event-tile-value text-truncate">1</div>
-        <div class="caption text-truncate">Total Registration</div>
+        <i18n path="Common.One" class="event-tile-value text-truncate" />
+        <i18n path="Common.TotalRegistration" class="caption text-truncate" />
       </div>
     </div>
 
@@ -19,8 +19,13 @@
         <i class="fa fa-user-x" aria-hidden="true"></i>
       </div>
       <div class="d-flex flex-column pa-2 event-tile-right greybg">
-        <div class="event-tile-value text-truncate">1</div>
-        <div class="caption text-truncate">Abandoned Registration</div>
+        <i18n path="Common.One" class="event-tile-value text-truncate" />
+        <div>
+          <i18n
+            path="Common.AbandonedRegistration"
+            class="caption text-truncate"
+          />
+        </div>
       </div>
     </div>
 
@@ -32,7 +37,7 @@
       </div>
       <div class="d-flex flex-column pa-2 event-tile-right greybg">
         <div class="event-tile-value text-truncate">$ 3.00</div>
-        <div class="caption text-truncate">Revenue</div>
+        <i18n path="Common.Revenue" class="caption text-truncate" />
       </div>
     </div>
 
@@ -43,8 +48,8 @@
         <i class="fa fa-calendar2" aria-hidden="true"></i>
       </div>
       <div class="d-flex flex-column pa-2 event-tile-right greybg">
-        <div class="event-tile-value text-truncate">10 Days</div>
-        <div class="caption text-truncate">Opens in</div>
+        <i18n path="Common.10Days" class="event-tile-value text-truncate" />
+        <i18n path="Common.OpensIn" class="caption text-truncate" />
       </div>
     </div>
   </v-flex>

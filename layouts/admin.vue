@@ -206,7 +206,7 @@
                   <v-col cols="12" sm="10" md="8" class="pb-0">
                     <v-text-field
                       v-model="email"
-                      label="Enter Email *"
+                      :label="$t('Common.EnterEmail')"
                       :rules="emailRules"
                       outlined
                       dense

@@ -26,7 +26,7 @@
               <v-col cols="12" class="pb-0">
                 <v-text-field
                   v-model="formData.Name"
-                  label="Name *"
+                  :label="$t('Common.NameRequired')"
                   :rules="requiredRule"
                   outlined
                   dense
@@ -35,7 +35,7 @@
               <v-col cols="12" class="pb-0">
                 <v-textarea
                   v-model="formData.About"
-                  label="About"
+                  :label="$t('Common.About')"
                   outlined
                   dense
                 ></v-textarea>
@@ -43,7 +43,7 @@
               <v-col cols="12" md="6" class="pb-0">
                 <v-text-field
                   v-model="formData.Email"
-                  label="Email *"
+                  :label="$t('Common.Email')"
                   :rules="emailRules"
                   outlined
                   dense
@@ -52,7 +52,7 @@
               <v-col cols="12" md="6" class="pb-0">
                 <v-text-field
                   v-model="formData.Mobile"
-                  label="Phone *"
+                  :label="$t('Common.PhoneRequired')"
                   :rules="requiredRule"
                   outlined
                   dense
@@ -62,7 +62,7 @@
               <v-col cols="12" class="pb-0">
                 <v-text-field
                   v-model="venueAddress.AddressLine"
-                  label="Address"
+                  :label="$t('Common.Address')"
                   outlined
                   dense
                 ></v-text-field>
@@ -70,7 +70,7 @@
               <v-col cols="12" class="pb-0">
                 <v-text-field
                   v-model="venueAddress.City"
-                  label="City"
+                  :label="$t('Common.City')"
                   outlined
                   dense
                 ></v-text-field>
@@ -78,7 +78,7 @@
               <v-col cols="12" class="pb-0">
                 <v-text-field
                   v-model="venueAddress.State"
-                  label="State"
+                  :label="$t('Common.State')"
                   outlined
                   dense
                 ></v-text-field>
@@ -86,7 +86,7 @@
               <v-col cols="12" class="pb-0">
                 <v-text-field
                   v-model="venueAddress.PostalCode"
-                  label="Zip"
+                  :label="$t('Common.Zip')"
                   outlined
                   dense
                 ></v-text-field>
@@ -94,7 +94,7 @@
               <v-col cols="12" class="pb-0">
                 <v-text-field
                   v-model="venueAddress.Country"
-                  label="Country"
+                  :label="$t('Common.Country')"
                   outlined
                   dense
                 ></v-text-field>

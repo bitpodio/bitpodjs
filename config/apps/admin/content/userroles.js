@@ -16,7 +16,7 @@ export default {
       fields: {
         id: {
           displayOrder: 2,
-          caption: 'Id',
+          caption: 'Common.Id',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '100px',
@@ -24,7 +24,7 @@ export default {
         },
         name: {
           displayOrder: 3,
-          caption: 'Name',
+          caption: 'Common.Name',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -52,7 +52,7 @@ export default {
         type: 'rest',
         getData: (ctx) => getCustomData(`OrganizationInfos/roles`),
       },
-      title: 'Roles',
+      title: 'Common.Roles',
       type: 'list',
     },
   },

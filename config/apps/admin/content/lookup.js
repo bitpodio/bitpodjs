@@ -17,11 +17,11 @@ export default {
       fields: {
         type: {
           form: {
-            caption: 'Type *',
+            caption: 'Common.Type',
             displayOrder: 1,
           },
           displayOrder: 2,
-          caption: 'Type',
+          caption: 'Common.TypeCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -36,11 +36,11 @@ export default {
         },
         key: {
           form: {
-            caption: 'Key *',
+            caption: 'Common.Key',
             displayOrder: 2,
           },
           displayOrder: 2,
-          caption: 'Key',
+          caption: 'Common.KeyCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -56,11 +56,11 @@ export default {
         },
         value: {
           form: {
-            caption: 'Value *',
+            caption: 'Common.ValueRequired',
             displayOrder: 3,
           },
           displayOrder: 3,
-          caption: 'Value',
+          caption: 'Common.Value',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -119,11 +119,11 @@ export default {
       fields: {
         type: {
           form: {
-            caption: 'Type *',
+            caption: 'Common.Type',
             displayOrder: 1,
           },
           displayOrder: 2,
-          caption: 'Type',
+          caption: 'Common.TypeCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -138,11 +138,11 @@ export default {
         },
         key: {
           form: {
-            caption: 'Key *',
+            caption: 'Common.Key',
             displayOrder: 2,
           },
           displayOrder: 2,
-          caption: 'Key',
+          caption: 'Common.KeyCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -158,11 +158,11 @@ export default {
         },
         value: {
           form: {
-            caption: 'Value *',
+            caption: 'Common.ValueRequired',
             displayOrder: 3,
           },
           displayOrder: 3,
-          caption: 'Value',
+          caption: 'Common.Value',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -221,11 +221,11 @@ export default {
       fields: {
         type: {
           form: {
-            caption: 'Type *',
+            caption: 'Common.Type',
             displayOrder: 1,
           },
           displayOrder: 2,
-          caption: 'Type',
+          caption: 'Common.TypeCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -240,11 +240,11 @@ export default {
         },
         key: {
           form: {
-            caption: 'Key *',
+            caption: 'Common.Key',
             displayOrder: 2,
           },
           displayOrder: 2,
-          caption: 'Key',
+          caption: 'Common.KeyCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -260,11 +260,11 @@ export default {
         },
         value: {
           form: {
-            caption: 'Value *',
+            caption: 'Common.ValueRequired',
             displayOrder: 3,
           },
           displayOrder: 3,
-          caption: 'Value',
+          caption: 'Common.Value',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -323,11 +323,11 @@ export default {
       fields: {
         type: {
           form: {
-            caption: 'Type *',
+            caption: 'Common.Type',
             displayOrder: 1,
           },
           displayOrder: 2,
-          caption: 'Type',
+          caption: 'Common.TypeCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -342,11 +342,11 @@ export default {
         },
         key: {
           form: {
-            caption: 'Key *',
+            caption: 'Common.Key',
             displayOrder: 2,
           },
           displayOrder: 2,
-          caption: 'Key',
+          caption: 'Common.KeyCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -362,11 +362,11 @@ export default {
         },
         value: {
           form: {
-            caption: 'Value *',
+            caption: 'Common.ValueRequired',
             displayOrder: 3,
           },
           displayOrder: 3,
-          caption: 'Value',
+          caption: 'Common.Value',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -425,11 +425,11 @@ export default {
       fields: {
         type: {
           form: {
-            caption: 'Type *',
+            caption: 'Common.Type',
             displayOrder: 1,
           },
           displayOrder: 2,
-          caption: 'Type',
+          caption: 'Common.TypeCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -444,11 +444,11 @@ export default {
         },
         key: {
           form: {
-            caption: 'Key *',
+            caption: 'Common.Key',
             displayOrder: 2,
           },
           displayOrder: 2,
-          caption: 'Key',
+          caption: 'Common.KeyCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -464,11 +464,11 @@ export default {
         },
         value: {
           form: {
-            caption: 'Value *',
+            caption: 'Common.ValueRequired',
             displayOrder: 3,
           },
           displayOrder: 3,
-          caption: 'Value',
+          caption: 'Common.Value',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -527,11 +527,11 @@ export default {
       fields: {
         type: {
           form: {
-            caption: 'Type *',
+            caption: 'Common.Type',
             displayOrder: 1,
           },
           displayOrder: 2,
-          caption: 'Type',
+          caption: 'Common.TypeCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -547,11 +547,11 @@ export default {
         },
         key: {
           form: {
-            caption: 'Key *',
+            caption: 'Common.Key',
             displayOrder: 2,
           },
           displayOrder: 2,
-          caption: 'Key',
+          caption: 'Common.KeyCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -567,11 +567,11 @@ export default {
         },
         value: {
           form: {
-            caption: 'Value *',
+            caption: 'Common.ValueRequired',
             displayOrder: 3,
           },
           displayOrder: 3,
-          caption: 'Value',
+          caption: 'Common.Value',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -630,11 +630,11 @@ export default {
       fields: {
         type: {
           form: {
-            caption: 'Type *',
+            caption: 'Common.Type',
             displayOrder: 1,
           },
           displayOrder: 2,
-          caption: 'Type',
+          caption: 'Common.TypeCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -649,11 +649,11 @@ export default {
         },
         key: {
           form: {
-            caption: 'Key *',
+            caption: 'Common.Key',
             displayOrder: 2,
           },
           displayOrder: 2,
-          caption: 'Key',
+          caption: 'Common.KeyCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -669,11 +669,11 @@ export default {
         },
         value: {
           form: {
-            caption: 'Value *',
+            caption: 'Common.ValueRequired',
             displayOrder: 3,
           },
           displayOrder: 3,
-          caption: 'Value',
+          caption: 'Common.Value',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -732,11 +732,11 @@ export default {
       fields: {
         type: {
           form: {
-            caption: 'Type *',
+            caption: 'Common.Type',
             displayOrder: 1,
           },
           displayOrder: 2,
-          caption: 'Type',
+          caption: 'Common.TypeCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -751,11 +751,11 @@ export default {
         },
         key: {
           form: {
-            caption: 'Key *',
+            caption: 'Common.Key',
             displayOrder: 2,
           },
           displayOrder: 2,
-          caption: 'Key',
+          caption: 'Common.KeyCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -771,11 +771,11 @@ export default {
         },
         value: {
           form: {
-            caption: 'Value *',
+            caption: 'Common.ValueRequired',
             displayOrder: 3,
           },
           displayOrder: 3,
-          caption: 'Value',
+          caption: 'Common.Value',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -834,11 +834,11 @@ export default {
       fields: {
         type: {
           form: {
-            caption: 'Type *',
+            caption: 'Common.Type',
             displayOrder: 1,
           },
           displayOrder: 2,
-          caption: 'Type',
+          caption: 'Common.TypeCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -853,11 +853,11 @@ export default {
         },
         key: {
           form: {
-            caption: 'Key *',
+            caption: 'Common.Key',
             displayOrder: 2,
           },
           displayOrder: 2,
-          caption: 'Key',
+          caption: 'Common.KeyCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -873,11 +873,11 @@ export default {
         },
         value: {
           form: {
-            caption: 'Value *',
+            caption: 'Common.ValueRequired',
             displayOrder: 3,
           },
           displayOrder: 3,
-          caption: 'Value',
+          caption: 'Common.Value',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -936,11 +936,11 @@ export default {
       fields: {
         type: {
           form: {
-            caption: 'Type *',
+            caption: 'Common.Type',
             displayOrder: 1,
           },
           displayOrder: 2,
-          caption: 'Type',
+          caption: 'Common.TypeCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -955,11 +955,11 @@ export default {
         },
         key: {
           form: {
-            caption: 'Key *',
+            caption: 'Common.Key',
             displayOrder: 2,
           },
           displayOrder: 2,
-          caption: 'Key',
+          caption: 'Common.KeyCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -975,11 +975,11 @@ export default {
         },
         value: {
           form: {
-            caption: 'Value *',
+            caption: 'Common.ValueRequired',
             displayOrder: 3,
           },
           displayOrder: 3,
-          caption: 'Value',
+          caption: 'Common.Value',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -995,7 +995,7 @@ export default {
         },
         name: {
           displayOrder: 4,
-          caption: 'Name',
+          caption: 'Common.Name',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -1049,11 +1049,11 @@ export default {
       fields: {
         type: {
           form: {
-            caption: 'Type *',
+            caption: 'Common.Type',
             displayOrder: 1,
           },
           displayOrder: 2,
-          caption: 'Type',
+          caption: 'Common.TypeCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -1068,11 +1068,11 @@ export default {
         },
         key: {
           form: {
-            caption: 'Key *',
+            caption: 'Common.Key',
             displayOrder: 2,
           },
           displayOrder: 2,
-          caption: 'Key',
+          caption: 'Common.KeyCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -1088,11 +1088,11 @@ export default {
         },
         value: {
           form: {
-            caption: 'Value *',
+            caption: 'Common.ValueRequired',
             displayOrder: 3,
           },
           displayOrder: 3,
-          caption: 'Value',
+          caption: 'Common.Value',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -1151,11 +1151,11 @@ export default {
       fields: {
         type: {
           form: {
-            caption: 'Type *',
+            caption: 'Common.Type',
             displayOrder: 1,
           },
           displayOrder: 2,
-          caption: 'Type',
+          caption: 'Common.TypeCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -1170,11 +1170,11 @@ export default {
         },
         key: {
           form: {
-            caption: 'Key *',
+            caption: 'Common.Key',
             displayOrder: 2,
           },
           displayOrder: 2,
-          caption: 'Key',
+          caption: 'Common.KeyCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -1190,11 +1190,11 @@ export default {
         },
         value: {
           form: {
-            caption: 'Value *',
+            caption: 'Common.ValueRequired',
             displayOrder: 3,
           },
           displayOrder: 3,
-          caption: 'Value',
+          caption: 'Common.Value',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -1235,7 +1235,7 @@ export default {
           }
         },
       },
-      title: 'Departments',
+      title: 'Common.Departments',
       type: 'list',
     },
   },

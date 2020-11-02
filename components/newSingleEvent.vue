@@ -42,7 +42,7 @@
           <v-tab-item :value="'1'">
             <v-card flat>
               <p>
-                <i18n path="Common.Entereventname" />
+                <i18n path="Common.EnterEventName" />
               </p>
               <v-row>
                 <v-col cols="12" class="pb-0">
@@ -66,7 +66,7 @@
                   <v-col cols="12" sm="6" md="4" class="pb-0">
                     <CustomDate
                       v-model="eventData.StartDate"
-                      label="Start Date*"
+                      :label="$t('Common.StartD')"
                       :field="startDateField"
                       :rules="startDateRule"
                       :on-change="changeStartDate()"
@@ -76,7 +76,7 @@
                   <v-col cols="12" sm="6" md="4" class="pb-0">
                     <CustomDate
                       v-model="eventData.EndDate"
-                      label="End Date*"
+                      :label="$t('Common.EndD')"
                       :field="endDateField"
                       :rules="endDateRule"
                       :on-change="changeEndDate"
@@ -100,7 +100,7 @@
                   <RichText
                     v-model="eventData.Description"
                     class="mb-3"
-                    label="Description"
+                    :label="$t('Common.Description')"
                   ></RichText>
                 </v-col>
                 <v-col cols="12" sm="6" md="6" class="pb-0">
@@ -136,7 +136,7 @@
                     <v-text-field
                       v-model="eventData.WebinarLink"
                       :rules="onlineEventLink"
-                      label="Online event link (https)*"
+                      :label="$t('Common.OnlineEventLink')"
                       outlined
                       dense
                       required
@@ -145,7 +145,7 @@
                   <v-col v-if="isOnlineEvent" cols="12" class="pb-0">
                     <v-textarea
                       v-model="eventData.JoiningInstruction"
-                      label="Additional online event joining instructions, URL, phone etc."
+                      :label="$t('Common.AdditionalOnlineEvent')"
                       outlined
                       required
                       dense
@@ -153,7 +153,7 @@
                   </v-col>
                   <v-col v-if="isBitpodVirtual" cols="12" class="pb-0">
                     <v-text-field
-                      label="Bitpod Virtual Link"
+                      :label="$t('Common.BitpodVirtualLink')"
                       outlined
                       dense
                       disabled
@@ -276,7 +276,7 @@
           <v-tab-item :value="'3'">
             <v-card v-if="isTicket" flat>
               <p>
-                <i18n path="Common.Setupeventtickets" />
+                <i18n path="Common.SetupEventTickets" />
               </p>
               <v-btn
                 class="ma-2 ml-0 mb-3"
@@ -344,7 +344,7 @@
                       <td class="pa-2 pb-0">
                         <CustomDate
                           v-model="ticket.StartDate"
-                          label="Start Date*"
+                          :label="$t('Common.StartD')"
                           :field="ticketStartDateField"
                           :rules="ticketStartDateRule(k)"
                           :on-change="changeTicketStartDate()"
@@ -354,7 +354,7 @@
                       <td class="pa-2 pb-0">
                         <CustomDate
                           v-model="ticket.EndDate"
-                          label="End Date*"
+                          :label="$t('Common.EndD')"
                           :field="ticketEndDateField"
                           :rules="ticketEndDateRule(k)"
                           :on-change="changeTicketEndDate()"
@@ -399,9 +399,9 @@
                   /></span>
                 </div>
                 <div class="pb-3 text--primary">
-                  <i18n path="Common.Eventgoers" />
+                  <i18n path="Common.EventGoers" />
                   <br />
-                  <i18n path="Common.Youcanalso" />
+                  <i18n path="Common.EventsLink" />
                 </div>
                 <div class="pb-2">
                   <v-btn

@@ -402,7 +402,7 @@
           </div>
         </v-flex>
         <v-flex my-3>
-          <i18n path="Common.NameonCard" class="body-2 text--secondary" />
+          <i18n path="Common.NameOnCard" class="body-2 text--secondary" />
 
           <div class="body-1">
             {{

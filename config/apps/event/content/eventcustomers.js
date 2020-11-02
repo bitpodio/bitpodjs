@@ -24,11 +24,11 @@ export default {
       fields: {
         FirstName: {
           form: {
-            caption: 'First Name *',
+            caption: 'Common.FirstName',
             displayOrder: 1,
           },
           displayOrder: 2,
-          caption: 'FirstName',
+          caption: 'Common.FirstNameCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -46,11 +46,11 @@ export default {
         },
         LastName: {
           form: {
-            caption: 'Last Name *',
+            caption: 'Common.LastName',
             displayOrder: 2,
           },
           displayOrder: 3,
-          caption: 'LastName',
+          caption: 'Common.LastNameCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -68,11 +68,11 @@ export default {
         },
         Email: {
           form: {
-            caption: 'Email *',
+            caption: 'Common.Email',
             displayOrder: 3,
           },
           displayOrder: 4,
-          caption: 'Email',
+          caption: 'Common.EmailCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '130px',
@@ -93,11 +93,11 @@ export default {
         },
         BusinessNumber: {
           form: {
-            caption: 'Phone *',
+            caption: 'Common.PhoneRequired',
             displayOrder: 4,
           },
           displayOrder: 5,
-          caption: 'BusinessNumber',
+          caption: 'Common.BusinessNumber',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '130px',
@@ -118,7 +118,7 @@ export default {
         },
         createdDate: {
           displayOrder: 6,
-          caption: 'createdDate',
+          caption: 'Common.CreatedDate',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '130px',
@@ -128,7 +128,7 @@ export default {
         },
         createdBy: {
           displayOrder: 7,
-          caption: 'Created By',
+          caption: 'Common.CreatedBy',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '130px',
@@ -138,10 +138,10 @@ export default {
         },
         Tags: {
           form: {
-            caption: 'Tags',
+            caption: 'Common.Tags',
             displayOrder: 5,
           },
-          caption: 'Tags',
+          caption: 'Common.Tags',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '130px',
@@ -153,10 +153,10 @@ export default {
         },
         '_BillingAddress.AddressLine': {
           form: {
-            caption: 'Address',
+            caption: 'Common.Address',
             displayOrder: 6,
           },
-          caption: 'Address',
+          caption: 'Common.Address',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '130px',
@@ -168,10 +168,10 @@ export default {
         },
         '_BillingAddress.City': {
           form: {
-            caption: 'City',
+            caption: 'Common.City',
             displayOrder: 7,
           },
-          caption: 'City',
+          caption: 'Common.City',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '130px',
@@ -183,10 +183,10 @@ export default {
         },
         '_BillingAddress.State': {
           form: {
-            caption: 'State',
+            caption: 'Common.State',
             displayOrder: 8,
           },
-          caption: 'State',
+          caption: 'Common.State',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '130px',
@@ -198,10 +198,10 @@ export default {
         },
         '_BillingAddress.PostalCode': {
           form: {
-            caption: 'Zip',
+            caption: 'Common.Zip',
             displayOrder: 9,
           },
-          caption: 'Zip',
+          caption: 'Common.Zip',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '130px',
@@ -213,10 +213,10 @@ export default {
         },
         '_BillingAddress.Country': {
           form: {
-            caption: 'Country',
+            caption: 'Common.Country',
             displayOrder: 10,
           },
-          caption: 'Country',
+          caption: 'Common.Country',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '130px',
@@ -228,10 +228,10 @@ export default {
         },
         Description: {
           form: {
-            caption: 'Description',
+            caption: 'Common.Description',
             displayOrder: 11,
           },
-          caption: 'Description',
+          caption: 'Common.Description',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '130px',
@@ -254,7 +254,7 @@ export default {
         model: 'Customer',
         defaultSort: 'createdDate DESC',
       },
-      title: 'Members',
+      title: 'Common.Members',
       defaultSort: 'createdDate DESC',
     },
   },

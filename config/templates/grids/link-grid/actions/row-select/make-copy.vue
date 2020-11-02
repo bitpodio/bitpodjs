@@ -8,7 +8,7 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn color="primary" dark v-bind="attrs" v-on="on">
-          <i18n path="Common.MakeaCopy" />
+          <i18n path="Drawer.MakeaCopy" />
         </v-btn>
       </template>
       <v-card>
@@ -41,7 +41,7 @@
               </v-col>
             </v-row>
           </v-container>
-          <small><i18n path="Common.indicatesrequiredfield" /></small>
+          <small><i18n path="Common.IndicatesRequiredField" /></small>
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions class="pl-4">

@@ -12,7 +12,7 @@
             class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
           >
             <h2 class="black--text pt-5 pb-2 text-h5">
-              Edit Badge
+              <i18n path="Drawer.EditBadge" />
             </h2>
             <v-spacer></v-spacer>
             <div>
@@ -26,7 +26,7 @@
               <v-col cols="12" sm="6" md="6">
                 <v-text-field
                   v-model="badge.Size"
-                  label="Size*"
+                  :label="$t('Common.Size')"
                   :rules="requiredRules"
                   outlined
                   dense
@@ -35,7 +35,7 @@
               <v-col cols="12" sm="6" md="6">
                 <v-text-field
                   v-model="badge.DisplayOrder"
-                  label="Display Order*"
+                  :label="$t('Common.DisplayOrder')"
                   :rules="displayOrderRules"
                   type="number"
                   min="1"
@@ -61,8 +61,8 @@
               depressed
               :disabled="!valid || isSaveButtonDisabled"
               @click.native="onSave"
-              >Save</v-btn
-            >
+              ><i18n path="Drawer.Save"
+            /></v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>

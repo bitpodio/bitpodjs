@@ -7,8 +7,8 @@
       </v-btn>
     </v-col>
     <v-snackbar v-model="snackbar" :timeout="timeout" top="true"
-      ><div class="text-center">Ticket Deleted Successfully</div></v-snackbar
-    >
+      ><i18n path="Common.TicketDeletedSuccessfully" class="text-center"
+    /></v-snackbar>
   </div>
 </template>
 

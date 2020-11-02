@@ -7,7 +7,7 @@
     <v-dialog v-model="popupDialog" width="500">
       <v-card>
         <v-card-text class="pt-3">
-          <i18n path="Common.unsavedchanges" />
+          <i18n path="Common.UnsavedChanges" />
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>

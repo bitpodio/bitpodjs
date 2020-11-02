@@ -20,7 +20,7 @@
             <v-col cols="12">
               <v-text-field
                 v-model="formData.Token"
-                label="Token *"
+                :label="$t('Common.Token')"
                 :rules="required"
                 outlined
                 dense
@@ -29,7 +29,7 @@
             <v-col cols="12">
               <v-text-field
                 v-model="formData.URL"
-                label="URL *"
+                :label="$t('Common.Url')"
                 :rules="required"
                 outlined
                 dense
@@ -38,7 +38,7 @@
             <v-col cols="12">
               <v-text-field
                 v-model="formData.PublicKey"
-                label="Public Key *"
+                :label="$t('Common.PublicKey')"
                 :rules="required"
                 outlined
                 dense
@@ -47,7 +47,7 @@
             <v-col cols="12">
               <v-text-field
                 v-model="formData.PrivateKey"
-                label="Private Key *"
+                :label="$t('Common.PrivateKey')"
                 :rules="required"
                 outlined
                 dense
@@ -56,7 +56,7 @@
             <v-col cols="12">
               <v-text-field
                 v-model="formData.MerchantAccounts"
-                label="Merchant Accounts(e.g USD:merchantId)"
+                :label="$t('Common.MerchantAccounts')"
                 outlined
                 dense
               ></v-text-field>

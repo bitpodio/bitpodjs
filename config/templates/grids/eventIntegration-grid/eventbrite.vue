@@ -20,7 +20,7 @@
             <v-col cols="12">
               <v-text-field
                 v-model="formData.AccessKey"
-                label="Private Key *"
+                :label="$t('Common.PrivateKey')"
                 :rules="required"
                 outlined
                 dense
@@ -29,7 +29,7 @@
             <v-col cols="12">
               <v-text-field
                 v-model="formData.URL"
-                label="URL *"
+                :label="$t('Common.Url')"
                 :rules="required"
                 outlined
                 dense

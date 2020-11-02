@@ -18,7 +18,7 @@
             <v-list-item-content>
               <copy
                 :text-to-copy="getKeyCopied(item.accesskey, item.accesssecret)"
-                label="Copy"
+                :label="$t('Drawer.Copy')"
                 :hide-toast="true"
                 :unique-id="'a' + item.id"
                 icon-size="15"

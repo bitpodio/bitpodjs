@@ -24,7 +24,8 @@
                 class="rounded"
                 @click="goLive"
               >
-                Join Event
+                <i18n path="Common.JoinEvent" />
+
                 <v-icon right class="fs-22">
                   mdi-video
                 </v-icon>
@@ -32,13 +33,13 @@
             </div>
             <div class="mr-2">
               <v-btn depressed color="primary" @click="viewRegistration"
-                >View</v-btn
-              >
+                ><i18n path="Drawer.View"
+              /></v-btn>
             </div>
             <div v-if="data.event.Status === 'Not ready'" class="mr-2">
               <v-btn outlined color="primary" @click="publishEvent"
-                >Publish</v-btn
-              >
+                ><i18n path="Drawer.Publish"
+              /></v-btn>
             </div>
             <v-menu left :offset-y="offset" transition="slide-y-transition">
               <template v-slot:activator="{ on, attrs }">
@@ -53,7 +54,9 @@
                     <i class="fa fa-paperplane mt-1" aria-hidden="true"></i>
                   </v-list-item-icon>
                   <v-list-item-content>
-                    <v-list-item-title>Publish to eventbrite</v-list-item-title>
+                    <v-list-item-title
+                      ><i18n path="Drawer.Publishtoeventbrite"
+                    /></v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
                 <v-list-item @click="isMakeCopy = true">
@@ -61,7 +64,9 @@
                     <i class="fa fa-clone mt-1" aria-hidden="true"></i>
                   </v-list-item-icon>
                   <v-list-item-content>
-                    <v-list-item-title>Make a copy</v-list-item-title>
+                    <v-list-item-title
+                      ><i18n path="Drawer.MakeaCopy"
+                    /></v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
                 <v-list-item>
@@ -72,7 +77,9 @@
                     ></i>
                   </v-list-item-icon>
                   <v-list-item-content>
-                    <v-list-item-title>Edit email template</v-list-item-title>
+                    <v-list-item-title
+                      ><i18n path="Drawer.Editemailtemplate"
+                    /></v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
                 <v-list-item @click="redirectIntegration">
@@ -80,7 +87,9 @@
                     <i class="fa fa-link1 mt-1" aria-hidden="true"></i>
                   </v-list-item-icon>
                   <v-list-item-content>
-                    <v-list-item-title>Integrations</v-list-item-title>
+                    <v-list-item-title
+                      ><i18n path="Drawer.Integrations"
+                    /></v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
               </v-list>
@@ -285,7 +294,7 @@
                 class="event-tile-value text-truncate"
               />
 
-              <i18n path="Common.Opensin" class="caption text-truncate" />
+              <i18n path="Common.OpensIn" class="caption text-truncate" />
             </div>
           </div>
         </v-flex>
@@ -316,7 +325,7 @@
               color="success"
               class="body-2"
               @click="changeStatus('Open for registration')"
-              ><i18n path="Common.Openforregistration" />
+              ><i18n path="Common.OpenForRegistration" />
             </v-stepper-step>
 
             <v-divider></v-divider>
@@ -328,7 +337,7 @@
               class="body-2"
               color="success"
               @click="changeStatus('Sold out')"
-              ><i18n path="Common.Soldout" />
+              ><i18n path="Common.SoldOut" />
             </v-stepper-step>
 
             <v-divider></v-divider>
@@ -340,7 +349,7 @@
               class="body-2"
               color="success"
               @click="changeStatus('Registration closed')"
-              ><i18n path="Common.Registrationclosed" />
+              ><i18n path="Common.RegistrationClosed" />
             </v-stepper-step>
           </v-stepper-header>
         </v-stepper>
@@ -424,7 +433,7 @@
                     :hide-preview="true"
                     @input="fileUploadedEventBanner"
                   />
-                  <i18n path="Common.EventBanner(680x350)" />
+                  <i18n path="Common.EventB" />
                 </v-list-item-title>
               </v-list-item>
               <v-list-item
@@ -483,7 +492,9 @@
               >
               <copy :text-to-copy="getImageUrl(image)" :unique-id="image" />
             </v-flex>
-            <v-card-text class="pa-0 mt-n2">Banner Image</v-card-text>
+            <v-card-text class="pa-0 mt-n2"
+              ><i18n path="Common.BannerImage"
+            /></v-card-text>
           </v-card>
           <v-dialog v-model="bannerDialog" max-width="600">
             <v-card>
@@ -848,7 +859,7 @@
         <div class="mt-2 seatmap-btn">
           <v-switch
             v-model="switchSeat"
-            label="Seatmap & Tickets"
+            :label="$t('Common.SeatmapTickets')"
             class="mt-0 ml-0 max-h24 positionAbsolute"
             height="20"
             @change="updateSeatReservation"
@@ -1156,7 +1167,7 @@
           </div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">SEO Description</div>
+          <i18n path="Common.SEODescription" class="body-2 text--secondary" />
           <div class="body-1 d-flex flex-wrap">
             {{ formatField(data.event.SEODesc) }}
           </div>
@@ -1279,7 +1290,7 @@
             debounce="500"
             height="20"
             class="ma-0 pa-0"
-            :label="$t('Common.Notifyorganizerwhensomeoneregisters')"
+            :label="$t('Common.NotifyOrganizer')"
             color="green"
             @change="updateReg"
           ></v-checkbox>
@@ -1291,7 +1302,7 @@
             debounce="500"
             height="20"
             class="ma-0 pa-0"
-            :label="$t('Common.Asktoprintbadgeaftercheckin')"
+            :label="$t('Common.AskToPrintBadgeAfterCheckin')"
             color="green"
             @change="updateReg"
           ></v-checkbox>
@@ -1351,7 +1362,7 @@
       <v-dialog v-model="popupDialog" width="500">
         <v-card>
           <v-card-text class="pt-3">
-            <i18n path="Common.deletelayout" />
+            <i18n path="Common.DeleteLayout" />
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>

@@ -20,7 +20,7 @@
             <v-col cols="12">
               <v-text-field
                 v-model="formData.URL"
-                label="API URL *"
+                :label="$t('Common.ApiUrl')"
                 :rules="required"
                 outlined
                 dense
@@ -29,7 +29,7 @@
             <v-col cols="12">
               <v-text-field
                 v-model="formData.AccessKey"
-                label="Merchant Id *"
+                :label="$t('Common.MerchantId')"
                 :rules="required"
                 outlined
                 dense
@@ -38,7 +38,7 @@
             <v-col cols="12">
               <v-text-field
                 v-model="formData.Token"
-                label="Merchant Key *"
+                :label="$t('Common.MerchantKey')"
                 :rules="required"
                 outlined
                 dense

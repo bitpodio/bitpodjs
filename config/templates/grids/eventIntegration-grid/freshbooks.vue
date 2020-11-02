@@ -20,7 +20,7 @@
             <v-col cols="12">
               <v-text-field
                 v-model="formData.AccountID"
-                label="Account ID *"
+                :label="$t('Common.AccountId')"
                 :rules="required"
                 outlined
                 dense
@@ -29,7 +29,7 @@
             <v-col cols="12">
               <v-text-field
                 v-model="formData.RefreshToken"
-                label="Refresh Token *"
+                :label="$t('Common.RefreshToken')"
                 :rules="required"
                 outlined
                 dense

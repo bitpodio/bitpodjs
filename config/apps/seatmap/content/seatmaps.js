@@ -17,7 +17,7 @@ export default {
       fields: {
         Name: {
           displayOrder: 1,
-          caption: 'Name',
+          caption: 'Common.Name',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '250px',
@@ -25,7 +25,7 @@ export default {
         },
         ImageUrl: {
           displayOrder: 2,
-          caption: 'Image Url',
+          caption: 'Common.ImageUrl',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '250px',
@@ -33,7 +33,7 @@ export default {
         },
         createdDate: {
           displayOrder: 3,
-          caption: 'Date',
+          caption: 'Common.Date',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -41,7 +41,7 @@ export default {
         },
         createdBy: {
           displayOrder: 4,
-          caption: 'Created By',
+          caption: 'Common.CreatedBy',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -95,11 +95,11 @@ export default {
       fields: {
         Title: {
           form: {
-            caption: 'Title *',
+            caption: 'Common.Title',
             displayOrder: 1,
           },
           displayOrder: 2,
-          caption: 'Title',
+          caption: 'Common.Title',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '250px',
@@ -112,11 +112,11 @@ export default {
         },
         StartDate: {
           form: {
-            caption: 'Start Date *',
+            caption: 'Common.StartD',
             displayOrder: 3,
           },
           displayOrder: 3,
-          caption: 'Start Date',
+          caption: 'Common.StartDate',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -129,11 +129,11 @@ export default {
         },
         EndDate: {
           form: {
-            caption: 'End Date *',
+            caption: 'Common.EndD',
             displayOrder: 4,
           },
           displayOrder: 3,
-          caption: 'End Date',
+          caption: 'Common.EndDate',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -146,11 +146,11 @@ export default {
         },
         Status: {
           form: {
-            caption: 'Status *',
+            caption: 'Common.StatusRequired',
             displayOrder: 7,
           },
           displayOrder: 3,
-          caption: 'Status',
+          caption: 'Common.Status',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -163,11 +163,11 @@ export default {
         },
         VenueName: {
           form: {
-            caption: 'Venue Name',
+            caption: 'Common.VenueName',
             displayOrder: 13,
           },
           displayOrder: 6,
-          caption: 'Venue',
+          caption: 'Common.Venue',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -226,11 +226,11 @@ export default {
       fields: {
         Name: {
           form: {
-            caption: 'Name *',
+            caption: 'Common.NameRequired',
             displayOrder: 1,
           },
           displayOrder: 2,
-          caption: 'Name',
+          caption: 'Common.Name',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -241,7 +241,7 @@ export default {
         },
         'child.Name': {
           displayOrder: 3,
-          caption: 'Parent BU',
+          caption: 'Common.ParentBu',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -251,7 +251,7 @@ export default {
         },
         'contacts.FullName': {
           displayOrder: 3,
-          caption: 'Primary Contact',
+          caption: 'Common.PrimaryContact',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -261,11 +261,11 @@ export default {
         },
         '_CurrentAddress.AddressLine': {
           form: {
-            caption: 'Address *',
+            caption: 'Common.AddressRequired',
             displayOrder: 3,
           },
           displayOrder: 5,
-          caption: 'Address Line',
+          caption: 'Common.AddressLine',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '160px',
@@ -281,11 +281,11 @@ export default {
         },
         '_CurrentAddress.Country': {
           form: {
-            caption: 'Country',
+            caption: 'Common.Country',
             displayOrder: 6,
           },
           displayOrder: 6,
-          caption: 'Country',
+          caption: 'Common.Country',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '130px',
@@ -296,11 +296,11 @@ export default {
         },
         Email: {
           form: {
-            caption: 'Email',
+            caption: 'Common.EmailCaption',
             displayOrder: 9,
           },
           displayOrder: 7,
-          caption: 'Email',
+          caption: 'Common.EmailCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '130px',
@@ -311,11 +311,11 @@ export default {
         },
         Phone: {
           form: {
-            caption: 'Phone',
+            caption: 'Common.Phone',
             displayOrder: 8,
           },
           displayOrder: 8,
-          caption: 'Phone',
+          caption: 'Common.Phone',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '130px',

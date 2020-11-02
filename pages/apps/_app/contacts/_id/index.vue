@@ -144,7 +144,7 @@
         <v-divider></v-divider>
         <v-row>
           <v-col class="col-md-6 col-12">
-            <i18n path="Common.DateofBirth" class="body-2 text--secondary" />
+            <i18n path="Common.DateOfBirth" class="body-2 text--secondary" />
             <div class="body-1">{{ formatField(data.contact.BirthDate) }}</div>
           </v-col>
           <v-col class="col-md-6 col-12">

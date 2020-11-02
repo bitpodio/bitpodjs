@@ -37,7 +37,7 @@
                 <v-tab-item :value="'tab-1'">
                   <v-row>
                     <v-col cols="12" class="mb-2">
-                      <i18n path="Common.Selectatemplate" />
+                      <i18n path="Common.SelectTemplate" />
                     </v-col>
                     <v-flex
                       class="d-flex flex-wrap pa-0 ml-3 justify-center justify-md-start"
@@ -126,7 +126,7 @@
                     <v-col cols="12" class="mt-3">
                       <v-text-field
                         v-model="sectionHeading.speakers"
-                        label="Label for Speakers section"
+                        :label="$t('Common.LabelForSpeakers')"
                         outlined
                         dense
                       ></v-text-field>
@@ -134,7 +134,7 @@
                     <v-col cols="12">
                       <v-text-field
                         v-model="sectionHeading.registrationTypes"
-                        label="Label for Registration Types section"
+                        :label="$t('Common.LabelForRegistration')"
                         outlined
                         dense
                       ></v-text-field>
@@ -142,7 +142,7 @@
                     <v-col cols="12">
                       <v-text-field
                         v-model="sectionHeading.session"
-                        label="Label for Sessions section"
+                        :label="$t('Common.LabelForSessions')"
                         outlined
                         dense
                       ></v-text-field>
@@ -150,7 +150,7 @@
                     <v-col cols="12">
                       <v-text-field
                         v-model="sectionHeading.registrationbtn"
-                        label="Label for Register button"
+                        :label="$t('Common.LabelForRegister')"
                         outlined
                         dense
                       ></v-text-field>
@@ -158,7 +158,7 @@
                     <v-col cols="12">
                       <v-text-field
                         v-model="sectionHeading.ticketsectionlabel"
-                        label="Label for Tickets section"
+                        :label="$t('Common.LabelForTickets')"
                         outlined
                         dense
                       ></v-text-field>
@@ -166,7 +166,7 @@
                     <v-col cols="12">
                       <v-text-field
                         v-model="sectionHeading.ticketlabel"
-                        label="Label for Tickets"
+                        :label="$t('Common.LabelTickets')"
                         outlined
                         dense
                       ></v-text-field>
@@ -174,7 +174,7 @@
                     <v-col cols="12">
                       <v-text-field
                         v-model="sectionHeading.datetimelabel"
-                        label="Label for Date and Time section"
+                        :label="$t('Common.LabelForDateTime')"
                         outlined
                         dense
                       ></v-text-field>
@@ -182,7 +182,7 @@
                     <v-col cols="12">
                       <v-text-field
                         v-model="sectionHeading.venuelabel"
-                        label="Label for Venue section"
+                        :label="$t('Common.LabelForVenue')"
                         outlined
                         dense
                       ></v-text-field>
@@ -193,7 +193,7 @@
                     >
                       <v-text-field
                         v-model="sectionHeading.sessionsectionlabel"
-                        label="Label for Recurring Sessions section"
+                        :label="$t('Common.LabelForRecurringSessions')"
                         outlined
                         dense
                       ></v-text-field>
@@ -203,7 +203,7 @@
                         v-model="
                           sectionHeading.registrationquestionsectionlabel
                         "
-                        label="Label for Registration Questions section"
+                        :label="$t('Common.LabelForRegistrationQuestions')"
                         outlined
                         dense
                       ></v-text-field>
@@ -211,7 +211,7 @@
                     <v-col cols="12">
                       <v-text-field
                         v-model="sectionHeading.gallery"
-                        label="Label for Image Gallery section"
+                        :label="$t('Common.LabelForImageGallery')"
                         outlined
                         dense
                       ></v-text-field>
@@ -219,7 +219,7 @@
                     <v-col cols="12">
                       <v-text-field
                         v-model="sectionHeading.review"
-                        label="Label for Reviews section"
+                        :label="$t('Common.LabelForReviews')"
                         outlined
                         dense
                       ></v-text-field>
@@ -228,7 +228,7 @@
                       <v-select
                         v-model="animation"
                         :items="animationDropDown"
-                        label="Animation"
+                        :label="$t('Common.Animation')"
                         outlined
                         dense
                       ></v-select>

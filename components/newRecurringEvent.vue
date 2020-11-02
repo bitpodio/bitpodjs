@@ -11,7 +11,9 @@
         <v-card-title
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
-          <h2 class="black--text pt-4 pb-0 text-h5">Availability</h2>
+          <h2 class="black--text pt-4 pb-0 text-h5">
+            <i18n path="Common.Availability" />
+          </h2>
           <v-spacer></v-spacer>
           <div>
             <v-btn icon @click="isDateRange = false">
@@ -33,7 +35,7 @@
               <v-col v-if="isOverPeriod" cols="12" class="pb-0">
                 <v-text-field
                   v-model="RollingDays"
-                  label="Rolling Days"
+                  :label="$t('Common.RollingDays')"
                   type="number"
                   min="0"
                   outlined
@@ -44,7 +46,7 @@
               <v-col v-if="isOverDate" cols="12" class="pb-0">
                 <CustomDate
                   v-model="StartDate"
-                  label="Start Date*"
+                  :label="$t('Common.StartD')"
                   :field="startDateField"
                   :rules="startDateRule"
                   :on-change="changeStartDate"
@@ -54,7 +56,7 @@
               <v-col v-if="isOverDate" cols="12">
                 <CustomDate
                   v-model="EndDate"
-                  label="End Date*"
+                  :label="$t('Common.EndD')"
                   :field="endDateRule"
                   :rules="endDateRule"
                   :on-change="changeEndDate"
@@ -64,8 +66,8 @@
               <div class="col-md-12">
                 <v-flex class="d-flex justify-center align-center pb-1">
                   <h2 class="body-1 pb-1">
-                    <i class="fa-repeat pr-1" aria-hidden="true"></i> Repeating
-                    days of the week
+                    <i class="fa-repeat pr-1" aria-hidden="true"></i>
+                    <i18n path="Common.RepeatingDaysOfWeek" />
                   </h2>
                   <v-spacer></v-spacer>
                 </v-flex>
@@ -84,10 +86,10 @@
         </v-card-text>
         <div class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10 mb-3">
           <v-btn depressed color="primary" class="mr-1" @click="setSchedule">
-            Apply
+            <i18n path="Common.Apply" />
           </v-btn>
           <v-btn depressed color="grey lighten-2" @click="isDateRange = false">
-            Cancel
+            <i18n path="Drawer.Cancel" />
           </v-btn>
         </div>
       </v-card>
@@ -103,7 +105,9 @@
         <v-card-title
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
-          <h2 class="black--text pt-4 pb-0 text-h5">Duration</h2>
+          <h2 class="black--text pt-4 pb-0 text-h5">
+            <i18n path="Common.Duration" />
+          </h2>
           <v-spacer></v-spacer>
           <div>
             <v-btn icon @click="isDuration = false">
@@ -121,7 +125,7 @@
               <v-col cols="12" class="mt-3">
                 <v-text-field
                   v-model="Duration"
-                  label="Duration"
+                  :label="$t('Common.Duration')"
                   type="number"
                   min="0"
                   :rules="durationRules"
@@ -134,10 +138,10 @@
         </v-card-text>
         <div class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10 mb-3">
           <v-btn depressed class="mr-1" color="primary" @click="setDuration">
-            Apply
+            <i18n path="Common.Apply" />
           </v-btn>
           <v-btn depressed color="grey lighten-2" @click="isDuration = false">
-            Cancel
+            <i18n path="Drawer.Cancel" />
           </v-btn>
         </div>
       </v-card>
@@ -153,7 +157,9 @@
         <v-card-title
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
-          <h2 class="black--text pt-4 pb-0 text-h5">Location</h2>
+          <h2 class="black--text pt-4 pb-0 text-h5">
+            <i18n path="Common.Location" />
+          </h2>
           <v-spacer></v-spacer>
           <div>
             <v-btn icon @click="isPhone = false">
@@ -167,7 +173,7 @@
               <v-col cols="12" class="mt-3">
                 <v-text-field
                   v-model="Phone"
-                  label="Phone"
+                  :label="$t('Common.Phone')"
                   outlined
                   dense
                   :rules="phoneRules"
@@ -178,10 +184,10 @@
         </v-card-text>
         <div class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10 mb-3">
           <v-btn depressed class="mr-1" color="primary" @click="setPhone">
-            Apply
+            <i18n path="Common.Apply" />
           </v-btn>
           <v-btn depressed color="grey lighten-2" @click="isPhone = false">
-            Cancel
+            <i18n path="Drawer.Cancel" />
           </v-btn>
         </div>
       </v-card>
@@ -197,7 +203,9 @@
         <v-card-title
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
-          <h2 class="black--text pt-4 pb-0 text-h5">Location</h2>
+          <h2 class="black--text pt-4 pb-0 text-h5">
+            <i18n path="Common.Location" />
+          </h2>
           <v-spacer></v-spacer>
           <div>
             <v-btn icon @click="isOnlineMeeting = false">
@@ -215,7 +223,7 @@
               <v-col cols="12" class="mt-3">
                 <v-text-field
                   v-model="WebinarLink"
-                  label="Online event link (https)*"
+                  :label="$t('Common.OnlineEventLink')"
                   :rules="onlineMeetingRules"
                   outlined
                   dense
@@ -231,14 +239,14 @@
             color="primary"
             @click="setOnlineMeeting"
           >
-            Apply
+            <i18n path="Common.Apply" />
           </v-btn>
           <v-btn
             depressed
             color="grey lighten-2"
             @click="isOnlineMeeting = false"
           >
-            Cancel
+            <i18n path="Drawer.Cancel" />
           </v-btn>
         </div>
       </v-card>
@@ -254,7 +262,9 @@
         <v-card-title
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
-          <h2 class="black--text pt-4 pb-0 text-h5">Location</h2>
+          <h2 class="black--text pt-4 pb-0 text-h5">
+            <i18n path="Common.Location" />
+          </h2>
           <v-spacer></v-spacer>
           <div>
             <v-btn icon @click="isCustom = false">
@@ -287,7 +297,7 @@
             <v-col cols="6" class="pb-0">
               <v-text-field
                 v-model="venueAddress.City"
-                label="City"
+                :label="$t('Common.City')"
                 outlined
                 dense
                 @change="changeAddress()"
@@ -296,7 +306,7 @@
             <v-col cols="6" class="pb-0">
               <v-text-field
                 v-model="venueAddress.State"
-                label="State"
+                :label="$t('Common.State')"
                 outlined
                 dense
                 @change="changeAddress()"
@@ -305,7 +315,7 @@
             <v-col cols="6" class="pb-0">
               <v-text-field
                 v-model="venueAddress.Country"
-                label="Country"
+                :label="$t('Common.Country')"
                 outlined
                 dense
                 @change="changeAddress()"
@@ -314,7 +324,7 @@
             <v-col cols="6" class="pb-0">
               <v-text-field
                 v-model="venueAddress.ZipCode"
-                label="Zip Code"
+                :label="$t('Common.ZipCode')"
                 outlined
                 dense
                 @change="changeAddress()"
@@ -329,10 +339,10 @@
             color="primary"
             @click="setCustomLocation"
           >
-            Apply
+            <i18n path="Common.Apply" />
           </v-btn>
           <v-btn depressed color="grey lighten-2" @click="isCustom = false">
-            Cancel
+            <i18n path="Drawer.Cancel" />
           </v-btn>
         </div>
       </v-card>
@@ -348,7 +358,9 @@
         <v-card-title
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
-          <h2 class="black--text pt-4 pb-0 text-h5">Location</h2>
+          <h2 class="black--text pt-4 pb-0 text-h5">
+            <i18n path="Common.Location" />
+          </h2>
           <v-spacer></v-spacer>
           <div>
             <v-btn icon @click="isPersonMeeting = false">
@@ -380,14 +392,14 @@
             class="mr-1"
             @click="setPersonMeeting"
           >
-            Apply
+            <i18n path="Common.Apply" />
           </v-btn>
           <v-btn
             depressed
             color="grey lighten-2"
             @click="isPersonMeeting = false"
           >
-            Cancel
+            <i18n path="Drawer.Cancel" />
           </v-btn>
         </div>
       </v-card>
@@ -403,7 +415,9 @@
         <v-card-title
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
-          <h2 class="black--text pt-4 pb-0 text-h5">Change Tickets</h2>
+          <h2 class="black--text pt-4 pb-0 text-h5">
+            <i18n path="Common.ChangeTickets" />
+          </h2>
           <v-spacer></v-spacer>
           <div>
             <v-btn icon @click="isSessionTicket = false">
@@ -425,14 +439,14 @@
             class="mr-1"
             @click="setSessionTicket"
           >
-            Apply
+            <i18n path="Common.Apply" />
           </v-btn>
           <v-btn
             depressed
             color="grey lighten-2"
             @click="isSessionTicket = false"
           >
-            Cancel
+            <i18n path="Drawer.Cancel" />
           </v-btn>
         </div>
       </v-card>
@@ -448,7 +462,9 @@
         <v-card-title
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
-          <h2 class="black--text pt-4 pb-0 text-h5">Location</h2>
+          <h2 class="black--text pt-4 pb-0 text-h5">
+            <i18n path="Common.Location" />
+          </h2>
           <v-spacer></v-spacer>
           <div>
             <v-btn icon @click="isType = false">
@@ -469,7 +485,7 @@
               <v-col v-if="isGroup" cols="12">
                 <v-text-field
                   v-model="MaxAllow"
-                  label="Max Allow*"
+                  :label="$t('Common.MaxAllow')"
                   min="0"
                   :rules="maxAllowRules"
                   outlined
@@ -481,10 +497,10 @@
         </v-card-text>
         <div class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10 mb-3">
           <v-btn depressed color="primary" class="mr-1" @click="setType">
-            Apply
+            <i18n path="Common.Apply" />
           </v-btn>
           <v-btn depressed color="grey lighten-2" @click="isType = false">
-            Cancel
+            <i18n path="Drawer.Cancel" />
           </v-btn>
         </div>
       </v-card>
@@ -493,7 +509,9 @@
       <v-card-title
         class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
       >
-        <h2 class="black--text pt-4 pb-0 text-h5">New Recurring Event</h2>
+        <h2 class="black--text pt-4 pb-0 text-h5">
+          <i18n path="Common.NewRecurringEvent" />
+        </h2>
         <v-spacer></v-spacer>
         <div>
           <v-btn icon @click="close">
@@ -503,7 +521,8 @@
         <v-tabs v-model="tabs" height="36" class="mb-6 mt-2 v-event-icon">
           <v-tabs-slider></v-tabs-slider>
           <v-tab href="#1" class="px-0 mr-4" @click="selectTab(1)">
-            <v-icon left>fa-info-circle</v-icon><span>Basic Info</span>
+            <v-icon left>fa-info-circle</v-icon
+            ><span><i18n path="Common.BasicInfo" /></span>
           </v-tab>
           <v-tab
             href="#2"
@@ -511,7 +530,8 @@
             :disabled="!validTab1()"
             @click="selectTab(2)"
           >
-            <v-icon left>fa-ticket</v-icon><span>Tickets</span>
+            <v-icon left>fa-ticket</v-icon
+            ><span><i18n path="Common.Tickets" /></span>
           </v-tab>
           <v-tab
             href="#3"
@@ -519,7 +539,8 @@
             :disabled="!validTab1() || !validTab2()"
             @click="selectTab(3)"
           >
-            <v-icon left>fa-history</v-icon><span>Recurring Session</span>
+            <v-icon left>fa-history</v-icon
+            ><span><i18n path="Common.RecurringSession" /></span>
           </v-tab>
         </v-tabs>
       </v-card-title>
@@ -528,9 +549,7 @@
           <v-tab-item :value="'1'">
             <v-card flat>
               <p>
-                Enter event name and details to help your audience learn about
-                your event, add details that highlights why someone should
-                attend it.
+                <i18n path="Common.EnterEventName" />
               </p>
               <v-form
                 ref="validBasicInfoForm"
@@ -542,7 +561,7 @@
                     <v-text-field
                       v-model="eventData.Title"
                       :rules="requiredRules"
-                      label="Event Title*"
+                      :label="$t('Common.EventTitle')"
                       required
                       dense
                       outlined
@@ -553,13 +572,13 @@
                     <RichText
                       v-model="eventData.Description"
                       class="mb-3"
-                      label="Description"
+                      :label="$t('Common.Description')"
                     ></RichText>
                   </v-col>
                   <v-col cols="12" sm="6" md="6" class="pb-0">
                     <v-text-field
                       v-model="eventData.UniqLink"
-                      label="Event Link*"
+                      llabel="$t('Common.EventL')"
                       :hint="eventLinkHint"
                       persistent-hint
                       outlined
@@ -582,26 +601,33 @@
                 :lazy-validation="lazy"
               >
                 <p>
-                  Setup event tickets and price, you can also set tickets
-                  validity so early birds can be offered better pricing.
+                  <i18n path="Common.SetupEventTickets" />
                 </p>
                 <v-btn
                   class="ma-2 ml-0 mb-3"
                   outlined
                   color="primary"
                   @click="addTicketRow"
-                  >Add Tickets</v-btn
-                >
+                  ><i18n path="Common.AddTickets"
+                /></v-btn>
                 <v-simple-table class="event-table">
                   <template v-slot:default>
                     <thead>
                       <tr>
-                        <th class="text-left pl-0">Title*</th>
-                        <th class="text-left pl-2">Type*</th>
-                        <th class="text-left pl-2">
-                          Price ({{ eventData.Currency }})
+                        <th class="text-left pl-0">
+                          <i18n path="Common.Title" />
                         </th>
-                        <th class="text-left pl-2">Quantity</th>
+                        <th class="text-left pl-2">
+                          <i18n path="Common.Type" />
+                        </th>
+                        <th class="text-left pl-2">
+                          {{
+                            $t('Common.Price', { currency: eventData.Currency })
+                          }}
+                        </th>
+                        <th class="text-left pl-2">
+                          <i18n path="Common.Quantity" />
+                        </th>
                         <th class="text-left pl-2"></th>
                       </tr>
                     </thead>
@@ -666,32 +692,30 @@
                 :lazy-validation="lazy"
               >
                 <p>
-                  Setup event recurrence, sessions availability to help your
-                  attendees book a time slot.
+                  <i18n path="Common.SetupEventRecurrence" />
                 </p>
                 <v-btn
                   class="ma-2 ml-0 mb-3"
                   outlined
                   color="primary"
                   @click="addSession"
-                  >Add Recurring Session</v-btn
-                >
+                  ><i18n path="Common.AddRecurringSession"
+                /></v-btn>
                 <div v-if="isZoom">
-                  To send Zoom joining info, you must setup Zoom integration,
+                  <i18n path="Common.SendZoomJoiningInfo" />
                   <a href="" @click.stop.prevent="openWindow(zoomDocumentLink)"
-                    >click here</a
-                  >
-                  for documentation.
+                    ><i18n path="Common.ClickHere"
+                  /></a>
+                  <i18n path="Common.ForDocumentation" />
                 </div>
                 <div v-if="isGoogleMeet">
-                  To send google meet joining info, you must setup google meet
-                  integration,
+                  <i18n path="Common.SendGoogleMeetJoiningInfo" />
                   <a
                     href=""
                     @click.stop.prevent="openWindow(googleMeetDocumentLink)"
-                    >click here</a
-                  >
-                  for documentation.
+                    ><i18n path="Common.ClickHere"
+                  /></a>
+                  <i18n path="Common.ForDocumentation" />
                 </div>
                 <div
                   v-if="isLocationMessage"
@@ -703,18 +727,30 @@
                   <template v-slot:default>
                     <thead>
                       <tr>
-                        <th class="text-left pl-0">Date Range*</th>
-                        <th class="text-left pl-2 st-date">Start Time*</th>
-                        <th class="text-left pl-2 st-date">End Time*</th>
-                        <th class="text-left pl-2 st-date">Slot Size*</th>
-                        <th class="text-left pl-2 event-timezone">
-                          Timezone
+                        <th class="text-left pl-0">
+                          <i18n path="Common.DateRange" />
+                        </th>
+                        <th class="text-left pl-2 st-date">
+                          <i18n path="Common.StartT" />
+                        </th>
+                        <th class="text-left pl-2 st-date">
+                          <i18n path="Common.EndT" />
+                        </th>
+                        <th class="text-left pl-2 st-date">
+                          <i18n path="Common.SlotSize" />
                         </th>
                         <th class="text-left pl-2 event-timezone">
-                          Location*
+                          <i18n path="Common.Timezone" />
                         </th>
-                        <th class="text-left pl-2">Type*</th>
-                        <th class="text-left">Tickets</th>
+                        <th class="text-left pl-2 event-timezone">
+                          <i18n path="Common.RecurringEventLocation" />
+                        </th>
+                        <th class="text-left pl-2">
+                          <i18n path="Common.Type" />
+                        </th>
+                        <th class="text-left">
+                          <i18n path="Common.Tickets" />
+                        </th>
                         <th class="text-left"></th>
                       </tr>
                     </thead>
@@ -747,7 +783,7 @@
                             :items="slotLookupOptions"
                             item-text="value"
                             item-value="key"
-                            label="Slot Size"
+                            :label="$t('Common.SlotSize')"
                             outlined
                             dense
                             @change="changeDuration(k)"
@@ -817,16 +853,13 @@
                 </div>
                 <div class="pb-2 text-uppercase">
                   <span class="text-uppercase Body 1" style="font-size: 20px;"
-                    >EVENT HAS BEEN CREATED.</span
-                  >
+                    ><i18n path="Common.EventHasBeenCreated"
+                  /></span>
                 </div>
                 <div class="pb-3 text--primary">
-                  Event goers can only register after you publish it. We
-                  recommend you click view button to verify your event page and
-                  if everything looks as expected then PUBLISH it.
+                  <i18n path="Common.EventGoers" />
                   <br />
-                  You can also use events link from left panel to edit or
-                  publish this event any time you like.
+                  <i18n path="Common.EventsLink" />
                 </div>
                 <div class="pb-2">
                   <v-btn
@@ -834,8 +867,9 @@
                     color="primary"
                     class="ma-1"
                     @click="viewRegistration"
-                    ><v-icon left>mdi-eye-outline</v-icon>View</v-btn
-                  >
+                    ><v-icon left>mdi-eye-outline</v-icon
+                    ><i18n path="Drawer.View"
+                  /></v-btn>
                   <v-btn
                     outlined
                     color="primary"
@@ -843,11 +877,11 @@
                     @click="eventPublish"
                   >
                     <v-icon left>mdi-rotate-315 mdi-send</v-icon>
-                    Publish</v-btn
-                  >
+                    <i18n path="Drawer.Publish"
+                  /></v-btn>
                   <v-btn text color="primary" class="ma-1" @click="closeForm"
-                    >Close</v-btn
-                  >
+                    ><i18n path="Drawer.Close"
+                  /></v-btn>
                 </div>
               </div>
               <div v-if="isEventPublish" class="flex">
@@ -859,25 +893,25 @@
                 </div>
                 <div class="pb-2">
                   <span class="text-uppercase Body 1" style="font-size: 20px;">
-                    YOUR EVENT HAS BEEN PUBLISHED.</span
-                  >
+                    <i18n path="Common.EventHasBeenPublished"
+                  /></span>
                 </div>
-                <div class="pb-2 text--primary">
-                  Now it is open for registrations, you can click on view to
-                  fetch the event landing page URL, which you can share with
-                  others, so they can register.
-                </div>
+                <i18n
+                  path="Common.NowOpenForRegistrations"
+                  class="pb-2 text--primary"
+                />
                 <div class="pb-2">
                   <v-btn
                     depressed
                     color="primary"
                     class="ma-1"
                     @click="viewRegistration"
-                    ><v-icon left>mdi-eye-outline</v-icon>View</v-btn
-                  >
+                    ><v-icon left>mdi-eye-outline</v-icon
+                    ><i18n path="Drawer.View"
+                  /></v-btn>
                   <v-btn text color="primary" class="ma-1" @click="closeForm"
-                    >Close</v-btn
-                  >
+                    ><i18n path="Drawer.Close"
+                  /></v-btn>
                 </div>
               </div>
             </v-card>
@@ -893,24 +927,24 @@
           depressed
           color="grey lighten-2"
           @click="prev()"
-          >Prev</v-btn
-        >
+          ><i18n path="Drawer.Prev"
+        /></v-btn>
         <v-btn
           v-if="currentTab < 3"
           depressed
           color="primary"
           :disabled="isNextDisabled()"
           @click="next()"
-          >Next</v-btn
-        >
+          ><i18n path="Drawer.Next"
+        /></v-btn>
         <v-btn
           v-if="currentTab > 2 && !isEventCreate && !isEventPublish"
           depressed
           color="primary"
           :disabled="isSaveButtonDisabled"
           @click="saveRecord"
-          >Save</v-btn
-        >
+          ><i18n path="Drawer.Save"
+        /></v-btn>
       </v-card-actions>
     </v-card>
   </v-form>

@@ -26,7 +26,7 @@
               <v-select
                 v-model="privacy"
                 :items="eventPrivacyDropdown"
-                label="Privacy*"
+                :label="$t('Common.PrivacyRequired')"
                 required
                 outlined
                 dense
@@ -36,7 +36,7 @@
               <v-select
                 v-model="currency"
                 :items="currencyDropdown"
-                label="Currency*"
+                :label="$t('Common.CurrencyReq')"
                 required
                 outlined
                 dense
@@ -45,7 +45,7 @@
             <v-col cols="12" sm="6" md="6" class="pb-0">
               <v-text-field
                 v-model="formData.ProjectCode"
-                label="GL Account Code"
+                :label="$t('Common.GLAccountCode')"
                 outlined
                 dense
               ></v-text-field>
@@ -53,7 +53,7 @@
             <v-col cols="12" sm="6" md="6" class="pb-0">
               <v-text-field
                 v-model="formData.CostCenter"
-                label="Cost Center"
+                :label="$t('Common.CostCenter')"
                 outlined
                 dense
               ></v-text-field>
@@ -61,7 +61,7 @@
             <v-col cols="12" sm="6" md="12">
               <v-text-field
                 v-model="formData.UniqLink"
-                label="Event Link*"
+                :label="$t('Common.EventL')"
                 :rules="linkRules"
                 persistent-hint
                 :hint="getUniqLink"
@@ -77,7 +77,7 @@
               >
             </v-col>
             <v-col cols="12" class="mb-6">
-              <span>Cancellation Policy</span>
+              <span><i18n path="Common.CancellationPolicy" /> </span>
               <RichText v-model="formData.CancellationPolicy" />
             </v-col>
           </v-row>

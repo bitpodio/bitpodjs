@@ -15,13 +15,13 @@
         </div>
       </v-card-title>
       <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
-        <i18n path="Common.integratewithsalesforce" />
+        <i18n path="Common.IntegrateWithSalesforce" />
         <v-form ref="form" v-model="valid" :lazy-validation="lazy">
           <v-row>
             <v-col cols="12" class="pb-0">
               <v-text-field
                 v-model="formData.loginUrl"
-                label="Salesforce Login URL *"
+                :label="$t('Common.SalesforceLoginUrl')"
                 :rules="required"
                 outlined
                 dense

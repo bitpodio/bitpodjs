@@ -26,7 +26,7 @@
               <v-col cols="12" class="pb-0">
                 <v-text-field
                   v-model="formData.PrivacyPolicy"
-                  label="Privacy Policy"
+                  :label="$t('Common.PrivacyPolicy')"
                   outlined
                   dense
                 ></v-text-field>
@@ -34,7 +34,7 @@
               <v-col cols="12" class="pb-0">
                 <v-text-field
                   v-model="formData.EventRegistrationURL"
-                  label="Event Registration URL"
+                  :label="$t('Common.EventRegistrationURL')"
                   outlined
                   dense
                 ></v-text-field>
@@ -42,7 +42,7 @@
               <v-col cols="12" md="6" class="pb-0">
                 <v-text-field
                   v-model="formData.successTemplateCaption"
-                  label="Success Template Caption"
+                  :label="$t('Common.SuccessTemplateCaption')"
                   outlined
                   dense
                 ></v-text-field>
@@ -51,7 +51,7 @@
                 <v-select
                   v-model="currency"
                   :items="currencyDropdown"
-                  label="Currency*"
+                  :label="$t('Common.CurrencyReq')"
                   required
                   outlined
                   dense

@@ -8,7 +8,8 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on">
-          <i class="fa fa-upload iconSize mr-1" aria-hidden="true"></i> Import
+          <i class="fa fa-upload iconSize mr-1" aria-hidden="true"></i>
+          <i18n path="Common.Import" />
         </v-btn>
       </template>
       <template>
@@ -16,7 +17,9 @@
           <v-card-title
             class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
           >
-            <h2 class="black--text pt-4 pb-2 text-h5">Import Data</h2>
+            <h2 class="black--text pt-4 pb-2 text-h5">
+              <i18n path="Common.ImportData" />
+            </h2>
             <v-spacer></v-spacer>
             <div>
               <v-btn icon @click=";(dialog = false), (fileList = [])">
@@ -29,23 +32,28 @@
           >
             <div>
               <h4 class="font-weight-regular">
-                CSV file must have following columns in order these are listed,
-                for import process to work properly.
+                <i18n path="Common.CsvFileMust" />
               </h4>
-              <a :href="getDownloadLink()">Download Sample File</a>
+              <a :href="getDownloadLink()"
+                ><i18n path="Common.DownloadSampleFile"
+              /></a>
               <div class="fieldTable my-2">
                 <v-simple-table dense class="wrapper">
                   <template v-slot:default>
                     <thead>
                       <tr>
-                        <th class="text-left">Field Name</th>
-                        <th class="text-left element">Data Type</th>
+                        <th class="text-left">
+                          <i18n path="Common.FieldName" />
+                        </th>
+                        <th class="text-left element">
+                          <i18n path="Common.DataType" />
+                        </th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr v-for="(item, index) in templateData" :key="index">
                         <td>{{ item }}</td>
-                        <td class="element">string</td>
+                        <td class="element"><i18n path="Common.String" /></td>
                       </tr>
                     </tbody>
                   </template>
@@ -68,8 +76,8 @@
                     attach = !attach
                     resetList = []
                   "
-                  >Choose File</v-btn
-                >
+                  ><i18n path="Common.ChooseFile"
+                /></v-btn>
                 <div class="pt-1 pl-2">
                   {{ fileList.length ? fileList[0].name : 'No file chosen' }}
                 </div>
@@ -85,8 +93,8 @@
               depressed
               :disabled="!fileList.length"
               @click="importContacts"
-              >Import</v-btn
-            >
+              ><i18n path="Common.Import"
+            /></v-btn>
           </v-card-actions>
         </v-card>
       </template>

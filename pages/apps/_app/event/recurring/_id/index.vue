@@ -12,13 +12,13 @@
           <div class="d-flex">
             <div class="mr-2">
               <v-btn depressed color="primary" @click="viewRegistration"
-                >View</v-btn
-              >
+                ><i18n path="Drawer.View"
+              /></v-btn>
             </div>
             <div v-if="data.event.Status === 'Not ready'" class="mr-2">
               <v-btn outlined color="primary" @click="publishEvent"
-                >Publish</v-btn
-              >
+                ><i18n path="Drawer.Publish"
+              /></v-btn>
             </div>
             <v-menu
               left
@@ -38,7 +38,9 @@
                     <i class="fa fa-clone mt-1" aria-hidden="true"></i>
                   </v-list-item-icon>
                   <v-list-item-content>
-                    <v-list-item-title>Make a copy</v-list-item-title>
+                    <v-list-item-title
+                      ><i18n path="Drawer.MakeaCopy"
+                    /></v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
                 <v-list-item @click="true">
@@ -49,7 +51,9 @@
                     ></i>
                   </v-list-item-icon>
                   <v-list-item-content>
-                    <v-list-item-title>Edit email template</v-list-item-title>
+                    <v-list-item-title
+                      ><i18n path="Drawer.Editemailtemplate"
+                    /></v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
                 <v-list-item @click="redirectIntegration">
@@ -57,7 +61,9 @@
                     <i class="fa fa-link1 mt-1" aria-hidden="true"></i>
                   </v-list-item-icon>
                   <v-list-item-content>
-                    <v-list-item-title>Integrations</v-list-item-title>
+                    <v-list-item-title
+                      ><i18n path="Drawer.Integrations"
+                    /></v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
                 <v-list-item @click.stop="copylinks = true">
@@ -65,7 +71,9 @@
                     <i class="fa fa-clone mt-1" aria-hidden="true"></i>
                   </v-list-item-icon>
                   <v-list-item-content>
-                    <v-list-item-title>Copy Links</v-list-item-title>
+                    <v-list-item-title
+                      ><i18n path="Common.CopyLinks"
+                    /></v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
               </v-list>
@@ -74,7 +82,7 @@
               <v-card>
                 <v-card-title class="pa-4 pr-2">
                   <h2 class="black--text text--lighten-1 pt-1 pb-0 text-h5">
-                    Copy Links
+                    <i18n path="Common.CopyLinks" />
                   </h2>
                   <v-spacer></v-spacer>
                   <div>
@@ -88,7 +96,7 @@
                     <v-text-field
                       id="eventLink"
                       :value="eventLink()"
-                      label="Event Link"
+                      :label="$t('Common.EventLink')"
                       outlined
                       readonly
                       dense
@@ -100,7 +108,7 @@
                   <v-col cols="12" sm="12" class="pl-0 pb-0 d-flex">
                     <v-text-field
                       :value="sessionLink()"
-                      label="Recurring sessions Link"
+                      :label="$t('Common.RecurringSessionsLink')"
                       outlined
                       readonly
                       dense
@@ -112,9 +120,9 @@
                   <v-col cols="12" sm="12" class="pl-0 pb-0 d-flex">
                     <v-text-field
                       :value="embedLink()"
-                      label="Embed Recurring Sessions"
+                      :label="$t('Common.EmbedRecurringSessions')"
                       outlined
-                      hint="You will need to contact Bitpod support to whitelist your domain, if you would like to embed it, into any of your website."
+                      :hint="$t('Common.ContactBitpodSupport')"
                       persistent-hint
                       readonly
                       dense
@@ -241,7 +249,7 @@
                 class="event-tile-value text-truncate"
               />
 
-              <i18n path="Common.Opensin" class="caption text-truncate" />
+              <i18n path="Common.OpensIn" class="caption text-truncate" />
             </div>
           </div>
         </v-flex>
@@ -272,7 +280,7 @@
               color="success"
               class="body-2"
               @click="changeStatus('Open for registration')"
-              ><i18n path="Common.Openforregistration"
+              ><i18n path="Common.OpenForRegistration"
             /></v-stepper-step>
 
             <v-divider></v-divider>
@@ -284,7 +292,7 @@
               class="body-2"
               color="success"
               @click="changeStatus('Sold out')"
-              ><i18n path="Common.Soldout"
+              ><i18n path="Common.SoldOut"
             /></v-stepper-step>
 
             <v-divider></v-divider>
@@ -296,7 +304,7 @@
               class="body-2"
               color="success"
               @click="changeStatus('Registration closed')"
-              ><i18n path="Common.Registrationclosed"
+              ><i18n path="Common.RegistrationClosed"
             /></v-stepper-step>
           </v-stepper-header>
         </v-stepper>
@@ -349,7 +357,7 @@
               </v-list-item>
               <v-list-item>
                 <v-list-item-title
-                  ><i18n path="Common.EventBanner(680x350)"
+                  ><i18n path="Common.EventB"
                 /></v-list-item-title>
               </v-list-item>
               <v-list-item>
@@ -809,7 +817,7 @@
             dense
             height="20"
             class="ma-0 pa-0"
-            label="Allow Cancelation"
+            :label="$t('Common.AllowCancelation')"
             color="green"
             @change="updateReg()"
           ></v-checkbox>
@@ -820,7 +828,7 @@
             dense
             height="20"
             class="ma-0 pa-0"
-            label="Validate Session Timing Conflict"
+            :label="$t('Common.ValidateSessionTimingConflict')"
             color="green"
             @change="updateReg()"
           ></v-checkbox>
@@ -831,7 +839,7 @@
             dense
             height="20"
             class="ma-0 pa-0"
-            label="Show Remaining Tickets Count"
+            :label="$t('Common.ShowRemainingTicketsCount')"
             color="green"
             @change="updateReg()"
           ></v-checkbox>
@@ -842,7 +850,7 @@
             dense
             height="20"
             class="ma-0 pa-0"
-            label="Show Attendee Form"
+            :label="$t('Common.ShowAttendeeForm')"
             color="green"
             @change="updateReg()"
           ></v-checkbox>
@@ -853,8 +861,7 @@
             dense
             height="20"
             class="ma-0 pa-0"
-            label="Notify organizer when someone 
-            registers"
+            :label="$t('Common.NotifyOrganizer')"
             color="green"
             @change="updateReg()"
           ></v-checkbox>
@@ -865,8 +872,7 @@
             dense
             height="20"
             class="ma-0 pa-0"
-            label="Allow user to select a time zone for 
-            recurring event"
+            :label="$t('Common.Allowusertoselectatimezoneforrecurringevent')"
             color="green"
             @change="updateReg()"
           ></v-checkbox>
@@ -901,7 +907,7 @@
             dense
             height="20"
             class="ma-0 pa-0"
-            label="Show Image Gallery"
+            :label="$t('Common.ShowImageGallery')"
             color="green"
             @change="updateReg1()"
           ></v-checkbox>
@@ -912,7 +918,7 @@
             dense
             height="20"
             class="ma-0 pa-0"
-            label="Show Event Reviews"
+            :label="$t('Common.ShowEventReviews')"
             color="green"
             @change="updateReg1()"
           ></v-checkbox>

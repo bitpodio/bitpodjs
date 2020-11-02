@@ -46,7 +46,7 @@
               <v-tab-item>
                 <v-card v-if="choosedTemplate === 0" flat>
                   <p class="mt-4 mb-3">
-                    <i18n path="Common.predesignedtemplate" />
+                    <i18n path="Common.PredesignedTemplate" />
                   </p>
                   <div class="pr-3 pt-1 tabContent">
                     <v-row>
@@ -149,7 +149,7 @@
                           </h3>
                           <div class="Caption mb-4">
                             <i18n
-                              path="Common.Useeditor"
+                              path="Common.UseEditor"
                               class="Caption mb-4"
                             />
                           </div>
@@ -175,7 +175,7 @@
                 <v-card v-else flat class="tabContent">
                   <v-flex class="d-flex">
                     <p class="mt-5 mb-4">
-                      <i18n path="Common.defaultcontent" />
+                      <i18n path="Common.DefaultContent" />
                     </p>
                     <v-spacer></v-spacer>
                     <v-btn
@@ -200,7 +200,7 @@
               <v-tab-item>
                 <v-card flat class="tabContent">
                   <p class="mt-4 mb-2">
-                    <i18n path="Common.enteringbasicinformation" />
+                    <i18n path="Common.EnteringBasicInformation" />
                   </p>
                   <div class="pr-3 pt-1">
                     <v-form ref="form">
@@ -208,7 +208,7 @@
                         <v-col cols="12" class="pb-0">
                           <v-text-field
                             v-model="subject"
-                            label="Subject *"
+                            :label="$t('Common.SubjectRequired')"
                             outlined
                             dense
                             :rules="[
@@ -222,7 +222,7 @@
                         <v-col cols="12" class="pb-0">
                           <v-text-field
                             v-model="senderName"
-                            label="Sender Name"
+                            :label="$t('Common.SenderName')"
                             outlined
                             dense
                           ></v-text-field>
@@ -230,7 +230,7 @@
                         <v-col cols="12" class="pb-0">
                           <v-text-field
                             v-model="sender"
-                            label="Sender *"
+                            :label="$t('Common.SenderRequired')"
                             outlined
                             dense
                             :rules="[
@@ -244,7 +244,7 @@
                         <v-col cols="12" class="pb-0">
                           <v-text-field
                             v-model="setReplyTo"
-                            label="Set reply-to *"
+                            :label="$t('Common.SetReply')"
                             outlined
                             dense
                             :rules="[
@@ -258,11 +258,8 @@
                         <v-col cols="12" class="pb-0">
                           <v-icon class="amber--text">fa-bulb</v-icon>
                           <v-card-text class="d-inline pa-0">
-                            You may refer invite members data by using
-                            placeholder expressions in subject line. e.g:
-                            ${Registration.FirstName} ${Registration.LastName}
-                            ${OrganizationInfo.Name}</v-card-text
-                          >
+                            <i18n path="Common.YouMayReferInviteMembersData"
+                          /></v-card-text>
                         </v-col>
                       </v-row>
                     </v-form>

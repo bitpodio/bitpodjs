@@ -54,7 +54,7 @@
               <v-col cols="12" sm="6" md="4" class="pb-0">
                 <v-text-field
                   v-model="session.Name"
-                  label="Name*"
+                  :label="$t('Common.NameRequired')"
                   outlined
                   :rules="requiredRules"
                   dense
@@ -71,7 +71,7 @@
               <v-col v-if="isGroup" cols="12" sm="6" md="4" class="pb-0">
                 <v-text-field
                   v-model="session.MaxAllow"
-                  label="Max Allow*"
+                  :label="$t('Common.MaxAllow')"
                   outlined
                   type="number"
                   :rules="maxAllowRules"
@@ -127,7 +127,7 @@
               <v-col v-if="isCustomMin" cols="12" sm="6" md="4" class="pb-0">
                 <v-text-field
                   v-model="customDuration"
-                  label="Duration*"
+                  :label="$t('Common.DurationRequired')"
                   outlined
                   type="number"
                   min="1"
@@ -163,7 +163,7 @@
               >
                 <v-text-field
                   v-model="session.BitpodVirtualLink"
-                  label="Bitpod Virtual Link"
+                  :label="$t('Common.BitpodVirtualLink')"
                   outlined
                   dense
                   :disabled="true"
@@ -178,7 +178,7 @@
               >
                 <v-text-field
                   v-model="session.Phone"
-                  label="Phone*"
+                  :label="$t('Common.PhoneRequired')"
                   outlined
                   dense
                   :rules="phoneRules"
@@ -193,7 +193,7 @@
                 <v-checkbox
                   v-model="session.SeatReservation"
                   class="ma-0"
-                  label="Seat Reservation"
+                  :label="$t('Common.SeatReservation')"
                 ></v-checkbox>
               </v-col>
               <v-col
@@ -206,7 +206,7 @@
                   :items="locationLookupOptions"
                   item-text="Name"
                   item-value="id"
-                  label="Location"
+                  :label="$t('Common.Location')"
                   outlined
                   dense
                   class="st-date"
@@ -221,7 +221,7 @@
               >
                 <v-text-field
                   v-model="session.WebinarLink"
-                  label="online meeting link (https)*"
+                  :label="$t('Common.OnlineMeetingLink')"
                   outlined
                   :rules="onlineEventLink"
                   dense
@@ -230,21 +230,21 @@
               <v-col cols="12" class="pb-0 pt-0">
                 <div v-if="session.LocationType === 'Zoom'">
                   <i class="fa fa-bulb" aria-hidden="true"></i>
-                  <i18n path="Common.sendZoomjoininginfo" />
+                  <i18n path="Common.SendZoomJoiningInfo" />
                   <a href="" @click.stop.prevent="openWindow(zoomDocumentLink)"
-                    ><i18n path="Common.clickhere"
+                    ><i18n path="Common.ClickHere"
                   /></a>
-                  <i18n path="Common.fordocumentation" />
+                  <i18n path="Common.ForDocumentation" />
                 </div>
                 <div v-if="session.LocationType === 'Google Meet'">
                   <i class="fa fa-bulb" aria-hidden="true"></i>
-                  <i18n path="Common.sendgooglemeetjoininginfo" />
+                  <i18n path="Common.SendGoogleMeetJoiningInfo" />
                   <a
                     href=""
                     @click.stop.prevent="openWindow(googleMeetDocumentLink)"
-                    ><i18n path="Common.clickhere"
+                    ><i18n path="Common.ClickHere"
                   /></a>
-                  <i18n path="Common.fordocumentation" />
+                  <i18n path="Common.ForDocumentation" />
                 </div>
               </v-col>
               <v-col
@@ -280,7 +280,7 @@
               >
                 <v-text-field
                   v-model="venueAddress.City"
-                  label="City"
+                  :label="$t('Common.City')"
                   outlined
                   dense
                   @change="changeAddress()"
@@ -295,7 +295,7 @@
               >
                 <v-text-field
                   v-model="venueAddress.State"
-                  label="State"
+                  :label="$t('Common.State')"
                   outlined
                   dense
                   @change="changeAddress()"
@@ -310,7 +310,7 @@
               >
                 <v-text-field
                   v-model="venueAddress.Country"
-                  label="Country"
+                  :label="$t('Common.Country')"
                   outlined
                   dense
                   @change="changeAddress()"
@@ -325,7 +325,7 @@
               >
                 <v-text-field
                   v-model="venueAddress.ZipCode"
-                  label="Zip Code"
+                  :label="$t('Common.ZipCode')"
                   outlined
                   dense
                   @change="changeAddress()"
@@ -336,7 +336,7 @@
               <v-flex class="d-flex justify-center align-center pb-1">
                 <h2 class="body-1 pb-1 primary--text">
                   <i class="fa fa-help-circle" aria-hidden="true"></i>
-                  <i18n path="Common.sessionscheduled" />
+                  <i18n path="Common.SessionScheduled" />
                 </h2>
                 <v-spacer></v-spacer>
               </v-flex>
@@ -358,7 +358,7 @@
               >
                 <v-text-field
                   v-model="session.RollingDays"
-                  label="Rolling Days"
+                  :label="$t('Common.RollingDays')"
                   outlined
                   type="number"
                   dense
@@ -373,7 +373,7 @@
               >
                 <CustomDate
                   v-model="session.StartDate"
-                  label="Start Date*"
+                  :label="$t('Common.StartD')"
                   :field="startDateField"
                   type="date"
                   :on-change="changeStartDate"
@@ -394,7 +394,7 @@
               >
                 <CustomDate
                   v-model="session.EndDate"
-                  label="End Date*"
+                  :label="$t('Common.EndD')"
                   :field="endDateField"
                   type="date"
                   :on-change="changeEndDate"
@@ -449,7 +449,7 @@
               <v-col cols="12" sm="6" md="4" class="pb-0">
                 <v-text-field
                   v-model="session.Frequency"
-                  label="Frequency (min)"
+                  :label="$t('Common.Frequency')"
                   outlined
                   type="number"
                   :rules="numberRules"
@@ -459,7 +459,7 @@
               <v-col cols="12" sm="6" md="4" class="pb-0">
                 <v-text-field
                   v-model="session.MinimumSchedulingNotice"
-                  label="Minimum Scheduling Notice (hr)"
+                  :label="$t('Common.MinimumSchedulingNotice')"
                   outlined
                   type="number"
                   :rules="numberRules"
@@ -469,7 +469,7 @@
               <v-col cols="12" sm="6" md="4" class="pb-0">
                 <v-text-field
                   v-model="session.BufferBefore"
-                  label="Buffer Before (min)"
+                  :label="$t('Common.BufferBefore')"
                   outlined
                   type="number"
                   :rules="numberRules"
@@ -479,7 +479,7 @@
               <v-col cols="12" sm="6" md="4" class="pb-0">
                 <v-text-field
                   v-model="session.BufferAfter"
-                  label="Buffer After (min)"
+                  :label="$t('Common.BufferAfter')"
                   outlined
                   type="number"
                   :rules="numberRules"
@@ -490,7 +490,7 @@
                 <RichText
                   v-model="session.Description"
                   class="mb-3"
-                  label="Description"
+                  :label="$t('Common.Description')"
                 ></RichText>
               </v-col>
             </v-row>
@@ -693,7 +693,7 @@ export default {
       },
       durationProps: {
         type: 'lookup',
-        caption: 'Duration',
+        caption: 'Common.Duration',
         dataSource: {
           query: registrationStatusOptions,
           itemText: 'value',

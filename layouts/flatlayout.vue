@@ -108,7 +108,7 @@
           <v-row>
             <v-col cols="12">
               <v-text-field
-                label="Event Name*"
+                :label="$t('Common.EventNameRequired')"
                 required
                 outlined
               ></v-text-field>
@@ -125,7 +125,7 @@
                   <v-text-field
                     v-model="date"
                     outlined
-                    label="Start Date"
+                    :label="$t('Common.StartDate')"
                     append-icon="fa-calendar"
                     readonly
                     v-bind="attrs"
@@ -156,7 +156,7 @@
                   <v-text-field
                     v-model="date"
                     outlined
-                    label="End Date"
+                    :label="$t('Common.EndDate')"
                     append-icon="fa-calendar"
                     readonly
                     v-bind="attrs"
@@ -172,7 +172,7 @@
             <v-col cols="12" sm="6" md="4">
               <v-select
                 :items="['0-17', '18-29', '30-54', '54+']"
-                label="Timezone*"
+                :label="$t('Common.TimezoneRequired')"
                 required
                 outlined
               ></v-select>
@@ -182,13 +182,13 @@
                 clearable
                 outlined
                 clear-icon="fa fa-close"
-                label="Description"
+                :label="$t('Common.Description')"
                 value=""
               ></v-textarea>
             </v-col>
             <v-col cols="12" sm="6" md="6">
               <v-text-field
-                label="Event Link*"
+                :label="$t('Common.EventL')"
                 hint="https://bitpod-event.test.bitpod.io/e/"
                 persistent-hint
                 outlined
@@ -196,7 +196,7 @@
               ></v-text-field>
             </v-col>
           </v-row>
-          <small><i18n path="Common.indicatesrequiredfield" /></small>
+          <small><i18n path="Common.IndicatesRequiredField" /></small>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -228,7 +228,10 @@
           <v-container>
             <v-row>
               <v-col cols="12">
-                <v-text-field label="Event Name*" required></v-text-field>
+                <v-text-field
+                  :label="$t('Common.EventNameRequired')"
+                  required
+                ></v-text-field>
               </v-col>
               <v-col cols="12" sm="6" md="4">
                 <v-dialog
@@ -241,7 +244,7 @@
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
                       v-model="date"
-                      label="Start Date"
+                      :label="$t('Common.StartDate')"
                       append-icon="fa-calendar"
                       readonly
                       v-bind="attrs"
@@ -271,7 +274,7 @@
                   <template v-slot:activator="{ on, attrs }">
                     <v-text-field
                       v-model="date"
-                      label="End Date"
+                      :label="$t('Common.EndDate')"
                       append-icon="fa-calendar"
                       readonly
                       v-bind="attrs"
@@ -287,7 +290,7 @@
               <v-col cols="12" sm="6" md="4">
                 <v-select
                   :items="['0-17', '18-29', '30-54', '54+']"
-                  label="Timezone*"
+                  :label="$t('Common.TimezoneRequired')"
                   required
                 ></v-select>
               </v-col>
@@ -295,13 +298,13 @@
                 <v-textarea
                   clearable
                   clear-icon="fa-close"
-                  label="Description"
+                  :label="$t('Common.Description')"
                   value=""
                 ></v-textarea>
               </v-col>
               <v-col cols="12" sm="6" md="6">
                 <v-text-field
-                  label="Event Link*"
+                  :label="$t('Common.EventL')"
                   hint="https://bitpod-event.test.bitpod.io/e/"
                   persistent-hint
                   required
@@ -309,7 +312,7 @@
               </v-col>
             </v-row>
           </v-container>
-          <small><i18n path="Common.indicatesrequiredfield" /></small>
+          <small><i18n path="Common.IndicatesRequiredField" /></small>
         </v-card-text>
       </v-card>
     </v-dialog>

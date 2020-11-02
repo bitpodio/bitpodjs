@@ -1,9 +1,7 @@
 <template>
   <div class="app">
     <v-snackbar v-model="snackbar" :top="true" :timeout="1000">
-      <div class="toast py-2 pr-1 pl-3">
-        You can not edit past days session
-      </div>
+      <i18n path="Common.YouCanNotEdit" class="toast py-2 pr-1 pl-3" />
     </v-snackbar>
     <v-col class="px-0">
       <v-dialog
@@ -14,9 +12,9 @@
       >
         <v-card>
           <v-toolbar dense flat dark fixed color="accent">
-            <v-toolbar-title class="body-1">{{
+            <v-toolbar- class="body-1">{{
               isParticipant ? 'Attendees' : 'Manage Schedule'
-            }}</v-toolbar-title>
+            }}</v-toolbar->
             <v-spacer></v-spacer>
             <v-btn
               icon
@@ -37,19 +35,19 @@
                     >mdi-checkbox-marked-outline</v-icon
                   >
                   <h3 class="d-inline">
-                    Availability
+                    <i18n path="Common.Availability" />
                   </h3>
                 </v-col>
                 <v-col cols="4" sm="4">
                   <v-btn text small @click="addAvailablity">
                     <v-icon dark left>mdi-plus</v-icon>
-                    Add Availability
+                    <i18n path="Common.AddAvailability" />
                   </v-btn>
                 </v-col>
                 <v-col cols="4" sm="4">
                   <v-btn text small @click="slots = []">
                     <v-icon dark left>mdi-cancel</v-icon>
-                    Not Available
+                    <i18n path="Common.NotAvailable" />
                   </v-btn>
                 </v-col>
               </v-row>
@@ -57,17 +55,17 @@
               <template v-if="!slots.length">
                 <div class="unavilable mt-3 mb-0 text-lg-h6 py-3 px-0">
                   <p class="mx-auto mb-1 unavilableText">
-                    Unavailable
+                    <i18n path="Common.Unavailable" />
                   </p>
                 </div>
               </template>
               <template v-else>
                 <v-row>
                   <v-col cols="4" sm="4">
-                    <h3>Start Time*</h3>
+                    <h3><i18n path="Common.StartT" /></h3>
                   </v-col>
                   <v-col cols="4" sm="4">
-                    <h3>End Time*</h3>
+                    <h3><i18n path="Common.EndT" /></h3>
                   </v-col>
                 </v-row>
                 <div style="max-height: 200px; overflow: hidden auto;">
@@ -149,7 +147,7 @@
                 <v-col cols="12" sm="12">
                   <v-icon dark color="black">mdi-repeat</v-icon>
                   <h3 class="d-inline">
-                    Repeating days of the week
+                    <i18n path="Common.RepeatingDaysOfWeek" />
                   </h3>
                 </v-col>
               </v-row>
@@ -194,8 +192,8 @@
               depressed
               :disabled="validSlots() || disabledButton"
               @click="applyToRepeating"
-              >Apply To Repeating Week Days</v-btn
-            >
+              ><i18n path="Common.ApplyToRepeatingWeekDays"
+            /></v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>

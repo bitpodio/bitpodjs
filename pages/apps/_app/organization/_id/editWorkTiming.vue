@@ -28,7 +28,7 @@
                 <v-select
                   v-model="formData.AvailableStartHour"
                   :items="timingDropDown"
-                  label="Start Time"
+                  :label="$t('Common.StartTime')"
                   outlined
                   dense
                 ></v-select>
@@ -37,7 +37,7 @@
                 <v-select
                   v-model="formData.AvailableEndHour"
                   :items="timingDropDown"
-                  label="End Time"
+                  :label="$t('Common.EndTime')"
                   outlined
                   dense
                 ></v-select>

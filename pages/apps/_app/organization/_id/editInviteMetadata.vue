@@ -27,7 +27,7 @@
                 <v-col cols="12" sm="6" md="6">
                   <v-text-field
                     v-model="template.Name"
-                    label="Template Name*"
+                    :label="$t('Common.TemplateName')"
                     :rules="requiredRules"
                     outlined
                     dense
@@ -43,7 +43,7 @@
                 <v-col cols="12" sm="6" md="6">
                   <v-text-field
                     v-model="template.Subject"
-                    label="Subject*"
+                    :label="$t('Common.SubjectRequired')"
                     :rules="requiredRules"
                     outlined
                     dense
@@ -60,14 +60,14 @@
                   <File
                     :field="fileField"
                     :value="[...template.Documents].filter((i) => i)"
-                    label="Upload"
+                    :label="$t('Drawer.Upload')"
                     @input="getAttachmentId"
                   />
                 </v-col>
                 <v-col cols="12" sm="6" md="12">
                   <v-text-field
                     v-model="template.ImageURL"
-                    label="Image URL"
+                    :label="$t('Common.ImageUrl')"
                     outlined
                     dense
                   ></v-text-field>

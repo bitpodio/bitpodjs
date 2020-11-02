@@ -2,7 +2,7 @@
   <v-col class="px-0 min-xw180 vs-hidden">
     <v-switch
       v-model="switch2"
-      label="Seatmap & Tickets"
+      :label="$t('Common.SeatmapTickets')"
       class="mt-0 max-h24"
       height="20"
     ></v-switch>

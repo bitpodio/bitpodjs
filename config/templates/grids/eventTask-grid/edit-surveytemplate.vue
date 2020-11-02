@@ -46,7 +46,7 @@
               <v-tab-item>
                 <v-card flat class="tabContent">
                   <p class="mt-4 mb-2">
-                    <i18n path="Common.enteringbasicinformation" />
+                    <i18n path="Common.EnteringBasicInformation" />
                   </p>
                   <div class="pr-3 pt-1">
                     <v-form ref="form">
@@ -54,7 +54,7 @@
                         <v-col cols="12" class="pb-0">
                           <v-text-field
                             v-model="subject"
-                            label="Subject *"
+                            :label="$t('Common.SubjectRequired')"
                             outlined
                             dense
                             :rules="[
@@ -68,7 +68,7 @@
                         <v-col cols="12" class="pb-0">
                           <v-text-field
                             v-model="senderName"
-                            label="Sender Name"
+                            :label="$t('Common.SenderName')"
                             outlined
                             dense
                           ></v-text-field>
@@ -76,7 +76,7 @@
                         <v-col cols="12" class="pb-0">
                           <v-text-field
                             v-model="sender"
-                            label="Sender *"
+                            :label="$t('Common.SenderRequired')"
                             outlined
                             dense
                             :rules="[
@@ -96,7 +96,7 @@
                 <v-card flat class="tabContent">
                   <v-flex class="d-flex">
                     <p class="mt-5 mb-4">
-                      <i18n path="Common.defaultcontent" />
+                      <i18n path="Common.DefaultContent" />
                     </p>
                     <v-spacer></v-spacer>
                   </v-flex>

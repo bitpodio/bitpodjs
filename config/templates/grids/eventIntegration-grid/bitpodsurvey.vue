@@ -20,7 +20,7 @@
             <v-col cols="12" class="pb-0">
               <v-text-field
                 v-model="formData.ConnectionURL"
-                label="Connection Url"
+                :label="$t('Common.ConnectionUrl')"
                 outlined
                 dense
               ></v-text-field>
@@ -34,7 +34,7 @@
               <v-text-field
                 v-if="showField"
                 v-model="formData.InvitationDBURL"
-                label="Invitation DB URL"
+                :label="$t('Common.InvitationDbUrl')"
                 outlined
                 dense
                 class="mt-4"

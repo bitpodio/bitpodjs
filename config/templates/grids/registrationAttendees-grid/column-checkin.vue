@@ -15,7 +15,7 @@
     </div>
     <div v-else style="display: flex; height: 20px;" class="ma-2 pb-0 mt-1">
       <v-icon color="success fs-14" class="pr-1 fs-14">mdi-check</v-icon>
-      <div><i18n path="Common.CheckedinJustnow" /></div>
+      <div><i18n path="Common.CheckedInJustnow" /></div>
     </div>
     <v-dialog
       v-model="isCheckedIn"
@@ -33,7 +33,7 @@
               class="fa fa-checkmark-circle tick-check icon-tick pr-2"
               aria-hidden="true"
             ></i
-            ><i18n path="Common.successfulcheckedin" />
+            ><i18n path="Common.SuccessfulCheckedin" />
           </h4>
           <v-spacer></v-spacer>
         </v-card-title>

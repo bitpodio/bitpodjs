@@ -3,14 +3,16 @@
     <div
       class="d-flex align-start flex-wrap flex-sm-wrap flex-xl-nowrap flex-md-nowrap"
     >
-      <div v-if="index === 0" class="pr-3 pt-3 filter-or">
-        Where
-      </div>
+      <i18n
+        v-if="index === 0"
+        path="Common.Where"
+        class="pr-3 pt-3 filter-or"
+      />
       <div v-else-if="index === 1" class="pr-3 filter-or">
         <v-select
           v-model="selectedConditionOperator"
           :items="conditionOperator"
-          label="select"
+          :label="$t('Common.FilterSelect')"
           single-line
           outlined
           dense
@@ -25,7 +27,7 @@
         :items="fieldsList"
         item-text="text"
         item-value="value"
-        label="Field"
+        :label="$t('Common.Field')"
         single-line
         outlined
         dense
@@ -37,7 +39,7 @@
         :items="stringFilterOptions"
         item-text="text"
         item-value="value"
-        label="Operator"
+        :label="$t('Common.Operator')"
         single-line
         outlined
         dense
@@ -61,7 +63,7 @@
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
                 v-model="date"
-                label="Enter Date"
+                :label="$t('Common.EnterDate')"
                 readonly
                 v-bind="attrs"
                 outlined
@@ -82,7 +84,7 @@
         <div v-else-if="fieldType === 'number'">
           <v-text-field
             v-model="filterRule.value"
-            label="Enter a value"
+            :label="$t('Common.EnterValue')"
             type="number"
             dense
             outlined
@@ -102,7 +104,7 @@
         <div v-else>
           <v-text-field
             v-model="filterRule.value"
-            label="Enter a value"
+            :label="$t('Common.EnterValue')"
             type="text"
             outlined
             dense
