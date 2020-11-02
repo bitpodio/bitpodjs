@@ -133,7 +133,10 @@
                   <v-col v-if="isOnlineEvent" cols="12" class="pb-0">
                     <v-text-field
                       v-model="eventData.WebinarLink"
-                      :rules="onlineEventLink"
+                      :rules="
+                        eventData.LocationType === 'Online event' &&
+                        onlineEventLink
+                      "
                       label="Online event link (https)*"
                       outlined
                       dense
@@ -334,7 +337,7 @@
                           label="Start Date*"
                           :field="ticketStartDateField"
                           :rules="ticketStartDateRule(k)"
-                          :on-change="changeTicketStartDate()"
+                          :on-change="changeTicketStartDate"
                           type="datetime"
                         />
                       </td>
@@ -344,7 +347,7 @@
                           label="End Date*"
                           :field="ticketEndDateField"
                           :rules="ticketEndDateRule(k)"
-                          :on-change="changeTicketEndDate()"
+                          :on-change="changeTicketEndDate"
                           type="datetime"
                         />
                       </td>
@@ -945,10 +948,15 @@ export default {
     prev(value) {
       this.currentTab = parseInt(this.tabs) - 1
       this.tabs = `${this.currentTab}`
+      this.scrollToTop()
     },
     setNextTab() {
       this.currentTab = parseInt(this.tabs) + 1
       this.tabs = `${this.currentTab}`
+      this.scrollToTop()
+    },
+    scrollToTop() {
+      document.getElementsByClassName('event-inner')[0].scrollTop = 0
     },
     next() {
       const {
@@ -960,6 +968,7 @@ export default {
         LocationType,
         WebinarLink,
       } = this.eventData
+
       this.$refs.form.validate()
       if (
         this.currentTab === 1 &&
@@ -977,7 +986,9 @@ export default {
       } else if (this.currentTab === 2) {
         if (
           (LocationType === 'Venue' && this.venueAddress.AddressLine !== '') ||
-          (LocationType === 'Online event' && WebinarLink !== '') ||
+          (LocationType === 'Online event' &&
+            WebinarLink !== '' &&
+            WebinarLink.startsWith('https://')) ||
           LocationType === 'Bitpod Virtual'
         ) {
           this.addresslineMessage = ''
@@ -1215,14 +1226,22 @@ export default {
         this.isVenue = true
         this.isOnlineEvent = false
         this.isBitpodVirtual = false
-        this.isMap = true
+        this.isMap = false
         this.isBitpodVirtual = false
+        this.venueAddress.AddressLine = ''
+        this.eventData.VenueName = ''
+        this.venueAddress.City = ''
+        this.venueAddress.State = ''
+        this.venueAddress.Country = ''
+        this.venueAddress.PostalCode = ''
       }
       if (value === 'Online event') {
         this.isVenue = false
         this.isOnlineEvent = true
         this.isMap = false
         this.isBitpodVirtual = false
+        this.eventData.WebinarLink = ''
+        this.eventData.JoiningInstruction = ''
       }
       if (value === 'Bitpod Virtual') {
         this.isVenue = false

@@ -406,7 +406,7 @@ body {
 }
 .event-table .v-messages__message {
   white-space: nowrap !important;
-  position: fixed !important;
+  position: absolute !important;
 }
 .ps-top6 {
   top: 6px;

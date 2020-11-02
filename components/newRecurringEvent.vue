@@ -1913,10 +1913,15 @@ export default {
     prev() {
       this.currentTab = parseInt(this.tabs) - 1
       this.tabs = `${this.currentTab}`
+      this.scrollToTop()
     },
     setNextTab() {
       this.currentTab = parseInt(this.tabs) + 1
       this.tabs = `${this.currentTab}`
+      this.scrollToTop()
+    },
+    scrollToTop() {
+      document.getElementsByClassName('event-inner')[0].scrollTop = 0
     },
     next() {
       const { Title, UniqLink } = this.eventData
