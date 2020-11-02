@@ -1384,6 +1384,7 @@ export default {
     },
     selectTab(tabNumber) {
       this.currentTab = tabNumber
+      this.scrollToTop()
     },
     isNextDisabled() {
       return this.isUniqLinkValid === false
@@ -1913,10 +1914,15 @@ export default {
     prev() {
       this.currentTab = parseInt(this.tabs) - 1
       this.tabs = `${this.currentTab}`
+      this.scrollToTop()
     },
     setNextTab() {
       this.currentTab = parseInt(this.tabs) + 1
       this.tabs = `${this.currentTab}`
+      this.scrollToTop()
+    },
+    scrollToTop() {
+      document.getElementsByClassName('event-inner')[0].scrollTop = 0
     },
     next() {
       const { Title, UniqLink } = this.eventData
@@ -2016,6 +2022,7 @@ export default {
               ticket.Events = res.id
               ticket.Amount = parseInt(ticket.Amount)
               ticket.TicketCount = parseInt(ticket.TicketCount)
+              ticket.AvailableCount = parseInt(ticket.TicketCount)
               ticketList.push(ticket)
             })
             const ticketres = await this.$axios

@@ -67,7 +67,7 @@
                       label="Start Date*"
                       :field="startDateField"
                       :rules="startDateRule"
-                      :on-change="changeStartDate()"
+                      :on-change="changeStartDate"
                       type="datetime"
                     />
                   </v-col>
@@ -130,16 +130,25 @@
                       :on-change="changeLocation"
                     />
                   </v-col>
-                  <v-col v-if="isOnlineEvent" cols="12" class="pb-0">
-                    <v-text-field
-                      v-model="eventData.WebinarLink"
-                      :rules="onlineEventLink"
-                      label="Online event link (https)*"
-                      outlined
-                      dense
-                      required
-                    ></v-text-field>
-                  </v-col>
+                  <v-form
+                    ref="webinarLinkForm"
+                    v-model="datevalid"
+                    :lazy-validation="lazy"
+                  >
+                    <v-col v-if="isOnlineEvent" cols="12" class="pb-0">
+                      <v-text-field
+                        v-model="eventData.WebinarLink"
+                        :rules="
+                          eventData.LocationType === 'Online event' &&
+                          onlineEventLink
+                        "
+                        label="Online event link (https)*"
+                        outlined
+                        dense
+                        required
+                      ></v-text-field>
+                    </v-col>
+                  </v-form>
                   <v-col v-if="isOnlineEvent" cols="12" class="pb-0">
                     <v-textarea
                       v-model="eventData.JoiningInstruction"
@@ -334,7 +343,7 @@
                           label="Start Date*"
                           :field="ticketStartDateField"
                           :rules="ticketStartDateRule(k)"
-                          :on-change="changeTicketStartDate()"
+                          :on-change="changeTicketStartDate"
                           type="datetime"
                         />
                       </td>
@@ -344,7 +353,7 @@
                           label="End Date*"
                           :field="ticketEndDateField"
                           :rules="ticketEndDateRule(k)"
-                          :on-change="changeTicketEndDate()"
+                          :on-change="changeTicketEndDate"
                           type="datetime"
                         />
                       </td>
@@ -770,6 +779,10 @@ export default {
     },
     selectTab(tabNumber) {
       this.currentTab = tabNumber
+      this.scrollToTop()
+      if (tabNumber === 1) {
+        this.resetLocation()
+      }
     },
     close() {
       this.onFormClose()
@@ -934,7 +947,11 @@ export default {
         (LocationType === 'Venue' &&
           this.venueAddress &&
           this.venueAddress.AddressLine !== '') ||
-        (LocationType === 'Online event' && WebinarLink !== '') ||
+        (LocationType === 'Online event' &&
+          WebinarLink &&
+          WebinarLink !== '' &&
+          WebinarLink.startsWith('https://') &&
+          WebinarLink !== undefined) ||
         LocationType === 'Bitpod Virtual'
       ) {
         return true
@@ -942,13 +959,27 @@ export default {
         return false
       }
     },
+    resetLocation() {
+      if (
+        this.eventData.WebinarLink === '' ||
+        this.eventData.WebinarLink === undefined
+      ) {
+        this.$refs.webinarLinkForm.reset()
+      }
+    },
     prev(value) {
       this.currentTab = parseInt(this.tabs) - 1
       this.tabs = `${this.currentTab}`
+      this.scrollToTop()
+      this.resetLocation()
     },
     setNextTab() {
       this.currentTab = parseInt(this.tabs) + 1
       this.tabs = `${this.currentTab}`
+      this.scrollToTop()
+    },
+    scrollToTop() {
+      document.getElementsByClassName('event-inner')[0].scrollTop = 0
     },
     next() {
       const {
@@ -960,6 +991,7 @@ export default {
         LocationType,
         WebinarLink,
       } = this.eventData
+
       this.$refs.form.validate()
       if (
         this.currentTab === 1 &&
@@ -975,9 +1007,13 @@ export default {
       ) {
         this.setNextTab()
       } else if (this.currentTab === 2) {
+        this.$refs.webinarLinkForm.validate()
         if (
           (LocationType === 'Venue' && this.venueAddress.AddressLine !== '') ||
-          (LocationType === 'Online event' && WebinarLink !== '') ||
+          (LocationType === 'Online event' &&
+            WebinarLink &&
+            WebinarLink !== '' &&
+            WebinarLink.startsWith('https://')) ||
           LocationType === 'Bitpod Virtual'
         ) {
           this.addresslineMessage = ''
@@ -1124,8 +1160,10 @@ export default {
             this.venueAddress.City = City || ''
             this.venueAddress.State = State || ''
             const latlng = {}
-            latlng.lat = res.data.results[0].geometry.location.lat
-            latlng.lng = res.data.results[0].geometry.location.lng
+            latlng.lat =
+              res.data.results[0] && res.data.results[0].geometry.location.lat
+            latlng.lng =
+              res.data.results[0] && res.data.results[0].geometry.location.lng
             this.venueAddress.LatLng.lat = latlng.lat || ''
             this.venueAddress.LatLng.lng = latlng.lng || ''
 
@@ -1215,14 +1253,22 @@ export default {
         this.isVenue = true
         this.isOnlineEvent = false
         this.isBitpodVirtual = false
-        this.isMap = true
+        this.isMap = false
         this.isBitpodVirtual = false
+        this.venueAddress.AddressLine = ''
+        this.eventData.VenueName = ''
+        this.venueAddress.City = ''
+        this.venueAddress.State = ''
+        this.venueAddress.Country = ''
+        this.venueAddress.PostalCode = ''
       }
       if (value === 'Online event') {
         this.isVenue = false
         this.isOnlineEvent = true
         this.isMap = false
         this.isBitpodVirtual = false
+        this.eventData.WebinarLink = ''
+        this.eventData.JoiningInstruction = ''
       }
       if (value === 'Bitpod Virtual') {
         this.isVenue = false
