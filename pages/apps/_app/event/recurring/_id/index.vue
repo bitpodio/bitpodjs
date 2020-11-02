@@ -1171,7 +1171,9 @@ export default {
     },
     redirectIntegration() {
       this.$router.push(
-        `/apps/event/list/EventIntegration/integrations?event=${this.$route.params.id}`
+        this.localePath(
+          `/apps/event/list/EventIntegration/integrations?event=${this.$route.params.id}`
+        )
       )
     },
     async updateEvent() {

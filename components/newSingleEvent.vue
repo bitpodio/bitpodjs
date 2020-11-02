@@ -793,7 +793,7 @@ export default {
     closeForm() {
       this.onFormClose()
       this.tabs = '1'
-      this.$router.push('/apps/event/event/' + this.eventId)
+      this.$router.push(this.localePath('/apps/event/event/' + this.eventId))
       this.$refs.form.reset()
       this.resetForm()
     },

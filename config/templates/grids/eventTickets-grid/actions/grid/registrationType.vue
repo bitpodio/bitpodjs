@@ -11,7 +11,9 @@ export default {
   methods: {
     routeToHistory(ctx) {
       this.$router.push(
-        `/apps/event/list/RegistrationType/eventRegistrationType?event=${this.$route.params.id}`
+        this.localePath(
+          `/apps/event/list/RegistrationType/eventRegistrationType?event=${this.$route.params.id}`
+        )
       )
     },
   },

@@ -108,7 +108,7 @@
               v-for="(child, i) in item.children"
               :key="i"
               link
-              :to="item.to"
+              :to="localePath(item.to)"
               router
               exact
             >

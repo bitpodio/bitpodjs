@@ -658,7 +658,8 @@
     "OnlineEventText": "#Online event",
     "Gallery": "Gallery",
     "Reviews": "Reviews",
-    "DateTime": "Date and Time"
+    "DateTime": "Date and Time",
+    "BadgesTemplates": "Badges Templates"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",

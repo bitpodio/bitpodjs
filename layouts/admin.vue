@@ -60,7 +60,29 @@
             <template v-slot:activator>
               <v-list-item-content>
                 <v-list-item-title class="nav-title">
-                  {{ item.text }}
+                  <i18n
+                    v-if="item.text === 'Organization'"
+                    path="Common.Organization"
+                  />
+                  <i18n v-if="item.text === 'Lookups'" path="Common.Lookups" />
+                  <i18n
+                    v-if="item.text === 'Templates'"
+                    path="Common.Templates"
+                  />
+                  <i18n
+                    v-if="item.text === 'Badges Templates'"
+                    path="Common.BadgesTemplates"
+                  />
+                  <i18n
+                    v-if="item.text === 'Registration Form'"
+                    path="Common.RegistrationForm"
+                  />
+                  <i18n v-if="item.text === 'Roles'" path="Common.Roles" />
+                  <i18n v-if="item.text === 'Users'" path="Common.Users" />
+                  <i18n
+                    v-if="item.text === 'Access Keys'"
+                    path="Common.AccessKeys"
+                  />
                 </v-list-item-title>
               </v-list-item-content>
             </template>
@@ -68,7 +90,7 @@
               v-for="(child, i) in item.children"
               :key="i"
               link
-              :to="item.to"
+              :to="localePath(item.to)"
               router
               exact
             >
@@ -82,7 +104,14 @@
               </v-list-item-content>
             </v-list-item>
           </v-list-group>
-          <v-list-item v-else :key="item.text" link :to="item.to" router exact>
+          <v-list-item
+            v-else
+            :key="item.text"
+            link
+            :to="localePath(item.to)"
+            router
+            exact
+          >
             <v-list-item-action class="nav-icon">
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-action>
@@ -191,7 +220,7 @@
               class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start font-weight-regular"
             >
               <h2 class="black--text pt-10 pb-9 font-weight-regular">
-                New User
+                <i18n path="Common.NewUser" />
               </h2>
               <v-spacer></v-spacer>
               <div>

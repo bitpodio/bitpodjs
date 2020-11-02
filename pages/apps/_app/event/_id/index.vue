@@ -2062,7 +2062,9 @@ export default {
     },
     redirectIntegration() {
       this.$router.push(
-        `/apps/event/list/EventIntegration/integrations?event=${this.$route.params.id}`
+        this.localePath(
+          `/apps/event/list/EventIntegration/integrations?event=${this.$route.params.id}`
+        )
       )
     },
     updateRegistrationSetting(eventData) {
@@ -2116,7 +2118,9 @@ export default {
       this.updateRegistrationPage()
     }, 500),
     routeToSeatmap() {
-      this.$router.push(`/apps/seatmap/new?event=${this.$route.params.id}`)
+      this.$router.push(
+        this.localePath(`/apps/seatmap/new?event=${this.$route.params.id}`)
+      )
     },
     async updateSeatReservation() {
       const seatReservation = this.switchSeat
@@ -2171,7 +2175,7 @@ export default {
       }
     },
     onEditSeatMap() {
-      this.$router.push(`/apps/seatmap/${this.layoutId}`)
+      this.$router.push(this.localePath(`/apps/seatmap/${this.layoutId}`))
     },
   },
   apollo: {

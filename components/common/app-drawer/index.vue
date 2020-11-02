@@ -16,7 +16,7 @@
           <div v-for="app in userApps" :key="app.name">
             <nuxt-link
               v-if="app.route"
-              :to="app.route"
+              :to="localePath(app.route)"
               class="text-decoration-none"
             >
               <v-flex

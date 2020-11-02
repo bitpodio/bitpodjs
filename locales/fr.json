@@ -658,7 +658,8 @@
     "OnlineEventText": "# Événement en ligne",
     "Gallery": "Galerie",
     "Reviews": "Commentaires",
-    "DateTime": "Date et l'heure"
+    "DateTime": "Date et l'heure",
+    "BadgesTemplates": "Modèles de badges"
   },
   "Drawer" : {
     "CreateEventAction" : "Créer un événement",

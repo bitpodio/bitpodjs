@@ -1853,7 +1853,9 @@ export default {
     closeForm() {
       this.onFormClose()
       this.tabs = '1'
-      this.$router.push('/apps/event/event/recurring/' + this.eventId)
+      this.$router.push(
+        this.localePath('/apps/event/event/recurring/' + this.eventId)
+      )
       this.resetForm()
     },
     resetForm() {

@@ -66,7 +66,7 @@
               v-for="(child, i) in item.children"
               :key="i"
               link
-              :to="item.to"
+              :to="localePath(item.to)"
               router
               exact
             >
@@ -80,7 +80,14 @@
               </v-list-item-content>
             </v-list-item>
           </v-list-group>
-          <v-list-item v-else :key="item.text" link :to="item.to" router exact>
+          <v-list-item
+            v-else
+            :key="item.text"
+            link
+            :to="localePath(item.to)"
+            router
+            exact
+          >
             <v-list-item-action class="nav-icon">
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-action>

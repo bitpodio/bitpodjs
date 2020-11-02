@@ -92,15 +92,17 @@ export default {
   },
   computed: {
     seatmapRoute() {
-      return `/apps/seatmap/new`
+      return this.localePath(`/apps/seatmap/new`)
     },
   },
   methods: {
     seatmapRoutes(id) {
-      return `/apps/seatmap/${id}`
+      return this.localePath(`/apps/seatmap/${id}`)
     },
     seatmapView(id) {
-      this.$router.push(`/apps/seatmap/seatmap/seatmap?id=${id}`)
+      this.$router.push(
+        this.localePath(`/apps/seatmap/seatmap/seatmap?id=${id}`)
+      )
     },
   },
 }

@@ -116,10 +116,12 @@ export default {
   },
   methods: {
     newSeatMap() {
-      this.$router.push(`/apps/seatmap/new?location=${this.item.id}`)
+      this.$router.push(
+        this.localePath(`/apps/seatmap/new?location=${this.item.id}`)
+      )
     },
     editSeatMap() {
-      this.$router.push(`/apps/seatmap/${this.item.LayoutId}`)
+      this.$router.push(this.localePath(`/apps/seatmap/${this.item.LayoutId}`))
     },
     existingSeatMap() {
       this.selectExistingSeatMap = true

@@ -495,7 +495,9 @@ export default {
     },
     closeForm() {
       this.isViewEvent = false
-      this.$router.push('/apps/event/event/' + this.copyEventId)
+      this.$router.push(
+        this.localePath('/apps/event/event/' + this.copyEventId)
+      )
     },
     viewEvent() {
       const baseUrl = this.$bitpod.getApiUrl()

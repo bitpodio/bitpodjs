@@ -732,27 +732,33 @@ export default {
   },
   methods: {
     routeToLiveEvents(method) {
-      this.$router.push('/apps/event/list/Event/All Events')
+      this.$router.push(this.localePath('/apps/event/list/Event/All Events'))
     },
     routeToRegistrations(method) {
-      this.$router.push('/apps/event/list/Registrations/Registrations')
+      this.$router.push(
+        this.localePath('/apps/event/list/Registrations/Registrations')
+      )
     },
     routeToAbandoned(method) {
       if (method === 'routeToAbandoned') {
         this.$router.push(
-          '/apps/event/list/Registrations/Abandoned Registrations'
+          this.localePath(
+            '/apps/event/list/Registrations/Abandoned Registrations'
+          )
         )
       }
     },
     routeToEvent(data) {
       this.$router.push(
-        `/apps/event/event${
-          data.BusinessType === 'Single' ? '' : '/recurring'
-        }/${data.id}`
+        this.localePath(
+          `/apps/event/event${
+            data.BusinessType === 'Single' ? '' : '/recurring'
+          }/${data.id}`
+        )
       )
     },
     routeToRegistration(id) {
-      this.$router.push(`/apps/event/registration/${id}`)
+      this.$router.push(this.localePath(`/apps/event/registration/${id}`))
     },
     updateScroll() {
       const block = this.$refs.summaryBlock
