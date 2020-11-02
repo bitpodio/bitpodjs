@@ -30,8 +30,8 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Name is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.NameRequired')
             },
           ],
         },

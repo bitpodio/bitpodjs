@@ -119,7 +119,9 @@ export default {
               const res = await this.$axios.$put(url, data)
               if (res) {
                 this.checkbox = res.Status === 'Connected'
-                this.snackbarText = 'Connection Updated Successfully'
+                this.snackbarText = this.$t(
+                  'Messages.Success.ConnectionSuccessfully'
+                )
                 this.snackbar = true
               }
             } catch (e) {

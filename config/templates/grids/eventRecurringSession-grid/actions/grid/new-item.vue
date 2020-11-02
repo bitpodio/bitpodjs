@@ -614,7 +614,7 @@ export default {
           if (v && !isNaN(v)) {
             return true
           }
-          return strings.INVALID_PHONE_MSG
+          return this.$t('Messages.Error.PleaseEnterValidPhone')
         },
       ],
       durationRules: [
@@ -622,7 +622,7 @@ export default {
           if (!isNaN(parseFloat(v)) && v > 0) {
             return true
           }
-          return strings.DURATION_RANGE
+          return this.$t('Messages.Error.DurationGreaterMsg')
         },
       ],
       maxAllowRules: [
@@ -630,7 +630,7 @@ export default {
           if (!isNaN(parseFloat(v)) && v > 0) {
             return true
           }
-          return strings.MAX_ALLOW_MSG
+          return this.$t('Messages.Error.MaxAllowMsg')
         },
       ],
       numberRules: [
@@ -646,7 +646,7 @@ export default {
           if (v.length > 0) {
             return true
           }
-          return strings.LOCATION_MSG
+          return this.$t('Messages.Error.SelectLocation')
         },
       ],
       typeProps: {
@@ -827,7 +827,7 @@ export default {
         (v) => {
           const startDate = new Date(v)
           return startDate > new Date(this.session.EndDate)
-            ? strings.START_END_DATE
+            ? this.$t('Messages.Error.StartEndDate')
             : true
         },
       ]
@@ -837,7 +837,7 @@ export default {
         (v) => {
           const endDate = new Date(v)
           return new Date(this.session.StartDate) > endDate
-            ? strings.END_START_DATE
+            ? this.$t('Messages.Error.EndStartDate')
             : true
         },
       ]
@@ -1064,7 +1064,9 @@ export default {
     changeStartDate(v) {
       const startDate = new Date(v)
       this.startDateMessage =
-        startDate > new Date(this.session.EndDate) ? strings.START_END_DATE : ''
+        startDate > new Date(this.session.EndDate)
+          ? this.$t('Messages.Error.StartEndDate')
+          : ''
       if (this.startDateMessage === '') {
         this.endDateMessage = ''
       }
@@ -1072,14 +1074,18 @@ export default {
     changeEndDate(v) {
       const endDate = new Date(v)
       this.endDateMessage =
-        new Date(this.session.StartDate) > endDate ? strings.END_START_DATE : ''
+        new Date(this.session.StartDate) > endDate
+          ? this.$t('Messages.Error.EndStartDate')
+          : ''
       if (this.endDateMessage === '') {
         this.startDateMessage = ''
       }
     },
     changeAddressData(value) {
       this.addresslineMessage =
-        value === ' ' || value === '' ? strings.FIELD_REQUIRED : ''
+        value === ' ' || value === ''
+          ? this.$t('Messages.Error.ThisFieldRequired')
+          : ''
     },
     getAddressData(addressData, placeResultData, id) {
       this.venueAddress.AddressLine =
@@ -1140,7 +1146,7 @@ export default {
             delete this.venueAddress.LatLng.__typename
           this.session._CurrentAddress = this.venueAddress
         } else {
-          this.addresslineMessage = strings.FIELD_REQUIRED
+          this.addresslineMessage = this.$t('Messages.Error.ThisFieldRequired')
           return
         }
       } else {
@@ -1163,7 +1169,7 @@ export default {
       if (
         this.actionType === 'Edit' ||
         isInvalidSlot === false ||
-        confirm(strings.OVERLAP_SESSION_MSG)
+        confirm(this.$t('Messages.Warn.OverLapSessionMsg'))
       ) {
         const ObjectID5 = (
           m = Math,

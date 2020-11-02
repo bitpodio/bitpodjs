@@ -334,7 +334,7 @@ export default {
     },
     addressValidation() {
       if (this.addressLine === '') {
-        const message = strings.FIELD_REQUIRED
+        const message = this.$t('Messages.Error.ThisFieldRequired')
         this.setErrorAlert(true, message)
         return message
       }
@@ -362,7 +362,7 @@ export default {
         (v) => {
           const startDate = new Date(v)
           return startDate > new Date(this.EndDate)
-            ? strings.START_END_DATE
+            ? this.$t('Messages.Error.StartEndDate')
             : true
         },
       ]
@@ -372,7 +372,7 @@ export default {
         (v) => {
           const endDate = new Date(v)
           return new Date(this.StartDate) > endDate
-            ? strings.END_START_DATE
+            ? this.$t('Messages.Error.EndStartDate')
             : true
         },
       ]

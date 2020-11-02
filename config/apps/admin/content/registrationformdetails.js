@@ -45,8 +45,8 @@ export default {
           newForm: false,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Control Type is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.ControlRequired')
             },
           ],
           dataSource: {

@@ -172,11 +172,11 @@ export default {
       return [
         (v) => {
           if (parseInt(v) > parseInt(this.refundData.TotalAmount)) {
-            return strings.REFUND_PAID_AMT
+            return this.$t('Messages.Error.RefundPaidAmount')
           } else if (v === '') {
-            return strings.FIELD_REQUIRED
+            return this.$t('Messages.Error.ThisFieldRequired')
           } else if (parseInt(v) < 1) {
-            return strings.REFUND_AMT_MSG
+            return this.$t('Messages.Error.RefundAmountMsg')
           }
         },
       ]

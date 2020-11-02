@@ -55,8 +55,8 @@ export default {
           newForm: false,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Title is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.TitleRequired')
             },
           ],
         },
@@ -93,8 +93,8 @@ export default {
           newForm: false,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Start Date is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.StartDateRequired')
             },
           ],
         },
@@ -115,8 +115,8 @@ export default {
           newForm: false,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'End Date is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.EndDateRequired')
             },
           ],
         },
@@ -137,8 +137,8 @@ export default {
           editForm: true,
           cssClasses: 'col-4 col-md-6',
           rules: [
-            (v) => {
-              return !!v || 'Timezone is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.TimezoneRequired')
             },
           ],
         },
@@ -158,8 +158,8 @@ export default {
           newForm: false,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Organizer is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.OrganizerRequired')
             },
           ],
         },
@@ -179,11 +179,14 @@ export default {
           newForm: false,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Email is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.EmailRequired')
             },
             function (value, data) {
-              return /.+@.+\..+/.test(value) || 'E-mail must be valid'
+              return (
+                /.+@.+\..+/.test(value) ||
+                this.$t('Messages.Error.EmailRequired')
+              )
             },
           ],
         },
@@ -204,8 +207,8 @@ export default {
           newForm: false,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Status is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.StatusRequired')
             },
           ],
           dataSource: {
@@ -953,11 +956,14 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Email is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.EmailRequired')
             },
             function (value, data) {
-              return /.+@.+\..+/.test(value) || 'E-mail must be valid'
+              return (
+                /.+@.+\..+/.test(value) ||
+                this.$t('Messages.Error.EmailRequired')
+              )
             },
           ],
         },
@@ -1102,8 +1108,8 @@ export default {
           editForm: true,
           filterEnable: false,
           rules: [
-            (v) => {
-              return !!v || 'First Name is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.FirstNameRequired')
             },
           ],
         },
@@ -1123,8 +1129,8 @@ export default {
           editForm: true,
           filterEnable: false,
           rules: [
-            (v) => {
-              return !!v || 'Last Name is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.LastNameRequired')
             },
           ],
         },
@@ -1144,8 +1150,8 @@ export default {
           editForm: true,
           filterEnable: false,
           rules: [
-            (v) => {
-              return !!v || 'Phone is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.PhoneRequired')
             },
             function (value, data) {
               return /^[0-9]\d*$|^$/.test(value) || 'Number must be valid'
@@ -1248,8 +1254,8 @@ export default {
           editForm: true,
           filterEnable: false,
           rules: [
-            (v) => {
-              return !!v || 'Ticket should be selected'
+            function (v) {
+              return !!v || this.$t('Messages.Error.TicketSelected')
             },
           ],
           dataSource: {
@@ -1468,11 +1474,14 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Email is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.EmailRequired')
             },
             function (value, data) {
-              return /.+@.+\..+/.test(value) || 'E-mail must be valid'
+              return (
+                /.+@.+\..+/.test(value) ||
+                this.$t('Messages.Error.EmailRequired')
+              )
             },
           ],
         },
@@ -1631,8 +1640,8 @@ export default {
           editForm: true,
           filterEnable: false,
           rules: [
-            (v) => {
-              return !!v || 'First Name is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.FirstNameRequired')
             },
           ],
         },
@@ -1652,8 +1661,8 @@ export default {
           editForm: true,
           filterEnable: false,
           rules: [
-            (v) => {
-              return !!v || 'Last Name is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.LastNameRequired')
             },
           ],
         },
@@ -1673,11 +1682,14 @@ export default {
           editForm: true,
           filterEnable: false,
           rules: [
-            (v) => {
-              return !!v || 'Phone is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.PhoneRequired')
             },
             function (value, data) {
-              return /^[0-9]\d*$|^$/.test(value) || 'Number must be valid'
+              return (
+                /^[0-9]\d*$|^$/.test(value) ||
+                this.$t('Messages.Error.NumberValid')
+              )
             },
           ],
         },
@@ -1777,8 +1789,8 @@ export default {
           editForm: true,
           filterEnable: false,
           rules: [
-            (v) => {
-              return !!v || 'Ticket should be selected'
+            function (v) {
+              return !!v || this.$t('Messages.Error.TicketSelected')
             },
           ],
           dataSource: {
@@ -1897,11 +1909,14 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Email is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.EmailRequired')
             },
             function (value, data) {
-              return /.+@.+\..+/.test(value) || 'E-mail must be valid'
+              return (
+                /.+@.+\..+/.test(value) ||
+                this.$t('Messages.Error.EmailRequired')
+              )
             },
           ],
         },
@@ -1921,11 +1936,14 @@ export default {
           editForm: true,
           filterEnable: false,
           rules: [
-            (v) => {
-              return !!v || 'Phone is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.PhoneRequired')
             },
             function (value, data) {
-              return /^[0-9]\d*$|^$/.test(value) || 'Number must be valid'
+              return (
+                /^[0-9]\d*$|^$/.test(value) ||
+                this.$t('Messages.Error.NumberValid')
+              )
             },
           ],
         },
@@ -1963,8 +1981,8 @@ export default {
           multiple: true,
           filterEnable: false,
           rules: [
-            (v) => {
-              return !!v || 'Ticket is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.TicketRequired')
             },
           ],
           dataSource: {
@@ -2034,8 +2052,8 @@ export default {
             },
           },
           rules: [
-            (v) => {
-              return !!v || 'Status is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.StatusRequired')
             },
           ],
         },
@@ -2067,8 +2085,8 @@ export default {
           editForm: true,
           filterEnable: false,
           rules: [
-            (v) => {
-              return !!v || 'First Name is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.FirstNameRequired')
             },
           ],
         },
@@ -2088,8 +2106,8 @@ export default {
           editForm: true,
           filterEnable: false,
           rules: [
-            (v) => {
-              return !!v || 'Last Name is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.LastNameRequired')
             },
           ],
         },
@@ -2109,8 +2127,8 @@ export default {
           editForm: true,
           filterEnable: false,
           rules: [
-            (v) => {
-              return !!v || 'Address is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.AddressRequired')
             },
           ],
         },
@@ -2263,11 +2281,14 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Email is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.EmailRequired')
             },
             function (value, data) {
-              return /.+@.+\..+/.test(value) || 'E-mail must be valid'
+              return (
+                /.+@.+\..+/.test(value) ||
+                this.$t('Messages.Error.EmailRequired')
+              )
             },
           ],
         },
@@ -2286,11 +2307,14 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Phone is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.PhoneRequired')
             },
             function (value, data) {
-              return /^[0-9]\d*$|^$/.test(value) || 'Number must be valid'
+              return (
+                /^[0-9]\d*$|^$/.test(value) ||
+                this.$t('Messages.Error.NumberValid')
+              )
             },
           ],
         },
@@ -2327,8 +2351,8 @@ export default {
           editForm: true,
           multiple: true,
           rules: [
-            (v) => {
-              return !!v || 'Ticket is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.TicketRequired')
             },
           ],
           dataSource: {
@@ -2398,8 +2422,8 @@ export default {
             },
           },
           rules: [
-            (v) => {
-              return !!v || 'Status is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.StatusRequired')
             },
           ],
         },
@@ -2430,8 +2454,8 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'First Name is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.FirstNameRequired')
             },
           ],
         },
@@ -2450,8 +2474,8 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Last Name is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.LastNameRequired')
             },
           ],
         },
@@ -2470,8 +2494,8 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Address is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.AddressRequired')
             },
           ],
         },
@@ -2721,8 +2745,8 @@ export default {
           required: true,
           default: 'General admission',
           rules: [
-            (v) => {
-              return !!v || 'Title is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.TitleRequired')
             },
           ],
         },
@@ -2751,16 +2775,6 @@ export default {
             }
             return type === 'Free' || type === ''
           },
-          rules: [
-            (v) => {
-              return !!v || 'Price is required'
-            },
-            function (value, data) {
-              return (
-                /^[0-9]\d*$|^$/.test(value) || 'Price should not be negative'
-              )
-            },
-          ],
         },
         Type: {
           form: {
@@ -2790,11 +2804,6 @@ export default {
               }
             },
           },
-          rules: [
-            (v) => {
-              return !!v || 'Type is required'
-            },
-          ],
         },
         TicketCount: {
           form: {
@@ -2813,11 +2822,6 @@ export default {
           newForm: true,
           editForm: true,
           minimumValue: '1',
-          rules: [
-            (v) => {
-              return !!v || 'Total Count is required'
-            },
-          ],
         },
         Group: {
           form: {
@@ -2881,17 +2885,6 @@ export default {
           newForm: true,
           editForm: true,
           minimumValue: '1',
-          rules: [
-            (v) => {
-              return !!v || 'Display Order is required'
-            },
-            function (value, data) {
-              return (
-                /^[1-9]\d*$|^$/.test(value) ||
-                'Display Order should not be negative'
-              )
-            },
-          ],
         },
         AvailableCount: {
           displayOrder: 6,
@@ -2922,17 +2915,6 @@ export default {
           inlineEdit: true,
           newForm: true,
           editForm: true,
-          rules: [
-            (v) => {
-              return !!v || 'Start is required'
-            },
-            (v, data) => {
-              return (
-                (!!v && data.EndDate > new Date(v)) ||
-                'Start Date should be less than End Date'
-              )
-            },
-          ],
         },
         EndDate: {
           form: {
@@ -2951,17 +2933,6 @@ export default {
           newForm: true,
           editForm: true,
           default: addMonths(new Date(), 1),
-          rules: [
-            function (v) {
-              const eventEndDate = this.context.event.EndDate
-              const isValidEndDate =
-                eventEndDate > (v && new Date(v).toISOString())
-              return (
-                !!isValidEndDate ||
-                'Ticket end date should be less than event end date.'
-              )
-            },
-          ],
         },
         ValidateQty: {
           form: {
@@ -3058,8 +3029,8 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Code is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.CodeRequired')
             },
           ],
         },
@@ -3116,13 +3087,13 @@ export default {
           hidden: false,
           minimumValue: '1',
           rules: [
-            (v) => {
-              return !!v || 'Offer Value is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.OfferValueRequired')
             },
             function (value, data) {
               return (
                 /^[1-9]\d*$|^$/.test(value) ||
-                'Offer Value should not be negative'
+                this.$t('Messages.Error.OfferValueNegative')
               )
             },
           ],
@@ -3345,11 +3316,6 @@ export default {
           inlineEdit: true,
           newForm: true,
           editForm: true,
-          rules: [
-            (v) => {
-              return !!v || 'Name is required'
-            },
-          ],
         },
         Description: {
           form: {
@@ -3401,17 +3367,6 @@ export default {
           inlineEdit: true,
           newForm: true,
           editForm: true,
-          rules: [
-            (v) => {
-              return !!v || 'Start is required'
-            },
-            (v, data) => {
-              return (
-                (!!v && data.EndDate > new Date(v)) ||
-                'Start Date should be less than End Date'
-              )
-            },
-          ],
         },
         Duration: {
           displayOrder: 4,
@@ -3490,11 +3445,6 @@ export default {
               }
             },
           },
-          rules: [
-            (v) => {
-              return !!v || 'Tickets is required'
-            },
-          ],
         },
         TicketName: {
           displayOrder: 9,
@@ -3586,7 +3536,7 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Common.FirstNameRequired')
+              return !!v || this.$t('Messages.Error.FirstNameRequired')
             },
           ],
         },
@@ -3606,8 +3556,8 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Last Name is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.LastNameRequired')
             },
           ],
         },
@@ -3627,11 +3577,14 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Email is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.EmailRequired')
             },
             function (value, data) {
-              return /.+@.+\..+/.test(value) || 'E-mail must be valid'
+              return (
+                /.+@.+\..+/.test(value) ||
+                this.$t('Messages.Error.EmailRequired')
+              )
             },
           ],
         },
@@ -3651,8 +3604,8 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Phone is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.PhoneRequired')
             },
           ],
         },
@@ -3792,11 +3745,6 @@ export default {
           inlineEdit: true,
           newForm: true,
           editForm: true,
-          rules: [
-            (v) => {
-              return !!v || 'Title is required'
-            },
-          ],
         },
         Category: {
           form: {
@@ -3814,11 +3762,6 @@ export default {
           inlineEdit: true,
           newForm: true,
           editForm: true,
-          rules: [
-            (v) => {
-              return !!v || 'Category is required'
-            },
-          ],
           dataSource: {
             query: registrationStatusOptions,
             itemText: 'value',
@@ -3853,11 +3796,6 @@ export default {
               category === 'Calendar Invite'
             )
           },
-          rules: [
-            (v) => {
-              return !!v || 'Status is required'
-            },
-          ],
           dataSource: {
             query: registrationStatusOptions,
             itemText: 'value',
@@ -3912,11 +3850,6 @@ export default {
               )
             }
           },
-          rules: [
-            (v) => {
-              return !!v || 'Action is required'
-            },
-          ],
           dataSource: {
             query: registrationStatusOptions,
             itemText: 'value',
@@ -4309,11 +4242,6 @@ export default {
           cssClasses: 'col-6 col-md-6',
           newForm: true,
           editForm: true,
-          rules: [
-            (v) => {
-              return !!v || 'Name is required'
-            },
-          ],
         },
         ScheduledType: {
           form: {
@@ -4353,11 +4281,6 @@ export default {
           cssClasses: 'col-6 col-md-6',
           newForm: true,
           editForm: true,
-          rules: [
-            (v) => {
-              return !!v || 'Start Time is required'
-            },
-          ],
           dataSource: {
             query: registrationStatusOptions,
             itemText: 'value',
@@ -4383,17 +4306,6 @@ export default {
           cssClasses: 'col-6 col-md-6',
           newForm: true,
           editForm: true,
-          rules: [
-            (v) => {
-              return !!v || 'End Time is required'
-            },
-            function (value, data) {
-              return (
-                data.EndTime > data.StartTime ||
-                'End Time should be greater than Start Time'
-              )
-            },
-          ],
           dataSource: {
             query: registrationStatusOptions,
             itemText: 'value',
@@ -4420,11 +4332,6 @@ export default {
           inlineEdit: true,
           newForm: true,
           editForm: true,
-          rules: [
-            (v) => {
-              return !!v || 'Timezone is required'
-            },
-          ],
         },
         Duration: {
           form: {
@@ -4441,11 +4348,6 @@ export default {
           inlineEdit: true,
           newForm: true,
           editForm: true,
-          rules: [
-            (v) => {
-              return !!v || 'Duration is required'
-            },
-          ],
           dataSource: {
             query: registrationStatusOptions,
             itemText: 'value',
@@ -4471,11 +4373,6 @@ export default {
           cssClasses: 'col-6 col-md-6',
           newForm: true,
           editForm: true,
-          rules: [
-            (v) => {
-              return !!v || 'Type is required'
-            },
-          ],
           dataSource: {
             query: registrationStatusOptions,
             itemText: 'value',
@@ -4507,11 +4404,6 @@ export default {
             const type = data.Type
             return type === 'Group'
           },
-          rules: [
-            (v) => {
-              return !!v || 'Max Allow is required'
-            },
-          ],
         },
         SeatReservation: {
           form: {
@@ -4566,11 +4458,6 @@ export default {
           cssClasses: 'col-6 col-md-6',
           newForm: true,
           editForm: true,
-          rules: [
-            (v) => {
-              return !!v || 'Location Type is required'
-            },
-          ],
           dataSource: {
             query: registrationStatusOptions,
             itemText: 'value',
@@ -4598,11 +4485,6 @@ export default {
           cssClasses: 'col-6 col-md-6',
           newForm: true,
           editForm: true,
-          rules: [
-            (v) => {
-              return !!v || 'Location is required'
-            },
-          ],
           visible(value, data) {
             const LocationType = data.LocationType
             return LocationType === 'In-person meeting'
@@ -4628,14 +4510,6 @@ export default {
           cssClasses: 'col-6 col-md-6',
           newForm: true,
           editForm: true,
-          rules: [
-            (v) => {
-              return !!v || 'Phone is required'
-            },
-            function (value, data) {
-              return /^[0-9]\d*$|^$/.test(value) || 'Number must be valid'
-            },
-          ],
           visible(value, data) {
             const LocationType = data.LocationType
             return LocationType === 'Phone call'
@@ -4656,11 +4530,6 @@ export default {
           cssClasses: 'col-6 col-md-6',
           newForm: true,
           editForm: true,
-          rules: [
-            (v) => {
-              return !!v || 'online meeting link is required'
-            },
-          ],
           visible(value, data) {
             const LocationType = data.LocationType
             return LocationType === 'Online meeting'
@@ -4681,11 +4550,6 @@ export default {
           cssClasses: 'col-12 col-md-12',
           newForm: true,
           editForm: true,
-          rules: [
-            (v) => {
-              return !!v || 'Address is required'
-            },
-          ],
           visible(value, data) {
             const LocationType = data.LocationType
             return LocationType === 'Custom'

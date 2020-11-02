@@ -52,8 +52,8 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Please fill out this field'
+            function (v) {
+              return !!v || this.$t('Messages.Error.PleaseField')
             },
           ],
         },
@@ -139,8 +139,8 @@ export default {
           editForm: true,
           minimumValue: '1',
           rules: [
-            (v) => {
-              return !!v || 'Please fillout this field'
+            function (v) {
+              return !!v || this.$t('Messages.Error.PleaseField')
             },
           ],
         },

@@ -104,13 +104,17 @@ export default {
                   layout
                 )
                 if (res) {
-                  this.snackbarText = 'Seatmap Updated Successfully'
+                  this.snackbarText = this.$t(
+                    'Messages.Success.SeatmapUpdateSuccess'
+                  )
                   this.snackbar = true
                   if (this.$route.params.id === 'new') {
                     this.updateEvent(eventData, res)
                   }
                 }
-                this.snackbarText = 'Seatmap Updated Successfully'
+                this.snackbarText = this.$t(
+                  'Messages.Success.SeatmapUpdateSuccess'
+                )
                 this.snackbar = true
               } catch (e) {
                 console.error(

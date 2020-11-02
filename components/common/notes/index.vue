@@ -187,11 +187,13 @@ export default {
       if (confirmDeletion) {
         try {
           await this.$axios.delete(this.getLink(id))
-          this.snackbarText = 'Comment deleted successfully.'
+          this.snackbarText = this.$t(
+            'Messages.Success.CommentDeletedSuccessfully'
+          )
           this.snackbar = true
           this.fetchAllComments()
         } catch (err) {
-          this.snackbarText = 'Failed to delete comment.'
+          this.snackbarText = this.$t('Messages.Success.FailedDeleteComment')
           this.snackbar = true
           return err
         }

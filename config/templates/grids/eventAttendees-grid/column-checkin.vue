@@ -141,8 +141,7 @@ export default {
             this.isPrinted = true
           } else {
             this.isCheckedIn = false
-            this.snackbarText =
-              'Congratulations, You have successfully checked in.'
+            this.snackbarText = this.$t('Messages.Success.SuccessfulCheckedIn')
             this.snackbar = true
           }
         }
