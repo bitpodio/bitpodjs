@@ -111,7 +111,7 @@ export default {
           if (!isNaN(parseFloat(v)) && v > 0) {
             return true
           }
-          return strings.INVALID_DISPLAY_ORDER
+          return this.$t('Messages.Error.InvalidDisplayOrder')
         },
       ],
     }

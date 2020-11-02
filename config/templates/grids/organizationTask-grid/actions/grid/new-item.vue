@@ -340,7 +340,7 @@ export default {
           (v) => {
             const DueDate = v && new Date(v)
             if (!DueDate && DueDate === null) {
-              return strings.FIELD_REQUIRED
+              return this.$t('Messages.Error.ThisFieldRequired')
             } else {
               return true
             }

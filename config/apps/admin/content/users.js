@@ -48,8 +48,8 @@ export default {
           newForm: true,
           editForm: false,
           rules: [
-            (v) => {
-              return !!v || 'Email is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.EmailRequired')
             },
             function (value, data) {
               return /.+@.+\..+/.test(value) || 'E-mail must be valid'

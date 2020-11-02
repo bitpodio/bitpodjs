@@ -130,7 +130,9 @@ export default {
         const res = await this.$axios.$patch(URL, { LayoutId: '' })
         if (res) {
           this.popupDialog = false
-          this.snackbarText = 'Seat Layout deleted successfully'
+          this.snackbarText = this.$t(
+            'Messages.Success.SeatLayoutDeleteSuccess'
+          )
           this.snackbar = true
           this.refresh()
         }

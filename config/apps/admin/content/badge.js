@@ -28,8 +28,8 @@ export default {
           newForm: true,
           editForm: false,
           rules: [
-            (v) => {
-              return !!v || 'Size is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.SizeRequired')
             },
           ],
         },
@@ -103,8 +103,8 @@ export default {
           editForm: false,
           minimumValue: '0',
           rules: [
-            (v) => {
-              return !!v || 'This field is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.ThisFieldRequired')
             },
           ],
         },

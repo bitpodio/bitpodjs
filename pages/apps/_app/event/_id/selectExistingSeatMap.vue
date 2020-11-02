@@ -156,7 +156,7 @@ export default {
           this.$refs.form.$parent.$parent.refresh()
           this.close()
           this.snackbar = true
-          this.snackbarText = 'Seat Layout added successfully'
+          this.snackbarText = this.$t('Messages.Success.SeatLayoutAddSuccess')
         }
       } catch (e) {
         console.error(

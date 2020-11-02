@@ -1122,7 +1122,7 @@ export default {
           this.formData
         )
         if (res) {
-          this.snackbarText = 'Congratulations, your event has been published.'
+          this.snackbarText = this.$t('Messages.Success.EventPublished')
           this.snackbar = true
           this.refresh()
         }

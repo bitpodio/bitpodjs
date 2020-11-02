@@ -1019,7 +1019,7 @@ export default {
           if (!isNaN(parseFloat(v)) && v >= 0) {
             return true
           }
-          return strings.MAX_ALLOW_MSG
+          return this.$t('Messages.Error.MaxAllowMsg')
         },
       ],
       durationRules: [
@@ -1027,7 +1027,7 @@ export default {
           if (!isNaN(parseFloat(v)) && v > 0) {
             return true
           }
-          return strings.DURATION_RANGE
+          return this.$t('Messages.Error.DurationGreaterMsg')
         },
       ],
       rollingDaysRules: [
@@ -1038,7 +1038,7 @@ export default {
           if (!isNaN(parseFloat(v)) && v > 0) {
             return true
           }
-          return strings.ROLLING_DAYS_RANGE
+          return this.$t('Messages.Error.RollingDaysMsg')
         },
       ],
       phoneRules: [
@@ -1046,7 +1046,7 @@ export default {
           if (v && !isNaN(v)) {
             return true
           }
-          return strings.INVALID_PHONE_MSG
+          return this.$t('Messages.Error.PleaseEnterValidPhone')
         },
       ],
       onlineMeetingRules: [onlineEventLink],
@@ -1055,7 +1055,7 @@ export default {
           if (v.length > 0) {
             return true
           }
-          return strings.LOCATION_MSG
+          return this.$t('Messages.Error.SelectLocation')
         },
       ],
       isDateRange: false,
@@ -1337,7 +1337,7 @@ export default {
         (v) => {
           const startDate = new Date(v)
           return startDate > new Date(this.EndDate)
-            ? strings.START_END_DATE
+            ? this.$t('Messages.Error.StartEndDate')
             : true
         },
       ]
@@ -1347,7 +1347,7 @@ export default {
         (v) => {
           const endDate = new Date(v)
           return new Date(this.StartDate) > endDate
-            ? strings.END_START_DATE
+            ? this.$t('Messages.Error.EndStartDate')
             : true
         },
       ]
@@ -1429,7 +1429,9 @@ export default {
             this.sessions[index].StartTime.split(':')[0]
           )
           const endTime = parseInt(this.sessions[index].EndTime.split(':')[0])
-          return startTime > endTime ? strings.START_END_TIME : true
+          return startTime > endTime
+            ? this.$t('Messages.Error.StartEndTime')
+            : true
         },
       ]
     },
@@ -1440,7 +1442,9 @@ export default {
             this.sessions[index].StartTime.split(':')[0]
           )
           const endTime = parseInt(this.sessions[index].EndTime.split(':')[0])
-          return startTime > endTime ? strings.END_START_TIME : true
+          return startTime > endTime
+            ? this.$t('Messages.Error.EndStartTime')
+            : true
         },
       ]
     },
@@ -1484,7 +1488,8 @@ export default {
       return false
     },
     changeAddressData(value) {
-      this.addresslineMessage = value === '' ? strings.FIELD_REQUIRED : ''
+      this.addresslineMessage =
+        value === '' ? this.$t('Messages.Error.ThisFieldRequired') : ''
     },
     changeAddress() {
       const { City, State, Country, PostalCode } = this.venueAddress
@@ -1652,7 +1657,7 @@ export default {
         const sessions = [...this.sessions]
         this.sessions = sessions
       } else {
-        this.addresslineMessage = strings.FIELD_REQUIRED
+        this.addresslineMessage = this.$t('Messages.Error.ThisFieldRequired')
       }
     },
     setPersonMeeting() {
@@ -2167,7 +2172,7 @@ export default {
         }
       } else {
         this.isInalidEventLink = true
-        this.uniqueLinkMessage = strings.UNIQUE_LINK_FORMAT
+        this.uniqueLinkMessage = this.$t('Messages.Warn.UniqueLinkFormat')
       }
     },
     async checkUniqueLink(value) {
@@ -2185,7 +2190,7 @@ export default {
       if (result.data.Event.EventCount > 0) {
         this.isUniqLinkValid = false
         this.isInalidEventLink = true
-        this.uniqueLinkMessage = strings.UNIQUE_LINK_DUPLICATE
+        this.uniqueLinkMessage = this.$t('Messages.Error.UniqueLinkDuplicate')
       } else {
         this.isInalidEventLink = false
         this.isUniqLinkValid = true

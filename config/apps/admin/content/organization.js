@@ -34,8 +34,8 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Name is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.NameRequired')
             },
           ],
         },
@@ -90,8 +90,8 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Address is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.AddressRequired')
             },
           ],
         },
@@ -203,8 +203,8 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Type should be selected'
+            function (v) {
+              return !!v || this.$t('Messages.Error.TypeSelected')
             },
           ],
           dataSource: {

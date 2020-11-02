@@ -85,7 +85,9 @@
               <v-autocomplete
                 ref="country"
                 v-model="country"
-                :rules="[() => !!country || 'This field is required']"
+                :rules="[
+                  () => !!country || $t('Messages.Error.ThisFieldRequired'),
+                ]"
                 :items="countries"
                 :label="$t('Common.Country')"
                 placeholder="Select..."

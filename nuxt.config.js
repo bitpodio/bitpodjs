@@ -214,13 +214,13 @@ export default {
         fr: {
           currency: {
             style: 'currency',
-            currency: 'INR',
+            currency: 'USD',
           },
         },
         he: {
           currency: {
             style: 'currency',
-            currency: 'INR',
+            currency: 'USD',
           },
         },
       },

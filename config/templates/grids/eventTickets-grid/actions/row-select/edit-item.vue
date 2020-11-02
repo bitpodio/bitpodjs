@@ -251,14 +251,15 @@ export default {
             const { EndDate } = this.formData
             let startDateMessage = ''
             if (this.context.event.BusinessType !== 'Recurring') {
-              if (!StartDate) startDateMessage = strings.FIELD_REQUIRED
+              if (!StartDate)
+                startDateMessage = this.$t('Messages.Error.ThisFieldRequired')
               else if (StartDate && EndDate && StartDate > EndDate)
-                startDateMessage = strings.START_END_DATE
+                startDateMessage = this.$t('Messages.Error.StartEndDate')
               else startDateMessage = ''
               return startDateMessage || true
             } else {
               if (StartDate && EndDate && StartDate > EndDate)
-                startDateMessage = strings.START_END_DATE
+                startDateMessage = this.$t('Messages.Error.StartEndDate')
               else startDateMessage = ''
               return startDateMessage || true
             }
@@ -277,18 +278,19 @@ export default {
             const { StartDate } = this.formData
             let endDateMessage = ''
             if (this.context.event.BusinessType !== 'Recurring') {
-              if (!EndDate) endDateMessage = strings.FIELD_REQUIRED
+              if (!EndDate)
+                endDateMessage = this.$t('Messages.Error.ThisFieldRequired')
               else if (StartDate && EndDate && StartDate > EndDate)
-                endDateMessage = strings.END_START_DATE
+                endDateMessage = this.$t('Messages.Error.EndStartDate')
               else if (EndDate < new Date())
-                endDateMessage = strings.TICKET_END_DT_CURRENT_DT
+                endDateMessage = this.$t('Messages.Error.TicketEndCurrentDate')
               else if (EndDate > new Date(this.CheckEndDate))
-                endDateMessage = strings.TICKET_END_DT_MSG
+                endDateMessage = this.$t('Messages.Error.TicketEndDate')
               else endDateMessage = ''
               return endDateMessage || true
             } else {
               if (StartDate && EndDate && EndDate < StartDate)
-                endDateMessage = strings.END_START_DATE
+                endDateMessage = this.$t('Messages.Error.EndStartDate')
               else endDateMessage = ''
               return endDateMessage || true
             }

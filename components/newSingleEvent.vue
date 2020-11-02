@@ -695,11 +695,12 @@ export default {
           const StartDate = v && new Date(v)
           const { EndDate } = this.eventData
           let startDateMessage = ''
-          if (!StartDate) startDateMessage = strings.FIELD_REQUIRED
+          if (!StartDate)
+            startDateMessage = this.$t('Messages.Error.ThisFieldRequired')
           else if (StartDate && EndDate && StartDate > EndDate)
-            startDateMessage = strings.EVENT_START_END_DATE
+            startDateMessage = this.$t('Messages.Error.EventStartEndDate')
           else if (StartDate < new Date())
-            startDateMessage = strings.EVENT_START_DATE
+            startDateMessage = this.$t('Messages.Error.EventStartDate')
           else startDateMessage = ''
           return startDateMessage || true
         },
@@ -711,9 +712,10 @@ export default {
           const EndDate = v && new Date(v)
           const { StartDate } = this.eventData
           let endDateMessage = ''
-          if (!EndDate) endDateMessage = strings.FIELD_REQUIRED
+          if (!EndDate)
+            endDateMessage = this.$t('Messages.Error.ThisFieldRequired')
           else if (StartDate && EndDate && StartDate > EndDate)
-            endDateMessage = strings.EVENT_START_END_DATE
+            endDateMessage = this.$t('Messages.Error.EventStartEndDate')
           else if (EndDate < new Date()) endDateMessage = strings.EVENT_END_DATE
           else endDateMessage = ''
           return endDateMessage || true
@@ -880,14 +882,16 @@ export default {
             const { EndDate } = this.tickets[index]
             let startDateMessage = ''
             if (!StartDate && this.tickets[index].StartDate === null)
-              startDateMessage = strings.FIELD_REQUIRED
+              startDateMessage = this.$t('Messages.Error.ThisFieldRequired')
             else if (StartDate && EndDate && StartDate > EndDate)
-              startDateMessage = strings.TICKET_START_DT_MSG
+              startDateMessage = this.$t('Messages.Error.TicketStartDate')
             else if (
               StartDate &&
               new Date(StartDate.setSeconds(1)) < this.currentDatetime
             ) {
-              startDateMessage = strings.TICKET_START_DT_CURRENT_DT
+              startDateMessage = this.$t(
+                'Messages.Error.TicketStartCurrentDate'
+              )
             } else startDateMessage = ''
             return startDateMessage || true
           } else {
@@ -905,13 +909,13 @@ export default {
             let endDateMessage = ''
 
             if (!EndDate && this.tickets[index].EndDate === null)
-              endDateMessage = strings.FIELD_REQUIRED
+              endDateMessage = this.$t('Messages.Error.ThisFieldRequired')
             else if (StartDate && EndDate && StartDate > EndDate)
-              endDateMessage = strings.TICKET_START_DT_MSG
+              endDateMessage = this.$t('Messages.Error.TicketStartDate')
             else if (new Date(EndDate) < this.currentDatetime) {
-              endDateMessage = strings.TICKET_END_DT_CURRENT_DT
+              endDateMessage = this.$t('Messages.Error.TicketEndCurrentDate')
             } else if (new Date(EndDate) > this.eventData.EndDate) {
-              endDateMessage = strings.TICKET_END_DT_MSG
+              endDateMessage = this.$t('Messages.Error.TicketEndDate')
             } else endDateMessage = ''
             return endDateMessage || true
           } else {
@@ -994,7 +998,7 @@ export default {
           this.addresslineMessage = ''
           this.setNextTab()
         } else if (this.venueAddress.AddressLine === '') {
-          this.addresslineMessage = strings.FIELD_REQUIRED
+          this.addresslineMessage = this.$t('Messages.Error.ThisFieldRequired')
         }
       }
     },
@@ -1104,7 +1108,8 @@ export default {
       }
     },
     changeAddressData(value) {
-      this.addresslineMessage = value === '' ? strings.FIELD_REQUIRED : ''
+      this.addresslineMessage =
+        value === '' ? this.$t('Messages.Error.ThisFieldRequired') : ''
       this.venueAddress.AddressLine = value
       this.isMap = this.isEmptyAddress()
     },
@@ -1195,7 +1200,7 @@ export default {
         }
       } else {
         this.isInvalidEventLink = true
-        this.uniqueLinkMessage = strings.UNIQUE_LINK_FORMAT
+        this.uniqueLinkMessage = this.$t('Messages.Warn.UniqueLinkFormat')
       }
       this.eventData.UniqLink = value
     },
@@ -1214,7 +1219,7 @@ export default {
       if (result.data.Event.EventCount > 0) {
         this.isUniqLinkValid = false
         this.isInvalidEventLink = true
-        this.uniqueLinkMessage = strings.UNIQUE_LINK_DUPLICATE
+        this.uniqueLinkMessage = this.$t('Messages.Error.UniqueLinkDuplicate')
       } else {
         this.isInvalidEventLink = false
         this.isUniqLinkValid = true

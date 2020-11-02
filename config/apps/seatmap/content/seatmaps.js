@@ -274,8 +274,8 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Address is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.AddressRequired')
             },
           ],
         },
@@ -325,7 +325,10 @@ export default {
           editForm: true,
           rules: [
             function (value, data) {
-              return /^[0-9]\d*$|^$/.test(value) || 'Number must be valid'
+              return (
+                /^[0-9]\d*$|^$/.test(value) ||
+                this.$t('Messages.Error.NumberValid')
+              )
             },
           ],
         },

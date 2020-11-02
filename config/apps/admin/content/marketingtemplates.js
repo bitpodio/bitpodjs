@@ -31,8 +31,8 @@ export default {
           newForm: true,
           editForm: false,
           rules: [
-            (v) => {
-              return !!v || 'Template Name is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.TemplateNameRequired')
             },
           ],
         },
@@ -51,8 +51,8 @@ export default {
           newForm: true,
           editForm: false,
           rules: [
-            (v) => {
-              return !!v || 'Subject is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.SubjectRequired')
             },
           ],
         },
@@ -71,8 +71,8 @@ export default {
           newForm: true,
           editForm: false,
           rules: [
-            (v) => {
-              return !!v || 'Type is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.TypeRequired')
             },
           ],
           dataSource: {
@@ -159,8 +159,8 @@ export default {
             'Full Name': 'Full Name',
           },
           rules: [
-            (v) => {
-              return !!v || 'Body is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.BodyRequired')
             },
           ],
         },
@@ -179,8 +179,8 @@ export default {
           newForm: true,
           editForm: false,
           rules: [
-            (v) => {
-              return !!v || 'Type is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.TypeRequired')
             },
           ],
           dataSource: {
@@ -287,8 +287,8 @@ export default {
           newForm: true,
           editForm: false,
           rules: [
-            (v) => {
-              return !!v || 'Template Name is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.TemplateNameRequired')
             },
           ],
         },
@@ -307,8 +307,8 @@ export default {
           newForm: true,
           editForm: false,
           rules: [
-            (v) => {
-              return !!v || 'Subject is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.SubjectRequired')
             },
           ],
         },
@@ -327,8 +327,8 @@ export default {
           newForm: true,
           editForm: false,
           rules: [
-            (v) => {
-              return !!v || 'Type is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.TypeRequired')
             },
           ],
           dataSource: {
@@ -415,8 +415,8 @@ export default {
             'Full Name': 'Full Name',
           },
           rules: [
-            (v) => {
-              return !!v || 'Body is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.BodyRequired')
             },
           ],
         },
@@ -435,8 +435,8 @@ export default {
           newForm: true,
           editForm: false,
           rules: [
-            (v) => {
-              return !!v || 'Type is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.TypeRequired')
             },
           ],
           dataSource: {

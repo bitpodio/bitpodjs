@@ -72,7 +72,7 @@ export default {
   methods: {
     openSnackbar() {
       this.snackbar = true
-      this.snackbarText = 'Access Key and Secret copied to clipboard'
+      this.snackbarText = this.$t('Messages.Success.AccessKeySecretCopied')
     },
     getKeyCopied(accessKey, secretKey) {
       const key = `key:${accessKey}secret:${secretKey}`
@@ -87,7 +87,7 @@ export default {
             `${url}Users/${userName}/Accesskey/${accessKey}`
           )
           this.snackbar = true
-          this.snackbarText = 'Item deleted successfully'
+          this.snackbarText = this.$t('Messages.Success.DeletedSuccessfully')
           this.refresh()
           return res
         } catch (e) {

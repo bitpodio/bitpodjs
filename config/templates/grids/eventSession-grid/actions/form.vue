@@ -351,7 +351,7 @@ export default {
           if (!isNaN(parseFloat(v)) && v > 0) {
             return true
           }
-          return strings.DURATION_RANGE
+          return this.$t('Messages.Error.DurationGreaterMsg')
         },
       ],
       venueAddress: {
@@ -371,7 +371,7 @@ export default {
           if (v && !isNaN(v)) {
             return true
           }
-          return strings.INVALID_PHONE_MSG
+          return this.$t('Messages.Error.PleaseEnterValidPhone')
         },
       ],
       typeProps: {
@@ -436,13 +436,13 @@ export default {
       return [
         (v) => {
           if (!v) {
-            return strings.FIELD_REQUIRED
+            return this.$t('Messages.Error.ThisFieldRequired')
           }
           const startDate = new Date(v)
           const eventStartDate = new Date(this.eventDetails.StartDate)
           const eventEndDate = new Date(this.eventDetails.EndDate)
           return startDate < eventStartDate || startDate > eventEndDate
-            ? strings.START_EVENT_DURATION_TIME
+            ? this.$t('Messages.Error.SessionStartDate')
             : true
         },
       ]
@@ -552,7 +552,9 @@ export default {
     },
     changeAddressData(value) {
       this.addresslineMessage =
-        value === ' ' || value === '' ? strings.FIELD_REQUIRED : ''
+        value === ' ' || value === ''
+          ? this.$t('Messages.Error.ThisFieldRequired')
+          : ''
       this.venueAddress.AddressLine = value
     },
     getAddressData(addressData, placeResultData, id) {
@@ -603,7 +605,7 @@ export default {
         if (this.venueAddress.AddressLine !== '') {
           this.session._CurrentAddress = this.venueAddress
         } else {
-          this.addresslineMessage = strings.FIELD_REQUIRED
+          this.addresslineMessage = this.$t('Messages.Error.ThisFieldRequired')
           return
         }
       } else {
@@ -636,9 +638,9 @@ export default {
       }
       if (res) {
         if (this.isEdit) {
-          this.snackbarText = 'Record updated successfully.'
+          this.snackbarText = this.$t('Messages.Success.RecordUpdatedSuccess')
         } else {
-          this.snackbarText = 'Record created successfully.'
+          this.snackbarText = this.$t('Messages.Success.RecordCreateSuccess')
         }
         this.snackbar = true
         this.closeForm()

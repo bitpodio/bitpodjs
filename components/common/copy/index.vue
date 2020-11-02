@@ -75,7 +75,7 @@ export default {
   data() {
     return {
       snackbar: false,
-      snackbarText: 'Copied to clipboard',
+      snackbarText: this.$t('Messages.Success.CopiedClipboard'),
       timeout: 3000,
     }
   },

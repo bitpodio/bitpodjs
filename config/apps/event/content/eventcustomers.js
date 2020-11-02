@@ -39,8 +39,8 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'First Name is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.FirstNameRequired')
             },
           ],
         },
@@ -61,8 +61,8 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Last Name is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.LastNameRequired')
             },
           ],
         },
@@ -83,8 +83,8 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Email is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.EmailRequired')
             },
             function (value, data) {
               return /.+@.+\..+/.test(value) || 'E-mail must be valid'
@@ -108,8 +108,8 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Phone is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.PhoneRequired')
             },
             function (value, data) {
               return /^[0-9]\d*$|^$/.test(value) || 'Number must be valid'

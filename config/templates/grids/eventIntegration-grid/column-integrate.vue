@@ -126,7 +126,7 @@ export default {
         const res = await this.$axios.$patch(`${url}Connections`, connobj)
         if (res) {
           this.refresh()
-          this.snackbarText = 'Connection Updated Successfully'
+          this.snackbarText = this.$t('Messages.Success.ConnectionSuccessfully')
           this.snackbar = true
         }
       } catch (e) {
@@ -145,7 +145,9 @@ export default {
           const url = this.$bitpod.getApiUrl()
           const res = await this.$axios.$delete(`${url}Connections/${id}`)
           if (res) {
-            this.snackbarText = 'Connection deleted Successfully'
+            this.snackbarText = this.$t(
+              'Messages.Success.ConnectionDeletedSuccessfully'
+            )
             this.snackbar = true
             this.refresh()
           }
@@ -176,7 +178,9 @@ export default {
         openAuthPopups(options, (e) => {
           console.log('openAuthPopups response', e)
           this.refresh()
-          this.snackbarText = 'Connection setup Successfully'
+          this.snackbarText = this.$t(
+            'Messages.Success.ConnectionSetupSuccessfully'
+          )
           this.snackbar = true
         })
       } else {

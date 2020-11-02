@@ -60,7 +60,9 @@
                             :rules="[
                               (v) => {
                                 invalid = !subject || !sender
-                                return v ? true : 'This field is required'
+                                return v
+                                  ? true
+                                  : $t('Messages.Error.ThisFieldRequired')
                               },
                             ]"
                           ></v-text-field>
@@ -82,7 +84,9 @@
                             :rules="[
                               (v) => {
                                 invalid = !subject || !sender
-                                return v ? true : 'This field is required'
+                                return v
+                                  ? true
+                                  : $t('Messages.Error.ThisFieldRequired')
                               },
                             ]"
                           ></v-text-field>

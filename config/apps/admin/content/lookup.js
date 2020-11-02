@@ -49,8 +49,8 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Key is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.KeyRequired')
             },
           ],
         },
@@ -69,8 +69,8 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Value is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.ValueRequired')
             },
           ],
         },
@@ -151,8 +151,8 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Key is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.KeyRequired')
             },
           ],
         },
@@ -171,8 +171,8 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Value is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.ValueRequired')
             },
           ],
         },
@@ -253,8 +253,8 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Key is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.KeyRequired')
             },
           ],
         },
@@ -273,8 +273,8 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Value is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.ValueRequired')
             },
           ],
         },
@@ -355,8 +355,8 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Key is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.KeyRequired')
             },
           ],
         },
@@ -375,8 +375,8 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Value is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.ValueRequired')
             },
           ],
         },
@@ -457,8 +457,8 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Key is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.KeyRequired')
             },
           ],
         },
@@ -477,8 +477,8 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Value is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.ValueRequired')
             },
           ],
         },
@@ -560,8 +560,8 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Key is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.KeyRequired')
             },
           ],
         },
@@ -580,8 +580,8 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Value is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.ValueRequired')
             },
           ],
         },
@@ -662,8 +662,8 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Key is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.KeyRequired')
             },
           ],
         },
@@ -682,8 +682,8 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Value is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.ValueRequired')
             },
           ],
         },
@@ -764,8 +764,8 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Key is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.KeyRequired')
             },
           ],
         },
@@ -784,8 +784,8 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Value is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.ValueRequired')
             },
           ],
         },
@@ -866,8 +866,8 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Key is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.KeyRequired')
             },
           ],
         },
@@ -886,8 +886,8 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Value is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.ValueRequired')
             },
           ],
         },
@@ -968,8 +968,8 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Key is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.KeyRequired')
             },
           ],
         },
@@ -988,8 +988,8 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Value is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.ValueRequired')
             },
           ],
         },
@@ -1081,8 +1081,8 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Key is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.KeyRequired')
             },
           ],
         },
@@ -1101,8 +1101,8 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Value is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.ValueRequired')
             },
           ],
         },
@@ -1183,8 +1183,8 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Key is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.KeyRequired')
             },
           ],
         },
@@ -1203,8 +1203,8 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Value is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.ValueRequired')
             },
           ],
         },

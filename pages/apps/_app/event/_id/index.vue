@@ -1766,7 +1766,7 @@ export default {
           this.formData
         )
         if (res) {
-          this.snackbarText = 'Congratulations, your event has been published.'
+          this.snackbarText = this.$t('Messages.Success.EventPublished')
           this.snackbar = true
           this.refresh()
         }
@@ -1805,7 +1805,7 @@ export default {
             `${url}Badges/${getIdFromAtob(this.badgeData.id)}`
           )
           if (res) {
-            this.snackbarText = 'Badges deleted successfully'
+            this.snackbarText = this.$t('Messages.Success.BadgesDeleteSuccess')
             this.snackbar = true
             this.refresh()
           }
@@ -1945,7 +1945,7 @@ export default {
           formData
         )
         if (res) {
-          this.snackbarText = 'Attachment added successfully'
+          this.snackbarText = this.$t('Messages.Success.AttachmentAddSuccess')
           this.snackbar = true
           this.refresh()
         }
@@ -1961,7 +1961,7 @@ export default {
             `${url}Events/${this.$route.params.id}/Others/rel/${id}`
           )
           if (res) {
-            this.snackbarText = 'Attachment added successfully'
+            this.snackbarText = this.$t('Messages.Success.AttachmentAddSuccess')
             this.snackbar = true
             this.refresh()
           }
@@ -2021,7 +2021,9 @@ export default {
         )
         if (res) {
           this.refresh()
-          this.snackbarText = 'Attachment deleted successfully'
+          this.snackbarText = this.$t(
+            'Messages.Success.AttachmentDeleteSuccess'
+          )
           this.snackbar = true
         }
       }
@@ -2034,8 +2036,10 @@ export default {
           `${url}Events/${this.$route.params.id}/LogoURL/${id}`
         )
         if (res) {
-          this.snackbarText = 'Attachment deleted successfully'
-          this.snackbar = true
+          ;(this.snackbarText = this.$t(
+            'Messages.Success.AttachmentDeleteSuccess'
+          )),
+            (this.snackbar = true)
           this.refresh()
         }
       }
@@ -2048,8 +2052,10 @@ export default {
           `${url}Events/${this.$route.params.id}/Others/${id}`
         )
         if (res) {
-          this.snackbarText = 'Attachment deleted successfully'
-          this.snackbar = true
+          ;(this.snackbarText = this.$t(
+            'Messages.Success.AttachmentDeleteSuccess'
+          )),
+            (this.snackbar = true)
           this.refresh()
         }
       }
@@ -2151,7 +2157,9 @@ export default {
         const res = await this.$axios.$patch(URL, { LayoutId: '' })
         if (res) {
           this.popupDialog = false
-          this.snackbarText = 'Seat Layout deleted successfully'
+          this.snackbarText = this.$t(
+            'Messages.Success.SeatLayoutDeleteSuccess'
+          )
           this.snackbar = true
           this.refresh()
         }
