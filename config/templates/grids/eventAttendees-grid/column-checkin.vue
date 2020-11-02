@@ -123,6 +123,9 @@ export default {
       noBadgeFound: true,
     }
   },
+  mounted() {
+    this.getOrgInfo()
+  },
   methods: {
     async updateDate(ele) {
       const url = this.$bitpod.getApiUrl()
@@ -186,6 +189,7 @@ export default {
       this.id = ''
     },
     setTemplates() {
+      this.getOrgInfo()
       if (Object.keys(this.context.badge).length > 0) {
         const template = this.context.badge.Template
         const str = this.getBadge(template, this.item)
@@ -207,7 +211,7 @@ export default {
             '{{ Category }}',
             `${(items.regType && items.regType.Name) || 'Guest'}`
           )
-          .replace('{{ Organization }}', `${items.CompanyName}`)
+          .replace('{{ Organization }}', `${items.CompanyName || ''}`)
           .replace(logoUrl, this.getAttachmentLink(this.logoId, true))
         if (this.context.event && this.context.event.Title) {
           str = str.replace('{{ EventName }}', `${this.context.event.Title}`)
@@ -236,7 +240,11 @@ export default {
         })
         if (result) {
           const orgInfo = formatGQLResult(result.data, 'OrganizationInfo')
-          this.logoId = orgInfo[0].Image[0]
+          if (this.context.event.Logo.length > 0) {
+            this.logoId = this.context.event.Logo[0]
+          } else {
+            this.logoId = orgInfo[0].Image[0]
+          }
         }
       } catch (e) {
         console.error(

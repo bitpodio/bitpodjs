@@ -59,6 +59,7 @@ export default {
       return str
     },
     openPrintForm() {
+      this.getOrgInfo()
       this.items.map((ele) => {
         const template = this.context.badge.Template
           ? this.context.badge.Template
@@ -115,7 +116,11 @@ export default {
         })
         if (result) {
           const orgInfo = formatGQLResult(result.data, 'OrganizationInfo')
-          this.logoId = orgInfo[0].Image[0]
+          if (this.context.event.Logo.length > 0) {
+            this.logoId = this.context.event.Logo[0]
+          } else {
+            this.logoId = orgInfo[0].Image[0]
+          }
         }
       } catch (e) {
         console.error(
