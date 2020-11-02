@@ -59,7 +59,7 @@
                 </div>
                 <v-flex class="tile-info pa-4 pb-0">
                   <div class="text--secondary pa-2 pb-0 body-2 pl-0 pt-0">
-                    {{ item.StartDate }}
+                    {{ formatedDate(item.StartDate, item.Timezone) }}
                   </div>
                   <v-card-title
                     class="text-h5 grey--text text--darken-4 text-truncate d-block text-capitalize pa-2 pt-0 pb-1 pl-0"
@@ -193,7 +193,7 @@
                 </div>
                 <v-flex class="tile-info pa-4 pb-0">
                   <div class="text--secondary pa-2 pb-0 body-2 pl-0 pt-0">
-                    {{ item.StartDate }}
+                    {{ formatedDate(item.StartDate, item.Timezone) }}
                   </div>
                   <v-card-title
                     class="text-h5 grey--text text--darken-4 text-truncate d-block text-capitalize pa-2 pt-0 pb-1 pl-0"
@@ -297,6 +297,8 @@
 </template>
 
 <script>
+import format from 'date-fns/format'
+import { utcToZonedTime } from 'date-fns-tz'
 import editEventForm from '~/pages/apps/_app/event/_id/editEventForm.vue'
 import makeCopy from '~/pages/apps/_app/event/_id/makeCopy.vue'
 import nuxtconfig from '~/nuxt.config'
@@ -349,6 +351,18 @@ export default {
     },
     formatAddressField(fieldValue) {
       return fieldValue || ' '
+    },
+    formatDate(date) {
+      return date ? format(new Date(date), 'PPp') : ''
+    },
+    formatedDate(date, timezone) {
+      if (date) {
+        const formattedDate = new Date(date)
+        const zonedDate = utcToZonedTime(formattedDate, timezone)
+        const pattern = 'PPp'
+        const output = format(zonedDate, pattern, { timezone })
+        return output
+      }
     },
   },
 }
