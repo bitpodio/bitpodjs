@@ -1384,6 +1384,7 @@ export default {
     },
     selectTab(tabNumber) {
       this.currentTab = tabNumber
+      this.scrollToTop()
     },
     isNextDisabled() {
       return this.isUniqLinkValid === false
