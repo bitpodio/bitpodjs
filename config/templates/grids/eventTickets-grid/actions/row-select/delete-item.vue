@@ -53,7 +53,9 @@ export default {
   methods: {
     async onDeleteItem() {
       const url = this.$bitpod.getApiUrl()
-      const check = confirm('Are you sure you want to delete this ticket?')
+      const check = await this.$confirm(
+        'Are you sure you want to delete this ticket?'
+      )
       try {
         if (check) {
           await this.$axios.$delete(`${url}Tickets/${this.items[0].id}`)

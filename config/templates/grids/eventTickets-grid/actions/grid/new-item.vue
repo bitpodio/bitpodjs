@@ -104,8 +104,9 @@
               <v-col class="col-12 col-md-6">
                 <v-text-field
                   v-model="formData.TicketCount"
-                  :label="$t('Common.TicketCount')"
+                  :label="$t('Common.TicketCountRequired')"
                   type="number"
+                  :rules="required"
                   min="1"
                   outlined
                   dense
@@ -231,7 +232,7 @@ export default {
         EndDate: '',
         Events: '',
         Group: '',
-        TicketCount: null,
+        TicketCount: 100,
         Type: 'Free',
         ValidateQty: false,
         Status: '',
@@ -239,8 +240,8 @@ export default {
       eventData: {},
       setAttendeeType: {},
       Symbol: '',
-      StartDate: null,
-      EndDate: null,
+      StartDate: '',
+      EndDate: '',
       CheckEndDate: '',
     }
   },
@@ -385,10 +386,11 @@ export default {
       this.formData.DisplayOrder = null
       this.formData.Group = ''
       this.formData.Type = 'Free'
-      this.formData.TicketCount = null
+      this.formData.TicketCount = 100
       this.formData.ValidateQty = false
       this.formData.Status = ''
       this.valid = true
+      this.setDefaultDate()
     },
     getAttendeesId() {
       this.formData.Attendee = this.setAttendeeType
@@ -436,6 +438,19 @@ export default {
         this.formData.Amount = 0
       } else {
         this.formData.Amount = 1
+      }
+    },
+    setDefaultDate() {
+      if (this.eventData.BusinessType !== 'Recurring') {
+        this.eventData.StartDate = new Date()
+        this.eventData.EndDate = this.CheckEndDate
+        this.eventData.EndDate = utcToZonedTime(
+          this.eventData.EndDate,
+          this.eventData.Timezone
+        )
+      } else {
+        this.eventData.StartDate = null
+        this.eventData.EndDate = null
       }
     },
     getTicketDate() {

@@ -21,10 +21,10 @@ export default {
       required: false,
     },
   },
-  data() {
-    return {
-      chipValue: this.value && this.value.split(','),
-    }
+  computed: {
+    chipValue() {
+      return this.value && this.value.split(',')
+    },
   },
 }
 </script>

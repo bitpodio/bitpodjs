@@ -206,6 +206,9 @@ body {
 .box-grey h2.body-1,
 .box-grey h2 > .fa {
   color: #3fa5ff !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
 }
 .survey-img {
   max-width: 36px !important;
@@ -406,7 +409,7 @@ body {
 }
 .event-table .v-messages__message {
   white-space: nowrap !important;
-  position: fixed !important;
+  position: absolute !important;
 }
 .ps-top6 {
   top: 9px;

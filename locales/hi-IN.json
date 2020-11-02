@@ -659,7 +659,8 @@
     "Gallery": "Gallery",
     "Reviews": "Reviews",
     "DateTime": "Date and Time",
-    "BadgesTemplates": "Badges Templates"
+    "BadgesTemplates": "Badges Templates",
+    "TicketCountRequired": "Ticket Count*"
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",

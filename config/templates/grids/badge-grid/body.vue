@@ -69,7 +69,9 @@ export default {
     async deleteBadge(id) {
       const url = this.$bitpod.getApiUrl()
 
-      const check = confirm('Are you sure you want to delete this badge?')
+      const check = await this.$confirm(
+        'Are you sure you want to delete this badge?'
+      )
       let res = null
       if (check === true) {
         try {

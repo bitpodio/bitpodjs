@@ -104,7 +104,8 @@
               <v-col class="col-12 col-md-6">
                 <v-text-field
                   v-model="formData.TicketCount"
-                  :label="$t('Common.TicketCount')"
+                  :label="$t('Common.TicketCountRequired')"
+                  :rules="required"
                   type="number"
                   outlined
                   dense

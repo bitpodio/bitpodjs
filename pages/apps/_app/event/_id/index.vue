@@ -1418,7 +1418,6 @@ import editBadgeForm from './editBadgeForm.vue'
 import makeCopy from './makeCopy.vue'
 import badge from '~/config/apps/event/gql/badge.gql'
 import organizationInfo from '~/config/apps/event/gql/organizationInfo.gql'
-import eventAttendees from '~/config/apps/event/gql/eventAttendees.gql'
 import nuxtconfig from '~/nuxt.config'
 import Grid from '~/components/common/grid'
 import File from '~/components/common/form/file.vue'
@@ -1606,7 +1605,7 @@ export default {
   },
   mounted() {
     this.getAttendees()
-    setTimeout(this.openPrint, 5000)
+    setTimeout(this.openPrint, 3000)
   },
 
   methods: {
@@ -1630,19 +1629,29 @@ export default {
     },
     openPrintForm() {
       this.getAttendees()
-      this.attendees.map((ele) => {
-        const str = this.getBadgePrinted(this.badgeData.Template, ele)
+      if (this.attendees.length > 0) {
+        this.attendees.map((ele) => {
+          const str = this.getBadgePrinted(this.badgeData.Template, ele)
 
-        if (
-          this.eventData.LocationType === 'Venue' &&
-          this.$refs.iframe &&
-          this.$refs.printForm
-        ) {
-          this.$refs.iframe.contentWindow.document.write(
-            `<div style="display:flex">${str}</div>`
-          )
-        }
-      })
+          if (
+            this.eventData.LocationType === 'Venue' &&
+            this.$refs.iframe &&
+            this.$refs.printForm
+          ) {
+            this.$refs.iframe.contentWindow.document.write(
+              `<div style="display:flex">${str}</div>`
+            )
+          }
+        })
+      } else {
+        const str = this.getBadge(this.badgeData.Template)
+        this.$refs.iframe.contentWindow.document.write(
+          `<div style="display:flex">${str}</div>`
+        )
+      }
+      setTimeout(this.getPrinted, 3000)
+    },
+    getPrinted() {
       this.$refs.iframe.contentWindow.print()
       this.$refs.iframe.contentWindow.close()
       this.$refs.iframe.contentWindow.document.close()
@@ -1651,29 +1660,19 @@ export default {
       this.$refs.iframe.contentWindow.document.firstChild.innerHTML = this.$refs.printForm.innerHTML
     },
     openBadgeForm() {
-      const res = confirm('New badge will replace your existing badge.')
+      const res = this.$confirm('New badge will replace your existing badge.')
       if (res) {
         this.newBadge = true
       }
     },
     async getAttendees() {
       try {
-        const result = await this.$apollo.query({
-          query: gql`
-            ${eventAttendees}
-          `,
-          variables: {
-            filters: {
-              where: {
-                EventId: this.$route.params.id,
-              },
-            },
-          },
-        })
-        if (result) {
-          const attendeesData = formatGQLResult(result.data, 'Attendee')
-          this.attendees = attendeesData
-          return attendeesData
+        const url = this.$bitpod.getApiUrl()
+        const res = await this.$axios.get(
+          `${url}Events/${this.$route.params.id}/Attende`
+        )
+        if (res) {
+          this.attendees = res.data
         }
       } catch (e) {
         console.error(
@@ -1798,7 +1797,9 @@ export default {
     },
     async deleteBadge() {
       const url = this.$bitpod.getApiUrl()
-      const check = confirm('Are you sure you want to delete this badge?')
+      const check = await this.$confirm(
+        'Are you sure you want to delete this badge?'
+      )
       if (check === true) {
         try {
           const res = await this.$axios.$delete(
@@ -2014,7 +2015,7 @@ export default {
     },
     async deleteBannerFile(e, id) {
       const url = this.$bitpod.getApiUrl()
-      const checkRes = confirm('Are you sure you want to delete')
+      const checkRes = await this.$confirm('Are you sure you want to delete?')
       if (checkRes) {
         const res = await this.$axios.delete(
           `${url}Events/${this.$route.params.id}/BannerImage/${id}`
@@ -2030,7 +2031,7 @@ export default {
     },
     async deleteLogoFile(id) {
       const url = this.$bitpod.getApiUrl()
-      const checkRes = confirm('Are you sure you want to delete')
+      const checkRes = await this.$confirm('Are you sure you want to delete?')
       if (checkRes) {
         const res = await this.$axios.delete(
           `${url}Events/${this.$route.params.id}/LogoURL/${id}`
@@ -2046,7 +2047,7 @@ export default {
     },
     async deleteOtherFile(id) {
       const url = this.$bitpod.getApiUrl()
-      const checkRes = confirm('Are you sure you want to delete')
+      const checkRes = await this.$confirm('Are you sure you want to delete?')
       if (checkRes) {
         const res = await this.$axios.delete(
           `${url}Events/${this.$route.params.id}/Others/${id}`
@@ -2214,6 +2215,7 @@ export default {
         this.updateRegistrationSetting(this.eventData)
         this.getSeatMap(this.eventData)
         this.updateStepper()
+        this.getAttendees()
         if (event[0].Images.length > 0) {
           this.getBannerImageName(event[0].Images[0])
         }

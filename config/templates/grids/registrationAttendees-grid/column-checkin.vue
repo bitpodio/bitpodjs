@@ -1,9 +1,9 @@
 <template>
   <div class="positionRelative position">
-    <div v-if="item.CheckIn === null" class="pt-1">
+    <div v-if="item.CheckIn === null" class="pt-1" style="height: 10px;">
       <v-chip
         class="ma-2 pb-0 mt-1"
-        height="20"
+        height="13"
         color="blue"
         text-color="white"
         label
@@ -13,8 +13,8 @@
         <i18n path="Common.CheckIn" />
       </v-chip>
     </div>
-    <div v-else style="display: flex; height: 20px;" class="ma-2 pb-0 mt-1">
-      <v-icon color="success fs-14" class="pr-1 fs-14">mdi-check</v-icon>
+    <div v-else style="display: flex; height: 13px;" class="ma-2 pb-0 mt-1">
+      <v-icon color="success" class="pr-1 fs-14">mdi-check</v-icon>
       <div><i18n path="Common.CheckedInJustnow" /></div>
     </div>
     <v-dialog
@@ -132,6 +132,7 @@ export default {
   },
   mounted() {
     this.getEventId()
+    this.getOrgInfo()
     setTimeout(this.openPrint, 5000)
   },
   methods: {
@@ -153,6 +154,7 @@ export default {
     },
     setTemplates() {
       if (this.Template !== '') {
+        this.getOrgInfo()
         const str = this.getBadge(this.Template, this.item)
         this.noBadgeFound = true
         return str
@@ -205,6 +207,7 @@ export default {
           this.eventTitle = res.data.Title
           this.eventType = res.data.BusinessType
           this.printBadgeOnCheckIn = res.data.printBadgeOnCheckIn
+          this.logoId = res.data.Logo[0]
           this.getEventSelectedBadge()
         }
         return res
@@ -242,6 +245,7 @@ export default {
       }
     },
     openPrintForm() {
+      this.getOrgInfo()
       const str = this.getBadge(this.Template, this.item)
       this.$refs.iframe.contentWindow.document.write(
         `<div style="display:flex">${str}</div>`
@@ -296,7 +300,11 @@ export default {
         })
         if (result) {
           const orgInfo = formatGQLResult(result.data, 'OrganizationInfo')
-          this.logoId = orgInfo[0].Image[0]
+          if (this.$attrs.context.event.Logo.length > 0) {
+            this.logoId = this.$attrs.context.event.Logo[0]
+          } else {
+            this.logoId = orgInfo[0].Image[0]
+          }
         }
       } catch (e) {
         console.error(

@@ -181,7 +181,7 @@ export default {
   },
   methods: {
     async deleteComment(id) {
-      const confirmDeletion = confirm(
+      const confirmDeletion = await this.$confirm(
         'Are you sure you want to delete this comment?'
       )
       if (confirmDeletion) {

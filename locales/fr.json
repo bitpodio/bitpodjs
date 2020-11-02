@@ -659,7 +659,8 @@
     "Gallery": "Galerie",
     "Reviews": "Commentaires",
     "DateTime": "Date et l'heure",
-    "BadgesTemplates": "Modèles de badges"
+    "BadgesTemplates": "Modèles de badges",
+    "TicketCountRequired": "Nombre de billets *"
   },
   "Drawer" : {
     "CreateEventAction" : "Créer un événement",
