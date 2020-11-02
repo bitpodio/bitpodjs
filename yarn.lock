@@ -11735,6 +11735,11 @@ vue@^2.6.11:
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.11.tgz#76594d877d4b12234406e84e35275c6d514125c5"
   integrity sha512-VfPwgcGABbGAue9+sfrD4PuwFar7gPb1yl1UK1MwXoQPAw0BKSqWfoYCT/ThFrdEVWoI51dBuyCoiNU9bZDZxQ==
 
+vuetify-confirm@^2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/vuetify-confirm/-/vuetify-confirm-2.0.6.tgz#2fc790984096f2ae560f5926f32f3cba9f7a5006"
+  integrity sha512-WXgcj95kFbTAU0/On28iedSb71VjK0SfB6Q+MZIV/py3tAB3Yuq5PfPtT4lYYNvYHP4v3hmx4YyvdWE00Ea6DQ==
+
 vuetify-datetime-picker@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/vuetify-datetime-picker/-/vuetify-datetime-picker-2.1.1.tgz#582341b65fa6e8036cb10d7e56a90d9989335ad9"

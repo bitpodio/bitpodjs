@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     async onDelete() {
-      const res = confirm('Are you sure, You want to delete?')
+      const res = await this.$confirm('Are you sure, You want to delete?')
       if (res) {
         const ids = this.items.map(({ id }) => id)
         await this.onDeleteItem(ids)

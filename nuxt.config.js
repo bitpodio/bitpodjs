@@ -71,6 +71,8 @@ export default {
   plugins: [
     '~/plugins/eventBus.js',
     '~/plugins/bitpod',
+    // '~/plugins/v-confirm',
+    { src: '~/plugins/v-confirm', mode: 'client' },
     { src: '~/plugins/v-datetime-picker.js', mode: 'client' },
   ],
   /*
