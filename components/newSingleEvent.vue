@@ -1267,9 +1267,7 @@ export default {
         this.isOnlineEvent = true
         this.isMap = false
         this.isBitpodVirtual = false
-        // if (this.eventData.WebinarLink !== '') {
         this.eventData.WebinarLink = ''
-        // }
         this.eventData.JoiningInstruction = ''
       }
       if (value === 'Bitpod Virtual') {
