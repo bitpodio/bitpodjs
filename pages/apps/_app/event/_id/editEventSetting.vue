@@ -56,7 +56,7 @@
                 dense
               ></v-text-field>
             </v-col>
-            <v-col cols="12" sm="6" md="12">
+            <v-col cols="12" sm="6" md="12" class="pb-0">
               <v-text-field
                 v-model="formData.UniqLink"
                 label="Event Link*"
@@ -70,11 +70,14 @@
               ></v-text-field>
               <span
                 v-if="isInvalidEventLink && !!formData.UniqLink"
-                class="red--text pa-3 pt-0 body-1"
+                class="red--text caption pl-3 pt-0"
                 >{{ uniqueLinkMessage }}</span
               >
+              <span v-else style="height: 14px;" class="transparent--text">{{
+                uniqueMsg
+              }}</span>
             </v-col>
-            <v-col cols="12" class="mb-6">
+            <v-col cols="12" class="mb-6 mt-0">
               <span>Cancellation Policy</span>
               <RichText v-model="formData.CancellationPolicy" />
             </v-col>
@@ -124,6 +127,7 @@ export default {
       eventPrivacyDropdown: [],
       currencyDropdown: [],
       currency: [],
+      uniqueMsg: 'event link',
       data: {
         event: {},
       },

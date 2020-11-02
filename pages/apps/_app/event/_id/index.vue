@@ -1342,7 +1342,6 @@ import editBadgeForm from './editBadgeForm.vue'
 import makeCopy from './makeCopy.vue'
 import badge from '~/config/apps/event/gql/badge.gql'
 import organizationInfo from '~/config/apps/event/gql/organizationInfo.gql'
-import eventAttendees from '~/config/apps/event/gql/eventAttendees.gql'
 import nuxtconfig from '~/nuxt.config'
 import Grid from '~/components/common/grid'
 import File from '~/components/common/form/file.vue'
@@ -1530,7 +1529,7 @@ export default {
   },
   mounted() {
     this.getAttendees()
-    setTimeout(this.openPrint, 5000)
+    setTimeout(this.openPrint, 3000)
   },
 
   methods: {
@@ -1554,19 +1553,29 @@ export default {
     },
     openPrintForm() {
       this.getAttendees()
-      this.attendees.map((ele) => {
-        const str = this.getBadgePrinted(this.badgeData.Template, ele)
+      if (this.attendees.length > 0) {
+        this.attendees.map((ele) => {
+          const str = this.getBadgePrinted(this.badgeData.Template, ele)
 
-        if (
-          this.eventData.LocationType === 'Venue' &&
-          this.$refs.iframe &&
-          this.$refs.printForm
-        ) {
-          this.$refs.iframe.contentWindow.document.write(
-            `<div style="display:flex">${str}</div>`
-          )
-        }
-      })
+          if (
+            this.eventData.LocationType === 'Venue' &&
+            this.$refs.iframe &&
+            this.$refs.printForm
+          ) {
+            this.$refs.iframe.contentWindow.document.write(
+              `<div style="display:flex">${str}</div>`
+            )
+          }
+        })
+      } else {
+        const str = this.getBadge(this.badgeData.Template)
+        this.$refs.iframe.contentWindow.document.write(
+          `<div style="display:flex">${str}</div>`
+        )
+      }
+      setTimeout(this.getPrinted, 3000)
+    },
+    getPrinted() {
       this.$refs.iframe.contentWindow.print()
       this.$refs.iframe.contentWindow.close()
       this.$refs.iframe.contentWindow.document.close()
@@ -1582,22 +1591,12 @@ export default {
     },
     async getAttendees() {
       try {
-        const result = await this.$apollo.query({
-          query: gql`
-            ${eventAttendees}
-          `,
-          variables: {
-            filters: {
-              where: {
-                EventId: this.$route.params.id,
-              },
-            },
-          },
-        })
-        if (result) {
-          const attendeesData = formatGQLResult(result.data, 'Attendee')
-          this.attendees = attendeesData
-          return attendeesData
+        const url = this.$bitpod.getApiUrl()
+        const res = await this.$axios.get(
+          `${url}Events/${this.$route.params.id}/Attende`
+        )
+        if (res) {
+          this.attendees = res.data
         }
       } catch (e) {
         console.error(
@@ -2126,6 +2125,7 @@ export default {
         this.updateRegistrationSetting(this.eventData)
         this.getSeatMap(this.eventData)
         this.updateStepper()
+        this.getAttendees()
         if (event[0].Images.length > 0) {
           this.getBannerImageName(event[0].Images[0])
         }
