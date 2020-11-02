@@ -31,6 +31,7 @@
             :rules="rules"
             readonly
             outlined
+            append-icon="fa-calendar"
             dense
             v-bind="attrs"
             v-on="on"

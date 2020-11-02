@@ -1293,6 +1293,7 @@ export default {
           orgInfoFilters: {
             where: {},
           },
+          fetchPolicy: 'no-cache',
         }
       },
       update(data) {
