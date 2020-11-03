@@ -431,7 +431,6 @@
                           registrationRadio = ''
                           openRadio = ''
                           priorInvite = {}
-                          priorInviteeSelected = []
                         "
                       >
                         <v-icon dark left>mdi-replay</v-icon>
@@ -766,7 +765,7 @@
     </v-dialog>
     <v-dialog v-model="previousInviteDialog" width="600px">
       <v-card>
-        <v-card-title class="d-flex align-start px-2 pl-4">
+        <v-card-title class="d-flex align-start px-2 pl-4 p-0">
           <h2 class="black--text pt-0 pb-0 text-h5">
             <i18n path="Common.SelectPriorInvite" />
           </h2>
@@ -777,10 +776,9 @@
             </v-btn>
           </div>
         </v-card-title>
-        <v-container class="pt-12 px-4">
+        <v-container class="pt-0 px-4">
           <Grid
             v-if="!editDraft"
-            :value="priorInviteeSelected"
             view-name="inviteeEventTasks"
             :content="CRMcontent()"
             :single-select="true"
@@ -788,7 +786,6 @@
           />
           <Grid
             v-else
-            :value="priorInviteeSelected"
             view-name="inviteeEventTasks"
             :filter="filter"
             :content="CRMcontent()"
@@ -878,7 +875,6 @@ export default {
       scheduleInvite: false,
       scheduledTime: '',
       selectAll: false,
-      priorInviteeSelected: [],
       validDate: false,
       invalid: true,
       templateObject: '',
@@ -888,7 +884,7 @@ export default {
     filter() {
       return {
         where: {
-          id: this.draftData.EventId,
+          EventId: this.draftData.EventId,
         },
       }
     },
@@ -970,7 +966,6 @@ export default {
       )
       this.registrationRadio = this.draftData.RegistrationCondition
       if (this.priorSelectedData) {
-        this.priorInviteeSelected = [this.priorSelectedData]
         this.openRadio = this.draftData.PreviousEmailCondition
         this.priorInvite = this.priorSelectedData
       }
@@ -1039,7 +1034,6 @@ export default {
         this.templateSubject = ''
         this.acknowledgement = false
         this.disableButton = false
-        this.priorInviteeSelected = []
         this.scheduledTime = ''
         this.scheduleInvite = false
       }

@@ -4753,7 +4753,7 @@ export default {
         hideDefaultFooter: false,
         showExpand: false,
         singleExpand: false,
-        showSelect: true,
+        showSelect: false,
         hideFilter: false,
         hideSearch: true,
       },
