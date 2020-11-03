@@ -1168,7 +1168,7 @@ export default {
       if (
         this.actionType === 'Edit' ||
         isInvalidSlot === false ||
-        confirm(this.$t('Messages.Warn.OverLapSessionMsg'))
+        (await this.$confirm(this.$t('Messages.Warn.OverLapSessionMsg')))
       ) {
         const ObjectID5 = (
           m = Math,

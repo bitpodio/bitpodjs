@@ -1153,7 +1153,7 @@ export default {
         document.getElementsByClassName(
           'pac-container pac-logo'
         )[0].style.display = 'none'
-      }, 1000)
+      }, 2000)
     },
     isEmptyAddress() {
       const { City, State, Country, PostalCode } = this.venueAddress

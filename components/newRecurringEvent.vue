@@ -2037,9 +2037,7 @@ export default {
           !isLocationTypeEmpty.includes(true) &&
           !isInvalidSessionMap.includes(true) &&
           (isInvalidSlot === false ||
-            confirm(
-              'This session overlaps with another session, are you sure? click Yes to create and cancel to cancel it.'
-            ))
+            (await this.$confirm(this.$t('Messages.Warn.OverLapSessionMsg'))))
         ) {
           this.isSaveButtonDisabled = true
           this.eventData.EventManager = this.$auth.$state.user.data.email
