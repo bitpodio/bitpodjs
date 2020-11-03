@@ -385,9 +385,9 @@
     "RecurringEventLocation" : "Emplacement *",
     "NewDefaultForm" : "Nouveau {subTitle}",
     "EditDefaultForm" : "Editer {subTitle}",
-    "YouMayReferInviteMembers" : "Vous pouvez consulter les données des membres d'invite en utilisant des expressions de marque de réservation dans la ligne d'objet.  E.g: $ {Contact.FirstName } $ {Contact.LastName } $ {OrganizationInfo.Name }",
+    "YouMayReferInviteMembers" : "Vous pouvez consulter les données des membres d'invite en utilisant des expressions de marque de réservation dans la ligne d'objet. e.g:{contactTemplateData}",
     "SessionInformation" : "Informations sur la session",
-    "YouMayReferInviteMembersData" : "Vous pouvez consulter les données des membres d'invite en utilisant des expressions de marque de réservation dans la ligne d'objet.  E.g: $ {Registration.FirstName } $ {Registration.LastName } $ {OrganizationInfo.Name }",
+    "YouMayReferInviteMembersData" : "Vous pouvez consulter les données des membres d'invite en utilisant des expressions de marque de réservation dans la ligne d'objet. e.g:{registrationTemplateData}",
     "TicketDeletedSuccessfully" : "Ticket supprimé avec succès",
     "Draft" : "Ébauche",
     "Join" : "Rejoindre",
@@ -759,7 +759,8 @@
     },
     "Warn" : {
       "UniqueLinkFormat" : "Minuscules lettres alphanumériques uniquement",
-      "OverLapSessionMsg" : "Cette session chevauche une autre session, êtes-vous sûr?  Cliquez sur Oui pour créer et annuler pour l'annuler."
+      "OverLapSessionMsg" : "Cette session chevauche une autre session, êtes-vous sûr?  Cliquez sur Oui pour créer et annuler pour l'annuler.",
+      "DeleteActivity": "Voulez-vous vraiment supprimer cette activité?"
     },
     "Success" : {
       "CopiedClipboard" : "Copié dans le presse-papiers",
@@ -780,7 +781,10 @@
       "AttachmentDeleteSuccess" : "Pièce jointe supprimée avec succès",
       "SeatLayoutAddSuccess" : "L'ajout de l'agencement de siège a abouti",
       "FailedFetchToken" : "Impossible d'extraire le jeton JWT.",
-      "SeatmapUpdateSuccess" : "Seatmap a été mis à jour avec succès"
+      "SeatmapUpdateSuccess" : "Seatmap a été mis à jour avec succès",
+      "EmailInviteSuccess": "Vos invitations par e-mail ont été mises à jour avec succès.",
+      "EmailSaveSuccess": "Vos invitations par e-mail ont été enregistrées avec succès.",
+      "TaskDeleteSuccess": "Tâche supprimée avec succès"
     }
   },
   "$vuetify": {

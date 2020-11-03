@@ -1,11 +1,25 @@
 <template>
   <v-flex>
-    <v-snackbar v-model="snackbar" :top="true" :timeout="1000">
-      <i18n path="Common.SomeErrorOccured" class="toast py-2 pr-1 pl-3" />
+    <v-snackbar v-model="snackbar" :top="true" :timeout="3000">
+      <div class="toast py-2 pr-1 pl-3 fs-16">
+        {{ snackbarText }}
+      </div>
     </v-snackbar>
+    <span v-if="editDraft">
+      <v-btn
+        icon
+        small
+        @click="
+          dialog = true
+          prefilData()
+        "
+      >
+        <v-icon class="fs-18">fa-pencil</v-icon>
+      </v-btn>
+    </span>
     <v-dialog v-model="dialog" persistent scrollable content-class="slide-form">
       <template v-slot:activator="{ on, attrs }">
-        <v-col class="px-0">
+        <v-col v-if="!editDraft" class="px-0">
           <v-btn
             text
             small
@@ -118,8 +132,13 @@
                         <v-col cols="12" class="pb-0">
                           <v-icon class="amber--text">fa-bulb</v-icon>
                           <v-card-text class="d-inline pa-0">
-                            <i18n path="Common.YouMayReferInviteMembers"
-                          /></v-card-text>
+                            {{
+                              $t('Common.YouMayReferInviteMembers', {
+                                contactTemplateData:
+                                  ' ${Registration.FirstName} ${Registration.LastName} ${OrganizationInfo.Name}',
+                              })
+                            }}</v-card-text
+                          >
                         </v-col>
                       </v-row>
                     </v-form>
@@ -760,8 +779,18 @@
         </v-card-title>
         <v-container class="pt-12 px-4">
           <Grid
+            v-if="!editDraft"
             :value="priorInviteeSelected"
             view-name="inviteeEventTasks"
+            :content="CRMcontent()"
+            :single-select="true"
+            @onSelectedListChange="previousInviteSelect"
+          />
+          <Grid
+            v-else
+            :value="priorInviteeSelected"
+            view-name="inviteeEventTasks"
+            :filter="filter"
             :content="CRMcontent()"
             :single-select="true"
             @onSelectedListChange="previousInviteSelect"
@@ -801,9 +830,30 @@ export default {
       default: 'My Template',
       required: false,
     },
+    draftTemplate: {
+      type: String,
+      default: '',
+      required: false,
+    },
+    editDraft: {
+      type: Boolean,
+      default: false,
+      required: false,
+    },
+    draftData: {
+      type: Object,
+      default: () => {},
+      required: false,
+    },
+    priorSelectedData: {
+      type: Object,
+      default: () => {},
+      required: false,
+    },
   },
   data() {
     return {
+      snackbarText: '',
       templateItems: [],
       selectedList: [],
       dialog: false,
@@ -835,6 +885,13 @@ export default {
     }
   },
   computed: {
+    filter() {
+      return {
+        where: {
+          id: this.draftData.EventId,
+        },
+      }
+    },
     dropdownOptions() {
       return this.template !== 'General Template'
         ? {
@@ -896,7 +953,40 @@ export default {
       }
     },
   },
+  mounted() {
+    if (this.editDraft) {
+      this.prefilData()
+    }
+  },
   methods: {
+    async prefilData() {
+      this.choosedTemplate = 3
+      this.subject = this.draftData.Title
+      this.senderName = this.draftData.SenderName
+      this.sender = this.draftData.Owner
+      this.setReplyTo = this.draftData.ReplyTo
+      this.selectAll = !(
+        this.draftData.ContactId && this.draftData.ContactId.length
+      )
+      this.registrationRadio = this.draftData.RegistrationCondition
+      if (this.priorSelectedData) {
+        this.priorInviteeSelected = [this.priorSelectedData]
+        this.openRadio = this.draftData.PreviousEmailCondition
+        this.priorInvite = this.priorSelectedData
+      }
+      this.RTEValue = this.draftTemplate
+      this.curentTab = 0
+      this.disableButton = false
+      this.selectedList = this.draftData.ContactId.map((i) => {
+        return { id: i }
+      })
+      const data = await Promise.all(
+        this.draftData.ContactId.map((i) => {
+          return this.$axios.$get(`${this.$bitpod.getApiUrl()}Contacts/${i}`)
+        })
+      )
+      this.selectedList = data
+    },
     campaignFormDisplayed() {
       if (this.template === 'General Template') {
         this.selectedList = this.$parent.$parent.$data.selectedItems
@@ -935,20 +1025,24 @@ export default {
     },
     resetForm() {
       this.dialog = false
-      this.selectedList = []
-      this.choosedTemplate = 0
-      this.curentTab = 0
-      this.RTEValue = ''
-      this.registrationRadio = ''
-      this.openRadio = ''
-      this.priorInvite = {}
-      this.templateID = ''
-      this.templateSubject = ''
-      this.acknowledgement = false
-      this.disableButton = false
-      this.priorInviteeSelected = []
-      this.scheduledTime = ''
-      this.scheduleInvite = false
+      if (this.editDraft) {
+        this.prefilData()
+      } else {
+        this.selectedList = []
+        this.choosedTemplate = 0
+        this.curentTab = 0
+        this.RTEValue = ''
+        this.registrationRadio = ''
+        this.openRadio = ''
+        this.priorInvite = {}
+        this.templateID = ''
+        this.templateSubject = ''
+        this.acknowledgement = false
+        this.disableButton = false
+        this.priorInviteeSelected = []
+        this.scheduledTime = ''
+        this.scheduleInvite = false
+      }
     },
     previousInviteSelect(data) {
       if (data && data.length) {
@@ -1035,17 +1129,36 @@ export default {
           if (saved) {
             postData.TemplateId = saved.data.id
           }
-          return this.$axios({
-            method: 'POST',
-            url: exceptionURL,
-            data: postData,
-          })
+          if (this.editDraft) {
+            return this.$axios({
+              method: 'PATCH',
+              url: `${exceptionURL}/${this.$route.params.id}`,
+              data: postData,
+            })
+          } else {
+            return this.$axios({
+              method: 'POST',
+              url: exceptionURL,
+              data: postData,
+            })
+          }
         })
         .then((data) => {
-          if (data.data.Status === 'Draft') {
-            this.resetForm()
+          if (this.editDraft) {
+            this.$parent.$apollo.queries.data.refresh()
+            this.dialog = false
+            if (data.data.Status === 'Draft') {
+              this.snackbarText = this.$t('Messages.Success.EmailInviteSuccess')
+              this.snackbar = true
+            }
+          } else {
+            if (data.data.Status === 'Draft') {
+              this.snackbarText = this.$t('Messages.Success.EmailSaveSuccess')
+              this.snackbar = true
+              this.resetForm()
+            }
+            this.acknowledgement = true
           }
-          this.acknowledgement = true
           return data
         })
         .catch(() => {

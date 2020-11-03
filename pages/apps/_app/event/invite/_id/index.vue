@@ -1,5 +1,10 @@
 <template>
   <v-flex d-flex flex-md-row flex-lg-row flex-column>
+    <v-snackbar v-model="snackbar" :top="true" :timeout="3000">
+      <div class="toast py-2 pr-1 pl-3 fs-16">
+        {{ snackbarText }}
+      </div>
+    </v-snackbar>
     <v-flex column xs12 sm12 md12 lg12>
       <div
         class="xs12 sm8 md8 lg8 boxview pa-3 mr-0 mb-4 pb-2 elevation-1 rounded-lg"
@@ -12,12 +17,28 @@
           </div>
           <v-spacer></v-spacer>
           <div class="mr-2 invite-actions d-none">
-            <span v-if="data.invites.Status === 'Draft'">
-              <v-btn icon small>
-                <v-icon class="fs-18">fa-pencil</v-icon>
-              </v-btn>
-            </span>
-            <v-btn icon small>
+            <div class="positionAbsolute editIcon">
+              <editDraft
+                v-if="data.invites.Status === 'Draft' && dataReady && prevReady"
+                :edit-draft="true"
+                :draft-data="data.invites"
+                :draft-template="draftTemplate"
+                :template="
+                  templateType === 'My Template' ||
+                  templateType === 'Invitation Template'
+                    ? 'Invitation Template'
+                    : 'General Template'
+                "
+                :my-template="
+                  templateType === 'My Template' ||
+                  templateType === 'Invitation Template'
+                    ? 'My Template'
+                    : 'My General Template'
+                "
+                :prior-selected-data="priorData"
+              />
+            </div>
+            <v-btn icon small @click="deleteSaved">
               <v-icon class="fs-18">fa-trash</v-icon>
             </v-btn>
           </div>
@@ -62,7 +83,13 @@
             </div>
             <div class="d-flex flex-column pa-2 event-tile-right greybg">
               <div class="event-tile-value text-truncate">
-                <span v-if="data.invites.Status === 'Completed'">
+                <span
+                  v-if="
+                    data.invites.Status === 'Completed' &&
+                    analytics &&
+                    analytics.Sent
+                  "
+                >
                   {{ analytics.Sent }}
                 </span>
                 <span v-else><i18n path="Common.0" /></span>
@@ -82,7 +109,13 @@
             </div>
             <div class="d-flex flex-column pa-2 event-tile-right greybg">
               <div class="event-tile-value text-truncate">
-                <span v-if="data.invites.Status === 'Completed'">
+                <span
+                  v-if="
+                    data.invites.Status === 'Completed' &&
+                    analytics &&
+                    analytics.Delivered
+                  "
+                >
                   {{ analytics.Delivered }}
                 </span>
                 <span v-else><i18n path="Common.0" /></span>
@@ -102,7 +135,13 @@
             </div>
             <div class="d-flex flex-column pa-2 event-tile-right greybg">
               <div class="event-tile-value text-truncate">
-                <span v-if="data.invites.Status === 'Completed'">
+                <span
+                  v-if="
+                    data.invites.Status === 'Completed' &&
+                    analytics &&
+                    analytics.Open
+                  "
+                >
                   {{ analytics.Open }}
                 </span>
                 <span v-else><i18n path="Common.0" /></span>
@@ -122,7 +161,13 @@
             </div>
             <div class="d-flex flex-column pa-2 event-tile-right greybg">
               <div class="event-tile-value text-truncate">
-                <span v-if="data.invites.Status === 'Completed'">
+                <span
+                  v-if="
+                    data.invites.Status === 'Completed' &&
+                    analytics &&
+                    analytics.SpamReport
+                  "
+                >
                   {{ analytics.SpamReport }}
                 </span>
                 <span v-else><i18n path="Common.0" /></span>
@@ -142,7 +187,13 @@
             </div>
             <div class="d-flex flex-column pa-2 event-tile-right greybg">
               <div class="event-tile-value text-truncate">
-                <span v-if="data.invites.Status === 'Completed'">
+                <span
+                  v-if="
+                    data.invites.Status === 'Completed' &&
+                    analytics &&
+                    analytics.Unsubscribed
+                  "
+                >
                   {{ analytics.Unsubscribed }}
                 </span>
                 <span v-else><i18n path="Common.0" /></span>
@@ -162,7 +213,13 @@
             </div>
             <div class="d-flex flex-column pa-2 event-tile-right greybg">
               <div class="event-tile-value text-truncate">
-                <span v-if="data.invites.Status === 'Completed'">
+                <span
+                  v-if="
+                    data.invites.Status === 'Completed' &&
+                    analytics &&
+                    analytics.isRegistered
+                  "
+                >
                   {{ analytics.isRegistered }}
                 </span>
                 <span v-else><i18n path="Common.0" /></span>
@@ -225,15 +282,24 @@ import gql from 'graphql-tag'
 import format from 'date-fns/format'
 import Grid from '~/components/common/grid'
 import invites from '~/config/apps/event/gql/eventInviteSummary.gql'
+import editDraft from '~/config/templates/grids/eventInvites-grid/actions/grid/sendEventInvite.vue'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin } from '~/utility'
 export default {
   components: {
     Grid,
+    editDraft,
   },
   mixins: [configLoaderMixin],
   data() {
     return {
+      snackbar: false,
+      snackbarText: '',
+      dataReady: false,
+      prevReady: false,
+      draftTemplate: '',
+      templateType: 'My Template',
+      priorData: {},
       loading: 0,
       data: {
         invites: {},
@@ -296,7 +362,7 @@ export default {
         )}`
       )
       if (res) {
-        this.analytics = res.data[0]
+        this.analytics = res.data[0] || {}
         return res
       }
     } catch (e) {
@@ -304,11 +370,62 @@ export default {
     }
   },
   methods: {
+    async deleteSaved() {
+      const url = this.$bitpod.getApiUrl()
+      const check = await this.$confirm(this.$t('Messages.Warn.DeleteActivity'))
+      let res = null
+      if (check === true) {
+        try {
+          res = await this.$axios.$delete(
+            `${url}CRMACTIVITIES/${this.$route.params.id}`
+          )
+        } catch (e) {
+          console.error(
+            `Error in invitationHistory-grid while making a DELETE call to CRMACTIVITIES model in method deleteSaved context: url:-${url}`,
+            e
+          )
+        }
+        if (res) {
+          this.snackbarText = this.$t('Messages.Success.TaskDeleteSuccess')
+          this.snackbar = true
+          this.$router.back()
+        }
+      }
+    },
     formatDate(date) {
       return date ? format(new Date(date), 'PPp') : '-'
     },
     formatField(fieldValue) {
       return fieldValue || '-'
+    },
+    async getTemplate(id) {
+      if (!id) {
+        this.dataReady = true
+      } else {
+        const temp = await this.$axios.$get(
+          `${this.$bitpod.getApiUrl()}MarketingTemplates/${id}`
+        )
+        if (temp) {
+          this.draftTemplate = temp.Body
+          this.dataReady = true
+          if (temp.Type) {
+            this.templateType = temp.Type
+          }
+        }
+      }
+    },
+    async getPrior(id) {
+      if (!id) {
+        this.prevReady = true
+      } else {
+        const prev = await this.$axios.$get(
+          `${this.$bitpod.getApiUrl()}CRMACTIVITIES/${id}`
+        )
+        if (prev) {
+          this.priorData = prev
+          this.prevReady = true
+        }
+      }
     },
   },
   apollo: {
@@ -329,6 +446,10 @@ export default {
       },
       update(data) {
         const invites = formatGQLResult(data, 'CRMActivity')
+        if (invites && invites.length) {
+          this.getTemplate(invites[0].TemplateId)
+          this.getPrior(invites[0].ParentId)
+        }
         return {
           invites: invites.length > 0 ? invites[0] : {},
         }
@@ -350,5 +471,9 @@ export default {
 <style scoped>
 .boxview:hover .invite-actions {
   display: block !important;
+}
+.editIcon {
+  right: 60px;
+  top: 31px;
 }
 </style>

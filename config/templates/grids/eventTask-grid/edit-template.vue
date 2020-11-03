@@ -264,8 +264,13 @@
                         <v-col cols="12" class="pb-0">
                           <v-icon class="amber--text">fa-bulb</v-icon>
                           <v-card-text class="d-inline pa-0">
-                            <i18n path="Common.YouMayReferInviteMembersData"
-                          /></v-card-text>
+                            {{
+                              $t('Common.YouMayReferInviteMembersData', {
+                                YouMayReferInviteMembersData:
+                                  ' ${Contact.FirstName} ${Contact.LastName} ${OrganizationInfo.Name}',
+                              })
+                            }}
+                          </v-card-text>
                         </v-col>
                       </v-row>
                     </v-form>
