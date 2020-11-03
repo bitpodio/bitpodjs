@@ -1873,6 +1873,9 @@ export default {
     deleteTicket(index) {
       if (this.tickets.length > 1) {
         this.tickets.splice(index, 1)
+      } else {
+        const ticket = this.ticketDefaultData()
+        this.tickets = [ticket]
       }
     },
     deleteSession(index) {
@@ -2195,7 +2198,7 @@ export default {
         StartTime: this.AvailableStartHour || '10:00',
         EndTime: this.AvailableEndHour || '19:00',
         Duration: '30',
-        Timezone: '',
+        Timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
         LocationType: '',
         Type: 'Personal',
         Tickets: '0 ticket',

@@ -178,6 +178,7 @@
                         placeholder="Address*"
                         :required="true"
                         @placechanged="getAddressData"
+                        @focus="removeSearchAddress"
                         @change="changeAddressData($event)"
                       ></vue-google-autocomplete>
                     </no-ssr>
@@ -492,10 +493,10 @@
 <script>
 import addMonths from 'date-fns/addMonths'
 import addDays from 'date-fns/addDays'
+import { zonedTimeToUtc } from 'date-fns-tz'
 import gql from 'graphql-tag'
 import strings from '../strings.js'
 import CustomDate from '~/components/common/form/date.vue'
-import { formatTimezoneDateFieldsData } from '~/utility/form.js'
 import Lookup from '~/components/common/form/lookup.vue'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import Timezone from '~/components/common/form/timezone'
@@ -872,6 +873,20 @@ export default {
     deleteTicket(index) {
       if (this.tickets.length > 1) {
         this.tickets.splice(index, 1)
+      } else {
+        const ticket = this.resetTicket()
+        this.tickets = [ticket]
+      }
+    },
+    resetTicket() {
+      return {
+        TicketId: 0,
+        Code: 'General admission',
+        Type: 'Free',
+        Amount: 0,
+        StartDate: new Date(),
+        EndDate: this.eventData.EndDate,
+        TicketCount: 100,
       }
     },
     ticketStartDateRule(index) {
@@ -1046,6 +1061,13 @@ export default {
         this.eventData.WebinarLink = ''
       }
     },
+    getUtcToZonedDateTime(date, timezone) {
+      if (date) {
+        const formattedDate = new Date(date)
+        const zonedDate = zonedTimeToUtc(formattedDate, timezone)
+        return zonedDate
+      }
+    },
     async saveRecord() {
       const isValidTicket = this.tickets.map((ticket, index) => {
         return (
@@ -1059,13 +1081,15 @@ export default {
       if (!isValidTicket.includes(false)) {
         this.isSaveButtonDisabled = true
         this.setLoationType()
-        const convertedEventRecord = formatTimezoneDateFieldsData(
-          this.eventData,
-          this.fields
-        )
         const eventInfo = JSON.parse(JSON.stringify(this.eventData))
-        eventInfo.StartDate = convertedEventRecord.StartDate
-        eventInfo.EndDate = convertedEventRecord.EndDate
+        eventInfo.StartDate = this.getUtcToZonedDateTime(
+          eventInfo.StartDate,
+          eventInfo.Timezone
+        )
+        eventInfo.EndDate = this.getUtcToZonedDateTime(
+          eventInfo.EndDate,
+          eventInfo.Timezone
+        )
         eventInfo.EventManager = this.$auth.$state.user.data.email
         eventInfo.Organizer = this.$auth.$state.user.data.name
 
@@ -1107,6 +1131,13 @@ export default {
           }
         }
       }
+    },
+    removeSearchAddress() {
+      setTimeout(() => {
+        document.getElementsByClassName(
+          'pac-container pac-logo'
+        )[0].style.display = 'none'
+      }, 1000)
     },
     isEmptyAddress() {
       const { City, State, Country, PostalCode } = this.venueAddress
