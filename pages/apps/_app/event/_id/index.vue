@@ -1653,11 +1653,20 @@ export default {
       )
     },
     openPrintForm() {
+      const logoUrl = `src="${
+        nuxtconfig.publicRuntimeConfig.cdnUri +
+        'admin-default-template-logo.png'
+      }"`
+      let str
       this.getAttendees()
       if (this.attendees.length > 0) {
         this.attendees.map((ele) => {
-          const str = this.getBadgePrinted(this.badgeData.Template, ele)
-
+          if (this.logoId !== '') {
+            str = this.getBadgePrinted(this.badgeData.Template, ele)
+          } else {
+            str = this.getBadgePrinted(this.badgeData.Template, ele)
+            str = str.replace(logoUrl, '')
+          }
           if (
             this.eventData.LocationType === 'Venue' &&
             this.$refs.iframe &&
@@ -1669,7 +1678,12 @@ export default {
           }
         })
       } else {
-        const str = this.getBadge(this.badgeData.Template)
+        if (this.logoId !== '') {
+          str = this.getBadge(this.badgeData.Template)
+        } else {
+          str = this.getBadge(this.badgeData.Template)
+          str = str.replace(logoUrl, '')
+        }
         this.$refs.iframe.contentWindow.document.write(
           `<div style="display:flex">${str}</div>`
         )
@@ -1684,8 +1698,10 @@ export default {
     openPrint() {
       this.$refs.iframe.contentWindow.document.firstChild.innerHTML = this.$refs.printForm.innerHTML
     },
-    openBadgeForm() {
-      const res = this.$confirm('New badge will replace your existing badge.')
+    async openBadgeForm() {
+      const res = await this.$confirm(
+        'New badge will replace your existing badge.'
+      )
       if (res) {
         this.newBadge = true
       }
@@ -1715,7 +1731,12 @@ export default {
           .replace('{{ FullName }}', `${this.$auth.user.data.name}`)
           .replace('{{ Category }}', `${this.getBadgeCategory}`)
           .replace('{{ Organization }}', `${this.$store.state.currentOrg.name}`)
-          .replace(logoUrl, this.getAttachmentLink(this.logoId, true))
+        if (this.logoId !== '') {
+          str = str.replace(
+            logoUrl,
+            this.getAttachmentLink(this.logoId, true) || logoUrl
+          )
+        }
         if (this.data.event && this.data.event.Title) {
           str = str.replace('{{ EventName }}', `${this.data.event.Title}`)
         }
@@ -1813,7 +1834,9 @@ export default {
             `${(ele.regType && ele.regType.Name) || 'Guest'}`
           )
           .replace('{{ Organization }}', `${ele.CompanyName}`)
-          .replace(logoUrl, this.getAttachmentLink(this.logoId, true))
+        if (this.logoId !== '') {
+          str = str.replace(logoUrl, this.getAttachmentLink(this.logoId, true))
+        }
         if (this.data.event && this.data.event.Title) {
           str = str.replace('{{ EventName }}', `${this.data.event.Title}`)
         }
@@ -1859,7 +1882,16 @@ export default {
         })
         if (result) {
           const orgInfo = formatGQLResult(result.data, 'OrganizationInfo')
-          this.logoId = this.eventData.Logo[0] || orgInfo[0].Image[0]
+          if (this.eventData.Logo.length > 0) {
+            this.logoId = this.eventData.Logo[0]
+          } else if (
+            this.eventData.Logo.length === 0 &&
+            orgInfo[0].Image.length === 0
+          ) {
+            this.logoId = ''
+          } else {
+            this.logoId = orgInfo[0].Image[0]
+          }
         }
       } catch (e) {
         console.error(
