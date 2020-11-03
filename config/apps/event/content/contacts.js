@@ -399,7 +399,7 @@ export default {
         model: 'Contact',
         defaultSort: 'createdDate DESC',
       },
-      itemTitle: 'Contact',
+      itemTitle: 'Common.Contact',
       title: 'Common.Contacts',
       defaultSort: 'createdDate DESC',
     },

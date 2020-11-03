@@ -755,7 +755,10 @@
       "RefundPaidAmount" : "Le montant remboursé ne peut être supérieur ou égal au montant total payé",
       "RefundAmountMsg" : "Le montant ne doit pas être inférieur ou égal à 0",
       "InvalidDisplayOrder" : "L'ordre d'affichage ne doit pas être vide et inférieur à 1",
-      "EventEndDate": "La date de fin de l'événement ne doit pas être inférieure à la date actuelle" 
+      "EventEndDate": "La date de fin de l'événement ne doit pas être inférieure à la date actuelle",
+      "FieldRequired": "Ce champ est requis *",
+      "EmailInvalid": "Le courriel est invalide",
+      "HttpsUrl": "Cela doit être une URL https"
     },
     "Warn" : {
       "UniqueLinkFormat" : "Minuscules lettres alphanumériques uniquement",

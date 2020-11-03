@@ -11,7 +11,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'Registation Type',
+      itemTitle: 'Common.RegistrationType',
       hidden: true,
       fields: {
         Name: {

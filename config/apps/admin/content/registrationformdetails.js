@@ -12,7 +12,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'Registration Form',
+      itemTitle: 'Common.RegistrationForm',
       default: false,
       fields: {
         Label: {
