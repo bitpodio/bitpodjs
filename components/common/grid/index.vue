@@ -142,6 +142,17 @@
               :headers="props.headers"
             />
           </template>
+          <template
+            v-for="h in headers"
+            v-slot:[`header.${h.value}`]="{ header }"
+          >
+            <v-tooltip :key="h.value" bottom>
+              <template v-slot:activator="{ on }">
+                <span v-on="on">{{ header.text }}</span>
+              </template>
+              <span>{{ header.text }}</span>
+            </v-tooltip>
+          </template>
         </v-data-table>
       </v-skeleton-loader>
     </div>

@@ -5,6 +5,7 @@
       app
       class="nav-bar greybg"
       :width="240"
+      :right="$vuetify.rtl"
     >
       <v-toolbar-title
         class="ml-0 pl-3 px-2 py-1 logo-ds d-none d-sm-flex d-md-none align-center"
