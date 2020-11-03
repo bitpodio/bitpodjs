@@ -160,10 +160,15 @@
     <v-flex column class="mxw-w30">
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-2 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
-          <h2 class="body-1 pb-1" :title="$t('Common.OrganizationInformation')">
-            <i class="fa fa-location pr-1" aria-hidden="true"></i>
-            <i18n path="Common.OrganizationInformation" />
-          </h2>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <h2 class="body-1 pb-0" v-bind="attrs" v-on="on">
+                <i class="fa fa-tag pr-1" aria-hidden="true"></i>
+                <i18n path="Common.OrganizationInformation" />
+              </h2>
+            </template>
+            <span><i18n path="Common.OrganizationInformation" /></span>
+          </v-tooltip>
           <v-spacer></v-spacer>
           <v-btn text small @click="editOrgInfo = true">
             <v-icon left class="fs-16">fa-pencil</v-icon
@@ -236,10 +241,15 @@
 
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-2 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
-          <h2 class="body-1 pb-1" :title="$t('Common.Settings')">
-            <i class="fa fa-cog pr-1" aria-hidden="true"></i>
-            <i18n path="Common.Settings" />
-          </h2>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <h2 class="body-1 pb-0" v-bind="attrs" v-on="on">
+                <i class="fa fa-tag pr-1" aria-hidden="true"></i>
+                <i18n path="Common.Settings" />
+              </h2>
+            </template>
+            <span><i18n path="Common.Settings" /></span>
+          </v-tooltip>
           <v-spacer></v-spacer>
           <v-btn text small @click="editOrgSetting = true">
             <v-icon left class="fs-16">fa-pencil</v-icon
@@ -285,10 +295,15 @@
 
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-2 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
-          <h2 class="body-1 pb-1" :title="$t('Common.SocialMedia')">
-            <i class="fa fa-share-square-o pr-1" aria-hidden="true"></i>
-            <i18n path="Common.SocialMedia" />
-          </h2>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <h2 class="body-1 pb-0" v-bind="attrs" v-on="on">
+                <i class="fa fa-tag pr-1" aria-hidden="true"></i>
+                <i18n path="Common.SocialMedia" />
+              </h2>
+            </template>
+            <span><i18n path="Common.SocialMedia" /></span>
+          </v-tooltip>
           <v-spacer></v-spacer>
           <v-btn text small @click="editSocialMedia = true">
             <v-icon left class="fs-16">fa-pencil</v-icon
@@ -321,10 +336,15 @@
 
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-2 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
-          <h2 class="body-1 pb-1" :title="$t('Common.WorkTimings')">
-            <i class="fa fa-timer pr-1" aria-hidden="true"></i>
-            <i18n path="Common.WorkTimings" />
-          </h2>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <h2 class="body-1 pb-0" v-bind="attrs" v-on="on">
+                <i class="fa fa-tag pr-1" aria-hidden="true"></i>
+                <i18n path="Common.WorkTimings" />
+              </h2>
+            </template>
+            <span><i18n path="Common.WorkTimings" /></span>
+          </v-tooltip>
           <v-spacer></v-spacer>
           <v-btn text small @click="editWorkTiming = true">
             <v-icon left class="fs-16">fa-pencil</v-icon

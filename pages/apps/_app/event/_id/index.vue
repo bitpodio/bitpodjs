@@ -1052,10 +1052,15 @@
     <v-flex column class="mxw-w30">
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 py-0 pr-2 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
-          <h2 class="body-1 pb-0" :title="$t('Common.EventInformation')">
-            <i class="fa fa-info-circle pr-1" aria-hidden="true"></i>
-            <i18n path="Common.EventInformation" />
-          </h2>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <h2 class="body-1 pb-0" v-bind="attrs" v-on="on">
+                <i class="fa fa-info-circle pr-1" aria-hidden="true"></i>
+                <i18n path="Common.EventInformation" />
+              </h2>
+            </template>
+            <span><i18n path="Common.EventInformation" /></span>
+          </v-tooltip>
           <v-spacer></v-spacer>
           <v-btn text small @click.stop="eventForm = true">
             <v-icon left class="fs-16">fa-pencil</v-icon
@@ -1095,10 +1100,15 @@
         class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pb-0 pr-2 box-grey"
       >
         <v-flex class="d-flex justify-center align-center pb-2">
-          <h2 class="body-1 pb-0" :title="$t('Common.Badge')">
-            <i class="fa fa-id-badge pr-1" aria-hidden="true"></i>
-            <i18n path="Common.Badge" />
-          </h2>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <h2 class="body-1 pb-0" v-bind="attrs" v-on="on">
+                <i class="fa fa-id-badge pr-1" aria-hidden="true"></i>
+                <i18n path="Common.Badge" />
+              </h2>
+            </template>
+            <span><i18n path="Common.Badge" /></span>
+          </v-tooltip>
           <v-spacer></v-spacer>
           <v-btn text small @click="openBadgeForm">
             <v-icon left>mdi-plus</v-icon><i18n path="Drawer.Create" />
@@ -1149,10 +1159,15 @@
 
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-0 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
-          <h2 class="body-1 pb-0" :title="$t('Common.SEODetails')">
-            <i class="fa fa-tag pr-1" aria-hidden="true"></i>
-            <i18n path="Common.SEODetails" />
-          </h2>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <h2 class="body-1 pb-0" v-bind="attrs" v-on="on">
+                <i class="fa fa-tag pr-1" aria-hidden="true"></i>
+                <i18n path="Common.SEODetails" />
+              </h2>
+            </template>
+            <span><i18n path="Common.SEODetails" /></span>
+          </v-tooltip>
           <v-spacer></v-spacer>
           <v-btn text small @click="seoForm = true">
             <v-icon left class="fs-16">fa-pencil</v-icon
@@ -1182,10 +1197,15 @@
 
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-2 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
-          <h2 class="body-1 pb-0" :title="$t('Common.EventSettings')">
-            <i class="fa fa-settings pr-1" aria-hidden="true"></i>
-            <i18n path="Common.EventSettings" />
-          </h2>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <h2 class="body-1 pb-0" v-bind="attrs" v-on="on">
+                <i class="fa fa-settings pr-1" aria-hidden="true"></i>
+                <i18n path="Common.EventSettings" />
+              </h2>
+            </template>
+            <span><i18n path="Common.EventSettings" /></span>
+          </v-tooltip>
           <v-spacer></v-spacer>
           <v-btn text small @click="eventSetting = true">
             <v-icon left class="fs-16">fa-pencil</v-icon
@@ -1311,13 +1331,15 @@
       </div>
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-0 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
-          <h2
-            class="body-1 pb-0"
-            :title="$t('Common.RegistrationPageSettings')"
-          >
-            <i class="fa fa-settings pr-1" aria-hidden="true"></i>
-            <i18n path="Common.RegistrationPageSettings" />
-          </h2>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <h2 class="body-1 pb-0" v-bind="attrs" v-on="on">
+                <i class="fa fa-tag pr-1" aria-hidden="true"></i>
+                <i18n path="Common.RegistrationPageSettings" />
+              </h2>
+            </template>
+            <span><i18n path="Common.RegistrationPageSettings" /></span>
+          </v-tooltip>
           <v-spacer></v-spacer>
           <v-btn text small @click="siteSetting = true">
             <v-icon left class="fs-16">fa-pencil</v-icon

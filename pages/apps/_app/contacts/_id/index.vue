@@ -137,10 +137,15 @@
     </v-flex>
     <v-flex class="mxw-w30">
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 py-0 box-grey">
-        <h2 class="body-1 pb-1" :title="$t('Common.ContactInformation')">
-          <i class="fa fa-info-circle pr-1" aria-hidden="true"></i>
-          <i18n path="Common.ContactInformation" />
-        </h2>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <h2 class="body-1 pb-0" v-bind="attrs" v-on="on">
+              <i class="fa fa-tag pr-1" aria-hidden="true"></i>
+              <i18n path="Common.ContactInformation" />
+            </h2>
+          </template>
+          <span><i18n path="Common.ContactInformation" /></span>
+        </v-tooltip>
         <v-divider></v-divider>
         <v-row>
           <v-col class="col-md-6 col-12">
@@ -197,10 +202,15 @@
       </div>
 
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 py-0 box-grey">
-        <h2 class="body-1 pb-1" :title="$t('Common.AddressInformation')">
-          <i class="fa fa-location pr-1" aria-hidden="true"></i>
-          <i18n path="Common.AddressInformation" />
-        </h2>
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <h2 class="body-1 pb-0" v-bind="attrs" v-on="on">
+              <i class="fa fa-tag pr-1" aria-hidden="true"></i>
+              <i18n path="Common.AddressInformation" />
+            </h2>
+          </template>
+          <span><i18n path="Common.AddressInformation" /></span>
+        </v-tooltip>
         <v-divider></v-divider>
         <v-row>
           <v-col class="col-md-6 col-12">
