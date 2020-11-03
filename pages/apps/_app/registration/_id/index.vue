@@ -346,7 +346,7 @@
     <v-flex column class="mxw-w30">
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 py-0 pr-2 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
-          <h2 class="body-1 pb-0">
+          <h2 class="body-1 pb-0" :title="$t('Common.EventInformation')">
             <i class="fa fa-info-circle pr-1" aria-hidden="true"></i>
             <i18n path="Common.EventInformation" />
           </h2>
@@ -382,7 +382,7 @@
 
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 py-0 pr-2 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
-          <h2 class="body-1 pb-0">
+          <h2 class="body-1 pb-0" :title="$t('Common.PaymentDetails')">
             <i class="fa fa-banknote pr-1" aria-hidden="true"></i>
             <i18n path="Common.PaymentDetails" />
           </h2>
@@ -441,7 +441,7 @@
 
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 py-0 pr-2 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
-          <h2 class="body-1 pb-0">
+          <h2 class="body-1 pb-0" :title="$t('Common.SurveyQuestions')">
             <i class="fa fa-question-circle pr-1" aria-hidden="true"></i>
             <i18n path="Common.SurveyQuestions" />
           </h2>

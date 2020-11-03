@@ -137,7 +137,7 @@
     </v-flex>
     <v-flex class="mxw-w30">
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 py-0 box-grey">
-        <h2 class="body-1 pb-1">
+        <h2 class="body-1 pb-1" :title="$t('Common.ContactInformation')">
           <i class="fa fa-info-circle pr-1" aria-hidden="true"></i>
           <i18n path="Common.ContactInformation" />
         </h2>
@@ -197,7 +197,7 @@
       </div>
 
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 py-0 box-grey">
-        <h2 class="body-1 pb-1">
+        <h2 class="body-1 pb-1" :title="$t('Common.AddressInformation')">
           <i class="fa fa-location pr-1" aria-hidden="true"></i>
           <i18n path="Common.AddressInformation" />
         </h2>
