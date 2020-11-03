@@ -12,7 +12,7 @@
             class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
           >
             <h2 class="black--text pt-5 pb-2 text-h5">
-              Edit Template
+              <i18n path="Common.EditTemplate" />
             </h2>
             <v-spacer></v-spacer>
             <div>
@@ -27,7 +27,7 @@
                 <v-col cols="12" sm="6" md="6">
                   <v-text-field
                     v-model="template.Name"
-                    label="Template Name*"
+                    :label="$t('Common.TemplateName')"
                     :rules="requiredRules"
                     outlined
                     dense
@@ -43,7 +43,7 @@
                 <v-col cols="12" sm="6" md="6">
                   <v-text-field
                     v-model="template.Subject"
-                    label="Subject*"
+                    :label="$t('Common.SubjectRequired')"
                     :rules="requiredRules"
                     outlined
                     dense
@@ -60,14 +60,14 @@
                   <File
                     :field="fileField"
                     :value="[...template.Documents].filter((i) => i)"
-                    label="Upload"
+                    :label="$t('Drawer.Upload')"
                     @input="getAttachmentId"
                   />
                 </v-col>
                 <v-col cols="12" sm="6" md="12">
                   <v-text-field
                     v-model="template.ImageURL"
-                    label="Image URL"
+                    :label="$t('Common.ImageUrl')"
                     outlined
                     dense
                   ></v-text-field>
@@ -84,8 +84,8 @@
               :disabled="!valid || isSaveButtonDisabled"
               depressed
               @click.native="onSave"
-              >Save</v-btn
-            >
+              ><i18n path="Drawer.Save"
+            /></v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>

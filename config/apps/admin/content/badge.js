@@ -16,11 +16,11 @@ export default {
       fields: {
         Size: {
           form: {
-            caption: 'Size *',
+            caption: 'Common.Size',
             displayOrder: 1,
           },
           displayOrder: 1,
-          caption: 'Size',
+          caption: 'Common.SizeCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '250px',
@@ -28,14 +28,14 @@ export default {
           newForm: true,
           editForm: false,
           rules: [
-            (v) => {
-              return !!v || 'Size is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.SizeRequired')
             },
           ],
         },
         Type: {
           displayOrder: 2,
-          caption: 'Type',
+          caption: 'Common.TypeCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '250px',
@@ -45,7 +45,7 @@ export default {
         },
         Category: {
           displayOrder: 3,
-          caption: 'Category',
+          caption: 'Common.Category',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -55,7 +55,7 @@ export default {
         },
         Default: {
           displayOrder: 4,
-          caption: 'Default',
+          caption: 'Common.Default',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -69,7 +69,7 @@ export default {
             displayOrder: 3,
           },
           displayOrder: 5,
-          caption: 'Template',
+          caption: 'Common.Template',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -90,11 +90,11 @@ export default {
         },
         DisplayOrder: {
           form: {
-            caption: 'Display Order *',
+            caption: 'Common.DisplayOrder',
             displayOrder: 2,
           },
           displayOrder: 6,
-          caption: 'Display Order',
+          caption: 'Common.DisplayOrd',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -103,8 +103,8 @@ export default {
           editForm: false,
           minimumValue: '0',
           rules: [
-            (v) => {
-              return !!v || 'This field is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.ThisFieldRequired')
             },
           ],
         },
@@ -132,7 +132,7 @@ export default {
           where: { EventId: { exists: false } },
         },
       },
-      title: 'Badge',
+      title: 'Common.Badge',
       type: 'list',
     },
   },

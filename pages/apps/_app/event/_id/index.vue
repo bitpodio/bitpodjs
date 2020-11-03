@@ -24,7 +24,8 @@
                 class="rounded"
                 @click="goLive"
               >
-                Join Event
+                <i18n path="Common.JoinEvent" />
+
                 <v-icon right class="fs-22">
                   mdi-video
                 </v-icon>
@@ -32,13 +33,13 @@
             </div>
             <div class="mr-2">
               <v-btn depressed color="primary" @click="viewRegistration"
-                >View</v-btn
-              >
+                ><i18n path="Drawer.View"
+              /></v-btn>
             </div>
             <div v-if="data.event.Status === 'Not ready'" class="mr-2">
               <v-btn outlined color="primary" @click="publishEvent"
-                >Publish</v-btn
-              >
+                ><i18n path="Drawer.Publish"
+              /></v-btn>
             </div>
             <v-menu left :offset-y="offset" transition="slide-y-transition">
               <template v-slot:activator="{ on, attrs }">
@@ -53,7 +54,9 @@
                     <i class="fa fa-paperplane mt-1" aria-hidden="true"></i>
                   </v-list-item-icon>
                   <v-list-item-content>
-                    <v-list-item-title>Publish to eventbrite</v-list-item-title>
+                    <v-list-item-title
+                      ><i18n path="Drawer.Publishtoeventbrite"
+                    /></v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
                 <v-list-item @click="isMakeCopy = true">
@@ -61,7 +64,9 @@
                     <i class="fa fa-clone mt-1" aria-hidden="true"></i>
                   </v-list-item-icon>
                   <v-list-item-content>
-                    <v-list-item-title>Make a copy</v-list-item-title>
+                    <v-list-item-title
+                      ><i18n path="Drawer.MakeaCopy"
+                    /></v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
                 <v-list-item>
@@ -72,7 +77,9 @@
                     ></i>
                   </v-list-item-icon>
                   <v-list-item-content>
-                    <v-list-item-title>Edit email template</v-list-item-title>
+                    <v-list-item-title
+                      ><i18n path="Drawer.Editemailtemplate"
+                    /></v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
                 <v-list-item @click="redirectIntegration">
@@ -80,16 +87,26 @@
                     <i class="fa fa-link1 mt-1" aria-hidden="true"></i>
                   </v-list-item-icon>
                   <v-list-item-content>
-                    <v-list-item-title>Integrations</v-list-item-title>
+                    <v-list-item-title
+                      ><i18n path="Drawer.Integrations"
+                    /></v-list-item-title>
                   </v-list-item-content>
                 </v-list-item>
               </v-list>
             </v-menu>
           </div>
         </v-flex>
-        <v-chip small class="mt-1 mb-3 event-datechip greybg" label>
-          {{ formatedDate(data.event.StartDate, data.event.Timezone) }} -
-          {{ formatedDate(data.event.EndDate, data.event.Timezone) }} -
+        <v-chip
+          v-if="
+            data.event.StartDate !== undefined &&
+            data.event.EndDate !== undefined
+          "
+          small
+          class="mt-1 mb-3 event-datechip greybg"
+          label
+        >
+          {{ $d(new Date(data.event.StartDate), 'long', $i18n.locale) }} -
+          {{ $d(new Date(data.event.EndDate), 'long', $i18n.locale) }} -
           {{ formatField(data.event.Timezone) }}
         </v-chip>
         <v-flex>
@@ -183,7 +200,10 @@
               <div class="event-tile-value text-truncate">
                 {{ data.eventSummary.totalRegistration }}
               </div>
-              <div class="caption text-truncate">Total Registration</div>
+              <i18n
+                path="Common.TotalRegistration"
+                class="caption text-truncate"
+              />
             </div>
           </div>
 
@@ -199,7 +219,10 @@
               <div class="event-tile-value text-truncate">
                 {{ data.eventSummary.totalFailed }}
               </div>
-              <div class="caption text-truncate">Abandoned Registration</div>
+              <i18n
+                path="Common.AbandonedRegistration"
+                class="caption text-truncate"
+              />
             </div>
           </div>
 
@@ -216,7 +239,8 @@
               <div class="event-tile-value text-truncate">
                 {{ data.event.Currency }} {{ data.eventSummary.Revenue }}
               </div>
-              <div class="caption text-truncate">Revenue</div>
+
+              <i18n path="Common.Revenue" class="caption text-truncate" />
             </div>
           </div>
 
@@ -233,7 +257,8 @@
               <div class="event-tile-value text-truncate">
                 {{ data.eventSummary.TotalSession }}
               </div>
-              <div class="caption text-truncate">Total Sessions</div>
+
+              <i18n path="Common.TotalSessions" class="caption text-truncate" />
             </div>
           </div>
 
@@ -250,7 +275,8 @@
               <div class="event-tile-value text-truncate">
                 {{ data.event.MySpeakers.length }}
               </div>
-              <div class="caption text-truncate">Total Speakers</div>
+
+              <i18n path="Common.TotalSpeakers" class="caption text-truncate" />
             </div>
           </div>
 
@@ -263,8 +289,12 @@
               <i class="fa fa-calendar2" aria-hidden="true"></i>
             </div>
             <div class="d-flex flex-column pa-2 event-tile-right greybg">
-              <div class="event-tile-value text-truncate">29 Days</div>
-              <div class="caption text-truncate">Opens in</div>
+              <i18n
+                path="Common.29Days"
+                class="event-tile-value text-truncate"
+              />
+
+              <i18n path="Common.OpensIn" class="caption text-truncate" />
             </div>
           </div>
         </v-flex>
@@ -283,8 +313,8 @@
               color="success"
               class="ml-n13 body-2"
               @click="changeStatus('Not ready')"
-              >Not Ready</v-stepper-step
-            >
+              ><i18n path="Common.NotReady" />
+            </v-stepper-step>
 
             <v-divider></v-divider>
 
@@ -295,8 +325,8 @@
               color="success"
               class="body-2"
               @click="changeStatus('Open for registration')"
-              >Open for registration</v-stepper-step
-            >
+              ><i18n path="Common.OpenForRegistration" />
+            </v-stepper-step>
 
             <v-divider></v-divider>
 
@@ -307,8 +337,8 @@
               class="body-2"
               color="success"
               @click="changeStatus('Sold out')"
-              >Sold out</v-stepper-step
-            >
+              ><i18n path="Common.SoldOut" />
+            </v-stepper-step>
 
             <v-divider></v-divider>
 
@@ -319,8 +349,8 @@
               class="body-2"
               color="success"
               @click="changeStatus('Registration closed')"
-              >Registration closed</v-stepper-step
-            >
+              ><i18n path="Common.RegistrationClosed" />
+            </v-stepper-step>
           </v-stepper-header>
         </v-stepper>
 
@@ -334,12 +364,19 @@
             </v-avatar>
             <span>{{ data.event.createdBy }}</span>
           </v-chip>
-          <v-subheader class="d-inline-flex pl-1"
-            ><span class="pl-1"
-              >Created this event on
-              {{ formatDate(data.event.createdDate) }}.</span
-            ></v-subheader
-          >
+          <v-subheader
+            v-if="data.event.createdDate !== undefined"
+            class="d-inline-flex pl-1"
+            >{{
+              $t('Common.CreatedThisEventOn', {
+                date: $d(
+                  new Date(data.event.createdDate),
+                  'short',
+                  $i18n.locale
+                ),
+              })
+            }}
+          </v-subheader>
         </v-flex>
       </div>
       <div
@@ -347,7 +384,8 @@
       >
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-0">
-            <i class="fa fa-image pr-1" aria-hidden="true"></i> Image Gallery
+            <i class="fa fa-image pr-1" aria-hidden="true"></i>
+            <i18n path="Common.ImageGallery" />
           </h2>
           <v-spacer></v-spacer>
           <v-menu offset-y>
@@ -360,7 +398,7 @@
                 v-on="on"
                 @click="allow = true"
               >
-                <v-icon left>fa-upload</v-icon> Upload
+                <v-icon left>fa-upload</v-icon> <i18n path="Drawer.Upload" />
               </v-btn>
             </template>
             <v-list dense>
@@ -378,7 +416,7 @@
                     :hide-preview="true"
                     @input="fileUploadedBadgeLogo"
                   />
-                  Badge Logo
+                  <i18n path="Common.BadgeLogo" />
                 </v-list-item-title>
               </v-list-item>
               <v-list-item
@@ -395,7 +433,7 @@
                     :hide-preview="true"
                     @input="fileUploadedEventBanner"
                   />
-                  Event Banner(680x350)
+                  <i18n path="Common.EventB" />
                 </v-list-item-title>
               </v-list-item>
               <v-list-item
@@ -412,7 +450,7 @@
                     :hide-preview="true"
                     @input="fileUploadedOther"
                   />
-                  Other
+                  <i18n path="Common.Other" />
                 </v-list-item-title>
               </v-list-item>
             </v-list>
@@ -454,7 +492,9 @@
               >
               <copy :text-to-copy="getImageUrl(image)" :unique-id="image" />
             </v-flex>
-            <v-card-text class="pa-0 mt-n2">Banner Image</v-card-text>
+            <v-card-text class="pa-0 mt-n2"
+              ><i18n path="Common.BannerImage"
+            /></v-card-text>
           </v-card>
           <v-dialog v-model="bannerDialog" max-width="600">
             <v-card>
@@ -537,7 +577,9 @@
               <v-spacer></v-spacer>
               <copy :text-to-copy="getImageUrl(image)" :unique-id="image" />
             </v-flex>
-            <v-card-text class="pa-0 mt-n2">Event Banner</v-card-text>
+            <v-card-text class="pa-0 mt-n2"
+              ><i18n path="Common.EventBanner"
+            /></v-card-text>
           </v-card>
           <v-dialog v-model="bannerDialog" max-width="600">
             <v-card>
@@ -622,7 +664,9 @@
               >
               <copy :text-to-copy="getImageUrl(image)" :unique-id="image" />
             </v-flex>
-            <v-card-text class="pa-0 mt-n2">Logo Image</v-card-text>
+            <v-card-text class="pa-0 mt-n2"
+              ><i18n path="Common.LogoImage"
+            /></v-card-text>
           </v-card>
           <v-dialog v-model="logoDialog" max-width="600">
             <v-card>
@@ -706,7 +750,9 @@
               >
               <copy :text-to-copy="getImageUrl(image)" :unique-id="image" />
             </v-flex>
-            <v-card-text class="pa-0 mt-n2 otherImg">Logo Image</v-card-text>
+            <v-card-text class="pa-0 mt-n2 otherImg"
+              ><i18n path="Common.LogoImage"
+            /></v-card-text>
           </v-card>
           <v-dialog v-model="otherDialogOpen" max-width="600">
             <v-card>
@@ -753,7 +799,8 @@
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
-            <i class="fa fa-users pr-1" aria-hidden="true"></i> Attendees
+            <i class="fa fa-users pr-1" aria-hidden="true"></i>
+            <i18n path="Common.Attendees" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
@@ -772,7 +819,7 @@
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
             <i class="fa fa-user-plus pr-1" aria-hidden="true"></i>
-            Registrations
+            <i18n path="Common.Registrations" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
@@ -790,7 +837,7 @@
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
             <i class="fa fa-mail pr-1" aria-hidden="true"></i>
-            Invites
+            <i18n path="Common.Invites" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
@@ -804,7 +851,7 @@
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
             <i class="fa fa-ticketalt pr-1" aria-hidden="true"></i>
-            Tickets
+            <i18n path="Common.Tickets" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
@@ -813,7 +860,7 @@
           <v-switch
             v-if="data.event.LocationType === 'Venue'"
             v-model="switchSeat"
-            label="Seatmap & Tickets"
+            :label="$t('Common.SeatmapTickets')"
             class="mt-0 ml-0 max-h24 positionAbsolute"
             height="20"
             @change="updateSeatReservation"
@@ -862,7 +909,9 @@
                 @click="routeToSeatmap"
               >
                 <v-icon class="fs-16">mdi-plus</v-icon>
-                <v-text class="text-center body-2 pt-1">New Seat Map</v-text>
+                <v-text class="text-center body-2 pt-1"
+                  ><i18n path="Common.NewSeatMap"
+                /></v-text>
               </v-flex>
               <v-flex
                 class="d-flex flex-column justify-center ma-2 cursorPointer seat-actions pa-2"
@@ -870,8 +919,8 @@
               >
                 <v-icon class="fs-16">fa-grid</v-icon>
                 <v-text class="text-center body-2 pt-1"
-                  >Select Existing Seat Map</v-text
-                >
+                  ><i18n path="Common.SelectExistingSeatMap"
+                /></v-text>
               </v-flex>
             </div>
           </div>
@@ -892,7 +941,7 @@
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
             <i class="fa fa-settings1 pr-1" aria-hidden="true"></i>
-            Discount Codes
+            <i18n path="Common.DiscountCodes" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
@@ -910,7 +959,7 @@
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
             <i class="fa fa-question-circle pr-1" aria-hidden="true"></i>
-            Registration Questions
+            <i18n path="Common.RegistrationQuestions" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
@@ -928,7 +977,7 @@
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
             <i class="fa fa-black-board pr-1" aria-hidden="true"></i>
-            Sessions
+            <i18n path="Common.Sessions" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
@@ -942,7 +991,7 @@
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
             <i class="fa fa-mic pr-1" aria-hidden="true"></i>
-            Speakers
+            <i18n path="Common.Speakers" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
@@ -956,7 +1005,7 @@
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
             <i class="fa fa-external-link pr-1" aria-hidden="true"></i>
-            Tasks
+            <i18n path="Common.Tasks" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
@@ -975,7 +1024,7 @@
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
             <i class="fa fa-file-text-o pr-1" aria-hidden="true"></i>
-            Registration Form
+            <i18n path="Common.RegistrationForm" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
@@ -992,7 +1041,7 @@
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
             <i class="fa fa-comments-alt pr-1" aria-hidden="true"></i>
-            Notes
+            <i18n path="Common.Notes" />
           </h2>
           <v-spacer></v-spacer>
         </v-flex>
@@ -1004,27 +1053,30 @@
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 py-0 pr-2 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-0">
-            <i class="fa fa-info-circle pr-1" aria-hidden="true"></i> Event
-            Information
+            <i class="fa fa-info-circle pr-1" aria-hidden="true"></i>
+            <i18n path="Common.EventInformation" />
           </h2>
           <v-spacer></v-spacer>
           <v-btn text small @click.stop="eventForm = true">
-            <v-icon left class="fs-16">fa-pencil</v-icon>Edit
+            <v-icon left class="fs-16">fa-pencil</v-icon
+            ><i18n path="Drawer.Edit" />
           </v-btn>
         </v-flex>
         <v-divider></v-divider>
         <v-flex my-3>
-          <div class="body-2 text--secondary">Organizer</div>
+          <i18n path="Common.Organizer" class="body-2 text--secondary" />
+
           <div class="body-1">{{ formatField(data.event.Organizer) }}</div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">Event Manager</div>
+          <i18n path="Common.EventManager" class="body-2 text--secondary" />
+
           <div class="body-1 text--primary">
             {{ formatField(data.event.EventManager) }}
           </div>
         </v-flex>
         <v-flex v-if="data.event.Tags" my-3>
-          <div class="body-2 text--secondary">Tags</div>
+          {{ $tc('Common.Tags', data.event.Tags.length) }}
           <div class="body-1 v-tags">
             <v-chip
               v-for="Tags in data.event.Tags"
@@ -1044,14 +1096,15 @@
       >
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-0">
-            <i class="fa fa-id-badge pr-1" aria-hidden="true"></i> Badge
+            <i class="fa fa-id-badge pr-1" aria-hidden="true"></i>
+            <i18n path="Common.Badge" />
           </h2>
           <v-spacer></v-spacer>
           <v-btn text small @click="openBadgeForm">
-            <v-icon left>mdi-plus</v-icon>Create
+            <v-icon left>mdi-plus</v-icon><i18n path="Drawer.Create" />
           </v-btn>
           <v-btn text small class="ml-1" @click="openPrintForm">
-            <v-icon left>fa-printer</v-icon>Print
+            <v-icon left>fa-printer</v-icon><i18n path="Drawer.Print" />
           </v-btn>
           <v-menu left :offset-y="offset" transition="slide-y-transition">
             <template v-slot:activator="{ on, attrs }">
@@ -1064,13 +1117,17 @@
               <v-list-item @click="editBadgeForm = true">
                 <v-icon left class="fs-16">fa-pencil</v-icon>
                 <v-list-item-content>
-                  <v-list-item-title>Edit</v-list-item-title>
+                  <v-list-item-title
+                    ><i18n path="Drawer.Edit"
+                  /></v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
               <v-list-item @click="deleteBadge">
                 <v-icon left class="fs-16">fa-trash</v-icon>
                 <v-list-item-content>
-                  <v-list-item-title>Delete</v-list-item-title>
+                  <v-list-item-title
+                    ><i18n path="Drawer.Delete"
+                  /></v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
             </v-list>
@@ -1093,28 +1150,32 @@
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-0 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-0">
-            <i class="fa fa-tag pr-1" aria-hidden="true"></i> SEO Details
+            <i class="fa fa-tag pr-1" aria-hidden="true"></i>
+            <i18n path="Common.SEODetails" />
           </h2>
           <v-spacer></v-spacer>
           <v-btn text small @click="seoForm = true">
-            <v-icon left class="fs-16">fa-pencil</v-icon>Edit
+            <v-icon left class="fs-16">fa-pencil</v-icon
+            ><i18n path="Drawer.Edit" />
           </v-btn>
         </v-flex>
         <v-divider></v-divider>
         <v-flex my-3>
-          <div class="body-2 text--secondary">SEO Title</div>
+          <i18n path="Common.SEOTitle" class="body-2 text--secondary" />
+
           <div class="body-1">
             {{ formatField(data.event.SEOTitle) }}
           </div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">SEO Description</div>
+          <i18n path="Common.SEODescription" class="body-2 text--secondary" />
           <div class="body-1 d-flex flex-wrap">
             {{ formatField(data.event.SEODesc) }}
           </div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">SEO Keywords</div>
+          <i18n path="Common.SEOKeywords" class="body-2 text--secondary" />
+
           <div class="body-1">{{ formatField(data.event.SEOKeywords) }}</div>
         </v-flex>
       </div>
@@ -1122,43 +1183,54 @@
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-2 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-0">
-            <i class="fa fa-settings pr-1" aria-hidden="true"></i> Event
-            Settings
+            <i class="fa fa-settings pr-1" aria-hidden="true"></i>
+            <i18n path="Common.EventSettings" />
           </h2>
           <v-spacer></v-spacer>
           <v-btn text small @click="eventSetting = true">
-            <v-icon left class="fs-16">fa-pencil</v-icon>Edit
+            <v-icon left class="fs-16">fa-pencil</v-icon
+            ><i18n path="Drawer.Edit" />
           </v-btn>
         </v-flex>
         <v-divider></v-divider>
         <v-flex my-3>
-          <div class="body-2 text--secondary">Privacy</div>
+          <i18n path="Common.Privacy" class="body-2 text--secondary" />
+
           <div class="body-1">{{ formatField(data.event.Privacy) }}</div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">Currency</div>
+          <i18n path="Common.Currency" class="body-2 text--secondary" />
+
           <div class="body-1">{{ formatField(data.event.Currency) }}</div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">GL Account Code</div>
+          <i18n path="Common.GLAccountCode" class="body-2 text--secondary" />
+
           <div class="body-1">{{ formatField(data.event.ProjectCode) }}</div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">Cost Center</div>
+          <i18n path="Common.CostCenter" class="body-2 text--secondary" />
+
           <div class="body-1">{{ formatField(data.event.CostCenter) }}</div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">Business Type</div>
+          <i18n path="Common.BusinessType" class="body-2 text--secondary" />
+
           <div class="body-1">{{ formatField(data.event.BusinessType) }}</div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">Event Link</div>
+          <i18n path="Common.EventLink" class="body-2 text--secondary" />
+
           <div class="body-1 d-block text-truncate">
             {{ eventLink(data.event.UniqLink) }}
           </div>
         </v-flex>
         <v-flex my-3>
-          <div class="body-2 text--secondary">Cancelation Policy</div>
+          <i18n
+            path="Common.CancellationPolicy"
+            class="body-2 text--secondary"
+          />
+
           <div class="body-1">
             <!-- eslint-disable-next-line vue/no-v-html -->
             <div v-html="formatField(data.event.CancellationPolicy)"></div>
@@ -1171,7 +1243,7 @@
             debounce="500"
             height="20"
             class="ma-0 pa-0"
-            label="Allow Cancelation"
+            :label="$t('Common.AllowCancelation')"
             color="green"
             @change="updateReg"
           ></v-checkbox>
@@ -1183,7 +1255,7 @@
             debounce="500"
             height="20"
             class="ma-0 pa-0"
-            label="Validate Session Timing Conflict"
+            :label="$t('Common.ValidateSessionTimingConflict')"
             color="green"
             @change="updateReg"
           ></v-checkbox>
@@ -1195,7 +1267,7 @@
             debounce="500"
             height="20"
             class="ma-0 pa-0"
-            label="Show Remaining Tickets Count"
+            :label="$t('Common.ShowRemainingTicketsCount')"
             color="green"
             @change="updateReg"
           ></v-checkbox>
@@ -1203,7 +1275,7 @@
         <v-flex class="d-block text-truncate">
           <v-checkbox
             v-model="data.event.ShowAttendeeForm"
-            label="Show Attendee Form"
+            :label="$t('Common.ShowAttendeeForm')"
             color="green"
             dense
             debounce="500"
@@ -1219,8 +1291,7 @@
             debounce="500"
             height="20"
             class="ma-0 pa-0"
-            label="Notify  organizer when someone 
-            registers"
+            :label="$t('Common.NotifyOrganizer')"
             color="green"
             @change="updateReg"
           ></v-checkbox>
@@ -1232,7 +1303,7 @@
             debounce="500"
             height="20"
             class="ma-0 pa-0"
-            label="Ask to print badge after check in"
+            :label="$t('Common.AskToPrintBadgeAfterCheckin')"
             color="green"
             @change="updateReg"
           ></v-checkbox>
@@ -1242,16 +1313,21 @@
         <v-flex class="d-flex justify-center align-center pb-2">
           <h2 class="body-1 pb-0">
             <i class="fa fa-settings pr-1" aria-hidden="true"></i>
-            Registration Page Settings
+            <i18n path="Common.RegistrationPageSettings" />
           </h2>
           <v-spacer></v-spacer>
           <v-btn text small @click="siteSetting = true">
-            <v-icon left class="fs-16">fa-pencil</v-icon>Edit
+            <v-icon left class="fs-16">fa-pencil</v-icon
+            ><i18n path="Drawer.Edit" />
           </v-btn>
         </v-flex>
         <v-divider></v-divider>
         <v-flex my-3>
-          <div class="body-2 text--secondary">Registration Site Template</div>
+          <i18n
+            path="Common.RegistrationSiteTemplate"
+            class="body-2 text--secondary"
+          />
+
           <div class="body-1">
             {{ formatField(data.event.RegistrationSiteTemplate) }}
           </div>
@@ -1262,7 +1338,7 @@
             dense
             height="20"
             class="ma-0 pa-0"
-            label="Show Image Gallery"
+            :label="$t('Common.ShowImageGallery')"
             color="green"
             @change="updateReg1()"
           ></v-checkbox>
@@ -1273,7 +1349,7 @@
             dense
             height="20"
             class="ma-0 pa-0"
-            label="Show Event Reviews"
+            :label="$t('Common.ShowEventReviews')"
             color="green"
             @change="updateReg1()"
           ></v-checkbox>
@@ -1287,12 +1363,12 @@
       <v-dialog v-model="popupDialog" width="500">
         <v-card>
           <v-card-text class="pt-3">
-            are you sure you want to delete layout
+            <i18n path="Common.DeleteLayout" />
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="primary" small dark dense @click="onDeleteSeatMap">
-              OK
+              <i18n path="Drawer.OK" />
             </v-btn>
             <v-btn
               color="primary"
@@ -1301,7 +1377,7 @@
               dense
               @click="popupDialog = false"
             >
-              Cancel
+              <i18n path="Drawer.Cancel" />
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -1689,7 +1765,7 @@ export default {
           this.formData
         )
         if (res) {
-          this.snackbarText = 'Congratulations, your event has been published.'
+          this.snackbarText = this.$t('Messages.Success.EventPublished')
           this.snackbar = true
           this.refresh()
         }
@@ -1730,7 +1806,7 @@ export default {
             `${url}Badges/${getIdFromAtob(this.badgeData.id)}`
           )
           if (res) {
-            this.snackbarText = 'Badges deleted successfully'
+            this.snackbarText = this.$t('Messages.Success.BadgesDeleteSuccess')
             this.snackbar = true
             this.refresh()
           }
@@ -1870,7 +1946,7 @@ export default {
           formData
         )
         if (res) {
-          this.snackbarText = 'Attachment added successfully'
+          this.snackbarText = this.$t('Messages.Success.AttachmentAddSuccess')
           this.snackbar = true
           this.refresh()
         }
@@ -1886,7 +1962,7 @@ export default {
             `${url}Events/${this.$route.params.id}/Others/rel/${id}`
           )
           if (res) {
-            this.snackbarText = 'Attachment added successfully'
+            this.snackbarText = this.$t('Messages.Success.AttachmentAddSuccess')
             this.snackbar = true
             this.refresh()
           }
@@ -1946,7 +2022,9 @@ export default {
         )
         if (res) {
           this.refresh()
-          this.snackbarText = 'Attachment deleted successfully'
+          this.snackbarText = this.$t(
+            'Messages.Success.AttachmentDeleteSuccess'
+          )
           this.snackbar = true
         }
       }
@@ -1959,7 +2037,9 @@ export default {
           `${url}Events/${this.$route.params.id}/LogoURL/${id}`
         )
         if (res) {
-          this.snackbarText = 'Attachment deleted successfully'
+          this.snackbarText = this.$t(
+            'Messages.Success.AttachmentDeleteSuccess'
+          )
           this.snackbar = true
           this.refresh()
         }
@@ -1973,7 +2053,9 @@ export default {
           `${url}Events/${this.$route.params.id}/Others/${id}`
         )
         if (res) {
-          this.snackbarText = 'Attachment deleted successfully'
+          this.snackbarText = this.$t(
+            'Messages.Success.AttachmentDeleteSuccess'
+          )
           this.snackbar = true
           this.refresh()
         }
@@ -1981,7 +2063,9 @@ export default {
     },
     redirectIntegration() {
       this.$router.push(
-        `/apps/event/list/EventIntegration/integrations?event=${this.$route.params.id}`
+        this.localePath(
+          `/apps/event/list/EventIntegration/integrations?event=${this.$route.params.id}`
+        )
       )
     },
     updateRegistrationSetting(eventData) {
@@ -2035,7 +2119,9 @@ export default {
       this.updateRegistrationPage()
     }, 500),
     routeToSeatmap() {
-      this.$router.push(`/apps/seatmap/new?event=${this.$route.params.id}`)
+      this.$router.push(
+        this.localePath(`/apps/seatmap/new?event=${this.$route.params.id}`)
+      )
     },
     async updateSeatReservation() {
       const seatReservation = this.switchSeat
@@ -2076,7 +2162,9 @@ export default {
         const res = await this.$axios.$patch(URL, { LayoutId: '' })
         if (res) {
           this.popupDialog = false
-          this.snackbarText = 'Seat Layout deleted successfully'
+          this.snackbarText = this.$t(
+            'Messages.Success.SeatLayoutDeleteSuccess'
+          )
           this.snackbar = true
           this.refresh()
         }
@@ -2088,7 +2176,7 @@ export default {
       }
     },
     onEditSeatMap() {
-      this.$router.push(`/apps/seatmap/${this.layoutId}`)
+      this.$router.push(this.localePath(`/apps/seatmap/${this.layoutId}`))
     },
   },
   apollo: {

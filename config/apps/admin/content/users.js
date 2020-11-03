@@ -16,7 +16,7 @@ export default {
       fields: {
         name: {
           displayOrder: 2,
-          caption: 'Name',
+          caption: 'Common.Name',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -26,7 +26,7 @@ export default {
         },
         id: {
           displayOrder: 3,
-          caption: 'Username',
+          caption: 'Common.Username',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -36,11 +36,11 @@ export default {
         },
         email: {
           form: {
-            caption: 'Email',
+            caption: 'Common.EmailCaption',
             displayOrder: 1,
           },
           displayOrder: 4,
-          caption: 'Email',
+          caption: 'Common.EmailCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -48,8 +48,8 @@ export default {
           newForm: true,
           editForm: false,
           rules: [
-            (v) => {
-              return !!v || 'Email is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.EmailRequired')
             },
             function (value, data) {
               return /.+@.+\..+/.test(value) || 'E-mail must be valid'
@@ -58,7 +58,7 @@ export default {
         },
         rolemappings: {
           displayOrder: 5,
-          caption: 'Roles',
+          caption: 'Common.Roles',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -78,7 +78,7 @@ export default {
         getData: (ctx) =>
           getData(`Organizations/${ctx.$store.state.currentOrg.id}/Users`),
       },
-      title: 'Users',
+      title: 'Common.Users',
       type: 'list',
     },
   },

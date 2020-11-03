@@ -10,12 +10,12 @@
         small
         @click="updateDate(item.id)"
       >
-        Check In
+        <i18n path="Common.CheckIn" />
       </v-chip>
     </div>
     <div v-else style="display: flex; height: 20px;" class="ma-2 pb-0 mt-1">
       <v-icon color="success" class="pr-1 fs-14">mdi-check</v-icon>
-      <div>Checked in Just now</div>
+      <i18n path="Common.CheckedInJustnow" />
     </div>
     <v-dialog
       v-model="isCheckedIn"
@@ -33,7 +33,7 @@
               class="fa fa-checkmark-circle tick-check icon-tick pr-2"
               aria-hidden="true"
             ></i
-            >You have successfully checked in. Enjoy the event!
+            ><i18n path="Common.SuccessfulCheckedin" />
           </h4>
           <v-spacer></v-spacer>
         </v-card-title>
@@ -61,10 +61,10 @@
             v-on="on"
             @click.native="openPrintForm"
           >
-            <v-icon left>mdi-printer</v-icon>Print Badges
+            <v-icon left>mdi-printer</v-icon><i18n path="Common.PrintBadges" />
           </v-btn>
           <v-btn text small v-bind="attrs" v-on="on" @click="onClose">
-            Close
+            <i18n path="Drawer.Close" />
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -144,8 +144,7 @@ export default {
             this.isPrinted = true
           } else {
             this.isCheckedIn = false
-            this.snackbarText =
-              'Congratulations, You have successfully checked in.'
+            this.snackbarText = this.$t('Messages.Success.SuccessfulCheckedIn')
             this.snackbar = true
           }
         }

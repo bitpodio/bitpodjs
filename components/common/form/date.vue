@@ -39,10 +39,12 @@
         </template>
         <v-date-picker v-model="date" scrollable @change="onCalendarChange">
           <v-spacer></v-spacer>
-          <v-btn text color="primary" @click="modal = false">Cancel</v-btn>
+          <v-btn text color="primary" @click="modal = false"
+            ><i18n path="Drawer.Cancel"
+          /></v-btn>
           <v-btn text color="primary" @click="$refs.dialog.save(date)"
-            >OK</v-btn
-          >
+            ><i18n path="Drawer.OK"
+          /></v-btn>
         </v-date-picker>
       </v-dialog>
     </div>

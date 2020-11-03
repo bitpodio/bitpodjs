@@ -27,7 +27,7 @@ export default {
       fields: {
         currentUsageCount: {
           displayOrder: 9,
-          caption: 'Current Usage Count',
+          caption: 'Common.CurrentUsageCount',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '220px',
@@ -38,11 +38,11 @@ export default {
         },
         codeTitle: {
           form: {
-            caption: 'Code *',
+            caption: 'Common.CodeRequired',
             displayOrder: 1,
           },
           displayOrder: 1,
-          caption: 'Code',
+          caption: 'Common.Code',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -52,18 +52,18 @@ export default {
           newForm: true,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Please fill out this field'
+            function (v) {
+              return !!v || this.$t('Messages.Error.PleaseField')
             },
           ],
         },
         Description: {
           form: {
-            caption: 'Description',
+            caption: 'Common.Description',
             displayOrder: 2,
           },
           displayOrder: 2,
-          caption: 'Description',
+          caption: 'Common.Description',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -76,11 +76,11 @@ export default {
         },
         isActive: {
           form: {
-            caption: 'Is Active',
+            caption: 'Common.IsActiveField',
             displayOrder: 4,
           },
           displayOrder: 4,
-          caption: 'IsActive',
+          caption: 'Common.IsActive',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '120px',
@@ -92,11 +92,11 @@ export default {
         },
         isPercent: {
           form: {
-            caption: 'Is percent',
+            caption: 'Common.IsPercentCaption',
             displayOrder: 3,
           },
           displayOrder: 3,
-          caption: 'IsPercent',
+          caption: 'Common.IsPercent',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '130px',
@@ -108,11 +108,11 @@ export default {
         },
         validTill: {
           form: {
-            caption: 'Valid Till',
+            caption: 'Common.ValidTill',
             displayOrder: 7,
           },
           displayOrder: 7,
-          caption: 'Valid Till',
+          caption: 'Common.ValidTill',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -124,11 +124,11 @@ export default {
         },
         offerValue: {
           form: {
-            caption: 'Offer Value *',
+            caption: 'Common.OfferValueRequired',
             displayOrder: 5,
           },
           displayOrder: 5,
-          caption: 'Offer Value',
+          caption: 'Common.OfferValue',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '130px',
@@ -139,18 +139,18 @@ export default {
           editForm: true,
           minimumValue: '1',
           rules: [
-            (v) => {
-              return !!v || 'Please fillout this field'
+            function (v) {
+              return !!v || this.$t('Messages.Error.PleaseField')
             },
           ],
         },
         minApplicableOrderAmount: {
           form: {
-            caption: 'Min Applicable Order Amount',
+            caption: 'Common.MinApplicableOrderAmount',
             displayOrder: 6,
           },
           displayOrder: 6,
-          caption: 'Min Applicable Amount',
+          caption: 'Common.MinApplicableAmount',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '220px',
@@ -163,11 +163,11 @@ export default {
         },
         maxApplicableAmount: {
           form: {
-            caption: 'Max Applicable Amount',
+            caption: 'Common.MaxApplicableAmount',
             displayOrder: 8,
           },
           displayOrder: 8,
-          caption: 'Max Applicable Amount',
+          caption: 'Common.MaxApplicableAmount',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -181,11 +181,11 @@ export default {
         },
         maxUsageCount: {
           form: {
-            caption: 'Max Usage Count',
+            caption: 'Common.MaxUsageCount',
             displayOrder: 9,
           },
           displayOrder: 8,
-          caption: 'Max Usage Count',
+          caption: 'Common.MaxUsageCount',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -198,7 +198,7 @@ export default {
         },
         createdDate: {
           displayOrder: 10,
-          caption: 'Created Date',
+          caption: 'Common.CreatedDate',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '250px',
@@ -210,10 +210,10 @@ export default {
         },
         EventId: {
           form: {
-            caption: 'Event',
+            caption: 'Common.EventApp',
             displayOrder: 10,
           },
-          caption: 'Event',
+          caption: 'Common.EventApp',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -253,7 +253,7 @@ export default {
         type: 'graphql',
         model: 'OfferCode',
       },
-      title: 'Discount Codes',
+      title: 'Common.DiscountCodes',
       model: 'OfferCode',
     },
     discountMembers: {
@@ -269,7 +269,7 @@ export default {
       fields: {
         FirstName: {
           displayOrder: 2,
-          caption: 'First Name',
+          caption: 'Common.FirstNameCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '220px',
@@ -277,7 +277,7 @@ export default {
         },
         LastName: {
           displayOrder: 3,
-          caption: 'Last Name',
+          caption: 'Common.LastNameCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -285,7 +285,7 @@ export default {
         },
         Email: {
           displayOrder: 4,
-          caption: 'Email',
+          caption: 'Common.EmailCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '120px',
@@ -293,7 +293,7 @@ export default {
         },
         BusinessNumber: {
           displayOrder: 5,
-          caption: 'Business Number',
+          caption: 'Common.BusinessNumber',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -301,7 +301,7 @@ export default {
         },
         createdDate: {
           displayOrder: 6,
-          caption: 'Created Date',
+          caption: 'Common.CreatedDate',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -309,7 +309,7 @@ export default {
         },
         Action: {
           displayOrder: 7,
-          caption: 'Action',
+          caption: 'Drawer.Action',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '130px',

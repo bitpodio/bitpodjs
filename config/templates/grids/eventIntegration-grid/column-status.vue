@@ -21,7 +21,7 @@
           <v-spacer></v-spacer>
 
           <v-btn text @click="dialog = false">
-            ok
+            <i18n path="Common.Ok" />
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -119,7 +119,9 @@ export default {
               const res = await this.$axios.$put(url, data)
               if (res) {
                 this.checkbox = res.Status === 'Connected'
-                this.snackbarText = 'Connection Updated Successfully'
+                this.snackbarText = this.$t(
+                  'Messages.Success.ConnectionSuccessfully'
+                )
                 this.snackbar = true
               }
             } catch (e) {

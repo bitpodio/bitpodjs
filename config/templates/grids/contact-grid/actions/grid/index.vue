@@ -9,7 +9,7 @@
     />
     <div>
       <campaign
-        button-label="email campaign"
+        :button-label="$t('Common.EmailCampaign')"
         template="General Template"
         my-template="My General Template"
       />

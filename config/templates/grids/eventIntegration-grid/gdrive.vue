@@ -4,7 +4,9 @@
       <v-card-title
         class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
       >
-        <h2 class="black--text pt-5 pb-3 text-h5">Google Drive Setup</h2>
+        <h2 class="black--text pt-5 pb-3 text-h5">
+          <i18n path="Common.GoogleDriveSetup" />
+        </h2>
         <v-spacer></v-spacer>
         <div>
           <v-btn icon @click.native="onClose">
@@ -14,15 +16,12 @@
       </v-card-title>
       <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
         <v-form ref="form" v-model="valid" :lazy-validation="lazy">
-          To integrate with google drive, you will need to authenticate using
-          google drive credentials, click button below to go to google drive
-          login site and login with account you want to use for this
-          integration.
+          <i18n path="Common.IntegrateWithGoogleDrive" />
           <v-row>
             <v-col cols="12">
               <v-text-field
                 v-model="formData.maxFileSize"
-                label="Max File Size Allowed (in bytes) *"
+                :label="$t('Common.MaxFileSizeAllowed')"
                 :rules="required"
                 outlined
                 dense
@@ -31,7 +30,7 @@
             <v-col cols="12">
               <v-text-field
                 v-model="formData.fileExtention"
-                label="File Extentions Allowed(eg, csv,txt,xls) *"
+                :label="$t('Common.FileExtentionsAllowed')"
                 :rules="required"
                 outlined
                 dense
@@ -40,7 +39,7 @@
             <v-col cols="12">
               <v-text-field
                 v-model="formData.fileNameRgex"
-                label="Filename Regex"
+                :label="$t('Common.FilenameRegex')"
                 outlined
                 dense
               ></v-text-field>
@@ -57,8 +56,8 @@
           :disabled="!valid"
           depressed
           @click="onSave(formData)"
-          >Save</v-btn
-        >
+          ><i18n path="Drawer.Save"
+        /></v-btn>
       </v-card-actions>
     </v-card>
   </v-col>

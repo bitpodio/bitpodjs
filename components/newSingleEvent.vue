@@ -4,7 +4,9 @@
       <v-card-title
         class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
       >
-        <h2 class="black--text pt-4 pb-0 text-h5">Create Event</h2>
+        <h2 class="black--text pt-4 pb-0 text-h5">
+          <i18n path="Drawer.CreateEventAction" />
+        </h2>
         <v-spacer></v-spacer>
         <div>
           <v-btn icon @click="close">
@@ -13,7 +15,8 @@
         </div>
         <v-tabs v-model="tabs" height="36" class="mb-6 mt-2 v-event-icon">
           <v-tab href="#1" class="px-0 mr-4" @click="selectTab(1)">
-            <v-icon left>fa-info-circle</v-icon><span>Basic Info</span>
+            <v-icon left>fa-info-circle</v-icon
+            ><span><i18n path="Common.BasicInfo" /></span>
           </v-tab>
           <v-tab
             href="#2"
@@ -21,7 +24,8 @@
             :disabled="!validTab1()"
             @click="selectTab(2)"
           >
-            <v-icon left>fa-map-marker</v-icon><span>Location</span>
+            <v-icon left>fa-map-marker</v-icon
+            ><span><i18n path="Common.Location" /></span>
           </v-tab>
           <v-tab
             href="#3"
@@ -29,7 +33,8 @@
             :disabled="!validTab1() || !validTab2()"
             @click="selectTab(3)"
           >
-            <v-icon left>fa-ticket</v-icon><span>Tickets</span>
+            <v-icon left>fa-ticket</v-icon
+            ><span><i18n path="Common.Tickets" /></span>
           </v-tab>
         </v-tabs>
       </v-card-title>
@@ -38,16 +43,14 @@
           <v-tab-item :value="'1'">
             <v-card flat>
               <p>
-                Enter event name and details to help your audience learn about
-                your event, add details that highlights why someone should
-                attend it.
+                <i18n path="Common.EnterEventName" />
               </p>
               <v-row>
                 <v-col cols="12" class="pb-0">
                   <v-text-field
                     v-model="eventData.Title"
                     :rules="requiredRules"
-                    label="Event Title*"
+                    :label="$t('Common.EventTitle')"
                     required
                     dense
                     outlined
@@ -64,7 +67,7 @@
                   <v-col cols="12" sm="6" md="4" class="pb-0">
                     <CustomDate
                       v-model="eventData.StartDate"
-                      label="Start Date*"
+                      :label="$t('Common.StartD')"
                       :field="startDateField"
                       :rules="startDateRule"
                       :on-change="changeStartDate"
@@ -74,7 +77,7 @@
                   <v-col cols="12" sm="6" md="4" class="pb-0">
                     <CustomDate
                       v-model="eventData.EndDate"
-                      label="End Date*"
+                      :label="$t('Common.EndD')"
                       :field="endDateField"
                       :rules="endDateRule"
                       :on-change="changeEndDate"
@@ -98,13 +101,13 @@
                   <RichText
                     v-model="eventData.Description"
                     class="mb-3"
-                    label="Description"
+                    :label="$t('Common.Description')"
                   ></RichText>
                 </v-col>
                 <v-col cols="12" sm="6" md="6" class="pb-0">
                   <v-text-field
                     v-model="eventData.UniqLink"
-                    label="Event Link*"
+                    :label="$t('Common.EventL')"
                     :hint="eventLinkHint"
                     persistent-hint
                     outlined
@@ -142,7 +145,7 @@
                           eventData.LocationType === 'Online event' &&
                           onlineEventLink
                         "
-                        label="Online event link (https)*"
+                        :label="$t('Common.OnlineEventLink')"
                         outlined
                         dense
                         required
@@ -152,7 +155,7 @@
                   <v-col v-if="isOnlineEvent" cols="12" class="pb-0">
                     <v-textarea
                       v-model="eventData.JoiningInstruction"
-                      label="Additional online event joining instructions, URL, phone etc."
+                      :label="$t('Common.AdditionalOnlineEvent')"
                       outlined
                       required
                       dense
@@ -160,7 +163,7 @@
                   </v-col>
                   <v-col v-if="isBitpodVirtual" cols="12" class="pb-0">
                     <v-text-field
-                      label="Bitpod Virtual Link"
+                      :label="$t('Common.BitpodVirtualLink')"
                       outlined
                       dense
                       disabled
@@ -175,7 +178,7 @@
                         ref="venueAddress.AddressLine"
                         v-model="venueAddress.AddressLine"
                         class="form-control pa-3 d-block rounded"
-                        placeholder="Address*"
+                        :placeholder="$t('Common.Address')"
                         :required="true"
                         @placechanged="getAddressData"
                         @focus="removeSearchAddress"
@@ -192,7 +195,7 @@
                   <v-col v-if="isVenue" cols="12" class="pb-0">
                     <v-text-field
                       v-model="eventData.VenueName"
-                      label="Venue Name"
+                      :label="$t('Common.VenueName')"
                       outlined
                       dense
                       @change="changeAddress()"
@@ -201,7 +204,7 @@
                   <v-col v-if="isVenue" cols="12" class="pb-0">
                     <v-text-field
                       v-model="venueAddress.City"
-                      label="City"
+                      :label="$t('Common.City')"
                       outlined
                       dense
                       @change="changeAddress()"
@@ -210,7 +213,7 @@
                   <v-col v-if="isVenue" cols="12" class="pb-0">
                     <v-text-field
                       v-model="venueAddress.State"
-                      label="State"
+                      :label="$t('Common.State')"
                       outlined
                       dense
                       @change="changeAddress()"
@@ -219,7 +222,7 @@
                   <v-col v-if="isVenue" cols="12" class="pb-0">
                     <v-text-field
                       v-model="venueAddress.Country"
-                      label="Country"
+                      :label="$t('Common.Country')"
                       outlined
                       dense
                       @change="changeAddress()"
@@ -228,7 +231,7 @@
                   <v-col v-if="isVenue" cols="12" class="pb-0">
                     <v-text-field
                       v-model="venueAddress.PostalCode"
-                      label="Zip Code"
+                      :label="$t('Common.ZipCode')"
                       outlined
                       dense
                     ></v-text-field>
@@ -284,28 +287,39 @@
           <v-tab-item :value="'3'">
             <v-card v-if="isTicket" flat>
               <p>
-                Setup event tickets and price, you can also set tickets validity
-                so early birds can be offered better pricing.
+                <i18n path="Common.SetupEventTickets" />
               </p>
               <v-btn
                 class="ma-2 ml-0 mb-3"
                 outlined
                 color="indigo"
                 @click="addTicketRow"
-                >Add Tickets</v-btn
-              >
+                ><i18n path="Common.AddTickets"
+              /></v-btn>
               <v-simple-table class="event-table">
                 <template v-slot:default>
                   <thead>
                     <tr>
-                      <th class="text-left pl-0">Title*</th>
-                      <th class="text-left pl-2">Type*</th>
-                      <th class="text-left pl-2">
-                        Price ({{ eventData.Currency }})
+                      <th class="text-left pl-0">
+                        <i18n path="Common.Title" />
                       </th>
-                      <th class="text-left pl-2">Start Date*</th>
-                      <th class="text-left pl-2">End Date*</th>
-                      <th class="text-left pl-2">Quantity</th>
+                      <th class="text-left pl-2">
+                        <i18n path="Common.Type" />
+                      </th>
+                      <th class="text-left pl-2">
+                        {{
+                          $t('Common.Price', { currency: eventData.Currency })
+                        }}
+                      </th>
+                      <th class="text-left pl-2">
+                        <i18n path="Common.StartD" />
+                      </th>
+                      <th class="text-left pl-2">
+                        <i18n path="Common.EndD" />
+                      </th>
+                      <th class="text-left pl-2">
+                        <i18n path="Common.Quantity" />
+                      </th>
                       <th class="text-left"></th>
                     </tr>
                   </thead>
@@ -341,7 +355,7 @@
                       <td class="pa-2 pb-0">
                         <CustomDate
                           v-model="ticket.StartDate"
-                          label="Start Date*"
+                          :label="$t('Common.StartD')"
                           :field="ticketStartDateField"
                           :rules="ticketStartDateRule(k)"
                           :on-change="changeTicketStartDate"
@@ -351,7 +365,7 @@
                       <td class="pa-2 pb-0">
                         <CustomDate
                           v-model="ticket.EndDate"
-                          label="End Date*"
+                          :label="$t('Common.EndD')"
                           :field="ticketEndDateField"
                           :rules="ticketEndDateRule(k)"
                           :on-change="changeTicketEndDate"
@@ -392,16 +406,13 @@
                 </div>
                 <div class="pb-2 text-uppercase">
                   <span class="text-uppercase Body 1" style="font-size: 20px;"
-                    >EVENT HAS BEEN CREATED.</span
-                  >
+                    ><i18n path="Common.EventHasBeenCreated"
+                  /></span>
                 </div>
                 <div class="pb-3 text--primary">
-                  Event goers can only register after you publish it. We
-                  recommend you click view button to verify your event page and
-                  if everything looks as expected then PUBLISH it.
+                  <i18n path="Common.EventGoers" />
                   <br />
-                  You can also use events link from left panel to edit or
-                  publish this event any time you like.
+                  <i18n path="Common.EventsLink" />
                 </div>
                 <div class="pb-2">
                   <v-btn
@@ -409,8 +420,9 @@
                     color="primary"
                     class="ma-1"
                     @click="viewRegistration"
-                    ><v-icon left>mdi-eye-outline</v-icon>View</v-btn
-                  >
+                    ><v-icon left>mdi-eye-outline</v-icon
+                    ><i18n path="Drawer.View"
+                  /></v-btn>
                   <v-btn
                     outlined
                     color="primary"
@@ -418,11 +430,11 @@
                     @click="eventPublish"
                   >
                     <v-icon left>mdi-rotate-315 mdi-send</v-icon>
-                    Publish</v-btn
-                  >
+                    <i18n path="Drawer.Publish"
+                  /></v-btn>
                   <v-btn text color="primary" class="ma-1" @click="closeForm"
-                    >Close</v-btn
-                  >
+                    ><i18n path="Drawer.Close"
+                  /></v-btn>
                 </div>
               </div>
               <div v-if="isEventPublish" class="flex">
@@ -434,25 +446,25 @@
                 </div>
                 <div class="pb-2">
                   <span class="text-uppercase Body 1" style="font-size: 20px;">
-                    YOUR EVENT HAS BEEN PUBLISHED.</span
-                  >
+                    <i18n path="Common.EventHasBeenPublished"
+                  /></span>
                 </div>
-                <div class="pb-2 text--primary">
-                  Now it is open for registrations, you can click on view to
-                  fetch the event landing page URL, which you can share with
-                  others, so they can register.
-                </div>
+                <i18n
+                  path="Common.NowOpenForRegistrations"
+                  class="pb-2 text--primary"
+                />
                 <div class="pb-2">
                   <v-btn
                     depressed
                     color="primary"
                     class="ma-1"
                     @click="viewRegistration"
-                    ><v-icon left>mdi-eye-outline</v-icon>View</v-btn
-                  >
+                    ><v-icon left>mdi-eye-outline</v-icon
+                    ><i18n path="Drawer.View"
+                  /></v-btn>
                   <v-btn text color="primary" class="ma-1" @click="closeForm"
-                    >Close</v-btn
-                  >
+                    ><i18n path="Drawer.Close"
+                  /></v-btn>
                 </div>
               </div>
             </v-card>
@@ -468,24 +480,24 @@
           depressed
           color="grey lighten-2"
           @click="prev()"
-          >Prev</v-btn
-        >
+          ><i18n path="Drawer.Prev"
+        /></v-btn>
         <v-btn
           v-if="currentTab < 3"
           depressed
           color="primary"
           :disabled="isNextDisabled()"
           @click="next()"
-          >Next</v-btn
-        >
+          ><i18n path="Drawer.Next"
+        /></v-btn>
         <v-btn
           v-if="currentTab > 2 && !isEventCreate && !isEventPublish"
           depressed
           color="primary"
           :disabled="isSaveButtonDisabled || !valid || !datevalid"
           @click="saveRecord"
-          >Save</v-btn
-        >
+          ><i18n path="Drawer.Save"
+        /></v-btn>
       </v-card-actions>
     </v-card>
   </v-form>
@@ -495,7 +507,6 @@ import addMonths from 'date-fns/addMonths'
 import addDays from 'date-fns/addDays'
 import { zonedTimeToUtc } from 'date-fns-tz'
 import gql from 'graphql-tag'
-import strings from '../strings.js'
 import CustomDate from '~/components/common/form/date.vue'
 import Lookup from '~/components/common/form/lookup.vue'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
@@ -694,11 +705,12 @@ export default {
           const StartDate = v && new Date(v)
           const { EndDate } = this.eventData
           let startDateMessage = ''
-          if (!StartDate) startDateMessage = strings.FIELD_REQUIRED
+          if (!StartDate)
+            startDateMessage = this.$t('Messages.Error.ThisFieldRequired')
           else if (StartDate && EndDate && StartDate > EndDate)
-            startDateMessage = strings.EVENT_START_END_DATE
+            startDateMessage = this.$t('Messages.Error.EventStartEndDate')
           else if (StartDate < new Date())
-            startDateMessage = strings.EVENT_START_DATE
+            startDateMessage = this.$t('Messages.Error.EventStartDate')
           else startDateMessage = ''
           return startDateMessage || true
         },
@@ -710,10 +722,12 @@ export default {
           const EndDate = v && new Date(v)
           const { StartDate } = this.eventData
           let endDateMessage = ''
-          if (!EndDate) endDateMessage = strings.FIELD_REQUIRED
+          if (!EndDate)
+            endDateMessage = this.$t('Messages.Error.ThisFieldRequired')
           else if (StartDate && EndDate && StartDate > EndDate)
-            endDateMessage = strings.EVENT_START_END_DATE
-          else if (EndDate < new Date()) endDateMessage = strings.EVENT_END_DATE
+            endDateMessage = this.$t('Messages.Error.EventStartEndDate')
+          else if (EndDate < new Date())
+            endDateMessage = this.$t('Messages.Error.EventEndDate')
           else endDateMessage = ''
           return endDateMessage || true
         },
@@ -793,7 +807,7 @@ export default {
     closeForm() {
       this.onFormClose()
       this.tabs = '1'
-      this.$router.push('/apps/event/event/' + this.eventId)
+      this.$router.push(this.localePath('/apps/event/event/' + this.eventId))
       this.$refs.form.reset()
       this.resetForm()
     },
@@ -897,14 +911,16 @@ export default {
             const { EndDate } = this.tickets[index]
             let startDateMessage = ''
             if (!StartDate && this.tickets[index].StartDate === null)
-              startDateMessage = strings.FIELD_REQUIRED
+              startDateMessage = this.$t('Messages.Error.ThisFieldRequired')
             else if (StartDate && EndDate && StartDate > EndDate)
-              startDateMessage = strings.TICKET_START_DT_MSG
+              startDateMessage = this.$t('Messages.Error.TicketStartDate')
             else if (
               StartDate &&
               new Date(StartDate.setSeconds(1)) < this.currentDatetime
             ) {
-              startDateMessage = strings.TICKET_START_DT_CURRENT_DT
+              startDateMessage = this.$t(
+                'Messages.Error.TicketStartCurrentDate'
+              )
             } else startDateMessage = ''
             return startDateMessage || true
           } else {
@@ -922,13 +938,13 @@ export default {
             let endDateMessage = ''
 
             if (!EndDate && this.tickets[index].EndDate === null)
-              endDateMessage = strings.FIELD_REQUIRED
+              endDateMessage = this.$t('Messages.Error.ThisFieldRequired')
             else if (StartDate && EndDate && StartDate > EndDate)
-              endDateMessage = strings.TICKET_START_DT_MSG
+              endDateMessage = this.$t('Messages.Error.TicketStartDate')
             else if (new Date(EndDate) < this.currentDatetime) {
-              endDateMessage = strings.TICKET_END_DT_CURRENT_DT
+              endDateMessage = this.$t('Messages.Error.TicketEndCurrentDate')
             } else if (new Date(EndDate) > this.eventData.EndDate) {
-              endDateMessage = strings.TICKET_END_DT_MSG
+              endDateMessage = this.$t('Messages.Error.TicketEndDate')
             } else endDateMessage = ''
             return endDateMessage || true
           } else {
@@ -1034,7 +1050,7 @@ export default {
           this.addresslineMessage = ''
           this.setNextTab()
         } else if (this.venueAddress.AddressLine === '') {
-          this.addresslineMessage = strings.FIELD_REQUIRED
+          this.addresslineMessage = this.$t('Messages.Error.ThisFieldRequired')
         }
       }
     },
@@ -1160,7 +1176,8 @@ export default {
       }
     },
     changeAddressData(value) {
-      this.addresslineMessage = value === '' ? strings.FIELD_REQUIRED : ''
+      this.addresslineMessage =
+        value === '' ? this.$t('Messages.Error.ThisFieldRequired') : ''
       this.venueAddress.AddressLine = value
       this.isMap = this.isEmptyAddress()
     },
@@ -1253,7 +1270,7 @@ export default {
         }
       } else {
         this.isInvalidEventLink = true
-        this.uniqueLinkMessage = strings.UNIQUE_LINK_FORMAT
+        this.uniqueLinkMessage = this.$t('Messages.Warn.UniqueLinkFormat')
       }
       this.eventData.UniqLink = value
     },
@@ -1272,7 +1289,7 @@ export default {
       if (result.data.Event.EventCount > 0) {
         this.isUniqLinkValid = false
         this.isInvalidEventLink = true
-        this.uniqueLinkMessage = strings.UNIQUE_LINK_DUPLICATE
+        this.uniqueLinkMessage = this.$t('Messages.Error.UniqueLinkDuplicate')
       } else {
         this.isInvalidEventLink = false
         this.isUniqLinkValid = true

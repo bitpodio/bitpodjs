@@ -2,12 +2,13 @@
   <div>
     <v-col class="px-0">
       <v-btn text small v-bind="attrs" v-on="on" @click="onDeleteItem">
-        <v-icon left class="fs-16">fa-trash</v-icon>Delete
+        <v-icon left class="fs-16">fa-trash</v-icon
+        ><i18n path="Drawer.Delete" />
       </v-btn>
     </v-col>
     <v-snackbar v-model="snackbar" :timeout="timeout" top="true"
-      ><div class="text-center">Ticket Deleted Successfully</div></v-snackbar
-    >
+      ><i18n path="Common.TicketDeletedSuccessfully" class="text-center"
+    /></v-snackbar>
   </div>
 </template>
 

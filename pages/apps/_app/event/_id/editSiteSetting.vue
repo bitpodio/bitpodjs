@@ -12,7 +12,7 @@
             class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
           >
             <h2 class="black--text pt-5 pb-3 text-h5">
-              Edit Registration Page Settings
+              <i18n path="Common.EditRegistrationPageSettings" />
             </h2>
             <v-spacer></v-spacer>
             <div>
@@ -23,11 +23,11 @@
             <v-tabs v-model="tabs" center-active height="36">
               <v-tabs-slider></v-tabs-slider>
               <v-tab href="#tab-1" class="px-0 mr-4">
-                <span>Templates</span>
+                <span><i18n path="Common.Templates" /></span>
               </v-tab>
 
               <v-tab href="#tab-2" class="px-0 mr-4">
-                <span>Section Settings</span>
+                <span><i18n path="Common.SectionSettings" /></span>
               </v-tab>
             </v-tabs>
           </v-card-title>
@@ -37,7 +37,7 @@
                 <v-tab-item :value="'tab-1'">
                   <v-row>
                     <v-col cols="12" class="mb-2">
-                      Select a template
+                      <i18n path="Common.SelectTemplate" />
                     </v-col>
                     <v-flex
                       class="d-flex flex-wrap pa-0 ml-3 justify-center justify-md-start"
@@ -103,8 +103,8 @@
                                     selectTemplate(item.Name)
                                     selectedItem = index
                                   "
-                                  >Select</v-btn
-                                >
+                                  ><i18n path="Common.Select"
+                                /></v-btn>
                               </div>
                             </v-flex>
                           </v-card>
@@ -121,14 +121,12 @@
                 <v-tab-item :value="'tab-2'">
                   <v-row>
                     <v-col cols="12" class="mt-3">
-                      Here you can change section titles of registration site,
-                      to best suit your event. For example, you may relabel
-                      Speakers to Artists
+                      <i18n path="Common.ChangeSectionTitle" />
                     </v-col>
                     <v-col cols="12" class="mt-3">
                       <v-text-field
                         v-model="sectionHeading.speakers"
-                        label="Label for Speakers section"
+                        :label="$t('Common.LabelForSpeakers')"
                         outlined
                         dense
                       ></v-text-field>
@@ -136,7 +134,7 @@
                     <v-col cols="12">
                       <v-text-field
                         v-model="sectionHeading.registrationTypes"
-                        label="Label for Registration Types section"
+                        :label="$t('Common.LabelForRegistration')"
                         outlined
                         dense
                       ></v-text-field>
@@ -144,7 +142,7 @@
                     <v-col cols="12">
                       <v-text-field
                         v-model="sectionHeading.session"
-                        label="Label for Sessions section"
+                        :label="$t('Common.LabelForSessions')"
                         outlined
                         dense
                       ></v-text-field>
@@ -152,7 +150,7 @@
                     <v-col cols="12">
                       <v-text-field
                         v-model="sectionHeading.registrationbtn"
-                        label="Label for Register button"
+                        :label="$t('Common.LabelForRegister')"
                         outlined
                         dense
                       ></v-text-field>
@@ -160,7 +158,7 @@
                     <v-col cols="12">
                       <v-text-field
                         v-model="sectionHeading.ticketsectionlabel"
-                        label="Label for Tickets section"
+                        :label="$t('Common.LabelForTickets')"
                         outlined
                         dense
                       ></v-text-field>
@@ -168,7 +166,7 @@
                     <v-col cols="12">
                       <v-text-field
                         v-model="sectionHeading.ticketlabel"
-                        label="Label for Tickets"
+                        :label="$t('Common.LabelTickets')"
                         outlined
                         dense
                       ></v-text-field>
@@ -176,7 +174,7 @@
                     <v-col cols="12">
                       <v-text-field
                         v-model="sectionHeading.datetimelabel"
-                        label="Label for Date and Time section"
+                        :label="$t('Common.LabelForDateTime')"
                         outlined
                         dense
                       ></v-text-field>
@@ -184,7 +182,7 @@
                     <v-col cols="12">
                       <v-text-field
                         v-model="sectionHeading.venuelabel"
-                        label="Label for Venue section"
+                        :label="$t('Common.LabelForVenue')"
                         outlined
                         dense
                       ></v-text-field>
@@ -195,7 +193,7 @@
                     >
                       <v-text-field
                         v-model="sectionHeading.sessionsectionlabel"
-                        label="Label for Recurring Sessions section"
+                        :label="$t('Common.LabelForRecurringSessions')"
                         outlined
                         dense
                       ></v-text-field>
@@ -205,7 +203,7 @@
                         v-model="
                           sectionHeading.registrationquestionsectionlabel
                         "
-                        label="Label for Registration Questions section"
+                        :label="$t('Common.LabelForRegistrationQuestions')"
                         outlined
                         dense
                       ></v-text-field>
@@ -213,7 +211,7 @@
                     <v-col cols="12">
                       <v-text-field
                         v-model="sectionHeading.gallery"
-                        label="Label for Image Gallery section"
+                        :label="$t('Common.LabelForImageGallery')"
                         outlined
                         dense
                       ></v-text-field>
@@ -221,7 +219,7 @@
                     <v-col cols="12">
                       <v-text-field
                         v-model="sectionHeading.review"
-                        label="Label for Reviews section"
+                        :label="$t('Common.LabelForReviews')"
                         outlined
                         dense
                       ></v-text-field>
@@ -230,7 +228,7 @@
                       <v-select
                         v-model="animation"
                         :items="animationDropDown"
-                        label="Animation"
+                        :label="$t('Common.Animation')"
                         outlined
                         dense
                       ></v-select>
@@ -250,22 +248,22 @@
               color="grey lighten-2"
               depressed
               @click="tabs = 'tab-1'"
-              >Prev</v-btn
-            >
+              ><i18n path="Drawer.Prev"
+            /></v-btn>
             <v-btn
               v-if="tabs === 'tab-1'"
               color="primary"
               depressed
               @click="tabs = 'tab-2'"
-              >Next</v-btn
-            >
+              ><i18n path="Drawer.Next"
+            /></v-btn>
             <v-btn
               v-if="tabs === 'tab-2'"
               color="primary"
               depressed
               @click.native="onSave"
-              >Save</v-btn
-            >
+              ><i18n path="Drawer.Save"
+            /></v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>

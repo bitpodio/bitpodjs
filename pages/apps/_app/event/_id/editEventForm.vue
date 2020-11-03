@@ -10,7 +10,9 @@
         <v-card-title
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
-          <h2 class="black--text pt-5 pb-2 text-h5">Edit Event Information</h2>
+          <h2 class="black--text pt-5 pb-2 text-h5">
+            <i18n path="Common.EditEventInformation" />
+          </h2>
           <v-spacer></v-spacer>
           <div>
             <v-btn icon @click.native="close">
@@ -23,7 +25,7 @@
             <v-col cols="12" class="mt-3 pb-0">
               <v-text-field
                 v-model="formData.Title"
-                label="Title *"
+                :label="$t('Common.Title')"
                 :rules="requiredRule"
                 required
                 outlined
@@ -31,7 +33,7 @@
               ></v-text-field>
             </v-col>
             <v-col cols="12" class="mb-5">
-              <span>Description</span>
+              <span><i18n path="Common.Description" /> </span>
               <RichText v-model="formData.Description" />
             </v-col>
             <v-col
@@ -44,7 +46,7 @@
               <div class="custom-date-time-picker">
                 <CustomDate
                   v-model="StartDate"
-                  label="Start Date*"
+                  :label="$t('Common.StartD')"
                   :field="startDateField"
                   :rules="startDateRule"
                   :on-change="changeStartDate"
@@ -61,7 +63,7 @@
             >
               <CustomDate
                 v-model="EndDate"
-                label="End Date*"
+                :label="$t('Common.EndD')"
                 :field="endDateField"
                 :rules="endDateRule"
                 :on-change="changeEndDate"
@@ -84,7 +86,7 @@
             <v-col cols="12" sm="6" md="4" class="pb-0">
               <v-text-field
                 v-model="formData.Organizer"
-                label="Event organizer *"
+                :label="$t('Common.EventOrganizer')"
                 :rules="requiredRule"
                 outlined
                 required
@@ -94,7 +96,7 @@
             <v-col cols="12" sm="6" md="4" class="pb-0">
               <v-text-field
                 v-model="formData.EventManager"
-                label="Event Manager/Team Email *"
+                :label="$t('Common.EventManagerTeamEmail')"
                 :rules="emailRules"
                 outlined
                 required
@@ -110,7 +112,7 @@
               <v-text-field
                 v-model="formData.MaxNoRegistrations"
                 type="number"
-                label="Max registrations per day"
+                :label="$t('Common.MaxRegistrationsPerDay')"
                 min="0"
                 outlined
                 dense
@@ -120,7 +122,7 @@
               <v-select
                 v-model="tags"
                 :items="tagsDropdown"
-                label="Tags"
+                :label="$t('Common.Tags')"
                 multiple
                 chips
                 small-chips
@@ -132,7 +134,7 @@
             <v-col cols="12" class="pb-0">
               <v-text-field
                 v-if="formData.LocationType === 'Bitpod Virtual'"
-                label="Bitpod Virtual Link"
+                :label="$t('Common.BitpodVirtualLink')"
                 outlined
                 dense
                 disabled
@@ -143,7 +145,7 @@
               <v-text-field
                 v-if="formData.LocationType === 'Online event'"
                 v-model="formData.WebinarLink"
-                label="Online Event Link*"
+                :label="$t('Common.OnlineEventLinkReq')"
                 :rules="requiredRule"
                 outlined
                 required
@@ -154,7 +156,7 @@
               <v-textarea
                 v-if="formData.LocationType === 'Online event'"
                 v-model="formData.JoiningInstruction"
-                label="Additional online event joining instructions,URL,phone,etc*"
+                :label="$t('Common.AdditionalOnlineEventJoining')"
                 outlined
                 required
                 dense
@@ -171,7 +173,7 @@
                     ref="address"
                     v-model="VenueAddress.AddressLine"
                     outlined
-                    label="Venue Address"
+                    :label="$t('Common.VenueAddress')"
                     classname="form-control"
                     :rules="[addressValidation]"
                     placeholder="Venue Address *"
@@ -187,7 +189,7 @@
               <v-col cols="12" class="mt-6">
                 <v-text-field
                   v-model="formData.VenueName"
-                  label="Venue Name"
+                  :label="$t('Common.VenueName')"
                   outlined
                   dense
                   @change="changeVenueName"
@@ -196,7 +198,7 @@
               <v-col cols="12">
                 <v-text-field
                   v-model="VenueAddress.City"
-                  label="City"
+                  :label="$t('Common.City')"
                   outlined
                   dense
                   @change="changeCity"
@@ -205,7 +207,7 @@
               <v-col cols="12">
                 <v-text-field
                   v-model="VenueAddress.State"
-                  label="State"
+                  :label="$t('Common.State')"
                   outlined
                   dense
                   @change="changeState"
@@ -214,7 +216,7 @@
               <v-col cols="12">
                 <v-text-field
                   v-model="VenueAddress.Country"
-                  label="Country"
+                  :label="$t('Common.Country')"
                   outlined
                   dense
                   @change="changeCountry"
@@ -223,7 +225,7 @@
               <v-col cols="12">
                 <v-text-field
                   v-model="VenueAddress.PostalCode"
-                  label="Zip Code"
+                  :label="$t('Common.ZipCode')"
                   outlined
                   dense
                   @change="changeZipCode"
@@ -241,8 +243,8 @@
             color="primary"
             depressed
             @click="onSave"
-            >Save</v-btn
-          >
+            ><i18n path="Drawer.Save"
+          /></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -255,7 +257,6 @@ import { email, required } from '~/utility/rules.js'
 import event from '~/config/apps/event/gql/event.gql'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import { formatGQLResult } from '~/utility/gql.js'
-import strings from '~/strings.js'
 import Timezone from '~/components/common/form/timezone'
 import CustomDate from '~/components/common/form/date.vue'
 import nuxtconfig from '~/nuxt.config'
@@ -332,7 +333,7 @@ export default {
     },
     addressValidation() {
       if (this.addressLine === '') {
-        const message = strings.FIELD_REQUIRED
+        const message = this.$t('Messages.Error.ThisFieldRequired')
         this.setErrorAlert(true, message)
         return message
       }
@@ -360,7 +361,7 @@ export default {
         (v) => {
           const startDate = new Date(v)
           return startDate > new Date(this.EndDate)
-            ? strings.START_END_DATE
+            ? this.$t('Messages.Error.StartEndDate')
             : true
         },
       ]
@@ -370,7 +371,7 @@ export default {
         (v) => {
           const endDate = new Date(v)
           return new Date(this.StartDate) > endDate
-            ? strings.END_START_DATE
+            ? this.$t('Messages.Error.EndStartDate')
             : true
         },
       ]

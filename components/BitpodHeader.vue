@@ -15,14 +15,16 @@
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <v-toolbar-title style="width: 300px;" class="ml-0 pl-4">
-        <span class="hidden-sm-and-down">Google Contacts</span>
+        <span class="hidden-sm-and-down"
+          ><i18n path="Common.GoogleContacts"
+        /></span>
       </v-toolbar-title>
       <v-text-field
         flat
         solo-inverted
         hide-details
         prepend-inner-icon="mdi-magnify"
-        label="Search"
+        :label="$t('Common.Search')"
         class="hidden-sm-and-down"
       ></v-text-field>
       <v-spacer></v-spacer>

@@ -1,5 +1,7 @@
 <template>
-  <div>custom {{ errorMessage }}</div>
+  <div>
+    {{ $t('Common.CustomErrorMessage', { errorMessage: errorMessage }) }}
+  </div>
 </template>
 
 <script>

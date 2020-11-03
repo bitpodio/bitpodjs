@@ -21,7 +21,7 @@
                     small
                     color="white"
                   >
-                    Draft
+                    <i18n path="Common.Draft" />
                   </v-btn>
                   <div v-if="!item.Images.length" class="overflow-h rounded-t">
                     <v-flex
@@ -86,8 +86,8 @@
               <v-card-actions class="pt-0 pl-4 tiles-action">
                 <div class="text-truncate d-block">
                   <v-text class="ma-0 mr-1 event-tags body-2"
-                    >#Recurring event</v-text
-                  >
+                    ><i18n path="Common.RecurringE"
+                  /></v-text>
                   <v-text
                     v-for="Tags in item.Tags"
                     :key="Tags"
@@ -117,7 +117,9 @@
                         <i class="fa fa-eye mt-1" aria-hidden="true"></i>
                       </v-list-item-icon>
                       <v-list-item-content>
-                        <v-list-item-title>Preview</v-list-item-title>
+                        <v-list-item-title
+                          ><i18n path="Drawer.Preview"
+                        /></v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
                     <v-list-item @click="openEventForm(item.id)">
@@ -128,7 +130,9 @@
                         ></i>
                       </v-list-item-icon>
                       <v-list-item-content>
-                        <v-list-item-title>Edit</v-list-item-title>
+                        <v-list-item-title
+                          ><i18n path="Drawer.Edit"
+                        /></v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
                     <v-list-item @click="openMakeCopy(item.id)">
@@ -136,7 +140,9 @@
                         <i class="fa fa-clone mt-1" aria-hidden="true"></i>
                       </v-list-item-icon>
                       <v-list-item-content>
-                        <v-list-item-title>Make a copy</v-list-item-title>
+                        <v-list-item-title
+                          ><i18n path="Drawer.MakeaCopy"
+                        /></v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
                   </v-list>
@@ -155,7 +161,7 @@
                     small
                     color="white"
                   >
-                    Draft
+                    <i18n path="Common.Draft" />
                   </v-btn>
                   <div v-if="!item.Images.length" class="overflow-h rounded-t">
                     <v-flex
@@ -192,8 +198,11 @@
                   </div>
                 </div>
                 <v-flex class="tile-info pa-4 pb-0">
-                  <div class="text--secondary pa-2 pb-0 body-2 pl-0 pt-0">
-                    {{ formatedDate(item.StartDate, item.Timezone) }}
+                  <div
+                    v-if="item.StartDate !== undefined && item.StartDate"
+                    class="text--secondary pa-2 pb-0 body-2 pl-0 pt-0"
+                  >
+                    {{ $d(new Date(item.StartDate), 'long', $i18n.locale) }}
                   </div>
                   <v-card-title
                     class="text-h5 grey--text text--darken-4 text-truncate d-block text-capitalize pa-2 pt-0 pb-1 pl-0"
@@ -220,13 +229,13 @@
                 <div class="text-truncate d-block">
                   <span v-if="item.LocationType === 'Bitpod Virtual'">
                     <v-text class="ma-0 mr-1 event-tags body-2"
-                      >#Bitpod Virtual</v-text
-                    >
+                      ><i18n path="Common.BitpodVirtual"
+                    /></v-text>
                   </span>
                   <span v-else-if="item.LocationType === 'Online event'">
                     <v-text class="ma-0 mr-1 event-tags body-2"
-                      >#Online event</v-text
-                    >
+                      ><i18n path="Common.OnlineEventText"
+                    /></v-text>
                   </span>
                   <span v-else>
                     <v-text
@@ -259,7 +268,9 @@
                         <i class="fa fa-eye mt-1" aria-hidden="true"></i>
                       </v-list-item-icon>
                       <v-list-item-content>
-                        <v-list-item-title>Preview</v-list-item-title>
+                        <v-list-item-title
+                          ><i18n path="Drawer.Preview"
+                        /></v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
                     <v-list-item :key="item.id" @click="openEventForm(item.id)">
@@ -270,7 +281,9 @@
                         ></i>
                       </v-list-item-icon>
                       <v-list-item-content>
-                        <v-list-item-title>Edit</v-list-item-title>
+                        <v-list-item-title
+                          ><i18n path="Drawer.Edit"
+                        /></v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
                     <v-list-item :key="item.id" @click="openMakeCopy(item.id)">
@@ -278,7 +291,9 @@
                         <i class="fa fa-clone mt-1" aria-hidden="true"></i>
                       </v-list-item-icon>
                       <v-list-item-content>
-                        <v-list-item-title>Make a copy</v-list-item-title>
+                        <v-list-item-title
+                          ><i18n path="Drawer.MakeaCopy"
+                        /></v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
                   </v-list>
@@ -330,7 +345,9 @@ export default {
       this.count += 1
     },
     routes(id) {
-      return `/apps/event/event/${id}`
+      return this.$i18n.locale === 'en'
+        ? `/apps/event/event/${id}`
+        : `/${this.$i18n.locale}/apps/event/event/${id}`
     },
     getAttachmentLink(id, isDownloadLink) {
       const url = this.$bitpod.getApiUrl()

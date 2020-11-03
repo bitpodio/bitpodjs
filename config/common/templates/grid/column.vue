@@ -3,6 +3,7 @@
     :class="columnClass[column.type]"
     class="text-truncate"
     :style="{ maxWidth: column.width }"
+    :title="value"
   >
     {{ value }}
   </div>

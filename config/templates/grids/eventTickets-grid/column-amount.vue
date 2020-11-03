@@ -1,5 +1,11 @@
 <template>
-  <div>{{ Symbol }}{{ value }}.00</div>
+  <i18n-n
+    v-if="Currency !== ''"
+    :value="value"
+    :format="{ key: 'currency', currency: Currency }"
+    :locale="$i18n.locale"
+  >
+  </i18n-n>
 </template>
 
 <script>
@@ -13,6 +19,7 @@ export default {
   data() {
     return {
       Symbol: '',
+      Currency: '',
     }
   },
   mounted() {
@@ -25,18 +32,12 @@ export default {
           `${this.$bitpod.getApiUrl()}Events/${this.$route.params.id}`
         )
         if (res) {
-          this.getCurrencySymbol(res.Currency)
+          this.Currency = res.Currency
           return res
         }
       } catch (e) {
         console.log('Error', e)
       }
-    },
-
-    getCurrencySymbol(Currency) {
-      this.Symbol = Number()
-        .toLocaleString(Currency, { style: 'currency', currency: Currency })
-        .slice(0, 1)
     },
   },
 }

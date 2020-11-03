@@ -8,14 +8,16 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on">
-          <v-icon left>mdi-plus</v-icon> New Ticket
+          <v-icon left>mdi-plus</v-icon> <i18n path="Common.NewTicket" />
         </v-btn>
       </template>
       <v-card>
         <v-card-title
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
-          <h2 class="black--text pt-5 pb-3 text-h5">New Ticket</h2>
+          <h2 class="black--text pt-5 pb-3 text-h5">
+            <i18n path="Common.NewTicket" />
+          </h2>
           <v-spacer></v-spacer>
           <div>
             <v-btn icon @click="onClose">
@@ -29,7 +31,7 @@
               <v-col cols="12">
                 <v-text-field
                   v-model="formData.Code"
-                  label="Title*"
+                  :label="$t('Common.Title')"
                   :rules="required"
                   outlined
                   dense
@@ -82,7 +84,7 @@
                   v-model="formData.Type"
                   :items="typeDropDown"
                   :rules="required"
-                  label="Type*"
+                  :label="$t('Common.Type')"
                   outlined
                   dense
                   @change="getType"
@@ -102,7 +104,7 @@
               <v-col class="col-12 col-md-6">
                 <v-text-field
                   v-model="formData.TicketCount"
-                  label="Ticket Count*"
+                  :label="$t('Common.TicketCountRequired')"
                   type="number"
                   :rules="required"
                   min="1"
@@ -113,7 +115,7 @@
               <v-col class="col-12 col-md-6">
                 <v-text-field
                   v-model="formData.Group"
-                  label="Group Name"
+                  :label="$t('Common.GroupName')"
                   outlined
                   dense
                 ></v-text-field>
@@ -122,7 +124,7 @@
                 <v-select
                   v-model="Attendees"
                   :items="registrationTypeDropdown"
-                  label="Registration Type"
+                  :label="$t('Common.RegistrationType')"
                   multiple
                   chips
                   outlined
@@ -134,7 +136,7 @@
               <v-col class="col-12 col-md-6">
                 <v-text-field
                   v-model="formData.DisplayOrder"
-                  label="Display Order"
+                  :label="$t('Common.DisplayOrd')"
                   type="number"
                   min="1"
                   outlined
@@ -144,7 +146,7 @@
               <v-col class="col-12 col-md-6">
                 <v-checkbox
                   v-model="formData.ValidateQty"
-                  label="Validate Quantity"
+                  :label="$t('Common.ValidateQuantity')"
                   class="ma-0"
                   dense
                 ></v-checkbox>
@@ -152,7 +154,7 @@
               <v-col class="col-12 col-md-6">
                 <v-checkbox
                   v-model="formData.CheckGroupDiscount"
-                  label=" Check Group Discount"
+                  :label="$t('Common.CheckGroupDiscount')"
                   class="ma-0"
                   dense
                 ></v-checkbox>
@@ -174,8 +176,8 @@
             "
             depressed
             @click.native="onSave"
-            >Save</v-btn
-          >
+            ><i18n path="Drawer.Save"
+          /></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -190,7 +192,6 @@ import registrationtype from '~/config/apps/event/gql/registrationType.gql'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { required } from '~/utility/rules.js'
-import strings from '~/strings.js'
 export default {
   props: {
     refresh: {
@@ -256,14 +257,15 @@ export default {
             const { EndDate } = this.eventData
             let startDateMessage = ''
             if (this.eventData.BusinessType !== 'Recurring') {
-              if (!StartDate) startDateMessage = strings.FIELD_REQUIRED
+              if (!StartDate)
+                startDateMessage = this.$t('Messages.Error.ThisFieldRequired')
               else if (StartDate && EndDate && StartDate > EndDate)
-                startDateMessage = strings.START_END_DATE
+                startDateMessage = this.$t('Messages.Error.StartEndDate')
               else startDateMessage = ''
               return startDateMessage || true
             } else {
               if (StartDate && EndDate && StartDate > EndDate)
-                startDateMessage = strings.START_END_DATE
+                startDateMessage = this.$t('Messages.Error.StartEndDate')
               else startDateMessage = ''
               return startDateMessage || true
             }
@@ -282,18 +284,19 @@ export default {
             const { StartDate } = this.eventData
             let endDateMessage = ''
             if (this.eventData.BusinessType !== 'Recurring') {
-              if (!EndDate) endDateMessage = strings.FIELD_REQUIRED
+              if (!EndDate)
+                endDateMessage = this.$t('Messages.Error.ThisFieldRequired')
               else if (StartDate && EndDate && StartDate > EndDate)
-                endDateMessage = strings.END_START_DATE
+                endDateMessage = this.$t('Messages.Error.EndStartDate')
               else if (EndDate > new Date(this.CheckEndDate))
-                endDateMessage = strings.TICKET_END_DT_MSG
+                endDateMessage = this.$t('Messages.Error.TicketEndDate')
               else if (EndDate < new Date())
-                endDateMessage = strings.TICKET_END_DT_CURRENT_DT
+                endDateMessage = this.$t('Messages.Error.TicketEndCurrentDate')
               else endDateMessage = ''
               return endDateMessage || true
             } else {
               if (StartDate && EndDate && EndDate < StartDate)
-                endDateMessage = strings.END_START_DATE
+                endDateMessage = this.$t('Messages.Error.EndStartDate')
               else endDateMessage = ''
               return endDateMessage || true
             }

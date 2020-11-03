@@ -493,6 +493,15 @@ body {
 .custom-date-time-picker .v-input input {
   cursor: pointer !important;
 }
+.v-grid th.text-start.sortable span {
+    white-space: nowrap;
+    width: calc(100% - 50px);
+    min-width: 50px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+    float: left;
+}
 @media (max-width: 800px) {
   .nav-bar {
     top: 0 !important;

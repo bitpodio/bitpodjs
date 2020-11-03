@@ -1,3 +1,3 @@
 <template>
-  <div>header Template</div>
+  <div><i18n path="Common.HeaderTemplate" /></div>
 </template>

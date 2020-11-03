@@ -69,8 +69,7 @@ export default {
       this.jwtAcquired = true
     } catch (err) {
       console.error(`Error while fetching JWT`, err)
-      this.snackbarText = 'Failed to fetch JWT token.'
-      this.snackbar = true
+      this.snackbarText = this.$t('Messages.Success.FailedFetchToken')
     }
   },
   methods: {

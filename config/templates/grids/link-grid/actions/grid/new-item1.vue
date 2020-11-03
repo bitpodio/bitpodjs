@@ -9,13 +9,15 @@
       <template v-slot:activator="{ on, attrs }">
         <v-flex xs12 sm12 md12 mx-3>
           <v-btn color="primary" dark v-bind="attrs" v-on="on">
-            New Item
+            <i18n path="Common.NewItem" />
           </v-btn>
         </v-flex>
       </template>
       <v-card>
         <v-toolbar dense flat dark fixed color="accent">
-          <v-toolbar-title class="body-1">New Item</v-toolbar-title>
+          <v-toolbar-title class="body-1"
+            ><i18n path="Common.NewItem"
+          /></v-toolbar-title>
           <v-spacer></v-spacer>
           <v-btn icon dark @click="dialog = false">
             <v-icon>mdi-close</v-icon>
@@ -44,7 +46,9 @@
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions class="pl-4">
-          <v-btn color="primary" depressed @click="onSave">Save</v-btn>
+          <v-btn color="primary" depressed @click="onSave"
+            ><i18n path="Drawer.Save"
+          /></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

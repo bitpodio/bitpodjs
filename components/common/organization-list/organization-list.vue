@@ -3,13 +3,13 @@
     <v-dialog v-model="dialog" persistent max-width="27rem">
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small color="primary" dark v-bind="attrs" v-on="on">
-          Open another organization
+          <i18n path="Common.OpenAnotherOrganization" />
         </v-btn>
       </template>
       <v-card>
         <v-card-title>
           <h2 class="black--text pt-2 pb-2 text-h5">
-            Open another organization
+            <i18n path="Common.OpenAnotherOrganization" />
           </h2>
         </v-card-title>
         <v-card-text>
@@ -18,7 +18,7 @@
             :items="orgList"
             item-text="name"
             item-value="name"
-            label="Organizations"
+            :label="$t('Common.Organizations')"
             outlined
             dense
             hide-details
@@ -26,10 +26,12 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" text @click="onOpenClick">Open</v-btn>
+          <v-btn color="primary" text @click="onOpenClick"
+            ><i18n path="Common.Open"
+          /></v-btn>
           <v-btn color="grey darken-1" text @click="dialog = false"
-            >Cancel</v-btn
-          >
+            ><i18n path="Drawer.Cancel"
+          /></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

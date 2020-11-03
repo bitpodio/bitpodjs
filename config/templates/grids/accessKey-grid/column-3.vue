@@ -18,7 +18,7 @@
             <v-list-item-content>
               <copy
                 :text-to-copy="getKeyCopied(item.accesskey, item.accesssecret)"
-                label="Copy"
+                :label="$t('Drawer.Copy')"
                 :hide-toast="true"
                 :unique-id="'a' + item.id"
                 icon-size="15"
@@ -33,7 +33,9 @@
               <i class="fa fa-trash mr-1 mt-1" aria-hidden="true"></i>
             </v-list-item-icon>
             <v-list-item-content class="ml-n3">
-              <v-list-item-title>Delete</v-list-item-title>
+              <v-list-item-title
+                ><i18n path="Drawer.Delete"
+              /></v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -70,7 +72,7 @@ export default {
   methods: {
     openSnackbar() {
       this.snackbar = true
-      this.snackbarText = 'Access Key and Secret copied to clipboard'
+      this.snackbarText = this.$t('Messages.Success.AccessKeySecretCopied')
     },
     getKeyCopied(accessKey, secretKey) {
       const key = `key:${accessKey}secret:${secretKey}`
@@ -85,7 +87,7 @@ export default {
             `${url}Users/${userName}/Accesskey/${accessKey}`
           )
           this.snackbar = true
-          this.snackbarText = 'Item deleted successfully'
+          this.snackbarText = this.$t('Messages.Success.DeletedSuccessfully')
           this.refresh()
           return res
         } catch (e) {

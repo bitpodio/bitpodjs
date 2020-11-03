@@ -17,11 +17,11 @@ export default {
       fields: {
         Label: {
           form: {
-            caption: 'Label',
+            caption: 'Common.Label',
             displayOrder: 1,
           },
           displayOrder: 1,
-          caption: 'Label',
+          caption: 'Common.Label',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '250px',
@@ -32,11 +32,11 @@ export default {
         },
         ControlType: {
           form: {
-            caption: 'Control Type *',
+            caption: 'Common.ControlType',
             displayOrder: 3,
           },
           displayOrder: 2,
-          caption: 'Type',
+          caption: 'Common.TypeCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -45,8 +45,8 @@ export default {
           newForm: false,
           editForm: true,
           rules: [
-            (v) => {
-              return !!v || 'Control Type is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.ControlRequired')
             },
           ],
           dataSource: {
@@ -62,11 +62,11 @@ export default {
         },
         Options: {
           form: {
-            caption: 'Options',
+            caption: 'Common.OptionsCaption',
             displayOrder: 3,
           },
           displayOrder: 2,
-          caption: 'Options',
+          caption: 'Common.OptionsCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -86,11 +86,11 @@ export default {
         },
         DisplayOrder: {
           form: {
-            caption: 'Display Order',
+            caption: 'Common.DisplayOrd',
             displayOrder: 2,
           },
           displayOrder: 3,
-          caption: 'Display Order',
+          caption: 'Common.DisplayOrd',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -101,11 +101,11 @@ export default {
         },
         isShowField: {
           form: {
-            caption: 'Show Field',
+            caption: 'Common.ShowField',
             displayOrder: 5,
           },
           displayOrder: 4,
-          caption: 'Buyer',
+          caption: 'Common.Buyer',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -116,7 +116,7 @@ export default {
         },
         isAttendeeField: {
           displayOrder: 5,
-          caption: 'Attendee',
+          caption: 'Common.Attendee',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -125,11 +125,11 @@ export default {
         },
         isRequired: {
           form: {
-            caption: 'Required',
+            caption: 'Common.Required',
             displayOrder: 4,
           },
           displayOrder: 6,
-          caption: 'Required',
+          caption: 'Common.Required',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -168,7 +168,7 @@ export default {
           where: {},
         },
       },
-      title: 'Registration Form',
+      title: 'Common.RegistrationForm',
       type: 'list',
     },
   },

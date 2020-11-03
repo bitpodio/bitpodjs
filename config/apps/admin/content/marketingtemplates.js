@@ -18,11 +18,11 @@ export default {
       fields: {
         Name: {
           form: {
-            caption: 'Template Name *',
+            caption: 'Common.TemplateName',
             displayOrder: 1,
           },
           displayOrder: 1,
-          caption: 'Name',
+          caption: 'Common.Name',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '250px',
@@ -31,18 +31,18 @@ export default {
           newForm: true,
           editForm: false,
           rules: [
-            (v) => {
-              return !!v || 'Template Name is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.TemplateNameRequired')
             },
           ],
         },
         Subject: {
           form: {
-            caption: 'Subject *',
+            caption: 'Common.SubjectRequired',
             displayOrder: 2,
           },
           displayOrder: 1,
-          caption: 'Subject',
+          caption: 'Common.Subject',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '250px',
@@ -51,18 +51,18 @@ export default {
           newForm: true,
           editForm: false,
           rules: [
-            (v) => {
-              return !!v || 'Subject is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.SubjectRequired')
             },
           ],
         },
         Type: {
           form: {
-            caption: 'Type *',
+            caption: 'Common.Type',
             displayOrder: 4,
           },
           displayOrder: 2,
-          caption: 'Type',
+          caption: 'Common.TypeCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '250px',
@@ -71,8 +71,8 @@ export default {
           newForm: true,
           editForm: false,
           rules: [
-            (v) => {
-              return !!v || 'Type is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.TypeRequired')
             },
           ],
           dataSource: {
@@ -88,11 +88,11 @@ export default {
         },
         ImageURL: {
           form: {
-            caption: 'Image URL',
+            caption: 'Common.ImageUrl',
             displayOrder: 6,
           },
           displayOrder: 3,
-          caption: 'Image Url',
+          caption: 'Common.ImageUrl',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '250px',
@@ -103,11 +103,11 @@ export default {
         },
         Body: {
           form: {
-            caption: 'Body *',
+            caption: 'Common.BodyRequired',
             displayOrder: 3,
           },
           displayOrder: 4,
-          caption: 'Body',
+          caption: 'Common.Body',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '250px',
@@ -159,18 +159,18 @@ export default {
             'Full Name': 'Full Name',
           },
           rules: [
-            (v) => {
-              return !!v || 'Body is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.BodyRequired')
             },
           ],
         },
         Category: {
           form: {
-            caption: 'Category *',
+            caption: 'Common.CategoryRequired',
             displayOrder: 5,
           },
           displayOrder: 5,
-          caption: 'Category',
+          caption: 'Common.Category',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '250px',
@@ -179,8 +179,8 @@ export default {
           newForm: true,
           editForm: false,
           rules: [
-            (v) => {
-              return !!v || 'Type is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.TypeRequired')
             },
           ],
           dataSource: {
@@ -196,7 +196,7 @@ export default {
         },
         createdDate: {
           displayOrder: 6,
-          caption: 'Date',
+          caption: 'Common.Date',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -206,7 +206,7 @@ export default {
         },
         createdBy: {
           displayOrder: 7,
-          caption: 'Created By',
+          caption: 'Common.CreatedBy',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -216,11 +216,11 @@ export default {
         },
         Documents: {
           form: {
-            caption: 'Attachments',
+            caption: 'Common.Attachments',
             displayOrder: 7,
           },
           displayOrder: 7,
-          caption: 'Attachments',
+          caption: 'Common.Attachments',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -256,7 +256,7 @@ export default {
           }
         },
       },
-      title: 'Templates',
+      title: 'Common.Templates',
       type: 'list',
     },
     mytemplate: {
@@ -274,11 +274,11 @@ export default {
       fields: {
         Name: {
           form: {
-            caption: 'Template Name *',
+            caption: 'Common.TemplateName',
             displayOrder: 1,
           },
           displayOrder: 1,
-          caption: 'Name',
+          caption: 'Common.Name',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '250px',
@@ -287,18 +287,18 @@ export default {
           newForm: true,
           editForm: false,
           rules: [
-            (v) => {
-              return !!v || 'Template Name is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.TemplateNameRequired')
             },
           ],
         },
         Subject: {
           form: {
-            caption: 'Subject *',
+            caption: 'Common.SubjectRequired',
             displayOrder: 2,
           },
           displayOrder: 1,
-          caption: 'Subject',
+          caption: 'Common.Subject',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '250px',
@@ -307,18 +307,18 @@ export default {
           newForm: true,
           editForm: false,
           rules: [
-            (v) => {
-              return !!v || 'Subject is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.SubjectRequired')
             },
           ],
         },
         Type: {
           form: {
-            caption: 'Type *',
+            caption: 'Common.Type',
             displayOrder: 4,
           },
           displayOrder: 2,
-          caption: 'Type',
+          caption: 'Common.TypeCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '250px',
@@ -327,8 +327,8 @@ export default {
           newForm: true,
           editForm: false,
           rules: [
-            (v) => {
-              return !!v || 'Type is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.TypeRequired')
             },
           ],
           dataSource: {
@@ -344,11 +344,11 @@ export default {
         },
         ImageURL: {
           form: {
-            caption: 'Image URL',
+            caption: 'Common.ImageUrl',
             displayOrder: 6,
           },
           displayOrder: 3,
-          caption: 'Image Url',
+          caption: 'Common.ImageUrl',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '250px',
@@ -359,11 +359,11 @@ export default {
         },
         Body: {
           form: {
-            caption: 'Body *',
+            caption: 'Common.BodyRequired',
             displayOrder: 3,
           },
           displayOrder: 4,
-          caption: 'Body',
+          caption: 'Common.Body',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '250px',
@@ -415,18 +415,18 @@ export default {
             'Full Name': 'Full Name',
           },
           rules: [
-            (v) => {
-              return !!v || 'Body is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.BodyRequired')
             },
           ],
         },
         Category: {
           form: {
-            caption: 'Category *',
+            caption: 'Common.CategoryRequired',
             displayOrder: 5,
           },
           displayOrder: 5,
-          caption: 'Category',
+          caption: 'Common.Category',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '250px',
@@ -435,8 +435,8 @@ export default {
           newForm: true,
           editForm: false,
           rules: [
-            (v) => {
-              return !!v || 'Type is required'
+            function (v) {
+              return !!v || this.$t('Messages.Error.TypeRequired')
             },
           ],
           dataSource: {
@@ -452,7 +452,7 @@ export default {
         },
         createdDate: {
           displayOrder: 6,
-          caption: 'Date',
+          caption: 'Common.Date',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -462,7 +462,7 @@ export default {
         },
         createdBy: {
           displayOrder: 7,
-          caption: 'Created By',
+          caption: 'Common.CreatedBy',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -496,7 +496,7 @@ export default {
           }
         },
       },
-      title: 'My Templates',
+      title: 'Common.MyTemplates',
       type: 'list',
     },
   },

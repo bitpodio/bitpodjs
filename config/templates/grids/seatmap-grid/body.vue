@@ -12,7 +12,7 @@
           >
             <v-card-text class="font-weight-medium text-center subtitle-1 pt-0">
               <i class="fa fa-plus fs-36 warning--text"></i>
-              <div class="body-1">New Seatmap</div>
+              <i18n path="Common.NewSeatmap" class="body-1" />
             </v-card-text>
           </v-card>
         </nuxt-link>
@@ -56,7 +56,9 @@
                       <i class="fa fa-eye mt-1" aria-hidden="true"></i>
                     </v-list-item-icon>
                     <v-list-item-content>
-                      <v-list-item-title>More info</v-list-item-title>
+                      <v-list-item-title
+                        ><i18n path="Common.MoreInfo"
+                      /></v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
                   <v-list-item :to="seatmapRoutes(item.id)">
@@ -67,7 +69,9 @@
                       ></i>
                     </v-list-item-icon>
                     <v-list-item-content>
-                      <v-list-item-title>Edit</v-list-item-title>
+                      <v-list-item-title
+                        ><i18n path="Drawer.Edit"
+                      /></v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
                 </v-list>
@@ -88,15 +92,17 @@ export default {
   },
   computed: {
     seatmapRoute() {
-      return `/apps/seatmap/new`
+      return this.localePath(`/apps/seatmap/new`)
     },
   },
   methods: {
     seatmapRoutes(id) {
-      return `/apps/seatmap/${id}`
+      return this.localePath(`/apps/seatmap/${id}`)
     },
     seatmapView(id) {
-      this.$router.push(`/apps/seatmap/seatmap/seatmap?id=${id}`)
+      this.$router.push(
+        this.localePath(`/apps/seatmap/seatmap/seatmap?id=${id}`)
+      )
     },
   },
 }

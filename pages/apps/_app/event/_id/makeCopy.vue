@@ -10,18 +10,21 @@
       <v-card>
         <div class="flex">
           <div class="pb-2 text-center pa-4">
-            <span class="text-h5"> Event has been copied successfully.</span>
+            <i18n path="Common.CopiedSuccessfully" class="text-h5" />
           </div>
-          <div class="pb-2 text--primary text-center">
-            We recommend you click the preview button to verify your event page.
-          </div>
+
+          <i18n
+            path="Common.ClickPreviewButton"
+            class="pb-2 text--primary text-center"
+          />
+
           <div class="pb-2 text-center">
             <v-btn depressed color="primary" class="ma-1" @click="viewEvent"
-              ><v-icon left>mdi-eye-outline</v-icon>Preview</v-btn
-            >
+              ><v-icon left>mdi-eye-outline</v-icon><i18n path="Drawer.Preview"
+            /></v-btn>
             <v-btn text color="primary" class="ma-1" @click="closeForm"
-              >Close</v-btn
-            >
+              ><i18n path="Drawer.Close"
+            /></v-btn>
           </div>
         </div>
       </v-card>
@@ -37,7 +40,9 @@
           <v-card-title
             class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
           >
-            <h2 class="black--text pt-5 pb-4 text-h5">Copy Event</h2>
+            <h2 class="black--text pt-5 pb-4 text-h5">
+              <i18n path="Common.CopyEvent" />
+            </h2>
             <v-spacer></v-spacer>
             <div>
               <v-btn icon @click="close">
@@ -51,7 +56,7 @@
                 <v-text-field
                   v-model="Title"
                   :rules="requiredRules"
-                  label="Title*"
+                  :label="$t('Common.Title')"
                   dense
                   outlined
                 ></v-text-field>
@@ -63,7 +68,7 @@
                 <v-col v-if="isVenue || isOnline" cols="12" sm="4" md="4">
                   <CustomDate
                     v-model="StartDate"
-                    label="Start Date*"
+                    :label="$t('Common.StartD')"
                     :field="startDateField"
                     :rules="startDateRule"
                     :on-change="changeStartDate()"
@@ -73,7 +78,7 @@
                 <v-col v-if="isVenue || isOnline" cols="12" sm="4" md="4">
                   <CustomDate
                     v-model="EndDate"
-                    label="End Date*"
+                    :label="$t('Common.EndD')"
                     :field="endDateField"
                     :rules="endDateRule"
                     :on-change="changeEndDate()"
@@ -95,7 +100,7 @@
               <v-col cols="12">
                 <v-text-field
                   v-model="UniqLink"
-                  label="Event Link*"
+                  :label="$t('Common.EventL')"
                   class="text-links"
                   :rules="requiredRules"
                   persistent-hint
@@ -115,7 +120,7 @@
               <v-col cols="12" class="pb-0">
                 <v-text-field
                   v-model="eventData.WebinarLink"
-                  label="Online Event Link*"
+                  :label="$t('Common.OnlineEventLinkReq')"
                   outlined
                   dense
                 ></v-text-field>
@@ -123,7 +128,7 @@
               <v-col cols="12" class="pb-0">
                 <v-textarea
                   v-model="eventData.JoiningInstruction"
-                  label="Additional online event joining instructions, URL, phone etc."
+                  :label="$t('Common.AdditionalOnlineEvent')"
                   outlined
                   dense
                   rows="2"
@@ -134,7 +139,7 @@
               <v-flex class="d-flex justify-center align-center pb-1">
                 <h2 class="body-1 pb-1 primary--text">
                   <i class="fa fa-map-marker" aria-hidden="true"></i>
-                  Venue
+                  <i18n path="Common.Venue" />
                 </h2>
                 <v-spacer></v-spacer>
               </v-flex>
@@ -163,7 +168,7 @@
                 <v-col v-if="isVenue" cols="12" class="pb-0">
                   <v-text-field
                     v-model="eventData.VenueName"
-                    label="Venue Name"
+                    :label="$t('Common.VenueName')"
                     outlined
                     dense
                   ></v-text-field>
@@ -173,7 +178,7 @@
                   <v-col v-if="isVenue" cols="12" sm="6" md="6" class="pb-0">
                     <v-text-field
                       v-model="venueAddress.City"
-                      label="City"
+                      :label="$t('Common.City')"
                       outlined
                       dense
                     ></v-text-field>
@@ -181,7 +186,7 @@
                   <v-col v-if="isVenue" cols="12" sm="6" md="6" class="pb-0">
                     <v-text-field
                       v-model="venueAddress.State"
-                      label="State"
+                      :label="$t('Common.State')"
                       outlined
                       dense
                     ></v-text-field>
@@ -189,7 +194,7 @@
                   <v-col v-if="isVenue" cols="12" sm="6" md="6" class="pb-0">
                     <v-text-field
                       v-model="venueAddress.Country"
-                      label="Country"
+                      :label="$t('Common.Country')"
                       outlined
                       dense
                     ></v-text-field>
@@ -197,7 +202,7 @@
                   <v-col v-if="isVenue" cols="12" sm="6" md="6" class="pb-0">
                     <v-text-field
                       v-model="venueAddress.PostalCode"
-                      label="Zip Code"
+                      :label="$t('Common.ZipCode')"
                       outlined
                       dense
                     ></v-text-field>
@@ -249,8 +254,8 @@
             <div class="col-md-12 pl-0">
               <v-flex class="d-flex justify-center align-center pb-1">
                 <h2 class="body-1 pb-1 fs-16">
-                  <i class="fa fa-network pr-1" aria-hidden="true"></i> I would
-                  like to copy following event objects as well
+                  <i class="fa fa-network pr-1" aria-hidden="true"></i
+                  ><i18n path="Common.CopyEventObjects" />
                 </h2>
                 <v-spacer></v-spacer>
               </v-flex>
@@ -259,35 +264,35 @@
               <v-col cols="12" sm="4" md="4" class="py-0">
                 <v-checkbox
                   v-model="isSpeakers"
-                  label="Speakers"
+                  :label="$t('Common.Speakers')"
                   class="ma-0"
                 ></v-checkbox>
               </v-col>
               <v-col cols="12" sm="4" md="4" class="py-0">
                 <v-checkbox
                   v-model="isTickets"
-                  label="Tickets"
+                  :label="$t('Common.Tickets')"
                   class="ma-0"
                 ></v-checkbox>
               </v-col>
               <v-col cols="12" sm="4" md="4" class="py-0">
                 <v-checkbox
                   v-model="isSessions"
-                  label="Sessions"
+                  :label="$t('Common.Sessions')"
                   class="ma-0"
                 ></v-checkbox>
               </v-col>
               <v-col cols="12" sm="4" md="4" class="py-0">
                 <v-checkbox
                   v-model="isRegistrationTypes"
-                  label="Registration Types"
+                  :label="$t('Common.RegistrationTypes')"
                   class="ma-0"
                 ></v-checkbox>
               </v-col>
               <v-col cols="12" sm="4" md="4" class="py-0">
                 <v-checkbox
                   v-model="isOfferCode"
-                  label="Offer Code"
+                  :label="$t('Common.OfferCode')"
                   class="ma-0"
                 ></v-checkbox>
               </v-col>
@@ -304,8 +309,8 @@
               color="primary"
               depressed
               @click="onSave"
-              >Copy</v-btn
-            >
+              ><i18n path="Drawer.Copy"
+            /></v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -315,7 +320,6 @@
 
 <script>
 import gql from 'graphql-tag'
-import strings from '~/strings.js'
 import Timezone from '~/components/common/form/timezone'
 import { required } from '~/utility/rules.js'
 import event from '~/config/apps/event/gql/event.gql'
@@ -441,11 +445,12 @@ export default {
           const StartDate = v && new Date(v)
           const { EndDate } = this.eventData
           let startDateMessage = ''
-          if (!StartDate) startDateMessage = strings.FIELD_REQUIRED
+          if (!StartDate)
+            startDateMessage = this.$t('Messages.Error.ThisFieldRequired')
           else if (StartDate && EndDate && StartDate > EndDate)
-            startDateMessage = strings.EVENT_START_END_DATE
+            startDateMessage = this.$t('Messages.Error.EventStartEndDate')
           else if (StartDate < new Date())
-            startDateMessage = strings.EVENT_START_DATE
+            startDateMessage = this.$t('Messages.Error.EventStartDate')
           else startDateMessage = ''
           return startDateMessage || true
         },
@@ -459,8 +464,9 @@ export default {
           let endDateMessage = ''
           if (!EndDate) endDateMessage = this.requiredRules
           else if (StartDate && EndDate && StartDate > EndDate)
-            endDateMessage = strings.EVENT_START_END_DATE
-          else if (EndDate < new Date()) endDateMessage = strings.EVENT_END_DATE
+            endDateMessage = this.$t('Messages.Error.EventStartEndDate')
+          else if (EndDate < new Date())
+            endDateMessage = this.$t('Messages.Error.EventEndDate')
           else endDateMessage = ''
           return endDateMessage || true
         },
@@ -489,7 +495,9 @@ export default {
     },
     closeForm() {
       this.isViewEvent = false
-      this.$router.push('/apps/event/event/' + this.copyEventId)
+      this.$router.push(
+        this.localePath('/apps/event/event/' + this.copyEventId)
+      )
     },
     viewEvent() {
       const baseUrl = this.$bitpod.getApiUrl()
@@ -511,7 +519,7 @@ export default {
         }
       } else {
         this.isInvalidEventLink = true
-        this.uniqueLinkMessage = strings.UNIQUE_LINK_FORMAT
+        this.uniqueLinkMessage = this.$t('Messages.Warn.UniqueLinkFormat')
       }
     },
     async checkUniqueLink(value) {
@@ -527,7 +535,7 @@ export default {
       })
       if (result.data.Event.EventCount > 0) {
         this.isInvalidEventLink = true
-        this.uniqueLinkMessage = strings.UNIQUE_LINK_DUPLICATE
+        this.uniqueLinkMessage = this.$t('Messages.Error.UniqueLinkDuplicate')
       } else this.isInvalidEventLink = false
     },
     returnToCenter() {

@@ -61,7 +61,9 @@
       </v-row>
       <v-row>
         <v-col class="col-12 col-sm-6 col-md-4 parentWidth">
-          <h3 class="font-weight-regular pb-2">Events on Sale</h3>
+          <h3 class="font-weight-regular pb-2">
+            <i18n path="Common.EventsonSale" />
+          </h3>
           <div v-if="!eventOnSaleEmpty">
             <div
               v-for="(data, index) in eventOnSaleData"
@@ -140,8 +142,7 @@
               <i class="fa fa-calendar" aria-hidden="true"></i>
             </div>
             <div class="text-center">
-              There aren't any live events, to start setting up your event use
-              Create Event link
+              <i18n path="Common.StartSettingUpYourEvent" />
             </div>
           </div>
           <v-hover v-slot:default="{ hover }">
@@ -154,12 +155,14 @@
               }"
               @click="routeToLiveEvents"
             >
-              View all
+              <i18n path="Common.ViewAll" />
             </h4>
           </v-hover>
         </v-col>
         <v-col class="col-12 col-sm-6 col-md-4 parentWidth">
-          <h3 class="font-weight-regular pb-2">10 Days Tickets Sale</h3>
+          <h3 class="font-weight-regular pb-2">
+            <i18n path="Common.10DaysTicketsSale" />
+          </h3>
           <div
             v-if="!ticketSoldLoaded || !ticketSoldReady"
             class="rounded white elevation-2 chartHeight positionRelative"
@@ -186,7 +189,9 @@
           </div>
         </v-col>
         <v-col class="col-12 col-sm-6 col-md-4 parentWidth">
-          <h3 class="font-weight-regular pb-2">Recent Buyers</h3>
+          <h3 class="font-weight-regular pb-2">
+            <i18n path="Common.RecentBuyers" />
+          </h3>
           <div v-if="!recentBuyersEmpty">
             <div
               v-for="(data, index) in recentBuyersData"
@@ -254,7 +259,7 @@
               <i class="fa fa-user" aria-hidden="true"></i>
             </div>
             <div class="text-center">
-              No Recent Buyer
+              <i18n path="Common.NoRecentBuyer" />
             </div>
           </div>
           <v-hover v-slot:default="{ hover }">
@@ -267,7 +272,7 @@
               }"
               @click="routeToRegistrations"
             >
-              View all
+              <i18n path="Common.ViewAll" />
             </h4>
           </v-hover>
         </v-col>
@@ -275,7 +280,7 @@
       <v-row>
         <v-col class="col-12 col-sm-6 col-md-4 parentWidth">
           <h3 class="font-weight-regular pb-2">
-            Invitations Conversion by Event
+            <i18n path="Common.InvitationsConversionByEvent" />
           </h3>
           <div
             v-if="!conversionLoaded || !conversionReady"
@@ -304,7 +309,7 @@
         </v-col>
         <v-col class="col-12 col-sm-6 col-md-4 parentWidth">
           <h3 class="font-weight-regular pb-2">
-            Sale by Geo Location
+            <i18n path="Common.SaleByGeoLocation" />
           </h3>
           <div
             v-if="!geoLocationLoaded || !geoLocationReady"
@@ -337,7 +342,7 @@
         ></v-col>
         <v-col class="col-12 col-sm-6 col-md-4 parentWidth">
           <h3 class="font-weight-regular pb-2">
-            Tickets Sold
+            <i18n path="Common.TicketsSold" />
           </h3>
           <div
             v-if="!pieLoaded || !pieReady"
@@ -368,7 +373,7 @@
       <v-row>
         <v-col class="col-12 col-sm-6 col-md-4 parentWidth">
           <h3 class="font-weight-regular pb-2">
-            Invitations Conversion Trend
+            <i18n path="Common.InvitationsConversionTrend" />
           </h3>
           <div
             v-if="!conversionTrendLoaded || !conversionTrendReady"
@@ -397,7 +402,7 @@
         </v-col>
         <v-col class="col-12 col-sm-6 col-md-4 parentWidth">
           <h3 class="font-weight-regular pb-2">
-            Sessions Sold
+            <i18n path="Common.SessionsSold" />
           </h3>
           <div
             v-if="!sessionLoaded || !sessionReady"
@@ -426,7 +431,7 @@
         </v-col>
         <v-col class="col-12 col-sm-6 col-md-4 parentWidth">
           <h3 class="font-weight-regular pb-2">
-            Events Timeline
+            <i18n path="Common.EventsTimeline" />
           </h3>
           <div
             v-if="!eventTimelineLoaded || !eventTimelineReady"
@@ -727,27 +732,33 @@ export default {
   },
   methods: {
     routeToLiveEvents(method) {
-      this.$router.push('/apps/event/list/Event/All Events')
+      this.$router.push(this.localePath('/apps/event/list/Event/All Events'))
     },
     routeToRegistrations(method) {
-      this.$router.push('/apps/event/list/Registrations/Registrations')
+      this.$router.push(
+        this.localePath('/apps/event/list/Registrations/Registrations')
+      )
     },
     routeToAbandoned(method) {
       if (method === 'routeToAbandoned') {
         this.$router.push(
-          '/apps/event/list/Registrations/Abandoned Registrations'
+          this.localePath(
+            '/apps/event/list/Registrations/Abandoned Registrations'
+          )
         )
       }
     },
     routeToEvent(data) {
       this.$router.push(
-        `/apps/event/event${
-          data.BusinessType === 'Single' ? '' : '/recurring'
-        }/${data.id}`
+        this.localePath(
+          `/apps/event/event${
+            data.BusinessType === 'Single' ? '' : '/recurring'
+          }/${data.id}`
+        )
       )
     },
     routeToRegistration(id) {
-      this.$router.push(`/apps/event/registration/${id}`)
+      this.$router.push(this.localePath(`/apps/event/registration/${id}`))
     },
     updateScroll() {
       const block = this.$refs.summaryBlock
