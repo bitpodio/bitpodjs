@@ -315,7 +315,10 @@ export default {
           const orgInfo = formatGQLResult(result.data, 'OrganizationInfo')
           if (this.$attrs.context.event.Logo.length > 0) {
             this.logoId = this.$attrs.context.event.Logo[0]
-          } else if (this.$attrs.context.event.Logo.length === 0) {
+          } else if (
+            this.$attrs.context.event.Logo.length === 0 &&
+            orgInfo[0].Image.length === 0
+          ) {
             this.logoId = ''
           } else {
             this.logoId = orgInfo[0].Image[0]
