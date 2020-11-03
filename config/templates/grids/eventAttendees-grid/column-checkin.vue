@@ -171,7 +171,17 @@ export default {
       return str
     },
     openPrintForm() {
-      const str = this.setTemplates()
+      const logoUrl = `src="${
+        nuxtconfig.publicRuntimeConfig.cdnUri +
+        'admin-default-template-logo.png'
+      }"`
+      let str
+      if (this.logoId !== '') {
+        str = this.setTemplates()
+      } else {
+        str = this.setTemplates()
+        str = str.replace(logoUrl, '')
+      }
       this.$refs.iframe.contentWindow.document.write(
         `<div style="display:flex">${str}</div>`
       )
@@ -211,7 +221,12 @@ export default {
             `${(items.regType && items.regType.Name) || 'Guest'}`
           )
           .replace('{{ Organization }}', `${items.CompanyName || ''}`)
-          .replace(logoUrl, this.getAttachmentLink(this.logoId, true))
+        if (this.logoId !== '') {
+          str = str.replace(
+            logoUrl,
+            this.getAttachmentLink(this.logoId, true) || logoUrl
+          )
+        }
         if (this.context.event && this.context.event.Title) {
           str = str.replace('{{ EventName }}', `${this.context.event.Title}`)
         }
@@ -241,6 +256,8 @@ export default {
           const orgInfo = formatGQLResult(result.data, 'OrganizationInfo')
           if (this.context.event.Logo.length > 0) {
             this.logoId = this.context.event.Logo[0]
+          } else if (this.context.event.Logo.length === 0) {
+            this.logoId = ''
           } else {
             this.logoId = orgInfo[0].Image[0]
           }
@@ -288,7 +305,6 @@ export default {
             this.Template = e.Template
           }
         })
-        this.getOrgInfo()
         return {
           badge: badge.length > 0 ? badge : {},
         }

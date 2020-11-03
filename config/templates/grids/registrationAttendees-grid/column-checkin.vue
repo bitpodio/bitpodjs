@@ -235,7 +235,6 @@ export default {
         if (result) {
           const badgeTemplate = formatGQLResult(result.data, 'Badge')
           this.Template = badgeTemplate[0].Template
-          this.getOrgInfo()
         }
       } catch (e) {
         console.error(
@@ -245,8 +244,17 @@ export default {
       }
     },
     openPrintForm() {
-      this.getOrgInfo()
-      const str = this.getBadge(this.Template, this.item)
+      const logoUrl = `src="${
+        nuxtconfig.publicRuntimeConfig.cdnUri +
+        'admin-default-template-logo.png'
+      }"`
+      let str
+      if (this.logoId !== '') {
+        str = this.getBadge(this.Template, this.item)
+      } else {
+        str = this.getBadge(this.Template, this.item)
+        str = str.replace(logoUrl, '')
+      }
       this.$refs.iframe.contentWindow.document.write(
         `<div style="display:flex">${str}</div>`
       )
@@ -272,7 +280,12 @@ export default {
             `${(items.regType && items.regType.Name) || 'Guest'}`
           )
           .replace('{{ Organization }}', `${items.CompanyName || ''} `)
-          .replace(logoUrl, this.getAttachmentLink(this.logoId, true))
+        if (this.logoId !== '') {
+          str = str.replace(
+            logoUrl,
+            this.getAttachmentLink(this.logoId, true) || logoUrl
+          )
+        }
         if (this.eventTitle) {
           str = str.replace('{{ EventName }}', `${this.eventTitle}`)
         }
@@ -302,6 +315,8 @@ export default {
           const orgInfo = formatGQLResult(result.data, 'OrganizationInfo')
           if (this.$attrs.context.event.Logo.length > 0) {
             this.logoId = this.$attrs.context.event.Logo[0]
+          } else if (this.$attrs.context.event.Logo.length === 0) {
+            this.logoId = ''
           } else {
             this.logoId = orgInfo[0].Image[0]
           }
