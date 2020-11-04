@@ -150,7 +150,7 @@
         <v-row>
           <v-col class="col-md-6 col-12">
             <i18n path="Common.DateOfBirth" class="body-2 text--secondary" />
-            <div class="body-1">{{ formatField(data.contact.BirthDate) }}</div>
+            <div class="body-1">{{ formatDate(data.contact.BirthDate) }}</div>
           </v-col>
           <v-col class="col-md-6 col-12">
             <i18n path="Common.Department" class="body-2 text--secondary" />
@@ -352,7 +352,7 @@ export default {
       return attachmentUrl
     },
     formatDate(date) {
-      return date ? format(new Date(date), 'PPp') : ''
+      return date ? format(new Date(date), 'PP') : ''
     },
     formatField(fieldValue) {
       return fieldValue || '-'
