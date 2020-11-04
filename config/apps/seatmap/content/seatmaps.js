@@ -90,7 +90,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'Event',
+      itemTitle: 'Common.EventApp',
       default: false,
       fields: {
         Title: {
@@ -221,7 +221,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'Business Unit',
+      itemTitle: 'Common.BusinessUnits',
       default: false,
       fields: {
         Name: {
