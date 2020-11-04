@@ -2,7 +2,9 @@
   <v-col class="px-0">
     <v-btn text small v-bind="attrs" v-on="on" @click="onDelete">
       <v-icon left class="fs-16">fa-trash</v-icon>
-      <div v-if="gridDeleteAction === 'Delete'">{{ $t('Drawer.Delete') }}</div>
+      <span v-if="gridDeleteAction === 'Delete'">{{
+        $t('Drawer.Delete')
+      }}</span>
     </v-btn>
   </v-col>
 </template>

@@ -9,7 +9,7 @@
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on">
           <v-icon left class="fs-16">fa-pencil</v-icon>
-          <div v-if="gridEditAction === 'Edit'">{{ $t('Drawer.Edit') }}</div>
+          <span v-if="gridEditAction === 'Edit'">{{ $t('Drawer.Edit') }}</span>
         </v-btn>
       </template>
       <v-card>

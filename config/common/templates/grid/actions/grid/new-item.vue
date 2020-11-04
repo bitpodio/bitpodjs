@@ -2,7 +2,7 @@
   <v-col class="px-0">
     <v-btn text small @click.stop="onNewClick">
       <v-icon left>mdi-plus</v-icon>
-      <div v-if="gridNewAction === 'New'">{{ $t('Common.New') }}</div>
+      <span v-if="gridNewAction === 'New'">{{ $t('Common.New') }}</span>
     </v-btn>
     <v-dialog
       v-model="dialog"
