@@ -1,5 +1,6 @@
 <template>
   <div class="positionRelative position">
+    <confirm ref="confirm"></confirm>
     <div v-if="item.CheckIn">
       <v-chip
         class="ma-2"
@@ -34,8 +35,10 @@ export default {
   },
   methods: {
     async updateDate() {
-      const res = await this.$confirm(
-        'are you sure, you want to cancel check in?'
+      const res = await this.$refs.confirm.open(
+        'Cancel Checkin',
+        'are you sure, you want to cancel check in?',
+        { color: 'warning' }
       )
       const url = this.$bitpod.getApiUrl()
       if (res) {

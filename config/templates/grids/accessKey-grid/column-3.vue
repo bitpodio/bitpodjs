@@ -1,6 +1,7 @@
 <template>
   <v-flex>
     <div>
+      <confirm ref="confirm"></confirm>
       <v-snackbar v-model="snackbar" :timeout="2000" :top="true" width="10">
         <div class="toast text-center">
           {{ snackbarText }}
@@ -80,7 +81,11 @@ export default {
     },
     async onDelete(accessKey, userName) {
       const url = this.$bitpod.getApiUrl()
-      const check = await this.$confirm('Are you sure you want to delete?')
+      const check = await this.$refs.confirm.open(
+        this.$t('Drawer.Delete'),
+        this.$t('Messages.Warn.DeleteWarning'),
+        { color: 'error' }
+      )
       if (check === true) {
         try {
           const res = await this.$axios.$delete(

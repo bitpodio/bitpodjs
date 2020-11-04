@@ -1,5 +1,6 @@
 <template>
   <v-flex class="d-flex flex-wrap greybg pa-0 justify-center justify-md-start">
+    <confirm ref="confirm"></confirm>
     <v-hover
       v-for="item in items"
       :key="item.id"
@@ -168,8 +169,10 @@ export default {
   methods: {
     async deleteTemplete(id) {
       const url = this.$bitpod.getApiUrl()
-      const check = await this.$confirm(
-        'Are you sure you want to delete this template?'
+      const check = await this.$refs.confirm.open(
+        'Delete Template',
+        'Are you sure you want to delete this template?',
+        { color: 'error' }
       )
       let res = null
       if (check === true) {
