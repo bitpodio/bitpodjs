@@ -1982,8 +1982,9 @@ export default {
         })
         .catch((e) => {
           console.error(
-          `Error in apps/event/_id/index.vue while making a PUT call to Event model in method updateOtherImageGallery context: EventId:-${this.$route.params.id} \n URL:- ${url} \n formData:- ${obj}`,
-          e)
+            `Error in apps/event/_id/index.vue while making a PUT call to Event model in method updateOtherImageGallery context: EventId:-${this.$route.params.id} \n URL:- ${url} \n formData:- ${formData}`,
+            e
+          )
         })
     },
     viewRegistrationLink() {
