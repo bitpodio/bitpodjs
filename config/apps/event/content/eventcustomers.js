@@ -20,7 +20,7 @@ export default {
         hideFilter: false,
         hideSearch: false,
       },
-      itemTitle: 'Member',
+      itemTitle: 'Common.Members',
       fields: {
         FirstName: {
           form: {

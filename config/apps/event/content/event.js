@@ -35,7 +35,7 @@ export default {
         hideFilter: false,
         hideSearch: false,
       },
-      itemTitle: 'Event',
+      itemTitle: 'Common.EventApp',
       default: false,
       fields: {
         Title: {
@@ -924,7 +924,7 @@ export default {
         hideFilter: true,
         hideSearch: true,
       },
-      itemTitle: 'Attendee',
+      itemTitle: 'Common.Attendee',
       hidden: true,
       fields: {
         FullName: {
@@ -1342,7 +1342,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'Attendee',
+      itemTitle: 'Common.Attendee',
       hidden: true,
       fields: {
         FullName: {
@@ -1442,7 +1442,7 @@ export default {
         hideFilter: true,
         hideSearch: true,
       },
-      itemTitle: 'Attendee',
+      itemTitle: 'Common.Attendee',
       hidden: true,
       fields: {
         FullName: {
@@ -1877,7 +1877,7 @@ export default {
         hideFilter: true,
         hideSearch: true,
       },
-      itemTitle: 'Registration',
+      itemTitle: 'Drawer.Registrations',
       hidden: true,
       fields: {
         FullName: {
@@ -2237,7 +2237,7 @@ export default {
         hideFilter: true,
         hideSearch: true,
       },
-      itemTitle: 'Registration',
+      itemTitle: 'Drawer.Registrations',
       hidden: true,
       fields: {
         GoLive: {
@@ -2723,7 +2723,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'Ticket',
+      itemTitle: 'Common.Ticket',
       hidden: true,
       fields: {
         Code: {
@@ -3010,7 +3010,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'Discount Code',
+      itemTitle: 'Drawer.DiscountCode',
       hidden: true,
       fields: {
         codeTitle: {
@@ -3285,7 +3285,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'Session',
+      itemTitle: 'Common.Sessions',
       hidden: true,
       fields: {
         GoLive: {
@@ -3500,7 +3500,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'Speaker',
+      itemTitle: 'Common.Speaker',
       hidden: true,
       fields: {
         Title: {
@@ -3726,7 +3726,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'Task',
+      itemTitle: 'Common.Task',
       hidden: true,
       fields: {
         Title: {

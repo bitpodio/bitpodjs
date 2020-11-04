@@ -12,7 +12,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'Currency',
+      itemTitle: 'Common.Currency',
       default: false,
       fields: {
         type: {
@@ -114,7 +114,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'Timezone',
+      itemTitle: 'Common.Timezone',
       default: false,
       fields: {
         type: {
@@ -216,7 +216,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'Event Privacy',
+      itemTitle: 'Common.EventPrivacy',
       default: false,
       fields: {
         type: {
@@ -318,7 +318,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'Event Tag',
+      itemTitle: 'Common.EventTag',
       default: false,
       fields: {
         type: {
@@ -420,7 +420,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'Ticket Type',
+      itemTitle: 'Common.TicketType',
       default: false,
       fields: {
         type: {
@@ -522,7 +522,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'Session Type',
+      itemTitle: 'Common.SessionType',
       default: false,
       fields: {
         type: {
@@ -625,7 +625,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'Question Control',
+      itemTitle: 'Common.QuestionControl',
       default: false,
       fields: {
         type: {
@@ -727,7 +727,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'Refund Method',
+      itemTitle: 'Common.RefundMethod',
       default: false,
       fields: {
         type: {
@@ -829,7 +829,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'Reason',
+      itemTitle: 'Common.Reason',
       default: false,
       fields: {
         type: {
@@ -931,7 +931,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'Badge Category',
+      itemTitle: 'Common.BadgeCategory',
       default: false,
       fields: {
         type: {
@@ -1044,7 +1044,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'Contact Type',
+      itemTitle: 'Common.ContactTypes',
       default: false,
       fields: {
         type: {
@@ -1146,7 +1146,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'Department',
+      itemTitle: 'Common.Department',
       default: false,
       fields: {
         type: {

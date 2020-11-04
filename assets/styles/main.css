@@ -525,12 +525,6 @@ body {
 .v-application--is-rtl .slide-form .v-card__title {
   padding-right: 40px !important; 
 }
-.v-application--is-rtl .slide-form .v-card__title.pl-xl-15 {
-  padding-right: 60px !important; 
-}
-.v-application--is-rtl .slide-form-default .v-card__title.pl-xl-15 {
-  padding-right: 60px !important; 
-}
 .parentWidth h3 {
   white-space: nowrap;
   text-overflow: ellipsis;
