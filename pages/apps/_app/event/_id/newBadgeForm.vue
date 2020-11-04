@@ -224,7 +224,9 @@ export default {
         .replace('{{ FullName }}', `${this.$auth.user.data.name}`)
         .replace('{{ Category }}', `${this.Category}`)
         .replace('{{ Organization }}', `${this.$store.state.currentOrg.name}`)
-        .replace(logoUrl, this.getAttachmentLink(logoId, true))
+      if (logoId !== '') {
+        str = str.replace(logoUrl, this.getAttachmentLink(logoId, true))
+      }
       if (this.data.event && this.data.event.Title) {
         str = str.replace('{{ EventName }}', `${this.data.event.Title}`)
       }

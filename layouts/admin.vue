@@ -61,29 +61,7 @@
             <template v-slot:activator>
               <v-list-item-content>
                 <v-list-item-title class="nav-title">
-                  <i18n
-                    v-if="item.text === 'Organization'"
-                    path="Common.Organization"
-                  />
-                  <i18n v-if="item.text === 'Lookups'" path="Common.Lookups" />
-                  <i18n
-                    v-if="item.text === 'Templates'"
-                    path="Common.Templates"
-                  />
-                  <i18n
-                    v-if="item.text === 'Badges Templates'"
-                    path="Common.BadgesTemplates"
-                  />
-                  <i18n
-                    v-if="item.text === 'Registration Form'"
-                    path="Common.RegistrationForm"
-                  />
-                  <i18n v-if="item.text === 'Roles'" path="Common.Roles" />
-                  <i18n v-if="item.text === 'Users'" path="Common.Users" />
-                  <i18n
-                    v-if="item.text === 'Access Keys'"
-                    path="Common.AccessKeys"
-                  />
+                  {{ item.text }}
                 </v-list-item-title>
               </v-list-item-content>
             </template>
@@ -118,7 +96,29 @@
             </v-list-item-action>
             <v-list-item-content>
               <v-list-item-title class="nav-title">
-                {{ item.text }}
+                <i18n
+                  v-if="item.text === 'Organization'"
+                  path="Common.Organization"
+                />
+                <i18n v-if="item.text === 'Lookups'" path="Common.Lookups" />
+                <i18n
+                  v-if="item.text === 'Templates'"
+                  path="Common.Templates"
+                />
+                <i18n
+                  v-if="item.text === 'Badges Templates'"
+                  path="Common.BadgesTemplates"
+                />
+                <i18n
+                  v-if="item.text === 'Registration Form'"
+                  path="Common.RegistrationForm"
+                />
+                <i18n v-if="item.text === 'Roles'" path="Common.Roles" />
+                <i18n v-if="item.text === 'Users'" path="Common.Users" />
+                <i18n
+                  v-if="item.text === 'Access Keys'"
+                  path="Common.AccessKeys"
+                />
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>

@@ -385,9 +385,9 @@
     "RecurringEventLocation": "Location*",
     "NewDefaultForm": "New {subTitle}",
     "EditDefaultForm": "Edit {subTitle}",
-    "YouMayReferInviteMembers": "You may refer invite members data by using placeholder expressions in subject line. e.g: ${Contact.FirstName} ${Contact.LastName} ${OrganizationInfo.Name}",
+    "YouMayReferInviteMembers": "You may refer invite members data by using placeholder expressions in subject line. e.g:{contactTemplateData}",
     "SessionInformation": "Session Information",
-    "YouMayReferInviteMembersData": "You may refer invite members data by using placeholder expressions in subject line. e.g: ${Registration.FirstName} ${Registration.LastName} ${OrganizationInfo.Name}",
+    "YouMayReferInviteMembersData": "You may refer invite members data by using placeholder expressions in subject line. e.g:{registrationTemplateData}",
     "TicketDeletedSuccessfully": "Ticket Deleted Successfully",
     "Draft": "Draft",
     "Join": "Join",
@@ -755,11 +755,15 @@
       "RefundPaidAmount": "Refunded Amount can not be greater or equal than total paid amount",
       "RefundAmountMsg": "Amount should not be less than or equal to  0",
       "InvalidDisplayOrder": "Display order should not be blank and less than 1",
-      "EventEndDate": "Event end date should not be less than current date"  
-    },
+      "EventEndDate": "Event end date should not be less than current date",
+      "FieldRequired": "This field is required *",
+      "EmailInvalid": "Email is invalid",
+      "HttpsUrl": "This must be a https url"
+   },
     "Warn": {
       "UniqueLinkFormat": "Lower case alphanumeric letters only",
-      "OverLapSessionMsg": "This session overlaps with another session, are you sure? click Yes to create and cancel to cancel it."
+      "OverLapSessionMsg": "This session overlaps with another session, are you sure? click Yes to create and cancel to cancel it.",
+      "DeleteActivity": "Are you sure you want to delete this activity?"
     },
     "Success": {
       "CopiedClipboard": "Copied to clipboard",
@@ -780,7 +784,10 @@
       "AttachmentDeleteSuccess": "Attachment deleted successfully",
       "SeatLayoutAddSuccess": "Seat Layout added successfully",
       "FailedFetchToken": "Failed to fetch JWT token.",
-      "SeatmapUpdateSuccess": "Seatmap Updated Successfully"
+      "SeatmapUpdateSuccess": "Seatmap Updated Successfully",
+      "EmailInviteSuccess": "Your email invites has been updated successfully.",
+      "EmailSaveSuccess": "Your email invites has been saved successfully.",
+      "TaskDeleteSuccess": "Task deleted successfully"
     }
   },
   "$vuetify": {
