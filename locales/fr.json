@@ -660,7 +660,9 @@
     "Reviews": "Commentaires",
     "DateTime": "Date et l'heure",
     "BadgesTemplates": "Modèles de badges",
-    "TicketCountRequired": "Nombre de billets *"
+    "TicketCountRequired": "Nombre de billets *",
+    "Yes": "Oui",
+    "No": "Non"
   },
   "Drawer" : {
     "CreateEventAction" : "Créer un événement",
@@ -763,7 +765,8 @@
     "Warn" : {
       "UniqueLinkFormat" : "Minuscules lettres alphanumériques uniquement",
       "OverLapSessionMsg" : "Cette session chevauche une autre session, êtes-vous sûr?  Cliquez sur Oui pour créer et annuler pour l'annuler.",
-      "DeleteActivity": "Voulez-vous vraiment supprimer cette activité?"
+      "DeleteActivity": "Voulez-vous vraiment supprimer cette activité?",
+      "DeleteWarning": "Are you sure, You want to delete?"
     },
     "Success" : {
       "CopiedClipboard" : "Copié dans le presse-papiers",

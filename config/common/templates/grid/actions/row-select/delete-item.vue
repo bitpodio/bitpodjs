@@ -6,6 +6,7 @@
         $t('Drawer.Delete')
       }}</span>
     </v-btn>
+    <confirm ref="confirm"></confirm>
   </v-col>
 </template>
 
@@ -39,7 +40,11 @@ export default {
   },
   methods: {
     async onDelete() {
-      const res = await this.$confirm('Are you sure, You want to delete?')
+      const res = await this.$refs.confirm.open(
+        this.$t('Drawer.Delete'),
+        this.$t('Messages.Warn.DeleteWarning'),
+        { color: 'error' }
+      )
       if (res) {
         const ids = this.items.map(({ id }) => id)
         await this.onDeleteItem(ids)
