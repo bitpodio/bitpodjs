@@ -196,6 +196,12 @@ export default {
     },
   },
   mounted() {
+    const dialog = this.$root.$el.getElementsByClassName(
+      'v-dialog__content--active'
+    )
+    if (dialog && dialog.length) {
+      dialog[0].style.zIndex = 1000
+    }
     if (!this.dropdownOptions && (!this.field || !this.field.dropdownOptions)) {
       delete this.config.extraButtons
     } else if (this.dropdownOptions) {
