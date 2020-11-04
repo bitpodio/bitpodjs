@@ -126,6 +126,7 @@ body {
 }
 .headernew {
   left: 0 !important;
+  right: 0 !important;
 }
 .appbar-left {
   width: 250px;
@@ -501,6 +502,33 @@ body {
     text-overflow: ellipsis;
     display: block;
     float: left;
+}
+.v-application--is-rtl .attendeeCount {
+  left: 10px;
+  right: unset !important;
+}
+.v-application--is-rtl .dataTile .pl-2 {
+  padding-right: 8px !important;
+}
+.v-application--is-rtl .dataTile > div {
+  left: 0px !important;
+}
+.v-application--is-rtl .white.d-inline-block.elevation-2.rounded.mr-5 .pl-4 {
+  padding-right: 16px !important;
+}
+.v-application--is-rtl .summaryTile {
+  padding-right: 8px !important;
+}
+.v-application--is-rtl .slide-form-default .v-card__title {
+  padding-right: 40px !important; 
+}
+.v-application--is-rtl .slide-form .v-card__title {
+  padding-right: 40px !important; 
+}
+.parentWidth h3 {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 @media (max-width: 800px) {
   .nav-bar {

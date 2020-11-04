@@ -1052,10 +1052,15 @@
     <v-flex column class="mxw-w30">
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 py-0 pr-2 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
-          <h2 class="body-1 pb-0">
-            <i class="fa fa-info-circle pr-1" aria-hidden="true"></i>
-            <i18n path="Common.EventInformation" />
-          </h2>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <h2 class="body-1 pb-0" v-bind="attrs" v-on="on">
+                <i class="fa fa-info-circle pr-1" aria-hidden="true"></i>
+                <i18n path="Common.EventInformation" />
+              </h2>
+            </template>
+            <span><i18n path="Common.EventInformation" /></span>
+          </v-tooltip>
           <v-spacer></v-spacer>
           <v-btn text small @click.stop="eventForm = true">
             <v-icon left class="fs-16">fa-pencil</v-icon
@@ -1095,10 +1100,15 @@
         class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pb-0 pr-2 box-grey"
       >
         <v-flex class="d-flex justify-center align-center pb-2">
-          <h2 class="body-1 pb-0">
-            <i class="fa fa-id-badge pr-1" aria-hidden="true"></i>
-            <i18n path="Common.Badge" />
-          </h2>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <h2 class="body-1 pb-0" v-bind="attrs" v-on="on">
+                <i class="fa fa-id-badge pr-1" aria-hidden="true"></i>
+                <i18n path="Common.Badge" />
+              </h2>
+            </template>
+            <span><i18n path="Common.Badge" /></span>
+          </v-tooltip>
           <v-spacer></v-spacer>
           <v-btn text small @click="openBadgeForm">
             <v-icon left>mdi-plus</v-icon><i18n path="Drawer.Create" />
@@ -1149,10 +1159,15 @@
 
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-0 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
-          <h2 class="body-1 pb-0">
-            <i class="fa fa-tag pr-1" aria-hidden="true"></i>
-            <i18n path="Common.SEODetails" />
-          </h2>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <h2 class="body-1 pb-0" v-bind="attrs" v-on="on">
+                <i class="fa fa-tag pr-1" aria-hidden="true"></i>
+                <i18n path="Common.SEODetails" />
+              </h2>
+            </template>
+            <span><i18n path="Common.SEODetails" /></span>
+          </v-tooltip>
           <v-spacer></v-spacer>
           <v-btn text small @click="seoForm = true">
             <v-icon left class="fs-16">fa-pencil</v-icon
@@ -1182,10 +1197,15 @@
 
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-2 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
-          <h2 class="body-1 pb-0">
-            <i class="fa fa-settings pr-1" aria-hidden="true"></i>
-            <i18n path="Common.EventSettings" />
-          </h2>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <h2 class="body-1 pb-0" v-bind="attrs" v-on="on">
+                <i class="fa fa-settings pr-1" aria-hidden="true"></i>
+                <i18n path="Common.EventSettings" />
+              </h2>
+            </template>
+            <span><i18n path="Common.EventSettings" /></span>
+          </v-tooltip>
           <v-spacer></v-spacer>
           <v-btn text small @click="eventSetting = true">
             <v-icon left class="fs-16">fa-pencil</v-icon
@@ -1311,10 +1331,15 @@
       </div>
       <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-0 box-grey">
         <v-flex class="d-flex justify-center align-center pb-2">
-          <h2 class="body-1 pb-0">
-            <i class="fa fa-settings pr-1" aria-hidden="true"></i>
-            <i18n path="Common.RegistrationPageSettings" />
-          </h2>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <h2 class="body-1 pb-0" v-bind="attrs" v-on="on">
+                <i class="fa fa-tag pr-1" aria-hidden="true"></i>
+                <i18n path="Common.RegistrationPageSettings" />
+              </h2>
+            </template>
+            <span><i18n path="Common.RegistrationPageSettings" /></span>
+          </v-tooltip>
           <v-spacer></v-spacer>
           <v-btn text small @click="siteSetting = true">
             <v-icon left class="fs-16">fa-pencil</v-icon
@@ -1628,11 +1653,20 @@ export default {
       )
     },
     openPrintForm() {
+      const logoUrl = `src="${
+        nuxtconfig.publicRuntimeConfig.cdnUri +
+        'admin-default-template-logo.png'
+      }"`
+      let str
       this.getAttendees()
       if (this.attendees.length > 0) {
         this.attendees.map((ele) => {
-          const str = this.getBadgePrinted(this.badgeData.Template, ele)
-
+          if (this.logoId !== '') {
+            str = this.getBadgePrinted(this.badgeData.Template, ele)
+          } else {
+            str = this.getBadgePrinted(this.badgeData.Template, ele)
+            str = str.replace(logoUrl, '')
+          }
           if (
             this.eventData.LocationType === 'Venue' &&
             this.$refs.iframe &&
@@ -1644,7 +1678,12 @@ export default {
           }
         })
       } else {
-        const str = this.getBadge(this.badgeData.Template)
+        if (this.logoId !== '') {
+          str = this.getBadge(this.badgeData.Template)
+        } else {
+          str = this.getBadge(this.badgeData.Template)
+          str = str.replace(logoUrl, '')
+        }
         this.$refs.iframe.contentWindow.document.write(
           `<div style="display:flex">${str}</div>`
         )
@@ -1659,8 +1698,10 @@ export default {
     openPrint() {
       this.$refs.iframe.contentWindow.document.firstChild.innerHTML = this.$refs.printForm.innerHTML
     },
-    openBadgeForm() {
-      const res = this.$confirm('New badge will replace your existing badge.')
+    async openBadgeForm() {
+      const res = await this.$confirm(
+        'New badge will replace your existing badge.'
+      )
       if (res) {
         this.newBadge = true
       }
@@ -1690,7 +1731,12 @@ export default {
           .replace('{{ FullName }}', `${this.$auth.user.data.name}`)
           .replace('{{ Category }}', `${this.getBadgeCategory}`)
           .replace('{{ Organization }}', `${this.$store.state.currentOrg.name}`)
-          .replace(logoUrl, this.getAttachmentLink(this.logoId, true))
+        if (this.logoId !== '') {
+          str = str.replace(
+            logoUrl,
+            this.getAttachmentLink(this.logoId, true) || logoUrl
+          )
+        }
         if (this.data.event && this.data.event.Title) {
           str = str.replace('{{ EventName }}', `${this.data.event.Title}`)
         }
@@ -1788,7 +1834,9 @@ export default {
             `${(ele.regType && ele.regType.Name) || 'Guest'}`
           )
           .replace('{{ Organization }}', `${ele.CompanyName}`)
-          .replace(logoUrl, this.getAttachmentLink(this.logoId, true))
+        if (this.logoId !== '') {
+          str = str.replace(logoUrl, this.getAttachmentLink(this.logoId, true))
+        }
         if (this.data.event && this.data.event.Title) {
           str = str.replace('{{ EventName }}', `${this.data.event.Title}`)
         }
@@ -1834,7 +1882,16 @@ export default {
         })
         if (result) {
           const orgInfo = formatGQLResult(result.data, 'OrganizationInfo')
-          this.logoId = this.eventData.Logo[0] || orgInfo[0].Image[0]
+          if (this.eventData.Logo.length > 0) {
+            this.logoId = this.eventData.Logo[0]
+          } else if (
+            this.eventData.Logo.length === 0 &&
+            orgInfo[0].Image.length === 0
+          ) {
+            this.logoId = ''
+          } else {
+            this.logoId = orgInfo[0].Image[0]
+          }
         }
       } catch (e) {
         console.error(

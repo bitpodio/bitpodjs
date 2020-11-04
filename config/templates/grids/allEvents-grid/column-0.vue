@@ -30,10 +30,14 @@ export default {
   },
   computed: {
     route() {
-      return `/apps/event${this.context.basePath}/${this.item.id}`
+      return this.localePath(
+        `/apps/event${this.context.basePath}/${this.item.id}`
+      )
     },
     recurringroute() {
-      return `/apps/event${this.context.basePath}/recurring/${this.item.id}`
+      return this.localePath(
+        `/apps/event${this.context.basePath}/recurring/${this.item.id}`
+      )
     },
   },
 }

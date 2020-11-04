@@ -13,7 +13,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'Template',
+      itemTitle: 'Common.Template',
       default: false,
       fields: {
         Name: {
@@ -269,7 +269,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'Template',
+      itemTitle: 'Common.Template',
       default: false,
       fields: {
         Name: {

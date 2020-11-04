@@ -448,7 +448,7 @@ export default {
         type: 'graphql',
         model: 'Registration',
       },
-      itemTitle: 'Registration',
+      itemTitle: 'Common.Registrations',
       title: 'Common.Registrations',
       type: 'list',
     },
@@ -894,7 +894,7 @@ export default {
           where: { Status: 'Failed' },
         },
       },
-      itemTitle: 'Registration',
+      itemTitle: 'Common.Registrations',
       title: 'Common.AbandonedRegistrations',
       type: 'list',
     },
@@ -908,7 +908,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'Session',
+      itemTitle: 'Common.Sessions',
       hidden: true,
       fields: {
         Name: {
@@ -1025,7 +1025,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'Attendee',
+      itemTitle: 'Common.Attendee',
       hidden: true,
       fields: {
         FullName: {
@@ -1483,7 +1483,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'Session',
+      itemTitle: 'Common.Sessions',
       hidden: true,
       fields: {
         Name: {
@@ -1587,7 +1587,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'Attendee',
+      itemTitle: 'Common.Attendee',
       hidden: true,
       fields: {
         FullName: {
