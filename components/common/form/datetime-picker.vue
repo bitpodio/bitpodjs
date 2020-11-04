@@ -58,12 +58,12 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <slot name="actions" :parent="this">
-          <v-btn color="grey lighten-1" text @click.native="clearHandler">{{
-            clearText
-          }}</v-btn>
-          <v-btn color="green darken-1" text @click="okHandler">{{
-            okText
-          }}</v-btn>
+          <v-btn color="grey lighten-1" text @click.native="clearHandler">
+            <i18n path="Common.Clear" />
+          </v-btn>
+          <v-btn color="green darken-1" text @click="okHandler">
+            <i18n path="Drawer.OK" />
+          </v-btn>
         </slot>
       </v-card-actions>
     </v-card>
@@ -78,8 +78,6 @@ const DEFAULT_TIME = '00:00:00'
 const DEFAULT_DATE_FORMAT = 'yyyy-MM-dd'
 const DEFAULT_TIME_FORMAT = 'HH:mm:ss'
 const DEFAULT_DIALOG_WIDTH = 340
-const DEFAULT_CLEAR_TEXT = 'CLEAR'
-const DEFAULT_OK_TEXT = 'OK'
 
 export default {
   model: {
@@ -112,14 +110,6 @@ export default {
     timeFormat: {
       type: String,
       default: 'HH:mm',
-    },
-    clearText: {
-      type: String,
-      default: DEFAULT_CLEAR_TEXT,
-    },
-    okText: {
-      type: String,
-      default: DEFAULT_OK_TEXT,
     },
     textFieldProps: {
       type: Object,

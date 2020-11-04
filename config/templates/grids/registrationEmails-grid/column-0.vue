@@ -25,7 +25,9 @@ export default {
   },
   computed: {
     route() {
-      return `/apps/event${this.context.basePath}/activity/${this.item.id}`
+      return this.localePath(
+        `/apps/event${this.context.basePath}/activity/${this.item.id}`
+      )
     },
   },
 }
