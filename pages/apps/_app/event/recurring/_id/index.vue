@@ -1167,8 +1167,14 @@ export default {
       return attachmentUrl
     },
     viewRegistration() {
-      const regUrl = `https://${nuxtConfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
-      window.open(`${regUrl}`, '_blank')
+      const orgName = this.$store.state.currentOrg.name
+      if (orgName === 'bitpod') {
+        const regUrl = `https://${nuxtConfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
+        window.open(`${regUrl}`, '_blank')
+      } else {
+        const regUrl = `https://${orgName}-${nuxtConfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
+        window.open(`${regUrl}`, '_blank')
+      }
     },
     eventLink() {
       const baseUrl = this.$bitpod.getApiUrl()
