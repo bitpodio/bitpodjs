@@ -8,8 +8,8 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on">
-          <v-icon left class="fs-16">fa-pencil</v-icon
-          >{{ actionCaption('edit') }}
+          <v-icon left class="fs-16">fa-pencil</v-icon>
+          <div v-if="gridEditAction === 'Edit'">{{ $t('Drawer.Edit') }}</div>
         </v-btn>
       </template>
       <v-card>
@@ -42,7 +42,7 @@
                   <component
                     :is="formControl(field) || null"
                     v-model="formData[field.fieldName]"
-                    :field="field"
+                    :field="translate(field)"
                     :rules="rulesArray(field)"
                     :readonly="readonly[field.fieldName]"
                     :filter="filter[field.fieldName]"
@@ -116,6 +116,7 @@ export default {
       updateCount: 0,
       valid: true,
       lazy: false,
+      gridEditAction: this.actionCaption('edit'),
     }
   },
   watch: {
@@ -152,6 +153,11 @@ export default {
           this.errorMessage = error.message.split(':')[1]
         }
       }
+    },
+    translate(field) {
+      return Object.assign({}, field, {
+        form: { caption: this.$t(field.form.caption) },
+      })
     },
   },
 }

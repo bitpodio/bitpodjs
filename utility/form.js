@@ -53,6 +53,7 @@ export function getGridFields(content, viewName, isEditForm) {
     const isFormField =
       field[showAttribute] === undefined ? true : field[showAttribute]
     if (isFormField) {
+      debugger
       editableFields.push({
         ...field,
         fieldName,
@@ -149,7 +150,7 @@ export const formTitleMixin = {
   computed: {
     subTitle() {
       const view = this.content.views[this.viewName]
-      return view.itemTitle || ''
+      return this.$t(view.itemTitle) || ''
     },
   },
 }
