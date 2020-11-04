@@ -1770,7 +1770,7 @@ export default {
           this.refresh()
         }
       } catch (e) {
-        console.log(
+        console.error(
           `Error in app/Event/_id/index.vue while making a PATCH call to Event model from method changeStatus context:-URL:-${url}\nInput:-\t Status:-${statusName}\n id:-${this.$route.params.id} `,
           e
         )
@@ -1884,7 +1884,10 @@ export default {
           this.bannerName = res.fileName
         }
       } catch (e) {
-        console.log('Error', e)
+        console.error(
+          `Error in apps/event/_id/index.vue while making a GET call to Attachment model in method getBannerImageName context: URL:- ${url} \n ImageId:-${imageId}`,
+          e
+        )
       }
     },
     async getLogoName(imageId) {
@@ -1895,7 +1898,10 @@ export default {
           this.logoName = res.fileName
         }
       } catch (e) {
-        console.log('Error', e)
+        console.error(
+          `Error in apps/event/_id/index.vue while making a GET call to Attachment model in method getLogoName context: URL:- ${url} \n ImageId:-${imageId}`,
+          e
+        )
       }
     },
     refresh() {
@@ -1962,7 +1968,10 @@ export default {
           this.refresh()
         }
       } catch (e) {
-        console.log('Error', e)
+        console.error(
+          `Error in apps/event/_id/index.vue while making a PATCH call to Event model in method updateEventGallery context: URL:- ${url} \nEventId:-${this.$route.params.id}\n formData:-${formData}`,
+          e
+        )
       }
     },
     updateOtherImageGallery(formData) {
