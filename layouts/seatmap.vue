@@ -30,6 +30,7 @@
         ><i18n path="Common.Seatmaps"
       /></v-toolbar-title>
       <v-spacer></v-spacer>
+      <LanguageSwitcher />
       <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
         <v-icon>mdi-invert-colors</v-icon>
       </v-btn>
