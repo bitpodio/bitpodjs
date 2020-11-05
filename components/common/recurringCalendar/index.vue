@@ -223,6 +223,7 @@ import rrulePlugin from '@fullcalendar/rrule'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
+import allLocales from '@fullcalendar/core/locales-all'
 import Grid from '~/components/common/grid'
 import { formatGQLResult } from '~/utility/gql.js'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
@@ -271,6 +272,8 @@ export default {
           dayGridPlugin,
           listPlugin,
         ],
+        locales: allLocales,
+        locale: this.$i18n.locale,
         dayMaxEvents: 3,
         timeZone: 'UTC',
         initialView: 'dayGridMonth',

@@ -757,7 +757,11 @@
           <v-card-actions
             class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
           >
-            <v-btn v-if="curentTab > 0" depressed @click="curentTab--"
+            <v-btn
+              v-if="curentTab > 0"
+              depressed
+              :disabled="acknowledgement"
+              @click="curentTab--"
               ><i18n path="Drawer.Prev"
             /></v-btn>
             <v-btn
