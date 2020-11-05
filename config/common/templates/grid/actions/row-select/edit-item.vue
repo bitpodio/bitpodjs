@@ -9,7 +9,7 @@
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on">
           <v-icon left class="fs-16">fa-pencil</v-icon>
-          <div v-if="gridEditAction === 'Edit'">{{ $t('Drawer.Edit') }}</div>
+          {{ $t(actionCaption('edit')) }}
         </v-btn>
       </template>
       <v-card>
@@ -26,7 +26,7 @@
             </v-btn>
           </div>
         </v-card-title>
-        <div v-if="errorMessage !== ''" class="red--text ml-10">
+        <div v-if="errorMessage !== ''" class="red--text mx-10">
           {{ errorMessage }}
         </div>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
@@ -116,7 +116,6 @@ export default {
       updateCount: 0,
       valid: true,
       lazy: false,
-      gridEditAction: this.actionCaption('edit'),
     }
   },
   watch: {

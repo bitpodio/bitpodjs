@@ -227,7 +227,7 @@
                     >
                       {{ data.creatorName }}
                     </h3>
-                    <h5 class="font-weight-regular text-truncate tileCaption">
+                    <h5 class="font-weight-regular text-truncate eventName">
                       {{ data.eventName }}
                     </h5>
                   </div>
@@ -523,9 +523,10 @@ export default {
       ticketSaleData: [['Date', 'Ticket Sold']],
       ticketSalechartOptions: {
         curveType: 'function',
-        legend: 'none',
         height: '316',
         width: '350',
+        reverseCategories: this.$vuetify.rtl,
+        legend: 'right',
         hAxis: {
           logscale: true,
           viewWindow: {
@@ -600,6 +601,7 @@ export default {
         legend: 'none',
         height: '316',
         width: '350',
+        reverseCategories: this.$vuetify.rtl,
         chartArea: { width: '80%', height: '70%' },
         animation: {
           startup: true,
@@ -613,6 +615,7 @@ export default {
         legend: 'none',
         height: '316',
         width: '350',
+        reverseCategories: this.$vuetify.rtl,
         hAxis: { logscale: true },
         vAxis: {
           viewWindow: {
@@ -732,7 +735,9 @@ export default {
   },
   methods: {
     routeToLiveEvents(method) {
-      this.$router.push(this.localePath('/apps/event/list/Event/All Events'))
+      this.$router.push(
+        this.localePath('/apps/event/list/Event/live and draft event')
+      )
     },
     routeToRegistrations(method) {
       this.$router.push(
@@ -1172,6 +1177,9 @@ export default {
 }
 .summaryTile {
   width: 132px;
+}
+.eventName {
+  width: 152px;
 }
 .dataTile {
   height: 70px;

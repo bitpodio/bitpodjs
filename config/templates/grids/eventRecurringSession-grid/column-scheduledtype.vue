@@ -20,7 +20,9 @@ export default {
   },
   computed: {
     route() {
-      return `/apps/event/recurringcalendar/${this.$props.item.id}`
+      return this.localePath(
+        `/apps/event/recurringcalendar/${this.$props.item.id}`
+      )
     },
   },
 }

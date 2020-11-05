@@ -1427,6 +1427,7 @@
     <selectExistingSeatMap
       :select-existing-seat-map.sync="selectExistingSeatMap"
     />
+    <confirm ref="confirm"></confirm>
   </v-flex>
 </template>
 <script>
@@ -1711,8 +1712,10 @@ export default {
       this.$refs.iframe.contentWindow.document.firstChild.innerHTML = this.$refs.printForm.innerHTML
     },
     async openBadgeForm() {
-      const res = await this.$confirm(
-        'New badge will replace your existing badge.'
+      const res = await this.$refs.confirm.open(
+        this.$t('Common.NewBadge'),
+        this.$t('Messages.Warn.ReplaceBadge'),
+        { color: 'warning' }
       )
       if (res) {
         this.newBadge = true
@@ -1857,8 +1860,10 @@ export default {
     },
     async deleteBadge() {
       const url = this.$bitpod.getApiUrl()
-      const check = await this.$confirm(
-        'Are you sure you want to delete this badge?'
+      const check = await this.$refs.confirm.open(
+        this.$t('Common.DeleteBadge'),
+        this.$t('Messages.Warn.DeleteBadge'),
+        { color: 'error lighten-1' }
       )
       if (check === true) {
         try {
@@ -2089,7 +2094,11 @@ export default {
     },
     async deleteBannerFile(e, id) {
       const url = this.$bitpod.getApiUrl()
-      const checkRes = await this.$confirm('Are you sure you want to delete?')
+      const checkRes = await this.$refs.confirm.open(
+        this.$t('Drawer.Delete'),
+        this.$t('Messages.Warn.DeleteImage'),
+        { color: 'error lighten-1' }
+      )
       if (checkRes) {
         const res = await this.$axios.delete(
           `${url}Events/${this.$route.params.id}/BannerImage/${id}`
@@ -2105,7 +2114,11 @@ export default {
     },
     async deleteLogoFile(id) {
       const url = this.$bitpod.getApiUrl()
-      const checkRes = await this.$confirm('Are you sure you want to delete?')
+      const checkRes = await this.$refs.confirm.open(
+        this.$t('Drawer.Delete'),
+        this.$t('Messages.Warn.DeleteImage'),
+        { color: 'error lighten-1' }
+      )
       if (checkRes) {
         const res = await this.$axios.delete(
           `${url}Events/${this.$route.params.id}/LogoURL/${id}`
@@ -2121,7 +2134,11 @@ export default {
     },
     async deleteOtherFile(id) {
       const url = this.$bitpod.getApiUrl()
-      const checkRes = await this.$confirm('Are you sure you want to delete?')
+      const checkRes = await this.$refs.confirm.open(
+        this.$t('Drawer.Delete'),
+        this.$t('Messages.Warn.DeleteImage'),
+        { color: 'error lighten-1' }
+      )
       if (checkRes) {
         const res = await this.$axios.delete(
           `${url}Events/${this.$route.params.id}/Others/${id}`

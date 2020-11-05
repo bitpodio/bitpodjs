@@ -39,6 +39,7 @@
     "EventBanner" : "Bannière d'événement",
     "LogoImage" : "Image du logo",
     "Attendees" : "Participants",
+    "ManageSchedule": "Gérer le calendrier",
     "Registrations" : "Enregistrements",
     "Invites" : "Invite",
     "Emails" : "Eclous",
@@ -107,6 +108,7 @@
     "Venue" : "Lieu",
     "CopyEventObjects" : "Je voudrais également copier les objets d'événement suivants:",
     "NewBadge" : "Nouvel insigne",
+    "DeleteBadge": "Supprimer le badge",
     "Designer" : "Concepteur",
     "IDCardBadge" : "Carte d'identité Insigne",
     "PinNameBadge" : "Insigne de nom de Pin",
@@ -231,6 +233,8 @@
     "SuccessfulCheckedin" : "Vous avez vérifié avec succès.  Profitez de l'événement !",
     "EditSetting" : "Modifier le paramètre",
     "AdditionalSetting" : "Paramètre supplémentaire",
+    "DeleteTicket": "Supprimer le ticket",
+    "DeleteTemplate": "Supprimer le modèle",
     "Ok" : "Ok",
     "DefaultForm" : "Formulaire par défaut",
     "SalesforceIntegrationSetup" : "Configuration de Salesforce Integration",
@@ -385,6 +389,7 @@
     "RecurringEventLocation" : "Emplacement *",
     "NewDefaultForm" : "Nouveau {subTitle}",
     "EditDefaultForm" : "Editer {subTitle}",
+    "DeleteDefaultForm": "Supprimer {subTitle} | Supprimer {subTitle}s",
     "YouMayReferInviteMembers" : "Vous pouvez consulter les données des membres d'invite en utilisant des expressions de marque de réservation dans la ligne d'objet. e.g:{contactTemplateData}",
     "SessionInformation" : "Informations sur la session",
     "YouMayReferInviteMembersData" : "Vous pouvez consulter les données des membres d'invite en utilisant des expressions de marque de réservation dans la ligne d'objet. e.g:{registrationTemplateData}",
@@ -660,7 +665,13 @@
     "Reviews": "Commentaires",
     "DateTime": "Date et l'heure",
     "BadgesTemplates": "Modèles de badges",
-    "TicketCountRequired": "Nombre de billets *"
+    "TicketCountRequired": "Nombre de billets *",
+    "Yes": "Oui",
+    "No": "Non",
+    "Registration": "Enregistrement",
+    "CreateBadge": "Créer un badge",
+    "NewTemplate": "Nouveau modèle",
+    "Clear": "CLAIR"
   },
   "Drawer" : {
     "CreateEventAction" : "Créer un événement",
@@ -763,7 +774,16 @@
     "Warn" : {
       "UniqueLinkFormat" : "Minuscules lettres alphanumériques uniquement",
       "OverLapSessionMsg" : "Cette session chevauche une autre session, êtes-vous sûr?  Cliquez sur Oui pour créer et annuler pour l'annuler.",
-      "DeleteActivity": "Voulez-vous vraiment supprimer cette activité?"
+      "DeleteActivity": "Voulez-vous vraiment supprimer cette activité?",
+      "DeleteComment": "Voulez-vous supprimer ce commentaire?",
+      "DeleteWarning": "Voulez-vous supprimer {subTitle}? | Voulez-vous supprimer {subTitle}s?",
+      "CancelCheckin": "Voulez-vous annuler cet enregistrement?",
+      "DeleteTicket": "Voulez-vous supprimer ce ticket?",
+      "DeleteTemplate": "Voulez-vous supprimer ce modèle?",
+      "DeleteBadge": "Voulez-vous supprimer ce badge?",
+      "DeleteAccessKey": "Voulez-vous supprimer cette clé d'accès?",
+      "ReplaceBadge": "Un nouveau badge remplacera votre badge existant",
+      "DeleteImage": "Voulez-vous supprimer cette image?"
     },
     "Success" : {
       "CopiedClipboard" : "Copié dans le presse-papiers",

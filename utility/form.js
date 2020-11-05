@@ -11,9 +11,9 @@ import { _set, _get, isPlainObject } from '~/utility/object'
 
 const FORM_DATE_CONTROLS = ['date', 'datetime']
 const DEFAULT_ACTION_CAPTION = {
-  new: 'New',
-  edit: 'Edit',
-  delete: 'Delete',
+  new: 'Common.New',
+  edit: 'Drawer.Edit',
+  delete: 'Drawer.Delete',
 }
 
 function getFormTimeZoneField(fields) {
@@ -53,7 +53,6 @@ export function getGridFields(content, viewName, isEditForm) {
     const isFormField =
       field[showAttribute] === undefined ? true : field[showAttribute]
     if (isFormField) {
-      debugger
       editableFields.push({
         ...field,
         fieldName,

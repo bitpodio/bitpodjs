@@ -147,7 +147,6 @@ export default {
         actions: {
           new: {
             hidden: true,
-            caption: 'new field',
           },
           edit: {
             hidden: false,

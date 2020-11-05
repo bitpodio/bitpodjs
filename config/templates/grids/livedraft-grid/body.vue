@@ -345,9 +345,7 @@ export default {
       this.count += 1
     },
     routes(id) {
-      return this.$i18n.locale === 'en'
-        ? `/apps/event/event/${id}`
-        : `/${this.$i18n.locale}/apps/event/event/${id}`
+      return this.localePath(`/apps/event/event/${id}`)
     },
     getAttachmentLink(id, isDownloadLink) {
       const url = this.$bitpod.getApiUrl()
@@ -360,7 +358,7 @@ export default {
       return window.GeoPattern.generate(name).toDataUrl()
     },
     recurringRoutes(id) {
-      return `/apps/event/event/recurring/${id}`
+      return this.localePath(`/apps/event/event/recurring/${id}`)
     },
     viewRegistration(UniqLink) {
       const orgName = this.$store.state.currentOrg.name

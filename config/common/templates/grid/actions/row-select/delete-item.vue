@@ -2,16 +2,17 @@
   <v-col class="px-0">
     <v-btn text small v-bind="attrs" v-on="on" @click="onDelete">
       <v-icon left class="fs-16">fa-trash</v-icon>
-      <div v-if="gridDeleteAction === 'Delete'">{{ $t('Drawer.Delete') }}</div>
+      {{ $t(actionCaption('delete')) }}
     </v-btn>
+    <confirm ref="confirm"></confirm>
   </v-col>
 </template>
 
 <script>
-import { gridActionMixin } from '~/utility/form'
+import { gridActionMixin, formTitleMixin } from '~/utility/form'
 
 export default {
-  mixins: [gridActionMixin],
+  mixins: [formTitleMixin, gridActionMixin],
   props: {
     content: {
       type: null,
@@ -32,12 +33,21 @@ export default {
     return {
       dialog: false,
       updateCount: 0,
-      gridDeleteAction: this.actionCaption('delete'),
     }
   },
   methods: {
     async onDelete() {
-      const res = await this.$confirm('Are you sure, You want to delete?')
+      const ids = this.items.map(({ id }) => id)
+      const subhead = this.subTitle.toLowerCase()
+      const res = await this.$refs.confirm.open(
+        this.$tc('Common.DeleteDefaultForm', ids.length, {
+          subTitle: subhead,
+        }),
+        this.$tc('Messages.Warn.DeleteWarning', ids.length, {
+          subTitle: subhead,
+        }),
+        { color: 'error lighten-1' }
+      )
       if (res) {
         const ids = this.items.map(({ id }) => id)
         await this.onDeleteItem(ids)
