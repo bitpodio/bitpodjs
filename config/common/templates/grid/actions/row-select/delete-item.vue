@@ -38,12 +38,13 @@ export default {
   methods: {
     async onDelete() {
       const ids = this.items.map(({ id }) => id)
+      const subhead = this.subTitle.toLowerCase()
       const res = await this.$refs.confirm.open(
         this.$tc('Common.DeleteDefaultForm', ids.length, {
-          subTitle: this.subTitle,
+          subTitle: subhead,
         }),
         this.$tc('Messages.Warn.DeleteWarning', ids.length, {
-          subTitle: this.subTitle,
+          subTitle: subhead,
         }),
         { color: 'error lighten-1' }
       )
