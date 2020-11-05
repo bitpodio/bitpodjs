@@ -750,39 +750,41 @@ export default {
         type: 'Timezone',
         fieldName: 'session.Timezone',
       },
-      days: [
-        {
-          Label: 'Sundays',
-          Value: false,
-        },
-        {
-          Label: 'Mondays',
-          Value: false,
-        },
-        {
-          Label: 'Tuesdays',
-          Value: false,
-        },
-        {
-          Label: 'Wednesdays',
-          Value: false,
-        },
-        {
-          Label: 'Thursdays',
-          Value: false,
-        },
-        {
-          Label: 'Fridays',
-          Value: false,
-        },
-        {
-          Label: 'Saturdays',
-          Value: false,
-        },
-      ],
     }
   },
   computed: {
+    days() {
+      return [
+        {
+          Label: this.$t('Common.Sundays'),
+          Value: false,
+        },
+        {
+          Label: this.$t('Common.Mondays'),
+          Value: false,
+        },
+        {
+          Label: this.$t('Common.Tuesdays'),
+          Value: false,
+        },
+        {
+          Label: this.$t('Common.Wednesdays'),
+          Value: false,
+        },
+        {
+          Label: this.$t('Common.Thursdays'),
+          Value: false,
+        },
+        {
+          Label: this.$t('Common.Fridays'),
+          Value: false,
+        },
+        {
+          Label: this.$t('Common.Saturdays'),
+          Value: false,
+        },
+      ]
+    },
     slotLookupOptions() {
       const items = this.slotOptions
       return items
@@ -937,25 +939,25 @@ export default {
     setSelectedDays(selectedDays) {
       selectedDays.map((x) => {
         this.days.map((day) => {
-          if (x === 'monday' && day.Label === 'Mondays') {
+          if (x === 'monday' && day.Label === this.$t('Common.Mondays')) {
             day.Value = true
           }
           if (x === 'tuesday' && day.Label === 'Tuesdays') {
             day.Value = true
           }
-          if (x === 'wednesday' && day.Label === 'Wednesdays') {
+          if (x === 'wednesday' && day.Label === this.$t('Common.Wednesdays')) {
             day.Value = true
           }
-          if (x === 'thursday' && day.Label === 'Thursdays') {
+          if (x === 'thursday' && day.Label === this.$t('Common.Thursdays')) {
             day.Value = true
           }
-          if (x === 'friday' && day.Label === 'Fridays') {
+          if (x === 'friday' && day.Label === this.$t('Common.Fridays')) {
             day.Value = true
           }
-          if (x === 'saturday' && day.Label === 'Saturdays') {
+          if (x === 'saturday' && day.Label === this.$t('Common.Saturdays')) {
             day.Value = true
           }
-          if (x === 'sunday' && day.Label === 'Sundays') {
+          if (x === 'sunday' && day.Label === this.$t('Common.Sundays')) {
             day.Value = true
           }
         })
@@ -1009,19 +1011,19 @@ export default {
         if (d === 'tuesday' && day.Label === 'Tuesdays') {
           removeIndex = i
         }
-        if (d === 'wednesday' && day.Label === 'Wednesdays') {
+        if (d === 'wednesday' && day.Label === this.$t('Common.Wednesdays')) {
           removeIndex = i
         }
-        if (d === 'thursday' && day.Label === 'Thursdays') {
+        if (d === 'thursday' && day.Label === this.$t('Common.Thursdays')) {
           removeIndex = i
         }
-        if (d === 'friday' && day.Label === 'Fridays') {
+        if (d === 'friday' && day.Label === this.$t('Common.Fridays')) {
           removeIndex = i
         }
-        if (d === 'saturday' && day.Label === 'Saturdays') {
+        if (d === 'saturday' && day.Label === this.$t('Common.Saturdays')) {
           removeIndex = i
         }
-        if (d === 'sunday' && day.Label === 'Sundays') {
+        if (d === 'sunday' && day.Label === this.$t('Common.Sundays')) {
           removeIndex = i
         }
       })
@@ -1029,25 +1031,25 @@ export default {
     },
     addDay(day) {
       let dayName
-      if (day.Label === 'Mondays') {
+      if (day.Label === this.$t('Common.Mondays')) {
         dayName = 'monday'
       }
-      if (day.Label === 'Tuesdays') {
+      if (day.Label === this.$t('Common.Tuesdays')) {
         dayName = 'tuesday'
       }
-      if (day.Label === 'Wednesdays') {
+      if (day.Label === this.$t('Common.Wednesdays')) {
         dayName = 'wednesday'
       }
-      if (day.Label === 'Thursdays') {
+      if (day.Label === this.$t('Common.Thursdays')) {
         dayName = 'thursday'
       }
-      if (day.Label === 'Fridays') {
+      if (day.Label === this.$t('Common.Fridays')) {
         dayName = 'friday'
       }
-      if (day.Label === 'Saturdays') {
+      if (day.Label === this.$t('Common.Saturdays')) {
         dayName = 'saturday'
       }
-      if (day.Label === 'Sundays') {
+      if (day.Label === this.$t('Common.Sundays')) {
         dayName = 'sunday'
       }
       this.selectedDays.push(dayName)

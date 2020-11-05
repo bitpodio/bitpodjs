@@ -663,6 +663,12 @@
     "BadgesTemplates": "Badges Templates",
     "TicketCountRequired": "Ticket Count*",
     "Sundays":"Sundays",
+    "Mondays":"Mondays",
+    "Tuesdays":"Tuesdays",
+    "Wednesdays":"Wednesdays",
+    "Thursdays":"Thursdays",
+    "Fridays":"Fridays",
+    "Saturdays":"Saturdays",
     "CreateBadge": "Create Badge",
     "NewTemplate": "New Template",
     "Clear": "CLEAR"

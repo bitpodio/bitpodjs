@@ -1150,9 +1150,11 @@ export default {
     },
     removeSearchAddress() {
       setTimeout(() => {
-        document.getElementsByClassName(
-          'pac-container pac-logo'
-        )[0].style.display = 'none'
+        Object.values(
+          document.getElementsByClassName('pac-container pac-logo')
+        ).map((i) => {
+          i.style.display = 'none'
+        })
       }, 1000)
     },
     isEmptyAddress() {
@@ -1176,6 +1178,7 @@ export default {
       }
     },
     changeAddressData(value) {
+      this.removeSearchAddress()
       this.addresslineMessage =
         value === '' ? this.$t('Messages.Error.ThisFieldRequired') : ''
       this.venueAddress.AddressLine = value

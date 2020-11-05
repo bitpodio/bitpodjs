@@ -663,6 +663,12 @@
     "BadgesTemplates": "Modèles de badges",
     "TicketCountRequired": "Nombre de billets *",
     "Sundays":"les dimanches",
+    "Mondays":"Les lundis",
+    "Tuesdays":"Les mardis",
+    "Wednesdays":"Les mercredis",
+    "Thursdays":"Les jeudis",
+    "Fridays":"Les vendredis",
+    "Saturdays":"les samedis",
     "CreateBadge": "Créer un badge",
     "NewTemplate": "Nouveau modèle",
     "Clear": "CLAIR"
