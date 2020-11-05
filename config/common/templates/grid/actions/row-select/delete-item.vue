@@ -45,7 +45,7 @@ export default {
         this.$tc('Messages.Warn.DeleteWarning', ids.length, {
           subTitle: this.subTitle,
         }),
-        { color: 'error' }
+        { color: 'error lighten-1' }
       )
       if (res) {
         const ids = this.items.map(({ id }) => id)
