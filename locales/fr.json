@@ -772,7 +772,7 @@
       "UniqueLinkFormat" : "Minuscules lettres alphanumériques uniquement",
       "OverLapSessionMsg" : "Cette session chevauche une autre session, êtes-vous sûr?  Cliquez sur Oui pour créer et annuler pour l'annuler.",
       "DeleteActivity": "Voulez-vous vraiment supprimer cette activité?",
-      "DeleteWarning": "Voulez-vous supprimer {subTitle} ? | Voulez-vous supprimer {subTitle}s ?"
+      "DeleteWarning": "Voulez-vous supprimer {subTitle}? | Voulez-vous supprimer {subTitle}s?"
     },
     "Success" : {
       "CopiedClipboard" : "Copié dans le presse-papiers",

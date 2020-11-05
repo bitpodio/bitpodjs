@@ -772,7 +772,7 @@
       "UniqueLinkFormat": "Lower case alphanumeric letters only",
       "OverLapSessionMsg": "This session overlaps with another session, are you sure? click Yes to create and cancel to cancel it.",
       "DeleteActivity": "Are you sure you want to delete this activity?",
-      "DeleteWarning": "Do you want to delete {subTitle} ? | Do you want to delete {subTitle}s ?"
+      "DeleteWarning": "Do you want to delete this {subTitle}? | Do you want to delete these {subTitle}s?"
     },
     "Success": {
       "CopiedClipboard": "Copied to clipboard",
