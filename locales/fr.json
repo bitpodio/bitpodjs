@@ -385,6 +385,7 @@
     "RecurringEventLocation" : "Emplacement *",
     "NewDefaultForm" : "Nouveau {subTitle}",
     "EditDefaultForm" : "Editer {subTitle}",
+    "DeleteDefaultForm": "Supprimer {subTitle} | Supprimer {subTitle}s",
     "YouMayReferInviteMembers" : "Vous pouvez consulter les données des membres d'invite en utilisant des expressions de marque de réservation dans la ligne d'objet. e.g:{contactTemplateData}",
     "SessionInformation" : "Informations sur la session",
     "YouMayReferInviteMembersData" : "Vous pouvez consulter les données des membres d'invite en utilisant des expressions de marque de réservation dans la ligne d'objet. e.g:{registrationTemplateData}",
@@ -662,7 +663,8 @@
     "BadgesTemplates": "Modèles de badges",
     "TicketCountRequired": "Nombre de billets *",
     "Yes": "Oui",
-    "No": "Non"
+    "No": "Non",
+    "Registration": "Enregistrement"
   },
   "Drawer" : {
     "CreateEventAction" : "Créer un événement",
@@ -766,7 +768,7 @@
       "UniqueLinkFormat" : "Minuscules lettres alphanumériques uniquement",
       "OverLapSessionMsg" : "Cette session chevauche une autre session, êtes-vous sûr?  Cliquez sur Oui pour créer et annuler pour l'annuler.",
       "DeleteActivity": "Voulez-vous vraiment supprimer cette activité?",
-      "DeleteWarning": "Are you sure, You want to delete?"
+      "DeleteWarning": "Voulez-vous supprimer {subTitle} ? | Voulez-vous supprimer {subTitle}s ?"
     },
     "Success" : {
       "CopiedClipboard" : "Copié dans le presse-papiers",

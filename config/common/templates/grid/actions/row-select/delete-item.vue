@@ -11,10 +11,10 @@
 </template>
 
 <script>
-import { gridActionMixin } from '~/utility/form'
+import { gridActionMixin, formTitleMixin } from '~/utility/form'
 
 export default {
-  mixins: [gridActionMixin],
+  mixins: [formTitleMixin, gridActionMixin],
   props: {
     content: {
       type: null,
@@ -40,9 +40,14 @@ export default {
   },
   methods: {
     async onDelete() {
+      const ids = this.items.map(({ id }) => id)
       const res = await this.$refs.confirm.open(
-        this.$t('Drawer.Delete'),
-        this.$t('Messages.Warn.DeleteWarning'),
+        this.$tc('Common.DeleteDefaultForm', ids.length, {
+          subTitle: this.subTitle,
+        }),
+        this.$tc('Messages.Warn.DeleteWarning', ids.length, {
+          subTitle: this.subTitle,
+        }),
         { color: 'error' }
       )
       if (res) {
