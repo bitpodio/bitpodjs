@@ -40,7 +40,7 @@
                   min="0"
                   outlined
                   dense
-                  :rules="rollingDaysRules"
+                  :rules="rollingDaysRules()"
                 ></v-text-field>
               </v-col>
               <v-col v-if="isOverDate" cols="12" class="pb-0">
@@ -128,7 +128,7 @@
                   :label="$t('Common.Duration')"
                   type="number"
                   min="0"
-                  :rules="durationRules"
+                  :rules="durationRules()"
                   outlined
                   dense
                 ></v-text-field>
@@ -176,7 +176,7 @@
                   :label="$t('Common.Phone')"
                   outlined
                   dense
-                  :rules="phoneRules"
+                  :rules="phoneRules()"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -379,7 +379,7 @@
                 <Lookup
                   v-model="InPersonMeeting"
                   :field="inPersonMeetingProps"
-                  :rules="personMeetingRules"
+                  :rules="personMeetingRules()"
                 />
               </v-col>
             </v-row>
@@ -487,7 +487,7 @@
                   v-model="MaxAllow"
                   :label="$t('Common.MaxAllow')"
                   min="0"
-                  :rules="maxAllowRules"
+                  :rules="maxAllowRules()"
                   outlined
                   dense
                 ></v-text-field>
@@ -1013,50 +1013,7 @@ export default {
       slotOptions: [],
       inPersonMeetingOptions: [],
       weekDay: [],
-      maxAllowRules: [
-        (v) => {
-          if (!isNaN(parseFloat(v)) && v >= 0) {
-            return true
-          }
-          return this.$t('Messages.Error.MaxAllowMsg')
-        },
-      ],
-      durationRules: [
-        (v) => {
-          if (!isNaN(parseFloat(v)) && v > 0) {
-            return true
-          }
-          return this.$t('Messages.Error.DurationGreaterMsg')
-        },
-      ],
-      rollingDaysRules: [
-        (v) => {
-          if (!v && v.trim()) {
-            return true
-          }
-          if (!isNaN(parseFloat(v)) && v > 0) {
-            return true
-          }
-          return this.$t('Messages.Error.RollingDaysMsg')
-        },
-      ],
-      phoneRules: [
-        (v) => {
-          if (v && !isNaN(v)) {
-            return true
-          }
-          return this.$t('Messages.Error.PleaseEnterValidPhone')
-        },
-      ],
       onlineMeetingRules: [onlineEventLink],
-      personMeetingRules: [
-        (v) => {
-          if (v.length > 0) {
-            return true
-          }
-          return this.$t('Messages.Error.SelectLocation')
-        },
-      ],
       isDateRange: false,
       isOverDate: false,
       isOverPeriod: true,
@@ -1388,6 +1345,59 @@ export default {
     },
   },
   methods: {
+    phoneRules() {
+      return [
+        (v) => {
+          if (v && !isNaN(v)) {
+            return true
+          }
+          return this.$t('Messages.Error.PleaseEnterValidPhone')
+        },
+      ]
+    },
+    personMeetingRules() {
+      return [
+        (v) => {
+          if (v.length > 0) {
+            return true
+          }
+          return this.$t('Messages.Error.SelectLocation')
+        },
+      ]
+    },
+    maxAllowRules() {
+      return [
+        (v) => {
+          if (!isNaN(parseFloat(v)) && v >= 0) {
+            return true
+          }
+          return this.$t('Messages.Error.MaxAllowMsg')
+        },
+      ]
+    },
+    durationRules() {
+      return [
+        (v) => {
+          if (!isNaN(parseFloat(v)) && v > 0) {
+            return true
+          }
+          return this.$t('Messages.Error.DurationGreaterMsg')
+        },
+      ]
+    },
+    rollingDaysRules() {
+      return [
+        (v) => {
+          if (!v && v.trim()) {
+            return true
+          }
+          if (!isNaN(parseFloat(v)) && v > 0) {
+            return true
+          }
+          return this.$t('Messages.Error.RollingDaysMsg')
+        },
+      ]
+    },
     setSelectedDays(selectedDays) {
       this.sessions[0].Days = selectedDays
     },
@@ -1526,6 +1536,7 @@ export default {
         this.selectedSession = index
         if (this.sessions[index].LocationType === 'Phone call') {
           this.Phone = ''
+          this.$refs.phoneform && this.$refs.phoneform.reset()
           this.isPhone = true
           this.isZoom = false
           this.isGoogleMeet = false
@@ -1533,6 +1544,7 @@ export default {
         }
         if (this.sessions[index].LocationType === 'Online meeting') {
           this.WebinarLink = ''
+          this.$refs.meetingform && this.$refs.meetingform.reset()
           this.isOnlineMeeting = true
           this.isZoom = false
           this.isGoogleMeet = false
@@ -1540,6 +1552,7 @@ export default {
         }
         if (this.sessions[index].LocationType === 'Custom') {
           this.isCustom = true
+          this.addresslineMessage = ''
           this.isZoom = false
           this.isGoogleMeet = false
           this.selectedLocation = ''
@@ -1581,7 +1594,7 @@ export default {
       this.selectedSession = index
       if (this.sessions[index].Duration === '0') {
         this.isDuration = true
-        this.Duration = 0
+        this.Duration = 1
       }
     },
     setDuration() {

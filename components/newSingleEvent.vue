@@ -1153,7 +1153,7 @@ export default {
         document.getElementsByClassName(
           'pac-container pac-logo'
         )[0].style.display = 'none'
-      }, 2000)
+      }, 1000)
     },
     isEmptyAddress() {
       const { City, State, Country, PostalCode } = this.venueAddress
@@ -1182,6 +1182,7 @@ export default {
       this.isMap = this.isEmptyAddress()
     },
     changeAddress() {
+      this.removeSearchAddress()
       const { City, State, Country, PostalCode } = this.venueAddress
       const VenueName = this.eventData.VenueName
       const AddressLine = this.$refs['venueAddress.AddressLine'].$data
@@ -1207,13 +1208,17 @@ export default {
             this.venueAddress.Country = Country || ''
             this.venueAddress.City = City || ''
             this.venueAddress.State = State || ''
-            const latlng = {}
+            const latlng = { lat: 0.0, lng: 0.0 }
             latlng.lat =
-              res.data.results[0] && res.data.results[0].geometry.location.lat
+              res.data.results.length > 0
+                ? res.data.results[0].geometry.location.lat
+                : 0.0
             latlng.lng =
-              res.data.results[0] && res.data.results[0].geometry.location.lng
-            this.venueAddress.LatLng.lat = latlng.lat || ''
-            this.venueAddress.LatLng.lng = latlng.lng || ''
+              res.data.results.length > 0
+                ? res.data.results[0].geometry.location.lng
+                : 0.0
+            this.venueAddress.LatLng.lat = latlng.lat || 0.0
+            this.venueAddress.LatLng.lng = latlng.lng || 0.0
 
             this.locations = [latlng]
             this.isMap = true

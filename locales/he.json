@@ -170,7 +170,7 @@
     "TicketType": "Ticket Type",
     "EventTag": "Event Tag",
     "EventPrivacy": "Event Privacy",
-    "TimeZone": "TimeZone",
+    "TimeZone": "TimeZone*",
     "Contact": "Contact",
     "Refund": "Refund",
     "General": "General",
@@ -660,7 +660,8 @@
     "Reviews": "Reviews",
     "DateTime": "Date and Time",
     "BadgesTemplates": "Badges Templates",
-    "TicketCountRequired": "Ticket Count*"
+    "TicketCountRequired": "Ticket Count*",
+    "Sundays":"Sundays"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",

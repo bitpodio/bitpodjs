@@ -660,7 +660,8 @@
     "Reviews": "Reviews",
     "DateTime": "Date and Time",
     "BadgesTemplates": "Badges Templates",
-    "TicketCountRequired": "Ticket Count*"
+    "TicketCountRequired": "Ticket Count*",
+    "Sundays":"Sundays"
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",

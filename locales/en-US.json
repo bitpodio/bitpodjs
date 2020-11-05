@@ -381,7 +381,7 @@
     "AddRecurringSession": "Add Recurring Session",
     "DateRange": "Date Range*",
     "SlotSize": "Slot Size*",
-    "Timezone": "Timezone",
+    "Timezone": "Timezone*",
     "RecurringEventLocation": "Location*",
     "NewDefaultForm": "New {subTitle}",
     "EditDefaultForm": "Edit {subTitle}",
@@ -660,7 +660,8 @@
     "Reviews": "Reviews",
     "DateTime": "Date and Time",
     "BadgesTemplates": "Badges Templates",
-    "TicketCountRequired": "Ticket Count*"
+    "TicketCountRequired": "Ticket Count*",
+    "Sundays":"Sundays"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",
