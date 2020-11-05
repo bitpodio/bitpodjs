@@ -448,7 +448,7 @@ export default {
         type: 'graphql',
         model: 'Registration',
       },
-      itemTitle: 'Common.Registrations',
+      itemTitle: 'Common.Registration',
       title: 'Common.Registrations',
       type: 'list',
     },

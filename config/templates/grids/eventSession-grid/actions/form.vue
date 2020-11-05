@@ -187,7 +187,7 @@
                 </no-ssr>
                 <div
                   v-if="addresslineMessage !== ''"
-                  class="red--text pl-3 pb-2 caption"
+                  class="red--text px-3 pb-2 caption"
                 >
                   {{ addresslineMessage }}*
                 </div>
