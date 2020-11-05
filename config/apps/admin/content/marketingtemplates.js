@@ -237,7 +237,7 @@ export default {
         actions: {
           new: {
             hidden: false,
-            caption: 'New Template',
+            caption: 'Common.NewTemplate',
           },
         },
       },
@@ -479,7 +479,7 @@ export default {
         actions: {
           new: {
             hidden: false,
-            caption: 'New Template',
+            caption: 'Common.NewTemplate',
           },
         },
       },

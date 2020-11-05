@@ -117,7 +117,7 @@ export default {
         actions: {
           new: {
             hidden: false,
-            caption: 'Create Badge',
+            caption: 'Common.CreateBadge',
           },
         },
       },

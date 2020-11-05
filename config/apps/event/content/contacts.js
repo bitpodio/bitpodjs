@@ -439,7 +439,6 @@ export default {
         actions: {
           new: {
             hidden: true,
-            caption: 'new field',
           },
           edit: {
             hidden: true,
@@ -652,7 +651,6 @@ export default {
         actions: {
           new: {
             hidden: true,
-            caption: 'new field',
           },
           edit: {
             hidden: true,
