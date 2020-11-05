@@ -105,8 +105,22 @@
           class="mt-1 mb-3 event-datechip greybg"
           label
         >
-          {{ $d(new Date(data.event.StartDate), 'long', $i18n.locale) }} -
-          {{ $d(new Date(data.event.EndDate), 'long', $i18n.locale) }} -
+          {{
+            $d(
+              formatedDate(data.event.StartDate, data.event.Timezone),
+              'long',
+              $i18n.locale
+            )
+          }}
+          -
+          {{
+            $d(
+              formatedDate(data.event.EndDate, data.event.Timezone),
+              'long',
+              $i18n.locale
+            )
+          }}
+          -
           {{ formatField(data.event.Timezone) }}
         </v-chip>
         <v-flex>
@@ -2328,6 +2342,9 @@ export default {
 }
 .cardImg {
   position: relative;
+  margin: 16px !important;
+  padding: 0 !important;
+  margin-left: 0 !important;
 }
 .cardDelete {
   position: absolute;

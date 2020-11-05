@@ -87,14 +87,6 @@
                   dense
                 ></v-select>
               </v-col>
-              <v-col cols="12">
-                <v-checkbox
-                  v-model="formData.isRequired"
-                  label=" Required"
-                  class="ma-0"
-                  dense
-                ></v-checkbox>
-              </v-col>
             </v-row>
           </v-form>
         </v-card-text>
