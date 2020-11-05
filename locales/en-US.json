@@ -266,6 +266,7 @@
     "FixedTimeAndTimeZone": "Fixed Time and Time Zone",
     "LaunchYourInvite": "We'll launch your invite on the date and time you specify.",
     "ContactDetails": "CONTACT DETAILS",
+    "ContentDetails": "CONTENT DETAILS",
     "NotAddedContact": "You have not added any contact yet.",
     "SelectContact": "Select Contact",
     "NotAddedContent": "You have not added any content yet.",
@@ -370,6 +371,7 @@
     "EndT": "End Time*",
     "RepeatingDaysOfWeek": "Repeating days of the week",
     "ApplyToRepeatingWeekDays": "Apply To Repeating Week Days",
+    "ApplyToOnly": "Apply to only ",
     "GoogleContacts": "Google Contacts",
     "Edit": "EDIT",
     "One": "1",
@@ -759,7 +761,9 @@
       "EventEndDate": "Event end date should not be less than current date",
       "FieldRequired": "This field is required *",
       "EmailInvalid": "Email is invalid",
-      "HttpsUrl": "This must be a https url"
+      "HttpsUrl": "This must be a https url",
+      "OverlappingTimeSlot": "Time-slot overlapping with other slots",
+      "EndTimeMustBeGreater": "End time must be greater then start time"
    },
     "Warn": {
       "UniqueLinkFormat": "Lower case alphanumeric letters only",

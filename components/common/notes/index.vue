@@ -265,7 +265,7 @@ export default {
   width: 350px;
 }
 .tile {
-  width: 120px;
+  width: 160px;
 }
 .extraComments {
   display: none;
