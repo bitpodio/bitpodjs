@@ -1,5 +1,6 @@
 <template>
   <div>
+    <confirm ref="confirm"></confirm>
     <div>
       <div class="subtitle-1 py-2 greybg">
         <i class="fa fa-pencil-square-o mr-1" aria-hidden="true"></i
@@ -329,9 +330,10 @@ export default {
   methods: {
     async deleteTemplete(id) {
       const url = this.$bitpod.getApiUrl()
-
-      const check = await this.$confirm(
-        'Are you sure you want to delete this template?'
+      const check = await this.$refs.confirm.open(
+        this.$t('Common.CancelCheckin'),
+        this.$t('Messages.Warn.DeleteTemplate'),
+        { color: 'error lighten-1' }
       )
       let res = null
       if (check === true) {

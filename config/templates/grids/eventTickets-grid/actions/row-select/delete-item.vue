@@ -1,5 +1,6 @@
 <template>
   <div>
+    <confirm ref="confirm"></confirm>
     <v-col class="px-0">
       <v-btn text small v-bind="attrs" v-on="on" @click="onDeleteItem">
         <v-icon left class="fs-16">fa-trash</v-icon
@@ -53,8 +54,10 @@ export default {
   methods: {
     async onDeleteItem() {
       const url = this.$bitpod.getApiUrl()
-      const check = await this.$confirm(
-        'Are you sure you want to delete this ticket?'
+      const check = await this.$refs.confirm.open(
+        this.$t('Common.DeleteTicket'),
+        this.$t('Messages.Warn.DeleteTicket'),
+        { color: 'error lighten-1' }
       )
       try {
         if (check) {

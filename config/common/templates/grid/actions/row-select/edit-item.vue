@@ -26,7 +26,7 @@
             </v-btn>
           </div>
         </v-card-title>
-        <div v-if="errorMessage !== ''" class="red--text ml-10">
+        <div v-if="errorMessage !== ''" class="red--text mx-10">
           {{ errorMessage }}
         </div>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">

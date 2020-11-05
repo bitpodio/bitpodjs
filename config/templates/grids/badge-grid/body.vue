@@ -1,5 +1,6 @@
 <template>
   <div>
+    <confirm ref="confirm"></confirm>
     <v-flex
       class="d-flex flex-wrap greybg pa-0 justify-center justify-md-start"
     >
@@ -69,8 +70,10 @@ export default {
     async deleteBadge(id) {
       const url = this.$bitpod.getApiUrl()
 
-      const check = await this.$confirm(
-        'Are you sure you want to delete this badge?'
+      const check = await this.$refs.confirm.open(
+        this.$t('Common.DeleteBadge'),
+        this.$t('Messages.Warn.DeleteBadge'),
+        { color: 'error lighten-1' }
       )
       let res = null
       if (check === true) {

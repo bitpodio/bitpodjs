@@ -108,6 +108,7 @@
     "Venue": "स्थान",
     "CopyEventObjects": "मैं निम्नलिखित घटना वस्तुओं को भी कॉपी करना चाहूंगा",
     "NewBadge": "नया बैज",
+    "DeleteBadge": "बैज हटाएं",
     "Designer": "डिजाइनर",
     "IDCardBadge": "आईडी कार्ड बैज",
     "PinNameBadge": "पिन नाम बैज",
@@ -232,6 +233,8 @@
     "SuccessfulCheckedin": "आपने सफलतापूर्वक जाँच कर ली है।",
     "EditSetting": "सेटिंग संपादित करें",
     "AdditionalSetting": "अतिरिक्त सेटिंग",
+    "DeleteTicket": "टिकट हटाओ",
+    "DeleteTemplate": "टेम्पलेट हटाएं",
     "Ok": "ठीक",
     "DefaultForm": "डिफ़ॉल्ट रूप",
     "SalesforceIntegrationSetup": "Salesforce एकीकरण सेटअप",
@@ -386,6 +389,7 @@
     "RecurringEventLocation": "Location*",
     "NewDefaultForm": "New {subTitle}",
     "EditDefaultForm": "Edit {subTitle}",
+    "DeleteDefaultForm": "हटाएं {subTitle} | हटाएं {subTitle}",
     "YouMayReferInviteMembers": "You may refer invite members data by using placeholder expressions in subject line. e.g:{contactTemplateData}",
     "SessionInformation": "Session Information",
     "YouMayReferInviteMembersData": "You may refer invite members data by using placeholder expressions in subject line. e.g:{registrationTemplateData}",
@@ -662,9 +666,12 @@
     "DateTime": "Date and Time",
     "BadgesTemplates": "Badges Templates",
     "TicketCountRequired": "Ticket Count*",
-    "CreateBadge": "Create Badge",
-    "NewTemplate": "New Template",
-    "Clear": "CLEAR"
+    "Yes": "हाँ",
+    "No": "नहीं",
+    "Registration": "पंजीकरण",
+    "CreateBadge": "बैज बनाएँ",
+    "NewTemplate": "नया टेम्पलेट",
+    "Clear": "साफ़"
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",
@@ -767,7 +774,16 @@
     "Warn": {
       "UniqueLinkFormat": "Lower case alphanumeric letters only",
       "OverLapSessionMsg": "This session overlaps with another session, are you sure? click Yes to create and cancel to cancel it.",
-      "DeleteActivity": "Are you sure you want to delete this activity?"
+      "DeleteActivity": "क्या आप इस गतिविधि को हटाना चाहते हैं?",
+      "DeleteComment": "क्या आपकी इस टिप्पणी को हटाने की चाहत है?",
+      "DeleteWarning": "क्या आप {subTitle} हटाना चाहते हैं? | क्या आप {subTitle} हटाना चाहते हैं?",
+      "CancelCheckin": "क्या आप इस चेक को रद्द करना चाहते हैं?",
+      "DeleteTicket": "क्या आप इस टिकट को हटाना चाहते हैं?",
+      "DeleteTemplate": "क्या आप इस टेम्पलेट को हटाना चाहते हैं?",
+      "DeleteBadge": "क्या आप इस बैज को हटाना चाहते हैं?",
+      "DeleteAccessKey": "क्या आप इस एक्सेस कुंजी को हटाना चाहते हैं?",
+      "ReplaceBadge": "नया बैज आपके मौजूदा बैज की जगह लेगा",
+      "DeleteImage": "क्या आप इस छवि को हटाना चाहते हैं?"
     },
     "Success": {
       "CopiedClipboard": "Copied to clipboard",

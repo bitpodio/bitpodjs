@@ -523,9 +523,10 @@ export default {
       ticketSaleData: [['Date', 'Ticket Sold']],
       ticketSalechartOptions: {
         curveType: 'function',
-        legend: 'none',
         height: '316',
         width: '350',
+        reverseCategories: this.$vuetify.rtl,
+        legend: 'right',
         hAxis: {
           logscale: true,
           viewWindow: {
@@ -600,6 +601,7 @@ export default {
         legend: 'none',
         height: '316',
         width: '350',
+        reverseCategories: this.$vuetify.rtl,
         chartArea: { width: '80%', height: '70%' },
         animation: {
           startup: true,
@@ -613,6 +615,7 @@ export default {
         legend: 'none',
         height: '316',
         width: '350',
+        reverseCategories: this.$vuetify.rtl,
         hAxis: { logscale: true },
         vAxis: {
           viewWindow: {
