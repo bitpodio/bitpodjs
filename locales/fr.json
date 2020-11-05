@@ -39,6 +39,7 @@
     "EventBanner" : "Bannière d'événement",
     "LogoImage" : "Image du logo",
     "Attendees" : "Participants",
+    "ManageSchedule": "Gérer le calendrier",
     "Registrations" : "Enregistrements",
     "Invites" : "Invite",
     "Emails" : "Eclous",
@@ -661,7 +662,10 @@
     "DateTime": "Date et l'heure",
     "BadgesTemplates": "Modèles de badges",
     "TicketCountRequired": "Nombre de billets *",
-    "Sundays":"les dimanches"
+    "Sundays":"les dimanches",
+    "CreateBadge": "Créer un badge",
+    "NewTemplate": "Nouveau modèle",
+    "Clear": "CLAIR"
   },
   "Drawer" : {
     "CreateEventAction" : "Créer un événement",

@@ -38,6 +38,7 @@
     "Other": "अन्य",
     "EventBanner": "इवेंट बैनर",
     "LogoImage": "लोगो छवि",
+    "ManageSchedule": "शेड्यूल प्रबंधित करें",
     "Attendees": "सहभागी",
     "Registrations": "पंजीकरण",
     "Invites": "आमंत्रण",
@@ -661,7 +662,10 @@
     "DateTime": "Date and Time",
     "BadgesTemplates": "Badges Templates",
     "TicketCountRequired": "Ticket Count*",
-    "Sundays":"Sundays"
+    "Sundays":"Sundays",
+    "CreateBadge": "Create Badge",
+    "NewTemplate": "New Template",
+    "Clear": "CLEAR"
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",
