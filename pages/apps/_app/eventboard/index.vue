@@ -227,7 +227,7 @@
                     >
                       {{ data.creatorName }}
                     </h3>
-                    <h5 class="font-weight-regular text-truncate tileCaption">
+                    <h5 class="font-weight-regular text-truncate eventName">
                       {{ data.eventName }}
                     </h5>
                   </div>
@@ -735,7 +735,9 @@ export default {
   },
   methods: {
     routeToLiveEvents(method) {
-      this.$router.push(this.localePath('/apps/event/list/Event/All Events'))
+      this.$router.push(
+        this.localePath('/apps/event/list/Event/live and draft event')
+      )
     },
     routeToRegistrations(method) {
       this.$router.push(
@@ -1175,6 +1177,9 @@ export default {
 }
 .summaryTile {
   width: 132px;
+}
+.eventName {
+  width: 152px;
 }
 .dataTile {
   height: 70px;

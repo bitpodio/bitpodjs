@@ -38,6 +38,7 @@
     "Other": "अन्य",
     "EventBanner": "इवेंट बैनर",
     "LogoImage": "लोगो छवि",
+    "ManageSchedule": "शेड्यूल प्रबंधित करें",
     "Attendees": "सहभागी",
     "Registrations": "पंजीकरण",
     "Invites": "आमंत्रण",
@@ -662,9 +663,12 @@
     "DateTime": "Date and Time",
     "BadgesTemplates": "Badges Templates",
     "TicketCountRequired": "Ticket Count*",
-    "Yes": "Yes",
-    "No": "No",
-    "Registration": "पंजीकरण"
+    "Yes": "हाँ",
+    "No": "नहीं",
+    "Registration": "पंजीकरण",
+    "CreateBadge": "बैज बनाएँ",
+    "NewTemplate": "नया टेम्पलेट",
+    "Clear": "साफ़"
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",

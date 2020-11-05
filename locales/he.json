@@ -39,6 +39,7 @@
     "EventBanner": "Event Banner",
     "LogoImage": "Logo Image",
     "Attendees": "Attendees",
+    "ManageSchedule": "Manage Schedule",
     "Registrations": "Registrations",
     "Invites": "Invites",
     "Emails": "Emails",
@@ -664,7 +665,10 @@
     "TicketCountRequired": "Ticket Count*",
     "Yes": "Yes",
     "No": "No",
-    "Registration": "Registration"
+    "Registration": "Registration",
+    "CreateBadge": "Create Badge",
+    "NewTemplate": "New Template",
+    "Clear": "CLEAR"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",

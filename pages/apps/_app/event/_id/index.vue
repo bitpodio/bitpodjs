@@ -712,7 +712,7 @@
           </v-dialog>
           <v-card
             v-for="(image, index) in eventData.Other"
-            :key="image"
+            :key="index"
             class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-5 pr-3 elevation-0 cardImg rounded"
           >
             <span class="cardDelete">
@@ -741,13 +741,15 @@
               </template>
             </v-img>
             <v-flex class="mt-1 d-flex">
-              <v-card-text class="pa-0 pb-1"
-                ><a
+              <v-card-text class="pa-0 pb-1">
+                <a
                   class="d-inline-block text-truncate anchorTag"
                   :href="getAttachmentLink(image, true)"
-                  >{{ OtherImageName[index] }}</a
-                ></v-card-text
-              >
+                  >{{
+                    OtherImageName[index] && OtherImageName[index].fileName
+                  }}</a
+                >
+              </v-card-text>
               <copy :text-to-copy="getImageUrl(image)" :unique-id="image" />
             </v-flex>
             <v-card-text class="pa-0 mt-n2 otherImg"
@@ -1622,13 +1624,6 @@ export default {
       return dataObj
     },
   },
-  watch: {
-    eventData() {
-      if (this.eventData.Other.length > 0) {
-        this.getImageName()
-      }
-    },
-  },
   mounted() {
     this.getAttendees()
     setTimeout(this.openPrint, 3000)
@@ -1799,7 +1794,7 @@ export default {
           this.refresh()
         }
       } catch (e) {
-        console.log(
+        console.error(
           `Error in app/Event/_id/index.vue while making a PATCH call to Event model from method changeStatus context:-URL:-${url}\nInput:-\t Status:-${statusName}\n id:-${this.$route.params.id} `,
           e
         )
@@ -1905,10 +1900,14 @@ export default {
         )
       }
     },
-    getImageName() {
-      this.eventData.Other.map((id) => {
-        this.getOtherImageName(id)
-      })
+    async getImageName() {
+      const url = this.$bitpod.getApiUrl()
+      const imageData = await Promise.all(
+        this.eventData.Other.map((id) => {
+          return this.$axios.$get(`${url}Attachments/${id}`)
+        })
+      )
+      this.OtherImageName = imageData
     },
     getImageUrl(imageId) {
       const downloadLink = this.getAttachmentLink(imageId, true)
@@ -1922,7 +1921,10 @@ export default {
           this.bannerName = res.fileName
         }
       } catch (e) {
-        console.log('Error', e)
+        console.error(
+          `Error in apps/event/_id/index.vue while making a GET call to Attachment model in method getBannerImageName context: URL:- ${url} \n ImageId:-${imageId}`,
+          e
+        )
       }
     },
     async getLogoName(imageId) {
@@ -1933,19 +1935,10 @@ export default {
           this.logoName = res.fileName
         }
       } catch (e) {
-        console.log('Error', e)
-      }
-    },
-    async getOtherImageName(imageId) {
-      const url = this.$bitpod.getApiUrl()
-      try {
-        const res = await this.$axios.$get(`${url}Attachments/${imageId}`)
-        if (res) {
-          this.OtherImageName.push(res.fileName)
-          this.refresh()
-        }
-      } catch (e) {
-        console.log('Error', e)
+        console.error(
+          `Error in apps/event/_id/index.vue while making a GET call to Attachment model in method getLogoName context: URL:- ${url} \n ImageId:-${imageId}`,
+          e
+        )
       }
     },
     refresh() {
@@ -1977,7 +1970,7 @@ export default {
       if (data.length > 0) {
         this.formData.Logo = []
         this.formData.Logo.push(data[0])
-        this.updateEventGallery(this.formData)
+        this.updateEventGallery({ Logo: this.formData.Logo })
       }
     },
     fileUploadedEventBanner(data) {
@@ -1989,14 +1982,13 @@ export default {
         this.formData.Images.push(data[0])
         this.formData.ImagesURL.push(imageUrl)
 
-        this.updateEventGallery(this.formData)
+        this.updateEventGallery({ Images: this.formData.Images })
       }
     },
     fileUploadedOther(data) {
       this.allow = true
       if (data.length > 0) {
-        // this.formData.Other = []
-        this.formData.Other.push(...data)
+        this.formData.Other.push(data)
         this.updateOtherImageGallery(data)
       }
     },
@@ -2013,25 +2005,33 @@ export default {
           this.refresh()
         }
       } catch (e) {
-        console.log('Error', e)
+        console.error(
+          `Error in apps/event/_id/index.vue while making a PATCH call to Event model in method updateEventGallery context: URL:- ${url} \nEventId:-${this.$route.params.id}\n formData:-${formData}`,
+          e
+        )
       }
     },
     updateOtherImageGallery(formData) {
       const url = this.$bitpod.getApiUrl()
-      try {
-        formData.map(async (id) => {
-          const res = await this.$axios.$put(
-            `${url}Events/${this.$route.params.id}/Others/rel/${id}`
-          )
-          if (res) {
-            this.snackbarText = this.$t('Messages.Success.AttachmentAddSuccess')
-            this.snackbar = true
-            this.refresh()
-          }
+      formData
+        .reduce((acc, i) => {
+          return acc.then(() => {
+            return this.$axios.$put(
+              `${url}Events/${this.$route.params.id}/Others/rel/${i}`
+            )
+          })
+        }, Promise.resolve())
+        .then(() => {
+          this.snackbarText = this.$t('Messages.Success.AttachmentAddSuccess')
+          this.snackbar = true
+          return this.refresh()
         })
-      } catch (e) {
-        console.log('Error', e)
-      }
+        .catch((e) => {
+          console.error(
+            `Error in apps/event/_id/index.vue while making a PUT call to Event model in method updateOtherImageGallery context: EventId:-${this.$route.params.id} \n URL:- ${url} \n formData:- ${formData}`,
+            e
+          )
+        })
     },
     viewRegistrationLink() {
       const regUrl = `https://${nuxtconfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
@@ -2296,6 +2296,10 @@ export default {
         if (event[0].Logo.length > 0) {
           this.getLogoName(event[0].Logo[0])
         }
+        if (event[0].Other.length > 0) {
+          this.getImageName()
+        }
+
         return {
           event: event.length > 0 ? event[0] : {},
           badge: badge.length > 0 ? badge[0] : {},

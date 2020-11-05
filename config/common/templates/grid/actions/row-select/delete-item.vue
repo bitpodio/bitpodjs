@@ -2,9 +2,7 @@
   <v-col class="px-0">
     <v-btn text small v-bind="attrs" v-on="on" @click="onDelete">
       <v-icon left class="fs-16">fa-trash</v-icon>
-      <span v-if="gridDeleteAction === 'Delete'">{{
-        $t('Drawer.Delete')
-      }}</span>
+      {{ $t(actionCaption('delete')) }}
     </v-btn>
     <confirm ref="confirm"></confirm>
   </v-col>
@@ -35,7 +33,6 @@ export default {
     return {
       dialog: false,
       updateCount: 0,
-      gridDeleteAction: this.actionCaption('delete'),
     }
   },
   methods: {

@@ -8,7 +8,8 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on">
-          <v-icon left>{{ buttonIcon }}</v-icon> {{ buttonLabel }}
+          <v-icon left>{{ buttonIcon }}</v-icon>
+          {{ $t('Common.ScheduleATask') }}
         </v-btn>
       </template>
       <v-card>

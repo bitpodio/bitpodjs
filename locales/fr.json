@@ -39,6 +39,7 @@
     "EventBanner" : "Bannière d'événement",
     "LogoImage" : "Image du logo",
     "Attendees" : "Participants",
+    "ManageSchedule": "Gérer le calendrier",
     "Registrations" : "Enregistrements",
     "Invites" : "Invite",
     "Emails" : "Eclous",
@@ -664,7 +665,10 @@
     "TicketCountRequired": "Nombre de billets *",
     "Yes": "Oui",
     "No": "Non",
-    "Registration": "Enregistrement"
+    "Registration": "Enregistrement",
+    "CreateBadge": "Créer un badge",
+    "NewTemplate": "Nouveau modèle",
+    "Clear": "CLAIR"
   },
   "Drawer" : {
     "CreateEventAction" : "Créer un événement",

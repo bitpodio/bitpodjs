@@ -438,7 +438,7 @@ export default {
         },
         actions: {
           new: {
-            caption: 'New Registration',
+            caption: 'Common.NewRegistration',
           },
         },
       },
@@ -997,7 +997,6 @@ export default {
         actions: {
           new: {
             hidden: true,
-            caption: 'new field',
           },
           edit: {
             hidden: true,
@@ -1559,7 +1558,6 @@ export default {
         actions: {
           new: {
             hidden: true,
-            caption: 'new field',
           },
           edit: {
             hidden: true,
@@ -1903,7 +1901,6 @@ export default {
         actions: {
           new: {
             hidden: true,
-            caption: 'new field',
           },
           edit: {
             hidden: true,
