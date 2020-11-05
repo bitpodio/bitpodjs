@@ -11,22 +11,29 @@
         content-class="slide-form-default"
       >
         <v-card>
-          <v-toolbar dense flat dark fixed color="accent">
-            <v-toolbar- class="body-1">{{
-              isParticipant ? 'Attendees' : 'Manage Schedule'
-            }}</v-toolbar->
+          <v-card-title
+            class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
+          >
+            <h2 class="black--text pt-5 pb-2 text-h5">
+              {{
+                isParticipant
+                  ? this.$t('Common.Attendees')
+                  : this.$t('Common.ManageSchedule')
+              }}
+            </h2>
             <v-spacer></v-spacer>
-            <v-btn
-              icon
-              dark
-              @click="
-                dialog = false
-                isParticipant = false
-              "
-            >
-              <v-icon>mdi-close</v-icon>
-            </v-btn>
-          </v-toolbar>
+            <div>
+              <v-btn
+                icon
+                @click="
+                  dialog = false
+                  isParticipant = false
+                "
+              >
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+            </div>
+          </v-card-title>
           <v-card-text v-if="!isParticipant">
             <v-container>
               <v-row>
