@@ -183,9 +183,9 @@ export default {
   methods: {
     async deleteComment(id) {
       const confirmDeletion = await this.$refs.confirm.open(
-        'Delete',
-        'Are you sure you want to delete this comment?',
-        { color: 'error' }
+        this.$t('Drawer.Delete'),
+        this.$t('Messages.Warn.DeleteComment'),
+        { color: 'error lighten-1' }
       )
       if (confirmDeletion) {
         try {

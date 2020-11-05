@@ -36,8 +36,8 @@ export default {
   methods: {
     async updateDate() {
       const res = await this.$refs.confirm.open(
-        'Cancel Checkin',
-        'are you sure, you want to cancel check in?',
+        this.$t('Common.CancelCheckin'),
+        this.$t('Messages.Warn.CancelCheckin'),
         { color: 'warning' }
       )
       const url = this.$bitpod.getApiUrl()

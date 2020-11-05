@@ -331,9 +331,9 @@ export default {
     async deleteTemplete(id) {
       const url = this.$bitpod.getApiUrl()
       const check = await this.$refs.confirm.open(
-        'Delete Template',
-        'Are you sure you want to delete this template?',
-        { color: 'error' }
+        this.$t('Common.CancelCheckin'),
+        this.$t('Messages.Warn.DeleteTemplate'),
+        { color: 'error lighten-1' }
       )
       let res = null
       if (check === true) {

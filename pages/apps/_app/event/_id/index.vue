@@ -1696,8 +1696,8 @@ export default {
     },
     async openBadgeForm() {
       const res = await this.$refs.confirm.open(
-        'New Badge',
-        'New badge will replace your existing badge.',
+        this.$t('Common.NewBadge'),
+        this.$t('Messages.Warn.ReplaceBadge'),
         { color: 'warning' }
       )
       if (res) {
@@ -1844,9 +1844,9 @@ export default {
     async deleteBadge() {
       const url = this.$bitpod.getApiUrl()
       const check = await this.$refs.confirm.open(
-        'Delete Badge',
-        'Are you sure you want to delete this badge?',
-        { color: 'error' }
+        this.$t('Common.DeleteBadge'),
+        this.$t('Messages.Warn.DeleteBadge'),
+        { color: 'error lighten-1' }
       )
       if (check === true) {
         try {
@@ -2079,8 +2079,8 @@ export default {
       const url = this.$bitpod.getApiUrl()
       const checkRes = await this.$refs.confirm.open(
         this.$t('Drawer.Delete'),
-        this.$t('Messages.Warn.DeleteWarning'),
-        { color: 'error' }
+        this.$t('Messages.Warn.DeleteImage'),
+        { color: 'error lighten-1' }
       )
       if (checkRes) {
         const res = await this.$axios.delete(
@@ -2099,8 +2099,8 @@ export default {
       const url = this.$bitpod.getApiUrl()
       const checkRes = await this.$refs.confirm.open(
         this.$t('Drawer.Delete'),
-        this.$t('Messages.Warn.DeleteWarning'),
-        { color: 'error' }
+        this.$t('Messages.Warn.DeleteImage'),
+        { color: 'error lighten-1' }
       )
       if (checkRes) {
         const res = await this.$axios.delete(
@@ -2119,8 +2119,8 @@ export default {
       const url = this.$bitpod.getApiUrl()
       const checkRes = await this.$refs.confirm.open(
         this.$t('Drawer.Delete'),
-        this.$t('Messages.Warn.DeleteWarning'),
-        { color: 'error' }
+        this.$t('Messages.Warn.DeleteImage'),
+        { color: 'error lighten-1' }
       )
       if (checkRes) {
         const res = await this.$axios.delete(

@@ -55,9 +55,9 @@ export default {
     async onDeleteItem() {
       const url = this.$bitpod.getApiUrl()
       const check = await this.$refs.confirm.open(
-        'Delete Ticket',
-        'Are you sure you want to delete this ticket?',
-        { color: 'error' }
+        this.$t('Common.DeleteTicket'),
+        this.$t('Messages.Warn.DeleteTicket'),
+        { color: 'error lighten-1' }
       )
       try {
         if (check) {

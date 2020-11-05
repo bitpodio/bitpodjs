@@ -71,9 +71,9 @@ export default {
       const url = this.$bitpod.getApiUrl()
 
       const check = await this.$refs.confirm.open(
-        this.$t('Drawer.Delete'),
-        this.$t('Messages.Warn.DeleteWarning'),
-        { color: 'error' }
+        this.$t('Common.DeleteBadge'),
+        this.$t('Messages.Warn.DeleteBadge'),
+        { color: 'error lighten-1' }
       )
       let res = null
       if (check === true) {
