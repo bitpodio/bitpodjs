@@ -105,22 +105,8 @@
           class="mt-1 mb-3 event-datechip greybg"
           label
         >
-          {{
-            $d(
-              formatedDate(data.event.StartDate, data.event.Timezone),
-              'long',
-              $i18n.locale
-            )
-          }}
-          -
-          {{
-            $d(
-              formatedDate(data.event.EndDate, data.event.Timezone),
-              'long',
-              $i18n.locale
-            )
-          }}
-          -
+          {{ $d(new Date(data.event.StartDate), 'long', $i18n.locale) }} -
+          {{ $d(new Date(data.event.EndDate), 'long', $i18n.locale) }} -
           {{ formatField(data.event.Timezone) }}
         </v-chip>
         <v-flex>

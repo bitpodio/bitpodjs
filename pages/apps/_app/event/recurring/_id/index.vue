@@ -1784,6 +1784,9 @@ export default {
 }
 .cardImg {
   position: relative;
+  margin: 16px !important;
+  padding: 0 !important;
+  margin-left: 0 !important;
 }
 .cardImg:hover .cardDelete {
   display: inline-block;
