@@ -1,5 +1,6 @@
 <template>
   <v-flex d-flex flex-md-row flex-lg-row flex-column>
+    <confirm ref="confirm"></confirm>
     <v-snackbar v-model="snackbar" :top="true" :timeout="3000">
       <div class="toast py-2 pr-1 pl-3 fs-16">
         {{ snackbarText }}
@@ -372,7 +373,11 @@ export default {
   methods: {
     async deleteSaved() {
       const url = this.$bitpod.getApiUrl()
-      const check = await this.$confirm(this.$t('Messages.Warn.DeleteActivity'))
+      const check = await this.$refs.confirm.open(
+        'Delete Activity',
+        this.$t('Messages.Warn.DeleteActivity'),
+        { color: 'error' }
+      )
       let res = null
       if (check === true) {
         try {

@@ -1,5 +1,6 @@
 <template>
   <div>
+    <confirm ref="confirm"></confirm>
     <v-snackbar v-model="snackbar" timeout="1000" :top="true" width="10">
       <div
         class="toast py-2 pr-1 pl-5 text-h6 light font-weight-regular text-center"
@@ -182,8 +183,10 @@ export default {
   },
   methods: {
     async deleteComment(id) {
-      const confirmDeletion = await this.$confirm(
-        'Are you sure you want to delete this comment?'
+      const confirmDeletion = await this.$refs.confirm.open(
+        this.$t('Drawer.Delete'),
+        this.$t('Messages.Warn.DeleteComment'),
+        { color: 'error lighten-1' }
       )
       if (confirmDeletion) {
         try {

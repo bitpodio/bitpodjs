@@ -47,7 +47,7 @@
                   outlined
                 ></v-select>
               </v-col>
-              <span v-if="message != ''" class="red--text pl-3 pt-1">{{
+              <span v-if="message != ''" class="red--text px-3 pt-1">{{
                 message
               }}</span>
             </v-row>
