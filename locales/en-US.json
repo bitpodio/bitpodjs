@@ -661,7 +661,10 @@
     "Reviews": "Reviews",
     "DateTime": "Date and Time",
     "BadgesTemplates": "Badges Templates",
-    "TicketCountRequired": "Ticket Count*"
+    "TicketCountRequired": "Ticket Count*",
+    "CreateBadge": "Create Badge",
+    "NewTemplate": "New Template",
+    "Clear": "CLEAR"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",

@@ -661,7 +661,10 @@
     "Reviews": "Commentaires",
     "DateTime": "Date et l'heure",
     "BadgesTemplates": "Modèles de badges",
-    "TicketCountRequired": "Nombre de billets *"
+    "TicketCountRequired": "Nombre de billets *",
+    "CreateBadge": "Créer un badge",
+    "NewTemplate": "Nouveau modèle",
+    "Clear": "CLAIR"
   },
   "Drawer" : {
     "CreateEventAction" : "Créer un événement",
