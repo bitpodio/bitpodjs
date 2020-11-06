@@ -1,7 +1,7 @@
 export const appList = [
   {
     name: 'event',
-    label: 'Event',
+    label: 'Common.EventApp',
     css: 'fa fa-calendar fs-36 success--text',
     type: 'route',
     route: '/apps/event/list/Event/live and draft event',
@@ -9,7 +9,7 @@ export const appList = [
   },
   {
     name: 'admin',
-    label: 'Administration',
+    label: 'Common.AdminApp',
     css: 'fa fa-cogs fs-36 primary--text',
     type: 'route',
     route: '/apps/admin/organization/5cfe026f6ab042000c530105',
@@ -17,7 +17,7 @@ export const appList = [
   },
   {
     name: 'HelpCenter',
-    label: 'Help-Center',
+    label: 'Common.HelpCenterMap',
     css: 'fa fa-help-circle fs-36 warning--text',
     type: 'route',
     route: '/apps/help-center/',
@@ -25,7 +25,7 @@ export const appList = [
   },
   {
     name: 'Survey',
-    label: 'Survey',
+    label: 'Common.SurveyApp',
     css: 'survey-img',
     type: 'url',
     icon: 'https://survey.bitpod.io/favicon.ico',
@@ -34,7 +34,7 @@ export const appList = [
   },
   {
     name: 'seatmap',
-    label: 'Seat Map',
+    label: 'Common.SeatMap',
     css: 'fa fa-grid-alt fs-36 primary--text',
     type: 'route',
     route: '/apps/seatmap/list/seatmaps/seatmaps',

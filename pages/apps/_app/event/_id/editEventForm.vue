@@ -301,7 +301,7 @@ export default {
         eventSummary: {},
       },
       timezonefield: {
-        caption: 'Timezone',
+        caption: this.$t('Common.TimeZone'),
         type: 'Timezone',
       },
       formData: {},
@@ -344,7 +344,7 @@ export default {
       return {
         appendIcon: 'fa-calendar',
         outlined: true,
-        caption: 'Start Date',
+        caption: this.$t('Common.StartDate'),
         type: 'datetime',
       }
     },
@@ -352,7 +352,7 @@ export default {
       return {
         appendIcon: 'fa-calendar',
         outlined: true,
-        caption: 'End Date',
+        caption: this.$t('Common.EndDate'),
         type: 'datetime',
       }
     },
