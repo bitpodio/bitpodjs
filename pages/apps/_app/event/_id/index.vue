@@ -105,8 +105,7 @@
           class="mt-1 mb-3 event-datechip greybg"
           label
         >
-          {{ $d(new Date(data.event.StartDate), 'long', $i18n.locale) }} -
-          {{ $d(new Date(data.event.EndDate), 'long', $i18n.locale) }} -
+          {{ getEventStartDate() }} - {{ getEventEndDate() }} -
           {{ formatField(data.event.Timezone) }}
         </v-chip>
         <v-flex>
@@ -1630,6 +1629,24 @@ export default {
   },
 
   methods: {
+    getEventStartDate() {
+      return this.$d(
+        new Date(
+          this.formatedDate(this.eventData.StartDate, this.eventData.Timezone)
+        ),
+        'long',
+        this.$i18n.locale
+      )
+    },
+    getEventEndDate() {
+      return this.$d(
+        new Date(
+          this.formatedDate(this.eventData.EndDate, this.eventData.Timezone)
+        ),
+        'long',
+        this.$i18n.locale
+      )
+    },
     eventLink() {
       const baseUrl = this.$bitpod.getApiUrl()
       const regUrl = baseUrl.replace(
@@ -2345,6 +2362,9 @@ export default {
 }
 .cardImg {
   position: relative;
+  margin: 16px !important;
+  padding: 0 !important;
+  margin-left: 0 !important;
 }
 .cardDelete {
   position: absolute;
