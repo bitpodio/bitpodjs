@@ -131,9 +131,9 @@
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="grey--text">
-                      <timeAgo :date="comment.modifiedDate" />
+                      <div class="grey--text">
+                        <timeAgo :date="comment.modifiedDate" />
+                      </div>
                     </div>
                   </div>
                 </div>
