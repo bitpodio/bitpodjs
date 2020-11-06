@@ -229,7 +229,7 @@
     "PrintBadges": "Print Badges",
     "CancelCheckin": "Cancel Check In",
     "CheckIn": "Check In",
-    "CheckedInJustnow": "Checked in Just now",
+    "CheckedInJustnow": "Checked in ",
     "SuccessfulCheckedin": "You have successfully checked in. Enjoy the event!",
     "EditSetting": "Edit Setting",
     "AdditionalSetting": "Additional Setting",
@@ -723,6 +723,28 @@
     "Members": "Members",
     "Contacts": "Contacts"
   },
+  "FilterOptions": {
+   "Is": "Is",
+   "IsNot": "Is not",
+   "Contains": "Contains",
+   "DoesNotContain": "Does not contain",
+   "StartsWith": "Starts with",
+   "EndsWith": "Ends with",
+   "IsEmpty": "Is empty",
+   "IsNotEmpty": "Is not empty",
+   "Today": "Today",
+   "Tomorrow": "Tomorrow",
+   "Yesterday": "Yesterday",
+   "ThePastWeek": "The past week",
+   "ThePastMonth": "The past month",
+   "ThePastYear": "The past year",
+   "TheNextWeek": "The next week",
+   "TheNextMonth": "The next month",
+   "TheNextYear": "The next year",
+   "ExactDate": "Exact date",
+   "And": "and",
+   "Or": "or"
+ },
   "Messages": {
     "Error": {
       "SizeRequired": "Size is required",
