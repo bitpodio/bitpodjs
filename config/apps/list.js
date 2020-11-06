@@ -40,4 +40,12 @@ export const appList = [
     route: '/apps/seatmap/list/seatmaps/seatmaps',
     roles: ['$orguser'],
   },
+  {
+    name: 'integration',
+    label: 'Integation',
+    css: 'fa fa fa-link1 fs-36 primary--text',
+    type: 'route',
+    route: '/apps/integration/list/integration/integration',
+    roles: ['$orguser'],
+  },
 ]
