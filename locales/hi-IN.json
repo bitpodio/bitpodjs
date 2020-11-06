@@ -253,7 +253,7 @@
     "MyTemplates": "मेरे टेम्प्लेट",
     "SaveTemplates": "एक ऐसी जगह जहां आप भविष्य के उपयोग के लिए टेम्पलेट सहेज सकते हैं।",
     "PreDesignedTemplates": "पहले से तैयार किए गए टेम्प्लेट",
-    "ReadyToUseTemplates":  "जल्दी से ईमेल भेजने के लिए तैयार-से-उपयोग करने वाले टेम्प्लेट",
+    "ReadyToUseTemplates": "जल्दी से ईमेल भेजने के लिए तैयार-से-उपयोग करने वाले टेम्प्लेट",
     "RichTextEditor": "रिच टेक्स्ट एडिटर",
     "UseEditor": "अपनी सामग्री डिज़ाइन करने के लिए संपादक का उपयोग करें।",
     "SelectTemplateToContinue": "जारी रखने के लिए एक टेम्पलेट का चयन करें।",
@@ -413,13 +413,13 @@
     "OnlineEventLink": "Online event link (https)*",
     "MaxAllow": "Max Allow*",
     "LastName": "Last Name*",
-    "PhoneRequired": "Phone*",
+    "PhoneRequired": "फ़ोन*",
     "EnterValue": "Enter a value",
     "AddNote": "Add a note *",
     "Organizations": "Organizations",
-    "ExpiresOn": "Expires On",
-    "AdditionalOnlineEvent": "Additional online event joining instructions, URL, phone etc.",
-    "BitpodVirtualLink": "Bitpod Virtual Link",
+    "ExpiresOn": "पर समय सीमा समाप्त",
+    "AdditionalOnlineEvent": "अतिरिक्त ऑनलाइन घटना में शामिल होने के निर्देश, यूआरएल, फोन आदि।",
+    "BitpodVirtualLink": "बिटपॉड वर्चुअल लिंक",
     "Url": "URL *",
     "Host": "Host *",
     "Path": "Path *",
@@ -431,13 +431,13 @@
     "RefreshToken": "Refresh Token *",
     "ClientId": "Client Id *",
     "ClientSecret": "Client Secret *",
-    "Email": "Email*",
-    "Organization": "Organization",
+    "Email": "ईमेल*",
+    "Organization": "संगठन",
     "Token": "Token *",
     "PublicKey": "Public Key *",
     "PrivateKey": "Private Key *",
-    "PrivacyRequired": "Privacy*",
-    "PartGoesIntoUrl": "Part which goes into URL",
+    "PrivacyRequired": "गोपनीयता *",
+    "PartGoesIntoUrl": "जो हिस्सा URL में जाता है",
     "PartialRefund": "Partial Refund",
     "CalendarType": "type",
     "EventOverlapMode": "event-overlap-mode",
@@ -450,7 +450,7 @@
     "StatusRequired": "Status*",
     "Event": "Event*",
     "TicketsRequired": "Tickets*",
-    "TicketQuantity": "Ticket Quantity*",
+    "TicketQuantity": "टिकट की मात्रा *",
     "Session": "Session*",
     "RegistrationTypeRequired": "Registration Type*",
     "MerchantAccounts": "Merchant Accounts(e.g USD:merchantId)",
@@ -479,7 +479,7 @@
     "Opened": "खुल गया",
     "OpenedClicked": "खोला और क्लिक किया",
     "ScheduleDate": "कार्यक्रम दिनांक *",
-    "NameRequired": "Name*",
+    "NameRequired": "नाम *",
     "DurationRequired": "Duration*",
     "SeatReservation": "Seat Reservation",
     "OnlineMeetingLink": "online meeting link (https)*",
@@ -487,13 +487,13 @@
     "MinimumSchedulingNotice": "Minimum Scheduling Notice (hr)",
     "BufferBefore": "Buffer Before (min)",
     "BufferAfter": "Buffer After (min)",
-    "Label": "Label",
-    "ControlType": "Control Type*",
-    "Question": "Question*",
+    "Label": "लेबल",
+    "ControlType": "नियंत्रण प्रकार*",
+    "Question": "सवाल*",
     "Options": "Options*",
-    "DisplayOrder": "Display Order*",
-    "OptionsCsvFormat": "Options, use CSV format*",
-    "Required": "Required",
+    "DisplayOrder": "प्रस्तुति का क्रम*",
+    "OptionsCsvFormat": "विकल्प, CSV प्रारूप का उपयोग करें *",
+    "Required": "अपेक्षित",
     "SeatmapTickets": "Seatmap & Tickets",
     "TicketQty": "Ticket Quantity",
     "SessionName": "Session Name*",
@@ -502,39 +502,39 @@
     "EditActivity": "Edit Activity",
     "DueDateRequired": "Due Date*",
     "TicketCount": "Ticket Count",
-    "GroupName": "Group Name",
-    "DisplayOrd": "Display Order",
-    "ValidateQuantity": "Validate Quantity",
-    "CheckGroupDiscount": "Check Group Discount",
-    "EnterEmail": "Enter Email *",
-    "Username": "Username",
-    "Role": "Role*",
-    "EventNameRequired": "Event Name*",
-    "TimezoneRequired": "Timezone*",
-    "EventOrganizer": "Event organizer *",
-    "EventManagerTeamEmail": "Event Manager/Team Email *",
-    "MaxRegistrationsPerDay": "Max registrations per day",
-    "OnlineEventLinkReq": "Online Event Link*",
-    "AdditionalOnlineEventJoining": "Additional online event joining instructions,URL,phone,etc*",
-    "VenueAddress": "Venue Address",
-    "CurrencyReq": "Currency*",
-    "SEOElements": "SEO elements are auto derived from event elements when event is created or edited. Check this if you want to Turn off auto update",
-    "MetaDescription": "Meta Description",
-    "MetaKeywords": "Meta Keywords",
-    "LabelForSpeakers": "Label for Speakers section",
-    "LabelForRegistration": "Label for Registration Types section",
-    "LabelForSessions": "Label for Sessions section",
-    "LabelForRegister": "Label for Register button",
-    "LabelForTickets": "Label for Tickets section",
-    "LabelTickets": "Label for Tickets",
-    "LabelForDateTime": "Label for Date and Time section",
-    "LabelForVenue": "Label for Venue section",
-    "LabelForRecurringSessions": "Label for Recurring Sessions section",
-    "LabelForRegistrationQuestions": "Label for Registration Questions section",
-    "LabelForImageGallery": "Label for Image Gallery section",
-    "LabelForReviews": "Label for Reviews section",
-    "Animation": "Animation",
-    "RegistrationTypes": "Registration Types",
+    "GroupName": "समूह का नाम",
+    "DisplayOrd": "प्रस्तुति का क्रम",
+    "ValidateQuantity": "मान्य मात्रा",
+    "CheckGroupDiscount": "समूह छूट की जाँच करें",
+    "EnterEmail": "ईमेल दर्ज करें *",
+    "Username": "उपयोगकर्ता नाम",
+    "Role": "भूमिका *",
+    "EventNameRequired": "कार्यक्रम नाम*",
+    "TimezoneRequired": "समय क्षेत्र*",
+    "EventOrganizer": "कार्यक्रम आयोजक *",
+    "EventManagerTeamEmail": "कार्यक्रम प्रबंधक/टीम ईमेल *",
+    "MaxRegistrationsPerDay": "प्रति दिन अधिकतम पंजीकरण",
+    "OnlineEventLinkReq": "ऑनलाइन इवेंट लिंक *",
+    "AdditionalOnlineEventJoining": "अतिरिक्त ऑनलाइन घटना में शामिल होने के निर्देश, URL, फोन, आदि *",
+    "VenueAddress": "स्थान का पता",
+    "CurrencyReq": "मुद्रा *",
+    "SEOElements": "जब इवेंट बनाया जाता है या संपादित किया जाता है, तो SEO एलिमेंट्स इवेंट एलिमेंट्स से ऑटो होते हैं। यदि आप ऑटो अपडेट बंद करना चाहते हैं तो इसे जांचें",
+    "MetaDescription": "मेटा विवरण",
+    "MetaKeywords": "मेटा कीवर्ड",
+    "LabelForSpeakers": "स्पीकर अनुभाग के लिए लेबल",
+    "LabelForRegistration": "पंजीकरण प्रकार अनुभाग के लिए लेबल",
+    "LabelForSessions": "सत्र अनुभाग के लिए लेबल",
+    "LabelForRegister": "रजिस्टर बटन के लिए लेबल",
+    "LabelForTickets": "टिकट अनुभाग के लिए लेबल",
+    "LabelTickets": "टिकट के लिए लेबल",
+    "LabelForDateTime": "दिनांक और समय अनुभाग के लिए लेबल",
+    "LabelForVenue": "वेन्यू सेक्शन के लिए लेबल",
+    "LabelForRecurringSessions": "आवर्ती सत्र अनुभाग के लिए लेबल",
+    "LabelForRegistrationQuestions": "पंजीकरण प्रश्न अनुभाग के लिए लेबल",
+    "LabelForImageGallery": "छवि गैलरी अनुभाग के लिए लेबल",
+    "LabelForReviews": "समीक्षा अनुभाग के लिए लेबल",
+    "Animation": "एनीमेशन",
+    "RegistrationTypes": "पंजीकरण के प्रकार",
     "OfferCode": "Offer Code",
     "RecurringSessionsLink": "Recurring sessions Link",
     "EmbedRecurringSessions": "Embed Recurring Sessions",
@@ -542,7 +542,7 @@
     "Size": "Size*",
     "TemplateName": "Template Name*",
     "ImageUrl": "Image URL",
-    "About": "About",
+    "About": "के बारे में",
     "FullRefund": "Full Refund",
     "AmountReq": "Amount*",
     "Comments": "Comments",
@@ -634,10 +634,10 @@
     "Unit": "Unit",
     "AutoRenew": "Auto Renew",
     "Id": "Id",
-    "Roles": "Roles",
-    "AccessKeys": "Access keys",
+    "Roles": "भूमिकाएँ",
+    "AccessKeys": "पहुंच कुंजी",
     "SeatMaps": "Seat Maps",
-    "Users": "Users",
+    "Users": "उपयोगकर्ता",
     "ValueRequired": "Value *",
     "BodyRequired": "Body *",
     "CategoryRequired": "Category *",
@@ -667,7 +667,7 @@
     "Reviews": "Reviews",
     "DateTime": "Date and Time",
     "BadgesTemplates": "Badges Templates",
-    "TicketCountRequired": "Ticket Count*",
+    "TicketCountRequired": "टिकट गणना *",
     "Yes": "हाँ",
     "No": "नहीं",
     "Registration": "पंजीकरण",
@@ -815,67 +815,67 @@
     }
   },
   "$vuetify": {
-    "badge":"Badge",
-    "close":"Close",
-    "dataIterator":{
-      "noResultsText":"No matching records found",
-      "loadingText":"Loading items..."
+    "badge": "Badge",
+    "close": "Close",
+    "dataIterator": {
+      "noResultsText": "No matching records found",
+      "loadingText": "Loading items..."
     },
-   "dataTable":{
-      "itemsPerPageText":"Rows per page:",
-      "ariaLabel":{
-         "sortDescending":"Sorted descending.",
-         "sortAscending":"Sorted ascending.",
-         "sortNone":"Not sorted.",
-         "activateNone":"Activate to remove sorting.",
-         "activateDescending":"Activate to sort descending.",
-         "activateAscending":"Activate to sort ascending."
+    "dataTable": {
+      "itemsPerPageText": "Rows per page:",
+      "ariaLabel": {
+        "sortDescending": "Sorted descending.",
+        "sortAscending": "Sorted ascending.",
+        "sortNone": "Not sorted.",
+        "activateNone": "Activate to remove sorting.",
+        "activateDescending": "Activate to sort descending.",
+        "activateAscending": "Activate to sort ascending."
       },
-      "sortBy":"Sort by"
-   },
-   "dataFooter":{
-      "itemsPerPageText":"Items per page:",
-      "itemsPerPageAll":"All",
-      "nextPage":"Next page",
-      "prevPage":"Previous page",
-      "firstPage":"First page",
-      "lastPage":"Last page",
-      "pageText":"{0}-{1} of {2}"
-   },
-   "datePicker":{
-      "itemsSelected":"{0} selected",
-      "nextMonthAriaLabel":"Next month",
-      "nextYearAriaLabel":"Next year",
-      "prevMonthAriaLabel":"Previous month",
-      "prevYearAriaLabel":"Previous year"
-   },
-   "noDataText":"No data available",
-   "carousel":{
-      "prev":"Previous visual",
-      "next":"Next visual",
-      "ariaLabel":{
-         "delimiter":"Carousel slide {0} of {1}"
+      "sortBy": "Sort by"
+    },
+    "dataFooter": {
+      "itemsPerPageText": "Items per page:",
+      "itemsPerPageAll": "All",
+      "nextPage": "Next page",
+      "prevPage": "Previous page",
+      "firstPage": "First page",
+      "lastPage": "Last page",
+      "pageText": "{0}-{1} of {2}"
+    },
+    "datePicker": {
+      "itemsSelected": "{0} selected",
+      "nextMonthAriaLabel": "Next month",
+      "nextYearAriaLabel": "Next year",
+      "prevMonthAriaLabel": "Previous month",
+      "prevYearAriaLabel": "Previous year"
+    },
+    "noDataText": "No data available",
+    "carousel": {
+      "prev": "Previous visual",
+      "next": "Next visual",
+      "ariaLabel": {
+        "delimiter": "Carousel slide {0} of {1}"
       }
-   },
-   "calendar":{
-      "moreEvents":"{0} more"
-   },
-   "fileInput":{
-      "counter":"{0} files",
-      "counterSize":"{0} files ({1} in total)"
-   },
-   "timePicker":{
-      "am":"AM",
-      "pm":"PM"
-   },
-   "pagination":{
-      "ariaLabel":{
-         "wrapper":"Pagination Navigation",
-         "next":"Next page",
-         "previous":"Previous page",
-         "page":"Goto Page {0}",
-         "currentPage":"Current Page, Page {0}"
+    },
+    "calendar": {
+      "moreEvents": "{0} more"
+    },
+    "fileInput": {
+      "counter": "{0} files",
+      "counterSize": "{0} files ({1} in total)"
+    },
+    "timePicker": {
+      "am": "AM",
+      "pm": "PM"
+    },
+    "pagination": {
+      "ariaLabel": {
+        "wrapper": "Pagination Navigation",
+        "next": "Next page",
+        "previous": "Previous page",
+        "page": "Goto Page {0}",
+        "currentPage": "Current Page, Page {0}"
       }
-   }
+    }
   }
 }
