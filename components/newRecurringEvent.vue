@@ -40,7 +40,7 @@
                   min="0"
                   outlined
                   dense
-                  :rules="rollingDaysRules"
+                  :rules="rollingDaysRules()"
                 ></v-text-field>
               </v-col>
               <v-col v-if="isOverDate" cols="12" class="pb-0">
@@ -128,7 +128,7 @@
                   :label="$t('Common.Duration')"
                   type="number"
                   min="0"
-                  :rules="durationRules"
+                  :rules="durationRules()"
                   outlined
                   dense
                 ></v-text-field>
@@ -176,7 +176,7 @@
                   :label="$t('Common.Phone')"
                   outlined
                   dense
-                  :rules="phoneRules"
+                  :rules="phoneRules()"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -379,7 +379,7 @@
                 <Lookup
                   v-model="InPersonMeeting"
                   :field="inPersonMeetingProps"
-                  :rules="personMeetingRules"
+                  :rules="personMeetingRules()"
                 />
               </v-col>
             </v-row>
@@ -487,7 +487,7 @@
                   v-model="MaxAllow"
                   :label="$t('Common.MaxAllow')"
                   min="0"
-                  :rules="maxAllowRules"
+                  :rules="maxAllowRules()"
                   outlined
                   dense
                 ></v-text-field>
@@ -796,22 +796,30 @@
                             :field="timezonefield"
                           ></Timezone>
                         </td>
+
                         <td class="pa-2 pb-0 event-timezone">
-                          <div v-if="session.selectedLocation">
-                            {{ session.selectedLocation }}
-                            <v-icon @click="closeShowLocation(k)"
-                              >mdi-close</v-icon
-                            >
-                          </div>
-                          <Lookup
-                            v-else
-                            v-model="session.LocationType"
-                            :field="locationTypeProps"
-                            :rules="requiredRules"
-                            required
-                            :on-change="changelocationType(k)"
-                          />
+                          <v-form
+                            ref="locationForm"
+                            v-model="validlocation"
+                            :lazy-validation="lazy"
+                          >
+                            <div v-if="session.selectedLocation">
+                              {{ session.selectedLocation }}
+                              <v-icon @click="closeShowLocation(k)"
+                                >mdi-close</v-icon
+                              >
+                            </div>
+                            <Lookup
+                              v-else
+                              v-model="session.LocationType"
+                              :field="locationTypeProps"
+                              :rules="requiredRules"
+                              required
+                              :on-change="changelocationType(k)"
+                            />
+                          </v-form>
                         </td>
+
                         <td class="pa-2 pb-0">
                           <span v-if="session.Type === 'Group'"
                             >{{ getMaxAllow(session) }}
@@ -1004,6 +1012,7 @@ export default {
       validOnlineMeeting: true,
       validCustomLocation: true,
       validPersonMeeting: true,
+      validlocation: true,
       validType: true,
       validBasicInfo: true,
       validSessions: true,
@@ -1013,50 +1022,7 @@ export default {
       slotOptions: [],
       inPersonMeetingOptions: [],
       weekDay: [],
-      maxAllowRules: [
-        (v) => {
-          if (!isNaN(parseFloat(v)) && v >= 0) {
-            return true
-          }
-          return this.$t('Messages.Error.MaxAllowMsg')
-        },
-      ],
-      durationRules: [
-        (v) => {
-          if (!isNaN(parseFloat(v)) && v > 0) {
-            return true
-          }
-          return this.$t('Messages.Error.DurationGreaterMsg')
-        },
-      ],
-      rollingDaysRules: [
-        (v) => {
-          if (!v && v.trim()) {
-            return true
-          }
-          if (!isNaN(parseFloat(v)) && v > 0) {
-            return true
-          }
-          return this.$t('Messages.Error.RollingDaysMsg')
-        },
-      ],
-      phoneRules: [
-        (v) => {
-          if (v && !isNaN(v)) {
-            return true
-          }
-          return this.$t('Messages.Error.PleaseEnterValidPhone')
-        },
-      ],
       onlineMeetingRules: [onlineEventLink],
-      personMeetingRules: [
-        (v) => {
-          if (v.length > 0) {
-            return true
-          }
-          return this.$t('Messages.Error.SelectLocation')
-        },
-      ],
       isDateRange: false,
       isOverDate: false,
       isOverPeriod: true,
@@ -1213,36 +1179,6 @@ export default {
 
       isInalidEventLink: false,
       uniqueLinkMessage: '',
-      days: [
-        {
-          Label: 'Sundays',
-          Value: false,
-        },
-        {
-          Label: 'Mondays',
-          Value: false,
-        },
-        {
-          Label: 'Tuesdays',
-          Value: false,
-        },
-        {
-          Label: 'Wednesdays',
-          Value: false,
-        },
-        {
-          Label: 'Thursdays',
-          Value: false,
-        },
-        {
-          Label: 'Fridays',
-          Value: false,
-        },
-        {
-          Label: 'Saturdays',
-          Value: false,
-        },
-      ],
       tickets: [
         {
           id: ObjectID5(),
@@ -1295,6 +1231,38 @@ export default {
     }
   },
   computed: {
+    days() {
+      return [
+        {
+          Label: this.$t('Common.Sundays'),
+          Value: false,
+        },
+        {
+          Label: this.$t('Common.Mondays'),
+          Value: false,
+        },
+        {
+          Label: this.$t('Common.Tuesdays'),
+          Value: false,
+        },
+        {
+          Label: this.$t('Common.Wednesdays'),
+          Value: false,
+        },
+        {
+          Label: this.$t('Common.Thursdays'),
+          Value: false,
+        },
+        {
+          Label: this.$t('Common.Fridays'),
+          Value: false,
+        },
+        {
+          Label: this.$t('Common.Saturdays'),
+          Value: false,
+        },
+      ]
+    },
     eventLinkHint() {
       return `${nuxtconfig.integrationLinks.EVENT_LINK_HINT}${this.eventData.UniqLink}`
     },
@@ -1388,6 +1356,59 @@ export default {
     },
   },
   methods: {
+    phoneRules() {
+      return [
+        (v) => {
+          if (v && !isNaN(v)) {
+            return true
+          }
+          return this.$t('Messages.Error.PleaseEnterValidPhone')
+        },
+      ]
+    },
+    personMeetingRules() {
+      return [
+        (v) => {
+          if (v.length > 0) {
+            return true
+          }
+          return this.$t('Messages.Error.SelectLocation')
+        },
+      ]
+    },
+    maxAllowRules() {
+      return [
+        (v) => {
+          if (!isNaN(parseFloat(v)) && v >= 0) {
+            return true
+          }
+          return this.$t('Messages.Error.MaxAllowMsg')
+        },
+      ]
+    },
+    durationRules() {
+      return [
+        (v) => {
+          if (!isNaN(parseFloat(v)) && v > 0) {
+            return true
+          }
+          return this.$t('Messages.Error.DurationGreaterMsg')
+        },
+      ]
+    },
+    rollingDaysRules() {
+      return [
+        (v) => {
+          if (!v && v.trim()) {
+            return true
+          }
+          if (!isNaN(parseFloat(v)) && v > 0) {
+            return true
+          }
+          return this.$t('Messages.Error.RollingDaysMsg')
+        },
+      ]
+    },
     setSelectedDays(selectedDays) {
       this.sessions[0].Days = selectedDays
     },
@@ -1526,6 +1547,7 @@ export default {
         this.selectedSession = index
         if (this.sessions[index].LocationType === 'Phone call') {
           this.Phone = ''
+          this.$refs.phoneform && this.$refs.phoneform.reset()
           this.isPhone = true
           this.isZoom = false
           this.isGoogleMeet = false
@@ -1533,6 +1555,7 @@ export default {
         }
         if (this.sessions[index].LocationType === 'Online meeting') {
           this.WebinarLink = ''
+          this.$refs.meetingform && this.$refs.meetingform.reset()
           this.isOnlineMeeting = true
           this.isZoom = false
           this.isGoogleMeet = false
@@ -1540,6 +1563,7 @@ export default {
         }
         if (this.sessions[index].LocationType === 'Custom') {
           this.isCustom = true
+          this.addresslineMessage = ''
           this.isZoom = false
           this.isGoogleMeet = false
           this.selectedLocation = ''
@@ -1581,7 +1605,7 @@ export default {
       this.selectedSession = index
       if (this.sessions[index].Duration === '0') {
         this.isDuration = true
-        this.Duration = 0
+        this.Duration = 1
       }
     },
     setDuration() {
@@ -1751,6 +1775,9 @@ export default {
       }
     },
     selectSchedule(index) {
+      this.days.forEach((d, i) => {
+        d.Value = false
+      })
       this.isDateRange = true
       this.selectedSession = index
       const session = this.sessions[index]
@@ -1765,25 +1792,25 @@ export default {
       this.EndDate = session.EndDate
       session.Days.forEach((day, i) => {
         this.days.forEach((d, i) => {
-          if (day === 'monday' && d.Label === 'Mondays') {
+          if (day === 'monday' && d.Label === this.$t('Common.Mondays')) {
             d.Value = true
           }
-          if (day === 'tuesday' && d.Label === 'Tuesdays') {
+          if (day === 'tuesday' && d.Label === this.$t('Common.Tuesdays')) {
             d.Value = true
           }
-          if (day === 'wednesday' && d.Label === 'Wednesdays') {
+          if (day === 'wednesday' && d.Label === this.$t('Common.Wednesdays')) {
             d.Value = true
           }
-          if (day === 'thursday' && d.Label === 'Thursdays') {
+          if (day === 'thursday' && d.Label === this.$t('Common.Thursdays')) {
             d.Value = true
           }
-          if (day === 'friday' && d.Label === 'Fridays') {
+          if (day === 'friday' && d.Label === this.$t('Common.Fridays')) {
             d.Value = true
           }
-          if (day === 'saturday' && d.Label === 'Saturdays') {
+          if (day === 'saturday' && d.Label === this.$t('Common.Saturdays')) {
             d.Value = true
           }
-          if (day === 'sunday' && d.Label === 'Sundays') {
+          if (day === 'sunday' && d.Label === this.$t('Common.Sundays')) {
             d.Value = true
           }
         })
@@ -1819,25 +1846,25 @@ export default {
         }
         this.sessions[this.selectedSession].Days = []
         this.days.forEach((d, i) => {
-          if (d.Label === 'Mondays' && d.Value === true) {
+          if (d.Label === this.$t('Common.Mondays') && d.Value === true) {
             this.sessions[this.selectedSession].Days.push('monday')
           }
-          if (d.Label === 'Tuesdays' && d.Value === true) {
+          if (d.Label === this.$t('Common.Tuesdays') && d.Value === true) {
             this.sessions[this.selectedSession].Days.push('tuesday')
           }
-          if (d.Label === 'Wednesdays' && d.Value === true) {
+          if (d.Label === this.$t('Common.Wednesdays') && d.Value === true) {
             this.sessions[this.selectedSession].Days.push('wednesday')
           }
-          if (d.Label === 'Thursdays' && d.Value === true) {
+          if (d.Label === this.$t('Common.Thursdays') && d.Value === true) {
             this.sessions[this.selectedSession].Days.push('thursday')
           }
-          if (d.Label === 'Fridays' && d.Value === true) {
+          if (d.Label === this.$t('Common.Fridays') && d.Value === true) {
             this.sessions[this.selectedSession].Days.push('friday')
           }
-          if (d.Label === 'Saturdays' && d.Value === true) {
+          if (d.Label === this.$t('Common.Saturdays') && d.Value === true) {
             this.sessions[this.selectedSession].Days.push('saturday')
           }
-          if (d.Label === 'Sundays' && d.Value === true) {
+          if (d.Label === this.$t('Common.Sundays') && d.Value === true) {
             this.sessions[this.selectedSession].Days.push('sunday')
           }
         })
@@ -1913,12 +1940,16 @@ export default {
     deleteTicket(index) {
       if (this.tickets.length > 1) {
         this.tickets.splice(index, 1)
+      } else {
+        const ticket = this.ticketDefaultData()
+        this.tickets = [ticket]
       }
     },
     deleteSession(index) {
       if (this.sessions.length > 1) {
         this.sessions.splice(index, 1)
       } else {
+        this.$refs.locationForm && this.$refs.locationForm[0].reset()
         this.resetSession()
       }
     },
@@ -2034,9 +2065,7 @@ export default {
           !isLocationTypeEmpty.includes(true) &&
           !isInvalidSessionMap.includes(true) &&
           (isInvalidSlot === false ||
-            confirm(
-              'This session overlaps with another session, are you sure? click Yes to create and cancel to cancel it.'
-            ))
+            (await this.$confirm(this.$t('Messages.Warn.OverLapSessionMsg'))))
         ) {
           this.isSaveButtonDisabled = true
           this.eventData.EventManager = this.$auth.$state.user.data.email
@@ -2235,7 +2264,7 @@ export default {
         StartTime: this.AvailableStartHour || '10:00',
         EndTime: this.AvailableEndHour || '19:00',
         Duration: '30',
-        Timezone: '',
+        Timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
         LocationType: '',
         Type: 'Personal',
         Tickets: '0 ticket',
@@ -2286,7 +2315,10 @@ export default {
           ...rest,
         }))
         this.eventData.Currency = OrganizationInfo[0].Currency
-        if (OrganizationInfo[0].weekDay.length > 0) {
+        if (
+          OrganizationInfo[0].weekDay !== null &&
+          OrganizationInfo[0].weekDay.length > 0
+        ) {
           this.setSelectedDays(OrganizationInfo[0].weekDay)
           this.weekDay = OrganizationInfo[0].weekDay
         }

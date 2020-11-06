@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <v-snackbar v-model="snackbar" :top="true" :timeout="1000">
+    <v-snackbar v-model="snackbar" :top="true" :timeout="3000">
       <i18n path="Common.YouCanNotEdit" class="toast py-2 pr-1 pl-3" />
     </v-snackbar>
     <v-col class="px-0">
@@ -60,10 +60,10 @@
               </v-row>
               <v-divider></v-divider>
               <template v-if="!slots.length">
-                <div class="unavilable mt-3 mb-0 text-lg-h6 py-3 px-0">
-                  <p class="mx-auto mb-1 unavilableText">
-                    <i18n path="Common.Unavailable" />
-                  </p>
+                <div
+                  class="unavilable mt-3 mb-0 text-lg-h6 py-5 px-0 text-center"
+                >
+                  <i18n path="Common.Unavailable" />
                 </div>
               </template>
               <template v-else>
@@ -86,8 +86,9 @@
                             :items="dropdown"
                             editable
                             outlined
+                            dense
                             :rules="[
-                              () => {
+                              function () {
                                 if (
                                   !slots.reduce((acc, i, k) => {
                                     let validity
@@ -107,7 +108,7 @@
                                   }, true)
                                 ) {
                                   slots[key].valid1 = false
-                                  return `Time-slot overlapping with other slots`
+                                  return this.$t('Error.OverlappingTimeSlot')
                                 } else {
                                   slots[key].valid1 = true
                                   return true
@@ -124,13 +125,14 @@
                             :items="dropdown"
                             editable
                             outlined
+                            dense
                             :rules="[
-                              () => {
+                              function () {
                                 if (
                                   slots[key].startTime >= slots[key].endTime
                                 ) {
                                   slots[key].valid = false
-                                  return `End time must be greater then start time`
+                                  return this.$t('Error.EndTimeMustBeGreater')
                                 } else {
                                   slots[key].valid = true
                                   return true
@@ -142,7 +144,10 @@
                         </v-col>
                         <v-col cols="4" sm="4" class="pt-2 px-3 pb-0">
                           <v-btn icon @click="deleteAvailablity(key)">
-                            <v-icon dark>mdi-delete</v-icon>
+                            <i
+                              class="fa fa-trash mb-2 fs-20"
+                              aria-hidden="true"
+                            ></i>
                           </v-btn>
                         </v-col>
                       </v-row>
@@ -192,7 +197,8 @@
               depressed
               :disabled="validSlots() || disabledButton"
               @click="applyToOnly"
-              >Apply to Only {{ selectedDate }}
+              ><i18n path="Common.ApplyToOnly" />
+              {{ $d(new Date(selectedDate || null), 'short', $i18n.locale) }}
             </v-btn>
             <v-btn
               color="primary"
@@ -217,6 +223,7 @@ import rrulePlugin from '@fullcalendar/rrule'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
+import allLocales from '@fullcalendar/core/locales-all'
 import Grid from '~/components/common/grid'
 import { formatGQLResult } from '~/utility/gql.js'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
@@ -265,6 +272,8 @@ export default {
           dayGridPlugin,
           listPlugin,
         ],
+        locales: allLocales,
+        locale: this.$i18n.locale,
         dayMaxEvents: 3,
         timeZone: 'UTC',
         initialView: 'dayGridMonth',

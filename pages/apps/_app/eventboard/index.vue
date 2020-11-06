@@ -98,7 +98,7 @@
                       </h4>
                     </div>
                   </div>
-                  <div v-if="data.imageUrl" style="width: 60px;">
+                  <div v-if="data.imageUrl" style="width: 67px;">
                     <v-img
                       :src="getURL(data.imageUrl)"
                       :lazy-src="getURL(data.imageUrl)"
