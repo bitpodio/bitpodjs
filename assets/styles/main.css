@@ -453,6 +453,9 @@ body {
 .vs-hidden {
   visibility: hidden;
 }
+.recurring-event .vs-hidden {
+  display: none;
+}
 .boxview .v-expansion-panel-content__wrap {
   padding: 0 !important;
 }
