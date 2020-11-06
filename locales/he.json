@@ -171,11 +171,7 @@
     "TicketType": "Ticket Type",
     "EventTag": "Event Tag",
     "EventPrivacy": "Event Privacy",
-<<<<<<< HEAD
-    "TimeZone": "TimeZone*",
-=======
     "TimeZone": "אזור זמן",
->>>>>>> b081ad16f16d16100a52cd69ce3dc298ede20947
     "Contact": "Contact",
     "Refund": "Refund",
     "General": "General",
