@@ -411,7 +411,7 @@
                           small
                           @click="unselectContact(key)"
                         >
-                          <v-icon dark left>mdi-delete</v-icon>
+                          <i class="fa fa-trash fs-16" aria-hidden="true"></i>
                         </v-btn>
                         {{ item.FullName }} ({{ item.Email }})
                       </div>
@@ -579,11 +579,11 @@
                 >
                   <v-col cols="12" class="red lighten-5">
                     <h4 class="body-1 py-2">
-                      <i18n path="Common.NotAddedContact" />
+                      <i18n path="Common.ContentDetails" />
                     </h4>
                     <v-flex class="d-flex">
                       <h5 class="body-2 mt-2 mr-2">
-                        <i18n path="Common.Logout" />
+                        <i18n path="Common.NotAddedContent" />
                       </h5>
                       <v-btn color="blue" outlined @click="curentTab = 2"
                         ><i18n path="Common.SelectContact"
@@ -598,7 +598,7 @@
                     </h4>
                     <v-flex class="d-flex">
                       <h5 class="body-2 mt-2 mr-2">
-                        <i18n path="Common.NotAddedContent" />
+                        <i18n path="Common.NotAddedContact" />
                       </h5>
                       <v-btn color="blue" outlined @click="curentTab = 1"
                         ><i18n path="Common.SelectContent"
@@ -607,7 +607,14 @@
                   </v-col>
                 </v-row>
                 <v-row v-else class="ma-1 my-3">
-                  <v-col class="templateverify pl-0" cols="4">
+                  <v-col
+                    class="pl-0"
+                    cols="4"
+                    :class="{
+                      templateverify: !isFrench,
+                      templateverifyFrench: isFrench,
+                    }"
+                  >
                     <v-card height="250" align="center" justify="center">
                       <v-icon class="py-2 pt-7" size="48">fa-mail</v-icon>
                       <h3
@@ -628,7 +635,13 @@
                       /></v-btn>
                     </v-card>
                   </v-col>
-                  <v-col cols="4" class="templateverify">
+                  <v-col
+                    cols="4"
+                    :class="{
+                      templateverify: !isFrench,
+                      templateverifyFrench: isFrench,
+                    }"
+                  >
                     <v-card height="250" align="center" justify="center">
                       <v-icon class="py-2 pt-7" size="48">fa-calendar</v-icon>
                       <h3
@@ -649,7 +662,13 @@
                       /></v-btn>
                     </v-card>
                   </v-col>
-                  <v-col cols="4" class="templateverify">
+                  <v-col
+                    cols="4"
+                    :class="{
+                      templateverify: !isFrench,
+                      templateverifyFrench: isFrench,
+                    }"
+                  >
                     <v-card height="250" align="center" justify="center">
                       <v-icon class="py-2 pt-7" size="48">fa-save</v-icon>
                       <h3
@@ -725,7 +744,7 @@
                         small
                         @click="unselectContact(key)"
                       >
-                        <v-icon dark left>mdi-delete</v-icon>
+                        <i class="fa fa-trash fs-16" aria-hidden="true"></i>
                       </v-btn>
                       {{ item.FullName }} ({{ item.Email }})
                     </div>
@@ -738,7 +757,11 @@
           <v-card-actions
             class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
           >
-            <v-btn v-if="curentTab > 0" depressed @click="curentTab--"
+            <v-btn
+              v-if="curentTab > 0"
+              depressed
+              :disabled="acknowledgement"
+              @click="curentTab--"
               ><i18n path="Drawer.Prev"
             /></v-btn>
             <v-btn
@@ -878,6 +901,7 @@ export default {
       validDate: false,
       invalid: true,
       templateObject: '',
+      isFrench: false,
     }
   },
   computed: {
@@ -950,6 +974,9 @@ export default {
     },
   },
   mounted() {
+    if (this.$i18n.locale === 'fr') {
+      this.isFrench = true
+    }
     if (this.editDraft) {
       this.prefilData()
     }
@@ -1282,5 +1309,8 @@ export default {
 <style scoped>
 .invite-inner {
   height: calc(100vh - 100px);
+}
+.templateverifyFrench {
+  max-width: 350px !important;
 }
 </style>
