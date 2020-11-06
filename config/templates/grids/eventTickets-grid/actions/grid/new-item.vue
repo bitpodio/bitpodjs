@@ -49,7 +49,7 @@
                     <v-datetime-picker
                       ref="dateTimeComponent"
                       v-model="eventData.StartDate"
-                      :label="getDateLabel('StartDate')"
+                      :label="getDateLabel($t('Common.StartDate'))"
                       :text-field-props="eventStartDateProps"
                       :on-change="changeStartDate()"
                     >
@@ -65,7 +65,7 @@
                     <v-datetime-picker
                       ref="dateTimeComponent1"
                       v-model="eventData.EndDate"
-                      :label="getDateLabel('EndDate')"
+                      :label="getDateLabel($t('Common.StartDate'))"
                       :text-field-props="eventEndDateProps"
                       :on-change="changeEndDate()"
                     >
