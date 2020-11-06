@@ -340,7 +340,7 @@
           <v-spacer></v-spacer>
         </v-flex>
         <v-divider></v-divider>
-        <Notes model-name="Registrations" />
+        <Notes ref="notes" model-name="Registrations" />
       </div>
     </v-flex>
     <v-flex column class="mxw-w30">

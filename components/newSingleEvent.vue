@@ -181,6 +181,7 @@
                         :placeholder="$t('Common.Address')"
                         :required="true"
                         @placechanged="getAddressData"
+                        @focus="removeSearchAddress"
                         @change="changeAddressData($event)"
                       ></vue-google-autocomplete>
                     </no-ssr>
@@ -504,9 +505,9 @@
 <script>
 import addMonths from 'date-fns/addMonths'
 import addDays from 'date-fns/addDays'
+import { zonedTimeToUtc } from 'date-fns-tz'
 import gql from 'graphql-tag'
 import CustomDate from '~/components/common/form/date.vue'
-import { formatTimezoneDateFieldsData } from '~/utility/form.js'
 import Lookup from '~/components/common/form/lookup.vue'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import Timezone from '~/components/common/form/timezone'
@@ -886,6 +887,20 @@ export default {
     deleteTicket(index) {
       if (this.tickets.length > 1) {
         this.tickets.splice(index, 1)
+      } else {
+        const ticket = this.resetTicket()
+        this.tickets = [ticket]
+      }
+    },
+    resetTicket() {
+      return {
+        TicketId: 0,
+        Code: 'General admission',
+        Type: 'Free',
+        Amount: 0,
+        StartDate: new Date(),
+        EndDate: this.eventData.EndDate,
+        TicketCount: 100,
       }
     },
     ticketStartDateRule(index) {
@@ -1062,6 +1077,13 @@ export default {
         this.eventData.WebinarLink = ''
       }
     },
+    getUtcToZonedDateTime(date, timezone) {
+      if (date) {
+        const formattedDate = new Date(date)
+        const zonedDate = zonedTimeToUtc(formattedDate, timezone)
+        return zonedDate
+      }
+    },
     async saveRecord() {
       const isValidTicket = this.tickets.map((ticket, index) => {
         return (
@@ -1075,13 +1097,15 @@ export default {
       if (!isValidTicket.includes(false)) {
         this.isSaveButtonDisabled = true
         this.setLoationType()
-        const convertedEventRecord = formatTimezoneDateFieldsData(
-          this.eventData,
-          this.fields
-        )
         const eventInfo = JSON.parse(JSON.stringify(this.eventData))
-        eventInfo.StartDate = convertedEventRecord.StartDate
-        eventInfo.EndDate = convertedEventRecord.EndDate
+        eventInfo.StartDate = this.getUtcToZonedDateTime(
+          eventInfo.StartDate,
+          eventInfo.Timezone
+        )
+        eventInfo.EndDate = this.getUtcToZonedDateTime(
+          eventInfo.EndDate,
+          eventInfo.Timezone
+        )
         eventInfo.EventManager = this.$auth.$state.user.data.email
         eventInfo.Organizer = this.$auth.$state.user.data.name
 
@@ -1124,6 +1148,15 @@ export default {
         }
       }
     },
+    removeSearchAddress() {
+      setTimeout(() => {
+        Object.values(
+          document.getElementsByClassName('pac-container pac-logo')
+        ).map((i) => {
+          i.style.display = 'none'
+        })
+      }, 1000)
+    },
     isEmptyAddress() {
       const { City, State, Country, PostalCode } = this.venueAddress
       const VenueName = this.eventData.VenueName
@@ -1145,12 +1178,14 @@ export default {
       }
     },
     changeAddressData(value) {
+      this.removeSearchAddress()
       this.addresslineMessage =
         value === '' ? this.$t('Messages.Error.ThisFieldRequired') : ''
       this.venueAddress.AddressLine = value
       this.isMap = this.isEmptyAddress()
     },
     changeAddress() {
+      this.removeSearchAddress()
       const { City, State, Country, PostalCode } = this.venueAddress
       const VenueName = this.eventData.VenueName
       const AddressLine = this.$refs['venueAddress.AddressLine'].$data
@@ -1176,13 +1211,17 @@ export default {
             this.venueAddress.Country = Country || ''
             this.venueAddress.City = City || ''
             this.venueAddress.State = State || ''
-            const latlng = {}
+            const latlng = { lat: 0.0, lng: 0.0 }
             latlng.lat =
-              res.data.results[0] && res.data.results[0].geometry.location.lat
+              res.data.results.length > 0
+                ? res.data.results[0].geometry.location.lat
+                : 0.0
             latlng.lng =
-              res.data.results[0] && res.data.results[0].geometry.location.lng
-            this.venueAddress.LatLng.lat = latlng.lat || ''
-            this.venueAddress.LatLng.lng = latlng.lng || ''
+              res.data.results.length > 0
+                ? res.data.results[0].geometry.location.lng
+                : 0.0
+            this.venueAddress.LatLng.lat = latlng.lat || 0.0
+            this.venueAddress.LatLng.lng = latlng.lng || 0.0
 
             this.locations = [latlng]
             this.isMap = true

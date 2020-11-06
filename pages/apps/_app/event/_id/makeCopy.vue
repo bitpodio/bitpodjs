@@ -12,11 +12,9 @@
           <div class="pb-2 text-center pa-4">
             <i18n path="Common.CopiedSuccessfully" class="text-h5" />
           </div>
-
-          <i18n
-            path="Common.ClickPreviewButton"
-            class="pb-2 text--primary text-center"
-          />
+          <div class="pa-2 text-center">
+            <i18n path="Common.ClickPreviewButton" class="text--primary" />
+          </div>
 
           <div class="pb-2 text-center">
             <v-btn depressed color="primary" class="ma-1" @click="viewEvent"

@@ -20,7 +20,7 @@
           </h2>
           <v-spacer></v-spacer>
           <div>
-            <v-btn icon @click="dialog = false">
+            <v-btn icon @click="closeForm">
               <v-icon>mdi-close</v-icon>
             </v-btn>
           </div>
@@ -101,6 +101,11 @@ export default {
   },
 
   methods: {
+    closeForm() {
+      this.dialog = false
+      this.duplicateMessage = ''
+      this.$refs.form && this.$refs.form.reset()
+    },
     async onSave() {
       this.duplicateMessage = ''
       this.isSaveButtonDisabled = true
