@@ -5,14 +5,13 @@
 export default {
   props: {
     date: {
-      type: String,
+      type: Date,
       required: true,
     },
   },
   computed: {
     timeAgo() {
       return this.getData(this.date)
-      //    new Intl.RelativeTimeFormat('en', { style: 'long' }).format(-5, 'day')
     },
   },
   methods: {
