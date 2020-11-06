@@ -202,9 +202,6 @@
         />
         <v-spacer></v-spacer>
       </v-toolbar-title>
-      <!-- <div class="d-flex d-sm-flex d-md-none ml-n3">
-        <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      </div> -->
       <v-spacer></v-spacer>
       <LanguageSwitcher />
       <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
