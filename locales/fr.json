@@ -783,7 +783,8 @@
       "DeleteBadge": "Voulez-vous supprimer ce badge?",
       "DeleteAccessKey": "Voulez-vous supprimer cette clé d'accès?",
       "ReplaceBadge": "Un nouveau badge remplacera votre badge existant",
-      "DeleteImage": "Voulez-vous supprimer cette image?"
+      "DeleteImage": "Voulez-vous supprimer cette image?",
+      "NoEvents": "Il n'y a pas d'événements en direct et de brouillon, pour commencer à configurer votre événement, utilisez le lien Créer un événement"
     },
     "Success" : {
       "CopiedClipboard" : "Copié dans le presse-papiers",

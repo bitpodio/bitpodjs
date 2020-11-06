@@ -1,6 +1,6 @@
 <template>
   <v-flex class="greybg">
-    <div>
+    <div v-if="items.length">
       <v-row class="ma-0">
         <v-col
           v-for="item in items"
@@ -329,6 +329,13 @@
               </v-card-actions>
             </v-card>
           </div>
+        </v-col>
+      </v-row>
+    </div>
+    <div v-else>
+      <v-row class="ma-0">
+        <v-col class="col-md-12 text-center">
+          <v-text class="body-1"><i18n path="Messages.Warn.NoEvents" /></v-text>
         </v-col>
       </v-row>
     </div>
