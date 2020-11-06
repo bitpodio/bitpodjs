@@ -411,6 +411,9 @@ body {
 .event-table .v-messages__message {
   white-space: nowrap !important;
   position: absolute !important;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 100%;
 }
 .ps-top6 {
   top: 9px;

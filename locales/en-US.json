@@ -673,6 +673,7 @@
     "Thursdays":"Thursdays",
     "Fridays":"Fridays",
     "Saturdays":"Saturdays",
+    "Event Scheduled":"Event Scheduled",
     "Yes": "Yes",
     "No": "No",
     "Registration": "Registration",
@@ -719,7 +720,8 @@
     "Registrations": "Registrations",
     "DiscountCode": "Discount Code",
     "Members": "Members",
-    "Contacts": "Contacts"
+    "Contacts": "Contacts",
+    "SessionOverlaps": "Session overlaps"
   },
   "Messages": {
     "Error": {
@@ -814,7 +816,9 @@
       "SeatmapUpdateSuccess": "Seatmap Updated Successfully",
       "EmailInviteSuccess": "Your email invites has been updated successfully.",
       "EmailSaveSuccess": "Your email invites has been saved successfully.",
-      "TaskDeleteSuccess": "Task deleted successfully"
+      "TaskDeleteSuccess": "Task deleted successfully",
+      "EditRegistrationSuccess": "Registration updated successfully",
+      "CancelRegistrationSuccess": "Registration cancelld successfully"
     }
   },
   "$vuetify": {

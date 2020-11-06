@@ -44,7 +44,7 @@
     "Invites" : "Invite",
     "Emails" : "Eclous",
     "Notes" : "Notes",
-    "Tickets" : "Tickets",
+    "Tickets" : "Des billets",
     "DiscountCodes" : "Codes de remise",
     "RegistrationQuestions" : "Questions d'inscription",
     "Sessions" : "Sessions",
@@ -673,6 +673,7 @@
     "Thursdays":"Les jeudis",
     "Fridays":"Les vendredis",
     "Saturdays":"les samedis",
+    "EventScheduled":"Événement programmé",
     "Yes": "Oui",
     "No": "Non",
     "Registration": "Enregistrement",
@@ -719,7 +720,8 @@
     "Registrations" : "Enregistrements",
     "DiscountCode" : "Code d'actualisation",
     "Members" : "Membres",
-    "Contacts" : "Contacts"
+    "Contacts" : "Contacts",
+    "SessionOverlaps": "Chevauchements de sessions"
   },
   "Messages" : {
     "Error" : {
@@ -814,7 +816,9 @@
       "SeatmapUpdateSuccess" : "Seatmap a été mis à jour avec succès",
       "EmailInviteSuccess": "Vos invitations par e-mail ont été mises à jour avec succès.",
       "EmailSaveSuccess": "Vos invitations par e-mail ont été enregistrées avec succès.",
-      "TaskDeleteSuccess": "Tâche supprimée avec succès"
+      "TaskDeleteSuccess": "Tâche supprimée avec succès",
+      "EditRegistrationSuccess": "Registration updated successfully",
+      "CancelRegistrationSuccess": "Registration cancelld successfully"
     }
   },
   "$vuetify": {

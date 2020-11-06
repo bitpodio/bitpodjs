@@ -378,7 +378,7 @@
     "10Days": "10 Days",
     "Duration": "Duration",
     "ChangeTickets": "Change Tickets",
-    "NewRecurringEvent": "New Recurring Event",
+    "NewRecurringEvent": "אירוע חוזר חדש",
     "RecurringSession": "Recurring Session",
     "SetupEventRecurrence": "Setup event recurrence, sessions availability to help your attendees book a time slot.",
     "AddRecurringSession": "Add Recurring Session",
@@ -671,6 +671,7 @@
     "Thursdays":"ימי חמישי",
     "Fridays":"ימי שישי",
     "Saturdays":"שבתות",
+    "Event Scheduled":"האירוע נקבע",
     "TicketCountRequired": "ספירת כרטיסים *",
     "Yes": "Yes",
     "No": "No",
@@ -718,7 +719,8 @@
     "Registrations": "Registrations",
     "DiscountCode": "Discount Code",
     "Members": "Members",
-    "Contacts": "Contacts"
+    "Contacts": "Contacts",
+    "SessionOverlaps": "מושב חופף"
   },
   "Messages": {
     "Error": {
@@ -813,7 +815,9 @@
       "SeatmapUpdateSuccess": "Seatmap Updated Successfully",
       "EmailInviteSuccess": "Your email invites has been updated successfully.",
       "EmailSaveSuccess": "Your email invites has been saved successfully.",
-      "TaskDeleteSuccess": "Task deleted successfully"
+      "TaskDeleteSuccess": "Task deleted successfully",
+      "EditRegistrationSuccess": "ההרשמה עודכנה בהצלחה",
+      "CancelRegistrationSuccess": "ההרשמה בוטלה בהצלחה"
     }
   },
   "$vuetify": {
