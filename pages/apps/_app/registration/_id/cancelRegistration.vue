@@ -74,7 +74,6 @@ export default {
       requiredRules: [required],
     }
   },
-
   methods: {
     close() {
       this.$emit('update:isCancelReg', false)
@@ -113,6 +112,7 @@ export default {
       }
       if (regRes) {
         this.close()
+        this.$parent.$refs.notes.fetchAllComments()
         return regRes
       }
     },
