@@ -36,53 +36,60 @@
               <span><i18n path="Common.Description" /> </span>
               <RichText v-model="formData.Description" />
             </v-col>
-            <v-col
-              v-if="formData.BusinessType !== 'Recurring'"
-              cols="12"
-              sm="6"
-              md="4"
-              class="pb-0"
+            <v-form
+              ref="dateform"
+              v-model="datevalid"
+              :lazy-validation="lazy"
+              class="px-3 v-data-table__wrapper"
             >
-              <div class="custom-date-time-picker">
-                <CustomDate
-                  v-model="StartDate"
-                  :label="$t('Common.StartD')"
-                  :field="startDateField"
-                  :rules="startDateRule"
-                  :on-change="changeStartDate"
-                  type="datetime"
-                />
-              </div>
-            </v-col>
-            <v-col
-              v-if="formData.BusinessType !== 'Recurring'"
-              cols="12"
-              sm="6"
-              md="4"
-              class="pb-0"
-            >
-              <CustomDate
-                v-model="EndDate"
-                :label="$t('Common.EndD')"
-                :field="endDateField"
-                :rules="endDateRule"
-                :on-change="changeEndDate"
-                type="datetime"
-              />
-            </v-col>
-            <v-col
-              v-if="formData.BusinessType !== 'Recurring'"
-              class="d-flex pb-0"
-              cols="12"
-              sm="6"
-              md="4"
-            >
-              <Timezone
-                v-model="formData.Timezone"
-                :field="timezonefield"
-                :value="formData.Timezone"
-              />
-            </v-col>
+              <v-row>
+                <v-col class="col-12 col-md-4">
+                  <v-datetime-picker
+                    ref="dateTimeComponent"
+                    v-model="StartDate"
+                    :label="$t('Common.StartD')"
+                    :text-field-props="eventStartDateProps"
+                    :on-change="changeStartDate()"
+                  >
+                    <template slot="dateIcon">
+                      <v-icon>fas fa-calendar</v-icon>
+                    </template>
+                    <template slot="timeIcon">
+                      <v-icon>fas fa-clock</v-icon>
+                    </template>
+                  </v-datetime-picker>
+                </v-col>
+                <v-col class="col-12 col-md-4">
+                  <v-datetime-picker
+                    ref="dateTimeComponent1"
+                    v-model="EndDate"
+                    :label="$t('Common.EndD')"
+                    :text-field-props="eventEndDateProps"
+                    :on-change="changeEndDate()"
+                  >
+                    <template slot="dateIcon">
+                      <v-icon>fas fa-calendar</v-icon>
+                    </template>
+                    <template slot="timeIcon">
+                      <v-icon>fas fa-clock</v-icon>
+                    </template>
+                  </v-datetime-picker>
+                </v-col>
+                <v-col
+                  v-if="formData.BusinessType !== 'Recurring'"
+                  class="d-flex pb-0"
+                  cols="12"
+                  sm="6"
+                  md="4"
+                >
+                  <Timezone
+                    v-model="formData.Timezone"
+                    :field="timezonefield"
+                    :value="formData.Timezone"
+                  />
+                </v-col>
+              </v-row>
+            </v-form>
             <v-col cols="12" sm="6" md="4" class="pb-0">
               <v-text-field
                 v-model="formData.Organizer"
@@ -239,7 +246,7 @@
           class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
         >
           <v-btn
-            :disabled="VenueAddress.AddressLine === '' || !valid"
+            :disabled="VenueAddress.AddressLine === '' || !valid || !datevalid"
             color="primary"
             depressed
             @click="onSave"
@@ -258,7 +265,6 @@ import event from '~/config/apps/event/gql/event.gql'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import Timezone from '~/components/common/form/timezone'
-import CustomDate from '~/components/common/form/date.vue'
 import nuxtconfig from '~/nuxt.config'
 
 export default {
@@ -267,7 +273,6 @@ export default {
       process.client ? import('~/components/common/form/richtext.vue') : false,
     VueGoogleAutocomplete: () => import('vue-google-autocomplete'),
     Timezone,
-    CustomDate,
   },
   props: {
     eventForm: {
@@ -283,6 +288,7 @@ export default {
     return {
       loading: 0,
       valid: true,
+      datevalid: true,
       startdateMessage: '',
       enddateMessage: '',
       tags: [],
@@ -340,41 +346,45 @@ export default {
       this.setErrorAlert(false, '')
       return true
     },
-    startDateField() {
+    eventStartDateProps() {
       return {
         appendIcon: 'fa-calendar',
         outlined: true,
-        caption: this.$t('Common.StartDate'),
-        type: 'datetime',
+        dense: true,
+        rules: [
+          (v) => {
+            const StartDate = v && new Date(v)
+            const EndDate = new Date(this.EndDate)
+            let startDateMessage = ''
+            if (!StartDate)
+              startDateMessage = this.$t('Messages.Error.ThisFieldRequired')
+            else if (StartDate > EndDate)
+              startDateMessage = this.$t('Messages.Error.StartEndDate')
+            else startDateMessage = ''
+            return startDateMessage || true
+          },
+        ],
       }
     },
-    endDateField() {
+    eventEndDateProps() {
       return {
         appendIcon: 'fa-calendar',
         outlined: true,
-        caption: this.$t('Common.EndDate'),
-        type: 'datetime',
+        dense: true,
+        rules: [
+          (v) => {
+            const EndDate = v && new Date(v)
+            const StartDate = new Date(this.StartDate)
+            let endDateMessage = ''
+            if (!EndDate)
+              endDateMessage = this.$t('Messages.Error.ThisFieldRequired')
+            else if (EndDate < StartDate)
+              endDateMessage = this.$t('Messages.Error.EndStartDate')
+            else endDateMessage = ''
+            return endDateMessage || true
+          },
+        ],
       }
-    },
-    startDateRule() {
-      return [
-        (v) => {
-          const startDate = new Date(v)
-          return startDate > new Date(this.EndDate)
-            ? this.$t('Messages.Error.StartEndDate')
-            : true
-        },
-      ]
-    },
-    endDateRule() {
-      return [
-        (v) => {
-          const endDate = new Date(v)
-          return new Date(this.StartDate) > endDate
-            ? this.$t('Messages.Error.EndStartDate')
-            : true
-        },
-      ]
     },
   },
   async mounted() {
@@ -395,11 +405,21 @@ export default {
     onReset() {
       this.$refs.form.reset()
     },
-    changeStartDate(value) {
-      this.$refs.form.validate()
+    outsideClicked() {
+      this.$refs.dateTimeComponent.okHandler()
+      this.$refs.dateTimeComponent1.okHandler()
     },
-    changeEndDate(value) {
-      this.$refs.form.validate()
+    changeStartDate() {
+      this.$refs.dateform && this.$refs.dateform.validate()
+      if (this.$refs.dateTimeComponent) {
+        this.$refs.dateTimeComponent.$children[0].onClickOutside = this.outsideClicked
+      }
+    },
+    changeEndDate() {
+      this.$refs.dateform && this.$refs.dateform.validate()
+      if (this.$refs.dateTimeComponent1) {
+        this.$refs.dateTimeComponent1.$children[0].onClickOutside = this.outsideClicked
+      }
     },
     setErrorAlert(visible, message) {
       this.errorAlert.visible = visible
