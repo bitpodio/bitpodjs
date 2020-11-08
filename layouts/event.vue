@@ -4,6 +4,9 @@
       v-model="drawer"
       app
       class="nav-bar greybg"
+      :class="{
+        'custom-nav-drawer': !$vuetify.breakpoint.smAndDown && drawer === null,
+      }"
       :width="240"
       :right="$vuetify.rtl"
     >
@@ -268,7 +271,12 @@
       </div>
     </v-app-bar>
 
-    <v-main class="greybg">
+    <v-main
+      class="greybg"
+      :class="{
+        'custom-nav-main': !$vuetify.breakpoint.smAndDown && drawer === null,
+      }"
+    >
       <v-container fluid>
         <v-row>
           <v-col class="pt-0">
@@ -366,3 +374,13 @@ export default {
   },
 }
 </script>
+
+<style>
+.custom-nav-drawer {
+  visibility: visible;
+  transform: translateX(0%) !important;
+}
+.custom-nav-main {
+  padding-left: 240px !important;
+}
+</style>
