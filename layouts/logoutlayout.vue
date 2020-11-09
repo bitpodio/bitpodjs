@@ -9,9 +9,6 @@
         ></v-img>
       </span>
       <v-spacer></v-spacer>
-      <v-btn class="ma-2" outlined color="primary" to="/">
-        <i18n path="Common.SignIn" />
-      </v-btn>
     </v-app-bar>
 
     <v-main>

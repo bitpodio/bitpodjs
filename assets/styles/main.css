@@ -536,6 +536,13 @@ body {
 .event-tags:last-child::after {
   content: '';
 }
+.custom-nav-drawer {
+  visibility: visible;
+  transform: translateX(0%) !important;
+}
+.custom-nav-main {
+  padding-left: 240px !important;
+}
 @media (max-width: 800px) {
   .nav-bar {
     top: 0 !important;
