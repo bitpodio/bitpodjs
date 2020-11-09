@@ -591,7 +591,8 @@ export default {
       this.setObjects()
       if (
         this.eventData.BusinessType === 'Single' &&
-        this.eventData.LocationType === 'Venue'
+        this.eventData.LocationType === 'Venue' &&
+        this.eventData._VenueAddress.LatLng
       ) {
         delete this.eventData._VenueAddress.LatLng.__typename
         delete this.eventData._VenueAddress.LatLng.visible
@@ -614,7 +615,7 @@ export default {
       if (res) {
         this.isMakeCopy = false
         this.isViewEvent = true
-        this.copyEventId = res.id
+        this.copyEventId = res.result.id
         return res
       }
     },
