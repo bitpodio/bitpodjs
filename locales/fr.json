@@ -446,7 +446,7 @@
     "Field" : "Zone",
     "Operator" : "Opérateur",
     "EnterDate" : "Saisir la date",
-    "EmailCampaign" : "Campagne de courrier électronique",
+    "EmailCampaign" : "campagne email",
     "StatusRequired" : "Statut *",
     "Event" : "Evénement *",
     "TicketsRequired" : "Billets *",
