@@ -2378,7 +2378,7 @@ export default {
   position: absolute;
   top: 5px;
   right: 5px;
-  z-index: 99;
+  z-index: 9;
   display: none;
 }
 .cardImg:hover .cardDelete {
