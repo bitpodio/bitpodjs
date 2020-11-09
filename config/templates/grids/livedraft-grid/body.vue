@@ -313,7 +313,7 @@
                     <v-list-item
                       v-if="item.Status === 'Not ready'"
                       :key="item.id"
-                      @click="stop"
+                      @click="deleteEvent(item.id)"
                     >
                       <v-list-item-icon class="mr-2">
                         <i class="fa fa-trash mt-1" aria-hidden="true"></i>
@@ -370,6 +370,20 @@ export default {
     }
   },
   methods: {
+    async deleteEvent(id) {
+      const url = this.$bitpod.getApiUrl()
+      try {
+        const res = await this.$axios.$delete(`${url}Events/${id}`)
+        if (res) {
+          this.$eventBus.$emit('grid-refresh')
+        }
+      } catch (e) {
+        console.error(
+          `Error in config/templates/grids/livedraft-grid/body.vue while making a DELETE call to Event model in method deleteEvent context: EventId:-${id} \n URL:- ${url} `,
+          e
+        )
+      }
+    },
     openEventForm(itemId) {
       this.id = itemId
       this.eventForm = true
