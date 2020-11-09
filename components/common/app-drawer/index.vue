@@ -27,7 +27,7 @@
                 </v-flex>
                 <v-flex
                   ><div class="pa-1 caption text--primary">
-                    {{ app.label }}
+                    {{ $t(app.label) }}
                   </div></v-flex
                 >
               </v-flex>
@@ -46,7 +46,7 @@
                 </v-flex>
                 <v-flex
                   ><div class="pa-1 caption text--primary">
-                    {{ app.label }}
+                    {{ $t(app.label) }}
                   </div></v-flex
                 >
               </v-flex>

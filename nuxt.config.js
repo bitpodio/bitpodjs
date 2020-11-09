@@ -286,7 +286,7 @@ export default {
       // See 'apollo' definition
       // For example: default query options
       $query: {
-        fetchPolicy: 'network-only',
+        fetchPolicy: 'no-cache',
       },
     },
   },

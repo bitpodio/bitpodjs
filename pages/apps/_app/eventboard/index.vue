@@ -98,7 +98,7 @@
                       </h4>
                     </div>
                   </div>
-                  <div v-if="data.imageUrl" style="width: 60px;">
+                  <div v-if="data.imageUrl" style="width: 67px;">
                     <v-img
                       :src="getURL(data.imageUrl)"
                       :lazy-src="getURL(data.imageUrl)"
@@ -248,7 +248,9 @@
                     >
                       {{ data.status }}
                     </v-chip>
-                    <h5 class="font-weight-regular px-2">{{ data.time }}</h5>
+                    <h5 class="font-weight-regular px-2">
+                      <timeAgo :date="data.time" />
+                    </h5>
                   </div>
                 </div>
               </v-skeleton-loader>
@@ -475,13 +477,14 @@ import {
 } from './aggregateFilters.js'
 import { formatGQLResult } from '~/utility/gql.js'
 import { getIdFromAtob } from '~/utility'
-import timeAgo from '~/utility/get-time-difference.js'
+import timeAgo from '~/components/common/timeAgo'
 import eventList from '~/config/apps/event/gql/eventlist.gql'
 import registrationList from '~/config/apps/event/gql/registrationList.gql'
 export default {
   layout: 'event',
   components: {
     GChart,
+    timeAgo,
   },
   data() {
     return {
@@ -1118,7 +1121,7 @@ export default {
               eventName: item.EventName,
               creatorName: item.FullName || 'Unknown',
               status: item.Status,
-              time: timeAgo(item.createdDate),
+              time: item.createdDate,
               class: this.recentBuyersData[index].class,
               id: getIdFromAtob(item.id),
             }

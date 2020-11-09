@@ -229,13 +229,13 @@
     "PrintBadges" : "Imprimer les badges",
     "CancelCheckin" : "Annuler le contrôle",
     "CheckIn" : "Vérifier dans",
-    "CheckedInJustnow" : "Checked in Just now",
+    "CheckedInJustnow" : "Enregistré ",
     "SuccessfulCheckedin" : "Vous avez vérifié avec succès.  Profitez de l'événement !",
     "EditSetting" : "Modifier le paramètre",
     "AdditionalSetting" : "Paramètre supplémentaire",
+    "Ok" : "D'accord",
     "DeleteTicket": "Supprimer le ticket",
     "DeleteTemplate": "Supprimer le modèle",
-    "Ok" : "Ok",
     "DefaultForm" : "Formulaire par défaut",
     "SalesforceIntegrationSetup" : "Configuration de Salesforce Integration",
     "IntegrateWithSalesforce" : "Pour s'intégrer à un vendeur, vous devez vous authentifier à l'aide des données d'identification de vendeur, cliquez sur le bouton ci-dessous pour accéder au site de connexion de l'agent de vente et connectez-vous avec le compte que vous souhaitez utiliser pour cette intégration.",
@@ -269,6 +269,7 @@
     "FixedTimeAndTimeZone" : "Fuseau horaire fixe et fuseau horaire",
     "LaunchYourInvite" : "Nous allons lancer votre invitation à la date et à l'heure que vous spécifiez.",
     "ContactDetails" : "DÉTAILS DU CONTACT",
+    "ContentDetails": "DÉTAILS DU CONTENU",
     "NotAddedContact" : "Vous n'avez pas encore ajouté de contact.",
     "SelectContact" : "Sélectionner le contact",
     "NotAddedContent" : "Vous n'avez pas encore ajouté de contenu.",
@@ -373,6 +374,7 @@
     "EndT" : "Heure de fin *",
     "RepeatingDaysOfWeek" : "Nombre de jours de répétition de la semaine",
     "ApplyToRepeatingWeekDays" : "Appliquer aux jours de la semaine de répétition",
+    "ApplyToOnly": "Appliquer uniquement à ",
     "GoogleContacts" : "Contacts Google",
     "Edit" : "EDITER",
     "One" : "1",
@@ -723,6 +725,28 @@
     "Contacts" : "Contacts",
     "SessionOverlaps": "Chevauchements de sessions"
   },
+  "FilterOptions": {
+      "Is": "Est",
+      "IsNot": "N'est pas",
+      "Contains": "Contenir",
+      "DoesNotContain": "Ne contient pas",
+      "StartsWith": "Commence avec",
+      "EndsWith": "Se termine par",
+      "IsEmpty": "Est vide",
+      "IsNotEmpty": "N'est pas vide",
+      "Today": "Aujourd'hui",
+      "Tomorrow": "Demain",
+      "Yesterday": "Hier",
+      "ThePastWeek": "La semaine passée",
+      "ThePastMonth": "Le mois dernier",
+      "ThePastYear": "L'année passée",
+      "TheNextWeek": "La semaine prochaine",
+      "TheNextMonth": "Le mois prochain",
+      "TheNextYear": "L'année prochaine",
+      "ExactDate": "Date exacte",
+      "And": "et",
+      "Or": "ou"
+ },
   "Messages" : {
     "Error" : {
       "SizeRequired" : "La taille est requise",
@@ -778,7 +802,9 @@
       "EventEndDate": "La date de fin de l'événement ne doit pas être inférieure à la date actuelle",
       "FieldRequired": "Ce champ est requis *",
       "EmailInvalid": "Le courriel est invalide",
-      "HttpsUrl": "Cela doit être une URL https"
+      "HttpsUrl": "Cela doit être une URL https",
+      "OverlappingTimeSlot": "Intervalle de temps chevauchant avec d'autres emplacements",
+      "EndTimeMustBeGreater": "L'heure de fin doit être supérieure à l'heure de début"
     },
     "Warn" : {
       "UniqueLinkFormat" : "Minuscules lettres alphanumériques uniquement",
@@ -792,7 +818,8 @@
       "DeleteBadge": "Voulez-vous supprimer ce badge?",
       "DeleteAccessKey": "Voulez-vous supprimer cette clé d'accès?",
       "ReplaceBadge": "Un nouveau badge remplacera votre badge existant",
-      "DeleteImage": "Voulez-vous supprimer cette image?"
+      "DeleteImage": "Voulez-vous supprimer cette image?",
+      "NoEvents": "Il n'y a pas d'événements en direct et de brouillon, pour commencer à configurer votre événement, utilisez le lien Créer un événement"
     },
     "Success" : {
       "CopiedClipboard" : "Copié dans le presse-papiers",

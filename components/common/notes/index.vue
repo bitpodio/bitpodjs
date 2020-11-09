@@ -18,7 +18,7 @@
           row-height="18"
           auto-grow
         ></v-textarea>
-        <div class="mt-n5">
+        <div class="mt-n2 mb-5">
           <v-btn
             v-if="!fileList || !fileList.length"
             class="float-right"
@@ -34,7 +34,7 @@
           >
             <v-icon class="mdi-rotate-315" medium>mdi-attachment</v-icon>
             <h4 class="font-weight-regular ml-1 mt-1">
-              <i18n path="Common.AttachFile" />
+              {{ $t('Common.AttachFile') }}
             </h4>
           </div>
         </div>
@@ -53,89 +53,93 @@
           @click="uploadNote"
           ><i18n path="Drawer.Save"
         /></v-btn>
-        <div v-for="(comment, index) in existingComments" :key="comment.id">
-          <v-hover v-slot:default="{ hover }">
-            <div
-              :class="{
-                extraComments: !showMore && index > 4,
-              }"
-            >
-              <i
-                v-show="hover"
-                class="fa fa-trash float-right cursorPointer pa-3"
-                @click="deleteComment(comment.id)"
-              ></i>
+        <div :class="{ 'mt-16': fileList && fileList.length }">
+          <div v-for="(comment, index) in existingComments" :key="comment.id">
+            <v-hover v-slot:default="{ hover }">
               <div
                 :class="{
-                  borderBottomGrey: index < existingComments.length - 1,
+                  extraComments: !showMore && index > 4,
                 }"
               >
-                <div class="d-flex py-2">
-                  <div class="pr-3">
-                    <v-avatar size="38">
-                      <img
-                        src="https://res.cloudinary.com/mytestlogo/image/upload/v1571395685/default_profile.png"
-                        alt="John"
-                      />
-                    </v-avatar>
-                  </div>
-                  <div
-                    class="v-data-table__wrapper"
-                    :class="{ 'mr-9': !hover }"
-                  >
-                    <div class="blue--text">{{ comment.modifiedBy }}</div>
-                    <div class="text-break-word">{{ comment.Notes }}</div>
-                    <div v-if="comment.AttachmentId.length" class="gallery">
-                      <div
-                        v-for="attachment in comment.AttachmentId"
-                        :key="attachment.id"
-                        class="mr-2 d-inline-block"
-                      >
-                        <div class="tile">
-                          <div class="attachments text-center">
-                            <v-img
-                              contain
-                              height="120"
-                              width="120"
-                              :src="getAttachmentLink(attachment, true)"
-                            >
-                              <template v-slot:placeholder>
-                                <v-row
-                                  class="fill-height ma-0"
-                                  align="center"
-                                  justify="center"
-                                >
-                                  <v-icon>{{
-                                    attachmentDetails[attachment] &&
-                                    attachmentDetails[
-                                      attachment
-                                    ].contentType.includes('image')
-                                      ? 'mdi-file-image'
-                                      : 'mdi-file'
-                                  }}</v-icon>
-                                </v-row>
-                              </template></v-img
-                            >
+                <i
+                  v-show="hover"
+                  class="fa fa-trash float-right cursorPointer pa-3"
+                  @click="deleteComment(comment.id)"
+                ></i>
+                <div
+                  :class="{
+                    borderBottomGrey: index < existingComments.length - 1,
+                  }"
+                >
+                  <div class="d-flex py-2">
+                    <div class="pr-3">
+                      <v-avatar size="38">
+                        <img
+                          src="https://res.cloudinary.com/mytestlogo/image/upload/v1571395685/default_profile.png"
+                          alt="John"
+                        />
+                      </v-avatar>
+                    </div>
+                    <div
+                      class="v-data-table__wrapper"
+                      :class="{ 'mr-9': !hover }"
+                    >
+                      <div class="blue--text">{{ comment.modifiedBy }}</div>
+                      <div class="text-break-word">{{ comment.Notes }}</div>
+                      <div v-if="comment.AttachmentId.length" class="gallery">
+                        <div
+                          v-for="attachment in comment.AttachmentId"
+                          :key="attachment.id"
+                          class="mr-2 d-inline-block"
+                        >
+                          <div class="image">
+                            <div class="attachments text-center">
+                              <v-img
+                                contain
+                                height="120"
+                                width="120"
+                                :src="getAttachmentLink(attachment, true)"
+                              >
+                                <template v-slot:placeholder>
+                                  <v-row
+                                    class="fill-height ma-0"
+                                    align="center"
+                                    justify="center"
+                                  >
+                                    <v-icon>{{
+                                      attachmentDetails[attachment] &&
+                                      attachmentDetails[
+                                        attachment
+                                      ].contentType.includes('image')
+                                        ? 'mdi-file-image'
+                                        : 'mdi-file'
+                                    }}</v-icon>
+                                  </v-row>
+                                </template></v-img
+                              >
+                            </div>
+                            <div class="text-truncate image">
+                              <a
+                                class="text-h7"
+                                :href="getAttachmentLink(attachment, true)"
+                                >{{
+                                  attachmentDetails[attachment] &&
+                                  attachmentDetails[attachment].fileName
+                                }}</a
+                              >
+                            </div>
                           </div>
-                          <a
-                            class="text-h7"
-                            :href="getAttachmentLink(attachment, true)"
-                            >{{
-                              attachmentDetails[attachment] &&
-                              attachmentDetails[attachment].fileName
-                            }}</a
-                          >
                         </div>
                       </div>
-                    </div>
-                    <div class="grey--text">
-                      {{ getTimeAgo(comment.modifiedDate) }}
+                      <div class="grey--text">
+                        <timeAgo :date="comment.modifiedDate" />
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </v-hover>
+            </v-hover>
+          </div>
         </div>
         <div
           v-if="existingComments && existingComments.length > 5"
@@ -150,10 +154,11 @@
 </template>
 <script>
 import File from '../form/file.vue'
-import timeAgo from '~/utility/get-time-difference.js'
+import timeAgo from '~/components/common/timeAgo'
 export default {
   components: {
     File,
+    timeAgo,
   },
   props: {
     modelName: {
@@ -267,8 +272,11 @@ export default {
 .gallery {
   width: 350px;
 }
+.image {
+  width: 120px !important;
+}
 .tile {
-  width: 120px;
+  width: 160px !important;
 }
 .extraComments {
   display: none;

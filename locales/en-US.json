@@ -229,7 +229,7 @@
     "PrintBadges": "Print Badges",
     "CancelCheckin": "Cancel Check In",
     "CheckIn": "Check In",
-    "CheckedInJustnow": "Checked in Just now",
+    "CheckedInJustnow": "Checked in ",
     "SuccessfulCheckedin": "You have successfully checked in. Enjoy the event!",
     "EditSetting": "Edit Setting",
     "AdditionalSetting": "Additional Setting",
@@ -269,6 +269,7 @@
     "FixedTimeAndTimeZone": "Fixed Time and Time Zone",
     "LaunchYourInvite": "We'll launch your invite on the date and time you specify.",
     "ContactDetails": "CONTACT DETAILS",
+    "ContentDetails": "CONTENT DETAILS",
     "NotAddedContact": "You have not added any contact yet.",
     "SelectContact": "Select Contact",
     "NotAddedContent": "You have not added any content yet.",
@@ -373,6 +374,7 @@
     "EndT": "End Time*",
     "RepeatingDaysOfWeek": "Repeating days of the week",
     "ApplyToRepeatingWeekDays": "Apply To Repeating Week Days",
+    "ApplyToOnly": "Apply to only ",
     "GoogleContacts": "Google Contacts",
     "Edit": "EDIT",
     "One": "1",
@@ -723,6 +725,28 @@
     "Contacts": "Contacts",
     "SessionOverlaps": "Session overlaps"
   },
+  "FilterOptions": {
+   "Is": "Is",
+   "IsNot": "Is not",
+   "Contains": "Contains",
+   "DoesNotContain": "Does not contain",
+   "StartsWith": "Starts with",
+   "EndsWith": "Ends with",
+   "IsEmpty": "Is empty",
+   "IsNotEmpty": "Is not empty",
+   "Today": "Today",
+   "Tomorrow": "Tomorrow",
+   "Yesterday": "Yesterday",
+   "ThePastWeek": "The past week",
+   "ThePastMonth": "The past month",
+   "ThePastYear": "The past year",
+   "TheNextWeek": "The next week",
+   "TheNextMonth": "The next month",
+   "TheNextYear": "The next year",
+   "ExactDate": "Exact date",
+   "And": "and",
+   "Or": "or"
+ },
   "Messages": {
     "Error": {
       "SizeRequired": "Size is required",
@@ -778,7 +802,9 @@
       "EventEndDate": "Event end date should not be less than current date",
       "FieldRequired": "This field is required *",
       "EmailInvalid": "Email is invalid",
-      "HttpsUrl": "This must be a https url"
+      "HttpsUrl": "This must be a https url",
+      "OverlappingTimeSlot": "Time-slot overlapping with other slots",
+      "EndTimeMustBeGreater": "End time must be greater then start time"
    },
     "Warn": {
       "UniqueLinkFormat": "Lower case alphanumeric letters only",
@@ -792,7 +818,8 @@
       "DeleteBadge": "Do you want to delete this badge?",
       "DeleteAccessKey": "Do you want to delete this access key?",
       "ReplaceBadge": "New badge will replace your existing badge",
-      "DeleteImage": "Do you want to delete this image?"
+      "DeleteImage": "Do you want to delete this image?",
+      "NoEvents": "There aren't any live and draft events, to start setting up your event use Create Event link"
     },
     "Success": {
       "CopiedClipboard": "Copied to clipboard",

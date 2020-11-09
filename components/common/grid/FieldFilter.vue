@@ -24,7 +24,7 @@
       </div>
       <v-select
         v-model="filterRule.field"
-        :items="fieldsList"
+        :items="translate(fieldsList)"
         item-text="text"
         item-value="value"
         :label="$t('Common.Field')"
@@ -36,7 +36,7 @@
       ></v-select>
       <v-select
         v-model="filterRule.operator"
-        :items="stringFilterOptions"
+        :items="tanslateStringFilter(stringFilterOptions)"
         item-text="text"
         item-value="value"
         :label="$t('Common.Operator')"
@@ -148,14 +148,14 @@ export default {
       textFieldInput: null,
       values: this.filterValues,
       stringOperatorOptions: {
-        Is: 'is',
-        'Is not': 'isNot',
-        Contains: 'contains',
-        'Does not contain': 'notContains',
-        'Starts with': 'startsWith',
-        'Ends with': 'endsWith',
-        'Is empty': 'isEmpty',
-        'Is not empty': 'isNotEmpty',
+        'FilterOptions.Is': 'is',
+        'FilterOptions.IsNot': 'isNot',
+        'FilterOptions.Contains': 'contains',
+        'FilterOptions.DoesNotContain': 'notContains',
+        'FilterOptions.StartsWith': 'startsWith',
+        'FilterOptions.EndsWith': 'endsWith',
+        'FilterOptions.IsEmpty': 'isEmpty',
+        'FilterOptions.IsNotEmpty': 'isNotEmpty',
       },
       numberOperatorOptions: {
         '=': 'is',
@@ -164,35 +164,38 @@ export default {
         '<': 'lt',
         '≥': 'gte',
         '≤': 'lte',
-        'Is empty': 'isEmpty',
-        'Is not empty': 'isNotEmpty',
+        'FilterOptions.IsEmpty': 'isEmpty',
+        'FilterOptions.IsNotEmpty': 'isNotEmpty',
       },
       dateOperatorOptions: {
-        Today: 'today',
-        Tomorrow: 'tomorrow',
-        Yesterday: 'yesterday',
-        'The past week': 'pastWeek',
-        'The past month': 'pastMonth',
-        'The past year': 'pastYear',
-        'The next week': 'nextWeek',
-        'The next month': 'nextMonth',
-        'The next year': 'nextYear',
-        'Exact date': 'exactDate',
-        'Is empty': 'isEmpty',
-        'Is not empty': 'isNotEmpty',
+        'FilterOptions.Today': 'today',
+        'FilterOptions.Tomorrow': 'tomorrow',
+        'FilterOptions.Yesterday': 'yesterday',
+        'FilterOptions.ThePastWeek': 'pastWeek',
+        'FilterOptions.ThePastMonth': 'pastMonth',
+        'FilterOptions.ThePastYear': 'pastYear',
+        'FilterOptions.TheNextWeek': 'nextWeek',
+        'FilterOptions.TheNextMonth': 'nextMonth',
+        'FilterOptions.TheNextYear': 'nextYear',
+        'FilterOptions.ExactDate': 'exactDate',
+        'FilterOptions.IsEmpty': 'isEmpty',
+        'FilterOptions.IsNotEmpty': 'isNotEmpty',
       },
       checkboxOperatorOptions: {
-        Is: 'is',
-        'Is not': 'isNot',
+        'FilterOptions.Is': 'is',
+        'FilterOptions.IsNot': 'isNot',
       },
       lookupOperatorOptions: {
-        Is: 'is',
-        'Is not': 'isNot',
-        'Is empty': 'isEmpty',
-        'Is not empty': 'isNotEmpty',
+        'FilterOptions.Is': 'is',
+        'FilterOptions.IsNot': 'isNot',
+        'FilterOptions.IsEmpty': 'isEmpty',
+        'FilterOptions.IsNotEmpty': 'isNotEmpty',
       },
       items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
-      conditionOperator: ['and', 'or'],
+      conditionOperator: [
+        this.$t('FilterOptions.And'),
+        this.$t('FilterOptions.Or'),
+      ],
       selectedConditionOperator: this.ruleCondition,
       nonInputOperators: [
         'isEmpty',
@@ -282,6 +285,22 @@ export default {
     },
     onFieldChange() {
       this.filterRule.value = ''
+    },
+    translate(fieldsList) {
+      const fieldsListObj = []
+      fieldsList.map((e) => {
+        e.text = this.$t(e.text)
+        fieldsListObj.push(e)
+      })
+      return fieldsListObj
+    },
+    tanslateStringFilter(stringFilterOptions) {
+      const stringFilterOptionsObj = []
+      stringFilterOptions.map((e) => {
+        e.text = this.$t(e.text)
+        stringFilterOptionsObj.push(e)
+      })
+      return stringFilterOptionsObj
     },
   },
 }

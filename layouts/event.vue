@@ -4,6 +4,9 @@
       v-model="drawer"
       app
       class="nav-bar greybg"
+      :class="{
+        'custom-nav-drawer': !$vuetify.breakpoint.smAndDown && drawer === null,
+      }"
       :width="240"
       :right="$vuetify.rtl"
     >
@@ -202,9 +205,6 @@
         />
         <v-spacer></v-spacer>
       </v-toolbar-title>
-      <div class="d-flex d-sm-flex d-md-none ml-n3">
-        <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      </div>
       <v-spacer></v-spacer>
       <LanguageSwitcher />
       <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
@@ -271,7 +271,12 @@
       </div>
     </v-app-bar>
 
-    <v-main class="greybg">
+    <v-main
+      class="greybg"
+      :class="{
+        'custom-nav-main': !$vuetify.breakpoint.smAndDown && drawer === null,
+      }"
+    >
       <v-container fluid>
         <v-row>
           <v-col class="pt-0">
@@ -369,3 +374,13 @@ export default {
   },
 }
 </script>
+
+<style>
+.custom-nav-drawer {
+  visibility: visible;
+  transform: translateX(0%) !important;
+}
+.custom-nav-main {
+  padding-left: 240px !important;
+}
+</style>
