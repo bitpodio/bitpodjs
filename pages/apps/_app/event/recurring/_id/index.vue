@@ -974,12 +974,16 @@
         <v-flex my-3>
           <i18n path="Common.SEODescription" class="body-2 text--secondary" />
 
-          <div class="body-1">{{ formatField(data.event.SEODesc) }}</div>
+          <div class="body-1 d-flex flex-wrap braek-all">
+            {{ formatField(data.event.SEODesc) }}
+          </div>
         </v-flex>
         <v-flex my-3>
           <i18n path="Common.SEOKeywords" class="body-2 text--secondary" />
 
-          <div class="body-1">{{ formatField(data.event.SEOKeywords) }}</div>
+          <div class="body-1 d-flex flex-wrap braek-all">
+            {{ formatField(data.event.SEOKeywords) }}
+          </div>
         </v-flex>
       </div>
 

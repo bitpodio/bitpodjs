@@ -124,6 +124,7 @@ body {
 .headernew {
   left: 0 !important;
   right: 0 !important;
+  z-index: 99 !important;
 }
 .appbar-left {
   width: 250px;
@@ -526,6 +527,9 @@ body {
   text-overflow: ellipsis;
   overflow: hidden;
 }
+.braek-all {
+ word-break: break-all !important;
+} 
 @media (max-width: 800px) {
   .nav-bar {
     top: 0 !important;

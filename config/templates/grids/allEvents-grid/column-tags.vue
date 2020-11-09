@@ -1,6 +1,6 @@
 <template>
   <div class="mxcol-name d-block text-truncate">
-    <v-text v-for="val in value" :key="val" class="ma-2"> {{ val }},</v-text>
+    <v-text v-for="val in value" :key="val"> {{ val }},</v-text>
   </div>
 </template>
 
