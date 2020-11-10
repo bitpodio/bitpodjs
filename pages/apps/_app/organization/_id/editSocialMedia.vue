@@ -104,8 +104,6 @@ export default {
     async onSave() {
       const url = this.$bitpod.getApiUrl()
       this.formData.Currency = this.currency
-      console.log('EditOrg SocialMedia----', this.formData)
-      debugger
       try {
         const res = await this.$axios.$patch(
           `${url}OrganizationInfos/${this.$route.params.id}`,

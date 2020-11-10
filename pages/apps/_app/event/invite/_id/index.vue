@@ -56,11 +56,8 @@
             </v-col>
             <v-col class="col-12 pb-0">
               <i18n path="Common.DueDate" class="body-2 text--secondary" />
-
-              <div v-if="data.invites.DueDate">
-                <div v-if="data.invites.DueDate !== undefined" class="body-1">
-                  {{ $d(new Date(data.invites.DueDate), 'long', $i18n.locale) }}
-                </div>
+              <div class="body-1">
+                {{ formatDate(data.invites.DueDate) }}
               </div>
             </v-col>
             <v-col class="col-12 pb-0">
@@ -400,7 +397,7 @@ export default {
       }
     },
     formatDate(date) {
-      return date ? format(new Date(date), 'PPp') : '-'
+      return date ? this.$d(new Date(date), 'long', this.$i18n.locale) : '-'
     },
     formatField(fieldValue) {
       return fieldValue || '-'

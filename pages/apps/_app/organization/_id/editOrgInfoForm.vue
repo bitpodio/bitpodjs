@@ -175,8 +175,6 @@ export default {
       const url = this.$bitpod.getApiUrl()
       this.setAddress()
       delete this.formData._CurrentAddress.LatLng
-      console.log('Form Data----', this.formData)
-      debugger
       try {
         const res = await this.$axios.$patch(
           `${url}OrganizationInfos/${this.$route.params.id}`,
@@ -212,7 +210,6 @@ export default {
       },
       update(data) {
         const organization = formatGQLResult(data, 'OrganizationInfo')
-        debugger
         this.formData = { ...organization[0] }
         this.formData.id = this.$route.params.id
         this.formData._PaymentGatewaySetting.id = this.formData
@@ -223,7 +220,6 @@ export default {
         this.venueAddress.id = this.venueAddress.id
           ? atob(this.venueAddress.id).split(':')[1]
           : ''
-        debugger
         return {
           organization: organization.length > 0 ? organization[0] : {},
         }

@@ -150,8 +150,6 @@ export default {
       this.formData.weekDay = this.selectedDays
         .filter((x) => x.selected)
         .map((y) => y.dayName)
-      console.log('EditOrg worktiming----', this.formData)
-      debugger
       try {
         const res = await this.$axios.$patch(
           `${url}OrganizationInfos/${this.$route.params.id}`,
