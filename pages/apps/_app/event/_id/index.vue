@@ -1088,7 +1088,7 @@
           </div>
         </v-flex>
         <v-flex v-if="data.event.Tags" my-3>
-          {{ $tc('Common.Tags', data.event.Tags.length) }}
+          {{ $t('Common.Tags') }}
           <div class="body-1 v-tags">
             <v-chip
               v-for="Tags in data.event.Tags"
