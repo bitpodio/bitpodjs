@@ -112,7 +112,7 @@
           </v-row>
         </v-flex>
 
-        <v-flex mb-3 d-flex justify-center align-center>
+        <v-flex mb-3 d-flex justify-center align-center class="email-body">
           <!-- eslint-disable-next-line vue/no-v-html -->
           <div v-html="data.invites.Body" />
         </v-flex>
@@ -185,3 +185,10 @@ export default {
   },
 }
 </script>
+<style>
+.email-body .in-table div > img {
+  width: 40px !important;
+  max-width: 40px !important;
+  margin-right: 0;
+}
+</style>

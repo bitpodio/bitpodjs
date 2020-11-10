@@ -1,13 +1,13 @@
 {
   "Common": {
     "AppTitle": "אירועים",
-    "Logout": "Logout",
-    "Login": "Login",
-    "EventApp": "Event",
-    "AdminApp": "Administration",
-    "SeatMap": "Seat Map",
-    "SurveyApp": "Survey",
-    "HelpCenterMap": "Help Center",
+    "Logout": "להתנתק",
+    "Login": "התחברות",
+    "EventApp": "מִקרֶה",
+    "AdminApp": "מִנהָל",
+    "SeatMap": "מפת מושב",
+    "SurveyApp": "סֶקֶר",
+    "HelpCenterMap": "מרכז עזרה",
     "HomePage": "Home page",
     "SignIn": "Sign in",
     "EditEventInformation": "ערוך מידע על האירוע",
@@ -730,6 +730,28 @@
     "Members": "Members",
     "Contacts": "Contacts"
   },
+  "FilterOptions": {
+   "Is": "Is",
+   "IsNot": "Is not",
+   "Contains": "Contains",
+   "DoesNotContain": "Does not contain",
+   "StartsWith": "Starts with",
+   "EndsWith": "Ends with",
+   "IsEmpty": "Is empty",
+   "IsNotEmpty": "Is not empty",
+   "Today": "Today",
+   "Tomorrow": "Tomorrow",
+   "Yesterday": "Yesterday",
+   "ThePastWeek": "The past week",
+   "ThePastMonth": "The past month",
+   "ThePastYear": "The past year",
+   "TheNextWeek": "The next week",
+   "TheNextMonth": "The next month",
+   "TheNextYear": "The next year",
+   "ExactDate": "Exact date",
+   "And": "וְ-",
+   "Or": "אוֹ"
+ },
   "Messages": {
     "Error": {
       "SizeRequired": "Size is required",
@@ -801,7 +823,8 @@
       "DeleteBadge": "האם אתה רוצה למחוק את התג הזה?",
       "DeleteAccessKey": "האם ברצונך למחוק את מפתח הגישה הזה?",
       "ReplaceBadge": "תג חדש יחליף את התג הקיים שלך",
-      "DeleteImage": "האם אתה רוצה למחוק את התמונה הזו?"
+      "DeleteImage": "האם אתה רוצה למחוק את התמונה הזו?",
+      "NoEvents": "אין אירועים חיים וטיוטה, כדי להתחיל בהגדרת האירוע שלך השתמש בקישור צור אירוע"
     },
     "Success": {
       "CopiedClipboard": "הועתק ללוח",

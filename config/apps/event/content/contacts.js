@@ -533,7 +533,7 @@ export default {
       template: {
         name: 'link-grid',
         context: {
-          basePath: '/contact',
+          basePath: '/registration',
         },
       },
       dataSource: {

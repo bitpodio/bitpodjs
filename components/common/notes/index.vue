@@ -132,7 +132,7 @@
                         </div>
                       </div>
                       <div class="grey--text">
-                        {{ getTimeAgo(comment.modifiedDate) }}
+                        <timeAgo :date="comment.modifiedDate" />
                       </div>
                     </div>
                   </div>
@@ -154,10 +154,11 @@
 </template>
 <script>
 import File from '../form/file.vue'
-import timeAgo from '~/utility/get-time-difference.js'
+import timeAgo from '~/components/common/timeAgo'
 export default {
   components: {
     File,
+    timeAgo,
   },
   props: {
     modelName: {

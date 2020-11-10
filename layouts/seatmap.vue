@@ -23,9 +23,6 @@
         />
         <v-spacer></v-spacer>
       </v-toolbar-title>
-      <div class="d-flex d-sm-flex d-md-none ml-n3">
-        <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      </div>
       <v-toolbar-title class="pl-0 ml-n1"
         ><i18n path="Common.Seatmaps"
       /></v-toolbar-title>

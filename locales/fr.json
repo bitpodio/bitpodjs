@@ -229,13 +229,13 @@
     "PrintBadges" : "Imprimer les badges",
     "CancelCheckin" : "Annuler le contrôle",
     "CheckIn" : "Vérifier dans",
-    "CheckedInJustnow" : "Checked in Just now",
+    "CheckedInJustnow" : "Enregistré ",
     "SuccessfulCheckedin" : "Vous avez vérifié avec succès.  Profitez de l'événement !",
     "EditSetting" : "Modifier le paramètre",
     "AdditionalSetting" : "Paramètre supplémentaire",
+    "Ok" : "D'accord",
     "DeleteTicket": "Supprimer le ticket",
     "DeleteTemplate": "Supprimer le modèle",
-    "Ok" : "Ok",
     "DefaultForm" : "Formulaire par défaut",
     "SalesforceIntegrationSetup" : "Configuration de Salesforce Integration",
     "IntegrateWithSalesforce" : "Pour s'intégrer à un vendeur, vous devez vous authentifier à l'aide des données d'identification de vendeur, cliquez sur le bouton ci-dessous pour accéder au site de connexion de l'agent de vente et connectez-vous avec le compte que vous souhaitez utiliser pour cette intégration.",
@@ -731,6 +731,28 @@
     "Members" : "Membres",
     "Contacts" : "Contacts"
   },
+  "FilterOptions": {
+      "Is": "Est",
+      "IsNot": "N'est pas",
+      "Contains": "Contenir",
+      "DoesNotContain": "Ne contient pas",
+      "StartsWith": "Commence avec",
+      "EndsWith": "Se termine par",
+      "IsEmpty": "Est vide",
+      "IsNotEmpty": "N'est pas vide",
+      "Today": "Aujourd'hui",
+      "Tomorrow": "Demain",
+      "Yesterday": "Hier",
+      "ThePastWeek": "La semaine passée",
+      "ThePastMonth": "Le mois dernier",
+      "ThePastYear": "L'année passée",
+      "TheNextWeek": "La semaine prochaine",
+      "TheNextMonth": "Le mois prochain",
+      "TheNextYear": "L'année prochaine",
+      "ExactDate": "Date exacte",
+      "And": "et",
+      "Or": "ou"
+ },
   "Messages" : {
     "Error" : {
       "SizeRequired" : "La taille est requise",
@@ -802,7 +824,8 @@
       "DeleteBadge": "Voulez-vous supprimer ce badge?",
       "DeleteAccessKey": "Voulez-vous supprimer cette clé d'accès?",
       "ReplaceBadge": "Un nouveau badge remplacera votre badge existant",
-      "DeleteImage": "Voulez-vous supprimer cette image?"
+      "DeleteImage": "Voulez-vous supprimer cette image?",
+      "NoEvents": "Il n'y a pas d'événements en direct et de brouillon, pour commencer à configurer votre événement, utilisez le lien Créer un événement"
     },
     "Success" : {
       "CopiedClipboard" : "Copié dans le presse-papiers",
