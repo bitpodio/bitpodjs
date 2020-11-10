@@ -262,7 +262,7 @@ export default {
         })
         if (result.data.Event.EventCount > 0) {
           this.isInvalidEventLink = true
-          this.uniqueLinkMessage = 'This link is already taken'
+          this.uniqueLinkMessage = this.$t('Messages.Error.UniqueLinkDuplicate')
         } else {
           this.isInvalidEventLink = false
           this.uniqueLinkMessage = ''
