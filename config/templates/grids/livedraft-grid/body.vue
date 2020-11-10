@@ -1,6 +1,6 @@
 <template>
   <v-flex class="greybg">
-    <div>
+    <div v-if="items.length">
       <v-row class="ma-0">
         <v-col
           v-for="item in items"
@@ -142,6 +142,20 @@
                       <v-list-item-content>
                         <v-list-item-title
                           ><i18n path="Drawer.MakeaCopy"
+                        /></v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+                    <v-list-item
+                      v-if="item.Status === 'Not ready'"
+                      :key="item.id"
+                      @click="stop"
+                    >
+                      <v-list-item-icon class="mr-2">
+                        <i class="fa fa-trash mt-1" aria-hidden="true"></i>
+                      </v-list-item-icon>
+                      <v-list-item-content>
+                        <v-list-item-title
+                          ><i18n path="Drawer.Delete"
                         /></v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
@@ -296,11 +310,32 @@
                         /></v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
+                    <v-list-item
+                      v-if="item.Status === 'Not ready'"
+                      :key="item.id"
+                      @click="stop"
+                    >
+                      <v-list-item-icon class="mr-2">
+                        <i class="fa fa-trash mt-1" aria-hidden="true"></i>
+                      </v-list-item-icon>
+                      <v-list-item-content>
+                        <v-list-item-title
+                          ><i18n path="Drawer.Delete"
+                        /></v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
                   </v-list>
                 </v-menu>
               </v-card-actions>
             </v-card>
           </div>
+        </v-col>
+      </v-row>
+    </div>
+    <div v-else>
+      <v-row class="ma-0">
+        <v-col class="col-md-12 text-center">
+          <v-text class="body-1"><i18n path="Messages.Warn.NoEvents" /></v-text>
         </v-col>
       </v-row>
     </div>

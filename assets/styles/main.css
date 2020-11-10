@@ -63,9 +63,6 @@ body {
   font-size: 20px;
   border: 2px dashed lightgrey;
 }
-.unavilableText {
-  width: 108px;
-}
 .fc-icon {
   position: relative;
   bottom: 3px;
@@ -337,10 +334,6 @@ body {
 .overflowHidden {
   overflow: hidden;
 }
-.v-skeleton-loader__bone {
-  width: 100% !important;
-  height: 100% !important;
-}
 .invite-form .v-tab {
   min-width: auto !important;
 }
@@ -455,6 +448,9 @@ body {
 }
 .vs-hidden {
   visibility: hidden;
+}
+.recurring-event .vs-hidden {
+  display: none;
 }
 .boxview .v-expansion-panel-content__wrap {
   padding: 0 !important;

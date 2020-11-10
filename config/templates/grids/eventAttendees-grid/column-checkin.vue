@@ -15,7 +15,8 @@
     </div>
     <div v-else style="display: flex; height: 20px;" class="ma-2 pb-0 mt-1">
       <v-icon color="success" class="pr-1 fs-14">mdi-check</v-icon>
-      <i18n path="Common.CheckedInJustnow" />
+      <i18n path="Common.CheckedInJustnow" class="pr-1" />
+      <timeAgo :date="item.CheckIn" />
     </div>
     <v-dialog
       v-model="isCheckedIn"
@@ -84,11 +85,16 @@
 
 <script>
 import gql from 'graphql-tag'
+import timeAgo from '~/components/common/timeAgo'
 import nuxtconfig from '~/nuxt.config'
 import badge from '~/config/apps/event/gql/badge.gql'
 import organizationInfo from '~/config/apps/event/gql/organizationInfo.gql'
 import { formatGQLResult } from '~/utility/gql.js'
+
 export default {
+  components: {
+    timeAgo,
+  },
   props: {
     item: {
       type: Object,
