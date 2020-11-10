@@ -216,7 +216,7 @@
                     v-if="item.StartDate !== undefined && item.StartDate"
                     class="text--secondary pa-2 pb-0 body-2 pl-0 pt-0"
                   >
-                    {{ $d(new Date(item.StartDate), 'long', $i18n.locale) }}
+                    {{ getEventStartDate(item.StartDate, item.Timezone) }}
                   </div>
                   <v-card-title
                     class="text-h5 grey--text text--darken-4 text-truncate d-block text-capitalize pa-2 pt-0 pb-1 pl-0"
@@ -370,6 +370,13 @@ export default {
     }
   },
   methods: {
+    getEventStartDate(StartDate, Timezone) {
+      return this.$d(
+        new Date(this.formatedDate(StartDate, Timezone)),
+        'long',
+        this.$i18n.locale
+      )
+    },
     openEventForm(itemId) {
       this.id = itemId
       this.eventForm = true

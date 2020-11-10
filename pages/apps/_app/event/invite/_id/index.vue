@@ -57,8 +57,10 @@
             <v-col class="col-12 pb-0">
               <i18n path="Common.DueDate" class="body-2 text--secondary" />
 
-              <div v-if="data.invites.DueDate !== undefined" class="body-1">
-                {{ $d(new Date(data.invites.DueDate), 'long', $i18n.locale) }}
+              <div v-if="data.invites.DueDate">
+                <div v-if="data.invites.DueDate !== undefined" class="body-1">
+                  {{ $d(new Date(data.invites.DueDate), 'long', $i18n.locale) }}
+                </div>
               </div>
             </v-col>
             <v-col class="col-12 pb-0">
