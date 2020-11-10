@@ -4,7 +4,7 @@ export default {
   views: {
     integration: {
       ui: {
-        hideDefaultHeader: false,
+        hideDefaultHeader: true,
         hideDefaultFooter: true,
         showExpand: false,
         singleExpand: false,
@@ -48,7 +48,7 @@ export default {
         },
       },
       template: {
-        name: 'eventIntegration-grid',
+        name: 'integrationapp-grid',
         context: {
           basePath: '/organization',
         },
@@ -68,7 +68,7 @@ export default {
         type: 'rest',
         getData: (ctx) => getCustomData(`OrganizationInfos/getMyConnections`),
       },
-      title: 'Integrations',
+      title: '',
       type: 'list',
     },
   },

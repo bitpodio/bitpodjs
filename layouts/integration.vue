@@ -92,7 +92,7 @@
       </div>
     </v-app-bar>
 
-    <v-main class="integration">
+    <v-main class="greybg seatmap">
       <v-container fluid>
         <v-row>
           <v-col class="pt-0">
@@ -149,9 +149,3 @@ export default {
   },
 }
 </script>
-<style>
-.integration {
-  width: 65%;
-  margin: auto;
-}
-</style>
