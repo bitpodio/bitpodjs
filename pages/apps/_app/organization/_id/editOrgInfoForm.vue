@@ -169,11 +169,14 @@ export default {
       this.formData._CurrentAddress.State = this.venueAddress.State
       this.formData._CurrentAddress.PostalCode = this.venueAddress.PostalCode
       this.formData._CurrentAddress.Country = this.venueAddress.Country
+      this.formData._CurrentAddress.id = this.venueAddress.id
     },
     async onSave() {
       const url = this.$bitpod.getApiUrl()
       this.setAddress()
       delete this.formData._CurrentAddress.LatLng
+      console.log('Form Data----', this.formData)
+      debugger
       try {
         const res = await this.$axios.$patch(
           `${url}OrganizationInfos/${this.$route.params.id}`,
@@ -209,9 +212,18 @@ export default {
       },
       update(data) {
         const organization = formatGQLResult(data, 'OrganizationInfo')
+        debugger
         this.formData = { ...organization[0] }
         this.formData.id = this.$route.params.id
+        this.formData._PaymentGatewaySetting.id = this.formData
+          ._PaymentGatewaySetting.id
+          ? atob(this.formData._PaymentGatewaySetting.id).split(':')[1]
+          : ''
         this.venueAddress = { ...organization[0]._CurrentAddress }
+        this.venueAddress.id = this.venueAddress.id
+          ? atob(this.venueAddress.id).split(':')[1]
+          : ''
+        debugger
         return {
           organization: organization.length > 0 ? organization[0] : {},
         }

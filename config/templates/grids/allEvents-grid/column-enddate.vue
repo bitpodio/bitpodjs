@@ -1,13 +1,11 @@
 <template>
-  <div
-    v-if="date !== undefined && date"
-    class="mxcol-name d-block text-truncate"
-  >
-    {{ $d(new Date(date), 'long', $i18n.locale) }}
+  <div v-if="item.EndDate" class="mxcol-name d-block text-truncate">
+    {{ getEventEndDate(item.EndDate, item.Timezone) }}
   </div>
 </template>
 
 <script>
+import { formatedDate } from '~/utility/form.js'
 export default {
   props: {
     item: {
@@ -16,10 +14,15 @@ export default {
       required: false,
     },
   },
-  data() {
-    return {
-      date: this.item.EndDate,
-    }
+  methods: {
+    getEventEndDate(EndDate, Timezone) {
+      EndDate = new Date(EndDate).toISOString()
+      return this.$d(
+        new Date(formatedDate(EndDate, Timezone)),
+        'long',
+        this.$i18n.locale
+      )
+    },
   },
 }
 </script>

@@ -131,6 +131,8 @@ export default {
     async onSave() {
       const url = this.$bitpod.getApiUrl()
       this.formData.Currency = this.currency
+      console.log('EditOrg Setting----', this.formData)
+      debugger
       try {
         const res = await this.$axios.$patch(
           `${url}OrganizationInfos/${this.$route.params.id}`,
@@ -196,6 +198,13 @@ export default {
         const organization = formatGQLResult(data, 'OrganizationInfo')
         this.formData = { ...organization[0] }
         this.formData.id = this.$route.params.id
+        this.formData._PaymentGatewaySetting.id = this.formData
+          ._PaymentGatewaySetting.id
+          ? atob(this.formData._PaymentGatewaySetting.id).split(':')[1]
+          : ''
+        this.formData._CurrentAddress.id = this.formData._CurrentAddress.id
+          ? atob(this.formData._CurrentAddress.id).split(':')[1]
+          : ''
         this.currency = this.formData.Currency
         this.venueAddress = { ...organization[0]._CurrentAddress }
         return {
