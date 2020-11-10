@@ -46,6 +46,13 @@
 export default {
   layout: 'logoutlayout',
   components: {},
+  middleware: ['auth'],
+  async beforeMount() {
+    const provider = this.$route.query.p
+    if (provider) {
+      return await this.$auth.loginWith(provider)
+    }
+  },
   methods: {
     async loginBitpod() {
       return await this.$auth.loginWith('bitpod')
