@@ -397,7 +397,7 @@ export default {
         if (res) {
           this.dialog = false
           this.onReset()
-          this.onRefresh()
+          this.$eventBus.$emit('user-created')
         }
       } catch (e) {
         console.log(
