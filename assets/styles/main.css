@@ -550,6 +550,9 @@ body {
 .custom-nav-main {
   padding-left: 240px !important;
 }
+.slide-form .v-slide-group__prev--disabled {
+    display: none !important;
+}
 @media (max-width: 800px) {
   .nav-bar {
     top: 0 !important;
