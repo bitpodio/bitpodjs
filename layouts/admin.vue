@@ -5,6 +5,9 @@
       app
       class="nav-bar greybg"
       :width="240"
+      :class="{
+        'custom-nav-drawer': !$vuetify.breakpoint.smAndDown && drawer === null,
+      }"
       :right="$vuetify.rtl"
     >
       <v-toolbar-title
@@ -394,7 +397,7 @@ export default {
         if (res) {
           this.dialog = false
           this.onReset()
-          this.onRefresh()
+          this.$eventBus.$emit('user-created')
         }
       } catch (e) {
         console.log(

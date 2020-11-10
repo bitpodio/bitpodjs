@@ -82,7 +82,7 @@
                     </div>
                     <div
                       class="v-data-table__wrapper"
-                      :class="{ 'mr-9': !hover }"
+                      :class="{ 'mr-10': !hover }"
                     >
                       <div class="blue--text">{{ comment.modifiedBy }}</div>
                       <div class="text-break-word">{{ comment.Notes }}</div>
