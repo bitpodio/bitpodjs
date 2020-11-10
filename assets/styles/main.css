@@ -124,6 +124,7 @@ body {
 .headernew {
   left: 0 !important;
   right: 0 !important;
+  z-index: 99 !important;
 }
 .appbar-left {
   width: 250px;
@@ -525,6 +526,22 @@ body {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+.braek-all {
+ word-break: break-all !important;
+} 
+.event-tags::after {
+  content: ', ';
+}
+.event-tags:last-child::after {
+  content: '';
+}
+.custom-nav-drawer {
+  visibility: visible;
+  transform: translateX(0%) !important;
+}
+.custom-nav-main {
+  padding-left: 240px !important;
 }
 @media (max-width: 800px) {
   .nav-bar {
