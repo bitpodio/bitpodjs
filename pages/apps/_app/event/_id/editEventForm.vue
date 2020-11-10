@@ -26,7 +26,7 @@
               <v-text-field
                 v-model="formData.Title"
                 :label="$t('Common.Title')"
-                :rules="requiredRule"
+                :rules="[rules.required]"
                 required
                 outlined
                 dense
@@ -94,7 +94,7 @@
               <v-text-field
                 v-model="formData.Organizer"
                 :label="$t('Common.EventOrganizer')"
-                :rules="requiredRule"
+                :rules="[rules.required]"
                 outlined
                 required
                 dense
@@ -104,7 +104,7 @@
               <v-text-field
                 v-model="formData.EventManager"
                 :label="$t('Common.EventManagerTeamEmail')"
-                :rules="emailRules"
+                :rules="[rules.required, rules.email]"
                 outlined
                 required
                 dense
@@ -153,7 +153,7 @@
                 v-if="formData.LocationType === 'Online event'"
                 v-model="formData.WebinarLink"
                 :label="$t('Common.OnlineEventLinkReq')"
-                :rules="requiredRule"
+                :rules="[rules.required]"
                 outlined
                 required
                 dense
@@ -260,7 +260,7 @@
 <script>
 import gql from 'graphql-tag'
 import { utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz'
-import { email, required } from '~/utility/rules.js'
+import { rules } from '~/utility/rules.js'
 import event from '~/config/apps/event/gql/event.gql'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import { formatGQLResult } from '~/utility/gql.js'
@@ -294,12 +294,12 @@ export default {
       tags: [],
       addressLine: '',
       tagsDropdown: [],
-      requiredRule: [required],
+      rules: rules(this.$i18n),
       errorAlert: {
         message: '',
         visible: false,
       },
-      emailRules: [required, email],
+      // emailRules: [required, email],
       allowSpaces: false,
       data: {
         event: {},

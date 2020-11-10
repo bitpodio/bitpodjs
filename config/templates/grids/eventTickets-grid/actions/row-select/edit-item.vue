@@ -33,7 +33,7 @@
                 <v-text-field
                   v-model="formData.Code"
                   :label="$t('Common.Title')"
-                  :rules="required"
+                  :rules="[rules.required]"
                   outlined
                   dense
                 ></v-text-field>
@@ -84,7 +84,7 @@
                   v-model="formData.Type"
                   :items="typeDropDown"
                   :label="$t('Common.Type')"
-                  :rules="required"
+                  :rules="[rules.required]"
                   outlined
                   dense
                   @change="getType"
@@ -105,7 +105,7 @@
                 <v-text-field
                   v-model="formData.TicketCount"
                   :label="$t('Common.TicketCountRequired')"
-                  :rules="required"
+                  :rules="[rules.required]"
                   type="number"
                   outlined
                   dense
@@ -198,7 +198,7 @@ import gql from 'graphql-tag'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import registrationtype from '~/config/apps/event/gql/registrationType.gql'
 import { formatGQLResult } from '~/utility/gql.js'
-import { required } from '~/utility/rules.js'
+import { rules } from '~/utility/rules.js'
 export default {
   props: {
     refresh: {
@@ -223,7 +223,7 @@ export default {
       registrationType: [],
       eventStatusDropDown: [],
       eventStatus: [],
-      required: [required],
+      rules: rules(this.$i18n),
       Amount: 0,
       dialog: false,
       datevalid: true,

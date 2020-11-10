@@ -27,7 +27,7 @@
                 <v-text-field
                   v-model="badge.Size"
                   :label="$t('Common.Size')"
-                  :rules="requiredRules"
+                  :rules="[rules.required]"
                   outlined
                   dense
                 ></v-text-field>
@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import { required } from '~/utility/rules.js'
+import { rules } from '~/utility/rules.js'
 export default {
   components: {
     RichText: () =>
@@ -101,7 +101,7 @@ export default {
     badge.DisplayOrder = item.DisplayOrder
     badge.Template = item.Template || ''
     return {
-      requiredRules: [required],
+      rules: rules(this.$i18n),
       badge,
       isSaveButtonDisabled: false,
       valid: false,

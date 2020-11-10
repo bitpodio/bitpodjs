@@ -32,7 +32,7 @@
                 <v-text-field
                   v-model="formData.Code"
                   :label="$t('Common.Title')"
-                  :rules="required"
+                  :rules="[rules.required]"
                   outlined
                   dense
                 ></v-text-field>
@@ -83,7 +83,7 @@
                 <v-select
                   v-model="formData.Type"
                   :items="typeDropDown"
-                  :rules="required"
+                  :rules="[rules.required]"
                   :label="$t('Common.Type')"
                   outlined
                   dense
@@ -106,7 +106,7 @@
                   v-model="formData.TicketCount"
                   :label="$t('Common.TicketCountRequired')"
                   type="number"
-                  :rules="required"
+                  :rules="[rules.required]"
                   min="1"
                   outlined
                   dense
@@ -191,7 +191,7 @@ import generalconfiguration from '~/config/apps/event/gql/registrationStatusOpti
 import registrationtype from '~/config/apps/event/gql/registrationType.gql'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
-import { required } from '~/utility/rules.js'
+import { rules } from '~/utility/rules.js'
 export default {
   props: {
     refresh: {
@@ -218,7 +218,7 @@ export default {
       type: [],
       registrationTypeDropdown: [],
       registrationType: [],
-      required: [required],
+      rules: rules(this.$i18n),
       ticketIds: [],
       Amount: 0,
       Attendees: [],

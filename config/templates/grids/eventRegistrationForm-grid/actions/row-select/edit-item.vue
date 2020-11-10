@@ -40,7 +40,7 @@
               <v-col cols="12">
                 <v-select
                   v-model="controlType"
-                  :rules="required"
+                  :rules="[rules.required]"
                   :items="controlTypeDropDown"
                   :label="$t('Common.ControlType')"
                   outlined
@@ -51,7 +51,7 @@
                 <v-text-field
                   v-model="CsvOptions"
                   :label="$t('Common.Options')"
-                  :rules="required"
+                  :rules="[rules.required]"
                   outlined
                   dense
                 ></v-text-field>
@@ -59,7 +59,7 @@
               <v-col cols="12">
                 <v-text-field
                   v-model="formData.DisplayOrder"
-                  :rules="required"
+                  :rules="[rules.required]"
                   :label="$t('Common.DisplayOrder')"
                   type="number"
                   min="1"
@@ -92,7 +92,7 @@
 import gql from 'graphql-tag'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import { formatGQLResult } from '~/utility/gql.js'
-import { required } from '~/utility/rules.js'
+import { rules } from '~/utility/rules.js'
 export default {
   props: {
     content: {
@@ -117,7 +117,7 @@ export default {
     return {
       formData: {},
       valid: false,
-      required: [required],
+      rules: rules(this.$i18n),
       dialog: false,
       controlType: '',
       controlTypeDropDown: [],

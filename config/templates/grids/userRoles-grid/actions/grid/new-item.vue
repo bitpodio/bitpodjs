@@ -32,7 +32,7 @@
                 <v-text-field
                   v-model="email"
                   :label="$t('Common.EnterEmail')"
-                  :rules="emailRules"
+                  :rules="[rules.email, rules.required]"
                   outlined
                   dense
                 ></v-text-field>
@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import { email, required } from '~/utility/rules.js'
+import { rules } from '~/utility/rules.js'
 
 export default {
   props: {
@@ -84,7 +84,7 @@ export default {
   },
   data() {
     return {
-      emailRules: [required, email],
+      rules: rules(this.$i18n),
       valid: false,
       dialog: false,
       formData: {

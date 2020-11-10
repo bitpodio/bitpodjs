@@ -253,7 +253,7 @@
     "MyTemplates": "My Templates",
     "SaveTemplates": "A place where you can save templates for future use.",
     "PreDesignedTemplates": "Pre-designed Templates",
-    "ReadyToUseTemplates":  "Ready-to-use templates to send emails quickly.",
+    "ReadyToUseTemplates": "Ready-to-use templates to send emails quickly.",
     "RichTextEditor": "Rich Text Editor",
     "UseEditor": "Use editor to design your content.",
     "SelectTemplateToContinue": "Select a template to continue.",
@@ -668,13 +668,13 @@
     "DateTime": "Date and Time",
     "BadgesTemplates": "Badges Templates",
     "TicketCountRequired": "Ticket Count*",
-    "Sundays":"Sundays",
-    "Mondays":"Mondays",
-    "Tuesdays":"Tuesdays",
-    "Wednesdays":"Wednesdays",
-    "Thursdays":"Thursdays",
-    "Fridays":"Fridays",
-    "Saturdays":"Saturdays",
+    "Sundays": "Sundays",
+    "Mondays": "Mondays",
+    "Tuesdays": "Tuesdays",
+    "Wednesdays": "Wednesdays",
+    "Thursdays": "Thursdays",
+    "Fridays": "Fridays",
+    "Saturdays": "Saturdays",
     "Yes": "Yes",
     "No": "No",
     "Registration": "Registration",
@@ -724,27 +724,27 @@
     "Contacts": "Contacts"
   },
   "FilterOptions": {
-   "Is": "Is",
-   "IsNot": "Is not",
-   "Contains": "Contains",
-   "DoesNotContain": "Does not contain",
-   "StartsWith": "Starts with",
-   "EndsWith": "Ends with",
-   "IsEmpty": "Is empty",
-   "IsNotEmpty": "Is not empty",
-   "Today": "Today",
-   "Tomorrow": "Tomorrow",
-   "Yesterday": "Yesterday",
-   "ThePastWeek": "The past week",
-   "ThePastMonth": "The past month",
-   "ThePastYear": "The past year",
-   "TheNextWeek": "The next week",
-   "TheNextMonth": "The next month",
-   "TheNextYear": "The next year",
-   "ExactDate": "Exact date",
-   "And": "and",
-   "Or": "or"
- },
+    "Is": "Is",
+    "IsNot": "Is not",
+    "Contains": "Contains",
+    "DoesNotContain": "Does not contain",
+    "StartsWith": "Starts with",
+    "EndsWith": "Ends with",
+    "IsEmpty": "Is empty",
+    "IsNotEmpty": "Is not empty",
+    "Today": "Today",
+    "Tomorrow": "Tomorrow",
+    "Yesterday": "Yesterday",
+    "ThePastWeek": "The past week",
+    "ThePastMonth": "The past month",
+    "ThePastYear": "The past year",
+    "TheNextWeek": "The next week",
+    "TheNextMonth": "The next month",
+    "TheNextYear": "The next year",
+    "ExactDate": "Exact date",
+    "And": "and",
+    "Or": "or"
+  },
   "Messages": {
     "Error": {
       "SizeRequired": "Size is required",
@@ -759,7 +759,7 @@
       "AddressRequired": "Address is required",
       "TypeSelected": "Type should be selected",
       "ControlRequired": "Control Type is required",
-      "EmailRequired": "Email is required",
+      "EmailRequired": "Email is required *",
       "FirstNameRequired": "First Name is required",
       "LastNameRequired": "Last Name is required",
       "PhoneRequired": "Phone is required",
@@ -803,7 +803,7 @@
       "HttpsUrl": "This must be a https url",
       "OverlappingTimeSlot": "Time-slot overlapping with other slots",
       "EndTimeMustBeGreater": "End time must be greater then start time"
-   },
+    },
     "Warn": {
       "UniqueLinkFormat": "Lower case alphanumeric letters only",
       "OverLapSessionMsg": "This session overlaps with another session, are you sure? click Yes to create and cancel to cancel it.",
@@ -845,67 +845,67 @@
     }
   },
   "$vuetify": {
-    "badge":"Badge",
-    "close":"Close",
-    "dataIterator":{
-      "noResultsText":"No matching records found",
-      "loadingText":"Loading items..."
+    "badge": "Badge",
+    "close": "Close",
+    "dataIterator": {
+      "noResultsText": "No matching records found",
+      "loadingText": "Loading items..."
     },
-   "dataTable":{
-      "itemsPerPageText":"Rows per page:",
-      "ariaLabel":{
-         "sortDescending":"Sorted descending.",
-         "sortAscending":"Sorted ascending.",
-         "sortNone":"Not sorted.",
-         "activateNone":"Activate to remove sorting.",
-         "activateDescending":"Activate to sort descending.",
-         "activateAscending":"Activate to sort ascending."
+    "dataTable": {
+      "itemsPerPageText": "Rows per page:",
+      "ariaLabel": {
+        "sortDescending": "Sorted descending.",
+        "sortAscending": "Sorted ascending.",
+        "sortNone": "Not sorted.",
+        "activateNone": "Activate to remove sorting.",
+        "activateDescending": "Activate to sort descending.",
+        "activateAscending": "Activate to sort ascending."
       },
-      "sortBy":"Sort by"
-   },
-   "dataFooter":{
-      "itemsPerPageText":"Items per page:",
-      "itemsPerPageAll":"All",
-      "nextPage":"Next page",
-      "prevPage":"Previous page",
-      "firstPage":"First page",
-      "lastPage":"Last page",
-      "pageText":"{0}-{1} of {2}"
-   },
-   "datePicker":{
-      "itemsSelected":"{0} selected",
-      "nextMonthAriaLabel":"Next month",
-      "nextYearAriaLabel":"Next year",
-      "prevMonthAriaLabel":"Previous month",
-      "prevYearAriaLabel":"Previous year"
-   },
-   "noDataText":"No data available",
-   "carousel":{
-      "prev":"Previous visual",
-      "next":"Next visual",
-      "ariaLabel":{
-         "delimiter":"Carousel slide {0} of {1}"
+      "sortBy": "Sort by"
+    },
+    "dataFooter": {
+      "itemsPerPageText": "Items per page:",
+      "itemsPerPageAll": "All",
+      "nextPage": "Next page",
+      "prevPage": "Previous page",
+      "firstPage": "First page",
+      "lastPage": "Last page",
+      "pageText": "{0}-{1} of {2}"
+    },
+    "datePicker": {
+      "itemsSelected": "{0} selected",
+      "nextMonthAriaLabel": "Next month",
+      "nextYearAriaLabel": "Next year",
+      "prevMonthAriaLabel": "Previous month",
+      "prevYearAriaLabel": "Previous year"
+    },
+    "noDataText": "No data available",
+    "carousel": {
+      "prev": "Previous visual",
+      "next": "Next visual",
+      "ariaLabel": {
+        "delimiter": "Carousel slide {0} of {1}"
       }
-   },
-   "calendar":{
-      "moreEvents":"{0} more"
-   },
-   "fileInput":{
-      "counter":"{0} files",
-      "counterSize":"{0} files ({1} in total)"
-   },
-   "timePicker":{
-      "am":"AM",
-      "pm":"PM"
-   },
-   "pagination":{
-      "ariaLabel":{
-         "wrapper":"Pagination Navigation",
-         "next":"Next page",
-         "previous":"Previous page",
-         "page":"Goto Page {0}",
-         "currentPage":"Current Page, Page {0}"
+    },
+    "calendar": {
+      "moreEvents": "{0} more"
+    },
+    "fileInput": {
+      "counter": "{0} files",
+      "counterSize": "{0} files ({1} in total)"
+    },
+    "timePicker": {
+      "am": "AM",
+      "pm": "PM"
+    },
+    "pagination": {
+      "ariaLabel": {
+        "wrapper": "Pagination Navigation",
+        "next": "Next page",
+        "previous": "Previous page",
+        "page": "Goto Page {0}",
+        "currentPage": "Current Page, Page {0}"
       }
-   }
+    }
   }
 }

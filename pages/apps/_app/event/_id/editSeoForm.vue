@@ -32,7 +32,7 @@
               <v-col cols="12" class="pb-0">
                 <v-text-field
                   v-model="seoData.SEOTitle"
-                  :rules="nameRules"
+                  :rules="[rules.required]"
                   :label="$t('Common.PartGoesIntoUrl')"
                   outlined
                   dense
@@ -78,7 +78,7 @@
 
 <script>
 import gql from 'graphql-tag'
-import { required } from '~/utility/rules.js'
+import { rules } from '~/utility/rules.js'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 
@@ -94,7 +94,7 @@ export default {
       data: {
         event: {},
       },
-      nameRules: [required],
+      rules: rules(this.$i18n),
       seoTitle: '',
       formData: {},
       valid: true,
