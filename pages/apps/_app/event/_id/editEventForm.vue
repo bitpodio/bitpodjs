@@ -299,7 +299,6 @@ export default {
         message: '',
         visible: false,
       },
-      // emailRules: [required, email],
       allowSpaces: false,
       data: {
         event: {},

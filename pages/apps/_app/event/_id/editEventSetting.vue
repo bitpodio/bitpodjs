@@ -137,7 +137,6 @@ export default {
       formData: {},
       uniqueLinkMessage: '',
       rules: rules(this.$i18n),
-      // linkRules: [required, link],
     }
   },
   computed: {
