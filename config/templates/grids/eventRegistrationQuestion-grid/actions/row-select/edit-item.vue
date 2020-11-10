@@ -1,5 +1,8 @@
 <template>
   <v-col class="px-0">
+    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
+      <div class="text-center">{{ snackbarText }}</div>
+    </v-snackbar>
     <v-dialog
       v-model="dialog"
       persistent
@@ -150,6 +153,9 @@ export default {
       doNotShowField: ['text', 'date', 'country', 'number'],
       CsvOptions: '',
       id: '',
+      snackbarText: '',
+      snackbar: false,
+      timeout: 2000,
     }
   },
   computed: {
@@ -159,6 +165,13 @@ export default {
         this.controlType === 'radio' ||
         this.controlType === 'dropdown'
       )
+    },
+  },
+  watch: {
+    snackbar(newVal) {
+      if (!newVal) {
+        this.refresh()
+      }
     },
   },
   mounted() {
@@ -223,7 +236,8 @@ export default {
 
       if (res) {
         this.dialog = false
-        this.refresh()
+        this.snackbarText = this.$t('Messages.Success.RecordUpdatedSuccess')
+        this.snackbar = true
       }
     },
     async getQuestions() {

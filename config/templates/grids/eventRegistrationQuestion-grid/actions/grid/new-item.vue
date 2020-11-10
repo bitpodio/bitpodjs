@@ -1,5 +1,8 @@
 <template>
   <v-col class="px-0">
+    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
+      <div class="text-center">{{ snackbarText }}</div>
+    </v-snackbar>
     <v-dialog
       v-model="dialog"
       persistent
@@ -147,6 +150,9 @@ export default {
       ticketIds: [],
       showField: ['checkbox', 'radio', 'dropdown'],
       CsvOptions: '',
+      snackbar: false,
+      timeout: 2000,
+      snackbarText: '',
     }
   },
   computed: {
@@ -228,6 +234,8 @@ export default {
       if (res) {
         this.dialog = false
         this.onReset()
+        this.snackbarText = this.$t('Messages.Success.RecordCreateSuccess')
+        this.snackbar = true
         this.refresh()
       }
     },

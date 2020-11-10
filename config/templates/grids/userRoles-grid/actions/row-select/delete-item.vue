@@ -8,12 +8,6 @@
     </v-col>
     <v-snackbar v-model="snackbar" timeout="2000" top="true">
       <i18n path="Common.ItemDeletedSuccessfully" />
-
-      <template v-slot:action="{ attrs }">
-        <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">
-          <i18n path="Drawer.Close" />
-        </v-btn>
-      </template>
     </v-snackbar>
   </div>
 </template>
@@ -37,6 +31,13 @@ export default {
       snackbar: false,
     }
   },
+  watch: {
+    snackbar(newVal) {
+      if (!newVal) {
+        this.refresh()
+      }
+    },
+  },
   methods: {
     async onDelete() {
       const url = this.$bitpod.getApiUrl()
@@ -47,7 +48,6 @@ export default {
         )
 
         this.snackbar = true
-        this.refresh()
         return res
       } catch (e) {
         console.log(

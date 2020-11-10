@@ -1,5 +1,8 @@
 <template>
   <v-col class="px-0">
+    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
+      <div class="text-center">{{ snackbarText }}</div>
+    </v-snackbar>
     <v-dialog
       v-model="dialog"
       persistent
@@ -214,6 +217,9 @@ export default {
       valid: false,
       dialog: false,
       datevalid: true,
+      snackbar: false,
+      timeout: 2000,
+      snackbarText: '',
       typeDropDown: [],
       type: [],
       registrationTypeDropdown: [],
@@ -424,6 +430,8 @@ export default {
           this.dialog = false
           this.onReset()
           this.formData.Code = 'General admission'
+          this.snackbarText = this.$t('Messages.Success.RecordCreateSuccess')
+          this.snackbar = true
           this.refresh()
         }
       } catch (e) {

@@ -1,5 +1,8 @@
 <template>
   <v-col class="px-0">
+    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
+      <div class="text-center">{{ snackbarText }}</div>
+    </v-snackbar>
     <v-dialog
       v-model="dialog"
       persistent
@@ -125,6 +128,9 @@ export default {
       doNotShowField: ['text', 'date'],
       CsvOptions: '',
       id: '',
+      snackbarText: '',
+      snackbar: false,
+      timeout: 3000,
     }
   },
   computed: {
@@ -136,6 +142,13 @@ export default {
         this.controlType === 'country' ||
         this.controlType === 'number'
       )
+    },
+  },
+  watch: {
+    snackbar(newVal) {
+      if (!newVal) {
+        this.$parent.refresh()
+      }
     },
   },
   async mounted() {
@@ -187,7 +200,8 @@ export default {
         )
         if (res) {
           this.dialog = false
-          this.$parent.refresh()
+          this.snackbarText = this.$t('Messages.Success.RecordUpdatedSuccess')
+          this.snackbar = true
         }
       } catch (e) {
         console.error(
