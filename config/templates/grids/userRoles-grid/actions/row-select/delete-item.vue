@@ -7,8 +7,8 @@
         ><i18n path="Drawer.Delete" />
       </v-btn>
     </v-col>
-    <v-snackbar v-model="snackbar" :timeout="3000" :top="true">
-      <div class="text-center">{{ snackbarText }}</div>
+    <v-snackbar v-model="snackbar" timeout="2000" top="true">
+      <i18n path="Common.ItemDeletedSuccessfully" />
     </v-snackbar>
   </div>
 </template>

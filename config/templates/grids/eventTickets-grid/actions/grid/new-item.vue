@@ -1,5 +1,8 @@
 <template>
   <v-col class="px-0">
+    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
+      <div class="text-center">{{ snackbarText }}</div>
+    </v-snackbar>
     <v-dialog
       v-model="dialog"
       persistent
@@ -32,7 +35,7 @@
                 <v-text-field
                   v-model="formData.Code"
                   :label="$t('Common.Title')"
-                  :rules="required"
+                  :rules="[rules.required]"
                   outlined
                   dense
                 ></v-text-field>
@@ -83,7 +86,7 @@
                 <v-select
                   v-model="formData.Type"
                   :items="typeDropDown"
-                  :rules="required"
+                  :rules="[rules.required]"
                   :label="$t('Common.Type')"
                   outlined
                   dense
@@ -106,7 +109,7 @@
                   v-model="formData.TicketCount"
                   :label="$t('Common.TicketCountRequired')"
                   type="number"
-                  :rules="required"
+                  :rules="[rules.required]"
                   min="1"
                   outlined
                   dense
@@ -191,7 +194,7 @@ import generalconfiguration from '~/config/apps/event/gql/registrationStatusOpti
 import registrationtype from '~/config/apps/event/gql/registrationType.gql'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
-import { required } from '~/utility/rules.js'
+import { rules } from '~/utility/rules.js'
 export default {
   props: {
     refresh: {
@@ -214,11 +217,14 @@ export default {
       valid: false,
       dialog: false,
       datevalid: true,
+      snackbar: false,
+      timeout: 2000,
+      snackbarText: '',
       typeDropDown: [],
       type: [],
       registrationTypeDropdown: [],
       registrationType: [],
-      required: [required],
+      rules: rules(this.$i18n),
       ticketIds: [],
       Amount: 0,
       Attendees: [],
@@ -424,6 +430,8 @@ export default {
           this.dialog = false
           this.onReset()
           this.formData.Code = 'General admission'
+          this.snackbarText = this.$t('Messages.Success.RecordCreateSuccess')
+          this.snackbar = true
           this.refresh()
         }
       } catch (e) {

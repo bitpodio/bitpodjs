@@ -62,7 +62,7 @@
               <v-text-field
                 v-model="formData.UniqLink"
                 :label="$t('Common.EventL')"
-                :rules="linkRules"
+                :rules="[rules.required, rules.link]"
                 persistent-hint
                 :hint="getUniqLink"
                 outlined
@@ -104,7 +104,7 @@
 
 <script>
 import gql from 'graphql-tag'
-import { required, link } from '~/utility/rules.js'
+import { rules } from '~/utility/rules.js'
 import event from '~/config/apps/event/gql/event.gql'
 import eventCount from '~/config/apps/event/gql/eventCount.gql'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
@@ -136,7 +136,7 @@ export default {
       isInvalidEventLink: false,
       formData: {},
       uniqueLinkMessage: '',
-      linkRules: [required, link],
+      rules: rules(this.$i18n),
     }
   },
   computed: {

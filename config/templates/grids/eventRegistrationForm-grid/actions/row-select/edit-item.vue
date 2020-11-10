@@ -1,5 +1,8 @@
 <template>
   <v-col class="px-0">
+    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
+      <div class="text-center">{{ snackbarText }}</div>
+    </v-snackbar>
     <v-dialog
       v-model="dialog"
       persistent
@@ -40,7 +43,7 @@
               <v-col cols="12">
                 <v-select
                   v-model="controlType"
-                  :rules="required"
+                  :rules="[rules.required]"
                   :items="controlTypeDropDown"
                   :label="$t('Common.ControlType')"
                   outlined
@@ -51,7 +54,7 @@
                 <v-text-field
                   v-model="CsvOptions"
                   :label="$t('Common.Options')"
-                  :rules="required"
+                  :rules="[rules.required]"
                   outlined
                   dense
                 ></v-text-field>
@@ -59,7 +62,7 @@
               <v-col cols="12">
                 <v-text-field
                   v-model="formData.DisplayOrder"
-                  :rules="required"
+                  :rules="[rules.required]"
                   :label="$t('Common.DisplayOrder')"
                   type="number"
                   min="1"
@@ -92,7 +95,7 @@
 import gql from 'graphql-tag'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import { formatGQLResult } from '~/utility/gql.js'
-import { required } from '~/utility/rules.js'
+import { rules } from '~/utility/rules.js'
 export default {
   props: {
     content: {
@@ -117,7 +120,7 @@ export default {
     return {
       formData: {},
       valid: false,
-      required: [required],
+      rules: rules(this.$i18n),
       dialog: false,
       controlType: '',
       controlTypeDropDown: [],
@@ -125,6 +128,9 @@ export default {
       doNotShowField: ['text', 'date'],
       CsvOptions: '',
       id: '',
+      snackbarText: '',
+      snackbar: false,
+      timeout: 3000,
     }
   },
   computed: {
@@ -136,6 +142,13 @@ export default {
         this.controlType === 'country' ||
         this.controlType === 'number'
       )
+    },
+  },
+  watch: {
+    snackbar(newVal) {
+      if (!newVal) {
+        this.$parent.refresh()
+      }
     },
   },
   async mounted() {
@@ -187,7 +200,8 @@ export default {
         )
         if (res) {
           this.dialog = false
-          this.$parent.refresh()
+          this.snackbarText = this.$t('Messages.Success.RecordUpdatedSuccess')
+          this.snackbar = true
         }
       } catch (e) {
         console.error(

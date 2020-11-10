@@ -769,7 +769,7 @@
       "AddressRequired": "Address is required",
       "TypeSelected": "Type should be selected",
       "ControlRequired": "Control Type is required",
-      "EmailRequired": "Email is required",
+      "EmailRequired": "Email is required *",
       "FirstNameRequired": "First Name is required",
       "LastNameRequired": "Last Name is required",
       "PhoneRequired": "Phone is required",
