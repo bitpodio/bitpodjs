@@ -48,7 +48,7 @@
                 <v-icon>mdi-close</v-icon>
               </v-btn>
             </div>
-            <v-tabs v-model="curentTab" height="36">
+            <v-tabs v-model="curentTab" left height="36">
               <v-tab class="px-0 mr-4"><i18n path="Common.BasicInfo" /></v-tab>
               <v-tab :disabled="invalid" class="px-0 mr-4"
                 ><i18n path="Common.Content"
@@ -153,8 +153,7 @@
                   <div class="pr-3 pt-1 tabContent">
                     <v-row>
                       <v-col
-                        class="pl-4 templateTile"
-                        cols="4"
+                        class="pl-4 templateTile col-12 col-sm-6 col-md-4"
                         @click="chooseTemplate(1)"
                       >
                         <v-card
@@ -178,8 +177,7 @@
                       </v-col>
 
                       <v-col
-                        class="pl-5 templateTile"
-                        cols="4"
+                        class="pl-5 templateTile col-12 col-sm-6 col-md-4"
                         @click="chooseTemplate(2)"
                       >
                         <v-card
@@ -202,8 +200,7 @@
                       </v-col>
 
                       <v-col
-                        class="pl-5 templateTile"
-                        cols="4"
+                        class="pl-5 templateTile col-12 col-sm-6 col-md-4"
                         @click="chooseTemplate(3)"
                       >
                         <v-card
@@ -338,7 +335,7 @@
                   ></v-progress-circular>
                 </v-card>
                 <v-card v-else flat class="tabContent">
-                  <v-flex class="d-flex">
+                  <v-flex class="flexInLargeScreen">
                     <p class="mt-5 mb-4">
                       <i18n path="Common.DefaultContent" />
                     </p>
@@ -370,7 +367,7 @@
                   </p>
                 </v-card>
                 <v-row>
-                  <v-col cols="6" class="contactsGrid">
+                  <v-col class="contactsGrid col-12 col-sm-6">
                     <div class="borderBottomGrey pb-1">
                       <v-checkbox
                         v-model="selectAll"
@@ -392,7 +389,7 @@
                       />
                     </div>
                   </v-col>
-                  <v-col cols="6" class="contactsGrid">
+                  <v-col class="contactsGrid col-12 col-sm-6">
                     <div class="borderBottomGrey pb-1">
                       <v-icon size="18">mdi-email-outline</v-icon>
                       <h4 class="d-inline body-1">
@@ -581,7 +578,7 @@
                     <h4 class="body-1 py-2">
                       <i18n path="Common.ContentDetails" />
                     </h4>
-                    <v-flex class="d-flex">
+                    <v-flex class="flexInLargeScreen">
                       <h5 class="body-2 mt-2 mr-2">
                         <i18n path="Common.NotAddedContent" />
                       </h5>
@@ -596,7 +593,7 @@
                     <h4 class="body-1 py-2">
                       <i18n path="Common.ContactDetails" />
                     </h4>
-                    <v-flex class="d-flex">
+                    <v-flex class="flexInLargeScreen">
                       <h5 class="body-2 mt-2 mr-2">
                         <i18n path="Common.NotAddedContact" />
                       </h5>
@@ -608,8 +605,7 @@
                 </v-row>
                 <v-row v-else class="ma-1 my-3">
                   <v-col
-                    class="pl-0"
-                    cols="4"
+                    class="pl-0 col-12 col-sm-6 col-md-4"
                     :class="{
                       templateverify: !isFrench,
                       templateverifyFrench: isFrench,
@@ -636,7 +632,7 @@
                     </v-card>
                   </v-col>
                   <v-col
-                    cols="4"
+                    class="col-12 col-sm-6 col-md-4"
                     :class="{
                       templateverify: !isFrench,
                       templateverifyFrench: isFrench,
@@ -663,7 +659,7 @@
                     </v-card>
                   </v-col>
                   <v-col
-                    cols="4"
+                    class="col-12 col-sm-6 col-md-4"
                     :class="{
                       templateverify: !isFrench,
                       templateverifyFrench: isFrench,
@@ -1312,5 +1308,10 @@ export default {
 }
 .templateverifyFrench {
   max-width: 350px !important;
+}
+@media (min-width: 600px) {
+  .flexInLargeScreen {
+    display: flex;
+  }
 }
 </style>
