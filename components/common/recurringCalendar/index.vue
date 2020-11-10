@@ -108,7 +108,9 @@
                                   }, true)
                                 ) {
                                   slots[key].valid1 = false
-                                  return this.$t('Error.OverlappingTimeSlot')
+                                  return $t(
+                                    'Messages.Error.OverlappingTimeSlot'
+                                  )
                                 } else {
                                   slots[key].valid1 = true
                                   return true
@@ -132,7 +134,9 @@
                                   slots[key].startTime >= slots[key].endTime
                                 ) {
                                   slots[key].valid = false
-                                  return this.$t('Error.EndTimeMustBeGreater')
+                                  return $t(
+                                    'Messages.Error.EndTimeMustBeGreater'
+                                  )
                                 } else {
                                   slots[key].valid = true
                                   return true
@@ -175,7 +179,7 @@
                   <v-checkbox
                     v-model="day.selected"
                     class="ma-0"
-                    :label="day.dayName"
+                    :label="day.dayNameLang"
                   ></v-checkbox>
                 </v-col>
               </v-row>
@@ -246,13 +250,41 @@ export default {
       selectedDate: '',
       slots: [],
       selectedDays: [
-        { dayName: 'Sundays', selected: false },
-        { dayName: 'Mondays', selected: false },
-        { dayName: 'Tuesdays', selected: false },
-        { dayName: 'Wednesdays', selected: false },
-        { dayName: 'Thursdays', selected: false },
-        { dayName: 'Fridays', selected: false },
-        { dayName: 'Saturdays', selected: false },
+        {
+          dayNameLang: this.$t('Common.Sundays'),
+          dayName: 'Sundays',
+          selected: false,
+        },
+        {
+          dayNameLang: this.$t('Common.Mondays'),
+          dayName: 'Mondays',
+          selected: false,
+        },
+        {
+          dayNameLang: this.$t('Common.Tuesdays'),
+          dayName: 'Tuesdays',
+          selected: false,
+        },
+        {
+          dayNameLang: this.$t('Common.Wednesdays'),
+          dayName: 'Wednesdays',
+          selected: false,
+        },
+        {
+          dayNameLang: this.$t('Common.Thursdays'),
+          dayName: 'Thursdays',
+          selected: false,
+        },
+        {
+          dayNameLang: this.$t('Common.Fridays'),
+          dayName: 'Fridays',
+          selected: false,
+        },
+        {
+          dayNameLang: this.$t('Common.Saturdays'),
+          dayName: 'Saturdays',
+          selected: false,
+        },
       ],
       dialog: false,
       colors: [
@@ -343,6 +375,7 @@ export default {
           this.selectedDays = this.selectedDays.map((day, key) => {
             return {
               dayName: day.dayName,
+              dayNameLang: day.dayNameLang,
               selected: key === propsdata.date.getDay(),
             }
           })
@@ -399,7 +432,12 @@ export default {
     },
     updateValidation() {
       setTimeout(() => {
-        if (this.slots && this.slots.length && !this.isParticipant) {
+        if (
+          this.slots &&
+          this.slots.length &&
+          !this.isParticipant &&
+          this.$refs.formData
+        ) {
           this.$refs.formData.validate()
         }
       }, 1000)

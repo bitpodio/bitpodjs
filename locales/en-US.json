@@ -680,7 +680,15 @@
     "Registration": "Registration",
     "CreateBadge": "Create Badge",
     "NewTemplate": "New Template",
-    "Clear": "CLEAR"
+    "Clear": "CLEAR",
+    "TotalRegistrations": "Total Registrations",
+    "TotalRevenue": "Total Revenue",
+    "EmailConversion": "Email Conversion",
+    "Success": "Success",
+    "Cancelled": "Cancelled",
+    "Failed": "Failed",
+    "Pending": "Pending",
+    "LocationTypeRequired": "Location Type*"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",

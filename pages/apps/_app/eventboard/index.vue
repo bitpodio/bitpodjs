@@ -42,12 +42,12 @@
                   </div>
                   <div class="pl-2 pt-1">
                     <h3 class="font-weight-regular text-truncate summaryTile">
-                      {{ data.caption === 'Total Revenue' ? '$' : ''
+                      {{ data.isRevenue ? '$' : ''
                       }}{{
-                        data.caption === 'Total Revenue'
+                        data.isRevenue
                           ? parseFloat(data.data).toFixed(2)
                           : data.data
-                      }}{{ data.caption === 'Email Conversion' ? '%' : '' }}
+                      }}{{ data.isConversion ? '%' : '' }}
                     </h3>
                     <h5 class="font-weight-regular text-truncate summaryTile">
                       {{ data.caption }}
@@ -246,7 +246,7 @@
                       text-color="white"
                       small
                     >
-                      {{ data.status }}
+                      {{ $t(`Common.${data.status}`) }}
                     </v-chip>
                     <h5 class="font-weight-regular px-2">{{ data.time }}</h5>
                   </div>
@@ -526,7 +526,7 @@ export default {
         height: '316',
         width: '350',
         reverseCategories: this.$vuetify.rtl,
-        legend: 'right',
+        legend: 'none',
         hAxis: {
           logscale: true,
           viewWindow: {
@@ -642,35 +642,37 @@ export default {
       },
       eventSummaryData: [
         {
-          caption: 'Total Registrations',
+          caption: this.$t('Common.TotalRegistrations'),
           icon: 'fa fa-user-check',
           data: '',
           class: 'green accent-4',
         },
         {
-          caption: 'Abandoned Registrations',
+          caption: this.$t('Common.AbandonedRegistrations'),
           icon: 'fa fa-user-x',
           data: '',
           class: 'red lighten-1',
           click: 'routeToAbandoned',
         },
         {
-          caption: 'Total Revenue',
+          caption: this.$t('Common.TotalRevenue'),
           icon: 'fa fa-banknote',
           data: '',
           class: 'yellow darken-2',
+          isRevenue: true,
         },
         {
-          caption: 'Tickets Sold',
+          caption: this.$t('Common.TicketsSold'),
           icon: 'fa fa-ticket',
           data: '',
           class: 'light-blue darken-1',
         },
         {
-          caption: 'Email Conversion',
+          caption: this.$t('Common.EmailConversion'),
           icon: 'fa fa-seo-consulting',
           data: '',
           class: 'green accent-4',
+          isConversion: true,
         },
       ],
       eventOnSaleData: [
