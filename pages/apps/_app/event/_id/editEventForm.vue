@@ -37,6 +37,7 @@
               <RichText v-model="formData.Description" />
             </v-col>
             <v-form
+              v-if="formData.BusinessType === 'Single'"
               ref="dateform"
               v-model="datevalid"
               :lazy-validation="lazy"
@@ -75,13 +76,7 @@
                     </template>
                   </v-datetime-picker>
                 </v-col>
-                <v-col
-                  v-if="formData.BusinessType !== 'Recurring'"
-                  class="d-flex pb-0"
-                  cols="12"
-                  sm="6"
-                  md="4"
-                >
+                <v-col class="d-flex pb-0" cols="12" sm="6" md="4">
                   <Timezone
                     v-model="formData.Timezone"
                     :field="timezonefield"
