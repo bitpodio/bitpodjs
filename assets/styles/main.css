@@ -553,9 +553,12 @@ body {
 .slide-form .v-slide-group__prev--disabled {
     display: none !important;
 }
+.boxview .v-data-table-header-mobile {
+    display: none !important;
+}
 @media (max-width: 800px) {
   .nav-bar {
-    top: 0 !important;
+    top: 50px !important;
   }
 }
 @media (max-width: 600px) {
