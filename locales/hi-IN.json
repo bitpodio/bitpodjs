@@ -723,7 +723,7 @@
     "DiscountCode": "छूट संकेत",
     "Members": "सदस्य",
     "Contacts": "संपर्क",
-    "SessionOverlaps": "अधिवेशन ओवरलैप करता है"
+    "SessionOverlaps": "अधिवेशन ओवरलैप चेतावनी"
   },
   "FilterOptions": {
    "Is": "है",
@@ -844,8 +844,14 @@
       "EmailInviteSuccess": "Your email invites has been updated successfully.",
       "EmailSaveSuccess": "Your email invites has been saved successfully.",
       "TaskDeleteSuccess": "Task deleted successfully",
+      "TaskCreatedSuccess": "टास्क सफलतापूर्वक बनाया गया",
+      "TaskUpdatedSuccess": "टास्क सफलतापूर्वक अपडेट किया गया",
       "EditRegistrationSuccess": "पंजीकरण सफलतापूर्वक अपडेट किया गया",
-      "CancelRegistrationSuccess": "पंजीकरण सफलतापूर्वक रद्द किया गया"
+      "CancelRegistrationSuccess": "पंजीकरण सफलतापूर्वक रद्द कर दिया गया",
+      "RefundRegistrationSuccess": "पंजीकरण सफलतापूर्वक वापस",
+      "RecurringSessionCreatedSuccess": "आवर्ती सत्र सफलतापूर्वक बनाया गया",
+      "RecurringSessionUpdatedSuccess": "आवर्ती सत्र सफलतापूर्वक अपडेट किया गया",
+      "EditInviteMetadataSuccess": "template metadata updated successfully"
     }
   },
   "$vuetify": {

@@ -396,7 +396,6 @@ export default {
       }
       if (res) {
         this.close()
-        await navigator.clipboard.writeText('hello')
         this.snackbar = true
         this.refresh()
         return res

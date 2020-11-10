@@ -1,5 +1,16 @@
 <template>
   <div>
+    <v-snackbar
+      v-if="!hideToast"
+      v-model="snackbar"
+      :timeout="timeout"
+      :top="true"
+      width="2px"
+    >
+      <div class="fs-16 text-center">
+        {{ snackbarText }}
+      </div>
+    </v-snackbar>
     <confirm ref="confirm"></confirm>
     <v-col class="px-0">
       <v-dialog
@@ -587,6 +598,8 @@ export default {
             },
           }
     return {
+      snackbar: false,
+      timeout: 2000,
       valid: false,
       required: [required],
       onlineEventLink: [onlineEventLink],
@@ -697,20 +710,6 @@ export default {
           },
         },
       },
-      durationProps: {
-        type: 'lookup',
-        caption: 'Common.Duration',
-        dataSource: {
-          query: registrationStatusOptions,
-          itemText: 'value',
-          itemValue: 'key',
-          filter(data) {
-            return {
-              type: 'EventDuration',
-            }
-          },
-        },
-      },
       locationTypeProps: {
         type: 'lookup',
         caption: 'Location Type*',
@@ -760,6 +759,27 @@ export default {
     }
   },
   computed: {
+    snackbarText() {
+      return this.actionType === 'New'
+        ? this.$t('Messages.Success.RecurringSessionCreatedSuccess')
+        : this.$t('Messages.Success.RecurringSessionUpdatedSuccess')
+    },
+    durationProps() {
+      return {
+        type: 'lookup',
+        caption: this.$t('Common.Duration'),
+        dataSource: {
+          query: registrationStatusOptions,
+          itemText: 'value',
+          itemValue: 'key',
+          filter(data) {
+            return {
+              type: 'EventDuration',
+            }
+          },
+        },
+      }
+    },
     days() {
       return [
         {
@@ -1260,6 +1280,7 @@ export default {
             this.resetForm()
             this.isGroup = false
             this.refresh()
+            this.snackbar = true
             return exceptionRes
           }
         } else if (this.actionType === 'Edit') {
@@ -1279,6 +1300,7 @@ export default {
             this.dialog = false
             this.isGroup = false
             this.refresh()
+            this.snackbar = true
             return res
           }
         }

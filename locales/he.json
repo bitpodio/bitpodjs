@@ -722,7 +722,7 @@
     "DiscountCode": "Discount Code",
     "Members": "Members",
     "Contacts": "Contacts",
-    "SessionOverlaps": "מושב חופף"
+    "SessionOverlaps": "אזהרת חפיפה של מושב"
   },
   "FilterOptions": {
    "Is": "Is",
@@ -843,8 +843,14 @@
       "EmailInviteSuccess": "Your email invites has been updated successfully.",
       "EmailSaveSuccess": "Your email invites has been saved successfully.",
       "TaskDeleteSuccess": "Task deleted successfully",
+      "TaskCreatedSuccess": "המשימה נוצרה בהצלחה",
+      "TaskUpdatedSuccess": "המשימה עודכנה בהצלחה",
       "EditRegistrationSuccess": "ההרשמה עודכנה בהצלחה",
-      "CancelRegistrationSuccess": "ההרשמה בוטלה בהצלחה"
+      "CancelRegistrationSuccess": "ההרשמה בוטלה בהצלחה",
+      "RefundRegistrationSuccess": "החזר ההרשמה בהצלחה",
+      "RecurringSessionCreatedSuccess": "מושב חוזר נוצר בהצלחה",
+      "RecurringSessionUpdatedSuccess": "ההפעלה החוזרת עודכנה בהצלחה",
+      "EditInviteMetadataSuccess": "template metadata updated successfully"
     }
   },
   "$vuetify": {

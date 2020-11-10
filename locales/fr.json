@@ -723,7 +723,7 @@
     "DiscountCode" : "Code d'actualisation",
     "Members" : "Membres",
     "Contacts" : "Contacts",
-    "SessionOverlaps": "Chevauchements de sessions"
+    "SessionOverlaps": "Avertissement de chevauchement de session"
   },
   "FilterOptions": {
       "Is": "Est",
@@ -844,8 +844,14 @@
       "EmailInviteSuccess": "Vos invitations par e-mail ont été mises à jour avec succès.",
       "EmailSaveSuccess": "Vos invitations par e-mail ont été enregistrées avec succès.",
       "TaskDeleteSuccess": "Tâche supprimée avec succès",
-      "EditRegistrationSuccess": "Registration updated successfully",
-      "CancelRegistrationSuccess": "Registration cancelld successfully"
+      "TaskCreatedSuccess": "Tâche créée avec succès",
+      "TaskUpdatedSuccess": "Tâche mise à jour avec succès",
+      "EditRegistrationSuccess": "Inscription mise à jour avec succès",
+      "CancelRegistrationSuccess": "Inscription annulée avec succès",
+      "RefundRegistrationSuccess": "Remboursement d'inscription réussi",
+      "RecurringSessionCreatedSuccess": "Session récurrente créée avec succès",
+      "RecurringSessionUpdatedSuccess": "Session récurrente mise à jour avec succès",
+      "EditInviteMetadataSuccess": "template metadata updated successfully"
     }
   },
   "$vuetify": {

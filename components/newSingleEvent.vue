@@ -1266,7 +1266,6 @@ export default {
       this.verifyUniqueLink(event.currentTarget.value)
     },
     verifyUniqueLink(value) {
-      this.isUniqLinkValid = false
       value = value.toLowerCase().replace(/\s/g, '')
       value = value.trim()
       const regex = RegExp(/^[0-9a-zA-Z]+$/)
@@ -1282,7 +1281,6 @@ export default {
       this.eventData.UniqLink = value
     },
     async checkUniqueLink(value) {
-      this.isUniqLinkValid = true
       const where = { UniqLink: value }
       const result = await this.$apollo.query({
         query: gql`
@@ -1298,12 +1296,11 @@ export default {
         this.isInvalidEventLink = true
         this.uniqueLinkMessage = this.$t('Messages.Error.UniqueLinkDuplicate')
       } else {
-        this.isInvalidEventLink = false
         this.isUniqLinkValid = true
+        this.isInvalidEventLink = false
       }
     },
     changeLocation(value) {
-      debugger
       this.addresslineMessage = ''
       if (value === 'Venue') {
         this.isVenue = true

@@ -1,137 +1,149 @@
 <template>
-  <v-col class="px-0">
-    <v-dialog
-      v-model="dialog"
-      persistent
-      scrollable
-      content-class="slide-form-default"
+  <div>
+    <v-snackbar
+      v-if="!hideToast"
+      v-model="snackbar"
+      :timeout="timeout"
+      :top="true"
+      width="2px"
     >
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn text small v-bind="attrs" v-on="on">
-          <v-icon left>{{ buttonIcon }}</v-icon>
-          {{ buttonLabel }}
-        </v-btn>
-      </template>
-      <v-card>
-        <v-card-title
-          class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
-        >
-          <h2 class="black--text pt-5 pb-4 text-h5">
-            <i18n path="Common.ScheduleATask" />
-          </h2>
-          <v-spacer></v-spacer>
-          <div>
-            <v-btn icon @click="closeForm">
-              <v-icon>mdi-close</v-icon>
-            </v-btn>
-          </div>
-        </v-card-title>
-        <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
-          <v-form ref="form" v-model="valid" :lazy-validation="lazy">
-            <v-row>
-              <v-col cols="12" sm="6" md="12">
-                <v-text-field
-                  v-model="task.Title"
-                  :label="$t('Common.Title')"
-                  :rules="requiredRules"
-                  outlined
-                  dense
-                ></v-text-field>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="12" sm="6" md="4">
-                <Lookup
-                  v-model="task.Category"
-                  :field="categoryLookupField"
-                  :rules="requiredRules"
-                  :on-change="changeCategory"
-                />
-              </v-col>
-              <v-col cols="12" sm="6" md="4">
-                <Lookup
-                  v-model="task.Status"
-                  :field="statusLookupField"
-                  :filter="filter"
-                  :rules="requiredRules"
-                  :on-change="changeStatus"
-                />
-              </v-col>
-              <v-col v-if="isAction" cols="12" sm="6" md="4">
-                <Lookup
-                  v-model="task.Action"
-                  :field="actionLookupField"
-                  :rules="requiredRules"
-                  :filter="actionFilter"
-                />
-              </v-col>
-              <v-col v-if="isDueDate" cols="12" sm="6" md="4">
-                <v-datetime-picker
-                  v-model="task.DueDate"
-                  :text-field-props="dueDateProps()"
-                  :rules="requiredRules"
-                  :label="$t('Common.DueDateRequired')"
-                >
-                  <template slot="dateIcon">
-                    <v-icon>fas fa-calendar</v-icon>
-                  </template>
-                  <template slot="timeIcon">
-                    <v-icon>fas fa-clock</v-icon>
-                  </template>
-                </v-datetime-picker>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col v-if="isDay" cols="12" sm="6" md="4">
-                <Lookup
-                  v-model="Day"
-                  :field="dayLookupField"
-                  :disabled="true"
-                />
-              </v-col>
-              <v-col v-if="isTime" cols="12" sm="6" md="4">
-                <Lookup v-model="task.Time" :field="timeLookupField" />
-              </v-col>
+      <div class="fs-16 text-center">
+        {{ snackbarText }}
+      </div>
+    </v-snackbar>
+    <v-col class="px-0">
+      <v-dialog
+        v-model="dialog"
+        persistent
+        scrollable
+        content-class="slide-form-default"
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn text small v-bind="attrs" v-on="on">
+            <v-icon left>{{ buttonIcon }}</v-icon>
+            {{ buttonLabel }}
+          </v-btn>
+        </template>
+        <v-card>
+          <v-card-title
+            class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
+          >
+            <h2 class="black--text pt-5 pb-4 text-h5">
+              <i18n path="Common.ScheduleATask" />
+            </h2>
+            <v-spacer></v-spacer>
+            <div>
+              <v-btn icon @click="closeForm">
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+            </div>
+          </v-card-title>
+          <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
+            <v-form ref="form" v-model="valid" :lazy-validation="lazy">
+              <v-row>
+                <v-col cols="12" sm="6" md="12">
+                  <v-text-field
+                    v-model="task.Title"
+                    :label="$t('Common.Title')"
+                    :rules="requiredRules"
+                    outlined
+                    dense
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col cols="12" sm="6" md="4">
+                  <Lookup
+                    v-model="task.Category"
+                    :field="categoryLookupField"
+                    :rules="requiredRules"
+                    :on-change="changeCategory"
+                  />
+                </v-col>
+                <v-col cols="12" sm="6" md="4">
+                  <Lookup
+                    v-model="task.Status"
+                    :field="statusLookupField"
+                    :filter="filter"
+                    :rules="requiredRules"
+                    :on-change="changeStatus"
+                  />
+                </v-col>
+                <v-col v-if="isAction" cols="12" sm="6" md="4">
+                  <Lookup
+                    v-model="task.Action"
+                    :field="actionLookupField"
+                    :rules="requiredRules"
+                    :filter="actionFilter"
+                  />
+                </v-col>
+                <v-col v-if="isDueDate" cols="12" sm="6" md="4">
+                  <v-datetime-picker
+                    v-model="task.DueDate"
+                    :text-field-props="dueDateProps()"
+                    :rules="requiredRules"
+                    :label="$t('Common.DueDateRequired')"
+                  >
+                    <template slot="dateIcon">
+                      <v-icon>fas fa-calendar</v-icon>
+                    </template>
+                    <template slot="timeIcon">
+                      <v-icon>fas fa-clock</v-icon>
+                    </template>
+                  </v-datetime-picker>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col v-if="isDay" cols="12" sm="6" md="4">
+                  <Lookup
+                    v-model="Day"
+                    :field="dayLookupField"
+                    :disabled="true"
+                  />
+                </v-col>
+                <v-col v-if="isTime" cols="12" sm="6" md="4">
+                  <Lookup v-model="task.Time" :field="timeLookupField" />
+                </v-col>
 
-              <v-col v-if="isTimezone" cols="12" sm="6" md="4">
-                <Timezone
-                  v-model="task.Timezone"
-                  :rules="requiredRules"
-                  :field="timezonefield"
-                  dense
-                  class="v-timezone"
-                ></Timezone>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col v-if="isSurvey" cols="12">
-                <Lookup
-                  v-model="task.SurveyId"
-                  :field="surveyLookupField"
-                  :rules="requiredRules"
-                  :on-change="changeSurvey"
-                />
-              </v-col>
-            </v-row>
-          </v-form>
-        </v-card-text>
-        <v-divider></v-divider>
-        <v-card-actions
-          class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
-        >
-          <v-btn
-            color="primary"
-            :disabled="!valid || isSaveButtonDisabled"
-            depressed
-            @click.native="onSave"
-            ><i18n path="Drawer.Save"
-          /></v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-  </v-col>
+                <v-col v-if="isTimezone" cols="12" sm="6" md="4">
+                  <Timezone
+                    v-model="task.Timezone"
+                    :rules="requiredRules"
+                    :field="timezonefield"
+                    dense
+                    class="v-timezone"
+                  ></Timezone>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col v-if="isSurvey" cols="12">
+                  <Lookup
+                    v-model="task.SurveyId"
+                    :field="surveyLookupField"
+                    :rules="requiredRules"
+                    :on-change="changeSurvey"
+                  />
+                </v-col>
+              </v-row>
+            </v-form>
+          </v-card-text>
+          <v-divider></v-divider>
+          <v-card-actions
+            class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
+          >
+            <v-btn
+              color="primary"
+              :disabled="!valid || isSaveButtonDisabled"
+              depressed
+              @click.native="onSave"
+              ><i18n path="Drawer.Save"
+            /></v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-col>
+  </div>
 </template>
-
 <script>
 import { getLookupData } from '~/config/apps/event/rest'
 import { required } from '~/utility/rules.js'
@@ -194,6 +206,8 @@ export default {
       customers: [],
       customerId: '',
       valid: false,
+      snackbar: false,
+      timeout: 2000,
       required: [required],
       duplicateMessage: '',
       isSaveButtonDisabled: false,
@@ -297,6 +311,11 @@ export default {
     }
   },
   computed: {
+    snackbarText() {
+      return this.item
+        ? this.$t('Messages.Success.TaskUpdatedSuccess')
+        : this.$t('Messages.Success.TaskCreatedSuccess')
+    },
     filter() {
       if (
         this.task.Category === 'Registration Email' ||
@@ -473,6 +492,7 @@ export default {
       if (res) {
         this.dialog = false
         this.refresh()
+        this.snackbar = true
         this.isSaveButtonDisabled = false
         return res
       }
