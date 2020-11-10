@@ -1,9 +1,12 @@
 <template>
-  <div>
-    <div v-if="item.BusinessType === 'Recurring'">
+  <div class="mxcol-200 text-truncate">
+    <div
+      v-if="item.BusinessType === 'Recurring'"
+      class="mxcol-200 text-truncate"
+    >
       <nuxt-link :to="recurringroute"> {{ value }}</nuxt-link>
     </div>
-    <div v-else>
+    <div v-else class="mxcol-200 text-truncate">
       <nuxt-link :to="route"> {{ value }}</nuxt-link>
     </div>
   </div>
