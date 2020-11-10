@@ -532,6 +532,9 @@ body {
   }
 }
 @media (max-width: 600px) {
+  .v-tooltip__content {
+    display: none !important;
+  }
   .slide-form,
   .slide-form-default {
     width: 100% !important;
