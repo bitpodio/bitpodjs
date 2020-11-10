@@ -483,12 +483,6 @@ export default {
 .overflow-h {
   overflow: hidden;
 }
-.event-tags::after {
-  content: ', ';
-}
-.event-tags:last-child::after {
-  content: '';
-}
 .tiles-action {
   min-height: 36px;
 }

@@ -374,13 +374,3 @@ export default {
   },
 }
 </script>
-
-<style>
-.custom-nav-drawer {
-  visibility: visible;
-  transform: translateX(0%) !important;
-}
-.custom-nav-main {
-  padding-left: 240px !important;
-}
-</style>
