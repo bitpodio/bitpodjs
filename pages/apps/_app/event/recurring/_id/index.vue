@@ -887,7 +887,7 @@
         />
       </div>
       <div
-        class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -974,12 +974,16 @@
         <v-flex my-3>
           <i18n path="Common.SEODescription" class="body-2 text--secondary" />
 
-          <div class="body-1">{{ formatField(data.event.SEODesc) }}</div>
+          <div class="body-1 d-flex flex-wrap braek-all">
+            {{ formatField(data.event.SEODesc) }}
+          </div>
         </v-flex>
         <v-flex my-3>
           <i18n path="Common.SEOKeywords" class="body-2 text--secondary" />
 
-          <div class="body-1">{{ formatField(data.event.SEOKeywords) }}</div>
+          <div class="body-1 d-flex flex-wrap braek-all">
+            {{ formatField(data.event.SEOKeywords) }}
+          </div>
         </v-flex>
       </div>
 
@@ -1780,7 +1784,7 @@ export default {
   position: absolute;
   top: 5px;
   right: 5px;
-  z-index: 99;
+  z-index: 9;
   display: none;
 }
 .cardImg {

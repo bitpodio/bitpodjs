@@ -5,6 +5,9 @@
       app
       class="nav-bar greybg"
       :width="240"
+      :class="{
+        'custom-nav-drawer': !$vuetify.breakpoint.smAndDown && drawer === null,
+      }"
       :right="$vuetify.rtl"
     >
       <v-toolbar-title

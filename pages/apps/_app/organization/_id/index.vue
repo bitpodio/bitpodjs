@@ -102,24 +102,6 @@
         <Grid view-name="organizationTasks" :content="content" class="mt-n12" />
       </div>
       <div
-        v-if="content"
-        class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
-      >
-        <v-flex class="d-flex justify-center align-center pb-3">
-          <h2 class="body-1 pb-0">
-            <i class="fa fa-link1 pr-1" aria-hidden="true"></i>
-            <i18n path="Drawer.Integrations" />
-          </h2>
-          <v-spacer></v-spacer>
-        </v-flex>
-        <v-divider></v-divider>
-        <Grid
-          view-name="organizationIntegration"
-          :content="content"
-          class="mt-n12"
-        />
-      </div>
-      <div
         class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 pb-0 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-2">
