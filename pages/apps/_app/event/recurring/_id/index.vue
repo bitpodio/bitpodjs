@@ -1,1194 +1,1224 @@
 <template>
-  <v-flex d-flex flex-md-row flex-lg-row flex-column>
-    <v-flex column class="mxw-w70">
-      <div
-        class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
-      >
-        <v-flex class="d-flex pb-2">
-          <div class="text-h4 text-capitalize event-title">
-            {{ data.event.Title }}
-          </div>
-          <v-spacer></v-spacer>
-          <div class="d-flex">
-            <div class="mr-2">
-              <v-btn depressed color="primary" @click="viewRegistration"
-                ><i18n path="Drawer.View"
-              /></v-btn>
+  <div>
+    <v-flex class="detailview-head mb-3"
+      ><v-btn class="ml-n3 back-icon" icon @click="goBack"
+        ><v-icon class="fs-30">mdi-chevron-left</v-icon> </v-btn
+      ><v-text class="fs-18 min-h36"
+        ><i18n path="Common.RecurringEvent" /></v-text
+    ></v-flex>
+    <v-flex d-flex flex-md-row flex-lg-row flex-column>
+      <v-flex column class="mxw-w70">
+        <div
+          class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+        >
+          <v-flex class="d-flex pb-2">
+            <div class="text-h4 text-capitalize event-title">
+              {{ data.event.Title }}
             </div>
-            <div v-if="data.event.Status === 'Not ready'" class="mr-2">
-              <v-btn outlined color="primary" @click="publishEvent"
-                ><i18n path="Drawer.Publish"
-              /></v-btn>
+            <v-spacer></v-spacer>
+            <div class="d-flex">
+              <div class="mr-2">
+                <v-btn depressed color="primary" @click="viewRegistration"
+                  ><i18n path="Drawer.View"
+                /></v-btn>
+              </div>
+              <div v-if="data.event.Status === 'Not ready'" class="mr-2">
+                <v-btn outlined color="primary" @click="publishEvent"
+                  ><i18n path="Drawer.Publish"
+                /></v-btn>
+              </div>
+              <v-menu
+                left
+                :close-on-click="closeOnClick"
+                :offset-y="offset"
+                transition="slide-y-transition"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn icon small v-bind="attrs" v-on="on">
+                    <v-icon>mdi-dots-vertical</v-icon>
+                  </v-btn>
+                </template>
+
+                <v-list dense>
+                  <v-list-item @click="isMakeCopy = true">
+                    <v-list-item-icon class="mr-2">
+                      <i class="fa fa-clone mt-1" aria-hidden="true"></i>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                      <v-list-item-title
+                        ><i18n path="Drawer.MakeaCopy"
+                      /></v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <v-list-item @click="true">
+                    <v-list-item-icon class="mr-2">
+                      <i
+                        class="fa fa-pencil-square-o mt-1"
+                        aria-hidden="true"
+                      ></i>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                      <v-list-item-title
+                        ><i18n path="Drawer.Editemailtemplate"
+                      /></v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <v-list-item @click="redirectIntegration">
+                    <v-list-item-icon class="mr-2">
+                      <i class="fa fa-link1 mt-1" aria-hidden="true"></i>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                      <v-list-item-title
+                        ><i18n path="Drawer.Integrations"
+                      /></v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <v-list-item @click.stop="copylinks = true">
+                    <v-list-item-icon class="mr-2">
+                      <i class="fa fa-clone mt-1" aria-hidden="true"></i>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                      <v-list-item-title
+                        ><i18n path="Common.CopyLinks"
+                      /></v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
+              <v-dialog v-model="copylinks" max-width="800">
+                <v-card>
+                  <v-card-title class="pa-4 pr-2">
+                    <h2 class="black--text text--lighten-1 pt-1 pb-0 text-h5">
+                      <i18n path="Common.CopyLinks" />
+                    </h2>
+                    <v-spacer></v-spacer>
+                    <div>
+                      <v-btn icon @click="copylinks = false">
+                        <v-icon>mdi-close</v-icon>
+                      </v-btn>
+                    </div>
+                  </v-card-title>
+                  <v-card-text class="pa-4 pt-0">
+                    <v-col cols="12" sm="12" class="pl-0 pb-0 d-flex">
+                      <v-text-field
+                        id="eventLink"
+                        :value="eventLink()"
+                        :label="$t('Common.EventLink')"
+                        outlined
+                        readonly
+                        dense
+                      ></v-text-field>
+                      <v-btn icon class="ml-2">
+                        <v-icon>mdi-18px mdi-content-copy</v-icon>
+                      </v-btn>
+                    </v-col>
+                    <v-col cols="12" sm="12" class="pl-0 pb-0 d-flex">
+                      <v-text-field
+                        :value="sessionLink()"
+                        :label="$t('Common.RecurringSessionsLink')"
+                        outlined
+                        readonly
+                        dense
+                      ></v-text-field>
+                      <v-btn icon class="ml-2">
+                        <v-icon>mdi-18px mdi-content-copy</v-icon>
+                      </v-btn>
+                    </v-col>
+                    <v-col cols="12" sm="12" class="pl-0 pb-0 d-flex">
+                      <v-text-field
+                        :value="embedLink()"
+                        :label="$t('Common.EmbedRecurringSessions')"
+                        outlined
+                        :hint="$t('Common.ContactBitpodSupport')"
+                        persistent-hint
+                        readonly
+                        dense
+                      ></v-text-field>
+                      <v-btn icon class="ml-2">
+                        <v-icon>mdi-18px mdi-content-copy</v-icon>
+                      </v-btn>
+                    </v-col>
+                  </v-card-text>
+                </v-card>
+              </v-dialog>
             </div>
-            <v-menu
-              left
-              :close-on-click="closeOnClick"
-              :offset-y="offset"
-              transition="slide-y-transition"
+          </v-flex>
+          <v-chip class="my-2 mt-1 greybg">
+            <i18n path="Common.RecurringEvent" />
+          </v-chip>
+
+          <v-flex d-flex flex-md-row flex-lg-row my-2 class="event-cards">
+            <div
+              class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
             >
+              <div
+                class="pa-2 success d-flex justify-center align-center event-tile-left"
+              >
+                <i class="fa fa-user-check" aria-hidden="true"></i>
+              </div>
+              <div class="d-flex flex-column pa-2 event-tile-right greybg">
+                <div class="event-tile-value text-truncate">
+                  {{ data.eventSummary.totalRegistration }}
+                </div>
+
+                <i18n
+                  path="Common.TotalRegistration"
+                  class="caption text-truncate"
+                />
+              </div>
+            </div>
+
+            <div
+              class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
+            >
+              <div
+                class="pa-2 error d-flex justify-center align-center event-tile-left"
+              >
+                <i class="fa fa-user-x" aria-hidden="true"></i>
+              </div>
+              <div class="d-flex flex-column pa-2 event-tile-right greybg">
+                <div class="event-tile-value text-truncate">
+                  {{ data.eventSummary.totalFailed }}
+                </div>
+
+                <i18n
+                  path="Common.AbandonedRegistration"
+                  class="caption text-truncate"
+                />
+              </div>
+            </div>
+
+            <div
+              v-if="data.eventSummary.Revenue"
+              class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
+            >
+              <div
+                class="pa-2 warning d-flex justify-center align-center event-tile-left"
+              >
+                <i class="fa fa-banknote" aria-hidden="true"></i>
+              </div>
+              <div class="d-flex flex-column pa-2 event-tile-right greybg">
+                <div class="event-tile-value text-truncate">
+                  {{ data.event.Currency }} {{ data.eventSummary.Revenue }}
+                </div>
+
+                <i18n path="Common.Revenue" class="caption text-truncate" />
+              </div>
+            </div>
+
+            <div
+              v-if="data.eventSummary.TotalSession"
+              class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
+            >
+              <div
+                class="pa-2 primary d-flex justify-center align-center event-tile-left"
+              >
+                <i class="fa fa fa-black-board" aria-hidden="true"></i>
+              </div>
+              <div class="d-flex flex-column pa-2 event-tile-right greybg">
+                <div class="event-tile-value text-truncate">
+                  {{ data.eventSummary.TotalSession }}
+                </div>
+
+                <i18n
+                  path="Common.TotalSessions"
+                  class="caption text-truncate"
+                />
+              </div>
+            </div>
+
+            <div
+              v-if="data.event.MySpeakers"
+              class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
+            >
+              <div
+                class="pa-2 warning d-flex justify-center align-center event-tile-left"
+              >
+                <i class="fa fa-mic1" aria-hidden="true"></i>
+              </div>
+              <div class="d-flex flex-column pa-2 event-tile-right greybg">
+                <div class="event-tile-value text-truncate">
+                  {{ data.event.MySpeakers.length }}
+                </div>
+
+                <i18n
+                  path="Common.TotalSpeakers"
+                  class="caption text-truncate"
+                />
+              </div>
+            </div>
+
+            <div
+              class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
+            >
+              <div
+                class="pa-2 primary d-flex justify-center align-center event-tile-left"
+              >
+                <i class="fa fa-calendar2" aria-hidden="true"></i>
+              </div>
+              <div class="d-flex flex-column pa-2 event-tile-right greybg">
+                <i18n
+                  path="Common.29Days"
+                  class="event-tile-value text-truncate"
+                />
+
+                <i18n path="Common.OpensIn" class="caption text-truncate" />
+              </div>
+            </div>
+          </v-flex>
+
+          <v-stepper
+            v-model="Status"
+            alt-labels
+            class="elevation-0 boxview event-steper"
+            style="max-width: 800px;"
+          >
+            <v-stepper-header success>
+              <v-stepper-step
+                editable
+                step="1"
+                :complete="true"
+                color="success"
+                class="ml-n13 body-2"
+                @click="changeStatus('Not ready')"
+                ><i18n path="Common.NotReady"
+              /></v-stepper-step>
+
+              <v-divider></v-divider>
+
+              <v-stepper-step
+                editable
+                step="2"
+                :complete="Status > 1"
+                color="success"
+                class="body-2"
+                @click="changeStatus('Open for registration')"
+                ><i18n path="Common.OpenForRegistration"
+              /></v-stepper-step>
+
+              <v-divider></v-divider>
+
+              <v-stepper-step
+                editable
+                step="3"
+                :complete="Status > 2"
+                class="body-2"
+                color="success"
+                @click="changeStatus('Sold out')"
+                ><i18n path="Common.SoldOut"
+              /></v-stepper-step>
+
+              <v-divider></v-divider>
+
+              <v-stepper-step
+                editable
+                step="4"
+                :complete="Status > 3"
+                class="body-2"
+                color="success"
+                @click="changeStatus('Registration closed')"
+                ><i18n path="Common.RegistrationClosed"
+              /></v-stepper-step>
+            </v-stepper-header>
+          </v-stepper>
+
+          <v-divider></v-divider>
+          <v-flex class="d-flex flex-row align-center">
+            <v-chip pill class="greybg" v-on="on">
+              <v-avatar left color="warning" size="24">
+                <span class="white--text name-initial">{{
+                  data.event.createdBy
+                }}</span>
+              </v-avatar>
+              <span>{{ data.event.createdBy }}</span>
+            </v-chip>
+            <v-subheader
+              v-if="data.event.createdDate !== undefined"
+              class="d-inline-flex pl-1"
+              >{{
+                $t('Common.CreatedThisEventOn', {
+                  date: $d(
+                    new Date(data.event.createdDate),
+                    'long',
+                    $i18n.locale
+                  ),
+                })
+              }}</v-subheader
+            >
+          </v-flex>
+        </div>
+        <div
+          class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        >
+          <v-flex class="d-flex justify-center align-center pb-2">
+            <h2 class="body-1 pb-0">
+              <i class="fa fa-image pr-1" aria-hidden="true"></i>
+              <i18n path="Common.ImageGallery" />
+            </h2>
+            <v-spacer></v-spacer>
+            <v-menu offset-y>
               <template v-slot:activator="{ on, attrs }">
-                <v-btn icon small v-bind="attrs" v-on="on">
-                  <v-icon>mdi-dots-vertical</v-icon>
+                <v-btn
+                  depressed
+                  text
+                  small
+                  v-bind="attrs"
+                  v-on="on"
+                  @click="allow = true"
+                >
+                  <v-icon left>fa-upload</v-icon> <i18n path="Drawer.Upload" />
                 </v-btn>
               </template>
-
               <v-list dense>
-                <v-list-item @click="isMakeCopy = true">
-                  <v-list-item-icon class="mr-2">
-                    <i class="fa fa-clone mt-1" aria-hidden="true"></i>
-                  </v-list-item-icon>
-                  <v-list-item-content>
-                    <v-list-item-title
-                      ><i18n path="Drawer.MakeaCopy"
-                    /></v-list-item-title>
-                  </v-list-item-content>
+                <v-list-item
+                  class="cursorPointer"
+                  @click.native="checkLogoClicked"
+                >
+                  <v-list-item-title>
+                    <File
+                      :field="fileField"
+                      :no-btn-look="true"
+                      :block="true"
+                      :open-file-dialog="badgeLogo"
+                      :value="checkArray"
+                      :hide-preview="true"
+                      @input="fileUploadedBadgeLogo"
+                    />
+                    <i18n path="Common.BadgeLogo" />
+                  </v-list-item-title>
                 </v-list-item>
-                <v-list-item @click="true">
-                  <v-list-item-icon class="mr-2">
-                    <i
-                      class="fa fa-pencil-square-o mt-1"
-                      aria-hidden="true"
-                    ></i>
-                  </v-list-item-icon>
-                  <v-list-item-content>
-                    <v-list-item-title
-                      ><i18n path="Drawer.Editemailtemplate"
-                    /></v-list-item-title>
-                  </v-list-item-content>
+                <v-list-item
+                  class="cursorPointer"
+                  @click.native="checkBannerClicked"
+                >
+                  <v-list-item-title>
+                    <File
+                      :field="fileField"
+                      :no-btn-look="true"
+                      :block="true"
+                      :open-file-dialog="eventBanner"
+                      :value="checkArray"
+                      :hide-preview="true"
+                      @input="fileUploadedEventBanner"
+                    />
+                    <i18n path="Common.EventB" />
+                  </v-list-item-title>
                 </v-list-item>
-                <v-list-item @click="redirectIntegration">
-                  <v-list-item-icon class="mr-2">
-                    <i class="fa fa-link1 mt-1" aria-hidden="true"></i>
-                  </v-list-item-icon>
-                  <v-list-item-content>
-                    <v-list-item-title
-                      ><i18n path="Drawer.Integrations"
-                    /></v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
-                <v-list-item @click.stop="copylinks = true">
-                  <v-list-item-icon class="mr-2">
-                    <i class="fa fa-clone mt-1" aria-hidden="true"></i>
-                  </v-list-item-icon>
-                  <v-list-item-content>
-                    <v-list-item-title
-                      ><i18n path="Common.CopyLinks"
-                    /></v-list-item-title>
-                  </v-list-item-content>
+                <v-list-item
+                  class="cursorPointer"
+                  @click.native="checkOtherClicked"
+                >
+                  <v-list-item-title>
+                    <File
+                      :field="otherFileField"
+                      :no-btn-look="true"
+                      :block="true"
+                      :open-file-dialog="otherDialog"
+                      :value="checkArray"
+                      :hide-preview="true"
+                      @input="fileUploadedOther"
+                    />
+                    <i18n path="Common.Other" />
+                  </v-list-item-title>
                 </v-list-item>
               </v-list>
             </v-menu>
-            <v-dialog v-model="copylinks" max-width="800">
+          </v-flex>
+          <v-divider></v-divider>
+          <div>
+            <v-card
+              v-if="data.event.Images && data.event.Images.length === 0"
+              class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-5 pr-3 elevation-0 cardImg rounded cursorPointer"
+            >
+              <v-img
+                :src="$config.cdnUri + 'default-min.jpg'"
+                :lazy-src="$config.cdnUri + 'default-min.jpg'"
+                aspect-ratio="1"
+                class="rounded"
+                max-width="150"
+                max-height="150"
+                width="150"
+                position="right"
+                @click.stop="bannerDialog = true"
+              >
+                <template v-slot:placeholder>
+                  <v-row
+                    class="fill-height ma-0"
+                    align="center"
+                    justify="center"
+                  >
+                    <v-progress-circular
+                      indeterminate
+                      color="grey lighten-5"
+                    ></v-progress-circular>
+                  </v-row>
+                </template>
+              </v-img>
+              <v-flex class="mt-1 d-flex otherImg">
+                <v-card-text class="pa-0 pb-1"
+                  ><a
+                    class="d-inline-block text-truncate anchorTag"
+                    :href="getAttachmentLink(image, true)"
+                    >{{ OtherImageName[index] }}</a
+                  ></v-card-text
+                >
+                <copy :text-to-copy="getImageUrl(image)" :unique-id="image" />
+              </v-flex>
+              <v-card-text class="pa-0 mt-n2"
+                ><i18n path="Common.BannerImage"
+              /></v-card-text>
+            </v-card>
+            <v-card
+              v-for="image in data.event.Images"
+              :key="image"
+              class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-5 pr-3 elevation-0 cardImg rounded cursorPointer"
+            >
+              <span class="cardDelete">
+                <i
+                  class="fa-trash pa-2 cursorPointer"
+                  @click="deleteBannerFile(e, image)"
+                ></i>
+              </span>
+              <v-img
+                :src="getAttachmentLink(image, true)"
+                :lazy-src="getAttachmentLink(image, true)"
+                aspect-ratio="1"
+                class="rounded"
+                max-width="150"
+                max-height="150"
+                width="150"
+                @click.stop="bannerDialog = true"
+              >
+                <template v-slot:placeholder>
+                  <v-row
+                    class="fill-height ma-0"
+                    align="center"
+                    justify="center"
+                  >
+                    <v-progress-circular
+                      indeterminate
+                      color="grey lighten-5"
+                    ></v-progress-circular>
+                  </v-row>
+                </template>
+              </v-img>
+              <v-flex class="mt-1 d-flex">
+                <v-card-text class="pa-0 pb-1 d-inline-block text-truncate"
+                  ><a
+                    class="d-inline-block text-truncate anchorTag"
+                    :href="getAttachmentLink(image, true)"
+                    >{{ bannerName }}</a
+                  ></v-card-text
+                >
+                <v-spacer></v-spacer>
+                <copy :text-to-copy="getImageUrl(image)" :unique-id="image" />
+              </v-flex>
+              <v-card-text class="pa-0 mt-n2"
+                ><i18n path="Common.EventBanner"
+              /></v-card-text>
+            </v-card>
+            <v-dialog v-model="bannerDialog" max-width="600">
               <v-card>
-                <v-card-title class="pa-4 pr-2">
-                  <h2 class="black--text text--lighten-1 pt-1 pb-0 text-h5">
-                    <i18n path="Common.CopyLinks" />
-                  </h2>
+                <v-card-title class="pa-1">
                   <v-spacer></v-spacer>
                   <div>
-                    <v-btn icon @click="copylinks = false">
+                    <v-btn icon @click="bannerDialog = false">
                       <v-icon>mdi-close</v-icon>
                     </v-btn>
                   </div>
                 </v-card-title>
-                <v-card-text class="pa-4 pt-0">
-                  <v-col cols="12" sm="12" class="pl-0 pb-0 d-flex">
-                    <v-text-field
-                      id="eventLink"
-                      :value="eventLink()"
-                      :label="$t('Common.EventLink')"
-                      outlined
-                      readonly
-                      dense
-                    ></v-text-field>
-                    <v-btn icon class="ml-2">
-                      <v-icon>mdi-18px mdi-content-copy</v-icon>
+                <v-card-text class="pa-1">
+                  <v-card
+                    v-for="image in data.event.Images"
+                    :key="image"
+                    class="mx-auto elevation-0"
+                    @click.stop="bannerDialog = true"
+                  >
+                    <v-img
+                      :src="getAttachmentLink(image, true)"
+                      :lazy-src="getAttachmentLink(image, true)"
+                      aspect-ratio="1"
+                      class="white"
+                      width="100%"
+                      contain
+                    >
+                      <template v-slot:placeholder>
+                        <v-row
+                          class="fill-height ma-0"
+                          align="center"
+                          justify="center"
+                        >
+                          <v-progress-circular
+                            indeterminate
+                            color="grey lighten-5"
+                          ></v-progress-circular>
+                        </v-row>
+                      </template>
+                    </v-img>
+                  </v-card>
+                </v-card-text>
+              </v-card>
+            </v-dialog>
+            <v-card
+              v-for="image in data.event.Logo"
+              :key="image"
+              class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-5 pr-3 elevation-0 cardImg rounded"
+            >
+              <span class="cardDelete">
+                <i
+                  class="fa-trash pa-2 cursorPointer"
+                  @click="deleteLogoFile(image)"
+                ></i>
+              </span>
+              <v-img
+                :src="getAttachmentLink(image, true)"
+                :lazy-src="getAttachmentLink(image, true)"
+                aspect-ratio="1"
+                class="rounded white"
+                max-width="150"
+                max-height="150"
+                width="150"
+                contain
+                @click.stop="logoDialog = true"
+              >
+                <template v-slot:placeholder>
+                  <v-row
+                    class="fill-height ma-0"
+                    align="center"
+                    justify="center"
+                  >
+                    <v-progress-circular
+                      indeterminate
+                      color="grey lighten-5"
+                    ></v-progress-circular>
+                  </v-row>
+                </template>
+              </v-img>
+              <v-flex class="mt-1 d-flex">
+                <v-card-text class="pa-0 pb-1 d-inline-block"
+                  ><a
+                    class="d-inline-block text-truncate anchorTag"
+                    :href="getAttachmentLink(image, true)"
+                    >{{ logoName }}</a
+                  ></v-card-text
+                >
+                <copy :text-to-copy="getImageUrl(image)" :unique-id="image" />
+              </v-flex>
+              <v-card-text class="pa-0 mt-n2"
+                ><i18n path="Common.LogoImage"
+              /></v-card-text>
+            </v-card>
+            <v-dialog v-model="logoDialog" max-width="600">
+              <v-card>
+                <v-card-title class="pa-1">
+                  <v-spacer></v-spacer>
+                  <div>
+                    <v-btn icon @click="logoDialog = false">
+                      <v-icon>mdi-close</v-icon>
                     </v-btn>
-                  </v-col>
-                  <v-col cols="12" sm="12" class="pl-0 pb-0 d-flex">
-                    <v-text-field
-                      :value="sessionLink()"
-                      :label="$t('Common.RecurringSessionsLink')"
-                      outlined
-                      readonly
-                      dense
-                    ></v-text-field>
-                    <v-btn icon class="ml-2">
-                      <v-icon>mdi-18px mdi-content-copy</v-icon>
+                  </div>
+                </v-card-title>
+                <v-card-text class="pa-1">
+                  <v-card
+                    v-for="image in data.event.Logo"
+                    :key="image"
+                    class="mx-auto elevation-0"
+                    @click.stop="logoDialog = true"
+                  >
+                    <v-img
+                      :src="getAttachmentLink(image, true)"
+                      :lazy-src="getAttachmentLink(image, true)"
+                      aspect-ratio="1"
+                      class="white"
+                      width="100%"
+                      contain
+                    >
+                      <template v-slot:placeholder>
+                        <v-row
+                          class="fill-height ma-0"
+                          align="center"
+                          justify="center"
+                        >
+                          <v-progress-circular
+                            indeterminate
+                            color="grey lighten-5"
+                          ></v-progress-circular>
+                        </v-row>
+                      </template>
+                    </v-img>
+                  </v-card>
+                </v-card-text>
+              </v-card>
+            </v-dialog>
+            <v-card
+              v-for="(image, index) in eventData.Other"
+              :key="index"
+              class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-5 pr-3 elevation-0 cardImg rounded"
+            >
+              <span class="cardDelete">
+                <i
+                  class="fa-trash pa-2 cursorPointer"
+                  @click="deleteOtherFile(image)"
+                ></i>
+              </span>
+              <v-img
+                :src="getAttachmentLink(image, true)"
+                :lazy-src="getAttachmentLink(image, true)"
+                aspect-ratio="1"
+                class="rounded"
+                max-width="150"
+                max-height="150"
+                width="150"
+                @click.stop="openOtherDialog(image)"
+              >
+                <template v-slot:placeholder>
+                  <v-row
+                    class="fill-height ma-0"
+                    align="center"
+                    justify="center"
+                  >
+                    <v-progress-circular
+                      indeterminate
+                      color="grey lighten-5"
+                    ></v-progress-circular>
+                  </v-row>
+                </template>
+              </v-img>
+              <v-flex class="mt-1 d-flex">
+                <v-card-text class="pa-0 pb-1">
+                  <a
+                    class="d-inline-block text-truncate anchorTag"
+                    :href="getAttachmentLink(image, true)"
+                    >{{
+                      OtherImageName[index] && OtherImageName[index].fileName
+                    }}</a
+                  >
+                </v-card-text>
+                <copy :text-to-copy="getImageUrl(image)" :unique-id="image" />
+              </v-flex>
+              <v-card-text class="pa-0 mt-n2 otherImg"
+                ><i18n path="Common.LogoImage"
+              /></v-card-text>
+            </v-card>
+            <v-dialog v-model="otherDialogOpen" max-width="600">
+              <v-card>
+                <v-card-title class="pa-1">
+                  <v-spacer></v-spacer>
+                  <div>
+                    <v-btn icon @click="otherDialogOpen = false">
+                      <v-icon>mdi-close</v-icon>
                     </v-btn>
-                  </v-col>
-                  <v-col cols="12" sm="12" class="pl-0 pb-0 d-flex">
-                    <v-text-field
-                      :value="embedLink()"
-                      :label="$t('Common.EmbedRecurringSessions')"
-                      outlined
-                      :hint="$t('Common.ContactBitpodSupport')"
-                      persistent-hint
-                      readonly
-                      dense
-                    ></v-text-field>
-                    <v-btn icon class="ml-2">
-                      <v-icon>mdi-18px mdi-content-copy</v-icon>
-                    </v-btn>
-                  </v-col>
+                  </div>
+                </v-card-title>
+                <v-card-text class="pa-1">
+                  <v-card class="mx-auto elevation-0">
+                    <v-img
+                      :src="displaySelectedOtherImage"
+                      :lazy-src="displaySelectedOtherImage"
+                      aspect-ratio="1"
+                      class="white"
+                      width="100%"
+                      contain
+                    >
+                      <template v-slot:placeholder>
+                        <v-row
+                          class="fill-height ma-0"
+                          align="center"
+                          justify="center"
+                        >
+                          <v-progress-circular
+                            indeterminate
+                            color="grey lighten-5"
+                          ></v-progress-circular>
+                        </v-row>
+                      </template>
+                    </v-img>
+                  </v-card>
                 </v-card-text>
               </v-card>
             </v-dialog>
           </div>
-        </v-flex>
-        <v-chip class="my-2 mt-1 greybg">
-          <i18n path="Common.RecurringEvent" />
-        </v-chip>
-
-        <v-flex d-flex flex-md-row flex-lg-row my-2 class="event-cards">
-          <div
-            class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
-          >
-            <div
-              class="pa-2 success d-flex justify-center align-center event-tile-left"
-            >
-              <i class="fa fa-user-check" aria-hidden="true"></i>
-            </div>
-            <div class="d-flex flex-column pa-2 event-tile-right greybg">
-              <div class="event-tile-value text-truncate">
-                {{ data.eventSummary.totalRegistration }}
-              </div>
-
-              <i18n
-                path="Common.TotalRegistration"
-                class="caption text-truncate"
-              />
-            </div>
-          </div>
-
-          <div
-            class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
-          >
-            <div
-              class="pa-2 error d-flex justify-center align-center event-tile-left"
-            >
-              <i class="fa fa-user-x" aria-hidden="true"></i>
-            </div>
-            <div class="d-flex flex-column pa-2 event-tile-right greybg">
-              <div class="event-tile-value text-truncate">
-                {{ data.eventSummary.totalFailed }}
-              </div>
-
-              <i18n
-                path="Common.AbandonedRegistration"
-                class="caption text-truncate"
-              />
-            </div>
-          </div>
-
-          <div
-            v-if="data.eventSummary.Revenue"
-            class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
-          >
-            <div
-              class="pa-2 warning d-flex justify-center align-center event-tile-left"
-            >
-              <i class="fa fa-banknote" aria-hidden="true"></i>
-            </div>
-            <div class="d-flex flex-column pa-2 event-tile-right greybg">
-              <div class="event-tile-value text-truncate">
-                {{ data.event.Currency }} {{ data.eventSummary.Revenue }}
-              </div>
-
-              <i18n path="Common.Revenue" class="caption text-truncate" />
-            </div>
-          </div>
-
-          <div
-            v-if="data.eventSummary.TotalSession"
-            class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
-          >
-            <div
-              class="pa-2 primary d-flex justify-center align-center event-tile-left"
-            >
-              <i class="fa fa fa-black-board" aria-hidden="true"></i>
-            </div>
-            <div class="d-flex flex-column pa-2 event-tile-right greybg">
-              <div class="event-tile-value text-truncate">
-                {{ data.eventSummary.TotalSession }}
-              </div>
-
-              <i18n path="Common.TotalSessions" class="caption text-truncate" />
-            </div>
-          </div>
-
-          <div
-            v-if="data.event.MySpeakers"
-            class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
-          >
-            <div
-              class="pa-2 warning d-flex justify-center align-center event-tile-left"
-            >
-              <i class="fa fa-mic1" aria-hidden="true"></i>
-            </div>
-            <div class="d-flex flex-column pa-2 event-tile-right greybg">
-              <div class="event-tile-value text-truncate">
-                {{ data.event.MySpeakers.length }}
-              </div>
-
-              <i18n path="Common.TotalSpeakers" class="caption text-truncate" />
-            </div>
-          </div>
-
-          <div
-            class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
-          >
-            <div
-              class="pa-2 primary d-flex justify-center align-center event-tile-left"
-            >
-              <i class="fa fa-calendar2" aria-hidden="true"></i>
-            </div>
-            <div class="d-flex flex-column pa-2 event-tile-right greybg">
-              <i18n
-                path="Common.29Days"
-                class="event-tile-value text-truncate"
-              />
-
-              <i18n path="Common.OpensIn" class="caption text-truncate" />
-            </div>
-          </div>
-        </v-flex>
-
-        <v-stepper
-          v-model="Status"
-          alt-labels
-          class="elevation-0 boxview event-steper"
-          style="max-width: 800px;"
+        </div>
+        <div
+          v-if="content"
+          class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
-          <v-stepper-header success>
-            <v-stepper-step
-              editable
-              step="1"
-              :complete="true"
-              color="success"
-              class="ml-n13 body-2"
-              @click="changeStatus('Not ready')"
-              ><i18n path="Common.NotReady"
-            /></v-stepper-step>
+          <v-flex class="d-flex justify-center align-center pb-3">
+            <h2 class="body-1 pb-0">
+              <i class="fa fa-black-board pr-1" aria-hidden="true"></i>
+              <i18n path="Common.RecurringSessions" />
+            </h2>
+            <v-spacer></v-spacer>
+          </v-flex>
+          <v-divider></v-divider>
+          <Grid
+            ref="recurringGrid"
+            view-name="eventRecurringSession"
+            :content="content"
+            class="mt-n12"
+          />
+        </div>
+        <div
+          v-if="content"
+          class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+        >
+          <v-flex class="d-flex justify-center align-center pb-3">
+            <h2 class="body-1 pb-0">
+              <i class="fa fa-users pr-1" aria-hidden="true"></i>
+              <i18n path="Common.Attendees" />
+            </h2>
+            <v-spacer></v-spacer>
+          </v-flex>
+          <v-divider></v-divider>
+          <Grid
+            view-name="eventRecurringAttendees"
+            :content="content"
+            :context="data"
+            class="mt-n12"
+          />
+        </div>
+        <div
+          v-if="content"
+          class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+        >
+          <v-flex class="d-flex justify-center align-center pb-3">
+            <h2 class="body-1 pb-0">
+              <i class="fa fa-user-plus pr-1" aria-hidden="true"></i>
+              <i18n path="Common.Registrations" />
+            </h2>
+            <v-spacer></v-spacer>
+          </v-flex>
+          <v-divider></v-divider>
+          <Grid
+            view-name="recurringEventRegistrations"
+            :content="content"
+            class="mt-n12"
+          />
+        </div>
+        <div
+          v-if="content"
+          class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+        >
+          <v-flex class="d-flex justify-center align-center pb-3">
+            <h2 class="body-1 pb-0">
+              <i class="fa fa-mail pr-1" aria-hidden="true"></i>
+              <i18n path="Common.Invites" />
+            </h2>
+            <v-spacer></v-spacer>
+          </v-flex>
+          <v-divider></v-divider>
+          <Grid view-name="eventInvites" :content="content" class="mt-n12" />
+        </div>
+        <div
+          v-if="content"
+          class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg recurring-event"
+        >
+          <v-flex class="d-flex justify-center align-center pb-3">
+            <h2 class="body-1 pb-0">
+              <i class="fa fa-ticketalt pr-1" aria-hidden="true"></i>
+              <i18n path="Common.Tickets" />
+            </h2>
+            <v-spacer></v-spacer>
+          </v-flex>
+          <v-divider></v-divider>
+          <Grid
+            view-name="eventTickets"
+            :content="content"
+            class="mt-n12"
+            :context="data"
+          />
+        </div>
+        <div
+          v-if="content"
+          class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+        >
+          <v-flex class="d-flex justify-center align-center pb-3">
+            <h2 class="body-1 pb-0">
+              <i class="fa fa-settings1 pr-1" aria-hidden="true"></i>
+              <i18n path="Common.DiscountCodes" />
+            </h2>
+            <v-spacer></v-spacer>
+          </v-flex>
+          <v-divider></v-divider>
+          <Grid
+            view-name="eventDiscountCodes"
+            :content="content"
+            class="mt-n12"
+          />
+        </div>
+        <div
+          v-if="content"
+          class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+        >
+          <v-flex class="d-flex justify-center align-center pb-3">
+            <h2 class="body-1 pb-0">
+              <i class="fa fa-question-circle pr-1" aria-hidden="true"></i>
+              <i18n path="Common.RegistrationQuestions" />
+            </h2>
+            <v-spacer></v-spacer>
+          </v-flex>
+          <v-divider></v-divider>
+          <Grid
+            view-name="eventRegistrationQuestion"
+            :content="content"
+            class="mt-n12"
+          />
+        </div>
+        <div
+          v-if="content"
+          class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+        >
+          <v-flex class="d-flex justify-center align-center pb-3">
+            <h2 class="body-1 pb-0">
+              <i class="fa fa-mic pr-1" aria-hidden="true"></i>
+              <i18n path="Common.Speakers" />
+            </h2>
+            <v-spacer></v-spacer>
+          </v-flex>
+          <v-divider></v-divider>
+          <Grid view-name="eventSpeakers" :content="content" class="mt-n12" />
+        </div>
+        <div
+          v-if="content"
+          class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+        >
+          <v-flex class="d-flex justify-center align-center pb-3">
+            <h2 class="body-1 pb-0">
+              <i class="fa fa-external-link pr-1" aria-hidden="true"></i>
+              <i18n path="Common.Tasks" />
+            </h2>
+            <v-spacer></v-spacer>
+          </v-flex>
+          <v-divider></v-divider>
+          <Grid
+            view-name="eventTasks"
+            :content="content"
+            :context="data"
+            class="mt-n12"
+          />
+        </div>
+        <div
+          v-if="content"
+          class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+        >
+          <v-flex class="d-flex justify-center align-center pb-3">
+            <h2 class="body-1 pb-0">
+              <i class="fa fa-file-text-o pr-1" aria-hidden="true"></i>
+              <i18n path="Common.RegistrationForm" />
+            </h2>
+            <v-spacer></v-spacer>
+          </v-flex>
+          <v-divider></v-divider>
+          <Grid
+            view-name="eventRegistrationForm"
+            :content="content"
+            class="mt-n12"
+          />
+        </div>
+        <div
+          class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        >
+          <v-flex class="d-flex justify-center align-center pb-3">
+            <h2 class="body-1 pb-0">
+              <i class="fa fa-comments-alt pr-1" aria-hidden="true"></i>
+              <i18n path="Common.Notes" />
+            </h2>
+            <v-spacer></v-spacer>
+          </v-flex>
+          <v-divider></v-divider>
+          <Notes model-name="Events" />
+        </div>
+      </v-flex>
+      <v-flex column class="mxw-w30">
+        <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 py-0 pr-2 box-grey">
+          <v-flex class="d-flex justify-center align-center pb-2">
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <h2 class="body-1 pb-0" v-bind="attrs" v-on="on">
+                  <i class="fa fa-tag pr-1" aria-hidden="true"></i>
+                  <i18n path="Common.EventInformation" />
+                </h2>
+              </template>
+              <span><i18n path="Common.EventInformation" /></span>
+            </v-tooltip>
+            <v-spacer></v-spacer>
+            <v-btn text small @click.stop="eventForm = true">
+              <v-icon left class="fs-16">fa-pencil</v-icon
+              ><i18n path="Drawer.Edit" />
+            </v-btn>
+          </v-flex>
+          <v-divider></v-divider>
+          <v-flex my-3>
+            <i18n path="Common.Organizer" class="body-2 text--secondary" />
 
-            <v-divider></v-divider>
+            <div class="body-1">{{ formatField(data.event.Organizer) }}</div>
+          </v-flex>
+          <v-flex my-3>
+            <i18n path="Common.EventManager" class="body-2 text--secondary" />
 
-            <v-stepper-step
-              editable
-              step="2"
-              :complete="Status > 1"
-              color="success"
-              class="body-2"
-              @click="changeStatus('Open for registration')"
-              ><i18n path="Common.OpenForRegistration"
-            /></v-stepper-step>
-
-            <v-divider></v-divider>
-
-            <v-stepper-step
-              editable
-              step="3"
-              :complete="Status > 2"
-              class="body-2"
-              color="success"
-              @click="changeStatus('Sold out')"
-              ><i18n path="Common.SoldOut"
-            /></v-stepper-step>
-
-            <v-divider></v-divider>
-
-            <v-stepper-step
-              editable
-              step="4"
-              :complete="Status > 3"
-              class="body-2"
-              color="success"
-              @click="changeStatus('Registration closed')"
-              ><i18n path="Common.RegistrationClosed"
-            /></v-stepper-step>
-          </v-stepper-header>
-        </v-stepper>
-
-        <v-divider></v-divider>
-        <v-flex class="d-flex flex-row align-center">
-          <v-chip pill class="greybg" v-on="on">
-            <v-avatar left color="warning" size="24">
-              <span class="white--text name-initial">{{
-                data.event.createdBy
-              }}</span>
-            </v-avatar>
-            <span>{{ data.event.createdBy }}</span>
-          </v-chip>
-          <v-subheader
-            v-if="data.event.createdDate !== undefined"
-            class="d-inline-flex pl-1"
-            >{{
-              $t('Common.CreatedThisEventOn', {
-                date: $d(
-                  new Date(data.event.createdDate),
-                  'long',
-                  $i18n.locale
-                ),
-              })
-            }}</v-subheader
-          >
-        </v-flex>
-      </div>
-      <div
-        class="xs12 sm4 md4 lg4 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
-      >
-        <v-flex class="d-flex justify-center align-center pb-2">
-          <h2 class="body-1 pb-0">
-            <i class="fa fa-image pr-1" aria-hidden="true"></i>
-            <i18n path="Common.ImageGallery" />
-          </h2>
-          <v-spacer></v-spacer>
-          <v-menu offset-y>
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn
-                depressed
-                text
+            <div class="body-1 text--primary">
+              {{ formatField(data.event.EventManager) }}
+            </div>
+          </v-flex>
+          <v-flex v-if="data.event.Tags" my-3>
+            <i18n path="Common.Tags" class="body-2 text--secondary" />
+            <div class="body-1 v-tags">
+              <v-chip
+                v-for="Tags in data.event.Tags"
+                :key="Tags"
                 small
-                v-bind="attrs"
-                v-on="on"
-                @click="allow = true"
+                class="ma-1"
               >
-                <v-icon left>fa-upload</v-icon> <i18n path="Drawer.Upload" />
-              </v-btn>
-            </template>
-            <v-list dense>
-              <v-list-item
-                class="cursorPointer"
-                @click.native="checkLogoClicked"
-              >
-                <v-list-item-title>
-                  <File
-                    :field="fileField"
-                    :no-btn-look="true"
-                    :block="true"
-                    :open-file-dialog="badgeLogo"
-                    :value="checkArray"
-                    :hide-preview="true"
-                    @input="fileUploadedBadgeLogo"
-                  />
-                  <i18n path="Common.BadgeLogo" />
-                </v-list-item-title>
-              </v-list-item>
-              <v-list-item
-                class="cursorPointer"
-                @click.native="checkBannerClicked"
-              >
-                <v-list-item-title>
-                  <File
-                    :field="fileField"
-                    :no-btn-look="true"
-                    :block="true"
-                    :open-file-dialog="eventBanner"
-                    :value="checkArray"
-                    :hide-preview="true"
-                    @input="fileUploadedEventBanner"
-                  />
-                  <i18n path="Common.EventB" />
-                </v-list-item-title>
-              </v-list-item>
-              <v-list-item
-                class="cursorPointer"
-                @click.native="checkOtherClicked"
-              >
-                <v-list-item-title>
-                  <File
-                    :field="otherFileField"
-                    :no-btn-look="true"
-                    :block="true"
-                    :open-file-dialog="otherDialog"
-                    :value="checkArray"
-                    :hide-preview="true"
-                    @input="fileUploadedOther"
-                  />
-                  <i18n path="Common.Other" />
-                </v-list-item-title>
-              </v-list-item>
-            </v-list>
-          </v-menu>
-        </v-flex>
-        <v-divider></v-divider>
-        <div>
-          <v-card
-            v-if="data.event.Images && data.event.Images.length === 0"
-            class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-5 pr-3 elevation-0 cardImg rounded cursorPointer"
-          >
-            <v-img
-              :src="$config.cdnUri + 'default-min.jpg'"
-              :lazy-src="$config.cdnUri + 'default-min.jpg'"
-              aspect-ratio="1"
-              class="rounded"
-              max-width="150"
-              max-height="150"
-              width="150"
-              position="right"
-              @click.stop="bannerDialog = true"
-            >
-              <template v-slot:placeholder>
-                <v-row class="fill-height ma-0" align="center" justify="center">
-                  <v-progress-circular
-                    indeterminate
-                    color="grey lighten-5"
-                  ></v-progress-circular>
-                </v-row>
-              </template>
-            </v-img>
-            <v-flex class="mt-1 d-flex otherImg">
-              <v-card-text class="pa-0 pb-1"
-                ><a
-                  class="d-inline-block text-truncate anchorTag"
-                  :href="getAttachmentLink(image, true)"
-                  >{{ OtherImageName[index] }}</a
-                ></v-card-text
-              >
-              <copy :text-to-copy="getImageUrl(image)" :unique-id="image" />
-            </v-flex>
-            <v-card-text class="pa-0 mt-n2"
-              ><i18n path="Common.BannerImage"
-            /></v-card-text>
-          </v-card>
-          <v-card
-            v-for="image in data.event.Images"
-            :key="image"
-            class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-5 pr-3 elevation-0 cardImg rounded cursorPointer"
-          >
-            <span class="cardDelete">
-              <i
-                class="fa-trash pa-2 cursorPointer"
-                @click="deleteBannerFile(e, image)"
-              ></i>
-            </span>
-            <v-img
-              :src="getAttachmentLink(image, true)"
-              :lazy-src="getAttachmentLink(image, true)"
-              aspect-ratio="1"
-              class="rounded"
-              max-width="150"
-              max-height="150"
-              width="150"
-              @click.stop="bannerDialog = true"
-            >
-              <template v-slot:placeholder>
-                <v-row class="fill-height ma-0" align="center" justify="center">
-                  <v-progress-circular
-                    indeterminate
-                    color="grey lighten-5"
-                  ></v-progress-circular>
-                </v-row>
-              </template>
-            </v-img>
-            <v-flex class="mt-1 d-flex">
-              <v-card-text class="pa-0 pb-1 d-inline-block text-truncate"
-                ><a
-                  class="d-inline-block text-truncate anchorTag"
-                  :href="getAttachmentLink(image, true)"
-                  >{{ bannerName }}</a
-                ></v-card-text
-              >
-              <v-spacer></v-spacer>
-              <copy :text-to-copy="getImageUrl(image)" :unique-id="image" />
-            </v-flex>
-            <v-card-text class="pa-0 mt-n2"
-              ><i18n path="Common.EventBanner"
-            /></v-card-text>
-          </v-card>
-          <v-dialog v-model="bannerDialog" max-width="600">
-            <v-card>
-              <v-card-title class="pa-1">
-                <v-spacer></v-spacer>
-                <div>
-                  <v-btn icon @click="bannerDialog = false">
-                    <v-icon>mdi-close</v-icon>
-                  </v-btn>
-                </div>
-              </v-card-title>
-              <v-card-text class="pa-1">
-                <v-card
-                  v-for="image in data.event.Images"
-                  :key="image"
-                  class="mx-auto elevation-0"
-                  @click.stop="bannerDialog = true"
-                >
-                  <v-img
-                    :src="getAttachmentLink(image, true)"
-                    :lazy-src="getAttachmentLink(image, true)"
-                    aspect-ratio="1"
-                    class="white"
-                    width="100%"
-                    contain
-                  >
-                    <template v-slot:placeholder>
-                      <v-row
-                        class="fill-height ma-0"
-                        align="center"
-                        justify="center"
-                      >
-                        <v-progress-circular
-                          indeterminate
-                          color="grey lighten-5"
-                        ></v-progress-circular>
-                      </v-row>
-                    </template>
-                  </v-img>
-                </v-card>
-              </v-card-text>
-            </v-card>
-          </v-dialog>
-          <v-card
-            v-for="image in data.event.Logo"
-            :key="image"
-            class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-5 pr-3 elevation-0 cardImg rounded"
-          >
-            <span class="cardDelete">
-              <i
-                class="fa-trash pa-2 cursorPointer"
-                @click="deleteLogoFile(image)"
-              ></i>
-            </span>
-            <v-img
-              :src="getAttachmentLink(image, true)"
-              :lazy-src="getAttachmentLink(image, true)"
-              aspect-ratio="1"
-              class="rounded white"
-              max-width="150"
-              max-height="150"
-              width="150"
-              contain
-              @click.stop="logoDialog = true"
-            >
-              <template v-slot:placeholder>
-                <v-row class="fill-height ma-0" align="center" justify="center">
-                  <v-progress-circular
-                    indeterminate
-                    color="grey lighten-5"
-                  ></v-progress-circular>
-                </v-row>
-              </template>
-            </v-img>
-            <v-flex class="mt-1 d-flex">
-              <v-card-text class="pa-0 pb-1 d-inline-block"
-                ><a
-                  class="d-inline-block text-truncate anchorTag"
-                  :href="getAttachmentLink(image, true)"
-                  >{{ logoName }}</a
-                ></v-card-text
-              >
-              <copy :text-to-copy="getImageUrl(image)" :unique-id="image" />
-            </v-flex>
-            <v-card-text class="pa-0 mt-n2"
-              ><i18n path="Common.LogoImage"
-            /></v-card-text>
-          </v-card>
-          <v-dialog v-model="logoDialog" max-width="600">
-            <v-card>
-              <v-card-title class="pa-1">
-                <v-spacer></v-spacer>
-                <div>
-                  <v-btn icon @click="logoDialog = false">
-                    <v-icon>mdi-close</v-icon>
-                  </v-btn>
-                </div>
-              </v-card-title>
-              <v-card-text class="pa-1">
-                <v-card
-                  v-for="image in data.event.Logo"
-                  :key="image"
-                  class="mx-auto elevation-0"
-                  @click.stop="logoDialog = true"
-                >
-                  <v-img
-                    :src="getAttachmentLink(image, true)"
-                    :lazy-src="getAttachmentLink(image, true)"
-                    aspect-ratio="1"
-                    class="white"
-                    width="100%"
-                    contain
-                  >
-                    <template v-slot:placeholder>
-                      <v-row
-                        class="fill-height ma-0"
-                        align="center"
-                        justify="center"
-                      >
-                        <v-progress-circular
-                          indeterminate
-                          color="grey lighten-5"
-                        ></v-progress-circular>
-                      </v-row>
-                    </template>
-                  </v-img>
-                </v-card>
-              </v-card-text>
-            </v-card>
-          </v-dialog>
-          <v-card
-            v-for="(image, index) in eventData.Other"
-            :key="index"
-            class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-5 pr-3 elevation-0 cardImg rounded"
-          >
-            <span class="cardDelete">
-              <i
-                class="fa-trash pa-2 cursorPointer"
-                @click="deleteOtherFile(image)"
-              ></i>
-            </span>
-            <v-img
-              :src="getAttachmentLink(image, true)"
-              :lazy-src="getAttachmentLink(image, true)"
-              aspect-ratio="1"
-              class="rounded"
-              max-width="150"
-              max-height="150"
-              width="150"
-              @click.stop="openOtherDialog(image)"
-            >
-              <template v-slot:placeholder>
-                <v-row class="fill-height ma-0" align="center" justify="center">
-                  <v-progress-circular
-                    indeterminate
-                    color="grey lighten-5"
-                  ></v-progress-circular>
-                </v-row>
-              </template>
-            </v-img>
-            <v-flex class="mt-1 d-flex">
-              <v-card-text class="pa-0 pb-1">
-                <a
-                  class="d-inline-block text-truncate anchorTag"
-                  :href="getAttachmentLink(image, true)"
-                  >{{
-                    OtherImageName[index] && OtherImageName[index].fileName
-                  }}</a
-                >
-              </v-card-text>
-              <copy :text-to-copy="getImageUrl(image)" :unique-id="image" />
-            </v-flex>
-            <v-card-text class="pa-0 mt-n2 otherImg"
-              ><i18n path="Common.LogoImage"
-            /></v-card-text>
-          </v-card>
-          <v-dialog v-model="otherDialogOpen" max-width="600">
-            <v-card>
-              <v-card-title class="pa-1">
-                <v-spacer></v-spacer>
-                <div>
-                  <v-btn icon @click="otherDialogOpen = false">
-                    <v-icon>mdi-close</v-icon>
-                  </v-btn>
-                </div>
-              </v-card-title>
-              <v-card-text class="pa-1">
-                <v-card class="mx-auto elevation-0">
-                  <v-img
-                    :src="displaySelectedOtherImage"
-                    :lazy-src="displaySelectedOtherImage"
-                    aspect-ratio="1"
-                    class="white"
-                    width="100%"
-                    contain
-                  >
-                    <template v-slot:placeholder>
-                      <v-row
-                        class="fill-height ma-0"
-                        align="center"
-                        justify="center"
-                      >
-                        <v-progress-circular
-                          indeterminate
-                          color="grey lighten-5"
-                        ></v-progress-circular>
-                      </v-row>
-                    </template>
-                  </v-img>
-                </v-card>
-              </v-card-text>
-            </v-card>
-          </v-dialog>
+                {{ Tags }}
+              </v-chip>
+            </div>
+          </v-flex>
         </div>
-      </div>
-      <div
-        v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
-      >
-        <v-flex class="d-flex justify-center align-center pb-3">
-          <h2 class="body-1 pb-0">
-            <i class="fa fa-black-board pr-1" aria-hidden="true"></i>
-            <i18n path="Common.RecurringSessions" />
-          </h2>
-          <v-spacer></v-spacer>
-        </v-flex>
-        <v-divider></v-divider>
-        <Grid
-          ref="recurringGrid"
-          view-name="eventRecurringSession"
-          :content="content"
-          class="mt-n12"
-        />
-      </div>
-      <div
-        v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
-      >
-        <v-flex class="d-flex justify-center align-center pb-3">
-          <h2 class="body-1 pb-0">
-            <i class="fa fa-users pr-1" aria-hidden="true"></i>
-            <i18n path="Common.Attendees" />
-          </h2>
-          <v-spacer></v-spacer>
-        </v-flex>
-        <v-divider></v-divider>
-        <Grid
-          view-name="eventRecurringAttendees"
-          :content="content"
-          :context="data"
-          class="mt-n12"
-        />
-      </div>
-      <div
-        v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
-      >
-        <v-flex class="d-flex justify-center align-center pb-3">
-          <h2 class="body-1 pb-0">
-            <i class="fa fa-user-plus pr-1" aria-hidden="true"></i>
-            <i18n path="Common.Registrations" />
-          </h2>
-          <v-spacer></v-spacer>
-        </v-flex>
-        <v-divider></v-divider>
-        <Grid
-          view-name="recurringEventRegistrations"
-          :content="content"
-          class="mt-n12"
-        />
-      </div>
-      <div
-        v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
-      >
-        <v-flex class="d-flex justify-center align-center pb-3">
-          <h2 class="body-1 pb-0">
-            <i class="fa fa-mail pr-1" aria-hidden="true"></i>
-            <i18n path="Common.Invites" />
-          </h2>
-          <v-spacer></v-spacer>
-        </v-flex>
-        <v-divider></v-divider>
-        <Grid view-name="eventInvites" :content="content" class="mt-n12" />
-      </div>
-      <div
-        v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg recurring-event"
-      >
-        <v-flex class="d-flex justify-center align-center pb-3">
-          <h2 class="body-1 pb-0">
-            <i class="fa fa-ticketalt pr-1" aria-hidden="true"></i>
-            <i18n path="Common.Tickets" />
-          </h2>
-          <v-spacer></v-spacer>
-        </v-flex>
-        <v-divider></v-divider>
-        <Grid
-          view-name="eventTickets"
-          :content="content"
-          class="mt-n12"
-          :context="data"
-        />
-      </div>
-      <div
-        v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
-      >
-        <v-flex class="d-flex justify-center align-center pb-3">
-          <h2 class="body-1 pb-0">
-            <i class="fa fa-settings1 pr-1" aria-hidden="true"></i>
-            <i18n path="Common.DiscountCodes" />
-          </h2>
-          <v-spacer></v-spacer>
-        </v-flex>
-        <v-divider></v-divider>
-        <Grid
-          view-name="eventDiscountCodes"
-          :content="content"
-          class="mt-n12"
-        />
-      </div>
-      <div
-        v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
-      >
-        <v-flex class="d-flex justify-center align-center pb-3">
-          <h2 class="body-1 pb-0">
-            <i class="fa fa-question-circle pr-1" aria-hidden="true"></i>
-            <i18n path="Common.RegistrationQuestions" />
-          </h2>
-          <v-spacer></v-spacer>
-        </v-flex>
-        <v-divider></v-divider>
-        <Grid
-          view-name="eventRegistrationQuestion"
-          :content="content"
-          class="mt-n12"
-        />
-      </div>
-      <div
-        v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
-      >
-        <v-flex class="d-flex justify-center align-center pb-3">
-          <h2 class="body-1 pb-0">
-            <i class="fa fa-mic pr-1" aria-hidden="true"></i>
-            <i18n path="Common.Speakers" />
-          </h2>
-          <v-spacer></v-spacer>
-        </v-flex>
-        <v-divider></v-divider>
-        <Grid view-name="eventSpeakers" :content="content" class="mt-n12" />
-      </div>
-      <div
-        v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
-      >
-        <v-flex class="d-flex justify-center align-center pb-3">
-          <h2 class="body-1 pb-0">
-            <i class="fa fa-external-link pr-1" aria-hidden="true"></i>
-            <i18n path="Common.Tasks" />
-          </h2>
-          <v-spacer></v-spacer>
-        </v-flex>
-        <v-divider></v-divider>
-        <Grid
-          view-name="eventTasks"
-          :content="content"
-          :context="data"
-          class="mt-n12"
-        />
-      </div>
-      <div
-        v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
-      >
-        <v-flex class="d-flex justify-center align-center pb-3">
-          <h2 class="body-1 pb-0">
-            <i class="fa fa-file-text-o pr-1" aria-hidden="true"></i>
-            <i18n path="Common.RegistrationForm" />
-          </h2>
-          <v-spacer></v-spacer>
-        </v-flex>
-        <v-divider></v-divider>
-        <Grid
-          view-name="eventRegistrationForm"
-          :content="content"
-          class="mt-n12"
-        />
-      </div>
-      <div
-        class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
-      >
-        <v-flex class="d-flex justify-center align-center pb-3">
-          <h2 class="body-1 pb-0">
-            <i class="fa fa-comments-alt pr-1" aria-hidden="true"></i>
-            <i18n path="Common.Notes" />
-          </h2>
-          <v-spacer></v-spacer>
-        </v-flex>
-        <v-divider></v-divider>
-        <Notes model-name="Events" />
-      </div>
-    </v-flex>
-    <v-flex column class="mxw-w30">
-      <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 py-0 pr-2 box-grey">
-        <v-flex class="d-flex justify-center align-center pb-2">
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <h2 class="body-1 pb-0" v-bind="attrs" v-on="on">
-                <i class="fa fa-tag pr-1" aria-hidden="true"></i>
-                <i18n path="Common.EventInformation" />
-              </h2>
-            </template>
-            <span><i18n path="Common.EventInformation" /></span>
-          </v-tooltip>
-          <v-spacer></v-spacer>
-          <v-btn text small @click.stop="eventForm = true">
-            <v-icon left class="fs-16">fa-pencil</v-icon
-            ><i18n path="Drawer.Edit" />
-          </v-btn>
-        </v-flex>
-        <v-divider></v-divider>
-        <v-flex my-3>
-          <i18n path="Common.Organizer" class="body-2 text--secondary" />
 
-          <div class="body-1">{{ formatField(data.event.Organizer) }}</div>
-        </v-flex>
-        <v-flex my-3>
-          <i18n path="Common.EventManager" class="body-2 text--secondary" />
+        <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-0 box-grey">
+          <v-flex class="d-flex justify-center align-center pb-2">
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <h2 class="body-1 pb-0" v-bind="attrs" v-on="on">
+                  <i class="fa fa-tag pr-1" aria-hidden="true"></i>
+                  <i18n path="Common.SEODetails" />
+                </h2>
+              </template>
+              <span><i18n path="Common.SEODetails" /></span>
+            </v-tooltip>
+            <v-spacer></v-spacer>
+            <v-btn text small @click="seoForm = true">
+              <v-icon left class="fs-16">fa-pencil</v-icon
+              ><i18n path="Drawer.Edit" />
+            </v-btn>
+          </v-flex>
+          <v-divider></v-divider>
+          <v-flex my-3>
+            <i18n path="Common.SEOTitle" class="body-2 text--secondary" />
 
-          <div class="body-1 text--primary">
-            {{ formatField(data.event.EventManager) }}
-          </div>
-        </v-flex>
-        <v-flex v-if="data.event.Tags" my-3>
-          <i18n path="Common.Tags" class="body-2 text--secondary" />
-          <div class="body-1 v-tags">
-            <v-chip
-              v-for="Tags in data.event.Tags"
-              :key="Tags"
-              small
-              class="ma-1"
-            >
-              {{ Tags }}
-            </v-chip>
-          </div>
-        </v-flex>
-      </div>
+            <div class="body-1">
+              {{ formatField(data.event.SEOTitle) }}
+            </div>
+          </v-flex>
+          <v-flex my-3>
+            <i18n path="Common.SEODescription" class="body-2 text--secondary" />
 
-      <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-0 box-grey">
-        <v-flex class="d-flex justify-center align-center pb-2">
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <h2 class="body-1 pb-0" v-bind="attrs" v-on="on">
-                <i class="fa fa-tag pr-1" aria-hidden="true"></i>
-                <i18n path="Common.SEODetails" />
-              </h2>
-            </template>
-            <span><i18n path="Common.SEODetails" /></span>
-          </v-tooltip>
-          <v-spacer></v-spacer>
-          <v-btn text small @click="seoForm = true">
-            <v-icon left class="fs-16">fa-pencil</v-icon
-            ><i18n path="Drawer.Edit" />
-          </v-btn>
-        </v-flex>
-        <v-divider></v-divider>
-        <v-flex my-3>
-          <i18n path="Common.SEOTitle" class="body-2 text--secondary" />
+            <div class="body-1">{{ formatField(data.event.SEODesc) }}</div>
+          </v-flex>
+          <v-flex my-3>
+            <i18n path="Common.SEOKeywords" class="body-2 text--secondary" />
 
-          <div class="body-1">
-            {{ formatField(data.event.SEOTitle) }}
-          </div>
-        </v-flex>
-        <v-flex my-3>
-          <i18n path="Common.SEODescription" class="body-2 text--secondary" />
-
-          <div class="body-1">{{ formatField(data.event.SEODesc) }}</div>
-        </v-flex>
-        <v-flex my-3>
-          <i18n path="Common.SEOKeywords" class="body-2 text--secondary" />
-
-          <div class="body-1">{{ formatField(data.event.SEOKeywords) }}</div>
-        </v-flex>
-      </div>
-
-      <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-0 box-grey">
-        <v-flex class="d-flex justify-center align-center pb-2">
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <h2 class="body-1 pb-0" v-bind="attrs" v-on="on">
-                <i class="fa fa-tag pr-1" aria-hidden="true"></i>
-                <i18n path="Common.EventSettings" />
-              </h2>
-            </template>
-            <span><i18n path="Common.EventSettings" /></span>
-          </v-tooltip>
-          <v-spacer></v-spacer>
-          <v-btn text small @click="eventSetting = true">
-            <v-icon left class="fs-16">fa-pencil</v-icon
-            ><i18n path="Drawer.Edit" />
-          </v-btn>
-        </v-flex>
-        <v-divider></v-divider>
-        <v-flex my-3>
-          <i18n path="Common.Privacy" class="body-2 text--secondary" />
-
-          <div class="body-1">{{ formatField(data.event.Privacy) }}</div>
-        </v-flex>
-        <v-flex my-3>
-          <i18n path="Common.Currency" class="body-2 text--secondary" />
-
-          <div class="body-1">{{ formatField(data.event.Currency) }}</div>
-        </v-flex>
-        <v-flex my-3>
-          <i18n path="Common.GLAccountCode" class="body-2 text--secondary" />
-
-          <div class="body-1">{{ formatField(data.event.ProjectCode) }}</div>
-        </v-flex>
-        <v-flex my-3>
-          <i18n path="Common.CostCenter" class="body-2 text--secondary" />
-
-          <div class="body-1">{{ formatField(data.event.CostCenter) }}</div>
-        </v-flex>
-        <v-flex my-3>
-          <i18n path="Common.BusinessType" class="body-2 text--secondary" />
-
-          <div class="body-1">{{ formatField(data.event.BusinessType) }}</div>
-        </v-flex>
-        <v-flex my-3>
-          <i18n path="Common.EventLink" class="body-2 text--secondary" />
-
-          <div class="body-1 d-block text-truncate">
-            {{ formatField(eventUniqueLink) }}
-          </div>
-        </v-flex>
-        <v-flex my-3>
-          <i18n path="Common.SessionLink" class="body-2 text--secondary" />
-
-          <div class="body-1 d-block text-truncate">
-            {{ formatField(eventSessionLink) }}
-          </div>
-        </v-flex>
-        <v-flex my-3>
-          <i18n
-            path="Common.CancellationPolicy"
-            class="body-2 text--secondary"
-          />
-
-          <div class="body-1">
-            <!-- eslint-disable-next-line vue/no-v-html -->
-            <div v-html="formatField(data.event.CancellationPolicy)"></div>
-          </div>
-        </v-flex>
-        <v-flex class="d-block text-truncate">
-          <v-checkbox
-            v-model="data.event.isRefundable"
-            dense
-            height="20"
-            class="ma-0 pa-0"
-            :label="$t('Common.AllowCancelation')"
-            color="green"
-            @change="updateReg()"
-          ></v-checkbox>
-        </v-flex>
-        <v-flex class="d-block text-truncate">
-          <v-checkbox
-            v-model="data.event.SessionTimingConflict"
-            dense
-            height="20"
-            class="ma-0 pa-0"
-            :label="$t('Common.ValidateSessionTimingConflict')"
-            color="green"
-            @change="updateReg()"
-          ></v-checkbox>
-        </v-flex>
-        <v-flex class="d-block text-truncate">
-          <v-checkbox
-            v-model="data.event.ShowRemainingTickets"
-            dense
-            height="20"
-            class="ma-0 pa-0"
-            :label="$t('Common.ShowRemainingTicketsCount')"
-            color="green"
-            @change="updateReg()"
-          ></v-checkbox>
-        </v-flex>
-        <v-flex class="d-block text-truncate">
-          <v-checkbox
-            v-model="data.event.ShowAttendeeForm"
-            dense
-            height="20"
-            class="ma-0 pa-0"
-            :label="$t('Common.ShowAttendeeForm')"
-            color="green"
-            @change="updateReg()"
-          ></v-checkbox>
-        </v-flex>
-        <v-flex class="mt-2">
-          <v-checkbox
-            v-model="data.event.NotifyOrganizer"
-            dense
-            height="20"
-            class="ma-0 pa-0"
-            :label="$t('Common.NotifyOrganizer')"
-            color="green"
-            @change="updateReg()"
-          ></v-checkbox>
-        </v-flex>
-        <v-flex class="mt-2">
-          <v-checkbox
-            v-model="data.event.showTimezone"
-            dense
-            height="20"
-            class="ma-0 pa-0"
-            :label="$t('Common.Allowusertoselectatimezoneforrecurringevent')"
-            color="green"
-            @change="updateReg()"
-          ></v-checkbox>
-        </v-flex>
-      </div>
-      <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-0 box-grey">
-        <v-flex class="d-flex justify-center align-center pb-2">
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <h2 class="body-1 pb-0" v-bind="attrs" v-on="on">
-                <i class="fa fa-tag pr-1" aria-hidden="true"></i>
-                <i18n path="Common.RegistrationPageSettings" />
-              </h2>
-            </template>
-            <span><i18n path="Common.RegistrationPageSettings" /></span>
-          </v-tooltip>
-          <v-spacer></v-spacer>
-          <v-btn text small @click="siteSetting = true">
-            <v-icon left class="fs-16">fa-pencil</v-icon
-            ><i18n path="Drawer.Edit" />
-          </v-btn>
-        </v-flex>
-        <v-divider></v-divider>
-        <v-flex my-3>
-          <i18n
-            path="Common.RegistrationSiteTemplate"
-            class="body-2 text--secondary"
-          />
-
-          <div class="body-1">
-            {{ formatField(data.event.RegistrationSiteTemplate) }}
-          </div>
-        </v-flex>
-        <v-flex>
-          <v-checkbox
-            v-model="registrationSetting.showimagegallery"
-            dense
-            height="20"
-            class="ma-0 pa-0"
-            :label="$t('Common.ShowImageGallery')"
-            color="green"
-            @change="updateReg1()"
-          ></v-checkbox>
-        </v-flex>
-        <v-flex>
-          <v-checkbox
-            v-model="registrationSetting.showeventreviews"
-            dense
-            height="20"
-            class="ma-0 pa-0"
-            :label="$t('Common.ShowEventReviews')"
-            color="green"
-            @change="updateReg1()"
-          ></v-checkbox>
-        </v-flex>
-      </div>
-      <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
-        <div class="toast py-2 pr-1 pl-3">
-          {{ snackbarText }}
+            <div class="body-1">{{ formatField(data.event.SEOKeywords) }}</div>
+          </v-flex>
         </div>
-      </v-snackbar>
+
+        <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-0 box-grey">
+          <v-flex class="d-flex justify-center align-center pb-2">
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <h2 class="body-1 pb-0" v-bind="attrs" v-on="on">
+                  <i class="fa fa-tag pr-1" aria-hidden="true"></i>
+                  <i18n path="Common.EventSettings" />
+                </h2>
+              </template>
+              <span><i18n path="Common.EventSettings" /></span>
+            </v-tooltip>
+            <v-spacer></v-spacer>
+            <v-btn text small @click="eventSetting = true">
+              <v-icon left class="fs-16">fa-pencil</v-icon
+              ><i18n path="Drawer.Edit" />
+            </v-btn>
+          </v-flex>
+          <v-divider></v-divider>
+          <v-flex my-3>
+            <i18n path="Common.Privacy" class="body-2 text--secondary" />
+
+            <div class="body-1">{{ formatField(data.event.Privacy) }}</div>
+          </v-flex>
+          <v-flex my-3>
+            <i18n path="Common.Currency" class="body-2 text--secondary" />
+
+            <div class="body-1">{{ formatField(data.event.Currency) }}</div>
+          </v-flex>
+          <v-flex my-3>
+            <i18n path="Common.GLAccountCode" class="body-2 text--secondary" />
+
+            <div class="body-1">{{ formatField(data.event.ProjectCode) }}</div>
+          </v-flex>
+          <v-flex my-3>
+            <i18n path="Common.CostCenter" class="body-2 text--secondary" />
+
+            <div class="body-1">{{ formatField(data.event.CostCenter) }}</div>
+          </v-flex>
+          <v-flex my-3>
+            <i18n path="Common.BusinessType" class="body-2 text--secondary" />
+
+            <div class="body-1">{{ formatField(data.event.BusinessType) }}</div>
+          </v-flex>
+          <v-flex my-3>
+            <i18n path="Common.EventLink" class="body-2 text--secondary" />
+
+            <div class="body-1 d-block text-truncate">
+              {{ formatField(eventUniqueLink) }}
+            </div>
+          </v-flex>
+          <v-flex my-3>
+            <i18n path="Common.SessionLink" class="body-2 text--secondary" />
+
+            <div class="body-1 d-block text-truncate">
+              {{ formatField(eventSessionLink) }}
+            </div>
+          </v-flex>
+          <v-flex my-3>
+            <i18n
+              path="Common.CancellationPolicy"
+              class="body-2 text--secondary"
+            />
+
+            <div class="body-1">
+              <!-- eslint-disable-next-line vue/no-v-html -->
+              <div v-html="formatField(data.event.CancellationPolicy)"></div>
+            </div>
+          </v-flex>
+          <v-flex class="d-block text-truncate">
+            <v-checkbox
+              v-model="data.event.isRefundable"
+              dense
+              height="20"
+              class="ma-0 pa-0"
+              :label="$t('Common.AllowCancelation')"
+              color="green"
+              @change="updateReg()"
+            ></v-checkbox>
+          </v-flex>
+          <v-flex class="d-block text-truncate">
+            <v-checkbox
+              v-model="data.event.SessionTimingConflict"
+              dense
+              height="20"
+              class="ma-0 pa-0"
+              :label="$t('Common.ValidateSessionTimingConflict')"
+              color="green"
+              @change="updateReg()"
+            ></v-checkbox>
+          </v-flex>
+          <v-flex class="d-block text-truncate">
+            <v-checkbox
+              v-model="data.event.ShowRemainingTickets"
+              dense
+              height="20"
+              class="ma-0 pa-0"
+              :label="$t('Common.ShowRemainingTicketsCount')"
+              color="green"
+              @change="updateReg()"
+            ></v-checkbox>
+          </v-flex>
+          <v-flex class="d-block text-truncate">
+            <v-checkbox
+              v-model="data.event.ShowAttendeeForm"
+              dense
+              height="20"
+              class="ma-0 pa-0"
+              :label="$t('Common.ShowAttendeeForm')"
+              color="green"
+              @change="updateReg()"
+            ></v-checkbox>
+          </v-flex>
+          <v-flex class="mt-2">
+            <v-checkbox
+              v-model="data.event.NotifyOrganizer"
+              dense
+              height="20"
+              class="ma-0 pa-0"
+              :label="$t('Common.NotifyOrganizer')"
+              color="green"
+              @change="updateReg()"
+            ></v-checkbox>
+          </v-flex>
+          <v-flex class="mt-2">
+            <v-checkbox
+              v-model="data.event.showTimezone"
+              dense
+              height="20"
+              class="ma-0 pa-0"
+              :label="$t('Common.Allowusertoselectatimezoneforrecurringevent')"
+              color="green"
+              @change="updateReg()"
+            ></v-checkbox>
+          </v-flex>
+        </div>
+        <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-0 box-grey">
+          <v-flex class="d-flex justify-center align-center pb-2">
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <h2 class="body-1 pb-0" v-bind="attrs" v-on="on">
+                  <i class="fa fa-tag pr-1" aria-hidden="true"></i>
+                  <i18n path="Common.RegistrationPageSettings" />
+                </h2>
+              </template>
+              <span><i18n path="Common.RegistrationPageSettings" /></span>
+            </v-tooltip>
+            <v-spacer></v-spacer>
+            <v-btn text small @click="siteSetting = true">
+              <v-icon left class="fs-16">fa-pencil</v-icon
+              ><i18n path="Drawer.Edit" />
+            </v-btn>
+          </v-flex>
+          <v-divider></v-divider>
+          <v-flex my-3>
+            <i18n
+              path="Common.RegistrationSiteTemplate"
+              class="body-2 text--secondary"
+            />
+
+            <div class="body-1">
+              {{ formatField(data.event.RegistrationSiteTemplate) }}
+            </div>
+          </v-flex>
+          <v-flex>
+            <v-checkbox
+              v-model="registrationSetting.showimagegallery"
+              dense
+              height="20"
+              class="ma-0 pa-0"
+              :label="$t('Common.ShowImageGallery')"
+              color="green"
+              @change="updateReg1()"
+            ></v-checkbox>
+          </v-flex>
+          <v-flex>
+            <v-checkbox
+              v-model="registrationSetting.showeventreviews"
+              dense
+              height="20"
+              class="ma-0 pa-0"
+              :label="$t('Common.ShowEventReviews')"
+              color="green"
+              @change="updateReg1()"
+            ></v-checkbox>
+          </v-flex>
+        </div>
+        <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
+          <div class="toast py-2 pr-1 pl-3">
+            {{ snackbarText }}
+          </div>
+        </v-snackbar>
+      </v-flex>
+      <div v-if="seoForm">
+        <editSeoForm :seo-form.sync="seoForm" />
+      </div>
+      <div v-if="eventForm">
+        <editEventForm :event-form.sync="eventForm" />
+      </div>
+      <div v-if="eventSetting">
+        <editEventSetting :event-setting.sync="eventSetting" />
+      </div>
+      <div v-if="siteSetting">
+        <editSiteSetting :site-setting.sync="siteSetting" />
+      </div>
+      <makeCopy :is-make-copy.sync="isMakeCopy" />
     </v-flex>
-    <div v-if="seoForm">
-      <editSeoForm :seo-form.sync="seoForm" />
-    </div>
-    <div v-if="eventForm">
-      <editEventForm :event-form.sync="eventForm" />
-    </div>
-    <div v-if="eventSetting">
-      <editEventSetting :event-setting.sync="eventSetting" />
-    </div>
-    <div v-if="siteSetting">
-      <editSiteSetting :site-setting.sync="siteSetting" />
-    </div>
-    <makeCopy :is-make-copy.sync="isMakeCopy" />
-  </v-flex>
+  </div>
 </template>
 <script>
 import gql from 'graphql-tag'
@@ -1355,6 +1385,9 @@ export default {
     openOtherDialog(image) {
       this.otherDialogOpen = true
       this.displaySelectedOtherImage = this.getAttachmentLink(image, true)
+    },
+    goBack() {
+      this.$router.back()
     },
     async getBannerImageName(imageId) {
       const url = this.$bitpod.getApiUrl()

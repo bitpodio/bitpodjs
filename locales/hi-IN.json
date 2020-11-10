@@ -499,6 +499,7 @@
     "SessionName": "Session Name*",
     "StartDateTime": "Start Date Time*",
     "CustomDuration": "Custom Duration*",
+    "Activity": "गतिविधि",
     "EditActivity": "Edit Activity",
     "DueDateRequired": "Due Date*",
     "TicketCount": "Ticket Count",

@@ -499,6 +499,7 @@
     "SessionName" : "Nom de la session *",
     "StartDateTime" : "Heure de début *",
     "CustomDuration" : "Durée personnalisée *",
+    "Activity": "Activité",
     "EditActivity" : "Editer une activité",
     "DueDateRequired" : "Date d'échéance *",
     "TicketCount" : "Nombre de tickets",
