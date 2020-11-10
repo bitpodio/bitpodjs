@@ -526,6 +526,13 @@ body {
   text-overflow: ellipsis;
   overflow: hidden;
 }
+.detailview-head {
+  min-height: 52px;
+}
+.back-icon {
+  position: relative;
+  top: -2px;
+}
 @media (max-width: 800px) {
   .nav-bar {
     top: 0 !important;
