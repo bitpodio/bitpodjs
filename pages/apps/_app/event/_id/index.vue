@@ -489,7 +489,7 @@
                 max-height="150"
                 width="150"
                 position="right"
-                @click.stop="bannerDialog = true"
+                @click.stop="dbannerDialog = true"
               >
                 <template v-slot:placeholder>
                   <v-row
@@ -518,44 +518,17 @@
                 ><i18n path="Common.BannerImage"
               /></v-card-text>
             </v-card>
-            <v-dialog v-model="bannerDialog" max-width="600">
+            <v-dialog v-model="dbannerDialog" max-width="600">
               <v-card>
                 <v-card-title class="pa-1">
                   <v-spacer></v-spacer>
                   <div>
-                    <v-btn icon @click="bannerDialog = false">
+                    <v-btn icon @click="dbannerDialog = false">
                       <v-icon>mdi-close</v-icon>
                     </v-btn>
                   </div>
                 </v-card-title>
-                <v-card-text class="pa-1">
-                  <v-card
-                    class="mx-auto elevation-0"
-                    @click.stop="bannerDialog = true"
-                  >
-                    <v-img
-                      :src="$config.cdnUri + 'default-min.jpg'"
-                      :lazy-src="$config.cdnUri + 'default-min.jpg'"
-                      aspect-ratio="1"
-                      class="white"
-                      width="100%"
-                      contain
-                    >
-                      <template v-slot:placeholder>
-                        <v-row
-                          class="fill-height ma-0"
-                          align="center"
-                          justify="center"
-                        >
-                          <v-progress-circular
-                            indeterminate
-                            color="grey lighten-5"
-                          ></v-progress-circular>
-                        </v-row>
-                      </template>
-                    </v-img>
-                  </v-card>
-                </v-card-text>
+                <v-img :src="$config.cdnUri + 'default-min.jpg'"> </v-img>
               </v-card>
             </v-dialog>
             <v-card
@@ -624,27 +597,7 @@
                     class="mx-auto elevation-0"
                     @click.stop="bannerDialog = true"
                   >
-                    <v-img
-                      :src="getAttachmentLink(image, true)"
-                      :lazy-src="getAttachmentLink(image, true)"
-                      aspect-ratio="1"
-                      class="white"
-                      width="100%"
-                      contain
-                    >
-                      <template v-slot:placeholder>
-                        <v-row
-                          class="fill-height ma-0"
-                          align="center"
-                          justify="center"
-                        >
-                          <v-progress-circular
-                            indeterminate
-                            color="grey lighten-5"
-                          ></v-progress-circular>
-                        </v-row>
-                      </template>
-                    </v-img>
+                    <v-img :src="getAttachmentLink(image, true)"> </v-img>
                   </v-card>
                 </v-card-text>
               </v-card>
@@ -715,27 +668,7 @@
                     class="mx-auto elevation-0"
                     @click.stop="logoDialog = true"
                   >
-                    <v-img
-                      :src="getAttachmentLink(image, true)"
-                      :lazy-src="getAttachmentLink(image, true)"
-                      aspect-ratio="1"
-                      class="white"
-                      width="100%"
-                      contain
-                    >
-                      <template v-slot:placeholder>
-                        <v-row
-                          class="fill-height ma-0"
-                          align="center"
-                          justify="center"
-                        >
-                          <v-progress-circular
-                            indeterminate
-                            color="grey lighten-5"
-                          ></v-progress-circular>
-                        </v-row>
-                      </template>
-                    </v-img>
+                    <v-img :src="getAttachmentLink(image, true)"> </v-img>
                   </v-card>
                 </v-card-text>
               </v-card>
@@ -800,31 +733,7 @@
                     </v-btn>
                   </div>
                 </v-card-title>
-                <v-card-text class="pa-1">
-                  <v-card class="mx-auto elevation-0">
-                    <v-img
-                      :src="displaySelectedOtherImage"
-                      :lazy-src="displaySelectedOtherImage"
-                      aspect-ratio="1"
-                      class="white"
-                      width="100%"
-                      contain
-                    >
-                      <template v-slot:placeholder>
-                        <v-row
-                          class="fill-height ma-0"
-                          align="center"
-                          justify="center"
-                        >
-                          <v-progress-circular
-                            indeterminate
-                            color="grey lighten-5"
-                          ></v-progress-circular>
-                        </v-row>
-                      </template>
-                    </v-img>
-                  </v-card>
-                </v-card-text>
+                <v-img :src="displaySelectedOtherImage"> </v-img>
               </v-card>
             </v-dialog>
           </div>
@@ -1537,6 +1446,7 @@ export default {
       siteSetting: false,
       logoDialog: false,
       bannerDialog: false,
+      dbannerDialog: false,
       otherDialogOpen: false,
       formData: {
         Logo: [],
