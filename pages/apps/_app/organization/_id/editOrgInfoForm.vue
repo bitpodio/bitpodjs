@@ -168,6 +168,7 @@ export default {
       this.formData._CurrentAddress.State = this.venueAddress.State
       this.formData._CurrentAddress.PostalCode = this.venueAddress.PostalCode
       this.formData._CurrentAddress.Country = this.venueAddress.Country
+      this.formData._CurrentAddress.id = this.venueAddress.id
     },
     async onSave() {
       const url = this.$bitpod.getApiUrl()
@@ -210,7 +211,14 @@ export default {
         const organization = formatGQLResult(data, 'OrganizationInfo')
         this.formData = { ...organization[0] }
         this.formData.id = this.$route.params.id
+        this.formData._PaymentGatewaySetting.id = this.formData
+          ._PaymentGatewaySetting.id
+          ? atob(this.formData._PaymentGatewaySetting.id).split(':')[1]
+          : ''
         this.venueAddress = { ...organization[0]._CurrentAddress }
+        this.venueAddress.id = this.venueAddress.id
+          ? atob(this.venueAddress.id).split(':')[1]
+          : ''
         return {
           organization: organization.length > 0 ? organization[0] : {},
         }
