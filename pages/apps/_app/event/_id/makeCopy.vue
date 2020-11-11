@@ -360,7 +360,6 @@ export default {
       addresslineMessage: '',
       requiredRules: [required],
       saveBtnDisabled: false,
-      isRecurring: false,
       copyEventId: '',
       currentLocation: {},
       locationsVisibleOnMap: '',
@@ -420,6 +419,9 @@ export default {
         this.eventData.BusinessType === 'Single' &&
         this.eventData.LocationType === 'Online event'
       )
+    },
+    isRecurring() {
+      return this.eventData && this.eventData.BusinessType === 'Recurring'
     },
     startDateField() {
       return {
@@ -493,9 +495,10 @@ export default {
     },
     closeForm() {
       this.isViewEvent = false
-      this.$router.push(
-        this.localePath('/apps/event/event/' + this.copyEventId)
-      )
+      const path = this.isRecurring
+        ? '/apps/event/event/recurring/'
+        : '/apps/event/event/'
+      this.$router.push(this.localePath(path + this.copyEventId))
     },
     viewEvent() {
       const baseUrl = this.$bitpod.getApiUrl()

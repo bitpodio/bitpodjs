@@ -96,12 +96,6 @@ export default {
         this.$refs.dateTimeComponent.display = true
       }
     }
-    // if (this.field.type === 'date') {
-    //   debugger
-    //   this.$refs.dialog.$children[0].$children[0].$el.onclick = () => {
-    //     this.$refs.dialog.display = true
-    //   }
-    // }
     this.onCalendarChange()
     if (this.field.type === 'datetime') {
       this.$refs.dateTimeComponent.$children[0].onClickOutside = this.outsideClicked

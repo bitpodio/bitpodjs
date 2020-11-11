@@ -279,7 +279,6 @@
 
 <script>
 import gql from 'graphql-tag'
-import format from 'date-fns/format'
 import Grid from '~/components/common/grid'
 import invites from '~/config/apps/event/gql/eventInviteSummary.gql'
 import editDraft from '~/config/templates/grids/eventInvites-grid/actions/grid/sendEventInvite.vue'

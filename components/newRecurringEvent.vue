@@ -2252,7 +2252,6 @@ export default {
       this.verifyUniqueLink(event.currentTarget.value)
     },
     verifyUniqueLink(value) {
-      this.isUniqLinkValid = false
       value = value.toLowerCase().replace(/\s/g, '')
       value = value.trim()
       this.eventData.UniqLink = value
@@ -2268,7 +2267,6 @@ export default {
       }
     },
     async checkUniqueLink(value) {
-      this.isUniqLinkValid = true
       const where = { UniqLink: value }
       const result = await this.$apollo.query({
         query: gql`
