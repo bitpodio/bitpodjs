@@ -660,11 +660,7 @@ export default {
   },
   computed: {
     locationTypeLookupOptions() {
-      const items = []
-      this.locationTypeOptions.forEach(function (option) {
-        items.push(option.key)
-      })
-      return items
+      return this.locationTypeOptions.map((option, index) => option.key)
     },
     startDateField() {
       return {
