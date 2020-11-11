@@ -27,7 +27,7 @@
                 <v-text-field
                   v-model="formData.Name"
                   :label="$t('Common.NameRequired')"
-                  :rules="requiredRule"
+                  :rules="[rules.required]"
                   outlined
                   dense
                 ></v-text-field>
@@ -44,7 +44,7 @@
                 <v-text-field
                   v-model="formData.Email"
                   :label="$t('Common.Email')"
-                  :rules="emailRules"
+                  :rules="[rules.required, rules.email]"
                   outlined
                   dense
                 ></v-text-field>
@@ -53,7 +53,7 @@
                 <v-text-field
                   v-model="formData.Mobile"
                   :label="$t('Common.PhoneRequired')"
-                  :rules="requiredRule"
+                  :rules="[rules.required]"
                   outlined
                   dense
                 ></v-text-field>
@@ -121,7 +121,7 @@
 
 <script>
 import gql from 'graphql-tag'
-import { email, required } from '~/utility/rules.js'
+import { rules } from '~/utility/rules.js'
 import { formatGQLResult } from '~/utility/gql.js'
 import organization from '~/config/apps/admin/gql/organization.gql'
 export default {
@@ -135,8 +135,7 @@ export default {
   data() {
     return {
       valid: false,
-      requiredRule: [required],
-      emailRules: [required, email],
+      rules: rules(this.$i18n),
       formData: {},
       venueAddress: {},
       data: {
@@ -169,6 +168,7 @@ export default {
       this.formData._CurrentAddress.State = this.venueAddress.State
       this.formData._CurrentAddress.PostalCode = this.venueAddress.PostalCode
       this.formData._CurrentAddress.Country = this.venueAddress.Country
+      this.formData._CurrentAddress.id = this.venueAddress.id
     },
     async onSave() {
       const url = this.$bitpod.getApiUrl()
@@ -211,7 +211,14 @@ export default {
         const organization = formatGQLResult(data, 'OrganizationInfo')
         this.formData = { ...organization[0] }
         this.formData.id = this.$route.params.id
+        this.formData._PaymentGatewaySetting.id = this.formData
+          ._PaymentGatewaySetting.id
+          ? atob(this.formData._PaymentGatewaySetting.id).split(':')[1]
+          : ''
         this.venueAddress = { ...organization[0]._CurrentAddress }
+        this.venueAddress.id = this.venueAddress.id
+          ? atob(this.venueAddress.id).split(':')[1]
+          : ''
         return {
           organization: organization.length > 0 ? organization[0] : {},
         }

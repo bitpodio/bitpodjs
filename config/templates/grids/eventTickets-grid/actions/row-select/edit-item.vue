@@ -1,5 +1,8 @@
 <template>
   <v-col class="px-0">
+    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
+      <div class="text-center">{{ snackbarText }}</div>
+    </v-snackbar>
     <v-dialog
       v-model="dialog"
       persistent
@@ -33,7 +36,7 @@
                 <v-text-field
                   v-model="formData.Code"
                   :label="$t('Common.Title')"
-                  :rules="required"
+                  :rules="[rules.required]"
                   outlined
                   dense
                 ></v-text-field>
@@ -84,7 +87,7 @@
                   v-model="formData.Type"
                   :items="typeDropDown"
                   :label="$t('Common.Type')"
-                  :rules="required"
+                  :rules="[rules.required]"
                   outlined
                   dense
                   @change="getType"
@@ -105,7 +108,7 @@
                 <v-text-field
                   v-model="formData.TicketCount"
                   :label="$t('Common.TicketCountRequired')"
-                  :rules="required"
+                  :rules="[rules.required]"
                   type="number"
                   outlined
                   dense
@@ -198,7 +201,7 @@ import gql from 'graphql-tag'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import registrationtype from '~/config/apps/event/gql/registrationType.gql'
 import { formatGQLResult } from '~/utility/gql.js'
-import { required } from '~/utility/rules.js'
+import { rules } from '~/utility/rules.js'
 export default {
   props: {
     refresh: {
@@ -223,7 +226,7 @@ export default {
       registrationType: [],
       eventStatusDropDown: [],
       eventStatus: [],
-      required: [required],
+      rules: rules(this.$i18n),
       Amount: 0,
       dialog: false,
       datevalid: true,
@@ -237,6 +240,9 @@ export default {
       },
       Symbol: '',
       CheckEndDate: '',
+      snackbar: false,
+      snackbarText: '',
+      timeout: 3000,
     }
   },
   computed: {
@@ -296,6 +302,13 @@ export default {
             }
           },
         ],
+      }
+    },
+  },
+  watch: {
+    snackbar(newVal) {
+      if (!newVal) {
+        this.refresh()
       }
     },
   },
@@ -408,7 +421,8 @@ export default {
         if (res) {
           this.onReset()
           this.dialog = false
-          this.refresh()
+          this.snackbarText = this.$t('Messages.Success.RecordUpdatedSuccess')
+          this.snackbar = true
         }
       } catch (e) {
         console.log(

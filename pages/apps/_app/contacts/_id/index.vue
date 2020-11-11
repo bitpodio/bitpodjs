@@ -130,7 +130,7 @@
           <Grid view-name="contactEmails" :content="content" class="mt-n12" />
         </div>
         <div
-          class="xs12 sm8 md8 lg8 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+          class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
           <v-flex class="d-flex justify-center align-center pb-3">
             <h2 class="body-1 pb-0">

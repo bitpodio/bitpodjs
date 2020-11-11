@@ -1,15 +1,18 @@
-module.exports = Object.freeze({
-  required: (v) => !!v || 'This field is required *',
-  email: (v) =>
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-      v
-    ) || 'Email is invalid',
-  link: (v) => /^[a-z0-9]+$/i.test(v) || 'Lower case alphanumeric letters only',
-  onlineEventLink: (v) => {
-    return !v
-      ? 'This field is required'
-      : !v.startsWith('https://')
-      ? 'This must be a https url'
-      : true
-  },
-})
+export function rules(i18n) {
+  return Object.freeze({
+    required: (v) => !!v || i18n.t('Messages.Error.FieldRequired'),
+    email: (v) =>
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+        v
+      ) || i18n.t('Messages.Error.EmailRequired'),
+    link: (v) =>
+      /^[a-z0-9]+$/i.test(v) || i18n.t('Messages.Warn.UniqueLinkFormat'),
+    onlineEventLink: (v) => {
+      return !v
+        ? i18n.t('Messages.Error.FieldRequired')
+        : !v.startsWith('https://')
+        ? i18n.t('Messages.Error.HttpsUrl')
+        : true
+    },
+  })
+}

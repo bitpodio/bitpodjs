@@ -981,7 +981,7 @@
           />
         </div>
         <div
-          class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+          class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 mr-2 mb-4 elevation-1 rounded-lg"
         >
           <v-flex class="d-flex justify-center align-center pb-3">
             <h2 class="body-1 pb-0">
@@ -1026,7 +1026,7 @@
             </div>
           </v-flex>
           <v-flex v-if="data.event.Tags" my-3>
-            {{ $tc('Common.Tags', data.event.Tags.length) }}
+            {{ $t('Common.Tags') }}
             <div class="body-1 v-tags">
               <v-chip
                 v-for="Tags in data.event.Tags"

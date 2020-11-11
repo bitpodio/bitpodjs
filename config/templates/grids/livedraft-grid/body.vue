@@ -1,5 +1,6 @@
 <template>
   <v-flex class="greybg">
+    <confirm ref="confirm"></confirm>
     <div v-if="items.length">
       <v-row class="ma-0">
         <v-col
@@ -216,7 +217,7 @@
                     v-if="item.StartDate !== undefined && item.StartDate"
                     class="text--secondary pa-2 pb-0 body-2 pl-0 pt-0"
                   >
-                    {{ $d(new Date(item.StartDate), 'long', $i18n.locale) }}
+                    {{ getEventStartDate(item.StartDate, item.Timezone) }}
                   </div>
                   <v-card-title
                     class="text-h5 grey--text text--darken-4 text-truncate d-block text-capitalize pa-2 pt-0 pb-1 pl-0"
@@ -313,7 +314,7 @@
                     <v-list-item
                       v-if="item.Status === 'Not ready'"
                       :key="item.id"
-                      @click="stop"
+                      @click="deleteEvent(item.id)"
                     >
                       <v-list-item-icon class="mr-2">
                         <i class="fa fa-trash mt-1" aria-hidden="true"></i>
@@ -343,6 +344,9 @@
       <editEventForm :id="id" :event-form.sync="eventForm" />
     </div>
     <makeCopy :id="id" :key="count" :is-make-copy.sync="isMakeCopy" />
+    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
+      <div class="text-center">{{ snackbarText }}</div>
+    </v-snackbar>
   </v-flex>
 </template>
 
@@ -367,9 +371,42 @@ export default {
       isMakeCopy: false,
       id: '',
       count: 0,
+      snackbar: false,
+      timeout: 2000,
+      snackbarText: '',
     }
   },
   methods: {
+    getEventStartDate(StartDate, Timezone) {
+      return this.$d(
+        new Date(this.formatedDate(StartDate, Timezone)),
+        'long',
+        this.$i18n.locale
+      )
+    },
+    async deleteEvent(id) {
+      const url = this.$bitpod.getApiUrl()
+      try {
+        const check = await this.$refs.confirm.open(
+          this.$t('Drawer.DeleteEvent'),
+          this.$t('Messages.Warn.DeleteEvent'),
+          { color: 'error lighten-1' }
+        )
+        if (check === true) {
+          const res = await this.$axios.$delete(`${url}Events/${id}`)
+          if (res) {
+            this.snackbarText = this.$t('Messages.Success.DeletedSuccessfully')
+            this.snackbar = true
+            this.$eventBus.$emit('grid-refresh')
+          }
+        }
+      } catch (e) {
+        console.error(
+          `Error in config/templates/grids/livedraft-grid/body.vue while making a DELETE call to Event model in method deleteEvent context: EventId:-${id} \n URL:- ${url} `,
+          e
+        )
+      }
+    },
     openEventForm(itemId) {
       this.id = itemId
       this.eventForm = true
