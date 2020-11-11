@@ -1,0 +1,28 @@
+query($filters: JSON, $locationTypeFilters: JSON) {
+  OrganizationInfo {
+    OrganizationInfoFind(filter: $filters) {
+      edges {
+        node {
+          id
+          Currency
+          Image
+          weekDay
+          AvailableEndHour
+          AvailableStartHour
+        }
+      }
+    }
+  }
+  GeneralConfiguration {
+    GeneralConfigurationFind(filter: $locationTypeFilters) {
+      edges {
+        node {
+          id
+          value
+          key
+          type
+        }
+      }
+    }
+  }
+}
