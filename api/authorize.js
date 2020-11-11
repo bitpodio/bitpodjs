@@ -6,7 +6,8 @@ export default function (req, res, next) {
   console.log('===>in authorize.js')
   console.log('===>in authorize.js req', req)
   if (req.headers.referer.includes('-')) {
-    referer = 'https://' + a.split('-')[1].replace('/login', '')
+    referer =
+      'https://' + req.headers.referer.split('-')[1].replace('/login', '')
     console.log('==>referer', referer)
   } else {
     referer = req.headers.referer
