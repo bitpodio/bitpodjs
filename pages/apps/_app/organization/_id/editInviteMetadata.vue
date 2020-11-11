@@ -1,96 +1,109 @@
 <template>
-  <v-layout>
-    <v-form ref="form" v-model="valid">
-      <v-dialog
-        v-model="editMetadata"
-        persistent
-        scrollable
-        content-class="slide-form-default"
-      >
-        <v-card>
-          <v-card-title
-            class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
-          >
-            <h2 class="black--text pt-5 pb-2 text-h5">
-              <i18n path="Common.EditTemplate" />
-            </h2>
-            <v-spacer></v-spacer>
-            <div>
-              <v-btn icon @click="onClose">
-                <v-icon>mdi-close</v-icon>
-              </v-btn>
-            </div>
-          </v-card-title>
-          <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
-            <v-form ref="form" v-model="valid" :lazy-validation="lazy">
-              <v-row>
-                <v-col cols="12" sm="6" md="6">
-                  <v-text-field
-                    v-model="template.Name"
-                    :label="$t('Common.TemplateName')"
-                    :rules="requiredRules"
-                    outlined
-                    dense
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6" md="6">
-                  <Lookup
-                    v-model="template.Type"
-                    :field="typeLookupField"
-                    :rules="requiredRules"
-                  />
-                </v-col>
-                <v-col cols="12" sm="6" md="6">
-                  <v-text-field
-                    v-model="template.Subject"
-                    :label="$t('Common.SubjectRequired')"
-                    :rules="requiredRules"
-                    outlined
-                    dense
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12" sm="6" md="6">
-                  <Lookup
-                    v-model="template.Category"
-                    :field="categoryLookupField"
-                    :rules="requiredRules"
-                  />
-                </v-col>
-                <v-col cols="12" sm="6" md="12">
-                  <File
-                    :field="fileField"
-                    :value="[...template.Documents].filter((i) => i)"
-                    :label="$t('Drawer.Upload')"
-                    @input="getAttachmentId"
-                  />
-                </v-col>
-                <v-col cols="12" sm="6" md="12">
-                  <v-text-field
-                    v-model="template.ImageURL"
-                    :label="$t('Common.ImageUrl')"
-                    outlined
-                    dense
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-            </v-form>
-          </v-card-text>
-          <v-divider></v-divider>
-          <v-card-actions
-            class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
-          >
-            <v-btn
-              color="primary"
-              :disabled="!valid || isSaveButtonDisabled"
-              depressed
-              @click.native="onSave"
-              ><i18n path="Drawer.Save"
-            /></v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-    </v-form>
-  </v-layout>
+  <div>
+    <v-snackbar
+      v-if="!hideToast"
+      v-model="snackbar"
+      :timeout="timeout"
+      :top="true"
+      width="2px"
+    >
+      <div class="fs-16 text-center">
+        {{ snackbarText }}
+      </div>
+    </v-snackbar>
+    <v-layout>
+      <v-form ref="form" v-model="valid">
+        <v-dialog
+          v-model="editMetadata"
+          persistent
+          scrollable
+          content-class="slide-form-default"
+        >
+          <v-card>
+            <v-card-title
+              class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
+            >
+              <h2 class="black--text pt-5 pb-2 text-h5">
+                <i18n path="Common.EditTemplate" />
+              </h2>
+              <v-spacer></v-spacer>
+              <div>
+                <v-btn icon @click="onClose">
+                  <v-icon>mdi-close</v-icon>
+                </v-btn>
+              </div>
+            </v-card-title>
+            <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
+              <v-form ref="form" v-model="valid" :lazy-validation="lazy">
+                <v-row>
+                  <v-col cols="12" sm="6" md="6">
+                    <v-text-field
+                      v-model="template.Name"
+                      :label="$t('Common.TemplateName')"
+                      :rules="requiredRules"
+                      outlined
+                      dense
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="6">
+                    <Lookup
+                      v-model="template.Type"
+                      :field="typeLookupField"
+                      :rules="requiredRules"
+                    />
+                  </v-col>
+                  <v-col cols="12" sm="6" md="6">
+                    <v-text-field
+                      v-model="template.Subject"
+                      :label="$t('Common.SubjectRequired')"
+                      :rules="requiredRules"
+                      outlined
+                      dense
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="6">
+                    <Lookup
+                      v-model="template.Category"
+                      :field="categoryLookupField"
+                      :rules="requiredRules"
+                    />
+                  </v-col>
+                  <v-col cols="12" sm="6" md="12">
+                    <File
+                      :field="fileField"
+                      :value="[...template.Documents].filter((i) => i)"
+                      :label="$t('Drawer.Upload')"
+                      @input="getAttachmentId"
+                    />
+                  </v-col>
+                  <v-col cols="12" sm="6" md="12">
+                    <v-text-field
+                      v-model="template.ImageURL"
+                      :label="$t('Common.ImageUrl')"
+                      outlined
+                      dense
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+              </v-form>
+            </v-card-text>
+            <v-divider></v-divider>
+            <v-card-actions
+              class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
+            >
+              <v-btn
+                color="primary"
+                :disabled="!valid || isSaveButtonDisabled"
+                depressed
+                @click.native="onSave"
+                ><i18n path="Drawer.Save"
+              /></v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-form>
+    </v-layout>
+  </div>
 </template>
 
 <script>
@@ -130,6 +143,8 @@ export default {
       },
       isSaveButtonDisabled: false,
       fileList,
+      snackbar: false,
+      timeout: 2000,
       orgLogo: false,
       allow: true,
       requiredRules: [required],
@@ -165,6 +180,11 @@ export default {
       },
     }
   },
+  computed: {
+    snackbarText() {
+      return this.$t('Messages.Success.EditInviteMetadataSuccess')
+    },
+  },
   methods: {
     getAttachmentId(data) {
       this.fileList = data
@@ -192,6 +212,7 @@ export default {
       if (res) {
         this.$parent.refresh()
         this.onClose()
+        this.snackbar = true
       }
     },
   },

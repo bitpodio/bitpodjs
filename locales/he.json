@@ -381,7 +381,7 @@
     "10Days": "10 Days",
     "Duration": "Duration",
     "ChangeTickets": "Change Tickets",
-    "NewRecurringEvent": "New Recurring Event",
+    "NewRecurringEvent": "אירוע חוזר חדש",
     "RecurringSession": "Recurring Session",
     "SetupEventRecurrence": "Setup event recurrence, sessions availability to help your attendees book a time slot.",
     "AddRecurringSession": "Add Recurring Session",
@@ -668,13 +668,14 @@
     "Reviews": "Reviews",
     "DateTime": "Date and Time",
     "BadgesTemplates": "Badges Templates",
-    "Sundays": "ימי ראשון",
-    "Mondays": "ימי שני",
-    "Tuesdays": "ימי שלישי",
-    "Wednesdays": "ימי רביעי",
-    "Thursdays": "ימי חמישי",
-    "Fridays": "ימי שישי",
-    "Saturdays": "שבתות",
+    "Sundays":"ימי ראשון",
+    "Mondays":"ימי שני",
+    "Tuesdays":"ימי שלישי",
+    "Wednesdays":"ימי רביעי",
+    "Thursdays":"ימי חמישי",
+    "Fridays":"ימי שישי",
+    "Saturdays":"שבתות",
+    "Event Scheduled":"האירוע נקבע",
     "TicketCountRequired": "ספירת כרטיסים *",
     "Yes": "Yes",
     "No": "No",
@@ -732,7 +733,8 @@
     "Registrations": "Registrations",
     "DiscountCode": "Discount Code",
     "Members": "Members",
-    "Contacts": "Contacts"
+    "Contacts": "Contacts",
+    "SessionOverlaps": "אזהרת חפיפה של מושב"
   },
   "FilterOptions": {
     "Is": "Is",
@@ -854,7 +856,15 @@
       "SeatmapUpdateSuccess": "Seatmap Updated Successfully",
       "EmailInviteSuccess": "Your email invites has been updated successfully.",
       "EmailSaveSuccess": "Your email invites has been saved successfully.",
-      "TaskDeleteSuccess": "Task deleted successfully"
+      "TaskDeleteSuccess": "Task deleted successfully",
+      "TaskCreatedSuccess": "המשימה נוצרה בהצלחה",
+      "TaskUpdatedSuccess": "המשימה עודכנה בהצלחה",
+      "EditRegistrationSuccess": "ההרשמה עודכנה בהצלחה",
+      "CancelRegistrationSuccess": "ההרשמה בוטלה בהצלחה",
+      "RefundRegistrationSuccess": "החזר ההרשמה בהצלחה",
+      "RecurringSessionCreatedSuccess": "מושב חוזר נוצר בהצלחה",
+      "RecurringSessionUpdatedSuccess": "ההפעלה החוזרת עודכנה בהצלחה",
+      "EditInviteMetadataSuccess": "template metadata updated successfully"
     }
   },
   "$vuetify": {

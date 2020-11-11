@@ -1,5 +1,16 @@
 <template>
   <div>
+    <v-snackbar
+      v-if="!hideToast"
+      v-model="snackbar"
+      :timeout="timeout"
+      :top="true"
+      width="2px"
+    >
+      <div class="fs-16 text-center">
+        {{ snackbarText }}
+      </div>
+    </v-snackbar>
     <v-form ref="form" v-model="valid" :lazy-validation="lazy">
       <v-dialog
         v-model="isCancelReg"
@@ -72,7 +83,14 @@ export default {
     return {
       valid: false,
       requiredRules: [required],
+      snackbar: false,
+      timeout: 2000,
     }
+  },
+  computed: {
+    snackbarText() {
+      return this.$t('Messages.Success.CancelRegistrationSuccess')
+    },
   },
   methods: {
     close() {
@@ -113,6 +131,7 @@ export default {
       if (regRes) {
         this.close()
         this.$parent.$refs.notes.fetchAllComments()
+        this.snackbar = true
         return regRes
       }
     },
