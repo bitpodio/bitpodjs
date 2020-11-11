@@ -556,6 +556,16 @@ body {
 .boxview .v-data-table-header-mobile {
     display: none !important;
 }
+.st-date {
+  max-width: 125px !important;
+  min-width: 125px !important;
+  box-sizing: border-box;
+}
+.event-timezone {
+  max-width: 160px !important;
+  min-width: 160px !important;
+  box-sizing: border-box;
+}
 @media (max-width: 800px) {
   .nav-bar {
     top: 50px !important;
@@ -621,5 +631,8 @@ body {
     text-align: left;
     font-weight: bold;
     content: attr(data-title);
+  }
+  .st-date, .event-timezone {
+    max-width: 100% !important;
   }
 }
