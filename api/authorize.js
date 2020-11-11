@@ -3,6 +3,8 @@ import url from 'url'
 import nuxtconfig from '../nuxt.config'
 export default function (req, res, next) {
   console.log('===>in authorize.js')
+  console.log('===>in authorize.js req', req)
+
   const referer = req.headers.referer
   console.log('===>in authorize.js Referer', referer)
   if (!referer) {
@@ -27,6 +29,7 @@ export default function (req, res, next) {
   console.log('===>in authorize.js  authorizationUrl==>', authorizationUrl)
   delete query.provider
   console.log('===>in authorize.js  query1==>', query)
+  console.log('===>in authorize.js res', res)
   res.writeHead(301, {
     Location: `${authorizationUrl}?${qs.encode(query)}`,
   })
