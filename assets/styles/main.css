@@ -583,4 +583,43 @@ body {
     width: 100%;
     max-width: 100%;
   }
+  #res-tables thead.e-thead,
+	#res-tables tbody.e-tbody,
+	#res-tables th.e-th,
+	#res-tables td.e-td,
+	#res-tables tr.e-tr {
+		display: block;
+  }
+  #res-tables tr.e-tr {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 20px;
+    position: relative;
+    right: 0;
+    padding-top: 20px;
+  }
+  #res-tables thead.e-thead tr.e-tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+  #res-tables td.e-td {
+    border: none;
+    border-bottom: 1px solid #fff;
+    position: relative;
+    padding-left: 35%;
+    white-space: normal;
+    text-align: left;
+    min-height: 72px;
+  }
+  #res-tables td.e-td::before {
+    position: absolute;
+    top: 0;
+    left: 6px;
+    width: 35%;
+    padding-right: 10px;
+    white-space: nowrap;
+    text-align: left;
+    font-weight: bold;
+    content: attr(data-title);
+  }
 }

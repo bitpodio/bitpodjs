@@ -73,7 +73,11 @@
                 </v-flex>
                 <v-divider></v-divider>
               </div>
-              <v-col v-for="(day, k) in days" :key="k" cols="4" class="py-0">
+              <v-col
+                v-for="(day, k) in days"
+                :key="k"
+                class="py-0 col-md-4 col-xs-6"
+              >
                 <v-checkbox
                   v-model="day.Value"
                   :label="day.Label"
@@ -84,7 +88,7 @@
             </v-row>
           </v-form>
         </v-card-text>
-        <div class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10 mb-3">
+        <div class="px-6 px-md-10 px-lg-10 px-xl-15 mb-3">
           <v-btn depressed color="primary" class="mr-1" @click="setSchedule">
             <i18n path="Common.Apply" />
           </v-btn>
@@ -136,7 +140,7 @@
             </v-row>
           </v-form>
         </v-card-text>
-        <div class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10 mb-3">
+        <div class="px-6 px-md-10 px-lg-10 px-xl-15 mb-3">
           <v-btn depressed class="mr-1" color="primary" @click="setDuration">
             <i18n path="Common.Apply" />
           </v-btn>
@@ -182,7 +186,7 @@
             </v-row>
           </v-form>
         </v-card-text>
-        <div class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10 mb-3">
+        <div class="px-6 px-md-10 px-lg-10 px-xl-15 mb-3">
           <v-btn depressed class="mr-1" color="primary" @click="setPhone">
             <i18n path="Common.Apply" />
           </v-btn>
@@ -232,7 +236,7 @@
             </v-row>
           </v-form>
         </v-card-text>
-        <div class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10 mb-3">
+        <div class="px-6 px-md-10 px-lg-10 px-xl-15 mb-3">
           <v-btn
             depressed
             class="mr-1"
@@ -332,7 +336,7 @@
             </v-col>
           </v-row>
         </v-card-text>
-        <div class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10 mb-3">
+        <div class="px-6 px-md-10 px-lg-10 px-xl-15 mb-3">
           <v-btn
             depressed
             class="mr-1"
@@ -385,7 +389,7 @@
             </v-row>
           </v-form>
         </v-card-text>
-        <div class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10 mb-3">
+        <div class="px-6 px-md-10 px-lg-10 px-xl-15 mb-3">
           <v-btn
             depressed
             color="primary"
@@ -432,7 +436,7 @@
             </v-col>
           </v-row>
         </v-card-text>
-        <div class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10 mb-3">
+        <div class="px-6 px-md-10 px-lg-10 px-xl-15 mb-3">
           <v-btn
             depressed
             color="primary"
@@ -495,7 +499,7 @@
             </v-row>
           </v-form>
         </v-card-text>
-        <div class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10 mb-3">
+        <div class="px-6 px-md-10 px-lg-10 px-xl-15 mb-3">
           <v-btn depressed color="primary" class="mr-1" @click="setType">
             <i18n path="Common.Apply" />
           </v-btn>
