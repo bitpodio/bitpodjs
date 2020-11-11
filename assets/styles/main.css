@@ -635,4 +635,8 @@ body {
   .st-date, .event-timezone {
     max-width: 100% !important;
   }
+  span.event-datechip.v-size--small {
+    height: auto !important;
+    white-space: normal;
+  }
 }
