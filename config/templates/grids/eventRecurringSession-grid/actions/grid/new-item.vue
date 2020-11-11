@@ -56,7 +56,7 @@
                   v-model="session.Name"
                   :label="$t('Common.NameRequired')"
                   outlined
-                  :rules="requiredRules"
+                  :rules="[rules.required]"
                   dense
                 ></v-text-field>
               </v-col>
@@ -64,7 +64,7 @@
                 <Lookup
                   v-model="session.Type"
                   :field="typeProps"
-                  :rules="required"
+                  :rules="[rules.required]"
                   :on-change="changeType"
                 />
               </v-col>
@@ -93,14 +93,14 @@
                 <Lookup
                   v-model="session.StartTime"
                   :field="startTimeProps"
-                  :rules="required"
+                  :rules="[rules.required]"
                 />
               </v-col>
               <v-col cols="12" sm="6" md="4" class="pb-0">
                 <Lookup
                   v-model="session.EndTime"
                   :field="endTimeProps"
-                  :rules="required"
+                  :rules="[rules.required]"
                 />
               </v-col>
             </v-row>
@@ -108,7 +108,7 @@
               <v-col cols="12" sm="6" md="4" class="pb-0">
                 <Timezone
                   v-model="session.Timezone"
-                  :rules="requiredRules"
+                  :rules="[rules.required]"
                   :field="timezonefield"
                   dense
                   class="v-timezone"
@@ -118,7 +118,7 @@
                 <Lookup
                   v-model="Duration1"
                   :field="durationProps"
-                  :rules="required"
+                  :rules="[rules.required]"
                   @change="changeDuration"
                 />
               </v-col>
@@ -150,7 +150,7 @@
                 <Lookup
                   v-model="session.LocationType"
                   :field="locationTypeProps"
-                  :rules="required"
+                  :rules="[rules.required]"
                 />
               </v-col>
               <v-col
@@ -223,7 +223,7 @@
                   v-model="session.WebinarLink"
                   :label="$t('Common.OnlineMeetingLink')"
                   outlined
-                  :rules="onlineEventLink"
+                  :rules="[rules.onlineEventLink]"
                   dense
                 ></v-text-field>
               </v-col>
@@ -516,7 +516,7 @@
 <script>
 import gql from 'graphql-tag'
 import { formatGQLResult } from '~/utility/gql.js'
-import { required, onlineEventLink } from '~/utility/rules.js'
+import { rules } from '~/utility/rules.js'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import location from '~/config/apps/event/gql/location.gql'
 import { getIdFromAtob } from '~/utility'
@@ -581,8 +581,7 @@ export default {
           }
     return {
       valid: false,
-      required: [required],
-      onlineEventLink: [onlineEventLink],
+      rules: rules(this.$i18n),
       dialog: false,
       actionType,
       isSaveButtonDisabled: false,
@@ -596,7 +595,6 @@ export default {
       customDuration: '15',
       timeSlotMessage: '',
       addresslineMessage: '',
-      requiredRules: [required],
       ScheduledType: 'Over a period of rolling days',
       zoomDocumentLink: nuxtconfig.integrationLinks.ZOOM_DOCUMENT_LINK,
       startDateMessage: '',
