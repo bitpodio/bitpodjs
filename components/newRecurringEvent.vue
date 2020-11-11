@@ -602,7 +602,7 @@
                     <v-col cols="12" class="pb-0">
                       <v-text-field
                         v-model="eventData.Title"
-                        :rules="requiredRules"
+                        :rules="[rules.required]"
                         :label="$t('Common.EventTitle')"
                         required
                         dense
@@ -680,7 +680,7 @@
                           <td class="pa-2 pb-0 pl-0">
                             <v-text-field
                               v-model="ticket.Code"
-                              :rules="requiredRules"
+                              :rules="[rules.required]"
                               outlined
                               dense
                               @change="changeTicketCode(k)"
@@ -838,7 +838,7 @@
                           <td class="pa-2 pb-0 event-timezone text-truncate">
                             <Timezone
                               v-model="session.Timezone"
-                              :rules="requiredRules"
+                              :rules="[rules.required]"
                               :field="timezonefield"
                             ></Timezone>
                           </td>
@@ -859,7 +859,7 @@
                                 v-else
                                 v-model="session.LocationType"
                                 :field="locationTypeProps"
-                                :rules="requiredRules"
+                                :rules="[rules.required]"
                                 required
                                 :on-change="changelocationType(k)"
                               />
@@ -1019,7 +1019,7 @@ import organizationInfo from '~/config/apps/event/gql/organizationInfo.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { getIdFromAtob } from '~/utility'
 import CustomDate from '~/components/common/form/date.vue'
-import { required, onlineEventLink } from '~/utility/rules.js'
+import { rules, onlineEventLink } from '~/utility/rules.js'
 import nuxtconfig from '~/nuxt.config'
 
 const ObjectID5 = (
@@ -1047,8 +1047,9 @@ export default {
       default: false,
     },
   },
-  data: () => {
+  data() {
     return {
+      rules: rules(this.$i18n),
       showLocation: false,
       selectedLocation: '',
       isUniqLinkValid: false,
@@ -1112,7 +1113,6 @@ export default {
       isSession: true,
       isEventCreate: false,
       isEventPublish: false,
-      requiredRules: [required],
       AvailableStartHour: '',
       AvailableEndHour: '',
       isMap: false,

@@ -49,7 +49,7 @@
                 <v-col cols="12" class="pb-0">
                   <v-text-field
                     v-model="eventData.Title"
-                    :rules="requiredRules"
+                    :rules="[rules.required]"
                     :label="$t('Common.EventTitle')"
                     required
                     dense
@@ -88,7 +88,7 @@
                   <v-col cols="12" sm="6" md="4" class="pb-0">
                     <Timezone
                       v-model="eventData.Timezone"
-                      :rules="requiredRules"
+                      :rules="[rules.required]"
                       :field="timezonefield"
                       dense
                       class="v-timezone"
@@ -146,8 +146,9 @@
                       <v-text-field
                         v-model="eventData.WebinarLink"
                         :rules="
-                          eventData.LocationType === 'Online event' &&
-                          onlineEventLink
+                          eventData.LocationType === 'Online event' && [
+                            rules.onlineEventLink,
+                          ]
                         "
                         :label="$t('Common.OnlineEventLink')"
                         outlined
@@ -332,7 +333,7 @@
                       <td class="pa-2 pb-0 pl-0">
                         <v-text-field
                           v-model="ticket.Code"
-                          :rules="requiredRules"
+                          :rules="[rules.required]"
                           outlined
                           dense
                         ></v-text-field>
@@ -519,7 +520,8 @@ import eventCount from '~/config/apps/event/gql/eventCount.gql'
 import orgInfoLocationType from '~/config/apps/event/gql/orgInfoLocationType.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import nuxtconfig from '~/nuxt.config'
-import { required, onlineEventLink } from '~/utility/rules.js'
+import { rules } from '~/utility/rules.js'
+
 export default {
   components: {
     RichText: () =>
@@ -539,11 +541,11 @@ export default {
       default: false,
     },
   },
-  data: () => {
+  data() {
     const currentDatetime = new Date(new Date().setSeconds(0))
     return {
+      rules: rules(this.$i18n),
       valid: true,
-      onlineEventLink: [onlineEventLink],
       datevalid: true,
       lazy: false,
       tabs: null,
@@ -555,7 +557,6 @@ export default {
       isTicket: true,
       isEventCreate: false,
       isEventPublish: false,
-      requiredRules: [required],
       isMap: false,
       locationTypeOptions: [],
       currentLocation: {},
