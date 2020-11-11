@@ -462,59 +462,8 @@
                 )
               }}
             </div>
-<<<<<<< HEAD
           </v-flex>
         </div>
-=======
-          </v-col>
-        </v-row>
-      </div>
-      <div
-        class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
-      >
-        <v-flex class="d-flex justify-center align-center pb-3">
-          <h2 class="body-1 pb-0">
-            <i class="fa fa-comments-alt pr-1" aria-hidden="true"></i>
-            <i18n path="Common.Notes" />
-          </h2>
-          <v-spacer></v-spacer>
-        </v-flex>
-        <v-divider></v-divider>
-        <Notes ref="notes" model-name="Registrations" />
-      </div>
-    </v-flex>
-    <v-flex column class="mxw-w30">
-      <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 py-0 pr-2 box-grey">
-        <v-flex class="d-flex justify-center align-center pb-2">
-          <v-tooltip bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <h2 class="body-1 pb-0" v-bind="attrs" v-on="on">
-                <i class="fa fa-tag pr-1" aria-hidden="true"></i>
-                <i18n path="Common.EventInformation" />
-              </h2>
-            </template>
-            <span><i18n path="Common.EventInformation" /></span>
-          </v-tooltip>
-          <v-spacer></v-spacer>
-        </v-flex>
-        <v-divider></v-divider>
-        <v-flex my-3>
-          <i18n path="Common.EventName" class="body-2 text--secondary" />
-
-          <div class="body-1">
-            {{ formatField(data.registration.EventName) }}
-          </div>
-        </v-flex>
-        <v-flex my-3>
-          <i18n path="Common.StartDate" class="body-2 text--secondary" />
-
-          <div class="body-1 text--primary">
-            {{ StartDate }}
-          </div>
-        </v-flex>
-        <v-flex my-3>
-          <i18n path="Common.EndDate" class="body-2 text--secondary" />
->>>>>>> b03441f880fdeb3a7dd1205dba17ab1e5963b0b2
 
         <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 py-0 pr-2 box-grey">
           <v-flex class="d-flex justify-center align-center pb-2">
