@@ -1,5 +1,8 @@
 <template>
   <v-col class="px-0">
+    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
+      <div class="text-center">{{ snackbarText }}</div>
+    </v-snackbar>
     <v-dialog
       v-model="dialog"
       persistent
@@ -33,7 +36,7 @@
                 <v-text-field
                   v-model="formData.Question"
                   :label="$t('Common.Question')"
-                  :rules="required"
+                  :rules="[rules.required]"
                   outlined
                   dense
                 ></v-text-field>
@@ -41,7 +44,7 @@
               <v-col cols="12">
                 <v-select
                   v-model="controlType"
-                  :rules="required"
+                  :rules="[rules.required]"
                   :items="controlTypeDropDown"
                   :label="$t('Common.ControlType')"
                   outlined
@@ -52,7 +55,7 @@
                 <v-text-field
                   v-model="CsvOptions"
                   :label="$t('Common.OptionsCsvFormat')"
-                  :rules="required"
+                  :rules="[rules.required]"
                   outlined
                   dense
                 ></v-text-field>
@@ -60,7 +63,7 @@
               <v-col cols="12">
                 <v-text-field
                   v-model="formData.DisplayOrder"
-                  :rules="required"
+                  :rules="[rules.required]"
                   :label="$t('Common.DisplayOrder')"
                   type="number"
                   min="1"
@@ -114,7 +117,7 @@ import generalconfiguration from '~/config/apps/event/gql/registrationStatusOpti
 import eventTicket from '~/config/apps/event/gql/eventTickets.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { getIdFromAtob } from '~/utility'
-import { required } from '~/utility/rules.js'
+import { rules } from '~/utility/rules.js'
 export default {
   props: {
     content: {
@@ -139,7 +142,7 @@ export default {
     return {
       formData: {},
       valid: false,
-      required: [required],
+      rules: rules(this.$i18n),
       dialog: false,
       controlType: '',
       controlTypeDropDown: [],
@@ -150,6 +153,9 @@ export default {
       doNotShowField: ['text', 'date', 'country', 'number'],
       CsvOptions: '',
       id: '',
+      snackbarText: '',
+      snackbar: false,
+      timeout: 2000,
     }
   },
   computed: {
@@ -159,6 +165,13 @@ export default {
         this.controlType === 'radio' ||
         this.controlType === 'dropdown'
       )
+    },
+  },
+  watch: {
+    snackbar(newVal) {
+      if (!newVal) {
+        this.refresh()
+      }
     },
   },
   mounted() {
@@ -223,7 +236,8 @@ export default {
 
       if (res) {
         this.dialog = false
-        this.refresh()
+        this.snackbarText = this.$t('Messages.Success.RecordUpdatedSuccess')
+        this.snackbar = true
       }
     },
     async getQuestions() {

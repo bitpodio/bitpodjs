@@ -237,7 +237,7 @@
                     <v-text-field
                       v-model="email"
                       :label="$t('Common.EnterEmail')"
-                      :rules="emailRules"
+                      :rules="[rules.email, rules.required]"
                       outlined
                       dense
                     ></v-text-field>
@@ -284,7 +284,7 @@
 <script>
 import OrgnaizationList from '~/components/common/organization-list'
 import AppDrawer from '~/components/common/app-drawer'
-import { email, required } from '~/utility/rules.js'
+import { rules } from '~/utility/rules.js'
 export default {
   middleware: ['auth', 'authorization'],
   components: {
@@ -312,7 +312,7 @@ export default {
       account: false,
       message: false,
       valid: false,
-      emailRules: [required, email],
+      rules: rules(this.$i18n),
       formData: {
         emailId: '',
       },
@@ -397,7 +397,7 @@ export default {
         if (res) {
           this.dialog = false
           this.onReset()
-          this.onRefresh()
+          this.$eventBus.$emit('user-created')
         }
       } catch (e) {
         console.log(

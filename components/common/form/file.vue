@@ -5,7 +5,7 @@
         class="font-weight-regular"
         style="position: absolute; top: -12px; left: 8px;"
       >
-        {{ field.caption }}
+        {{ $t(field.caption) }}
       </h3>
       <v-btn
         class="primary uploadFile"

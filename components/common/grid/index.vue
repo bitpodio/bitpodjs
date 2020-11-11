@@ -415,6 +415,12 @@ export default {
     },
   },
   mounted() {
+    if (this.loadRestData) {
+      this.$eventBus.$on('user-created', this.loadRestData)
+    }
+    if (this.refresh) {
+      this.$eventBus.$on('grid-refresh', this.refresh)
+    }
     this.selectedItems = this.value
     this.headers.forEach(async (column, index) => {
       const columnFileName = column && column.value.toLowerCase()
@@ -446,7 +452,10 @@ export default {
     }
     this.loadRestData()
   },
-
+  beforeDestroy() {
+    this.$eventBus.$off('user-created')
+    this.$eventBus.$off('grid-refresh')
+  },
   methods: {
     updatePagination(pagination) {
       // call rest

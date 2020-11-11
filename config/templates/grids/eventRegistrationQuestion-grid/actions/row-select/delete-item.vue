@@ -1,5 +1,6 @@
 <template>
   <div>
+    <confirm ref="confirm"></confirm>
     <v-col class="px-0">
       <v-btn text small v-bind="attrs" v-on="on" @click="onDelete">
         <v-icon left class="fs-16">mdi-delete</v-icon
@@ -47,29 +48,36 @@ export default {
     }
   },
   methods: {
-    onDelete() {
+    async onDelete() {
       this.dialog = false
-      this.items
-        .reduce((acc, e) => {
-          return acc
-            .then(() => {
-              return this.$axios.$delete(
-                `${this.$bitpod.getApiUrl()}Events/${
-                  this.$route.params.id
-                }/Survey/${e.id}`
-              )
-            })
-            .then((res) => {
-              this.snackbar = true
-              this.refresh()
-              return res
-            })
-        }, Promise.resolve())
-        .then(() => {
-          this.snackbar = true
-          return true
-        })
-        .catch((e) => console.log('error', e))
+      const check = await this.$refs.confirm.open(
+        this.$t('Drawer.DeleteEvent'),
+        this.$t('Messages.Warn.DeleteEvent'),
+        { color: 'error' }
+      )
+      if (check === true) {
+        this.items
+          .reduce((acc, e) => {
+            return acc
+              .then(() => {
+                return this.$axios.$delete(
+                  `${this.$bitpod.getApiUrl()}Events/${
+                    this.$route.params.id
+                  }/Survey/${e.id}`
+                )
+              })
+              .then((res) => {
+                this.snackbar = true
+                this.refresh()
+                return res
+              })
+          }, Promise.resolve())
+          .then(() => {
+            this.snackbar = true
+            return true
+          })
+          .catch((e) => console.log('error', e))
+      }
     },
   },
 }

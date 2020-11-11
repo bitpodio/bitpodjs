@@ -5,7 +5,7 @@
     item-text="label"
     item-value="tzCode"
     :loading="isLoading"
-    :label="field.caption"
+    :label="$t(field.caption)"
     :rules="rules"
     dense
     outlined

@@ -389,7 +389,7 @@ export default {
       },
       locationTypeProps: {
         type: 'lookup',
-        caption: 'Location Type*',
+        caption: this.$t('Common.LocationTypeRequired'),
         dataSource: {
           query: registrationStatusOptions,
           itemText: 'value',
@@ -403,7 +403,7 @@ export default {
       },
       durationProps: {
         type: 'lookup',
-        caption: 'Duration*',
+        caption: this.$t('Common.DurationRequired'),
         dataSource: {
           query: registrationStatusOptions,
           itemText: 'value',
@@ -416,7 +416,7 @@ export default {
         },
       },
       timezonefield: {
-        caption: 'Timezone*',
+        caption: this.$t('Common.Timezone'),
         type: 'Timezone',
         fieldName: 'session.Timezone',
       },
@@ -427,7 +427,7 @@ export default {
       return {
         appendIcon: 'fa-calendar',
         outlined: true,
-        caption: 'Start Date Time*',
+        caption: this.$t('Common.StartDateTime'),
         type: 'datetime',
       }
     },
@@ -526,7 +526,7 @@ export default {
       return {
         type: 'lookup',
         multiple: true,
-        caption: 'Tickets',
+        caption: this.$t('Common.Tickets'),
         items,
         dataSource: {
           items,
@@ -540,7 +540,7 @@ export default {
       return {
         type: 'lookup',
         multiple: true,
-        caption: 'Speakers',
+        caption: this.$t('Common.Speakers'),
         items,
         dataSource: {
           items,

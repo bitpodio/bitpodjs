@@ -34,14 +34,14 @@
                   v-model="userName"
                   disabled="true"
                   :label="$t('Common.Username')"
-                  :rules="required"
+                  :rules="[rules.required]"
                   outlined
                 ></v-text-field>
               </v-col>
               <v-col cols="12">
                 <v-select
                   v-model="roles"
-                  :rules="fieldRules"
+                  :rules="[rules.required]"
                   :items="rolesDropDown"
                   :label="$t('Common.Role')"
                   outlined
@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import { required } from '~/utility/rules.js'
+import { rules } from '~/utility/rules.js'
 export default {
   props: {
     refresh: {
@@ -84,7 +84,7 @@ export default {
       valid: false,
       dialog: false,
       rolesDropDown: [],
-      fieldRules: [required],
+      rules: rules(this.$i18n),
       roles: [],
       userName: '',
       formData: {},

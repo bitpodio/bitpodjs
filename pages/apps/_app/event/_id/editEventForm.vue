@@ -26,7 +26,7 @@
               <v-text-field
                 v-model="formData.Title"
                 :label="$t('Common.Title')"
-                :rules="requiredRule"
+                :rules="[rules.required]"
                 required
                 outlined
                 dense
@@ -37,6 +37,7 @@
               <RichText v-model="formData.Description" />
             </v-col>
             <v-form
+              v-if="formData.BusinessType === 'Single'"
               ref="dateform"
               v-model="datevalid"
               :lazy-validation="lazy"
@@ -75,13 +76,7 @@
                     </template>
                   </v-datetime-picker>
                 </v-col>
-                <v-col
-                  v-if="formData.BusinessType !== 'Recurring'"
-                  class="d-flex pb-0"
-                  cols="12"
-                  sm="6"
-                  md="4"
-                >
+                <v-col class="d-flex pb-0" cols="12" sm="6" md="4">
                   <Timezone
                     v-model="formData.Timezone"
                     :field="timezonefield"
@@ -94,7 +89,7 @@
               <v-text-field
                 v-model="formData.Organizer"
                 :label="$t('Common.EventOrganizer')"
-                :rules="requiredRule"
+                :rules="[rules.required]"
                 outlined
                 required
                 dense
@@ -104,7 +99,7 @@
               <v-text-field
                 v-model="formData.EventManager"
                 :label="$t('Common.EventManagerTeamEmail')"
-                :rules="emailRules"
+                :rules="[rules.required, rules.email]"
                 outlined
                 required
                 dense
@@ -153,7 +148,7 @@
                 v-if="formData.LocationType === 'Online event'"
                 v-model="formData.WebinarLink"
                 :label="$t('Common.OnlineEventLinkReq')"
-                :rules="requiredRule"
+                :rules="[rules.required]"
                 outlined
                 required
                 dense
@@ -260,7 +255,7 @@
 <script>
 import gql from 'graphql-tag'
 import { utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz'
-import { email, required } from '~/utility/rules.js'
+import { rules } from '~/utility/rules.js'
 import event from '~/config/apps/event/gql/event.gql'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import { formatGQLResult } from '~/utility/gql.js'
@@ -294,12 +289,11 @@ export default {
       tags: [],
       addressLine: '',
       tagsDropdown: [],
-      requiredRule: [required],
+      rules: rules(this.$i18n),
       errorAlert: {
         message: '',
         visible: false,
       },
-      emailRules: [required, email],
       allowSpaces: false,
       data: {
         event: {},

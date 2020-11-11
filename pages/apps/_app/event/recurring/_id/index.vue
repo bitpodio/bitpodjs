@@ -887,7 +887,7 @@
         />
       </div>
       <div
-        class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <v-flex class="d-flex justify-center align-center pb-3">
           <h2 class="body-1 pb-0">
@@ -1578,7 +1578,7 @@ export default {
       try {
         const res = await this.$axios.patch(
           `${url}Events/${this.$route.params.id}`,
-          this.formData
+          this.eventData
         )
         if (res) {
           this.snackbarText = this.$t('Messages.Success.EventPublished')
@@ -1587,7 +1587,7 @@ export default {
         }
       } catch (e) {
         console.error(
-          `Error in app/Event/_id/index.vue while making a PATCH call to Event model from method publishEvent context:-URL:-${url}\n formData:-${this.formData}\n id:-${this.$route.params.id} `,
+          `Error in app/Event/_id/index.vue while making a PATCH call to Event model from method publishEvent context:-URL:-${url}\n formData:-${this.eventData}\n id:-${this.$route.params.id} `,
           e
         )
       }
@@ -1714,6 +1714,7 @@ export default {
         const badge = formatGQLResult(data, 'Badge')
         const eventSummary = data.Event.EventGetEventSummery
         this.eventData = event[0]
+        this.eventData.id = this.$route.params.id
         this.eventData_sectionHeading =
           this.eventData._sectionHeading !== null
             ? this.eventData._sectionHeading

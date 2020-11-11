@@ -60,7 +60,7 @@
               >
                 <v-checkbox
                   v-model="day.selected"
-                  :label="day.dayName"
+                  :label="day.dayNameLang"
                   class="mt-0"
                   height="20"
                 ></v-checkbox>
@@ -108,13 +108,41 @@ export default {
       startTiming: [],
       endTiming: [],
       selectedDays: [
-        { dayName: 'sunday', selected: false },
-        { dayName: 'monday', selected: false },
-        { dayName: 'tuesday', selected: false },
-        { dayName: 'wednesday', selected: false },
-        { dayName: 'thursday', selected: false },
-        { dayName: 'friday', selected: false },
-        { dayName: 'saturday', selected: false },
+        {
+          dayNameLang: this.$t('Common.Sundays'),
+          dayName: 'Sundays',
+          selected: false,
+        },
+        {
+          dayNameLang: this.$t('Common.Mondays'),
+          dayName: 'Mondays',
+          selected: false,
+        },
+        {
+          dayNameLang: this.$t('Common.Tuesdays'),
+          dayName: 'Tuesdays',
+          selected: false,
+        },
+        {
+          dayNameLang: this.$t('Common.Wednesdays'),
+          dayName: 'Wednesdays',
+          selected: false,
+        },
+        {
+          dayNameLang: this.$t('Common.Thursdays'),
+          dayName: 'Thursdays',
+          selected: false,
+        },
+        {
+          dayNameLang: this.$t('Common.Fridays'),
+          dayName: 'Fridays',
+          selected: false,
+        },
+        {
+          dayNameLang: this.$t('Common.Saturdays'),
+          dayName: 'Saturdays',
+          selected: false,
+        },
       ],
       timingDropDown: [],
       workingDay: [],
@@ -215,6 +243,13 @@ export default {
         const organization = formatGQLResult(data, 'OrganizationInfo')
         this.formData = { ...organization[0] }
         this.formData.id = this.$route.params.id
+        this.formData._PaymentGatewaySetting.id = this.formData
+          ._PaymentGatewaySetting.id
+          ? atob(this.formData._PaymentGatewaySetting.id).split(':')[1]
+          : ''
+        this.formData._CurrentAddress.id = this.formData._CurrentAddress.id
+          ? atob(this.formData._CurrentAddress.id).split(':')[1]
+          : ''
         this.currency = this.formData.Currency
         this.venueAddress = { ...organization[0]._CurrentAddress }
         this.formData.weekDay.map((x) => {
