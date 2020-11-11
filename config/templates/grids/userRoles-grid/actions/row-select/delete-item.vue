@@ -50,7 +50,7 @@ export default {
           { color: 'error lighten-1' }
         )
         if (check === true) {
-          const res = await this.$axios.$delete(
+          await this.$axios.$delete(
             `${url}Organizations/${this.items[0].orgId}/Users/${this.items[0].email}
         `
           )

@@ -18,7 +18,7 @@
           <div v-if="item.Type == 'Invitation Template'">
             <v-card
               :elevation="hover ? 1 : 0"
-              class="ma-3 ml-0 mt-0 invite-card"
+              class="ma-8 ml-0 mt-0 invite-card"
             >
               <div v-if="item.ImageURL !== null" class="pa-1">
                 <v-img
@@ -28,6 +28,7 @@
                   class="grey lighten-2"
                   min-height="200"
                   max-height="200"
+                  position="top"
                 >
                   <template v-slot:placeholder>
                     <v-img
@@ -153,7 +154,7 @@
           <div v-if="item.Type == 'Registration Email Template'">
             <v-card
               :elevation="hover ? 1 : 0"
-              class="ma-3 ml-0 mt-0 invite-card positionRelative"
+              class="ma-8 ml-0 mt-0 invite-card positionRelative"
             >
               <div v-if="item.ImageURL !== null" class="pa-1">
                 <v-img
@@ -163,6 +164,7 @@
                   class="grey lighten-2"
                   min-height="200"
                   max-height="200"
+                  position="top"
                 >
                   <template v-slot:placeholder>
                     <v-img
