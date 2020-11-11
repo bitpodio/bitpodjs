@@ -527,6 +527,13 @@ body {
   text-overflow: ellipsis;
   overflow: hidden;
 }
+.detailview-head {
+  min-height: 52px;
+}
+.back-icon {
+  position: relative;
+  top: -2px;
+}
 .braek-all {
  word-break: break-all !important;
 } 
@@ -543,9 +550,15 @@ body {
 .custom-nav-main {
   padding-left: 240px !important;
 }
+.slide-form .v-slide-group__prev--disabled {
+    display: none !important;
+}
+.boxview .v-data-table-header-mobile {
+    display: none !important;
+}
 @media (max-width: 800px) {
   .nav-bar {
-    top: 0 !important;
+    top: 50px !important;
   }
 }
 @media (max-width: 600px) {

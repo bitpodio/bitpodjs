@@ -695,6 +695,12 @@
                         </tr>
                       </thead>
                       <tbody>
+                        <tr v-for="item in registration.attendee" :key="item">
+                          <td>{{ item.TicketName }}</td>
+                          <td>{{ item.TicketAmount }}</td>
+                          <td>{{ item.TicketQuantity }}</td>
+                          <td>{{ item.TicketAmount }}</td>
+                        </tr>
                         <tr
                           v-for="item in registration.TicketListId"
                           :key="item"
