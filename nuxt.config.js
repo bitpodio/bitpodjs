@@ -1,5 +1,5 @@
 const basePath = process.env.PUBLIC_PATH || ''
-
+console.log('basePath in nuxtconfig', basePath)
 export default {
   /*
    ** Nuxt rendering mode
