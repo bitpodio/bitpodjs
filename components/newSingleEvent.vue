@@ -49,7 +49,7 @@
                 <v-col cols="12" class="pb-0">
                   <v-text-field
                     v-model="eventData.Title"
-                    :rules="requiredRules"
+                    :rules="[rules.required]"
                     :label="$t('Common.EventTitle')"
                     required
                     dense
@@ -88,7 +88,7 @@
                   <v-col cols="12" sm="6" md="4" class="pb-0">
                     <Timezone
                       v-model="eventData.Timezone"
-                      :rules="requiredRules"
+                      :rules="[rules.required]"
                       :field="timezonefield"
                       dense
                       class="v-timezone"
@@ -146,8 +146,9 @@
                       <v-text-field
                         v-model="eventData.WebinarLink"
                         :rules="
-                          eventData.LocationType === 'Online event' &&
-                          onlineEventLink
+                          eventData.LocationType === 'Online event' && [
+                            rules.onlineEventLink,
+                          ]
                         "
                         :label="$t('Common.OnlineEventLink')"
                         outlined
@@ -300,101 +301,106 @@
                 @click="addTicketRow"
                 ><i18n path="Common.AddTickets"
               /></v-btn>
-              <v-simple-table class="event-table">
-                <template v-slot:default>
-                  <thead>
-                    <tr>
-                      <th class="text-left pl-0">
-                        <i18n path="Common.Title" />
-                      </th>
-                      <th class="text-left pl-2">
-                        <i18n path="Common.Type" />
-                      </th>
-                      <th class="text-left pl-2">
-                        {{
-                          $t('Common.Price', { currency: eventData.Currency })
-                        }}
-                      </th>
-                      <th class="text-left pl-2">
-                        <i18n path="Common.StartD" />
-                      </th>
-                      <th class="text-left pl-2">
-                        <i18n path="Common.EndD" />
-                      </th>
-                      <th class="text-left pl-2">
-                        <i18n path="Common.Quantity" />
-                      </th>
-                      <th class="text-left"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="(ticket, k) in tickets" :key="k">
-                      <td class="pa-2 pb-0 pl-0">
-                        <v-text-field
-                          v-model="ticket.Code"
-                          :rules="requiredRules"
-                          outlined
-                          dense
-                        ></v-text-field>
-                      </td>
-                      <td class="pa-2 pb-0">
-                        <Lookup
-                          v-model="ticket.Type"
-                          :field="ticketTypeProps"
-                          class="v-tickettype"
-                          :on-change="changeTicketType(k)"
-                        />
-                      </td>
-                      <td class="pa-2 pb-0">
-                        <v-text-field
-                          v-model="ticket.Amount"
-                          outlined
-                          dense
-                          value
-                          type="Number"
-                          min="0"
-                          :disabled="isPriceDisabled(k)"
-                        ></v-text-field>
-                      </td>
-                      <td class="pa-2 pb-0">
-                        <CustomDate
-                          v-model="ticket.StartDate"
-                          :label="$t('Common.StartD')"
-                          :field="ticketStartDateField"
-                          :rules="ticketStartDateRule(k)"
-                          :on-change="changeTicketStartDate"
-                          type="datetime"
-                        />
-                      </td>
-                      <td class="pa-2 pb-0">
-                        <CustomDate
-                          v-model="ticket.EndDate"
-                          :label="$t('Common.EndD')"
-                          :field="ticketEndDateField"
-                          :rules="ticketEndDateRule(k)"
-                          :on-change="changeTicketEndDate"
-                          type="datetime"
-                        />
-                      </td>
-                      <td class="pa-2 pb-0">
-                        <v-text-field
-                          v-model="ticket.TicketCount"
-                          outlined
-                          dense
-                          type="Number"
-                          min="0"
-                          value
-                        ></v-text-field>
-                      </td>
-                      <td class="pa-2 pt-0">
-                        <v-btn icon class="mt-1" @click="deleteTicket(k)">
-                          <v-icon>fa-trash</v-icon>
-                        </v-btn>
-                      </td>
-                    </tr>
-                  </tbody>
-                </template>
-              </v-simple-table>
+              <div id="res-tables">
+                <v-simple-table class="event-table">
+                  <template v-slot:default>
+                    <thead class="e-thead">
+                      <tr class="e-tr">
+                        <th class="text-left pl-2 pl-md-0 e-td">
+                          <i18n path="Common.Title" />
+                        </th>
+                        <th class="text-left pl-2 e-td">
+                          <i18n path="Common.Type" />
+                        </th>
+                        <th class="text-left pl-2 e-td">
+                          {{
+                            $t('Common.Price', { currency: eventData.Currency })
+                          }}
+                        </th>
+                        <th class="text-left pl-2 e-td">
+                          <i18n path="Common.StartD" />
+                        </th>
+                        <th class="text-left pl-2 e-td">
+                          <i18n path="Common.EndD" />
+                        </th>
+                        <th class="text-left pl-2 e-td">
+                          <i18n path="Common.Quantity" />
+                        </th>
+                        <th class="text-left e-td"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="(ticket, k) in tickets" :key="k" class="e-tr">
+                        <td
+                          class="pa-2 pb-0 pl-2 pl-md-0 e-td"
+                          data-title="Title"
+                        >
+                          <v-text-field
+                            v-model="ticket.Code"
+                            :rules="[rules.required]"
+                            outlined
+                            dense
+                          ></v-text-field>
+                        </td>
+                        <td class="pa-2 pb-0 e-td" data-title="Type">
+                          <Lookup
+                            v-model="ticket.Type"
+                            :field="ticketTypeProps"
+                            class="v-tickettype"
+                            :on-change="changeTicketType(k)"
+                          />
+                        </td>
+                        <td class="pa-2 pb-0 e-td" data-title="Price">
+                          <v-text-field
+                            v-model="ticket.Amount"
+                            outlined
+                            dense
+                            value
+                            type="Number"
+                            min="0"
+                            :disabled="isPriceDisabled(k)"
+                          ></v-text-field>
+                        </td>
+                        <td class="pa-2 pb-0 e-td" data-title="">
+                          <CustomDate
+                            v-model="ticket.StartDate"
+                            :label="$t('Common.StartD')"
+                            :field="ticketStartDateField"
+                            :rules="ticketStartDateRule(k)"
+                            :on-change="changeTicketStartDate"
+                            type="datetime"
+                          />
+                        </td>
+                        <td class="pa-2 pb-0 e-td" data-title="">
+                          <CustomDate
+                            v-model="ticket.EndDate"
+                            :label="$t('Common.EndD')"
+                            :field="ticketEndDateField"
+                            :rules="ticketEndDateRule(k)"
+                            :on-change="changeTicketEndDate"
+                            type="datetime"
+                          />
+                        </td>
+                        <td class="pa-2 pb-0 e-td" data-title="Quantity">
+                          <v-text-field
+                            v-model="ticket.TicketCount"
+                            outlined
+                            dense
+                            type="Number"
+                            min="0"
+                            value
+                          ></v-text-field>
+                        </td>
+                        <td class="pa-2 pt-0 e-td" data-title="">
+                          <v-btn icon class="mt-1" @click="deleteTicket(k)">
+                            <v-icon>fa-trash</v-icon>
+                          </v-btn>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </template>
+                </v-simple-table>
+              </div>
             </v-card>
             <v-card
               v-else
@@ -519,7 +525,8 @@ import eventCount from '~/config/apps/event/gql/eventCount.gql'
 import orgInfoLocationType from '~/config/apps/event/gql/orgInfoLocationType.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import nuxtconfig from '~/nuxt.config'
-import { required, onlineEventLink } from '~/utility/rules.js'
+import { rules } from '~/utility/rules.js'
+
 export default {
   components: {
     RichText: () =>
@@ -539,11 +546,11 @@ export default {
       default: false,
     },
   },
-  data: () => {
+  data() {
     const currentDatetime = new Date(new Date().setSeconds(0))
     return {
+      rules: rules(this.$i18n),
       valid: true,
-      onlineEventLink: [onlineEventLink],
       datevalid: true,
       lazy: false,
       tabs: null,
@@ -555,7 +562,6 @@ export default {
       isTicket: true,
       isEventCreate: false,
       isEventPublish: false,
-      requiredRules: [required],
       isMap: false,
       locationTypeOptions: [],
       currentLocation: {},

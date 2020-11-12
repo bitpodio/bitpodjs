@@ -75,7 +75,11 @@
                   </v-flex>
                   <v-divider></v-divider>
                 </div>
-                <v-col v-for="(day, k) in days" :key="k" cols="4" class="py-0">
+                <v-col
+                  v-for="(day, k) in days"
+                  :key="k"
+                  class="py-0 col-md-4 col-xs-6"
+                >
                   <v-checkbox
                     v-model="day.Value"
                     :label="day.Label"
@@ -86,9 +90,7 @@
               </v-row>
             </v-form>
           </v-card-text>
-          <div
-            class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10 mb-3"
-          >
+          <div class="px-6 px-md-10 px-lg-10 px-xl-15 mb-3">
             <v-btn depressed color="primary" class="mr-1" @click="setSchedule">
               <i18n path="Common.Apply" />
             </v-btn>
@@ -146,9 +148,7 @@
               </v-row>
             </v-form>
           </v-card-text>
-          <div
-            class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10 mb-3"
-          >
+          <div class="px-6 px-md-10 px-lg-10 px-xl-15 mb-3">
             <v-btn depressed class="mr-1" color="primary" @click="setDuration">
               <i18n path="Common.Apply" />
             </v-btn>
@@ -200,9 +200,7 @@
               </v-row>
             </v-form>
           </v-card-text>
-          <div
-            class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10 mb-3"
-          >
+          <div class="px-6 px-md-10 px-lg-10 px-xl-15 mb-3">
             <v-btn depressed class="mr-1" color="primary" @click="setPhone">
               <i18n path="Common.Apply" />
             </v-btn>
@@ -254,9 +252,7 @@
               </v-row>
             </v-form>
           </v-card-text>
-          <div
-            class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10 mb-3"
-          >
+          <div class="px-6 px-md-10 px-lg-10 px-xl-15 mb-3">
             <v-btn
               depressed
               class="mr-1"
@@ -358,9 +354,7 @@
               </v-col>
             </v-row>
           </v-card-text>
-          <div
-            class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10 mb-3"
-          >
+          <div class="px-6 px-md-10 px-lg-10 px-xl-15 mb-3">
             <v-btn
               depressed
               class="mr-1"
@@ -415,9 +409,7 @@
               </v-row>
             </v-form>
           </v-card-text>
-          <div
-            class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10 mb-3"
-          >
+          <div class="px-6 px-md-10 px-lg-10 px-xl-15 mb-3">
             <v-btn
               depressed
               color="primary"
@@ -466,9 +458,7 @@
               </v-col>
             </v-row>
           </v-card-text>
-          <div
-            class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10 mb-3"
-          >
+          <div class="px-6 px-md-10 px-lg-10 px-xl-15 mb-3">
             <v-btn
               depressed
               color="primary"
@@ -533,9 +523,7 @@
               </v-row>
             </v-form>
           </v-card-text>
-          <div
-            class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10 mb-3"
-          >
+          <div class="px-6 px-md-10 px-lg-10 px-xl-15 mb-3">
             <v-btn depressed color="primary" class="mr-1" @click="setType">
               <i18n path="Common.Apply" />
             </v-btn>
@@ -602,7 +590,7 @@
                     <v-col cols="12" class="pb-0">
                       <v-text-field
                         v-model="eventData.Title"
-                        :rules="requiredRules"
+                        :rules="[rules.required]"
                         :label="$t('Common.EventTitle')"
                         required
                         dense
@@ -652,78 +640,87 @@
                     @click="addTicketRow"
                     ><i18n path="Common.AddTickets"
                   /></v-btn>
-                  <v-simple-table class="event-table">
-                    <template v-slot:default>
-                      <thead>
-                        <tr>
-                          <th class="text-left pl-0">
-                            <i18n path="Common.Title" />
-                          </th>
-                          <th class="text-left pl-2">
-                            <i18n path="Common.Type" />
-                          </th>
-                          <th class="text-left pl-2">
-                            {{
-                              $t('Common.Price', {
-                                currency: eventData.Currency,
-                              })
-                            }}
-                          </th>
-                          <th class="text-left pl-2">
-                            <i18n path="Common.Quantity" />
-                          </th>
-                          <th class="text-left pl-2"></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr v-for="(ticket, k) in tickets" :key="k">
-                          <td class="pa-2 pb-0 pl-0">
-                            <v-text-field
-                              v-model="ticket.Code"
-                              :rules="requiredRules"
-                              outlined
-                              dense
-                              @change="changeTicketCode(k)"
-                            ></v-text-field>
-                          </td>
-                          <td class="pa-2 pb-0">
-                            <Lookup
-                              v-model="ticket.Type"
-                              :field="ticketTypeProps"
-                              :on-change="changeTicketType(k)"
-                            />
-                          </td>
-                          <td class="pa-2 pb-0">
-                            <v-text-field
-                              v-model="ticket.Amount"
-                              outlined
-                              dense
-                              value
-                              type="Number"
-                              min="0"
-                              :disabled="isPriceDisabled(k)"
-                              @change="changeTicketAmount(k)"
-                            ></v-text-field>
-                          </td>
-                          <td class="pa-2 pb-0">
-                            <v-text-field
-                              v-model="ticket.TicketCount"
-                              outlined
-                              dense
-                              value
-                              type="Number"
-                              min="0"
-                            ></v-text-field>
-                          </td>
-                          <td class="pa-2 pb-0">
-                            <v-btn icon class="mt-1" @click="deleteTicket(k)">
-                              <v-icon>fa-trash</v-icon>
-                            </v-btn>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </template>
-                  </v-simple-table>
+                  <div id="res-tables">
+                    <v-simple-table class="event-table">
+                      <template v-slot:default>
+                        <thead class="e-thead">
+                          <tr class="e-tr">
+                            <th class="text-left pl-0">
+                              <i18n path="Common.Title" />
+                            </th>
+                            <th class="text-left pl-2">
+                              <i18n path="Common.Type" />
+                            </th>
+                            <th class="text-left pl-2">
+                              {{
+                                $t('Common.Price', {
+                                  currency: eventData.Currency,
+                                })
+                              }}
+                            </th>
+                            <th class="text-left pl-2">
+                              <i18n path="Common.Quantity" />
+                            </th>
+                            <th class="text-left pl-2"></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr
+                            v-for="(ticket, k) in tickets"
+                            :key="k"
+                            class="e-tr"
+                          >
+                            <td
+                              class="pa-2 pb-0 pl-2 pl-md-0 e-td"
+                              data-title="Ticket"
+                            >
+                              <v-text-field
+                                v-model="ticket.Code"
+                                :rules="[rules.required]"
+                                outlined
+                                dense
+                                @change="changeTicketCode(k)"
+                              ></v-text-field>
+                            </td>
+                            <td class="pa-2 pb-0 e-td" data-title="Type">
+                              <Lookup
+                                v-model="ticket.Type"
+                                :field="ticketTypeProps"
+                                :on-change="changeTicketType(k)"
+                              />
+                            </td>
+                            <td class="pa-2 pb-0 e-td" data-title="Amount">
+                              <v-text-field
+                                v-model="ticket.Amount"
+                                outlined
+                                dense
+                                value
+                                type="Number"
+                                min="0"
+                                :disabled="isPriceDisabled(k)"
+                                @change="changeTicketAmount(k)"
+                              ></v-text-field>
+                            </td>
+                            <td class="pa-2 pb-0 e-td" data-title="">
+                              <v-text-field
+                                v-model="ticket.TicketCount"
+                                outlined
+                                dense
+                                value
+                                type="Number"
+                                min="0"
+                              ></v-text-field>
+                            </td>
+                            <td class="pa-2 pb-0 e-td">
+                              <v-btn icon class="mt-1" @click="deleteTicket(k)">
+                                <v-icon>fa-trash</v-icon>
+                              </v-btn>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </template>
+                    </v-simple-table>
+                  </div>
                 </v-form>
               </v-card>
             </v-tab-item>
@@ -769,129 +766,155 @@
                   >
                     {{ locationMessage }}
                   </div>
-                  <v-simple-table class="event-table">
-                    <template v-slot:default>
-                      <thead>
-                        <tr>
-                          <th class="text-left pl-0">
-                            <i18n path="Common.DateRange" />
-                          </th>
-                          <th class="text-left pl-2 st-date">
-                            <i18n path="Common.StartT" />
-                          </th>
-                          <th class="text-left pl-2 st-date">
-                            <i18n path="Common.EndT" />
-                          </th>
-                          <th class="text-left pl-2 st-date">
-                            <i18n path="Common.SlotSize" />
-                          </th>
-                          <th class="text-left pl-2 event-timezone">
-                            <i18n path="Common.Timezone" />
-                          </th>
-                          <th class="text-left pl-2 event-timezone">
-                            <i18n path="Common.RecurringEventLocation" />
-                          </th>
-                          <th class="text-left pl-2">
-                            <i18n path="Common.Type" />
-                          </th>
-                          <th class="text-left">
-                            <i18n path="Common.Tickets" />
-                          </th>
-                          <th class="text-left"></th>
-                        </tr>
-                      </thead>
+                  <div id="res-tables">
+                    <v-simple-table class="event-table">
+                      <template v-slot:default>
+                        <thead class="e-thead">
+                          <tr class="e-tr">
+                            <th class="text-left pl-0">
+                              <i18n path="Common.DateRange" />
+                            </th>
+                            <th class="text-left pl-2 st-date">
+                              <i18n path="Common.StartT" />
+                            </th>
+                            <th class="text-left pl-2 st-date">
+                              <i18n path="Common.EndT" />
+                            </th>
+                            <th class="text-left pl-2 st-date">
+                              <i18n path="Common.SlotSize" />
+                            </th>
+                            <th class="text-left pl-2 event-timezone">
+                              <i18n path="Common.Timezone" />
+                            </th>
+                            <th class="text-left pl-2 event-timezone">
+                              <i18n path="Common.RecurringEventLocation" />
+                            </th>
+                            <th class="text-left pl-2">
+                              <i18n path="Common.Type" />
+                            </th>
+                            <th class="text-left">
+                              <i18n path="Common.Tickets" />
+                            </th>
+                            <th class="text-left"></th>
+                          </tr>
+                        </thead>
 
-                      <tbody>
-                        <tr v-for="(session, k) in sessions" :key="k">
-                          <td class="pa-2 pb-0 pl-0">
-                            <span>{{ session.CustomScheduledType }}</span>
-                            <v-btn icon small @click="selectSchedule(k)">
-                              <v-icon>mdi-18px mdi-pencil</v-icon>
-                            </v-btn>
-                          </td>
-                          <td class="pa-2 pb-0 st-date">
-                            <Lookup
-                              v-model="session.StartTime"
-                              :field="startTimeProps"
-                              :rules="validStartTimeRule(k)"
-                            />
-                          </td>
-                          <td class="pa-2 pb-0 st-date">
-                            <Lookup
-                              v-model="session.EndTime"
-                              :field="endTimeProps"
-                              :rules="validEndTimeRule(k)"
-                            />
-                          </td>
-                          <td class="pa-2 pb-0 st-date">
-                            <v-autocomplete
-                              v-model="session.Duration"
-                              :items="slotLookupOptions"
-                              item-text="value"
-                              item-value="key"
-                              :label="$t('Common.SlotSize')"
-                              outlined
-                              dense
-                              @change="changeDuration(k)"
-                            ></v-autocomplete>
-                          </td>
-                          <td class="pa-2 pb-0 event-timezone text-truncate">
-                            <Timezone
-                              v-model="session.Timezone"
-                              :rules="requiredRules"
-                              :field="timezonefield"
-                            ></Timezone>
-                          </td>
-
-                          <td class="pa-2 pb-0 event-timezone">
-                            <v-form
-                              ref="locationForm"
-                              v-model="validlocation"
-                              :lazy-validation="lazy"
+                        <tbody>
+                          <tr
+                            v-for="(session, k) in sessions"
+                            :key="k"
+                            class="e-tr"
+                          >
+                            <td class="pa-2 pb-0 pl-0 e-td" data-title="">
+                              <span>{{ session.CustomScheduledType }}</span>
+                              <v-btn icon small @click="selectSchedule(k)">
+                                <v-icon>mdi-18px mdi-pencil</v-icon>
+                              </v-btn>
+                            </td>
+                            <td
+                              class="pa-2 pb-0 st-date e-td"
+                              data-title="Start Time"
                             >
-                              <div v-if="session.selectedLocation">
-                                {{ session.selectedLocation }}
-                                <v-icon @click="closeShowLocation(k)"
-                                  >mdi-close</v-icon
-                                >
-                              </div>
                               <Lookup
-                                v-else
-                                v-model="session.LocationType"
-                                :field="locationTypeProps"
-                                :rules="requiredRules"
-                                required
-                                :on-change="changelocationType(k)"
+                                v-model="session.StartTime"
+                                :field="startTimeProps"
+                                :rules="validStartTimeRule(k)"
                               />
-                            </v-form>
-                          </td>
+                            </td>
+                            <td
+                              class="pa-2 pb-0 st-date e-td"
+                              data-title="End Time"
+                            >
+                              <Lookup
+                                v-model="session.EndTime"
+                                :field="endTimeProps"
+                                :rules="validEndTimeRule(k)"
+                              />
+                            </td>
+                            <td class="pa-2 pb-0 st-date e-td" data-title="">
+                              <v-autocomplete
+                                v-model="session.Duration"
+                                :items="slotLookupOptions"
+                                item-text="value"
+                                item-value="key"
+                                :label="$t('Common.SlotSize')"
+                                outlined
+                                dense
+                                @change="changeDuration(k)"
+                              ></v-autocomplete>
+                            </td>
+                            <td
+                              class="pa-2 pb-0 event-timezone text-truncate e-td"
+                              data-title=""
+                            >
+                              <Timezone
+                                v-model="session.Timezone"
+                                :rules="[rules.required]"
+                                :field="timezonefield"
+                              ></Timezone>
+                            </td>
 
-                          <td class="pa-2 pb-0">
-                            <span v-if="session.Type === 'Group'"
-                              >{{ getMaxAllow(session) }}
-                            </span>
-                            <span v-if="session.Type === 'Personal'"
-                              >{{ session.Type }}
-                            </span>
-                            <v-btn icon small @click="selectType(k)">
-                              <v-icon>mdi-18px mdi-pencil</v-icon>
-                            </v-btn>
-                          </td>
-                          <td class="pa-2 pb-0">
-                            <span>{{ getTicketCount(session) }} </span>
-                            <v-btn icon small @click="selectSessionTickets(k)">
-                              <v-icon>mdi-18px mdi-pencil</v-icon>
-                            </v-btn>
-                          </td>
-                          <td class="pa-2 pb-0">
-                            <v-btn icon class="mt-1" @click="deleteSession(k)">
-                              <v-icon>fa-trash</v-icon>
-                            </v-btn>
-                          </td>
-                        </tr>
-                      </tbody>
-                    </template>
-                  </v-simple-table>
+                            <td
+                              class="pa-2 pb-0 event-timezone e-td"
+                              data-title=""
+                            >
+                              <v-form
+                                ref="locationForm"
+                                v-model="validlocation"
+                                :lazy-validation="lazy"
+                              >
+                                <div v-if="session.selectedLocation">
+                                  {{ session.selectedLocation }}
+                                  <v-icon @click="closeShowLocation(k)"
+                                    >mdi-close</v-icon
+                                  >
+                                </div>
+                                <Lookup
+                                  v-else
+                                  v-model="session.LocationType"
+                                  :field="locationTypeProps"
+                                  :rules="[rules.required]"
+                                  required
+                                  :on-change="changelocationType(k)"
+                                />
+                              </v-form>
+                            </td>
+
+                            <td class="pa-2 pb-0 e-td" data-title="">
+                              <span v-if="session.Type === 'Group'"
+                                >{{ getMaxAllow(session) }}
+                              </span>
+                              <span v-if="session.Type === 'Personal'"
+                                >{{ session.Type }}
+                              </span>
+                              <v-btn icon small @click="selectType(k)">
+                                <v-icon>mdi-18px mdi-pencil</v-icon>
+                              </v-btn>
+                            </td>
+                            <td class="pa-2 pb-0 e-td" data-title="">
+                              <span>{{ getTicketCount(session) }} </span>
+                              <v-btn
+                                icon
+                                small
+                                @click="selectSessionTickets(k)"
+                              >
+                                <v-icon>mdi-18px mdi-pencil</v-icon>
+                              </v-btn>
+                            </td>
+                            <td class="pa-2 pb-0 e-td" data-title="">
+                              <v-btn
+                                icon
+                                class="mt-1"
+                                @click="deleteSession(k)"
+                              >
+                                <v-icon>fa-trash</v-icon>
+                              </v-btn>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </template>
+                    </v-simple-table>
+                  </div>
                 </v-form>
               </v-card>
               <v-card
@@ -1019,7 +1042,7 @@ import organizationInfo from '~/config/apps/event/gql/organizationInfo.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { getIdFromAtob } from '~/utility'
 import CustomDate from '~/components/common/form/date.vue'
-import { required, onlineEventLink } from '~/utility/rules.js'
+import { rules, onlineEventLink } from '~/utility/rules.js'
 import nuxtconfig from '~/nuxt.config'
 
 const ObjectID5 = (
@@ -1047,8 +1070,9 @@ export default {
       default: false,
     },
   },
-  data: () => {
+  data() {
     return {
+      rules: rules(this.$i18n),
       showLocation: false,
       selectedLocation: '',
       isUniqLinkValid: false,
@@ -1112,7 +1136,6 @@ export default {
       isSession: true,
       isEventCreate: false,
       isEventPublish: false,
-      requiredRules: [required],
       AvailableStartHour: '',
       AvailableEndHour: '',
       isMap: false,
@@ -1131,7 +1154,6 @@ export default {
       },
       scheduledTypeProps: {
         type: 'lookup',
-        caption: 'Event Scheduled',
         dataSource: {
           query: registrationStatusOptions,
           itemText: 'value',
@@ -2064,11 +2086,23 @@ export default {
         this.setNextTab()
       }
     },
-
+    isEmptyLocation() {
+      const isEmpty = this.sessions.map(
+        (session) => session.LocationType === ''
+      )
+      return isEmpty.includes(true)
+    },
     async saveRecord() {
       const { Code, Type } = this.tickets
       this.$refs.validSessionsForm.validate()
-      if (this.validSessions && Code !== '' && Type !== '') {
+      this.$refs.locationForm &&
+        this.$refs.locationForm.map((location) => location.validate())
+      if (
+        this.validSessions &&
+        !this.isEmptyLocation() &&
+        Code !== '' &&
+        Type !== ''
+      ) {
         const isInvalidSessionMap = this.sessions.map((session, index) => {
           return session.StartTime > session.EndTime
         })
@@ -2252,6 +2286,7 @@ export default {
       this.verifyUniqueLink(event.currentTarget.value)
     },
     verifyUniqueLink(value) {
+      this.isUniqLinkValid = false
       value = value.toLowerCase().replace(/\s/g, '')
       value = value.trim()
       this.eventData.UniqLink = value
@@ -2267,6 +2302,7 @@ export default {
       }
     },
     async checkUniqueLink(value) {
+      this.isUniqLinkValid = true
       const where = { UniqLink: value }
       const result = await this.$apollo.query({
         query: gql`
@@ -2407,15 +2443,5 @@ export default {
 }
 .event-inner {
   min-height: 410px;
-}
-.st-date {
-  max-width: 125px !important;
-  min-width: 125px !important;
-  box-sizing: border-box;
-}
-.event-timezone {
-  max-width: 160px !important;
-  min-width: 160px !important;
-  box-sizing: border-box;
 }
 </style>
