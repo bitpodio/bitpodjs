@@ -54,7 +54,11 @@ export default {
     }
   },
   methods: {
+    clearCookie() {
+      document.cookie = 'auth.redirect=' + '/'
+    },
     async loginBitpod() {
+      this.clearCookie()
       return await this.$auth.loginWith('bitpod')
     },
     async loginGoogle() {
