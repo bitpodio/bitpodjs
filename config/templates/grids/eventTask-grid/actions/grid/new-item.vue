@@ -45,7 +45,7 @@
                   <v-text-field
                     v-model="task.Title"
                     :label="$t('Common.Title')"
-                    :rules="requiredRules"
+                    :rules="[rules.required]"
                     outlined
                     dense
                   ></v-text-field>
@@ -56,7 +56,7 @@
                   <Lookup
                     v-model="task.Category"
                     :field="categoryLookupField"
-                    :rules="requiredRules"
+                    :rules="[rules.required]"
                     :on-change="changeCategory"
                   />
                 </v-col>
@@ -65,7 +65,7 @@
                     v-model="task.Status"
                     :field="statusLookupField"
                     :filter="filter"
-                    :rules="requiredRules"
+                    :rules="[rules.required]"
                     :on-change="changeStatus"
                   />
                 </v-col>
@@ -73,7 +73,7 @@
                   <Lookup
                     v-model="task.Action"
                     :field="actionLookupField"
-                    :rules="requiredRules"
+                    :rules="[rules.required]"
                     :filter="actionFilter"
                   />
                 </v-col>
@@ -81,7 +81,7 @@
                   <v-datetime-picker
                     v-model="task.DueDate"
                     :text-field-props="dueDateProps()"
-                    :rules="requiredRules"
+                    :rules="[rules.required]"
                     :label="$t('Common.DueDateRequired')"
                   >
                     <template slot="dateIcon">
@@ -108,7 +108,7 @@
                 <v-col v-if="isTimezone" cols="12" sm="6" md="4">
                   <Timezone
                     v-model="task.Timezone"
-                    :rules="requiredRules"
+                    :rules="[rules.required]"
                     :field="timezonefield"
                     dense
                     class="v-timezone"
@@ -120,7 +120,7 @@
                   <Lookup
                     v-model="task.SurveyId"
                     :field="surveyLookupField"
-                    :rules="requiredRules"
+                    :rules="[rules.required]"
                     :on-change="changeSurvey"
                   />
                 </v-col>
@@ -146,7 +146,7 @@
 </template>
 <script>
 import { getLookupData } from '~/config/apps/event/rest'
-import { required } from '~/utility/rules.js'
+import { rules } from '~/utility/rules.js'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
 export default {
   props: {
@@ -208,10 +208,9 @@ export default {
       valid: false,
       snackbar: false,
       timeout: 2000,
-      required: [required],
+      rules: rules(this.$i18n),
       duplicateMessage: '',
       isSaveButtonDisabled: false,
-      requiredRules: [required],
       timezonefield: {
         caption: 'Timezone*',
         type: 'Timezone',
