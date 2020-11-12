@@ -126,12 +126,16 @@
               <v-row>
                 <v-col cols="12" sm="6" md="6" class="pl-0 pt-0 pb-0">
                   <v-col class="pb-0">
-                    <Lookup
+                    <v-select
                       v-model="eventData.LocationType"
-                      :field="locationTypeProps"
+                      :items="locationTypeLookupOptions"
+                      label="Location Type*"
+                      required
+                      outlined
+                      dense
                       class="v-tickettype"
-                      :on-change="changeLocation"
-                    />
+                      @change="changeLocation($event)"
+                    ></v-select>
                   </v-col>
                   <v-form
                     ref="webinarLinkForm"
@@ -517,7 +521,7 @@ import Lookup from '~/components/common/form/lookup.vue'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import Timezone from '~/components/common/form/timezone'
 import eventCount from '~/config/apps/event/gql/eventCount.gql'
-import organizationInfo from '~/config/apps/event/gql/organizationInfo.gql'
+import orgInfoLocationType from '~/config/apps/event/gql/orgInfoLocationType.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import nuxtconfig from '~/nuxt.config'
 import { required, onlineEventLink } from '~/utility/rules.js'
@@ -558,6 +562,7 @@ export default {
       isEventPublish: false,
       requiredRules: [required],
       isMap: false,
+      locationTypeOptions: [],
       currentLocation: {},
       locationsVisibleOnMap: '',
       circleOptions: {},
@@ -578,19 +583,6 @@ export default {
           filter(data) {
             return {
               type: 'TicketType',
-            }
-          },
-        },
-      },
-      locationTypeProps: {
-        type: 'lookup',
-        dataSource: {
-          query: registrationStatusOptions,
-          itemText: 'value',
-          itemValue: 'key',
-          filter(data) {
-            return {
-              type: 'EventLocationType',
             }
           },
         },
@@ -672,6 +664,9 @@ export default {
     }
   },
   computed: {
+    locationTypeLookupOptions() {
+      return this.locationTypeOptions.map((option, index) => option.key)
+    },
     startDateField() {
       return {
         appendIcon: 'fa-calendar',
@@ -1272,7 +1267,6 @@ export default {
       this.verifyUniqueLink(event.currentTarget.value)
     },
     verifyUniqueLink(value) {
-      this.isUniqLinkValid = false
       value = value.toLowerCase().replace(/\s/g, '')
       value = value.trim()
       const regex = RegExp(/^[0-9a-zA-Z]+$/)
@@ -1288,7 +1282,6 @@ export default {
       this.eventData.UniqLink = value
     },
     async checkUniqueLink(value) {
-      this.isUniqLinkValid = true
       const where = { UniqLink: value }
       const result = await this.$apollo.query({
         query: gql`
@@ -1304,8 +1297,8 @@ export default {
         this.isInvalidEventLink = true
         this.uniqueLinkMessage = this.$t('Messages.Error.UniqueLinkDuplicate')
       } else {
-        this.isInvalidEventLink = false
         this.isUniqLinkValid = true
+        this.isInvalidEventLink = false
       }
     },
     changeLocation(value) {
@@ -1355,7 +1348,7 @@ export default {
     data: {
       query() {
         return gql`
-          ${organizationInfo}
+          ${orgInfoLocationType}
         `
       },
       variables() {
@@ -1363,10 +1356,16 @@ export default {
           filters: {
             where: {},
           },
+          locationTypeFilters: {
+            where: {
+              type: 'EventLocationType',
+            },
+          },
         }
       },
       update(data) {
         const OrganizationInfo = formatGQLResult(data, 'OrganizationInfo')
+        this.locationTypeOptions = formatGQLResult(data, 'GeneralConfiguration')
         this.eventData.Currency = OrganizationInfo[0].Currency
       },
       error(error) {
