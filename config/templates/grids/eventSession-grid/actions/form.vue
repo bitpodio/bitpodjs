@@ -41,7 +41,7 @@
                   v-model="session.Name"
                   :label="$t('Common.SessionName')"
                   outlined
-                  :rules="required"
+                  :rules="[rules.required]"
                   dense
                 ></v-text-field>
               </v-col>
@@ -67,7 +67,7 @@
                 <Lookup
                   v-model="session.Duration"
                   :field="durationProps"
-                  :rules="required"
+                  :rules="[rules.required]"
                   @change="changeDuration"
                 />
               </v-col>
@@ -85,7 +85,7 @@
               <v-col cols="12" sm="6">
                 <Timezone
                   v-model="session.Timezone"
-                  :rules="requiredRules"
+                  :rules="[rules.required]"
                   :field="timezonefield"
                   dense
                   class="v-timezone"
@@ -113,7 +113,7 @@
                 <Lookup
                   v-model="session.LocationType"
                   :field="locationTypeProps"
-                  :rules="required"
+                  :rules="[rules.required]"
                   @change="locationChanged"
                 />
               </v-col>
@@ -146,7 +146,7 @@
                   v-model="session.WebinarLink"
                   :label="$t('Common.OnlineEventLink')"
                   outlined
-                  :rules="onlineEventLink"
+                  :rules="[rules.onlineEventLink]"
                   dense
                 ></v-text-field>
               </v-col>
@@ -270,16 +270,17 @@
         <v-card-actions
           class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
         >
-          <v-btn
+          <SaveBtn
+            v-if="dialog"
             color="primary"
             :disabled="
               !valid ||
               (session.LocationType === 'Venue' && !venueAddress.AddressLine)
             "
+            :label="this.$t('Drawer.Save')"
             depressed
-            @click.native="onSave"
-            ><i18n path="Drawer.Save"
-          /></v-btn>
+            :action="onSave"
+          ></SaveBtn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -290,7 +291,7 @@
 import gql from 'graphql-tag'
 import { utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz'
 import { formatGQLResult } from '~/utility/gql.js'
-import { required, onlineEventLink } from '~/utility/rules.js'
+import { rules } from '~/utility/rules.js'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import location from '~/config/apps/event/gql/location.gql'
 import speaker from '~/config/apps/event/gql/eventSpeakers.gql'
@@ -298,9 +299,11 @@ import event from '~/config/apps/event/gql/event.gql'
 import { getIdFromAtob } from '~/utility'
 import CustomDate from '~/components/common/form/date.vue'
 import nuxtconfig from '~/nuxt.config'
+import SaveBtn from '~/components/common/saveButton'
 export default {
   components: {
     CustomDate,
+    SaveBtn,
     VueGoogleAutocomplete: () => import('vue-google-autocomplete'),
     RichText: () =>
       process.client ? import('~/components/common/form/richtext.vue') : false,
@@ -330,8 +333,6 @@ export default {
       snackbarText: '',
       eventDetails: {},
       valid: false,
-      required: [required],
-      onlineEventLink: [onlineEventLink],
       dialog: false,
       isSaveButtonDisabled: false,
       isGroup: false,
@@ -340,7 +341,7 @@ export default {
       ticketOptions: [],
       speakerOptions: [],
       addresslineMessage: '',
-      requiredRules: [required],
+      rules: rules(this.$i18n),
       zoomDocumentLink: nuxtconfig.integrationLinks.ZOOM_DOCUMENT_LINK,
       googleMeetDocumentLink:
         nuxtconfig.integrationLinks.GOOGLE_MEET_DOCUMENT_LINK,
@@ -437,9 +438,13 @@ export default {
           if (!v) {
             return this.$t('Messages.Error.ThisFieldRequired')
           }
-          const startDate = new Date(v)
-          const eventStartDate = new Date(this.eventDetails.StartDate)
-          const eventEndDate = new Date(this.eventDetails.EndDate)
+          const startDate = new Date(new Date(v).toLocaleString())
+          const eventStartDate = new Date(
+            new Date(this.eventDetails.StartDate).toLocaleString()
+          )
+          const eventEndDate = new Date(
+            new Date(this.eventDetails.EndDate).toLocaleString()
+          )
           return startDate < eventStartDate || startDate > eventEndDate
             ? this.$t('Messages.Error.SessionStartDate')
             : true
