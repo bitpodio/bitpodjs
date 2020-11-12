@@ -1,5 +1,16 @@
 <template>
   <div>
+    <v-snackbar
+      v-if="!hideToast"
+      v-model="snackbar"
+      :timeout="timeout"
+      :top="true"
+      width="2px"
+    >
+      <div class="fs-16 text-center">
+        {{ snackbarText }}
+      </div>
+    </v-snackbar>
     <v-form ref="form" v-model="valid" :lazy-validation="lazy">
       <v-dialog
         v-model="isEditReg"
@@ -202,9 +213,15 @@ export default {
       default: false,
       allowSpaces: false,
     },
+    hideToast: {
+      default: false,
+      type: Boolean,
+    },
   },
   data() {
     return {
+      snackbar: false,
+      timeout: 2000,
       requiredRules: [required],
       regData: {},
       regDetails: {},
@@ -243,6 +260,9 @@ export default {
     }
   },
   computed: {
+    snackbarText() {
+      return this.$t('Messages.Success.EditRegistrationSuccess')
+    },
     eventsProps() {
       const items = this.events
       return {
@@ -376,6 +396,7 @@ export default {
       }
       if (res) {
         this.close()
+        this.snackbar = true
         this.refresh()
         return res
       }

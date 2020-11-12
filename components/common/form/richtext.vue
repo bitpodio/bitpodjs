@@ -184,6 +184,20 @@ export default {
         allowResizeX: true,
         allowResizeY: true,
         zIndex: 99999,
+        popup: {
+          a: [
+            {
+              name: 'eye',
+              tooltip: 'Open link',
+              exec: 'function(e,t){var o=r.attr(t,"href");t&&o&&e.ow.open(o)}',
+            },
+            'unlink',
+            'brush',
+            'bold',
+            'underline',
+            'italic',
+          ],
+        },
       },
     }
   },

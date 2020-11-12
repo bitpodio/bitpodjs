@@ -44,7 +44,7 @@
     "Invites": "Invite",
     "Emails": "Eclous",
     "Notes": "Notes",
-    "Tickets": "Des billets",
+    "Tickets": "Des billets*",
     "DiscountCodes": "Codes de remise",
     "RegistrationQuestions": "Questions d'inscription",
     "Sessions": "Sessions",
@@ -668,13 +668,14 @@
     "DateTime": "Date et l'heure",
     "BadgesTemplates": "Modèles de badges",
     "TicketCountRequired": "Nombre de billets *",
-    "Sundays": "les dimanches",
-    "Mondays": "Les lundis",
-    "Tuesdays": "Les mardis",
-    "Wednesdays": "Les mercredis",
-    "Thursdays": "Les jeudis",
-    "Fridays": "Les vendredis",
-    "Saturdays": "les samedis",
+    "Sundays":"les dimanches",
+    "Mondays":"Les lundis",
+    "Tuesdays":"Les mardis",
+    "Wednesdays":"Les mercredis",
+    "Thursdays":"Les jeudis",
+    "Fridays":"Les vendredis",
+    "Saturdays":"les samedis",
+    "EventScheduled":"Événement programmé",
     "Yes": "Oui",
     "No": "Non",
     "Registration": "Enregistrement",
@@ -733,7 +734,8 @@
     "Registrations": "Enregistrements",
     "DiscountCode": "Code d'actualisation",
     "Members": "Membres",
-    "Contacts": "Contacts"
+    "Contacts": "Contacts",
+    "SessionOverlaps": "Avertissement de chevauchement de session"
   },
   "FilterOptions": {
     "Is": "Est",
@@ -855,7 +857,15 @@
       "SeatmapUpdateSuccess": "Seatmap a été mis à jour avec succès",
       "EmailInviteSuccess": "Vos invitations par e-mail ont été mises à jour avec succès.",
       "EmailSaveSuccess": "Vos invitations par e-mail ont été enregistrées avec succès.",
-      "TaskDeleteSuccess": "Tâche supprimée avec succès"
+      "TaskDeleteSuccess": "Tâche supprimée avec succès",
+      "TaskCreatedSuccess": "Tâche créée avec succès",
+      "TaskUpdatedSuccess": "Tâche mise à jour avec succès",
+      "EditRegistrationSuccess": "Inscription mise à jour avec succès",
+      "CancelRegistrationSuccess": "Inscription annulée avec succès",
+      "RefundRegistrationSuccess": "Remboursement d'inscription réussi",
+      "RecurringSessionCreatedSuccess": "Session récurrente créée avec succès",
+      "RecurringSessionUpdatedSuccess": "Session récurrente mise à jour avec succès",
+      "EditInviteMetadataSuccess": "template metadata updated successfully"
     }
   },
   "$vuetify": {

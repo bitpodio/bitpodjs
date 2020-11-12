@@ -289,6 +289,7 @@
             <v-btn
               v-if="curentTab < 1"
               color="primary"
+              :disabled="!RTEValue"
               depressed
               @click="curentTab++"
               ><i18n path="Drawer.Next"

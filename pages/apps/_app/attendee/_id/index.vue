@@ -695,6 +695,12 @@
                         </tr>
                       </thead>
                       <tbody>
+                        <tr v-for="item in attendeeData" :key="item">
+                          <td>{{ item.ticketName }}</td>
+                          <td>{{ item.price }}</td>
+                          <td>{{ item.count }}</td>
+                          <td>{{ item.total }}</td>
+                        </tr>
                         <tr
                           v-for="item in registration.TicketListId"
                           :key="item"
@@ -935,6 +941,7 @@ export default {
       event: {},
       registration: {},
       eventImage: false,
+      attendeeData: {},
     }
   },
   computed: {
@@ -1030,6 +1037,19 @@ export default {
         const res = await this.$axios.$get(URL)
         if (res) {
           this.registration = res
+          res.attendee.map((i) => {
+            if (!this.attendeeData[i.TicketName]) {
+              this.attendeeData[i.TicketName] = {
+                count: 1,
+                ticketName: i.TicketName,
+                price: i.TicketAmount,
+                total: i.TicketAmount,
+              }
+            } else {
+              this.attendeeData[i.TicketName].count++
+              this.attendeeData[i.TicketName].total += i.TicketAmount
+            }
+          })
           this.getEventData(res.EventId)
         }
       } catch (e) {
