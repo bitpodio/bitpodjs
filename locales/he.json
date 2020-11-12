@@ -687,7 +687,9 @@
     "Cancelled": "מבוטל",
     "Failed": "נִכשָׁל",
     "Pending": "ממתין ל",
-    "LocationTypeRequired": "סוג מיקום *"
+    "LocationTypeRequired": "סוג מיקום *",
+    "EditEvent": "Edit Event",
+    "UploadImages": "Upload Images"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",

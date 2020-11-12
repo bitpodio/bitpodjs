@@ -688,7 +688,9 @@
     "Cancelled": "Cancelled",
     "Failed": "Failed",
     "Pending": "Pending",
-    "LocationTypeRequired": "Location Type*"
+    "LocationTypeRequired": "Location Type*",
+    "EditEvent": "Edit Event",
+    "UploadImages": "Upload Images"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",

@@ -21,7 +21,7 @@
               <v-text-field
                 v-model="formData.ClientId"
                 :label="$t('Common.ClientId')"
-                :rules="required"
+                :rules="[rules.required]"
                 outlined
                 dense
               ></v-text-field>
@@ -30,7 +30,7 @@
               <v-text-field
                 v-model="formData.ClientSecret"
                 :label="$t('Common.ClientSecret')"
-                :rules="required"
+                :rules="[rules.required]"
                 outlined
                 dense
               ></v-text-field>
@@ -55,7 +55,7 @@
 </template>
 
 <script>
-import { required } from '~/utility/rules.js'
+import { rules } from '~/utility/rules.js'
 export default {
   props: {
     item: {
@@ -81,7 +81,7 @@ export default {
   data() {
     return {
       valid: false,
-      required: [required],
+      rules: rules(this.$i18n),
       formData: { ...this.item },
       lazy: false,
     }
