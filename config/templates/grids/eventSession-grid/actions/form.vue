@@ -98,6 +98,7 @@
                 <Lookup
                   v-model="session.SessionTicket"
                   :field="ticketProps()"
+                  :rules="[rules.required]"
                 />
               </v-col>
               <div class="col-md-12 pb-0 pt-0">
