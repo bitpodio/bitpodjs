@@ -1,5 +1,10 @@
 <template>
   <div class="app">
+    <v-flex class="detailview-head mb-3"
+      ><v-btn class="ml-n3 back-icon" icon @click="goBack"
+        ><v-icon class="fs-30">mdi-chevron-left</v-icon> </v-btn
+      ><v-text class="fs-18 min-h36"><i18n path="Drawer.Schedule" /></v-text
+    ></v-flex>
     <v-snackbar v-model="snackbar" :top="true" :timeout="3000">
       <i18n path="Common.YouCanNotEdit" class="toast py-2 pr-1 pl-3" />
     </v-snackbar>
@@ -401,6 +406,9 @@ export default {
     this.getTimeSlots()
   },
   methods: {
+    goBack() {
+      this.$router.back()
+    },
     filterData() {
       const startDate =
         this.clickedDate === '' ? new Date() : new Date(this.clickedDate)
@@ -583,7 +591,11 @@ export default {
           const allDay = this.rnd(0, 3) === 0
           const difference = event.end.split(':')[0] - event.start.split(':')[0]
           const duration = (difference < 10 ? '0' : '') + difference + ':00'
-          return event.ranges && event.ranges.length
+          return event.ranges &&
+            event.ranges.length &&
+            event.dow &&
+            event.dow.length &&
+            event.dow[0] != null
             ? {
                 title: event.title,
                 rrule: `DTSTART:${event.ranges[0].start
@@ -600,7 +612,7 @@ export default {
                 )}`,
                 duration,
               }
-            : event.dow && event.dow.length
+            : event.dow && event.dow.length && event.dow[0] != null
             ? {
                 title: event.title,
                 rrule: `DTSTART:${new Date(0)
