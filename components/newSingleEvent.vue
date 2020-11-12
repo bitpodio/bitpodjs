@@ -337,7 +337,7 @@
                         >
                           <v-text-field
                             v-model="ticket.Code"
-                            :rules="requiredRules"
+                            :rules="[rules.required]"
                             outlined
                             dense
                           ></v-text-field>
