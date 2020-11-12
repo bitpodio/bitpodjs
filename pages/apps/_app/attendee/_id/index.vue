@@ -694,20 +694,37 @@
                           </th>
                         </tr>
                       </thead>
-                      <tbody>
+                      <tbody v-if="event.seatReservation">
                         <tr v-for="item in attendeeData" :key="item">
                           <td>{{ item.ticketName }}</td>
                           <td>{{ item.price }}</td>
                           <td>{{ item.count }}</td>
                           <td>{{ item.total }}</td>
                         </tr>
+                        <tr>
+                          <td></td>
+                          <td></td>
+                          <td>Total {{ registration.TicketQuantity }}</td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td></td>
+                          <td></td>
+                          <td><i18n path="Common.Total" /></td>
+                          <td>
+                            {{ registration.Currency }}
+                            {{ registration.TotalAmount }}
+                          </td>
+                        </tr>
+                      </tbody>
+                      <tbody v-else>
                         <tr
                           v-for="item in registration.TicketListId"
                           :key="item"
                         >
                           <td>{{ item.Code }}</td>
                           <td>{{ item.Amount }}</td>
-                          <td>{{ item.TicketQuantity }}</td>
+                          <td>{{ item.count }}</td>
                           <td>{{ item.Amount }}</td>
                         </tr>
                         <tr>
@@ -716,7 +733,6 @@
                           <td>Total {{ registration.TicketQuantity }}</td>
                           <td></td>
                         </tr>
-
                         <tr>
                           <td></td>
                           <td></td>

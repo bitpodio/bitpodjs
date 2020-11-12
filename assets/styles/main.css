@@ -655,4 +655,7 @@ body {
   .seatmap-inner {
     max-width: 100%;
   }
+  .event-title {
+    max-width: 100%;
+  }
 }
