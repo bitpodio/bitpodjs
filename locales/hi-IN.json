@@ -690,7 +690,9 @@
     "Cancelled": "रद्द",
     "Failed": "अनुत्तीर्ण होना",
     "Pending": "विचाराधीन",
-    "LocationTypeRequired": "स्थान का प्रकार *"
+    "LocationTypeRequired": "स्थान का प्रकार *",
+    "EditEvent": "Edit Event",
+    "UploadImages": "Upload Images"
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",

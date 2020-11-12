@@ -1133,7 +1133,7 @@ export default {
             },
           ],
         },
-        'attendeeTicket.Code': {
+        TicketName: {
           displayOrder: 4,
           caption: 'Common.Ticket',
           searchEnable: true,

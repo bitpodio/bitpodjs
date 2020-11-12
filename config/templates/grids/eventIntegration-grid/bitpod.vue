@@ -21,7 +21,7 @@
               <v-text-field
                 v-model="formData.URL"
                 :label="$t('Common.Url')"
-                :rules="required"
+                :rules="[rules.required]"
                 outlined
                 dense
               ></v-text-field>
@@ -30,7 +30,7 @@
               <v-text-field
                 v-model="formData.Host"
                 :label="$t('Common.Host')"
-                :rules="required"
+                :rules="[rules.required]"
                 outlined
                 dense
               ></v-text-field>
@@ -39,7 +39,7 @@
               <v-text-field
                 v-model="formData.Path"
                 :label="$t('Common.Path')"
-                :rules="required"
+                :rules="[rules.required]"
                 outlined
                 dense
               ></v-text-field>
@@ -48,7 +48,7 @@
               <v-text-field
                 v-model="formData.AccessKeyId"
                 :label="$t('Common.AccessKey')"
-                :rules="required"
+                :rules="[rules.required]"
                 outlined
                 dense
               ></v-text-field>
@@ -57,7 +57,7 @@
               <v-text-field
                 v-model="formData.AccessSecret"
                 :label="$t('Common.AccessSecret')"
-                :rules="required"
+                :rules="[rules.required]"
                 outlined
                 dense
               ></v-text-field>
@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import { required } from '~/utility/rules.js'
+import { rules } from '~/utility/rules.js'
 export default {
   props: {
     item: {
@@ -108,7 +108,7 @@ export default {
   data() {
     return {
       valid: false,
-      required: [required],
+      rules: rules(this.$i18n),
       formData: { ...this.item },
       lazy: false,
     }

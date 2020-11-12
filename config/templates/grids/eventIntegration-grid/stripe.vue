@@ -29,7 +29,7 @@
               <v-text-field
                 v-model="formData.Token"
                 :label="$t('Common.Token')"
-                :rules="required"
+                :rules="[rules.required]"
                 outlined
                 dense
               ></v-text-field>
@@ -38,7 +38,7 @@
               <v-text-field
                 v-model="formData.URL"
                 :label="$t('Common.Url')"
-                :rules="required"
+                :rules="[rules.required]"
                 outlined
                 dense
               ></v-text-field>
@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import { required } from '~/utility/rules.js'
+import { rules } from '~/utility/rules.js'
 export default {
   props: {
     item: {
@@ -89,7 +89,7 @@ export default {
   data() {
     return {
       valid: false,
-      required: [required],
+      rules: rules(this.$i18n),
       formData: { ...this.item },
       lazy: false,
     }

@@ -1007,7 +1007,7 @@ export default {
           newForm: true,
           editForm: true,
         },
-        'attendeeTicket.Code': {
+        TicketName: {
           displayOrder: 7,
           caption: 'Common.Ticket',
           searchEnable: true,
