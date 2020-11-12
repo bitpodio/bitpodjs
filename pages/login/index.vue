@@ -55,7 +55,9 @@ export default {
   },
   methods: {
     clearCookie() {
-      document.cookie = 'auth.redirect=' + '/'
+      console.log('inside clear cookie')
+      document.cookie = 'auth.redirect=' + ' '
+      console.log('inside clear cookie1', document.cookie)
     },
     async loginBitpod() {
       this.clearCookie()
