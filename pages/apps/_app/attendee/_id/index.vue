@@ -694,20 +694,37 @@
                           </th>
                         </tr>
                       </thead>
-                      <tbody>
+                      <tbody v-if="event.seatReservation">
                         <tr v-for="item in attendeeData" :key="item">
                           <td>{{ item.ticketName }}</td>
                           <td>{{ item.price }}</td>
                           <td>{{ item.count }}</td>
                           <td>{{ item.total }}</td>
                         </tr>
+                        <tr>
+                          <td></td>
+                          <td></td>
+                          <td>Total {{ registration.TicketQuantity }}</td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                          <td></td>
+                          <td></td>
+                          <td><i18n path="Common.Total" /></td>
+                          <td>
+                            {{ registration.Currency }}
+                            {{ registration.TotalAmount }}
+                          </td>
+                        </tr>
+                      </tbody>
+                      <tbody v-else>
                         <tr
                           v-for="item in registration.TicketListId"
                           :key="item"
                         >
                           <td>{{ item.Code }}</td>
                           <td>{{ item.Amount }}</td>
-                          <td>{{ item.TicketQuantity }}</td>
+                          <td>{{ registration.TicketQuantity }}</td>
                           <td>{{ item.Amount }}</td>
                         </tr>
                         <tr>
@@ -716,7 +733,6 @@
                           <td>Total {{ registration.TicketQuantity }}</td>
                           <td></td>
                         </tr>
-
                         <tr>
                           <td></td>
                           <td></td>
@@ -758,11 +774,11 @@
                   v-if="event.BusinessType === 'Recurring'"
                   class="body-1 my-n3"
                 >
-                  <v-list class="pa-0">
+                  <v-list class="pa-0 if-rec" :data-title="event.BusinessType">
                     <v-list-item
                       v-for="item in registration.attendee"
                       :key="item.id"
-                      class="pa-0"
+                      class="pa-0 if-rec-child"
                     >
                       <v-list-item-content class="py-0">
                         <v-list-item-title>
@@ -1150,6 +1166,12 @@ export default {
 }
 .gallery-img {
   max-width: 220px;
+}
+.if-rec[data-title='Recurring'] .if-rec-child {
+  display: none;
+}
+.if-rec[data-title='Recurring'] .if-rec-child:nth-child(1) {
+  display: flex;
 }
 @media screen and (max-width: 600px) {
   .background-event-img {
