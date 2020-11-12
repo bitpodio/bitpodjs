@@ -56,7 +56,9 @@ export default {
   methods: {
     clearCookie() {
       console.log('inside clear cookie')
-      window.localStorage.auth.redirect = ''
+      if (window.localStorage['auth.redirect']) {
+        window.localStorage['auth.redirect'] = ''
+      }
       document.cookie = 'auth.redirect=' + ''
       console.log('inside clear cookie1', document.cookie)
     },
