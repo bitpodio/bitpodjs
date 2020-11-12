@@ -110,37 +110,37 @@ export default {
       selectedDays: [
         {
           dayNameLang: this.$t('Common.Sundays'),
-          dayName: 'Sundays',
+          dayName: 'sunday',
           selected: false,
         },
         {
           dayNameLang: this.$t('Common.Mondays'),
-          dayName: 'Mondays',
+          dayName: 'monday',
           selected: false,
         },
         {
           dayNameLang: this.$t('Common.Tuesdays'),
-          dayName: 'Tuesdays',
+          dayName: 'tuesday',
           selected: false,
         },
         {
           dayNameLang: this.$t('Common.Wednesdays'),
-          dayName: 'Wednesdays',
+          dayName: 'wednesday',
           selected: false,
         },
         {
           dayNameLang: this.$t('Common.Thursdays'),
-          dayName: 'Thursdays',
+          dayName: 'thursday',
           selected: false,
         },
         {
           dayNameLang: this.$t('Common.Fridays'),
-          dayName: 'Fridays',
+          dayName: 'friday',
           selected: false,
         },
         {
           dayNameLang: this.$t('Common.Saturdays'),
-          dayName: 'Saturdays',
+          dayName: 'saturday',
           selected: false,
         },
       ],
