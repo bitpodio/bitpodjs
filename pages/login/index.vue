@@ -56,12 +56,12 @@ export default {
   methods: {
     clearCookie() {
       console.log('inside clear cookie')
-      document.cookie = 'auth.redirect=' + ' '
+      window.localStorage.auth.redirect = ''
+      document.cookie = 'auth.redirect=' + ''
       console.log('inside clear cookie1', document.cookie)
     },
     async loginBitpod() {
       this.clearCookie()
-      this.$auth.logout()
       return await this.$auth.loginWith('bitpod')
     },
     async loginGoogle() {

@@ -299,9 +299,7 @@ export default {
     redirect: {
       login: '/login',
       callback: '/callback',
-      home: basePath
-        ? `${basePath}/apps/event/eventboard`
-        : `/nuxt/apps/event/eventboard`,
+      home: `${basePath}/apps/event/eventboard`,
       logout: '/',
     },
     strategies: {
