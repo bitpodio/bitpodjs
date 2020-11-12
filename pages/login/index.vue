@@ -61,6 +61,7 @@ export default {
     },
     async loginBitpod() {
       this.clearCookie()
+      this.$auth.logout()
       return await this.$auth.loginWith('bitpod')
     },
     async loginGoogle() {
