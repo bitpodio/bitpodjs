@@ -239,11 +239,11 @@
                   </v-flex>
                   <v-divider></v-divider>
                   <div>
-                    <v-list class="if-rec" :data-title="event.BusinessType">
+                    <v-list>
                       <v-list-item
                         v-for="item in registration.attendee"
                         :key="item.id"
-                        class="pa-0 my-3 if-rec-child"
+                        class="pa-0 my-3"
                       >
                         <v-list-item-avatar size="36" class="mr-2 ma-0">
                           <v-avatar
