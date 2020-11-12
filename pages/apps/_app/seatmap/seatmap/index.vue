@@ -152,4 +152,9 @@ export default {
   max-width: 65%;
   margin: auto;
 }
+@media (max-width: 600px) {
+  .seatmap-inner {
+    max-width: 100%;
+  }
+}
 </style>
