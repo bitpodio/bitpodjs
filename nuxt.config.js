@@ -297,7 +297,7 @@ export default {
   ],
   auth: {
     redirect: {
-      login: '/',
+      login: '/login',
       callback: '/callback',
       home: `${basePath}/apps/event/eventboard`,
       logout: '/',

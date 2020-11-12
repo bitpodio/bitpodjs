@@ -2,17 +2,17 @@ import qs from 'querystring'
 import url from 'url'
 import nuxtconfig from '../nuxt.config'
 export default function (req, res, next) {
-  let referer
+  // let referer
   console.log('===>in authorize.js')
   console.log('===>in authorize.js req', req)
-  if (req.headers.referer.includes('/login')) {
-    referer = req.headers.referer.replace('/login', '')
-    //  'https://' + req.headers.referer.split('-')[1].replace('/login', '')
-    console.log('==>referer', referer)
-  } else {
-    referer = req.headers.referer
-    console.log('==>referer', referer)
-  }
+  // if (req.headers.referer.includes('/login')) {
+  //   referer = req.headers.referer.replace('/login', '')
+  //   //  'https://' + req.headers.referer.split('-')[1].replace('/login', '')
+  //   console.log('==>referer', referer)
+  // } else {
+  const referer = req.headers.referer
+  console.log('==>referer', referer)
+  // }
   console.log('==>referer', referer)
   console.log('===>in authorize.js Referer', referer)
   if (!referer) {
