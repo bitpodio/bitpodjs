@@ -239,11 +239,11 @@
                   </v-flex>
                   <v-divider></v-divider>
                   <div>
-                    <v-list>
+                    <v-list class="if-rec" :data-title="event.BusinessType">
                       <v-list-item
                         v-for="item in registration.attendee"
                         :key="item.id"
-                        class="pa-0 my-3"
+                        class="pa-0 my-3 if-rec-child"
                       >
                         <v-list-item-avatar size="36" class="mr-2 ma-0">
                           <v-avatar
@@ -724,7 +724,7 @@
                         >
                           <td>{{ item.Code }}</td>
                           <td>{{ item.Amount }}</td>
-                          <td>{{ item.count }}</td>
+                          <td>{{ registration.TicketQuantity }}</td>
                           <td>{{ item.Amount }}</td>
                         </tr>
                         <tr>
@@ -774,11 +774,11 @@
                   v-if="event.BusinessType === 'Recurring'"
                   class="body-1 my-n3"
                 >
-                  <v-list class="pa-0">
+                  <v-list class="pa-0 if-rec" :data-title="event.BusinessType">
                     <v-list-item
                       v-for="item in registration.attendee"
                       :key="item.id"
-                      class="pa-0"
+                      class="pa-0 if-rec-child"
                     >
                       <v-list-item-content class="py-0">
                         <v-list-item-title>
@@ -1166,6 +1166,12 @@ export default {
 }
 .gallery-img {
   max-width: 220px;
+}
+.if-rec[data-title='Recurring'] .if-rec-child {
+  display: none;
+}
+.if-rec[data-title='Recurring'] .if-rec-child:nth-child(1) {
+  display: flex;
 }
 @media screen and (max-width: 600px) {
   .background-event-img {
