@@ -242,7 +242,13 @@
                     ></v-text-field>
                   </v-col>
                 </v-col>
-                <v-col cols="12" sm="6" md="6" class="pb-0">
+                <v-col
+                  v-if="eventData.LocationType === 'Venue'"
+                  cols="12"
+                  sm="6"
+                  md="6"
+                  class="pb-0"
+                >
                   <v-col
                     v-if="isMap && locations[0] && locations[0].lat"
                     class="pa-0"

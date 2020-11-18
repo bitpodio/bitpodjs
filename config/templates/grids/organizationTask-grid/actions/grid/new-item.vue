@@ -9,7 +9,7 @@
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on">
           <v-icon left>{{ buttonIcon }}</v-icon>
-          {{ $t('Common.ScheduleATask') }}
+          {{ (type === 'New' ? $t('Common.NewScheduleATask') : $t('Common.EditScheduleATask')) }}
         </v-btn>
       </template>
       <v-card>
@@ -17,7 +17,7 @@
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
           <h2 class="black--text pt-5 pb-4 text-h5">
-            <i18n path="Common.ScheduleATask" />
+            {{ (type === 'New' ? $t('Common.NewScheduleATask') : $t('Common.EditScheduleATask')) }}
           </h2>
           <v-spacer></v-spacer>
           <div>
@@ -166,6 +166,11 @@ export default {
     lazy: {
       type: Boolean,
       default: false,
+    },
+    type: {
+      default: 'New',
+      allowSpaces: false,
+      type: String,
     },
   },
   data() {
