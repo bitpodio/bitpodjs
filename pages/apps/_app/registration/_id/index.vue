@@ -124,7 +124,7 @@
             </v-col>
           </v-row>
           <v-divider></v-divider>
-          <v-flex class="d-flex flex-row align-center">
+          <v-flex class="d-flex flex-row align-center flex-wrap pt-2 pt-sm-0">
             <v-chip pill class="greybg" v-on="on">
               <v-avatar left color="warning" size="24">
                 <span class="white--text name-initial">{{

@@ -11,7 +11,7 @@
         <div
           class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
         >
-          <v-flex class="d-flex pb-2">
+          <v-flex class="d-flex pb-2 flex-column flex-md-row">
             <div class="text-h4 text-capitalize event-title">
               {{ data.event.Title }}
             </div>
@@ -108,24 +108,30 @@
                         readonly
                         dense
                       ></v-text-field>
-                      <v-btn icon class="ml-2">
-                        <v-icon>mdi-18px mdi-content-copy</v-icon>
-                      </v-btn>
+                      <copy
+                        :text-to-copy="eventLink()"
+                        uniqueId="eventLink"
+                        class="ml-2 mt-3"
+                      />
                     </v-col>
                     <v-col cols="12" sm="12" class="pl-0 pb-0 d-flex">
                       <v-text-field
+                        id="sessionLink"
                         :value="sessionLink()"
                         :label="$t('Common.RecurringSessionsLink')"
                         outlined
                         readonly
                         dense
                       ></v-text-field>
-                      <v-btn icon class="ml-2">
-                        <v-icon>mdi-18px mdi-content-copy</v-icon>
-                      </v-btn>
+                      <copy
+                        :text-to-copy="sessionLink()"
+                        uniqueId="sessionLink"
+                        class="ml-2 mt-3"
+                      />
                     </v-col>
                     <v-col cols="12" sm="12" class="pl-0 pb-0 d-flex">
                       <v-text-field
+                        id="embedLink"
                         :value="embedLink()"
                         :label="$t('Common.EmbedRecurringSessions')"
                         outlined
@@ -134,9 +140,11 @@
                         readonly
                         dense
                       ></v-text-field>
-                      <v-btn icon class="ml-2">
-                        <v-icon>mdi-18px mdi-content-copy</v-icon>
-                      </v-btn>
+                      <copy
+                        :text-to-copy="embedLink()"
+                        uniqueId="embedLink"
+                        class="ml-2 mt-3"
+                      />
                     </v-col>
                   </v-card-text>
                 </v-card>
@@ -323,7 +331,7 @@
           </v-stepper>
 
           <v-divider></v-divider>
-          <v-flex class="d-flex flex-row align-center">
+          <v-flex class="d-flex flex-row align-center flex-wrap pt-2 pt-sm-0">
             <v-chip pill class="greybg" v-on="on">
               <v-avatar left color="warning" size="24">
                 <span class="white--text name-initial">{{

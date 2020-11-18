@@ -462,4 +462,9 @@ export default {
 .inactive-connection {
   border-bottom: 2px solid grey;
 }
+@media (max-width: 600px) {
+  .seatmap-inner {
+    max-width: 100%;
+  }
+}
 </style>

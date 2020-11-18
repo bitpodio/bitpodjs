@@ -44,7 +44,7 @@
     "Invites": "Invite",
     "Emails": "Eclous",
     "Notes": "Notes",
-    "Tickets": "Des billets",
+    "Tickets": "Des billets*",
     "DiscountCodes": "Codes de remise",
     "RegistrationQuestions": "Questions d'inscription",
     "Sessions": "Sessions",
@@ -689,7 +689,9 @@
     "Cancelled": "Annulé",
     "Failed": "Échoué",
     "Pending": "En attente",
-    "LocationTypeRequired": "Type de lieu*"
+    "LocationTypeRequired": "Type de lieu*",
+    "EditEvent": "Edit Event",
+    "UploadImages": "Upload Images"
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",

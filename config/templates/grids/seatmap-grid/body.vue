@@ -5,7 +5,7 @@
         <nuxt-link :to="seatmapRoute" class="text-decoration-none">
           <v-card
             :elevation="hover ? 1 : 0"
-            class="ma-10 ml-0 mt-0 d-flex justify-center align-center"
+            class="ma-3 ma-md-10 ml-0 mt-0 ml-md-0 mt-md-0 d-flex justify-center align-center"
             height="125"
             max-width="155"
             width="155"
@@ -23,7 +23,10 @@
         v-slot:default="{ hover }"
         open-delay="200"
       >
-        <v-card :elevation="hover ? 1 : 0" class="ma-10 ml-0 mt-0 seat-maps">
+        <v-card
+          :elevation="hover ? 1 : 0"
+          class="ma-3 ma-md-10 ml-0 mt-0 ml-md-0 mt-md-0 seat-maps"
+        >
           <nuxt-link :to="seatmapRoutes(item.id)" class="text-decoration-none">
             <v-card-text
               class="font-weight-medium text-center positionRelative subtitle-1 seat-card pb-0"
@@ -128,5 +131,10 @@ export default {
 .seatmap-inner {
   max-width: 65%;
   margin: auto;
+}
+@media (max-width: 600px) {
+  .seatmap-inner {
+    max-width: 100%;
+  }
 }
 </style>

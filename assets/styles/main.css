@@ -569,6 +569,10 @@ body {
   min-width: 160px !important;
   box-sizing: border-box;
 }
+.seatmap .grid-actions-container {
+    min-height: auto !important;
+    margin-bottom: 0;
+}
 @media (max-width: 800px) {
   .nav-bar {
     top: 50px !important;
@@ -641,5 +645,18 @@ body {
   span.event-datechip.v-size--small {
     height: auto !important;
     white-space: normal;
+  }
+  .seatmap .container.container--fluid {
+    padding: 12px !important;
+  }
+  .box-actions {
+    display: block;
+  }
+  .seatmap-inner {
+    max-width: 100%;
+  }
+  .event-title {
+    max-width: 100%;
+    overflow-wrap: break-word;
   }
 }

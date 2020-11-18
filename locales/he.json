@@ -44,7 +44,7 @@
     "Invites": "Invites",
     "Emails": "Emails",
     "Notes": "Notes",
-    "Tickets": "כרטיסים",
+    "Tickets": "כרטיסים*",
     "DiscountCodes": "Discount Codes",
     "RegistrationQuestions": "שאלות רישום",
     "Sessions": "Sessions",
@@ -690,7 +690,9 @@
     "Cancelled": "מבוטל",
     "Failed": "נִכשָׁל",
     "Pending": "ממתין ל",
-    "LocationTypeRequired": "סוג מיקום *"
+    "LocationTypeRequired": "סוג מיקום *",
+    "EditEvent": "Edit Event",
+    "UploadImages": "Upload Images"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",

@@ -10,7 +10,7 @@
         <div
           class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
         >
-          <v-flex class="d-flex pb-1">
+          <v-flex class="d-flex pb-1 flex-column flex-md-row">
             <div class="text-h4 text-capitalize event-title">
               {{ data.event.Title }}
             </div>
@@ -373,7 +373,7 @@
           </v-stepper>
 
           <v-divider></v-divider>
-          <v-flex class="d-flex flex-row align-center">
+          <v-flex class="d-flex flex-row align-center flex-wrap pt-2 pt-sm-0">
             <v-chip pill class="greybg" v-on="on">
               <v-avatar left color="warning" size="24">
                 <span class="white--text name-initial">{{

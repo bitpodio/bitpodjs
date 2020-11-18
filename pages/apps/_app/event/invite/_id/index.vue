@@ -493,6 +493,5 @@ export default {
 }
 .editIcon {
   right: 60px;
-  top: 31px;
 }
 </style>

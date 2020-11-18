@@ -44,7 +44,7 @@
     "Invites": "Invites",
     "Emails": "Emails",
     "Notes": "Notes",
-    "Tickets": "Tickets",
+    "Tickets": "Tickets*",
     "DiscountCodes": "Discount Codes",
     "RegistrationQuestions": "Registration Questions",
     "Sessions": "Sessions",
@@ -690,7 +690,9 @@
     "Cancelled": "Cancelled",
     "Failed": "Failed",
     "Pending": "Pending",
-    "LocationTypeRequired": "Location Type*"
+    "LocationTypeRequired": "Location Type*",
+    "EditEvent": "Edit Event",
+    "UploadImages": "Upload Images"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",

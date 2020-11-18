@@ -154,6 +154,9 @@ export default {
       }
     },
     translate(field) {
+      if (!field.form) {
+        return field
+      }
       return Object.assign({}, field, {
         form: { caption: this.$t(field.form.caption) },
       })
