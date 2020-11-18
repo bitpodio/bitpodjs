@@ -11,7 +11,7 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on" @click="getQuestions">
-          <v-icon left class="fs-16">mdi-pencil</v-icon
+          <v-icon left class="fs-16">fa-pencil</v-icon
           ><i18n path="Common.EditItem" />
         </v-btn>
       </template>
