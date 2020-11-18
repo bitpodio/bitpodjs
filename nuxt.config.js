@@ -1,4 +1,5 @@
 const basePath = process.env.PUBLIC_PATH || ''
+
 export default {
   /*
    ** Nuxt rendering mode
