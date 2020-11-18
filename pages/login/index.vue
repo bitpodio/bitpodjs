@@ -12,7 +12,7 @@
             outlined
             large
             block
-            @click.native="loginBitpod"
+            @click="loginBitpod"
           >
             <v-avatar>
               <img :src="$config.cdnUri + 'logo-favicon.png'" />
@@ -54,12 +54,12 @@ export default {
     }
   },
   methods: {
-    loginBitpod() {
+    async loginBitpod() {
       if (window.localStorage['auth.redirect']) {
         window.localStorage['auth.redirect'] = ''
       }
       document.cookie = 'auth.redirect=' + ''
-      return this.$auth.loginWith('bitpod')
+      return await this.$auth.loginWith('bitpod')
     },
     async loginGoogle() {
       return await this.$auth.loginWith('google')
