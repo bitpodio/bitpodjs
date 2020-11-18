@@ -1,6 +1,6 @@
 <template>
   <div class="positionRelative position">
-    <div v-if="item.CheckIn === null" class="pt-1">
+    <div v-if="item.CheckIn === null && item.Status !== 'Failed'" class="pt-1">
       <v-chip
         class="ma-2 pb-0 mt-1"
         height="20"
@@ -13,7 +13,11 @@
         <i18n path="Common.CheckIn" />
       </v-chip>
     </div>
-    <div v-else style="display: flex; height: 20px;" class="ma-2 pb-0 mt-1">
+    <div
+      v-if="item.CheckIn !== null && item.Status !== 'Failed'"
+      style="display: flex; height: 20px;"
+      class="ma-2 pb-0 mt-1"
+    >
       <v-icon color="success" class="pr-1 fs-14">mdi-check</v-icon>
       <i18n path="Common.CheckedInJustnow" class="pr-1" />
       <timeAgo :date="item.CheckIn" />

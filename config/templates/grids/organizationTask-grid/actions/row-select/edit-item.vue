@@ -2,10 +2,10 @@
   <div>
     <newItem
       :dialog.sync="dialog"
-      :button-label="$t('Drawer.Edit')"
       button-icon="fa fa-pencil-square-o"
       :items="items"
       :refresh="refresh"
+      type="Edit"
     />
   </div>
 </template>
