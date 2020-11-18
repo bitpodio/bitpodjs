@@ -43,7 +43,6 @@ app.post('/connect/token', async (req, res) => {
     const refreshToken = req.body.refresh_token
     params.append('grant_type', 'refresh_token')
     params.append('refresh_token', refreshToken)
-
     try {
       const tokenResponse = await axios.post(urls.tokenEndPointUrl, params)
       if (req.query.provider === 'google') {
