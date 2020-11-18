@@ -54,24 +54,11 @@ export default {
     }
   },
   methods: {
-    clearCookie() {
-      debugger
-      console.log('inside clear cookie')
-      if (window.localStorage['auth.redirect']) {
-        window.localStorage['auth.redirect'] = ''
-      }
-      document.cookie = 'auth.redirect=' + ''
-      console.log('inside clear cookie1', document.cookie)
-      // this.$router.beforeHooks.shift()
-      // this.$router.forward()
-    },
     loginBitpod() {
-      console.log('asdasd')
       if (window.localStorage['auth.redirect']) {
         window.localStorage['auth.redirect'] = ''
       }
       document.cookie = 'auth.redirect=' + ''
-      console.log('inside clear cookie1', document.cookie)
       return this.$auth.loginWith('bitpod')
     },
     async loginGoogle() {
