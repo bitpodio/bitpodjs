@@ -8,8 +8,17 @@
           <v-col class="col-md-12 col-12 pt-0">
             <v-card class="elevation-0">
               <v-list>
-                <v-list-item class="pl-0">
-                  <v-list-item-avatar size="62">
+                <v-list-item
+                  class="pl-0"
+                  v-for="image in data.organization.Image"
+                  :key="image"
+                >
+                  <v-list-item-avatar
+                    size="62"
+                    v-if="
+                      data.organization && data.organization.Image.length === 0
+                    "
+                  >
                     <v-avatar
                       color="primary"
                       size="62"
@@ -21,9 +30,32 @@
                       }}</span>
                     </v-avatar>
                   </v-list-item-avatar>
-
+                  <v-img
+                    v-else
+                    :src="getAttachmentLink(image, true)"
+                    :lazy-src="getAttachmentLink(image, true)"
+                    aspect-ratio="1"
+                    class="mr-3"
+                    max-width="139"
+                    max-height="92"
+                    width="150"
+                    contain
+                  >
+                    <template v-slot:placeholder>
+                      <v-row
+                        class="fill-height ma-0"
+                        align="center"
+                        justify="center"
+                      >
+                        <v-progress-circular
+                          indeterminate
+                          color="grey lighten-5"
+                        ></v-progress-circular>
+                      </v-row>
+                    </template>
+                  </v-img>
                   <v-list-item-content>
-                    <v-list-item-title>
+                    <v-list-item-title class="mt-n3">
                       <h2>{{ data.organization.Name }}</h2>
                     </v-list-item-title>
                     <v-list-item-subtitle class="pb-1">{{
@@ -34,8 +66,11 @@
                     }}</v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
-                <v-list class="mt-n4 pl-2"
-                  ><span class="cursorPointer" @click="checkOrgClicked">
+                <v-list class="mt-n4 pl-2 ml-6"
+                  ><span
+                    class="cursorPointer blue--text"
+                    @click="checkOrgClicked"
+                  >
                     <File
                       :field="fileField"
                       :no-btn-look="true"
@@ -432,6 +467,13 @@ export default {
     },
   },
   methods: {
+    getAttachmentLink(id, isDownloadLink) {
+      const url = this.$bitpod.getApiUrl()
+      const attachmentUrl = `${url}Attachments${
+        isDownloadLink ? '/download' : ''
+      }${id ? '/' + id : ''}`
+      return attachmentUrl
+    },
     refresh() {
       this.$apollo.queries.data.refresh()
     },
@@ -453,6 +495,7 @@ export default {
           }`,
           this.formData
         )
+        this.refresh()
       } catch (e) {
         console.log('Error', e)
       }
