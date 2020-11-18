@@ -59,10 +59,6 @@ app.post('/connect/token', async (req, res) => {
         })
       }
     } catch (error) {
-      console.log(
-        '===>in api/index.js inside /connect/token in catch 1 refresh_token:',
-        res
-      )
       return res.status(400).send({ error: 'Bad Request' })
     }
   } else {
@@ -89,7 +85,6 @@ app.post('/connect/token', async (req, res) => {
         })
       }
     } catch (error) {
-      console.log('===>in api/index.js inside /connect/token  in error')
       return res.status(400).send({ error: 'Bad Request' })
     }
   }
