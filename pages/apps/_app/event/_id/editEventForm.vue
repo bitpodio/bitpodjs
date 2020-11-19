@@ -537,7 +537,6 @@ export default {
             }
           )
           if (res) {
-            debugger
             this.close()
             this.refresh()
             return (this.data.event = res)
