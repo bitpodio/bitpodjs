@@ -375,7 +375,7 @@
               </div>
               <File
                 :field="fileField"
-                :value="formData.Images"
+                :value="selectedImage"
                 @input="fileUploadedEventBanner"
               />
             </v-col>
@@ -671,7 +671,8 @@ export default {
       this.formData.Status = this.status
       this.formData.Privacy = this.privacy
       this.formData.Currency = this.currency
-      if (this.selectedImage !== '') {
+      if (this.selectedImage !== '' || this.formData.Images.length === 0) {
+        this.formData.Images = []
         this.formData.Images.push(this.selectedImage)
       } else {
         this.formData.Images = []
@@ -796,6 +797,7 @@ export default {
         }
       },
       update(data) {
+        debugger
         const event = formatGQLResult(data, 'Event')
         this.formData = event.length > 0 ? { ...event[0] } : {}
         this.formData.id = this.$route.params.id
@@ -803,6 +805,7 @@ export default {
         this.status = this.formData.Status
         this.privacy = this.formData.Privacy
         this.currency = this.formData.Currency
+        this.selectedImage = this.formData.Images
         if (
           this.formData.BusinessType !== 'Recurring' &&
           this.formData.StartDate !== null &&

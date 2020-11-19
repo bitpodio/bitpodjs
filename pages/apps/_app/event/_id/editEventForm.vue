@@ -278,6 +278,11 @@ export default {
       type: String,
       default: '',
     },
+    refresh: {
+      type: Function,
+      default: () => false,
+      required: false,
+    },
   },
   data() {
     return {
@@ -442,7 +447,7 @@ export default {
       this.$emit('update:eventForm', false)
       this.onReset()
     },
-    refresh() {
+    refreshGrid() {
       this.$refs.form.$parent.$parent.refresh()
       this.$apollo.queries.data.refresh()
     },
@@ -509,6 +514,7 @@ export default {
           )
           if (res) {
             this.close()
+            this.refreshGrid()
             this.refresh()
             this.data.event = res
           }
@@ -531,6 +537,7 @@ export default {
             }
           )
           if (res) {
+            debugger
             this.close()
             this.refresh()
             return (this.data.event = res)

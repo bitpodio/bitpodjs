@@ -34,9 +34,20 @@
                           {{ data.registration.FirstName }}
                         </h2>
                       </v-list-item-title>
-                      <v-list-item-subtitle>{{
-                        data.registration.Status
-                      }}</v-list-item-subtitle>
+                      <v-list-item-subtitle>
+                        <v-chip
+                          small
+                          :class="{
+                            blue: data.registration.Status === 'Cancelled',
+                            red: data.registration.Status === 'Failed',
+                            orange: data.registration.Status === 'Pending',
+                            success: data.registration.Status === 'Success',
+                          }"
+                          text-color="white"
+                        >
+                          {{ data.registration.Status }}</v-chip
+                        ></v-list-item-subtitle
+                      >
                     </v-list-item-content>
                   </v-list-item>
                 </v-list>
