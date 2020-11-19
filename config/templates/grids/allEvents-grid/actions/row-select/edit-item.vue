@@ -106,15 +106,15 @@
               </v-row>
             </v-form>
             <v-col cols="12" md="6" sm="6" class="pb-0">
-                  <v-select
-                    v-model="status"
-                    :items="statusDropdown"
-                    :label="$t('Common.Status')"
-                    outlined
-                    persistent-hint
-                    dense
-                  ></v-select>
-                </v-col>
+              <v-select
+                v-model="status"
+                :items="statusDropdown"
+                :label="$t('Common.Status')"
+                outlined
+                persistent-hint
+                dense
+              ></v-select>
+            </v-col>
             <v-col cols="12" md="6" sm="6" class="pb-0">
               <v-text-field
                 v-model="formData.Organizer"
@@ -671,8 +671,10 @@ export default {
       this.formData.Status = this.status
       this.formData.Privacy = this.privacy
       this.formData.Currency = this.currency
-      if (this.formData.Images.length === 0) {
+      if (this.selectedImage !== '') {
         this.formData.Images.push(this.selectedImage)
+      } else {
+        this.formData.Images = []
       }
       if (
         this.formData.BusinessType !== 'Recurring' ||
@@ -764,7 +766,11 @@ export default {
       }
     },
     fileUploadedEventBanner(data) {
-      this.selectedImage = data[0]
+      if (data.length > 0) {
+        this.selectedImage = data[0]
+      } else {
+        this.selectedImage = ''
+      }
     },
   },
   apollo: {
