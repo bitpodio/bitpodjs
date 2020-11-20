@@ -149,7 +149,7 @@
                     <v-list-item
                       v-if="item.Status === 'Not ready'"
                       :key="item.id"
-                      @click="stop"
+                      @click="deleteEvent(item.id)"
                     >
                       <v-list-item-icon class="mr-2">
                         <i class="fa fa-trash mt-1" aria-hidden="true"></i>
@@ -341,7 +341,7 @@
       </v-row>
     </div>
     <div v-if="eventForm">
-      <editEventForm :id="id" :event-form.sync="eventForm" />
+      <editEventForm :id="id" :event-form.sync="eventForm" :refresh="refresh" />
     </div>
     <makeCopy :id="id" :key="count" :is-make-copy.sync="isMakeCopy" />
     <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
@@ -364,6 +364,11 @@ export default {
   props: {
     items: { type: Array, default: () => [] },
     offset: { type: Boolean, default: false },
+    refresh: {
+      type: Function,
+      default: () => false,
+      required: false,
+    },
   },
   data() {
     return {
@@ -395,7 +400,9 @@ export default {
         if (check === true) {
           const res = await this.$axios.$delete(`${url}Events/${id}`)
           if (res) {
-            this.snackbarText = this.$t('Messages.Success.DeletedSuccessfully')
+            this.snackbarText = this.$t(
+              'Messages.Success.EventDeletedSuccessfully'
+            )
             this.snackbar = true
             this.$eventBus.$emit('grid-refresh')
           }
