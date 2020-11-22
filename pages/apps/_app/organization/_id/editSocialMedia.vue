@@ -96,6 +96,7 @@ export default {
     },
     onClose() {
       this.$emit('update:editSocialMedia', false)
+      this.$emit('update:snackbar', true)
       this.onReset()
     },
     refresh() {

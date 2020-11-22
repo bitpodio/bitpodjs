@@ -157,6 +157,7 @@ export default {
     },
     onClose() {
       this.$emit('update:editOrgInfo', false)
+      this.$emit('update:snackbar', true)
       this.onReset()
     },
     refresh() {

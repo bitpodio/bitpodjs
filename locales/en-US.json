@@ -841,6 +841,8 @@
       "CopiedClipboard": "Copied to clipboard",
       "CommentDeletedSuccessfully": "Comment deleted successfully.",
       "FailedDeleteComment": "Failed to delete comment.",
+      "EventDetailsUpdateSuccess": "Event details updated successfully",
+      "OrgDetailsUpdateSuccess": "Organization details updated successfully",
       "AccessKeySecretCopied": "Access Key and Secret copied to clipboard",
       "DeletedSuccessfully": "Item deleted successfully",
       "EventDeletedSuccessfully": "Event deleted successfully",

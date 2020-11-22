@@ -335,6 +335,7 @@ export default {
     },
     close() {
       this.$emit('update:siteSetting', false)
+      this.$emit('update:snackbar', true)
       this.onReset()
     },
     refresh() {

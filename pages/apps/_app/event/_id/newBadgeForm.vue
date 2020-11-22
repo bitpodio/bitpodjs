@@ -288,6 +288,7 @@ export default {
       this.tabs = 'tab-1'
       this.RTEValue = ''
       this.$emit('update:newBadge', false)
+      this.$emit('update:snackbar', true)
     },
     refresh() {
       this.$apollo.queries.data1.refresh()

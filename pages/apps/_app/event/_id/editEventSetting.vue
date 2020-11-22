@@ -189,6 +189,7 @@ export default {
     },
     close() {
       this.$emit('update:eventSetting', false)
+      this.$emit('update:snackbar', true)
       this.onReset()
     },
     refresh() {

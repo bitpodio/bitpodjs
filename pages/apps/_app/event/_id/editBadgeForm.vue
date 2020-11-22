@@ -103,6 +103,7 @@ export default {
   methods: {
     close() {
       this.$emit('update:editBadgeForm', false)
+      this.$emit('update:snackbar', true)
     },
     async onSave() {
       const url = this.$bitpod.getApiUrl()

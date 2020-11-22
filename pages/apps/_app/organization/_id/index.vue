@@ -398,21 +398,36 @@
           </div>
         </v-flex>
       </div>
+      <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
+        <div class="toast py-2 pr-1 pl-3">
+          {{ snackbarText }}
+        </div>
+      </v-snackbar>
     </v-flex>
     <div v-if="editOrgInfo">
       <editOrgInfoForm
         :edit-org-info.sync="editOrgInfo"
         :items="data.organization"
+        :snackbar.sync="snackbar"
       />
     </div>
     <div v-if="editOrgSetting">
-      <editOrgSetting :edit-org-setting.sync="editOrgSetting" />
+      <editOrgSetting
+        :edit-org-setting.sync="editOrgSetting"
+        :snackbar.sync="snackbar"
+      />
     </div>
     <div v-if="editSocialMedia">
-      <editSocialMedia :edit-social-media.sync="editSocialMedia" />
+      <editSocialMedia
+        :edit-social-media.sync="editSocialMedia"
+        :snackbar.sync="snackbar"
+      />
     </div>
     <div v-if="editWorkTiming">
-      <editWorkTiming :edit-work-timing.sync="editWorkTiming" />
+      <editWorkTiming
+        :edit-work-timing.sync="editWorkTiming"
+        :snackbar.sync="snackbar"
+      />
     </div>
   </v-flex>
 </template>
@@ -459,6 +474,8 @@ export default {
       editSocialMedia: false,
       editWorkTiming: false,
       allow: true,
+      snackbar: false,
+      snackbarText: this.$t('Messages.Success.OrgDetailsUpdateSuccess'),
     }
   },
   computed: {

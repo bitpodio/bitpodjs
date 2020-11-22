@@ -445,6 +445,7 @@ export default {
     },
     close() {
       this.$emit('update:eventForm', false)
+      this.$emit('update:snackbar', true)
       this.onReset()
     },
     refreshGrid() {

@@ -123,6 +123,7 @@ export default {
     },
     onClose() {
       this.$emit('update:editOrgSetting', false)
+      this.$emit('update:snackbar', true)
       this.onReset()
     },
     refresh() {

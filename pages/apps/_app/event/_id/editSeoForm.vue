@@ -109,6 +109,7 @@ export default {
   methods: {
     close() {
       this.$emit('update:seoForm', false)
+      this.$emit('update:snackbar', true)
       this.onReset()
     },
     refresh() {
