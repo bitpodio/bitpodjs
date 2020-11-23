@@ -278,7 +278,7 @@
             </div>
 
             <div
-              v-if="data.event.MySpeakers"
+              v-if="data.event.MySpeakers && data.event.MySpeakers.length > 0"
               class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
             >
               <div
