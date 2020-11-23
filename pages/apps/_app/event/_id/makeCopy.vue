@@ -703,6 +703,6 @@ export default {
 }
 .text-errorview {
   position: relative;
-  bottom: 24px;
+  bottom: 34px;
 }
 </style>
