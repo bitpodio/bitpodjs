@@ -29,7 +29,14 @@
             class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
           >
             <h2 class="black--text pt-5 pb-4 text-h5">
-              <i18n path="Common.ScheduleATask" />
+              <i18n
+                v-if="buttonLabel === 'Edit Activity'"
+                path="Common.EditScheduleATask"
+              />
+              <i18n
+                v-if="buttonLabel !== 'Edit Activity'"
+                path="Common.NewScheduleATask"
+              />
             </h2>
             <v-spacer></v-spacer>
             <div>
