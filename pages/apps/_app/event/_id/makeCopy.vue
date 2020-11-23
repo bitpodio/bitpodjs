@@ -95,7 +95,7 @@
             </v-form>
 
             <v-row>
-              <v-col cols="12">
+              <v-col cols="12" class="text-links">
                 <v-text-field
                   v-model="UniqLink"
                   :label="$t('Common.EventL')"
@@ -107,11 +107,12 @@
                   outlined
                   @keyup="changeUniqueLink($event)"
                 ></v-text-field>
-                <v-flex
+                <div
                   v-if="isInvalidEventLink && !!UniqLink"
-                  class="red--text pt-1 pb-0 mt-n6 pl-3 body-2"
-                  >{{ uniqueLinkMessage }}</v-flex
+                  class="red--text pt-1 pb-0 text-errorview pl-3 body-2"
                 >
+                  {{ uniqueLinkMessage }}
+                </div>
               </v-col>
             </v-row>
             <v-row v-if="isOnline">
@@ -696,6 +697,12 @@ export default {
   overflow: hidden !important;
 }
 .text-links {
-  height: 80px;
+  height: 92px !important;
+  min-height: 92px !important;
+  max-height: 92px !important;
+}
+.text-errorview {
+  position: relative;
+  bottom: 24px;
 }
 </style>
