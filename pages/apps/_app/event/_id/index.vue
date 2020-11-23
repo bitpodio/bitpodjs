@@ -848,7 +848,10 @@
                   </div>
                 </v-hover>
               </div>
-              <div v-else-if="switchDailog" class="d-inline-flex">
+              <div
+                v-else-if="switchDailog"
+                class="d-inline-flex flex-column flex-sm-row"
+              >
                 <v-flex
                   class="d-flex flex-column justify-center ma-2 cursorPointer seat-actions pa-2"
                   @click="routeToSeatmap"
