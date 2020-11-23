@@ -137,7 +137,7 @@
               v-else-if="data.event.LocationType === 'Bitpod Virtual'"
               class="pb-1 d-inline-flex"
             >
-              <a @click="goLive"
+              <a class="text-truncate bitpodLink" @click="goLive"
                 ><v-icon class="fs-16 mr-1 primary--text mt-n1">fa-video</v-icon
                 >{{ viewBitpodVirtualLink() }}</a
               >
@@ -2294,6 +2294,11 @@ export default {
 </script>
 
 <style scoped>
+@media (max-width: 500px) {
+  .bitpodLink {
+    width: 240px !important;
+  }
+}
 .form-control {
   border: 1px solid #ccc;
   padding: 10px;

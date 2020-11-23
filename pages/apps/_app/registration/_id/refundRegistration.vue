@@ -50,7 +50,7 @@
                 <Lookup
                   v-model="refund.RefundMethod"
                   :field="refundMethodProps"
-                  :rules="requiredRules"
+                  :rules="[rules.required]"
                 />
               </v-col>
               <v-col>
@@ -59,7 +59,7 @@
                   row
                   :mandatory="false"
                   class="mt-0"
-                  :rules="requiredRules"
+                  :rules="[rules.required]"
                   @change="changeRefundRequest($event)"
                 >
                   <v-radio
@@ -115,7 +115,7 @@
 <script>
 import gql from 'graphql-tag'
 import addHours from 'date-fns/addHours'
-import { required } from '~/utility/rules.js'
+import { rules } from '~/utility/rules.js'
 import eventRegistrationTicketSlot from '~/config/apps/event/gql/eventRegistrationTicketSlot.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
@@ -134,6 +134,7 @@ export default {
   },
   data() {
     return {
+      rules: rules(this.$i18n),
       snackbar: false,
       timeout: 2000,
       regData: {},
@@ -145,7 +146,6 @@ export default {
       valid: false,
       Amount: '',
       isWarningMsg: false,
-      requiredRules: [required],
       data: {
         event: {},
       },

@@ -53,7 +53,7 @@
               <v-col cols="12" sm="12" md="12">
                 <v-text-field
                   v-model="Title"
-                  :rules="requiredRules"
+                  :rules="[rules.required]"
                   :label="$t('Common.Title')"
                   dense
                   outlined
@@ -100,7 +100,7 @@
                   v-model="UniqLink"
                   :label="$t('Common.EventL')"
                   class="text-links"
-                  :rules="requiredRules"
+                  :rules="[rules.required]"
                   persistent-hint
                   :hint="eventLinkHint"
                   dense
@@ -320,7 +320,7 @@
 <script>
 import gql from 'graphql-tag'
 import Timezone from '~/components/common/form/timezone'
-import { required } from '~/utility/rules.js'
+import { rules } from '~/utility/rules.js'
 import event from '~/config/apps/event/gql/event.gql'
 import eventCount from '~/config/apps/event/gql/eventCount.gql'
 import { formatGQLResult } from '~/utility/gql.js'
@@ -347,6 +347,7 @@ export default {
   },
   data() {
     return {
+      rules: rules(this.$i18n),
       datevalid: false,
       valid: false,
       lazy: false,
@@ -359,7 +360,6 @@ export default {
       isRegistrationTypes: true,
       isOfferCode: true,
       addresslineMessage: '',
-      requiredRules: [required],
       saveBtnDisabled: false,
       copyEventId: '',
       currentLocation: {},

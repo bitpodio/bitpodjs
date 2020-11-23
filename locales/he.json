@@ -692,8 +692,9 @@
     "Failed": "נִכשָׁל",
     "Pending": "ממתין ל",
     "LocationTypeRequired": "סוג מיקום *",
-    "EditEvent": "Edit Event",
-    "UploadImages": "Upload Images"
+    "EditEvent": "ערוך אירוע",
+    "UploadImages": "להעלות תמונות",
+    "HeaderPrice": "מחיר"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",
@@ -807,8 +808,9 @@
       "SelectLocation": "Please select location!",
       "StartEndDate": "תאריך ההתחלה צריך להיות פחות מתאריך הסיום",
       "EndStartDate": "תאריך הסיום צריך להיות גדול יותר מתאריך ההתחלה",
-      "StartEndTime": "Start Time should not be greater than End Time",
-      "EndStartTime": "End Time should not be less than Start Time",
+      "StartEndTime": "זמן ההתחלה לא אמור להיות גדול משעת הסיום",
+      "EndStartTime": "זמן הסיום לא אמור להיות פחות משעת ההתחלה",
+      "StartEndTimeEqlMsg": "זמן ההתחלה לא אמור להיות שווה לזמן הסיום.",
       "SessionStartDate": "תאריך תחילת ההפעלה צריך להיות בין תאריך האירוע",
       "RefundPaidAmount": "Refunded Amount can not be greater or equal than total paid amount",
       "RefundAmountMsg": "Amount should not be less than or equal to  0",
@@ -835,7 +837,8 @@
       "DeleteImage": "האם אתה רוצה למחוק את התמונה הזו?",
       "NoEvents": "אין אירועים חיים וטיוטה, כדי להתחיל בהגדרת האירוע שלך השתמש בקישור צור אירוע",
       "DeleteEvent": "האם אתה רוצה למחוק אירוע זה?",
-      "DeleteUser": "האם ברצונך למחוק משתמש זה?"
+      "DeleteUser": "האם ברצונך למחוק משתמש זה?",
+      "NoEventsFound": "לא נמצאו אירועים עם שם {searchKey}"
     },
     "Success": {
       "CopiedClipboard": "הועתק ללוח",
