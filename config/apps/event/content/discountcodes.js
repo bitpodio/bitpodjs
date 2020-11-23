@@ -121,6 +121,7 @@ export default {
           inlineEdit: true,
           newForm: true,
           editForm: true,
+          default: '',
         },
         offerValue: {
           form: {
