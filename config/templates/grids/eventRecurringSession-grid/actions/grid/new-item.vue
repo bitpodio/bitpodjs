@@ -1162,10 +1162,10 @@ export default {
     },
     async onSave() {
       if (this.session.StartTime > this.session.EndTime) {
-        this.timeSlotMessage = 'End time should be greater than start time.'
+        this.timeSlotMessage = this.$t('Messages.Error.StartEndTime')
         return
       } else if (this.session.StartTime === this.session.EndTime) {
-        this.timeSlotMessage = 'Start time should not be equal to end time.'
+        this.timeSlotMessage = this.$t('Messages.Error.StartEndTimeEqlMsg')
         return
       } else {
         this.timeSlotMessage = ''
