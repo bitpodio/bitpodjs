@@ -207,6 +207,7 @@ export default {
           newForm: false,
           editForm: true,
           cssClasses: 'col-6 col-md-6',
+          default: '',
         },
         Organization: {
           form: {

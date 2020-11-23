@@ -58,9 +58,14 @@
         <v-card-actions
           class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
         >
-          <v-btn color="primary" :disabled="!valid" depressed @click="onSave"
-            ><i18n path="Drawer.Save"
-          /></v-btn>
+          <SaveBtn
+            v-if="dialog"
+            color="primary"
+            :disabled="!valid"
+            :label="this.$t('Drawer.Save')"
+            depressed
+            :action="onSave"
+          ></SaveBtn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -68,6 +73,7 @@
 </template>
 
 <script>
+import SaveBtn from '~/components/common/saveButton'
 import { formValidationMixin } from '~/utility'
 import {
   formatTimezoneDateFieldsData,
@@ -81,6 +87,9 @@ import {
 } from '~/utility/form'
 
 export default {
+  components: {
+    SaveBtn,
+  },
   mixins: [
     formControlsMixin,
     formValidationMixin,

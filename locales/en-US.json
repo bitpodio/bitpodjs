@@ -693,7 +693,8 @@
     "Pending": "Pending",
     "LocationTypeRequired": "Location Type*",
     "EditEvent": "Edit Event",
-    "UploadImages": "Upload Images"
+    "UploadImages": "Upload Images",
+    "HeaderPrice": "Price"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",

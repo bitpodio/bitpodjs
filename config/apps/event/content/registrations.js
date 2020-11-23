@@ -318,10 +318,15 @@ export default {
                 },
               }
               filter = JSON.stringify(filter)
-              const path = `/GeneralConfigurations?filter=${filter}`
+              const path = `GeneralConfigurations?filter=${filter}`
               return getLookupData(path)
             },
           },
+          rules: [
+            function (v) {
+              return !!v || this.$t('Messages.Error.StatusRequired')
+            },
+          ],
         },
         RegistrationId: {
           displayOrder: 6,
@@ -761,7 +766,7 @@ export default {
                 },
               }
               filter = JSON.stringify(filter)
-              const path = `/GeneralConfigurations?filter=${filter}`
+              const path = `GeneralConfigurations?filter=${filter}`
               return getLookupData(path)
             },
           },

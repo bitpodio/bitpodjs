@@ -62,11 +62,16 @@ export default {
     onChange: { type: Function, default: () => {} },
   },
   data() {
-    const dateTime = this.value || new Date()
-    const date =
-      this.field.type === 'datetime'
+    const dateTime = this.value
+      ? this.value
+      : this.field.default === '' || this.field.default
+      ? this.field.default
+      : new Date()
+    const date = dateTime
+      ? this.field.type === 'datetime'
         ? new Date(dateTime)
         : new Date(dateTime).toISOString().substr(0, 10)
+      : ''
     return {
       date,
       modal: false,
