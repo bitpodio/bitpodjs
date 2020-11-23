@@ -577,6 +577,13 @@ body {
   .nav-bar {
     top: 50px !important;
   }
+  .participantButton {
+    font-size: 16px !important;
+    padding-top: 6px !important;
+  }
+  .fc-header-toolbar {
+    display: block !important;
+  }
 }
 @media (max-width: 600px) {
   .v-tooltip__content {
