@@ -1523,7 +1523,7 @@ export default {
             this.sessions[index].StartTime.split(':')[0]
           )
           const endTime = parseInt(this.sessions[index].EndTime.split(':')[0])
-          return startTime > endTime
+          return startTime > endTime || startTime === endTime
             ? this.$t('Messages.Error.StartEndTime')
             : true
         },
@@ -1536,7 +1536,7 @@ export default {
             this.sessions[index].StartTime.split(':')[0]
           )
           const endTime = parseInt(this.sessions[index].EndTime.split(':')[0])
-          return startTime > endTime
+          return startTime > endTime || startTime === endTime
             ? this.$t('Messages.Error.EndStartTime')
             : true
         },
