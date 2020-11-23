@@ -576,6 +576,15 @@ body {
     min-height: auto !important;
     margin-bottom: 0;
 }
+.key-date {
+  height: 42px;
+  align-items: center;
+  display: flex;
+}
+table > tbody > tr:last-child .key-align {
+  margin-top: 5px;
+  margin-bottom: 20px;
+}
 @media (max-width: 800px) {
   .nav-bar {
     top: 50px !important;
