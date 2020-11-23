@@ -1333,7 +1333,7 @@
           </v-flex>
         </div>
         <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
-          <div class="toast py-2 pr-1 pl-3">
+          <div class="fs-16 text-center">
             {{ snackbarText }}
           </div>
         </v-snackbar>
