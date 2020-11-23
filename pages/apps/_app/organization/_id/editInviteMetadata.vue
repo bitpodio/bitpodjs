@@ -40,7 +40,7 @@
                     <v-text-field
                       v-model="template.Name"
                       :label="$t('Common.TemplateName')"
-                      :rules="requiredRules"
+                      :rules="[rules.required]"
                       outlined
                       dense
                     ></v-text-field>
@@ -49,14 +49,14 @@
                     <Lookup
                       v-model="template.Type"
                       :field="typeLookupField"
-                      :rules="requiredRules"
+                      :rules="[rules.required]"
                     />
                   </v-col>
                   <v-col cols="12" sm="6" md="6">
                     <v-text-field
                       v-model="template.Subject"
                       :label="$t('Common.SubjectRequired')"
-                      :rules="requiredRules"
+                      :rules="[rules.required]"
                       outlined
                       dense
                     ></v-text-field>
@@ -65,7 +65,7 @@
                     <Lookup
                       v-model="template.Category"
                       :field="categoryLookupField"
-                      :rules="requiredRules"
+                      :rules="[rules.required]"
                     />
                   </v-col>
                   <v-col cols="12" sm="6" md="12">
@@ -109,7 +109,7 @@
 <script>
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import File from '~/components/common/form/file.vue'
-import { required } from '~/utility/rules.js'
+import { rules } from '~/utility/rules.js'
 export default {
   components: {
     File,
@@ -135,6 +135,7 @@ export default {
     fileList = this.selected.Documents ? this.selected.Documents : []
     const template = { ...this.selected }
     return {
+      rules: rules(this.$i18n),
       valid: false,
       template,
       fileField: {
@@ -147,7 +148,6 @@ export default {
       timeout: 2000,
       orgLogo: false,
       allow: true,
-      requiredRules: [required],
       typeLookupField: {
         displayOrder: 9,
         caption: 'Type*',
