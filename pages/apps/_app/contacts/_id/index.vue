@@ -15,7 +15,7 @@
               <v-card class="elevation-0 pt-0">
                 <v-list>
                   <v-list-item class="pl-0">
-                    <v-list-item-avatar size="62">
+                    <v-list-item-avatar size="62" v-if="lastPicId === ''">
                       <v-avatar
                         color="primary"
                         size="62"
@@ -27,9 +27,32 @@
                         }}</span>
                       </v-avatar>
                     </v-list-item-avatar>
-
-                    <v-list-item-content>
-                      <v-list-item-title>
+                    <v-img
+                      v-else
+                      :src="getAttachmentLink(lastPicId, true)"
+                      :lazy-src="getAttachmentLink(lastPicId, true)"
+                      aspect-ratio="1"
+                      class="rounded-circle"
+                      max-width="139"
+                      max-height="92"
+                      width="150"
+                      contain
+                    >
+                      <template v-slot:placeholder>
+                        <v-row
+                          class="fill-height ma-0"
+                          align="center"
+                          justify="center"
+                        >
+                          <v-progress-circular
+                            indeterminate
+                            color="grey lighten-5"
+                          ></v-progress-circular>
+                        </v-row>
+                      </template>
+                    </v-img>
+                    <v-list-item-content class="pl-3 pb-8">
+                      <v-list-item-title class="mt-n4">
                         <h2 class="text-capitalize text-truncate">
                           {{ data.contact.FullName }}
                         </h2>
@@ -42,8 +65,11 @@
                       }}</v-list-item-subtitle>
                     </v-list-item-content>
                   </v-list-item>
-                  <v-list class="mt-n4 pl-2"
-                    ><span class="cursorPointer" @click="checkContactClicked">
+                  <v-list class="mt-n4 pl-2 pt-6"
+                    ><span
+                      class="cursorPointer blue--text"
+                      @click="checkContactClicked"
+                    >
                       <File
                         :field="fileField"
                         :no-btn-look="true"
@@ -336,6 +362,7 @@ export default {
       checkArray: [],
       orgLogo: false,
       allow: true,
+      lastPicId: '',
     }
   },
   computed: {
@@ -351,6 +378,9 @@ export default {
     },
   },
   methods: {
+    refresh() {
+      this.$apollo.queries.data.refresh()
+    },
     checkContactClicked() {
       if (this.allow) {
         this.checkArray = []
@@ -368,6 +398,7 @@ export default {
           `${url}Contacts/${this.$route.params.id}/contactImg/rel/${data[0]}`,
           this.formData
         )
+        this.refresh()
       } catch (e) {
         console.log(
           `Error in pages/apps/_app/contacts/_id/index.vue while making a PUT call to Contact model context:-\n data:-${data}`
@@ -409,6 +440,8 @@ export default {
       },
       update(data) {
         const contact = formatGQLResult(data, 'Contact')
+        this.lastPicId =
+          contact[0].contactPic[contact[0].contactPic.length - 1] || ''
         return {
           contact: contact.length > 0 ? contact[0] : {},
         }

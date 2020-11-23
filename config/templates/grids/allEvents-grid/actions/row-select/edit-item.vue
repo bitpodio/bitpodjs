@@ -11,7 +11,7 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on" @click="getQuestions">
-          <v-icon left class="fs-16">mdi-pencil</v-icon
+          <v-icon left class="fs-16">fa-pencil</v-icon
           ><i18n path="Common.EditItem" />
         </v-btn>
       </template>
@@ -103,19 +103,19 @@
                     :value="formData.Timezone"
                   />
                 </v-col>
-                <v-col cols="12" sm="6" md="6" class="pb-0">
-                  <v-select
-                    v-model="status"
-                    :items="statusDropdown"
-                    :label="$t('Common.Status')"
-                    outlined
-                    persistent-hint
-                    dense
-                  ></v-select>
-                </v-col>
               </v-row>
             </v-form>
-            <v-col cols="12" sm="6" md="6" class="pb-0">
+            <v-col cols="12" md="6" sm="6" class="pb-0">
+              <v-select
+                v-model="status"
+                :items="statusDropdown"
+                :label="$t('Common.Status')"
+                outlined
+                persistent-hint
+                dense
+              ></v-select>
+            </v-col>
+            <v-col cols="12" md="6" sm="6" class="pb-0">
               <v-text-field
                 v-model="formData.Organizer"
                 :label="$t('Common.EventOrganizer')"
@@ -125,7 +125,7 @@
                 dense
               ></v-text-field>
             </v-col>
-            <v-col cols="12" sm="6" md="6" class="pb-0">
+            <v-col cols="12" md="6" sm="6" class="pb-0">
               <v-text-field
                 v-model="formData.EventManager"
                 :label="$t('Common.EventManagerTeamEmail')"
@@ -138,8 +138,8 @@
             <v-col
               v-if="formData.BusinessType === 'Recurring'"
               cols="12"
-              sm="6"
               md="6"
+              sm="6"
             >
               <v-text-field
                 v-model="formData.MaxNoRegistrations"
@@ -150,7 +150,7 @@
                 dense
               ></v-text-field>
             </v-col>
-            <v-col cols="12" sm="6" md="6" class="pb-0">
+            <v-col cols="12" md="6" sm="6" class="pb-0">
               <v-select
                 v-model="privacy"
                 :items="privacyDropdown"
@@ -160,7 +160,7 @@
                 dense
               ></v-select>
             </v-col>
-            <v-col cols="12" sm="6" md="6" class="pb-0">
+            <v-col cols="12" md="6" sm="6" class="pb-0">
               <v-select
                 v-model="currency"
                 :items="currencyDropdown"
@@ -375,7 +375,7 @@
               </div>
               <File
                 :field="fileField"
-                :value="formData.Images"
+                :value="selectedImage"
                 @input="fileUploadedEventBanner"
               />
             </v-col>
@@ -671,8 +671,12 @@ export default {
       this.formData.Status = this.status
       this.formData.Privacy = this.privacy
       this.formData.Currency = this.currency
-      this.formData.Images.push(this.selectedImage)
-
+      if (this.selectedImage !== '' || this.formData.Images.length === 0) {
+        this.formData.Images = []
+        this.formData.Images.push(this.selectedImage)
+      } else {
+        this.formData.Images = []
+      }
       if (
         this.formData.BusinessType !== 'Recurring' ||
         this.formData.StartDate !== null ||
@@ -763,7 +767,11 @@ export default {
       }
     },
     fileUploadedEventBanner(data) {
-      this.selectedImage = data[0]
+      if (data.length > 0) {
+        this.selectedImage = data[0]
+      } else {
+        this.selectedImage = ''
+      }
     },
   },
   apollo: {
@@ -796,6 +804,7 @@ export default {
         this.status = this.formData.Status
         this.privacy = this.formData.Privacy
         this.currency = this.formData.Currency
+        this.selectedImage = this.formData.Images
         if (
           this.formData.BusinessType !== 'Recurring' &&
           this.formData.StartDate !== null &&

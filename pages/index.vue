@@ -48,6 +48,10 @@ export default {
   components: {},
   methods: {
     async loginBitpod() {
+      if (window.localStorage['auth.redirect']) {
+        window.localStorage['auth.redirect'] = ''
+      }
+      document.cookie = 'auth.redirect=' + ''
       return await this.$auth.loginWith('bitpod')
     },
     async loginGoogle() {

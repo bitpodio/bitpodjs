@@ -24,7 +24,14 @@
             <v-icon class="pr-1">fa-filter</v-icon> <i18n path="Common.Filter"
           /></span>
         </div>
-        <div class="filter-fields-container">
+        <div
+          class="filter-fields-container"
+          :class="
+            rules && rules.length > 0
+              ? 'filter-fields-scroll'
+              : 'filter-fields-scroll-reset'
+          "
+        >
           <div
             v-for="[index, filterRule] of rules.entries()"
             :key="index + filterRule.field + ruleCondition"
@@ -170,6 +177,14 @@ export default {
     margin-bottom: 20px;
     border-radius: 0;
     border-bottom: 1px solid #ccc;
+  }
+  .filter-fields-scroll {
+    overflow: scroll;
+    height: 50vh;
+    overflow-x: hidden;
+  }
+  .filter-fields-scroll-reset {
+    height: 0;
   }
   .filter-fields-container .filter-rule-item:last-child {
     border-bottom: none;

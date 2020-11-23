@@ -108,24 +108,30 @@
                         readonly
                         dense
                       ></v-text-field>
-                      <v-btn icon class="ml-2">
-                        <v-icon>mdi-18px mdi-content-copy</v-icon>
-                      </v-btn>
+                      <copy
+                        :text-to-copy="eventLink()"
+                        uniqueId="eventLink"
+                        class="ml-2 mt-3"
+                      />
                     </v-col>
                     <v-col cols="12" sm="12" class="pl-0 pb-0 d-flex">
                       <v-text-field
+                        id="sessionLink"
                         :value="sessionLink()"
                         :label="$t('Common.RecurringSessionsLink')"
                         outlined
                         readonly
                         dense
                       ></v-text-field>
-                      <v-btn icon class="ml-2">
-                        <v-icon>mdi-18px mdi-content-copy</v-icon>
-                      </v-btn>
+                      <copy
+                        :text-to-copy="sessionLink()"
+                        uniqueId="sessionLink"
+                        class="ml-2 mt-3"
+                      />
                     </v-col>
                     <v-col cols="12" sm="12" class="pl-0 pb-0 d-flex">
                       <v-text-field
+                        id="embedLink"
                         :value="embedLink()"
                         :label="$t('Common.EmbedRecurringSessions')"
                         outlined
@@ -134,9 +140,11 @@
                         readonly
                         dense
                       ></v-text-field>
-                      <v-btn icon class="ml-2">
-                        <v-icon>mdi-18px mdi-content-copy</v-icon>
-                      </v-btn>
+                      <copy
+                        :text-to-copy="embedLink()"
+                        uniqueId="embedLink"
+                        class="ml-2 mt-3"
+                      />
                     </v-col>
                   </v-card-text>
                 </v-card>
@@ -1155,6 +1163,7 @@
         <editSiteSetting :site-setting.sync="siteSetting" />
       </div>
       <makeCopy :is-make-copy.sync="isMakeCopy" />
+      <confirm ref="confirm"></confirm>
     </v-flex>
   </div>
 </template>
@@ -1455,7 +1464,11 @@ export default {
     },
     async deleteBannerFile(e, id) {
       const url = this.$bitpod.getApiUrl()
-      const checkRes = await this.$confirm('Are you sure you want to delete?')
+      const checkRes = await this.$refs.confirm.open(
+        this.$t('Drawer.Delete'),
+        this.$t('Messages.Warn.DeleteImage'),
+        { color: 'error lighten-1' }
+      )
       if (checkRes) {
         const res = await this.$axios.delete(
           `${url}Events/${this.$route.params.id}/BannerImage/${id}`
@@ -1471,7 +1484,11 @@ export default {
     },
     async deleteLogoFile(id) {
       const url = this.$bitpod.getApiUrl()
-      const checkRes = await this.$confirm('Are you sure you want to delete?')
+      const checkRes = await this.$refs.confirm.open(
+        this.$t('Drawer.Delete'),
+        this.$t('Messages.Warn.DeleteImage'),
+        { color: 'error lighten-1' }
+      )
       if (checkRes) {
         const res = await this.$axios.delete(
           `${url}Events/${this.$route.params.id}/LogoURL/${id}`
@@ -1487,7 +1504,11 @@ export default {
     },
     async deleteOtherFile(id) {
       const url = this.$bitpod.getApiUrl()
-      const checkRes = await this.$confirm('Are you sure you want to delete?')
+      const checkRes = await this.$refs.confirm.open(
+        this.$t('Drawer.Delete'),
+        this.$t('Messages.Warn.DeleteImage'),
+        { color: 'error lighten-1' }
+      )
       if (checkRes) {
         const res = await this.$axios.delete(
           `${url}Events/${this.$route.params.id}/Others/${id}`
