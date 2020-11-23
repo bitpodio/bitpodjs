@@ -3,8 +3,7 @@
     <v-flex class="detailview-head mb-3"
       ><v-btn class="ml-n3 back-icon" icon @click="goBack"
         ><v-icon class="fs-30">mdi-chevron-left</v-icon> </v-btn
-      ><v-text class="fs-18 min-h36"
-        ><i18n path="Common.RecurringEvent" /></v-text
+      ><v-text class="fs-18 min-h36"><i18n path="Common.Invite" /></v-text
     ></v-flex>
     <v-flex d-flex flex-md-row flex-lg-row flex-column>
       <confirm ref="confirm"></confirm>
