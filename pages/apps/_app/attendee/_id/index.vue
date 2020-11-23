@@ -4,7 +4,7 @@
       <div v-if="event.ImageURL" class="background-event-img">
         <picture>
           <source
-            :srcset="`https://${baseUrl}${event.ImageURL}`"
+            :srcset="`https://${$store.state.currentOrg.name}-${baseUrl}${event.ImageURL}`"
             sizes="100vw"
           />
           <img
@@ -38,8 +38,8 @@
             <v-flex class="flex-70">
               <v-img
                 v-if="event.ImageURL"
-                :src="`https://${baseUrl}${event.ImageURL}`"
-                :lazy-src="`https://${baseUrl}${event.ImageURL}`"
+                :src="`https://${$store.state.currentOrg.name}-${baseUrl}${event.ImageURL}`"
+                :lazy-src="`https://${$store.state.currentOrg.name}-${baseUrl}${event.ImageURL}`"
                 class="eventsite-banner"
               >
                 <template v-slot:placeholder>
