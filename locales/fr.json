@@ -690,8 +690,9 @@
     "Failed": "Échoué",
     "Pending": "En attente",
     "LocationTypeRequired": "Type de lieu*",
-    "EditEvent": "Edit Event",
-    "UploadImages": "Upload Images"
+    "EditEvent": "Modifier l'événement",
+    "UploadImages": "Importer des images",
+    "HeaderPrice": "le prix"
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",

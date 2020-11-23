@@ -691,8 +691,9 @@
     "Failed": "נִכשָׁל",
     "Pending": "ממתין ל",
     "LocationTypeRequired": "סוג מיקום *",
-    "EditEvent": "Edit Event",
-    "UploadImages": "Upload Images"
+    "EditEvent": "ערוך אירוע",
+    "UploadImages": "להעלות תמונות",
+    "HeaderPrice": "מחיר"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",
