@@ -1,6 +1,6 @@
 <template>
-  <div class="mxcol-200 text-truncate">
-    <nuxt-link :to="route"> {{ value }}</nuxt-link>
+  <div class="key-align">
+    {{ value }}
   </div>
 </template>
 
@@ -21,13 +21,6 @@ export default {
       type: Object,
       default: () => {},
       required: false,
-    },
-  },
-  computed: {
-    route() {
-      return this.localePath(
-        `/apps/event${this.context.basePath}/${this.item.id}`
-      )
     },
   },
 }
