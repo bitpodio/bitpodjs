@@ -189,7 +189,6 @@ export default {
     },
     close() {
       this.$emit('update:eventSetting', false)
-      this.$emit('update:snackbar', true)
       this.onReset()
     },
     refresh() {
@@ -209,6 +208,7 @@ export default {
         )
         if (res) {
           this.close()
+          this.$emit('update:snackbar', true)
           this.refresh()
           this.data.event = res
         }

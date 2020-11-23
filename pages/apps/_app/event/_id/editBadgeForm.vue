@@ -103,7 +103,6 @@ export default {
   methods: {
     close() {
       this.$emit('update:editBadgeForm', false)
-      this.$emit('update:snackbar', true)
     },
     async onSave() {
       const url = this.$bitpod.getApiUrl()
@@ -115,6 +114,7 @@ export default {
         if (res) {
           this.$refs.editBadgeDialog.$parent.$parent.refresh()
           this.close()
+          this.$emit('update:snackbar', true)
         }
       } catch (e) {
         console.error(
