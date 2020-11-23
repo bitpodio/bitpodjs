@@ -476,6 +476,7 @@ export default {
       allow: true,
       snackbar: false,
       snackbarText: this.$t('Messages.Success.OrgDetailsUpdateSuccess'),
+      timeout: 4000,
     }
   },
   computed: {

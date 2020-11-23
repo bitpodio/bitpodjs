@@ -96,7 +96,6 @@ export default {
     },
     onClose() {
       this.$emit('update:editSocialMedia', false)
-      this.$emit('update:snackbar', true)
       this.onReset()
     },
     refresh() {
@@ -112,6 +111,7 @@ export default {
         )
         if (res) {
           this.onClose()
+          this.$emit('update:snackbar', true)
           this.refresh()
         }
       } catch (e) {

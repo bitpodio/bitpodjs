@@ -1486,7 +1486,7 @@ export default {
       OtherImageName: [],
       logoName: '',
       snackbar: false,
-      timeout: '1000',
+      timeout: '4000',
       snackbarText: this.$t('Messages.Success.EventDetailsUpdateSuccess'),
       logoId: '',
       getBadgeCategory: 'Guest',
