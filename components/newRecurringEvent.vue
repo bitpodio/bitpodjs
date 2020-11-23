@@ -701,7 +701,7 @@
                                 @change="changeTicketAmount(k)"
                               ></v-text-field>
                             </td>
-                            <td class="pa-2 pb-0 e-td" data-title="">
+                            <td class="pa-2 pb-0 e-td" data-title="Quantity">
                               <v-text-field
                                 v-model="ticket.TicketCount"
                                 outlined
