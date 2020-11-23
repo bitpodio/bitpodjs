@@ -834,7 +834,8 @@
       "DeleteUser": "Voulez-vous supprimer cet utilisateur?",
       "ReplaceBadge": "Un nouveau badge remplacera votre badge existant",
       "DeleteImage": "Voulez-vous supprimer cette image?",
-      "NoEvents": "Il n'y a pas d'événements en direct et de brouillon, pour commencer à configurer votre événement, utilisez le lien Créer un événement"
+      "NoEvents": "Il n'y a pas d'événements en direct et de brouillon, pour commencer à configurer votre événement, utilisez le lien Créer un événement",
+      "NoEventsFound": "Aucun événement trouvé avec nom {searchKey}"
     },
     "Success": {
       "CopiedClipboard": "Copié dans le presse-papiers",
