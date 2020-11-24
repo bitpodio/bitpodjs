@@ -278,7 +278,7 @@
             </div>
 
             <div
-              v-if="data.event.MySpeakers"
+              v-if="data.event.MySpeakers && data.event.MySpeakers.length > 0"
               class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
             >
               <div
@@ -848,7 +848,10 @@
                   </div>
                 </v-hover>
               </div>
-              <div v-else-if="switchDailog" class="d-inline-flex">
+              <div
+                v-else-if="switchDailog"
+                class="d-inline-flex flex-column flex-sm-row"
+              >
                 <v-flex
                   class="d-flex flex-column justify-center ma-2 cursorPointer seat-actions pa-2"
                   @click="routeToSeatmap"
@@ -1333,7 +1336,7 @@
           </v-flex>
         </div>
         <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
-          <div class="toast py-2 pr-1 pl-3">
+          <div class="fs-16 text-center">
             {{ snackbarText }}
           </div>
         </v-snackbar>
@@ -1361,20 +1364,30 @@
         </v-dialog>
       </v-flex>
       <div v-if="eventForm">
-        <editEventForm :event-form.sync="eventForm" />
+        <editEventForm :event-form.sync="eventForm" :snackbar.sync="snackbar" />
       </div>
       <div v-if="seoForm">
-        <editSeoForm :seo-form.sync="seoForm" />
+        <editSeoForm :seo-form.sync="seoForm" :snackbar.sync="snackbar" />
       </div>
       <div v-if="eventSetting">
-        <editEventSetting :event-setting.sync="eventSetting" />
+        <editEventSetting
+          :event-setting.sync="eventSetting"
+          :snackbar.sync="snackbar"
+        />
       </div>
       <div v-if="siteSetting">
-        <editSiteSetting :site-setting.sync="siteSetting" />
+        <editSiteSetting
+          :site-setting.sync="siteSetting"
+          :snackbar.sync="snackbar"
+        />
       </div>
       <makeCopy :key="isMakeCopy" :is-make-copy.sync="isMakeCopy" />
-      <newBadgeForm :new-badge.sync="newBadge" />
-      <editBadgeForm :id="badgeData.id" :edit-badge-form.sync="editBadgeForm" />
+      <newBadgeForm :new-badge.sync="newBadge" :snackbar.sync="snackbar" />
+      <editBadgeForm
+        :id="badgeData.id"
+        :edit-badge-form.sync="editBadgeForm"
+        :snackbar.sync="snackbar"
+      />
       <selectExistingSeatMap
         :select-existing-seat-map.sync="selectExistingSeatMap"
       />
@@ -1476,8 +1489,8 @@ export default {
       OtherImageName: [],
       logoName: '',
       snackbar: false,
-      timeout: '1000',
-      snackbarText: '',
+      timeout: '4000',
+      snackbarText: this.$t('Messages.Success.EventDetailsUpdateSuccess'),
       logoId: '',
       getBadgeCategory: 'Guest',
       attendees: [],

@@ -110,7 +110,7 @@
                       ></v-text-field>
                       <copy
                         :text-to-copy="eventLink()"
-                        uniqueId="eventLink"
+                        unique-id="eventLink"
                         class="ml-2 mt-3"
                       />
                     </v-col>
@@ -125,7 +125,7 @@
                       ></v-text-field>
                       <copy
                         :text-to-copy="sessionLink()"
-                        uniqueId="sessionLink"
+                        unique-id="sessionLink"
                         class="ml-2 mt-3"
                       />
                     </v-col>
@@ -142,7 +142,7 @@
                       ></v-text-field>
                       <copy
                         :text-to-copy="embedLink()"
-                        uniqueId="embedLink"
+                        unique-id="embedLink"
                         class="ml-2 mt-3"
                       />
                     </v-col>
@@ -236,7 +236,7 @@
             </div>
 
             <div
-              v-if="data.event.MySpeakers"
+              v-if="data.event.MySpeakers && data.event.MySpeakers.length > 0"
               class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
             >
               <div
