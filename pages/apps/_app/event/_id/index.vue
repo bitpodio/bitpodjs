@@ -2252,6 +2252,9 @@ export default {
         }
       },
       update(data) {
+        if (Object.values(data).length === 0) {
+          this.$apollo.queries.data.refresh()
+        }
         const event = formatGQLResult(data, 'Event')
         const badge = formatGQLResult(data, 'Badge')
         const eventSummary = data.Event.EventGetEventSummery

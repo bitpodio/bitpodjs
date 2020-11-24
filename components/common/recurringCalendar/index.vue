@@ -17,7 +17,7 @@
       >
         <v-card>
           <v-card-title
-            class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
+            class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start top"
           >
             <h2 class="black--text pt-5 pb-2 text-h5 heading">
               {{
@@ -194,7 +194,7 @@
               </v-row>
             </v-container>
           </v-card-text>
-          <v-card-text v-else class="pa-0px">
+          <v-card-text v-else class="pa-0px mt-sm-n5 mt-n12">
             <v-container
               v-if="contents && contents.Event"
               class="pa-0px mt-n16 mt-md-n10 mb-sm-3 mb-md-0"
@@ -340,8 +340,11 @@ export default {
         events: [],
         eventDidMount: (propsdata) => {
           if (propsdata.view.type === 'dayGridMonth') {
+            propsdata.el.className += ' eventBox'
+            propsdata.el.style.whiteSpace = 'break-spaces'
             propsdata.el.childNodes[1].className = 'd-none'
             propsdata.el.childNodes[0].className = 'd-none'
+            propsdata.el.lastElementChild.innerHTML = propsdata.el.lastElementChild.innerHTML.trim()
             Object.assign(propsdata.el.style, {
               border: propsdata.el.textContent.includes('unavailable')
                 ? '1px dashed'
@@ -822,6 +825,9 @@ export default {
 </script>
 
 <style scoped>
+.top {
+  z-index: 100;
+}
 .app {
   font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
   font-size: 14px;
