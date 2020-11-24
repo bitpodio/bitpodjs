@@ -14,8 +14,6 @@ export const actions = {
         orgPromise,
         orgInfoPromise,
       ])
-      console.log(`origin - ${origin}`)
-      console.log(`origin - ${JSON.stringify(currentOrgInfoRes.data)}`)
       const currentOrgInfo = currentOrgInfoRes.data
       commit('setCurrentOrg', currentOrgRes.data)
       commit('setCurrentOrgInfo', currentOrgInfo && currentOrgInfo[0])
