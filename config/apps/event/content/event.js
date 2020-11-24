@@ -1405,6 +1405,17 @@ export default {
         context: {
           basePath: '/registration',
         },
+        actions: {
+          new: {
+            hidden: true,
+          },
+          edit: {
+            hidden: true,
+          },
+          delete: {
+            hidden: true,
+          },
+        },
       },
       dataSource: {
         query: eventAttendees,
