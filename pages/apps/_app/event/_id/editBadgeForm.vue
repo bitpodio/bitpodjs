@@ -114,6 +114,7 @@ export default {
         if (res) {
           this.$refs.editBadgeDialog.$parent.$parent.refresh()
           this.close()
+          this.$emit('update:snackbar', true)
         }
       } catch (e) {
         console.error(

@@ -138,6 +138,7 @@ export default {
         )
         if (res) {
           this.onClose()
+          this.$emit('update:snackbar', true)
           this.refresh()
         }
       } catch (e) {
