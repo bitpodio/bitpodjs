@@ -229,7 +229,7 @@
                 <v-text-field
                   v-model="WebinarLink"
                   :label="$t('Common.OnlineEventLink')"
-                  :rules="onlineMeetingRules"
+                  :rules="[rules.onlineEventLink]"
                   outlined
                   dense
                 ></v-text-field>
@@ -672,6 +672,7 @@
                               value
                               type="Number"
                               min="0"
+                              onkeydown="return event.keyCode !== 69 && event.keyCode !== 189"
                               :disabled="isPriceDisabled(k)"
                               @change="changeTicketAmount(k)"
                             ></v-text-field>
@@ -683,6 +684,8 @@
                               dense
                               value
                               type="Number"
+                              onkeydown="return event.keyCode !== 69 && event.keyCode !== 189"
+                              :rules="[rules.required]"
                               min="0"
                             ></v-text-field>
                           </td>
@@ -810,7 +813,6 @@
                               :items="slotLookupOptions"
                               item-text="value"
                               item-value="key"
-                              :label="$t('Common.SlotSize')"
                               outlined
                               dense
                               @change="changeDuration(k)"
@@ -1003,7 +1005,7 @@ import organizationInfo from '~/config/apps/event/gql/organizationInfo.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { getIdFromAtob } from '~/utility'
 import CustomDate from '~/components/common/form/date.vue'
-import { rules, onlineEventLink } from '~/utility/rules.js'
+import { rules } from '~/utility/rules.js'
 import nuxtconfig from '~/nuxt.config'
 
 const ObjectID5 = (
@@ -1057,7 +1059,6 @@ export default {
       slotOptions: [],
       inPersonMeetingOptions: [],
       weekDay: [],
-      onlineMeetingRules: [onlineEventLink],
       isDateRange: false,
       isOverDate: false,
       isOverPeriod: true,
@@ -1167,7 +1168,6 @@ export default {
       },
       locationTypeProps: {
         type: 'lookup',
-        caption: 'Location',
         dataSource: {
           query: registrationStatusOptions,
           itemText: 'value',
