@@ -1,10 +1,10 @@
 <template>
-  <v-flex>
+  <v-flex class="public-page-main">
     <v-flex>
       <div v-if="event.ImageURL" class="background-event-img">
         <picture>
           <source
-            :srcset="`https://${$store.state.currentOrg.name}-${baseUrl}${event.ImageURL}`"
+            :srcset="`https://${orgName}-${baseUrl}${event.ImageURL}`"
             sizes="100vw"
           />
           <img
@@ -38,8 +38,8 @@
             <v-flex class="flex-70">
               <v-img
                 v-if="event.ImageURL"
-                :src="`https://${$store.state.currentOrg.name}-${baseUrl}${event.ImageURL}`"
-                :lazy-src="`https://${$store.state.currentOrg.name}-${baseUrl}${event.ImageURL}`"
+                :src="`https://${orgName}-${baseUrl}${event.ImageURL}`"
+                :lazy-src="`https://${orgName}-${baseUrl}${event.ImageURL}`"
                 class="eventsite-banner"
               >
                 <template v-slot:placeholder>
@@ -152,9 +152,13 @@
                         <v-list-item
                           v-for="item in registration.SessionListId"
                           :key="item.id"
-                          class="px-1 pt-2"
+                          class="px-1 pt-2 session-view-in"
                         >
-                          <v-list-item-avatar tile size="48" class="my-0">
+                          <v-list-item-avatar
+                            tile
+                            size="48"
+                            class="my-0 session-view"
+                          >
                             <v-avatar
                               size="48"
                               tile
@@ -212,6 +216,24 @@
                                   mdi-video
                                 </v-icon>
                               </v-btn>
+                            </div>
+                            <div v-if="item.LocationType === 'Online event'">
+                              <a
+                                :href="item.WebinarLink"
+                                target="_blank"
+                                class="text-decoration-none"
+                                ><v-btn
+                                  class="ma-2 mr-0"
+                                  outlined
+                                  color="success"
+                                >
+                                  <i18n path="Common.JoinSession" /><v-icon
+                                    right
+                                  >
+                                    mdi-video
+                                  </v-icon>
+                                </v-btn></a
+                              >
                             </div>
                           </v-list-item-icon>
                         </v-list-item>
@@ -718,14 +740,11 @@
                         </tr>
                       </tbody>
                       <tbody v-else>
-                        <tr
-                          v-for="item in registration.TicketListId"
-                          :key="item"
-                        >
-                          <td>{{ item.Code }}</td>
-                          <td>{{ item.Amount }}</td>
-                          <td>{{ registration.TicketQuantity }}</td>
-                          <td>{{ item.Amount }}</td>
+                        <tr v-for="item in attendeeData" :key="item">
+                          <td>{{ item.ticketName }}</td>
+                          <td>{{ item.ticketAmount }}</td>
+                          <td>{{ item.count }}</td>
+                          <td>{{ item.ticketAmount * item.count }}</td>
                         </tr>
                         <tr>
                           <td></td>
@@ -814,8 +833,13 @@
               width="100%"
               class="my-3"
             >
-              <div v-if="event.BusinessType === 'Single' && event.locationType">
-                <v-text>{{ event.locationType }}</v-text>
+              <div
+                v-if="event.BusinessType === 'Single' && event.locationType"
+                class="location-type"
+              >
+                <v-text :class="event.locationType">{{
+                  event.locationType
+                }}</v-text>
               </div>
               <div v-if="event.BusinessType === 'Recurring'">
                 <div
@@ -958,6 +982,7 @@ export default {
       registration: {},
       eventImage: false,
       attendeeData: {},
+      orgName: this.$store.state.currentOrg.name,
     }
   },
   computed: {
@@ -1066,6 +1091,14 @@ export default {
               this.attendeeData[i.TicketName].total += i.TicketAmount
             }
           })
+          Object.values(this.attendeeData).map((i) => {
+            const ticketname = this.registration.TicketListId.find((j) => {
+              return j.Code === i.ticketName
+            })
+            return Object.assign(i, {
+              ticketAmount: ticketname ? ticketname.Amount || 0 : 0,
+            })
+          })
           this.getEventData(res.EventId)
         }
       } catch (e) {
@@ -1172,6 +1205,9 @@ export default {
 }
 .if-rec[data-title='Recurring'] .if-rec-child:nth-child(1) {
   display: flex;
+}
+.location-type .Online.event {
+  display: none;
 }
 @media screen and (max-width: 600px) {
   .background-event-img {
