@@ -333,6 +333,17 @@
         </v-col>
       </v-row>
     </div>
+    <div v-else-if="searchBoxValue">
+      <v-row class="ma-0">
+        <v-col class="col-md-12 text-center">
+          <v-text class="body-1">{{
+            $t('Messages.Warn.NoEventsFound', {
+              searchKey: searchBoxValue,
+            })
+          }}</v-text>
+        </v-col>
+      </v-row>
+    </div>
     <div v-else>
       <v-row class="ma-0">
         <v-col class="col-md-12 text-center">
@@ -379,9 +390,16 @@ export default {
       snackbar: false,
       timeout: 2000,
       snackbarText: '',
+      searchBoxValue: '',
     }
   },
+  mounted() {
+    this.$eventBus.$on('searched-key', this.searchKeyChanged)
+  },
   methods: {
+    searchKeyChanged(data) {
+      this.searchBoxValue = data
+    },
     getEventStartDate(StartDate, Timezone) {
       return this.$d(
         new Date(this.formatedDate(StartDate, Timezone)),

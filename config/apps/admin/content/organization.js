@@ -337,7 +337,7 @@ export default {
         },
         Cost: {
           displayOrder: 5,
-          caption: 'Common.Price',
+          caption: 'Common.HeaderPrice',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '130px',

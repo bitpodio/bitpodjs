@@ -137,7 +137,7 @@
               v-else-if="data.event.LocationType === 'Bitpod Virtual'"
               class="pb-1 d-inline-flex"
             >
-              <a @click="goLive"
+              <a class="text-truncate bitpodLink" @click="goLive"
                 ><v-icon class="fs-16 mr-1 primary--text mt-n1">fa-video</v-icon
                 >{{ viewBitpodVirtualLink() }}</a
               >
@@ -278,7 +278,7 @@
             </div>
 
             <div
-              v-if="data.event.MySpeakers"
+              v-if="data.event.MySpeakers && data.event.MySpeakers.length > 0"
               class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
             >
               <div
@@ -848,7 +848,10 @@
                   </div>
                 </v-hover>
               </div>
-              <div v-else-if="switchDailog" class="d-inline-flex">
+              <div
+                v-else-if="switchDailog"
+                class="d-inline-flex flex-column flex-sm-row"
+              >
                 <v-flex
                   class="d-flex flex-column justify-center ma-2 cursorPointer seat-actions pa-2"
                   @click="routeToSeatmap"
@@ -2304,6 +2307,11 @@ export default {
 </script>
 
 <style scoped>
+@media (max-width: 500px) {
+  .bitpodLink {
+    width: 240px !important;
+  }
+}
 .form-control {
   border: 1px solid #ccc;
   padding: 10px;

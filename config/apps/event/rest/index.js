@@ -49,8 +49,8 @@ export function getData(modelName) {
 export const getAllUsers = getData.bind(null, 'users')
 
 export function getLookupData(path) {
-  const URL = `${this.$bitpod.getApiUrl()}`
   return async function query(field) {
+    const URL = `${this.$bitpod.getApiUrl()}`
     const res = await this.$axios.$get(`${URL}${path}`)
     return res
   }

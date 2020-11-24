@@ -19,7 +19,7 @@
           <v-card-title
             class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
           >
-            <h2 class="black--text pt-5 pb-2 text-h5">
+            <h2 class="black--text pt-5 pb-2 text-h5 heading">
               {{
                 isParticipant
                   ? this.$t('Common.Attendees')
@@ -39,26 +39,29 @@
               </v-btn>
             </div>
           </v-card-title>
-          <v-card-text v-if="!isParticipant">
+          <v-card-text v-if="!isParticipant" class="pa-0px">
             <v-container>
-              <v-row>
-                <v-col cols="4" sm="4">
-                  <v-icon dark color="black"
+              <v-row class="px-3">
+                <v-col cols="4" sm="4" class="pa-0px">
+                  <v-icon class="fs-12px" dark color="black"
                     >mdi-checkbox-marked-outline</v-icon
                   >
-                  <h3 class="d-inline">
+                  <h3 class="d-inline fs-12px">
                     <i18n path="Common.Availability" />
                   </h3>
                 </v-col>
-                <v-col cols="4" sm="4">
-                  <v-btn text small @click="addAvailablity">
-                    <v-icon dark left>mdi-plus</v-icon>
+                <v-col cols="8" sm="8" class="pa-0px d-block">
+                  <v-btn
+                    text
+                    small
+                    class="fs-8px pa-0px"
+                    @click="addAvailablity"
+                  >
+                    <v-icon class="fs-12px mr-0px" dark left>mdi-plus</v-icon>
                     <i18n path="Common.AddAvailability" />
                   </v-btn>
-                </v-col>
-                <v-col cols="4" sm="4">
-                  <v-btn text small @click="slots = []">
-                    <v-icon dark left>mdi-cancel</v-icon>
+                  <v-btn text small class="fs-8px pa-0px" @click="slots = []">
+                    <v-icon class="fs-12px mr-0px" dark left>mdi-cancel</v-icon>
                     <i18n path="Common.NotAvailable" />
                   </v-btn>
                 </v-col>
@@ -73,10 +76,10 @@
               </template>
               <template v-else>
                 <v-row>
-                  <v-col cols="4" sm="4">
+                  <v-col cols="5" md="4" class="fs-10px">
                     <h3><i18n path="Common.StartT" /></h3>
                   </v-col>
-                  <v-col cols="4" sm="4">
+                  <v-col cols="5" sm="4" class="fs-10px">
                     <h3><i18n path="Common.EndT" /></h3>
                   </v-col>
                 </v-row>
@@ -84,7 +87,7 @@
                   <v-form ref="formData">
                     <div v-for="(slot, key) in slots" :key="key">
                       <v-row>
-                        <v-col cols="4" sm="4" class="pt-1 px-3 pb-2">
+                        <v-col cols="5" md="4" class="pt-1 px-3 pb-2">
                           <v-autocomplete
                             v-model="slot.startTime"
                             class="ma-0"
@@ -125,7 +128,7 @@
                             @change="updateValidation"
                           ></v-autocomplete>
                         </v-col>
-                        <v-col cols="4" sm="4" class="pt-1 px-3 pb-2">
+                        <v-col cols="5" md="4" class="pt-1 px-3 pb-2">
                           <v-autocomplete
                             v-model="slot.endTime"
                             class="ma-0"
@@ -151,7 +154,7 @@
                             @change="updateValidation"
                           ></v-autocomplete>
                         </v-col>
-                        <v-col cols="4" sm="4" class="pt-2 px-3 pb-0">
+                        <v-col cols="2" md="4" class="pt-2 pb-0 px-1">
                           <v-btn icon @click="deleteAvailablity(key)">
                             <i
                               class="fa fa-trash mb-2 fs-20"
@@ -166,8 +169,8 @@
               </template>
               <v-row>
                 <v-col cols="12" sm="12">
-                  <v-icon dark color="black">mdi-repeat</v-icon>
-                  <h3 class="d-inline">
+                  <v-icon class="fs-12px" dark color="black">mdi-repeat</v-icon>
+                  <h3 class="d-inline fs-12px">
                     <i18n path="Common.RepeatingDaysOfWeek" />
                   </h3>
                 </v-col>
@@ -179,19 +182,23 @@
                   :key="key"
                   cols="3"
                   sm="3"
-                  class="pt-1 px-3 pb-2"
+                  class="pt-1 px-3 pb-2 days"
                 >
                   <v-checkbox
                     v-model="day.selected"
                     class="ma-0"
+                    dense
                     :label="day.dayNameLang"
                   ></v-checkbox>
                 </v-col>
               </v-row>
             </v-container>
           </v-card-text>
-          <v-card-text v-else>
-            <v-container v-if="contents && contents.Event">
+          <v-card-text v-else class="pa-0px">
+            <v-container
+              v-if="contents && contents.Event"
+              class="pa-0px mt-n16 mt-md-n10 mb-sm-3 mb-md-0"
+            >
               <Grid
                 view-name="eventAttendeePerDay"
                 :content="contents.Event"
@@ -199,11 +206,17 @@
               />
             </v-container>
           </v-card-text>
-          <v-card-actions v-if="!isParticipant" class="pl-4">
+          <v-card-actions
+            v-if="!isParticipant"
+            class="pl-8 pb-5 actions d-block"
+          >
             <v-btn
               outlined
               color="primary"
               depressed
+              small
+              dense
+              class="fs-8px mt-2 mr-2"
               :disabled="validSlots() || disabledButton"
               @click="applyToOnly"
               ><i18n path="Common.ApplyToOnly" />
@@ -212,6 +225,9 @@
             <v-btn
               color="primary"
               depressed
+              small
+              dense
+              class="fs-8px mt-2 ml-0"
               :disabled="validSlots() || disabledButton"
               @click="applyToRepeating"
               ><i18n path="Common.ApplyToRepeatingWeekDays"
@@ -812,5 +828,33 @@ export default {
 }
 .toast {
   font-size: 18px;
+}
+.days {
+  min-width: 135px;
+}
+@media (max-width: 950px) {
+  .pa-0px {
+    padding: 0 !important;
+  }
+  .fs-10px {
+    font-size: 10px !important;
+  }
+  .fs-8px {
+    font-size: 8px !important;
+  }
+  .fs-12px {
+    font-size: 12px !important;
+  }
+  .mr-0px {
+    margin: 0 !important;
+  }
+  .actions {
+    padding: 0 0 12px 12px !important;
+  }
+  .heading {
+    margin-left: -10px !important;
+    font-size: 20px !important;
+    padding-top: 10px !important;
+  }
 }
 </style>

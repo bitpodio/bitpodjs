@@ -42,6 +42,7 @@
     "ManageSchedule": "Manage Schedule",
     "Registrations": "Registrations",
     "Invites": "Invites",
+    "Invite": "Invite",
     "Emails": "Emails",
     "Notes": "Notes",
     "Tickets": "Tickets*",
@@ -308,7 +309,7 @@
     "JoinSession": "Join Session",
     "NewSession": "New Session",
     "NewScheduleATask": "Schedule a Task",
-    "EditScheduleATask": "Edit Activity",
+    "EditScheduleATask": "Edit Schedule Task",
     "NewEmailConfirmationTemplate": "New Email Confirmation Template",
     "NewTicket": "New Ticket",
     "RegistrationType": "Registration Type",
@@ -693,7 +694,8 @@
     "Pending": "Pending",
     "LocationTypeRequired": "Location Type*",
     "EditEvent": "Edit Event",
-    "UploadImages": "Upload Images"
+    "UploadImages": "Upload Images",
+    "HeaderPrice": "Price"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",
@@ -809,6 +811,7 @@
       "EndStartDate": "End Date should be greater than Start Date",
       "StartEndTime": "Start Time should not be greater than End Time",
       "EndStartTime": "End Time should not be less than Start Time",
+      "StartEndTimeEqlMsg": "Start time should not be equal to end time.",
       "SessionStartDate": "Session start date should be in between event date",
       "RefundPaidAmount": "Refunded Amount can not be greater or equal than total paid amount",
       "RefundAmountMsg": "Amount should not be less than or equal to  0",
@@ -835,7 +838,8 @@
       "ReplaceBadge": "New badge will replace your existing badge",
       "DeleteImage": "Do you want to delete this image?",
       "DeleteUser": "Do you want to delete this user?",
-      "NoEvents": "There aren't any live and draft events, to start setting up your event use Create Event link"
+      "NoEvents": "There aren't any live and draft events, to start setting up your event use Create Event link",
+      "NoEventsFound": "No events found with name {searchKey}"
     },
     "Success": {
       "CopiedClipboard": "Copied to clipboard",

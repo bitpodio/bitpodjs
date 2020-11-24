@@ -39,7 +39,7 @@
                   v-model="comment"
                   outlined
                   required
-                  :rules="requiredRules"
+                  :rules="[rules.required]"
                   dense
                   rows="4"
                   placeholder="Say something"
@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import { required } from '~/utility/rules.js'
+import { rules } from '~/utility/rules.js'
 export default {
   props: {
     isCancelReg: {
@@ -81,8 +81,8 @@ export default {
   },
   data() {
     return {
+      rules: rules(this.$i18n),
       valid: false,
-      requiredRules: [required],
       snackbar: false,
       timeout: 2000,
     }
