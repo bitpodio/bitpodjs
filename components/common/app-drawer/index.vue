@@ -63,9 +63,11 @@ import { intersection } from '~/utility/object.js'
 import { appList } from '~/config/apps/list'
 import userUtils from '~/utility/userApps'
 export default {
-  data: () => ({
-    apps: appList,
-  }),
+  data() {
+    return {
+      apps: appList(this.$store),
+    }
+  },
   computed: {
     userApps() {
       const userInfo = userUtils.userCurrentOrgInfo(this.$store) || {}

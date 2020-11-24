@@ -1,25 +1,29 @@
 <template>
   <div>
-    <component
-      :is="editItem || null"
-      v-if="isHiddenAction('edit')"
-      :content="content"
-      :view-name="viewName"
-      :items="items"
-      :on-update-item="onUpdateItem"
-      :refresh="refresh"
-      :context="context"
-    />
-    <component
-      :is="deleteItem || null"
-      v-if="isHiddenAction('delete')"
-      :content="content"
-      :view-name="viewName"
-      :items="items"
-      :on-delete-item="onDeleteItem"
-      :refresh="refresh"
-      :context="context"
-    />
+    <v-list-item>
+      <component
+        :is="editItem || null"
+        v-if="isHiddenAction('edit')"
+        :content="content"
+        :view-name="viewName"
+        :items="items"
+        :on-update-item="onUpdateItem"
+        :refresh="refresh"
+        :context="context"
+      />
+    </v-list-item>
+    <v-list-item>
+      <component
+        :is="deleteItem || null"
+        v-if="isHiddenAction('delete')"
+        :content="content"
+        :view-name="viewName"
+        :items="items"
+        :on-delete-item="onDeleteItem"
+        :refresh="refresh"
+        :context="context"
+      />
+    </v-list-item>
   </div>
 </template>
 <script>

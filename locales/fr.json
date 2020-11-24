@@ -694,7 +694,8 @@
     "LocationTypeRequired": "Type de lieu*",
     "EditEvent": "Modifier l'événement",
     "UploadImages": "Importer des images",
-    "HeaderPrice": "le prix"
+    "HeaderPrice": "le prix",
+    "TicketsNotRequired": "des billets"
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",
