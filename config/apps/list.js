@@ -1,4 +1,4 @@
-export const appList = [
+export const appList = (store) => [
   {
     name: 'event',
     label: 'Common.EventApp',
@@ -12,7 +12,9 @@ export const appList = [
     label: 'Common.AdminApp',
     css: 'fa fa-cogs fs-36 primary--text',
     type: 'route',
-    route: '/apps/admin/organization/5cfe026f6ab042000c530105',
+    route: `/apps/admin/organization/${
+      store.state.currentOrgInfo && store.state.currentOrgInfo.id
+    }`,
     roles: ['EventAdmin', '$orgowner'],
   },
   {

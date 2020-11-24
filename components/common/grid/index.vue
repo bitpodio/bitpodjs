@@ -10,9 +10,54 @@
     </v-snackbar>
     <div v-if="!error" :key="error">
       <div class="grid-actions-container mt-lg-n11 mt-md-n11 mt-sm-n11 mt-xs-0">
-        <div class="d-flex">
-          <template v-if="selectedItems.length > 0">
+        <div
+          class="grid-actions-menu"
+          v-if="
+            (hasGridOption ||
+            hasRowOption ||
+            (viewName &&
+            content.view &&
+            content.view[viewName] &&
+            content.view[viewName].template &&
+            content.view[viewName].template.actions &&
+            content.view[viewName].template.actions.reduce((acc,i)=>{return acc || !i.hidden},false)) )"
+        >
+          <v-menu right :offset-y="offset" transition="slide-y-transition">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn icon small v-bind="attrs" v-on="on">
+                <v-icon>mdi-dots-vertical</v-icon>
+              </v-btn>
+            </template>
+            <v-list dense>
+              <component
+                :is="actionTemplates['grid'] || null"
+                :content="content"
+                :view-name="viewName"
+                :on-new-item-save="onNewItemSave"
+                :refresh="refresh"
+                :context="context"
+                @hasGridOption="getGridOption"
+              />
+              <component
+                v-if="selectedItems.length > 0"
+                :is="actionTemplates['row-select'] || null"
+                :content="content"
+                :view-name="viewName"
+                :on-update-item="onUpdateItem"
+                :on-delete-item="onDeleteItem"
+                :items="selectedItems"
+                :refresh="refresh"
+                :context="context"
+                :getActionItems="getActionItems"
+                @hasRowOption="getRowOption"
+              />
+            </v-list>
+          </v-menu>
+        </div>
+        <div class="grid-actions-spread">
+          <div class="d-flex">
             <component
+              v-if="selectedItems.length > 0"
               :is="actionTemplates['row-select'] || null"
               :content="content"
               :view-name="viewName"
@@ -21,17 +66,21 @@
               :items="selectedItems"
               :refresh="refresh"
               :context="context"
-              class="d-flex"
+              :getActionItems="getActionItems"
+              class="d-inline-flex"
+              @hasRowOption="getRowOption"
             />
-          </template>
-          <component
-            :is="actionTemplates['grid'] || null"
-            :content="content"
-            :view-name="viewName"
-            :on-new-item-save="onNewItemSave"
-            :refresh="refresh"
-            :context="context"
-          />
+            <component
+              :is="actionTemplates['grid'] || null"
+              :content="content"
+              :view-name="viewName"
+              :on-new-item-save="onNewItemSave"
+              :refresh="refresh"
+              :context="context"
+              class="d-inline-flex"
+              @hasGridOption="getGridOption"
+            />
+          </div>
         </div>
         <div v-if="hideFilter">
           <slot name="filter">
@@ -364,6 +413,8 @@ export default {
       snackbar: false,
       timeout: 1000,
       snackbarText: '',
+      hasGridOption: false,
+      hasRowOption: false,
     }
   },
   computed: {
@@ -458,6 +509,12 @@ export default {
     this.$eventBus.$off('grid-refresh')
   },
   methods: {
+    getRowOption() {
+      this.hasRowOption = true
+    },
+    getGridOption() {
+      this.hasGridOption = true
+    },
     updatePagination(pagination) {
       // call rest
       this.loadRestData()
@@ -660,5 +717,15 @@ export default {
   display: flex;
   justify-content: flex-end;
   align-items: center;
+}
+@media (min-width: 601px) {
+  .grid-actions-menu {
+    display: none !important;
+  }
+}
+@media (max-width: 600px) {
+  .grid-actions-spread {
+    display: none !important;
+  }
 }
 </style>

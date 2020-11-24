@@ -322,7 +322,7 @@ export default {
         {
           icon: 'fa fa-network',
           text: 'Organization',
-          to: '/apps/admin/organization/5cfe026f6ab042000c530105',
+          to: `/apps/admin/organization/${this.$store.state.currentOrgInfo.id}`,
         },
         {
           icon: 'fa fa-cog',
@@ -364,13 +364,11 @@ export default {
     }
   },
   async created() {
-    if (!this.$apolloHelpers.getToken()) {
-      let token = this.$auth.strategy.token.get()
-      if (token) {
-        token = token.split(' ')[1]
-      }
-      await this.$apolloHelpers.onLogin(token, undefined, { expires: 7 })
+    let token = this.$auth.strategy.token.get()
+    if (token) {
+      token = token.split(' ')[1]
     }
+    await this.$apolloHelpers.onLogin(token, undefined, { expires: 7 })
   },
   methods: {
     async onLogout() {

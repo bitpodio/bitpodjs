@@ -16,7 +16,7 @@ const isValidPage = (store, route) => {
     return true
   }
   const currentRouteApp =
-    appList.find(({ name }) => name === route.params.app) || {}
+    appList(store).find(({ name }) => name === route.params.app) || {}
   const currentRouteAppRoles = currentRouteApp.roles || []
   const isAuthorizedApp =
     intersection(currentRouteAppRoles, userRoles).length > 0
