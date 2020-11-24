@@ -3081,7 +3081,7 @@ export default {
         },
         offerValue: {
           form: {
-            caption: 'Common.OfferValue',
+            caption: 'Common.OfferValueRequired',
             displayOrder: 4,
           },
           displayOrder: 3,
@@ -3124,6 +3124,7 @@ export default {
           newForm: true,
           editForm: true,
           hidden: false,
+          default: '',
         },
         isActive: {
           displayOrder: 5,

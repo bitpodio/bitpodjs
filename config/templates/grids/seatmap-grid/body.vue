@@ -1,6 +1,6 @@
 <template>
   <v-flex class="greybg">
-    <v-col class="d-flex flex-wrap greybg pa-0 pl-3 seatmap-inner">
+    <v-col class="d-flex flex-wrap greybg pa-0 pl-3 pt-10 seatmap-inner">
       <v-hover v-slot:default="{ hover }" open-delay="200">
         <nuxt-link :to="seatmapRoute" class="text-decoration-none">
           <v-card
@@ -32,7 +32,7 @@
               class="font-weight-medium text-center positionRelative subtitle-1 seat-card pb-0"
             >
               <i class="fa fa-grid-alt fs-36 warning--text"></i>
-              <div class="body-1 grey--text text--darken-1">
+              <div class="body-1 grey--text text--darken-1 text-truncate">
                 {{ item.Name }}
               </div>
             </v-card-text>

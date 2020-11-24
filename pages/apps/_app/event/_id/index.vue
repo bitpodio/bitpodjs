@@ -278,7 +278,7 @@
             </div>
 
             <div
-              v-if="data.event.MySpeakers"
+              v-if="data.event.MySpeakers && data.event.MySpeakers.length > 0"
               class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
             >
               <div
@@ -848,7 +848,10 @@
                   </div>
                 </v-hover>
               </div>
-              <div v-else-if="switchDailog" class="d-inline-flex">
+              <div
+                v-else-if="switchDailog"
+                class="d-inline-flex flex-column flex-sm-row"
+              >
                 <v-flex
                   class="d-flex flex-column justify-center ma-2 cursorPointer seat-actions pa-2"
                   @click="routeToSeatmap"
