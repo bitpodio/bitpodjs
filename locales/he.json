@@ -695,7 +695,8 @@
     "LocationTypeRequired": "סוג מיקום *",
     "EditEvent": "ערוך אירוע",
     "UploadImages": "להעלות תמונות",
-    "HeaderPrice": "מחיר"
+    "HeaderPrice": "מחיר",
+    "TicketsNotRequired": "כרטיסים"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",
