@@ -223,7 +223,7 @@
                                 target="_blank"
                                 class="text-decoration-none"
                                 ><v-btn
-                                  class="ma-2 ml-0"
+                                  class="ma-2 mr-0"
                                   outlined
                                   color="success"
                                 >
@@ -836,8 +836,13 @@
               width="100%"
               class="my-3"
             >
-              <div v-if="event.BusinessType === 'Single' && event.locationType">
-                <v-text>{{ event.locationType }}</v-text>
+              <div
+                v-if="event.BusinessType === 'Single' && event.locationType"
+                class="location-type"
+              >
+                <v-text :class="event.locationType">{{
+                  event.locationType
+                }}</v-text>
               </div>
               <div v-if="event.BusinessType === 'Recurring'">
                 <div
@@ -1200,6 +1205,9 @@ export default {
 }
 .if-rec[data-title='Recurring'] .if-rec-child:nth-child(1) {
   display: flex;
+}
+.location-type .Online.event {
+  display: none;
 }
 @media screen and (max-width: 600px) {
   .background-event-img {
