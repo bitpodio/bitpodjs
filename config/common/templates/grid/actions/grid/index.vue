@@ -1,14 +1,16 @@
 <template>
   <div>
-    <component
-      :is="newItem || null"
-      v-if="isHiddenAction('new')"
-      :content="content"
-      :view-name="viewName"
-      :on-new-item-save="onNewItemSave"
-      :refresh="refresh"
-      :context="context"
-    />
+    <v-list-item>
+      <component
+        :is="newItem || null"
+        v-if="isHiddenAction('new')"
+        :content="content"
+        :view-name="viewName"
+        :on-new-item-save="onNewItemSave"
+        :refresh="refresh"
+        :context="context"
+      />
+    </v-list-item>
   </div>
 </template>
 <script>
@@ -57,5 +59,8 @@ export default {
     },
   },
   methods: {},
+  mounted() {
+    this.$emit('hasGridOption', true)
+  },
 }
 </script>
