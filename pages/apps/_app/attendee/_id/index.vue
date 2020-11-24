@@ -740,14 +740,11 @@
                         </tr>
                       </tbody>
                       <tbody v-else>
-                        <tr
-                          v-for="item in registration.TicketListId"
-                          :key="item"
-                        >
-                          <td>{{ item.Code }}</td>
-                          <td>{{ item.Amount }}</td>
-                          <td>{{ registration.TicketQuantity }}</td>
-                          <td>{{ item.Amount }}</td>
+                        <tr v-for="item in attendeeData" :key="item">
+                          <td>{{ item.ticketName }}</td>
+                          <td>{{ item.ticketAmount }}</td>
+                          <td>{{ item.count }}</td>
+                          <td>{{ item.ticketAmount * item.count }}</td>
                         </tr>
                         <tr>
                           <td></td>
@@ -1094,11 +1091,14 @@ export default {
               this.attendeeData[i.TicketName].total += i.TicketAmount
             }
           })
-          // this.attendeeData.map((i) => {
-          //   return Object.assign(i,{
-          //     ticketAmount:
-          //     })
-          //  })
+          Object.values(this.attendeeData).map((i) => {
+            const ticketname = this.registration.TicketListId.find((j) => {
+              return j.Code === i.ticketName
+            })
+            return Object.assign(i, {
+              ticketAmount: ticketname ? ticketname.Amount || 0 : 0,
+            })
+          })
           this.getEventData(res.EventId)
         }
       } catch (e) {
