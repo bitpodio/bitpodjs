@@ -11,7 +11,7 @@
     <div v-if="!error" :key="error">
       <div class="grid-actions-container mt-lg-n11 mt-md-n11 mt-sm-n11 mt-xs-0">
         <div
-          class="isMobile"
+          class="grid-actions-menu"
           v-if="
             (hasGridOption ||
             hasRowOption ||
@@ -54,7 +54,7 @@
             </v-list>
           </v-menu>
         </div>
-        <div class="notMobile">
+        <div class="grid-actions-spread">
           <div class="d-flex">
             <component
               v-if="selectedItems.length > 0"
@@ -719,12 +719,12 @@ export default {
   align-items: center;
 }
 @media (min-width: 601px) {
-  .isMobile {
+  .grid-actions-menu {
     display: none !important;
   }
 }
 @media (max-width: 600px) {
-  .notMobile {
+  .grid-actions-spread {
     display: none !important;
   }
 }
