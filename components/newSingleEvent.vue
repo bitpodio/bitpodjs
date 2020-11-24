@@ -364,6 +364,7 @@
                             value
                             type="Number"
                             min="0"
+                            onkeydown="return event.keyCode !== 69 && event.keyCode !== 189"
                             :disabled="isPriceDisabled(k)"
                           ></v-text-field>
                         </td>
@@ -395,6 +396,8 @@
                             type="Number"
                             min="0"
                             value
+                            :rules="[rules.required]"
+                            onkeydown="return event.keyCode !== 69 && event.keyCode !== 189"
                           ></v-text-field>
                         </td>
                         <td class="pa-2 pt-0 e-td" data-title="">
@@ -694,7 +697,6 @@ export default {
       return {
         appendIcon: 'fa-calendar',
         outlined: true,
-        caption: 'Start Date*',
         type: 'datetime',
       }
     },
@@ -702,7 +704,6 @@ export default {
       return {
         appendIcon: 'fa-calendar',
         outlined: true,
-        caption: 'End Date*',
         type: 'datetime',
       }
     },
@@ -864,7 +865,10 @@ export default {
     },
 
     async eventPublish() {
-      const eventStatus = { Status: 'Open for registration' }
+      const eventStatus = {
+        Status: 'Open for registration',
+        Description: this.eventData.Description,
+      }
       this.isEventPublish = true
       this.isEventCreate = false
       const modelName = 'Event'

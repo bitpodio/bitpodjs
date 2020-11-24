@@ -3,7 +3,7 @@
     v-model="checkboxValue"
     :label="fieldCaption"
     :rules="rules"
-    @click="onCheckboxClick"
+    @change="onCheckboxClick"
   ></v-checkbox>
 </template>
 <script>

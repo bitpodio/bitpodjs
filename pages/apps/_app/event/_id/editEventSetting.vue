@@ -208,6 +208,7 @@ export default {
         )
         if (res) {
           this.close()
+          this.$emit('update:snackbar', true)
           this.refresh()
           this.data.event = res
         }

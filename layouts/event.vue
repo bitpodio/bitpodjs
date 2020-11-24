@@ -133,6 +133,18 @@
             :to="localePath(item.to)"
             router
             exact
+            :class="[
+              (currentPage.includes('/apps/event/event/') &&
+                item.to === '/apps/event/list/Event/live and draft event') ||
+              (currentPage.includes('/apps/event/registration') &&
+                item.to === '/apps/event/list/Registrations/Registrations') ||
+              (currentPage.includes('/apps/event/discountcodes/') &&
+                item.to === '/apps/event/list/DiscountCodes/Discount Codes') ||
+              (currentPage.includes('/apps/event/contacts/') &&
+                item.to === '/apps/event/list/Contacts/Contacts')
+                ? activeClass
+                : '',
+            ]"
           >
             <v-list-item-action class="nav-icon">
               <v-icon>{{ item.icon }}</v-icon>
@@ -302,6 +314,11 @@ export default {
   props: {
     source: { type: String, default: '' },
   },
+  computed: {
+    currentPage() {
+      return this.$route.path
+    },
+  },
   data: () => ({
     date: new Date().toISOString().substr(0, 10),
     menu: false,
@@ -317,6 +334,7 @@ export default {
     message: false,
     triggerReset: false,
     triggerRecEventReset: false,
+    activeClass: ' v-list-item--active',
     items: [
       {
         icon: 'fa fa-grid',

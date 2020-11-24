@@ -445,6 +445,7 @@ export default {
     },
     close() {
       this.$emit('update:eventForm', false)
+
       this.onReset()
     },
     refreshGrid() {
@@ -514,6 +515,7 @@ export default {
           )
           if (res) {
             this.close()
+            this.$emit('update:snackbar', true)
             this.refreshGrid()
             this.refresh()
             this.data.event = res
@@ -538,6 +540,8 @@ export default {
           )
           if (res) {
             this.close()
+            this.$emit('update:snackbar', true)
+            this.refreshGrid()
             this.refresh()
             return (this.data.event = res)
           }
