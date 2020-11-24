@@ -152,9 +152,13 @@
                         <v-list-item
                           v-for="item in registration.SessionListId"
                           :key="item.id"
-                          class="px-1 pt-2"
+                          class="px-1 pt-2 session-view-in"
                         >
-                          <v-list-item-avatar tile size="48" class="my-0">
+                          <v-list-item-avatar
+                            tile
+                            size="48"
+                            class="my-0 session-view"
+                          >
                             <v-avatar
                               size="48"
                               tile
@@ -212,6 +216,22 @@
                                   mdi-video
                                 </v-icon>
                               </v-btn>
+                            </div>
+                            <div v-if="item.LocationType === 'Online event'">
+                              <a
+                                :href="item.WebinarLink"
+                                target="_blank"
+                                class="text-decoration-none"
+                                ><v-btn
+                                  class="ma-2 ml-0"
+                                  outlined
+                                  color="success"
+                                >
+                                  <i18n path="Common.JoinEvent" /><v-icon right>
+                                    mdi-video
+                                  </v-icon>
+                                </v-btn></a
+                              >
                             </div>
                           </v-list-item-icon>
                         </v-list-item>
