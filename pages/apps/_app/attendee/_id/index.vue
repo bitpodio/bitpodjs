@@ -227,7 +227,9 @@
                                   outlined
                                   color="success"
                                 >
-                                  <i18n path="Common.JoinEvent" /><v-icon right>
+                                  <i18n path="Common.JoinSession" /><v-icon
+                                    right
+                                  >
                                     mdi-video
                                   </v-icon>
                                 </v-btn></a
