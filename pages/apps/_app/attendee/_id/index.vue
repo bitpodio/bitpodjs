@@ -1,5 +1,5 @@
 <template>
-  <v-flex>
+  <v-flex class="public-page-main">
     <v-flex>
       <div v-if="event.ImageURL" class="background-event-img">
         <picture>
@@ -1067,6 +1067,11 @@ export default {
               this.attendeeData[i.TicketName].total += i.TicketAmount
             }
           })
+          // this.attendeeData.map((i) => {
+          //   return Object.assign(i,{
+          //     ticketAmount:
+          //     })
+          //  })
           this.getEventData(res.EventId)
         }
       } catch (e) {
