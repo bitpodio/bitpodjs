@@ -32,6 +32,7 @@ export default {
         },
       },
       template: {
+        name: 'roles-grid',
         context: {
           basePath: '/organization',
         },

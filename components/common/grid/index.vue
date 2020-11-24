@@ -455,9 +455,10 @@ export default {
       // call rest
       this.loadRestData()
     },
-    search() {
+    search(newval) {
       // call rest
       this.loadRestData()
+      this.$eventBus.$emit('searched-key', newval)
     },
     value() {
       this.selectedItems = this.$props.value

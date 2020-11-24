@@ -1,5 +1,5 @@
 <template>
-  <div v-if="date !== undefined && date">
+  <div v-if="date !== undefined && date" class="key-date">
     {{ $d(new Date(date), 'long', $i18n.locale) }}
   </div>
 </template>

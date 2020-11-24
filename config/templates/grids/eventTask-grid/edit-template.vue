@@ -130,12 +130,12 @@
                         </div>
                       </v-hover>
                       <v-col
-                        class="pl-5 templateTile"
-                        cols="4"
+                        class="pl-0 pt-0 pb-0 pr-3 templateTile col-sm-4"
                         @click="chooseTemplate(3)"
                       >
                         <v-card
-                          height="230"
+                          height="250"
+                          width="253"
                           align="center"
                           justify="center"
                           class="tileCard cursorPointer pa-2"

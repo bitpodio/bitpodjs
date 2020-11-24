@@ -37,7 +37,7 @@
               <v-col cols="12" sm="6" md="6">
                 <v-text-field
                   v-model="regData.FirstName"
-                  :rules="requiredRules"
+                  :rules="[rules.required]"
                   :label="$t('Common.FirstN')"
                   dense
                   outlined
@@ -46,7 +46,7 @@
               <v-col cols="12" sm="6" md="6">
                 <v-text-field
                   v-model="regData.LastName"
-                  :rules="requiredRules"
+                  :rules="[rules.required]"
                   :label="$t('Common.LastName')"
                   dense
                   outlined
@@ -55,7 +55,7 @@
               <v-col cols="12" sm="6" md="6">
                 <v-text-field
                   v-model="regData.Phone"
-                  :rules="requiredRules"
+                  :rules="[rules.required]"
                   :label="$t('Common.PhoneRequired')"
                   dense
                   type="Number"
@@ -65,7 +65,7 @@
               <v-col cols="12" sm="6" md="6">
                 <v-text-field
                   v-model="regData.Email"
-                  :rules="requiredRules"
+                  :rules="[rules.required]"
                   :label="$t('Common.Email')"
                   dense
                   outlined
@@ -198,7 +198,7 @@
 
 <script>
 import gql from 'graphql-tag'
-import { required } from '~/utility/rules.js'
+import { rules } from '~/utility/rules.js'
 import eventRegistrationTicketSlot from '~/config/apps/event/gql/eventRegistrationTicketSlot.gql'
 import ticket from '~/config/apps/event/gql/ticket.gql'
 import eventSession from '~/config/apps/event/gql/eventSession.gql'
@@ -220,9 +220,9 @@ export default {
   },
   data() {
     return {
+      rules: rules(this.$i18n),
       snackbar: false,
       timeout: 2000,
-      requiredRules: [required],
       regData: {},
       regDetails: {},
       events: [],

@@ -32,7 +32,7 @@
                 <Lookup
                   v-model="customerId"
                   :field="customerProps"
-                  :rules="required"
+                  :rules="[rules.required]"
                 />
                 <div
                   v-show="duplicateMessage !== ''"
@@ -63,7 +63,7 @@
 
 <script>
 import member from '~/config/apps/event/gql/member.gql'
-import { required } from '~/utility/rules.js'
+import { rules } from '~/utility/rules.js'
 export default {
   props: {
     refresh: {
@@ -77,7 +77,7 @@ export default {
       customers: [],
       customerId: '',
       valid: false,
-      required: [required],
+      rules: rules(this.$i18n),
       dialog: false,
       duplicateMessage: '',
       isSaveButtonDisabled: false,
