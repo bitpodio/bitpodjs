@@ -4,10 +4,19 @@ export const actions = {
     const origin = getApiUrl(context.req.headers.host, context.req)
     const apiEndpoint = nuxtconfig.axios.apiEndpoint
     try {
-      const currentOrgRes = await context.$axios.get(
+      const orgPromise = context.$axios.get(
         `${origin}${apiEndpoint}Organizations/this`
       )
+      const orgInfoPromise = context.$axios.get(
+        `${origin}${apiEndpoint}OrganizationInfos`
+      )
+      const [currentOrgRes, currentOrgInfoRes] = await Promise.all([
+        orgPromise,
+        orgInfoPromise,
+      ])
+      const currentOrgInfo = currentOrgInfoRes.data
       commit('setCurrentOrg', currentOrgRes.data)
+      commit('setCurrentOrgInfo', currentOrgInfo && currentOrgInfo[0])
     } catch (err) {
       commit('setCurrentOrg', err)
     }
@@ -16,11 +25,15 @@ export const actions = {
 
 export const state = () => ({
   currentOrg: [],
+  currentOrgInfo: {},
 })
 
 export const mutations = {
   setCurrentOrg(state, payload) {
     state.currentOrg = payload
+  },
+  setCurrentOrgInfo(state, payload) {
+    state.currentOrgInfo = payload
   },
 }
 

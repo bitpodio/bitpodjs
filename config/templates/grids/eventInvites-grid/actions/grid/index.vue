@@ -1,8 +1,14 @@
 <template>
-  <div class="d-flex">
-    <newItem />
-    <newAction />
-    <refresh />
+  <div>
+    <v-list-item>
+      <newItem />
+    </v-list-item>
+    <v-list-item>
+      <newAction />
+    </v-list-item>
+    <v-list-item>
+      <refresh />
+    </v-list-item>
   </div>
 </template>
 <script>
@@ -14,6 +20,9 @@ export default {
     newAction,
     newItem,
     refresh,
+  },
+  mounted() {
+    this.$emit('hasGridOption', true)
   },
 }
 </script>
