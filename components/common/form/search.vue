@@ -117,12 +117,27 @@ export default {
       if (!value || value.length < 2) {
         this.isLoading = false
         return
+      } else if (this.value) {
+        this.isLoading = false
+        return
       }
       this.debouncedLoadItems(value, this)
     },
   },
   created() {
     this.debouncedLoadItems = debounce(this.loadItems, 500)
+  },
+  async mounted() {
+    const filters = { where: { id: this.value } }
+    const result = await this.$apollo.query({
+      query: gql`
+        ${this.field.dataSource.query}
+      `,
+      variables: {
+        filters,
+      },
+    })
+    this.items = formatResult(result.data)
   },
   methods: {
     onLookupChange() {
