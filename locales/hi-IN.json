@@ -693,7 +693,8 @@
     "LocationTypeRequired": "स्थान का प्रकार *",
     "EditEvent": "घटना संपादित करें",
     "UploadImages": "तश्वीरें अपलोड करो",
-    "HeaderPrice": "कीमत"
+    "HeaderPrice": "कीमत",
+    "TicketsNotRequired": "टिकट"
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",

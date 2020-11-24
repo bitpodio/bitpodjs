@@ -694,7 +694,8 @@
     "LocationTypeRequired": "Location Type*",
     "EditEvent": "Edit Event",
     "UploadImages": "Upload Images",
-    "HeaderPrice": "Price"
+    "HeaderPrice": "Price",
+    "TicketsNotRequired": "Tickets"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",
