@@ -239,7 +239,7 @@ export default {
           displayOrder: 6,
           caption: 'Common.EventApp',
           form: {
-            caption: 'Event *',
+            caption: 'Common.Event',
             displayOrder: 12,
           },
           searchEnable: true,
@@ -251,6 +251,11 @@ export default {
           inlineEdit: true,
           newForm: true,
           editForm: true,
+          rules: [
+            function (v) {
+              return !!v || this.$t('Messages.Error.ThisFieldRequired')
+            },
+          ],
           dataSource: {
             query: eventNames,
             itemText: 'Title',
@@ -409,7 +414,7 @@ export default {
           caption: 'Common.Tickets',
           searchEnable: true,
           form: {
-            caption: 'Common.TicketsRequired',
+            caption: 'Common.TicketsNotRequired',
             displayOrder: 13,
           },
           sortEnable: true,
