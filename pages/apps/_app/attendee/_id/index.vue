@@ -982,7 +982,7 @@ export default {
       registration: {},
       eventImage: false,
       attendeeData: {},
-      orgName: this.$store.state.currentOrg.name,
+      orgName: this.$store.state.currentOrgInfo.name,
     }
   },
   computed: {
