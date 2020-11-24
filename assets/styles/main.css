@@ -611,6 +611,7 @@ table > tbody > tr:last-child .key-align {
   .event-steper .v-stepper__header {
       position: relative !important;
       left: 25px !important;
+      box-shadow: none !important;
   }
 }
 @media (max-width: 600px) {
@@ -693,5 +694,13 @@ table > tbody > tr:last-child .key-align {
   .event-title {
     max-width: 100%;
     overflow-wrap: break-word;
+  }
+  .v-stepper:not(.v-stepper--vertical) .v-stepper__label {
+    display: block !important;
+    max-width: 100px !important;
+    white-space: normal !important;
+  }
+  .v-stepper--alt-labels .v-stepper__step {
+      flex-basis: 140px !important;
   }
 }
