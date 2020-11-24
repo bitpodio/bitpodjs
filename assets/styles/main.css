@@ -600,6 +600,18 @@ table > tbody > tr:last-child .key-align {
   .fc-header-toolbar {
     display: block !important;
   }
+  .event-steper .v-stepper:not(.v-stepper--vertical) .v-stepper__label {
+    display: block !important;
+    max-width: 100px !important;
+    white-space: normal !important;
+  }
+  .event-steper .v-stepper--alt-labels .v-stepper__step {
+      flex-basis: 140px !important;
+  }
+  .event-steper .v-stepper__header {
+      position: relative !important;
+      left: 25px !important;
+  }
 }
 @media (max-width: 600px) {
   .v-tooltip__content {
