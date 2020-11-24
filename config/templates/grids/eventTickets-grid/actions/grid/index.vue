@@ -1,8 +1,14 @@
 <template>
-  <div class="d-flex">
-    <newItem :refresh="refresh" />
-    <registrationType />
-    <seatmapTickets />
+  <div>
+    <v-list-item>
+      <newItem :refresh="refresh" />
+    </v-list-item>
+    <v-list-item>
+      <registrationType />
+    </v-list-item>
+    <v-list-item>
+      <seatmapTickets />
+    </v-list-item>
   </div>
 </template>
 
@@ -41,6 +47,9 @@ export default {
       default: () => {},
       required: false,
     },
+  },
+  mounted() {
+    this.$emit('hasGridOption', true)
   },
 }
 </script>

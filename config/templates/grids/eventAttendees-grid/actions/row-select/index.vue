@@ -1,23 +1,28 @@
 <template>
   <div>
-    <editItem
-      :content="content"
-      :view-name="viewName"
-      :items="items"
-      :on-update-item="onUpdateItem"
-      :refresh="refresh"
-      :context="context"
-    />
-    <deleteItem
-      :content="content"
-      :view-name="viewName"
-      :items="items"
-      :on-delete-item="onDeleteItem"
-      :refresh="refresh"
-      :context="context"
-    />
-
-    <printBadges :items="items" :context="context" />
+    <v-list-item>
+      <editItem
+        :content="content"
+        :view-name="viewName"
+        :items="items"
+        :on-update-item="onUpdateItem"
+        :refresh="refresh"
+        :context="context"
+      />
+    </v-list-item>
+    <v-list-item>
+      <deleteItem
+        :content="content"
+        :view-name="viewName"
+        :items="items"
+        :on-delete-item="onDeleteItem"
+        :refresh="refresh"
+        :context="context"
+      />
+    </v-list-item>
+    <v-list-item>
+      <printBadges :items="items" :context="context" />
+    </v-list-item>
   </div>
 </template>
 

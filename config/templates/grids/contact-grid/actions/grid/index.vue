@@ -1,25 +1,31 @@
 <template>
-  <div class="d-flex">
-    <newItem
-      :content="content"
-      :view-name="viewName"
-      :on-new-item-save="onNewItemSave"
-      :refresh="refresh"
-      :context="context"
-    />
-    <div>
+  <div>
+    <v-list-item>
+      <newItem
+        :content="content"
+        :view-name="viewName"
+        :on-new-item-save="onNewItemSave"
+        :refresh="refresh"
+        :context="context"
+      />
+    </v-list-item>
+    <v-list-item>
       <campaign
         :button-label="$t('Common.EmailCampaign')"
         template="General Template"
         my-template="My General Template"
       />
-    </div>
-    <invitationHistory />
-    <importContact
-      sample-file-name="v1573631144/Contact.csv"
-      :template-data="fieldNames"
-      model-name="contact"
-    />
+    </v-list-item>
+    <v-list-item>
+      <invitationHistory />
+    </v-list-item>
+    <v-list-item>
+      <importContact
+        sample-file-name="v1573631144/Contact.csv"
+        :template-data="fieldNames"
+        model-name="contact"
+      />
+    </v-list-item>
   </div>
 </template>
 
@@ -58,6 +64,9 @@ export default {
     return {
       fieldNames: ['FirstName', 'LastName', 'Email', 'Organization', 'Job'],
     }
+  },
+  mounted() {
+    this.$emit('hasGridOption', true)
   },
 }
 </script>

@@ -1,18 +1,22 @@
 <template>
-  <div class="d-inline-flex">
-    <importContact
-      sample-file-name="v1574252622/Attendee.csv"
-      :template-data="fieldNames"
-      model-name="attendee"
-    />
-    <newItem
-      :content="content"
-      :view-name="viewName"
-      :items="items"
-      :on-new-item-save="onNewItemSave"
-      :refresh="refresh"
-      :context="context"
-    />
+  <div>
+    <v-list-item>
+      <importContact
+        sample-file-name="v1574252622/Attendee.csv"
+        :template-data="fieldNames"
+        model-name="attendee"
+      />
+    </v-list-item>
+    <v-list-item>
+      <newItem
+        :content="content"
+        :view-name="viewName"
+        :items="items"
+        :on-new-item-save="onNewItemSave"
+        :refresh="refresh"
+        :context="context"
+      />
+    </v-list-item>
   </div>
 </template>
 
@@ -60,6 +64,9 @@ export default {
       default: () => {},
       required: false,
     },
+  },
+  mounted() {
+    this.$emit('hasGridOption', true)
   },
   data() {
     return {
