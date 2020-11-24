@@ -1944,7 +1944,10 @@ export default {
       window.open(`${regUrl}${this.eventData.UniqLink}`, '_blank')
     },
     async eventPublish() {
-      const eventStatus = { Status: 'Open for registration' }
+      const eventStatus = {
+        Status: 'Open for registration',
+        Description: this.eventData.Description,
+      }
       this.isEventPublish = true
       this.isEventCreate = false
       const modelName = 'Event'
