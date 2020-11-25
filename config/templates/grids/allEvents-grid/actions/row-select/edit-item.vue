@@ -696,6 +696,7 @@ export default {
       }
       if (this.formData.BusinessType !== 'Recurring') {
         this.formData._VenueAddress = { ...this.VenueAddress }
+        this.formData.SEODesc = this.formData.Description
         delete this.formData.VenueAddress
         delete this.formData._VenueAddress.LatLng
         this.formData._VenueAddress.id = this.formData._VenueAddress.id
@@ -720,6 +721,7 @@ export default {
         this.formData.MaxNoRegistrations = parseInt(
           this.formData.MaxNoRegistrations
         )
+        this.formData.SEODesc = this.formData.Description
         delete this.formData._VenueAddress
         try {
           const res = await this.$axios.$patch(`${url}Events/${this.eventId}`, {

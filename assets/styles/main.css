@@ -603,6 +603,10 @@ table > tbody > tr:last-child .key-align {
   .fc-header-toolbar {
     display: block !important;
   }
+  .eventBox {
+    font-size: 10px !important;
+    line-height: 10px !important;
+  }
   .v-stepper:not(.v-stepper--vertical) .v-stepper__label {
     display: block !important;
     max-width: 100px !important;
