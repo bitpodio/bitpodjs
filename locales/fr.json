@@ -1,6 +1,6 @@
 {
   "Common": {
-    "AppTitle": "Evénements",
+    "AppTitle": "Evénement",
     "Logout": "Déconnexion",
     "Login": "Connexion",
     "EventApp": "Evénement",
@@ -51,6 +51,7 @@
     "Sessions": "Sessions",
     "Speakers": "Orateurs",
     "Tasks": "Tâches",
+    "Task": "Tâche",
     "RegistrationForm": "Formulaire d'inscription",
     "EventInformation": "Informations sur les événements",
     "Organizer": "Organisateur",

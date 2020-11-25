@@ -31,11 +31,17 @@
             :rules="rules"
             readonly
             outlined
-            append-icon="fa-calendar"
             dense
             v-bind="attrs"
             v-on="on"
-          ></v-text-field>
+          >
+            <i
+              slot="append"
+              class="fa-calendar fs-22 grey--text"
+              aria-hidden="true"
+              @click="iconClick"
+            ></i>
+          </v-text-field>
         </template>
         <v-date-picker v-model="date" scrollable @change="onCalendarChange">
           <v-spacer></v-spacer>
@@ -96,17 +102,15 @@ export default {
     },
   },
   mounted() {
-    if (this.field.type === 'datetime') {
-      this.$refs.dateTimeComponent.$children[0].$children[0].$children[0].$el.onclick = () => {
-        this.$refs.dateTimeComponent.display = true
-      }
-    }
     this.onCalendarChange()
     if (this.field.type === 'datetime') {
       this.$refs.dateTimeComponent.$children[0].onClickOutside = this.outsideClicked
     }
   },
   methods: {
+    iconClick() {
+      this.modal = true
+    },
     outsideClicked() {
       this.$refs.dateTimeComponent.okHandler()
     },

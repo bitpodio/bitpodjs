@@ -6,6 +6,7 @@
       :small="small"
       :dense="dense"
       :color="color"
+      depressed
       @click="buttonClicked"
     >
       {{ label }}

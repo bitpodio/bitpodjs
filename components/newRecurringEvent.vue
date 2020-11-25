@@ -58,7 +58,7 @@
                 <CustomDate
                   v-model="EndDate"
                   :label="$t('Common.EndD')"
-                  :field="endDateRule"
+                  :field="endDateField"
                   :rules="endDateRule"
                   :on-change="changeEndDate"
                   type="date"

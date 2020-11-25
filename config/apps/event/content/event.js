@@ -1153,7 +1153,10 @@ export default {
               return !!v || this.$t('Messages.Error.PhoneRequired')
             },
             function (value, data) {
-              return /^[0-9]\d*$|^$/.test(value) || 'Number must be valid'
+              return (
+                /^[0-9]\d*$|^$/.test(value) ||
+                this.$t('Messages.Error.NumberValid')
+              )
             },
           ],
         },
@@ -3618,6 +3621,12 @@ export default {
             function (v) {
               return !!v || this.$t('Messages.Error.PhoneRequired')
             },
+            function (value, data) {
+              return (
+                /^[0-9]\d*$|^$/.test(value) ||
+                this.$t('Messages.Error.NumberValid')
+              )
+            },
           ],
         },
         Linkdin: {
@@ -4237,6 +4246,7 @@ export default {
         hideSearch: true,
       },
       hidden: true,
+      itemTitle: 'Common.RecurringSession',
       fields: {
         Name: {
           form: {
