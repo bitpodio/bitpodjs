@@ -2,7 +2,10 @@
   <div>
     <confirm ref="confirm"></confirm>
     <div>
-      <div class="subtitle-1 py-2 greybg">
+      <div
+        v-if="checkItemtype('Invitation Template')"
+        class="subtitle-1 py-2 greybg"
+      >
         <i class="fa fa-pencil-square-o mr-1" aria-hidden="true"></i
         ><i18n path="Common.InviteTemplates" />
       </div>
@@ -138,7 +141,10 @@
     </div>
 
     <div>
-      <div class="subtitle-1 py-2 greybg">
+      <div
+        v-if="checkItemtype('Registration Email Template')"
+        class="subtitle-1 py-2 greybg"
+      >
         <i class="fa fa-pencil-square-o mr-1" aria-hidden="true"></i
         ><i18n path="Common.RegistrationTemplates" />
       </div>
@@ -351,6 +357,12 @@ export default {
           this.refresh()
         }
       }
+    },
+    checkItemtype(type) {
+      const valObj = this.items.filter(function (elem) {
+        return elem.Type === type
+      })
+      return !!valObj.length
     },
   },
 }

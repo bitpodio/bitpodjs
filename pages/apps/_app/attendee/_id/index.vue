@@ -982,7 +982,7 @@ export default {
       registration: {},
       eventImage: false,
       attendeeData: {},
-      orgName: this.$store.state.currentOrgInfo.Name,
+      // orgName: this.$store.state.currentOrgInfo.Name,
     }
   },
   computed: {
@@ -995,6 +995,9 @@ export default {
     },
     baseUrl() {
       return nuxtconfig.axios.eventUrl
+    },
+    orgName() {
+      return this.$store.state.currentOrg.name
     },
   },
   mounted() {
