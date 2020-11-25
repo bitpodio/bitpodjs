@@ -266,11 +266,13 @@ export default {
 }
 </script>
 <style scoped>
+@media (min-width: 800px) {
+  .gallery {
+    width: 260px;
+  }
+}
 .attachments {
   border: 1px solid lightgrey;
-}
-.gallery {
-  width: 350px;
 }
 .image {
   width: 120px !important;
