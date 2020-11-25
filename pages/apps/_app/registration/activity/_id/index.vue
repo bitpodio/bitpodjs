@@ -198,4 +198,7 @@ export default {
   max-width: 40px !important;
   margin-right: 0;
 }
+.in-table div a {
+  min-height: 40px !important;
+}
 </style>
