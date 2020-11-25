@@ -695,4 +695,14 @@ table > tbody > tr:last-child .key-align {
     max-width: 100%;
     overflow-wrap: break-word;
   }
+  .roles-view {
+    white-space: nowrap;
+    max-width: 200px;
+    height: 50px;
+    overflow: auto;
+    overflow-y: hidden;
+  }
+  .roles-view::-webkit-scrollbar {
+    display: none;
+  }
 }
