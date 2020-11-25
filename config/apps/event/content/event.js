@@ -3622,7 +3622,10 @@ export default {
               return !!v || this.$t('Messages.Error.PhoneRequired')
             },
             function (value, data) {
-              return /^[0-9]\d*$|^$/.test(value) || 'Number must be valid'
+              return (
+                /^[0-9]\d*$|^$/.test(value) ||
+                this.$t('Messages.Error.NumberValid')
+              )
             },
           ],
         },
