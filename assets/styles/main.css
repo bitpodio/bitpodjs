@@ -562,6 +562,9 @@ body {
 .boxview .v-data-table-header-mobile {
     display: none !important;
 }
+.elevation-0.v-grid .v-data-table-header-mobile {
+    display: none !important;
+}
 .st-date {
   max-width: 125px !important;
   min-width: 125px !important;
