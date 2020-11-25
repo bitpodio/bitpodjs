@@ -717,7 +717,9 @@
                         <tr v-for="item in attendeeData" :key="item">
                           <td>{{ item.ticketName }}</td>
                           <td>{{ item.price }}</td>
-                          <td><div class="total-align">{{ item.count }}</div></td>
+                          <td>
+                            <div class="total-align">{{ item.count }}</div>
+                          </td>
                           <td>{{ item.total }}</td>
                         </tr>
                         <tr>
@@ -740,7 +742,9 @@
                         <tr v-for="item in attendeeData" :key="item">
                           <td>{{ item.ticketName }}</td>
                           <td>{{ item.ticketAmount }}</td>
-                          <td><div class="total-align">{{ item.count }}</div></td>
+                          <td>
+                            <div class="total-align">{{ item.count }}</div>
+                          </td>
                           <td>{{ item.ticketAmount * item.count }}</td>
                         </tr>
                         <tr>
