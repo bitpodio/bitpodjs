@@ -531,7 +531,7 @@
                 >
                   <div v-if="item.imageURL" class="overflow-hidden">
                     <img
-                      :src="`https://${baseUrl}${item.imageURL}`"
+                      :src="item.imageURL"
                       height="160px"
                       class="positionRelative speaker-img grey lighten-4"
                     />
