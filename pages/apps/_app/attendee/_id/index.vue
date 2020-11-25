@@ -3,10 +3,7 @@
     <v-flex>
       <div v-if="event.ImageURL" class="background-event-img">
         <picture>
-          <source
-            :srcset="`https://${orgName}-${baseUrl}${event.ImageURL}`"
-            sizes="100vw"
-          />
+          <source :srcset="event.ImageURL" sizes="100vw" />
           <img
             class="listing-hero-image js-picturefill-img"
             data-automation="listing-hero-image"
@@ -38,8 +35,8 @@
             <v-flex class="flex-70">
               <v-img
                 v-if="event.ImageURL"
-                :src="`https://${orgName}-${baseUrl}${event.ImageURL}`"
-                :lazy-src="`https://${orgName}-${baseUrl}${event.ImageURL}`"
+                :src="event.ImageURL"
+                :lazy-src="event.ImageURL"
                 class="eventsite-banner"
               >
                 <template v-slot:placeholder>
@@ -997,6 +994,7 @@ export default {
     },
     orgName() {
       return this.$store.state.currentOrg.name
+      // return this.$store.state.currentOrgInfo.Name
     },
   },
   mounted() {
