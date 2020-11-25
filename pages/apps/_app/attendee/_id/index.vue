@@ -717,7 +717,7 @@
                         <tr v-for="item in attendeeData" :key="item">
                           <td>{{ item.ticketName }}</td>
                           <td>{{ item.price }}</td>
-                          <td>{{ item.count }}</td>
+                          <td><div class="total-align">{{ item.count }}</div></td>
                           <td>{{ item.total }}</td>
                         </tr>
                         <tr>
@@ -740,7 +740,7 @@
                         <tr v-for="item in attendeeData" :key="item">
                           <td>{{ item.ticketName }}</td>
                           <td>{{ item.ticketAmount }}</td>
-                          <td>{{ item.count }}</td>
+                          <td><div class="total-align">{{ item.count }}</div></td>
                           <td>{{ item.ticketAmount * item.count }}</td>
                         </tr>
                         <tr>
@@ -1188,6 +1188,9 @@ export default {
 }
 .location-type .Online.event {
   display: none;
+}
+.total-align {
+  margin-left: 34px;
 }
 @media screen and (max-width: 600px) {
   .background-event-img {
