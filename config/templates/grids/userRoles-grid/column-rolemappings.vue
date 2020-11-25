@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="roles-view">
     <v-chip
       v-for="role in roles"
       :key="role"
