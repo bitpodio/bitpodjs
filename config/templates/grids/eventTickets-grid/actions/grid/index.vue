@@ -6,9 +6,7 @@
     <v-list-item>
       <registrationType />
     </v-list-item>
-    <v-list-item>
-      <seatmapTickets />
-    </v-list-item>
+    <seatmapTickets />
   </div>
 </template>
 
