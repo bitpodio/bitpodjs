@@ -973,6 +973,7 @@ export default {
   layout: 'public',
   mixins: [configLoaderMixin],
   data() {
+    debugger
     return {
       loading: 0,
       isEditReg: false,
