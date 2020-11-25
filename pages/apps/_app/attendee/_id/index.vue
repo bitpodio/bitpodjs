@@ -858,7 +858,7 @@
                   </div>
                 </div>
               </div>
-              <div v-if="showJoinBtn()">
+              <div v-if="event.locationType === 'Bitpod Virtual'">
                 <v-btn
                   class="ma-3 ml-0"
                   outlined
@@ -876,7 +876,7 @@
                     <i18n path="Common.OnlineEvent" />
                   </v-chip>
                 </div>
-                <div v-if="showOnlineJoinBtn()">
+                <div v-if="event.locationType === 'Online event'">
                   <a
                     :href="event.WebinarLink"
                     target="_blank"
@@ -982,7 +982,6 @@ export default {
       registration: {},
       eventImage: false,
       attendeeData: {},
-      orgName: this.$store.state.currentOrg.name,
     }
   },
   computed: {
@@ -995,6 +994,9 @@ export default {
     },
     baseUrl() {
       return nuxtconfig.axios.eventUrl
+    },
+    orgName() {
+      return this.$store.state.currentOrg.name
     },
   },
   mounted() {
@@ -1042,26 +1044,6 @@ export default {
         }-${this.registration.RegistrationId}`.toLowerCase()
       }
       window.open(`apps/event/live/${roomName}?e=${this.$route.params.id}`)
-    },
-    showJoinBtn() {
-      return (
-        this.event.locationType === 'Bitpod Virtual' &&
-        this.registration &&
-        this.registration.SessionListId &&
-        !this.registration.SessionListId.filter((i) => {
-          return i.LocationType === 'Bitpod Virtual'
-        }).length
-      )
-    },
-    showOnlineJoinBtn() {
-      return (
-        this.event.locationType === 'Online event' &&
-        this.registration &&
-        this.registration.SessionListId &&
-        !this.registration.SessionListId.filter((i) => {
-          return i.LocationType === 'Online event'
-        }).length
-      )
     },
     getAttachmentLink(id, isDownloadLink) {
       const url = this.$bitpod.getApiUrl()

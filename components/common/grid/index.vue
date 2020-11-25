@@ -530,6 +530,7 @@ export default {
     onItemSelected(items) {
       this.selectedItems = items
       this.$emit('onSelectedListChange', this.selectedItems)
+      this.$eventBus.$emit('itemSelected', this.selectedItems)
     },
     async onNewItemSave(data) {
       const modelName = getModelName(this.content, this.viewName)

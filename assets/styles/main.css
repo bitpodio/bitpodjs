@@ -562,6 +562,9 @@ body {
 .boxview .v-data-table-header-mobile {
     display: none !important;
 }
+.elevation-0.v-grid .v-data-table-header-mobile {
+    display: none !important;
+}
 .st-date {
   max-width: 125px !important;
   min-width: 125px !important;
@@ -698,5 +701,15 @@ table > tbody > tr:last-child .key-align {
   .event-title {
     max-width: 100%;
     overflow-wrap: break-word;
+  }
+  .roles-view {
+    white-space: nowrap;
+    max-width: 200px;
+    height: 50px;
+    overflow: auto;
+    overflow-y: hidden;
+  }
+  .roles-view::-webkit-scrollbar {
+    display: none;
   }
 }

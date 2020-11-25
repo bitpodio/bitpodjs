@@ -769,6 +769,7 @@
     "Error": {
       "SizeRequired": "La taille est requise",
       "ThisFieldRequired": "Ce champ est requis",
+      "InvalidDate": "Date invalide",
       "KeyRequired": "La clé est requise",
       "ValueRequired": "La valeur est obligatoire",
       "TemplateNameRequired": "Le nom du modèle est obligatoire",
