@@ -20,6 +20,12 @@
             ></v-progress-linear>
           </slot>
         </template>
+        <i
+          slot="append"
+          class="fa-calendar fs-22 grey--text"
+          aria-hidden="true"
+          @click="dateTimeIconClick"
+        ></i>
       </v-text-field>
     </template>
 
@@ -168,6 +174,9 @@ export default {
     this.init()
   },
   methods: {
+    dateTimeIconClick() {
+      this.display = true
+    },
     init() {
       if (!this.datetime) {
         return

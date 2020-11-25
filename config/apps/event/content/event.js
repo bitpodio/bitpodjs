@@ -4246,6 +4246,7 @@ export default {
         hideSearch: true,
       },
       hidden: true,
+      itemTitle: 'Common.RecurringSession',
       fields: {
         Name: {
           form: {
