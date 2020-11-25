@@ -3,10 +3,7 @@
     <v-flex>
       <div v-if="event.ImageURL" class="background-event-img">
         <picture>
-          <source
-            :srcset="`https://${orgName}-${baseUrl}${event.ImageURL}`"
-            sizes="100vw"
-          />
+          <source :srcset="event.ImageURL" sizes="100vw" />
           <img
             class="listing-hero-image js-picturefill-img"
             data-automation="listing-hero-image"
@@ -38,8 +35,8 @@
             <v-flex class="flex-70">
               <v-img
                 v-if="event.ImageURL"
-                :src="`https://${orgName}-${baseUrl}${event.ImageURL}`"
-                :lazy-src="`https://${orgName}-${baseUrl}${event.ImageURL}`"
+                :src="event.ImageURL"
+                :lazy-src="event.ImageURL"
                 class="eventsite-banner"
               >
                 <template v-slot:placeholder>
@@ -534,7 +531,7 @@
                 >
                   <div v-if="item.imageURL" class="overflow-hidden">
                     <img
-                      :src="`https://${baseUrl}${item.imageURL}`"
+                      :src="item.imageURL"
                       height="160px"
                       class="positionRelative speaker-img grey lighten-4"
                     />
@@ -720,7 +717,9 @@
                         <tr v-for="item in attendeeData" :key="item">
                           <td>{{ item.ticketName }}</td>
                           <td>{{ item.price }}</td>
-                          <td>{{ item.count }}</td>
+                          <td>
+                            <div class="total-align">{{ item.count }}</div>
+                          </td>
                           <td>{{ item.total }}</td>
                         </tr>
                         <tr>
@@ -743,7 +742,9 @@
                         <tr v-for="item in attendeeData" :key="item">
                           <td>{{ item.ticketName }}</td>
                           <td>{{ item.ticketAmount }}</td>
-                          <td>{{ item.count }}</td>
+                          <td>
+                            <div class="total-align">{{ item.count }}</div>
+                          </td>
                           <td>{{ item.ticketAmount * item.count }}</td>
                         </tr>
                         <tr>
@@ -997,6 +998,7 @@ export default {
     },
     orgName() {
       return this.$store.state.currentOrg.name
+      // return this.$store.state.currentOrgInfo.Name
     },
   },
   mounted() {
@@ -1190,6 +1192,9 @@ export default {
 }
 .location-type .Online.event {
   display: none;
+}
+.total-align {
+  margin-left: 34px;
 }
 @media screen and (max-width: 600px) {
   .background-event-img {
