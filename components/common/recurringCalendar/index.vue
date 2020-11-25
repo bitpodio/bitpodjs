@@ -210,28 +210,30 @@
             v-if="!isParticipant"
             class="pl-8 pb-5 actions d-block"
           >
-            <v-btn
+            <SaveBtn
+              v-if="dialog"
               outlined
-              color="primary"
-              depressed
               small
               dense
-              class="fs-8px mt-2 mr-2"
-              :disabled="validSlots() || disabledButton"
-              @click="applyToOnly"
-              ><i18n path="Common.ApplyToOnly" />
-              {{ $d(new Date(selectedDate || null), 'short', $i18n.locale) }}
-            </v-btn>
-            <v-btn
               color="primary"
-              depressed
+              class="fs-8px mt-2 mr-2 d-inline-block"
+              :disabled="validSlots() || disabledButton"
+              :label="
+                this.$t('Common.ApplyToOnly') +
+                $d(new Date(selectedDate || null), 'short', $i18n.locale)
+              "
+              :action="applyToOnly"
+            ></SaveBtn>
+            <SaveBtn
+              v-if="dialog"
               small
               dense
-              class="fs-8px mt-2 ml-0"
+              color="primary"
+              class="fs-8px mt-2 ml-0 d-inline-block"
               :disabled="validSlots() || disabledButton"
-              @click="applyToRepeating"
-              ><i18n path="Common.ApplyToRepeatingWeekDays"
-            /></v-btn>
+              :label="this.$t('Common.ApplyToRepeatingWeekDays')"
+              :action="applyToRepeating"
+            ></SaveBtn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -253,9 +255,11 @@ import Grid from '~/components/common/grid'
 import { formatGQLResult } from '~/utility/gql.js'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import { configLoaderMixin } from '~/utility'
+import SaveBtn from '~/components/common/saveButton'
 export default {
   components: {
     Grid,
+    SaveBtn,
     FullCalendar,
   },
   mixins: [configLoaderMixin],

@@ -539,15 +539,20 @@
                           type="datetime"
                         />
                       </div>
-                      <v-btn
+                      <SaveBtn
+                        v-if="dialog"
                         color="primary"
-                        depressed
+                        class="sendButtons d-inline-block"
                         :disabled="
                           disableButton || !scheduledTime || !validDate
                         "
-                        @click="sendNow('Schedule')"
-                        ><i18n path="Drawer.Schedule"
-                      /></v-btn>
+                        :label="this.$t('Drawer.Schedule')"
+                        :action="
+                          () => {
+                            sendNow('Schedule')
+                          }
+                        "
+                      ></SaveBtn>
                       <v-btn
                         class="ml-1"
                         color="grey lighten-2"
@@ -608,16 +613,17 @@
                       >
                         <i18n path="Common.SendNow" />
                       </h3>
-                      <h5 class="body-2 my-2 mb-5">
+                      <h5 class="body-2 my-2 mb-5 sendOptions">
                         <i18n path="Common.SendEmailInviteRightaway" />
                       </h5>
-                      <v-btn
-                        depressed
+                      <SaveBtn
+                        v-if="dialog"
                         color="primary"
+                        class="sendButtons"
                         :disabled="disableButton"
-                        @click="sendNow"
-                        ><i18n path="Drawer.Send"
-                      /></v-btn>
+                        :label="this.$t('Drawer.Send')"
+                        :action="sendNow"
+                      ></SaveBtn>
                     </v-card>
                   </v-col>
                   <v-col
@@ -635,10 +641,11 @@
                       >
                         <i18n path="Common.ScheduleInvite" />
                       </h3>
-                      <h5 class="body-2 my-2 mb-5">
+                      <h5 class="body-2 my-2 mb-5 sendOptions">
                         <i18n path="Common.ScheduleInviteWayYouPrefer" />
                       </h5>
                       <v-btn
+                        class="sendButtons"
                         depressed
                         color="primary"
                         :disabled="disableButton"
@@ -662,16 +669,21 @@
                       >
                         <i18n path="Common.SaveAsDraft" />
                       </h3>
-                      <h5 class="body-2 my-2 mb-5">
+                      <h5 class="body-2 my-2 mb-5 sendOptions">
                         <i18n path="Common.SaveEmailAsDraft" />
                       </h5>
-                      <v-btn
-                        depressed
+                      <SaveBtn
+                        v-if="dialog"
                         color="primary"
+                        class="sendButtons"
                         :disabled="disableButton"
-                        @click="sendNow('Draft')"
-                        ><i18n path="Common.SaveAsDraft"
-                      /></v-btn>
+                        :label="this.$t('Common.SaveAsDraft')"
+                        :action="
+                          () => {
+                            sendNow('Draft')
+                          }
+                        "
+                      ></SaveBtn>
                     </v-card>
                   </v-col>
                 </v-row>
@@ -790,6 +802,7 @@
             view-name="inviteeEventTasks"
             :content="CRMcontent()"
             :single-select="true"
+            :no-action="true"
             @onSelectedListChange="previousInviteSelect"
           />
           <Grid
@@ -810,12 +823,14 @@
 import gql from 'graphql-tag'
 import Grid from '~/components/common/grid'
 import CustomDate from '~/components/common/form/date.vue'
+import SaveBtn from '~/components/common/saveButton'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin, getIdFromAtob } from '~/utility'
 import marketingTemplates from '~/config/apps/admin/gql/marketingTemplates.gql'
 export default {
   components: {
     Grid,
+    SaveBtn,
     CustomDate,
     RichText: () =>
       process.client ? import('~/components/common/form/richtext.vue') : false,
@@ -974,7 +989,9 @@ export default {
   },
   methods: {
     updateSelectedList(data) {
-      this.selectedList = [...data]
+      if (data.viewName === 'Contacts') {
+        this.selectedList = [...data.items]
+      }
     },
     startDateField() {
       const now = new Date()
@@ -1305,9 +1322,17 @@ export default {
 .templateverifyFrench {
   max-width: 350px !important;
 }
+.sendOptions {
+  min-height: 40px !important;
+}
 @media (min-width: 600px) {
   .flexInLargeScreen {
     display: flex;
+  }
+}
+@media (max-width: 599px) {
+  .sendButtons {
+    font-size: 12px;
   }
 }
 </style>

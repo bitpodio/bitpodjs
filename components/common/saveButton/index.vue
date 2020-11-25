@@ -2,6 +2,9 @@
   <div>
     <v-btn
       :disabled="disabled || keyPressed"
+      :outlined="outlined"
+      :small="small"
+      :dense="dense"
       :color="color"
       @click="buttonClicked"
     >
@@ -22,6 +25,21 @@ export default {
       required: false,
     },
     disabled: {
+      default: false,
+      type: Boolean,
+      required: false,
+    },
+    outlined: {
+      default: false,
+      type: Boolean,
+      required: false,
+    },
+    small: {
+      default: false,
+      type: Boolean,
+      required: false,
+    },
+    dense: {
       default: false,
       type: Boolean,
       required: false,

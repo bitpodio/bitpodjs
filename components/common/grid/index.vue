@@ -9,9 +9,11 @@
       <div class="text-center">{{ snackbarText }}</div>
     </v-snackbar>
     <div v-if="!error" :key="error">
-      <div class="grid-actions-container mt-lg-n11 mt-md-n11 mt-sm-n11 mt-xs-0">
+      <div
+        v-if="!noAction"
+        class="grid-actions-container mt-lg-n11 mt-md-n11 mt-sm-n11 mt-xs-0"
+      >
         <div
-          class="grid-actions-menu"
           v-if="
             (hasGridOption ||
             hasRowOption ||
@@ -21,6 +23,7 @@
             content.view[viewName].template &&
             content.view[viewName].template.actions &&
             content.view[viewName].template.actions.reduce((acc,i)=>{return acc || !i.hidden},false)) )"
+          class="grid-actions-menu"
         >
           <v-menu right :offset-y="offset" transition="slide-y-transition">
             <template v-slot:activator="{ on, attrs }">
@@ -39,8 +42,8 @@
                 @hasGridOption="getGridOption"
               />
               <component
-                v-if="selectedItems.length > 0"
                 :is="actionTemplates['row-select'] || null"
+                v-if="selectedItems.length > 0"
                 :content="content"
                 :view-name="viewName"
                 :on-update-item="onUpdateItem"
@@ -48,7 +51,7 @@
                 :items="selectedItems"
                 :refresh="refresh"
                 :context="context"
-                :getActionItems="getActionItems"
+                :get-action-items="getActionItems"
                 @hasRowOption="getRowOption"
               />
             </v-list>
@@ -57,8 +60,8 @@
         <div class="grid-actions-spread">
           <div class="d-flex">
             <component
-              v-if="selectedItems.length > 0"
               :is="actionTemplates['row-select'] || null"
+              v-if="selectedItems.length > 0"
               :content="content"
               :view-name="viewName"
               :on-update-item="onUpdateItem"
@@ -66,7 +69,7 @@
               :items="selectedItems"
               :refresh="refresh"
               :context="context"
-              :getActionItems="getActionItems"
+              :get-action-items="getActionItems"
               class="d-inline-flex"
               @hasRowOption="getRowOption"
             />
@@ -376,6 +379,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    noAction: {
+      type: Boolean,
+      default: false,
+    },
     serveritemslength: {
       type: null,
       default: null,
@@ -530,7 +537,10 @@ export default {
     onItemSelected(items) {
       this.selectedItems = items
       this.$emit('onSelectedListChange', this.selectedItems)
-      this.$eventBus.$emit('itemSelected', this.selectedItems)
+      this.$eventBus.$emit('itemSelected', {
+        viewName: this.viewName,
+        items: this.selectedItems,
+      })
     },
     async onNewItemSave(data) {
       const modelName = getModelName(this.content, this.viewName)
