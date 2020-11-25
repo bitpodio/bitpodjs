@@ -695,7 +695,8 @@
     "EditEvent": "Modifier l'événement",
     "UploadImages": "Importer des images",
     "HeaderPrice": "le prix",
-    "TicketsNotRequired": "des billets"
+    "TicketsNotRequired": "des billets",
+    "Integration": "Integration"
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",

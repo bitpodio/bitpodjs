@@ -696,7 +696,8 @@
     "EditEvent": "ערוך אירוע",
     "UploadImages": "להעלות תמונות",
     "HeaderPrice": "מחיר",
-    "TicketsNotRequired": "כרטיסים"
+    "TicketsNotRequired": "כרטיסים",
+    "Integration": "Integration"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",

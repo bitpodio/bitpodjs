@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mxcol-200 text-truncate">
     <nuxt-link :to="route"> {{ value }}</nuxt-link>
   </div>
 </template>

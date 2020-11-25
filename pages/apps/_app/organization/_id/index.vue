@@ -9,15 +9,15 @@
             <v-card class="elevation-0">
               <v-list>
                 <v-list-item
-                  class="pl-0"
                   v-for="image in data.organization.Image"
                   :key="image"
+                  class="pl-0"
                 >
                   <v-list-item-avatar
-                    size="62"
                     v-if="
                       data.organization && data.organization.Image.length === 0
                     "
+                    size="62"
                   >
                     <v-avatar
                       color="primary"
@@ -147,30 +147,92 @@
           <v-spacer></v-spacer>
           <v-menu offset-y>
             <template v-slot:activator="{ on, attrs }">
-              <v-btn depressed text small v-bind="attrs" v-on="on">
-                <v-icon left>mdi-upload</v-icon> <i18n path="Drawer.Upload" />
+              <v-btn
+                class="cursorPointer"
+                depressed
+                text
+                small
+                v-bind="attrs"
+                @click.native="checkOtherClicked"
+                v-on="on"
+              >
+                <v-icon left>mdi-upload</v-icon>
+                <File
+                  :field="otherFileField"
+                  :no-btn-look="true"
+                  :block="true"
+                  :open-file-dialog="otherDialog"
+                  :value="checkArray"
+                  :hide-preview="true"
+                  @input="fileUploadedOther"
+                />
+                <i18n path="Drawer.Upload" />
               </v-btn>
             </template>
-            <v-list dense>
-              <v-list-item>
-                <v-list-item-title
-                  ><i18n path="Common.BadgeLogo"
-                /></v-list-item-title>
-              </v-list-item>
-              <v-list-item>
-                <v-list-item-title
-                  ><i18n path="Common.EventB"
-                /></v-list-item-title>
-              </v-list-item>
-              <v-list-item>
-                <v-list-item-title
-                  ><i18n path="Common.Other"
-                /></v-list-item-title>
-              </v-list-item>
-            </v-list>
           </v-menu>
         </v-flex>
         <v-divider></v-divider>
+        <div>
+          <v-card
+            v-for="(image, index) in data.organization.BannerImages"
+            :key="index"
+            class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-5 pr-3 elevation-0 cardImg rounded"
+          >
+            <span class="cardDelete">
+              <i
+                class="fa-trash pa-2 cursorPointer"
+                @click="deleteOtherFile(image)"
+              ></i>
+            </span>
+            <v-img
+              :src="getAttachmentLink(image, true)"
+              :lazy-src="getAttachmentLink(image, true)"
+              aspect-ratio="1"
+              class="rounded"
+              max-width="150"
+              max-height="150"
+              width="150"
+              @click.stop="openOtherDialog(image)"
+            >
+              <template v-slot:placeholder>
+                <v-row class="fill-height ma-0" align="center" justify="center">
+                  <v-progress-circular
+                    indeterminate
+                    color="grey lighten-5"
+                  ></v-progress-circular>
+                </v-row>
+              </template>
+            </v-img>
+            <v-flex class="mt-1 d-flex">
+              <v-card-text class="pa-0 pb-1">
+                <a
+                  class="d-inline-block text-truncate anchorTag"
+                  :href="getAttachmentLink(image, true)"
+                  >{{
+                    OtherImageName[index] && OtherImageName[index].fileName
+                  }}</a
+                >
+              </v-card-text>
+              <copy :text-to-copy="getImageUrl(image)" :unique-id="image" />
+            </v-flex>
+            <v-card-text class="pa-0 mt-n2 otherImg"
+              ><i18n path="Common.LogoImage"
+            /></v-card-text>
+          </v-card>
+          <v-dialog v-model="otherDialogOpen" max-width="600">
+            <v-card>
+              <v-card-title class="pa-1">
+                <v-spacer></v-spacer>
+                <div>
+                  <v-btn icon @click="otherDialogOpen = false">
+                    <v-icon>mdi-close</v-icon>
+                  </v-btn>
+                </div>
+              </v-card-title>
+              <v-img :src="displaySelectedOtherImage"> </v-img>
+            </v-card>
+          </v-dialog>
+        </div>
         <v-flex class="py-2"></v-flex>
       </div>
     </v-flex>
@@ -403,6 +465,7 @@
           {{ snackbarText }}
         </div>
       </v-snackbar>
+      <confirm ref="confirm"></confirm>
     </v-flex>
     <div v-if="editOrgInfo">
       <editOrgInfoForm
@@ -466,6 +529,7 @@ export default {
       },
       formData: {
         Image: [],
+        BannerImages: [],
       },
       checkArray: [],
       orgLogo: false,
@@ -477,6 +541,14 @@ export default {
       snackbar: false,
       snackbarText: this.$t('Messages.Success.OrgDetailsUpdateSuccess'),
       timeout: 4000,
+      otherDialog: false,
+      otherDialogOpen: false,
+      otherFileField: {
+        multiple: true,
+      },
+      OtherImageName: [],
+      displaySelectedOtherImage: '',
+      orgData: {},
     }
   },
   computed: {
@@ -485,6 +557,89 @@ export default {
     },
   },
   methods: {
+    openOtherDialog(image) {
+      this.otherDialogOpen = true
+      this.displaySelectedOtherImage = this.getAttachmentLink(image, true)
+    },
+    checkOtherClicked() {
+      if (this.allow) {
+        this.checkArray = []
+        this.otherDialog = !this.otherDialog
+        this.allow = false
+      }
+    },
+    fileUploadedOther(data) {
+      this.allow = true
+      if (data.length > 0) {
+        this.updateOtherImageGallery(data)
+      }
+    },
+    async getImageName() {
+      const url = this.$bitpod.getApiUrl()
+      try {
+        const imageData = await Promise.all(
+          this.orgData.BannerImages.map((id) => {
+            return this.$axios.$get(`${url}Attachments/${id}`).catch((e) => {
+              console.log(
+                `Error in apps/admin/organizatin/index.vue while making a GET call to Attachment model in getImageName method context:-\nURL:${url} \nattachmentId:${id} \n Error:${e}`
+              )
+            })
+          })
+        )
+        this.OtherImageName = imageData
+      } catch (e) {
+        console.log(
+          `Error in apps/admin/organizatin/index.vue while making a GET call to Attachment model in getImageName method context:-\nURL:${url}\n Error:${e}`
+        )
+      }
+    },
+    updateOtherImageGallery(formData) {
+      const url = this.$bitpod.getApiUrl()
+      formData
+        .reduce((acc, i) => {
+          return acc.then(() => {
+            return this.$axios.$put(
+              `${url}OrganizationInfos/${this.$route.params.id}/getBanner/rel/${i}`
+            )
+          })
+        }, Promise.resolve())
+        .then(() => {
+          this.snackbarText = this.$t('Messages.Success.AttachmentAddSuccess')
+          this.snackbar = true
+          this.getImageName()
+          return this.refresh()
+        })
+        .catch((e) => {
+          console.error(
+            `Error in apps/event/_id/index.vue while making a PUT call to Event model in method updateOtherImageGallery context: EventId:-${this.$route.params.id} \n URL:- ${url} \n formData:- ${formData}`,
+            e
+          )
+        })
+    },
+    async deleteOtherFile(id) {
+      const url = this.$bitpod.getApiUrl()
+      const checkRes = await this.$refs.confirm.open(
+        this.$t('Drawer.Delete'),
+        this.$t('Messages.Warn.DeleteImage'),
+        { color: 'error lighten-1' }
+      )
+      if (checkRes) {
+        const res = await this.$axios.delete(
+          `${url}OrganizationInfos/${this.$route.params.id}/getBanner/${id}`
+        )
+        if (res) {
+          this.snackbarText = this.$t(
+            'Messages.Success.AttachmentDeleteSuccess'
+          )
+          this.snackbar = true
+          this.refresh()
+        }
+      }
+    },
+    getImageUrl(imageId) {
+      const downloadLink = this.getAttachmentLink(imageId, true)
+      return downloadLink
+    },
     getAttachmentLink(id, isDownloadLink) {
       const url = this.$bitpod.getApiUrl()
       const attachmentUrl = `${url}Attachments${
@@ -543,6 +698,10 @@ export default {
       },
       update(data) {
         const organization = formatGQLResult(data, 'OrganizationInfo')
+        this.orgData = organization.length > 0 ? organization[0] : {}
+        if (organization[0].BannerImages.length > 0) {
+          this.getImageName()
+        }
         return {
           organization: organization.length > 0 ? organization[0] : {},
         }
@@ -560,3 +719,24 @@ export default {
   },
 }
 </script>
+<style scoped>
+.cardImg {
+  position: relative;
+  margin: 16px !important;
+  padding: 0 !important;
+  margin-left: 0 !important;
+}
+.cardDelete {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 9;
+  display: none;
+}
+.cardImg:hover .cardDelete {
+  display: inline-block;
+}
+.otherImg {
+  visibility: hidden;
+}
+</style>
