@@ -12,7 +12,7 @@ export default {
     routeToHistory(ctx) {
       this.$router.push(
         this.localePath(
-          `/apps/event/list/RegistrationType/eventRegistrationType?event=${this.$route.params.id}`
+          `/apps/event/event/reg-types?event=${this.$route.params.id}`
         )
       )
     },
