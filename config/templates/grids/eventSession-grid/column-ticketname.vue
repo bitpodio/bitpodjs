@@ -1,7 +1,8 @@
 <template>
   <div>
     <v-chip
-      v-for="val in chipValue"
+      v-for="val in (item && item.TicketName && item.TicketName.split(',')) ||
+      []"
       :key="val"
       class="ma-0"
       small
@@ -15,16 +16,11 @@
 <script>
 export default {
   props: {
-    value: {
-      type: String,
-      default: '',
+    item: {
+      type: Object,
+      default: () => {},
       required: false,
     },
-  },
-  data() {
-    return {
-      chipValue: this.value && this.value.split(','),
-    }
   },
 }
 </script>
