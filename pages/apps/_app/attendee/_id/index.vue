@@ -973,7 +973,6 @@ export default {
   layout: 'public',
   mixins: [configLoaderMixin],
   data() {
-    debugger
     return {
       loading: 0,
       isEditReg: false,
@@ -983,7 +982,6 @@ export default {
       registration: {},
       eventImage: false,
       attendeeData: {},
-      // orgName: this.$store.state.currentOrgInfo.Name,
     }
   },
   computed: {
