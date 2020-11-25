@@ -466,5 +466,9 @@ export default {
   .seatmap-inner {
     max-width: 100%;
   }
+  .seat-maps {
+    width: 150px;
+    max-width: 150px;
+  }
 }
 </style>
