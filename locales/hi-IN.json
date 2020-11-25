@@ -769,6 +769,7 @@
     "Error": {
       "SizeRequired": "Size is required",
       "ThisFieldRequired": "यह फ़ील्ड आवश्यक है",
+      "InvalidDate": "अमान्य तिथि",
       "KeyRequired": "Key is required",
       "ValueRequired": "Value is required",
       "TemplateNameRequired": "Template Name is required",

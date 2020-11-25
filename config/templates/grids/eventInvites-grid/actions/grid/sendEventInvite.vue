@@ -20,13 +20,7 @@
     <v-dialog v-model="dialog" persistent scrollable content-class="slide-form">
       <template v-slot:activator="{ on, attrs }">
         <v-col v-if="!editDraft" class="px-0">
-          <v-btn
-            text
-            small
-            v-bind="attrs"
-            v-on="on"
-            @click="campaignFormDisplayed"
-          >
+          <v-btn text small v-bind="attrs" v-on="on">
             <v-icon dark left>{{
               template === 'General Template' ? 'mdi-email-outline' : 'mdi-plus'
             }}</v-icon>
@@ -524,7 +518,7 @@
                   </v-col>
                 </v-row>
                 <v-row v-else-if="scheduleInvite" class="ma-3 ml-0">
-                  <v-col cols="5" style="max-width: 300px;" class="pl-0">
+                  <v-col style="max-width: 300px;" class="pl-0 col-12 col-sm-5">
                     <v-card align="center" justify="center" class="pb-10">
                       <v-icon class="py-2 pt-7" size="48">fa-calendar</v-icon>
                       <h3
@@ -537,18 +531,13 @@
                         <i18n path="Common.LaunchYourInvite" />
                       </h5>
                       <div style="width: 200px;">
-                        <v-datetime-picker
+                        <CustomDate
                           v-model="scheduledTime"
                           :label="$t('Common.ScheduleDate')"
-                          :text-field-props="textFieldProps()"
-                        >
-                          <template slot="dateIcon">
-                            <v-icon>fas fa-calendar</v-icon>
-                          </template>
-                          <template slot="timeIcon">
-                            <v-icon>fas fa-clock</v-icon>
-                          </template>
-                        </v-datetime-picker>
+                          :field="startDateField()"
+                          :rules="startDateRule()"
+                          type="datetime"
+                        />
                       </div>
                       <v-btn
                         color="primary"
@@ -820,12 +809,14 @@
 <script>
 import gql from 'graphql-tag'
 import Grid from '~/components/common/grid'
+import CustomDate from '~/components/common/form/date.vue'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin, getIdFromAtob } from '~/utility'
 import marketingTemplates from '~/config/apps/admin/gql/marketingTemplates.gql'
 export default {
   components: {
     Grid,
+    CustomDate,
     RichText: () =>
       process.client ? import('~/components/common/form/richtext.vue') : false,
   },
@@ -970,6 +961,7 @@ export default {
     },
   },
   mounted() {
+    this.$eventBus.$on('itemSelected', this.updateSelectedList)
     if (this.$i18n.locale === 'fr') {
       this.isFrench = true
     }
@@ -977,7 +969,38 @@ export default {
       this.prefilData()
     }
   },
+  beforeDestroy() {
+    this.$eventBus.$off('itemSelected')
+  },
   methods: {
+    updateSelectedList(data) {
+      this.selectedList = [...data]
+    },
+    startDateField() {
+      const now = new Date()
+      now.setMinutes(now.getMinutes() + 1)
+      return {
+        appendIcon: 'fa-calendar',
+        outlined: true,
+        caption: 'Start Date*',
+        type: 'datetime',
+        default: now,
+      }
+    },
+    startDateRule() {
+      return [
+        (v) => {
+          const scheduledDate = v && new Date(v)
+          if (scheduledDate && scheduledDate.getTime() < new Date().getTime()) {
+            this.validDate = false
+            return this.$t('Messages.Error.InvalidDate')
+          } else {
+            this.validDate = true
+            return true
+          }
+        },
+      ]
+    },
     async prefilData() {
       this.choosedTemplate = 3
       this.subject = this.draftData.Title
@@ -1005,11 +1028,6 @@ export default {
       )
       this.selectedList = data
     },
-    campaignFormDisplayed() {
-      if (this.template === 'General Template') {
-        this.selectedList = this.$parent.$parent.$data.selectedItems
-      }
-    },
     content() {
       return this.contents ? this.contents.Contacts : null
     },
@@ -1018,28 +1036,6 @@ export default {
     },
     updateList(data) {
       this.selectedList = data
-    },
-    textFieldProps() {
-      return {
-        appendIcon: 'fa-calendar',
-        outlined: true,
-        dense: true,
-        rules: [
-          (v) => {
-            const scheduledDate = v && new Date(v)
-            if (
-              scheduledDate &&
-              scheduledDate.getTime() < new Date().getTime()
-            ) {
-              this.validDate = false
-              return 'Invalid date'
-            } else {
-              this.validDate = true
-              return true
-            }
-          },
-        ],
-      }
     },
     resetForm() {
       this.dialog = false

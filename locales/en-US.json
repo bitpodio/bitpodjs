@@ -769,6 +769,7 @@
     "Error": {
       "SizeRequired": "Size is required",
       "ThisFieldRequired": "This field is required",
+      "InvalidDate": "Invalid date",
       "KeyRequired": "Key is required",
       "ValueRequired": "Value is required",
       "TemplateNameRequired": "Template Name is required",
