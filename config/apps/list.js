@@ -44,7 +44,7 @@ export const appList = (store) => [
   },
   {
     name: 'integration',
-    label: 'Integation',
+    label: 'Common.Integration',
     css: 'fa fa fa-link1 fs-36 primary--text',
     type: 'route',
     route: '/apps/integration/list/integration/integration',

@@ -696,7 +696,8 @@
     "EditEvent": "Edit Event",
     "UploadImages": "Upload Images",
     "HeaderPrice": "Price",
-    "TicketsNotRequired": "Tickets"
+    "TicketsNotRequired": "Tickets",
+    "Integration": "Integration"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",
