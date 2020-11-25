@@ -509,14 +509,15 @@
           @click="next()"
           ><i18n path="Drawer.Next"
         /></v-btn>
-        <v-btn
+        <SaveBtn
           v-if="currentTab > 2 && !isEventCreate && !isEventPublish"
-          depressed
           color="primary"
           :disabled="isSaveButtonDisabled || !valid || !datevalid"
-          @click="saveRecord"
+          depressed
+          :action="saveRecord"
+          class="ml-2"
           ><i18n path="Drawer.Save"
-        /></v-btn>
+        /></SaveBtn>
       </v-card-actions>
     </v-card>
   </v-form>
@@ -535,6 +536,7 @@ import orgInfoLocationType from '~/config/apps/event/gql/orgInfoLocationType.gql
 import { formatGQLResult } from '~/utility/gql.js'
 import nuxtconfig from '~/nuxt.config'
 import { rules } from '~/utility/rules.js'
+import SaveBtn from '~/components/common/saveButton'
 
 export default {
   components: {
@@ -543,6 +545,7 @@ export default {
     Lookup,
     Timezone,
     CustomDate,
+    SaveBtn,
     VueGoogleAutocomplete: () => import('vue-google-autocomplete'),
   },
   props: {

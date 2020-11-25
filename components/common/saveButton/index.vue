@@ -3,6 +3,7 @@
     <v-btn
       :disabled="disabled || keyPressed"
       :color="color"
+      depressed
       @click="buttonClicked"
     >
       {{ label }}
