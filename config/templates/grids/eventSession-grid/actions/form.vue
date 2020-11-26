@@ -92,10 +92,15 @@
                 ></Timezone>
               </v-col>
               <v-col cols="12">
-                <Lookup v-model="session.MySpeaker" :field="speakerProps()" />
+                <Lookup
+                  :key="commonKey"
+                  v-model="session.MySpeaker"
+                  :field="speakerProps()"
+                />
               </v-col>
               <v-col cols="12">
                 <Lookup
+                  :key="commonKey"
                   v-model="session.SessionTicket"
                   :field="ticketProps()"
                   :rules="[rules.required]"
@@ -328,6 +333,7 @@ export default {
   },
   data() {
     return {
+      commonKey: 0,
       customDuration: '50',
       isCustomMin: false,
       snackbar: false,
@@ -507,6 +513,9 @@ export default {
         }
         this.session.Duration = '60'
       }
+      this.$apollo.queries.data.refresh()
+      this.$apollo.queries.speaker.refresh()
+      this.$apollo.queries.event.refresh()
       this.dialog = true
     },
     changeDuration(value) {
@@ -719,6 +728,7 @@ export default {
           id: getIdFromAtob(id),
           ...rest,
         }))
+        this.commonKey = new Date().getTime()
       },
       error(error) {
         this.error = error
@@ -752,6 +762,7 @@ export default {
               Code: FirstName + LastName,
             })
           )
+          this.commonKey = new Date().getTime()
         }
       },
       error(error) {
