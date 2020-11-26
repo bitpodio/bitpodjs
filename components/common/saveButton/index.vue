@@ -55,11 +55,21 @@ export default {
       type: Function,
       required: false,
     },
+    reset: {
+      default: false,
+      type: Boolean,
+      required: false,
+    },
   },
   data() {
     return {
       keyPressed: false,
     }
+  },
+  watch: {
+    reset() {
+      this.keyPressed = false
+    },
   },
   methods: {
     buttonClicked() {
