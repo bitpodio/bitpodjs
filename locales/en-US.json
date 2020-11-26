@@ -698,7 +698,8 @@
     "UploadImages": "Upload Images",
     "HeaderPrice": "Price",
     "TicketsNotRequired": "Tickets",
-    "Integration": "Integration"
+    "Integration": "Integration",
+    "TimezoneCaption": "Timezone"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",

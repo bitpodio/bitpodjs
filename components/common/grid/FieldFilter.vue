@@ -237,6 +237,9 @@ export default {
         case 'lookup':
           operatorObject = this.lookupOperatorOptions
           break
+        case 'richtext':
+          operatorObject = this.stringOperatorOptions
+          break
       }
       for (const key in operatorObject) {
         stringFilterList.push({

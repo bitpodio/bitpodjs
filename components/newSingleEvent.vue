@@ -34,7 +34,7 @@
             @click="selectTab(3)"
           >
             <v-icon left>fa-ticket</v-icon
-            ><span><i18n path="Common.Tickets" /></span>
+            ><span><i18n path="Common.TicketsNotRequired" /></span>
           </v-tab>
         </v-tabs>
       </v-card-title>
