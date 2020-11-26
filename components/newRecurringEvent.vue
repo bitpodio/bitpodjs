@@ -682,10 +682,9 @@
                               v-model="ticket.TicketCount"
                               outlined
                               dense
-                              value
                               type="Number"
+                              :rules="ticketCountRules()"
                               onkeydown="return event.keyCode !== 69 && event.keyCode !== 189"
-                              :rules="[rules.required]"
                               min="0"
                             ></v-text-field>
                           </td>
@@ -981,14 +980,16 @@
           @click="next()"
           ><i18n path="Drawer.Next"
         /></v-btn>
-        <v-btn
+        <SaveBtn
           v-if="currentTab > 2 && !isEventCreate && !isEventPublish"
-          depressed
           color="primary"
           :disabled="isSaveButtonDisabled"
-          @click="saveRecord"
+          depressed
+          :action="saveRecord"
+          class="ml-2"
+          :reset="resetBtn"
           ><i18n path="Drawer.Save"
-        /></v-btn>
+        /></SaveBtn>
       </v-card-actions>
     </v-card>
   </v-form>
@@ -1007,6 +1008,7 @@ import { getIdFromAtob } from '~/utility'
 import CustomDate from '~/components/common/form/date.vue'
 import { rules } from '~/utility/rules.js'
 import nuxtconfig from '~/nuxt.config'
+import SaveBtn from '~/components/common/saveButton'
 
 const ObjectID5 = (
   m = Math,
@@ -1021,6 +1023,7 @@ export default {
     Lookup,
     Timezone,
     CustomDate,
+    SaveBtn,
     VueGoogleAutocomplete: () => import('vue-google-autocomplete'),
   },
   props: {
@@ -1036,6 +1039,7 @@ export default {
   data() {
     return {
       rules: rules(this.$i18n),
+      resetBtn: false,
       showLocation: false,
       selectedLocation: '',
       isUniqLinkValid: false,
@@ -1390,6 +1394,16 @@ export default {
     },
   },
   methods: {
+    ticketCountRules() {
+      return [
+        (v) => {
+          if (v !== '') {
+            return true
+          }
+          return this.$t('Messages.Error.FieldRequired')
+        },
+      ]
+    },
     phoneRules() {
       return [
         (v) => {
@@ -2240,6 +2254,8 @@ export default {
             }
           }
         }
+      } else {
+        this.resetBtn = !this.resetBtn
       }
     },
 
