@@ -729,6 +729,9 @@ export default {
   justify-content: flex-end;
   align-items: center;
 }
+.v-tooltip__content {
+  margin-top: -17px;
+}
 @media (min-width: 601px) {
   .grid-actions-menu {
     display: none !important;

@@ -699,7 +699,7 @@ export default {
       update(data) {
         const organization = formatGQLResult(data, 'OrganizationInfo')
         this.orgData = organization.length > 0 ? organization[0] : {}
-        if (organization[0].BannerImages.length > 0) {
+        if (organization[0] && organization[0].BannerImages.length > 0) {
           this.getImageName()
         }
         return {

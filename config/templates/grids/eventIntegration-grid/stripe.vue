@@ -21,6 +21,7 @@
               <v-text-field
                 v-model="formData.PrivateKey"
                 :label="$t('Common.PrivateKey')"
+                :rules="[rules.required]"
                 outlined
                 dense
               ></v-text-field>
