@@ -389,6 +389,7 @@ export default {
                       this.snackbarText = this.$t(
                         'Messages.Success.ConnectionSuccessfully'
                       )
+                      this.refresh()
                       this.snackbar = true
                     }
                   } catch (e) {
@@ -413,6 +414,7 @@ export default {
                 this.snackbarText = this.$t(
                   'Messages.Success.ConnectionSuccessfully'
                 )
+                this.refresh()
                 this.snackbar = true
               }
             } catch (e) {
