@@ -721,4 +721,10 @@ table > tbody > tr:last-child .key-align {
     white-space: nowrap;
     text-overflow: ellipsis;
   }
+  .grid-search-input {
+    max-width: 120px !important;
+  }
+  .filter-btn > span span {
+    display: none;
+  }
 }
