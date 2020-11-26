@@ -808,6 +808,13 @@
                             />
                           </td>
                           <td class="pa-2 pb-0 st-date e-td" data-title="">
+                            <div class="positionAbsolute">
+                              <div
+                                class="autocomplete-dropdown positionRelative"
+                              >
+                                <div :id="`duration-select-${k}`"></div>
+                              </div>
+                            </div>
                             <v-autocomplete
                               v-model="session.Duration"
                               :items="slotLookupOptions"
@@ -815,6 +822,7 @@
                               item-value="key"
                               outlined
                               dense
+                              :attach="`#duration-select-${k}`"
                               @change="changeDuration(k)"
                             ></v-autocomplete>
                           </td>
