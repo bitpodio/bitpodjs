@@ -807,6 +807,13 @@
                             />
                           </td>
                           <td class="pa-2 pb-0 st-date e-td" data-title="">
+                            <div class="positionAbsolute">
+                              <div
+                                class="autocomplete-dropdown positionRelative"
+                              >
+                                <div :id="`duration-select-${k}`"></div>
+                              </div>
+                            </div>
                             <v-autocomplete
                               v-model="session.Duration"
                               :items="slotLookupOptions"
@@ -814,17 +821,26 @@
                               item-value="key"
                               outlined
                               dense
+                              :attach="`#duration-select-${k}`"
                               @change="changeDuration(k)"
                             ></v-autocomplete>
                           </td>
                           <td
-                            class="pa-2 pb-0 event-timezone text-truncate e-td"
+                            class="pa-2 pb-0 event-timezone e-td"
                             data-title=""
                           >
+                            <div class="positionAbsolute">
+                              <div
+                                class="autocomplete-dropdown positionRelative"
+                              >
+                                <div :id="`timezone-select-${k}`"></div>
+                              </div>
+                            </div>
                             <Timezone
                               v-model="session.Timezone"
                               :rules="[rules.required]"
                               :field="timezonefield"
+                              :attach="`#timezone-select-${k}`"
                             ></Timezone>
                           </td>
 
@@ -2423,5 +2439,8 @@ export default {
 }
 .event-inner {
   min-height: 410px;
+}
+.autocomplete-dropdown {
+  margin-top: 13px;
 }
 </style>
