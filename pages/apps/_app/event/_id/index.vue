@@ -318,6 +318,7 @@
           </v-flex>
 
           <v-stepper
+            v-if="data.event.Title"
             v-model="Status"
             alt-labels
             class="elevation-0 boxview event-steper"
