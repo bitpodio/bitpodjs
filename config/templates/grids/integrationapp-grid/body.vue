@@ -389,6 +389,7 @@ export default {
                       this.snackbarText = this.$t(
                         'Messages.Success.ConnectionSuccessfully'
                       )
+                      this.refresh()
                       this.snackbar = true
                     }
                   } catch (e) {
@@ -413,6 +414,7 @@ export default {
                 this.snackbarText = this.$t(
                   'Messages.Success.ConnectionSuccessfully'
                 )
+                this.refresh()
                 this.snackbar = true
               }
             } catch (e) {
@@ -465,6 +467,10 @@ export default {
 @media (max-width: 600px) {
   .seatmap-inner {
     max-width: 100%;
+  }
+  .seat-maps {
+    width: 150px;
+    max-width: 150px;
   }
 }
 </style>

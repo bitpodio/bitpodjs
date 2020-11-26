@@ -11,6 +11,7 @@
           text
           small
           :color="value.length > 0 ? 'blue' : 'text--primary'"
+          class="filter-btn"
           v-bind="attrs"
           v-on="on"
         >
@@ -74,9 +75,7 @@
         </div>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn text @click="menu = false"
-            ><i18n path="Drawer.Cancel"
-          /></v-btn>
+          <v-btn text @click="onCancel"><i18n path="Drawer.Cancel" /></v-btn>
           <v-btn color="primary" text @click="onApply"
             ><i18n path="Common.Apply"
           /></v-btn>
@@ -117,7 +116,16 @@ export default {
       hints: true,
       rules: [...this.value.rules] || [],
       ruleCondition: this.value.ruleCondition,
+      backupRules: [],
     }
+  },
+  watch: {
+    menu(newVal) {
+      if (newVal && this.backupRules.length) {
+        this.rules.push(...this.backupRules)
+        this.backupRules = []
+      }
+    },
   },
   methods: {
     onFieldNameClick(fieldDetails, fieldName) {
@@ -130,6 +138,7 @@ export default {
     },
     onApply() {
       this.menu = false
+      this.backupRules = []
       const { rules, ruleCondition } = this
       this.$emit('input', { rules, ruleCondition })
     },
@@ -145,6 +154,7 @@ export default {
       ]
     },
     onRuleDelete(index) {
+      this.backupRules.push(this.rules[index])
       this.rules = this.rules.filter((_, i) => i !== index)
     },
     onRuleDuplicate(index) {
@@ -152,6 +162,9 @@ export default {
     },
     onRuleConditionChange(condition) {
       this.ruleCondition = condition
+    },
+    onCancel() {
+      this.menu = false
     },
   },
 }

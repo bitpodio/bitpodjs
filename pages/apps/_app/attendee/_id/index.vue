@@ -3,10 +3,7 @@
     <v-flex>
       <div v-if="event.ImageURL" class="background-event-img">
         <picture>
-          <source
-            :srcset="`https://${orgName}-${baseUrl}${event.ImageURL}`"
-            sizes="100vw"
-          />
+          <source :srcset="event.ImageURL" sizes="100vw" />
           <img
             class="listing-hero-image js-picturefill-img"
             data-automation="listing-hero-image"
@@ -38,8 +35,8 @@
             <v-flex class="flex-70">
               <v-img
                 v-if="event.ImageURL"
-                :src="`https://${orgName}-${baseUrl}${event.ImageURL}`"
-                :lazy-src="`https://${orgName}-${baseUrl}${event.ImageURL}`"
+                :src="event.ImageURL"
+                :lazy-src="event.ImageURL"
                 class="eventsite-banner"
               >
                 <template v-slot:placeholder>
@@ -193,6 +190,9 @@
                             <div v-if="item.StartDate" class="mt-1">
                               <v-list-item-subtitle class="session-date">
                                 {{ formatDateTime(item.StartDate) }}
+                                <span v-if="item.Timezone" class="ml-1">{{
+                                  item.Timezone
+                                }}</span>
                               </v-list-item-subtitle>
                             </div>
                           </v-list-item-content>
@@ -534,7 +534,7 @@
                 >
                   <div v-if="item.imageURL" class="overflow-hidden">
                     <img
-                      :src="`https://${baseUrl}${item.imageURL}`"
+                      :src="item.imageURL"
                       height="160px"
                       class="positionRelative speaker-img grey lighten-4"
                     />
@@ -720,7 +720,9 @@
                         <tr v-for="item in attendeeData" :key="item">
                           <td>{{ item.ticketName }}</td>
                           <td>{{ item.price }}</td>
-                          <td>{{ item.count }}</td>
+                          <td>
+                            <div class="total-align">{{ item.count }}</div>
+                          </td>
                           <td>{{ item.total }}</td>
                         </tr>
                         <tr>
@@ -743,7 +745,9 @@
                         <tr v-for="item in attendeeData" :key="item">
                           <td>{{ item.ticketName }}</td>
                           <td>{{ item.ticketAmount }}</td>
-                          <td>{{ item.count }}</td>
+                          <td>
+                            <div class="total-align">{{ item.count }}</div>
+                          </td>
                           <td>{{ item.ticketAmount * item.count }}</td>
                         </tr>
                         <tr>
@@ -808,8 +812,8 @@
                   </v-list>
                 </div>
                 <div v-else class="body-1">
-                  {{ formatDate(event && event.startDateTime) }} -<br />
-                  {{ formatDate(event && event.endDateTime) }} -<br />
+                  {{ getEventStartDate() }} -<br />
+                  {{ getEventEndDate() }} -<br />
                   {{ formatField(event && event.timeZone) }}
                 </div>
               </v-skeleton-loader>
@@ -966,6 +970,7 @@
 
 <script>
 import format from 'date-fns/format'
+import { utcToZonedTime } from 'date-fns-tz'
 import nuxtconfig from '~/nuxt.config'
 import { configLoaderMixin } from '~/utility'
 
@@ -997,6 +1002,7 @@ export default {
     },
     orgName() {
       return this.$store.state.currentOrg.name
+      // return this.$store.state.currentOrgInfo.Name
     },
   },
   mounted() {
@@ -1029,6 +1035,43 @@ export default {
         window.open(`${roomName}?e=${this.event.id}`)
       } else {
         window.open(`https://meet.bitpod.io/${roomName}?e=${this.event.id}`)
+      }
+    },
+    getEventStartDate() {
+      return this.$d(
+        new Date(
+          this.formatedDate(
+            this.event.startDateTime
+              ? new Date(this.event.startDateTime)
+              : new Date(),
+            this.event.timeZone
+          )
+        ),
+        'long',
+        this.$i18n.locale
+      )
+    },
+    getEventEndDate() {
+      return this.$d(
+        new Date(
+          this.formatedDate(
+            this.event.endDateTime
+              ? new Date(this.event.endDateTime)
+              : new Date(),
+            this.event.timeZone
+          )
+        ),
+        'long',
+        this.$i18n.locale
+      )
+    },
+    formatedDate(date, timezone) {
+      if (date) {
+        const formattedDate = new Date(date)
+        const zonedDate = utcToZonedTime(formattedDate, timezone)
+        const pattern = 'PPp' // 'd.M.YYYY HH:mm:ss.SSS [GMT]Z (z)'
+        const output = format(zonedDate, pattern, { timezone })
+        return output
       }
     },
     goLive() {
@@ -1190,6 +1233,9 @@ export default {
 }
 .location-type .Online.event {
   display: none;
+}
+.total-align {
+  margin-left: 34px;
 }
 @media screen and (max-width: 600px) {
   .background-event-img {

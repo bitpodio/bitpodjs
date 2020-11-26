@@ -51,6 +51,7 @@
     "Sessions": "सत्र",
     "Speakers": "वक्ताओं",
     "Tasks": "कार्य",
+    "Task": "Tâche",
     "RegistrationForm": "पंजीकरण फॉर्म",
     "EventInformation": "घटना की जानकारी",
     "Organizer": "व्यवस्था करनेवाला",
@@ -769,6 +770,7 @@
     "Error": {
       "SizeRequired": "Size is required",
       "ThisFieldRequired": "यह फ़ील्ड आवश्यक है",
+      "InvalidDate": "अमान्य तिथि",
       "KeyRequired": "Key is required",
       "ValueRequired": "Value is required",
       "TemplateNameRequired": "Template Name is required",

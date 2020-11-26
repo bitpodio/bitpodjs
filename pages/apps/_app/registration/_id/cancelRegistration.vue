@@ -51,9 +51,15 @@
           <v-card-actions
             class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
           >
-            <v-btn :disabled="!valid" color="primary" depressed @click="onSave"
+            <SaveBtn
+              v-if="isCancelReg"
+              color="primary"
+              :disabled="!valid"
+              depressed
+              :action="onSave"
+              class="ml-2"
               ><i18n path="Common.Comment"
-            /></v-btn>
+            /></SaveBtn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -63,7 +69,11 @@
 
 <script>
 import { rules } from '~/utility/rules.js'
+import SaveBtn from '~/components/common/saveButton'
 export default {
+  components: {
+    SaveBtn,
+  },
   props: {
     isCancelReg: {
       type: Boolean,

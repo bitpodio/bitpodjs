@@ -206,7 +206,7 @@
             <v-flex class="mt-1 d-flex">
               <v-card-text class="pa-0 pb-1">
                 <a
-                  class="d-inline-block text-truncate anchorTag"
+                  class="d-inline-block text-truncate anchorTag file-name"
                   :href="getAttachmentLink(image, true)"
                   >{{
                     OtherImageName[index] && OtherImageName[index].fileName
@@ -699,7 +699,7 @@ export default {
       update(data) {
         const organization = formatGQLResult(data, 'OrganizationInfo')
         this.orgData = organization.length > 0 ? organization[0] : {}
-        if (organization[0].BannerImages.length > 0) {
+        if (organization[0] && organization[0].BannerImages.length > 0) {
           this.getImageName()
         }
         return {
@@ -738,5 +738,8 @@ export default {
 }
 .otherImg {
   visibility: hidden;
+}
+.file-name {
+  width: 125px;
 }
 </style>

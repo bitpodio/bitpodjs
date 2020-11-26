@@ -2,7 +2,11 @@
   <div>
     <v-btn
       :disabled="disabled || keyPressed"
+      :outlined="outlined"
+      :small="small"
+      :dense="dense"
       :color="color"
+      depressed
       @click="buttonClicked"
     >
       {{ label }}
@@ -26,6 +30,21 @@ export default {
       type: Boolean,
       required: false,
     },
+    outlined: {
+      default: false,
+      type: Boolean,
+      required: false,
+    },
+    small: {
+      default: false,
+      type: Boolean,
+      required: false,
+    },
+    dense: {
+      default: false,
+      type: Boolean,
+      required: false,
+    },
     color: {
       default: 'Primary',
       type: String,
@@ -36,11 +55,21 @@ export default {
       type: Function,
       required: false,
     },
+    reset: {
+      default: false,
+      type: Boolean,
+      required: false,
+    },
   },
   data() {
     return {
       keyPressed: false,
     }
+  },
+  watch: {
+    reset() {
+      this.keyPressed = false
+    },
   },
   methods: {
     buttonClicked() {

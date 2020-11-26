@@ -796,7 +796,7 @@
           <v-flex class="d-flex justify-center align-center pb-3">
             <h2 class="body-1 pb-0">
               <i class="fa fa-ticketalt pr-1" aria-hidden="true"></i>
-              <i18n path="Common.Tickets" />
+              <i18n path="Common.TicketsNotRequired" />
             </h2>
             <v-spacer></v-spacer>
           </v-flex>
@@ -816,7 +816,7 @@
                   <div>
                     <v-card
                       :elevation="hover ? 1 : 0"
-                      class="ma-3 ml-0 mt-0 seatMaptile"
+                      class="ma-3 mt-0 ma-auto seatMaptile"
                       height="110"
                       max-width="110"
                       width="110"
@@ -842,7 +842,7 @@
                         </v-card-action>
                       </v-flex>
                     </v-card>
-                    <div class="text-truncate text-capitalize text-center pr-4">
+                    <div class="text-truncate text-capitalize text-center">
                       {{ layoutName }}
                     </div>
                   </div>
