@@ -1153,7 +1153,10 @@ export default {
               return !!v || this.$t('Messages.Error.PhoneRequired')
             },
             function (value, data) {
-              return /^[0-9]\d*$|^$/.test(value) || 'Number must be valid'
+              return (
+                /^[0-9]\d*$|^$/.test(value) ||
+                this.$t('Messages.Error.NumberValid')
+              )
             },
           ],
         },
@@ -1348,7 +1351,7 @@ export default {
           displayOrder: 2,
           caption: 'Common.FullName',
           searchEnable: true,
-          sortEnable: true,
+          sortEnable: false,
           columnWidth: '150px',
           type: 'string',
           hidden: false,
@@ -1360,7 +1363,7 @@ export default {
           displayOrder: 3,
           caption: 'Common.EmailCaption',
           searchEnable: true,
-          sortEnable: true,
+          sortEnable: false,
           columnWidth: '150px',
           type: 'string',
           form: {
@@ -1377,7 +1380,7 @@ export default {
           displayOrder: 4,
           caption: 'Common.SessionBooked',
           searchEnable: true,
-          sortEnable: true,
+          sortEnable: false,
           columnWidth: '150px',
           type: 'datetime',
           cssClasses: 'col-6 col-md-6',
@@ -1391,7 +1394,7 @@ export default {
           displayOrder: 5,
           caption: 'Common.Status',
           searchEnable: true,
-          sortEnable: true,
+          sortEnable: false,
           columnWidth: '150px',
           type: 'string',
           hidden: false,
@@ -3618,6 +3621,12 @@ export default {
             function (v) {
               return !!v || this.$t('Messages.Error.PhoneRequired')
             },
+            function (value, data) {
+              return (
+                /^[0-9]\d*$|^$/.test(value) ||
+                this.$t('Messages.Error.NumberValid')
+              )
+            },
           ],
         },
         Linkdin: {
@@ -4237,6 +4246,7 @@ export default {
         hideSearch: true,
       },
       hidden: true,
+      itemTitle: 'Common.RecurringSession',
       fields: {
         Name: {
           form: {

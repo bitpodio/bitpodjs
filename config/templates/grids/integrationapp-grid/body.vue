@@ -12,7 +12,7 @@
             <v-card
               :key="index"
               :elevation="hover ? 1 : 0"
-              class="ma-10 ml-0 mt-0 seat-maps"
+              class="ma-3 ma-md-10 ml-0 mt-0 ml-md-0 mt-md-0 seat-maps"
               :class="
                 !item.Status && !hover
                   ? 'on-hover'
@@ -465,6 +465,10 @@ export default {
 @media (max-width: 600px) {
   .seatmap-inner {
     max-width: 100%;
+  }
+  .seat-maps {
+    width: 150px;
+    max-width: 150px;
   }
 }
 </style>

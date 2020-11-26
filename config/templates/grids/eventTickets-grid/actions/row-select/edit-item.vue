@@ -178,18 +178,19 @@
         <v-card-actions
           class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
         >
-          <v-btn
+          <SaveBtn
+            v-if="dialog"
             color="primary"
-            depressed
             :disabled="
-              !datevalid ||
               !valid ||
-              (formData.Type !== 'Free' && Amount < 1) ||
+              !datevalid ||
+              (formData.Type !== 'Free' && formData.Amount < 1) ||
               formData.Code === ''
             "
-            @click.native="onSave"
-            ><i18n path="Drawer.Save"
-          /></v-btn>
+            :label="this.$t('Drawer.Save')"
+            depressed
+            :action="onSave"
+          ></SaveBtn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -200,9 +201,13 @@
 import gql from 'graphql-tag'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import registrationtype from '~/config/apps/event/gql/registrationType.gql'
+import SaveBtn from '~/components/common/saveButton'
 import { formatGQLResult } from '~/utility/gql.js'
 import { rules } from '~/utility/rules.js'
 export default {
+  components: {
+    SaveBtn,
+  },
   props: {
     refresh: {
       type: Function,

@@ -385,13 +385,14 @@
         <v-card-actions
           class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
         >
-          <v-btn
-            :disabled="VenueAddress.AddressLine === '' || !valid || !datevalid"
+          <SaveBtn
+            v-if="dialog"
             color="primary"
+            :disabled="VenueAddress.AddressLine === '' || !valid || !datevalid"
+            :label="this.$t('Drawer.Save')"
             depressed
-            @click="onSave"
-            ><i18n path="Drawer.Save"
-          /></v-btn>
+            :action="onSave"
+          ></SaveBtn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -406,6 +407,7 @@ import event from '~/config/apps/event/gql/event.gql'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import Timezone from '~/components/common/form/timezone'
+import SaveBtn from '~/components/common/saveButton'
 import File from '~/components/common/form/file.vue'
 import nuxtconfig from '~/nuxt.config'
 export default {
@@ -415,6 +417,7 @@ export default {
     VueGoogleAutocomplete: () => import('vue-google-autocomplete'),
     Timezone,
     File,
+    SaveBtn,
   },
   props: {
     items: {
@@ -696,6 +699,7 @@ export default {
       }
       if (this.formData.BusinessType !== 'Recurring') {
         this.formData._VenueAddress = { ...this.VenueAddress }
+        this.formData.SEODesc = this.formData.Description
         delete this.formData.VenueAddress
         delete this.formData._VenueAddress.LatLng
         this.formData._VenueAddress.id = this.formData._VenueAddress.id
@@ -720,6 +724,7 @@ export default {
         this.formData.MaxNoRegistrations = parseInt(
           this.formData.MaxNoRegistrations
         )
+        this.formData.SEODesc = this.formData.Description
         delete this.formData._VenueAddress
         try {
           const res = await this.$axios.$patch(`${url}Events/${this.eventId}`, {

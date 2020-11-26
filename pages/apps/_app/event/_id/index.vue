@@ -816,7 +816,7 @@
                   <div>
                     <v-card
                       :elevation="hover ? 1 : 0"
-                      class="ma-3 ml-0 mt-0 seatMaptile"
+                      class="ma-3 mt-0 ma-auto seatMaptile"
                       height="110"
                       max-width="110"
                       width="110"
@@ -842,7 +842,7 @@
                         </v-card-action>
                       </v-flex>
                     </v-card>
-                    <div class="text-truncate text-capitalize text-center pr-4">
+                    <div class="text-truncate text-capitalize text-center">
                       {{ layoutName }}
                     </div>
                   </div>
@@ -2264,6 +2264,9 @@ export default {
         }
       },
       update(data) {
+        if (Object.values(data).length === 0) {
+          this.$apollo.queries.data.refresh()
+        }
         const event = formatGQLResult(data, 'Event')
         const badge = formatGQLResult(data, 'Badge')
         const eventSummary = data.Event.EventGetEventSummery

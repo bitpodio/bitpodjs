@@ -562,6 +562,9 @@ body {
 .boxview .v-data-table-header-mobile {
     display: none !important;
 }
+.elevation-0.v-grid .v-data-table-header-mobile {
+    display: none !important;
+}
 .st-date {
   max-width: 125px !important;
   min-width: 125px !important;
@@ -585,6 +588,10 @@ table > tbody > tr:last-child .key-align {
   margin-top: 5px;
   margin-bottom: 20px;
 }
+.public-page-main .v-skeleton-loader__bone {
+  width: 100% !important;
+  height: 100% !important;
+}
 @media (max-width: 800px) {
   .nav-bar {
     top: 50px !important;
@@ -595,6 +602,23 @@ table > tbody > tr:last-child .key-align {
   }
   .fc-header-toolbar {
     display: block !important;
+  }
+  .eventBox {
+    font-size: 10px !important;
+    line-height: 10px !important;
+  }
+  .v-stepper:not(.v-stepper--vertical) .v-stepper__label {
+    display: block !important;
+    max-width: 100px !important;
+    white-space: normal !important;
+  }
+  .v-stepper--alt-labels .v-stepper__step {
+      flex-basis: 140px !important;
+  }
+  .event-steper .v-stepper__header {
+      position: relative !important;
+      left: 25px !important;
+      box-shadow: none !important;
   }
 }
 @media (max-width: 600px) {
@@ -677,5 +701,15 @@ table > tbody > tr:last-child .key-align {
   .event-title {
     max-width: 100%;
     overflow-wrap: break-word;
+  }
+  .roles-view {
+    white-space: nowrap;
+    max-width: 200px;
+    height: 50px;
+    overflow: auto;
+    overflow-y: hidden;
+  }
+  .roles-view::-webkit-scrollbar {
+    display: none;
   }
 }

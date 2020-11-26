@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="public-page-main">
     <div>
       <v-row class="px-3">
         <v-col

@@ -191,11 +191,11 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td><i18n path="Common.Student" /></td>
-                  <td>{{ data.registration.SubTotal }}</td>
-                  <td>{{ data.registration.TicketQuantity }}</td>
-                  <td>{{ data.registration.TotalAmount }}</td>
+                <tr v-for="item in attendeeData" :key="item">
+                  <td>{{ item.ticketName }}</td>
+                  <td>{{ item.price }}</td>
+                  <td>{{ item.count }}</td>
+                  <td>{{ item.total }}</td>
                 </tr>
                 <tr>
                   <td></td>
@@ -356,7 +356,7 @@
           </v-row>
         </div>
         <div
-          class="xs12 sm8 md8 lg8 boxview pa-3 pb-6 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+          class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
         >
           <v-flex class="d-flex justify-center align-center pb-3">
             <h2 class="body-1 pb-0">
@@ -533,6 +533,7 @@ export default {
       EndDate: '-',
       AddressLine: '',
       VenueName: '',
+      attendeeData: {},
     }
   },
   computed: {
@@ -546,6 +547,36 @@ export default {
     //     },
     //   }
     // },
+  },
+  async mounted() {
+    const url = this.$bitpod.getApiUrl()
+    const filter = { where: { RegistrationId: this.$route.params.id } }
+    try {
+      const res = await this.$axios.get(
+        `${url}Attes?filter=${JSON.stringify(filter)}`
+      )
+      if (res) {
+        res.data.map((i) => {
+          if (!this.attendeeData[i.TicketId]) {
+            this.attendeeData[i.TicketId] = {
+              count: 1,
+              ticketName: i.TicketName,
+              price: i.TicketAmount,
+              total: i.TicketAmount,
+            }
+          } else {
+            this.attendeeData[i.TicketId].count++
+            this.attendeeData[i.TicketId].total += i.TicketAmount
+          }
+        })
+        this.attendeeData = [...Object.values(this.attendeeData)]
+      }
+    } catch (e) {
+      console.error(
+        `Error while fetching data using GET call in registration/_id/index.vue in async mounted context:-url:${url}\n registrationId:${this.$route.params.id}`,
+        e
+      )
+    }
   },
   methods: {
     formatDate(date) {

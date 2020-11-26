@@ -20,13 +20,7 @@
     <v-dialog v-model="dialog" persistent scrollable content-class="slide-form">
       <template v-slot:activator="{ on, attrs }">
         <v-col v-if="!editDraft" class="px-0">
-          <v-btn
-            text
-            small
-            v-bind="attrs"
-            v-on="on"
-            @click="campaignFormDisplayed"
-          >
+          <v-btn text small v-bind="attrs" v-on="on">
             <v-icon dark left>{{
               template === 'General Template' ? 'mdi-email-outline' : 'mdi-plus'
             }}</v-icon>
@@ -524,7 +518,7 @@
                   </v-col>
                 </v-row>
                 <v-row v-else-if="scheduleInvite" class="ma-3 ml-0">
-                  <v-col cols="5" style="max-width: 300px;" class="pl-0">
+                  <v-col style="max-width: 300px;" class="pl-0 col-12 col-sm-5">
                     <v-card align="center" justify="center" class="pb-10">
                       <v-icon class="py-2 pt-7" size="48">fa-calendar</v-icon>
                       <h3
@@ -537,28 +531,28 @@
                         <i18n path="Common.LaunchYourInvite" />
                       </h5>
                       <div style="width: 200px;">
-                        <v-datetime-picker
+                        <CustomDate
                           v-model="scheduledTime"
                           :label="$t('Common.ScheduleDate')"
-                          :text-field-props="textFieldProps()"
-                        >
-                          <template slot="dateIcon">
-                            <v-icon>fas fa-calendar</v-icon>
-                          </template>
-                          <template slot="timeIcon">
-                            <v-icon>fas fa-clock</v-icon>
-                          </template>
-                        </v-datetime-picker>
+                          :field="startDateField()"
+                          :rules="startDateRule()"
+                          type="datetime"
+                        />
                       </div>
-                      <v-btn
+                      <SaveBtn
+                        v-if="dialog"
                         color="primary"
-                        depressed
+                        class="sendButtons d-inline-block"
                         :disabled="
                           disableButton || !scheduledTime || !validDate
                         "
-                        @click="sendNow('Schedule')"
-                        ><i18n path="Drawer.Schedule"
-                      /></v-btn>
+                        :label="this.$t('Drawer.Schedule')"
+                        :action="
+                          () => {
+                            sendNow('Schedule')
+                          }
+                        "
+                      ></SaveBtn>
                       <v-btn
                         class="ml-1"
                         color="grey lighten-2"
@@ -619,16 +613,17 @@
                       >
                         <i18n path="Common.SendNow" />
                       </h3>
-                      <h5 class="body-2 my-2 mb-5">
+                      <h5 class="body-2 my-2 mb-5 sendOptions">
                         <i18n path="Common.SendEmailInviteRightaway" />
                       </h5>
-                      <v-btn
-                        depressed
+                      <SaveBtn
+                        v-if="dialog"
                         color="primary"
+                        class="sendButtons"
                         :disabled="disableButton"
-                        @click="sendNow"
-                        ><i18n path="Drawer.Send"
-                      /></v-btn>
+                        :label="this.$t('Drawer.Send')"
+                        :action="sendNow"
+                      ></SaveBtn>
                     </v-card>
                   </v-col>
                   <v-col
@@ -646,10 +641,11 @@
                       >
                         <i18n path="Common.ScheduleInvite" />
                       </h3>
-                      <h5 class="body-2 my-2 mb-5">
+                      <h5 class="body-2 my-2 mb-5 sendOptions">
                         <i18n path="Common.ScheduleInviteWayYouPrefer" />
                       </h5>
                       <v-btn
+                        class="sendButtons"
                         depressed
                         color="primary"
                         :disabled="disableButton"
@@ -673,16 +669,21 @@
                       >
                         <i18n path="Common.SaveAsDraft" />
                       </h3>
-                      <h5 class="body-2 my-2 mb-5">
+                      <h5 class="body-2 my-2 mb-5 sendOptions">
                         <i18n path="Common.SaveEmailAsDraft" />
                       </h5>
-                      <v-btn
-                        depressed
+                      <SaveBtn
+                        v-if="dialog"
                         color="primary"
+                        class="sendButtons"
                         :disabled="disableButton"
-                        @click="sendNow('Draft')"
-                        ><i18n path="Common.SaveAsDraft"
-                      /></v-btn>
+                        :label="this.$t('Common.SaveAsDraft')"
+                        :action="
+                          () => {
+                            sendNow('Draft')
+                          }
+                        "
+                      ></SaveBtn>
                     </v-card>
                   </v-col>
                 </v-row>
@@ -801,6 +802,7 @@
             view-name="inviteeEventTasks"
             :content="CRMcontent()"
             :single-select="true"
+            :no-action="true"
             @onSelectedListChange="previousInviteSelect"
           />
           <Grid
@@ -820,12 +822,16 @@
 <script>
 import gql from 'graphql-tag'
 import Grid from '~/components/common/grid'
+import CustomDate from '~/components/common/form/date.vue'
+import SaveBtn from '~/components/common/saveButton'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin, getIdFromAtob } from '~/utility'
 import marketingTemplates from '~/config/apps/admin/gql/marketingTemplates.gql'
 export default {
   components: {
     Grid,
+    SaveBtn,
+    CustomDate,
     RichText: () =>
       process.client ? import('~/components/common/form/richtext.vue') : false,
   },
@@ -970,6 +976,7 @@ export default {
     },
   },
   mounted() {
+    this.$eventBus.$on('itemSelected', this.updateSelectedList)
     if (this.$i18n.locale === 'fr') {
       this.isFrench = true
     }
@@ -977,7 +984,40 @@ export default {
       this.prefilData()
     }
   },
+  beforeDestroy() {
+    this.$eventBus.$off('itemSelected')
+  },
   methods: {
+    updateSelectedList(data) {
+      if (data.viewName === 'Contacts') {
+        this.selectedList = [...data.items]
+      }
+    },
+    startDateField() {
+      const now = new Date()
+      now.setMinutes(now.getMinutes() + 1)
+      return {
+        appendIcon: 'fa-calendar',
+        outlined: true,
+        caption: 'Start Date*',
+        type: 'datetime',
+        default: now,
+      }
+    },
+    startDateRule() {
+      return [
+        (v) => {
+          const scheduledDate = v && new Date(v)
+          if (scheduledDate && scheduledDate.getTime() < new Date().getTime()) {
+            this.validDate = false
+            return this.$t('Messages.Error.InvalidDate')
+          } else {
+            this.validDate = true
+            return true
+          }
+        },
+      ]
+    },
     async prefilData() {
       this.choosedTemplate = 3
       this.subject = this.draftData.Title
@@ -1005,11 +1045,6 @@ export default {
       )
       this.selectedList = data
     },
-    campaignFormDisplayed() {
-      if (this.template === 'General Template') {
-        this.selectedList = this.$parent.$parent.$data.selectedItems
-      }
-    },
     content() {
       return this.contents ? this.contents.Contacts : null
     },
@@ -1018,28 +1053,6 @@ export default {
     },
     updateList(data) {
       this.selectedList = data
-    },
-    textFieldProps() {
-      return {
-        appendIcon: 'fa-calendar',
-        outlined: true,
-        dense: true,
-        rules: [
-          (v) => {
-            const scheduledDate = v && new Date(v)
-            if (
-              scheduledDate &&
-              scheduledDate.getTime() < new Date().getTime()
-            ) {
-              this.validDate = false
-              return 'Invalid date'
-            } else {
-              this.validDate = true
-              return true
-            }
-          },
-        ],
-      }
     },
     resetForm() {
       this.dialog = false
@@ -1309,9 +1322,17 @@ export default {
 .templateverifyFrench {
   max-width: 350px !important;
 }
+.sendOptions {
+  min-height: 40px !important;
+}
 @media (min-width: 600px) {
   .flexInLargeScreen {
     display: flex;
+  }
+}
+@media (max-width: 599px) {
+  .sendButtons {
+    font-size: 12px;
   }
 }
 </style>
