@@ -3269,7 +3269,7 @@ export default {
         },
         TicketName: {
           displayOrder: 6,
-          caption: 'Common.Tickets',
+          caption: 'Common.TicketsNotRequired',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -3354,7 +3354,7 @@ export default {
             displayOrder: 5,
           },
           displayOrder: 4,
-          caption: 'Common.Timezone',
+          caption: 'Common.TimezoneCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -3751,11 +3751,11 @@ export default {
       fields: {
         Title: {
           form: {
-            caption: 'Enter Title *',
+            caption: 'Common.Title',
             displayOrder: 1,
           },
           displayOrder: 2,
-          caption: 'Common.Title',
+          caption: 'Common.TitleCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
