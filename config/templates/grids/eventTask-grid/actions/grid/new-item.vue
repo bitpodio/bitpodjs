@@ -138,13 +138,15 @@
           <v-card-actions
             class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
           >
-            <v-btn
+            <SaveBtn
+              v-if="dialog"
               color="primary"
               :disabled="!valid || isSaveButtonDisabled"
               depressed
-              @click.native="onSave"
+              :action="onSave"
+              class="ml-2"
               ><i18n path="Drawer.Save"
-            /></v-btn>
+            /></SaveBtn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -155,7 +157,11 @@
 import { getLookupData } from '~/config/apps/event/rest'
 import { rules } from '~/utility/rules.js'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
+import SaveBtn from '~/components/common/saveButton'
 export default {
+  components: {
+    SaveBtn,
+  },
   props: {
     refresh: {
       type: Function,
@@ -374,7 +380,7 @@ export default {
         rules: [
           (v) => {
             const DueDate = v && new Date(v)
-            if (!DueDate && DueDate === null) {
+            if (DueDate === '' || !DueDate || DueDate === null) {
               return this.$t('Messages.Error.ThisFieldRequired')
             } else {
               return true
@@ -497,7 +503,9 @@ export default {
       }
       if (res) {
         this.dialog = false
+        this.$refs.form.reset()
         this.refresh()
+        this.resetForm()
         this.snackbar = true
         this.isSaveButtonDisabled = false
         return res
