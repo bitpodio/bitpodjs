@@ -698,7 +698,8 @@
     "UploadImages": "להעלות תמונות",
     "HeaderPrice": "מחיר",
     "TicketsNotRequired": "כרטיסים",
-    "Integration": "Integration"
+    "Integration": "Integration",
+    "TimezoneCaption": "Timezone"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",

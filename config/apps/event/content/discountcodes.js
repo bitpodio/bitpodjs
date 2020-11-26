@@ -57,7 +57,7 @@ export default {
             },
           ],
         },
-        Description: {
+        description: {
           form: {
             caption: 'Common.Description',
             displayOrder: 2,
