@@ -742,4 +742,7 @@ export default {
     display: none !important;
   }
 }
+.v-menu__content {
+  overflow-y: hidden;
+}
 </style>
