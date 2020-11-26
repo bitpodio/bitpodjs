@@ -1,6 +1,6 @@
 <template>
   <v-col class="px-0">
-    <v-btn text small v-bind="attrs" v-on="on" @click="onDelete">
+    <v-btn text small v-bind="attrs" v-on="on" @click.stop="onDelete">
       <v-icon left class="fs-16">fa-trash</v-icon>
       {{ $t(actionCaption('delete')) }}
     </v-btn>
