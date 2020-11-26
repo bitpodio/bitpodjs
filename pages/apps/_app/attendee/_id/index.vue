@@ -190,6 +190,9 @@
                             <div v-if="item.StartDate" class="mt-1">
                               <v-list-item-subtitle class="session-date">
                                 {{ formatDateTime(item.StartDate) }}
+                                <span v-if="item.Timezone" class="ml-1">{{
+                                  item.Timezone
+                                }}</span>
                               </v-list-item-subtitle>
                             </div>
                           </v-list-item-content>
@@ -809,8 +812,8 @@
                   </v-list>
                 </div>
                 <div v-else class="body-1">
-                  {{ formatDate(event && event.startDateTime) }} -<br />
-                  {{ formatDate(event && event.endDateTime) }} -<br />
+                  {{ getEventStartDate() }} -<br />
+                  {{ getEventEndDate() }} -<br />
                   {{ formatField(event && event.timeZone) }}
                 </div>
               </v-skeleton-loader>
@@ -967,6 +970,7 @@
 
 <script>
 import format from 'date-fns/format'
+import { utcToZonedTime } from 'date-fns-tz'
 import nuxtconfig from '~/nuxt.config'
 import { configLoaderMixin } from '~/utility'
 
@@ -1031,6 +1035,43 @@ export default {
         window.open(`${roomName}?e=${this.event.id}`)
       } else {
         window.open(`https://meet.bitpod.io/${roomName}?e=${this.event.id}`)
+      }
+    },
+    getEventStartDate() {
+      return this.$d(
+        new Date(
+          this.formatedDate(
+            this.event.startDateTime
+              ? new Date(this.event.startDateTime)
+              : new Date(),
+            this.event.timeZone
+          )
+        ),
+        'long',
+        this.$i18n.locale
+      )
+    },
+    getEventEndDate() {
+      return this.$d(
+        new Date(
+          this.formatedDate(
+            this.event.endDateTime
+              ? new Date(this.event.endDateTime)
+              : new Date(),
+            this.event.timeZone
+          )
+        ),
+        'long',
+        this.$i18n.locale
+      )
+    },
+    formatedDate(date, timezone) {
+      if (date) {
+        const formattedDate = new Date(date)
+        const zonedDate = utcToZonedTime(formattedDate, timezone)
+        const pattern = 'PPp' // 'd.M.YYYY HH:mm:ss.SSS [GMT]Z (z)'
+        const output = format(zonedDate, pattern, { timezone })
+        return output
       }
     },
     goLive() {

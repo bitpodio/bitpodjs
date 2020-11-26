@@ -301,15 +301,17 @@
           <v-card-actions
             class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
           >
-            <v-btn
+            <SaveBtn
+              v-if="isMakeCopy"
+              color="primary"
               :disabled="
                 !valid || !datevalid || isInvalidEventLink || saveBtnDisabled
               "
-              color="primary"
               depressed
-              @click="onSave"
+              :action="onSave"
+              class="ml-2"
               ><i18n path="Drawer.Copy"
-            /></v-btn>
+            /></SaveBtn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -327,11 +329,13 @@ import { formatGQLResult } from '~/utility/gql.js'
 import CustomDate from '~/components/common/form/date.vue'
 import { getIdFromAtob } from '~/utility'
 import nuxtconfig from '~/nuxt.config'
+import SaveBtn from '~/components/common/saveButton'
 
 export default {
   components: {
     Timezone,
     CustomDate,
+    SaveBtn,
     VueGoogleAutocomplete: () => import('vue-google-autocomplete'),
   },
   props: {

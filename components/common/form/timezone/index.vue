@@ -7,6 +7,7 @@
     :loading="isLoading"
     :label="$t(field.caption)"
     :rules="rules"
+    :attach="attach"
     dense
     outlined
     @change="onChange"
@@ -38,6 +39,10 @@ export default {
     rules: {
       type: Array,
       default: () => [],
+    },
+    attach: {
+      type: [String, Boolean],
+      default: false,
     },
   },
   data() {
