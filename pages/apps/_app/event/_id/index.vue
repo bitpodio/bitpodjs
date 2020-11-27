@@ -1775,7 +1775,6 @@ export default {
           `${url}Events/${this.$route.params.id}`,
           {
             Status: statusName,
-            Description: this.data.event.Description,
           }
         )
         if (res) {
@@ -1789,13 +1788,14 @@ export default {
       }
     },
     async publishEvent() {
-      this.formData.Status = 'Open for registration'
-      this.formData.Description = this.data.event.Description
+      const eventObj = {
+        Status: 'Open for registration',
+      }
       const url = this.$bitpod.getApiUrl()
       try {
         const res = await this.$axios.patch(
           `${url}Events/${this.$route.params.id}`,
-          this.formData
+          eventObj
         )
         if (res) {
           this.snackbarText = this.$t('Messages.Success.EventPublished')
