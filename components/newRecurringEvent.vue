@@ -1976,7 +1976,6 @@ export default {
     async eventPublish() {
       const eventStatus = {
         Status: 'Open for registration',
-        Description: this.eventData.Description,
       }
       this.isEventPublish = true
       this.isEventCreate = false
