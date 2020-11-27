@@ -789,8 +789,8 @@ export default {
   .grid-actions-spread {
     display: none !important;
   }
-}
-.v-menu__content {
-  overflow-y: hidden;
+  div[role='menu'].v-menu__content {
+    overflow-y: hidden;
+  }
 }
 </style>
