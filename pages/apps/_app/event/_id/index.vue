@@ -842,7 +842,7 @@
               v-if="data.event.LocationType === 'Venue'"
               v-model="switchSeat"
               :label="$t('Common.SeatmapTickets')"
-              class="mt-0 ml-0 max-h24 positionAbsolute"
+              class="mt-0 ml-0 max-h24 positionAbsolute pad-right"
               height="20"
               @change="updateSeatReservation"
             ></v-switch>
@@ -1811,7 +1811,6 @@ export default {
           `${url}Events/${this.$route.params.id}`,
           {
             Status: statusName,
-            Description: this.data.event.Description,
           }
         )
         if (res) {
@@ -1825,13 +1824,14 @@ export default {
       }
     },
     async publishEvent() {
-      this.formData.Status = 'Open for registration'
-      this.formData.Description = this.data.event.Description
+      const eventObj = {
+        Status: 'Open for registration',
+      }
       const url = this.$bitpod.getApiUrl()
       try {
         const res = await this.$axios.patch(
           `${url}Events/${this.$route.params.id}`,
-          this.formData
+          eventObj
         )
         if (res) {
           this.snackbarText = this.$t('Messages.Success.EventPublished')
@@ -2355,6 +2355,9 @@ export default {
 @media (max-width: 500px) {
   .bitpodLink {
     width: 240px !important;
+  }
+  .pad-right {
+    padding: 10px 30px 0 0;
   }
 }
 .form-control {

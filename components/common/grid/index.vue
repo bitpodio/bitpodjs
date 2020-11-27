@@ -22,7 +22,7 @@
             content.view[viewName] &&
             content.view[viewName].template &&
             content.view[viewName].template.actions &&
-            content.view[viewName].template.actions.reduce((acc,i)=>{return acc || !i.hidden},false)) )"
+            Object.values(content.view[viewName].template.actions).reduce((acc,i)=>{return acc || !i.hidden},false)) )"
           class="grid-actions-menu"
         >
           <v-menu right :offset-y="offset" transition="slide-y-transition">
@@ -789,5 +789,8 @@ export default {
   .grid-actions-spread {
     display: none !important;
   }
+}
+.v-menu__content {
+  overflow-y: hidden;
 }
 </style>
