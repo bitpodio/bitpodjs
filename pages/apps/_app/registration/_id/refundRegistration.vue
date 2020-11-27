@@ -281,6 +281,10 @@ export default {
       },
       update(data) {
         const registration = formatGQLResult(data, 'Registration')
+        this.$emit(
+          'updateData',
+          registration && registration.length > 0 && registration[0]
+        )
         this.regData = registration.length > 0 ? { ...registration[0] } : {}
         this.refundData.TotalAmount = this.regData.TotalAmount
         if (new Date() < addHours(new Date(this.regData.createdDate), 24)) {
