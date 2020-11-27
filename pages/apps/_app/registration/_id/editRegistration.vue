@@ -227,6 +227,10 @@ export default {
       default: false,
       type: Boolean,
     },
+    updateForm: {
+      default: false,
+      type: Boolean,
+    },
   },
   data() {
     return {
@@ -301,6 +305,11 @@ export default {
       return {
         ...ticket,
       }
+    },
+  },
+  watch: {
+    updateForm() {
+      this.$apollo.queries.data.refresh()
     },
   },
   methods: {
@@ -405,9 +414,9 @@ export default {
         )
       }
       if (res) {
-        this.close()
         this.snackbar = true
         this.refresh()
+        this.close()
         return res
       }
     },

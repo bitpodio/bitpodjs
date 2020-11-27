@@ -494,6 +494,7 @@
       </v-flex>
       <editRegistration
         :is-edit-reg.sync="isEditReg"
+        :update-form="updateForm"
         @updateData="updateData"
       />
       <cancelRegistration
@@ -528,6 +529,7 @@ export default {
   data() {
     return {
       loading: 0,
+      updateForm: false,
       isEditReg: false,
       isCancelReg: false,
       isRefund: false,
@@ -590,6 +592,7 @@ export default {
     },
     registrationCancelled() {
       this.data.registration.Status = 'Cancelled'
+      this.updateForm = !this.updateForm
     },
     formatDate(date) {
       return date ? format(new Date(date), 'PP') : ''
