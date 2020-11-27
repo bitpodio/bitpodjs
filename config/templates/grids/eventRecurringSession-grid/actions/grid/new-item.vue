@@ -1,12 +1,6 @@
 <template>
   <div>
-    <v-snackbar
-      v-if="!hideToast"
-      v-model="snackbar"
-      :timeout="timeout"
-      :top="true"
-      width="2px"
-    >
+    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true" width="2px">
       <div class="fs-16 text-center">
         {{ snackbarText }}
       </div>
@@ -904,6 +898,11 @@ export default {
               },
             }
     },
+    snackbar(newVal) {
+      if (!newVal) {
+        this.refresh()
+      }
+    },
   },
   methods: {
     getBitpodVirtualLink() {
@@ -1305,7 +1304,6 @@ export default {
           if (res) {
             this.dialog = false
             this.isGroup = false
-            this.refresh()
             this.snackbar = true
             return res
           }
