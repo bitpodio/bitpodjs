@@ -637,6 +637,9 @@ export default {
           this.session.Duration = this.customDuration
         }
         this.session.Duration = parseInt(this.session.Duration)
+        if (this.session && !this.session.MySpeaker) {
+          this.session.MySpeaker = []
+        }
         if (this.isEdit) {
           res = await this.$axios.$patch(
             `${baseUrl}Sessions/${this.session.id}`,
