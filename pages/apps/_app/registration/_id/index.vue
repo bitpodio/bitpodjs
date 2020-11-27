@@ -492,9 +492,15 @@
           <v-divider></v-divider>
         </div>
       </v-flex>
-      <editRegistration :is-edit-reg.sync="isEditReg" />
-      <cancelRegistration :is-cancel-reg.sync="isCancelReg" />
-      <refundRegistration :is-refund.sync="isRefund" />
+      <editRegistration
+        :is-edit-reg.sync="isEditReg"
+        @updateData="updateData"
+      />
+      <cancelRegistration
+        :is-cancel-reg.sync="isCancelReg"
+        @registrationCancelled="registrationCancelled"
+      />
+      <refundRegistration :is-refund.sync="isRefund" @updateData="updateData" />
     </v-flex>
   </div>
 </template>
@@ -579,6 +585,12 @@ export default {
     }
   },
   methods: {
+    updateData(newData) {
+      this.data.registration = newData
+    },
+    registrationCancelled() {
+      this.data.registration.Status = 'Cancelled'
+    },
     formatDate(date) {
       return date ? format(new Date(date), 'PP') : ''
     },
@@ -597,7 +609,7 @@ export default {
         const res = await this.$axios.get(
           `${url}Registrations/${this.$route.params.id}/EventList`
         )
-        if (res) {
+        if (res && res.data) {
           this.data.event = res.data
           this.StartDate = this.formatDate(this.data.event.StartDate)
           this.EndDate = this.formatDate(this.data.event.EndDate)

@@ -442,6 +442,10 @@ export default {
       },
       update(data) {
         const registration = formatGQLResult(data, 'Registration')
+        this.$emit(
+          'updateData',
+          registration && registration.length > 0 && registration[0]
+        )
         this.regData = registration.length > 0 ? { ...registration[0] } : {}
         this.regDetails = registration.length > 0 ? { ...registration[0] } : {}
         let events = formatGQLResult(data, 'Event')

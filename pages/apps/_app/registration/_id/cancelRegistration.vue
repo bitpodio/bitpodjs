@@ -142,6 +142,7 @@ export default {
         this.close()
         this.$parent.$refs.notes.fetchAllComments()
         this.snackbar = true
+        this.$emit('registrationCancelled')
         return regRes
       }
     },
