@@ -806,7 +806,7 @@
               v-if="data.event.LocationType === 'Venue'"
               v-model="switchSeat"
               :label="$t('Common.SeatmapTickets')"
-              class="mt-0 ml-0 max-h24 positionAbsolute"
+              class="mt-0 ml-0 max-h24 positionAbsolute pad-right"
               height="20"
               @change="updateSeatReservation"
             ></v-switch>
@@ -2315,6 +2315,9 @@ export default {
 @media (max-width: 500px) {
   .bitpodLink {
     width: 240px !important;
+  }
+  .pad-right {
+    padding: 10px 30px 0 0;
   }
 }
 .form-control {
