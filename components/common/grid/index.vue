@@ -108,7 +108,10 @@
           </slot>
         </div>
       </div>
-      <v-skeleton-loader :loading="loading" type="table">
+      <v-skeleton-loader
+        :loading="loading"
+        :type="viewName === 'live and draft event' ? '' : 'table'"
+      >
         <v-data-table
           v-model="selectedItems"
           dense
@@ -207,6 +210,21 @@
           </template>
         </v-data-table>
       </v-skeleton-loader>
+      <div
+        v-if="viewName === 'live and draft event'"
+        class="d-flex flex-sm-wrap"
+      >
+        <v-skeleton-loader
+          v-for="i in 10"
+          :key="i"
+          :loading="!!loading"
+          type="card"
+          width="264"
+          class="pa-4 pl-0 pt-0 eventtiles ma-4 ml-0 mt-0"
+        >
+          <div></div>
+        </v-skeleton-loader>
+      </div>
     </div>
   </div>
 </template>
