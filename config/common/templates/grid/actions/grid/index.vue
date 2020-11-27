@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-list-item>
+    <v-list-item v-if="isHiddenAction('new')">
       <component
         :is="newItem || null"
         v-if="isHiddenAction('new')"
@@ -58,9 +58,9 @@ export default {
       }
     },
   },
-  methods: {},
   mounted() {
     this.$emit('hasGridOption', true)
   },
+  methods: {},
 }
 </script>

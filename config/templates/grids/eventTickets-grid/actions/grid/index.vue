@@ -3,22 +3,19 @@
     <v-list-item>
       <newItem :refresh="refresh" />
     </v-list-item>
-    <v-list-item>
+    <v-list-item class="pad-right">
       <registrationType />
     </v-list-item>
-    <seatmapTickets />
   </div>
 </template>
 
 <script>
 import registrationType from './registrationType'
 import newItem from './new-item.vue'
-import seatmapTickets from './seatmapTickets.vue'
 export default {
   components: {
     registrationType,
     newItem,
-    seatmapTickets,
   },
   props: {
     viewName: {
@@ -51,3 +48,10 @@ export default {
   },
 }
 </script>
+<style scoped>
+@media (min-width: 600px) {
+  .pad-right {
+    margin-right: 150px;
+  }
+}
+</style>
