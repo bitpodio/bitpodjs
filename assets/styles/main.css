@@ -592,6 +592,10 @@ table > tbody > tr:last-child .key-align {
   width: 100% !important;
   height: 100% !important;
 }
+.seat-skeleton-inner {
+  max-width: 65%;
+  margin: 0 auto;
+}
 @media (max-width: 800px) {
   .nav-bar {
     top: 50px !important;
@@ -726,5 +730,8 @@ table > tbody > tr:last-child .key-align {
   }
   .filter-btn > span span {
     display: none;
+  }
+  .seat-skeleton-inner {
+    max-width: 100%;
   }
 }
