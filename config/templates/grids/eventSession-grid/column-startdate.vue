@@ -1,10 +1,11 @@
 <template>
-  <div v-if="date !== undefined && date">
-    {{ $d(new Date(date), 'long', $i18n.locale) }}
+  <div>
+    {{ $d(new Date(getZonedTime(item.StartDate)), 'long', $i18n.locale) }}
   </div>
 </template>
 
 <script>
+import { utcToZonedTime } from 'date-fns-tz'
 export default {
   props: {
     item: {
@@ -13,10 +14,10 @@ export default {
       required: false,
     },
   },
-  data() {
-    return {
-      date: this.item.StartDate,
-    }
+  methods: {
+    getZonedTime(datetime) {
+      return utcToZonedTime(new Date(datetime || null), this.item.Timezone)
+    },
   },
 }
 </script>

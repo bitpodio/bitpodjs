@@ -474,6 +474,7 @@ export default {
     },
   },
   mounted() {
+    this.$eventBus.$on('unselectAll-record', this.unselectAllRecord)
     if (this.loadRestData) {
       this.$eventBus.$on('user-created', this.loadRestData)
     }
@@ -514,6 +515,7 @@ export default {
   beforeDestroy() {
     this.$eventBus.$off('user-created')
     this.$eventBus.$off('grid-refresh')
+    this.$eventBus.$off('unselectAll-record')
   },
   methods: {
     getRowOption() {
@@ -611,6 +613,11 @@ export default {
         this.loadRestData()
       }
       this.selectedItems = []
+    },
+    unselectAllRecord(viewName) {
+      if (viewName === this.viewName) {
+        this.selectedItems = []
+      }
     },
     async loadRestData() {
       const dataSource = getViewDataSource(this.content, this.viewName)

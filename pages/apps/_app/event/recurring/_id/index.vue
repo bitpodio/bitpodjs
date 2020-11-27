@@ -276,6 +276,7 @@
           </v-flex>
 
           <v-stepper
+            v-if="data.event.Title"
             v-model="Status"
             alt-labels
             class="elevation-0 boxview event-steper"
@@ -619,7 +620,7 @@
               </v-card>
             </v-dialog>
             <v-card
-              v-for="(image, index) in eventData.Other"
+              v-for="(image, index) in eventData ? eventData.Other : []"
               :key="index"
               class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-5 pr-3 elevation-0 cardImg rounded"
             >
@@ -1700,10 +1701,14 @@ export default {
         }
       },
       update(data) {
+        if (Object.values(data).length === 0) {
+          this.$apollo.queries.data.refresh()
+        }
         const event = formatGQLResult(data, 'Event')
         const badge = formatGQLResult(data, 'Badge')
-        const eventSummary = data.Event.EventGetEventSummery
-        this.eventData = event[0]
+        const eventSummary =
+          (data.Event && data.Event.EventGetEventSummery) || {}
+        this.eventData = event[0] || {}
         this.eventData.id = this.$route.params.id
         this.eventData_sectionHeading =
           this.eventData._sectionHeading !== null
@@ -1711,15 +1716,19 @@ export default {
             : {}
         this.updateStepper()
         this.updateRegistrationSetting(this.eventData)
-        this.eventUniqueLink = `https://${nuxtConfig.axios.eventUrl}/e/${event[0].UniqLink}`
-        this.eventSessionLink = `https://${nuxtConfig.axios.eventUrl}/t/${event[0].UniqLink}`
-        if (event[0].Images.length > 0) {
+        this.eventUniqueLink = `https://${nuxtConfig.axios.eventUrl}/e/${
+          event[0] && event[0].UniqLink
+        }`
+        this.eventSessionLink = `https://${nuxtConfig.axios.eventUrl}/t/${
+          event[0] && event[0].UniqLink
+        }`
+        if (event[0] && event[0].Images && event[0].Images.length > 0) {
           this.getBannerImageName(event[0].Images[0])
         }
-        if (event[0].Logo.length > 0) {
+        if (event[0] && event[0].Logo && event[0].Logo.length > 0) {
           this.getLogoName(event[0].Logo[0])
         }
-        if (event[0].Other.length > 0) {
+        if (event[0] && event[0].Other && event[0].Other.length > 0) {
           this.getImageName()
         }
 

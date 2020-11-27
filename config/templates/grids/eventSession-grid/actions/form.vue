@@ -285,6 +285,7 @@
             "
             :label="this.$t('Drawer.Save')"
             depressed
+            :reset="resetSave"
             :action="onSave"
           ></SaveBtn>
         </v-card-actions>
@@ -333,6 +334,7 @@ export default {
   },
   data() {
     return {
+      resetSave: false,
       commonKey: 0,
       customDuration: '50',
       isCustomMin: false,
@@ -565,10 +567,12 @@ export default {
       }
     },
     changeAddressData(value) {
-      this.addresslineMessage =
-        value === ' ' || value === ''
-          ? this.$t('Messages.Error.ThisFieldRequired')
-          : ''
+      if (value === ' ' || value === '') {
+        this.resetSave = !this.resetSave
+        this.addresslineMessage = this.$t('Messages.Error.ThisFieldRequired')
+      } else {
+        this.addresslineMessage = ''
+      }
       this.venueAddress.AddressLine = value
     },
     getAddressData(addressData, placeResultData, id) {
@@ -786,7 +790,7 @@ export default {
         }
       },
       update(data) {
-        this.eventDetails = formatGQLResult(data, 'Event')[0]
+        this.eventDetails = formatGQLResult(data, 'Event')[0] || {}
       },
       error(error) {
         this.error = error

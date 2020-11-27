@@ -36,7 +36,7 @@
                 <v-col
                   v-for="field in fields"
                   v-show="visible[field.fieldName]"
-                  :key="`${field.fieldName}${updateCount}`"
+                  :key="`${field.fieldName}${updateCount}${dialog}`"
                   :class="field.cssClasses || 'col-12 col-md-6'"
                 >
                   <component
@@ -131,6 +131,12 @@ export default {
     items(newValue, oldValue) {
       this.updateCount = this.updateCount + 1
       this.formData = generateFormData(newValue[0])
+    },
+    dialog(newVal) {
+      if (newVal) {
+        this.updateCount = this.updateCount + 1
+        this.formData = generateFormData(this.items[0])
+      }
     },
   },
   methods: {

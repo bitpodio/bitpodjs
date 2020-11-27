@@ -91,13 +91,15 @@
             <v-card-actions
               class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
             >
-              <v-btn
+              <SaveBtn
+                v-if="editMetadata"
                 color="primary"
                 :disabled="!valid || isSaveButtonDisabled"
                 depressed
-                @click.native="onSave"
+                :action="onSave"
+                class="ml-2"
                 ><i18n path="Drawer.Save"
-              /></v-btn>
+              /></SaveBtn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -110,9 +112,11 @@
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import File from '~/components/common/form/file.vue'
 import { rules } from '~/utility/rules.js'
+import SaveBtn from '~/components/common/saveButton'
 export default {
   components: {
     File,
+    SaveBtn,
   },
   props: {
     editMetadata: {

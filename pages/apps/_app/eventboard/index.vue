@@ -939,7 +939,7 @@ export default {
               if (i.TicketId.length) {
                 i._id.forEach((j, index) => {
                   const data = i.TicketId.reduce((acc, k) => {
-                    return k.includes(j) ? ++acc : acc
+                    return k && k.includes(j) ? ++acc : acc
                   }, 0)
                   if (data) {
                     this.pieChartData.push([

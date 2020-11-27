@@ -109,7 +109,7 @@
                   v-model="formData.TicketCount"
                   :label="$t('Common.TicketCountRequired')"
                   type="number"
-                  :rules="[rules.required]"
+                  :rules="ticketCountRules()"
                   min="1"
                   outlined
                   dense
@@ -341,6 +341,16 @@ export default {
     this.getAttendeeType()
   },
   methods: {
+    ticketCountRules() {
+      return [
+        (v) => {
+          if (v !== '') {
+            return true
+          }
+          return this.$t('Messages.Error.FieldRequired')
+        },
+      ]
+    },
     outsideClicked() {
       this.$refs.dateTimeComponent.okHandler()
       this.$refs.dateTimeComponent1.okHandler()

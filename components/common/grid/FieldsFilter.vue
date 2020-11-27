@@ -11,6 +11,7 @@
           text
           small
           :color="value.length > 0 ? 'blue' : 'text--primary'"
+          class="filter-btn"
           v-bind="attrs"
           v-on="on"
         >

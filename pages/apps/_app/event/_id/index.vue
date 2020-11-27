@@ -318,6 +318,7 @@
           </v-flex>
 
           <v-stepper
+            v-if="data.event.Title"
             v-model="Status"
             alt-labels
             class="elevation-0 boxview event-steper"
@@ -2141,7 +2142,7 @@ export default {
       this.switchDailog = this.eventData
         ? this.eventData.SeatReservation
         : false
-      if (this.layoutId && this.switchDailog) {
+      if (this.switchDailog) {
         this.switchSeat = true
       }
     },
@@ -2269,7 +2270,8 @@ export default {
         }
         const event = formatGQLResult(data, 'Event')
         const badge = formatGQLResult(data, 'Badge')
-        const eventSummary = data.Event.EventGetEventSummery
+        const eventSummary =
+          (data.Event && data.Event.EventGetEventSummery) || {}
         this.eventData = event.length > 0 ? event[0] : {}
         this.badgeData = badge.length > 0 ? badge[0] : {}
         this.eventData_sectionHeading =
@@ -2281,13 +2283,13 @@ export default {
         this.getSeatMap(this.eventData)
         this.updateStepper()
         this.getAttendees()
-        if (event[0].Images.length > 0) {
+        if (event[0] && event[0].Images && event[0].Images.length > 0) {
           this.getBannerImageName(event[0].Images[0])
         }
-        if (event[0].Logo.length > 0) {
+        if (event[0] && event[0].Logo && event[0].Logo.length > 0) {
           this.getLogoName(event[0].Logo[0])
         }
-        if (event[0].Other.length > 0) {
+        if (event[0] && event[0].Other && event[0].Other.length > 0) {
           this.getImageName()
         }
 

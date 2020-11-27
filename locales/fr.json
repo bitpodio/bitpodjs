@@ -697,7 +697,8 @@
     "UploadImages": "Importer des images",
     "HeaderPrice": "le prix",
     "TicketsNotRequired": "des billets",
-    "Integration": "Integration"
+    "Integration": "Integration",
+    "TimezoneCaption": "Timezone"
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",

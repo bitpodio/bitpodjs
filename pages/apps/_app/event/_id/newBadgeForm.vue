@@ -317,7 +317,7 @@ export default {
       update(data) {
         const badge = formatGQLResult(data, 'Badge')
         this.eventBadge = badge
-        this.template = this.eventBadge[0].Template
+        this.template = this.eventBadge[0] && this.eventBadge[0].Template
         return {
           badge: badge.length > 0 ? badge : {},
         }

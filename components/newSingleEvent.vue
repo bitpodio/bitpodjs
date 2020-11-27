@@ -34,7 +34,7 @@
             @click="selectTab(3)"
           >
             <v-icon left>fa-ticket</v-icon
-            ><span><i18n path="Common.Tickets" /></span>
+            ><span><i18n path="Common.TicketsNotRequired" /></span>
           </v-tab>
         </v-tabs>
       </v-card-title>
@@ -395,8 +395,7 @@
                             dense
                             type="Number"
                             min="0"
-                            value
-                            :rules="[rules.required]"
+                            :rules="ticketCountRules()"
                             onkeydown="return event.keyCode !== 69 && event.keyCode !== 189"
                           ></v-text-field>
                         </td>
@@ -774,6 +773,16 @@ export default {
   },
 
   methods: {
+    ticketCountRules() {
+      return [
+        (v) => {
+          if (v !== '') {
+            return true
+          }
+          return this.$t('Messages.Error.FieldRequired')
+        },
+      ]
+    },
     getBitpodVirtualLink() {
       return `https://${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}/${
         this.eventLinkHint.split('/')[4]

@@ -536,7 +536,7 @@
             @click="selectTab(2)"
           >
             <v-icon left>fa-ticket</v-icon
-            ><span><i18n path="Common.Tickets" /></span>
+            ><span><i18n path="Common.TicketsNotRequired" /></span>
           </v-tab>
           <v-tab
             href="#3"
@@ -682,10 +682,9 @@
                               v-model="ticket.TicketCount"
                               outlined
                               dense
-                              value
                               type="Number"
+                              :rules="ticketCountRules()"
                               onkeydown="return event.keyCode !== 69 && event.keyCode !== 189"
-                              :rules="[rules.required]"
                               min="0"
                             ></v-text-field>
                           </td>
@@ -808,6 +807,13 @@
                             />
                           </td>
                           <td class="pa-2 pb-0 st-date e-td" data-title="">
+                            <div class="positionAbsolute">
+                              <div
+                                class="autocomplete-dropdown positionRelative"
+                              >
+                                <div :id="`duration-select-${k}`"></div>
+                              </div>
+                            </div>
                             <v-autocomplete
                               v-model="session.Duration"
                               :items="slotLookupOptions"
@@ -815,17 +821,26 @@
                               item-value="key"
                               outlined
                               dense
+                              :attach="`#duration-select-${k}`"
                               @change="changeDuration(k)"
                             ></v-autocomplete>
                           </td>
                           <td
-                            class="pa-2 pb-0 event-timezone text-truncate e-td"
+                            class="pa-2 pb-0 event-timezone e-td"
                             data-title=""
                           >
+                            <div class="positionAbsolute">
+                              <div
+                                class="autocomplete-dropdown positionRelative"
+                              >
+                                <div :id="`timezone-select-${k}`"></div>
+                              </div>
+                            </div>
                             <Timezone
                               v-model="session.Timezone"
                               :rules="[rules.required]"
                               :field="timezonefield"
+                              :attach="`#timezone-select-${k}`"
                             ></Timezone>
                           </td>
 
@@ -981,14 +996,16 @@
           @click="next()"
           ><i18n path="Drawer.Next"
         /></v-btn>
-        <v-btn
+        <SaveBtn
           v-if="currentTab > 2 && !isEventCreate && !isEventPublish"
-          depressed
           color="primary"
           :disabled="isSaveButtonDisabled"
-          @click="saveRecord"
+          depressed
+          :action="saveRecord"
+          class="ml-2"
+          :reset="resetBtn"
           ><i18n path="Drawer.Save"
-        /></v-btn>
+        /></SaveBtn>
       </v-card-actions>
     </v-card>
   </v-form>
@@ -1007,6 +1024,7 @@ import { getIdFromAtob } from '~/utility'
 import CustomDate from '~/components/common/form/date.vue'
 import { rules } from '~/utility/rules.js'
 import nuxtconfig from '~/nuxt.config'
+import SaveBtn from '~/components/common/saveButton'
 
 const ObjectID5 = (
   m = Math,
@@ -1021,6 +1039,7 @@ export default {
     Lookup,
     Timezone,
     CustomDate,
+    SaveBtn,
     VueGoogleAutocomplete: () => import('vue-google-autocomplete'),
   },
   props: {
@@ -1036,6 +1055,7 @@ export default {
   data() {
     return {
       rules: rules(this.$i18n),
+      resetBtn: false,
       showLocation: false,
       selectedLocation: '',
       isUniqLinkValid: false,
@@ -1390,6 +1410,16 @@ export default {
     },
   },
   methods: {
+    ticketCountRules() {
+      return [
+        (v) => {
+          if (v !== '') {
+            return true
+          }
+          return this.$t('Messages.Error.FieldRequired')
+        },
+      ]
+    },
     phoneRules() {
       return [
         (v) => {
@@ -2240,6 +2270,8 @@ export default {
             }
           }
         }
+      } else {
+        this.resetBtn = !this.resetBtn
       }
     },
 
@@ -2407,5 +2439,8 @@ export default {
 }
 .event-inner {
   min-height: 410px;
+}
+.autocomplete-dropdown {
+  margin-top: 13px;
 }
 </style>

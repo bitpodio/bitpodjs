@@ -108,7 +108,7 @@
                 <v-text-field
                   v-model="formData.TicketCount"
                   :label="$t('Common.TicketCountRequired')"
-                  :rules="[rules.required]"
+                  :rules="ticketCountRules()"
                   type="number"
                   outlined
                   dense
@@ -184,7 +184,7 @@
             :disabled="
               !valid ||
               !datevalid ||
-              (formData.Type !== 'Free' && formData.Amount < 1) ||
+              (formData.Type !== 'Free' && Amount < 1) ||
               formData.Code === ''
             "
             :label="this.$t('Drawer.Save')"
@@ -356,6 +356,16 @@ export default {
     this.getCurrencySymbol(this.context.event.Currency)
   },
   methods: {
+    ticketCountRules() {
+      return [
+        (v) => {
+          if (v !== '') {
+            return true
+          }
+          return this.$t('Messages.Error.FieldRequired')
+        },
+      ]
+    },
     outsideClicked() {
       this.$refs.dateTimeComponent.okHandler()
       this.$refs.dateTimeComponent1.okHandler()
