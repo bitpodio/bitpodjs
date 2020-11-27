@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="public-page-main">
     <v-flex class="detailview-head mb-3"
       ><v-btn class="ml-n3 back-icon" icon @click="goBack"
         ><v-icon class="fs-30">mdi-chevron-left</v-icon> </v-btn
@@ -12,7 +12,16 @@
         >
           <v-flex class="d-flex pb-1 flex-column flex-md-row">
             <div class="text-h4 text-capitalize event-title">
-              {{ data.event.Title }}
+              <v-skeleton-loader
+                :loading="!eventDataLoaded"
+                :tile="true"
+                class="rounded-lg"
+                type="avatar"
+                height="40"
+                width="250"
+              >
+                {{ data.event.Title }}
+              </v-skeleton-loader>
             </div>
             <v-spacer></v-spacer>
             <div class="d-flex">
@@ -114,111 +123,137 @@
             {{ getEventStartDate() }} - {{ getEventEndDate() }} -
             {{ formatField(data.event.Timezone) }}
           </v-chip>
-          <v-flex>
-            <div
-              v-if="
-                data.event.LocationType === 'Online Event' ||
-                data.event.LocationType === 'Online event'
-              "
-              class="pb-1"
-            >
-              <div v-if="data.event.WebinarLink">
-                <v-icon class="fs-16 mr-1 primary--text mt-n1">fa-globe</v-icon>
-                <a
-                  :href="data.event.WebinarLink"
-                  class="text-decoration-none"
-                  target="_blank"
-                >
-                  {{ data.event.WebinarLink }}
-                </a>
-              </div>
-            </div>
-            <div
-              v-else-if="data.event.LocationType === 'Bitpod Virtual'"
-              class="pb-1 d-inline-flex"
-            >
-              <a class="text-truncate bitpodLink" @click="goLive"
-                ><v-icon class="fs-16 mr-1 primary--text mt-n1">fa-video</v-icon
-                >{{ viewBitpodVirtualLink() }}</a
+          <v-skeleton-loader
+            :loading="!eventDataLoaded"
+            :tile="true"
+            class="rounded-lg"
+            type="avatar"
+            height="20"
+            width="200"
+          >
+            <v-flex>
+              <div
+                v-if="
+                  data.event.LocationType === 'Online Event' ||
+                  data.event.LocationType === 'Online event'
+                "
+                class="pb-1"
               >
-              <copy
-                class="pl-2"
-                :text-to-copy="viewBitpodVirtualLink()"
-                icon-size="20"
-                tooltip="Copy attendee link"
-              />
-            </div>
-            <div v-else>
-              <p class="blue--text body-2">
-                <i class="fa fa-map-marker" aria-hidden="true"></i>
-                <a
-                  v-if="
-                    data &&
-                    data.event &&
-                    data.event._VenueAddress &&
-                    data.event._VenueAddress.AddressLine &&
-                    !data.event._VenueAddress.AddressLine.includes(
-                      data.event.VenueName
-                    )
-                  "
-                  class="blue--text"
+                <div v-if="data.event.WebinarLink">
+                  <v-icon class="fs-16 mr-1 primary--text mt-n1"
+                    >fa-globe</v-icon
+                  >
+                  <a
+                    :href="data.event.WebinarLink"
+                    class="text-decoration-none"
+                    target="_blank"
+                  >
+                    {{ data.event.WebinarLink }}
+                  </a>
+                </div>
+              </div>
+              <div
+                v-else-if="data.event.LocationType === 'Bitpod Virtual'"
+                class="pb-1 d-inline-flex"
+              >
+                <a class="text-truncate bitpodLink" @click="goLive"
+                  ><v-icon class="fs-16 mr-1 primary--text mt-n1"
+                    >fa-video</v-icon
+                  >{{ viewBitpodVirtualLink() }}</a
                 >
-                  {{ formatAddressField(data.event.VenueName) }}
-                </a>
-                <a class="blue--text">
-                  {{
-                    formatAddressField(
+                <copy
+                  class="pl-2"
+                  :text-to-copy="viewBitpodVirtualLink()"
+                  icon-size="20"
+                  tooltip="Copy attendee link"
+                />
+              </div>
+              <div v-else>
+                <p class="blue--text body-2">
+                  <i class="fa fa-map-marker" aria-hidden="true"></i>
+                  <a
+                    v-if="
+                      data &&
+                      data.event &&
                       data.event._VenueAddress &&
-                        data.event._VenueAddress.AddressLine
-                    )
-                  }}
-                  {{
-                    formatAddressField(
-                      data.event._VenueAddress && data.event._VenueAddress.City
-                    )
-                  }}
-                  {{
-                    formatAddressField(
-                      data.event._VenueAddress && data.event._VenueAddress.State
-                    )
-                  }}
-                  {{
-                    formatAddressField(
-                      data.event._VenueAddress &&
-                        data.event._VenueAddress.Country
-                    )
-                  }}
-                  {{
-                    formatAddressField(
-                      data.event._VenueAddress &&
-                        data.event._VenueAddress.PostalCode
-                    )
-                  }}
-                </a>
-              </p>
-            </div>
-          </v-flex>
+                      data.event._VenueAddress.AddressLine &&
+                      !data.event._VenueAddress.AddressLine.includes(
+                        data.event.VenueName
+                      )
+                    "
+                    class="blue--text"
+                  >
+                    {{ formatAddressField(data.event.VenueName) }}
+                  </a>
+                  <a class="blue--text">
+                    {{
+                      formatAddressField(
+                        data.event._VenueAddress &&
+                          data.event._VenueAddress.AddressLine
+                      )
+                    }}
+                    {{
+                      formatAddressField(
+                        data.event._VenueAddress &&
+                          data.event._VenueAddress.City
+                      )
+                    }}
+                    {{
+                      formatAddressField(
+                        data.event._VenueAddress &&
+                          data.event._VenueAddress.State
+                      )
+                    }}
+                    {{
+                      formatAddressField(
+                        data.event._VenueAddress &&
+                          data.event._VenueAddress.Country
+                      )
+                    }}
+                    {{
+                      formatAddressField(
+                        data.event._VenueAddress &&
+                          data.event._VenueAddress.PostalCode
+                      )
+                    }}
+                  </a>
+                </p>
+              </div>
+            </v-flex>
+          </v-skeleton-loader>
 
           <v-flex d-flex flex-md-row flex-lg-row my-2 class="event-cards">
             <div
-              class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
+              class="greybg d-inline-block rounded mr-2"
+              style="width: 200px; height: 60px;"
             >
-              <div
-                class="pa-2 success d-flex justify-center align-center event-tile-left"
+              <v-skeleton-loader
+                :loading="!eventDataLoaded"
+                :tile="true"
+                type="avatar"
+                height="60"
+                width="75"
               >
-                <i class="fa fa-user-check" aria-hidden="true"></i>
-              </div>
-              <div class="d-flex flex-column pa-2 event-tile-right greybg">
-                <div class="event-tile-value text-truncate">
-                  {{ data.eventSummary.totalRegistration }}
+                <div
+                  class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
+                >
+                  <div
+                    class="pa-2 success d-flex justify-center align-center event-tile-left"
+                  >
+                    <i class="fa fa-user-check" aria-hidden="true"></i>
+                  </div>
+                  <div class="d-flex flex-column pa-2 event-tile-right greybg">
+                    <div class="event-tile-value text-truncate">
+                      {{ data.eventSummary.totalRegistration }}
+                    </div>
+                    <i18n
+                      path="Common.TotalRegistration"
+                      class="caption text-truncate"
+                    />
+                  </div>
                 </div>
-                <i18n
-                  path="Common.TotalRegistration"
-                  class="caption text-truncate"
-                />
-              </div>
+              </v-skeleton-loader>
             </div>
-
             <div
               class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
             >
@@ -1444,6 +1479,7 @@ export default {
   },
   data() {
     return {
+      eventDataLoaded: false,
       loading: 0,
       dialog: false,
       selectExistingSeatMap: false,
@@ -2267,6 +2303,8 @@ export default {
       update(data) {
         if (Object.values(data).length === 0) {
           this.$apollo.queries.data.refresh()
+        } else {
+          this.eventDataLoaded = true
         }
         const event = formatGQLResult(data, 'Event')
         const badge = formatGQLResult(data, 'Badge')
