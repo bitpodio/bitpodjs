@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-list-item>
+    <v-list-item v-if="isHiddenAction('edit')">
       <component
         :is="editItem || null"
         v-if="isHiddenAction('edit')"
@@ -12,7 +12,7 @@
         :context="context"
       />
     </v-list-item>
-    <v-list-item>
+    <v-list-item v-if="isHiddenAction('delete')">
       <component
         :is="deleteItem || null"
         v-if="isHiddenAction('delete')"

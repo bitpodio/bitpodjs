@@ -1,5 +1,5 @@
 <template>
-  <v-col class="px-0 min-xw180 vs-hidden">
+  <v-col class="px-0 min-xw180 vs-hidden d-none">
     <v-switch
       v-model="switch2"
       :label="$t('Common.SeatmapTickets')"
