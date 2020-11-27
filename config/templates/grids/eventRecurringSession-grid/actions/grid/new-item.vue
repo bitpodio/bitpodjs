@@ -917,7 +917,7 @@ export default {
     closeForm() {
       this.dialog = false
       this.resetForm()
-      this.$parent.$parent.$parent.$data.selectedItems = []
+      this.$eventBus.$emit('unselectAll-record', 'eventRecurringSession')
     },
     resetForm() {
       this.dialog = false
