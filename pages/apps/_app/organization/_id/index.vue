@@ -56,7 +56,9 @@
                   </v-img>
                   <v-list-item-content>
                     <v-list-item-title class="mt-n3">
-                      <h2>{{ data.organization.Name }}</h2>
+                      <h2 class="wrap-word-normal">
+                        {{ data.organization.Name }}
+                      </h2>
                     </v-list-item-title>
                     <v-list-item-subtitle class="pb-1">{{
                       data.organization.Email
