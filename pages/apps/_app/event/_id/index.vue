@@ -224,35 +224,22 @@
 
           <v-flex d-flex flex-md-row flex-lg-row my-2 class="event-cards">
             <div
-              class="greybg d-inline-block rounded mr-2"
-              style="width: 200px; height: 60px;"
+              class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
             >
-              <v-skeleton-loader
-                :loading="!eventDataLoaded"
-                :tile="true"
-                type="avatar"
-                height="60"
-                width="75"
+              <div
+                class="pa-2 success d-flex justify-center align-center event-tile-left"
               >
-                <div
-                  class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
-                >
-                  <div
-                    class="pa-2 success d-flex justify-center align-center event-tile-left"
-                  >
-                    <i class="fa fa-user-check" aria-hidden="true"></i>
-                  </div>
-                  <div class="d-flex flex-column pa-2 event-tile-right greybg">
-                    <div class="event-tile-value text-truncate">
-                      {{ data.eventSummary.totalRegistration }}
-                    </div>
-                    <i18n
-                      path="Common.TotalRegistration"
-                      class="caption text-truncate"
-                    />
-                  </div>
+                <i class="fa fa-user-check" aria-hidden="true"></i>
+              </div>
+              <div class="d-flex flex-column pa-2 event-tile-right greybg">
+                <div class="event-tile-value text-truncate">
+                  {{ data.eventSummary.totalRegistration }}
                 </div>
-              </v-skeleton-loader>
+                <i18n
+                  path="Common.TotalRegistration"
+                  class="caption text-truncate"
+                />
+              </div>
             </div>
             <div
               class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
