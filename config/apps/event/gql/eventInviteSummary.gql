@@ -41,7 +41,6 @@ query($filters: JSON, $where: JSON) {
           ContactId
           EventId
           ParentId
-          OrganizationInfoId
           Registrations
           RegistrationId
           _Comments {
