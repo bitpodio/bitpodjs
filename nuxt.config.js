@@ -236,9 +236,9 @@ export default {
 
   axios: {
     apiEndpoint: '/svc/api/',
-    backendBaseUrl: process.env.PUBLIC_DOMAIN || 'event.test.bitpod.io',
+    backendBaseUrl: process.env.PUBLIC_DOMAIN || 'event.bitpod.io',
     baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
-    eventUrl: process.env.GET_EVENT_URL || 'event.test.bitpod.io',
+    eventUrl: process.env.GET_EVENT_URL || 'event.bitpod.io',
   },
 
   publicRuntimeConfig: {
