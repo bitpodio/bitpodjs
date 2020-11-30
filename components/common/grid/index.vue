@@ -878,7 +878,6 @@ export default {
     overflow-y: hidden;
   }
   :root {
-    --default-padding: 16px;
     --header-height: 60px;
   }
   .sticky {
@@ -886,7 +885,11 @@ export default {
     top: 35px;
     z-index: 1;
     height: var(--header-height);
-    padding: 0 var(--default-padding);
+  }
+  .sticky > .grid-actions-menu {
+    background-color: white;
+    box-shadow: 0 1px 1px -1px rgba(0, 0, 0, 0.2),
+      0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 0 1px 0 rgba(0, 0, 0, 0.1) !important;
   }
   .sticky_sentinel {
     position: absolute;
@@ -899,7 +902,7 @@ export default {
     top: -44px;
   }
   .sticky_sentinel--bottom {
-    height: calc(var(--header-height) + var(--default-padding));
+    height: var(--header-height);
     bottom: 0;
   }
 }
