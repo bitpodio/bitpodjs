@@ -68,7 +68,7 @@
                     }}</v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
-                <v-list class="mt-n4 pl-2 ml-6"
+                <v-list class="mt-n2 pl-2 ml-6"
                   ><span
                     class="cursorPointer blue--text"
                     @click="checkOrgClicked"
