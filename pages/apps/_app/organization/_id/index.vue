@@ -13,47 +13,66 @@
                   :key="image"
                   class="pl-0"
                 >
-                  <v-list-item-avatar
-                    v-if="
-                      data.organization && data.organization.Image.length === 0
-                    "
-                    size="62"
-                  >
-                    <v-avatar
-                      color="primary"
+                  <div>
+                    <v-list-item-avatar
+                      v-if="
+                        data.organization &&
+                        data.organization.Image.length === 0
+                      "
                       size="62"
-                      v-bind="attrs"
-                      v-on="on"
                     >
-                      <span class="white--text Twitter">{{
-                        data.organization.Name
-                      }}</span>
-                    </v-avatar>
-                  </v-list-item-avatar>
-                  <v-img
-                    v-else
-                    :src="getAttachmentLink(image, true)"
-                    :lazy-src="getAttachmentLink(image, true)"
-                    aspect-ratio="1"
-                    class="mr-3"
-                    max-width="139"
-                    max-height="92"
-                    width="150"
-                    contain
-                  >
-                    <template v-slot:placeholder>
-                      <v-row
-                        class="fill-height ma-0"
-                        align="center"
-                        justify="center"
+                      <v-avatar
+                        color="primary"
+                        size="62"
+                        v-bind="attrs"
+                        v-on="on"
                       >
-                        <v-progress-circular
-                          indeterminate
-                          color="grey lighten-5"
-                        ></v-progress-circular>
-                      </v-row>
-                    </template>
-                  </v-img>
+                        <span class="white--text Twitter">{{
+                          data.organization.Name
+                        }}</span>
+                      </v-avatar>
+                    </v-list-item-avatar>
+                    <v-img
+                      v-else
+                      :src="getAttachmentLink(image, true)"
+                      :lazy-src="getAttachmentLink(image, true)"
+                      aspect-ratio="1"
+                      class="mr-3"
+                      max-width="139"
+                      max-height="92"
+                      width="150"
+                      contain
+                    >
+                      <template v-slot:placeholder>
+                        <v-row
+                          class="fill-height ma-0"
+                          align="center"
+                          justify="center"
+                        >
+                          <v-progress-circular
+                            indeterminate
+                            color="grey lighten-5"
+                          ></v-progress-circular>
+                        </v-row>
+                      </template>
+                    </v-img>
+                    <div class="text-center mt-1">
+                      <span
+                        class="cursorPointer blue--text"
+                        @click="checkOrgClicked"
+                      >
+                        <File
+                          :field="fileField"
+                          :no-btn-look="true"
+                          :block="true"
+                          :open-file-dialog="orgLogo"
+                          :value="checkArray"
+                          :hide-preview="true"
+                          @input="uploadOrgLogo" />
+                        <i18n path="Drawer.Upload"
+                      /></span>
+                    </div>
+                  </div>
                   <v-list-item-content>
                     <v-list-item-title class="mt-n3">
                       <h2 class="wrap-word-normal">
@@ -68,21 +87,6 @@
                     }}</v-list-item-subtitle>
                   </v-list-item-content>
                 </v-list-item>
-                <v-list class="mt-n2 pl-2 ml-6"
-                  ><span
-                    class="cursorPointer blue--text"
-                    @click="checkOrgClicked"
-                  >
-                    <File
-                      :field="fileField"
-                      :no-btn-look="true"
-                      :block="true"
-                      :open-file-dialog="orgLogo"
-                      :value="checkArray"
-                      :hide-preview="true"
-                      @input="uploadOrgLogo" />
-                    <i18n path="Drawer.Upload" /></span
-                ></v-list>
               </v-list>
             </v-card>
           </v-col>
