@@ -518,7 +518,9 @@ export default {
       this.$apollo.queries.data.refresh()
       this.$apollo.queries.speaker.refresh()
       this.$apollo.queries.event.refresh()
-      this.dialog = true
+      setTimeout(() => {
+        this.dialog = true
+      }, 0)
     },
     changeDuration(value) {
       if (value === '0') {
