@@ -295,7 +295,7 @@ export default {
           bpmnServerURL: `https://${nuxtconfig.axios.backendBaseUrl}/bpmn/`,
           OwnerId: this.$auth.$state.user.data.email,
           loginUser: this.$auth.$state.user.data.email,
-          OrgId: 1,
+          OrgId: this.$store.state.currentOrg.id,
           accessToken: this.$apolloHelpers.getToken(),
           MetaData: `{"eventId":"${this.$route.query.event || ''}"}`,
         }

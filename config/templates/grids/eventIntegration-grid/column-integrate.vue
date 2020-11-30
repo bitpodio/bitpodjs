@@ -171,7 +171,7 @@ export default {
           bpmnServerURL: `https://${nuxtconfig.axios.backendBaseUrl}/bpmn/`,
           OwnerId: this.profileId,
           loginUser: this.profileId,
-          OrgId: 1,
+          OrgId: this.$store.state.currentOrg.id,
           accessToken: this.accessToken,
           MetaData: `{"eventId":"${this.eventId}"}`,
         }
