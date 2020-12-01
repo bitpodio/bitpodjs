@@ -971,7 +971,6 @@
 <script>
 import format from 'date-fns/format'
 import { utcToZonedTime } from 'date-fns-tz'
-import nuxtconfig from '~/nuxt.config'
 import { configLoaderMixin } from '~/utility'
 
 export default {
@@ -998,7 +997,7 @@ export default {
       }
     },
     baseUrl() {
-      return nuxtconfig.axios.eventUrl
+      return this.$config.axios.eventUrl
     },
     orgName() {
       return this.$store.state.currentOrg.name
