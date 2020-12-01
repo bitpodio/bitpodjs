@@ -284,7 +284,6 @@ export default {
       this.dialog = false
     },
     onSetup(item) {
-      debugger
       if (item.MetaData.oauthType === 'Oauth') {
         const options = {
           AccessType: 'private',
