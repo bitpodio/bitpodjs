@@ -877,7 +877,8 @@
       "RefundRegistrationSuccess": "Remboursement d'inscription réussi",
       "RecurringSessionCreatedSuccess": "Session récurrente créée avec succès",
       "RecurringSessionUpdatedSuccess": "Session récurrente mise à jour avec succès",
-      "EditInviteMetadataSuccess": "template metadata updated successfully"
+      "EditMetadataSuccess": "Template metadata updated successfully",
+      "EditTemplateSuccess": "Template updated successfully"      
     }
   },
   "$vuetify": {

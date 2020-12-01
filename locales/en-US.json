@@ -880,7 +880,8 @@
       "RefundRegistrationSuccess": "Registration refund successfully",
       "RecurringSessionCreatedSuccess": "Recurring Session created successfully",
       "RecurringSessionUpdatedSuccess": "Recurring Session updated successfully",
-      "EditInviteMetadataSuccess": "template metadata updated successfully"
+      "EditMetadataSuccess": "Template metadata updated successfully",
+      "EditTemplateSuccess": "Template updated successfully"      
     }
   },
   "$vuetify": {

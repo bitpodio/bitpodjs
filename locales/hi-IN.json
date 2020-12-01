@@ -878,7 +878,8 @@
       "RefundRegistrationSuccess": "पंजीकरण सफलतापूर्वक वापस",
       "RecurringSessionCreatedSuccess": "आवर्ती सत्र सफलतापूर्वक बनाया गया",
       "RecurringSessionUpdatedSuccess": "आवर्ती सत्र सफलतापूर्वक अपडेट किया गया",
-      "EditInviteMetadataSuccess": "template metadata updated successfully"
+      "EditMetadataSuccess": "Template metadata updated successfully",
+      "EditTemplateSuccess": "Template updated successfully"      
     }
   },
   "$vuetify": {

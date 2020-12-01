@@ -878,7 +878,8 @@
       "RefundRegistrationSuccess": "החזר ההרשמה בהצלחה",
       "RecurringSessionCreatedSuccess": "מושב חוזר נוצר בהצלחה",
       "RecurringSessionUpdatedSuccess": "ההפעלה החוזרת עודכנה בהצלחה",
-      "EditInviteMetadataSuccess": "template metadata updated successfully"
+      "EditMetadataSuccess": "Template metadata updated successfully",
+      "EditTemplateSuccess": "Template updated successfully"      
     }
   },
   "$vuetify": {
