@@ -35,7 +35,6 @@ query ($filters: JSON, $where: JSON) {
                     Timezone
                     Type
                     id
-                    OrganizationInfoId
                     Day
                     Description
                     Category
