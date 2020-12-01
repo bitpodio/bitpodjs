@@ -191,7 +191,6 @@
 
 <script>
 import { templateLoaderMixin } from '~/utility'
-import nuxtconfig from '~/nuxt.config'
 import { openAuthPopups } from '~/utility/oauth'
 export default {
   mixins: [templateLoaderMixin],
@@ -285,6 +284,7 @@ export default {
       this.dialog = false
     },
     onSetup(item) {
+      debugger
       if (item.MetaData.oauthType === 'Oauth') {
         const options = {
           AccessType: 'private',
@@ -292,7 +292,7 @@ export default {
           Name: item.ServiceId,
           ServiceId: item.ServiceId,
           TenantId: 'event',
-          bpmnServerURL: `https://${nuxtconfig.axios.backendBaseUrl}/bpmn/`,
+          bpmnServerURL: `https://${this.$config.axios.backendBaseUrl}/bpmn/`,
           OwnerId: this.$auth.$state.user.data.email,
           loginUser: this.$auth.$state.user.data.email,
           OrgId: this.$store.state.currentOrg.id,

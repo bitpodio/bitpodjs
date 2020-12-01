@@ -1,7 +1,11 @@
 import nuxtconfig from '../nuxt.config'
 export const actions = {
   async nuxtServerInit({ commit }, context) {
-    const origin = getApiUrl(context.req.headers.host, context.req)
+    const origin = getApiUrl(
+      context.req.headers.host,
+      context.req,
+      context.$config
+    )
     const apiEndpoint = nuxtconfig.axios.apiEndpoint
     try {
       const orgPromise = context.$axios.get(
@@ -37,9 +41,9 @@ export const mutations = {
   },
 }
 
-function getApiUrl(host, req) {
+function getApiUrl(host, req, config) {
   if (host && host.includes('localhost')) {
-    return `https://${nuxtconfig.axios.backendBaseUrl}`
+    return `https://${config.axios.backendBaseUrl}`
   }
   const protocol = req.protocol
   return `${protocol}://${host}`
