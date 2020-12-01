@@ -137,7 +137,7 @@ function getApiUrl(req) {
   const protocol = req.protocol
   if (host && host.includes('localhost')) {
     //* $config is not available in middleware, refer: https://github.com/nuxt/nuxt.js/issues/2800
-    const backendBaseUrl = process.env.PUBLIC_DOMAIN || 'event.bitpod.io'
+    const backendBaseUrl = process.env.PUBLIC_DOMAIN || 'event.test.bitpod.io'
     return `${protocol}://${backendBaseUrl}`
   }
   return `${protocol}://${host}`
