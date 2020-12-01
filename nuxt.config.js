@@ -244,7 +244,7 @@ export default {
     axios: {
       browserBaseURL: process.env.BROWSER_BASE_URL,
       backendBaseUrl: process.env.PUBLIC_DOMAIN,
-      eventUrl: process.env.GET_EVENT_URL || 'event.bitpod.io',
+      eventUrl: process.env.GET_EVENT_URL || 'event.test.bitpod.io',
     },
     cdnUri:
       'https://res.cloudinary.com/mytestlogo/image/upload/bitpodjs/images/',
