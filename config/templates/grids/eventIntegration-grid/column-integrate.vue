@@ -38,7 +38,6 @@
 
 <script>
 import { templateLoaderMixin } from '~/utility'
-import nuxtconfig from '~/nuxt.config'
 import { openAuthPopups } from '~/utility/oauth'
 export default {
   mixins: [templateLoaderMixin],
@@ -168,7 +167,7 @@ export default {
           Name: this.serviceId,
           ServiceId: this.serviceId,
           TenantId: 'event',
-          bpmnServerURL: `https://${nuxtconfig.axios.backendBaseUrl}/bpmn/`,
+          bpmnServerURL: `https://${this.$config.axios.backendBaseUrl}/bpmn/`,
           OwnerId: this.profileId,
           loginUser: this.profileId,
           OrgId: this.$store.state.currentOrg.id,
