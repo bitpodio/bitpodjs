@@ -70,6 +70,7 @@
     "BusinessType": "Business Type",
     "EventLink": "Event Link",
     "AllowCancelation": "Allow Cancelation",
+    "AllowChat": "Allow Chat",
     "ValidateSessionTimingConflict": "Validate Session Timing Conflict",
     "ShowRemainingTicketsCount": "Show Remaining Tickets Count",
     "ShowAttendeeForm": "Show Attendee Form",
