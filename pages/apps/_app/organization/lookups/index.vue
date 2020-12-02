@@ -36,26 +36,30 @@
             v-if="content"
             class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mr-0 mb-4 pb-6 elevation-1 rounded-lg"
           >
-            <v-flex class="d-flex justify-center align-center pb-3">
-              <h2 class="body-1 pb-0">
-                <i18n path="Common.Currency" />
-              </h2>
-              <v-spacer></v-spacer>
-            </v-flex>
-            <v-divider></v-divider>
+            <div class="sticky d-flex flex-column justify-center boxview">
+              <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+                <h2 class="body-1 pb-0">
+                  <i18n path="Common.Currency" />
+                </h2>
+                <v-spacer></v-spacer>
+              </v-flex>
+              <v-divider></v-divider>
+            </div>
             <Grid view-name="lookups" :content="content" class="mt-n12" />
           </div>
           <div
             v-if="content"
             class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mr-0 mb-4 pb-6 elevation-1 rounded-lg"
           >
-            <v-flex class="d-flex justify-center align-center pb-3">
-              <h2 class="body-1 pb-0">
-                <i18n path="Common.TimeZone" />
-              </h2>
-              <v-spacer></v-spacer>
-            </v-flex>
-            <v-divider></v-divider>
+            <div class="sticky d-flex flex-column justify-center boxview">
+              <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+                <h2 class="body-1 pb-0">
+                  <i18n path="Common.TimeZone" />
+                </h2>
+                <v-spacer></v-spacer>
+              </v-flex>
+              <v-divider></v-divider>
+            </div>
             <Grid view-name="timezone" :content="content" class="mt-n12" />
           </div>
         </v-tab-item>
@@ -64,65 +68,75 @@
             v-if="content"
             class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mr-0 mb-4 pb-6 elevation-1 rounded-lg"
           >
-            <v-flex class="d-flex justify-center align-center pb-3">
-              <h2 class="body-1 pb-0">
-                <i18n path="Common.EventPrivacy" />
-              </h2>
-              <v-spacer></v-spacer>
-            </v-flex>
-            <v-divider></v-divider>
+            <div class="sticky d-flex flex-column justify-center boxview">
+              <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+                <h2 class="body-1 pb-0">
+                  <i18n path="Common.EventPrivacy" />
+                </h2>
+                <v-spacer></v-spacer>
+              </v-flex>
+              <v-divider></v-divider>
+            </div>
             <Grid view-name="eventprivacy" :content="content" class="mt-n12" />
           </div>
           <div
             v-if="content"
             class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mr-0 mb-4 pb-6 elevation-1 rounded-lg"
           >
-            <v-flex class="d-flex justify-center align-center pb-3">
-              <h2 class="body-1 pb-0">
-                <i18n path="Common.EventTag" />
-              </h2>
-              <v-spacer></v-spacer>
-            </v-flex>
-            <v-divider></v-divider>
+            <div class="sticky d-flex flex-column justify-center boxview">
+              <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+                <h2 class="body-1 pb-0">
+                  <i18n path="Common.EventTag" />
+                </h2>
+                <v-spacer></v-spacer>
+              </v-flex>
+              <v-divider></v-divider>
+            </div>
             <Grid view-name="eventtag" :content="content" class="mt-n12" />
           </div>
           <div
             v-if="content"
             class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mr-0 mb-4 pb-6 elevation-1 rounded-lg"
           >
-            <v-flex class="d-flex justify-center align-center pb-3">
-              <h2 class="body-1 pb-0">
-                <i18n path="Common.TicketType" />
-              </h2>
-              <v-spacer></v-spacer>
-            </v-flex>
-            <v-divider></v-divider>
+            <div class="sticky d-flex flex-column justify-center boxview">
+              <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+                <h2 class="body-1 pb-0">
+                  <i18n path="Common.TicketType" />
+                </h2>
+                <v-spacer></v-spacer>
+              </v-flex>
+              <v-divider></v-divider>
+            </div>
             <Grid view-name="tickettype" :content="content" class="mt-n12" />
           </div>
           <div
             v-if="content"
             class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mr-0 mb-4 pb-6 elevation-1 rounded-lg"
           >
-            <v-flex class="d-flex justify-center align-center pb-3">
-              <h2 class="body-1 pb-0">
-                <i18n path="Common.SessionType" />
-              </h2>
-              <v-spacer></v-spacer>
-            </v-flex>
-            <v-divider></v-divider>
+            <div class="sticky d-flex flex-column justify-center boxview">
+              <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+                <h2 class="body-1 pb-0">
+                  <i18n path="Common.SessionType" />
+                </h2>
+                <v-spacer></v-spacer>
+              </v-flex>
+              <v-divider></v-divider>
+            </div>
             <Grid view-name="sessiontype" :content="content" class="mt-n12" />
           </div>
           <div
             v-if="content"
             class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mr-0 mb-4 pb-6 elevation-1 rounded-lg"
           >
-            <v-flex class="d-flex justify-center align-center pb-3">
-              <h2 class="body-1 pb-0">
-                <i18n path="Common.QuestionControl" />
-              </h2>
-              <v-spacer></v-spacer>
-            </v-flex>
-            <v-divider></v-divider>
+            <div class="sticky d-flex flex-column justify-center boxview">
+              <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+                <h2 class="body-1 pb-0">
+                  <i18n path="Common.QuestionControl" />
+                </h2>
+                <v-spacer></v-spacer>
+              </v-flex>
+              <v-divider></v-divider>
+            </div>
             <Grid
               view-name="questioncontrol"
               :content="content"
@@ -135,26 +149,30 @@
             v-if="content"
             class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mr-0 mb-4 pb-6 elevation-1 rounded-lg"
           >
-            <v-flex class="d-flex justify-center align-center pb-3">
-              <h2 class="body-1 pb-0">
-                <i18n path="Common.RefundMethod" />
-              </h2>
-              <v-spacer></v-spacer>
-            </v-flex>
-            <v-divider></v-divider>
+            <div class="sticky d-flex flex-column justify-center boxview">
+              <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+                <h2 class="body-1 pb-0">
+                  <i18n path="Common.RefundMethod" />
+                </h2>
+                <v-spacer></v-spacer>
+              </v-flex>
+              <v-divider></v-divider>
+            </div>
             <Grid view-name="refundmethod" :content="content" class="mt-n12" />
           </div>
           <div
             v-if="content"
             class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mr-0 mb-4 pb-6 elevation-1 rounded-lg"
           >
-            <v-flex class="d-flex justify-center align-center pb-3">
-              <h2 class="body-1 pb-0">
-                <i18n path="Common.Reason" />
-              </h2>
-              <v-spacer></v-spacer>
-            </v-flex>
-            <v-divider></v-divider>
+            <div class="sticky d-flex flex-column justify-center boxview">
+              <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+                <h2 class="body-1 pb-0">
+                  <i18n path="Common.Reason" />
+                </h2>
+                <v-spacer></v-spacer>
+              </v-flex>
+              <v-divider></v-divider>
+            </div>
             <Grid view-name="reason" :content="content" class="mt-n12" />
           </div>
         </v-tab-item>
@@ -163,13 +181,15 @@
             v-if="content"
             class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mr-0 mb-4 pb-6 elevation-1 rounded-lg"
           >
-            <v-flex class="d-flex justify-center align-center pb-3">
-              <h2 class="body-1 pb-0">
-                <i18n path="Common.BadgeCategory" />
-              </h2>
-              <v-spacer></v-spacer>
-            </v-flex>
-            <v-divider></v-divider>
+            <div class="sticky d-flex flex-column justify-center boxview">
+              <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+                <h2 class="body-1 pb-0">
+                  <i18n path="Common.BadgeCategory" />
+                </h2>
+                <v-spacer></v-spacer>
+              </v-flex>
+              <v-divider></v-divider>
+            </div>
             <Grid view-name="badgecategory" :content="content" class="mt-n12" />
           </div>
         </v-tab-item>
@@ -178,26 +198,30 @@
             v-if="content"
             class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mr-0 mb-4 pb-6 elevation-1 rounded-lg"
           >
-            <v-flex class="d-flex justify-center align-center pb-3">
-              <h2 class="body-1 pb-0">
-                <i18n path="Common.ContactTypes" />
-              </h2>
-              <v-spacer></v-spacer>
-            </v-flex>
-            <v-divider></v-divider>
+            <div class="sticky d-flex flex-column justify-center boxview">
+              <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+                <h2 class="body-1 pb-0">
+                  <i18n path="Common.ContactTypes" />
+                </h2>
+                <v-spacer></v-spacer>
+              </v-flex>
+              <v-divider></v-divider>
+            </div>
             <Grid view-name="contacttypes" :content="content" class="mt-n12" />
           </div>
           <div
             v-if="content"
             class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mr-0 mb-4 pb-6 elevation-1 rounded-lg"
           >
-            <v-flex class="d-flex justify-center align-center pb-3">
-              <h2 class="body-1 pb-0">
-                <i18n path="Common.Departments" />
-              </h2>
-              <v-spacer></v-spacer>
-            </v-flex>
-            <v-divider></v-divider>
+            <div class="sticky d-flex flex-column justify-center boxview">
+              <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+                <h2 class="body-1 pb-0">
+                  <i18n path="Common.Departments" />
+                </h2>
+                <v-spacer></v-spacer>
+              </v-flex>
+              <v-divider></v-divider>
+            </div>
             <Grid view-name="departments" :content="content" class="mt-n12" />
           </div>
         </v-tab-item>

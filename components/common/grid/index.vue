@@ -882,14 +882,12 @@ export default {
   }
   .sticky {
     position: sticky;
-    top: 35px;
+    top: 40px;
     z-index: 1;
     height: var(--header-height);
   }
-  .sticky > .grid-actions-menu {
-    background-color: white;
-    box-shadow: 0 1px 1px -1px rgba(0, 0, 0, 0.2),
-      0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 0 1px 0 rgba(0, 0, 0, 0.1) !important;
+  .sticky.grid-actions-container {
+    margin-top: -65px;
   }
   .sticky_sentinel {
     position: absolute;

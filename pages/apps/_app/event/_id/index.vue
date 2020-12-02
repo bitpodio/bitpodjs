@@ -778,14 +778,16 @@
           v-if="content"
           class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
-          <v-flex class="d-flex justify-center align-center pb-3">
-            <h2 class="body-1 pb-0">
-              <i class="fa fa-users pr-1" aria-hidden="true"></i>
-              <i18n path="Common.Attendees" />
-            </h2>
-            <v-spacer></v-spacer>
-          </v-flex>
-          <v-divider></v-divider>
+          <div class="sticky d-flex flex-column justify-center boxview">
+            <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+              <h2 class="body-1 pb-0">
+                <i class="fa fa-users pr-1" aria-hidden="true"></i>
+                <i18n path="Common.Attendees" />
+              </h2>
+              <v-spacer></v-spacer>
+            </v-flex>
+            <v-divider></v-divider>
+          </div>
           <Grid
             view-name="eventAttendees"
             :content="content"
@@ -797,14 +799,16 @@
           v-if="content"
           class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
-          <v-flex class="d-flex justify-center align-center pb-3">
-            <h2 class="body-1 pb-0">
-              <i class="fa fa-user-plus pr-1" aria-hidden="true"></i>
-              <i18n path="Common.Registrations" />
-            </h2>
-            <v-spacer></v-spacer>
-          </v-flex>
-          <v-divider></v-divider>
+          <div class="sticky d-flex flex-column justify-center boxview">
+            <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+              <h2 class="body-1 pb-0">
+                <i class="fa fa-user-plus pr-1" aria-hidden="true"></i>
+                <i18n path="Common.Registrations" />
+              </h2>
+              <v-spacer></v-spacer>
+            </v-flex>
+            <v-divider></v-divider>
+          </div>
           <Grid
             view-name="eventRegistrations"
             :content="content"
@@ -815,37 +819,43 @@
           v-if="content"
           class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
-          <v-flex class="d-flex justify-center align-center pb-3">
-            <h2 class="body-1 pb-0">
-              <i class="fa fa-mail pr-1" aria-hidden="true"></i>
-              <i18n path="Common.Invites" />
-            </h2>
-            <v-spacer></v-spacer>
-          </v-flex>
-          <v-divider></v-divider>
+          <div class="sticky d-flex flex-column justify-center boxview">
+            <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+              <h2 class="body-1 pb-0">
+                <i class="fa fa-mail pr-1" aria-hidden="true"></i>
+                <i18n path="Common.Invites" />
+              </h2>
+              <v-spacer></v-spacer>
+            </v-flex>
+            <v-divider></v-divider>
+          </div>
           <Grid view-name="eventInvites" :content="content" class="mt-n12" />
         </div>
         <div
           v-if="content"
           class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 positionRelative rounded-lg"
         >
-          <v-flex class="d-flex justify-center align-center pb-3">
-            <h2 class="body-1 pb-0">
-              <i class="fa fa-ticketalt pr-1" aria-hidden="true"></i>
-              <i18n path="Common.TicketsNotRequired" />
-            </h2>
-            <v-spacer></v-spacer>
-          </v-flex>
-          <v-divider></v-divider>
-          <div class="mt-2 seatmap-btn">
-            <v-switch
-              v-if="data.event.LocationType === 'Venue'"
-              v-model="switchSeat"
-              :label="$t('Common.SeatmapTickets')"
-              class="mt-0 ml-0 max-h24 positionAbsolute pad-right"
-              height="20"
-              @change="updateSeatReservation"
-            ></v-switch>
+          <div class="sticky d-flex flex-column justify-center boxview">
+            <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+              <h2 class="body-1 pb-0">
+                <i class="fa fa-ticketalt pr-1" aria-hidden="true"></i>
+                <i18n path="Common.TicketsNotRequired" />
+              </h2>
+              <v-spacer></v-spacer>
+              <v-switch
+                v-if="
+                  data.event.LocationType === 'Venue' && switchSeat === true
+                "
+                v-model="switchSeat"
+                :label="$t('Common.SeatmapTickets')"
+                class="mt-0 ml-0 max-h24 positionAbsolute pad-top pad-right seatmap-btn"
+                height="20"
+                @change="updateSeatReservation"
+              ></v-switch>
+            </v-flex>
+            <v-divider></v-divider>
+          </div>
+          <div class="mt-2">
             <div v-if="switchSeat" class="d-flex justify-center">
               <div v-if="layoutId && switchDailog" class="text-center">
                 <v-hover v-slot:default="{ hover }">
@@ -922,14 +932,16 @@
           v-if="content"
           class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
-          <v-flex class="d-flex justify-center align-center pb-3">
-            <h2 class="body-1 pb-0">
-              <i class="fa fa-settings1 pr-1" aria-hidden="true"></i>
-              <i18n path="Common.DiscountCodes" />
-            </h2>
-            <v-spacer></v-spacer>
-          </v-flex>
-          <v-divider></v-divider>
+          <div class="sticky d-flex flex-column justify-center boxview">
+            <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+              <h2 class="body-1 pb-0">
+                <i class="fa fa-settings1 pr-1" aria-hidden="true"></i>
+                <i18n path="Common.DiscountCodes" />
+              </h2>
+              <v-spacer></v-spacer>
+            </v-flex>
+            <v-divider></v-divider>
+          </div>
           <Grid
             view-name="eventDiscountCodes"
             :content="content"
@@ -940,14 +952,16 @@
           v-if="content"
           class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
-          <v-flex class="d-flex justify-center align-center pb-3">
-            <h2 class="body-1 pb-0">
-              <i class="fa fa-question-circle pr-1" aria-hidden="true"></i>
-              <i18n path="Common.RegistrationQuestions" />
-            </h2>
-            <v-spacer></v-spacer>
-          </v-flex>
-          <v-divider></v-divider>
+          <div class="sticky d-flex flex-column justify-center boxview">
+            <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+              <h2 class="body-1 pb-0">
+                <i class="fa fa-question-circle pr-1" aria-hidden="true"></i>
+                <i18n path="Common.RegistrationQuestions" />
+              </h2>
+              <v-spacer></v-spacer>
+            </v-flex>
+            <v-divider></v-divider>
+          </div>
           <Grid
             view-name="eventRegistrationQuestion"
             :content="content"
@@ -958,42 +972,48 @@
           v-if="content"
           class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
-          <v-flex class="d-flex justify-center align-center pb-3">
-            <h2 class="body-1 pb-0">
-              <i class="fa fa-black-board pr-1" aria-hidden="true"></i>
-              <i18n path="Common.Sessions" />
-            </h2>
-            <v-spacer></v-spacer>
-          </v-flex>
-          <v-divider></v-divider>
+          <div class="sticky d-flex flex-column justify-center boxview">
+            <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+              <h2 class="body-1 pb-0">
+                <i class="fa fa-black-board pr-1" aria-hidden="true"></i>
+                <i18n path="Common.Sessions" />
+              </h2>
+              <v-spacer></v-spacer>
+            </v-flex>
+            <v-divider></v-divider>
+          </div>
           <Grid view-name="eventSession" :content="content" class="mt-n12" />
         </div>
         <div
           v-if="content"
           class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
-          <v-flex class="d-flex justify-center align-center pb-3">
-            <h2 class="body-1 pb-0">
-              <i class="fa fa-mic pr-1" aria-hidden="true"></i>
-              <i18n path="Common.Speakers" />
-            </h2>
-            <v-spacer></v-spacer>
-          </v-flex>
-          <v-divider></v-divider>
+          <div class="sticky d-flex flex-column justify-center boxview">
+            <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+              <h2 class="body-1 pb-0">
+                <i class="fa fa-mic pr-1" aria-hidden="true"></i>
+                <i18n path="Common.Speakers" />
+              </h2>
+              <v-spacer></v-spacer>
+            </v-flex>
+            <v-divider></v-divider>
+          </div>
           <Grid view-name="eventSpeakers" :content="content" class="mt-n12" />
         </div>
         <div
           v-if="content"
           class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
-          <v-flex class="d-flex justify-center align-center pb-3">
-            <h2 class="body-1 pb-0">
-              <i class="fa fa-external-link pr-1" aria-hidden="true"></i>
-              <i18n path="Common.Tasks" />
-            </h2>
-            <v-spacer></v-spacer>
-          </v-flex>
-          <v-divider></v-divider>
+          <div class="sticky d-flex flex-column justify-center boxview">
+            <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+              <h2 class="body-1 pb-0">
+                <i class="fa fa-external-link pr-1" aria-hidden="true"></i>
+                <i18n path="Common.Tasks" />
+              </h2>
+              <v-spacer></v-spacer>
+            </v-flex>
+            <v-divider></v-divider>
+          </div>
           <Grid
             view-name="eventTasks"
             :content="content"
@@ -1005,14 +1025,16 @@
           v-if="content"
           class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
-          <v-flex class="d-flex justify-center align-center pb-3">
-            <h2 class="body-1 pb-0">
-              <i class="fa fa-file-text-o pr-1" aria-hidden="true"></i>
-              <i18n path="Common.RegistrationForm" />
-            </h2>
-            <v-spacer></v-spacer>
-          </v-flex>
-          <v-divider></v-divider>
+          <div class="sticky d-flex flex-column justify-center boxview">
+            <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+              <h2 class="body-1 pb-0">
+                <i class="fa fa-file-text-o pr-1" aria-hidden="true"></i>
+                <i18n path="Common.RegistrationForm" />
+              </h2>
+              <v-spacer></v-spacer>
+            </v-flex>
+            <v-divider></v-divider>
+          </div>
           <Grid
             view-name="eventRegistrationForm"
             :content="content"
@@ -1629,8 +1651,11 @@ export default {
   mounted() {
     this.getAttendees()
     setTimeout(this.openPrint, 3000)
+    this.$eventBus.$on('update-seat-reservation', this.updateSeatReservation)
   },
-
+  beforeDestroy() {
+    this.$eventBus.$off('update-seat-reservation')
+  },
   methods: {
     getEventStartDate() {
       return this.$d(
@@ -2222,8 +2247,8 @@ export default {
         this.localePath(`/apps/seatmap/new?event=${this.$route.params.id}`)
       )
     },
-    async updateSeatReservation() {
-      const seatReservation = this.switchSeat
+    async updateSeatReservation(switchSeat) {
+      const seatReservation = switchSeat
       const URL = `${this.$bitpod.getApiUrl()}Events/${this.$route.params.id}`
       const obj = { SeatReservation: seatReservation }
       try {
@@ -2356,8 +2381,13 @@ export default {
   .bitpodLink {
     width: 240px !important;
   }
+  .pad-top {
+    padding-top: 10px;
+  }
+}
+@media (min-width: 600px) {
   .pad-right {
-    padding: 10px 30px 0 0;
+    padding-right: 15px;
   }
 }
 .form-control {
