@@ -83,7 +83,7 @@
                     <h3><i18n path="Common.EndT" /></h3>
                   </v-col>
                 </v-row>
-                <div style="max-height: 200px; overflow: hidden auto;">
+                <div class="slotContainer">
                   <v-form ref="formData">
                     <div v-for="(slot, key) in slots" :key="key">
                       <v-row>
@@ -841,6 +841,11 @@ export default {
 }
 .days {
   min-width: 135px;
+}
+.slotContainer {
+  max-height: 200px;
+  overflow: hidden auto !important;
+  -webkit-overflow-scrolling: touch;
 }
 @media (max-width: 950px) {
   .pa-0px {
