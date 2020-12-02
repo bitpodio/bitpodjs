@@ -104,7 +104,6 @@
 
 <script>
 import gql from 'graphql-tag'
-import nuxtconfig from '~/nuxt.config'
 import { rules } from '~/utility/rules.js'
 import event from '~/config/apps/event/gql/event.gql'
 import eventCount from '~/config/apps/event/gql/eventCount.gql'
@@ -142,7 +141,7 @@ export default {
   },
   computed: {
     getUniqLink() {
-      return `https://${nuxtconfig.axios.eventUrl}/e/${this.formData.UniqLink}`
+      return `https://${this.$config.axios.eventUrl}/e/${this.formData.UniqLink}`
     },
   },
   async mounted() {

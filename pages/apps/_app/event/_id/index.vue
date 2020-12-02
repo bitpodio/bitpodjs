@@ -1538,7 +1538,7 @@ export default {
       return this.contents ? this.contents.Event : null
     },
     baseUrl() {
-      return nuxtconfig.axios.eventUrl
+      return this.$config.axios.eventUrl
     },
     updateData() {
       const dataObj = {
@@ -2046,7 +2046,7 @@ export default {
         })
     },
     viewRegistrationLink() {
-      const regUrl = `https://${nuxtconfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
+      const regUrl = `https://${this.$config.axios.eventUrl}/e/${this.data.event.UniqLink}`
       return regUrl
     },
     viewBitpodVirtualLink() {
@@ -2080,10 +2080,10 @@ export default {
     viewRegistration() {
       const orgName = this.$store.state.currentOrg.name
       if (orgName === 'bitpod') {
-        const regUrl = `https://${nuxtconfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
+        const regUrl = `https://${this.$config.axios.eventUrl}/e/${this.data.event.UniqLink}`
         window.open(`${regUrl}`, '_blank')
       } else {
-        const regUrl = `https://${orgName}-${nuxtconfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
+        const regUrl = `https://${orgName}-${this.$config.axios.eventUrl}/e/${this.data.event.UniqLink}`
         window.open(`${regUrl}`, '_blank')
       }
     },
