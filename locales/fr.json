@@ -698,7 +698,8 @@
     "HeaderPrice": "le prix",
     "TicketsNotRequired": "des billets",
     "Integration": "Integration",
-    "TimezoneCaption": "Timezone"
+    "TimezoneCaption": "Timezone",
+    "Chat": "bavarder"
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",

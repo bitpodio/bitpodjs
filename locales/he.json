@@ -699,7 +699,8 @@
     "HeaderPrice": "מחיר",
     "TicketsNotRequired": "כרטיסים",
     "Integration": "Integration",
-    "TimezoneCaption": "Timezone"
+    "TimezoneCaption": "Timezone",
+    "Chat": "לְשׂוֹחֵחַ"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",
