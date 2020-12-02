@@ -103,6 +103,7 @@ export default {
     'nuxt-i18n',
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    '@nuxtjs/device',
     '@nuxtjs/apollo',
     '@nuxtjs/auth-next',
     [

@@ -1,5 +1,10 @@
 <template>
   <div>
+    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
+      <div class="fs-16 text-center">
+        {{ snackbarText }}
+      </div>
+    </v-snackbar>
     <confirm ref="confirm"></confirm>
     <v-flex
       class="d-flex flex-wrap greybg pa-0 justify-center justify-md-start"
@@ -41,6 +46,7 @@
         :edit-template.sync="editTemplate"
         :selected="selected"
         :refresh="refresh"
+        @update-snackbar="updateSnackbar"
       />
     </div>
   </div>
@@ -64,9 +70,16 @@ export default {
     return {
       editTemplate: false,
       selected: {},
+      snackbar: false,
+      timeout: '2000',
+      snackbarText: '',
     }
   },
   methods: {
+    updateSnackbar(message) {
+      this.snackbar = true
+      this.snackbarText = message
+    },
     async deleteBadge(id) {
       const url = this.$bitpod.getApiUrl()
 

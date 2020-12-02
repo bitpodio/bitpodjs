@@ -1655,7 +1655,7 @@ export default {
     },
     goLive() {
       window.open(
-        `apps/event/live/${this.eventData.UniqLink}?e=${this.$route.params.id}`
+        `apps/event/live/${this.eventData.UniqLink}?e=${this.$route.params.id}&n=${this.eventData.Title}`
       )
     },
     openPrintForm() {

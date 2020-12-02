@@ -124,14 +124,15 @@
               @click="curentTab++"
               ><i18n path="Drawer.Next"
             /></v-btn>
-            <v-btn
-              v-if="(curentTab === 1)"
+            <SaveBtn
+              v-if="dialog && curentTab === 1"
               color="primary"
-              :disabled="!RTEValue || !subject || !sender"
               depressed
-              @click.native="onSave"
+              :disabled="!RTEValue || !subject || !sender"
+              :action="onSave"
+              class="ml-2"
               ><i18n path="Drawer.Save"
-            /></v-btn>
+            /></SaveBtn>
           </v-card-actions>
         </v-card>
       </template>
@@ -154,8 +155,10 @@
 import gql from 'graphql-tag'
 import { formatGQLResult } from '~/utility/gql.js'
 import marketingTemplates from '~/config/apps/admin/gql/marketingTemplates.gql'
+import SaveBtn from '~/components/common/saveButton'
 export default {
   components: {
+    SaveBtn,
     RichText: () =>
       process.client ? import('~/components/common/form/richtext.vue') : false,
   },
@@ -284,6 +287,10 @@ export default {
       if (activityRes) {
         this.refresh()
         this.dialog = false
+        this.$emit(
+          'update-snackbar',
+          this.$t('Messages.Success.EditTemplateSuccess')
+        )
       }
     },
   },

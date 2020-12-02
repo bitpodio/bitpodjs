@@ -135,7 +135,7 @@
           item-key="id"
           class="elevation-0 v-grid"
           :class="hideDefaultHeader ? 'px-0 pt-0 istemplate' : 'px-2 pt-1'"
-          :show-select="showSelect"
+          :show-select="$device.isMobile || showSelect"
           @update:options="updatePagination"
           @click:row="onRowClick"
           @input="onItemSelected"
@@ -573,7 +573,7 @@ export default {
       this.isFilterApplied = true
     },
     onRowClick(item, props) {
-      if (!this.showSelect) {
+      if (!this.showSelect && !this.$device.isMobile) {
         this.selectedItems = [item]
       }
     },

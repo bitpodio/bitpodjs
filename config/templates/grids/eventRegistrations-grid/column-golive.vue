@@ -47,6 +47,7 @@ export default {
   },
   data() {
     return {
+      sessionName: '',
       linkReady: false,
       link: '',
       copyLink: '',
@@ -58,18 +59,19 @@ export default {
       try {
         const res = await this.$axios.$get(`${url}Sessions/${id}`)
         if (res) {
-          if (res.LocationType === 'Bitpod Virtual') {
+          this.sessionName = res.Name
+          if (res.LocationType === 'Bitpod Virtual' && this.item.ZoomLink) {
             const roomName = this.item.ZoomLink.split('/')[3]
-            this.link = `apps/event/live/${roomName}?e=${this.$route.params.id}`
+            this.link = `apps/event/live/${roomName}?e=${this.$route.params.id}&n=${this.sessionName}`
             this.copyLink = `https://${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}/${roomName}`
             this.linkReady = true
           }
-          if (res.LocationType === 'Zoom') {
+          if (res.LocationType === 'Zoom' && this.item.ZoomLink) {
             this.link = this.item.ZoomLink
             this.copyLink = this.link
             this.linkReady = true
           }
-          if (res.LocationType === 'Online meeting') {
+          if (res.LocationType === 'Online meeting' && res.WebinarLink) {
             this.link = res.WebinarLink
             this.copyLink = this.link
             this.linkReady = true

@@ -1,5 +1,10 @@
 <template>
   <div>
+    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
+      <div class="fs-16 text-center">
+        {{ snackbarText }}
+      </div>
+    </v-snackbar>
     <confirm ref="confirm"></confirm>
     <div>
       <div
@@ -281,12 +286,14 @@
         :edit-template.sync="editTemplate"
         :selected="selected"
         :refresh="refresh"
+        @update-snackbar="updateSnackbar"
       />
     </div>
     <div v-if="editMetadata">
       <editInviteMetadata
         :edit-metadata.sync="editMetadata"
         :selected="selected"
+        @update-snackbar="updateSnackbar"
       />
     </div>
     <v-dialog v-if="!!viewTemplate" v-model="showDialog" width="600px">
@@ -333,13 +340,20 @@ export default {
       viewTemplate: false,
       showDialog: false,
       selected: {},
+      snackbar: false,
+      timeout: '2000',
+      snackbarText: '',
     }
   },
   methods: {
+    updateSnackbar(message) {
+      this.snackbar = true
+      this.snackbarText = message
+    },
     async deleteTemplete(id) {
       const url = this.$bitpod.getApiUrl()
       const check = await this.$refs.confirm.open(
-        this.$t('Common.CancelCheckin'),
+        this.$t('Common.DeleteTemplate'),
         this.$t('Messages.Warn.DeleteTemplate'),
         { color: 'error lighten-1' }
       )

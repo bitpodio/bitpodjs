@@ -1,16 +1,5 @@
 <template>
   <div>
-    <v-snackbar
-      v-if="!hideToast"
-      v-model="snackbar"
-      :timeout="timeout"
-      :top="true"
-      width="2px"
-    >
-      <div class="fs-16 text-center">
-        {{ snackbarText }}
-      </div>
-    </v-snackbar>
     <v-layout>
       <v-form ref="form" v-model="valid">
         <v-dialog
@@ -148,8 +137,6 @@ export default {
       },
       isSaveButtonDisabled: false,
       fileList,
-      snackbar: false,
-      timeout: 2000,
       orgLogo: false,
       allow: true,
       typeLookupField: {
@@ -184,11 +171,6 @@ export default {
       },
     }
   },
-  computed: {
-    snackbarText() {
-      return this.$t('Messages.Success.EditInviteMetadataSuccess')
-    },
-  },
   methods: {
     getAttachmentId(data) {
       this.fileList = data
@@ -216,7 +198,10 @@ export default {
       if (res) {
         this.$parent.refresh()
         this.onClose()
-        this.snackbar = true
+        this.$emit(
+          'update-snackbar',
+          this.$t('Messages.Success.EditMetadataSuccess')
+        )
       }
     },
   },
