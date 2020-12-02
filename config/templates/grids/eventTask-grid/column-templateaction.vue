@@ -1,5 +1,10 @@
 <template>
   <div>
+    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
+      <div class="fs-16 text-center">
+        {{ snackbarText }}
+      </div>
+    </v-snackbar>
     <v-menu
       left
       :offset-y="offset"
@@ -20,6 +25,7 @@
           button-icon="fa fa-pencil-square-o"
           :item="item"
           :refresh="refresh"
+          @update-snackbar="updateSnackbar"
         />
         <editTemplate
           v-if="item.Category === 'Registration Email'"
@@ -27,6 +33,7 @@
           button-icon="fa fa-pencil-square-o"
           :context="context"
           :item="item"
+          @update-snackbar="updateSnackbar"
         />
         <editSurveytemplate
           v-if="item.Category === 'Survey Invite'"
@@ -34,6 +41,7 @@
           button-icon="fa fa-pencil-square-o"
           :context="context"
           :item="item"
+          @update-snackbar="updateSnackbar"
         />
       </v-list>
     </v-menu>
@@ -70,7 +78,16 @@ export default {
     return {
       updateCount: 1,
       dialog: false,
+      snackbar: false,
+      timeout: '2000',
+      snackbarText: '',
     }
+  },
+  methods: {
+    updateSnackbar(message) {
+      this.snackbar = true
+      this.snackbarText = message
+    },
   },
 }
 </script>
