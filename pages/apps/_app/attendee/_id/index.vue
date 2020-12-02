@@ -779,6 +779,28 @@
           >
             <v-flex class="d-flex justify-center align-center pb-2">
               <h2 class="body-1 pb-0">
+                <i class="fa-message-square pr-1" aria-hidden="true"></i>
+                <i18n path="Common.Chat" />
+              </h2>
+              <v-spacer></v-spacer>
+            </v-flex>
+            <v-divider></v-divider>
+            <div class="body-1 mt-2">
+              <iframe
+                id="rcChannel"
+                name="rcChannel"
+                :src="`https://chat.bitpod.io/channel/${registration.EventId}?layout=embedded`"
+                width="100%"
+                height="600"
+                frameBorder="0"
+              ></iframe>
+            </div>
+          </div>
+          <div
+            class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mb-4 mx-0 ml-md-2 mr-0 pb-2 rounded-lg"
+          >
+            <v-flex class="d-flex justify-center align-center pb-2">
+              <h2 class="body-1 pb-0">
                 <i class="fa-calendar pr-1" aria-hidden="true"></i>
                 <i18n path="Common.DateTime" />
               </h2>
@@ -961,28 +983,6 @@
                 </div>
               </v-skeleton-loader>
             </v-flex>
-          </div>
-          <div
-            class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mb-4 mx-0 ml-md-2 mr-0 pb-2 rounded-lg"
-          >
-            <v-flex class="d-flex justify-center align-center pb-2">
-              <h2 class="body-1 pb-0">
-                <i class="fa-message-square pr-1" aria-hidden="true"></i>
-                <i18n path="Common.Chat" />
-              </h2>
-              <v-spacer></v-spacer>
-            </v-flex>
-            <v-divider></v-divider>
-            <div class="body-1 mt-2">
-              <iframe
-                id="rcChannel"
-                name="rcChannel"
-                :src="`https://chat.bitpod.io/channel/${registration.EventId}?layout=embedded`"
-                width="100%"
-                height="300"
-                frameBorder="0"
-              ></iframe>
-            </div>
           </div>
         </v-flex>
       </v-flex>
@@ -1180,7 +1180,7 @@ export default {
       document.getElementById('rcChannel').contentWindow.postMessage(
         {
           externalCommand: 'login-with-token',
-          token: 'eFC45gJz8vrh7Tngn1SRwETemv2kDKgDAMjNlEqH9s2',
+          token: this.registration.chatToken,
         },
         '*'
       )
