@@ -224,35 +224,22 @@
 
           <v-flex d-flex flex-md-row flex-lg-row my-2 class="event-cards">
             <div
-              class="greybg d-inline-block rounded mr-2"
-              style="width: 200px; height: 60px;"
+              class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
             >
-              <v-skeleton-loader
-                :loading="!eventDataLoaded"
-                :tile="true"
-                type="avatar"
-                height="60"
-                width="75"
+              <div
+                class="pa-2 success d-flex justify-center align-center event-tile-left"
               >
-                <div
-                  class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
-                >
-                  <div
-                    class="pa-2 success d-flex justify-center align-center event-tile-left"
-                  >
-                    <i class="fa fa-user-check" aria-hidden="true"></i>
-                  </div>
-                  <div class="d-flex flex-column pa-2 event-tile-right greybg">
-                    <div class="event-tile-value text-truncate">
-                      {{ data.eventSummary.totalRegistration }}
-                    </div>
-                    <i18n
-                      path="Common.TotalRegistration"
-                      class="caption text-truncate"
-                    />
-                  </div>
+                <i class="fa fa-user-check" aria-hidden="true"></i>
+              </div>
+              <div class="d-flex flex-column pa-2 event-tile-right greybg">
+                <div class="event-tile-value text-truncate">
+                  {{ data.eventSummary.totalRegistration }}
                 </div>
-              </v-skeleton-loader>
+                <i18n
+                  path="Common.TotalRegistration"
+                  class="caption text-truncate"
+                />
+              </div>
             </div>
             <div
               class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
@@ -1573,7 +1560,7 @@ export default {
       return this.contents ? this.contents.Event : null
     },
     baseUrl() {
-      return nuxtconfig.axios.eventUrl
+      return this.$config.axios.eventUrl
     },
     updateData() {
       const dataObj = {
@@ -1693,7 +1680,7 @@ export default {
     },
     goLive() {
       window.open(
-        `apps/event/live/${this.eventData.UniqLink}?e=${this.$route.params.id}`
+        `apps/event/live/${this.eventData.UniqLink}?e=${this.$route.params.id}&n=${this.eventData.Title}`
       )
     },
     openPrintForm() {
@@ -2084,7 +2071,7 @@ export default {
         })
     },
     viewRegistrationLink() {
-      const regUrl = `https://${nuxtconfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
+      const regUrl = `https://${this.$config.axios.eventUrl}/e/${this.data.event.UniqLink}`
       return regUrl
     },
     viewBitpodVirtualLink() {
@@ -2118,10 +2105,10 @@ export default {
     viewRegistration() {
       const orgName = this.$store.state.currentOrg.name
       if (orgName === 'bitpod') {
-        const regUrl = `https://${nuxtconfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
+        const regUrl = `https://${this.$config.axios.eventUrl}/e/${this.data.event.UniqLink}`
         window.open(`${regUrl}`, '_blank')
       } else {
-        const regUrl = `https://${orgName}-${nuxtconfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
+        const regUrl = `https://${orgName}-${this.$config.axios.eventUrl}/e/${this.data.event.UniqLink}`
         window.open(`${regUrl}`, '_blank')
       }
     },

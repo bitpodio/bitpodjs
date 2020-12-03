@@ -1,9 +1,7 @@
 <template>
   <v-col class="px-0">
-    <v-snackbar v-model="snackbar" :timeout="1000" :top="true" width="10px">
-      <div
-        class="toast py-2 pr-1 pl-5 text-h6 light font-weight-regular text-center"
-      >
+    <v-snackbar v-model="snackbar" :timeout="2000" :top="true" width="2px">
+      <div class="fs-16 text-center">
         {{ snackbarText }}
       </div>
     </v-snackbar>
@@ -461,6 +459,13 @@ export default {
       ]
     },
   },
+  watch: {
+    snackbar(newData) {
+      if (!newData) {
+        this.refresh()
+      }
+    },
+  },
   methods: {
     locationChanged(value) {
       if (value !== 'Venue') {
@@ -518,7 +523,9 @@ export default {
       this.$apollo.queries.data.refresh()
       this.$apollo.queries.speaker.refresh()
       this.$apollo.queries.event.refresh()
-      this.dialog = true
+      setTimeout(() => {
+        this.dialog = true
+      }, 0)
     },
     changeDuration(value) {
       if (value === '0') {
@@ -665,7 +672,6 @@ export default {
         }
         this.snackbar = true
         this.closeForm()
-        this.refresh()
       }
     },
     closeForm() {

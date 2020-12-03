@@ -2,7 +2,9 @@ import getApiUrl from './getApiUrl'
 
 export default (context, inject) => {
   const bitpod = {
-    getApiUrl,
+    getApiUrl: () => {
+      return getApiUrl(context)
+    },
   }
   inject('bitpod', bitpod)
   context.$bitpod = bitpod

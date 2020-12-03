@@ -141,7 +141,7 @@ export default {
   },
   computed: {
     getUniqLink() {
-      return `https://bitpod-event.test.bitpod.io/e/${this.formData.UniqLink}`
+      return `https://${this.$config.axios.eventUrl}/e/${this.formData.UniqLink}`
     },
   },
   async mounted() {

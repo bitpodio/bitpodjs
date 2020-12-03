@@ -83,7 +83,7 @@
                     <h3><i18n path="Common.EndT" /></h3>
                   </v-col>
                 </v-row>
-                <div style="max-height: 200px; overflow: hidden auto;">
+                <div class="slotContainer">
                   <v-form ref="formData">
                     <div v-for="(slot, key) in slots" :key="key">
                       <v-row>
@@ -345,7 +345,8 @@ export default {
         eventDidMount: (propsdata) => {
           if (propsdata.view.type === 'dayGridMonth') {
             propsdata.el.className += ' eventBox'
-            propsdata.el.style.whiteSpace = 'break-spaces'
+            propsdata.el.style.whiteSpace = 'normal'
+            propsdata.el.style.display = 'block'
             propsdata.el.childNodes[1].className = 'd-none'
             propsdata.el.childNodes[0].className = 'd-none'
             propsdata.el.lastElementChild.innerHTML = propsdata.el.lastElementChild.innerHTML.trim()
@@ -841,6 +842,12 @@ export default {
 }
 .days {
   min-width: 135px;
+}
+@media (min-width: 600px) {
+  .slotContainer {
+    max-height: 200px;
+    overflow: hidden auto !important;
+  }
 }
 @media (max-width: 950px) {
   .pa-0px {

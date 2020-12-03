@@ -145,7 +145,7 @@
           item-key="id"
           class="elevation-0 v-grid"
           :class="hideDefaultHeader ? 'px-0 pt-0 istemplate' : 'px-2 pt-1'"
-          :show-select="showSelect"
+          :show-select="$device.isMobile || showSelect"
           @update:options="updatePagination"
           @click:row="onRowClick"
           @input="onItemSelected"
@@ -244,7 +244,7 @@
       </div>
       <div
         v-if="viewName === 'seatmaps' || viewName === 'integration'"
-        class="d-flex flex-sm-wrap flex-column flex-sm-row seat-skeleton-inner"
+        class="d-flex flex-sm-wrap flex-column flex-sm-row seat-skeleton-inner mt-8"
       >
         <v-skeleton-loader
           v-for="i in 10"
@@ -525,10 +525,13 @@ export default {
       this.$eventBus.$emit('searched-key', newval)
     },
     value() {
-      this.selectedItems = this.$props.value
+      this.selectedItems = this.value
     },
   },
   mounted() {
+    setTimeout(() => {
+      this.selectedItems = []
+    }, 2000)
     this.$eventBus.$on('unselectAll-record', this.unselectAllRecord)
     if (this.loadRestData) {
       this.$eventBus.$on('user-created', this.loadRestData)
@@ -672,7 +675,7 @@ export default {
       this.isFilterApplied = true
     },
     onRowClick(item, props) {
-      if (!this.showSelect) {
+      if (!this.showSelect && !this.$device.isMobile) {
         this.selectedItems = [item]
       }
     },

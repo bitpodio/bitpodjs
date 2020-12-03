@@ -366,7 +366,6 @@ import format from 'date-fns/format'
 import { utcToZonedTime } from 'date-fns-tz'
 import editEventForm from '~/pages/apps/_app/event/_id/editEventForm.vue'
 import makeCopy from '~/pages/apps/_app/event/_id/makeCopy.vue'
-import nuxtconfig from '~/nuxt.config'
 export default {
   components: {
     editEventForm,
@@ -460,10 +459,10 @@ export default {
     viewRegistration(UniqLink) {
       const orgName = this.$store.state.currentOrg.name
       if (orgName === 'bitpod') {
-        const regUrl = `https://${nuxtconfig.axios.eventUrl}/e/${UniqLink}`
+        const regUrl = `https://${this.$config.axios.eventUrl}/e/${UniqLink}`
         window.open(`${regUrl}`, '_blank')
       } else {
-        const regUrl = `https://${orgName}-${nuxtconfig.axios.eventUrl}/e/${UniqLink}`
+        const regUrl = `https://${orgName}-${this.$config.axios.eventUrl}/e/${UniqLink}`
         window.open(`${regUrl}`, '_blank')
       }
     },

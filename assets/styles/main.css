@@ -599,6 +599,12 @@ table > tbody > tr:last-child .key-align {
 .grid-actions-spread .v-list-item {
   padding: 0 !important;
 }
+.wrap-word-normal {
+  white-space: normal;
+}
+.service-text {
+  min-height: 24px;
+}
 @media (max-width: 800px) {
   .nav-bar {
     top: 50px !important;
