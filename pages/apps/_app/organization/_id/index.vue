@@ -88,10 +88,10 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <div class="sticky d-flex flex-column justify-center boxview">
-          <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+          <v-flex class="d-flex justify-center align-center pb-md-2 pt-md-2">
             <h2 class="body-1 pb-0">
               <i class="fa fa-user-plus pr-1" aria-hidden="true"></i>
               <i18n path="Common.BusinessUnits" />
@@ -108,10 +108,10 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <div class="sticky d-flex flex-column justify-center boxview">
-          <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+          <v-flex class="d-flex justify-center align-center pb-md-2 pt-md-2">
             <h2 class="body-1 pb-0">
               <i class="fa fa-server pr-1" aria-hidden="true"></i>
               <i18n path="Common.Subscriptions" />
@@ -128,10 +128,10 @@
       </div>
       <div
         v-if="content"
-        class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+        class="xs12 sm4 md4 lg4 boxview pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
       >
         <div class="sticky d-flex flex-column justify-center boxview">
-          <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+          <v-flex class="d-flex justify-center align-center pb-md-2 pt-md-2">
             <h2 class="body-1 pb-0">
               <i class="fa fa-external-link pr-1" aria-hidden="true"></i>
               <i18n path="Common.Tasks" />
@@ -747,5 +747,15 @@ export default {
 }
 .file-name {
   width: 125px;
+}
+@media (max-width: 500px) {
+  .pad-card {
+    padding: 0 12px 0 12px;
+  }
+}
+@media (min-width: 600px) {
+  .pad-card {
+    padding: 12px 12px 0 12px;
+  }
 }
 </style>

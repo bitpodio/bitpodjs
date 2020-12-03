@@ -776,10 +776,10 @@
         </div>
         <div
           v-if="content"
-          class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+          class="xs12 sm4 md4 lg4 boxview pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
           <div class="sticky d-flex flex-column justify-center boxview">
-            <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+            <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
               <h2 class="body-1 pb-0">
                 <i class="fa fa-users pr-1" aria-hidden="true"></i>
                 <i18n path="Common.Attendees" />
@@ -797,10 +797,10 @@
         </div>
         <div
           v-if="content"
-          class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+          class="xs12 sm4 md4 lg4 boxview pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
           <div class="sticky d-flex flex-column justify-center boxview">
-            <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+            <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
               <h2 class="body-1 pb-0">
                 <i class="fa fa-user-plus pr-1" aria-hidden="true"></i>
                 <i18n path="Common.Registrations" />
@@ -817,10 +817,10 @@
         </div>
         <div
           v-if="content"
-          class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+          class="xs12 sm4 md4 lg4 boxview pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
           <div class="sticky d-flex flex-column justify-center boxview">
-            <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+            <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
               <h2 class="body-1 pb-0">
                 <i class="fa fa-mail pr-1" aria-hidden="true"></i>
                 <i18n path="Common.Invites" />
@@ -833,10 +833,10 @@
         </div>
         <div
           v-if="content"
-          class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 positionRelative rounded-lg"
+          class="xs12 sm4 md4 lg4 boxview pad-card pb-6 mr-2 mb-4 elevation-1 positionRelative rounded-lg"
         >
           <div class="sticky d-flex flex-column justify-center boxview">
-            <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+            <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
               <h2 class="body-1 pb-0">
                 <i class="fa fa-ticketalt pr-1" aria-hidden="true"></i>
                 <i18n path="Common.TicketsNotRequired" />
@@ -855,7 +855,7 @@
             </v-flex>
             <v-divider></v-divider>
           </div>
-          <div class="mt-2">
+          <div class="mar-top">
             <div v-if="switchSeat" class="d-flex justify-center">
               <div v-if="layoutId && switchDailog" class="text-center">
                 <v-hover v-slot:default="{ hover }">
@@ -930,10 +930,10 @@
         </div>
         <div
           v-if="content"
-          class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+          class="xs12 sm4 md4 lg4 boxview boxviewsmall pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
           <div class="sticky d-flex flex-column justify-center boxview">
-            <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+            <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
               <h2 class="body-1 pb-0">
                 <i class="fa fa-settings1 pr-1" aria-hidden="true"></i>
                 <i18n path="Common.DiscountCodes" />
@@ -950,10 +950,10 @@
         </div>
         <div
           v-if="content"
-          class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+          class="xs12 sm4 md4 lg4 boxview pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
           <div class="sticky d-flex flex-column justify-center boxview">
-            <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+            <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
               <h2 class="body-1 pb-0">
                 <i class="fa fa-question-circle pr-1" aria-hidden="true"></i>
                 <i18n path="Common.RegistrationQuestions" />
@@ -970,10 +970,10 @@
         </div>
         <div
           v-if="content"
-          class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+          class="xs12 sm4 md4 lg4 boxview pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
           <div class="sticky d-flex flex-column justify-center boxview">
-            <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+            <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
               <h2 class="body-1 pb-0">
                 <i class="fa fa-black-board pr-1" aria-hidden="true"></i>
                 <i18n path="Common.Sessions" />
@@ -986,10 +986,10 @@
         </div>
         <div
           v-if="content"
-          class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+          class="xs12 sm4 md4 lg4 boxview pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
           <div class="sticky d-flex flex-column justify-center boxview">
-            <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+            <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
               <h2 class="body-1 pb-0">
                 <i class="fa fa-mic pr-1" aria-hidden="true"></i>
                 <i18n path="Common.Speakers" />
@@ -1002,10 +1002,10 @@
         </div>
         <div
           v-if="content"
-          class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+          class="xs12 sm4 md4 lg4 boxview pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
           <div class="sticky d-flex flex-column justify-center boxview">
-            <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+            <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
               <h2 class="body-1 pb-0">
                 <i class="fa fa-external-link pr-1" aria-hidden="true"></i>
                 <i18n path="Common.Tasks" />
@@ -1023,10 +1023,10 @@
         </div>
         <div
           v-if="content"
-          class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+          class="xs12 sm4 md4 lg4 boxview pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
           <div class="sticky d-flex flex-column justify-center boxview">
-            <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+            <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
               <h2 class="body-1 pb-0">
                 <i class="fa fa-file-text-o pr-1" aria-hidden="true"></i>
                 <i18n path="Common.RegistrationForm" />
@@ -2381,13 +2381,25 @@ export default {
   .bitpodLink {
     width: 240px !important;
   }
-  .pad-top {
-    padding-top: 10px;
+  .max-h24 {
+    max-height: 24px;
+    right: 12px;
+  }
+  .pad-card {
+    padding: 0 12px 0 12px;
   }
 }
 @media (min-width: 600px) {
-  .pad-right {
-    padding-right: 15px;
+  .max-h24 {
+    max-height: 24px;
+    right: 27px;
+    top: 13px;
+  }
+  .mar-top {
+    margin-top: 8px !important;
+  }
+  .pad-card {
+    padding: 12px 12px 0 12px;
   }
 }
 .form-control {
@@ -2439,10 +2451,5 @@ export default {
   border: 1px dashed #ccc;
   max-width: 240px;
   min-width: 240px;
-}
-.max-h24 {
-  max-height: 24px;
-  right: 12px;
-  top: 10px;
 }
 </style>

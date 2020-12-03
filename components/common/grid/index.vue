@@ -12,9 +12,14 @@
       <div
         v-if="!noAction"
         class="grid-actions-container mt-lg-n11 mt-md-n11 mt-sm-n11 mt-xs-0 sticky"
+        :class="onlySticky ? 'sticky_inline_flex' : ''"
       >
         <div
-          v-if="
+          class="d-flex align-center"
+          :class="onlySticky ? 'elevation-1 boxview rounded' : ''"
+        >
+          <div
+            v-if="
             (hasGridOption ||
             hasRowOption ||
             (viewName &&
@@ -23,24 +28,42 @@
             content.view[viewName].template &&
             content.view[viewName].template.actions &&
             Object.values(content.view[viewName].template.actions).reduce((acc,i)=>{return acc || !i.hidden},false)) )"
-          class="grid-actions-menu"
-        >
-          <v-menu right :offset-y="offset" transition="slide-y-transition">
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn icon small v-bind="attrs" v-on="on">
-                <v-icon>mdi-dots-vertical</v-icon>
-              </v-btn>
-            </template>
-            <v-list dense>
-              <component
-                :is="actionTemplates['grid'] || null"
-                :content="content"
-                :view-name="viewName"
-                :on-new-item-save="onNewItemSave"
-                :refresh="refresh"
-                :context="context"
-                @hasGridOption="getGridOption"
-              />
+            class="grid-actions-menu"
+          >
+            <v-menu right :offset-y="offset" transition="slide-y-transition">
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn icon small v-bind="attrs" v-on="on">
+                  <v-icon>mdi-dots-vertical</v-icon>
+                </v-btn>
+              </template>
+              <v-list dense>
+                <component
+                  :is="actionTemplates['grid'] || null"
+                  :content="content"
+                  :view-name="viewName"
+                  :on-new-item-save="onNewItemSave"
+                  :refresh="refresh"
+                  :context="context"
+                  @hasGridOption="getGridOption"
+                />
+                <component
+                  :is="actionTemplates['row-select'] || null"
+                  v-if="selectedItems.length > 0"
+                  :content="content"
+                  :view-name="viewName"
+                  :on-update-item="onUpdateItem"
+                  :on-delete-item="onDeleteItem"
+                  :items="selectedItems"
+                  :refresh="refresh"
+                  :context="context"
+                  :get-action-items="getActionItems"
+                  @hasRowOption="getRowOption"
+                />
+              </v-list>
+            </v-menu>
+          </div>
+          <div class="grid-actions-spread">
+            <div class="d-flex">
               <component
                 :is="actionTemplates['row-select'] || null"
                 v-if="selectedItems.length > 0"
@@ -52,60 +75,47 @@
                 :refresh="refresh"
                 :context="context"
                 :get-action-items="getActionItems"
+                class="d-inline-flex"
                 @hasRowOption="getRowOption"
               />
-            </v-list>
-          </v-menu>
-        </div>
-        <div class="grid-actions-spread">
-          <div class="d-flex">
-            <component
-              :is="actionTemplates['row-select'] || null"
-              v-if="selectedItems.length > 0"
-              :content="content"
-              :view-name="viewName"
-              :on-update-item="onUpdateItem"
-              :on-delete-item="onDeleteItem"
-              :items="selectedItems"
-              :refresh="refresh"
-              :context="context"
-              :get-action-items="getActionItems"
-              class="d-inline-flex"
-              @hasRowOption="getRowOption"
-            />
-            <component
-              :is="actionTemplates['grid'] || null"
-              :content="content"
-              :view-name="viewName"
-              :on-new-item-save="onNewItemSave"
-              :refresh="refresh"
-              :context="context"
-              class="d-inline-flex"
-              @hasGridOption="getGridOption"
-            />
+              <component
+                :is="actionTemplates['grid'] || null"
+                :content="content"
+                :view-name="viewName"
+                :on-new-item-save="onNewItemSave"
+                :refresh="refresh"
+                :context="context"
+                class="d-inline-flex"
+                @hasGridOption="getGridOption"
+              />
+            </div>
           </div>
-        </div>
-        <div v-if="hideFilter">
-          <slot name="filter">
-            <FieldsFilter
-              v-model="filters"
-              :is-filter-applied="isFilterApplied"
-              :fields="filterableFields"
-            />
-          </slot>
-        </div>
-        <div v-if="!hideSearch" class="grid-search-section">
-          <slot name="search">
-            <v-text-field
-              v-model="search"
-              append-icon="mdi-magnify"
-              :label="$t('Common.Search')"
-              hide-details
-              class="grid-search-input ml-2"
-              outlined
-              dense
-            ></v-text-field>
-          </slot>
+          <div v-if="hideFilter">
+            <slot name="filter">
+              <FieldsFilter
+                v-model="filters"
+                :is-filter-applied="isFilterApplied"
+                :fields="filterableFields"
+              />
+            </slot>
+          </div>
+          <div
+            v-if="!hideSearch"
+            class="grid-search-section"
+            :class="onlySticky ? 'mr-2' : ''"
+          >
+            <slot name="search">
+              <v-text-field
+                v-model="search"
+                append-icon="mdi-magnify"
+                :label="$t('Common.Search')"
+                hide-details
+                class="grid-search-input ml-2"
+                outlined
+                dense
+              ></v-text-field>
+            </slot>
+          </div>
         </div>
       </div>
       <v-skeleton-loader
@@ -427,6 +437,10 @@ export default {
     serveritemslength: {
       type: null,
       default: null,
+    },
+    onlySticky: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -878,7 +892,7 @@ export default {
     overflow-y: hidden;
   }
   :root {
-    --header-height: 60px;
+    --header-height: 80px;
   }
   .sticky {
     position: sticky;
@@ -887,7 +901,7 @@ export default {
     height: var(--header-height);
   }
   .sticky.grid-actions-container {
-    margin-top: -65px;
+    margin-top: -77px;
   }
   .sticky_sentinel {
     position: absolute;
@@ -902,6 +916,11 @@ export default {
   .sticky_sentinel--bottom {
     height: var(--header-height);
     bottom: 0;
+  }
+  .sticky_inline_flex {
+    display: inline-flex;
+    left: 100%;
+    z-index: 5;
   }
 }
 </style>

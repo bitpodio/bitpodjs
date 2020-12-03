@@ -34,10 +34,12 @@
         <v-tab-item :value="'tab-1'">
           <div
             v-if="content"
-            class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mr-0 mb-4 pb-6 elevation-1 rounded-lg"
+            class="xs12 sm4 md4 lg4 boxview boxviewsmall pad-card mr-0 mb-4 pb-6 elevation-1 rounded-lg"
           >
             <div class="sticky d-flex flex-column justify-center boxview">
-              <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+              <v-flex
+                class="d-flex justify-center align-center pb-md-2 pt-md-2"
+              >
                 <h2 class="body-1 pb-0">
                   <i18n path="Common.Currency" />
                 </h2>
@@ -49,10 +51,12 @@
           </div>
           <div
             v-if="content"
-            class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mr-0 mb-4 pb-6 elevation-1 rounded-lg"
+            class="xs12 sm4 md4 lg4 boxview boxviewsmall pad-card mr-0 mb-4 pb-6 elevation-1 rounded-lg"
           >
             <div class="sticky d-flex flex-column justify-center boxview">
-              <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+              <v-flex
+                class="d-flex justify-center align-center pb-md-2 pt-md-2"
+              >
                 <h2 class="body-1 pb-0">
                   <i18n path="Common.TimeZone" />
                 </h2>
@@ -66,10 +70,12 @@
         <v-tab-item :value="'tab-2'">
           <div
             v-if="content"
-            class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mr-0 mb-4 pb-6 elevation-1 rounded-lg"
+            class="xs12 sm4 md4 lg4 boxview boxviewsmall pad-card mr-0 mb-4 pb-6 elevation-1 rounded-lg"
           >
             <div class="sticky d-flex flex-column justify-center boxview">
-              <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+              <v-flex
+                class="d-flex justify-center align-center pb-md-2 pt-md-2"
+              >
                 <h2 class="body-1 pb-0">
                   <i18n path="Common.EventPrivacy" />
                 </h2>
@@ -81,10 +87,12 @@
           </div>
           <div
             v-if="content"
-            class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mr-0 mb-4 pb-6 elevation-1 rounded-lg"
+            class="xs12 sm4 md4 lg4 boxview boxviewsmall pad-card mr-0 mb-4 pb-6 elevation-1 rounded-lg"
           >
             <div class="sticky d-flex flex-column justify-center boxview">
-              <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+              <v-flex
+                class="d-flex justify-center align-center pb-md-2 pt-md-2"
+              >
                 <h2 class="body-1 pb-0">
                   <i18n path="Common.EventTag" />
                 </h2>
@@ -96,10 +104,12 @@
           </div>
           <div
             v-if="content"
-            class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mr-0 mb-4 pb-6 elevation-1 rounded-lg"
+            class="xs12 sm4 md4 lg4 boxview boxviewsmall pad-card mr-0 mb-4 pb-6 elevation-1 rounded-lg"
           >
             <div class="sticky d-flex flex-column justify-center boxview">
-              <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+              <v-flex
+                class="d-flex justify-center align-center pb-md-2 pt-md-2"
+              >
                 <h2 class="body-1 pb-0">
                   <i18n path="Common.TicketType" />
                 </h2>
@@ -111,10 +121,12 @@
           </div>
           <div
             v-if="content"
-            class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mr-0 mb-4 pb-6 elevation-1 rounded-lg"
+            class="xs12 sm4 md4 lg4 boxview boxviewsmall pad-card mr-0 mb-4 pb-6 elevation-1 rounded-lg"
           >
             <div class="sticky d-flex flex-column justify-center boxview">
-              <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+              <v-flex
+                class="d-flex justify-center align-center pb-md-2 pt-md-2"
+              >
                 <h2 class="body-1 pb-0">
                   <i18n path="Common.SessionType" />
                 </h2>
@@ -126,10 +138,12 @@
           </div>
           <div
             v-if="content"
-            class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mr-0 mb-4 pb-6 elevation-1 rounded-lg"
+            class="xs12 sm4 md4 lg4 boxview boxviewsmall pad-card mr-0 mb-4 pb-6 elevation-1 rounded-lg"
           >
             <div class="sticky d-flex flex-column justify-center boxview">
-              <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+              <v-flex
+                class="d-flex justify-center align-center pb-md-2 pt-md-2"
+              >
                 <h2 class="body-1 pb-0">
                   <i18n path="Common.QuestionControl" />
                 </h2>
@@ -147,10 +161,12 @@
         <v-tab-item :value="'tab-3'">
           <div
             v-if="content"
-            class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mr-0 mb-4 pb-6 elevation-1 rounded-lg"
+            class="xs12 sm4 md4 lg4 boxview boxviewsmall pad-card mr-0 mb-4 pb-6 elevation-1 rounded-lg"
           >
             <div class="sticky d-flex flex-column justify-center boxview">
-              <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+              <v-flex
+                class="d-flex justify-center align-center pb-md-2 pt-md-2"
+              >
                 <h2 class="body-1 pb-0">
                   <i18n path="Common.RefundMethod" />
                 </h2>
@@ -162,10 +178,12 @@
           </div>
           <div
             v-if="content"
-            class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mr-0 mb-4 pb-6 elevation-1 rounded-lg"
+            class="xs12 sm4 md4 lg4 boxview boxviewsmall pad-card mr-0 mb-4 pb-6 elevation-1 rounded-lg"
           >
             <div class="sticky d-flex flex-column justify-center boxview">
-              <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+              <v-flex
+                class="d-flex justify-center align-center pb-md-2 pt-md-2"
+              >
                 <h2 class="body-1 pb-0">
                   <i18n path="Common.Reason" />
                 </h2>
@@ -179,10 +197,12 @@
         <v-tab-item :value="'tab-4'">
           <div
             v-if="content"
-            class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mr-0 mb-4 pb-6 elevation-1 rounded-lg"
+            class="xs12 sm4 md4 lg4 boxview boxviewsmall pad-card mr-0 mb-4 pb-6 elevation-1 rounded-lg"
           >
             <div class="sticky d-flex flex-column justify-center boxview">
-              <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+              <v-flex
+                class="d-flex justify-center align-center pb-md-2 pt-md-2"
+              >
                 <h2 class="body-1 pb-0">
                   <i18n path="Common.BadgeCategory" />
                 </h2>
@@ -196,10 +216,12 @@
         <v-tab-item :value="'tab-5'">
           <div
             v-if="content"
-            class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mr-0 mb-4 pb-6 elevation-1 rounded-lg"
+            class="xs12 sm4 md4 lg4 boxview boxviewsmall pad-card mr-0 mb-4 pb-6 elevation-1 rounded-lg"
           >
             <div class="sticky d-flex flex-column justify-center boxview">
-              <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+              <v-flex
+                class="d-flex justify-center align-center pb-md-2 pt-md-2"
+              >
                 <h2 class="body-1 pb-0">
                   <i18n path="Common.ContactTypes" />
                 </h2>
@@ -211,10 +233,12 @@
           </div>
           <div
             v-if="content"
-            class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mr-0 mb-4 pb-6 elevation-1 rounded-lg"
+            class="xs12 sm4 md4 lg4 boxview boxviewsmall pad-card mr-0 mb-4 pb-6 elevation-1 rounded-lg"
           >
             <div class="sticky d-flex flex-column justify-center boxview">
-              <v-flex class="d-flex justify-center align-center pb-3 pt-2">
+              <v-flex
+                class="d-flex justify-center align-center pb-md-2 pt-md-2"
+              >
                 <h2 class="body-1 pb-0">
                   <i18n path="Common.Departments" />
                 </h2>
@@ -251,3 +275,15 @@ export default {
   },
 }
 </script>
+<style scoped>
+@media (max-width: 500px) {
+  .pad-card {
+    padding: 0 12px 0 12px;
+  }
+}
+@media (min-width: 600px) {
+  .pad-card {
+    padding: 12px 12px 0 12px;
+  }
+}
+</style>

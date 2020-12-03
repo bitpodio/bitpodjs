@@ -1,6 +1,6 @@
 <template>
   <v-layout column>
-    <v-flex v-if="content" xs12 sm12 md12>
+    <v-flex v-if="content" class="negative_margin" xs12 sm12 md12>
       <ViewDropdown
         :content="content"
         :view-name="$route.params.viewName"
@@ -8,7 +8,11 @@
       />
     </v-flex>
     <v-flex v-if="content" xs12 sm12 md12>
-      <Grid :view-name="$route.params.viewName" :content="content" />
+      <Grid
+        :view-name="$route.params.viewName"
+        :content="content"
+        :only-sticky="true"
+      />
     </v-flex>
   </v-layout>
 </template>
@@ -33,3 +37,10 @@ export default {
   },
 }
 </script>
+<style scoped>
+@media (max-width: 600px) {
+  .negative_margin {
+    margin-bottom: -30px;
+  }
+}
+</style>
