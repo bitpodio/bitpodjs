@@ -15,42 +15,66 @@
               <v-card class="elevation-0 pt-0">
                 <v-list>
                   <v-list-item class="pl-0">
-                    <v-list-item-avatar size="62" v-if="lastPicId === ''">
-                      <v-avatar
-                        color="primary"
-                        size="62"
-                        v-bind="attrs"
-                        v-on="on"
-                      >
-                        <span class="white--text Twitter">{{
-                          data.contact.FirstName
-                        }}</span>
-                      </v-avatar>
-                    </v-list-item-avatar>
-                    <v-img
-                      v-else
-                      :src="getAttachmentLink(lastPicId, true)"
-                      :lazy-src="getAttachmentLink(lastPicId, true)"
-                      aspect-ratio="1"
-                      class="rounded-circle"
-                      max-width="139"
-                      max-height="92"
-                      width="150"
-                      contain
-                    >
-                      <template v-slot:placeholder>
-                        <v-row
-                          class="fill-height ma-0"
-                          align="center"
-                          justify="center"
+                    <div>
+                      <div>
+                        <v-list-item-avatar
+                          size="62"
+                          v-if="lastPicId === ''"
+                          style="margin: auto;"
                         >
-                          <v-progress-circular
-                            indeterminate
-                            color="grey lighten-5"
-                          ></v-progress-circular>
-                        </v-row>
-                      </template>
-                    </v-img>
+                          <v-avatar
+                            color="primary"
+                            size="62"
+                            v-bind="attrs"
+                            v-on="on"
+                          >
+                            <span class="white--text Twitter">{{
+                              data.contact.FirstName
+                            }}</span>
+                          </v-avatar>
+                        </v-list-item-avatar>
+                        <v-img
+                          v-else
+                          :src="getAttachmentLink(lastPicId, true)"
+                          :lazy-src="getAttachmentLink(lastPicId, true)"
+                          aspect-ratio="1"
+                          class="rounded-circle"
+                          max-width="100"
+                          max-height="100"
+                          min-height="100"
+                          width="150"
+                          cover
+                        >
+                          <template v-slot:placeholder>
+                            <v-row
+                              class="fill-height ma-0"
+                              align="center"
+                              justify="center"
+                            >
+                              <v-progress-circular
+                                indeterminate
+                                color="grey lighten-5"
+                              ></v-progress-circular>
+                            </v-row>
+                          </template>
+                        </v-img>
+                      </div>
+                      <div
+                        class="cursorPointer blue--text text-center mt-1"
+                        @click="checkContactClicked"
+                      >
+                        <File
+                          :field="fileField"
+                          :no-btn-look="true"
+                          :block="true"
+                          :open-file-dialog="orgLogo"
+                          :value="checkArray"
+                          :hide-preview="true"
+                          @input="uploadContactImg"
+                        />
+                        <i18n path="Drawer.Upload" />
+                      </div>
+                    </div>
                     <v-list-item-content class="pl-3 pb-8">
                       <v-list-item-title class="mt-n4">
                         <h2 class="text-capitalize text-truncate">
@@ -65,21 +89,6 @@
                       }}</v-list-item-subtitle>
                     </v-list-item-content>
                   </v-list-item>
-                  <v-list class="mt-n4 pl-2 pt-6"
-                    ><span
-                      class="cursorPointer blue--text"
-                      @click="checkContactClicked"
-                    >
-                      <File
-                        :field="fileField"
-                        :no-btn-look="true"
-                        :block="true"
-                        :open-file-dialog="orgLogo"
-                        :value="checkArray"
-                        :hide-preview="true"
-                        @input="uploadContactImg" />
-                      <i18n path="Drawer.Upload" /></span
-                  ></v-list>
                 </v-list>
               </v-card>
             </v-col>

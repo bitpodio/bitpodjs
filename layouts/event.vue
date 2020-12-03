@@ -134,6 +134,10 @@
             router
             exact
             :class="[
+              (currentPage.includes(
+                '/apps/event/list/Event/eventInvitaionHistory'
+              ) &&
+                item.to === '/apps/event/list/Event/live and draft event') ||
               (currentPage.includes('/apps/event/event/') &&
                 item.to === '/apps/event/list/Event/live and draft event') ||
               (currentPage.includes('/apps/event/registration') &&
