@@ -511,10 +511,13 @@ export default {
       this.$eventBus.$emit('searched-key', newval)
     },
     value() {
-      this.selectedItems = this.$props.value
+      this.selectedItems = this.value
     },
   },
   mounted() {
+    setTimeout(() => {
+      this.selectedItems = []
+    }, 2000)
     this.$eventBus.$on('unselectAll-record', this.unselectAllRecord)
     if (this.loadRestData) {
       this.$eventBus.$on('user-created', this.loadRestData)
