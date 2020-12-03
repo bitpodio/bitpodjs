@@ -234,7 +234,7 @@
       </div>
       <div
         v-if="viewName === 'seatmaps' || viewName === 'integration'"
-        class="d-flex flex-sm-wrap flex-column flex-sm-row seat-skeleton-inner"
+        class="d-flex flex-sm-wrap flex-column flex-sm-row seat-skeleton-inner mt-8"
       >
         <v-skeleton-loader
           v-for="i in 10"
