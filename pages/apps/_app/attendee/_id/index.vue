@@ -243,7 +243,7 @@
                 </div>
               </div>
               <div v-if="registration && registration.allowChat === 'true'">
-                <!-- <div>
+                <div>
                   <div
                     class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2 rounded-lg"
                   >
@@ -269,7 +269,7 @@
                       ></iframe>
                     </div>
                   </div>
-                </div> -->
+                </div>
               </div>
               <div v-else>
                 <div
@@ -657,28 +657,6 @@
           </div>
         </v-flex>
         <v-flex column class="mxw-w30">
-          <!-- <div
-            class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mb-4 mx-0 ml-md-2 mr-0 pb-2 rounded-lg"
-          >
-            <v-flex class="d-flex justify-center align-center pb-2">
-              <h2 class="body-1 pb-0">
-                <i class="fa-message-square pr-1" aria-hidden="true"></i>
-                <i18n path="Common.Chat" />
-              </h2>
-              <v-spacer></v-spacer>
-            </v-flex>
-            <v-divider></v-divider>
-            <div class="body-1 mt-2">
-              <iframe
-                id="rcChannel"
-                name="rcChannel"
-                :src="`https://chat.bitpod.io/channel/${registration.EventId}?layout=embedded`"
-                width="100%"
-                height="600"
-                frameBorder="0"
-              ></iframe>
-            </div>
-          </div> -->
           <div
             class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mb-4 mx-0 ml-md-2 mr-0 pb-2 rounded-lg"
           >
