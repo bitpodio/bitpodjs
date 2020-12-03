@@ -242,271 +242,154 @@
                   </div>
                 </div>
               </div>
-              <div
-                v-if="
-                  registration &&
-                  registration.attendee &&
-                  registration.attendee.length
-                "
-              >
+              <div v-if="registration && registration.allowChat === 'true'">
+                <!-- <div>
+                  <div
+                    class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2 rounded-lg"
+                  >
+                    <v-flex class="d-flex justify-center align-center pb-3">
+                      <h2 class="body-1 pb-0">
+                        <i
+                          class="fa-message-square pr-1"
+                          aria-hidden="true"
+                        ></i>
+                        <i18n path="Common.Chat" />
+                      </h2>
+                      <v-spacer></v-spacer>
+                    </v-flex>
+                    <v-divider></v-divider>
+                    <div class="body-1 mt-2">
+                      <iframe
+                        id="rcChannel"
+                        name="rcChannel"
+                        :src="`https://chat.bitpod.io/channel/${registration.EventId}?layout=embedded`"
+                        width="100%"
+                        height="600"
+                        frameBorder="0"
+                      ></iframe>
+                    </div>
+                  </div>
+                </div> -->
+              </div>
+              <div v-else>
                 <div
-                  class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2 rounded-lg"
+                  v-if="
+                    registration &&
+                    registration.attendee &&
+                    registration.attendee.length
+                  "
                 >
-                  <v-flex class="d-flex justify-center align-center pb-3">
-                    <h2 class="body-1 pb-0">
-                      <i class="fa fa-users pr-1" aria-hidden="true"></i>
-                      <i18n path="Common.Attendee" />
-                    </h2>
-                    <v-spacer></v-spacer>
-                  </v-flex>
-                  <v-divider></v-divider>
-                  <div>
-                    <v-list>
-                      <v-list-item
-                        v-for="item in registration.attendee"
-                        :key="item.id"
-                        class="pa-0 my-3"
-                      >
-                        <v-list-item-avatar size="36" class="mr-2 ma-0">
-                          <v-avatar
-                            color="primary"
-                            size="36"
-                            v-bind="attrs"
-                            class="mr-"
-                            v-on="on"
-                          >
+                  <div
+                    class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2 rounded-lg"
+                  >
+                    <v-flex class="d-flex justify-center align-center pb-3">
+                      <h2 class="body-1 pb-0">
+                        <i class="fa fa-users pr-1" aria-hidden="true"></i>
+                        <i18n path="Common.Attendee" />
+                      </h2>
+                      <v-spacer></v-spacer>
+                    </v-flex>
+                    <v-divider></v-divider>
+                    <div>
+                      <v-list>
+                        <v-list-item
+                          v-for="item in registration.attendee"
+                          :key="item.id"
+                          class="pa-0 my-3"
+                        >
+                          <v-list-item-avatar size="36" class="mr-2 ma-0">
                             <v-avatar
                               color="primary"
                               size="36"
                               v-bind="attrs"
+                              class="mr-"
                               v-on="on"
                             >
-                              <span class="white--text Twitter-18">{{
-                                item.FullName
-                              }}</span>
-                            </v-avatar>
-                          </v-avatar>
-                        </v-list-item-avatar>
-
-                        <v-list-item-content class="py-0">
-                          <v-list-item-title class="text-capitalize">{{
-                            item.FullName
-                          }}</v-list-item-title>
-                          <div v-if="item.Email" class="mt-1">
-                            <v-list-item-subtitle class="session-date">
-                              {{ item.Email }}
-                            </v-list-item-subtitle>
-                          </div>
-                        </v-list-item-content>
-
-                        <v-list-item-icon class="ma-0 mt-2">
-                          <div class="mt-2">
-                            <div
-                              v-if="
-                                registration.EventList.BusinessType ===
-                                  'Recurring' && registration.ZoomLink
-                              "
-                            >
-                              <a
-                                :href="registration.ZoomLink"
-                                target="_blank"
-                                class="text-decoration-none"
+                              <v-avatar
+                                color="primary"
+                                size="36"
+                                v-bind="attrs"
+                                v-on="on"
                               >
-                                <v-btn
-                                  class="ma-2 mr-0"
-                                  outlined
-                                  color="success"
-                                >
-                                  <i18n path="Common.JoinSession" /><v-icon
-                                    right
-                                  >
-                                    mdi-video
-                                  </v-icon>
-                                </v-btn>
-                              </a>
+                                <span class="white--text Twitter-18">{{
+                                  item.FullName
+                                }}</span>
+                              </v-avatar>
+                            </v-avatar>
+                          </v-list-item-avatar>
+
+                          <v-list-item-content class="py-0">
+                            <v-list-item-title class="text-capitalize">{{
+                              item.FullName
+                            }}</v-list-item-title>
+                            <div v-if="item.Email" class="mt-1">
+                              <v-list-item-subtitle class="session-date">
+                                {{ item.Email }}
+                              </v-list-item-subtitle>
                             </div>
-                            <div
-                              v-if="
-                                registration.EventList.BusinessType ===
-                                  'Recurring' &&
-                                registration.SessionListId[0].LocationType ===
-                                  'Online meeting' &&
-                                registration.SessionListId[0].WebinarLink
-                              "
-                            >
-                              <a
-                                :href="
+                          </v-list-item-content>
+
+                          <v-list-item-icon class="ma-0 mt-2">
+                            <div class="mt-2">
+                              <div
+                                v-if="
+                                  registration.EventList.BusinessType ===
+                                    'Recurring' && registration.ZoomLink
+                                "
+                              >
+                                <a
+                                  :href="registration.ZoomLink"
+                                  target="_blank"
+                                  class="text-decoration-none"
+                                >
+                                  <v-btn
+                                    class="ma-2 mr-0"
+                                    outlined
+                                    color="success"
+                                  >
+                                    <i18n path="Common.JoinSession" /><v-icon
+                                      right
+                                    >
+                                      mdi-video
+                                    </v-icon>
+                                  </v-btn>
+                                </a>
+                              </div>
+                              <div
+                                v-if="
+                                  registration.EventList.BusinessType ===
+                                    'Recurring' &&
+                                  registration.SessionListId[0].LocationType ===
+                                    'Online meeting' &&
                                   registration.SessionListId[0].WebinarLink
                                 "
-                                target="_blank"
-                                class="text-decoration-none"
                               >
-                                <v-btn
-                                  class="ma-2 mr-0"
-                                  outlined
-                                  color="success"
+                                <a
+                                  :href="
+                                    registration.SessionListId[0].WebinarLink
+                                  "
+                                  target="_blank"
+                                  class="text-decoration-none"
                                 >
-                                  <i18n path="Common.JoinSession" /><v-icon
-                                    right
+                                  <v-btn
+                                    class="ma-2 mr-0"
+                                    outlined
+                                    color="success"
                                   >
-                                    mdi-video
-                                  </v-icon>
-                                </v-btn>
-                              </a>
-                            </div>
-                          </div>
-                        </v-list-item-icon>
-                      </v-list-item>
-                    </v-list>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div v-else class="d-none">
-              <div
-                v-if="
-                  event && event.sessions && Object.keys(event.sessions).length
-                "
-              >
-                <div
-                  class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2 rounded-lg"
-                >
-                  <v-flex class="d-flex justify-center align-center pb-3">
-                    <h2 class="body-1 pb-0">
-                      <i class="fa fa-black-board pr-1" aria-hidden="true"></i>
-                      <i18n path="Common.Sessions" />
-                    </h2>
-                    <v-spacer></v-spacer>
-                  </v-flex>
-                  <v-divider></v-divider>
-                  <div>
-                    <v-list>
-                      <v-list-item
-                        v-for="item in Object.values(event.sessions)"
-                        :key="item.id"
-                        class="px-1 pt-2"
-                      >
-                        <v-list-item-avatar tile size="48" class="my-0">
-                          <v-avatar
-                            size="48"
-                            tile
-                            v-bind="attrs"
-                            :style="{
-                              'background-color': getRandomColor(item.label),
-                            }"
-                            v-on="on"
-                          >
-                            <div class="d-flex flex-column">
-                              <div v-if="item.startDateTime">
-                                <div class="white--text text-h6 pt-0">
-                                  {{ formatDateDay(item.startDateTime) }}
-                                </div>
-                                <div class="white--text body-2 mt-n1">
-                                  {{ formatDateMonth(item.startDateTime) }}
-                                </div>
-                              </div>
-                              <div v-else>
-                                <v-icon class="white--text">fa-history</v-icon>
+                                    <i18n path="Common.JoinSession" /><v-icon
+                                      right
+                                    >
+                                      mdi-video
+                                    </v-icon>
+                                  </v-btn>
+                                </a>
                               </div>
                             </div>
-                          </v-avatar>
-                        </v-list-item-avatar>
-
-                        <v-list-item-content>
-                          <v-list-item-title class="text-capitalize">{{
-                            item.label
-                          }}</v-list-item-title>
-                          <div v-if="item.startTime">
-                            <v-list-item-subtitle class="session-date">
-                              <v-icon class="fs-16 mr-1">fa-clock</v-icon>
-                              {{ formatField(item.startTime) }}
-                              {{ formatField(item.endTime) }}
-                            </v-list-item-subtitle>
-                          </div>
-                          <div v-else>
-                            <v-list-item-subtitle
-                              class="session-date"
-                              v-text="formatDate(item.startDateTime)"
-                            ></v-list-item-subtitle>
-                          </div>
-                        </v-list-item-content>
-
-                        <v-list-item-icon class="ma-0">
-                          <div v-if="item.locationType === 'Bitpod Virtual'">
-                            <v-btn
-                              class="ma-2 mr-0"
-                              outlined
-                              color="success"
-                              @click="startEvent(item.bitpodVirtualLink, true)"
-                            >
-                              <i18n path="Common.JoinSession" /><v-icon right>
-                                mdi-video
-                              </v-icon>
-                            </v-btn>
-                          </div>
-                        </v-list-item-icon>
-                      </v-list-item>
-                    </v-list>
+                          </v-list-item-icon>
+                        </v-list-item>
+                      </v-list>
+                    </div>
                   </div>
-                </div>
-              </div>
-              <div
-                class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2 rounded-lg"
-              >
-                <v-flex class="d-flex justify-center align-center pb-3">
-                  <h2 class="body-1 pb-0">
-                    <i class="fa fa-users pr-1" aria-hidden="true"></i>
-                    <i18n path="Common.Attendees" />
-                  </h2>
-                  <v-spacer></v-spacer>
-                </v-flex>
-                <v-divider></v-divider>
-                <div>
-                  <v-list>
-                    <v-list-item
-                      v-for="item in registration.attendee"
-                      :key="item.id"
-                      class="px-0"
-                    >
-                      <v-list-item-avatar size="48" class="mr-2 ma-0">
-                        <v-avatar
-                          color="primary"
-                          size="36"
-                          v-bind="attrs"
-                          class="mr-"
-                          v-on="on"
-                        >
-                          <v-avatar
-                            color="primary"
-                            size="36"
-                            v-bind="attrs"
-                            v-on="on"
-                          >
-                            <span class="white--text Twitter">{{
-                              item.FullName
-                            }}</span>
-                          </v-avatar>
-                        </v-avatar>
-                      </v-list-item-avatar>
-
-                      <v-list-item-content class="py-0">
-                        <v-list-item-title
-                          class="text-capitalize"
-                          v-text="item.FullName"
-                        ></v-list-item-title>
-                        <v-list-item-subtitle
-                          v-text="item.Email"
-                        ></v-list-item-subtitle>
-                      </v-list-item-content>
-
-                      <v-list-item-icon class="ma-0 mt-2">
-                        <v-btn icon disabled>
-                          <v-icon>mdi-message-outline</v-icon>
-                        </v-btn>
-                      </v-list-item-icon>
-                    </v-list-item>
-                  </v-list>
                 </div>
               </div>
             </div>
@@ -774,7 +657,7 @@
           </div>
         </v-flex>
         <v-flex column class="mxw-w30">
-          <div
+          <!-- <div
             class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mb-4 mx-0 ml-md-2 mr-0 pb-2 rounded-lg"
           >
             <v-flex class="d-flex justify-center align-center pb-2">
@@ -795,7 +678,7 @@
                 frameBorder="0"
               ></iframe>
             </div>
-          </div>
+          </div> -->
           <div
             class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mb-4 mx-0 ml-md-2 mr-0 pb-2 rounded-lg"
           >
@@ -1028,7 +911,7 @@ export default {
   },
   mounted() {
     this.getRegistrationData()
-    this.authenticateIFrame()
+    // this.authenticateIFrame()
   },
   methods: {
     formatDate(date) {
