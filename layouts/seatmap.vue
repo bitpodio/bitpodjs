@@ -24,7 +24,7 @@
         <v-spacer></v-spacer>
       </v-toolbar-title>
       <v-toolbar-title class="pl-0 ml-n1"
-        ><i18n path="Common.Seatmaps"
+        ><i18n path="Common.Seatmap"
       /></v-toolbar-title>
       <v-spacer></v-spacer>
       <LanguageSwitcher />
