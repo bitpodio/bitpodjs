@@ -133,18 +133,7 @@
             :to="localePath(item.to)"
             router
             exact
-            :class="[
-              (currentPage.includes('/apps/event/event/') &&
-                item.to === '/apps/event/list/Event/live and draft event') ||
-              (currentPage.includes('/apps/event/registration') &&
-                item.to === '/apps/event/list/Registrations/Registrations') ||
-              (currentPage.includes('/apps/event/discountcodes/') &&
-                item.to === '/apps/event/list/DiscountCodes/Discount Codes') ||
-              (currentPage.includes('/apps/event/contacts/') &&
-                item.to === '/apps/event/list/Contacts/Contacts')
-                ? activeClass
-                : '',
-            ]"
+            :class="matchRoute(item.to)"
           >
             <v-list-item-action class="nav-icon">
               <v-icon>{{ item.icon }}</v-icon>
@@ -346,17 +335,23 @@ export default {
         icon: 'fa fa-calendar',
         text: 'Events',
         to: '/apps/event/list/Event/live and draft event',
+        allowedRoutes: [
+          '/apps/event/list/Event/eventInvitaionHistory',
+          '/apps/event/event/',
+        ],
       },
       {
         icon: 'fa fa-user-plus',
         text: 'Registrations',
         to: '/apps/event/list/Registrations/Registrations',
+        allowedRoutes: ['/apps/event/registration'],
       },
       { heading: 'Promotions' },
       {
         icon: 'fa fa-building',
         text: 'Discount Code',
         to: '/apps/event/list/DiscountCodes/Discount Codes',
+        allowedRoutes: ['/apps/event/discountcodes'],
       },
       { heading: 'Members' },
       {
@@ -368,6 +363,10 @@ export default {
         icon: 'fa fa-address-book-o',
         text: 'Contacts',
         to: '/apps/event/list/Contacts/Contacts',
+        allowedRoutes: [
+          '/apps/event/contacts/',
+          'apps/event/list/Contacts/Invites',
+        ],
       },
     ],
   }),
@@ -388,6 +387,19 @@ export default {
     },
     closeRecurringEventForm() {
       this.dialog = false
+    },
+    matchRoute(toRoute) {
+      return this.items.reduce((acc, i) => {
+        if (!i.allowedRoutes || i.to !== toRoute) {
+          return acc
+        }
+        const routeMatched = i.allowedRoutes.reduce((accc, j) => {
+          return accc || this.currentPage.includes(j)
+        }, false)
+        return acc || routeMatched
+      }, false)
+        ? this.activeClass
+        : ''
     },
   },
 }
