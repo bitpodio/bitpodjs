@@ -889,7 +889,7 @@ export default {
   },
   mounted() {
     this.getRegistrationData()
-    // this.authenticateIFrame()
+    this.authenticateIFrame()
   },
   methods: {
     formatDate(date) {
