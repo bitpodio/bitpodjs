@@ -121,7 +121,7 @@
             width="100%"
             class="rounded-lg"
           >
-            <div v-if="event.BusinessType">
+            <div>
               <div v-if="event.BusinessType === 'Single'">
                 <div
                   v-if="
@@ -242,7 +242,13 @@
                   </div>
                 </div>
               </div>
-              <div v-if="registration && registration.allowChat === 'true'">
+              <div
+                v-if="
+                  registration &&
+                  registration.EventList &&
+                  registration.EventList.allowChat === true
+                "
+              >
                 <div>
                   <div
                     class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2 rounded-lg"
@@ -266,6 +272,7 @@
                         width="100%"
                         height="600"
                         frameBorder="0"
+                        @load="authenticateIFrame()"
                       ></iframe>
                     </div>
                   </div>
@@ -889,7 +896,7 @@ export default {
   },
   mounted() {
     this.getRegistrationData()
-    this.authenticateIFrame()
+    // this.authenticateIFrame()
   },
   methods: {
     formatDate(date) {
