@@ -65,7 +65,7 @@ export default {
           this.$route.params.id
         }`
       )
-      this.jwtToken = res.data.token
+      this.jwtToken = res.data[1]
       this.jwtAcquired = true
     } catch (err) {
       console.error(`Error while fetching JWT`, err)
