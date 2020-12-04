@@ -479,6 +479,8 @@ export default {
       snackbarText: '',
       hasGridOption: false,
       hasRowOption: false,
+      headerObserver: null,
+      footerObserver: null,
       winWidth: window.innerWidth,
     }
   },
@@ -579,7 +581,7 @@ export default {
     }
 
     const observeHeaders = (container) => {
-      const observer = new IntersectionObserver(
+      this.headerObserver = new IntersectionObserver(
         (records, observer) => {
           for (const record of records) {
             const targetInfo = record.boundingClientRect
@@ -607,11 +609,11 @@ export default {
 
       // Add the top sentinels to each section and attach an observer.
       const sentinels = addSentinels(container, 'sticky_sentinel--top')
-      sentinels.forEach((el) => observer.observe(el))
+      sentinels.forEach((el) => this.headerObserver.observe(el))
     }
 
     const observeFooters = (container) => {
-      const observer = new IntersectionObserver(
+      this.footerObserver = new IntersectionObserver(
         (records, observer) => {
           for (const record of records) {
             const targetInfo = record.boundingClientRect
@@ -640,7 +642,7 @@ export default {
 
       // Add the bottom sentinels to each section and attach an observer.
       const sentinels = addSentinels(container, 'sticky_sentinel--bottom')
-      sentinels.forEach((el) => observer.observe(el))
+      sentinels.forEach((el) => this.footerObserver.observe(el))
     }
 
     const observeStickyHeaderChanges = (container) => {
@@ -666,6 +668,8 @@ export default {
     this.$eventBus.$off('user-created')
     this.$eventBus.$off('grid-refresh')
     this.$eventBus.$off('unselectAll-record')
+    this.headerObserver.disconnect()
+    this.footerObserver.disconnect()
     window.removeEventListener('resize', this.onResize)
   },
   methods: {
