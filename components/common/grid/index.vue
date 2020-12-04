@@ -16,7 +16,9 @@
       >
         <div
           class="d-flex align-center"
-          :class="onlySticky ? 'elevation-1 boxview rounded' : ''"
+          :class="{
+            'elevation-1 boxview rounded': onlySticky && winWidth < 600,
+          }"
         >
           <div
             v-if="
@@ -477,6 +479,7 @@ export default {
       snackbarText: '',
       hasGridOption: false,
       hasRowOption: false,
+      winWidth: window.innerWidth,
     }
   },
   computed: {
@@ -646,6 +649,10 @@ export default {
     }
 
     observeStickyHeaderChanges(document.querySelector('#inspire'))
+
+    this.$nextTick(() => {
+      window.addEventListener('resize', this.onResize)
+    })
   },
   created() {
     const dataSource = getViewDataSource(this.content, this.viewName)
@@ -659,6 +666,7 @@ export default {
     this.$eventBus.$off('user-created')
     this.$eventBus.$off('grid-refresh')
     this.$eventBus.$off('unselectAll-record')
+    window.removeEventListener('resize', this.onResize)
   },
   methods: {
     getRowOption() {
@@ -793,6 +801,9 @@ export default {
         headerObj.push(e)
       })
       return headerObj
+    },
+    onResize() {
+      this.winWidth = window.innerWidth
     },
   },
   apollo: {
