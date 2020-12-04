@@ -70,6 +70,7 @@
     "BusinessType": "טיפוס עסקי",
     "EventLink": "קישור לאירוע",
     "AllowCancelation": "אפשר ביטול",
+    "AllowChat": "אפשר צ'אט",
     "ValidateSessionTimingConflict": "אמת סכסוך תזמון מושב",
     "ShowRemainingTicketsCount": "הצגת ספירת הכרטיסים הנותרים",
     "ShowAttendeeForm": "הצג טופס משתתף",
@@ -699,7 +700,8 @@
     "HeaderPrice": "מחיר",
     "TicketsNotRequired": "כרטיסים",
     "Integration": "Integration",
-    "TimezoneCaption": "Timezone"
+    "TimezoneCaption": "Timezone",
+    "Chat": "לְשׂוֹחֵחַ"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",

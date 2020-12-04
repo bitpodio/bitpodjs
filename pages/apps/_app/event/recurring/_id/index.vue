@@ -1044,6 +1044,18 @@
           </v-flex>
           <v-flex class="d-block text-truncate">
             <v-checkbox
+              v-model="data.event.allowChat"
+              dense
+              debounce="500"
+              height="20"
+              class="ma-0 pa-0"
+              :label="$t('Common.AllowChat')"
+              color="green"
+              @change="updateReg"
+            ></v-checkbox>
+          </v-flex>
+          <v-flex class="d-block text-truncate">
+            <v-checkbox
               v-model="data.event.SessionTimingConflict"
               dense
               height="20"
@@ -1262,6 +1274,7 @@ export default {
     updateData() {
       const dataObj = {
         isRefundable: this.data.event.isRefundable,
+        allowChat: this.data.event.allowChat,
         SessionTimingConflict: this.data.event.SessionTimingConflict,
         ShowRemainingTickets: this.data.event.ShowRemainingTickets,
         ShowAttendeeForm: this.data.event.ShowAttendeeForm,
