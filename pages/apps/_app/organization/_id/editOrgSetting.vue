@@ -139,6 +139,7 @@ export default {
         if (res) {
           this.onClose()
           this.$emit('update:snackbar', true)
+          this.$store.commit('setCurrentOrgInfo', this.formData)
           this.refresh()
         }
       } catch (e) {
