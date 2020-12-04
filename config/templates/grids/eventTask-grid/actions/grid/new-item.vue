@@ -324,9 +324,7 @@ export default {
   },
   computed: {
     snackbarText() {
-      return this.item
-        ? this.$t('Messages.Success.TaskUpdatedSuccess')
-        : this.$t('Messages.Success.TaskCreatedSuccess')
+      return this.$t('Messages.Success.TaskCreatedSuccess')
     },
     filter() {
       if (
@@ -506,7 +504,14 @@ export default {
         this.$refs.form.reset()
         this.refresh()
         this.resetForm()
-        this.snackbar = true
+        if (this.item && this.item.id) {
+          this.$emit(
+            'update-snackbar',
+            this.$t('Messages.Success.TaskUpdatedSuccess')
+          )
+        } else {
+          this.snackbar = true
+        }
         this.isSaveButtonDisabled = false
         return res
       }

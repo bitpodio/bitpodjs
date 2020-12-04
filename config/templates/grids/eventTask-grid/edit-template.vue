@@ -502,6 +502,10 @@ export default {
       if (activityRes) {
         this.refresh()
         this.dialog = false
+        this.$emit(
+          'update-snackbar',
+          this.$t('Messages.Success.EditTemplateSuccess')
+        )
       }
     },
     chooseTemplate(index) {

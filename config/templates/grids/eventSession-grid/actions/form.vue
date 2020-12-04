@@ -1,9 +1,7 @@
 <template>
   <v-col class="px-0">
-    <v-snackbar v-model="snackbar" :timeout="1000" :top="true" width="10px">
-      <div
-        class="toast py-2 pr-1 pl-5 text-h6 light font-weight-regular text-center"
-      >
+    <v-snackbar v-model="snackbar" :timeout="2000" :top="true" width="2px">
+      <div class="fs-16 text-center">
         {{ snackbarText }}
       </div>
     </v-snackbar>
@@ -449,10 +447,16 @@ export default {
           }
           const startDate = new Date(new Date(v).toLocaleString())
           const eventStartDate = new Date(
-            new Date(this.eventDetails.StartDate).toLocaleString()
+            utcToZonedTime(
+              new Date(this.eventDetails.StartDate),
+              this.eventDetails.Timezone
+            ).toLocaleString()
           )
           const eventEndDate = new Date(
-            new Date(this.eventDetails.EndDate).toLocaleString()
+            utcToZonedTime(
+              new Date(this.eventDetails.EndDate),
+              this.eventDetails.Timezone
+            ).toLocaleString()
           )
           return startDate < eventStartDate || startDate > eventEndDate
             ? this.$t('Messages.Error.SessionStartDate')
@@ -461,7 +465,25 @@ export default {
       ]
     },
   },
+  watch: {
+    snackbar(newData) {
+      if (!newData) {
+        this.refresh()
+      }
+    },
+  },
+  mounted() {
+    this.$eventBus.$on('event-details-updated', this.updateDetails)
+  },
+  beforeDestroy() {
+    this.$eventBus.$off('event-details-updated')
+  },
   methods: {
+    updateDetails(newDetails) {
+      if (newDetails && this.eventDetails) {
+        this.eventDetails = { ...newDetails }
+      }
+    },
     locationChanged(value) {
       if (value !== 'Venue') {
         this.venueAddress = {
@@ -507,7 +529,13 @@ export default {
           delete this.venueAddress.LatLng
         }
       } else {
-        this.session.StartDate = new Date(this.eventDetails.StartDate)
+        this.session.StartDate = new Date(
+          utcToZonedTime(
+            new Date(this.eventDetails.StartDate),
+            this.eventDetails.Timezone
+          )
+        )
+        this.session.Timezone = this.eventDetails.Timezone
         if (this.session.StartDate.getSeconds()) {
           this.session.StartDate.setMinutes(
             this.session.StartDate.getMinutes() + 1
@@ -667,7 +695,6 @@ export default {
         }
         this.snackbar = true
         this.closeForm()
-        this.refresh()
       }
     },
     closeForm() {

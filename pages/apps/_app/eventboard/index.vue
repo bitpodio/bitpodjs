@@ -42,12 +42,7 @@
                   </div>
                   <div class="pl-2 pt-1">
                     <h3 class="font-weight-regular text-truncate summaryTile">
-                      {{ data.isRevenue ? '$' : ''
-                      }}{{
-                        data.isRevenue
-                          ? parseFloat(data.data).toFixed(2)
-                          : data.data
-                      }}{{ data.isConversion ? '%' : '' }}
+                      {{ data.data }}{{ data.isConversion ? '%' : '' }}
                     </h3>
                     <h5 class="font-weight-regular text-truncate summaryTile">
                       {{ data.caption }}
@@ -662,7 +657,6 @@ export default {
           icon: 'fa fa-banknote',
           data: '',
           class: 'yellow darken-2',
-          isRevenue: true,
         },
         {
           caption: this.$t('Common.TicketsSold'),
@@ -771,8 +765,10 @@ export default {
       this.$router.push(this.localePath(`/apps/event/registration/${id}`))
     },
     updateScroll() {
-      const block = this.$refs.summaryBlock
-      this.hasScroll = block.scrollWidth > block.clientWidth
+      if (this.$refs.summaryBlock) {
+        const block = this.$refs.summaryBlock
+        this.hasScroll = block.scrollWidth > block.clientWidth
+      }
     },
     getURL(id) {
       const attachmentUrl = `${this.$bitpod.getApiUrl()}Attachments/download/${id}`
@@ -783,9 +779,17 @@ export default {
         .get(`${this.$bitpod.getApiUrl()}Events/getEventSummery`)
         .then((data) => {
           const summaryData = data.data.result
+          let revenue = summaryData.Revenue || 0
+          revenue = Number(parseFloat(revenue).toFixed(2)).toLocaleString(
+            'en',
+            {
+              style: 'currency',
+              currency: this.$store.state.currentOrgInfo.Currency || 'USD',
+            }
+          )
           this.eventSummaryData[0].data = summaryData.totalRegistration || 0
           this.eventSummaryData[1].data = summaryData.totalFailed || 0
-          this.eventSummaryData[2].data = summaryData.Revenue || 0
+          this.eventSummaryData[2].data = revenue
           this.eventSummaryData[3].data = summaryData.TotalTickets || 0
           this.eventSummaryData[4].data =
             !summaryData.Sent || summaryData.Sent === 0

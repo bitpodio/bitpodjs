@@ -18,7 +18,11 @@
             <v-spacer></v-spacer>
             <div class="d-flex">
               <div class="mr-2">
-                <v-btn depressed color="primary" @click="viewRegistration"
+                <v-btn
+                  :disabled="!data || !data.event || !data.event.UniqLink"
+                  depressed
+                  color="primary"
+                  @click="viewRegistration"
                   ><i18n path="Drawer.View"
                 /></v-btn>
               </div>
@@ -1173,7 +1177,6 @@ import gql from 'graphql-tag'
 import format from 'date-fns/format'
 import _ from 'lodash'
 import editEventForm from '../../_id/editEventForm.vue'
-import nuxtConfig from '../../../../../../nuxt.config'
 import editSeoForm from '~/pages/apps/_app/event/_id/editSeoForm.vue'
 import editEventSetting from '~/pages/apps/_app/event/_id/editEventSetting.vue'
 import editSiteSetting from '~/pages/apps/_app/event/_id/editSiteSetting.vue'
@@ -1599,10 +1602,10 @@ export default {
     viewRegistration() {
       const orgName = this.$store.state.currentOrg.name
       if (orgName === 'bitpod') {
-        const regUrl = `https://${nuxtConfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
+        const regUrl = `https://${this.$config.axios.eventUrl}/e/${this.data.event.UniqLink}`
         window.open(`${regUrl}`, '_blank')
       } else {
-        const regUrl = `https://${orgName}-${nuxtConfig.axios.eventUrl}/e/${this.data.event.UniqLink}`
+        const regUrl = `https://${orgName}-${this.$config.axios.eventUrl}/e/${this.data.event.UniqLink}`
         window.open(`${regUrl}`, '_blank')
       }
     },
@@ -1716,10 +1719,10 @@ export default {
             : {}
         this.updateStepper()
         this.updateRegistrationSetting(this.eventData)
-        this.eventUniqueLink = `https://${nuxtConfig.axios.eventUrl}/e/${
+        this.eventUniqueLink = `https://${this.$config.axios.eventUrl}/e/${
           event[0] && event[0].UniqLink
         }`
-        this.eventSessionLink = `https://${nuxtConfig.axios.eventUrl}/t/${
+        this.eventSessionLink = `https://${this.$config.axios.eventUrl}/t/${
           event[0] && event[0].UniqLink
         }`
         if (event[0] && event[0].Images && event[0].Images.length > 0) {

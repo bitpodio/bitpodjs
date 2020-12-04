@@ -154,6 +154,11 @@ export default {
       }
       if (res) {
         this.$parent.refresh()
+
+        this.$emit(
+          'update-snackbar',
+          this.$t('Messages.Success.EditTemplateSuccess')
+        )
         this.onClose()
       }
     },

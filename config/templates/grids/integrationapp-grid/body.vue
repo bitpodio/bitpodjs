@@ -1,5 +1,5 @@
 <template>
-  <v-flex class="greybg seatmap-inner mt-n6">
+  <v-flex class="greybg seatmap-inner">
     <div v-for="c in Category" :key="c">
       <div class="ma-5">{{ c }}</div>
       <div class="d-flex flex-wrap ml-5 mt-5">
@@ -191,7 +191,6 @@
 
 <script>
 import { templateLoaderMixin } from '~/utility'
-import nuxtconfig from '~/nuxt.config'
 import { openAuthPopups } from '~/utility/oauth'
 export default {
   mixins: [templateLoaderMixin],
@@ -292,7 +291,7 @@ export default {
           Name: item.ServiceId,
           ServiceId: item.ServiceId,
           TenantId: 'event',
-          bpmnServerURL: `https://${nuxtconfig.axios.backendBaseUrl}/bpmn/`,
+          bpmnServerURL: `https://${this.$config.axios.backendBaseUrl}/bpmn/`,
           OwnerId: this.$auth.$state.user.data.email,
           loginUser: this.$auth.$state.user.data.email,
           OrgId: this.$store.state.currentOrg.id,
@@ -453,7 +452,7 @@ export default {
   margin: auto;
 }
 .on-hover {
-  background: #bdbdbd;
+  background: #e2e2e2;
 }
 .service-text {
   width: 110px;

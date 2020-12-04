@@ -65,7 +65,7 @@ export default {
           this.$route.params.id
         }`
       )
-      this.jwtToken = res.data.token
+      this.jwtToken = res.data[1]
       this.jwtAcquired = true
     } catch (err) {
       console.error(`Error while fetching JWT`, err)
@@ -87,6 +87,9 @@ export default {
     },
     onIFrameLoad() {
       const jitsi = this.$refs.jitsiRef
+      if (this.$route.query.n) {
+        jitsi.executeCommand('subject', this.$route.query.n)
+      }
       jitsi.addEventListener('participantRoleChanged', (e) => {
         if (e.role === 'moderator') {
           jitsi.executeCommand('password', this.$route.params.id.split('-')[2])

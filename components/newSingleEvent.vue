@@ -104,12 +104,16 @@
                     :label="$t('Common.Description')"
                   ></RichText>
                 </v-col>
-                <v-col cols="12" sm="6" md="6" class="pb-0">
+                <v-col
+                  cols="12"
+                  sm="6"
+                  md="6"
+                  class="pb-0 d-flex flex-column flex-md-row"
+                >
+                  <div class="pt-2 mr-2">{{ eventLinkLabel }}</div>
                   <v-text-field
                     v-model="eventData.UniqLink"
                     :label="$t('Common.EventL')"
-                    :hint="eventLinkHint"
-                    persistent-hint
                     outlined
                     dense
                     required
@@ -754,6 +758,9 @@ export default {
 
     eventLinkHint() {
       return `${nuxtconfig.integrationLinks.EVENT_LINK_HINT}${this.eventData.UniqLink}`
+    },
+    eventLinkLabel() {
+      return `${this.$bitpod.getApiUrl().replace('svc/api', 'e')}`
     },
     gMapCenter() {
       return {
