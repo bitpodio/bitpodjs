@@ -47,7 +47,11 @@
                 </v-btn>
               </div>
               <div class="mr-2">
-                <v-btn depressed color="primary" @click="viewRegistration"
+                <v-btn
+                  :disabled="!data || !data.event || !data.event.UniqLink"
+                  depressed
+                  color="primary"
+                  @click="viewRegistration"
                   ><i18n path="Drawer.View"
                 /></v-btn>
               </div>
