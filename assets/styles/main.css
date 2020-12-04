@@ -605,6 +605,9 @@ table > tbody > tr:last-child .key-align {
 .service-text {
   min-height: 24px;
 }
+.slide-form-default h2, .slide-form h2 {
+  width: calc(100% - 50px);
+}
 @media (max-width: 800px) {
   .nav-bar {
     top: 50px !important;
