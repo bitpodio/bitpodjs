@@ -879,7 +879,9 @@
       "RecurringSessionCreatedSuccess": "Session récurrente créée avec succès",
       "RecurringSessionUpdatedSuccess": "Session récurrente mise à jour avec succès",
       "EditMetadataSuccess": "Les métadonnées du modèle ont bien été mises à jour",
-      "EditTemplateSuccess": "Modèle mis à jour avec succès" 
+      "EditTemplateSuccess": "Modèle mis à jour avec succès",
+      "DeleteSuccess": "{modelName} Supprimé avec succès",
+      "ListUpdatedSucess": "{modelName} élément de liste mis à jour avec succès." 
     }
   },
   "$vuetify": {

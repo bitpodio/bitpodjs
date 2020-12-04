@@ -750,13 +750,17 @@ export default {
                   inq: ids,
                 },
               },
-              clientMutationId: `${modelName} list item updated successfully.`,
+              clientMutationId: this.$t('Messages.Success.ListUpdatedSucess', {
+                modelName,
+              }),
             },
           },
         })
         if (itemDeleted) {
           this.refresh()
-          this.snackbarText = `${modelName} deleted Successfully`
+          this.snackbarText = this.$t('Messages.Success.DeleteSuccess', {
+            modelName,
+          })
           this.snackbar = true
           return itemDeleted
         }
