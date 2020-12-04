@@ -177,17 +177,24 @@
                   </v-col>
 
                   <v-col v-if="isVenue" cols="12" class="pb-6 positionRelative">
+                    <div
+                      v-if="addressClicked || !!venueAddress.AddressLine"
+                      class="address-legend"
+                    >
+                      {{ $t('Common.Address') }}
+                    </div>
                     <no-ssr>
                       <vue-google-autocomplete
                         id="map"
                         ref="venueAddress.AddressLine"
                         v-model="venueAddress.AddressLine"
                         class="form-control pa-3 d-block rounded"
-                        :placeholder="$t('Common.Address')"
+                        :placeholder="!addressClicked && $t('Common.Address')"
                         :required="true"
                         @placechanged="getAddressData"
-                        @focus="removeSearchAddress"
+                        @focus="removeSearchAddress(true)"
                         @change="changeAddressData($event)"
+                        @blur="focusOut"
                       ></vue-google-autocomplete>
                     </no-ssr>
                     <div
@@ -565,6 +572,7 @@ export default {
       datevalid: true,
       lazy: false,
       tabs: null,
+      addressClicked: false,
       loading: false,
       isUniqLinkValid: false,
       currentTab: 1,
@@ -1170,7 +1178,13 @@ export default {
         }
       }
     },
-    removeSearchAddress() {
+    focusOut() {
+      this.addressClicked = false
+    },
+    removeSearchAddress(isAddressClicked) {
+      if (isAddressClicked) {
+        this.addressClicked = true
+      }
       setTimeout(() => {
         Object.values(
           document.getElementsByClassName('pac-container pac-logo')
@@ -1416,5 +1430,18 @@ export default {
 .map-contain {
   height: 400px;
   max-height: 400px;
+}
+.address-legend {
+  position: absolute;
+  background: white;
+  font-size: 13px !important;
+  left: 20px !important;
+  padding: 0 5px;
+  top: 3px;
+  color: grey;
+}
+.form-control:focus {
+  border: 2px solid #1a73e8 !important;
+  outline: #1a73e8;
 }
 </style>

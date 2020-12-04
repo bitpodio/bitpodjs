@@ -261,16 +261,24 @@
                   cols="12"
                   class="pt-0 pb-6"
                 >
+                  <div
+                    v-if="addressClicked || !!venueAddress.AddressLine"
+                    class="address-legend"
+                  >
+                    {{ $t('Common.Address') }}
+                  </div>
                   <no-ssr>
                     <vue-google-autocomplete
                       id="map"
                       ref="venueAddress.AddressLine"
                       v-model="venueAddress.AddressLine"
                       class="form-control pa-3 d-block rounded"
-                      placeholder="Address*"
+                      :placeholder="!addressClicked && $t('Common.Address')"
                       :required="true"
                       @placechanged="getAddressData"
                       @change="changeAddressData($event)"
+                      @focus="focusIn"
+                      @blur="focusOut"
                     ></vue-google-autocomplete>
                   </no-ssr>
                   <div
@@ -602,6 +610,7 @@ export default {
       valid: false,
       dialog: false,
       actionType,
+      addressClicked: false,
       isSaveButtonDisabled: false,
       isCustomMin: false,
       isGroup,
@@ -1445,5 +1454,18 @@ export default {
 .form-control {
   border: 1px solid #ccc;
   width: 100%;
+}
+.address-legend {
+  position: absolute;
+  background: white;
+  font-size: 13px !important;
+  left: 20px !important;
+  padding: 0 5px;
+  top: 3px;
+  color: grey;
+}
+.form-control:focus {
+  border: 2px solid #1a73e8 !important;
+  outline: #1a73e8;
 }
 </style>

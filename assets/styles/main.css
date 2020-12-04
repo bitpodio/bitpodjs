@@ -412,6 +412,9 @@ body {
   overflow: hidden;
   width: 100%;
 }
+.v-messages__message {
+  padding-top: 2px !important;
+}
 .ps-top6 {
   top: 9px;
 }
