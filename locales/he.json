@@ -244,7 +244,7 @@
     "IntegrateWithGoogleDrive": "To integrate with google drive, you will need to authenticate using google drive credentials, click button below to go to google drive login site and login with account you want to use for this integration.",
     "GoogleDriveSetup": "Google Drive Setup",
     "Refresh": "Refresh",
-    "SomeErrorOccured": "Some Error Occured, Please contact Administrator.",
+    "SomeErrorOccured": "אירעה שגיאה כלשהי, אנא פנה למנהל המערכת.",
     "NewEmailInvite": "הזמנת דוא\"ל חדשה",
     "BasicInfo": "מידע בסיסי",
     "Content": "תוֹכֶן",
@@ -826,7 +826,8 @@
       "EmailInvalid": "כתובת מייל לא תקינה",
       "HttpsUrl": "This must be a https url",
       "OverlappingTimeSlot": "משבצת זמן חופפת לחריצים אחרים",
-      "EndTimeMustBeGreater": "זמן הסיום חייב להיות גדול יותר משעת ההתחלה"
+      "EndTimeMustBeGreater": "זמן הסיום חייב להיות גדול יותר משעת ההתחלה",
+      "PermissionDenied": "אין לך הרשאה לבצע פעולה זו"
     },
     "Warn": {
       "UniqueLinkFormat": "אותיות אלפאנומריות באותיות קטנות בלבד",
@@ -879,7 +880,9 @@
       "RecurringSessionCreatedSuccess": "מושב חוזר נוצר בהצלחה",
       "RecurringSessionUpdatedSuccess": "ההפעלה החוזרת עודכנה בהצלחה",
       "EditMetadataSuccess": "מטא נתונים של תבנית עודכנו בהצלחה",
-      "EditTemplateSuccess": "התבנית עודכנה בהצלחה" 
+      "EditTemplateSuccess": "התבנית עודכנה בהצלחה",
+      "DeleteSuccess": "{modelName} נמחק בהצלחה",
+      "ListUpdatedSucess": "{modelName} פריט הרשימה עודכן בהצלחה."
     }
   },
   "$vuetify": {

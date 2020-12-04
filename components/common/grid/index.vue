@@ -11,10 +11,17 @@
     <div v-if="!error" :key="error">
       <div
         v-if="!noAction"
-        class="grid-actions-container mt-lg-n11 mt-md-n11 mt-sm-n11 mt-xs-0"
+        class="grid-actions-container mt-lg-n11 mt-md-n11 mt-sm-n11 mt-xs-0 sticky"
+        :class="onlySticky ? 'sticky_inline_flex' : ''"
       >
         <div
-          v-if="
+          class="d-flex align-center"
+          :class="{
+            'elevation-1 boxview rounded': onlySticky && winWidth < 600,
+          }"
+        >
+          <div
+            v-if="
             (hasGridOption ||
             hasRowOption ||
             (viewName &&
@@ -23,24 +30,42 @@
             content.view[viewName].template &&
             content.view[viewName].template.actions &&
             Object.values(content.view[viewName].template.actions).reduce((acc,i)=>{return acc || !i.hidden},false)) )"
-          class="grid-actions-menu"
-        >
-          <v-menu right :offset-y="offset" transition="slide-y-transition">
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn icon small v-bind="attrs" v-on="on">
-                <v-icon>mdi-dots-vertical</v-icon>
-              </v-btn>
-            </template>
-            <v-list dense>
-              <component
-                :is="actionTemplates['grid'] || null"
-                :content="content"
-                :view-name="viewName"
-                :on-new-item-save="onNewItemSave"
-                :refresh="refresh"
-                :context="context"
-                @hasGridOption="getGridOption"
-              />
+            class="grid-actions-menu"
+          >
+            <v-menu right :offset-y="offset" transition="slide-y-transition">
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn icon small v-bind="attrs" v-on="on">
+                  <v-icon>mdi-dots-vertical</v-icon>
+                </v-btn>
+              </template>
+              <v-list dense>
+                <component
+                  :is="actionTemplates['grid'] || null"
+                  :content="content"
+                  :view-name="viewName"
+                  :on-new-item-save="onNewItemSave"
+                  :refresh="refresh"
+                  :context="context"
+                  @hasGridOption="getGridOption"
+                />
+                <component
+                  :is="actionTemplates['row-select'] || null"
+                  v-if="selectedItems.length > 0"
+                  :content="content"
+                  :view-name="viewName"
+                  :on-update-item="onUpdateItem"
+                  :on-delete-item="onDeleteItem"
+                  :items="selectedItems"
+                  :refresh="refresh"
+                  :context="context"
+                  :get-action-items="getActionItems"
+                  @hasRowOption="getRowOption"
+                />
+              </v-list>
+            </v-menu>
+          </div>
+          <div class="grid-actions-spread">
+            <div class="d-flex">
               <component
                 :is="actionTemplates['row-select'] || null"
                 v-if="selectedItems.length > 0"
@@ -52,60 +77,47 @@
                 :refresh="refresh"
                 :context="context"
                 :get-action-items="getActionItems"
+                class="d-inline-flex"
                 @hasRowOption="getRowOption"
               />
-            </v-list>
-          </v-menu>
-        </div>
-        <div class="grid-actions-spread">
-          <div class="d-flex">
-            <component
-              :is="actionTemplates['row-select'] || null"
-              v-if="selectedItems.length > 0"
-              :content="content"
-              :view-name="viewName"
-              :on-update-item="onUpdateItem"
-              :on-delete-item="onDeleteItem"
-              :items="selectedItems"
-              :refresh="refresh"
-              :context="context"
-              :get-action-items="getActionItems"
-              class="d-inline-flex"
-              @hasRowOption="getRowOption"
-            />
-            <component
-              :is="actionTemplates['grid'] || null"
-              :content="content"
-              :view-name="viewName"
-              :on-new-item-save="onNewItemSave"
-              :refresh="refresh"
-              :context="context"
-              class="d-inline-flex"
-              @hasGridOption="getGridOption"
-            />
+              <component
+                :is="actionTemplates['grid'] || null"
+                :content="content"
+                :view-name="viewName"
+                :on-new-item-save="onNewItemSave"
+                :refresh="refresh"
+                :context="context"
+                class="d-inline-flex"
+                @hasGridOption="getGridOption"
+              />
+            </div>
           </div>
-        </div>
-        <div v-if="hideFilter">
-          <slot name="filter">
-            <FieldsFilter
-              v-model="filters"
-              :is-filter-applied="isFilterApplied"
-              :fields="filterableFields"
-            />
-          </slot>
-        </div>
-        <div v-if="!hideSearch" class="grid-search-section">
-          <slot name="search">
-            <v-text-field
-              v-model="search"
-              append-icon="mdi-magnify"
-              :label="$t('Common.Search')"
-              hide-details
-              class="grid-search-input ml-2"
-              outlined
-              dense
-            ></v-text-field>
-          </slot>
+          <div v-if="hideFilter">
+            <slot name="filter">
+              <FieldsFilter
+                v-model="filters"
+                :is-filter-applied="isFilterApplied"
+                :fields="filterableFields"
+              />
+            </slot>
+          </div>
+          <div
+            v-if="!hideSearch"
+            class="grid-search-section"
+            :class="onlySticky ? 'mr-2' : ''"
+          >
+            <slot name="search">
+              <v-text-field
+                v-model="search"
+                append-icon="mdi-magnify"
+                :label="$t('Common.Search')"
+                hide-details
+                class="grid-search-input ml-2"
+                outlined
+                dense
+              ></v-text-field>
+            </slot>
+          </div>
         </div>
       </div>
       <v-skeleton-loader
@@ -234,7 +246,7 @@
       </div>
       <div
         v-if="viewName === 'seatmaps' || viewName === 'integration'"
-        class="d-flex flex-sm-wrap flex-column flex-sm-row seat-skeleton-inner"
+        class="d-flex flex-sm-wrap flex-column flex-sm-row seat-skeleton-inner mt-8"
       >
         <v-skeleton-loader
           v-for="i in 10"
@@ -428,6 +440,10 @@ export default {
       type: null,
       default: null,
     },
+    onlySticky: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     const headers = getTableHeader(this.content, this.viewName, this)
@@ -463,6 +479,9 @@ export default {
       snackbarText: '',
       hasGridOption: false,
       hasRowOption: false,
+      headerObserver: null,
+      footerObserver: null,
+      winWidth: window.innerWidth,
     }
   },
   computed: {
@@ -511,10 +530,13 @@ export default {
       this.$eventBus.$emit('searched-key', newval)
     },
     value() {
-      this.selectedItems = this.$props.value
+      this.selectedItems = this.value
     },
   },
   mounted() {
+    setTimeout(() => {
+      this.selectedItems = []
+    }, 2000)
     this.$eventBus.$on('unselectAll-record', this.unselectAllRecord)
     if (this.loadRestData) {
       this.$eventBus.$on('user-created', this.loadRestData)
@@ -544,6 +566,95 @@ export default {
         `common/templates/grid/actions/${actionType}/index.vue`,
       ])
     })
+
+    const addSentinels = (container, className) => {
+      return Array.from(container.querySelectorAll('.sticky')).map((el) => {
+        const sentinel = document.createElement('div')
+        sentinel.classList.add('sticky_sentinel', className)
+        return el.parentElement.appendChild(sentinel)
+      })
+    }
+
+    const fireEvent = (stuck, target) => {
+      const e = new CustomEvent('sticky-change', { detail: { stuck, target } })
+      document.dispatchEvent(e)
+    }
+
+    const observeHeaders = (container) => {
+      this.headerObserver = new IntersectionObserver(
+        (records, observer) => {
+          for (const record of records) {
+            const targetInfo = record.boundingClientRect
+            const stickyTarget = record.target.parentElement.querySelector(
+              '.sticky'
+            )
+            const rootBoundsInfo = record.rootBounds
+
+            // Started sticking.
+            if (targetInfo.bottom < rootBoundsInfo.top) {
+              fireEvent(true, stickyTarget)
+            }
+
+            // Stopped sticking.
+            if (
+              targetInfo.bottom >= rootBoundsInfo.top &&
+              targetInfo.bottom < rootBoundsInfo.bottom
+            ) {
+              fireEvent(false, stickyTarget)
+            }
+          }
+        },
+        { threshold: [0], root: container }
+      )
+
+      // Add the top sentinels to each section and attach an observer.
+      const sentinels = addSentinels(container, 'sticky_sentinel--top')
+      sentinels.forEach((el) => this.headerObserver.observe(el))
+    }
+
+    const observeFooters = (container) => {
+      this.footerObserver = new IntersectionObserver(
+        (records, observer) => {
+          for (const record of records) {
+            const targetInfo = record.boundingClientRect
+            const stickyTarget = record.target.parentElement.querySelector(
+              '.sticky'
+            )
+            const rootBoundsInfo = record.rootBounds
+            const ratio = record.intersectionRatio
+
+            // Started sticking.
+            if (targetInfo.bottom > rootBoundsInfo.top && ratio === 1) {
+              fireEvent(true, stickyTarget)
+            }
+
+            // Stopped sticking.
+            if (
+              targetInfo.top < rootBoundsInfo.top &&
+              targetInfo.bottom < rootBoundsInfo.bottom
+            ) {
+              fireEvent(false, stickyTarget)
+            }
+          }
+        },
+        { threshold: [1], root: container }
+      )
+
+      // Add the bottom sentinels to each section and attach an observer.
+      const sentinels = addSentinels(container, 'sticky_sentinel--bottom')
+      sentinels.forEach((el) => this.footerObserver.observe(el))
+    }
+
+    const observeStickyHeaderChanges = (container) => {
+      observeHeaders(container)
+      observeFooters(container)
+    }
+
+    observeStickyHeaderChanges(document.querySelector('#inspire'))
+
+    this.$nextTick(() => {
+      window.addEventListener('resize', this.onResize)
+    })
   },
   created() {
     const dataSource = getViewDataSource(this.content, this.viewName)
@@ -557,6 +668,9 @@ export default {
     this.$eventBus.$off('user-created')
     this.$eventBus.$off('grid-refresh')
     this.$eventBus.$off('unselectAll-record')
+    this.headerObserver.disconnect()
+    this.footerObserver.disconnect()
+    window.removeEventListener('resize', this.onResize)
   },
   methods: {
     getRowOption() {
@@ -626,23 +740,41 @@ export default {
     async onDeleteItem(ids) {
       const modelName = getModelName(this.content, this.viewName)
       const deleteItemMutation = buildMutationDeleteQuery(modelName)
-      const itemDeleted = await this.$apollo.mutate({
-        mutation: gql(deleteItemMutation),
-        variables: {
-          Inputs: {
-            where: {
-              id: {
-                inq: ids,
+      try {
+        const itemDeleted = await this.$apollo.mutate({
+          mutation: gql(deleteItemMutation),
+          variables: {
+            Inputs: {
+              where: {
+                id: {
+                  inq: ids,
+                },
               },
+              clientMutationId: this.$t('Messages.Success.ListUpdatedSucess', {
+                modelName,
+              }),
             },
-            clientMutationId: `${modelName} list item updated successfully.`,
           },
-        },
-      })
-      this.refresh()
-      this.snackbarText = `${modelName} deleted Successfully`
-      this.snackbar = true
-      return itemDeleted
+        })
+        if (itemDeleted) {
+          this.refresh()
+          this.snackbarText = this.$t('Messages.Success.DeleteSuccess', {
+            modelName,
+          })
+          this.snackbar = true
+          return itemDeleted
+        }
+      } catch (e) {
+        const error = e
+        if (error.message.split(':')[1] === ' Access denied') {
+          this.snackbarText = this.$t('Messages.Error.PermissionDenied')
+          this.snackbar = true
+        }
+        console.error(
+          `Errors in components/common/grid/index.vue on onDeleteItem method context:-${ids} `,
+          error
+        )
+      }
     },
     refresh() {
       const dataSource = getViewDataSource(this.content, this.viewName)
@@ -691,6 +823,9 @@ export default {
         headerObj.push(e)
       })
       return headerObj
+    },
+    onResize() {
+      this.winWidth = window.innerWidth
     },
   },
   apollo: {
@@ -778,7 +913,9 @@ export default {
   align-items: center;
 }
 .v-tooltip__content {
-  margin-top: -17px;
+  font-size: 11px !important;
+  margin-top: -19px;
+  padding: 0 8px !important;
 }
 @media (min-width: 601px) {
   .grid-actions-menu {
@@ -791,6 +928,37 @@ export default {
   }
   div[role='menu'].v-menu__content {
     overflow-y: hidden;
+  }
+  :root {
+    --header-height: 80px;
+  }
+  .sticky {
+    position: sticky;
+    top: 40px;
+    z-index: 1;
+    height: var(--header-height);
+  }
+  .sticky.grid-actions-container {
+    margin-top: -77px;
+  }
+  .sticky_sentinel {
+    position: absolute;
+    left: 0;
+    right: 0;
+    visibility: hidden;
+  }
+  .sticky_sentinel--top {
+    height: 20px;
+    top: -44px;
+  }
+  .sticky_sentinel--bottom {
+    height: var(--header-height);
+    bottom: 0;
+  }
+  .sticky_inline_flex {
+    display: inline-flex;
+    left: 100%;
+    z-index: 5;
   }
 }
 </style>

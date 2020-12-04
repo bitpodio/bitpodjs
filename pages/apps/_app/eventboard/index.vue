@@ -765,8 +765,10 @@ export default {
       this.$router.push(this.localePath(`/apps/event/registration/${id}`))
     },
     updateScroll() {
-      const block = this.$refs.summaryBlock
-      this.hasScroll = block.scrollWidth > block.clientWidth
+      if (this.$refs.summaryBlock) {
+        const block = this.$refs.summaryBlock
+        this.hasScroll = block.scrollWidth > block.clientWidth
+      }
     },
     getURL(id) {
       const attachmentUrl = `${this.$bitpod.getApiUrl()}Attachments/download/${id}`

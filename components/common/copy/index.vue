@@ -104,8 +104,11 @@ export default {
           await navigator.clipboard.writeText(inputValue)
           inputEl.value = ''
           this.snackbar = true
+          this.snackbarText = this.$t('Messages.Success.CopiedClipboard')
         } catch (e) {
           console.log('Something went wrong', e)
+          this.snackbar = true
+          this.snackbarText = this.$t('Common.SomeErrorOccured')
         }
       }
     },
