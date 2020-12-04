@@ -447,10 +447,16 @@ export default {
           }
           const startDate = new Date(new Date(v).toLocaleString())
           const eventStartDate = new Date(
-            new Date(this.eventDetails.StartDate).toLocaleString()
+            utcToZonedTime(
+              new Date(this.eventDetails.StartDate),
+              this.eventDetails.Timezone
+            ).toLocaleString()
           )
           const eventEndDate = new Date(
-            new Date(this.eventDetails.EndDate).toLocaleString()
+            utcToZonedTime(
+              new Date(this.eventDetails.EndDate),
+              this.eventDetails.Timezone
+            ).toLocaleString()
           )
           return startDate < eventStartDate || startDate > eventEndDate
             ? this.$t('Messages.Error.SessionStartDate')
@@ -466,7 +472,18 @@ export default {
       }
     },
   },
+  mounted() {
+    this.$eventBus.$on('event-details-updated', this.updateDetails)
+  },
+  beforeDestroy() {
+    this.$eventBus.$off('event-details-updated')
+  },
   methods: {
+    updateDetails(newDetails) {
+      if (newDetails && this.eventDetails) {
+        this.eventDetails = { ...newDetails }
+      }
+    },
     locationChanged(value) {
       if (value !== 'Venue') {
         this.venueAddress = {
@@ -512,7 +529,13 @@ export default {
           delete this.venueAddress.LatLng
         }
       } else {
-        this.session.StartDate = new Date(this.eventDetails.StartDate)
+        this.session.StartDate = new Date(
+          utcToZonedTime(
+            new Date(this.eventDetails.StartDate),
+            this.eventDetails.Timezone
+          )
+        )
+        this.session.Timezone = this.eventDetails.Timezone
         if (this.session.StartDate.getSeconds()) {
           this.session.StartDate.setMinutes(
             this.session.StartDate.getMinutes() + 1
