@@ -1,5 +1,5 @@
 <template>
-  <v-flex class="greybg seatmap-inner mt-n6">
+  <v-flex class="greybg seatmap-inner">
     <div v-for="c in Category" :key="c">
       <div class="ma-5">{{ c }}</div>
       <div class="d-flex flex-wrap ml-5 mt-5">
@@ -452,7 +452,7 @@ export default {
   margin: auto;
 }
 .on-hover {
-  background: #bdbdbd;
+  background: #e2e2e2;
 }
 .service-text {
   width: 110px;

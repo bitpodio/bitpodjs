@@ -189,7 +189,9 @@
                             }}</v-list-item-title>
                             <div v-if="item.StartDate" class="mt-1">
                               <v-list-item-subtitle class="session-date">
-                                {{ formatDateTime(item.StartDate) }}
+                                {{
+                                  formatDateTime(item.StartDate, item.Timezone)
+                                }}
                                 <span v-if="item.Timezone" class="ml-1">{{
                                   item.Timezone
                                 }}</span>
@@ -908,8 +910,10 @@ export default {
     formatDateMonth(date) {
       return date ? format(new Date(date), 'LLL') : ''
     },
-    formatDateTime(date) {
-      return date ? format(new Date(date), 'p') : ''
+    formatDateTime(date, timezone) {
+      return date
+        ? format(new Date(this.formatedDate(new Date(date), timezone)), 'p')
+        : ''
     },
     getRandomColor(name) {
       return window.GeoPattern.generate(name).color
