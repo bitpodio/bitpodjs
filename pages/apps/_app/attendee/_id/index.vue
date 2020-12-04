@@ -271,7 +271,7 @@
                       <iframe
                         id="rcChannel"
                         name="rcChannel"
-                        :src="`https://chat.bitpod.io/channel/${registration.EventId}?layout=embedded`"
+                        :src="`https://chat.bitpod.io/channel/${registration.EventList.chatChannel}?layout=embedded`"
                         width="100%"
                         height="600"
                         frameBorder="0"
