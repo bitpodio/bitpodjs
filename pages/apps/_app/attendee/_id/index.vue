@@ -248,7 +248,8 @@
                 v-if="
                   registration &&
                   registration.EventList &&
-                  registration.EventList.allowChat === true
+                  registration.EventList.allowChat === true &&
+                  !registration.chatToken.includes('error')
                 "
               >
                 <div>
@@ -620,7 +621,10 @@
                         <tr>
                           <td></td>
                           <td></td>
-                          <td>Total {{ registration.TicketQuantity }}</td>
+                          <td>
+                            <span><i18n path="Common.Total" /></span>
+                            <span>{{ registration.TicketQuantity }}</span>
+                          </td>
                           <td></td>
                         </tr>
                         <tr>
