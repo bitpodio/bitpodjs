@@ -452,7 +452,7 @@ export default {
   margin: auto;
 }
 .on-hover {
-  background: #bdbdbd;
+  background: #e2e2e2;
 }
 .service-text {
   width: 110px;
