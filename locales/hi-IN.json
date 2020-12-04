@@ -826,7 +826,8 @@
       "EmailInvalid": "ईमेल अमान्य है",
       "HttpsUrl": "यह एक https url होना चाहिए",
       "OverlappingTimeSlot": "समय-स्लॉट अन्य स्लॉट के साथ अतिव्यापी",
-      "EndTimeMustBeGreater": "अंत समय अधिक होना चाहिए फिर समय शुरू करें"
+      "EndTimeMustBeGreater": "अंत समय अधिक होना चाहिए फिर समय शुरू करें",
+      "PermissionDenied": "आपको इस ऑपरेशन को करने की अनुमति नहीं है"
     },
     "Warn": {
       "UniqueLinkFormat": "केवल लोअर केस अल्फ़ान्यूमेरिक अक्षर",

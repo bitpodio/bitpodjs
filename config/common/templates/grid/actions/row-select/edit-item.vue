@@ -65,6 +65,7 @@
             :label="this.$t('Drawer.Save')"
             depressed
             :action="onSave"
+            :reset="resetBtn"
           ></SaveBtn>
         </v-card-actions>
       </v-card>
@@ -125,6 +126,7 @@ export default {
       updateCount: 0,
       valid: true,
       lazy: false,
+      resetBtn: false,
     }
   },
   watch: {
@@ -165,6 +167,7 @@ export default {
             error
           )
           this.errorMessage = error.message.split(':')[1]
+          this.resetBtn = !this.resetBtn
         }
       }
     },

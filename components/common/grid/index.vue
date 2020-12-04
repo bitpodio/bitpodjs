@@ -629,23 +629,37 @@ export default {
     async onDeleteItem(ids) {
       const modelName = getModelName(this.content, this.viewName)
       const deleteItemMutation = buildMutationDeleteQuery(modelName)
-      const itemDeleted = await this.$apollo.mutate({
-        mutation: gql(deleteItemMutation),
-        variables: {
-          Inputs: {
-            where: {
-              id: {
-                inq: ids,
+      try {
+        const itemDeleted = await this.$apollo.mutate({
+          mutation: gql(deleteItemMutation),
+          variables: {
+            Inputs: {
+              where: {
+                id: {
+                  inq: ids,
+                },
               },
+              clientMutationId: `${modelName} list item updated successfully.`,
             },
-            clientMutationId: `${modelName} list item updated successfully.`,
           },
-        },
-      })
-      this.refresh()
-      this.snackbarText = `${modelName} deleted Successfully`
-      this.snackbar = true
-      return itemDeleted
+        })
+        if (itemDeleted) {
+          this.refresh()
+          this.snackbarText = `${modelName} deleted Successfully`
+          this.snackbar = true
+          return itemDeleted
+        }
+      } catch (e) {
+        const error = e
+        if (error.message.split(':')[1] === ' Access denied') {
+          this.snackbarText = this.$t('Messages.Error.PermissionDenied')
+          this.snackbar = true
+        }
+        console.error(
+          `Errors in components/common/grid/index.vue on onDeleteItem method context:-${ids} `,
+          error
+        )
+      }
     },
     refresh() {
       const dataSource = getViewDataSource(this.content, this.viewName)
@@ -781,7 +795,9 @@ export default {
   align-items: center;
 }
 .v-tooltip__content {
-  margin-top: -17px;
+  font-size: 11px !important;
+  margin-top: -19px;
+  padding: 0 8px !important;
 }
 @media (min-width: 601px) {
   .grid-actions-menu {

@@ -295,6 +295,9 @@ function getDateAfterQuerybyDays(field, days) {
 
 export const configLoaderMixin = {
   layout(context) {
+    console.debug('configLoaderMixin context:- ', context)
+    console.debug('configLoaderMixin context route:- ', context.route)
+    console.debug('configLoaderMixin context app:- ', context.route.params.app)
     return context.route.params.app || 'default'
   },
   data() {

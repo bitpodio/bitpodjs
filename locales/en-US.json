@@ -826,7 +826,8 @@
       "EmailInvalid": "Email is invalid",
       "HttpsUrl": "This must be a https url",
       "OverlappingTimeSlot": "Time-slot overlapping with other slots",
-      "EndTimeMustBeGreater": "End time must be greater then start time"
+      "EndTimeMustBeGreater": "End time must be greater then start time",
+      "PermissionDenied": "You do not have permission to perform this operation"
     },
     "Warn": {
       "UniqueLinkFormat": "Lower case alphanumeric letters only",
