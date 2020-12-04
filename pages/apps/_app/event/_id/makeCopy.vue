@@ -328,7 +328,6 @@ import eventCount from '~/config/apps/event/gql/eventCount.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import CustomDate from '~/components/common/form/date.vue'
 import { getIdFromAtob } from '~/utility'
-import nuxtconfig from '~/nuxt.config'
 import SaveBtn from '~/components/common/saveButton'
 
 export default {
@@ -478,7 +477,9 @@ export default {
       ]
     },
     eventLinkHint() {
-      return `${nuxtconfig.integrationLinks.EVENT_LINK_HINT}${this.UniqLink}`
+      return `${this.$bitpod.getApiUrl().replace('svc/api', 'e')}${
+        this.UniqLink
+      }`
     },
     gMapCenter() {
       return { lat: this.locations[0].lat, lng: this.locations[0].lng }
