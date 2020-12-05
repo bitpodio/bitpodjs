@@ -105,7 +105,7 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/device',
     '@nuxtjs/apollo',
-    '@nuxtjs/auth-next',
+    '@bitpod/auth-next',
     [
       'nuxt-gmaps',
       {
@@ -323,6 +323,9 @@ export default {
           authorization: `${basePath}/authorize?provider=bitpod`,
           token: 'api/connect/token?provider=bitpod',
           userInfo: 'api/connect/userinfo?provider=bitpod',
+          logout:
+            process.env.BITPOD_ENDSESSION_ENDPOINT_URL ||
+            'https://login.bitpod.io/auth/connect/endsession',
         },
         responseType: 'code',
         grantType: 'authorization_code',
@@ -348,9 +351,9 @@ export default {
           'https://oauth2.googleapis.com/tokeninfo',
         authorization:
           process.env.GOOGLE_AUTHORIZATION_ENDPOINT_URL ||
-          'https://accounts.google.com/o/oauth2/auth',
+          'https://accounts.google.com/o/oauth2/v2/auth',
         endpoints: {
-          authorization: `${basePath}/authorize?provider=google`,
+          authorization: `${basePath}/authorize?provider=google&prompt=consent`,
           token: 'api/connect/token?provider=google',
           userInfo: 'api/connect/userinfo?provider=google',
         },
