@@ -314,6 +314,9 @@ body {
 .on-hover {
   opacity: 0.3;
 }
+.seatmap-inner .on-hover {
+  opacity: 1;
+}
 .templateButtons {
   position: absolute;
   bottom: 30px;
@@ -604,6 +607,12 @@ table > tbody > tr:last-child .key-align {
 }
 .service-text {
   min-height: 24px;
+}
+.slide-form-default h2, .slide-form h2 {
+  width: calc(100% - 50px);
+}
+.slide-form-default .v-input__append-inner, .slide-form .v-input__append-inner {
+  cursor: pointer;
 }
 @media (max-width: 800px) {
   .nav-bar {

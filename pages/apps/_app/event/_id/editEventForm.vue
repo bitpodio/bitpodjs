@@ -515,6 +515,7 @@ export default {
             }
           )
           if (res) {
+            this.$eventBus.$emit('event-details-updated', res)
             this.close()
             this.$emit('update:snackbar', true)
             this.refreshGrid()

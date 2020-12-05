@@ -13,6 +13,7 @@ query($filters: JSON, $badgeFilter: JSON, $eventId: String) {
           showTimezone
           UniqLink
           isRefundable
+          allowChat
           RegistrationSiteTemplate
           ShowAttendeeForm
           CapturePoint

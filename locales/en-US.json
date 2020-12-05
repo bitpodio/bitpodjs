@@ -70,6 +70,7 @@
     "BusinessType": "Business Type",
     "EventLink": "Event Link",
     "AllowCancelation": "Allow Cancelation",
+    "AllowChat": "Allow Chat",
     "ValidateSessionTimingConflict": "Validate Session Timing Conflict",
     "ShowRemainingTicketsCount": "Show Remaining Tickets Count",
     "ShowAttendeeForm": "Show Attendee Form",
@@ -699,7 +700,8 @@
     "HeaderPrice": "Price",
     "TicketsNotRequired": "Tickets",
     "Integration": "Integration",
-    "TimezoneCaption": "Timezone"
+    "TimezoneCaption": "Timezone",
+    "Chat": "Chat"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",
@@ -826,7 +828,8 @@
       "EmailInvalid": "Email is invalid",
       "HttpsUrl": "This must be a https url",
       "OverlappingTimeSlot": "Time-slot overlapping with other slots",
-      "EndTimeMustBeGreater": "End time must be greater then start time"
+      "EndTimeMustBeGreater": "End time must be greater then start time",
+      "PermissionDenied": "You do not have permission to perform this operation"
     },
     "Warn": {
       "UniqueLinkFormat": "Lower case alphanumeric letters only",
@@ -881,7 +884,9 @@
       "RecurringSessionCreatedSuccess": "Recurring Session created successfully",
       "RecurringSessionUpdatedSuccess": "Recurring Session updated successfully",
       "EditMetadataSuccess": "Template metadata updated successfully",
-      "EditTemplateSuccess": "Template updated successfully"
+      "EditTemplateSuccess": "Template updated successfully",
+      "DeleteSuccess": "{modelName} deleted Successfully",
+      "ListUpdatedSucess": "{modelName} list item updated successfully."
     }
   },
   "$vuetify": {

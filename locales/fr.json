@@ -70,6 +70,7 @@
     "BusinessType": "Type métier",
     "EventLink": "Lien d'événement",
     "AllowCancelation": "Autoriser l'annulation",
+    "AllowChat": "Autoriser le chat",
     "ValidateSessionTimingConflict": "Valider le conflit de temps de la session",
     "ShowRemainingTicketsCount": "Afficher le nombre de tickets restants",
     "ShowAttendeeForm": "Afficher le formulaire de participant",
@@ -698,7 +699,8 @@
     "HeaderPrice": "le prix",
     "TicketsNotRequired": "des billets",
     "Integration": "Integration",
-    "TimezoneCaption": "Timezone"
+    "TimezoneCaption": "Timezone",
+    "Chat": "bavarder"
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",
@@ -825,7 +827,8 @@
       "EmailInvalid": "Le courriel est invalide",
       "HttpsUrl": "Cela doit être une URL https",
       "OverlappingTimeSlot": "Intervalle de temps chevauchant avec d'autres emplacements",
-      "EndTimeMustBeGreater": "L'heure de fin doit être supérieure à l'heure de début"
+      "EndTimeMustBeGreater": "L'heure de fin doit être supérieure à l'heure de début",
+      "PermissionDenied": "Vous n'êtes pas autorisé à effectuer cette opération"
     },
     "Warn": {
       "UniqueLinkFormat": "Minuscules lettres alphanumériques uniquement",
@@ -878,7 +881,9 @@
       "RecurringSessionCreatedSuccess": "Session récurrente créée avec succès",
       "RecurringSessionUpdatedSuccess": "Session récurrente mise à jour avec succès",
       "EditMetadataSuccess": "Les métadonnées du modèle ont bien été mises à jour",
-      "EditTemplateSuccess": "Modèle mis à jour avec succès" 
+      "EditTemplateSuccess": "Modèle mis à jour avec succès",
+      "DeleteSuccess": "{modelName} Supprimé avec succès",
+      "ListUpdatedSucess": "{modelName} élément de liste mis à jour avec succès." 
     }
   },
   "$vuetify": {

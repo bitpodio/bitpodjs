@@ -70,6 +70,7 @@
     "BusinessType": "טיפוס עסקי",
     "EventLink": "קישור לאירוע",
     "AllowCancelation": "אפשר ביטול",
+    "AllowChat": "אפשר צ'אט",
     "ValidateSessionTimingConflict": "אמת סכסוך תזמון מושב",
     "ShowRemainingTicketsCount": "הצגת ספירת הכרטיסים הנותרים",
     "ShowAttendeeForm": "הצג טופס משתתף",
@@ -699,7 +700,8 @@
     "HeaderPrice": "מחיר",
     "TicketsNotRequired": "כרטיסים",
     "Integration": "Integration",
-    "TimezoneCaption": "Timezone"
+    "TimezoneCaption": "Timezone",
+    "Chat": "לְשׂוֹחֵחַ"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",
@@ -826,7 +828,8 @@
       "EmailInvalid": "כתובת מייל לא תקינה",
       "HttpsUrl": "This must be a https url",
       "OverlappingTimeSlot": "משבצת זמן חופפת לחריצים אחרים",
-      "EndTimeMustBeGreater": "זמן הסיום חייב להיות גדול יותר משעת ההתחלה"
+      "EndTimeMustBeGreater": "זמן הסיום חייב להיות גדול יותר משעת ההתחלה",
+      "PermissionDenied": "אין לך הרשאה לבצע פעולה זו"
     },
     "Warn": {
       "UniqueLinkFormat": "אותיות אלפאנומריות באותיות קטנות בלבד",
@@ -879,7 +882,9 @@
       "RecurringSessionCreatedSuccess": "מושב חוזר נוצר בהצלחה",
       "RecurringSessionUpdatedSuccess": "ההפעלה החוזרת עודכנה בהצלחה",
       "EditMetadataSuccess": "מטא נתונים של תבנית עודכנו בהצלחה",
-      "EditTemplateSuccess": "התבנית עודכנה בהצלחה" 
+      "EditTemplateSuccess": "התבנית עודכנה בהצלחה",
+      "DeleteSuccess": "{modelName} נמחק בהצלחה",
+      "ListUpdatedSucess": "{modelName} פריט הרשימה עודכן בהצלחה."
     }
   },
   "$vuetify": {

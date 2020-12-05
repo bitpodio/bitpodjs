@@ -70,6 +70,7 @@
     "BusinessType": "व्यापार के प्रकार",
     "EventLink": "घटना लिंक",
     "AllowCancelation": "रद्द करने की अनुमति दें",
+    "AllowChat": "चैट की अनुमति दें",
     "ValidateSessionTimingConflict": "मान्य सत्र का समय संघर्ष",
     "ShowRemainingTicketsCount": "शेष टिकट गणना दिखाएं",
     "ShowAttendeeForm": "सहभागी प्रपत्र दिखाएं",
@@ -699,7 +700,8 @@
     "HeaderPrice": "कीमत",
     "TicketsNotRequired": "टिकट",
     "Integration": "Integration",
-    "TimezoneCaption": "Timezone"
+    "TimezoneCaption": "Timezone",
+    "Chat": "बातचीत"
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",
@@ -826,7 +828,8 @@
       "EmailInvalid": "ईमेल अमान्य है",
       "HttpsUrl": "यह एक https url होना चाहिए",
       "OverlappingTimeSlot": "समय-स्लॉट अन्य स्लॉट के साथ अतिव्यापी",
-      "EndTimeMustBeGreater": "अंत समय अधिक होना चाहिए फिर समय शुरू करें"
+      "EndTimeMustBeGreater": "अंत समय अधिक होना चाहिए फिर समय शुरू करें",
+      "PermissionDenied": "आपको इस ऑपरेशन को करने की अनुमति नहीं है"
     },
     "Warn": {
       "UniqueLinkFormat": "केवल लोअर केस अल्फ़ान्यूमेरिक अक्षर",
@@ -879,7 +882,9 @@
       "RecurringSessionCreatedSuccess": "आवर्ती सत्र सफलतापूर्वक बनाया गया",
       "RecurringSessionUpdatedSuccess": "आवर्ती सत्र सफलतापूर्वक अपडेट किया गया",
       "EditMetadataSuccess": "टेम्प्लेट मेटाडेटा सफलतापूर्वक अपडेट किया गया",
-      "EditTemplateSuccess": "टेम्प्लेट सफलतापूर्वक अपडेट किया गया" 
+      "EditTemplateSuccess": "टेम्प्लेट सफलतापूर्वक अपडेट किया गया",
+      "DeleteSuccess": "{modelName} सफलतापूर्वक मिटाया गया",
+      "ListUpdatedSucess": "{modelName} सूची आइटम सफलतापूर्वक अपडेट किया गया।" 
     }
   },
   "$vuetify": {
