@@ -178,7 +178,7 @@
                     :label="$t('Common.VenueAddress')"
                     classname="form-control"
                     :rules="[addressValidation]"
-                    placeholder="Venue Address *"
+                    :placeholder="$t('Common.Address')"
                     @placechanged="getAddressData"
                     @change="addressChanged"
                   >
