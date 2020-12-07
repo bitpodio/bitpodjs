@@ -772,7 +772,7 @@
                             <i18n path="Common.Type" />
                           </th>
                           <th class="text-left">
-                            <i18n path="Common.Tickets" />
+                            <i18n path="Common.TicketsRequired" />
                           </th>
                           <th class="text-left"></th>
                         </tr>
