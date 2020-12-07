@@ -81,7 +81,9 @@
                 <span><i18n path="Common.OnlyAskWhen" /> </span>
                 <v-select
                   v-model="tickets"
-                  :items="ticketsDropDown"
+                  :items="[...ticketIds]"
+                  item-text="name"
+                  item-value="id"
                   multiple
                   chips
                   small-chips
@@ -181,7 +183,7 @@ export default {
     this.getTicketDetails()
       .then((res) => {
         this.ticketIds = []
-
+        
         this.ticketsDropDown = res.map((i) => {
           this.ticketIds.push({
             name: i.Code,
@@ -224,12 +226,11 @@ export default {
         this.formData.Options = []
       }
       this.formData.Options = this.formData.Options ? this.formData.Options : []
-      this.formData.TicketName = this.tickets ? this.tickets : []
-      this.formData.TicketIds = this.tickets
-        ? this.ticketIds
-            .filter((i) => this.tickets.some((j) => j === i.name))
-            .map((k) => k.id)
+      this.formData.TicketName = this.tickets
+        ? this.ticketIds.filter((i) =>
+            this.tickets.some((j) => j === i.id)).map((k) => k.name)
         : []
+      this.formData.TicketIds = this.tickets ? this.tickets : []
       const url = this.$bitpod.getApiUrl()
       const res = await this.$axios
         .$post(`${url}Events/${this.$route.params.id}/Survey`, {
