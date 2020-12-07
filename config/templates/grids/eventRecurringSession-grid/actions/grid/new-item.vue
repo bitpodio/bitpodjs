@@ -216,7 +216,6 @@
                     :label="$t('Common.Location')"
                     outlined
                     dense
-                    class="st-date"
                     multiple
                   ></v-autocomplete>
                 </v-col>
@@ -337,7 +336,7 @@
                   class="pb-0"
                 >
                   <v-text-field
-                    v-model="venueAddress.ZipCode"
+                    v-model="venueAddress.PostalCode"
                     :label="$t('Common.ZipCode')"
                     outlined
                     dense
