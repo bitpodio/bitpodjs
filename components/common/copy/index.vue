@@ -95,48 +95,36 @@ export default {
   },
   methods: {
     async clickListener() {
-      debugger
       const inputEl = this.uniqueId
         ? document.querySelector(`.${this.uniqueId}`)
         : document.querySelector('.to-copy')
       const inputValue = inputEl.value.trim()
       if (inputValue) {
         if (navigator.clipboard) {
-          console.log('inside the if block')
           try {
             await navigator.clipboard.writeText(inputValue)
             inputEl.value = ''
             this.snackbar = true
             this.snackbarText = this.$t('Messages.Success.CopiedClipboard')
           } catch (e) {
-            console.log('Something went wrong', e)
+            console.error('Something went wrong', e)
             this.snackbar = true
             this.snackbarText = this.$t('Common.SomeErrorOccured')
           }
         } else {
-          console.log('inside the else block')
-          console.log('inputValue', inputValue)
-          // let textArea = document.createElement('textarea')
-          // textArea.value = inputValue
-          // textArea.style.display = 'none'
-          // document.body.appendChild(textArea)
           inputEl.focus()
           inputEl.select()
           inputEl.setSelectionRange(0, 99999)
           try {
-            console.log('inputEl', inputEl)
             const isSuccess = document.execCommand('copy')
-            console.log('document', document)
-            console.log('isSuccess', isSuccess)
-            console.log('inputEl', inputEl)
+            console.debug('isSuccess', isSuccess)
             inputEl.value = ''
-            console.log('inputEl', inputEl)
             if (isSuccess) {
               this.snackbar = true
               this.snackbarText = this.$t('Messages.Success.CopiedClipboard')
             }
           } catch (e) {
-            console.log('Something went wrong', e)
+            console.error('Something went wrong', e)
             this.snackbar = true
             this.snackbarText = this.$t('Common.SomeErrorOccured')
           }

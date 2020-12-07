@@ -385,6 +385,10 @@ export default {
         )
         if (res) {
           this.close()
+          this.$emit(
+            'update:snackbarText',
+            this.$t('Messages.Success.EventDetailsUpdateSuccess')
+          )
           this.$emit('update:snackbar', true)
           this.refresh()
           this.sectionHeading = res._sectionHeading
