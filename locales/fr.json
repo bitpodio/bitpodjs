@@ -70,6 +70,7 @@
     "BusinessType": "Type métier",
     "EventLink": "Lien d'événement",
     "AllowCancelation": "Autoriser l'annulation",
+    "AllowChat": "Autoriser le chat",
     "ValidateSessionTimingConflict": "Valider le conflit de temps de la session",
     "ShowRemainingTicketsCount": "Afficher le nombre de tickets restants",
     "ShowAttendeeForm": "Afficher le formulaire de participant",
@@ -698,7 +699,8 @@
     "HeaderPrice": "le prix",
     "TicketsNotRequired": "des billets",
     "Integration": "Integration",
-    "TimezoneCaption": "Timezone"
+    "TimezoneCaption": "Timezone",
+    "Chat": "bavarder"
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",

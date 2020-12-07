@@ -70,6 +70,7 @@
     "BusinessType": "व्यापार के प्रकार",
     "EventLink": "घटना लिंक",
     "AllowCancelation": "रद्द करने की अनुमति दें",
+    "AllowChat": "चैट की अनुमति दें",
     "ValidateSessionTimingConflict": "मान्य सत्र का समय संघर्ष",
     "ShowRemainingTicketsCount": "शेष टिकट गणना दिखाएं",
     "ShowAttendeeForm": "सहभागी प्रपत्र दिखाएं",
@@ -699,7 +700,8 @@
     "HeaderPrice": "कीमत",
     "TicketsNotRequired": "टिकट",
     "Integration": "Integration",
-    "TimezoneCaption": "Timezone"
+    "TimezoneCaption": "Timezone",
+    "Chat": "बातचीत"
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",
