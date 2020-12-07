@@ -119,8 +119,8 @@ export default {
           // textArea.value = inputValue
           // textArea.style.display = 'none'
           // document.body.appendChild(textArea)
-          inputValue.focus()
-          inputValue.select()
+          inputEl.focus()
+          inputEl.select()
           try {
             const isSuccess = document.execCommand('copy')
             console.log('isSuccess', isSuccess)
