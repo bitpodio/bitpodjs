@@ -40,7 +40,7 @@
                 >
                   <template v-slot:placeholder>
                     <v-img
-                      :src="$config.cdnUri + 'invitee-image.png'"
+                      :src="$config.cdnUri + 'new-invitee-image.png'"
                       class="grey lighten-2"
                       min-height="200"
                       max-height="200"
@@ -51,7 +51,7 @@
               </div>
               <div v-else class="pa-1">
                 <v-img
-                  :src="$config.cdnUri + 'invitee-image.png'"
+                  :src="$config.cdnUri + 'new-invitee-image.png'"
                   class="grey lighten-2"
                   min-height="200"
                   max-height="200"
@@ -179,7 +179,7 @@
                 >
                   <template v-slot:placeholder>
                     <v-img
-                      :src="$config.cdnUri + 'invitee-image.png'"
+                      :src="$config.cdnUri + 'new-invitee-image.png'"
                       class="grey lighten-2"
                       min-height="200"
                       max-height="200"
@@ -190,7 +190,7 @@
               </div>
               <div v-else class="pa-1">
                 <v-img
-                  :src="$config.cdnUri + 'invitee-image.png'"
+                  :src="$config.cdnUri + 'new-invitee-image.png'"
                   class="grey lighten-2"
                   min-height="200"
                   max-height="200"

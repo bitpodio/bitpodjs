@@ -322,8 +322,9 @@ export default {
   .filter-or,
   .filter-field,
   .filter-value {
-    max-width: 80vw;
-    min-width: 80vw;
+    max-width: 75vw;
+    min-width: 65vw;
+    width: 100%;
   }
 }
 </style>

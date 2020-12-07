@@ -45,8 +45,9 @@
     "Invite": "Invite",
     "Emails": "Emails",
     "Notes": "Notes",
-    "Tickets": "Tickets*",
+    "Tickets": "Tickets",
     "DiscountCodes": "Discount Codes",
+    "Discount": "Discount",
     "RegistrationQuestions": "Registration Questions",
     "Sessions": "Sessions",
     "Speakers": "Speakers",
@@ -848,7 +849,8 @@
       "DeleteImage": "Do you want to delete this image?",
       "DeleteUser": "Do you want to delete this user?",
       "NoEvents": "There aren't any live and draft events, to start setting up your event use Create Event link",
-      "NoEventsFound": "No events found with name {searchKey}"
+      "NoEventsFound": "No events found with name {searchKey}",
+      "ConfirmResendRegistrationEmail": "Are you sure you want to resend confirmation emails?"
     },
     "Success": {
       "CopiedClipboard": "Copied to clipboard",

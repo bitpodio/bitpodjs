@@ -259,7 +259,9 @@
                             >
                               <template v-slot:placeholder>
                                 <v-img
-                                  :src="$config.cdnUri + 'invitee-image.png'"
+                                  :src="
+                                    $config.cdnUri + 'new-invitee-image.png'
+                                  "
                                   min-height="200"
                                   max-height="200"
                                 >
@@ -269,7 +271,7 @@
                           </div>
                           <div v-else class="pa-1">
                             <v-img
-                              :src="$config.cdnUri + 'invitee-image.png'"
+                              :src="$config.cdnUri + 'new-invitee-image.png'"
                               class="grey lighten-2"
                               min-height="200"
                               max-height="200"
@@ -302,7 +304,7 @@
                               setPreviewImage(
                                 item.ImageURL !== null
                                   ? item.ImageURL
-                                  : $config.cdnUri + 'invitee-image.png'
+                                  : $config.cdnUri + 'new-invitee-image.png'
                               )
                             "
                             ><i18n path="Drawer.View"
@@ -599,7 +601,7 @@
                 </v-row>
                 <v-row v-else class="ma-1 my-3">
                   <v-col
-                    class="pl-0 col-12 col-sm-6 col-md-4"
+                    class="pl-sm-0 col-12 col-sm-6 col-md-4"
                     :class="{
                       templateverify: !isFrench,
                       templateverifyFrench: isFrench,
