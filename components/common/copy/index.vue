@@ -95,6 +95,7 @@ export default {
   },
   methods: {
     async clickListener() {
+      debugger
       const inputEl = this.uniqueId
         ? document.querySelector(`.${this.uniqueId}`)
         : document.querySelector('.to-copy')
@@ -121,10 +122,15 @@ export default {
           // document.body.appendChild(textArea)
           inputEl.focus()
           inputEl.select()
+          inputEl.setSelectionRange(0, 99999)
           try {
+            console.log('inputEl', inputEl)
             const isSuccess = document.execCommand('copy')
+            console.log('document', document)
             console.log('isSuccess', isSuccess)
+            console.log('inputEl', inputEl)
             inputEl.value = ''
+            console.log('inputEl', inputEl)
             if (isSuccess) {
               this.snackbar = true
               this.snackbarText = this.$t('Messages.Success.CopiedClipboard')
