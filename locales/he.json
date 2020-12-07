@@ -847,7 +847,8 @@
       "NoEvents": "אין אירועים חיים וטיוטה, כדי להתחיל בהגדרת האירוע שלך השתמש בקישור צור אירוע",
       "DeleteEvent": "האם אתה רוצה למחוק אירוע זה?",
       "DeleteUser": "האם ברצונך למחוק משתמש זה?",
-      "NoEventsFound": "לא נמצאו אירועים עם שם {searchKey}"
+      "NoEventsFound": "לא נמצאו אירועים עם שם {searchKey}",
+      "ConfirmResendRegistrationEmail": "האם אתה בטוח שברצונך לשלוח שוב הודעות אישור?"
     },
     "Success": {
       "CopiedClipboard": "הועתק ללוח",
