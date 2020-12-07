@@ -1386,7 +1386,7 @@ export default {
       fields: {
         Title: {
           displayOrder: 1,
-          caption: 'Common.Title',
+          caption: 'Common.TitleCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
