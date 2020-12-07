@@ -147,10 +147,7 @@
               <v-col cols="12" sm="6" md="6" class="pl-0 pt-0 pb-0">
                 <v-col v-if="isVenue" cols="12" class="pb-6 pt-0">
                   <div class="positionRelative">
-                    <div
-                      v-if="addressClicked || !!venueAddress.AddressLine"
-                      class="address-legend"
-                    >
+                    <div v-if="addressClicked" class="address-legend">
                       {{ $t('Common.Address') }}
                     </div>
                     <no-ssr>
@@ -683,6 +680,7 @@ export default {
         ) {
           this.venueAddress = this.eventData._VenueAddress
           if (this.eventData._VenueAddress.LatLng !== null) {
+            this.addressClicked = true
             const latlng = this.eventData._VenueAddress.LatLng
             const newLocations = []
             latlng.name = `${this.eventData.VenueName} ${this.eventData._VenueAddress.City} ${this.eventData._VenueAddress.Country}`

@@ -763,7 +763,7 @@
                             <i18n path="Common.SlotSize" />
                           </th>
                           <th class="text-left pl-2 event-timezone">
-                            <i18n path="Common.Timezone" />
+                            <i18n path="Common.TimezoneCaption" />
                           </th>
                           <th class="text-left pl-2 event-timezone">
                             <i18n path="Common.RecurringEventLocation" />
@@ -772,7 +772,7 @@
                             <i18n path="Common.Type" />
                           </th>
                           <th class="text-left">
-                            <i18n path="Common.Tickets" />
+                            <i18n path="Common.TicketsNotRequired" />
                           </th>
                           <th class="text-left"></th>
                         </tr>

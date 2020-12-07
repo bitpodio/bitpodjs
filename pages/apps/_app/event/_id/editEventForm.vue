@@ -169,34 +169,24 @@
               style="display: contents;"
             >
               <v-col cols="12" class="mt-n6">
-                <div class="positionRelative">
-                  <div
-                    v-if="addressClicked || !!VenueAddress.AddressLine"
-                    class="address-legend"
+                <no-ssr>
+                  <vue-google-autocomplete
+                    id="map"
+                    ref="address"
+                    v-model="VenueAddress.AddressLine"
+                    outlined
+                    :label="$t('Common.VenueAddress')"
+                    classname="form-control"
+                    :rules="[addressValidation]"
+                    :placeholder="$t('Common.Address')"
+                    @placechanged="getAddressData"
+                    @change="addressChanged"
                   >
-                    {{ $t('Common.Address') }}
-                  </div>
-                  <no-ssr>
-                    <vue-google-autocomplete
-                      id="map"
-                      ref="address"
-                      v-model="VenueAddress.AddressLine"
-                      outlined
-                      :label="$t('Common.VenueAddress')"
-                      classname="form-control"
-                      :rules="[addressValidation]"
-                      :placeholder="!addressClicked && $t('Common.Address')"
-                      @placechanged="getAddressData"
-                      @change="addressChanged"
-                      @focus="focusIn"
-                      @blur="focusOut"
-                    >
-                    </vue-google-autocomplete>
-                    <span v-if="errorAlert.message != ''" style="color: red;">{{
-                      errorAlert.message
-                    }}</span>
-                  </no-ssr>
-                </div>
+                  </vue-google-autocomplete>
+                  <span v-if="errorAlert.message != ''" style="color: red;">{{
+                    errorAlert.message
+                  }}</span>
+                </no-ssr>
               </v-col>
               <v-col cols="12" class="mt-6">
                 <v-text-field
@@ -301,7 +291,6 @@ export default {
       datevalid: true,
       startdateMessage: '',
       enddateMessage: '',
-      addressClicked: false,
       tags: [],
       addressLine: '',
       tagsDropdown: [],
@@ -412,12 +401,6 @@ export default {
   },
 
   methods: {
-    focusOut() {
-      this.addressClicked = false
-    },
-    focusIn() {
-      this.addressClicked = true
-    },
     onReset() {
       this.$refs.form.reset()
     },
@@ -694,18 +677,5 @@ export default {
   color: red;
   padding: 10px;
   font-size: 12px;
-}
-.address-legend {
-  position: absolute !important;
-  background: white;
-  font-size: 13px !important;
-  left: 7px !important;
-  padding: 0 5px;
-  top: -11px;
-  color: grey;
-}
-.form-control:focus {
-  border: 2px solid #1a73e8 !important;
-  outline: #1a73e8;
 }
 </style>
