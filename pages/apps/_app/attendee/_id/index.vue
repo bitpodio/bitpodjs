@@ -627,6 +627,15 @@
                           </td>
                           <td></td>
                         </tr>
+                        <tr v-if="registration.Discount">
+                          <td></td>
+                          <td></td>
+                          <td><i18n path="Common.Discount" /></td>
+                          <td>
+                            {{ registration.Currency }}
+                            {{ registration.Discount }}
+                          </td>
+                        </tr>
                         <tr>
                           <td></td>
                           <td></td>
@@ -649,8 +658,20 @@
                         <tr>
                           <td></td>
                           <td></td>
-                          <td>Total {{ registration.TicketQuantity }}</td>
+                          <td>
+                            <span><i18n path="Common.Total" /></span>
+                            <span>{{ registration.TicketQuantity }}</span>
+                          </td>
                           <td></td>
+                        </tr>
+                        <tr v-if="registration.Discount">
+                          <td></td>
+                          <td></td>
+                          <td><i18n path="Common.Discount" /></td>
+                          <td>
+                            {{ registration.Currency }}
+                            {{ registration.Discount }}
+                          </td>
                         </tr>
                         <tr>
                           <td></td>
