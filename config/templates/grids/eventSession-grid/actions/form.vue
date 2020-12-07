@@ -573,7 +573,7 @@ export default {
       return {
         type: 'lookup',
         multiple: true,
-        caption: this.$t('Common.Tickets'),
+        caption: this.$t('Common.TicketsRequired'),
         items,
         dataSource: {
           items,

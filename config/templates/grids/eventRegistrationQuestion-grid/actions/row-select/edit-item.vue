@@ -260,7 +260,7 @@ export default {
       if (res) {
         this.formData = res
         this.controlType = res.ControlType
-        this.tickets = this.items[0].TicketIds  
+        this.tickets = this.items[0].TicketIds
         this.CsvOptions = res.Options.toString()
       }
     },
