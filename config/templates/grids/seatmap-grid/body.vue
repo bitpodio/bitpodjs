@@ -10,7 +10,7 @@
             max-width="155"
             width="155"
           >
-            <v-card-text class="font-weight-medium text-center subtitle-1 pt-0">
+            <v-card-text class="font-weight-medium text-center subtitle-1 pt-2">
               <i class="fa fa-plus fs-36 warning--text"></i>
               <div><i18n path="Common.NewSeatmap" class="body-1" /></div>
             </v-card-text>
