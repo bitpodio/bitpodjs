@@ -84,14 +84,6 @@ export default {
       ? document.querySelector(`.${this.uniqueId}btn`)
       : document.querySelector('.write-btn')
     writeBtn.addEventListener('click', this.clickListener)
-    const textField = document.getElementById('textField')
-    const copy = document.getElementById('copy')
-    copy.addEventListener('click', () => {
-      console.log('clicked')
-      textField.select()
-      textField.target.focus()
-      document.execCommand('copy')
-    })
   },
   beforeDestroy() {
     const writeBtn = this.uniqueId
