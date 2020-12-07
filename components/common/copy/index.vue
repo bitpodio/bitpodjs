@@ -84,6 +84,14 @@ export default {
       ? document.querySelector(`.${this.uniqueId}btn`)
       : document.querySelector('.write-btn')
     writeBtn.addEventListener('click', this.clickListener)
+    const textField = document.getElementById('textField')
+    const copy = document.getElementById('copy')
+    copy.addEventListener('click', () => {
+      console.log('clicked')
+      textField.select()
+      textField.target.focus()
+      document.execCommand('copy')
+    })
   },
   beforeDestroy() {
     const writeBtn = this.uniqueId
@@ -100,15 +108,40 @@ export default {
         : document.querySelector('.to-copy')
       const inputValue = inputEl.value.trim()
       if (inputValue) {
-        try {
-          await navigator.clipboard.writeText(inputValue)
-          inputEl.value = ''
-          this.snackbar = true
-          this.snackbarText = this.$t('Messages.Success.CopiedClipboard')
-        } catch (e) {
-          console.log('Something went wrong', e)
-          this.snackbar = true
-          this.snackbarText = this.$t('Common.SomeErrorOccured')
+        if (navigator.clipboard) {
+          console.log('inside the if block')
+          try {
+            await navigator.clipboard.writeText(inputValue)
+            inputEl.value = ''
+            this.snackbar = true
+            this.snackbarText = this.$t('Messages.Success.CopiedClipboard')
+          } catch (e) {
+            console.log('Something went wrong', e)
+            this.snackbar = true
+            this.snackbarText = this.$t('Common.SomeErrorOccured')
+          }
+        } else {
+          console.log('inside the else block')
+          console.log('inputValue', inputValue)
+          // let textArea = document.createElement('textarea')
+          // textArea.value = inputValue
+          // textArea.style.display = 'none'
+          // document.body.appendChild(textArea)
+          inputValue.focus()
+          inputValue.select()
+          try {
+            const isSuccess = document.execCommand('copy')
+            console.log('isSuccess', isSuccess)
+            inputEl.value = ''
+            if (isSuccess) {
+              this.snackbar = true
+              this.snackbarText = this.$t('Messages.Success.CopiedClipboard')
+            }
+          } catch (e) {
+            console.log('Something went wrong', e)
+            this.snackbar = true
+            this.snackbarText = this.$t('Common.SomeErrorOccured')
+          }
         }
       }
     },
