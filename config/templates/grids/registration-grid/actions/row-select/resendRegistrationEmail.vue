@@ -1,5 +1,6 @@
 <template>
   <v-col class="px-0">
+    <confirm ref="confirm"></confirm>
     <v-snackbar v-model="snackbar" :timeout="timeout" :top="true"
       ><div class="text-center">
         <i18n path="Common.ConfirmationEmailSent" /></div
@@ -40,20 +41,26 @@ export default {
   methods: {
     async resendRegistrationEmail() {
       const regIds = this.items.map((e) => e.id)
-      alert('are you sure, you want to resend confirmation emails ?')
-      try {
-        await this.$axios.$post(
-          `${this.$bitpod.getApiUrl()}CRMACTIVITIES/cloneActivityForResendEmail`,
-          {
-            regIds,
-          }
-        )
-        this.snackbar = true
-      } catch (e) {
-        console.error(
-          `Errors in config/templates/grids/registations-grid/actions/row-select/resendRegistrationEmail.vue on resendRegistrationEmail method context: regIds ${regIds}`,
-          e
-        )
+      const confirmResend = await this.$refs.confirm.open(
+        this.$t('Common.ResendRegistrationEmail'),
+        this.$t('Messages.Warn.ConfirmResendRegistrationEmail'),
+        { color: 'warning' }
+      )
+      if (confirmResend) {
+        try {
+          await this.$axios.$post(
+            `${this.$bitpod.getApiUrl()}CRMACTIVITIES/cloneActivityForResendEmail`,
+            {
+              regIds,
+            }
+          )
+          this.snackbar = true
+        } catch (e) {
+          console.error(
+            `Errors in config/templates/grids/registations-grid/actions/row-select/resendRegistrationEmail.vue on resendRegistrationEmail method context: regIds ${regIds}`,
+            e
+          )
+        }
       }
     },
   },

@@ -847,7 +847,8 @@
       "ReplaceBadge": "Un nouveau badge remplacera votre badge existant",
       "DeleteImage": "Voulez-vous supprimer cette image?",
       "NoEvents": "Il n'y a pas d'événements en direct et de brouillon, pour commencer à configurer votre événement, utilisez le lien Créer un événement",
-      "NoEventsFound": "Aucun événement trouvé avec nom {searchKey}"
+      "NoEventsFound": "Aucun événement trouvé avec nom {searchKey}",
+      "ConfirmResendRegistrationEmail": "Voulez-vous vraiment renvoyer les e-mails de confirmation?"
     },
     "Success": {
       "CopiedClipboard": "Copié dans le presse-papiers",
@@ -884,7 +885,7 @@
       "EditMetadataSuccess": "Les métadonnées du modèle ont bien été mises à jour",
       "EditTemplateSuccess": "Modèle mis à jour avec succès",
       "DeleteSuccess": "{modelName} Supprimé avec succès",
-      "ListUpdatedSucess": "{modelName} élément de liste mis à jour avec succès." 
+      "ListUpdatedSucess": "{modelName} élément de liste mis à jour avec succès."
     }
   },
   "$vuetify": {
