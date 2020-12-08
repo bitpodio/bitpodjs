@@ -2445,6 +2445,7 @@ export default {
 }
 .event-inner {
   min-height: 410px;
+  overflow-y: scroll;
 }
 .autocomplete-dropdown {
   margin-top: 13px;
