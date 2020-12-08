@@ -31,7 +31,7 @@
           ></v-app-bar-nav-icon>
         </div>
       </v-toolbar-title>
-      <div class="text-center mt-4">
+      <div class="text-center mt-3 mb-1 pl-1">
         <v-menu>
           <template v-slot:activator="{ on, attrs }">
             <v-btn
@@ -192,26 +192,27 @@
           size="24"
           height="36px"
           width="36px"
+          class="ml-2 mr-3"
           @click.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
         <span class="bitpod-logo logo-ds">
           <v-img
-            :src="$config.cdnUri + 'logo-favicon.png'"
-            class="logo-bitpod"
+            :src="$config.cdnUri + 'bitpod-logo-blk2.svg'"
+            class="logofull mr-2"
           ></v-img>
         </span>
         <i18n
           path="Common.AppTitle"
-          class="d-inline-flex align-center mx-2 text-h5"
+          class="d-inline-flex align-center mx-2 ml-3 text-h5"
         />
         <v-spacer></v-spacer>
       </v-toolbar-title>
       <v-spacer></v-spacer>
+      <AppDrawer />
       <LanguageSwitcher />
       <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
         <v-icon>mdi-invert-colors</v-icon>
       </v-btn>
-      <AppDrawer />
       <div v-if="$auth.$state.loggedIn">
         <v-menu
           v-model="account"
@@ -303,11 +304,6 @@ export default {
   props: {
     source: { type: String, default: '' },
   },
-  computed: {
-    currentPage() {
-      return this.$route.path
-    },
-  },
   data: () => ({
     date: new Date().toISOString().substr(0, 10),
     menu: false,
@@ -370,6 +366,11 @@ export default {
       },
     ],
   }),
+  computed: {
+    currentPage() {
+      return this.$route.path
+    },
+  },
   async created() {
     let token = this.$auth.strategy.token.get()
     if (token) {

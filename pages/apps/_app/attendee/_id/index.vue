@@ -275,6 +275,7 @@
                         width="100%"
                         height="600"
                         frameBorder="0"
+                        allow="camera;microphone;fullscreen"
                         @load="authenticateIFrame()"
                       ></iframe>
                     </div>
