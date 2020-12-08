@@ -349,6 +349,7 @@
     "NowOpenForRegistrations": "Now it is open for registrations, you can click on view to fetch the event landing page URL, which you can share with others, so they can register.",
     "EventL": "Event Link*",
     "EventTitle": "Event Title*",
+    "AddressRequired": "כתובת*",
     "Address*": "Address*",
     "VenueName": "שם המקום",
     "ZipCode": "מיקוד",
