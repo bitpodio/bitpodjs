@@ -68,7 +68,7 @@
                 </template>
 
                 <v-list dense>
-                  <v-list-item>
+                  <!-- <v-list-item>
                     <v-list-item-icon class="mr-2">
                       <i class="fa fa-paperplane mt-1" aria-hidden="true"></i>
                     </v-list-item-icon>
@@ -77,7 +77,7 @@
                         ><i18n path="Drawer.Publishtoeventbrite"
                       /></v-list-item-title>
                     </v-list-item-content>
-                  </v-list-item>
+                  </v-list-item> -->
                   <v-list-item @click="isMakeCopy = true">
                     <v-list-item-icon class="mr-2">
                       <i class="fa fa-clone mt-1" aria-hidden="true"></i>
@@ -88,7 +88,7 @@
                       /></v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
-                  <v-list-item>
+                  <!-- <v-list-item>
                     <v-list-item-icon class="mr-2">
                       <i
                         class="fa fa-pencil-square-o mt-1"
@@ -100,7 +100,7 @@
                         ><i18n path="Drawer.Editemailtemplate"
                       /></v-list-item-title>
                     </v-list-item-content>
-                  </v-list-item>
+                  </v-list-item> -->
                   <v-list-item @click="redirectIntegration">
                     <v-list-item-icon class="mr-2">
                       <i class="fa fa-link1 mt-1" aria-hidden="true"></i>
