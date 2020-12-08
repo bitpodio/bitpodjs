@@ -45,8 +45,9 @@
     "Invite": "Invite",
     "Emails": "Eclous",
     "Notes": "Notes",
-    "Tickets": "Des billets*",
+    "Tickets": "Des billets",
     "DiscountCodes": "Codes de remise",
+    "Discount": "Remise",
     "RegistrationQuestions": "Questions d'inscription",
     "Sessions": "Sessions",
     "Speakers": "Orateurs",
@@ -70,6 +71,7 @@
     "BusinessType": "Type métier",
     "EventLink": "Lien d'événement",
     "AllowCancelation": "Autoriser l'annulation",
+    "AllowChat": "Autoriser le chat",
     "ValidateSessionTimingConflict": "Valider le conflit de temps de la session",
     "ShowRemainingTicketsCount": "Afficher le nombre de tickets restants",
     "ShowAttendeeForm": "Afficher le formulaire de participant",
@@ -698,7 +700,8 @@
     "HeaderPrice": "le prix",
     "TicketsNotRequired": "des billets",
     "Integration": "Integration",
-    "TimezoneCaption": "Timezone"
+    "TimezoneCaption": "Timezone",
+    "Chat": "bavarder"
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",
@@ -844,7 +847,8 @@
       "ReplaceBadge": "Un nouveau badge remplacera votre badge existant",
       "DeleteImage": "Voulez-vous supprimer cette image?",
       "NoEvents": "Il n'y a pas d'événements en direct et de brouillon, pour commencer à configurer votre événement, utilisez le lien Créer un événement",
-      "NoEventsFound": "Aucun événement trouvé avec nom {searchKey}"
+      "NoEventsFound": "Aucun événement trouvé avec nom {searchKey}",
+      "ConfirmResendRegistrationEmail": "Voulez-vous vraiment renvoyer les e-mails de confirmation?"
     },
     "Success": {
       "CopiedClipboard": "Copié dans le presse-papiers",
@@ -863,6 +867,7 @@
       "SeatLayoutDeleteSuccess": "L'agencement de siège a été supprimé avec succès",
       "EventPublished": "Félicitations, votre événement a été publié.",
       "BadgesDeleteSuccess": "Badges supprimés avec succès",
+      "BadgesUpdatedSuccess":"Badges mis à jour avec succès",
       "AttachmentAddSuccess": "Pièce jointe ajoutée avec succès",
       "AttachmentDeleteSuccess": "Pièce jointe supprimée avec succès",
       "SeatLayoutAddSuccess": "L'ajout de l'agencement de siège a abouti",
@@ -881,7 +886,7 @@
       "EditMetadataSuccess": "Les métadonnées du modèle ont bien été mises à jour",
       "EditTemplateSuccess": "Modèle mis à jour avec succès",
       "DeleteSuccess": "{modelName} Supprimé avec succès",
-      "ListUpdatedSucess": "{modelName} élément de liste mis à jour avec succès." 
+      "ListUpdatedSucess": "{modelName} élément de liste mis à jour avec succès."
     }
   },
   "$vuetify": {

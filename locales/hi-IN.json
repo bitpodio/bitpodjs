@@ -45,8 +45,9 @@
     "Invite": "आमंत्रण",
     "Emails": "ईमेल",
     "Notes": "टिप्पणियाँ",
-    "Tickets": "टिकट*",
+    "Tickets": "टिकट",
     "DiscountCodes": "छूट कोड",
+    "Discount": "छूट",
     "RegistrationQuestions": "पंजीकरण प्रश्न",
     "Sessions": "सत्र",
     "Speakers": "वक्ताओं",
@@ -70,6 +71,7 @@
     "BusinessType": "व्यापार के प्रकार",
     "EventLink": "घटना लिंक",
     "AllowCancelation": "रद्द करने की अनुमति दें",
+    "AllowChat": "चैट की अनुमति दें",
     "ValidateSessionTimingConflict": "मान्य सत्र का समय संघर्ष",
     "ShowRemainingTicketsCount": "शेष टिकट गणना दिखाएं",
     "ShowAttendeeForm": "सहभागी प्रपत्र दिखाएं",
@@ -699,7 +701,8 @@
     "HeaderPrice": "कीमत",
     "TicketsNotRequired": "टिकट",
     "Integration": "Integration",
-    "TimezoneCaption": "Timezone"
+    "TimezoneCaption": "Timezone",
+    "Chat": "बातचीत"
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",
@@ -845,7 +848,8 @@
       "DeleteEvent": "क्या आप इस ईवेंट को हटाना चाहते हैं?",
       "NoEvents": "अपने ईवेंट का उपयोग शुरू करने के लिए कोई लाइव और ड्राफ्ट इवेंट नहीं हैं, ईवेंट बनाएं लिंक का उपयोग करें",
       "DeleteUser": "क्या आप इस उपयोगकर्ता को हटाना चाहते हैं?",
-      "NoEventsFound": "{searchKey} नाम के साथ कोई घटना नहीं मिली"
+      "NoEventsFound": "{searchKey} नाम के साथ कोई घटना नहीं मिली",
+      "ConfirmResendRegistrationEmail": "क्या आप वाकई पुष्टिकरण ईमेल को फिर से भेजना चाहते हैं?"
     },
     "Success": {
       "CopiedClipboard": "Copied to clipboard",
@@ -864,6 +868,7 @@
       "SeatLayoutDeleteSuccess": "Seat Layout deleted successfully",
       "EventPublished": "बधाई हो, आपका ईवेंट प्रकाशित हो गया है।",
       "BadgesDeleteSuccess": "बैज सफलतापूर्वक हटा दिए गए",
+      "BadgesUpdatedSuccess":"बैज सफलतापूर्वक अपडेट किया गया",
       "AttachmentAddSuccess": "अनुलग्नक सफलतापूर्वक जोड़ा गया",
       "AttachmentDeleteSuccess": "अनुलग्नक सफलतापूर्वक हटा दिया गया",
       "SeatLayoutAddSuccess": "Seat Layout added successfully",
@@ -882,7 +887,7 @@
       "EditMetadataSuccess": "टेम्प्लेट मेटाडेटा सफलतापूर्वक अपडेट किया गया",
       "EditTemplateSuccess": "टेम्प्लेट सफलतापूर्वक अपडेट किया गया",
       "DeleteSuccess": "{modelName} सफलतापूर्वक मिटाया गया",
-      "ListUpdatedSucess": "{modelName} सूची आइटम सफलतापूर्वक अपडेट किया गया।" 
+      "ListUpdatedSucess": "{modelName} सूची आइटम सफलतापूर्वक अपडेट किया गया।"
     }
   },
   "$vuetify": {

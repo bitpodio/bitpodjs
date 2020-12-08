@@ -2,8 +2,11 @@ import axios from 'axios'
 import nuxtconfig from '../nuxt.config'
 const express = require('express')
 const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
 const app = express()
+
 app.use(bodyParser.json())
+app.use(cookieParser())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 function getTokenUserInfoUrl(ob) {
@@ -78,6 +81,7 @@ app.post('/connect/token', async (req, res) => {
           refresh_token: tokenResponse.data.refresh_token,
         })
       } else {
+        res.cookie('id_token', tokenResponse.data.id_token)
         res.json({
           token_type: 'bearer',
           access_token: tokenResponse.data.access_token,

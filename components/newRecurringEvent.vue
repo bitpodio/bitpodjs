@@ -328,7 +328,7 @@
             </v-col>
             <v-col cols="6" class="pb-0">
               <v-text-field
-                v-model="venueAddress.ZipCode"
+                v-model="venueAddress.PostalCode"
                 :label="$t('Common.ZipCode')"
                 outlined
                 dense
@@ -772,7 +772,7 @@
                             <i18n path="Common.Type" />
                           </th>
                           <th class="text-left">
-                            <i18n path="Common.Tickets" />
+                            <i18n path="Common.TicketsNotRequired" />
                           </th>
                           <th class="text-left"></th>
                         </tr>
@@ -1280,11 +1280,10 @@ export default {
         State: '',
         Country: '',
         PostalCode: '',
-        LatLng: {},
-      },
-      LatLng: {
-        lat: 0.0,
-        lng: 0.0,
+        LatLng: {
+          lat: 0.0,
+          lng: 0.0,
+        },
       },
     }
   },
@@ -1647,7 +1646,7 @@ export default {
           this.venueAddress.State = ''
           this.venueAddress.Country = ''
           this.venueAddress.PostalCode = ''
-          this.venueAddress.LatLng = {}
+          this.venueAddress.LatLng = { lat: 0.0, lng: 0.0 }
         }
         if (this.sessions[index].LocationType === 'In-person meeting') {
           this.isPersonMeeting = true

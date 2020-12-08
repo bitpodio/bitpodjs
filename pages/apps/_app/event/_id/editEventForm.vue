@@ -178,7 +178,7 @@
                     :label="$t('Common.VenueAddress')"
                     classname="form-control"
                     :rules="[addressValidation]"
-                    placeholder="Venue Address *"
+                    :placeholder="$t('Common.Address')"
                     @placechanged="getAddressData"
                     @change="addressChanged"
                   >
@@ -517,6 +517,10 @@ export default {
           if (res) {
             this.$eventBus.$emit('event-details-updated', res)
             this.close()
+            this.$emit(
+              'update:snackbarText',
+              this.$t('Messages.Success.EventDetailsUpdateSuccess')
+            )
             this.$emit('update:snackbar', true)
             this.refreshGrid()
             this.refresh()

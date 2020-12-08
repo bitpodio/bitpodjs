@@ -84,10 +84,14 @@
                 <span><i18n path="Common.OnlyAskWhen" /></span>
                 <v-select
                   v-model="tickets"
-                  :items="ticketsDropDown"
+                  :items="[...ticketIds]"
+                  item-text="name"
+                  item-value="id"
                   multiple
                   chips
+                  small-chips
                   persistent-hint
+                  outlined
                   dense
                 ></v-select>
               </v-col>
@@ -226,12 +230,12 @@ export default {
       if (this.doNotShowField.includes(this.formData.ControlType)) {
         this.formData.Options = []
       }
-      this.formData.TicketName = this.tickets ? this.tickets : []
-      this.formData.TicketIds = this.tickets
+      this.formData.TicketName = this.tickets
         ? this.ticketIds
-            .filter((i) => this.tickets.some((j) => j === i.name))
-            .map((k) => k.id)
+            .filter((i) => this.tickets.some((j) => j === i.id))
+            .map((k) => k.name)
         : []
+      this.formData.TicketIds = this.tickets ? this.tickets : []
       const url = this.$bitpod.getApiUrl()
       const res = await this.$axios
         .put(`${url}Events/${this.$route.params.id}/Survey/${this.id}`, {
@@ -256,7 +260,7 @@ export default {
       if (res) {
         this.formData = res
         this.controlType = res.ControlType
-        this.tickets = res.TicketName
+        this.tickets = this.items[0].TicketIds
         this.CsvOptions = res.Options.toString()
       }
     },

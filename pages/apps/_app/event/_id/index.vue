@@ -1274,6 +1274,18 @@
           </v-flex>
           <v-flex class="d-block text-truncate">
             <v-checkbox
+              v-model="data.event.allowChat"
+              dense
+              debounce="500"
+              height="20"
+              class="ma-0 pa-0"
+              :label="$t('Common.AllowChat')"
+              color="green"
+              @change="updateReg"
+            ></v-checkbox>
+          </v-flex>
+          <v-flex class="d-block text-truncate">
+            <v-checkbox
               v-model="data.event.SessionTimingConflict"
               dense
               debounce="500"
@@ -1413,29 +1425,44 @@
         </v-dialog>
       </v-flex>
       <div v-if="eventForm">
-        <editEventForm :event-form.sync="eventForm" :snackbar.sync="snackbar" />
+        <editEventForm
+          :event-form.sync="eventForm"
+          :snackbar.sync="snackbar"
+          :snackbar-text.sync="snackbarText"
+        />
       </div>
       <div v-if="seoForm">
-        <editSeoForm :seo-form.sync="seoForm" :snackbar.sync="snackbar" />
+        <editSeoForm
+          :seo-form.sync="seoForm"
+          :snackbar.sync="snackbar"
+          :snackbar-text.sync="snackbarText"
+        />
       </div>
       <div v-if="eventSetting">
         <editEventSetting
           :event-setting.sync="eventSetting"
           :snackbar.sync="snackbar"
+          :snackbar-text.sync="snackbarText"
         />
       </div>
       <div v-if="siteSetting">
         <editSiteSetting
           :site-setting.sync="siteSetting"
           :snackbar.sync="snackbar"
+          :snackbar-text.sync="snackbarText"
         />
       </div>
       <makeCopy :key="isMakeCopy" :is-make-copy.sync="isMakeCopy" />
-      <newBadgeForm :new-badge.sync="newBadge" :snackbar.sync="snackbar" />
+      <newBadgeForm
+        :new-badge.sync="newBadge"
+        :snackbar.sync="snackbar"
+        :snackbar-text.sync="snackbarText"
+      />
       <editBadgeForm
         :id="badgeData.id"
         :edit-badge-form.sync="editBadgeForm"
         :snackbar.sync="snackbar"
+        :snackbar-text.sync="snackbarText"
       />
       <selectExistingSeatMap
         :select-existing-seat-map.sync="selectExistingSeatMap"
@@ -1569,6 +1596,7 @@ export default {
     updateData() {
       const dataObj = {
         isRefundable: this.data.event.isRefundable,
+        allowChat: this.data.event.allowChat,
         SessionTimingConflict: this.data.event.SessionTimingConflict,
         ShowRemainingTickets: this.data.event.ShowRemainingTickets,
         ShowAttendeeForm: this.data.event.ShowAttendeeForm,

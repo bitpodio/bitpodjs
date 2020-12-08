@@ -216,7 +216,6 @@
                     :label="$t('Common.Location')"
                     outlined
                     dense
-                    class="st-date"
                     multiple
                   ></v-autocomplete>
                 </v-col>
@@ -261,18 +260,25 @@
                   cols="12"
                   class="pt-0 pb-6"
                 >
-                  <no-ssr>
-                    <vue-google-autocomplete
-                      id="map"
-                      ref="venueAddress.AddressLine"
-                      v-model="venueAddress.AddressLine"
-                      class="form-control pa-3 d-block rounded"
-                      placeholder="Address*"
-                      :required="true"
-                      @placechanged="getAddressData"
-                      @change="changeAddressData($event)"
-                    ></vue-google-autocomplete>
-                  </no-ssr>
+                  <div class="positionRelative">
+                    <div v-if="addressClicked" class="address-legend">
+                      {{ $t('Common.Address') }}
+                    </div>
+                    <no-ssr>
+                      <vue-google-autocomplete
+                        id="map"
+                        ref="venueAddress.AddressLine"
+                        v-model="venueAddress.AddressLine"
+                        class="form-control pa-3 d-block rounded"
+                        :placeholder="!addressClicked && $t('Common.Address')"
+                        :required="true"
+                        @placechanged="getAddressData"
+                        @change="changeAddressData($event)"
+                        @focus="focusIn"
+                        @blur="focusOut"
+                      ></vue-google-autocomplete>
+                    </no-ssr>
+                  </div>
                   <div
                     v-show="addresslineMessage !== ''"
                     class="red--text pa-3 pt-0 body-1"
@@ -292,7 +298,6 @@
                     :label="$t('Common.City')"
                     outlined
                     dense
-                    @change="changeAddress()"
                   ></v-text-field>
                 </v-col>
                 <v-col
@@ -307,7 +312,6 @@
                     :label="$t('Common.State')"
                     outlined
                     dense
-                    @change="changeAddress()"
                   ></v-text-field>
                 </v-col>
                 <v-col
@@ -322,7 +326,6 @@
                     :label="$t('Common.Country')"
                     outlined
                     dense
-                    @change="changeAddress()"
                   ></v-text-field>
                 </v-col>
                 <v-col
@@ -333,11 +336,10 @@
                   class="pb-0"
                 >
                   <v-text-field
-                    v-model="venueAddress.ZipCode"
+                    v-model="venueAddress.PostalCode"
                     :label="$t('Common.ZipCode')"
                     outlined
                     dense
-                    @change="changeAddress()"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -581,6 +583,7 @@ export default {
           }
     const actionType = this.type
     const isGroup = session.Type === 'Group'
+    let addressClicked = false
     const venueAddress =
       this.type === 'Edit' && this.items[0]._CurrentAddress
         ? this.items[0]._CurrentAddress
@@ -595,6 +598,9 @@ export default {
               lng: 0.0,
             },
           }
+    if (this.type === 'Edit' && this.items[0]._CurrentAddress) {
+      addressClicked = true
+    }
     return {
       rules: rules(this.$i18n),
       snackbar: false,
@@ -602,6 +608,7 @@ export default {
       valid: false,
       dialog: false,
       actionType,
+      addressClicked,
       isSaveButtonDisabled: false,
       isCustomMin: false,
       isGroup,
@@ -905,6 +912,12 @@ export default {
     },
   },
   methods: {
+    focusOut() {
+      this.addressClicked = false
+    },
+    focusIn() {
+      this.addressClicked = true
+    },
     getBitpodVirtualLink() {
       const randomStr = Math.random().toString(36)
       const roomName = `/${randomStr.substring(2, 5)}-${randomStr.substring(
@@ -1116,8 +1129,14 @@ export default {
         value === ' ' || value === ''
           ? this.$t('Messages.Error.ThisFieldRequired')
           : ''
+      if (value === ' ' || value === '') {
+        this.addressClicked = false
+      } else {
+        this.addressClicked = true
+      }
     },
     getAddressData(addressData, placeResultData, id) {
+      this.addressClicked = true
       this.venueAddress.AddressLine =
         addressData.route ||
         '' + ', ' + addressData.administrative_area_level_1 ||
@@ -1445,5 +1464,18 @@ export default {
 .form-control {
   border: 1px solid #ccc;
   width: 100%;
+}
+.address-legend {
+  position: absolute;
+  background: white;
+  font-size: 13px !important;
+  left: 6px !important;
+  padding: 0 5px;
+  top: -8px;
+  color: grey;
+}
+.form-control:focus {
+  border: 2px solid #1a73e8 !important;
+  outline: #1a73e8;
 }
 </style>
