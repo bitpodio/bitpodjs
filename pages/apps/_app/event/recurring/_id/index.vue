@@ -54,7 +54,7 @@
                       /></v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
-                  <v-list-item @click="true">
+                  <!-- <v-list-item @click="true">
                     <v-list-item-icon class="mr-2">
                       <i
                         class="fa fa-pencil-square-o mt-1"
@@ -66,7 +66,7 @@
                         ><i18n path="Drawer.Editemailtemplate"
                       /></v-list-item-title>
                     </v-list-item-content>
-                  </v-list-item>
+                  </v-list-item> -->
                   <v-list-item @click="redirectIntegration">
                     <v-list-item-icon class="mr-2">
                       <i class="fa fa-link1 mt-1" aria-hidden="true"></i>
