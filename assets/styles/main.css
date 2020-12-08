@@ -618,6 +618,7 @@ table > tbody > tr:last-child .key-align {
   cursor: pointer;
 }
 .logofull {
+  min-width: 110px !important;
   max-width: 110px !important;
 }
 @media (max-width: 800px) {
