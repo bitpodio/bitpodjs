@@ -100,15 +100,34 @@ export default {
         : document.querySelector('.to-copy')
       const inputValue = inputEl.value.trim()
       if (inputValue) {
-        try {
-          await navigator.clipboard.writeText(inputValue)
-          inputEl.value = ''
-          this.snackbar = true
-          this.snackbarText = this.$t('Messages.Success.CopiedClipboard')
-        } catch (e) {
-          console.log('Something went wrong', e)
-          this.snackbar = true
-          this.snackbarText = this.$t('Common.SomeErrorOccured')
+        if (navigator.clipboard) {
+          try {
+            await navigator.clipboard.writeText(inputValue)
+            inputEl.value = ''
+            this.snackbar = true
+            this.snackbarText = this.$t('Messages.Success.CopiedClipboard')
+          } catch (e) {
+            console.error('Something went wrong', e)
+            this.snackbar = true
+            this.snackbarText = this.$t('Common.SomeErrorOccured')
+          }
+        } else {
+          inputEl.focus()
+          inputEl.select()
+          inputEl.setSelectionRange(0, 99999)
+          try {
+            const isSuccess = document.execCommand('copy')
+            console.debug('isSuccess', isSuccess)
+            inputEl.value = ''
+            if (isSuccess) {
+              this.snackbar = true
+              this.snackbarText = this.$t('Messages.Success.CopiedClipboard')
+            }
+          } catch (e) {
+            console.error('Something went wrong', e)
+            this.snackbar = true
+            this.snackbarText = this.$t('Common.SomeErrorOccured')
+          }
         }
       }
     },

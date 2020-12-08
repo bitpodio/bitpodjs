@@ -114,6 +114,10 @@ export default {
         if (res) {
           this.$refs.editBadgeDialog.$parent.$parent.refresh()
           this.close()
+          this.$emit(
+            'update:snackbarText',
+            this.$t('Messages.Success.BadgesUpdatedSuccess')
+          )
           this.$emit('update:snackbar', true)
         }
       } catch (e) {

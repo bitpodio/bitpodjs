@@ -867,6 +867,7 @@
       "SeatLayoutDeleteSuccess": "L'agencement de siège a été supprimé avec succès",
       "EventPublished": "Félicitations, votre événement a été publié.",
       "BadgesDeleteSuccess": "Badges supprimés avec succès",
+      "BadgesUpdatedSuccess":"Badges mis à jour avec succès",
       "AttachmentAddSuccess": "Pièce jointe ajoutée avec succès",
       "AttachmentDeleteSuccess": "Pièce jointe supprimée avec succès",
       "SeatLayoutAddSuccess": "L'ajout de l'agencement de siège a abouti",
