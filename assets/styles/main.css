@@ -101,6 +101,9 @@ body {
 .fs-30 {
   font-size: 30px !important;
 }
+.pac-container {
+  z-index: 10000 !important;
+}
 .text-break-word {
   overflow-wrap: break-word;
 }

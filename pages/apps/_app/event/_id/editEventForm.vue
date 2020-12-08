@@ -517,6 +517,10 @@ export default {
           if (res) {
             this.$eventBus.$emit('event-details-updated', res)
             this.close()
+            this.$emit(
+              'update:snackbarText',
+              this.$t('Messages.Success.EventDetailsUpdateSuccess')
+            )
             this.$emit('update:snackbar', true)
             this.refreshGrid()
             this.refresh()

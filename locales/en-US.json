@@ -870,6 +870,7 @@
       "SeatLayoutDeleteSuccess": "Seat Layout deleted successfully",
       "EventPublished": "Congratulations, your event has been published.",
       "BadgesDeleteSuccess": "Badges deleted successfully",
+      "BadgesUpdatedSuccess":"Badges updated successfully",
       "AttachmentAddSuccess": "Attachment added successfully",
       "AttachmentDeleteSuccess": "Attachment deleted successfully",
       "SeatLayoutAddSuccess": "Seat Layout added successfully",

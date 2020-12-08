@@ -1425,29 +1425,44 @@
         </v-dialog>
       </v-flex>
       <div v-if="eventForm">
-        <editEventForm :event-form.sync="eventForm" :snackbar.sync="snackbar" />
+        <editEventForm
+          :event-form.sync="eventForm"
+          :snackbar.sync="snackbar"
+          :snackbar-text.sync="snackbarText"
+        />
       </div>
       <div v-if="seoForm">
-        <editSeoForm :seo-form.sync="seoForm" :snackbar.sync="snackbar" />
+        <editSeoForm
+          :seo-form.sync="seoForm"
+          :snackbar.sync="snackbar"
+          :snackbar-text.sync="snackbarText"
+        />
       </div>
       <div v-if="eventSetting">
         <editEventSetting
           :event-setting.sync="eventSetting"
           :snackbar.sync="snackbar"
+          :snackbar-text.sync="snackbarText"
         />
       </div>
       <div v-if="siteSetting">
         <editSiteSetting
           :site-setting.sync="siteSetting"
           :snackbar.sync="snackbar"
+          :snackbar-text.sync="snackbarText"
         />
       </div>
       <makeCopy :key="isMakeCopy" :is-make-copy.sync="isMakeCopy" />
-      <newBadgeForm :new-badge.sync="newBadge" :snackbar.sync="snackbar" />
+      <newBadgeForm
+        :new-badge.sync="newBadge"
+        :snackbar.sync="snackbar"
+        :snackbar-text.sync="snackbarText"
+      />
       <editBadgeForm
         :id="badgeData.id"
         :edit-badge-form.sync="editBadgeForm"
         :snackbar.sync="snackbar"
+        :snackbar-text.sync="snackbarText"
       />
       <selectExistingSeatMap
         :select-existing-seat-map.sync="selectExistingSeatMap"
