@@ -127,7 +127,7 @@ body {
   z-index: 99 !important;
 }
 .appbar-left {
-  width: 250px;
+  width: auto;
 }
 .nav-drawer {
   display: none !important;
@@ -616,6 +616,9 @@ table > tbody > tr:last-child .key-align {
 }
 .slide-form-default .v-input__append-inner, .slide-form .v-input__append-inner {
   cursor: pointer;
+}
+.logofull {
+  max-width: 110px !important;
 }
 @media (max-width: 800px) {
   .nav-bar {
