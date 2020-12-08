@@ -259,13 +259,14 @@
               @click="tabs = 'tab-2'"
               ><i18n path="Drawer.Next"
             /></v-btn>
-            <v-btn
-              v-if="tabs === 'tab-2'"
+            <SaveBtn
+              v-if="siteSetting && tabs === 'tab-2'"
               color="primary"
               depressed
-              @click.native="onSave"
+              :action="onSave"
+              class="ml-2"
               ><i18n path="Drawer.Save"
-            /></v-btn>
+            /></SaveBtn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -279,7 +280,12 @@ import generalconfiguration from '~/config/apps/event/gql/registrationStatusOpti
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import templateList from '~/config/apps/event/gql/templateList.gql'
+import SaveBtn from '~/components/common/saveButton'
+
 export default {
+  components: {
+    SaveBtn,
+  },
   props: {
     siteSetting: {
       type: Boolean,
@@ -387,7 +393,7 @@ export default {
           this.close()
           this.$emit(
             'update:snackbarText',
-            this.$t('Messages.Success.EventDetailsUpdateSuccess')
+            this.$t('Messages.Success.EventRegSiteDetailsUpdateSuccess')
           )
           this.$emit('update:snackbar', true)
           this.refresh()
