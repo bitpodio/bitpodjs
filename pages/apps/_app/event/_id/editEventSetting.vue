@@ -89,7 +89,7 @@
         <v-card-actions
           class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
         >
-          <SaveBtn
+          <SaveButton
             v-if="eventSetting"
             color="primary"
             :disabled="!valid || isInvalidEventLink"
@@ -97,7 +97,7 @@
             :action="onSave"
             class="ml-2"
             ><i18n path="Drawer.Save"
-          /></SaveBtn>
+          /></SaveButton>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -111,13 +111,13 @@ import event from '~/config/apps/event/gql/event.gql'
 import eventCount from '~/config/apps/event/gql/eventCount.gql'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import { formatGQLResult } from '~/utility/gql.js'
-import SaveBtn from '~/components/common/saveButton'
+import SaveButton from '~/components/common/saveButton'
 
 export default {
   components: {
     RichText: () =>
       process.client ? import('~/components/common/form/richtext.vue') : false,
-    SaveBtn,
+    SaveButton,
   },
   props: {
     eventSetting: {

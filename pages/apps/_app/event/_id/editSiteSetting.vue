@@ -259,14 +259,14 @@
               @click="tabs = 'tab-2'"
               ><i18n path="Drawer.Next"
             /></v-btn>
-            <SaveBtn
+            <SaveButton
               v-if="siteSetting && tabs === 'tab-2'"
               color="primary"
               depressed
               :action="onSave"
               class="ml-2"
               ><i18n path="Drawer.Save"
-            /></SaveBtn>
+            /></SaveButton>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -280,11 +280,11 @@ import generalconfiguration from '~/config/apps/event/gql/registrationStatusOpti
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import templateList from '~/config/apps/event/gql/templateList.gql'
-import SaveBtn from '~/components/common/saveButton'
+import SaveButton from '~/components/common/saveButton'
 
 export default {
   components: {
-    SaveBtn,
+    SaveButton,
   },
   props: {
     siteSetting: {

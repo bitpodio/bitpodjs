@@ -240,7 +240,7 @@
         <v-card-actions
           class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
         >
-          <SaveBtn
+          <SaveButton
             v-if="eventForm"
             color="primary"
             :disabled="VenueAddress.AddressLine === '' || !valid || !datevalid"
@@ -248,7 +248,7 @@
             :action="onSave"
             class="ml-2"
             ><i18n path="Drawer.Save"
-          /></SaveBtn>
+          /></SaveButton>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -263,7 +263,7 @@ import generalconfiguration from '~/config/apps/event/gql/registrationStatusOpti
 import { formatGQLResult } from '~/utility/gql.js'
 import Timezone from '~/components/common/form/timezone'
 import nuxtconfig from '~/nuxt.config'
-import SaveBtn from '~/components/common/saveButton'
+import SaveButton from '~/components/common/saveButton'
 
 export default {
   components: {
@@ -271,7 +271,7 @@ export default {
       process.client ? import('~/components/common/form/richtext.vue') : false,
     VueGoogleAutocomplete: () => import('vue-google-autocomplete'),
     Timezone,
-    SaveBtn,
+    SaveButton,
   },
   props: {
     eventForm: {
