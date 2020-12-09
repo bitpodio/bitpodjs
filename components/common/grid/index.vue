@@ -795,6 +795,9 @@ export default {
     async loadRestData() {
       const dataSource = getViewDataSource(this.content, this.viewName)
       const dataSourceType = dataSource.type || 'graphql'
+      console.debug('Data Source Type is: ', dataSourceType)
+      console.debug('this.content is: ', this.content)
+      console.debug('this.viewname is: ', this.viewname)
       if (dataSourceType === 'rest') {
         const { search, filters } = this
         const options = {
@@ -805,15 +808,18 @@ export default {
 
         const getDataFunc = dataSource.getData.call(this, this)
         try {
+          console.debug('In try block')
           this.tableData = await getDataFunc.call(this, options)
           this.loading = false
         } catch (e) {
+          console.debug('In catch block')
           console.error(
             `Errors in components/common/grid/index.vue while calling method loadRestData`,
             e
           )
           this.loading = false
         }
+        console.debug('Done with try-catch block.')
       }
     },
     translate(headers) {
