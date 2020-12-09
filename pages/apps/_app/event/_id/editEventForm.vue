@@ -552,6 +552,11 @@ export default {
           if (res) {
             this.close()
             this.$emit('update:snackbar', true)
+            this.$emit(
+              'update:snackbarText',
+              this.$t('Messages.Success.EventDetailsUpdateSuccess')
+            )
+            this.$emit('update:snackbar', true)
             this.refreshGrid()
             this.refresh()
             return (this.data.event = res)

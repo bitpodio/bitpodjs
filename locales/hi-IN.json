@@ -703,7 +703,8 @@
     "TicketsNotRequired": "टिकट",
     "Integration": "Integration",
     "TimezoneCaption": "Timezone",
-    "Chat": "बातचीत"
+    "Chat": "बातचीत",
+    "VersionNotSupported":"इस ब्राउज़र में क्लिपबोर्ड सुलभ नहीं है।"
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",

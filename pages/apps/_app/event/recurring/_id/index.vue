@@ -1188,16 +1188,32 @@
         </v-snackbar>
       </v-flex>
       <div v-if="seoForm">
-        <editSeoForm :seo-form.sync="seoForm" />
+        <editSeoForm
+          :seo-form.sync="seoForm"
+          :snackbar.sync="snackbar"
+          :snackbar-text.sync="snackbarText"
+        />
       </div>
       <div v-if="eventForm">
-        <editEventForm :event-form.sync="eventForm" />
+        <editEventForm
+          :event-form.sync="eventForm"
+          :snackbar.sync="snackbar"
+          :snackbar-text.sync="snackbarText"
+        />
       </div>
       <div v-if="eventSetting">
-        <editEventSetting :event-setting.sync="eventSetting" />
+        <editEventSetting
+          :event-setting.sync="eventSetting"
+          :snackbar.sync="snackbar"
+          :snackbar-text.sync="snackbarText"
+        />
       </div>
       <div v-if="siteSetting">
-        <editSiteSetting :site-setting.sync="siteSetting" />
+        <editSiteSetting
+          :site-setting.sync="siteSetting"
+          :snackbar.sync="snackbar"
+          :snackbar-text.sync="snackbarText"
+        />
       </div>
       <makeCopy :is-make-copy.sync="isMakeCopy" />
       <confirm ref="confirm"></confirm>
