@@ -869,10 +869,16 @@
                       >
                         <v-card-action class="mt-n4">
                           <div class="d-flex justify-center text-center pb-5">
-                            <div class="mr-1" @click="onEditSeatMap">
+                            <div
+                              class="mr-1 cursorPointer"
+                              @click="onEditSeatMap"
+                            >
                               <v-icon small color="black">fa-pencil</v-icon>
                             </div>
-                            <div @click="popupDialog = true">
+                            <div
+                              class="cursorPointer"
+                              @click="popupDialog = true"
+                            >
                               <v-icon small color="black">fa-trash</v-icon>
                             </div>
                           </div>

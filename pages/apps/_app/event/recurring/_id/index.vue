@@ -690,16 +690,18 @@
         </div>
         <div
           v-if="content"
-          class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+          class="xs12 sm4 md4 lg4 boxview pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
-          <v-flex class="d-flex justify-center align-center pb-3">
-            <h2 class="body-1 pb-0">
-              <i class="fa fa-black-board pr-1" aria-hidden="true"></i>
-              <i18n path="Common.RecurringSessions" />
-            </h2>
-            <v-spacer></v-spacer>
-          </v-flex>
-          <v-divider></v-divider>
+          <div class="sticky d-flex flex-column justify-center boxview">
+            <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
+              <h2 class="body-1 pb-0">
+                <i class="fa fa-black-board pr-1" aria-hidden="true"></i>
+                <i18n path="Common.RecurringSessions" />
+              </h2>
+              <v-spacer></v-spacer>
+            </v-flex>
+            <v-divider></v-divider>
+          </div>
           <Grid
             ref="recurringGrid"
             view-name="eventRecurringSession"
@@ -709,16 +711,18 @@
         </div>
         <div
           v-if="content"
-          class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+          class="xs12 sm4 md4 lg4 boxview pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
-          <v-flex class="d-flex justify-center align-center pb-3">
-            <h2 class="body-1 pb-0">
-              <i class="fa fa-users pr-1" aria-hidden="true"></i>
-              <i18n path="Common.Attendees" />
-            </h2>
-            <v-spacer></v-spacer>
-          </v-flex>
-          <v-divider></v-divider>
+          <div class="sticky d-flex flex-column justify-center boxview">
+            <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
+              <h2 class="body-1 pb-0">
+                <i class="fa fa-users pr-1" aria-hidden="true"></i>
+                <i18n path="Common.Attendees" />
+              </h2>
+              <v-spacer></v-spacer>
+            </v-flex>
+            <v-divider></v-divider>
+          </div>
           <Grid
             view-name="eventRecurringAttendees"
             :content="content"
@@ -728,16 +732,18 @@
         </div>
         <div
           v-if="content"
-          class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+          class="xs12 sm4 md4 lg4 boxview pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
-          <v-flex class="d-flex justify-center align-center pb-3">
-            <h2 class="body-1 pb-0">
-              <i class="fa fa-user-plus pr-1" aria-hidden="true"></i>
-              <i18n path="Common.Registrations" />
-            </h2>
-            <v-spacer></v-spacer>
-          </v-flex>
-          <v-divider></v-divider>
+          <div class="sticky d-flex flex-column justify-center boxview">
+            <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
+              <h2 class="body-1 pb-0">
+                <i class="fa fa-user-plus pr-1" aria-hidden="true"></i>
+                <i18n path="Common.Registrations" />
+              </h2>
+              <v-spacer></v-spacer>
+            </v-flex>
+            <v-divider></v-divider>
+          </div>
           <Grid
             view-name="recurringEventRegistrations"
             :content="content"
@@ -746,30 +752,34 @@
         </div>
         <div
           v-if="content"
-          class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+          class="xs12 sm4 md4 lg4 boxview pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
-          <v-flex class="d-flex justify-center align-center pb-3">
-            <h2 class="body-1 pb-0">
-              <i class="fa fa-mail pr-1" aria-hidden="true"></i>
-              <i18n path="Common.Invites" />
-            </h2>
-            <v-spacer></v-spacer>
-          </v-flex>
-          <v-divider></v-divider>
+          <div class="sticky d-flex flex-column justify-center boxview">
+            <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
+              <h2 class="body-1 pb-0">
+                <i class="fa fa-mail pr-1" aria-hidden="true"></i>
+                <i18n path="Common.Invites" />
+              </h2>
+              <v-spacer></v-spacer>
+            </v-flex>
+            <v-divider></v-divider>
+          </div>
           <Grid view-name="eventInvites" :content="content" class="mt-n12" />
         </div>
         <div
           v-if="content"
-          class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg recurring-event"
+          class="xs12 sm4 md4 lg4 boxview pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg recurring-event"
         >
-          <v-flex class="d-flex justify-center align-center pb-3">
-            <h2 class="body-1 pb-0">
-              <i class="fa fa-ticketalt pr-1" aria-hidden="true"></i>
-              <i18n path="Common.TicketsNotRequired" />
-            </h2>
-            <v-spacer></v-spacer>
-          </v-flex>
-          <v-divider></v-divider>
+          <div class="sticky d-flex flex-column justify-center boxview">
+            <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
+              <h2 class="body-1 pb-0">
+                <i class="fa fa-ticketalt pr-1" aria-hidden="true"></i>
+                <i18n path="Common.TicketsNotRequired" />
+              </h2>
+              <v-spacer></v-spacer>
+            </v-flex>
+            <v-divider></v-divider>
+          </div>
           <Grid
             view-name="eventTickets"
             :content="content"
@@ -779,16 +789,18 @@
         </div>
         <div
           v-if="content"
-          class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+          class="xs12 sm4 md4 lg4 boxview pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
-          <v-flex class="d-flex justify-center align-center pb-3">
-            <h2 class="body-1 pb-0">
-              <i class="fa fa-settings1 pr-1" aria-hidden="true"></i>
-              <i18n path="Common.DiscountCodes" />
-            </h2>
-            <v-spacer></v-spacer>
-          </v-flex>
-          <v-divider></v-divider>
+          <div class="sticky d-flex flex-column justify-center boxview">
+            <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
+              <h2 class="body-1 pb-0">
+                <i class="fa fa-settings1 pr-1" aria-hidden="true"></i>
+                <i18n path="Common.DiscountCodes" />
+              </h2>
+              <v-spacer></v-spacer>
+            </v-flex>
+            <v-divider></v-divider>
+          </div>
           <Grid
             view-name="eventDiscountCodes"
             :content="content"
@@ -797,16 +809,18 @@
         </div>
         <div
           v-if="content"
-          class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+          class="xs12 sm4 md4 lg4 boxview pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
-          <v-flex class="d-flex justify-center align-center pb-3">
-            <h2 class="body-1 pb-0">
-              <i class="fa fa-question-circle pr-1" aria-hidden="true"></i>
-              <i18n path="Common.RegistrationQuestions" />
-            </h2>
-            <v-spacer></v-spacer>
-          </v-flex>
-          <v-divider></v-divider>
+          <div class="sticky d-flex flex-column justify-center boxview">
+            <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
+              <h2 class="body-1 pb-0">
+                <i class="fa fa-question-circle pr-1" aria-hidden="true"></i>
+                <i18n path="Common.RegistrationQuestions" />
+              </h2>
+              <v-spacer></v-spacer>
+            </v-flex>
+            <v-divider></v-divider>
+          </div>
           <Grid
             view-name="eventRegistrationQuestion"
             :content="content"
@@ -815,30 +829,34 @@
         </div>
         <div
           v-if="content"
-          class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+          class="xs12 sm4 md4 lg4 boxview pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
-          <v-flex class="d-flex justify-center align-center pb-3">
-            <h2 class="body-1 pb-0">
-              <i class="fa fa-mic pr-1" aria-hidden="true"></i>
-              <i18n path="Common.Speakers" />
-            </h2>
-            <v-spacer></v-spacer>
-          </v-flex>
-          <v-divider></v-divider>
+          <div class="sticky d-flex flex-column justify-center boxview">
+            <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
+              <h2 class="body-1 pb-0">
+                <i class="fa fa-mic pr-1" aria-hidden="true"></i>
+                <i18n path="Common.Speakers" />
+              </h2>
+              <v-spacer></v-spacer>
+            </v-flex>
+            <v-divider></v-divider>
+          </div>
           <Grid view-name="eventSpeakers" :content="content" class="mt-n12" />
         </div>
         <div
           v-if="content"
-          class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+          class="xs12 sm4 md4 lg4 boxview pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
-          <v-flex class="d-flex justify-center align-center pb-3">
-            <h2 class="body-1 pb-0">
-              <i class="fa fa-external-link pr-1" aria-hidden="true"></i>
-              <i18n path="Common.Tasks" />
-            </h2>
-            <v-spacer></v-spacer>
-          </v-flex>
-          <v-divider></v-divider>
+          <div class="sticky d-flex flex-column justify-center boxview">
+            <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
+              <h2 class="body-1 pb-0">
+                <i class="fa fa-external-link pr-1" aria-hidden="true"></i>
+                <i18n path="Common.Tasks" />
+              </h2>
+              <v-spacer></v-spacer>
+            </v-flex>
+            <v-divider></v-divider>
+          </div>
           <Grid
             view-name="eventTasks"
             :content="content"
@@ -848,16 +866,18 @@
         </div>
         <div
           v-if="content"
-          class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+          class="xs12 sm4 md4 lg4 boxview pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
-          <v-flex class="d-flex justify-center align-center pb-3">
-            <h2 class="body-1 pb-0">
-              <i class="fa fa-file-text-o pr-1" aria-hidden="true"></i>
-              <i18n path="Common.RegistrationForm" />
-            </h2>
-            <v-spacer></v-spacer>
-          </v-flex>
-          <v-divider></v-divider>
+          <div class="sticky d-flex flex-column justify-center boxview">
+            <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
+              <h2 class="body-1 pb-0">
+                <i class="fa fa-file-text-o pr-1" aria-hidden="true"></i>
+                <i18n path="Common.RegistrationForm" />
+              </h2>
+              <v-spacer></v-spacer>
+            </v-flex>
+            <v-divider></v-divider>
+          </div>
           <Grid
             view-name="eventRegistrationForm"
             :content="content"
@@ -1168,16 +1188,32 @@
         </v-snackbar>
       </v-flex>
       <div v-if="seoForm">
-        <editSeoForm :seo-form.sync="seoForm" />
+        <editSeoForm
+          :seo-form.sync="seoForm"
+          :snackbar.sync="snackbar"
+          :snackbar-text.sync="snackbarText"
+        />
       </div>
       <div v-if="eventForm">
-        <editEventForm :event-form.sync="eventForm" />
+        <editEventForm
+          :event-form.sync="eventForm"
+          :snackbar.sync="snackbar"
+          :snackbar-text.sync="snackbarText"
+        />
       </div>
       <div v-if="eventSetting">
-        <editEventSetting :event-setting.sync="eventSetting" />
+        <editEventSetting
+          :event-setting.sync="eventSetting"
+          :snackbar.sync="snackbar"
+          :snackbar-text.sync="snackbarText"
+        />
       </div>
       <div v-if="siteSetting">
-        <editSiteSetting :site-setting.sync="siteSetting" />
+        <editSiteSetting
+          :site-setting.sync="siteSetting"
+          :snackbar.sync="snackbar"
+          :snackbar-text.sync="snackbarText"
+        />
       </div>
       <makeCopy :is-make-copy.sync="isMakeCopy" />
       <confirm ref="confirm"></confirm>
@@ -1821,5 +1857,15 @@ export default {
 }
 .anchorTag {
   max-width: 120px;
+}
+@media (max-width: 500px) {
+  .pad-card {
+    padding: 0 12px 0 12px;
+  }
+}
+@media (min-width: 600px) {
+  .pad-card {
+    padding: 12px 12px 0 12px;
+  }
 }
 </style>

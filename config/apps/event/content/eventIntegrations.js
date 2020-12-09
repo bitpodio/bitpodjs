@@ -4,7 +4,7 @@ export default {
     integrations: {
       ui: {
         hideDefaultHeader: false,
-        hideDefaultFooter: false,
+        hideDefaultFooter: true,
         showExpand: false,
         singleExpand: false,
         showSelect: false,

@@ -58,26 +58,23 @@
                 dense
               ></v-text-field>
             </v-col>
-            <v-col cols="12" sm="6" md="12" class="pb-0">
+            <v-col
+              cols="12"
+              sm="6"
+              md="6"
+              class="pb-0 d-flex flex-column flex-md-row"
+            >
+              <div class="pt-2 mr-2">{{ eventLinkLabel() }}</div>
               <v-text-field
                 v-model="formData.UniqLink"
                 :label="$t('Common.EventL')"
                 :rules="[rules.required, rules.link]"
-                persistent-hint
-                :hint="getUniqLink"
                 outlined
-                required
                 dense
+                required
+                :error-messages="uniqueLinkMessage"
                 @input="checkUniqueLink"
               ></v-text-field>
-              <span
-                v-if="isInvalidEventLink && !!formData.UniqLink"
-                class="red--text caption pl-3 pt-0"
-                >{{ uniqueLinkMessage }}</span
-              >
-              <span v-else style="height: 14px;" class="transparent--text">{{
-                uniqueMsg
-              }}</span>
             </v-col>
             <v-col cols="12" class="mb-6 mt-0">
               <span><i18n path="Common.CancellationPolicy" /> </span>
@@ -174,6 +171,9 @@ export default {
   },
 
   methods: {
+    eventLinkLabel() {
+      return `${this.$bitpod.getApiUrl().replace('svc/api', 'e')}`
+    },
     onReset() {
       this.valid = true
       this.privacy = []
@@ -211,6 +211,7 @@ export default {
           }
         )
         if (res) {
+          this.$eventBus.$emit('event-tickets-currency-updated')
           this.close()
           this.$emit(
             'update:snackbarText',

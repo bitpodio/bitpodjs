@@ -702,7 +702,8 @@
     "TicketsNotRequired": "Tickets",
     "Integration": "Integration",
     "TimezoneCaption": "Timezone",
-    "Chat": "Chat"
+    "Chat": "Chat",
+    "VersionNotSupported":"Clipboard is not accessible in this browser."
   },
   "Drawer": {
     "CreateEventAction": "Create Event",
