@@ -326,9 +326,11 @@
             <div
               class="chanel-right d-flex flex-column justify-center align-start"
             >
-              <div class="chanel-right-head">User Guide</div>
+              <div class="chanel-right-head">
+                <i18n path="Common.UserGuide" />
+              </div>
               <div class="chanel-right-info body-2">
-                Gain in-depth knowledge about features and learn basic steps.
+                <i18n path="Common.UserGuideInfo" />
               </div>
             </div>
             <div class="chanel-more d-flex align-center justify-center">
@@ -345,9 +347,9 @@
             <div
               class="chanel-right d-flex flex-column justify-center align-start"
             >
-              <div class="chanel-right-head">FAQs</div>
+              <div class="chanel-right-head"><i18n path="Common.Faqs" /></div>
               <div class="chanel-right-info body-2">
-                Browse through frequently asked questions to resolve problems.
+                <i18n path="Common.FaqsInfo" />
               </div>
             </div>
             <div class="chanel-more d-flex align-center justify-center">
@@ -364,9 +366,11 @@
             <div
               class="chanel-right d-flex flex-column justify-center align-start"
             >
-              <div class="chanel-right-head">Help Videos</div>
+              <div class="chanel-right-head">
+                <i18n path="Common.HelpVideos" />
+              </div>
               <div class="chanel-right-info body-2">
-                Our videos will help you understand how to use of Bitpod.
+                <i18n path="Common.HelpVideosInfo" />
               </div>
             </div>
             <div class="chanel-more d-flex align-center justify-center">

@@ -703,7 +703,13 @@
     "TicketsNotRequired": "כרטיסים",
     "Integration": "Integration",
     "TimezoneCaption": "Timezone",
-    "Chat": "לְשׂוֹחֵחַ"
+    "Chat": "לְשׂוֹחֵחַ",
+    "UserGuide": "מדריך למשתמש",
+    "UserGuideInfo": "צברו ידע מעמיק על תכונות ולמדו צעדים בסיסיים.",
+    "Faqs": "שאלות נפוצות",
+    "FaqsInfo": "עיין בשאלות נפוצות כדי לפתור בעיות.",
+    "HelpVideos": "עזרי וידיאו",
+    "HelpVideosInfo": "הסרטונים שלנו יעזרו לך להבין כיצד להשתמש ב- Bitpod."
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",

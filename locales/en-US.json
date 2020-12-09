@@ -702,7 +702,13 @@
     "TicketsNotRequired": "Tickets",
     "Integration": "Integration",
     "TimezoneCaption": "Timezone",
-    "Chat": "Chat"
+    "Chat": "Chat",
+    "UserGuide": "User Guide",
+    "UserGuideInfo": "Gain in-depth knowledge about features and learn basic steps.",
+    "Faqs": "FAQs",
+    "FaqsInfo": "Browse through frequently asked questions to resolve problems.",
+    "HelpVideos": "Help Videos",
+    "HelpVideosInfo": "Our videos will help you understand how to use of Bitpod."
   },
   "Drawer": {
     "CreateEventAction": "Create Event",
