@@ -701,7 +701,8 @@
     "TicketsNotRequired": "des billets",
     "Integration": "Integration",
     "TimezoneCaption": "Timezone",
-    "Chat": "bavarder"
+    "Chat": "bavarder",
+    "VersionNotSupported":"Le Presse-papiers n'est pas accessible dans ce navigateur."
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",

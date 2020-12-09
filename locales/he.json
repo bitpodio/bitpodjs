@@ -703,7 +703,8 @@
     "TicketsNotRequired": "כרטיסים",
     "Integration": "Integration",
     "TimezoneCaption": "Timezone",
-    "Chat": "לְשׂוֹחֵחַ"
+    "Chat": "לְשׂוֹחֵחַ",
+    "VersionNotSupported":"הלוח אינו נגיש בדפדפן זה."
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",

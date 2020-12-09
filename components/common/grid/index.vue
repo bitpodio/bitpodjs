@@ -12,7 +12,7 @@
       <div
         v-if="!noAction"
         class="grid-actions-container mt-lg-n11 mt-md-n11 mt-sm-n11 mt-xs-0 sticky"
-        :class="onlySticky ? 'sticky_inline_flex' : ''"
+        :class="onlySticky ? 'sticky_inline_block' : ''"
       >
         <div
           class="d-flex align-center"
@@ -800,6 +800,9 @@ export default {
     async loadRestData() {
       const dataSource = getViewDataSource(this.content, this.viewName)
       const dataSourceType = dataSource.type || 'graphql'
+      console.debug('Data Source Type is: ', dataSourceType)
+      console.debug('this.content is: ', this.content)
+      console.debug('this.viewname is: ', this.viewname)
       if (dataSourceType === 'rest') {
         const { search, filters } = this
         const options = {
@@ -810,15 +813,18 @@ export default {
 
         const getDataFunc = dataSource.getData.call(this, this)
         try {
+          console.debug('In try block')
           this.tableData = await getDataFunc.call(this, options)
           this.loading = false
         } catch (e) {
+          console.debug('In catch block')
           console.error(
             `Errors in components/common/grid/index.vue while calling method loadRestData`,
             e
           )
           this.loading = false
         }
+        console.debug('Done with try-catch block.')
       }
     },
     translate(headers) {
@@ -960,9 +966,11 @@ export default {
     height: var(--header-height);
     bottom: 0;
   }
-  .sticky_inline_flex {
-    display: inline-flex;
+  .sticky_inline_block {
+    display: inline-block;
     left: 100%;
+    top: 55px;
+    margin-bottom: 0;
     z-index: 5;
   }
 }
