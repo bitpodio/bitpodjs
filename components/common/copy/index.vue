@@ -12,7 +12,7 @@
       </div>
     </v-snackbar>
     <input
-      v-show="false"  
+      v-show="false"
       type="text"
       :class="uniqueId ? uniqueId : 'to-copy'"
       :value="textToCopy"
