@@ -702,7 +702,8 @@
     "TicketsNotRequired": "Tickets",
     "Integration": "Integration",
     "TimezoneCaption": "Timezone",
-    "Chat": "Chat"
+    "Chat": "Chat",
+    "VersionNotSupported":"This feature is not supported in this version"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",

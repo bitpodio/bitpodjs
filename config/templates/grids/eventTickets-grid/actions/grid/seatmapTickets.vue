@@ -2,8 +2,8 @@
   <v-list-item v-if="eventLocation === 'Venue'">
     <v-col class="px-0 min-xw180 seatmap-btn">
       <v-switch
-        v-model="switch2"
         v-if="eventLocation === 'Venue'"
+        v-model="switch2"
         :label="$t('Common.SeatmapTickets')"
         class="mt-0 max-h24"
         @change="updateSeatReservation"

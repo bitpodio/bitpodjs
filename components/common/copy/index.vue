@@ -12,7 +12,7 @@
       </div>
     </v-snackbar>
     <input
-      v-show="false"
+      v-show="false"  
       type="text"
       :class="uniqueId ? uniqueId : 'to-copy'"
       :value="textToCopy"
@@ -112,16 +112,24 @@ export default {
             this.snackbarText = this.$t('Common.SomeErrorOccured')
           }
         } else {
-          inputEl.focus()
-          inputEl.select()
-          inputEl.setSelectionRange(0, 99999)
           try {
-            const isSuccess = document.execCommand('copy')
-            console.debug('isSuccess', isSuccess)
-            inputEl.value = ''
-            if (isSuccess) {
+            if (inputEl.focus() && inputEl.select()) {
+              inputEl.focus()
+              inputEl.select()
+              inputEl.setSelectionRange(0, 99999)
+              const isSuccess = document.execCommand('copy')
+              console.debug('isSuccess', isSuccess)
+              inputEl.value = ''
+              if (isSuccess) {
+                this.snackbar = true
+                this.snackbarText = this.$t('Messages.Success.CopiedClipboard')
+              } else {
+                this.snackbar = true
+                this.snackbarText = this.$t('Common.VersionNotSupported')
+              }
+            } else {
               this.snackbar = true
-              this.snackbarText = this.$t('Messages.Success.CopiedClipboard')
+              this.snackbarText = this.$t('Common.VersionNotSupported')
             }
           } catch (e) {
             console.error('Something went wrong', e)

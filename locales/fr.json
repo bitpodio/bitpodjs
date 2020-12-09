@@ -701,7 +701,8 @@
     "TicketsNotRequired": "des billets",
     "Integration": "Integration",
     "TimezoneCaption": "Timezone",
-    "Chat": "bavarder"
+    "Chat": "bavarder",
+    "VersionNotSupported":"Cette fonctionnalité n'est pas prise en charge dans cette version"
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",

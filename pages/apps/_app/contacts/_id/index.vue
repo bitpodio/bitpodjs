@@ -18,8 +18,8 @@
                     <div>
                       <div>
                         <v-list-item-avatar
-                          size="62"
                           v-if="lastPicId === ''"
+                          size="62"
                           style="margin: auto;"
                         >
                           <v-avatar

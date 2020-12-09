@@ -703,7 +703,8 @@
     "TicketsNotRequired": "כרטיסים",
     "Integration": "Integration",
     "TimezoneCaption": "Timezone",
-    "Chat": "לְשׂוֹחֵחַ"
+    "Chat": "לְשׂוֹחֵחַ",
+    "VersionNotSupported":"גרסה זו אינה נתמכת בתכונה זו"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",

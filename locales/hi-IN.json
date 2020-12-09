@@ -703,7 +703,8 @@
     "TicketsNotRequired": "टिकट",
     "Integration": "Integration",
     "TimezoneCaption": "Timezone",
-    "Chat": "बातचीत"
+    "Chat": "बातचीत",
+    "VersionNotSupported":"यह सुविधा इस संस्करण में समर्थित नहीं है"
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",
