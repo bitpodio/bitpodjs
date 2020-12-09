@@ -212,16 +212,18 @@
         </div>
         <div
           v-if="content"
-          class="xs12 sm8 md8 lg8 boxview pa-3 pb-6 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+          class="xs12 sm8 md8 lg8 boxview pad-card pb-6 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
         >
-          <v-flex class="d-flex justify-center align-center pb-3">
-            <h2 class="body-1 pb-0">
-              <i class="fa fa-black-board pr-1" aria-hidden="true"></i>
-              <i18n path="Common.Sessions" />
-            </h2>
-            <v-spacer></v-spacer>
-          </v-flex>
-          <v-divider></v-divider>
+          <div class="sticky d-flex flex-column justify-center boxview">
+            <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
+              <h2 class="body-1 pb-0">
+                <i class="fa fa-black-board pr-1" aria-hidden="true"></i>
+                <i18n path="Common.Sessions" />
+              </h2>
+              <v-spacer></v-spacer>
+            </v-flex>
+            <v-divider></v-divider>
+          </div>
           <Grid
             view-name="registrationSessions"
             :content="content"
@@ -230,16 +232,18 @@
         </div>
         <div
           v-if="content"
-          class="xs12 sm8 md8 lg8 boxview pa-3 pb-6 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+          class="xs12 sm8 md8 lg8 boxview pad-card pb-6 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
         >
-          <v-flex class="d-flex justify-center align-center pb-3">
-            <h2 class="body-1 pb-0">
-              <i class="fa fa-users pr-1" aria-hidden="true"></i>
-              <i18n path="Common.Attendees" />
-            </h2>
-            <v-spacer></v-spacer>
-          </v-flex>
-          <v-divider></v-divider>
+          <div class="sticky d-flex flex-column justify-center boxview">
+            <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
+              <h2 class="body-1 pb-0">
+                <i class="fa fa-users pr-1" aria-hidden="true"></i>
+                <i18n path="Common.Attendees" />
+              </h2>
+              <v-spacer></v-spacer>
+            </v-flex>
+            <v-divider></v-divider>
+          </div>
           <Grid
             view-name="registrationAttendees"
             :content="content"
@@ -249,16 +253,18 @@
         </div>
         <div
           v-if="content"
-          class="xs12 sm8 md8 lg8 boxview pa-3 pb-6 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+          class="xs12 sm8 md8 lg8 boxview pad-card pb-6 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
         >
-          <v-flex class="d-flex justify-center align-center pb-3">
-            <h2 class="body-1 pb-0">
-              <i class="fa fa-mail pr-1" aria-hidden="true"></i>
-              <i18n path="Common.Emails" />
-            </h2>
-            <v-spacer></v-spacer>
-          </v-flex>
-          <v-divider></v-divider>
+          <div class="sticky d-flex flex-column justify-center boxview">
+            <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
+              <h2 class="body-1 pb-0">
+                <i class="fa fa-mail pr-1" aria-hidden="true"></i>
+                <i18n path="Common.Emails" />
+              </h2>
+              <v-spacer></v-spacer>
+            </v-flex>
+            <v-divider></v-divider>
+          </div>
           <Grid
             view-name="registrationEmails"
             :content="content"
@@ -669,3 +675,15 @@ export default {
   },
 }
 </script>
+<style scoped>
+@media (max-width: 500px) {
+  .pad-card {
+    padding: 0 12px 0 12px;
+  }
+}
+@media (min-width: 600px) {
+  .pad-card {
+    padding: 12px 12px 0 12px;
+  }
+}
+</style>

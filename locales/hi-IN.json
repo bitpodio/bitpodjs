@@ -870,6 +870,8 @@
       "EventPublished": "बधाई हो, आपका ईवेंट प्रकाशित हो गया है।",
       "BadgesDeleteSuccess": "बैज सफलतापूर्वक हटा दिए गए",
       "BadgesUpdatedSuccess":"बैज सफलतापूर्वक अपडेट किया गया",
+      "EventRegSiteDetailsUpdateSuccess":"पंजीकरण पृष्ठ सेटिंग सफलतापूर्वक अपडेट की गई",
+      "UnableToAssignRole":"आपको यह क्रिया करने की अनुमति नहीं है। कृपया व्यवस्थापक से संपर्क करें",
       "AttachmentAddSuccess": "अनुलग्नक सफलतापूर्वक जोड़ा गया",
       "AttachmentDeleteSuccess": "अनुलग्नक सफलतापूर्वक हटा दिया गया",
       "SeatLayoutAddSuccess": "Seat Layout added successfully",

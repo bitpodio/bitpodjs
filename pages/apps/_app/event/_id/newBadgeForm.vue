@@ -139,13 +139,14 @@
             @click="tabs = 'tab-2'"
             ><i18n path="Drawer.Next"
           /></v-btn>
-          <v-btn
-            v-if="tabs === 'tab-2'"
+          <SaveButton
+            v-if="newBadge && tabs === 'tab-2'"
             color="primary"
             depressed
-            @click.native="onSave"
+            :action="onSave"
+            class="ml-2"
             ><i18n path="Drawer.Save"
-          /></v-btn>
+          /></SaveButton>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -159,10 +160,13 @@ import event from '~/config/apps/event/gql/event.gql'
 import badge from '~/config/apps/event/gql/badge.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { getIdFromAtob } from '~/utility'
+import SaveButton from '~/components/common/saveButton'
+
 export default {
   components: {
     RichText: () =>
       process.client ? import('~/components/common/form/richtext.vue') : false,
+    SaveButton,
   },
   props: {
     newBadge: {

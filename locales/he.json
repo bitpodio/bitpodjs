@@ -870,6 +870,8 @@
       "EventPublished": "מזל טוב, האירוע שלך פורסם.",
       "BadgesDeleteSuccess": "התגים נמחקו בהצלחה",
       "BadgesUpdatedSuccess":"התגים עודכנו בהצלחה",
+      "EventRegSiteDetailsUpdateSuccess":"הגדרות דף הרישום עודכנו בהצלחה",
+      "UnableToAssignRole":"אין לך הרשאה לבצע פעולה זו. אנא פנה למנהל המערכת",
       "AttachmentAddSuccess": "הקובץ המצורף נוסף בהצלחה",
       "AttachmentDeleteSuccess": "הקובץ המצורף נמחק בהצלחה",
       "SeatLayoutAddSuccess": "Seat Layout added successfully",
