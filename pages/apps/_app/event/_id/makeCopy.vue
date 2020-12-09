@@ -148,7 +148,7 @@
                 <v-col v-if="isVenue" cols="12" class="pb-6 pt-0">
                   <div class="positionRelative">
                     <div v-if="addressClicked" class="address-legend">
-                      {{ $t('Common.Address') }}
+                      {{ $t('Common.AddressRequired') }}
                     </div>
                     <no-ssr>
                       <vue-google-autocomplete

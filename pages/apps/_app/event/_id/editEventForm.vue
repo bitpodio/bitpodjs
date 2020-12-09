@@ -168,25 +168,32 @@
               v-if="formData.LocationType === 'Venue'"
               style="display: contents;"
             >
-              <v-col cols="12" class="mt-n6">
-                <no-ssr>
-                  <vue-google-autocomplete
-                    id="map"
-                    ref="address"
-                    v-model="VenueAddress.AddressLine"
-                    outlined
-                    :label="$t('Common.VenueAddress')"
-                    classname="form-control"
-                    :rules="[addressValidation]"
-                    :placeholder="$t('Common.Address')"
-                    @placechanged="getAddressData"
-                    @change="addressChanged"
-                  >
-                  </vue-google-autocomplete>
-                  <span v-if="errorAlert.message != ''" style="color: red;">{{
-                    errorAlert.message
-                  }}</span>
-                </no-ssr>
+              <v-col cols="12" class="mt-n6 positionRelative">
+                <div>
+                  <div v-if="addressClicked" class="address-legend">
+                    {{ $t('Common.AddressRequired') }}
+                  </div>
+                  <no-ssr>
+                    <vue-google-autocomplete
+                      id="map"
+                      ref="address"
+                      v-model="VenueAddress.AddressLine"
+                      outlined
+                      :label="$t('Common.VenueAddress')"
+                      classname="form-control"
+                      :rules="[addressValidation]"
+                      :placeholder="!addressClicked && $t('Common.Address')"
+                      @placechanged="getAddressData"
+                      @change="addressChanged"
+                      @focus="focusIn"
+                      @blur="focusOut"
+                    >
+                    </vue-google-autocomplete>
+                    <span v-if="errorAlert.message != ''" style="color: red;">{{
+                      errorAlert.message
+                    }}</span>
+                  </no-ssr>
+                </div>
               </v-col>
               <v-col cols="12" class="mt-6">
                 <v-text-field
@@ -295,6 +302,7 @@ export default {
       datevalid: true,
       startdateMessage: '',
       enddateMessage: '',
+      addressClicked: false,
       tags: [],
       addressLine: '',
       tagsDropdown: [],
@@ -405,6 +413,12 @@ export default {
   },
 
   methods: {
+    focusOut() {
+      this.addressClicked = false
+    },
+    focusIn() {
+      this.addressClicked = true
+    },
     onReset() {
       this.$refs.form.reset()
     },
@@ -457,6 +471,7 @@ export default {
       this.$apollo.queries.data.refresh()
     },
     getAddressData(addressData, placeResultData, id) {
+      this.addressClicked = true
       this.VenueAddress.AddressLine = addressData.route
       this.formData.VenueName = addressData.route
       this.VenueAddress.Country = addressData.country
@@ -625,9 +640,10 @@ export default {
           this.formData.StartDate !== null &&
           this.formData.EndDate !== null
         ) {
-          this.addressLine =
-            this.formData._VenueAddress &&
-            this.formData._VenueAddress.AddressLine
+          if (this.formData._VenueAddress) {
+            this.addressLine = this.formData._VenueAddress.AddressLine
+            this.addressClicked = true
+          }
           this.StartDate = this.getZonedDateTime(
             this.formData.StartDate,
             this.formData.Timezone
@@ -685,5 +701,18 @@ export default {
   color: red;
   padding: 10px;
   font-size: 12px;
+}
+.address-legend {
+  position: absolute;
+  background: white;
+  font-size: 13px !important;
+  left: 20px !important;
+  padding: 0 5px;
+  top: 3px;
+  color: grey;
+}
+.form-control:focus {
+  border: 2px solid #1a73e8 !important;
+  outline: #1a73e8;
 }
 </style>
