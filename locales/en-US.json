@@ -45,8 +45,9 @@
     "Invite": "Invite",
     "Emails": "Emails",
     "Notes": "Notes",
-    "Tickets": "Tickets*",
+    "Tickets": "Tickets",
     "DiscountCodes": "Discount Codes",
+    "Discount": "Discount",
     "RegistrationQuestions": "Registration Questions",
     "Sessions": "Sessions",
     "Speakers": "Speakers",
@@ -70,6 +71,7 @@
     "BusinessType": "Business Type",
     "EventLink": "Event Link",
     "AllowCancelation": "Allow Cancelation",
+    "AllowChat": "Allow Chat",
     "ValidateSessionTimingConflict": "Validate Session Timing Conflict",
     "ShowRemainingTicketsCount": "Show Remaining Tickets Count",
     "ShowAttendeeForm": "Show Attendee Form",
@@ -699,7 +701,8 @@
     "HeaderPrice": "Price",
     "TicketsNotRequired": "Tickets",
     "Integration": "Integration",
-    "TimezoneCaption": "Timezone"
+    "TimezoneCaption": "Timezone",
+    "Chat": "Chat"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",
@@ -846,7 +849,8 @@
       "DeleteImage": "Do you want to delete this image?",
       "DeleteUser": "Do you want to delete this user?",
       "NoEvents": "There aren't any live and draft events, to start setting up your event use Create Event link",
-      "NoEventsFound": "No events found with name {searchKey}"
+      "NoEventsFound": "No events found with name {searchKey}",
+      "ConfirmResendRegistrationEmail": "Are you sure you want to resend confirmation emails?"
     },
     "Success": {
       "CopiedClipboard": "Copied to clipboard",
@@ -866,6 +870,7 @@
       "SeatLayoutDeleteSuccess": "Seat Layout deleted successfully",
       "EventPublished": "Congratulations, your event has been published.",
       "BadgesDeleteSuccess": "Badges deleted successfully",
+      "BadgesUpdatedSuccess":"Badges updated successfully",
       "AttachmentAddSuccess": "Attachment added successfully",
       "AttachmentDeleteSuccess": "Attachment deleted successfully",
       "SeatLayoutAddSuccess": "Seat Layout added successfully",

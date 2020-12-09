@@ -69,7 +69,9 @@
                               >
                                 <template v-slot:placeholder>
                                   <v-img
-                                    :src="$config.cdnUri + 'invitee-image.png'"
+                                    :src="
+                                      $config.cdnUri + 'new-invitee-image.png'
+                                    "
                                     class="grey lighten-2"
                                     min-height="230"
                                     max-height="230"
@@ -80,7 +82,7 @@
                             </div>
                             <div v-else class="pa-1">
                               <v-img
-                                :src="$config.cdnUri + 'invitee-image.png'"
+                                :src="$config.cdnUri + 'new-invitee-image.png'"
                                 class="grey lighten-2"
                                 min-height="200"
                                 max-height="200"
@@ -383,6 +385,10 @@ export default {
         )
         if (res) {
           this.close()
+          this.$emit(
+            'update:snackbarText',
+            this.$t('Messages.Success.EventDetailsUpdateSuccess')
+          )
           this.$emit('update:snackbar', true)
           this.refresh()
           this.sectionHeading = res._sectionHeading

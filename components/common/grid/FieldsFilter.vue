@@ -36,41 +36,49 @@
           <div
             v-for="[index, filterRule] of rules.entries()"
             :key="index + filterRule.field + ruleCondition"
-            class="filter-rule-item"
           >
-            <FieldFilter
-              :filter-rule="filterRule"
-              :fields="fields"
-              :index="index"
-              :rule-condition="ruleCondition"
-              @onRuleConditionChange="onRuleConditionChange"
-            />
-            <v-menu bottom left>
-              <template v-slot:activator="{ on, attrs }">
-                <v-btn icon v-bind="attrs" v-on="on">
-                  <v-icon>mdi-dots-vertical</v-icon>
-                </v-btn>
-              </template>
+            <div class="d-block">
+              <div class="filter-rule-item">
+                <FieldFilter
+                  :filter-rule="filterRule"
+                  :fields="fields"
+                  :index="index"
+                  :rule-condition="ruleCondition"
+                  @onRuleConditionChange="onRuleConditionChange"
+                />
+                <v-menu bottom left>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn icon v-bind="attrs" v-on="on">
+                      <v-icon>mdi-dots-vertical</v-icon>
+                    </v-btn>
+                  </template>
 
-              <v-list>
-                <v-list-item @click="onRuleDelete(index)">
-                  <v-icon class="pr-2">mdi-delete</v-icon>
-                  <v-list-item-title
-                    ><i18n path="Drawer.Delete"
-                  /></v-list-item-title>
-                </v-list-item>
-                <v-list-item @click="onRuleDuplicate(index)">
-                  <v-icon class="pr-2">mdi-content-copy</v-icon>
-                  <v-list-item-title
-                    ><i18n path="Common.Duplicate"
-                  /></v-list-item-title>
-                </v-list-item>
-              </v-list>
-            </v-menu>
+                  <v-list>
+                    <v-list-item @click="onRuleDelete(index)">
+                      <v-icon class="pr-2">mdi-delete</v-icon>
+                      <v-list-item-title
+                        ><i18n path="Drawer.Delete"
+                      /></v-list-item-title>
+                    </v-list-item>
+                    <v-list-item @click="onRuleDuplicate(index)">
+                      <v-icon class="pr-2">mdi-content-copy</v-icon>
+                      <v-list-item-title
+                        ><i18n path="Common.Duplicate"
+                      /></v-list-item-title>
+                    </v-list-item>
+                  </v-list>
+                </v-menu>
+              </div>
+            </div>
           </div>
           <v-spacer></v-spacer>
-          <v-btn text color="primary" class="filter-btn" @click="onAddFilter"
-            ><i18n path="Common.AddFilter"
+          <v-btn
+            text
+            depressed
+            color="primary"
+            class="filter-btn mt-2"
+            @click="onAddFilter"
+            ><i18n class="d-block" path="Common.AddFilter"
           /></v-btn>
         </div>
         <v-card-actions>

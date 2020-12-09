@@ -101,6 +101,9 @@ body {
 .fs-30 {
   font-size: 30px !important;
 }
+.pac-container {
+  z-index: 10000 !important;
+}
 .text-break-word {
   overflow-wrap: break-word;
 }
@@ -127,7 +130,7 @@ body {
   z-index: 99 !important;
 }
 .appbar-left {
-  width: 250px;
+  width: auto;
 }
 .nav-drawer {
   display: none !important;
@@ -415,6 +418,9 @@ body {
   overflow: hidden;
   width: 100%;
 }
+.v-messages__message {
+  padding-top: 2px !important;
+}
 .ps-top6 {
   top: 9px;
 }
@@ -613,6 +619,10 @@ table > tbody > tr:last-child .key-align {
 }
 .slide-form-default .v-input__append-inner, .slide-form .v-input__append-inner {
   cursor: pointer;
+}
+.logofull {
+  min-width: 110px !important;
+  max-width: 110px !important;
 }
 @media (max-width: 800px) {
   .nav-bar {

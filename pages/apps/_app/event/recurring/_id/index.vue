@@ -54,7 +54,7 @@
                       /></v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
-                  <v-list-item @click="true">
+                  <!-- <v-list-item @click="true">
                     <v-list-item-icon class="mr-2">
                       <i
                         class="fa fa-pencil-square-o mt-1"
@@ -66,7 +66,7 @@
                         ><i18n path="Drawer.Editemailtemplate"
                       /></v-list-item-title>
                     </v-list-item-content>
-                  </v-list-item>
+                  </v-list-item> -->
                   <v-list-item @click="redirectIntegration">
                     <v-list-item-icon class="mr-2">
                       <i class="fa fa-link1 mt-1" aria-hidden="true"></i>
@@ -1044,6 +1044,18 @@
           </v-flex>
           <v-flex class="d-block text-truncate">
             <v-checkbox
+              v-model="data.event.allowChat"
+              dense
+              debounce="500"
+              height="20"
+              class="ma-0 pa-0"
+              :label="$t('Common.AllowChat')"
+              color="green"
+              @change="updateReg"
+            ></v-checkbox>
+          </v-flex>
+          <v-flex class="d-block text-truncate">
+            <v-checkbox
               v-model="data.event.SessionTimingConflict"
               dense
               height="20"
@@ -1262,6 +1274,7 @@ export default {
     updateData() {
       const dataObj = {
         isRefundable: this.data.event.isRefundable,
+        allowChat: this.data.event.allowChat,
         SessionTimingConflict: this.data.event.SessionTimingConflict,
         ShowRemainingTickets: this.data.event.ShowRemainingTickets,
         ShowAttendeeForm: this.data.event.ShowAttendeeForm,
