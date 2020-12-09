@@ -289,6 +289,9 @@
         </v-row>
       </v-container>
     </v-main>
+    <v-btn-fab elevation="1" fab icon outlined raised small
+      ><v-icon>mdi-plus</v-icon></v-btn-fab
+    >
   </v-app>
 </template>
 
