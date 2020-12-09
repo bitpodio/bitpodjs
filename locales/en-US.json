@@ -703,7 +703,7 @@
     "Integration": "Integration",
     "TimezoneCaption": "Timezone",
     "Chat": "Chat",
-    "VersionNotSupported":"This feature is not supported in this version"
+    "VersionNotSupported":"Clipboard is not accessible in this browser."
   },
   "Drawer": {
     "CreateEventAction": "Create Event",

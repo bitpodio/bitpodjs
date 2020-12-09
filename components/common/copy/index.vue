@@ -113,7 +113,7 @@ export default {
           }
         } else {
           try {
-            if (inputEl.focus() && inputEl.select()) {
+            if (inputEl.focus && inputEl.select) {
               inputEl.focus()
               inputEl.select()
               inputEl.setSelectionRange(0, 99999)

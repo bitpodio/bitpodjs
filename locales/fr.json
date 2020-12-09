@@ -702,7 +702,7 @@
     "Integration": "Integration",
     "TimezoneCaption": "Timezone",
     "Chat": "bavarder",
-    "VersionNotSupported":"Cette fonctionnalité n'est pas prise en charge dans cette version"
+    "VersionNotSupported":"Le Presse-papiers n'est pas accessible dans ce navigateur."
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",

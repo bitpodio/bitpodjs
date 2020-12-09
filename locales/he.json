@@ -704,7 +704,7 @@
     "Integration": "Integration",
     "TimezoneCaption": "Timezone",
     "Chat": "לְשׂוֹחֵחַ",
-    "VersionNotSupported":"גרסה זו אינה נתמכת בתכונה זו"
+    "VersionNotSupported":"הלוח אינו נגיש בדפדפן זה."
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",
