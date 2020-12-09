@@ -63,9 +63,14 @@
           <v-card-actions
             class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
           >
-            <v-btn color="primary" depressed @click.native="onSave"
+            <SaveButton
+              v-if="editOrgSetting"
+              color="primary"
+              depressed
+              :action="onSave"
+              class="ml-2"
               ><i18n path="Drawer.Save"
-            /></v-btn>
+            /></SaveButton>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -78,7 +83,12 @@ import gql from 'graphql-tag'
 import { formatGQLResult } from '~/utility/gql.js'
 import organization from '~/config/apps/admin/gql/organization.gql'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
+import SaveButton from '~/components/common/saveButton'
+
 export default {
+  components: {
+    SaveButton,
+  },
   props: {
     editOrgSetting: {
       type: Boolean,
