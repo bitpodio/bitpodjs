@@ -967,7 +967,7 @@ export default {
     bottom: 0;
   }
   .sticky_inline_block {
-    display: inline-block;
+    display: block;
     left: 100%;
     top: 55px;
     margin-bottom: 0;
