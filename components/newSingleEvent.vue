@@ -185,7 +185,7 @@
                       v-if="addressClicked || !!venueAddress.AddressLine"
                       class="address-legend"
                     >
-                      {{ $t('Common.Address') }}
+                      {{ $t('Common.AddressRequired') }}
                     </div>
                     <no-ssr>
                       <vue-google-autocomplete
