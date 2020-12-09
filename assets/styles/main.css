@@ -624,6 +624,24 @@ table > tbody > tr:last-child .key-align {
   min-width: 110px !important;
   max-width: 110px !important;
 }
+.help-button {
+  position: fixed !important;
+  right: 10px;
+  bottom: 10px;
+}
+.help-box {
+  max-width: 350px;
+  right: 0px;
+  position: fixed !important;
+  bottom: 10px;
+}
+.chanel-icon .fa {
+  color: #fff;
+  background: #0cb14b;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
 @media (max-width: 800px) {
   .nav-bar {
     top: 50px !important;

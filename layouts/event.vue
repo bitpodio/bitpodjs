@@ -289,9 +289,104 @@
         </v-row>
       </v-container>
     </v-main>
-    <v-btn-fab elevation="1" fab icon outlined raised small
-      ><v-icon>mdi-plus</v-icon></v-btn-fab
-    >
+    <div class="help-section">
+      <v-btn
+        class="mx-2 help-button"
+        fab
+        small
+        outlined
+        color="primary"
+        @click="helpDialog = !helpDialog"
+      >
+        <v-icon>
+          mdi-help
+        </v-icon>
+      </v-btn>
+      <v-dialog
+        v-model="helpDialog"
+        content-class="help-box"
+        transition="dialog-bottom-transition"
+      >
+        <v-card>
+          <v-card-title class="pa-0">
+            <v-spacer></v-spacer>
+            <div>
+              <v-btn icon @click="helpDialog = false">
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+            </div>
+          </v-card-title>
+          <div class="d-flex pt-4 px-2">
+            <div class="chanel-icon d-flex ma-4 mr-6">
+              <i
+                class="fa fa-flag fs-18 d-flex align-center justify-center"
+                style="background: #0cb14b;"
+              ></i>
+            </div>
+            <div
+              class="chanel-right d-flex flex-column justify-center align-start"
+            >
+              <div class="chanel-right-head">User Guide</div>
+              <div class="chanel-right-info body-2">
+                Gain in-depth knowledge about features and learn basic steps.
+              </div>
+            </div>
+            <div class="chanel-more d-flex align-center justify-center">
+              <i class="fa fa-chevron-right fs-22"></i>
+            </div>
+          </div>
+          <div class="d-flex pt-4 px-2">
+            <div class="chanel-icon d-flex ma-4 mr-6">
+              <i
+                class="fa fa-support fs-18 d-flex align-center justify-center"
+                style="background: #f4b400;"
+              ></i>
+            </div>
+            <div
+              class="chanel-right d-flex flex-column justify-center align-start"
+            >
+              <div class="chanel-right-head">FAQs</div>
+              <div class="chanel-right-info body-2">
+                Browse through frequently asked questions to resolve problems.
+              </div>
+            </div>
+            <div class="chanel-more d-flex align-center justify-center">
+              <i class="fa fa-chevron-right fs-22"></i>
+            </div>
+          </div>
+          <div class="d-flex pt-4 px-2">
+            <div class="chanel-icon d-flex ma-4 mr-6">
+              <i
+                class="fa fa-youtube fs-18 d-flex align-center justify-center"
+                style="background: #f25955;"
+              ></i>
+            </div>
+            <div
+              class="chanel-right d-flex flex-column justify-center align-start"
+            >
+              <div class="chanel-right-head">Help Videos</div>
+              <div class="chanel-right-info body-2">
+                Our videos will help you understand how to use of Bitpod.
+              </div>
+            </div>
+            <div class="chanel-more d-flex align-center justify-center">
+              <i class="fa fa-chevron-right fs-22"></i>
+            </div>
+          </div>
+          <v-card-actions>
+            <v-btn
+              block
+              depressed
+              color="primary"
+              class="my-3"
+              @click="helpDialog = false"
+            >
+              Contact Support
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </div>
   </v-app>
 </template>
 
@@ -315,6 +410,7 @@ export default {
     drawer: null,
     dialog1: false,
     dialog: false,
+    helpDialog: false,
     notifications: false,
     sound: true,
     tabs: null,
