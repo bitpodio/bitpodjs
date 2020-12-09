@@ -700,6 +700,8 @@ export default {
       })
     },
     async onNewItemSave(data) {
+      const dataSource = getViewDataSource(this.content, this.viewName)
+      const dataSourceType = dataSource.type || 'graphql'
       const modelName = getModelName(this.content, this.viewName)
       const newItemMutation = buildMutationCreateQuery(modelName)
       const userCreated = await this.$apollo.mutate({
@@ -711,6 +713,9 @@ export default {
           },
         },
       })
+      if (dataSourceType === 'rest') {
+        this.loadRestData()
+      }
       this.$apollo.queries.tableData.refresh()
       this.snackbarText = `${modelName} Created Successfully`
       this.snackbar = true

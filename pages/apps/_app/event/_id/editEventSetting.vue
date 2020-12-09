@@ -211,6 +211,7 @@ export default {
           }
         )
         if (res) {
+          this.$eventBus.$emit('event-tickets-currency-updated')
           this.close()
           this.$emit(
             'update:snackbarText',

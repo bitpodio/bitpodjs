@@ -52,6 +52,8 @@
                     <v-datetime-picker
                       ref="dateTimeComponent"
                       v-model="formData.StartDate"
+                      time-format="hh:mm a"
+                      date-format="MMMM dd, yyyy"
                       :label="getDateLabel($t('Common.StartDate'))"
                       :text-field-props="eventStartDateProps"
                       :on-change="changeStartDate()"
@@ -68,6 +70,8 @@
                     <v-datetime-picker
                       ref="dateTimeComponent1"
                       v-model="formData.EndDate"
+                      time-format="hh:mm a"
+                      date-format="MMMM dd, yyyy"
                       :label="getDateLabel($t('Common.EndDate'))"
                       :text-field-props="eventEndDateProps"
                       :on-change="changeEndDate()"
