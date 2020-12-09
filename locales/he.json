@@ -709,7 +709,8 @@
     "Faqs": "שאלות נפוצות",
     "FaqsInfo": "עיין בשאלות נפוצות כדי לפתור בעיות.",
     "HelpVideos": "עזרי וידיאו",
-    "HelpVideosInfo": "הסרטונים שלנו יעזרו לך להבין כיצד להשתמש ב- Bitpod."
+    "HelpVideosInfo": "הסרטונים שלנו יעזרו לך להבין כיצד להשתמש ב- Bitpod.",
+    "ContactSupport": "צור קשר עם תמיכה"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",

@@ -707,7 +707,8 @@
     "Faqs": "FAQs",
     "FaqsInfo": "Parcourez les questions fréquemment posées pour résoudre les problèmes.",
     "HelpVideos": "Vidéos d'aide",
-    "HelpVideosInfo": "Nos vidéos vous aideront à comprendre comment utiliser Bitpod."
+    "HelpVideosInfo": "Nos vidéos vous aideront à comprendre comment utiliser Bitpod.",
+    "ContactSupport": "Contactez le support"
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",

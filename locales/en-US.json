@@ -708,7 +708,8 @@
     "Faqs": "FAQs",
     "FaqsInfo": "Browse through frequently asked questions to resolve problems.",
     "HelpVideos": "Help Videos",
-    "HelpVideosInfo": "Our videos will help you understand how to use of Bitpod."
+    "HelpVideosInfo": "Our videos will help you understand how to use of Bitpod.",
+    "ContactSupport": "Contact Support"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",

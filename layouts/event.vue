@@ -309,6 +309,7 @@
       >
         <v-card>
           <v-card-title class="pa-0">
+            <div class="headline ma-2">How may I help you?</div>
             <v-spacer></v-spacer>
             <div>
               <v-btn icon @click="helpDialog = false">
@@ -385,7 +386,7 @@
               class="my-3"
               @click="helpDialog = false"
             >
-              Contact Support
+              <i18n path="Common.ContactSupport" />
             </v-btn>
           </v-card-actions>
         </v-card>
