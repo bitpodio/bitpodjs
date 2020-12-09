@@ -161,6 +161,7 @@
                         @placechanged="getAddressData"
                         @focus="focusIn"
                         @blur="focusOut"
+                        @change="changeAddressData($event)"
                       ></vue-google-autocomplete>
                     </no-ssr>
                   </div>
@@ -499,8 +500,11 @@ export default {
     },
   },
   methods: {
+    changeAddressData(value) {
+      this.addressClicked = value !== ''
+    },
     focusOut() {
-      this.addressClicked = false
+      this.addressClicked = this.venueAddress.AddressLine !== ''
     },
     focusIn() {
       this.addressClicked = true
@@ -574,6 +578,7 @@ export default {
         .join(', ')
     },
     getAddressData(addressData, placeResultData, id) {
+      this.addressClicked = true
       this.venueAddress.AddressLine =
         addressData.route ||
         '' + ', ' + addressData.administrative_area_level_1 ||
@@ -679,8 +684,8 @@ export default {
           this.eventData.LocationType === 'Venue'
         ) {
           this.venueAddress = this.eventData._VenueAddress
+          this.addressClicked = true
           if (this.eventData._VenueAddress.LatLng !== null) {
-            this.addressClicked = true
             const latlng = this.eventData._VenueAddress.LatLng
             const newLocations = []
             latlng.name = `${this.eventData.VenueName} ${this.eventData._VenueAddress.City} ${this.eventData._VenueAddress.Country}`
