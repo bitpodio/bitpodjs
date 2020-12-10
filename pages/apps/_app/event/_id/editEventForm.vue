@@ -666,7 +666,9 @@ export default {
             this.formData.EndDate,
             this.formData.Timezone
           )
-          this.formData._VenueAddress.id = atob(this.formData._VenueAddress.id)
+          this.formData._VenueAddress.id = atob(
+            this.formData._VenueAddress.id
+          ).split(':')[1]
           this.VenueAddress =
             this.formData._VenueAddress != null
               ? { ...this.formData._VenueAddress }
