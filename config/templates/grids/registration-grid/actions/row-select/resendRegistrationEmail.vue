@@ -1,8 +1,8 @@
 <template>
   <v-col class="px-0">
     <confirm ref="confirm"></confirm>
-    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true"
-      ><div class="text-center">
+    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true" width="2px"
+      ><div class="fs-16 text-center">
         <i18n path="Common.ConfirmationEmailSent" /></div
     ></v-snackbar>
     <v-btn text small v-bind="attrs" v-on="on" @click="resendRegistrationEmail">
@@ -28,7 +28,7 @@ export default {
   data() {
     return {
       snackbar: false,
-      timeout: 1000,
+      timeout: 3000,
     }
   },
   watch: {
