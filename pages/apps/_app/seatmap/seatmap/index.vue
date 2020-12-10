@@ -50,7 +50,7 @@
           <v-spacer></v-spacer>
         </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="Events" :content="content" class="mt-n12" />
+        <Grid view-name="Events" :content="content" class="mt-12" />
       </div>
       <div
         v-if="content"
@@ -67,7 +67,7 @@
         <Grid
           view-name="organizationBusinessUnit"
           :content="content"
-          class="mt-n12"
+          class="mt-12"
         />
       </div>
     </v-flex>
