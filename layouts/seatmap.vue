@@ -19,7 +19,7 @@
           ></v-img>
         </span>
         <i18n
-          path="Common.SeatMap"
+          path="Common.SeatMapNo"
           class="d-inline-flex align-center mx-0 mx-md-2 ml-0 ml-md-1 text-h5"
         />
         <v-spacer></v-spacer>

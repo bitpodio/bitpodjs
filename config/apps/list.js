@@ -36,7 +36,7 @@ export const appList = (store) => [
   },
   {
     name: 'seatmap',
-    label: 'Common.SeatMap',
+    label: 'Common.SeatMapNo',
     css: 'fa fa-grid-alt fs-36 primary--text',
     type: 'route',
     route: '/apps/seatmap/list/seatmaps/seatmaps',
