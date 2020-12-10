@@ -12,7 +12,13 @@
       <div
         v-if="!noAction"
         class="grid-actions-container mt-lg-n11 mt-md-n11 mt-sm-n11 mt-xs-0 sticky"
-        :class="onlySticky ? 'sticky_inline_block' : ''"
+        :class="
+          onlySticky
+            ? $device.isIOS
+              ? 'sticky_block'
+              : 'stick_inline_block'
+            : ''
+        "
       >
         <div
           class="d-flex align-center"
@@ -972,6 +978,14 @@ export default {
     top: 55px;
     margin-bottom: 0;
     z-index: 5;
+  }
+  .sticky_block {
+    display: block;
+    top: 55px;
+    margin-bottom: 0;
+    z-index: 5;
+    width: 50%;
+    float: right;
   }
 }
 </style>
