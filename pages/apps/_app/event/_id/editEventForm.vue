@@ -489,6 +489,10 @@ export default {
       )
       this.VenueAddress.State = venue ? venue.long_name : ''
       this.VenueAddress.PostalCode = addressData.postal_code || ''
+      const latlng = {}
+      latlng.lat = addressData.latitude
+      latlng.lng = addressData.longitude
+      this.VenueAddress.LatLng = latlng
     },
     getZonedDateTime(date, timezone) {
       if (date) {
@@ -531,7 +535,6 @@ export default {
         this.formData._VenueAddress = { ...this.VenueAddress }
         this.formData.SEODesc = this.formData.Description
         delete this.formData.VenueAddress
-        delete this.formData._VenueAddress.LatLng
         try {
           const res = await this.$axios.$patch(
             `${url}Events/${this.$route.params.id || this.id}`,
@@ -663,10 +666,12 @@ export default {
             this.formData.EndDate,
             this.formData.Timezone
           )
+          this.formData._VenueAddress.id = atob(this.formData._VenueAddress.id)
           this.VenueAddress =
             this.formData._VenueAddress != null
               ? { ...this.formData._VenueAddress }
               : {}
+          delete this.VenueAddress.LatLng.__typename
         } else {
           this.StartDate = this.formData.StartDate
             ? this.getZonedDateTime(
