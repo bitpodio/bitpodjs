@@ -97,8 +97,10 @@ export default {
       this.$refs.form.reset()
     },
     onClose() {
+      this.valid = true
       this.$refs.form.reset()
       this.dialog = false
+      this.message = ''
     },
     async onSave() {
       if (this.roles !== '') {
