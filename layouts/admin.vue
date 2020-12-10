@@ -10,24 +10,14 @@
       }"
       :right="$vuetify.rtl"
     >
-      <v-toolbar-title
-        class="ml-0 pl-3 px-2 py-1 logo-ds d-none d-sm-flex d-md-none align-center"
-      >
+      <div class="d-flex d-sm-none pl-3">
         <span class="bitpod-logo logo-ds">
           <v-img
-            :src="$config.cdnUri + 'logo-favicon.png'"
-            class="logo-bitpod"
+            :src="$config.cdnUri + 'bitpod-logo-blk2.svg'"
+            class="logofull mr-2"
           ></v-img>
         </span>
-        <i18n path="Common.AppTitle" class="d-inline-flex align-center mx-2" />
-        <v-spacer></v-spacer>
-        <div v-if="drawer === true" class="d-none d-sm-flex">
-          <v-app-bar-nav-icon
-            class="nav-drawer"
-            @click.stop="drawer = !drawer"
-          ></v-app-bar-nav-icon>
-        </div>
-      </v-toolbar-title>
+      </div>
       <div class="text-center mt-4 pl-1">
         <v-btn
           v-bind="attrs"
