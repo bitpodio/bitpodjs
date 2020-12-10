@@ -168,25 +168,32 @@
               v-if="formData.LocationType === 'Venue'"
               style="display: contents;"
             >
-              <v-col cols="12" class="mt-n6">
-                <no-ssr>
-                  <vue-google-autocomplete
-                    id="map"
-                    ref="address"
-                    v-model="VenueAddress.AddressLine"
-                    outlined
-                    :label="$t('Common.VenueAddress')"
-                    classname="form-control"
-                    :rules="[addressValidation]"
-                    :placeholder="$t('Common.Address')"
-                    @placechanged="getAddressData"
-                    @change="addressChanged"
-                  >
-                  </vue-google-autocomplete>
-                  <span v-if="errorAlert.message != ''" style="color: red;">{{
-                    errorAlert.message
-                  }}</span>
-                </no-ssr>
+              <v-col cols="12" class="mt-n6 positionRelative">
+                <div>
+                  <div v-if="addressClicked" class="address-legend">
+                    {{ $t('Common.AddressRequired') }}
+                  </div>
+                  <no-ssr>
+                    <vue-google-autocomplete
+                      id="map"
+                      ref="address"
+                      v-model="VenueAddress.AddressLine"
+                      outlined
+                      :label="$t('Common.VenueAddress')"
+                      classname="form-control"
+                      :rules="[addressValidation]"
+                      :placeholder="!addressClicked && $t('Common.Address')"
+                      @placechanged="getAddressData"
+                      @change="addressChanged"
+                      @focus="focusIn"
+                      @blur="focusOut"
+                    >
+                    </vue-google-autocomplete>
+                    <span v-if="errorAlert.message != ''" style="color: red;">{{
+                      errorAlert.message
+                    }}</span>
+                  </no-ssr>
+                </div>
               </v-col>
               <v-col cols="12" class="mt-6">
                 <v-text-field
@@ -240,13 +247,15 @@
         <v-card-actions
           class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
         >
-          <v-btn
-            :disabled="VenueAddress.AddressLine === '' || !valid || !datevalid"
+          <SaveButton
+            v-if="eventForm"
             color="primary"
+            :disabled="VenueAddress.AddressLine === '' || !valid || !datevalid"
             depressed
-            @click="onSave"
+            :action="onSave"
+            class="ml-2"
             ><i18n path="Drawer.Save"
-          /></v-btn>
+          /></SaveButton>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -261,6 +270,7 @@ import generalconfiguration from '~/config/apps/event/gql/registrationStatusOpti
 import { formatGQLResult } from '~/utility/gql.js'
 import Timezone from '~/components/common/form/timezone'
 import nuxtconfig from '~/nuxt.config'
+import SaveButton from '~/components/common/saveButton'
 
 export default {
   components: {
@@ -268,6 +278,7 @@ export default {
       process.client ? import('~/components/common/form/richtext.vue') : false,
     VueGoogleAutocomplete: () => import('vue-google-autocomplete'),
     Timezone,
+    SaveButton,
   },
   props: {
     eventForm: {
@@ -291,6 +302,7 @@ export default {
       datevalid: true,
       startdateMessage: '',
       enddateMessage: '',
+      addressClicked: false,
       tags: [],
       addressLine: '',
       tagsDropdown: [],
@@ -401,6 +413,12 @@ export default {
   },
 
   methods: {
+    focusOut() {
+      this.addressClicked = false
+    },
+    focusIn() {
+      this.addressClicked = true
+    },
     onReset() {
       this.$refs.form.reset()
     },
@@ -453,6 +471,7 @@ export default {
       this.$apollo.queries.data.refresh()
     },
     getAddressData(addressData, placeResultData, id) {
+      this.addressClicked = true
       this.VenueAddress.AddressLine = addressData.route
       this.formData.VenueName = addressData.route
       this.VenueAddress.Country = addressData.country
@@ -548,6 +567,11 @@ export default {
           if (res) {
             this.close()
             this.$emit('update:snackbar', true)
+            this.$emit(
+              'update:snackbarText',
+              this.$t('Messages.Success.EventDetailsUpdateSuccess')
+            )
+            this.$emit('update:snackbar', true)
             this.refreshGrid()
             this.refresh()
             return (this.data.event = res)
@@ -621,9 +645,10 @@ export default {
           this.formData.StartDate !== null &&
           this.formData.EndDate !== null
         ) {
-          this.addressLine =
-            this.formData._VenueAddress &&
-            this.formData._VenueAddress.AddressLine
+          if (this.formData._VenueAddress) {
+            this.addressLine = this.formData._VenueAddress.AddressLine
+            this.addressClicked = true
+          }
           this.StartDate = this.getZonedDateTime(
             this.formData.StartDate,
             this.formData.Timezone
@@ -681,5 +706,18 @@ export default {
   color: red;
   padding: 10px;
   font-size: 12px;
+}
+.address-legend {
+  position: absolute;
+  background: white;
+  font-size: 13px !important;
+  left: 20px !important;
+  padding: 0 5px;
+  top: 3px;
+  color: grey;
+}
+.form-control:focus {
+  border: 2px solid #1a73e8 !important;
+  outline: #1a73e8;
 }
 </style>

@@ -349,6 +349,7 @@
     "NowOpenForRegistrations": "Now it is open for registrations, you can click on view to fetch the event landing page URL, which you can share with others, so they can register.",
     "EventL": "Event Link*",
     "EventTitle": "Event Title*",
+    "AddressRequired": "כתובת*",
     "Address*": "Address*",
     "VenueName": "שם המקום",
     "ZipCode": "מיקוד",
@@ -702,7 +703,8 @@
     "TicketsNotRequired": "כרטיסים",
     "Integration": "Integration",
     "TimezoneCaption": "Timezone",
-    "Chat": "לְשׂוֹחֵחַ"
+    "Chat": "לְשׂוֹחֵחַ",
+    "VersionNotSupported":"הלוח אינו נגיש בדפדפן זה."
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",
@@ -869,6 +871,8 @@
       "EventPublished": "מזל טוב, האירוע שלך פורסם.",
       "BadgesDeleteSuccess": "התגים נמחקו בהצלחה",
       "BadgesUpdatedSuccess":"התגים עודכנו בהצלחה",
+      "EventRegSiteDetailsUpdateSuccess":"הגדרות דף הרישום עודכנו בהצלחה",
+      "UnableToAssignRole":"אין לך הרשאה לבצע פעולה זו. אנא פנה למנהל המערכת",
       "AttachmentAddSuccess": "הקובץ המצורף נוסף בהצלחה",
       "AttachmentDeleteSuccess": "הקובץ המצורף נמחק בהצלחה",
       "SeatLayoutAddSuccess": "Seat Layout added successfully",

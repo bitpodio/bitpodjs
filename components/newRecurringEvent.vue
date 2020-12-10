@@ -279,16 +279,21 @@
         </v-card-title>
         <v-card-text class="v-location px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-row>
-            <v-col cols="12" class="mt-3 mb-3">
+            <v-col cols="12" class="mt-3 mb-3 positionRelative">
+              <div v-if="addressClicked" class="address-legend">
+                {{ $t('Common.AddressRequired') }}
+              </div>
               <no-ssr>
                 <vue-google-autocomplete
                   id="map"
                   ref="venueAddress.AddressLine"
                   v-model="venueAddress.AddressLine"
                   class="form-control pa-3 d-block rounded"
-                  placeholder="Address*"
                   :required="true"
+                  :placeholder="!addressClicked && $t('Common.AddressRequired')"
                   @placechanged="getAddressData"
+                  @focus="removeSearchAddress(true)"
+                  @blur="focusOut"
                   @change="changeAddressData($event)"
                 ></vue-google-autocomplete>
               </no-ssr>
@@ -1066,6 +1071,7 @@ export default {
       valid: true,
       tabs: null,
       currentTab: 1,
+      addressClicked: false,
       validTickets: true,
       validDateRange: true,
       validDuration: true,
@@ -1416,6 +1422,21 @@ export default {
     },
   },
   methods: {
+    focusOut() {
+      this.addressClicked = false
+    },
+    removeSearchAddress(isAddressClicked) {
+      if (isAddressClicked) {
+        this.addressClicked = true
+      }
+      setTimeout(() => {
+        Object.values(
+          document.getElementsByClassName('pac-container pac-logo')
+        ).map((i) => {
+          i.style.display = 'none'
+        })
+      }, 1000)
+    },
     ticketCountRules() {
       return [
         (v) => {
@@ -1579,8 +1600,13 @@ export default {
       return false
     },
     changeAddressData(value) {
-      this.addresslineMessage =
-        value === '' ? this.$t('Messages.Error.ThisFieldRequired') : ''
+      if (value === '') {
+        this.addresslineMessage = this.$t('Messages.Error.ThisFieldRequired')
+        this.addressClicked = false
+      } else {
+        this.addresslineMessage = ''
+        this.addressClicked = true
+      }
     },
     changeAddress() {
       const { City, State, Country, PostalCode } = this.venueAddress
@@ -1595,6 +1621,7 @@ export default {
       this.venueAddress.PostalCode = PostalCode || ''
     },
     getAddressData(addressData, placeResultData, id) {
+      this.addressClicked = true
       this.venueAddress.AddressLine =
         addressData.route ||
         '' + ', ' + addressData.administrative_area_level_1 ||
@@ -2444,8 +2471,22 @@ export default {
 }
 .event-inner {
   min-height: 410px;
+  overflow-y: scroll !important;
 }
 .autocomplete-dropdown {
   margin-top: 13px;
+}
+.address-legend {
+  position: absolute;
+  background: white;
+  font-size: 13px !important;
+  left: 20px !important;
+  padding: 0 5px;
+  top: 3px;
+  color: grey;
+}
+.form-control:focus {
+  border: 2px solid #1a73e8 !important;
+  outline: #1a73e8;
 }
 </style>

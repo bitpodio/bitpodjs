@@ -65,9 +65,6 @@ export default {
       required: false,
     },
   },
-  mounted() {
-    this.$emit('hasGridOption', true)
-  },
   data() {
     return {
       fieldNames: [
@@ -80,6 +77,9 @@ export default {
         'Job Title',
       ],
     }
+  },
+  mounted() {
+    this.$emit('hasGridOption', true)
   },
 }
 </script>

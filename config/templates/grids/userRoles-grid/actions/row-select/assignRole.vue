@@ -45,11 +45,9 @@
                   :items="rolesDropDown"
                   :label="$t('Common.Role')"
                   outlined
+                  :error-messages="message"
                 ></v-select>
               </v-col>
-              <span v-if="message != ''" class="red--text px-3 pt-1">{{
-                message
-              }}</span>
             </v-row>
           </v-form>
         </v-card-text>
@@ -123,7 +121,7 @@ export default {
           this.refresh()
         }
       } catch (e) {
-        this.message = 'Please select a role'
+        this.message = this.$t('Messages.Error.UnableToAssignRole')
         console.log(
           `Error in templates/grids/userRoles-grid/actions/row-select/assignRole.vue while making a POST call to User model from method onSave context:-URL:-${url}\n formData:-${this.formData}\n OrganizationId:-${this.$attrs.items[0].orgId}\n UserName:-${this.userName} `,
           e

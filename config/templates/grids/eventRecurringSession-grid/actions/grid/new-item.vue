@@ -262,7 +262,7 @@
                 >
                   <div class="positionRelative">
                     <div v-if="addressClicked" class="address-legend">
-                      {{ $t('Common.Address') }}
+                      {{ $t('Common.AddressRequired') }}
                     </div>
                     <no-ssr>
                       <vue-google-autocomplete

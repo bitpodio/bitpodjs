@@ -58,26 +58,23 @@
                 dense
               ></v-text-field>
             </v-col>
-            <v-col cols="12" sm="6" md="12" class="pb-0">
+            <v-col
+              cols="12"
+              sm="6"
+              md="6"
+              class="pb-0 d-flex flex-column flex-md-row"
+            >
+              <div class="pt-2 mr-2">{{ eventLinkLabel() }}</div>
               <v-text-field
                 v-model="formData.UniqLink"
                 :label="$t('Common.EventL')"
                 :rules="[rules.required, rules.link]"
-                persistent-hint
-                :hint="getUniqLink"
                 outlined
-                required
                 dense
+                required
+                :error-messages="uniqueLinkMessage"
                 @input="checkUniqueLink"
               ></v-text-field>
-              <span
-                v-if="isInvalidEventLink && !!formData.UniqLink"
-                class="red--text caption pl-3 pt-0"
-                >{{ uniqueLinkMessage }}</span
-              >
-              <span v-else style="height: 14px;" class="transparent--text">{{
-                uniqueMsg
-              }}</span>
             </v-col>
             <v-col cols="12" class="mb-6 mt-0">
               <span><i18n path="Common.CancellationPolicy" /> </span>
@@ -89,13 +86,15 @@
         <v-card-actions
           class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
         >
-          <v-btn
-            :disabled="!valid || isInvalidEventLink"
+          <SaveButton
+            v-if="eventSetting"
             color="primary"
+            :disabled="!valid || isInvalidEventLink"
             depressed
-            @click="onSave"
+            :action="onSave"
+            class="ml-2"
             ><i18n path="Drawer.Save"
-          /></v-btn>
+          /></SaveButton>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -109,11 +108,13 @@ import event from '~/config/apps/event/gql/event.gql'
 import eventCount from '~/config/apps/event/gql/eventCount.gql'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import { formatGQLResult } from '~/utility/gql.js'
+import SaveButton from '~/components/common/saveButton'
 
 export default {
   components: {
     RichText: () =>
       process.client ? import('~/components/common/form/richtext.vue') : false,
+    SaveButton,
   },
   props: {
     eventSetting: {
@@ -170,6 +171,9 @@ export default {
   },
 
   methods: {
+    eventLinkLabel() {
+      return `${this.$bitpod.getApiUrl().replace('svc/api', 'e')}`
+    },
     onReset() {
       this.valid = true
       this.privacy = []
@@ -207,6 +211,7 @@ export default {
           }
         )
         if (res) {
+          this.$eventBus.$emit('event-tickets-currency-updated')
           this.close()
           this.$emit(
             'update:snackbarText',

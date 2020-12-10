@@ -10,7 +10,7 @@
             max-width="155"
             width="155"
           >
-            <v-card-text class="font-weight-medium text-center subtitle-1 pt-0">
+            <v-card-text class="font-weight-medium text-center subtitle-1 pt-2">
               <i class="fa fa-plus fs-36 warning--text"></i>
               <div><i18n path="Common.NewSeatmap" class="body-1" /></div>
             </v-card-text>
@@ -32,9 +32,19 @@
               class="font-weight-medium text-center positionRelative subtitle-1 seat-card pb-0"
             >
               <i class="fa fa-grid-alt fs-36 warning--text"></i>
-              <div class="body-1 grey--text text--darken-1 text-truncate">
-                {{ item.Name }}
-              </div>
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on, attrs }">
+                  <span v-bind="attrs">
+                    <div
+                      class="body-1 grey--text text--darken-1 text-truncate"
+                      v-on="on"
+                    >
+                      {{ item.Name }}
+                    </div>
+                  </span>
+                </template>
+                <span>{{ item.Name }}</span>
+              </v-tooltip>
             </v-card-text>
           </nuxt-link>
           <v-card-actions class="pa-0 ma-0 pb-1">

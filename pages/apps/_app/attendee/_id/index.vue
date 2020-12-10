@@ -275,6 +275,7 @@
                         width="100%"
                         height="600"
                         frameBorder="0"
+                        allow="camera;microphone;fullscreen"
                         @load="authenticateIFrame()"
                       ></iframe>
                     </div>
@@ -1019,31 +1020,35 @@ export default {
         this.$route.params.id
       }`
       try {
-        const res = await this.$axios.$get(URL)
-        if (res) {
-          this.registration = res
-          res.attendee.map((i) => {
-            if (!this.attendeeData[i.TicketName]) {
-              this.attendeeData[i.TicketName] = {
-                count: 1,
-                ticketName: i.TicketName,
-                price: i.TicketAmount,
-                total: i.TicketAmount,
+        const { result } = await this.$axios.$get(URL)
+        if (result) {
+          if (result.status === 'Not Found') {
+            return this.$nuxt.error({ statusCode: 404 })
+          } else {
+            this.registration = result
+            result.attendee.map((i) => {
+              if (!this.attendeeData[i.TicketName]) {
+                this.attendeeData[i.TicketName] = {
+                  count: 1,
+                  ticketName: i.TicketName,
+                  price: i.TicketAmount,
+                  total: i.TicketAmount,
+                }
+              } else {
+                this.attendeeData[i.TicketName].count++
+                this.attendeeData[i.TicketName].total += i.TicketAmount
               }
-            } else {
-              this.attendeeData[i.TicketName].count++
-              this.attendeeData[i.TicketName].total += i.TicketAmount
-            }
-          })
-          Object.values(this.attendeeData).map((i) => {
-            const ticketname = this.registration.TicketListId.find((j) => {
-              return j.Code === i.ticketName
             })
-            return Object.assign(i, {
-              ticketAmount: ticketname ? ticketname.Amount || 0 : 0,
+            Object.values(this.attendeeData).map((i) => {
+              const ticketname = this.registration.TicketListId.find((j) => {
+                return j.Code === i.ticketName
+              })
+              return Object.assign(i, {
+                ticketAmount: ticketname ? ticketname.Amount || 0 : 0,
+              })
             })
-          })
-          this.getEventData(res.EventId)
+            this.getEventData(result.EventId)
+          }
         }
       } catch (e) {
         console.error(

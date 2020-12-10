@@ -59,16 +59,18 @@
         </div>
         <div
           v-if="content"
-          class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+          class="xs12 sm4 md4 lg4 boxview pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
-          <v-flex class="d-flex justify-center align-center pb-3">
-            <h2 class="body-1 pb-0">
-              <i class="fa fa-user-plus pr-1" aria-hidden="true"></i>
-              <i18n path="Common.Members" />
-            </h2>
-            <v-spacer></v-spacer>
-          </v-flex>
-          <v-divider></v-divider>
+          <div class="sticky d-flex flex-column justify-center boxview">
+            <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
+              <h2 class="body-1 pb-0">
+                <i class="fa fa-user-plus pr-1" aria-hidden="true"></i>
+                <i18n path="Common.Members" />
+              </h2>
+              <v-spacer></v-spacer>
+            </v-flex>
+            <v-divider></v-divider>
+          </div>
           <Grid view-name="discountMembers" :content="content" class="mt-n12" />
         </div>
       </v-flex>
@@ -207,5 +209,15 @@ export default {
 <style scoped>
 .discount-top {
   border: 1px solid #e6e6e6;
+}
+@media (max-width: 500px) {
+  .pad-card {
+    padding: 0 12px 0 12px;
+  }
+}
+@media (min-width: 600px) {
+  .pad-card {
+    padding: 12px 12px 0 12px;
+  }
 }
 </style>

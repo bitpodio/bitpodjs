@@ -701,7 +701,8 @@
     "TicketsNotRequired": "des billets",
     "Integration": "Integration",
     "TimezoneCaption": "Timezone",
-    "Chat": "bavarder"
+    "Chat": "bavarder",
+    "VersionNotSupported":"Le Presse-papiers n'est pas accessible dans ce navigateur."
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",
@@ -868,6 +869,8 @@
       "EventPublished": "Félicitations, votre événement a été publié.",
       "BadgesDeleteSuccess": "Badges supprimés avec succès",
       "BadgesUpdatedSuccess":"Badges mis à jour avec succès",
+      "EventRegSiteDetailsUpdateSuccess":"Paramètres de la page d'inscription mis à jour avec succès",
+      "UnableToAssignRole":"Vous n'êtes pas autorisé à effectuer cette action.Veuillez contacter l'administrateur",
       "AttachmentAddSuccess": "Pièce jointe ajoutée avec succès",
       "AttachmentDeleteSuccess": "Pièce jointe supprimée avec succès",
       "SeatLayoutAddSuccess": "L'ajout de l'agencement de siège a abouti",

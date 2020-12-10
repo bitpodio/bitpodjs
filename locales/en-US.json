@@ -702,7 +702,8 @@
     "TicketsNotRequired": "Tickets",
     "Integration": "Integration",
     "TimezoneCaption": "Timezone",
-    "Chat": "Chat"
+    "Chat": "Chat",
+    "VersionNotSupported":"Clipboard is not accessible in this browser."
   },
   "Drawer": {
     "CreateEventAction": "Create Event",
@@ -801,6 +802,7 @@
       "TicketRequired": "Ticket is required",
       "Price is required": "Price is required",
       "CodeRequired": "Code is required",
+      "UnableToAssignRole":"You do not have permission to perform this action.Please contact the administrator",
       "OfferValueRequired": "Offer Value is required",
       "OfferValueNegative": "Offer Value should not be negative",
       "EventStartDate": "Event start date should not be less than current date",
@@ -871,6 +873,7 @@
       "EventPublished": "Congratulations, your event has been published.",
       "BadgesDeleteSuccess": "Badges deleted successfully",
       "BadgesUpdatedSuccess":"Badges updated successfully",
+      "EventRegSiteDetailsUpdateSuccess":"Registration Page settings updated successfully",
       "AttachmentAddSuccess": "Attachment added successfully",
       "AttachmentDeleteSuccess": "Attachment deleted successfully",
       "SeatLayoutAddSuccess": "Seat Layout added successfully",
