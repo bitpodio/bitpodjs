@@ -2,7 +2,7 @@ export const appList = (store) => [
   {
     name: 'event',
     label: 'Common.EventApp',
-    css: 'fa fa-calendar fs-36 success--text',
+    css: 'fa fa-video fs-36 success--text',
     type: 'route',
     route: '/apps/event/list/Event/live and draft event',
     roles: ['$orguser', '$orgowner', 'EventAdmin', 'EventManager'],
