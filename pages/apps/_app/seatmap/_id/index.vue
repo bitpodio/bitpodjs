@@ -29,7 +29,6 @@
   </div>
 </template>
 <script>
-import { getCurrentOrigin } from '~/plugins/bitpod/getApiUrl.js'
 const layoutWithType = {
   shapes: [],
   groups: {
@@ -63,14 +62,14 @@ const layoutWithType = {
 export default {
   layout: 'seatmap',
   data() {
-    const seatmapUrl = getCurrentOrigin()
+    const seatmapUrl = this.$bitpod.getApiUrl().replace('svc/api/', '')
     return {
       snackbarText: '',
       snackbar: false,
       timeout: 1000,
       seatmapData: null,
       loading: false,
-      iframe: { src: `${seatmapUrl}/seatmap`, loaded: false },
+      iframe: { src: `${seatmapUrl}seatmap`, loaded: false },
       popupDialog: false,
     }
   },

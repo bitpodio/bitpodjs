@@ -6,6 +6,7 @@
     "EventApp": "מִקרֶה",
     "AdminApp": "מִנהָל",
     "SeatMap": "מפת מושב",
+    "SeatMapNo": "מפתמושב",
     "SurveyApp": "סֶקֶר",
     "HelpCenterMap": "מרכז עזרה",
     "HomePage": "Home page",
@@ -853,7 +854,8 @@
       "DeleteEvent": "האם אתה רוצה למחוק אירוע זה?",
       "DeleteUser": "האם ברצונך למחוק משתמש זה?",
       "NoEventsFound": "לא נמצאו אירועים עם שם {searchKey}",
-      "ConfirmResendRegistrationEmail": "האם אתה בטוח שברצונך לשלוח שוב הודעות אישור?"
+      "ConfirmResendRegistrationEmail": "האם אתה בטוח שברצונך לשלוח שוב הודעות אישור?",
+      "DeleteSeatMap": "האם אתה רוצה למחוק את מפת המושב הזו?"
     },
     "Success": {
       "CopiedClipboard": "הועתק ללוח",

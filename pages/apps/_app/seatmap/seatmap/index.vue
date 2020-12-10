@@ -13,11 +13,11 @@
           <v-spacer></v-spacer>
           <div class="mr-2 invite-actions d-none">
             <span>
-              <v-btn icon small>
+              <v-btn icon small @click="onEditSeatMap">
                 <v-icon class="fs-18">fa-pencil</v-icon>
               </v-btn>
             </span>
-            <v-btn icon small>
+            <v-btn icon small @click="onDeleteSeatMap">
               <v-icon class="fs-18">fa-trash</v-icon>
             </v-btn>
           </div>
@@ -50,7 +50,7 @@
           <v-spacer></v-spacer>
         </v-flex>
         <v-divider></v-divider>
-        <Grid view-name="Events" :content="content" class="mt-n12" />
+        <Grid view-name="Events" :content="content" class="mt-12" />
       </div>
       <div
         v-if="content"
@@ -67,10 +67,14 @@
         <Grid
           view-name="organizationBusinessUnit"
           :content="content"
-          class="mt-n12"
+          class="mt-12"
         />
       </div>
     </v-flex>
+    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
+      <div class="text-center">{{ snackbarText }}</div>
+    </v-snackbar>
+    <confirm ref="confirm"></confirm>
   </v-flex>
 </template>
 
@@ -89,6 +93,9 @@ export default {
   mixins: [configLoaderMixin],
   data() {
     return {
+      snackbar: false,
+      timeout: 1000,
+      snackbarText: '',
       loading: 0,
       data: {
         seatmap: {},
@@ -106,6 +113,38 @@ export default {
     },
     formatField(fieldValue) {
       return fieldValue || '-'
+    },
+    onEditSeatMap() {
+      this.$router.push(
+        this.localePath(`/apps/seatmap/${this.$route.query.id}`)
+      )
+    },
+    async onDeleteSeatMap() {
+      const URL = `${this.$bitpod.getApiUrl()}SeatMaps/${this.$route.query.id}`
+      const checkRes = await this.$refs.confirm.open(
+        this.$t('Drawer.Delete'),
+        this.$t('Messages.Warn.DeleteSeatMap'),
+        { color: 'error lighten-1' }
+      )
+      if (checkRes) {
+        try {
+          const res = await this.$axios.$delete(URL)
+          if (res) {
+            this.snackbarText = this.$t(
+              'Messages.Success.SeatLayoutDeleteSuccess'
+            )
+            this.snackbar = true
+            setTimeout(() => {
+              this.$router.back()
+            }, 2000)
+          }
+        } catch (e) {
+          console.error(
+            `Error in apps/seatmap/seatmap/index.vue while making a Delete call to SeatMap model in method onDeleteSeatMap context: SeatMap id:-${this.$route.query.id} \n URL:- ${URL} `,
+            e
+          )
+        }
+      }
     },
   },
   apollo: {

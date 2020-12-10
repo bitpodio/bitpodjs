@@ -41,7 +41,7 @@
               ref="dateform"
               v-model="datevalid"
               :lazy-validation="lazy"
-              class="px-3 v-data-table__wrapper"
+              class="px-3"
             >
               <v-row>
                 <v-col class="col-12 col-md-4">
@@ -76,11 +76,17 @@
                     </template>
                   </v-datetime-picker>
                 </v-col>
-                <v-col class="d-flex pb-0" cols="12" sm="6" md="4">
+                <v-col class="col-12 col-md-4">
+                  <div>
+                    <div class="autocomplete-dropdown positionRelative">
+                      <div :id="`timezone-select`"></div>
+                    </div>
+                  </div>
                   <Timezone
                     v-model="formData.Timezone"
                     :field="timezonefield"
                     :value="formData.Timezone"
+                    :attach="`#timezone-select`"
                   />
                 </v-col>
               </v-row>
@@ -483,6 +489,10 @@ export default {
       )
       this.VenueAddress.State = venue ? venue.long_name : ''
       this.VenueAddress.PostalCode = addressData.postal_code || ''
+      const latlng = {}
+      latlng.lat = addressData.latitude
+      latlng.lng = addressData.longitude
+      this.VenueAddress.LatLng = latlng
     },
     getZonedDateTime(date, timezone) {
       if (date) {
@@ -525,7 +535,6 @@ export default {
         this.formData._VenueAddress = { ...this.VenueAddress }
         this.formData.SEODesc = this.formData.Description
         delete this.formData.VenueAddress
-        delete this.formData._VenueAddress.LatLng
         try {
           const res = await this.$axios.$patch(
             `${url}Events/${this.$route.params.id || this.id}`,
@@ -657,10 +666,14 @@ export default {
             this.formData.EndDate,
             this.formData.Timezone
           )
+          this.formData._VenueAddress.id = atob(
+            this.formData._VenueAddress.id
+          ).split(':')[1]
           this.VenueAddress =
             this.formData._VenueAddress != null
               ? { ...this.formData._VenueAddress }
               : {}
+          delete this.VenueAddress.LatLng.__typename
         } else {
           this.StartDate = this.formData.StartDate
             ? this.getZonedDateTime(

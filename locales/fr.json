@@ -6,6 +6,7 @@
     "EventApp": "Evénement",
     "AdminApp": "Administration",
     "SeatMap": "Carte de siège",
+    "SeatMapNo": "Carte de siège",
     "SurveyApp": "Enquête",
     "HelpCenterMap": "Centre d'aide",
     "HomePage": "Page d'accueil",
@@ -851,7 +852,8 @@
       "DeleteImage": "Voulez-vous supprimer cette image?",
       "NoEvents": "Il n'y a pas d'événements en direct et de brouillon, pour commencer à configurer votre événement, utilisez le lien Créer un événement",
       "NoEventsFound": "Aucun événement trouvé avec nom {searchKey}",
-      "ConfirmResendRegistrationEmail": "Voulez-vous vraiment renvoyer les e-mails de confirmation?"
+      "ConfirmResendRegistrationEmail": "Voulez-vous vraiment renvoyer les e-mails de confirmation?",
+      "DeleteSeatMap": "Voulez-vous supprimer cette carte de siège?"
     },
     "Success": {
       "CopiedClipboard": "Copié dans le presse-papiers",

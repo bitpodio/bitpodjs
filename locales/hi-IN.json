@@ -6,6 +6,7 @@
     "EventApp": "इवेंट",
     "AdminApp": "शासन प्रबंध",
     "SeatMap": "सीट का नक्शा",
+    "SeatMapNo": "सीट का नक्शा",
     "SurveyApp": "सर्वे",
     "HelpCenterMap": "सहायता केंद्र",
     "HomePage": "मुख पृष्ठ",
@@ -853,7 +854,8 @@
       "NoEvents": "अपने ईवेंट का उपयोग शुरू करने के लिए कोई लाइव और ड्राफ्ट इवेंट नहीं हैं, ईवेंट बनाएं लिंक का उपयोग करें",
       "DeleteUser": "क्या आप इस उपयोगकर्ता को हटाना चाहते हैं?",
       "NoEventsFound": "{searchKey} नाम के साथ कोई घटना नहीं मिली",
-      "ConfirmResendRegistrationEmail": "क्या आप वाकई पुष्टिकरण ईमेल को फिर से भेजना चाहते हैं?"
+      "ConfirmResendRegistrationEmail": "क्या आप वाकई पुष्टिकरण ईमेल को फिर से भेजना चाहते हैं?",
+      "DeleteSeatMap": "क्या आप इस सीटमैप को हटाना चाहते हैं?"
     },
     "Success": {
       "CopiedClipboard": "Copied to clipboard",
