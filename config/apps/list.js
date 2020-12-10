@@ -28,9 +28,8 @@ export const appList = (store) => [
   {
     name: 'Survey',
     label: 'Common.SurveyApp',
-    css: 'survey-img',
+    css: 'fa fa-check-circle fs-36 success--text',
     type: 'url',
-    icon: 'https://survey.bitpod.io/favicon.ico',
     href: 'https://dev-survey.bitpod.io/',
     roles: ['$orguser'],
   },
@@ -45,7 +44,7 @@ export const appList = (store) => [
   {
     name: 'integration',
     label: 'Common.Integration',
-    css: 'fa fa fa-link1 fs-36 primary--text',
+    css: 'fa fa fa-link1 fs-36 warning--text',
     type: 'route',
     route: '/apps/integration/list/integration/integration',
     roles: ['$orguser'],

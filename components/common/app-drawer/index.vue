@@ -42,7 +42,8 @@
                 class="d-flex justify-center align-center flex-column app-view"
               >
                 <v-flex class="d-flex justify-center align-center">
-                  <v-img :src="app.icon" class="survey-img"></v-img>
+                  <!-- <v-img :src="app.icon" class="survey-img"></v-img> -->
+                  <i :class="app.css" aria-hidden="true"></i>
                 </v-flex>
                 <v-flex
                   ><div class="pa-1 caption text--primary">
