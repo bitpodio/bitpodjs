@@ -41,7 +41,7 @@
               ref="dateform"
               v-model="datevalid"
               :lazy-validation="lazy"
-              class="px-3 v-data-table__wrapper"
+              class="px-3"
             >
               <v-row>
                 <v-col class="col-12 col-md-4">
@@ -76,11 +76,17 @@
                     </template>
                   </v-datetime-picker>
                 </v-col>
-                <v-col class="d-flex pb-0" cols="12" sm="6" md="4">
+                <v-col class="col-12 col-md-4">
+                  <div>
+                    <div class="autocomplete-dropdown positionRelative">
+                      <div :id="`timezone-select`"></div>
+                    </div>
+                  </div>
                   <Timezone
                     v-model="formData.Timezone"
                     :field="timezonefield"
                     :value="formData.Timezone"
+                    :attach="`#timezone-select`"
                   />
                 </v-col>
               </v-row>
