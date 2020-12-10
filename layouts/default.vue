@@ -4,7 +4,11 @@
       v-model="drawer"
       app
       class="nav-bar greybg"
-      :width="280"
+      :class="{
+        'custom-nav-drawer': !$vuetify.breakpoint.smAndDown && drawer === null,
+      }"
+      :width="240"
+      :right="$vuetify.rtl"
     >
       <v-toolbar-title
         class="ml-0 pl-3 px-2 py-1 logo-ds d-none d-sm-flex d-md-none align-center"
@@ -16,7 +20,7 @@
           ></v-img>
         </span>
         <i18n
-          path="Common.EventApp"
+          path="Common.AppTitle"
           class="d-inline-flex align-center mx-2 text-h5"
         />
         <v-spacer></v-spacer>
@@ -27,7 +31,7 @@
           ></v-app-bar-nav-icon>
         </div>
       </v-toolbar-title>
-      <div class="text-center mt-4">
+      <div class="text-center mt-3 mb-1 pl-1">
         <v-menu>
           <template v-slot:activator="{ on, attrs }">
             <v-btn
@@ -43,7 +47,12 @@
           </template>
 
           <v-list dense>
-            <v-list-item @click="dialog1 = !dialog1">
+            <v-list-item
+              @click="
+                triggerReset = !triggerReset
+                dialog1 = !dialog1
+              "
+            >
               <v-list-item-icon class="mr-2">
                 <v-icon class="fs-16 mr-2">fa-calendar</v-icon>
               </v-list-item-icon>
@@ -53,7 +62,12 @@
                 /></v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-            <v-list-item @click="dialog = !dialog">
+            <v-list-item
+              @click="
+                triggerRecEventReset = !triggerRecEventReset
+                dialog = !dialog
+              "
+            >
               <v-list-item-icon class="mr-2">
                 <v-icon class="fs-16 mr-2">fa-history</v-icon>
               </v-list-item-icon>
@@ -71,7 +85,12 @@
           <v-row v-if="item.heading" :key="item.heading" align="center">
             <div class="pa-0 pl-5">
               <v-subheader v-if="item.heading" class="nav-subheader pl-2">
-                {{ item.heading }}
+                <i18n v-if="item.heading === 'Event'" path="Common.EventApp" />
+                <i18n
+                  v-if="item.heading === 'Promotions'"
+                  path="Common.Promotions"
+                />
+                <i18n v-if="item.heading === 'Members'" path="Common.Members" />
               </v-subheader>
             </div>
           </v-row>
@@ -114,13 +133,28 @@
             :to="localePath(item.to)"
             router
             exact
+            :class="matchRoute(item.to)"
           >
             <v-list-item-action class="nav-icon">
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-action>
             <v-list-item-content>
               <v-list-item-title class="nav-title">
-                {{ item.text }}
+                <i18n
+                  v-if="item.text === 'Eventboard'"
+                  path="Drawer.Eventboard"
+                />
+                <i18n v-if="item.text === 'Events'" path="Drawer.Events" />
+                <i18n
+                  v-if="item.text === 'Registrations'"
+                  path="Drawer.Registrations"
+                />
+                <i18n
+                  v-if="item.text === 'Discount Code'"
+                  path="Drawer.DiscountCode"
+                />
+                <i18n v-if="item.text === 'Members'" path="Drawer.Members" />
+                <i18n v-if="item.text === 'Contacts'" path="Drawer.Contacts" />
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -134,11 +168,19 @@
       scrollable
       content-class="slide-form"
     >
-      <NewSingleEvent :on-form-close="closeSingleEventForm" />
+      <NewSingleEvent
+        v-if="dialog1"
+        :reset-data="triggerReset"
+        :on-form-close="closeSingleEventForm"
+      />
     </v-dialog>
 
     <v-dialog v-model="dialog" persistent scrollable content-class="slide-form">
-      <NewRecurringEvent :on-form-close="closeRecurringEventForm" />
+      <NewRecurringEvent
+        v-if="dialog"
+        :reset-data="triggerRecEventReset"
+        :on-form-close="closeRecurringEventForm"
+      />
     </v-dialog>
 
     <v-app-bar app flat class="greybg headernew pl-0" height="50">
@@ -150,28 +192,27 @@
           size="24"
           height="36px"
           width="36px"
+          class="ml-2 mr-3"
           @click.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
         <span class="bitpod-logo logo-ds">
           <v-img
-            :src="$config.cdnUri + 'logo-favicon.png'"
-            class="logo-bitpod"
+            :src="$config.cdnUri + 'bitpod-logo-blk2.svg'"
+            class="logofull mr-2"
           ></v-img>
         </span>
         <i18n
-          path="Common.EventApp"
-          class="d-inline-flex align-center mx-2 text-h5"
+          path="Common.AppTitle"
+          class="d-inline-flex align-center mx-2 ml-3 text-h5"
         />
         <v-spacer></v-spacer>
       </v-toolbar-title>
-      <v-toolbar-title class="pl-0 ml-n1"
-        ><i18n path="Common.EventApp" />
-      </v-toolbar-title>
       <v-spacer></v-spacer>
+      <AppDrawer />
+      <LanguageSwitcher />
       <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
         <v-icon>mdi-invert-colors</v-icon>
       </v-btn>
-      <AppDrawer />
       <div v-if="$auth.$state.loggedIn">
         <v-menu
           v-model="account"
@@ -232,7 +273,12 @@
       </div>
     </v-app-bar>
 
-    <v-main class="greybg">
+    <v-main
+      class="greybg"
+      :class="{
+        'custom-nav-main': !$vuetify.breakpoint.smAndDown && drawer === null,
+      }"
+    >
       <v-container fluid>
         <v-row>
           <v-col class="pt-0">
@@ -250,6 +296,7 @@
 import OrgnaizationList from '~/components/common/organization-list'
 import AppDrawer from '~/components/common/app-drawer'
 export default {
+  middleware: ['auth', 'authorization'],
   components: {
     OrgnaizationList,
     AppDrawer,
@@ -270,6 +317,9 @@ export default {
     tabs: null,
     account: false,
     message: false,
+    triggerReset: false,
+    triggerRecEventReset: false,
+    activeClass: ' v-list-item--active',
     items: [
       {
         icon: 'fa fa-grid',
@@ -281,17 +331,23 @@ export default {
         icon: 'fa fa-calendar',
         text: 'Events',
         to: '/apps/event/list/Event/live and draft event',
+        allowedRoutes: [
+          '/apps/event/list/Event/eventInvitaionHistory',
+          '/apps/event/event/',
+        ],
       },
       {
         icon: 'fa fa-user-plus',
         text: 'Registrations',
         to: '/apps/event/list/Registrations/Registrations',
+        allowedRoutes: ['/apps/event/registration'],
       },
       { heading: 'Promotions' },
       {
         icon: 'fa fa-building',
         text: 'Discount Code',
         to: '/apps/event/list/DiscountCodes/Discount Codes',
+        allowedRoutes: ['/apps/event/discountcodes'],
       },
       { heading: 'Members' },
       {
@@ -303,28 +359,48 @@ export default {
         icon: 'fa fa-address-book-o',
         text: 'Contacts',
         to: '/apps/event/list/Contacts/Contacts',
+        allowedRoutes: [
+          '/apps/event/contacts/',
+          'apps/event/list/Contacts/Invites',
+        ],
       },
     ],
   }),
+  computed: {
+    currentPage() {
+      return this.$route.path
+    },
+  },
   async created() {
-    if (!this.$apolloHelpers.getToken()) {
-      let token = this.$auth.strategy.token.get()
-      if (token) {
-        token = token.split(' ')[1]
-      }
-      await this.$apolloHelpers.onLogin(token, undefined, { expires: 7 })
+    let token = this.$auth.strategy.token.get()
+    if (token) {
+      token = token.split(' ')[1]
     }
+    await this.$apolloHelpers.onLogin(token, undefined, { expires: 7 })
   },
   methods: {
     async onLogout() {
-      this.$auth.logout()
       await this.$apolloHelpers.onLogout()
+      this.$auth.logout()
     },
     closeSingleEventForm() {
       this.dialog1 = false
     },
     closeRecurringEventForm() {
       this.dialog = false
+    },
+    matchRoute(toRoute) {
+      return this.items.reduce((acc, i) => {
+        if (!i.allowedRoutes || i.to !== toRoute) {
+          return acc
+        }
+        const routeMatched = i.allowedRoutes.reduce((accc, j) => {
+          return accc || this.currentPage.includes(j)
+        }, false)
+        return acc || routeMatched
+      }, false)
+        ? this.activeClass
+        : ''
     },
   },
 }
