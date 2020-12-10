@@ -637,13 +637,13 @@
                           </th>
                           <th class="text-left pl-2">
                             {{
-                              $t('Common.Price', {
+                              $t('Common.PriceRequired', {
                                 currency: eventData.Currency,
                               })
                             }}
                           </th>
                           <th class="text-left pl-2">
-                            <i18n path="Common.Quantity" />
+                            <i18n path="Common.QuantityRequired" />
                           </th>
                           <th class="text-left pl-2"></th>
                         </tr>
@@ -680,6 +680,7 @@
                               dense
                               value
                               type="Number"
+                              :rules="[rules.required]"
                               min="0"
                               onkeydown="return event.keyCode !== 69 && event.keyCode !== 189"
                               :disabled="isPriceDisabled(k)"
