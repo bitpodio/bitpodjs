@@ -60,8 +60,8 @@
             </v-col>
             <v-col
               cols="12"
-              sm="6"
-              md="6"
+              sm="8"
+              md="8"
               class="pb-0 d-flex flex-column flex-md-row"
             >
               <div class="pt-2 mr-2">{{ eventLinkLabel() }}</div>
