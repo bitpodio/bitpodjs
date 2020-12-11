@@ -457,6 +457,7 @@
 <script>
 import OrgnaizationList from '~/components/common/organization-list'
 import AppDrawer from '~/components/common/app-drawer'
+import nuxtconfig from '~/nuxt.config'
 export default {
   middleware: ['auth', 'authorization'],
   components: {
@@ -579,10 +580,8 @@ export default {
       this.formData.Name = this.$auth.$state.user.data.name
       this.formData.Email = this.$auth.$state.user.data.email
       this.formData.Message = this.helpMessage
-      console.log('testdata', this.formData)
       try {
-        const url = this.$config.axios.crmUrl
-        console.log('testdata1', url)
+        const url = `https://${this.$config.axios.crmUrl}${nuxtconfig.axios.apiEndpoint}`
         const res = await this.$axios.$patch(`${url}Leads`, {
           ...this.formData,
         })
