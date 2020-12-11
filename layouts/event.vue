@@ -302,14 +302,7 @@
             </div>
             <div class="headline ma-2 white--text">How may I help you?</div>
             <span class="positionAbsolute help-close">
-              <v-btn
-                icon
-                color="white"
-                @click="
-                  helpDialog = false
-                  helpForm = true
-                "
-              >
+              <v-btn icon color="white" @click="close()">
                 <v-icon>mdi-close</v-icon>
               </v-btn>
             </span>
@@ -412,13 +405,24 @@
           </div>
           <div v-else>
             <v-col class="col-12 col-md-12 py-0 mt-4">
-              <v-text-field label="Name" outlined dense></v-text-field>
+              <v-text-field
+                :value="this.$auth.$state.user.data.name"
+                label="Name"
+                outlined
+                dense
+              ></v-text-field>
             </v-col>
             <v-col class="col-12 col-md-12 py-0">
-              <v-text-field label="Email" outlined dense></v-text-field>
+              <v-text-field
+                :value="this.$auth.$state.user.data.email"
+                label="Email"
+                outlined
+                dense
+              ></v-text-field>
             </v-col>
             <v-col class="col-12 col-md-12 py-0">
               <v-textarea
+                v-model="helpMessage"
                 label="Message"
                 outlined
                 no-resize
@@ -433,7 +437,7 @@
                 depressed
                 color="primary"
                 class="mb-3 mt-0"
-                @click="helpForm = false"
+                @click="onSave"
               >
                 <i18n path="Common.LeaveMessage" />
               </v-btn>
@@ -441,6 +445,11 @@
           </div>
         </v-card>
       </v-dialog>
+      <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
+        <div class="fs-16 text-center">
+          {{ snackbarText }}
+        </div>
+      </v-snackbar>
     </div>
   </v-app>
 </template>
@@ -475,6 +484,15 @@ export default {
     triggerReset: false,
     triggerRecEventReset: false,
     activeClass: ' v-list-item--active',
+    formData: {
+      Name: '',
+      Email: '',
+      Message: '',
+    },
+    helpMessage: '',
+    snackbar: false,
+    timeout: '4000',
+    snackbarText: '',
     items: [
       {
         icon: 'fa fa-grid',
@@ -556,6 +574,37 @@ export default {
       }, false)
         ? this.activeClass
         : ''
+    },
+    async onSave() {
+      this.formData.Name = this.$auth.$state.user.data.name
+      this.formData.Email = this.$auth.$state.user.data.email
+      this.formData.Message = this.helpMessage
+      console.log('testdata', this.formData)
+      try {
+        const url = this.$config.publicRuntimeConfig.axios.crmUrl
+        console.log('testdata1', url)
+        const res = await this.$axios.$patch(`${url}Leads`, {
+          ...this.formData,
+        })
+        if (res) {
+          this.helpDialog = false
+          this.onReset()
+          this.snackbarText = this.$t(
+            'Messages.Success.EventDetailsUpdateSuccess'
+          )
+          this.snackbar = true
+        }
+      } catch (e) {
+        console.log('Error', e)
+      }
+    },
+    onReset() {
+      this.helpMessage = ''
+    },
+    close() {
+      this.helpDialog = false
+      this.helpForm = true
+      this.helpMessage = ''
     },
   },
 }
