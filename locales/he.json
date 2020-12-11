@@ -714,7 +714,8 @@
     "HelpVideos": "עזרי וידיאו",
     "HelpVideosInfo": "הסרטונים שלנו יעזרו לך להבין כיצד להשתמש ב- Bitpod.",
     "ContactSupport": "צור קשר עם תמיכה",
-    "VersionNotSupported":"הלוח אינו נגיש בדפדפן זה."
+    "VersionNotSupported":"הלוח אינו נגיש בדפדפן זה.",
+    "LeaveMessage": "השאר הודעה"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",

@@ -713,7 +713,8 @@
     "HelpVideos": "Help Videos",
     "HelpVideosInfo": "Our videos will help you understand how to use of Bitpod.",
     "ContactSupport": "Contact Support",
-    "VersionNotSupported":"Clipboard is not accessible in this browser."
+    "VersionNotSupported":"Clipboard is not accessible in this browser.",
+    "LeaveMessage": "Leave a Message"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",

@@ -276,6 +276,7 @@
         </v-row>
       </v-container>
     </v-main>
+
     <div class="help-section">
       <v-btn
         class="mx-2 help-button"
@@ -295,87 +296,132 @@
         transition="dialog-bottom-transition"
       >
         <v-card>
-          <v-card-title class="pa-0">
-            <div class="headline ma-2">How may I help you?</div>
-            <v-spacer></v-spacer>
-            <div>
-              <v-btn icon @click="helpDialog = false">
+          <div class="text-center pa-2 help-top-section positionRelative">
+            <div class="robo-img mt-2">
+              <v-img :src="$config.cdnUri + 'robo-white.png'"></v-img>
+            </div>
+            <div class="headline ma-2 white--text">How may I help you?</div>
+            <span class="positionAbsolute help-close">
+              <v-btn
+                icon
+                color="white"
+                @click="
+                  helpDialog = false
+                  helpForm = true
+                "
+              >
                 <v-icon>mdi-close</v-icon>
               </v-btn>
-            </div>
-          </v-card-title>
-          <div class="d-flex pt-4 px-2">
-            <div class="chanel-icon d-flex ma-4 mr-6">
-              <i
-                class="fa fa-flag fs-18 d-flex align-center justify-center"
-                style="background: #0cb14b;"
-              ></i>
-            </div>
-            <div
-              class="chanel-right d-flex flex-column justify-center align-start"
-            >
-              <div class="chanel-right-head">
-                <i18n path="Common.UserGuide" />
-              </div>
-              <div class="chanel-right-info body-2">
-                <i18n path="Common.UserGuideInfo" />
-              </div>
-            </div>
-            <div class="chanel-more d-flex align-center justify-center">
-              <i class="fa fa-chevron-right fs-22"></i>
-            </div>
+            </span>
+            <span v-if="!helpForm" class="positionAbsolute help-back">
+              <v-btn icon color="white" @click="helpForm = true">
+                <v-icon>fa-arrow-left</v-icon>
+              </v-btn>
+            </span>
           </div>
-          <div class="d-flex pt-4 px-2">
-            <div class="chanel-icon d-flex ma-4 mr-6">
-              <i
-                class="fa fa-support fs-18 d-flex align-center justify-center"
-                style="background: #f4b400;"
-              ></i>
-            </div>
-            <div
-              class="chanel-right d-flex flex-column justify-center align-start"
-            >
-              <div class="chanel-right-head"><i18n path="Common.Faqs" /></div>
-              <div class="chanel-right-info body-2">
-                <i18n path="Common.FaqsInfo" />
+          <div v-if="helpForm">
+            <div class="d-flex pt-4 px-2">
+              <div class="chanel-icon d-flex ma-4 mr-6">
+                <i
+                  class="fa fa-flag fs-18 d-flex align-center justify-center"
+                  style="background: #0cb14b;"
+                ></i>
+              </div>
+              <div
+                class="chanel-right d-flex flex-column justify-center align-start"
+              >
+                <div class="chanel-right-head">
+                  <i18n path="Common.UserGuide" />
+                </div>
+                <div class="chanel-right-info body-2">
+                  <i18n path="Common.UserGuideInfo" />
+                </div>
+              </div>
+              <div class="chanel-more d-flex align-center justify-center">
+                <i class="fa fa-chevron-right fs-22"></i>
               </div>
             </div>
-            <div class="chanel-more d-flex align-center justify-center">
-              <i class="fa fa-chevron-right fs-22"></i>
+            <div class="d-flex pt-4 px-2">
+              <div class="chanel-icon d-flex ma-4 mr-6">
+                <i
+                  class="fa fa-support fs-18 d-flex align-center justify-center"
+                  style="background: #f4b400;"
+                ></i>
+              </div>
+              <div
+                class="chanel-right d-flex flex-column justify-center align-start"
+              >
+                <div class="chanel-right-head"><i18n path="Common.Faqs" /></div>
+                <div class="chanel-right-info body-2">
+                  <i18n path="Common.FaqsInfo" />
+                </div>
+              </div>
+              <div class="chanel-more d-flex align-center justify-center">
+                <i class="fa fa-chevron-right fs-22"></i>
+              </div>
             </div>
+            <div class="d-flex pt-4 px-2">
+              <div class="chanel-icon d-flex ma-4 mr-6">
+                <i
+                  class="fa fa-youtube fs-18 d-flex align-center justify-center"
+                  style="background: #f25955;"
+                ></i>
+              </div>
+              <div
+                class="chanel-right d-flex flex-column justify-center align-start"
+              >
+                <div class="chanel-right-head">
+                  <i18n path="Common.HelpVideos" />
+                </div>
+                <div class="chanel-right-info body-2">
+                  <i18n path="Common.HelpVideosInfo" />
+                </div>
+              </div>
+              <div class="chanel-more d-flex align-center justify-center">
+                <i class="fa fa-chevron-right fs-22"></i>
+              </div>
+            </div>
+            <v-card-actions>
+              <v-btn
+                block
+                depressed
+                color="primary"
+                class="my-3"
+                @click="helpForm = false"
+              >
+                <i18n path="Common.ContactSupport" />
+              </v-btn>
+            </v-card-actions>
           </div>
-          <div class="d-flex pt-4 px-2">
-            <div class="chanel-icon d-flex ma-4 mr-6">
-              <i
-                class="fa fa-youtube fs-18 d-flex align-center justify-center"
-                style="background: #f25955;"
-              ></i>
-            </div>
-            <div
-              class="chanel-right d-flex flex-column justify-center align-start"
-            >
-              <div class="chanel-right-head">
-                <i18n path="Common.HelpVideos" />
-              </div>
-              <div class="chanel-right-info body-2">
-                <i18n path="Common.HelpVideosInfo" />
-              </div>
-            </div>
-            <div class="chanel-more d-flex align-center justify-center">
-              <i class="fa fa-chevron-right fs-22"></i>
-            </div>
+          <div v-else>
+            <v-col class="col-12 col-md-12 py-0 mt-4">
+              <v-text-field label="Name" outlined dense></v-text-field>
+            </v-col>
+            <v-col class="col-12 col-md-12 py-0">
+              <v-text-field label="Email" outlined dense></v-text-field>
+            </v-col>
+            <v-col class="col-12 col-md-12 py-0">
+              <v-textarea
+                label="Message"
+                outlined
+                no-resize
+                rows="2"
+                row-height="25"
+                height="100"
+              ></v-textarea>
+            </v-col>
+            <v-card-actions>
+              <v-btn
+                block
+                depressed
+                color="primary"
+                class="mb-3 mt-0"
+                @click="helpForm = false"
+              >
+                <i18n path="Common.LeaveMessage" />
+              </v-btn>
+            </v-card-actions>
           </div>
-          <v-card-actions>
-            <v-btn
-              block
-              depressed
-              color="primary"
-              class="my-3"
-              @click="helpDialog = false"
-            >
-              <i18n path="Common.ContactSupport" />
-            </v-btn>
-          </v-card-actions>
         </v-card>
       </v-dialog>
     </div>
@@ -403,6 +449,7 @@ export default {
     dialog1: false,
     dialog: false,
     helpDialog: false,
+    helpForm: true,
     notifications: false,
     sound: true,
     tabs: null,

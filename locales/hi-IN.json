@@ -714,7 +714,8 @@
     "HelpVideos": "वीडियो मदद करें",
     "HelpVideosInfo": "हमारे वीडियो आपको यह समझने में मदद करेंगे कि बिटपोड का उपयोग कैसे करें.",
     "ContactSupport": "संपर्क करें",
-    "VersionNotSupported":"इस ब्राउज़र में क्लिपबोर्ड सुलभ नहीं है।"
+    "VersionNotSupported":"इस ब्राउज़र में क्लिपबोर्ड सुलभ नहीं है।",
+    "LeaveMessage": "एक संदेश छोड़ें"
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",
