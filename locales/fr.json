@@ -714,7 +714,8 @@
     "HelpVideosInfo": "Nos vidéos vous aideront à comprendre comment utiliser Bitpod.",
     "ContactSupport": "Contactez le support",
     "VersionNotSupported":"Le Presse-papiers n'est pas accessible dans ce navigateur.",
-    "LeaveMessage": "Laisser un message"
+    "LeaveMessage": "Laisser un message",
+    "HowHelp": "Comment puis-je vous aider?"
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",

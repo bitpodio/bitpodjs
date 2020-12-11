@@ -716,7 +716,8 @@
     "HelpVideosInfo": "הסרטונים שלנו יעזרו לך להבין כיצד להשתמש ב- Bitpod.",
     "ContactSupport": "צור קשר עם תמיכה",
     "VersionNotSupported":"הלוח אינו נגיש בדפדפן זה.",
-    "LeaveMessage": "השאר הודעה"
+    "LeaveMessage": "השאר הודעה",
+    "HowHelp": "איך אני יכול לעזור לך?"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",

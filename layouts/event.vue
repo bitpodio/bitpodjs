@@ -300,7 +300,9 @@
             <div class="robo-img mt-2">
               <v-img :src="$config.cdnUri + 'robo-white.png'"></v-img>
             </div>
-            <div class="headline ma-2 white--text">How may I help you?</div>
+            <div class="headline ma-2 white--text">
+              <i18n path="Common.HowHelp" />
+            </div>
             <span class="positionAbsolute help-close">
               <v-btn icon color="white" @click="close()">
                 <v-icon>mdi-close</v-icon>
@@ -477,8 +479,6 @@ export default {
     drawer: null,
     dialog1: false,
     dialog: false,
-    helpDialog: false,
-    helpForm: true,
     notifications: false,
     sound: true,
     tabs: null,
@@ -487,6 +487,8 @@ export default {
     triggerReset: false,
     triggerRecEventReset: false,
     activeClass: ' v-list-item--active',
+    helpDialog: false,
+    helpForm: true,
     formData: {
       Name: '',
       Email: '',
