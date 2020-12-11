@@ -903,7 +903,8 @@
       "EditMetadataSuccess": "टेम्प्लेट मेटाडेटा सफलतापूर्वक अपडेट किया गया",
       "EditTemplateSuccess": "टेम्प्लेट सफलतापूर्वक अपडेट किया गया",
       "DeleteSuccess": "{modelName} सफलतापूर्वक मिटाया गया",
-      "ListUpdatedSucess": "{modelName} सूची आइटम सफलतापूर्वक अपडेट किया गया।"
+      "ListUpdatedSucess": "{modelName} सूची आइटम सफलतापूर्वक अपडेट किया गया।",
+      "ThanksHelp": "हमे संपर्क करने के लिए धन्यवाद! हम तुमसे जल्द ही संपर्क करेंगे!"
     }
   },
   "$vuetify": {

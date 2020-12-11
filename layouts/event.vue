@@ -581,7 +581,7 @@ export default {
       this.formData.Message = this.helpMessage
       console.log('testdata', this.formData)
       try {
-        const url = this.$config.publicRuntimeConfig.axios.crmUrl
+        const url = this.$config.axios.crmUrl
         console.log('testdata1', url)
         const res = await this.$axios.$patch(`${url}Leads`, {
           ...this.formData,
@@ -589,9 +589,7 @@ export default {
         if (res) {
           this.helpDialog = false
           this.onReset()
-          this.snackbarText = this.$t(
-            'Messages.Success.EventDetailsUpdateSuccess'
-          )
+          this.snackbarText = this.$t('Messages.Success.ThanksHelp')
           this.snackbar = true
         }
       } catch (e) {

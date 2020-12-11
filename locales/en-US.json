@@ -904,7 +904,8 @@
       "EditMetadataSuccess": "Template metadata updated successfully",
       "EditTemplateSuccess": "Template updated successfully",
       "DeleteSuccess": "{modelName} deleted Successfully",
-      "ListUpdatedSucess": "{modelName} list item updated successfully."
+      "ListUpdatedSucess": "{modelName} list item updated successfully.",
+      "ThanksHelp": "Thanks for contacting us! We will get back to you soon!"
     }
   },
   "$vuetify": {

@@ -903,7 +903,8 @@
       "EditMetadataSuccess": "מטא נתונים של תבנית עודכנו בהצלחה",
       "EditTemplateSuccess": "התבנית עודכנה בהצלחה",
       "DeleteSuccess": "{modelName} נמחק בהצלחה",
-      "ListUpdatedSucess": "{modelName} פריט הרשימה עודכן בהצלחה."
+      "ListUpdatedSucess": "{modelName} פריט הרשימה עודכן בהצלחה.",
+      "ThanksHelp": "תודה שפנית אלינו! אנחנו נחזור אליך בקרוב!"
     }
   },
   "$vuetify": {
