@@ -660,6 +660,10 @@ table > tbody > tr:last-child .key-align {
   left: 5px;
   top: 5px;
 }
+.help-box a {
+  text-decoration: none !important;
+  color: unset !important;
+}
 @media (max-width: 800px) {
   .nav-bar {
     top: 50px !important;

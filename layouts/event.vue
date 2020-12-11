@@ -320,67 +320,84 @@
             </span>
           </div>
           <div v-if="helpForm">
-            <div class="d-flex pt-4 px-2">
-              <div class="chanel-icon d-flex ma-4 mr-6">
-                <i
-                  class="fa fa-flag fs-18 d-flex align-center justify-center"
-                  style="background: #0cb14b;"
-                ></i>
-              </div>
-              <div
-                class="chanel-right d-flex flex-column justify-center align-start"
-              >
-                <div class="chanel-right-head">
-                  <i18n path="Common.UserGuide" />
+            <a
+              href="https://event.bitpod.io/admin/docs/HelpCenter/"
+              target="_blank"
+            >
+              <div class="d-flex pt-4 px-2">
+                <div class="chanel-icon d-flex ma-4 mr-6">
+                  <i
+                    class="fa fa-flag fs-18 d-flex align-center justify-center"
+                    style="background: #0cb14b;"
+                  ></i>
                 </div>
-                <div class="chanel-right-info body-2">
-                  <i18n path="Common.UserGuideInfo" />
+                <div
+                  class="chanel-right d-flex flex-column justify-center align-start"
+                >
+                  <div class="chanel-right-head">
+                    <i18n path="Common.UserGuide" />
+                  </div>
+                  <div class="chanel-right-info body-2">
+                    <i18n path="Common.UserGuideInfo" />
+                  </div>
                 </div>
-              </div>
-              <div class="chanel-more d-flex align-center justify-center">
-                <i class="fa fa-chevron-right fs-22"></i>
-              </div>
-            </div>
-            <div class="d-flex pt-4 px-2">
-              <div class="chanel-icon d-flex ma-4 mr-6">
-                <i
-                  class="fa fa-support fs-18 d-flex align-center justify-center"
-                  style="background: #f4b400;"
-                ></i>
-              </div>
-              <div
-                class="chanel-right d-flex flex-column justify-center align-start"
-              >
-                <div class="chanel-right-head"><i18n path="Common.Faqs" /></div>
-                <div class="chanel-right-info body-2">
-                  <i18n path="Common.FaqsInfo" />
+                <div class="chanel-more d-flex align-center justify-center">
+                  <i class="fa fa-chevron-right fs-22"></i>
                 </div>
               </div>
-              <div class="chanel-more d-flex align-center justify-center">
-                <i class="fa fa-chevron-right fs-22"></i>
-              </div>
-            </div>
-            <div class="d-flex pt-4 px-2">
-              <div class="chanel-icon d-flex ma-4 mr-6">
-                <i
-                  class="fa fa-youtube fs-18 d-flex align-center justify-center"
-                  style="background: #f25955;"
-                ></i>
-              </div>
-              <div
-                class="chanel-right d-flex flex-column justify-center align-start"
-              >
-                <div class="chanel-right-head">
-                  <i18n path="Common.HelpVideos" />
+            </a>
+            <a
+              href="https://event.bitpod.io/admin/docs/HelpCenter/Introduction/FAQs/views/FAQs"
+              target="_blank"
+            >
+              <div class="d-flex pt-4 px-2">
+                <div class="chanel-icon d-flex ma-4 mr-6">
+                  <i
+                    class="fa fa-support fs-18 d-flex align-center justify-center"
+                    style="background: #f4b400;"
+                  ></i>
                 </div>
-                <div class="chanel-right-info body-2">
-                  <i18n path="Common.HelpVideosInfo" />
+                <div
+                  class="chanel-right d-flex flex-column justify-center align-start"
+                >
+                  <div class="chanel-right-head">
+                    <i18n path="Common.Faqs" />
+                  </div>
+                  <div class="chanel-right-info body-2">
+                    <i18n path="Common.FaqsInfo" />
+                  </div>
+                </div>
+                <div class="chanel-more d-flex align-center justify-center">
+                  <i class="fa fa-chevron-right fs-22"></i>
                 </div>
               </div>
-              <div class="chanel-more d-flex align-center justify-center">
-                <i class="fa fa-chevron-right fs-22"></i>
+            </a>
+            <a
+              href="https://www.youtube.com/channel/UCPE_a4LrIlP2RL04P92Bl-Q"
+              target="_blank"
+            >
+              <div class="d-flex pt-4 px-2">
+                <div class="chanel-icon d-flex ma-4 mr-6">
+                  <i
+                    class="fa fa-youtube fs-18 d-flex align-center justify-center"
+                    style="background: #f25955;"
+                  ></i>
+                </div>
+                <div
+                  class="chanel-right d-flex flex-column justify-center align-start"
+                >
+                  <div class="chanel-right-head">
+                    <i18n path="Common.HelpVideos" />
+                  </div>
+                  <div class="chanel-right-info body-2">
+                    <i18n path="Common.HelpVideosInfo" />
+                  </div>
+                </div>
+                <div class="chanel-more d-flex align-center justify-center">
+                  <i class="fa fa-chevron-right fs-22"></i>
+                </div>
               </div>
-            </div>
+            </a>
             <v-card-actions>
               <v-btn
                 block
