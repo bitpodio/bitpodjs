@@ -91,7 +91,7 @@
             @keyup.enter="onFilterInput"
           ></v-text-field>
         </div>
-        <div v-else-if="fieldType === 'checkbox'">
+        <div v-else-if="fieldType === 'checkbox'" class="mt-n3">
           <v-checkbox v-model="filterRule.value"></v-checkbox>
         </div>
         <div v-else-if="fieldType === 'lookup'">

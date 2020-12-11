@@ -6,6 +6,7 @@
     "EventApp": "इवेंट",
     "AdminApp": "शासन प्रबंध",
     "SeatMap": "सीट का नक्शा",
+    "SeatMapNo": "सीट का नक्शा",
     "SurveyApp": "सर्वे",
     "HelpCenterMap": "सहायता केंद्र",
     "HomePage": "मुख पृष्ठ",
@@ -186,6 +187,7 @@
     "Name": "नाम",
     "Amount": "रकम",
     "Quantity": "मात्रा",
+    "QuantityRequired": "मात्रा *",
     "Total": "कुल",
     "Student": "छात्र",
     "RefundDetails": "रिफंड विवरण",
@@ -340,6 +342,7 @@
     "Title": "शीर्षक*",
     "Type": "प्रकार*",
     "Price": "कीमत {currency}",
+    "PriceRequired": "कीमत* {currency}",
     "StartD": "आरंभ करने की तिथि*",
     "EndD": "अंतिम तिथि*",
     "EventHasBeenCreated": "घटना बनाई गई है।",
@@ -710,7 +713,8 @@
     "FaqsInfo": "समस्याओं को हल करने के लिए अक्सर पूछे जाने वाले प्रश्नों के माध्यम से ब्राउज़ करें.",
     "HelpVideos": "वीडियो मदद करें",
     "HelpVideosInfo": "हमारे वीडियो आपको यह समझने में मदद करेंगे कि बिटपोड का उपयोग कैसे करें.",
-    "ContactSupport": "संपर्क करें"
+    "ContactSupport": "संपर्क करें",
+    "VersionNotSupported":"इस ब्राउज़र में क्लिपबोर्ड सुलभ नहीं है।"
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",
@@ -857,7 +861,8 @@
       "NoEvents": "अपने ईवेंट का उपयोग शुरू करने के लिए कोई लाइव और ड्राफ्ट इवेंट नहीं हैं, ईवेंट बनाएं लिंक का उपयोग करें",
       "DeleteUser": "क्या आप इस उपयोगकर्ता को हटाना चाहते हैं?",
       "NoEventsFound": "{searchKey} नाम के साथ कोई घटना नहीं मिली",
-      "ConfirmResendRegistrationEmail": "क्या आप वाकई पुष्टिकरण ईमेल को फिर से भेजना चाहते हैं?"
+      "ConfirmResendRegistrationEmail": "क्या आप वाकई पुष्टिकरण ईमेल को फिर से भेजना चाहते हैं?",
+      "DeleteSeatMap": "क्या आप इस सीटमैप को हटाना चाहते हैं?"
     },
     "Success": {
       "CopiedClipboard": "Copied to clipboard",

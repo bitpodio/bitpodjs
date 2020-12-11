@@ -6,6 +6,7 @@
     "EventApp": "Evénement",
     "AdminApp": "Administration",
     "SeatMap": "Carte de siège",
+    "SeatMapNo": "Carte de siège",
     "SurveyApp": "Enquête",
     "HelpCenterMap": "Centre d'aide",
     "HomePage": "Page d'accueil",
@@ -186,6 +187,7 @@
     "Name": "Nom",
     "Amount": "Montant",
     "Quantity": "Quantité",
+    "QuantityRequired": "Quantité*",
     "Total": "Total",
     "Student": "Étudiant",
     "RefundDetails": "Détails du remboursement",
@@ -340,6 +342,7 @@
     "Title": "Titre *",
     "Type": "Type *",
     "Price": "Prix {currency}",
+    "PriceRequired": "Prix* {currency}",
     "StartD": "Date de début *",
     "EndD": "Date de fin *",
     "EventHasBeenCreated": "L'ÉVÉNEMENT A ÉTÉ CRÉÉ.",
@@ -708,7 +711,8 @@
     "FaqsInfo": "Parcourez les questions fréquemment posées pour résoudre les problèmes.",
     "HelpVideos": "Vidéos d'aide",
     "HelpVideosInfo": "Nos vidéos vous aideront à comprendre comment utiliser Bitpod.",
-    "ContactSupport": "Contactez le support"
+    "ContactSupport": "Contactez le support",
+    "VersionNotSupported":"Le Presse-papiers n'est pas accessible dans ce navigateur."
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",
@@ -855,7 +859,8 @@
       "DeleteImage": "Voulez-vous supprimer cette image?",
       "NoEvents": "Il n'y a pas d'événements en direct et de brouillon, pour commencer à configurer votre événement, utilisez le lien Créer un événement",
       "NoEventsFound": "Aucun événement trouvé avec nom {searchKey}",
-      "ConfirmResendRegistrationEmail": "Voulez-vous vraiment renvoyer les e-mails de confirmation?"
+      "ConfirmResendRegistrationEmail": "Voulez-vous vraiment renvoyer les e-mails de confirmation?",
+      "DeleteSeatMap": "Voulez-vous supprimer cette carte de siège?"
     },
     "Success": {
       "CopiedClipboard": "Copié dans le presse-papiers",

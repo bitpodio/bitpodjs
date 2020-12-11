@@ -6,6 +6,8 @@
         v-model="date"
         :label="fieldCaption"
         :text-field-props="textFieldProps"
+        time-format="hh:mm a"
+        date-format="MMMM dd, yyyy"
         @input="onCalendarChange"
       >
         <template slot="dateIcon">

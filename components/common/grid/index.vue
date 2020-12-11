@@ -12,7 +12,13 @@
       <div
         v-if="!noAction"
         class="grid-actions-container mt-lg-n11 mt-md-n11 mt-sm-n11 mt-xs-0 sticky"
-        :class="onlySticky ? 'sticky_inline_block' : ''"
+        :class="
+          onlySticky
+            ? $device.isIOS
+              ? 'sticky_block'
+              : 'stick_inline_block'
+            : ''
+        "
       >
         <div
           class="d-flex align-center"
@@ -700,6 +706,8 @@ export default {
       })
     },
     async onNewItemSave(data) {
+      const dataSource = getViewDataSource(this.content, this.viewName)
+      const dataSourceType = dataSource.type || 'graphql'
       const modelName = getModelName(this.content, this.viewName)
       const newItemMutation = buildMutationCreateQuery(modelName)
       const userCreated = await this.$apollo.mutate({
@@ -711,6 +719,9 @@ export default {
           },
         },
       })
+      if (dataSourceType === 'rest') {
+        this.loadRestData()
+      }
       this.$apollo.queries.tableData.refresh()
       this.snackbarText = `${modelName} Created Successfully`
       this.snackbar = true
@@ -795,6 +806,9 @@ export default {
     async loadRestData() {
       const dataSource = getViewDataSource(this.content, this.viewName)
       const dataSourceType = dataSource.type || 'graphql'
+      console.debug('Data Source Type is: ', dataSourceType)
+      console.debug('this.content is: ', this.content)
+      console.debug('this.viewname is: ', this.viewname)
       if (dataSourceType === 'rest') {
         const { search, filters } = this
         const options = {
@@ -805,15 +819,18 @@ export default {
 
         const getDataFunc = dataSource.getData.call(this, this)
         try {
+          console.debug('In try block')
           this.tableData = await getDataFunc.call(this, options)
           this.loading = false
         } catch (e) {
+          console.debug('In catch block')
           console.error(
             `Errors in components/common/grid/index.vue while calling method loadRestData`,
             e
           )
           this.loading = false
         }
+        console.debug('Done with try-catch block.')
       }
     },
     translate(headers) {
@@ -961,6 +978,14 @@ export default {
     top: 55px;
     margin-bottom: 0;
     z-index: 5;
+  }
+  .sticky_block {
+    display: block;
+    top: 55px;
+    margin-bottom: 0;
+    z-index: 5;
+    width: 50%;
+    float: right;
   }
 }
 </style>

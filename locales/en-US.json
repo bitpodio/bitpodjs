@@ -6,6 +6,7 @@
     "EventApp": "Event",
     "AdminApp": "Administration",
     "SeatMap": "Seat Map",
+    "SeatMapNo": "Seatmap",
     "SurveyApp": "Survey",
     "HelpCenterMap": "Help Center",
     "HomePage": "Home page",
@@ -186,6 +187,7 @@
     "Name": "Name",
     "Amount": "Amount",
     "Quantity": "Quantity",
+    "QuantityRequired": "Quantity*",
     "Total": "Total",
     "Student": "Student",
     "RefundDetails": "Refund Details",
@@ -340,6 +342,7 @@
     "Title": "Title*",
     "Type": "Type*",
     "Price": "Price {currency}",
+    "PriceRequired": "Price* {currency}",
     "StartD": "Start Date*",
     "EndD": "End Date*",
     "EventHasBeenCreated": "EVENT HAS BEEN CREATED.",
@@ -709,7 +712,8 @@
     "FaqsInfo": "Browse through frequently asked questions to resolve problems.",
     "HelpVideos": "Help Videos",
     "HelpVideosInfo": "Our videos will help you understand how to use of Bitpod.",
-    "ContactSupport": "Contact Support"
+    "ContactSupport": "Contact Support",
+    "VersionNotSupported":"Clipboard is not accessible in this browser."
   },
   "Drawer": {
     "CreateEventAction": "Create Event",
@@ -858,7 +862,8 @@
       "DeleteUser": "Do you want to delete this user?",
       "NoEvents": "There aren't any live and draft events, to start setting up your event use Create Event link",
       "NoEventsFound": "No events found with name {searchKey}",
-      "ConfirmResendRegistrationEmail": "Are you sure you want to resend confirmation emails?"
+      "ConfirmResendRegistrationEmail": "Are you sure you want to resend confirmation emails?",
+      "DeleteSeatMap": "Do you want to delete this seatmap?"
     },
     "Success": {
       "CopiedClipboard": "Copied to clipboard",

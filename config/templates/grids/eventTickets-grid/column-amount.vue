@@ -15,6 +15,10 @@ export default {
       type: Number,
       default: 0,
     },
+    refresh: {
+      type: Function,
+      default: () => false,
+    },
   },
   data() {
     return {
@@ -24,6 +28,7 @@ export default {
   },
   mounted() {
     this.getCurrency()
+    this.$eventBus.$on('event-tickets-currency-updated', this.getCurrency)
   },
   methods: {
     async getCurrency() {
@@ -33,6 +38,7 @@ export default {
         )
         if (res) {
           this.Currency = res.Currency
+          this.refresh()
           return res
         }
       } catch (e) {

@@ -95,14 +95,18 @@
             </v-form>
 
             <v-row>
-              <v-col cols="12" class="text-links">
+              <v-col
+                cols="12"
+                sm="8"
+                md="8"
+                class="text-links pb-0 d-flex flex-column flex-md-row"
+              >
+                <div class="pt-2 mr-2">{{ eventLinkHint }}</div>
                 <v-text-field
                   v-model="UniqLink"
                   :label="$t('Common.EventL')"
                   class="text-links"
                   :rules="[rules.required]"
-                  persistent-hint
-                  :hint="eventLinkHint"
                   dense
                   outlined
                   @keyup="changeUniqueLink($event)"
@@ -148,7 +152,7 @@
                 <v-col v-if="isVenue" cols="12" class="pb-6 pt-0">
                   <div class="positionRelative">
                     <div v-if="addressClicked" class="address-legend">
-                      {{ $t('Common.Address') }}
+                      {{ $t('Common.AddressRequired') }}
                     </div>
                     <no-ssr>
                       <vue-google-autocomplete
@@ -161,6 +165,7 @@
                         @placechanged="getAddressData"
                         @focus="focusIn"
                         @blur="focusOut"
+                        @change="changeAddressData($event)"
                       ></vue-google-autocomplete>
                     </no-ssr>
                   </div>
@@ -485,9 +490,7 @@ export default {
       ]
     },
     eventLinkHint() {
-      return `${this.$bitpod.getApiUrl().replace('svc/api', 'e')}${
-        this.UniqLink
-      }`
+      return `${this.$bitpod.getApiUrl().replace('svc/api', 'e')}`
     },
     gMapCenter() {
       return { lat: this.locations[0].lat, lng: this.locations[0].lng }
@@ -499,8 +502,11 @@ export default {
     },
   },
   methods: {
+    changeAddressData(value) {
+      this.addressClicked = value !== ''
+    },
     focusOut() {
-      this.addressClicked = false
+      this.addressClicked = this.venueAddress.AddressLine !== ''
     },
     focusIn() {
       this.addressClicked = true
@@ -574,6 +580,7 @@ export default {
         .join(', ')
     },
     getAddressData(addressData, placeResultData, id) {
+      this.addressClicked = true
       this.venueAddress.AddressLine =
         addressData.route ||
         '' + ', ' + addressData.administrative_area_level_1 ||
@@ -679,8 +686,8 @@ export default {
           this.eventData.LocationType === 'Venue'
         ) {
           this.venueAddress = this.eventData._VenueAddress
+          this.addressClicked = true
           if (this.eventData._VenueAddress.LatLng !== null) {
-            this.addressClicked = true
             const latlng = this.eventData._VenueAddress.LatLng
             const newLocations = []
             latlng.name = `${this.eventData.VenueName} ${this.eventData._VenueAddress.City} ${this.eventData._VenueAddress.Country}`

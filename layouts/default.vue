@@ -6,27 +6,14 @@
       class="nav-bar greybg"
       :width="280"
     >
-      <v-toolbar-title
-        class="ml-0 pl-3 px-2 py-1 logo-ds d-none d-sm-flex d-md-none align-center"
-      >
+      <div class="d-flex d-sm-none pl-3">
         <span class="bitpod-logo logo-ds">
           <v-img
-            :src="$config.cdnUri + 'logo-favicon.png'"
-            class="logo-bitpod"
+            :src="$config.cdnUri + 'bitpod-logo-blk2.svg'"
+            class="logofull mr-2"
           ></v-img>
         </span>
-        <i18n
-          path="Common.EventApp"
-          class="d-inline-flex align-center mx-2 text-h5"
-        />
-        <v-spacer></v-spacer>
-        <div v-if="drawer === true" class="d-none d-sm-flex">
-          <v-app-bar-nav-icon
-            class="nav-drawer"
-            @click.stop="drawer = !drawer"
-          ></v-app-bar-nav-icon>
-        </div>
-      </v-toolbar-title>
+      </div>
       <div class="text-center mt-4">
         <v-menu>
           <template v-slot:activator="{ on, attrs }">
@@ -150,22 +137,20 @@
           size="24"
           height="36px"
           width="36px"
+          class="ml-0 ml-md-2 mr-2 mr-md-3"
           @click.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
-        <span class="bitpod-logo logo-ds">
+        <span class="bitpod-logo logo-ds d-none d-sm-flex">
           <v-img
-            :src="$config.cdnUri + 'logo-favicon.png'"
-            class="logo-bitpod"
+            :src="$config.cdnUri + 'bitpod-logo-blk2.svg'"
+            class="logofull mr-2"
           ></v-img>
         </span>
         <i18n
           path="Common.EventApp"
-          class="d-inline-flex align-center mx-2 text-h5"
+          class="d-inline-flex align-center mx-0 mx-md-2 ml-0 ml-md-1 text-h5"
         />
         <v-spacer></v-spacer>
-      </v-toolbar-title>
-      <v-toolbar-title class="pl-0 ml-n1"
-        ><i18n path="Common.EventApp" />
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
