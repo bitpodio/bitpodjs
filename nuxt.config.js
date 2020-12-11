@@ -237,7 +237,7 @@ export default {
 
   axios: {
     apiEndpoint: '/svc/api/',
-    baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
+    // baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
   },
 
   publicRuntimeConfig: {
@@ -246,6 +246,7 @@ export default {
       //* refer getApiUrl() in /api/index.js for possible changes on changing the following line
       backendBaseUrl: process.env.PUBLIC_DOMAIN || 'event.test.bitpod.io',
       eventUrl: process.env.GET_EVENT_URL || 'event.test.bitpod.io',
+      crmUrl: process.env.GET_CRM_URL || 'crmivijd.test.bitpod.io',
     },
     cdnUri:
       'https://res.cloudinary.com/mytestlogo/image/upload/bitpodjs/images/',
@@ -284,7 +285,7 @@ export default {
         httpEndpoint: `https://${
           process.env.PUBLIC_DOMAIN || 'event.test.bitpod.io'
         }/svc/graphql`,
-        browserHttpEndpoint: '/svc/graphql',
+        // browserHttpEndpoint: '/svc/graphql',
       },
     },
     defaultOptions: {
