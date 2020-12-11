@@ -589,6 +589,7 @@ export default {
         })
         if (res) {
           this.helpDialog = false
+          this.helpForm = true
           this.onReset()
           this.snackbarText = this.$t('Messages.Success.ThanksHelp')
           this.snackbar = true
