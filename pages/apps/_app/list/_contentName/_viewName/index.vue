@@ -1,6 +1,12 @@
 <template>
   <v-layout column>
-    <v-flex v-if="content" :class="{ 'mb-6': $device.isIOS }" xs12 sm12 md12>
+    <v-flex
+      v-if="content"
+      :class="{ 'mb-6': $device.isIOS, 'negative-margin': !$device.isIOS }"
+      xs12
+      sm12
+      md12
+    >
       <ViewDropdown
         :content="content"
         :view-name="$route.params.viewName"
@@ -37,3 +43,10 @@ export default {
   },
 }
 </script>
+<style scoped>
+@media (max-width: 600px) {
+  .negative-margin {
+    margin-bottom: -30px;
+  }
+}
+</style>

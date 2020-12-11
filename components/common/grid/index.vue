@@ -16,7 +16,7 @@
           onlySticky
             ? $device.isIOS
               ? 'sticky_block'
-              : 'stick_inline_block'
+              : 'sticky_inline_flex'
             : ''
         "
       >
@@ -972,10 +972,10 @@ export default {
     height: var(--header-height);
     bottom: 0;
   }
-  .sticky_inline_block {
-    display: inline-block;
+  .sticky_inline_flex {
+    display: inline-flex;
     left: 100%;
-    top: 55px;
+    top: 40px;
     margin-bottom: 0;
     z-index: 5;
   }
