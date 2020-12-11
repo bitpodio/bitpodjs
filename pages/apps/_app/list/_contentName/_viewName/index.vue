@@ -2,11 +2,15 @@
   <v-layout column>
     <v-flex
       v-if="content"
+      class="d-flex align-center"
       :class="{ 'mb-6': $device.isIOS, 'negative-margin': !$device.isIOS }"
       xs12
       sm12
       md12
     >
+      <v-btn v-if="hasGoBack" class="ml-n3" icon @click="goBack">
+        <v-icon class="fs-30">mdi-chevron-left</v-icon>
+      </v-btn>
       <ViewDropdown
         :content="content"
         :view-name="$route.params.viewName"
@@ -34,11 +38,30 @@ export default {
     ViewDropdown,
   },
   mixins: [configLoaderMixin],
+  data: () => {
+    return {
+      shouldGoBack: [
+        'Event/eventInvitaionHistory',
+        'EventIntegration/integrations',
+        'Contacts/Invites',
+      ],
+    }
+  },
   computed: {
     content() {
       return this.contents
         ? this.contents[this.$route.params.contentName]
         : null
+    },
+    hasGoBack() {
+      return this.shouldGoBack.includes(
+        `${this.$route.params.contentName}/${this.$route.params.viewName}`
+      )
+    },
+  },
+  methods: {
+    goBack() {
+      this.$router.back()
     },
   },
 }
