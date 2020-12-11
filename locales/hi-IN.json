@@ -707,7 +707,7 @@
     "Integration": "Integration",
     "TimezoneCaption": "Timezone",
     "Chat": "बातचीत",
-    "VersionNotSupported":"इस ब्राउज़र में क्लिपबोर्ड सुलभ नहीं है।"
+    "VersionNotSupported": "इस ब्राउज़र में क्लिपबोर्ड सुलभ नहीं है।"
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",
@@ -835,7 +835,8 @@
       "HttpsUrl": "यह एक https url होना चाहिए",
       "OverlappingTimeSlot": "समय-स्लॉट अन्य स्लॉट के साथ अतिव्यापी",
       "EndTimeMustBeGreater": "अंत समय अधिक होना चाहिए फिर समय शुरू करें",
-      "PermissionDenied": "आपको इस ऑपरेशन को करने की अनुमति नहीं है"
+      "PermissionDenied": "आपको इस ऑपरेशन को करने की अनुमति नहीं है",
+      "roleAlreadyExits": "यह {roles} भूमिका पहले से मौजूद है"
     },
     "Warn": {
       "UniqueLinkFormat": "केवल लोअर केस अल्फ़ान्यूमेरिक अक्षर",
@@ -874,9 +875,9 @@
       "SeatLayoutDeleteSuccess": "Seat Layout deleted successfully",
       "EventPublished": "बधाई हो, आपका ईवेंट प्रकाशित हो गया है।",
       "BadgesDeleteSuccess": "बैज सफलतापूर्वक हटा दिए गए",
-      "BadgesUpdatedSuccess":"बैज सफलतापूर्वक अपडेट किया गया",
-      "EventRegSiteDetailsUpdateSuccess":"पंजीकरण पृष्ठ सेटिंग सफलतापूर्वक अपडेट की गई",
-      "UnableToAssignRole":"आपको यह क्रिया करने की अनुमति नहीं है। कृपया व्यवस्थापक से संपर्क करें",
+      "BadgesUpdatedSuccess": "बैज सफलतापूर्वक अपडेट किया गया",
+      "EventRegSiteDetailsUpdateSuccess": "पंजीकरण पृष्ठ सेटिंग सफलतापूर्वक अपडेट की गई",
+      "UnableToAssignRole": "आपको यह क्रिया करने की अनुमति नहीं है। कृपया व्यवस्थापक से संपर्क करें",
       "AttachmentAddSuccess": "अनुलग्नक सफलतापूर्वक जोड़ा गया",
       "AttachmentDeleteSuccess": "अनुलग्नक सफलतापूर्वक हटा दिया गया",
       "SeatLayoutAddSuccess": "Seat Layout added successfully",
