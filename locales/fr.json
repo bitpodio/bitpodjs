@@ -834,7 +834,8 @@
       "HttpsUrl": "Cela doit être une URL https",
       "OverlappingTimeSlot": "Intervalle de temps chevauchant avec d'autres emplacements",
       "EndTimeMustBeGreater": "L'heure de fin doit être supérieure à l'heure de début",
-      "PermissionDenied": "Vous n'êtes pas autorisé à effectuer cette opération"
+      "PermissionDenied": "Vous n'êtes pas autorisé à effectuer cette opération",
+      "roleAlreadyExits": "Ce rôle {roles} existe déjà"
     },
     "Warn": {
       "UniqueLinkFormat": "Minuscules lettres alphanumériques uniquement",

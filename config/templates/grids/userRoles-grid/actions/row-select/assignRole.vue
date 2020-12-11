@@ -87,6 +87,7 @@ export default {
       userName: '',
       formData: {},
       message: '',
+      error: '',
     }
   },
   mounted() {
@@ -123,7 +124,14 @@ export default {
           this.refresh()
         }
       } catch (e) {
-        this.message = this.$t('Messages.Error.UnableToAssignRole')
+        this.error = { ...e }
+        if (this.error.response.status === 400) {
+          this.message = this.$t('Messages.Error.roleAlreadyExits', {
+            roles: this.roles,
+          })
+        } else {
+          this.message = this.$t('Messages.Error.UnableToAssignRole')
+        }
         console.log(
           `Error in templates/grids/userRoles-grid/actions/row-select/assignRole.vue while making a POST call to User model from method onSave context:-URL:-${url}\n formData:-${this.formData}\n OrganizationId:-${this.$attrs.items[0].orgId}\n UserName:-${this.userName} `,
           e
