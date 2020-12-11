@@ -409,6 +409,7 @@
                 :value="this.$auth.$state.user.data.name"
                 label="Name"
                 outlined
+                disabled
                 dense
               ></v-text-field>
             </v-col>
@@ -417,6 +418,7 @@
                 :value="this.$auth.$state.user.data.email"
                 label="Email"
                 outlined
+                disabled
                 dense
               ></v-text-field>
             </v-col>
