@@ -707,7 +707,8 @@
     "Integration": "Integration",
     "TimezoneCaption": "Timezone",
     "Chat": "Chat",
-    "VersionNotSupported": "Clipboard is not accessible in this browser."
+    "VersionNotSupported": "Clipboard is not accessible in this browser.",
+    "DeleteSeatmap": "Delete Seatmap"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",

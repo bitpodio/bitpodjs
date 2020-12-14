@@ -708,7 +708,8 @@
     "Integration": "Integration",
     "TimezoneCaption": "Timezone",
     "Chat": "बातचीत",
-    "VersionNotSupported": "इस ब्राउज़र में क्लिपबोर्ड सुलभ नहीं है।"
+    "VersionNotSupported": "इस ब्राउज़र में क्लिपबोर्ड सुलभ नहीं है।",
+    "DeleteSeatmap": "सीमैप हटाएं"
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",
