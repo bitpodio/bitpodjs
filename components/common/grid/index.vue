@@ -257,7 +257,7 @@
         <v-skeleton-loader
           v-for="i in 10"
           :key="i"
-          loading="true"
+          :loading="!!loading"
           type="card"
           width="236"
           class="pa-4 pl-0 pt-0 eventtiles ma-4 ml-0 mt-0"
