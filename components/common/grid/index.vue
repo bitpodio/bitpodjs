@@ -14,7 +14,7 @@
         class="grid-actions-container mt-lg-n11 mt-md-n11 mt-sm-n11 mt-xs-0 sticky"
         :class="
           onlySticky
-            ? $device.isIOS
+            ? $device.isIos
               ? 'sticky_block'
               : 'sticky_inline_flex'
             : ''
