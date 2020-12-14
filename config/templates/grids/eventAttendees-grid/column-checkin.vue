@@ -1,7 +1,14 @@
 <template>
   <div class="positionRelative position">
     <div v-if="item.CheckIn === null && item.Status !== 'Failed'" class="pt-1">
+      <div v-if="isCustomMobile" class="d-flex flex-column">
+        <v-icon large color="gray" @click="updateDate(item.id)">
+          mdi-minus-circle-outline
+        </v-icon>
+        <p class="text-caption mb-0"><i18n path="Common.TapToCheckIn" /></p>
+      </div>
       <v-chip
+        v-else
         class="ma-2 pb-0 mt-1"
         height="20"
         color="blue"
@@ -14,7 +21,18 @@
       </v-chip>
     </div>
     <div
-      v-if="item.CheckIn !== null && item.Status !== 'Failed'"
+      v-if="item.CheckIn !== null && item.Status !== 'Failed' && isCustomMobile"
+      class="d-flex flex-column text-center"
+    >
+      <v-icon large color="success">
+        mdi-check-circle-outline
+      </v-icon>
+      <timeAgo :date="item.CheckIn" />
+    </div>
+    <div
+      v-if="
+        item.CheckIn !== null && item.Status !== 'Failed' && !isCustomMobile
+      "
       style="display: flex; height: 20px;"
       class="ma-2 pb-0 mt-1"
     >
@@ -114,6 +132,10 @@ export default {
       type: Object,
       default: () => {},
       required: false,
+    },
+    isCustomMobile: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
