@@ -709,7 +709,8 @@
     "Chat": "Chat",
     "VersionNotSupported": "Clipboard is not accessible in this browser.",
     "DeleteSeatmap": "Delete Seatmap",
-    "DeleteNote": "Delete Note"
+    "DeleteNote": "Delete Note",
+    "PastEventMessage": "This event is no longer active."
   },
   "Drawer": {
     "CreateEventAction": "Create Event",

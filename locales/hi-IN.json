@@ -710,7 +710,8 @@
     "Chat": "बातचीत",
     "VersionNotSupported": "इस ब्राउज़र में क्लिपबोर्ड सुलभ नहीं है।",
     "DeleteSeatmap": "सीमैप हटाएं",
-    "DeleteNote": "नोट हटाएँ"
+    "DeleteNote": "नोट हटाएँ",
+    "PastEventMessage": "यह ईवेंट अब सक्रिय नहीं है."
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",

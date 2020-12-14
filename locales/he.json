@@ -710,7 +710,8 @@
     "Chat": "לְשׂוֹחֵחַ",
     "VersionNotSupported":"הלוח אינו נגיש בדפדפן זה.",
     "DeleteSeatmap": "מחק מפת מושבים",
-    "DeleteNote": "מחק הערה"
+    "DeleteNote": "מחק הערה",
+    "PastEventMessage": "אירוע זה אינו פעיל יותר."
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",

@@ -160,7 +160,14 @@
           @click:row="onRowClick"
           @input="onItemSelected"
         >
-          <template v-if="!!slotTemplates.item" v-slot:item="props">
+          <template
+            v-if="
+              hasMobileCustomView
+                ? !!slotTemplates.item && $device.isMobile
+                : !!slotTemplates.item
+            "
+            v-slot:item="props"
+          >
             <component
               :is="slotTemplates.item || null"
               :item="props.item"
@@ -170,6 +177,7 @@
               :items="tableData.items"
               :content="content"
               :refresh="refresh"
+              :select="props.select"
             />
           </template>
           <template
@@ -238,7 +246,7 @@
         </v-data-table>
       </v-skeleton-loader>
       <div
-        v-if="viewName === 'live and draft event' || viewName === 'template'"
+        v-if="viewName === 'live and draft event'"
         class="d-flex flex-sm-wrap flex-column flex-sm-row"
       >
         <v-skeleton-loader
@@ -253,8 +261,23 @@
         </v-skeleton-loader>
       </div>
       <div
-        v-if="viewName === 'seatmaps' || viewName === 'integration'"
-        class="d-flex flex-sm-wrap flex-column flex-sm-row seat-skeleton-inner mt-8"
+        v-if="viewName === 'template'"
+        class="d-flex flex-sm-wrap flex-column flex-sm-row mt-12"
+      >
+        <v-skeleton-loader
+          v-for="i in 10"
+          :key="i"
+          :loading="!!loading"
+          type="card"
+          width="236"
+          class="pa-4 pl-0 pt-0 eventtiles ma-4 ml-0 mt-0"
+        >
+          <div></div>
+        </v-skeleton-loader>
+      </div>
+      <div
+        v-if="viewName === 'seatmaps'"
+        class="d-flex flex-sm-wrap flex-column flex-sm-row seat-skeleton-inner mt-10 pl-3"
       >
         <v-skeleton-loader
           v-for="i in 10"
@@ -263,7 +286,23 @@
           type="card"
           width="155"
           height="125"
-          class="pl-0 pt-0 eventtiles ma-8 ml-0 mt-0"
+          class="pl-0 pt-0 eventtiles ma-10 ml-0 mt-0"
+        >
+          <div></div>
+        </v-skeleton-loader>
+      </div>
+      <div
+        v-if="viewName === 'integration'"
+        class="d-flex flex-sm-wrap flex-column flex-sm-row seat-skeleton-inner mt-16 pl-5"
+      >
+        <v-skeleton-loader
+          v-for="i in 10"
+          :key="i"
+          :loading="loading"
+          type="card"
+          width="155"
+          height="125"
+          class="pl-0 pt-0 eventtiles ma-10 ml-0 mt-0"
         >
           <div></div>
         </v-skeleton-loader>
@@ -449,6 +488,10 @@ export default {
       default: null,
     },
     onlySticky: {
+      type: Boolean,
+      default: false,
+    },
+    hasMobileCustomView: {
       type: Boolean,
       default: false,
     },
