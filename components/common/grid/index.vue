@@ -252,7 +252,7 @@
       </div>
       <div
         v-if="viewName === 'template'"
-        class="d-flex flex-sm-wrap flex-column flex-sm-row mt-16"
+        class="d-flex flex-sm-wrap flex-column flex-sm-row mt-12"
       >
         <v-skeleton-loader
           v-for="i in 10"
