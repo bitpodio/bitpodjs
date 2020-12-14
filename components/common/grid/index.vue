@@ -176,6 +176,7 @@
               :items="tableData.items"
               :content="content"
               :refresh="refresh"
+              :select="props.select"
             />
           </template>
           <template

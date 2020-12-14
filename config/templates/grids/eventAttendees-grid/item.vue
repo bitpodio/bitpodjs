@@ -1,6 +1,12 @@
 <template>
   <tr>
-    <td class="py-2">
+    <div class="positionAbsolute align-checkbox">
+      <v-simple-checkbox
+        :value="isSelected"
+        @input="select($event)"
+      ></v-simple-checkbox>
+    </div>
+    <td class="pb-4 pt-10">
       <div class="d-flex align-center">
         <v-avatar color="primary" size="48" class="mx-2">
           <span class="white--text Twitter">{{ item.FullName }}</span>
@@ -16,7 +22,7 @@
         </div>
       </div>
     </td>
-    <td class="py-2">
+    <td class="pb-4 pt-10">
       <ColumnCheckin
         v-if="!item.CheckIn"
         :item="item"
@@ -56,16 +62,21 @@ export default {
       default: () => false,
       required: false,
     },
-  },
-  computed: {
-    route() {
-      const regId = this.item.registration
-        ? atob(this.item.registration.id).split(':')[1]
-        : ''
-      return `/apps/event${this.context.basePath}/${regId}`
+    isSelected: {
+      type: Boolean,
+      default: false,
+    },
+    select: {
+      type: Function,
+      default: () => {},
     },
   },
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.align-checkbox {
+  right: 18px;
+  padding-top: 10px;
+}
+</style>
