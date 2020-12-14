@@ -709,7 +709,8 @@
     "TimezoneCaption": "Timezone",
     "Chat": "לְשׂוֹחֵחַ",
     "VersionNotSupported":"הלוח אינו נגיש בדפדפן זה.",
-    "PastEventMessage": "אירוע זה אינו פעיל יותר."
+    "PastEventMessage": "אירוע זה אינו פעיל יותר.",
+    "DeleteSeatmap": "מחק מפת מושבים"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",
