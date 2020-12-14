@@ -1116,7 +1116,12 @@
             <v-btn text small class="ml-1" @click="openPrintForm">
               <v-icon left>fa-printer</v-icon><i18n path="Drawer.Print" />
             </v-btn>
-            <v-menu left :offset-y="offset" transition="slide-y-transition">
+            <v-menu
+              v-if="Object.keys(badgeData).length > 0"
+              left
+              :offset-y="offset"
+              transition="slide-y-transition"
+            >
               <template v-slot:activator="{ on, attrs }">
                 <v-btn icon small v-bind="attrs" v-on="on">
                   <v-icon>mdi-dots-vertical</v-icon>
@@ -1743,12 +1748,16 @@ export default {
       this.$refs.iframe.contentWindow.document.firstChild.innerHTML = this.$refs.printForm.innerHTML
     },
     async openBadgeForm() {
-      const res = await this.$refs.confirm.open(
-        this.$t('Common.NewBadge'),
-        this.$t('Messages.Warn.ReplaceBadge'),
-        { color: 'warning' }
-      )
-      if (res) {
+      if (Object.keys(this.badgeData).length > 0) {
+        const res = await this.$refs.confirm.open(
+          this.$t('Common.NewBadge'),
+          this.$t('Messages.Warn.ReplaceBadge'),
+          { color: 'warning' }
+        )
+        if (res) {
+          this.newBadge = true
+        }
+      } else {
         this.newBadge = true
       }
     },

@@ -845,7 +845,8 @@
       "HttpsUrl": "This must be a https url",
       "OverlappingTimeSlot": "משבצת זמן חופפת לחריצים אחרים",
       "EndTimeMustBeGreater": "זמן הסיום חייב להיות גדול יותר משעת ההתחלה",
-      "PermissionDenied": "אין לך הרשאה לבצע פעולה זו"
+      "PermissionDenied": "אין לך הרשאה לבצע פעולה זו",
+      "roleAlreadyExits": "תפקיד {roles} זה כבר קיים"
     },
     "Warn": {
       "UniqueLinkFormat": "אותיות אלפאנומריות באותיות קטנות בלבד",
