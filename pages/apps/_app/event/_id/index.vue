@@ -783,6 +783,7 @@
             view-name="eventAttendees"
             :content="content"
             :context="data"
+            :has-mobile-custom-view="true"
             class="mt-n12"
           />
         </div>
