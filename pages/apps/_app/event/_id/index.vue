@@ -1341,7 +1341,10 @@
               @change="updateReg"
             ></v-checkbox>
           </v-flex>
-          <v-flex class="d-block text-truncate">
+          <v-flex
+            v-if="eventData.LocationType === 'Venue'"
+            class="d-block text-truncate"
+          >
             <v-checkbox
               v-model="data.event.printBadgeOnCheckIn"
               dense
@@ -2293,7 +2296,7 @@ export default {
     async onDeleteSeatMap() {
       const URL = `${this.$bitpod.getApiUrl()}Events/${this.$route.params.id}`
       const checkRes = await this.$refs.confirm.open(
-        this.$t('Drawer.Delete'),
+        this.$t('Common.DeleteSeatmap'),
         this.$t('Messages.Warn.DeleteSeatMap'),
         { color: 'error lighten-1' }
       )

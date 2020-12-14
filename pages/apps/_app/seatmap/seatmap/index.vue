@@ -122,7 +122,7 @@ export default {
     async onDeleteSeatMap() {
       const URL = `${this.$bitpod.getApiUrl()}SeatMaps/${this.$route.query.id}`
       const checkRes = await this.$refs.confirm.open(
-        this.$t('Drawer.Delete'),
+        this.$t('Common.DeleteSeatmap'),
         this.$t('Messages.Warn.DeleteSeatMap'),
         { color: 'error lighten-1' }
       )

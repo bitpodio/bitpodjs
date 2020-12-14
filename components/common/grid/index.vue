@@ -155,6 +155,7 @@
           :class="hideDefaultHeader ? 'px-0 pt-0 istemplate' : 'px-2 pt-1'"
           :show-select="$device.isMobile || showSelect"
           @update:options="updatePagination"
+          @update:page="updatePageChange"
           @click:row="onRowClick"
           @input="onItemSelected"
         >
@@ -499,6 +500,7 @@ export default {
       headerObserver: null,
       footerObserver: null,
       winWidth: window.innerWidth,
+      itemPerPage: 0,
     }
   },
   computed: {
@@ -698,7 +700,15 @@ export default {
     },
     updatePagination(pagination) {
       // call rest
+      if (pagination.itemsPerPage !== this.itemPerPage) {
+        this.loading = true
+        this.itemPerPage = pagination.itemsPerPage
+        this.$apollo.queries.tableData.refresh()
+      }
       this.loadRestData()
+    },
+    updatePageChange(data) {
+      this.loading = true
     },
     onFilterClick(e) {
       this.isFilterApplied = true
