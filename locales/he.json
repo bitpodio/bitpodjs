@@ -718,8 +718,9 @@
     "LeaveMessage": "השאר הודעה",
     "HowHelp": "איך אני יכול לעזור לך?",
     "VersionNotSupported":"הלוח אינו נגיש בדפדפן זה.",
-    "PastEventMessage": "אירוע זה אינו פעיל יותר.",
-    "DeleteSeatmap": "מחק מפת מושבים"
+    "DeleteSeatmap": "מחק מפת מושבים",
+    "DeleteNote": "מחק הערה",
+    "PastEventMessage": "אירוע זה אינו פעיל יותר."
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",
