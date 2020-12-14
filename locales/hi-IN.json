@@ -709,7 +709,8 @@
     "TimezoneCaption": "Timezone",
     "Chat": "बातचीत",
     "VersionNotSupported": "इस ब्राउज़र में क्लिपबोर्ड सुलभ नहीं है।",
-    "DeleteSeatmap": "सीमैप हटाएं"
+    "DeleteSeatmap": "सीमैप हटाएं",
+    "DeleteNote": "नोट हटाएँ"
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",

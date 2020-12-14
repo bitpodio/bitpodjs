@@ -709,7 +709,8 @@
     "TimezoneCaption": "Timezone",
     "Chat": "לְשׂוֹחֵחַ",
     "VersionNotSupported":"הלוח אינו נגיש בדפדפן זה.",
-    "DeleteSeatmap": "מחק מפת מושבים"
+    "DeleteSeatmap": "מחק מפת מושבים",
+    "DeleteNote": "מחק הערה"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",
