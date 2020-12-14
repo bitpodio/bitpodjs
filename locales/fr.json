@@ -707,6 +707,7 @@
     "TimezoneCaption": "Timezone",
     "Chat": "bavarder",
     "VersionNotSupported":"Le Presse-papiers n'est pas accessible dans ce navigateur.",
+    "PastEventMessage": "Cet événement n'est plus actif.",
     "DeleteSeatmap": "Supprimer la carte de siège"
   },
   "Drawer": {
