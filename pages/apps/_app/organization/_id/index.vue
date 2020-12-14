@@ -8,11 +8,7 @@
           <v-col class="col-md-12 col-12 pt-0">
             <v-card class="elevation-0">
               <v-list>
-                <v-list-item
-                  v-for="image in data.organization.Image"
-                  :key="image"
-                  class="pl-0"
-                >
+                <v-list-item class="pl-0">
                   <div>
                     <v-list-item-avatar
                       v-if="
@@ -34,8 +30,10 @@
                     </v-list-item-avatar>
                     <v-img
                       v-else
-                      :src="getAttachmentLink(image, true)"
-                      :lazy-src="getAttachmentLink(image, true)"
+                      :src="getAttachmentLink(data.organization.Image[0], true)"
+                      :lazy-src="
+                        getAttachmentLink(data.organization.Image[0], true)
+                      "
                       aspect-ratio="1"
                       class="mr-3"
                       max-width="139"
