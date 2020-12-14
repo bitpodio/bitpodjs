@@ -714,9 +714,11 @@
     "HelpVideos": "Help Videos",
     "HelpVideosInfo": "Our videos will help you understand how to use of Bitpod.",
     "ContactSupport": "Contact Support",
-    "VersionNotSupported":"Clipboard is not accessible in this browser.",
     "LeaveMessage": "Leave a Message",
-    "HowHelp": "How may I help you?"
+    "HowHelp": "How may I help you?",
+    "VersionNotSupported": "Clipboard is not accessible in this browser.",
+    "PastEventMessage": "This event is no longer active.",
+    "DeleteSeatmap": "Delete Seatmap"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",
