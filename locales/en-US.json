@@ -707,7 +707,8 @@
     "Integration": "Integration",
     "TimezoneCaption": "Timezone",
     "Chat": "Chat",
-    "VersionNotSupported": "Clipboard is not accessible in this browser."
+    "VersionNotSupported": "Clipboard is not accessible in this browser.",
+    "PastEventMessage": "This event is no longer active."
   },
   "Drawer": {
     "CreateEventAction": "Create Event",

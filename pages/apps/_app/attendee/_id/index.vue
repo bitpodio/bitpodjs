@@ -210,6 +210,7 @@
                                 class="ma-2 mr-0"
                                 outlined
                                 color="success"
+                                :disabled="isPast"
                                 @click="
                                   startEvent(item.BitpodVirtualLink, true)
                                 "
@@ -221,13 +222,14 @@
                             </div>
                             <div v-if="item.LocationType === 'Online event'">
                               <a
-                                :href="item.WebinarLink"
+                                :href="!isPast && item.WebinarLink"
                                 target="_blank"
                                 class="text-decoration-none"
                                 ><v-btn
                                   class="ma-2 mr-0"
                                   outlined
                                   color="success"
+                                  :disabled="isPast"
                                 >
                                   <i18n path="Common.JoinSession" /><v-icon
                                     right
@@ -249,6 +251,7 @@
                   registration &&
                   registration.EventList &&
                   registration.EventList.allowChat === true &&
+                  registration.EventList.LocationType === 'Bitpod Virtual' &&
                   !registration.chatToken.includes('error')
                 "
               >
@@ -349,7 +352,7 @@
                                 "
                               >
                                 <a
-                                  :href="registration.ZoomLink"
+                                  :href="!isPast && registration.ZoomLink"
                                   target="_blank"
                                   class="text-decoration-none"
                                 >
@@ -357,6 +360,7 @@
                                     class="ma-2 mr-0"
                                     outlined
                                     color="success"
+                                    :disabled="isPast"
                                   >
                                     <i18n path="Common.JoinSession" /><v-icon
                                       right
@@ -377,6 +381,7 @@
                               >
                                 <a
                                   :href="
+                                    !isPast &&
                                     registration.SessionListId[0].WebinarLink
                                   "
                                   target="_blank"
@@ -386,6 +391,7 @@
                                     class="ma-2 mr-0"
                                     outlined
                                     color="success"
+                                    :disabled="isPast"
                                   >
                                     <i18n path="Common.JoinSession" /><v-icon
                                       right
@@ -729,6 +735,9 @@
                     </v-list-item>
                   </v-list>
                 </div>
+                <div v-else-if="isPast">
+                  <i18n path="Common.PastEventMessage" />
+                </div>
                 <div v-else class="body-1">
                   {{ getEventStartDate() }} -<br />
                   {{ getEventEndDate() }} -<br />
@@ -785,6 +794,7 @@
                   class="ma-3 ml-0"
                   outlined
                   color="success"
+                  :disabled="isPast"
                   @click="startEvent(event.UniqLink)"
                 >
                   <i18n path="Common.JoinEvent" /><v-icon right>
@@ -800,10 +810,15 @@
                 </div>
                 <div v-if="event.locationType === 'Online event'">
                   <a
-                    :href="event.WebinarLink"
+                    :href="!isPast && event.WebinarLink"
                     target="_blank"
                     class="text-decoration-none"
-                    ><v-btn class="ma-2 ml-0" outlined color="success">
+                    ><v-btn
+                      class="ma-2 ml-0"
+                      outlined
+                      :disabled="isPast"
+                      color="success"
+                    >
                       <i18n path="Common.JoinEvent" /><v-icon right>
                         mdi-video
                       </v-icon>
@@ -904,6 +919,7 @@ export default {
       registration: {},
       eventImage: false,
       attendeeData: {},
+      isPast: false,
     }
   },
   computed: {
@@ -1069,6 +1085,8 @@ export default {
           if (res) {
             this.event = res.result
             this.eventImage = true
+            this.isPast =
+              new Date().getTime() > new Date(this.event.endDateTime).getTime()
           }
         } catch (e) {
           console.error(

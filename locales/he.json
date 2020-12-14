@@ -708,7 +708,8 @@
     "Integration": "Integration",
     "TimezoneCaption": "Timezone",
     "Chat": "לְשׂוֹחֵחַ",
-    "VersionNotSupported":"הלוח אינו נגיש בדפדפן זה."
+    "VersionNotSupported":"הלוח אינו נגיש בדפדפן זה.",
+    "PastEventMessage": "אירוע זה אינו פעיל יותר."
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",
