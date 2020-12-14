@@ -1398,7 +1398,9 @@ export default {
             ...rest,
           }
         })
-        this.session.LocationId = locId
+        if (this.type !== 'Edit') {
+          this.session.LocationId = locId
+        }
 
         let filterOption
         if (
