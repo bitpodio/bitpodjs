@@ -627,7 +627,8 @@ table > tbody > tr:last-child .key-align {
 .help-button {
   position: fixed !important;
   right: 10px;
-  bottom: 10px;
+  bottom: 15px;
+  background: #fff;
 }
 .help-box {
   max-width: 350px;
