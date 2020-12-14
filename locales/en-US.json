@@ -708,8 +708,9 @@
     "TimezoneCaption": "Timezone",
     "Chat": "Chat",
     "VersionNotSupported": "Clipboard is not accessible in this browser.",
-    "PastEventMessage": "This event is no longer active.",
-    "DeleteSeatmap": "Delete Seatmap"
+    "DeleteSeatmap": "Delete Seatmap",
+    "DeleteNote": "Delete Note",
+    "PastEventMessage": "This event is no longer active."
   },
   "Drawer": {
     "CreateEventAction": "Create Event",
