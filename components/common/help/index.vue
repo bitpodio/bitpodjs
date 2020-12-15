@@ -192,9 +192,9 @@ export default {
       snackbar: false,
       timeout: '4000',
       snackbarText: '',
-      helpDocs: this.localePath(`/admin/docs/HelpCenter/`),
+      helpDocs: this.localePath(`/adm/docs/HelpCenter/`),
       helpFaqs: this.localePath(
-        `/admin/docs/HelpCenter/Introduction/FAQs/views/FAQs`
+        `/adm/docs/HelpCenter/Introduction/FAQs/views/FAQs`
       ),
     }
   },
