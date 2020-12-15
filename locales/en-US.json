@@ -235,6 +235,7 @@
     "PrintBadges": "Print Badges",
     "CancelCheckin": "Cancel Check In",
     "CheckIn": "Check In",
+    "TapToCheckIn": "Tap to check in",
     "CheckedInJustnow": "Checked in ",
     "SuccessfulCheckedin": "You have successfully checked in. Enjoy the event!",
     "EditSetting": "Edit Setting",
@@ -708,7 +709,9 @@
     "TimezoneCaption": "Timezone",
     "Chat": "Chat",
     "VersionNotSupported": "Clipboard is not accessible in this browser.",
-    "DeleteSeatmap": "Delete Seatmap"
+    "DeleteSeatmap": "Delete Seatmap",
+    "DeleteNote": "Delete Note",
+    "PastEventMessage": "This event is no longer active."
   },
   "Drawer": {
     "CreateEventAction": "Create Event",

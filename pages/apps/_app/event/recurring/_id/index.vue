@@ -727,6 +727,7 @@
             view-name="eventRecurringAttendees"
             :content="content"
             :context="data"
+            :has-mobile-custom-view="true"
             class="mt-n12"
           />
         </div>
@@ -789,7 +790,7 @@
         </div>
         <div
           v-if="content"
-          class="xs12 sm4 md4 lg4 boxview pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+          class="xs12 sm4 md4 lg4 boxview boxviewsmall pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
           <div class="sticky d-flex flex-column justify-center boxview">
             <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">

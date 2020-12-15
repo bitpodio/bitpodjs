@@ -235,6 +235,7 @@
     "PrintBadges": "הדפסת תגים",
     "CancelCheckin": "בטל צ'ק-אין",
     "CheckIn": "קבלה",
+    "TapToCheckIn": "הקש כדי לבדוק",
     "CheckedInJustnow": "נכנס רק עכשיו",
     "SuccessfulCheckedin": "נכנסת בהצלחה. תהנה מהאירוע!",
     "EditSetting": "Edit Setting",
@@ -708,8 +709,10 @@
     "Integration": "Integration",
     "TimezoneCaption": "Timezone",
     "Chat": "לְשׂוֹחֵחַ",
-    "VersionNotSupported":"הלוח אינו נגיש בדפדפן זה.",
-    "DeleteSeatmap": "מחק מפת מושבים"
+    "VersionNotSupported": "הלוח אינו נגיש בדפדפן זה.",
+    "DeleteSeatmap": "מחק מפת מושבים",
+    "DeleteNote": "מחק הערה",
+    "PastEventMessage": "אירוע זה אינו פעיל יותר."
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",
@@ -877,9 +880,9 @@
       "SeatLayoutDeleteSuccess": "Seat Layout deleted successfully",
       "EventPublished": "מזל טוב, האירוע שלך פורסם.",
       "BadgesDeleteSuccess": "התגים נמחקו בהצלחה",
-      "BadgesUpdatedSuccess":"התגים עודכנו בהצלחה",
-      "EventRegSiteDetailsUpdateSuccess":"הגדרות דף הרישום עודכנו בהצלחה",
-      "UnableToAssignRole":"אין לך הרשאה לבצע פעולה זו. אנא פנה למנהל המערכת",
+      "BadgesUpdatedSuccess": "התגים עודכנו בהצלחה",
+      "EventRegSiteDetailsUpdateSuccess": "הגדרות דף הרישום עודכנו בהצלחה",
+      "UnableToAssignRole": "אין לך הרשאה לבצע פעולה זו. אנא פנה למנהל המערכת",
       "AttachmentAddSuccess": "הקובץ המצורף נוסף בהצלחה",
       "AttachmentDeleteSuccess": "הקובץ המצורף נמחק בהצלחה",
       "SeatLayoutAddSuccess": "Seat Layout added successfully",

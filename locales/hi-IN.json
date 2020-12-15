@@ -235,6 +235,7 @@
     "PrintBadges": "बैज प्रिंट करें",
     "CancelCheckin": "चेक इन रद्द करें",
     "CheckIn": "चेक इन",
+    "TapToCheckIn": "इसमें चेक करने के लिए टैप करें",
     "CheckedInJustnow": "आगमन की सूचना दिया ",
     "SuccessfulCheckedin": "आपने सफलतापूर्वक जाँच कर ली है।",
     "EditSetting": "सेटिंग संपादित करें",
@@ -709,7 +710,9 @@
     "TimezoneCaption": "Timezone",
     "Chat": "बातचीत",
     "VersionNotSupported": "इस ब्राउज़र में क्लिपबोर्ड सुलभ नहीं है।",
-    "DeleteSeatmap": "सीमैप हटाएं"
+    "DeleteSeatmap": "सीमैप हटाएं",
+    "DeleteNote": "नोट हटाएँ",
+    "PastEventMessage": "यह ईवेंट अब सक्रिय नहीं है."
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",
