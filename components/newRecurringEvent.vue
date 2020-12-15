@@ -373,7 +373,13 @@
           </h2>
           <v-spacer></v-spacer>
           <div>
-            <v-btn icon @click="isPersonMeeting = false">
+            <v-btn
+              icon
+              @click="
+                isPersonMeeting = false
+                InPersonMeeting = []
+              "
+            >
               <v-icon>mdi-close</v-icon>
             </v-btn>
           </div>
@@ -407,7 +413,10 @@
           <v-btn
             depressed
             color="grey lighten-2"
-            @click="isPersonMeeting = false"
+            @click="
+              isPersonMeeting = false
+              InPersonMeeting = []
+            "
           >
             <i18n path="Drawer.Cancel" />
           </v-btn>
@@ -1106,6 +1115,7 @@ export default {
       Phone: '',
       WebinarLink: '',
       InPersonMeeting: [],
+      defaultBusinessUnit: [],
       Type: 'Personal',
       MaxAllow: 5,
       isGroup: false,
@@ -1677,6 +1687,7 @@ export default {
           this.venueAddress.LatLng = { lat: 0.0, lng: 0.0 }
         }
         if (this.sessions[index].LocationType === 'In-person meeting') {
+          this.InPersonMeeting = [...this.defaultBusinessUnit]
           this.isPersonMeeting = true
           this.$refs.personmeetingform && this.$refs.personmeetingform.reset()
           this.isZoom = false
@@ -2136,10 +2147,14 @@ export default {
         const isLocationTypeEmpty = this.sessions.map((session, index) => {
           if (session.LocationType === 'In-person meeting') {
             if (session.LocationId.length === 0) {
+              session.LocationType = ''
+              this.resetBtn = !this.resetBtn
               return true
             }
           } else if (session.LocationType === 'Phone call') {
             if (session.Phone === undefined || session.Phone === '') {
+              session.LocationType = ''
+              this.resetBtn = !this.resetBtn
               return true
             }
           } else if (session.LocationType === 'Online meeting') {
@@ -2147,6 +2162,8 @@ export default {
               session.WebinarLink === undefined ||
               session.WebinarLink === ''
             ) {
+              session.LocationType = ''
+              this.resetBtn = !this.resetBtn
               return true
             }
           } else if (session.LocationType === 'Custom') {
@@ -2154,6 +2171,8 @@ export default {
               session._CurrentAddress.AddressLine === undefined ||
               session._CurrentAddress.AddressLine === ''
             ) {
+              session.LocationType = ''
+              this.resetBtn = !this.resetBtn
               return true
             }
           }
@@ -2428,10 +2447,18 @@ export default {
         const OrganizationInfo = formatGQLResult(data, 'OrganizationInfo')
         this.slotOptions = formatGQLResult(data, 'GeneralConfiguration')
         const locationResult = formatGQLResult(data, 'Location')
-        this.inPersonMeetingOptions = locationResult.map(({ id, ...rest }) => ({
-          id: getIdFromAtob(id),
-          ...rest,
-        }))
+        this.inPersonMeetingOptions = locationResult.map(({ id, ...rest }) => {
+          const decryptedId = getIdFromAtob(id)
+          if (rest.Default) {
+            this.InPersonMeeting.push(decryptedId)
+            this.defaultBusinessUnit.push(decryptedId)
+          }
+          return {
+            id: decryptedId,
+            ...rest,
+          }
+        })
+
         this.eventData.Currency = OrganizationInfo[0].Currency
         if (
           OrganizationInfo[0].weekDay !== null &&
