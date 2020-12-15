@@ -18,12 +18,22 @@ export default function (req, res, next) {
       const { host, oldState } = stateObject
       query.cbVerified = true
       query.state = oldState
-      res.writeHead(301, {
-        Location: `http://${host}${nuxtconfig.router.base}callback?${qs.encode(
-          query
-        )}`,
-      })
-      return res.end()
+      if(host && host.includes('localhost')){
+        res.writeHead(301, {
+          Location: `http://${host}${nuxtconfig.router.base}callback?${qs.encode(
+            query
+          )}`,
+        })
+        return res.end()
+      }else{
+        res.writeHead(301, {
+          Location: `https://${host}${nuxtconfig.router.base}callback?${qs.encode(
+            query
+          )}`,
+        })
+        return res.end()
+      }
+      
     }
   }
   return next()
