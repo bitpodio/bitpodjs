@@ -243,6 +243,19 @@
             <v-list-item>
               <OrgnaizationList />
             </v-list-item>
+            <v-list dense class="py-0">
+              <v-list-item>
+                <v-btn
+                  text
+                  small
+                  color="primary"
+                  href="https://event.bitpod.io/adm/"
+                  target="_blank"
+                >
+                  <i18n path="Common.GoToOldSite" />
+                </v-btn>
+              </v-list-item>
+            </v-list>
             <v-list dense class="pt-0">
               <v-list-item>
                 <v-btn text small color="primary" @click="onLogout">
