@@ -9,24 +9,21 @@
           size="24"
           height="36px"
           width="36px"
-          class="ml-2 mr-3"
+          class="ml-0 ml-md-2 mr-2 mr-md-3"
           @click.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
-        <span class="bitpod-logo logo-ds">
+        <span class="bitpod-logo logo-ds d-none d-sm-flex">
           <v-img
             :src="$config.cdnUri + 'bitpod-logo-new.png'"
             class="logofull mr-2"
           ></v-img>
         </span>
         <i18n
-          path="Common.SeatMap"
-          class="d-inline-flex align-center mx-2 ml-3 text-h5"
+          path="Common.SeatMapNo"
+          class="d-inline-flex align-center mx-0 mx-md-2 ml-0 ml-md-1 text-h5"
         />
         <v-spacer></v-spacer>
       </v-toolbar-title>
-      <!-- <v-toolbar-title class="pl-0 ml-n1"
-        ><i18n path="Common.SeatMap"
-      /></v-toolbar-title> -->
       <v-spacer></v-spacer>
       <AppDrawer />
       <LanguageSwitcher />
@@ -104,18 +101,21 @@
         </v-row>
       </v-container>
     </v-main>
+    <Help />
   </v-app>
 </template>
 
 <script>
 import OrgnaizationList from '~/components/common/organization-list'
 import AppDrawer from '~/components/common/app-drawer'
+import Help from '~/components/common/help'
 export default {
   layout: 'seatmap',
   middleware: ['auth', 'authorization'],
   components: {
     OrgnaizationList,
     AppDrawer,
+    Help,
   },
   data() {
     return {

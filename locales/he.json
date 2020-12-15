@@ -6,6 +6,7 @@
     "EventApp": "מִקרֶה",
     "AdminApp": "מִנהָל",
     "SeatMap": "מפת מושב",
+    "SeatMapNo": "מפתמושב",
     "SurveyApp": "סֶקֶר",
     "HelpCenterMap": "מרכז עזרה",
     "HomePage": "Home page",
@@ -186,6 +187,7 @@
     "Name": "שֵׁם",
     "Amount": "Amount",
     "Quantity": "Quantity",
+    "QuantityRequired": "כַּמוּת*",
     "Total": "Total",
     "Student": "Student",
     "RefundDetails": "Refund Details",
@@ -233,6 +235,7 @@
     "PrintBadges": "הדפסת תגים",
     "CancelCheckin": "בטל צ'ק-אין",
     "CheckIn": "קבלה",
+    "TapToCheckIn": "הקש כדי לבדוק",
     "CheckedInJustnow": "נכנס רק עכשיו",
     "SuccessfulCheckedin": "נכנסת בהצלחה. תהנה מהאירוע!",
     "EditSetting": "Edit Setting",
@@ -292,7 +295,8 @@
     "SelectPriorInvite": "בחר הזמנה מראש",
     "BasicInformation": "מידע בסיסי",
     "SessionTime": "Session Time",
-    "Location": "Location",
+    "Location": "מקום*",
+    "LocationRequired": "מקום*",
     "SendZoomJoiningInfo": "To send Zoom joining info, you must setup Zoom integration,",
     "ClickHere": "לחץ כאן",
     "ForDocumentation": "for documentation.",
@@ -340,6 +344,7 @@
     "Title": "כותרת*",
     "Type": "סוּג*",
     "Price": "מחיר {מטבע}",
+    "PriceRequired": "מחיר* {currency}",
     "StartD": "תאריך התחלה*",
     "EndD": "תאריך סיום*",
     "EventHasBeenCreated": "EVENT HAS BEEN CREATED.",
@@ -704,7 +709,19 @@
     "Integration": "Integration",
     "TimezoneCaption": "Timezone",
     "Chat": "לְשׂוֹחֵחַ",
-    "VersionNotSupported":"הלוח אינו נגיש בדפדפן זה."
+    "UserGuide": "מדריך למשתמש",
+    "UserGuideInfo": "צברו ידע מעמיק על תכונות ולמדו צעדים בסיסיים.",
+    "Faqs": "שאלות נפוצות",
+    "FaqsInfo": "עיין בשאלות נפוצות כדי לפתור בעיות.",
+    "HelpVideos": "עזרי וידיאו",
+    "HelpVideosInfo": "הסרטונים שלנו יעזרו לך להבין כיצד להשתמש ב- Bitpod.",
+    "ContactSupport": "צור קשר עם תמיכה",
+    "LeaveMessage": "השאר הודעה",
+    "HowHelp": "איך אני יכול לעזור לך?",
+    "VersionNotSupported":"הלוח אינו נגיש בדפדפן זה.",
+    "DeleteSeatmap": "מחק מפת מושבים",
+    "DeleteNote": "מחק הערה",
+    "PastEventMessage": "אירוע זה אינו פעיל יותר."
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",
@@ -827,12 +844,13 @@
       "RefundAmountMsg": "Amount should not be less than or equal to  0",
       "InvalidDisplayOrder": "Display order should not be blank and less than 1",
       "EventEndDate": "תאריך סיום האירוע לא צריך להיות פחות מהתאריך הנוכחי",
-      "FieldRequired": "זהו שדה חובה *",
+      "FieldRequired": "זהו שדה חובה",
       "EmailInvalid": "כתובת מייל לא תקינה",
       "HttpsUrl": "This must be a https url",
       "OverlappingTimeSlot": "משבצת זמן חופפת לחריצים אחרים",
       "EndTimeMustBeGreater": "זמן הסיום חייב להיות גדול יותר משעת ההתחלה",
-      "PermissionDenied": "אין לך הרשאה לבצע פעולה זו"
+      "PermissionDenied": "אין לך הרשאה לבצע פעולה זו",
+      "roleAlreadyExits": "תפקיד {roles} זה כבר קיים"
     },
     "Warn": {
       "UniqueLinkFormat": "אותיות אלפאנומריות באותיות קטנות בלבד",
@@ -851,7 +869,8 @@
       "DeleteEvent": "האם אתה רוצה למחוק אירוע זה?",
       "DeleteUser": "האם ברצונך למחוק משתמש זה?",
       "NoEventsFound": "לא נמצאו אירועים עם שם {searchKey}",
-      "ConfirmResendRegistrationEmail": "האם אתה בטוח שברצונך לשלוח שוב הודעות אישור?"
+      "ConfirmResendRegistrationEmail": "האם אתה בטוח שברצונך לשלוח שוב הודעות אישור?",
+      "DeleteSeatMap": "האם אתה רוצה למחוק את מפת המושב הזו?"
     },
     "Success": {
       "CopiedClipboard": "הועתק ללוח",
@@ -870,9 +889,9 @@
       "SeatLayoutDeleteSuccess": "Seat Layout deleted successfully",
       "EventPublished": "מזל טוב, האירוע שלך פורסם.",
       "BadgesDeleteSuccess": "התגים נמחקו בהצלחה",
-      "BadgesUpdatedSuccess":"התגים עודכנו בהצלחה",
-      "EventRegSiteDetailsUpdateSuccess":"הגדרות דף הרישום עודכנו בהצלחה",
-      "UnableToAssignRole":"אין לך הרשאה לבצע פעולה זו. אנא פנה למנהל המערכת",
+      "BadgesUpdatedSuccess": "התגים עודכנו בהצלחה",
+      "EventRegSiteDetailsUpdateSuccess": "הגדרות דף הרישום עודכנו בהצלחה",
+      "UnableToAssignRole": "אין לך הרשאה לבצע פעולה זו. אנא פנה למנהל המערכת",
       "AttachmentAddSuccess": "הקובץ המצורף נוסף בהצלחה",
       "AttachmentDeleteSuccess": "הקובץ המצורף נמחק בהצלחה",
       "SeatLayoutAddSuccess": "Seat Layout added successfully",
@@ -891,7 +910,8 @@
       "EditMetadataSuccess": "מטא נתונים של תבנית עודכנו בהצלחה",
       "EditTemplateSuccess": "התבנית עודכנה בהצלחה",
       "DeleteSuccess": "{modelName} נמחק בהצלחה",
-      "ListUpdatedSucess": "{modelName} פריט הרשימה עודכן בהצלחה."
+      "ListUpdatedSucess": "{modelName} פריט הרשימה עודכן בהצלחה.",
+      "ThanksHelp": "תודה שפנית אלינו! אנחנו נחזור אליך בקרוב!"
     }
   },
   "$vuetify": {

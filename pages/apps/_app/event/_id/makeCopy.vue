@@ -95,14 +95,18 @@
             </v-form>
 
             <v-row>
-              <v-col cols="12" class="text-links">
+              <v-col
+                cols="12"
+                sm="8"
+                md="8"
+                class="text-links pb-0 d-flex flex-column flex-md-row"
+              >
+                <div class="pt-2 mr-2">{{ eventLinkHint }}</div>
                 <v-text-field
                   v-model="UniqLink"
                   :label="$t('Common.EventL')"
                   class="text-links"
                   :rules="[rules.required]"
-                  persistent-hint
-                  :hint="eventLinkHint"
                   dense
                   outlined
                   @keyup="changeUniqueLink($event)"
@@ -486,9 +490,7 @@ export default {
       ]
     },
     eventLinkHint() {
-      return `${this.$bitpod.getApiUrl().replace('svc/api', 'e')}${
-        this.UniqLink
-      }`
+      return `${this.$bitpod.getApiUrl().replace('svc/api', 'e')}`
     },
     gMapCenter() {
       return { lat: this.locations[0].lat, lng: this.locations[0].lng }

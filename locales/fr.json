@@ -6,6 +6,7 @@
     "EventApp": "Evénement",
     "AdminApp": "Administration",
     "SeatMap": "Carte de siège",
+    "SeatMapNo": "Carte de siège",
     "SurveyApp": "Enquête",
     "HelpCenterMap": "Centre d'aide",
     "HomePage": "Page d'accueil",
@@ -186,6 +187,7 @@
     "Name": "Nom",
     "Amount": "Montant",
     "Quantity": "Quantité",
+    "QuantityRequired": "Quantité*",
     "Total": "Total",
     "Student": "Étudiant",
     "RefundDetails": "Détails du remboursement",
@@ -233,6 +235,7 @@
     "PrintBadges": "Imprimer les badges",
     "CancelCheckin": "Annuler le contrôle",
     "CheckIn": "Vérifier dans",
+    "TapToCheckIn": "Appuyez pour vous enregistrer",
     "CheckedInJustnow": "Enregistré ",
     "SuccessfulCheckedin": "Vous avez vérifié avec succès.  Profitez de l'événement !",
     "EditSetting": "Modifier le paramètre",
@@ -293,6 +296,7 @@
     "BasicInformation": "Informations de base",
     "SessionTime": "Heure de la session",
     "Location": "Emplacement",
+    "LocationRequired": "Emplacement*",
     "SendZoomJoiningInfo": "Pour envoyer des informations de jointure de zoom, vous devez configurer l'intégration de zoom,",
     "ClickHere": "Cliquez ici",
     "ForDocumentation": "Pour la documentation.",
@@ -340,6 +344,7 @@
     "Title": "Titre *",
     "Type": "Type *",
     "Price": "Prix {currency}",
+    "PriceRequired": "Prix* {currency}",
     "StartD": "Date de début *",
     "EndD": "Date de fin *",
     "EventHasBeenCreated": "L'ÉVÉNEMENT A ÉTÉ CRÉÉ.",
@@ -702,7 +707,19 @@
     "Integration": "Integration",
     "TimezoneCaption": "Timezone",
     "Chat": "bavarder",
-    "VersionNotSupported":"Le Presse-papiers n'est pas accessible dans ce navigateur."
+    "UserGuide": "Mode d'emploi",
+    "UserGuideInfo": "Acquérir des connaissances approfondies sur les fonctionnalités et apprendre les étapes de base.",
+    "Faqs": "FAQs",
+    "FaqsInfo": "Parcourez les questions fréquemment posées pour résoudre les problèmes.",
+    "HelpVideos": "Vidéos d'aide",
+    "HelpVideosInfo": "Nos vidéos vous aideront à comprendre comment utiliser Bitpod.",
+    "ContactSupport": "Contactez le support",
+    "LeaveMessage": "Laisser un message",
+    "HowHelp": "Comment puis-je vous aider?",
+    "VersionNotSupported":"Le Presse-papiers n'est pas accessible dans ce navigateur.",
+    "DeleteSeatmap": "Supprimer la carte de siège",
+    "DeleteNote": "Supprimer la note",
+    "PastEventMessage": "Cet événement n'est plus actif."
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",
@@ -825,12 +842,13 @@
       "RefundAmountMsg": "Le montant ne doit pas être inférieur ou égal à 0",
       "InvalidDisplayOrder": "L'ordre d'affichage ne doit pas être vide et inférieur à 1",
       "EventEndDate": "La date de fin de l'événement ne doit pas être inférieure à la date actuelle",
-      "FieldRequired": "Ce champ est requis *",
+      "FieldRequired": "Ce champ est requis",
       "EmailInvalid": "Le courriel est invalide",
       "HttpsUrl": "Cela doit être une URL https",
       "OverlappingTimeSlot": "Intervalle de temps chevauchant avec d'autres emplacements",
       "EndTimeMustBeGreater": "L'heure de fin doit être supérieure à l'heure de début",
-      "PermissionDenied": "Vous n'êtes pas autorisé à effectuer cette opération"
+      "PermissionDenied": "Vous n'êtes pas autorisé à effectuer cette opération",
+      "roleAlreadyExits": "Ce rôle {roles} existe déjà"
     },
     "Warn": {
       "UniqueLinkFormat": "Minuscules lettres alphanumériques uniquement",
@@ -849,7 +867,8 @@
       "DeleteImage": "Voulez-vous supprimer cette image?",
       "NoEvents": "Il n'y a pas d'événements en direct et de brouillon, pour commencer à configurer votre événement, utilisez le lien Créer un événement",
       "NoEventsFound": "Aucun événement trouvé avec nom {searchKey}",
-      "ConfirmResendRegistrationEmail": "Voulez-vous vraiment renvoyer les e-mails de confirmation?"
+      "ConfirmResendRegistrationEmail": "Voulez-vous vraiment renvoyer les e-mails de confirmation?",
+      "DeleteSeatMap": "Voulez-vous supprimer cette carte de siège?"
     },
     "Success": {
       "CopiedClipboard": "Copié dans le presse-papiers",
@@ -868,9 +887,9 @@
       "SeatLayoutDeleteSuccess": "L'agencement de siège a été supprimé avec succès",
       "EventPublished": "Félicitations, votre événement a été publié.",
       "BadgesDeleteSuccess": "Badges supprimés avec succès",
-      "BadgesUpdatedSuccess":"Badges mis à jour avec succès",
-      "EventRegSiteDetailsUpdateSuccess":"Paramètres de la page d'inscription mis à jour avec succès",
-      "UnableToAssignRole":"Vous n'êtes pas autorisé à effectuer cette action.Veuillez contacter l'administrateur",
+      "BadgesUpdatedSuccess": "Badges mis à jour avec succès",
+      "EventRegSiteDetailsUpdateSuccess": "Paramètres de la page d'inscription mis à jour avec succès",
+      "UnableToAssignRole": "Vous n'êtes pas autorisé à effectuer cette action.Veuillez contacter l'administrateur",
       "AttachmentAddSuccess": "Pièce jointe ajoutée avec succès",
       "AttachmentDeleteSuccess": "Pièce jointe supprimée avec succès",
       "SeatLayoutAddSuccess": "L'ajout de l'agencement de siège a abouti",
@@ -889,7 +908,8 @@
       "EditMetadataSuccess": "Les métadonnées du modèle ont bien été mises à jour",
       "EditTemplateSuccess": "Modèle mis à jour avec succès",
       "DeleteSuccess": "{modelName} Supprimé avec succès",
-      "ListUpdatedSucess": "{modelName} élément de liste mis à jour avec succès."
+      "ListUpdatedSucess": "{modelName} élément de liste mis à jour avec succès.",
+      "ThanksHelp": "Merci de nous avoir contacté! Nous reviendrons vers vous bientôt!"
     }
   },
   "$vuetify": {

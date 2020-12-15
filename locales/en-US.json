@@ -6,6 +6,7 @@
     "EventApp": "Event",
     "AdminApp": "Administration",
     "SeatMap": "Seat Map",
+    "SeatMapNo": "Seatmap",
     "SurveyApp": "Survey",
     "HelpCenterMap": "Help Center",
     "HomePage": "Home page",
@@ -186,6 +187,7 @@
     "Name": "Name",
     "Amount": "Amount",
     "Quantity": "Quantity",
+    "QuantityRequired": "Quantity*",
     "Total": "Total",
     "Student": "Student",
     "RefundDetails": "Refund Details",
@@ -233,6 +235,7 @@
     "PrintBadges": "Print Badges",
     "CancelCheckin": "Cancel Check In",
     "CheckIn": "Check In",
+    "TapToCheckIn": "Tap to check in",
     "CheckedInJustnow": "Checked in ",
     "SuccessfulCheckedin": "You have successfully checked in. Enjoy the event!",
     "EditSetting": "Edit Setting",
@@ -293,6 +296,7 @@
     "BasicInformation": "Basic Information",
     "SessionTime": "Session Time",
     "Location": "Location",
+    "LocationRequired": "Location*",
     "SendZoomJoiningInfo": "To send Zoom joining info, you must setup Zoom integration,",
     "ClickHere": "click here",
     "ForDocumentation": "for documentation.",
@@ -340,6 +344,7 @@
     "Title": "Title*",
     "Type": "Type*",
     "Price": "Price {currency}",
+    "PriceRequired": "Price* {currency}",
     "StartD": "Start Date*",
     "EndD": "End Date*",
     "EventHasBeenCreated": "EVENT HAS BEEN CREATED.",
@@ -703,7 +708,19 @@
     "Integration": "Integration",
     "TimezoneCaption": "Timezone",
     "Chat": "Chat",
-    "VersionNotSupported":"Clipboard is not accessible in this browser."
+    "UserGuide": "User Guide",
+    "UserGuideInfo": "Gain in-depth knowledge about features and learn basic steps.",
+    "Faqs": "FAQs",
+    "FaqsInfo": "Browse through frequently asked questions to resolve problems.",
+    "HelpVideos": "Help Videos",
+    "HelpVideosInfo": "Our videos will help you understand how to use of Bitpod.",
+    "ContactSupport": "Contact Support",
+    "LeaveMessage": "Leave a Message",
+    "HowHelp": "How may I help you?",
+    "VersionNotSupported": "Clipboard is not accessible in this browser.",
+    "DeleteSeatmap": "Delete Seatmap",
+    "DeleteNote": "Delete Note",
+    "PastEventMessage": "This event is no longer active."
   },
   "Drawer": {
     "CreateEventAction": "Create Event",
@@ -802,7 +819,7 @@
       "TicketRequired": "Ticket is required",
       "Price is required": "Price is required",
       "CodeRequired": "Code is required",
-      "UnableToAssignRole":"You do not have permission to perform this action.Please contact the administrator",
+      "UnableToAssignRole": "You do not have permission to perform this action.Please contact the administrator",
       "OfferValueRequired": "Offer Value is required",
       "OfferValueNegative": "Offer Value should not be negative",
       "EventStartDate": "Event start date should not be less than current date",
@@ -827,12 +844,13 @@
       "RefundAmountMsg": "Amount should not be less than or equal to  0",
       "InvalidDisplayOrder": "Display order should not be blank and less than 1",
       "EventEndDate": "Event end date should not be less than current date",
-      "FieldRequired": "This field is required *",
+      "FieldRequired": "This field is required",
       "EmailInvalid": "Email is invalid",
       "HttpsUrl": "This must be a https url",
       "OverlappingTimeSlot": "Time-slot overlapping with other slots",
       "EndTimeMustBeGreater": "End time must be greater then start time",
-      "PermissionDenied": "You do not have permission to perform this operation"
+      "PermissionDenied": "You do not have permission to perform this operation",
+      "roleAlreadyExits": "This {roles} role already exists"
     },
     "Warn": {
       "UniqueLinkFormat": "Lower case alphanumeric letters only",
@@ -852,7 +870,8 @@
       "DeleteUser": "Do you want to delete this user?",
       "NoEvents": "There aren't any live and draft events, to start setting up your event use Create Event link",
       "NoEventsFound": "No events found with name {searchKey}",
-      "ConfirmResendRegistrationEmail": "Are you sure you want to resend confirmation emails?"
+      "ConfirmResendRegistrationEmail": "Are you sure you want to resend confirmation emails?",
+      "DeleteSeatMap": "Do you want to delete this seatmap?"
     },
     "Success": {
       "CopiedClipboard": "Copied to clipboard",
@@ -872,8 +891,8 @@
       "SeatLayoutDeleteSuccess": "Seat Layout deleted successfully",
       "EventPublished": "Congratulations, your event has been published.",
       "BadgesDeleteSuccess": "Badges deleted successfully",
-      "BadgesUpdatedSuccess":"Badges updated successfully",
-      "EventRegSiteDetailsUpdateSuccess":"Registration Page settings updated successfully",
+      "BadgesUpdatedSuccess": "Badges updated successfully",
+      "EventRegSiteDetailsUpdateSuccess": "Registration Page settings updated successfully",
       "AttachmentAddSuccess": "Attachment added successfully",
       "AttachmentDeleteSuccess": "Attachment deleted successfully",
       "SeatLayoutAddSuccess": "Seat Layout added successfully",
@@ -892,7 +911,8 @@
       "EditMetadataSuccess": "Template metadata updated successfully",
       "EditTemplateSuccess": "Template updated successfully",
       "DeleteSuccess": "{modelName} deleted Successfully",
-      "ListUpdatedSucess": "{modelName} list item updated successfully."
+      "ListUpdatedSucess": "{modelName} list item updated successfully.",
+      "ThanksHelp": "Thanks for contacting us! We will get back to you soon!"
     }
   },
   "$vuetify": {

@@ -624,6 +624,47 @@ table > tbody > tr:last-child .key-align {
   min-width: 110px !important;
   max-width: 110px !important;
 }
+.help-button {
+  position: fixed !important;
+  right: 10px;
+  bottom: 15px;
+  background: #fff;
+}
+.help-box {
+  max-width: 350px;
+  right: 0px;
+  position: fixed !important;
+  bottom: 10px;
+}
+.chanel-icon .fa {
+  color: #fff;
+  background: #0cb14b;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+.robo-img {
+  max-width: 55px;
+  margin: auto;
+}
+.help-top-section {
+  background: #1a73e8;
+  border-radius: 2px 2px 0 0;
+  border-bottom-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+}
+.help-close {
+  right: 5px;
+  top: 5px;
+}
+.help-back {
+  left: 5px;
+  top: 5px;
+}
+.help-box a {
+  text-decoration: none !important;
+  color: unset !important;
+}
 @media (max-width: 800px) {
   .nav-bar {
     top: 50px !important;
@@ -761,5 +802,8 @@ table > tbody > tr:last-child .key-align {
   }
   .seat-skeleton-inner {
     max-width: 100%;
+  }
+  .help-box {
+    max-width: calc(100% - 25px);
   }
 }

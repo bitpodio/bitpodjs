@@ -213,10 +213,11 @@
                     :items="locationLookupOptions"
                     item-text="Name"
                     item-value="id"
-                    :label="$t('Common.Location')"
+                    :label="$t('Common.LocationRequired')"
                     outlined
                     dense
                     multiple
+                    :rules="personMeetingRules"
                   ></v-autocomplete>
                 </v-col>
                 <v-col
@@ -520,6 +521,7 @@
               depressed
               :action="onSave"
               class="ml-2"
+              :reset="resetBtn"
               ><i18n path="Drawer.Save"
             /></SaveBtn>
           </v-card-actions>
@@ -609,6 +611,7 @@ export default {
       dialog: false,
       actionType,
       addressClicked,
+      resetBtn: false,
       isSaveButtonDisabled: false,
       isCustomMin: false,
       isGroup,
@@ -917,6 +920,13 @@ export default {
     },
     focusIn() {
       this.addressClicked = true
+      setTimeout(() => {
+        Object.values(
+          document.getElementsByClassName('pac-container pac-logo')
+        ).map((i) => {
+          i.style.display = 'none'
+        })
+      }, 1000)
     },
     getBitpodVirtualLink() {
       const randomStr = Math.random().toString(36)
@@ -928,6 +938,7 @@ export default {
     },
     closeForm() {
       this.dialog = false
+      this.addresslineMessage = ''
       this.resetForm()
       this.$eventBus.$emit('unselectAll-record', 'eventRecurringSession')
     },
@@ -1133,6 +1144,7 @@ export default {
         this.addressClicked = false
       } else {
         this.addressClicked = true
+        this.venueAddress.AddressLine = value
       }
     },
     getAddressData(addressData, placeResultData, id) {
@@ -1185,9 +1197,11 @@ export default {
     async onSave() {
       if (this.session.StartTime > this.session.EndTime) {
         this.timeSlotMessage = this.$t('Messages.Error.StartEndTime')
+        this.resetBtn = !this.resetBtn
         return
       } else if (this.session.StartTime === this.session.EndTime) {
         this.timeSlotMessage = this.$t('Messages.Error.StartEndTimeEqlMsg')
+        this.resetBtn = !this.resetBtn
         return
       } else {
         this.timeSlotMessage = ''
@@ -1199,6 +1213,7 @@ export default {
           this.session._CurrentAddress = this.venueAddress
         } else {
           this.addresslineMessage = this.$t('Messages.Error.ThisFieldRequired')
+          this.resetBtn = !this.resetBtn
           return
         }
       } else {
@@ -1383,7 +1398,9 @@ export default {
             ...rest,
           }
         })
-        this.session.LocationId = locId
+        if (this.type !== 'Edit') {
+          this.session.LocationId = locId
+        }
 
         let filterOption
         if (

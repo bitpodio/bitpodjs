@@ -783,6 +783,7 @@
             view-name="eventAttendees"
             :content="content"
             :context="data"
+            :has-mobile-custom-view="true"
             class="mt-n12"
           />
         </div>
@@ -875,10 +876,7 @@
                             >
                               <v-icon small color="black">fa-pencil</v-icon>
                             </div>
-                            <div
-                              class="cursorPointer"
-                              @click="popupDialog = true"
-                            >
+                            <div class="cursorPointer" @click="onDeleteSeatMap">
                               <v-icon small color="black">fa-trash</v-icon>
                             </div>
                           </div>
@@ -1119,7 +1117,12 @@
             <v-btn text small class="ml-1" @click="openPrintForm">
               <v-icon left>fa-printer</v-icon><i18n path="Drawer.Print" />
             </v-btn>
-            <v-menu left :offset-y="offset" transition="slide-y-transition">
+            <v-menu
+              v-if="Object.keys(badgeData).length > 0"
+              left
+              :offset-y="offset"
+              transition="slide-y-transition"
+            >
               <template v-slot:activator="{ on, attrs }">
                 <v-btn icon small v-bind="attrs" v-on="on">
                   <v-icon>mdi-dots-vertical</v-icon>
@@ -1338,7 +1341,10 @@
               @change="updateReg"
             ></v-checkbox>
           </v-flex>
-          <v-flex class="d-block text-truncate">
+          <v-flex
+            v-if="eventData.LocationType === 'Venue'"
+            class="d-block text-truncate"
+          >
             <v-checkbox
               v-model="data.event.printBadgeOnCheckIn"
               dense
@@ -1407,28 +1413,6 @@
             {{ snackbarText }}
           </div>
         </v-snackbar>
-        <v-dialog v-model="popupDialog" width="500">
-          <v-card>
-            <v-card-text class="pt-3">
-              <i18n path="Common.DeleteLayout" />
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="primary" small dark dense @click="onDeleteSeatMap">
-                <i18n path="Drawer.OK" />
-              </v-btn>
-              <v-btn
-                color="primary"
-                small
-                outlined
-                dense
-                @click="popupDialog = false"
-              >
-                <i18n path="Drawer.Cancel" />
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
       </v-flex>
       <div v-if="eventForm">
         <editEventForm
@@ -1768,12 +1752,16 @@ export default {
       this.$refs.iframe.contentWindow.document.firstChild.innerHTML = this.$refs.printForm.innerHTML
     },
     async openBadgeForm() {
-      const res = await this.$refs.confirm.open(
-        this.$t('Common.NewBadge'),
-        this.$t('Messages.Warn.ReplaceBadge'),
-        { color: 'warning' }
-      )
-      if (res) {
+      if (Object.keys(this.badgeData).length > 0) {
+        const res = await this.$refs.confirm.open(
+          this.$t('Common.NewBadge'),
+          this.$t('Messages.Warn.ReplaceBadge'),
+          { color: 'warning' }
+        )
+        if (res) {
+          this.newBadge = true
+        }
+      } else {
         this.newBadge = true
       }
     },
@@ -2307,21 +2295,28 @@ export default {
     },
     async onDeleteSeatMap() {
       const URL = `${this.$bitpod.getApiUrl()}Events/${this.$route.params.id}`
-      try {
-        const res = await this.$axios.$patch(URL, { LayoutId: '' })
-        if (res) {
-          this.popupDialog = false
-          this.snackbarText = this.$t(
-            'Messages.Success.SeatLayoutDeleteSuccess'
+      const checkRes = await this.$refs.confirm.open(
+        this.$t('Common.DeleteSeatmap'),
+        this.$t('Messages.Warn.DeleteSeatMap'),
+        { color: 'error lighten-1' }
+      )
+      if (checkRes) {
+        try {
+          const res = await this.$axios.$patch(URL, { LayoutId: '' })
+          if (res) {
+            this.popupDialog = false
+            this.snackbarText = this.$t(
+              'Messages.Success.SeatLayoutDeleteSuccess'
+            )
+            this.snackbar = true
+            this.refresh()
+          }
+        } catch (e) {
+          console.error(
+            `Error in apps/event/_id/index.vue while making a Patch call to Event model in method updateEvent context: EventId:-${this.$route.params.id} \n URL:- ${URL} `,
+            e
           )
-          this.snackbar = true
-          this.refresh()
         }
-      } catch (e) {
-        console.error(
-          `Error in apps/event/_id/index.vue while making a Patch call to Event model in method updateEvent context: EventId:-${this.$route.params.id} \n URL:- ${URL} `,
-          e
-        )
       }
     },
     onEditSeatMap() {

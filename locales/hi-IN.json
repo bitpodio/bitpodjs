@@ -6,6 +6,7 @@
     "EventApp": "इवेंट",
     "AdminApp": "शासन प्रबंध",
     "SeatMap": "सीट का नक्शा",
+    "SeatMapNo": "सीट का नक्शा",
     "SurveyApp": "सर्वे",
     "HelpCenterMap": "सहायता केंद्र",
     "HomePage": "मुख पृष्ठ",
@@ -186,6 +187,7 @@
     "Name": "नाम",
     "Amount": "रकम",
     "Quantity": "मात्रा",
+    "QuantityRequired": "मात्रा *",
     "Total": "कुल",
     "Student": "छात्र",
     "RefundDetails": "रिफंड विवरण",
@@ -233,6 +235,7 @@
     "PrintBadges": "बैज प्रिंट करें",
     "CancelCheckin": "चेक इन रद्द करें",
     "CheckIn": "चेक इन",
+    "TapToCheckIn": "इसमें चेक करने के लिए टैप करें",
     "CheckedInJustnow": "आगमन की सूचना दिया ",
     "SuccessfulCheckedin": "आपने सफलतापूर्वक जाँच कर ली है।",
     "EditSetting": "सेटिंग संपादित करें",
@@ -293,6 +296,7 @@
     "BasicInformation": "मूलभूत जानकारी",
     "SessionTime": "सत्र का समय",
     "Location": "स्थान",
+    "LocationRequired": "स्थान*",
     "SendZoomJoiningInfo": "ज़ूम ज्वाइनिंग की जानकारी भेजने के लिए, आपको ज़ूम इंटीग्रेशन सेटअप करना होगा,",
     "ClickHere": "यहाँ क्लिक करें",
     "ForDocumentation": "प्रलेखन के लिए।",
@@ -340,6 +344,7 @@
     "Title": "शीर्षक*",
     "Type": "प्रकार*",
     "Price": "कीमत {currency}",
+    "PriceRequired": "कीमत* {currency}",
     "StartD": "आरंभ करने की तिथि*",
     "EndD": "अंतिम तिथि*",
     "EventHasBeenCreated": "घटना बनाई गई है।",
@@ -704,7 +709,19 @@
     "Integration": "Integration",
     "TimezoneCaption": "Timezone",
     "Chat": "बातचीत",
-    "VersionNotSupported":"इस ब्राउज़र में क्लिपबोर्ड सुलभ नहीं है।"
+    "UserGuide": "उपयोगकर्ता गाइड",
+    "UserGuideInfo": "सुविधाओं के बारे में गहराई से ज्ञान प्राप्त करें और बुनियादी कदम जानें.",
+    "Faqs": "पूछे जाने वाले प्रश्न",
+    "FaqsInfo": "समस्याओं को हल करने के लिए अक्सर पूछे जाने वाले प्रश्नों के माध्यम से ब्राउज़ करें.",
+    "HelpVideos": "वीडियो मदद करें",
+    "HelpVideosInfo": "हमारे वीडियो आपको यह समझने में मदद करेंगे कि बिटपोड का उपयोग कैसे करें.",
+    "ContactSupport": "संपर्क करें",
+    "LeaveMessage": "एक संदेश छोड़ें",
+    "HowHelp": "क्या मेरे द्वारा आपकी कोई सहायता हो सकती है?",
+    "VersionNotSupported": "इस ब्राउज़र में क्लिपबोर्ड सुलभ नहीं है।",
+    "DeleteSeatmap": "सीमैप हटाएं",
+    "DeleteNote": "नोट हटाएँ",
+    "PastEventMessage": "यह ईवेंट अब सक्रिय नहीं है."
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",
@@ -827,12 +844,13 @@
       "RefundAmountMsg": "राशि 0 से कम या उसके बराबर नहीं होनी चाहिए",
       "InvalidDisplayOrder": "Display order should not be blank and less than 1",
       "EventEndDate": "इवेंट की अंतिम तिथि वर्तमान तिथि से कम नहीं होनी चाहिए",
-      "FieldRequired": "यह फ़ील्ड आवश्यक है *",
+      "FieldRequired": "यह फ़ील्ड आवश्यक है",
       "EmailInvalid": "ईमेल अमान्य है",
       "HttpsUrl": "यह एक https url होना चाहिए",
       "OverlappingTimeSlot": "समय-स्लॉट अन्य स्लॉट के साथ अतिव्यापी",
       "EndTimeMustBeGreater": "अंत समय अधिक होना चाहिए फिर समय शुरू करें",
-      "PermissionDenied": "आपको इस ऑपरेशन को करने की अनुमति नहीं है"
+      "PermissionDenied": "आपको इस ऑपरेशन को करने की अनुमति नहीं है",
+      "roleAlreadyExits": "यह {roles} भूमिका पहले से मौजूद है"
     },
     "Warn": {
       "UniqueLinkFormat": "केवल लोअर केस अल्फ़ान्यूमेरिक अक्षर",
@@ -851,7 +869,8 @@
       "NoEvents": "अपने ईवेंट का उपयोग शुरू करने के लिए कोई लाइव और ड्राफ्ट इवेंट नहीं हैं, ईवेंट बनाएं लिंक का उपयोग करें",
       "DeleteUser": "क्या आप इस उपयोगकर्ता को हटाना चाहते हैं?",
       "NoEventsFound": "{searchKey} नाम के साथ कोई घटना नहीं मिली",
-      "ConfirmResendRegistrationEmail": "क्या आप वाकई पुष्टिकरण ईमेल को फिर से भेजना चाहते हैं?"
+      "ConfirmResendRegistrationEmail": "क्या आप वाकई पुष्टिकरण ईमेल को फिर से भेजना चाहते हैं?",
+      "DeleteSeatMap": "क्या आप इस सीटमैप को हटाना चाहते हैं?"
     },
     "Success": {
       "CopiedClipboard": "Copied to clipboard",
@@ -870,9 +889,9 @@
       "SeatLayoutDeleteSuccess": "Seat Layout deleted successfully",
       "EventPublished": "बधाई हो, आपका ईवेंट प्रकाशित हो गया है।",
       "BadgesDeleteSuccess": "बैज सफलतापूर्वक हटा दिए गए",
-      "BadgesUpdatedSuccess":"बैज सफलतापूर्वक अपडेट किया गया",
-      "EventRegSiteDetailsUpdateSuccess":"पंजीकरण पृष्ठ सेटिंग सफलतापूर्वक अपडेट की गई",
-      "UnableToAssignRole":"आपको यह क्रिया करने की अनुमति नहीं है। कृपया व्यवस्थापक से संपर्क करें",
+      "BadgesUpdatedSuccess": "बैज सफलतापूर्वक अपडेट किया गया",
+      "EventRegSiteDetailsUpdateSuccess": "पंजीकरण पृष्ठ सेटिंग सफलतापूर्वक अपडेट की गई",
+      "UnableToAssignRole": "आपको यह क्रिया करने की अनुमति नहीं है। कृपया व्यवस्थापक से संपर्क करें",
       "AttachmentAddSuccess": "अनुलग्नक सफलतापूर्वक जोड़ा गया",
       "AttachmentDeleteSuccess": "अनुलग्नक सफलतापूर्वक हटा दिया गया",
       "SeatLayoutAddSuccess": "Seat Layout added successfully",
@@ -891,7 +910,8 @@
       "EditMetadataSuccess": "टेम्प्लेट मेटाडेटा सफलतापूर्वक अपडेट किया गया",
       "EditTemplateSuccess": "टेम्प्लेट सफलतापूर्वक अपडेट किया गया",
       "DeleteSuccess": "{modelName} सफलतापूर्वक मिटाया गया",
-      "ListUpdatedSucess": "{modelName} सूची आइटम सफलतापूर्वक अपडेट किया गया।"
+      "ListUpdatedSucess": "{modelName} सूची आइटम सफलतापूर्वक अपडेट किया गया।",
+      "ThanksHelp": "हमे संपर्क करने के लिए धन्यवाद! हम तुमसे जल्द ही संपर्क करेंगे!"
     }
   },
   "$vuetify": {

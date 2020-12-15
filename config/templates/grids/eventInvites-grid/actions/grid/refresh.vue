@@ -16,7 +16,7 @@ export default {
   },
   methods: {
     refreshInvites() {
-      this.$parent.$parent.refresh()
+      this.$eventBus.$emit('eventInvites-grid-refresh', 'eventInvites')
     },
   },
 }
