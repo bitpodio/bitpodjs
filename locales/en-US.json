@@ -720,7 +720,8 @@
     "VersionNotSupported": "Clipboard is not accessible in this browser.",
     "DeleteSeatmap": "Delete Seatmap",
     "DeleteNote": "Delete Note",
-    "PastEventMessage": "This event is no longer active."
+    "PastEventMessage": "This event is no longer active.",
+    "GoToOldSite": "Go to the old site"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",

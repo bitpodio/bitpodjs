@@ -73,6 +73,7 @@
             <v-list-item>
               <OrgnaizationList />
             </v-list-item>
+            <OldSite />
             <v-list dense class="pt-0">
               <v-list-item>
                 <v-btn text small color="primary" @click="onLogout">
@@ -109,6 +110,7 @@
 import OrgnaizationList from '~/components/common/organization-list'
 import AppDrawer from '~/components/common/app-drawer'
 import Help from '~/components/common/help'
+import OldSite from '~/components/common/oldsite'
 export default {
   layout: 'seatmap',
   middleware: ['auth', 'authorization'],
@@ -116,6 +118,7 @@ export default {
     OrgnaizationList,
     AppDrawer,
     Help,
+    OldSite,
   },
   data() {
     return {
