@@ -3,7 +3,7 @@
     <v-flex
       v-if="content"
       class="d-flex align-center"
-      :class="{ 'mb-6': $device.isIOS, 'negative-margin': !$device.isIOS }"
+      :class="{ 'mb-6': $device.isIos, 'negative-margin': !$device.isIos }"
       xs12
       sm12
       md12
