@@ -31,6 +31,7 @@ query($filters: JSON, $slotFilters: JSON, $inPersonMeetingFilters: JSON) {
         node {
           id
           Name
+          Default
         }
       }
     }
