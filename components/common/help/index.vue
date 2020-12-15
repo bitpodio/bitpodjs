@@ -122,7 +122,7 @@
           <v-col class="col-12 col-md-12 py-0 mt-4">
             <v-text-field
               :value="this.$auth.$state.user.data.name"
-              label="Name"
+              :label="$t('Common.Name')"
               outlined
               disabled
               dense
@@ -131,7 +131,7 @@
           <v-col class="col-12 col-md-12 py-0">
             <v-text-field
               :value="this.$auth.$state.user.data.email"
-              label="Email"
+              :label="$t('Common.EmailCaption')"
               outlined
               disabled
               dense
@@ -140,7 +140,7 @@
           <v-col class="col-12 col-md-12 py-0">
             <v-textarea
               v-model="helpMessage"
-              label="Message"
+              :label="$t('Common.Message')"
               outlined
               no-resize
               rows="2"
@@ -174,15 +174,6 @@
 import nuxtconfig from '~/nuxt.config'
 export default {
   props: {
-    helpDocs: {
-      type: String,
-      default: 'https://event.bitpod.io/admin/docs/HelpCenter/',
-    },
-    helpFaqs: {
-      type: String,
-      default:
-        'https://event.bitpod.io/admin/docs/HelpCenter/Introduction/FAQs/views/FAQs',
-    },
     helpVideo: {
       type: String,
       default: 'https://www.youtube.com/channel/UCPE_a4LrIlP2RL04P92Bl-Q',
@@ -201,6 +192,10 @@ export default {
       snackbar: false,
       timeout: '4000',
       snackbarText: '',
+      helpDocs: this.localePath(`/admin/docs/HelpCenter/`),
+      helpFaqs: this.localePath(
+        `/admin/docs/HelpCenter/Introduction/FAQs/views/FAQs`
+      ),
     }
   },
   methods: {
