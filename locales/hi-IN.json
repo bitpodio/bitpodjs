@@ -731,6 +731,7 @@
     "EditBadge": "बैज संपादित करें",
     "DeleteEvent": "ईवेंट हटाएँ",
     "DeleteUser": "उपभोक्ता मिटायें",
+    "DeleteEventQuestion": "प्रश्न हटाएं",
     "Save": "सहेजें",
     "Prev": "पिछला",
     "Next": "आगे",
@@ -870,7 +871,8 @@
       "DeleteUser": "क्या आप इस उपयोगकर्ता को हटाना चाहते हैं?",
       "NoEventsFound": "{searchKey} नाम के साथ कोई घटना नहीं मिली",
       "ConfirmResendRegistrationEmail": "क्या आप वाकई पुष्टिकरण ईमेल को फिर से भेजना चाहते हैं?",
-      "DeleteSeatMap": "क्या आप इस सीटमैप को हटाना चाहते हैं?"
+      "DeleteSeatMap": "क्या आप इस सीटमैप को हटाना चाहते हैं?",
+      "DeleteEventQuestion":"क्या आप इस प्रश्न को हटाना चाहते हैं?"
     },
     "Success": {
       "CopiedClipboard": "Copied to clipboard",
