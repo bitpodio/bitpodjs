@@ -39,8 +39,6 @@
 </template>
 
 <script>
-import nuxtconfig from '~/nuxt.config'
-
 export default {
   data() {
     return {
@@ -59,7 +57,7 @@ export default {
       this.changeCurrentUrl(orgName)
     },
     changeCurrentUrl(orgName) {
-      let defaultPublicDomain = nuxtconfig.setting.domains.defaultPublicDomain
+      let defaultPublicDomain = this.$config.setting.domains.defaultPublicDomain
       defaultPublicDomain = defaultPublicDomain.split(',')[0]
       const basePath = this.$router.options.base
       const orgURL = `${window.location.protocol}//${orgName}-${defaultPublicDomain}${basePath}`
