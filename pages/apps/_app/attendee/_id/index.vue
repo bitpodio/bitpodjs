@@ -940,7 +940,6 @@ export default {
   },
   mounted() {
     this.getRegistrationData()
-    // this.authenticateIFrame()
   },
   methods: {
     formatDate(date) {
@@ -1097,13 +1096,15 @@ export default {
       }
     },
     authenticateIFrame() {
-      document.getElementById('rcChannel').contentWindow.postMessage(
-        {
-          externalCommand: 'login-with-token',
-          token: this.registration.chatToken,
-        },
-        '*'
-      )
+      setTimeout(() => {
+        document.getElementById('rcChannel').contentWindow.postMessage(
+          {
+            externalCommand: 'login-with-token',
+            token: this.registration.chatToken,
+          },
+          '*'
+        )
+      }, 2000)
     },
   },
 }

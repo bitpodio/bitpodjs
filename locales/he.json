@@ -709,7 +709,16 @@
     "Integration": "Integration",
     "TimezoneCaption": "Timezone",
     "Chat": "לְשׂוֹחֵחַ",
-    "VersionNotSupported": "הלוח אינו נגיש בדפדפן זה.",
+    "UserGuide": "מדריך למשתמש",
+    "UserGuideInfo": "צברו ידע מעמיק על תכונות ולמדו צעדים בסיסיים.",
+    "Faqs": "שאלות נפוצות",
+    "FaqsInfo": "עיין בשאלות נפוצות כדי לפתור בעיות.",
+    "HelpVideos": "עזרי וידיאו",
+    "HelpVideosInfo": "הסרטונים שלנו יעזרו לך להבין כיצד להשתמש ב- Bitpod.",
+    "ContactSupport": "צור קשר עם תמיכה",
+    "LeaveMessage": "השאר הודעה",
+    "HowHelp": "איך אני יכול לעזור לך?",
+    "VersionNotSupported":"הלוח אינו נגיש בדפדפן זה.",
     "DeleteSeatmap": "מחק מפת מושבים",
     "DeleteNote": "מחק הערה",
     "PastEventMessage": "אירוע זה אינו פעיל יותר."
@@ -901,7 +910,8 @@
       "EditMetadataSuccess": "מטא נתונים של תבנית עודכנו בהצלחה",
       "EditTemplateSuccess": "התבנית עודכנה בהצלחה",
       "DeleteSuccess": "{modelName} נמחק בהצלחה",
-      "ListUpdatedSucess": "{modelName} פריט הרשימה עודכן בהצלחה."
+      "ListUpdatedSucess": "{modelName} פריט הרשימה עודכן בהצלחה.",
+      "ThanksHelp": "תודה שפנית אלינו! אנחנו נחזור אליך בקרוב!"
     }
   },
   "$vuetify": {

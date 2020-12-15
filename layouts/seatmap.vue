@@ -101,18 +101,21 @@
         </v-row>
       </v-container>
     </v-main>
+    <Help />
   </v-app>
 </template>
 
 <script>
 import OrgnaizationList from '~/components/common/organization-list'
 import AppDrawer from '~/components/common/app-drawer'
+import Help from '~/components/common/help'
 export default {
   layout: 'seatmap',
   middleware: ['auth', 'authorization'],
   components: {
     OrgnaizationList,
     AppDrawer,
+    Help,
   },
   data() {
     return {
