@@ -269,6 +269,8 @@
         </v-row>
       </v-container>
     </v-main>
+
+    <Help />
   </v-app>
 </template>
 
@@ -276,11 +278,13 @@
 import OrgnaizationList from '~/components/common/organization-list'
 import AppDrawer from '~/components/common/app-drawer'
 import { rules } from '~/utility/rules.js'
+import Help from '~/components/common/help'
 export default {
   middleware: ['auth', 'authorization'],
   components: {
     OrgnaizationList,
     AppDrawer,
+    Help,
   },
   props: {
     refresh: {
