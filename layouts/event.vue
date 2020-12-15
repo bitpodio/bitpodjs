@@ -243,19 +243,7 @@
             <v-list-item>
               <OrgnaizationList />
             </v-list-item>
-            <v-list dense class="py-0">
-              <v-list-item>
-                <v-btn
-                  text
-                  small
-                  color="primary"
-                  href="https://event.bitpod.io/adm/"
-                  target="_blank"
-                >
-                  <i18n path="Common.GoToOldSite" />
-                </v-btn>
-              </v-list-item>
-            </v-list>
+            <OldSite />
             <v-list dense class="pt-0">
               <v-list-item>
                 <v-btn text small color="primary" @click="onLogout">
@@ -298,12 +286,14 @@
 import OrgnaizationList from '~/components/common/organization-list'
 import AppDrawer from '~/components/common/app-drawer'
 import Help from '~/components/common/help'
+import OldSite from '~/components/common/oldsite'
 export default {
   middleware: ['auth', 'authorization'],
   components: {
     OrgnaizationList,
     AppDrawer,
     Help,
+    OldSite,
   },
   props: {
     source: { type: String, default: '' },
