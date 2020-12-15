@@ -19,9 +19,9 @@ export default function (req, res, next) {
       query.cbVerified = true
       query.state = oldState
       res.writeHead(301, {
-        Location: `http://${host}${nuxtconfig.router.base}callback?${qs.encode(
-          query
-        )}`,
+        Location: `${
+          host && host.includes('localhost') ? 'http' : 'https'
+        }://${host}${nuxtconfig.router.base}callback?${qs.encode(query)}`,
       })
       return res.end()
     }
