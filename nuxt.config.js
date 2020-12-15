@@ -389,7 +389,7 @@ export default {
   setting: {
     domains: {
       defaultPublicDomain:
-        process.env.DEFAULT_PUBLIC_DOMAIN,
+        process.env.DEFAULT_PUBLIC_DOMAIN || 'event.bitpod.io',
     },
   },
   mappingIds: {
