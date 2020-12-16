@@ -722,7 +722,8 @@
     "DeleteNote": "Delete Note",
     "PastEventMessage": "This event is no longer active.",
     "GoToOldSite": "Go to the old site",
-    "SelectField": "Select a field"
+    "SelectField": "Select a field",
+    "DeleteImage":"Delete Image"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",

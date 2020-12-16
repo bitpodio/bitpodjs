@@ -53,7 +53,7 @@ export default {
       const check = await this.$refs.confirm.open(
         this.$t('Drawer.DeleteEventQuestion'),
         this.$t('Messages.Warn.DeleteEventQuestion'),
-        { color: 'error' }
+        { color: 'error lighten-1' }
       )
       if (check === true) {
         this.items
