@@ -869,7 +869,8 @@
       "NoEvents": "Il n'y a pas d'événements en direct et de brouillon, pour commencer à configurer votre événement, utilisez le lien Créer un événement",
       "NoEventsFound": "Aucun événement trouvé avec nom {searchKey}",
       "ConfirmResendRegistrationEmail": "Voulez-vous vraiment renvoyer les e-mails de confirmation?",
-      "DeleteSeatMap": "Voulez-vous supprimer cette carte de siège?"
+      "DeleteSeatMap": "Voulez-vous supprimer cette carte de siège?",
+      "DeleteSeatMapEvent":"Voulez-vous supprimer ce plan de siège? Cette disposition est déjà associée à l'événement."
     },
     "Success": {
       "CopiedClipboard": "Copié dans le presse-papiers",
