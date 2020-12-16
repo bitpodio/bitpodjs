@@ -721,7 +721,8 @@
     "VersionNotSupported":"הלוח אינו נגיש בדפדפן זה.",
     "DeleteSeatmap": "מחק מפת מושבים",
     "DeleteNote": "מחק הערה",
-    "PastEventMessage": "אירוע זה אינו פעיל יותר."
+    "PastEventMessage": "אירוע זה אינו פעיל יותר.",
+    "GoToOldSite": "היכנס לאתר הישן"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",
