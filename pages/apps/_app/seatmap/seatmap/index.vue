@@ -100,12 +100,32 @@ export default {
       data: {
         seatmap: {},
       },
+      eventData: {},
     }
   },
   computed: {
     content() {
       return this.contents ? this.contents.seatmaps : null
     },
+  },
+  async mounted() {
+    const filter = {
+      where: { LayoutId: this.$route.query.id },
+    }
+    const URL = `${this.$bitpod.getApiUrl()}Events?filter=${JSON.stringify(
+      filter
+    )}`
+    try {
+      const res = await this.$axios.$get(URL)
+      if (res) {
+        this.eventData = res[0]
+      }
+    } catch (e) {
+      console.error(
+        `Error in apps/seatmap/seatmap/index.vue while making a get call to Event model in mounted context: LayoutId:-${this.$route.query.id} \n URL:- ${URL} `,
+        e
+      )
+    }
   },
   methods: {
     formatDate(date) {
@@ -121,11 +141,19 @@ export default {
     },
     async onDeleteSeatMap() {
       const URL = `${this.$bitpod.getApiUrl()}SeatMaps/${this.$route.query.id}`
-      const checkRes = await this.$refs.confirm.open(
-        this.$t('Common.DeleteSeatmap'),
-        this.$t('Messages.Warn.DeleteSeatMap'),
-        { color: 'error lighten-1' }
-      )
+
+      const checkRes = this.eventData
+        ? await this.$refs.confirm.open(
+            this.$t('Common.DeleteSeatmap'),
+            this.$t('Messages.Warn.DeleteSeatMapEvent'),
+            { color: 'error lighten-1' }
+          )
+        : await this.$refs.confirm.open(
+            this.$t('Common.DeleteSeatmap'),
+            this.$t('Messages.Warn.DeleteSeatMap'),
+            { color: 'error lighten-1' }
+          )
+
       if (checkRes) {
         try {
           const res = await this.$axios.$delete(URL)
@@ -134,6 +162,22 @@ export default {
               'Messages.Success.SeatLayoutDeleteSuccess'
             )
             this.snackbar = true
+            if (this.eventData) {
+              const laypoutFilter = { LayoutId: this.$route.query.id }
+              const eventURl = `${this.$bitpod.getApiUrl()}Events/update?where=${JSON.stringify(
+                laypoutFilter
+              )}`
+              try {
+                await this.$axios.$post(eventURl, {
+                  LayoutId: '',
+                })
+              } catch (e) {
+                console.error(
+                  `Error in apps/seatmap/seatmap/index.vue while making a Post call to Event model in method onDeleteSeatMap context: LayoutId:-${this.$route.query.id} \n URL:- ${eventURl} `,
+                  e
+                )
+              }
+            }
             setTimeout(() => {
               this.$router.back()
             }, 2000)
