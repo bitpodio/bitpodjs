@@ -27,7 +27,7 @@
         :items="translate(fieldsList)"
         item-text="text"
         item-value="value"
-        :label="$t('Common.Field')"
+        :label="$t('Common.SelectField')"
         single-line
         outlined
         dense

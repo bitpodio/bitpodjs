@@ -721,7 +721,8 @@
     "DeleteSeatmap": "Delete Seatmap",
     "DeleteNote": "Delete Note",
     "PastEventMessage": "This event is no longer active.",
-    "GoToOldSite": "Go to the old site"
+    "GoToOldSite": "Go to the old site",
+    "SelectField": "Select a field"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",
@@ -892,7 +893,7 @@
       "ConnectionSetupSuccessfully": "Connection setup Successfully",
       "RecordUpdatedSuccess": "Record updated successfully.",
       "RecordCreateSuccess": "Record created successfully.",
-      "SeatLayoutDeleteSuccess": "Seat Layout deleted successfully",
+      "SeatLayoutDeleteSuccess": "Seatmap Layout deleted successfully",
       "EventPublished": "Congratulations, your event has been published.",
       "BadgesDeleteSuccess": "Badges deleted successfully",
       "BadgesUpdatedSuccess": "Badges updated successfully",
@@ -901,7 +902,7 @@
       "AttachmentDeleteSuccess": "Attachment deleted successfully",
       "SeatLayoutAddSuccess": "Seat Layout added successfully",
       "FailedFetchToken": "Failed to fetch JWT token.",
-      "SeatmapUpdateSuccess": "Seatmap Updated Successfully",
+      "SeatmapUpdateSuccess": "Seatmap Layout Updated Successfully",
       "EmailInviteSuccess": "Your email invites has been updated successfully.",
       "EmailSaveSuccess": "Your email invites has been saved successfully.",
       "TaskDeleteSuccess": "Task deleted successfully",
@@ -914,7 +915,7 @@
       "RecurringSessionUpdatedSuccess": "Recurring Session updated successfully",
       "EditMetadataSuccess": "Template metadata updated successfully",
       "EditTemplateSuccess": "Template updated successfully",
-      "DeleteSuccess": "{modelName} deleted Successfully",
+      "DeleteSuccess": "{modelName} Deleted Successfully",
       "ListUpdatedSucess": "{modelName} list item updated successfully.",
       "ThanksHelp": "Thanks for contacting us! We will get back to you soon!"
     }
