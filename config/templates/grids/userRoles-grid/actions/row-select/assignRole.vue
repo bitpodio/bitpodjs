@@ -14,9 +14,9 @@
       </template>
       <v-card>
         <v-card-title
-          class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start font-weight-regular"
+          class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
-          <h2 class="black--text pt-10 pb-9 font-weight-regular">
+          <h2 class="black--text pt-5 pb-2 font-weight-regular text-h5">
             <i18n path="Common.AssignRole" />
           </h2>
           <v-spacer></v-spacer>
@@ -36,6 +36,7 @@
                   :label="$t('Common.Username')"
                   :rules="[rules.required]"
                   outlined
+                  dense
                 ></v-text-field>
               </v-col>
               <v-col cols="12">
@@ -45,6 +46,7 @@
                   :items="rolesDropDown"
                   :label="$t('Common.Role')"
                   outlined
+                  dense
                   :error-messages="message"
                 ></v-select>
               </v-col>

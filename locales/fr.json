@@ -730,6 +730,7 @@
     "EditBadge": "Editer un insigne",
     "DeleteUser": "Supprimer l'utilisateur",
     "DeleteEvent": "Supprimer l'événement",
+    "DeleteEventQuestion": "Supprimer la question",
     "Save": "Sauvegarder",
     "Prev": "Prév.",
     "Next": "Suivant",
@@ -869,7 +870,9 @@
       "NoEvents": "Il n'y a pas d'événements en direct et de brouillon, pour commencer à configurer votre événement, utilisez le lien Créer un événement",
       "NoEventsFound": "Aucun événement trouvé avec nom {searchKey}",
       "ConfirmResendRegistrationEmail": "Voulez-vous vraiment renvoyer les e-mails de confirmation?",
-      "DeleteSeatMap": "Voulez-vous supprimer cette carte de siège?"
+      "DeleteSeatMap": "Voulez-vous supprimer cette carte de siège?",
+      "DeleteEventQuestion":"Voulez-vous supprimer cette question?"
+
     },
     "Success": {
       "CopiedClipboard": "Copié dans le presse-papiers",
