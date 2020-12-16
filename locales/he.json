@@ -722,7 +722,8 @@
     "DeleteSeatmap": "מחק מפת מושבים",
     "DeleteNote": "מחק הערה",
     "PastEventMessage": "אירוע זה אינו פעיל יותר.",
-    "GoToOldSite": "היכנס לאתר הישן"
+    "GoToOldSite": "היכנס לאתר הישן",
+    "SelectField": "בחר שדה"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",
@@ -889,7 +890,7 @@
       "ConnectionSetupSuccessfully": "Connection setup Successfully",
       "RecordUpdatedSuccess": "הרשומה עודכנה בהצלחה.",
       "RecordCreateSuccess": "הרשומה נוצרה בהצלחה.",
-      "SeatLayoutDeleteSuccess": "Seat Layout deleted successfully",
+      "SeatLayoutDeleteSuccess": "פריסת מפת המושב נמחקה בהצלחה",
       "EventPublished": "מזל טוב, האירוע שלך פורסם.",
       "BadgesDeleteSuccess": "התגים נמחקו בהצלחה",
       "BadgesUpdatedSuccess": "התגים עודכנו בהצלחה",
@@ -899,7 +900,7 @@
       "AttachmentDeleteSuccess": "הקובץ המצורף נמחק בהצלחה",
       "SeatLayoutAddSuccess": "Seat Layout added successfully",
       "FailedFetchToken": "Failed to fetch JWT token.",
-      "SeatmapUpdateSuccess": "Seatmap Updated Successfully",
+      "SeatmapUpdateSuccess": "פריסת מפת המושב עודכנה בהצלחה",
       "EmailInviteSuccess": "Your email invites has been updated successfully.",
       "EmailSaveSuccess": "Your email invites has been saved successfully.",
       "TaskDeleteSuccess": "Task deleted successfully",

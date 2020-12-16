@@ -1408,7 +1408,12 @@
             ></v-checkbox>
           </v-flex>
         </div>
-        <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
+        <v-snackbar
+          v-model="snackbar"
+          :timeout="timeout"
+          :top="true"
+          width="2px"
+        >
           <div class="fs-16 text-center">
             {{ snackbarText }}
           </div>
@@ -1556,7 +1561,7 @@ export default {
       OtherImageName: [],
       logoName: '',
       snackbar: false,
-      timeout: '4000',
+      timeout: '3000',
       snackbarText: this.$t('Messages.Success.EventDetailsUpdateSuccess'),
       logoId: '',
       getBadgeCategory: 'Guest',

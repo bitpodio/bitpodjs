@@ -722,7 +722,8 @@
     "DeleteSeatmap": "सीमैप हटाएं",
     "DeleteNote": "नोट हटाएँ",
     "PastEventMessage": "यह ईवेंट अब सक्रिय नहीं है.",
-    "GoToOldSite": "पुरानी साइट पर जाएं"
+    "GoToOldSite": "पुरानी साइट पर जाएं",
+    "SelectField": "एक क्षेत्र का चयन करें"
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",
@@ -889,7 +890,7 @@
       "ConnectionSetupSuccessfully": "Connection setup Successfully",
       "RecordUpdatedSuccess": "रिकॉर्ड सफलतापूर्वक अपडेट किया गया।",
       "RecordCreateSuccess": "रिकॉर्ड सफलतापूर्वक बनाया गया।",
-      "SeatLayoutDeleteSuccess": "Seat Layout deleted successfully",
+      "SeatLayoutDeleteSuccess": "सीटमैप लेआउट सफलतापूर्वक हटा दिया गया",
       "EventPublished": "बधाई हो, आपका ईवेंट प्रकाशित हो गया है।",
       "BadgesDeleteSuccess": "बैज सफलतापूर्वक हटा दिए गए",
       "BadgesUpdatedSuccess": "बैज सफलतापूर्वक अपडेट किया गया",
@@ -899,7 +900,7 @@
       "AttachmentDeleteSuccess": "अनुलग्नक सफलतापूर्वक हटा दिया गया",
       "SeatLayoutAddSuccess": "Seat Layout added successfully",
       "FailedFetchToken": "Failed to fetch JWT token.",
-      "SeatmapUpdateSuccess": "Seatmap Updated Successfully",
+      "SeatmapUpdateSuccess": "सीटमैप लेआउट अपडेट किया गया",
       "EmailInviteSuccess": "Your email invites has been updated successfully.",
       "EmailSaveSuccess": "Your email invites has been saved successfully.",
       "TaskDeleteSuccess": "Task deleted successfully",
@@ -912,7 +913,7 @@
       "RecurringSessionUpdatedSuccess": "आवर्ती सत्र सफलतापूर्वक अपडेट किया गया",
       "EditMetadataSuccess": "टेम्प्लेट मेटाडेटा सफलतापूर्वक अपडेट किया गया",
       "EditTemplateSuccess": "टेम्प्लेट सफलतापूर्वक अपडेट किया गया",
-      "DeleteSuccess": "{modelName} सफलतापूर्वक मिटाया गया",
+      "DeleteSuccess": "{modelName} सफलतापूर्वक हटा दिया गया",
       "ListUpdatedSucess": "{modelName} सूची आइटम सफलतापूर्वक अपडेट किया गया।",
       "ThanksHelp": "हमे संपर्क करने के लिए धन्यवाद! हम तुमसे जल्द ही संपर्क करेंगे!"
     }
