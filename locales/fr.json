@@ -707,10 +707,20 @@
     "Integration": "Integration",
     "TimezoneCaption": "Timezone",
     "Chat": "bavarder",
-    "VersionNotSupported": "Le Presse-papiers n'est pas accessible dans ce navigateur.",
+    "UserGuide": "Mode d'emploi",
+    "UserGuideInfo": "Acquérir des connaissances approfondies sur les fonctionnalités et apprendre les étapes de base.",
+    "Faqs": "FAQs",
+    "FaqsInfo": "Parcourez les questions fréquemment posées pour résoudre les problèmes.",
+    "HelpVideos": "Vidéos d'aide",
+    "HelpVideosInfo": "Nos vidéos vous aideront à comprendre comment utiliser Bitpod.",
+    "ContactSupport": "Contactez le support",
+    "LeaveMessage": "Laisser un message",
+    "HowHelp": "Comment puis-je vous aider?",
+    "VersionNotSupported":"Le Presse-papiers n'est pas accessible dans ce navigateur.",
     "DeleteSeatmap": "Supprimer la carte de siège",
     "DeleteNote": "Supprimer la note",
-    "PastEventMessage": "Cet événement n'est plus actif."
+    "PastEventMessage": "Cet événement n'est plus actif.",
+    "GoToOldSite": "Aller sur l'ancien site"
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",
@@ -899,7 +909,8 @@
       "EditMetadataSuccess": "Les métadonnées du modèle ont bien été mises à jour",
       "EditTemplateSuccess": "Modèle mis à jour avec succès",
       "DeleteSuccess": "{modelName} Supprimé avec succès",
-      "ListUpdatedSucess": "{modelName} élément de liste mis à jour avec succès."
+      "ListUpdatedSucess": "{modelName} élément de liste mis à jour avec succès.",
+      "ThanksHelp": "Merci de nous avoir contacté! Nous reviendrons vers vous bientôt!"
     }
   },
   "$vuetify": {

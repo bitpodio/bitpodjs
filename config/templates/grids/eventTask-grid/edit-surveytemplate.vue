@@ -306,6 +306,7 @@ export default {
           filters: {
             where: {
               Type: 'Survey Email Template',
+              Default: true,
             },
           },
           where: {},
@@ -320,6 +321,7 @@ export default {
             .replaceAll('</td>', '')
           this.templateID = this.editItem[0].id
           this.templateSubject = this.editItem[0].Subject
+          this.subject = this.editItem[0].Subject
         }
         return formatGQLResult(data, 'MarketingTemplate')
       },

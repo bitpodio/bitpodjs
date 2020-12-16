@@ -708,10 +708,20 @@
     "Integration": "Integration",
     "TimezoneCaption": "Timezone",
     "Chat": "Chat",
+    "UserGuide": "User Guide",
+    "UserGuideInfo": "Gain in-depth knowledge about features and learn basic steps.",
+    "Faqs": "FAQs",
+    "FaqsInfo": "Browse through frequently asked questions to resolve problems.",
+    "HelpVideos": "Help Videos",
+    "HelpVideosInfo": "Our videos will help you understand how to use of Bitpod.",
+    "ContactSupport": "Contact Support",
+    "LeaveMessage": "Leave a Message",
+    "HowHelp": "How may I help you?",
     "VersionNotSupported": "Clipboard is not accessible in this browser.",
     "DeleteSeatmap": "Delete Seatmap",
     "DeleteNote": "Delete Note",
-    "PastEventMessage": "This event is no longer active."
+    "PastEventMessage": "This event is no longer active.",
+    "GoToOldSite": "Go to the old site"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",
@@ -902,7 +912,8 @@
       "EditMetadataSuccess": "Template metadata updated successfully",
       "EditTemplateSuccess": "Template updated successfully",
       "DeleteSuccess": "{modelName} deleted Successfully",
-      "ListUpdatedSucess": "{modelName} list item updated successfully."
+      "ListUpdatedSucess": "{modelName} list item updated successfully.",
+      "ThanksHelp": "Thanks for contacting us! We will get back to you soon!"
     }
   },
   "$vuetify": {

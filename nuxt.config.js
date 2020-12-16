@@ -246,10 +246,17 @@ export default {
       //* refer getApiUrl() in /api/index.js for possible changes on changing the following line
       backendBaseUrl: process.env.PUBLIC_DOMAIN || 'event.test.bitpod.io',
       eventUrl: process.env.GET_EVENT_URL || 'event.test.bitpod.io',
+      crmUrl: process.env.GET_CRM_URL || 'crmivijd.test.bitpod.io',
     },
     cdnUri:
       'https://res.cloudinary.com/mytestlogo/image/upload/bitpodjs/images/',
     cdnCsvUri: 'https://res.cloudinary.com/mytestlogo/raw/upload/',
+    setting: {
+      domains: {
+        defaultPublicDomain:
+          process.env.DEFAULT_PUBLIC_DOMAIN || 'event.test.bitpod.io',
+      },
+    },
   },
 
   /*
@@ -385,12 +392,7 @@ export default {
       process.env.GOOGLE_MAPS_GEOCODE_API ||
       'https://maps.googleapis.com/maps/api/geocode/json',
   },
-  setting: {
-    domains: {
-      defaultPublicDomain:
-        process.env.DEFAULT_PUBLIC_DOMAIN || 'event.test.bitpod.io',
-    },
-  },
+
   mappingIds: {
     contact: '5f7ac71841a664000a774fc0',
     attendee: '5f7b46475ca471000bfecf9d',
