@@ -1,7 +1,7 @@
 <template>
   <tr>
     <td>
-      <div class="d-flex align-center py-4 mx-n3">
+      <div class="d-flex align-center py-3 mx-n3">
         <v-simple-checkbox
           class="pr-3"
           :value="isSelected"
