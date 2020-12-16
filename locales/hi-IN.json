@@ -874,6 +874,7 @@
       "NoEventsFound": "{searchKey} नाम के साथ कोई घटना नहीं मिली",
       "ConfirmResendRegistrationEmail": "क्या आप वाकई पुष्टिकरण ईमेल को फिर से भेजना चाहते हैं?",
       "DeleteSeatMap": "क्या आप इस सीटमैप को हटाना चाहते हैं?",
+      "DeleteSeatMapEvent":"क्या आप इस सीट का नक्शा हटाना चाहते हैं? यह लेआउट पहले से ही ईवेंट के साथ संबद्ध है।",
       "DeleteEventQuestion":"क्या आप इस प्रश्न को हटाना चाहते हैं?"
     },
     "Success": {

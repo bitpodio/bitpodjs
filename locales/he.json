@@ -874,6 +874,7 @@
       "NoEventsFound": "לא נמצאו אירועים עם שם {searchKey}",
       "ConfirmResendRegistrationEmail": "האם אתה בטוח שברצונך לשלוח שוב הודעות אישור?",
       "DeleteSeatMap": "האם אתה רוצה למחוק את מפת המושב הזו?",
+      "DeleteSeatMapEvent":"האם אתה רוצה למחוק את מפת המושבים הזו? פריסה זו כבר משויכת לאירוע.",
       "DeleteEventQuestion":"האם ברצונך למחוק שאלה זו?"
     },
     "Success": {
