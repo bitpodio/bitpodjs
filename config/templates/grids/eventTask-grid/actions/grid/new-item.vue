@@ -353,7 +353,6 @@ export default {
   },
   watch: {
     dialog(newValue, oldValue) {
-      debugger
       if (newValue) {
         this.task = { ...this.item } || {}
       }
@@ -413,7 +412,6 @@ export default {
       this.isDueDate = false
     },
     changeCategory(value) {
-      debugger
       this.isAction = this.task.Status === 'Wait for an Action'
       this.isSurvey = value === 'Survey Invite'
       if (
@@ -433,7 +431,6 @@ export default {
       }
     },
     changeStatus(value) {
-      debugger
       if (value === 'Wait for an Action') {
         this.isAction = true
       } else {
@@ -459,7 +456,6 @@ export default {
       }
     },
     changeSurvey(value, context) {
-      debugger
       const items = context.items
       const filterObj = items.filter(({ id }) => id === value)
       this.task.SurveyName = filterObj[0].name
@@ -482,7 +478,6 @@ export default {
       this.resetForm()
     },
     async onSave() {
-      debugger
       this.isSaveButtonDisabled = true
       const eventId = this.$route.params.id
       const baseUrl = this.$bitpod.getApiUrl()
