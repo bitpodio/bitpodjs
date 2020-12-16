@@ -13,7 +13,9 @@
                     <v-list-item-avatar
                       v-if="
                         data.organization &&
-                        data.organization.Image.length === 0
+                        (data.organization.Image
+                          ? data.organization.Image.length === 0
+                          : false)
                       "
                       size="62"
                     >
@@ -29,7 +31,7 @@
                       </v-avatar>
                     </v-list-item-avatar>
                     <v-img
-                      v-else
+                      v-else-if="data.organization && data.organization.Image"
                       :src="getAttachmentLink(data.organization.Image[0], true)"
                       :lazy-src="
                         getAttachmentLink(data.organization.Image[0], true)
