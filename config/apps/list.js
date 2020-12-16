@@ -30,7 +30,7 @@ export const appList = (store) => [
     label: 'Common.SurveyApp',
     css: 'fa fa-check-circle fs-36 success--text',
     type: 'url',
-    href: 'https://dev-survey.bitpod.io/',
+    href: 'https://survey.bitpod.io/',
     roles: ['$orguser'],
   },
   {
