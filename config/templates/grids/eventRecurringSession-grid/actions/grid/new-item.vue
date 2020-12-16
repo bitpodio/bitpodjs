@@ -449,7 +449,11 @@
                 </v-flex>
               </div>
               <v-row v-if="actionType === 'New' && dialog === true">
-                <v-col v-for="(day, k) in days" :key="k" cols="4" class="py-0">
+                <v-col
+                  v-for="(day, k) in days"
+                  :key="k"
+                  class="py-0 col-sm-4 col-xs-6"
+                >
                   <v-checkbox
                     v-model="day.Value"
                     :label="day.Label"

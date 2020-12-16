@@ -246,7 +246,7 @@
         </v-data-table>
       </v-skeleton-loader>
       <div
-        v-if="viewName === 'live and draft event'"
+        v-if="viewName === 'live and draft event' && loading === true"
         class="d-flex flex-sm-wrap flex-column flex-sm-row"
       >
         <v-skeleton-loader
@@ -1017,6 +1017,8 @@ export default {
   }
   .sticky.grid-actions-container {
     margin-top: -77px;
+    height: 50px;
+    margin-bottom: 10px;
   }
   .sticky_sentinel {
     position: absolute;
