@@ -8,17 +8,12 @@
     </div>
     <td class="pb-4 pt-10">
       <div class="d-flex align-center">
-        <v-avatar color="primary" size="48" class="mx-2">
+        <v-avatar tile color="primary" size="56" class="mx-2">
           <span class="white--text Twitter">{{ item.FullName }}</span>
         </v-avatar>
         <div>
-          <ColumnRegistrationFullname
-            :item="item"
-            :context="context"
-            :value="item.FullName"
-            class="text-body-1"
-          />
-          <ColumnStatus :value="item.Status" />
+          <p class="mb-1 fs-larger">{{ item.FullName }}</p>
+          <ColumnStatus :value="item.Status" :outlined="true" :label="true" />
         </div>
       </div>
     </td>
@@ -35,11 +30,9 @@
 
 <script>
 import ColumnCheckin from './column-checkin.vue'
-import ColumnRegistrationFullname from './column-registration.fullname.vue'
 import ColumnStatus from './column-status.vue'
 export default {
   components: {
-    ColumnRegistrationFullname,
     ColumnStatus,
     ColumnCheckin,
   },
@@ -75,5 +68,8 @@ export default {
 .align-checkbox {
   right: 18px;
   padding-top: 10px;
+}
+.fs-larger {
+  font-size: 1.25rem;
 }
 </style>

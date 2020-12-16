@@ -1,5 +1,5 @@
 <template>
-  <div>{{ timeAgo }}</div>
+  <div :class="{ 'fs-smaller': smallFontSize }">{{ timeAgo }}</div>
 </template>
 <script>
 export default {
@@ -7,6 +7,10 @@ export default {
     date: {
       type: Date,
       required: true,
+    },
+    smallFontSize: {
+      type: Boolean,
+      default: false,
     },
   },
   computed: {
@@ -66,3 +70,8 @@ export default {
   },
 }
 </script>
+<style scoped>
+.fs-smaller {
+  font-size: 0.75rem;
+}
+</style>

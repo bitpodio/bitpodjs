@@ -1,10 +1,12 @@
 <template>
-  <div class="positionRelative position">
+  <div :class="{ 'positionRelative position': !isCustomMobile }">
     <div v-if="item.CheckIn === null && item.Status !== 'Failed'" class="pt-1">
-      <div v-if="isCustomMobile" class="d-flex flex-column">
-        <v-icon large color="gray" @click="updateDate(item.id)">
-          mdi-minus-circle-outline
-        </v-icon>
+      <div v-if="isCustomMobile" class="text-center">
+        <div class="d-flex justify-center">
+          <v-btn icon color="gray" @click="updateDate(item.id)">
+            <v-icon x-large>fa-minus-circle</v-icon>
+          </v-btn>
+        </div>
         <p class="text-caption mb-0"><i18n path="Common.TapToCheckIn" /></p>
       </div>
       <v-chip
@@ -22,12 +24,16 @@
     </div>
     <div
       v-if="item.CheckIn !== null && item.Status !== 'Failed' && isCustomMobile"
-      class="d-flex flex-column text-center"
+      class="text-center"
     >
-      <v-icon large color="success">
-        mdi-check-circle-outline
-      </v-icon>
-      <timeAgo :date="item.CheckIn" />
+      <div class="d-flex justify-center">
+        <v-icon x-large color="success">
+          fa-check-circle
+        </v-icon>
+      </div>
+      <div>
+        <timeAgo :date="item.CheckIn" :small-font-size="true" />
+      </div>
     </div>
     <div
       v-if="
