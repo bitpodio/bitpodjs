@@ -7,11 +7,17 @@
         red: value === 'Failed',
         orange: value === 'Pending',
         success: value === 'Success',
+        'orange--text': value === 'Cancelled' && outlined,
+        'red--text': value === 'Failed' && outlined,
+        'orange--text': value === 'Pending' && outlined,
+        'green--text': value === 'Success' && outlined,
       }"
-      text-color="white"
+      :label="label"
+      :outlined="outlined"
+      :text-color="outlined ? '' : 'white'"
     >
-      {{ value }}</v-chip
-    >
+      {{ value }}
+    </v-chip>
   </div>
 </template>
 
@@ -22,6 +28,14 @@ export default {
       type: String,
       default: '',
       required: false,
+    },
+    outlined: {
+      type: Boolean,
+      default: false,
+    },
+    label: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {

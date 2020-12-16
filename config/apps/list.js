@@ -2,7 +2,7 @@ export const appList = (store) => [
   {
     name: 'event',
     label: 'Common.EventApp',
-    css: 'fa fa-video fs-36 success--text',
+    css: 'fa fa-video fs-36 red--text',
     type: 'route',
     route: '/apps/event/list/Event/live and draft event',
     roles: ['$orguser', '$orgowner', 'EventAdmin', 'EventManager'],
@@ -20,7 +20,7 @@ export const appList = (store) => [
   {
     name: 'HelpCenter',
     label: 'Common.HelpCenterMap',
-    css: 'fa fa-help-circle fs-36 warning--text',
+    css: 'fa fa-help-circle fs-36 success--text',
     type: 'route',
     route: '/apps/help-center/',
     roles: ['$orguser'],
@@ -28,7 +28,7 @@ export const appList = (store) => [
   {
     name: 'Survey',
     label: 'Common.SurveyApp',
-    css: 'fa fa-check-circle fs-36 success--text',
+    css: 'fa fa-check-circle fs-36 primary--text',
     type: 'url',
     href: 'https://survey.bitpod.io/',
     roles: ['$orguser'],
@@ -36,7 +36,7 @@ export const appList = (store) => [
   {
     name: 'seatmap',
     label: 'Common.SeatMapNo',
-    css: 'fa fa-grid-alt fs-36 primary--text',
+    css: 'fa fa-grid-alt fs-36 success--text',
     type: 'route',
     route: '/apps/seatmap/list/seatmaps/seatmaps',
     roles: ['$orguser'],

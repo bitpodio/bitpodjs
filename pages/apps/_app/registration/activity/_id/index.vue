@@ -156,6 +156,9 @@ export default {
     formatField(fieldValue) {
       return fieldValue || '-'
     },
+    goBack() {
+      this.$router.back()
+    },
   },
   apollo: {
     data: {
