@@ -246,7 +246,7 @@
         </v-data-table>
       </v-skeleton-loader>
       <div
-        v-if="viewName === 'live and draft event'"
+        v-if="viewName === 'live and draft event' && loading === true"
         class="d-flex flex-sm-wrap flex-column flex-sm-row"
       >
         <v-skeleton-loader
