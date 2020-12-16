@@ -5,8 +5,8 @@
         <component :is="errorTemplate || null" :error="error" />
       </div>
     </template>
-    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
-      <div class="text-center">{{ snackbarText }}</div>
+    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true" width="2px">
+      <div class="fs-16 text-center">{{ snackbarText }}</div>
     </v-snackbar>
     <div v-if="!error" :key="error">
       <div
@@ -526,7 +526,7 @@ export default {
       error: '',
       errorTemplate: null,
       snackbar: false,
-      timeout: 1000,
+      timeout: 3000,
       snackbarText: '',
       hasGridOption: false,
       hasRowOption: false,
