@@ -187,6 +187,7 @@ export default {
         Name: '',
         Email: '',
         Message: '',
+        FullName: '',
       },
       helpMessage: '',
       snackbar: false,
@@ -201,6 +202,7 @@ export default {
   methods: {
     async onSave() {
       this.formData.Name = this.$auth.$state.user.data.name
+      this.formData.FullName = this.$auth.$state.user.data.name
       this.formData.Email = this.$auth.$state.user.data.email
       this.formData.Message = this.helpMessage
       try {
