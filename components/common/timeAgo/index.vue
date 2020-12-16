@@ -1,5 +1,7 @@
 <template>
-  <div :class="{ 'fs-smaller': smallFontSize }">{{ timeAgo }}</div>
+  <div :class="{ 'fs-smaller': smallFontSize, 'green--text': isSuccess }">
+    {{ timeAgo }}
+  </div>
 </template>
 <script>
 export default {
@@ -9,6 +11,10 @@ export default {
       required: true,
     },
     smallFontSize: {
+      type: Boolean,
+      default: false,
+    },
+    isSuccess: {
       type: Boolean,
       default: false,
     },

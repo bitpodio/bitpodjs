@@ -32,7 +32,11 @@
         </v-icon>
       </div>
       <div>
-        <timeAgo :date="item.CheckIn" :small-font-size="true" />
+        <timeAgo
+          :date="item.CheckIn"
+          :small-font-size="true"
+          :is-success="true"
+        />
       </div>
     </div>
     <div
