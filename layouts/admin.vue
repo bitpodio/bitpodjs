@@ -210,9 +210,9 @@
         >
           <v-card>
             <v-card-title
-              class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start font-weight-regular"
+              class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
             >
-              <h2 class="black--text pt-10 pb-9 font-weight-regular">
+              <h2 class="black--text pt-5 pb-4 font-weight-regular text-h5">
                 <i18n path="Common.NewUser" />
               </h2>
               <v-spacer></v-spacer>

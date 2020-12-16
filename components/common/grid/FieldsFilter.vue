@@ -1,11 +1,6 @@
 <template>
   <v-col class="text-center px-0">
-    <v-menu
-      v-model="menu"
-      :close-on-content-click="false"
-      :nudge-width="500"
-      offset-x
-    >
+    <v-dialog v-model="menu" :close-on-content-click="false" max-width="700">
       <template v-slot:activator="{ on, attrs }">
         <v-btn
           text
@@ -89,7 +84,7 @@
           /></v-btn>
         </v-card-actions>
       </v-card>
-    </v-menu>
+    </v-dialog>
   </v-col>
 </template>
 
@@ -125,6 +120,7 @@ export default {
       rules: [...this.value.rules] || [],
       ruleCondition: this.value.ruleCondition,
       backupRules: [],
+      filterCount: 0,
     }
   },
   watch: {
@@ -132,6 +128,10 @@ export default {
       if (newVal && this.backupRules.length) {
         this.rules.push(...this.backupRules)
         this.backupRules = []
+      }
+      if (newVal === true && this.filterCount === 0) {
+        this.filterCount = 1
+        this.onAddFilter()
       }
     },
   },
@@ -155,10 +155,9 @@ export default {
       this.filterFields = { ...this.filterFields }
     },
     onAddFilter() {
-      const fieldName = Object.keys(this.fields)[0]
       this.rules = [
         ...this.rules,
-        { field: fieldName, operator: 'contains', value: '' },
+        { field: '', operator: 'contains', value: '' },
       ]
     },
     onRuleDelete(index) {
