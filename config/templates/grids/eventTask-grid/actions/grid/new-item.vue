@@ -424,7 +424,7 @@ export default {
       delete this.task.Time
       delete this.task.Timezone
     },
-    removeSurvey(){
+    removeSurvey() {
       delete this.task.SurveyId
     },
     changeCategory(value) {
