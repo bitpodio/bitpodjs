@@ -530,7 +530,6 @@ export default {
       this.verifyUniqueLink(event.currentTarget.value)
     },
     verifyUniqueLink(value) {
-      debugger
       value = value.toLowerCase().replace(/\s/g, '')
       value = value.trim()
       this.UniqLink = value
