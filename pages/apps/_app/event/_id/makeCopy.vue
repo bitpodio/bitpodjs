@@ -530,6 +530,7 @@ export default {
       this.verifyUniqueLink(event.currentTarget.value)
     },
     verifyUniqueLink(value) {
+      debugger
       value = value.toLowerCase().replace(/\s/g, '')
       value = value.trim()
       this.UniqLink = value
@@ -558,7 +559,10 @@ export default {
       if (result.data.Event.EventCount > 0) {
         this.isInvalidEventLink = true
         this.uniqueLinkMessage = this.$t('Messages.Error.UniqueLinkDuplicate')
-      } else this.isInvalidEventLink = false
+      } else {
+        this.isInvalidEventLink = false
+        this.uniqueLinkMessage = ''
+      }
     },
     returnToCenter() {
       this.$refs.gMap && this.$refs.gMap.map.setCenter(this.locations[0])

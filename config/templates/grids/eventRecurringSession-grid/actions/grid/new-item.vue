@@ -271,7 +271,10 @@
                         ref="venueAddress.AddressLine"
                         v-model="venueAddress.AddressLine"
                         class="form-control pa-3 d-block rounded"
-                        :placeholder="!addressClicked && $t('Common.Address')"
+                        :placeholder="
+                          !addressClicked && $t('Common.AddressRequired')
+                        "
+                        :rules="[addressValidation]"
                         :required="true"
                         @placechanged="getAddressData"
                         @change="changeAddressData($event)"
@@ -280,12 +283,9 @@
                       ></vue-google-autocomplete>
                     </no-ssr>
                   </div>
-                  <div
-                    v-show="addresslineMessage !== ''"
-                    class="red--text pa-3 pt-0 body-1"
-                  >
-                    {{ addresslineMessage }}
-                  </div>
+                  <span v-if="addresslineMessage != ''" style="color: red;">{{
+                    addresslineMessage
+                  }}</span>
                 </v-col>
                 <v-col
                   v-if="session.LocationType === 'Custom'"
@@ -521,7 +521,7 @@
             <SaveBtn
               v-if="dialog"
               color="primary"
-              :disabled="!valid"
+              :disabled="!valid || venueAddress.AddressLine === ''"
               depressed
               :action="onSave"
               class="ml-2"
@@ -880,6 +880,13 @@ export default {
         },
       ]
     },
+    // addressValidation() {
+    //   if (this.venueAddress.AddressLine === '') {
+    //     const message = this.$t('Messages.Error.ThisFieldRequired')
+    //     return message
+    //   }
+    //   return true
+    // },
   },
   watch: {
     items(newVal, oldVal) {
@@ -1145,8 +1152,10 @@ export default {
           ? this.$t('Messages.Error.ThisFieldRequired')
           : ''
       if (value === ' ' || value === '') {
+        this.valid = false
         this.addressClicked = false
       } else {
+        this.valid = true
         this.addressClicked = true
         this.venueAddress.AddressLine = value
       }
