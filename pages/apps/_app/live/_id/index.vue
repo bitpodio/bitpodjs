@@ -17,7 +17,6 @@
 </template>
 <script>
 import { JitsiMeet } from '@mycure/vue-jitsi-meet'
-import nuxtconfig from '~/nuxt.config'
 export default {
   layout: 'live',
   components: {
@@ -40,7 +39,7 @@ export default {
   },
   computed: {
     getDomain() {
-      return nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK
+      return this.$config.integrationLinks.BITOPD_VIRTUAL_LINK
     },
     jitsiOptions() {
       return {

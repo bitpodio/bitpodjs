@@ -757,7 +757,7 @@ export default {
     },
 
     eventLinkHint() {
-      return `${nuxtconfig.integrationLinks.EVENT_LINK_HINT}${this.eventData.UniqLink}`
+      return `${this.$config.integrationLinks.EVENT_LINK_HINT}${this.eventData.UniqLink}`
     },
     eventLinkLabel() {
       return `${this.$bitpod.getApiUrl().replace('svc/api', 'e')}`
@@ -799,7 +799,7 @@ export default {
       ]
     },
     getBitpodVirtualLink() {
-      return `https://${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}/${
+      return `https://${this.$config.integrationLinks.BITOPD_VIRTUAL_LINK}/${
         this.eventLinkHint.split('/')[4]
       }`
     },
