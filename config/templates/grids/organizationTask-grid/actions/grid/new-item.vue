@@ -434,7 +434,6 @@ export default {
       }
     },
     changeStatus(value) {
-      debugger
       if (value === 'Wait for an Action') {
         this.removeDueDate()
         this.isAction = true
