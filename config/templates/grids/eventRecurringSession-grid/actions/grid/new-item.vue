@@ -543,7 +543,6 @@ import registrationStatusOptions from '~/config/apps/event/gql/registrationStatu
 import location from '~/config/apps/event/gql/location.gql'
 import { getIdFromAtob } from '~/utility'
 import CustomDate from '~/components/common/form/date.vue'
-import nuxtconfig from '~/nuxt.config'
 import SaveBtn from '~/components/common/saveButton'
 export default {
   components: {
@@ -628,11 +627,11 @@ export default {
       timeSlotMessage: '',
       addresslineMessage: '',
       ScheduledType: 'Over a period of rolling days',
-      zoomDocumentLink: nuxtconfig.integrationLinks.ZOOM_DOCUMENT_LINK,
+      zoomDocumentLink: this.$config.integrationLinks.ZOOM_DOCUMENT_LINK,
       startDateMessage: '',
       endDateMessage: '',
-      googleMeetDocumentLink:
-        nuxtconfig.integrationLinks.GOOGLE_MEET_DOCUMENT_LINK,
+      googleMeetDocumentLink: this.$config.integrationLinks
+        .GOOGLE_MEET_DOCUMENT_LINK,
       sessionResult: [],
       session,
       venueAddress,
@@ -938,7 +937,7 @@ export default {
         5,
         8
       )}-${randomStr.substring(8, 11)}`
-      this.session.BitpodVirtualLink = `https://${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}${roomName}`
+      this.session.BitpodVirtualLink = `https://${this.$config.integrationLinks.BITOPD_VIRTUAL_LINK}${roomName}`
     },
     closeForm() {
       this.dialog = false

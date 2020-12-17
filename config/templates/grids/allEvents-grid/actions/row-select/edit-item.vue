@@ -414,7 +414,6 @@ import { formatGQLResult } from '~/utility/gql.js'
 import Timezone from '~/components/common/form/timezone'
 import SaveBtn from '~/components/common/saveButton'
 import File from '~/components/common/form/file.vue'
-import nuxtconfig from '~/nuxt.config'
 export default {
   components: {
     RichText: () =>
@@ -499,7 +498,7 @@ export default {
       return this.contents ? this.contents.Event : null
     },
     virtualLink() {
-      return `https://${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}/${this.formData.UniqLink}`
+      return `https://${this.$config.integrationLinks.BITOPD_VIRTUAL_LINK}/${this.formData.UniqLink}`
     },
     addressValidation() {
       if (this.addressLine === '') {

@@ -275,7 +275,6 @@ import event from '~/config/apps/event/gql/event.gql'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import Timezone from '~/components/common/form/timezone'
-import nuxtconfig from '~/nuxt.config'
 import SaveButton from '~/components/common/saveButton'
 
 export default {
@@ -352,7 +351,7 @@ export default {
       return this.contents ? this.contents.Event : null
     },
     virtualLink() {
-      return `https://${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}/${this.formData.UniqLink}`
+      return `https://${this.$config.integrationLinks.BITOPD_VIRTUAL_LINK}/${this.formData.UniqLink}`
     },
     addressValidation() {
       if (this.addressLine === '') {

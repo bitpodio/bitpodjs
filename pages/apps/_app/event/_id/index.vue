@@ -2106,7 +2106,7 @@ export default {
       return regUrl
     },
     viewBitpodVirtualLink() {
-      return `https://${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}/${this.data.event.UniqLink}`
+      return `https://${this.$config.integrationLinks.BITOPD_VIRTUAL_LINK}/${this.data.event.UniqLink}`
     },
     formatDate(date) {
       return date ? format(new Date(date), 'PPp') : ''
