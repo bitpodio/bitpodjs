@@ -86,7 +86,7 @@
                 </v-col>
                 <v-col v-if="isDueDate" cols="12" sm="6" md="4">
                   <v-datetime-picker
-                    v-model="task.DueDate"
+                    v-model="dueDate"
                     :text-field-props="dueDateProps()"
                     :rules="[rules.required]"
                     :label="$t('Common.DueDateRequired')"
@@ -192,9 +192,6 @@ export default {
   data() {
     let task = { ...this.item } || {}
     task = task || {}
-    const intDay = task.Day || 1
-    task.Day =
-      Number(intDay).toString().length === 1 ? `0${intDay}` : `${intDay}`
     const isAction = this.item && this.item.Status === 'Wait for an Action'
     let isSurvey = false
     let isDay = false
@@ -221,6 +218,7 @@ export default {
       valid: false,
       snackbar: false,
       timeout: 2000,
+      dueDate: null,
       rules: rules(this.$i18n),
       duplicateMessage: '',
       isSaveButtonDisabled: false,
@@ -366,6 +364,14 @@ export default {
           this.isTime = true
         }
       }
+      if (this.item && this.item.Category === 'Survey Invite') {
+        this.isSurvey = true
+        if (this.item.Status === 'Schedule') {
+          this.isDueDate = true
+          this.isTimezone = true
+          this.dueDate = new Date(this.item.DueDate)
+        }
+      }
     },
   },
 
@@ -477,6 +483,7 @@ export default {
       const baseUrl = this.$bitpod.getApiUrl()
       this.task.Day = parseInt(this.Day)
       this.task.Type = 'Scheduled'
+      this.task.DueDate = this.dueDate
       let res = null
       try {
         if (this.item && this.item.id) {
