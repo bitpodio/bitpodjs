@@ -140,6 +140,7 @@
         <v-data-table
           v-model="selectedItems"
           dense
+          :key="componentRerenderKey"
           :headers="translate(headers)"
           :items="tableData.items"
           :single-select="singleSelect"
@@ -534,6 +535,7 @@ export default {
       footerObserver: null,
       winWidth: window.innerWidth,
       itemPerPage: 0,
+      componentRerenderKey: 0,
     }
   },
   computed: {
@@ -611,6 +613,7 @@ export default {
         [`templates/grids/${this.templateFolderName}/${slot}.vue`],
         false
       )
+      this.componentRerenderKey += this.slotTemplates.body ? 1 : 0
     })
     const templateName = this.templateFolderName
     ACTION_TYPES.forEach(async (actionType) => {
