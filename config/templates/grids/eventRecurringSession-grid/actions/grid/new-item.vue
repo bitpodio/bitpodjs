@@ -880,13 +880,6 @@ export default {
         },
       ]
     },
-    // addressValidation() {
-    //   if (this.venueAddress.AddressLine === '') {
-    //     const message = this.$t('Messages.Error.ThisFieldRequired')
-    //     return message
-    //   }
-    //   return true
-    // },
   },
   watch: {
     items(newVal, oldVal) {
