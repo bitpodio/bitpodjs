@@ -26,7 +26,6 @@
 </template>
 
 <script>
-import nuxtconfig from '~/nuxt.config'
 export default {
   props: {
     item: {
@@ -59,7 +58,7 @@ export default {
             this.item.BitpodVirtualLink.split('/')[3]) ||
           'undefined'
         this.link = `apps/event/live/${roomName}?e=${this.$route.params.id}&n=${this.item.Name}`
-        this.copyLink = `https://${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}/${roomName}`
+        this.copyLink = `https://${this.$config.integrationLinks.BITOPD_VIRTUAL_LINK}/${roomName}`
       } else if (this.item.LocationType === 'Online event') {
         this.link = this.item.WebinarLink || ''
         this.copyLink = this.link

@@ -26,7 +26,6 @@
 </template>
 
 <script>
-import nuxtconfig from '~/nuxt.config'
 export default {
   props: {
     item: {
@@ -63,7 +62,7 @@ export default {
           if (res.LocationType === 'Bitpod Virtual' && this.item.ZoomLink) {
             const roomName = this.item.ZoomLink.split('/')[3]
             this.link = `apps/event/live/${roomName}?e=${this.$route.params.id}&n=${this.sessionName}`
-            this.copyLink = `https://${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}/${roomName}`
+            this.copyLink = `https://${this.$config.integrationLinks.BITOPD_VIRTUAL_LINK}/${roomName}`
             this.linkReady = true
           }
           if (res.LocationType === 'Zoom' && this.item.ZoomLink) {

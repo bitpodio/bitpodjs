@@ -1042,7 +1042,6 @@ import { formatGQLResult } from '~/utility/gql.js'
 import { getIdFromAtob } from '~/utility'
 import CustomDate from '~/components/common/form/date.vue'
 import { rules } from '~/utility/rules.js'
-import nuxtconfig from '~/nuxt.config'
 import SaveBtn from '~/components/common/saveButton'
 
 const ObjectID5 = (
@@ -1126,9 +1125,9 @@ export default {
       ZipCode: '',
       SessionTicket: [],
       TicketName: '',
-      zoomDocumentLink: nuxtconfig.integrationLinks.ZOOM_DOCUMENT_LINK,
-      googleMeetDocumentLink:
-        nuxtconfig.integrationLinks.GOOGLE_MEET_DOCUMENT_LINK,
+      zoomDocumentLink: this.$config.integrationLinks.ZOOM_DOCUMENT_LINK,
+      googleMeetDocumentLink: this.$config.integrationLinks
+        .GOOGLE_MEET_DOCUMENT_LINK,
       selectedSession: '',
       ScheduledType: '',
       RollingDays: '',
@@ -1338,7 +1337,7 @@ export default {
       ]
     },
     eventLinkHint() {
-      return `${nuxtconfig.integrationLinks.EVENT_LINK_HINT}${this.eventData.UniqLink}`
+      return `${this.$config.integrationLinks.EVENT_LINK_HINT}${this.eventData.UniqLink}`
     },
     eventLinkLabel() {
       return `${this.$bitpod.getApiUrl().replace('svc/api', 'e')}`
@@ -2304,7 +2303,7 @@ export default {
                 5
               )}-${randomStr.substring(5, 8)}-${randomStr.substring(8, 11)}`
               return Object.assign(i, {
-                BitpodVirtualLink: `https://${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}${roomName}`,
+                BitpodVirtualLink: `https://${this.$config.integrationLinks.BITOPD_VIRTUAL_LINK}${roomName}`,
               })
             })
             const sessionres = await this.$axios

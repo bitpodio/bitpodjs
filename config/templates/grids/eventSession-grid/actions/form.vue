@@ -303,7 +303,6 @@ import speaker from '~/config/apps/event/gql/eventSpeakers.gql'
 import event from '~/config/apps/event/gql/event.gql'
 import { getIdFromAtob } from '~/utility'
 import CustomDate from '~/components/common/form/date.vue'
-import nuxtconfig from '~/nuxt.config'
 import SaveBtn from '~/components/common/saveButton'
 export default {
   components: {
@@ -349,9 +348,9 @@ export default {
       speakerOptions: [],
       addresslineMessage: '',
       rules: rules(this.$i18n),
-      zoomDocumentLink: nuxtconfig.integrationLinks.ZOOM_DOCUMENT_LINK,
-      googleMeetDocumentLink:
-        nuxtconfig.integrationLinks.GOOGLE_MEET_DOCUMENT_LINK,
+      zoomDocumentLink: this.$config.integrationLinks.ZOOM_DOCUMENT_LINK,
+      googleMeetDocumentLink: this.$config.integrationLinks
+        .GOOGLE_MEET_DOCUMENT_LINK,
       session: {},
       durationRules: [
         (v) => {
@@ -565,7 +564,7 @@ export default {
         )
           .split(' ')[0]
           .replace(/[^a-zA-Z ]/g, '')}-${randomStr}`
-        this.session.BitpodVirtualLink = `https://${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}${roomName}`
+        this.session.BitpodVirtualLink = `https://${this.$config.integrationLinks.BITOPD_VIRTUAL_LINK}${roomName}`
       }
     },
     ticketProps() {
