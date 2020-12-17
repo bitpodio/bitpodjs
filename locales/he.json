@@ -723,7 +723,8 @@
     "DeleteNote": "מחק הערה",
     "PastEventMessage": "אירוע זה אינו פעיל יותר.",
     "GoToOldSite": "היכנס לאתר הישן",
-    "SelectField": "בחר שדה"
+    "SelectField": "בחר שדה",
+    "DeleteImage":"מחק תמונה"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",
