@@ -3,7 +3,7 @@
     <v-btn icon class="d-none d-sm-inline" @click="helpDialog = !helpDialog">
       <v-icon> mdi-help</v-icon>
     </v-btn>
-    <v-list shaped class="d-block d-sm-none">
+    <v-list shaped class="d-block d-sm-none py-0 mt-n2">
       <v-list-item @click="helpDialog = !helpDialog">
         <v-list-item-action class="nav-icon">
           <v-icon>mdi-help</v-icon>
