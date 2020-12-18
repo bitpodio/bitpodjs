@@ -147,6 +147,7 @@
           </v-list-item>
         </template>
       </v-list>
+      <Help class="d-block d-sm-none" />
     </v-navigation-drawer>
 
     <v-dialog
@@ -195,6 +196,7 @@
         <v-spacer></v-spacer>
       </v-toolbar-title>
       <v-spacer></v-spacer>
+      <Help class="d-none d-sm-inline" />
       <AppDrawer />
       <LanguageSwitcher />
       <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
