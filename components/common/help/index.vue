@@ -207,7 +207,7 @@ export default {
       this.formData.Message = this.helpMessage
       try {
         const url = `https://${this.$config.axios.crmUrl}${nuxtconfig.axios.apiEndpoint}`
-        const res = await this.$axios.$patch(`${url}Leads`, {
+        const res = await this.$axios.$post(`${url}Leads`, {
           ...this.formData,
         })
         if (res) {
