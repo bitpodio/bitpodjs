@@ -1312,7 +1312,7 @@ export default {
     verifyUniqueLink(value) {
       value = value.toLowerCase().replace(/\s/g, '')
       value = value.trim()
-      const regex = RegExp(/^[0-9a-zA-Z]+$/)
+      const regex = RegExp(/^(?![0-9]*$)[a-zA-Z0-9]+$/)
       if (regex.test(value)) {
         if (isNaN(value)) {
           this.eventData.UniqLink = value

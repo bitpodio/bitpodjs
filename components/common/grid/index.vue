@@ -1020,8 +1020,6 @@ export default {
   }
   .sticky.grid-actions-container {
     margin-top: -77px;
-    height: 50px;
-    margin-bottom: 10px;
   }
   .sticky_sentinel {
     position: absolute;

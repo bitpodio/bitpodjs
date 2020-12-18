@@ -141,7 +141,7 @@
             <SaveBtn
               v-if="dialog"
               color="primary"
-              :disabled="!valid || isSaveButtonDisabled"
+              :disabled="!valid || isSaveButtonDisabled || task.Status === ''"
               depressed
               :action="onSave"
               class="ml-2"
@@ -411,6 +411,28 @@ export default {
       this.isTimezone = false
       this.isDueDate = false
     },
+    removeDueDate() {
+      delete this.task.DueDate
+    },
+    removeDayTime() {
+      this.Day = ''
+      delete this.task.Time
+    },
+    removeDueDateTimezone() {
+      delete this.task.DueDate
+      delete this.task.Timezone
+    },
+    removedAction() {
+      delete this.task.Action
+    },
+    removeDayTimeTimezone() {
+      this.Day = ''
+      delete this.task.Time
+      delete this.task.Timezone
+    },
+    removeSurvey() {
+      delete this.task.SurveyId
+    },
     changeCategory(value) {
       this.isAction = this.task.Status === 'Wait for an Action'
       this.isSurvey = value === 'Survey Invite'
@@ -426,13 +448,20 @@ export default {
         this.hideDayTime()
         this.showDuedateTimezone()
       } else {
+        delete this.task.Status
         this.hideDuedateTimezone()
         this.hideDayTime()
+        this.removeDueDate()
+        this.removeDayTime()
+        this.removeDueDateTimezone()
+        this.removedAction()
+        this.removeSurvey()
       }
     },
     changeStatus(value) {
       if (value === 'Wait for an Action') {
         this.isAction = true
+        this.removeDueDate()
       } else {
         this.isAction = false
       }
@@ -449,10 +478,14 @@ export default {
       ) {
         this.isSurvey = true
         this.hideDayTime()
+        this.removeDayTime()
         this.showDuedateTimezone()
       } else {
         this.hideDuedateTimezone()
+        this.removeDueDateTimezone()
         this.hideDayTime()
+        this.removeDayTime()
+        this.removedAction()
       }
     },
     changeSurvey(value, context) {
@@ -463,6 +496,7 @@ export default {
     resetForm() {
       this.$refs.form.reset()
       this.task.Timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
+      this.task.DueDate = ''
       this.isAction = false
       this.isDay = false
       this.isTime = false
