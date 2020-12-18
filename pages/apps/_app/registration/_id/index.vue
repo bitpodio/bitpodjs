@@ -210,25 +210,51 @@
             </template>
           </v-simple-table>
         </div>
-        <div
-          v-if="content"
-          class="xs12 sm8 md8 lg8 boxview pad-card pb-6 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
-        >
-          <div class="sticky d-flex flex-column justify-center boxview">
-            <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
-              <h2 class="body-1 pb-0">
-                <i class="fa fa-black-board pr-1" aria-hidden="true"></i>
-                <i18n path="Common.Sessions" />
-              </h2>
-              <v-spacer></v-spacer>
-            </v-flex>
-            <v-divider></v-divider>
+        <div v-if="data && data.event && data.event.BusinessType === 'Single'">
+          <div
+            v-if="content"
+            class="xs12 sm8 md8 lg8 boxview pad-card pb-6 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+          >
+            <div class="sticky d-flex flex-column justify-center boxview">
+              <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
+                <h2 class="body-1 pb-0">
+                  <i class="fa fa-black-board pr-1" aria-hidden="true"></i>
+                  <i18n path="Common.Sessions" />
+                </h2>
+                <v-spacer></v-spacer>
+              </v-flex>
+              <v-divider></v-divider>
+            </div>
+            <Grid
+              view-name="registrationSessions"
+              :content="content"
+              class="mt-n12"
+            />
           </div>
-          <Grid
-            view-name="registrationSessions"
-            :content="content"
-            class="mt-n12"
-          />
+        </div>
+        <div
+          v-if="data && data.event && data.event.BusinessType === 'Recurring'"
+        >
+          <div
+            v-if="content"
+            class="xs12 sm8 md8 lg8 boxview pad-card pb-6 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+          >
+            <div class="sticky d-flex flex-column justify-center boxview">
+              <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
+                <h2 class="body-1 pb-0">
+                  <i class="fa fa-black-board pr-1" aria-hidden="true"></i>
+                  <i18n path="Common.Sessions" />
+                </h2>
+                <v-spacer></v-spacer>
+              </v-flex>
+              <v-divider></v-divider>
+            </div>
+            <Grid
+              view-name="registrationRecurringSessions"
+              :content="content"
+              class="mt-n12"
+            />
+          </div>
         </div>
         <div
           v-if="content"
