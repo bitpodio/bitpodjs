@@ -721,7 +721,11 @@
                   v-if="event.BusinessType === 'Recurring'"
                   class="body-1 my-n3"
                 >
-                  <v-list class="pa-0 if-rec" :data-title="event.BusinessType">
+                  <v-list
+                    v-if="!isPast"
+                    class="pa-0 if-rec"
+                    :data-title="event.BusinessType"
+                  >
                     <v-list-item
                       v-for="item in registration.attendee"
                       :key="item.id"
@@ -734,8 +738,11 @@
                       </v-list-item-content>
                     </v-list-item>
                   </v-list>
+                  <div v-else class="py-2">
+                    <i18n path="Common.PastEventMessage" />
+                  </div>
                 </div>
-                <div v-else-if="isPast">
+                <div v-else-if="isPast" class="py-2">
                   <i18n path="Common.PastEventMessage" />
                 </div>
                 <div v-else class="body-1">
@@ -1084,8 +1091,23 @@ export default {
           if (res) {
             this.event = res.result
             this.eventImage = true
-            this.isPast =
-              new Date().getTime() > new Date(this.event.endDateTime).getTime()
+            if (this.event.BusinessType === 'Single') {
+              this.isPast =
+                new Date().getTime() >
+                new Date(this.event.endDateTime).getTime()
+            } else {
+              const reg = this.registration
+              if (reg.attendee.length && reg.SessionListId.length) {
+                this.isPast =
+                  new Date().getTime() >
+                  new Date(reg.attendee[0].BookingDate).setMinutes(
+                    new Date(reg.attendee[0].BookingDate).getMinutes() +
+                      reg.SessionListId[0].Duration
+                  )
+              } else {
+                this.isPast = false
+              }
+            }
           }
         } catch (e) {
           console.error(
