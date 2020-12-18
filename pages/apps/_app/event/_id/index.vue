@@ -1408,7 +1408,12 @@
             ></v-checkbox>
           </v-flex>
         </div>
-        <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
+        <v-snackbar
+          v-model="snackbar"
+          :timeout="timeout"
+          :top="true"
+          width="2px"
+        >
           <div class="fs-16 text-center">
             {{ snackbarText }}
           </div>
@@ -1556,7 +1561,7 @@ export default {
       OtherImageName: [],
       logoName: '',
       snackbar: false,
-      timeout: '4000',
+      timeout: '3000',
       snackbarText: this.$t('Messages.Success.EventDetailsUpdateSuccess'),
       logoId: '',
       getBadgeCategory: 'Guest',
@@ -2101,7 +2106,7 @@ export default {
       return regUrl
     },
     viewBitpodVirtualLink() {
-      return `https://${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}/${this.data.event.UniqLink}`
+      return `https://${this.$config.integrationLinks.BITOPD_VIRTUAL_LINK}/${this.data.event.UniqLink}`
     },
     formatDate(date) {
       return date ? format(new Date(date), 'PPp') : ''
@@ -2141,7 +2146,7 @@ export default {
     async deleteBannerFile(e, id) {
       const url = this.$bitpod.getApiUrl()
       const checkRes = await this.$refs.confirm.open(
-        this.$t('Drawer.Delete'),
+        this.$t('Common.DeleteImage'),
         this.$t('Messages.Warn.DeleteImage'),
         { color: 'error lighten-1' }
       )
@@ -2161,7 +2166,7 @@ export default {
     async deleteLogoFile(id) {
       const url = this.$bitpod.getApiUrl()
       const checkRes = await this.$refs.confirm.open(
-        this.$t('Drawer.Delete'),
+        this.$t('Common.DeleteImage'),
         this.$t('Messages.Warn.DeleteImage'),
         { color: 'error lighten-1' }
       )
@@ -2181,7 +2186,7 @@ export default {
     async deleteOtherFile(id) {
       const url = this.$bitpod.getApiUrl()
       const checkRes = await this.$refs.confirm.open(
-        this.$t('Drawer.Delete'),
+        this.$t('Common.DeleteImage'),
         this.$t('Messages.Warn.DeleteImage'),
         { color: 'error lighten-1' }
       )

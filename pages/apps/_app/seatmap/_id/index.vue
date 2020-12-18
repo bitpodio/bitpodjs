@@ -1,8 +1,8 @@
 <template>
   <div>
     <iframe id="seatmap-iframe" :src="iframe.src" @load="load()" />
-    <v-snackbar v-model="snackbar" :timeout="timeout" top="true">
-      <div class="text-center">{{ snackbarText }}</div>
+    <v-snackbar v-model="snackbar" :timeout="timeout" top="true" width="2px">
+      <div class="fs-16 text-center">{{ snackbarText }}</div>
     </v-snackbar>
     <v-dialog v-model="popupDialog" width="500">
       <v-card>

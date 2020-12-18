@@ -720,7 +720,9 @@
     "DeleteSeatmap": "Supprimer la carte de siège",
     "DeleteNote": "Supprimer la note",
     "PastEventMessage": "Cet événement n'est plus actif.",
-    "GoToOldSite": "Aller sur l'ancien site"
+    "GoToOldSite": "Aller sur l'ancien site",
+    "SelectField": "Sélectionnez un champ",
+    "DeleteImage":"Supprimer l'image"
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",
@@ -730,6 +732,7 @@
     "EditBadge": "Editer un insigne",
     "DeleteUser": "Supprimer l'utilisateur",
     "DeleteEvent": "Supprimer l'événement",
+    "DeleteEventQuestion": "Supprimer la question",
     "Save": "Sauvegarder",
     "Prev": "Prév.",
     "Next": "Suivant",
@@ -869,7 +872,10 @@
       "NoEvents": "Il n'y a pas d'événements en direct et de brouillon, pour commencer à configurer votre événement, utilisez le lien Créer un événement",
       "NoEventsFound": "Aucun événement trouvé avec nom {searchKey}",
       "ConfirmResendRegistrationEmail": "Voulez-vous vraiment renvoyer les e-mails de confirmation?",
-      "DeleteSeatMap": "Voulez-vous supprimer cette carte de siège?"
+      "DeleteSeatMap": "Voulez-vous supprimer cette carte de siège?",
+      "DeleteSeatMapEvent":"Voulez-vous supprimer ce plan de siège? Cette mise en page est déjà associée à Event.",
+      "DeleteEventQuestion":"Voulez-vous supprimer cette question?"
+
     },
     "Success": {
       "CopiedClipboard": "Copié dans le presse-papiers",
@@ -885,7 +891,7 @@
       "ConnectionSetupSuccessfully": "Configuration de la connexion réussie",
       "RecordUpdatedSuccess": "Enregistrement mis à jour avec succès.",
       "RecordCreateSuccess": "Enregistrement créé avec succès.",
-      "SeatLayoutDeleteSuccess": "L'agencement de siège a été supprimé avec succès",
+      "SeatLayoutDeleteSuccess": "Disposition de la carte de siège supprimée avec succès",
       "EventPublished": "Félicitations, votre événement a été publié.",
       "BadgesDeleteSuccess": "Badges supprimés avec succès",
       "BadgesUpdatedSuccess": "Badges mis à jour avec succès",
@@ -895,7 +901,7 @@
       "AttachmentDeleteSuccess": "Pièce jointe supprimée avec succès",
       "SeatLayoutAddSuccess": "L'ajout de l'agencement de siège a abouti",
       "FailedFetchToken": "Impossible d'extraire le jeton JWT.",
-      "SeatmapUpdateSuccess": "Seatmap a été mis à jour avec succès",
+      "SeatmapUpdateSuccess": "Mise à jour réussie de la disposition du plan de siège",
       "EmailInviteSuccess": "Vos invitations par e-mail ont été mises à jour avec succès.",
       "EmailSaveSuccess": "Vos invitations par e-mail ont été enregistrées avec succès.",
       "TaskDeleteSuccess": "Tâche supprimée avec succès",
@@ -908,7 +914,7 @@
       "RecurringSessionUpdatedSuccess": "Session récurrente mise à jour avec succès",
       "EditMetadataSuccess": "Les métadonnées du modèle ont bien été mises à jour",
       "EditTemplateSuccess": "Modèle mis à jour avec succès",
-      "DeleteSuccess": "{modelName} Supprimé avec succès",
+      "DeleteSuccess": "{modelName} supprimé avec succès",
       "ListUpdatedSucess": "{modelName} élément de liste mis à jour avec succès.",
       "ThanksHelp": "Merci de nous avoir contacté! Nous reviendrons vers vous bientôt!"
     }

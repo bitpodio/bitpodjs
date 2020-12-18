@@ -271,7 +271,10 @@
                         ref="venueAddress.AddressLine"
                         v-model="venueAddress.AddressLine"
                         class="form-control pa-3 d-block rounded"
-                        :placeholder="!addressClicked && $t('Common.Address')"
+                        :placeholder="
+                          !addressClicked && $t('Common.AddressRequired')
+                        "
+                        :rules="[addressValidation]"
                         :required="true"
                         @placechanged="getAddressData"
                         @change="changeAddressData($event)"
@@ -280,12 +283,9 @@
                       ></vue-google-autocomplete>
                     </no-ssr>
                   </div>
-                  <div
-                    v-show="addresslineMessage !== ''"
-                    class="red--text pa-3 pt-0 body-1"
-                  >
-                    {{ addresslineMessage }}
-                  </div>
+                  <span v-if="addresslineMessage != ''" style="color: red;">{{
+                    addresslineMessage
+                  }}</span>
                 </v-col>
                 <v-col
                   v-if="session.LocationType === 'Custom'"
@@ -449,7 +449,11 @@
                 </v-flex>
               </div>
               <v-row v-if="actionType === 'New' && dialog === true">
-                <v-col v-for="(day, k) in days" :key="k" cols="4" class="py-0">
+                <v-col
+                  v-for="(day, k) in days"
+                  :key="k"
+                  class="py-0 col-sm-4 col-xs-6"
+                >
                   <v-checkbox
                     v-model="day.Value"
                     :label="day.Label"
@@ -517,7 +521,7 @@
             <SaveBtn
               v-if="dialog"
               color="primary"
-              :disabled="!valid"
+              :disabled="!valid || venueAddress.AddressLine === ''"
               depressed
               :action="onSave"
               class="ml-2"
@@ -539,7 +543,6 @@ import registrationStatusOptions from '~/config/apps/event/gql/registrationStatu
 import location from '~/config/apps/event/gql/location.gql'
 import { getIdFromAtob } from '~/utility'
 import CustomDate from '~/components/common/form/date.vue'
-import nuxtconfig from '~/nuxt.config'
 import SaveBtn from '~/components/common/saveButton'
 export default {
   components: {
@@ -624,11 +627,11 @@ export default {
       timeSlotMessage: '',
       addresslineMessage: '',
       ScheduledType: 'Over a period of rolling days',
-      zoomDocumentLink: nuxtconfig.integrationLinks.ZOOM_DOCUMENT_LINK,
+      zoomDocumentLink: this.$config.integrationLinks.ZOOM_DOCUMENT_LINK,
       startDateMessage: '',
       endDateMessage: '',
-      googleMeetDocumentLink:
-        nuxtconfig.integrationLinks.GOOGLE_MEET_DOCUMENT_LINK,
+      googleMeetDocumentLink: this.$config.integrationLinks
+        .GOOGLE_MEET_DOCUMENT_LINK,
       sessionResult: [],
       session,
       venueAddress,
@@ -934,7 +937,7 @@ export default {
         5,
         8
       )}-${randomStr.substring(8, 11)}`
-      this.session.BitpodVirtualLink = `https://${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}${roomName}`
+      this.session.BitpodVirtualLink = `https://${this.$config.integrationLinks.BITOPD_VIRTUAL_LINK}${roomName}`
     },
     closeForm() {
       this.dialog = false
@@ -1141,8 +1144,10 @@ export default {
           ? this.$t('Messages.Error.ThisFieldRequired')
           : ''
       if (value === ' ' || value === '') {
+        this.valid = false
         this.addressClicked = false
       } else {
+        this.valid = true
         this.addressClicked = true
         this.venueAddress.AddressLine = value
       }

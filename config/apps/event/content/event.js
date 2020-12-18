@@ -582,7 +582,7 @@ export default {
       fields: {
         Title: {
           displayOrder: 2,
-          caption: 'Common.Title',
+          caption: 'Common.TitleCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '250px',
@@ -1632,7 +1632,6 @@ export default {
           sortEnable: true,
           columnWidth: '150px',
           type: 'string',
-          hidden: true,
           inlineEdit: true,
           newForm: false,
           editForm: false,

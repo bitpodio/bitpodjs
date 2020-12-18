@@ -1519,7 +1519,7 @@ export default {
     async deleteBannerFile(e, id) {
       const url = this.$bitpod.getApiUrl()
       const checkRes = await this.$refs.confirm.open(
-        this.$t('Drawer.Delete'),
+        this.$t('Common.DeleteImage'),
         this.$t('Messages.Warn.DeleteImage'),
         { color: 'error lighten-1' }
       )
@@ -1539,7 +1539,7 @@ export default {
     async deleteLogoFile(id) {
       const url = this.$bitpod.getApiUrl()
       const checkRes = await this.$refs.confirm.open(
-        this.$t('Drawer.Delete'),
+        this.$t('Common.DeleteImage'),
         this.$t('Messages.Warn.DeleteImage'),
         { color: 'error lighten-1' }
       )
@@ -1559,7 +1559,7 @@ export default {
     async deleteOtherFile(id) {
       const url = this.$bitpod.getApiUrl()
       const checkRes = await this.$refs.confirm.open(
-        this.$t('Drawer.Delete'),
+        this.$t('Common.DeleteImage'),
         this.$t('Messages.Warn.DeleteImage'),
         { color: 'error lighten-1' }
       )

@@ -67,7 +67,7 @@
               </v-col>
               <v-col v-if="isDueDate" cols="12" sm="6" md="4">
                 <v-datetime-picker
-                  v-model="task.DueDate"
+                  v-model="dueDate"
                   :text-field-props="dueDateProps()"
                   :rules="[rules.required]"
                   :label="$t('Common.DueDateRequired')"
@@ -121,7 +121,7 @@
         >
           <v-btn
             color="primary"
-            :disabled="!valid || isSaveButtonDisabled"
+            :disabled="!valid || isSaveButtonDisabled || task.Status === ''"
             depressed
             @click.native="onSave"
             ><i18n path="Drawer.Save" />
@@ -178,25 +178,30 @@ export default {
     let isSurvey = false
     let isDay = false
     let isTime = false
+    let isDueDate = false
+    let isTimezone = false
     if (this.items && this.items[0].Category === 'Survey Invite') {
       isSurvey = true
       if (this.items[0].Status === 'Wait for an Action') {
         isDay = true
         isTime = true
       }
+      if (this.items[0].Status === 'Schedule') {
+        isDueDate = true
+        isTimezone = true
+      }
     }
     let task = {}
     task = this.items ? { ...this.items[0] } : {}
-    const intDay = task.Day || 1
-    task.Day =
-      Number(intDay).toString().length === 1 ? `0${intDay}` : `${intDay}`
+    const intDay = task.Day
+    task.Day = `0${intDay}`
     return {
       rules: rules(this.$i18n),
       isDay,
       isTime,
       isAction,
-      isDueDate: false,
-      isTimezone: false,
+      isDueDate,
+      isTimezone,
       isSurvey,
       isDayDisabled: true,
       task,
@@ -204,6 +209,7 @@ export default {
       customers: [],
       customerId: '',
       valid: false,
+      dueDate: '',
       duplicateMessage: '',
       isSaveButtonDisabled: false,
       timezonefield: {
@@ -305,6 +311,9 @@ export default {
       },
     }
   },
+  mounted() {
+    this.setDueDate()
+  },
   computed: {
     filter() {
       if (
@@ -335,6 +344,11 @@ export default {
   },
 
   methods: {
+    setDueDate() {
+      if (this.items && this.items.length) {
+        this.dueDate = new Date(this.items[0].DueDate)
+      }
+    },
     dueDateProps() {
       return {
         appendIcon: 'fa-calendar',
@@ -343,7 +357,7 @@ export default {
         rules: [
           (v) => {
             const DueDate = v && new Date(v)
-            if (!DueDate && DueDate === null) {
+            if (DueDate === '' || (!DueDate && DueDate === null)) {
               return this.$t('Messages.Error.ThisFieldRequired')
             } else {
               return true
@@ -370,6 +384,28 @@ export default {
       this.isTimezone = false
       this.isDueDate = false
     },
+    removeDueDate() {
+      delete this.task.DueDate
+    },
+    removeDayTime() {
+      this.Day = ''
+      delete this.task.Time
+    },
+    removeDueDateTimezone() {
+      delete this.task.DueDate
+      delete this.task.Timezone
+    },
+    removedAction() {
+      delete this.task.Action
+    },
+    removeDayTimeTimezone() {
+      this.Day = ''
+      delete this.task.Time
+      delete this.task.Timezone
+    },
+    removeSurvey() {
+      delete this.task.SurveyId
+    },
     changeCategory(value) {
       this.isAction = this.task.Status === 'Wait for an Action'
       this.isSurvey = value === 'Survey Invite'
@@ -385,12 +421,21 @@ export default {
         this.hideDayTime()
         this.showDuedateTimezone()
       } else {
+        delete this.task.Status
         this.hideDuedateTimezone()
         this.hideDayTime()
+        this.hideDuedateTimezone()
+        this.hideDayTime()
+        this.removeDueDate()
+        this.removeDayTime()
+        this.removeDueDateTimezone()
+        this.removedAction()
+        this.removeSurvey()
       }
     },
     changeStatus(value) {
       if (value === 'Wait for an Action') {
+        this.removeDueDate()
         this.isAction = true
       } else {
         this.isAction = false
@@ -408,10 +453,14 @@ export default {
       ) {
         this.isSurvey = true
         this.hideDayTime()
+        this.removeDayTime()
         this.showDuedateTimezone()
       } else {
         this.hideDuedateTimezone()
+        this.removeDueDateTimezone()
         this.hideDayTime()
+        this.removeDayTime()
+        this.removedAction()
       }
     },
     changeSurvey(value) {
@@ -420,6 +469,7 @@ export default {
     resetForm() {
       this.$refs.form.reset()
       this.task.Timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
+      this.task.DueDate = ''
       this.isAction = false
       this.isDay = false
       this.isTime = false
@@ -438,6 +488,7 @@ export default {
       this.isSaveButtonDisabled = true
       const baseUrl = this.$bitpod.getApiUrl()
       this.task.Day = parseInt(this.Day)
+      this.task.DueDate = this.dueDate
       this.task.Type = 'Template'
       let res = null
       try {

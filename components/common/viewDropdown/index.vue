@@ -14,11 +14,11 @@
       </template>
 
       <v-list>
-        <v-list-item v-for="view in viewList" :key="view.value" @click="true">
-          <NuxtLink :to="view.path" class="text-decoration-none text--primary">
+        <div v-for="view in viewList" :key="view.value">
+          <v-list-item :to="view.path">
             {{ $t(view.caption) }}
-          </NuxtLink>
-        </v-list-item>
+          </v-list-item>
+        </div>
       </v-list>
     </v-menu>
   </div>

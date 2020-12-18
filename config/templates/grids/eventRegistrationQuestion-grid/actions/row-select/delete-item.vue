@@ -51,9 +51,9 @@ export default {
     async onDelete() {
       this.dialog = false
       const check = await this.$refs.confirm.open(
-        this.$t('Drawer.DeleteEvent'),
-        this.$t('Messages.Warn.DeleteEvent'),
-        { color: 'error' }
+        this.$t('Drawer.DeleteEventQuestion'),
+        this.$t('Messages.Warn.DeleteEventQuestion'),
+        { color: 'error lighten-1' }
       )
       if (check === true) {
         this.items

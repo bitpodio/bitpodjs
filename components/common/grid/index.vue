@@ -5,8 +5,8 @@
         <component :is="errorTemplate || null" :error="error" />
       </div>
     </template>
-    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
-      <div class="text-center">{{ snackbarText }}</div>
+    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true" width="2px">
+      <div class="fs-16 text-center">{{ snackbarText }}</div>
     </v-snackbar>
     <div v-if="!error" :key="error">
       <div
@@ -140,6 +140,7 @@
         <v-data-table
           v-model="selectedItems"
           dense
+          :key="componentRerenderKey"
           :headers="translate(headers)"
           :items="tableData.items"
           :single-select="singleSelect"
@@ -246,7 +247,7 @@
         </v-data-table>
       </v-skeleton-loader>
       <div
-        v-if="viewName === 'live and draft event'"
+        v-if="viewName === 'live and draft event' && loading === true"
         class="d-flex flex-sm-wrap flex-column flex-sm-row"
       >
         <v-skeleton-loader
@@ -526,7 +527,7 @@ export default {
       error: '',
       errorTemplate: null,
       snackbar: false,
-      timeout: 1000,
+      timeout: 3000,
       snackbarText: '',
       hasGridOption: false,
       hasRowOption: false,
@@ -534,6 +535,7 @@ export default {
       footerObserver: null,
       winWidth: window.innerWidth,
       itemPerPage: 0,
+      componentRerenderKey: 0,
     }
   },
   computed: {
@@ -611,6 +613,7 @@ export default {
         [`templates/grids/${this.templateFolderName}/${slot}.vue`],
         false
       )
+      this.componentRerenderKey += this.slotTemplates.body ? 1 : 0
     })
     const templateName = this.templateFolderName
     ACTION_TYPES.forEach(async (actionType) => {

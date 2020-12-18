@@ -109,14 +109,9 @@
                   :rules="[rules.required]"
                   dense
                   outlined
+                  :error-messages="uniqueLinkMessage"
                   @keyup="changeUniqueLink($event)"
                 ></v-text-field>
-                <div
-                  v-if="isInvalidEventLink && !!UniqLink"
-                  class="red--text pt-1 pb-0 text-errorview pl-3 body-2"
-                >
-                  {{ uniqueLinkMessage }}
-                </div>
               </v-col>
             </v-row>
             <v-row v-if="isOnline">
@@ -563,7 +558,10 @@ export default {
       if (result.data.Event.EventCount > 0) {
         this.isInvalidEventLink = true
         this.uniqueLinkMessage = this.$t('Messages.Error.UniqueLinkDuplicate')
-      } else this.isInvalidEventLink = false
+      } else {
+        this.isInvalidEventLink = false
+        this.uniqueLinkMessage = ''
+      }
     },
     returnToCenter() {
       this.$refs.gMap && this.$refs.gMap.map.setCenter(this.locations[0])

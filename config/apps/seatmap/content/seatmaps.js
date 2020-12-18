@@ -99,7 +99,7 @@ export default {
             displayOrder: 1,
           },
           displayOrder: 2,
-          caption: 'Common.Title',
+          caption: 'Common.TitleCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '250px',

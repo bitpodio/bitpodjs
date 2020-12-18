@@ -757,7 +757,7 @@ export default {
     },
 
     eventLinkHint() {
-      return `${nuxtconfig.integrationLinks.EVENT_LINK_HINT}${this.eventData.UniqLink}`
+      return `${this.$config.integrationLinks.EVENT_LINK_HINT}${this.eventData.UniqLink}`
     },
     eventLinkLabel() {
       return `${this.$bitpod.getApiUrl().replace('svc/api', 'e')}`
@@ -799,7 +799,7 @@ export default {
       ]
     },
     getBitpodVirtualLink() {
-      return `https://${nuxtconfig.integrationLinks.BITOPD_VIRTUAL_LINK}/${
+      return `https://${this.$config.integrationLinks.BITOPD_VIRTUAL_LINK}/${
         this.eventLinkHint.split('/')[4]
       }`
     },
@@ -1312,7 +1312,7 @@ export default {
     verifyUniqueLink(value) {
       value = value.toLowerCase().replace(/\s/g, '')
       value = value.trim()
-      const regex = RegExp(/^[0-9a-zA-Z]+$/)
+      const regex = RegExp(/^(?![0-9]*$)[a-zA-Z0-9]+$/)
       if (regex.test(value)) {
         if (isNaN(value)) {
           this.eventData.UniqLink = value
