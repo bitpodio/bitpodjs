@@ -560,6 +560,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.EventApp',
+        pluralEntity: 'Drawer.Events',
         query: eventList,
         defaultSort: 'createdDate DESC',
         type: 'graphql',
@@ -703,6 +705,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.EventApp',
+        pluralEntity: 'Drawer.Events',
         query: eventList,
         defaultSort: 'createdDate DESC',
         type: 'graphql',
@@ -851,6 +855,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.EventApp',
+        pluralEntity: 'Drawer.Events',
         query: liveDraftEvents,
         defaultSort: 'createdDate DESC',
         type: 'graphql',
@@ -1310,6 +1316,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.Attendee',
+        pluralEntity: 'Common.Attendees',
         query: eventAttendees,
         defaultSort: 'createdDate DESC',
         type: 'graphql',
@@ -1421,6 +1429,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.Attendee',
+        pluralEntity: 'Common.Attendees',
         query: eventAttendees,
         defaultSort: 'createdDate DESC',
         type: 'graphql',
@@ -1855,6 +1865,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.Attendee',
+        pluralEntity: 'Common.Attendees',
         query: eventAttendees,
         defaultSort: 'createdDate DESC',
         type: 'graphql',
@@ -2216,6 +2228,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.Registration',
+        pluralEntity: 'Common.Registrations',
         query: registrationList,
         defaultSort: 'createdDate DESC',
         type: 'graphql',
@@ -2579,6 +2593,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.Registration',
+        pluralEntity: 'Common.Registrations',
         query: registrationList,
         defaultSort: 'createdDate DESC',
         type: 'graphql',
@@ -2988,6 +3004,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.Ticket',
+        pluralEntity: 'Common.Tickets',
         query: eventTickets,
         defaultSort: 'createdDate DESC',
         type: 'graphql',
@@ -3199,6 +3217,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Drawer.DiscountCode',
+        pluralEntity: 'Common.DiscountCodes',
         query: eventDiscountCodes,
         defaultSort: 'createdDate DESC',
         type: 'graphql',
@@ -3480,6 +3500,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.SessionCaption',
+        pluralEntity: 'Common.Sessions',
         query: eventSession,
         defaultSort: 'createdDate DESC',
         type: 'graphql',
@@ -3719,6 +3741,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.Speaker',
+        pluralEntity: 'Common.Speakers',
         model: 'Speaker',
         type: 'rest',
         getData: (ctx) =>
@@ -4124,6 +4148,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.Task',
+        pluralEntity: 'Common.Tasks',
         query: eventTasks,
         defaultSort: 'createdDate DESC',
         type: 'graphql',
@@ -4227,6 +4253,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.RegistrationForm',
+        pluralEntity: 'Common.RegistrationForms',
         type: 'rest',
         getData: (ctx) =>
           getData(`Events/${ctx.$route.params.id}/RegistrationForm`),
@@ -4751,6 +4779,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.RecurringSession',
+        pluralEntity: 'Common.RecurringSessions',
         query: eventRecurringSession,
         defaultSort: 'createdDate DESC',
         type: 'graphql',
@@ -4834,6 +4864,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.Task',
+        pluralEntity: 'Common.Tasks',
         query: eventTasks,
         defaultSort: 'createdDate DESC',
         type: 'graphql',
@@ -4920,6 +4952,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.Task',
+        pluralEntity: 'Common.Tasks',
         query: eventTasks,
         type: 'graphql',
         model: 'CRMActivity',

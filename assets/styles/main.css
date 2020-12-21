@@ -632,9 +632,6 @@ table > tbody > tr:last-child .key-align {
 }
 .help-box {
   max-width: 350px;
-  right: 0px;
-  position: fixed !important;
-  bottom: 10px;
 }
 .chanel-icon .fa {
   color: #fff;

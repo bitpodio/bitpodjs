@@ -9,6 +9,7 @@
     "SeatMapNo": "Carte de siège",
     "SurveyApp": "Enquête",
     "HelpCenterMap": "Centre d'aide",
+    "Help": "Aidez-moi",
     "HomePage": "Page d'accueil",
     "SignIn": "Se connecter",
     "EditEventInformation": "Editer les informations sur les événements",
@@ -723,7 +724,21 @@
     "GoToOldSite": "Aller sur l'ancien site",
     "SelectField": "Sélectionnez un champ",
     "DeleteImage":"Supprimer l'image",
-    "QuestionDeletedSuccessfully":"Question supprimée avec succès"
+    "QuestionDeletedSuccessfully":"Question supprimée avec succès",
+    "SessionCaption": "Session",
+    "RegistrationForms": "Formulaires d'inscription",
+    "Badges": "Badges",
+    "Timezones": "Fuseaux horaires",
+    "EventPrivacies": "Privacité des événements",
+    "EventTags": "Tags d'événement",
+    "TicketTypes": "Types de billets",
+    "SessionTypes": "Types de session",
+    "QuestionControls": "Contrôles des questions",
+    "RefundMethods": "Méthodes de remboursement",
+    "Reasons": "Les raisons",
+    "BadgeCategories": "Catégories de badges",
+    "ContactType": "type de contact",
+    "BusinessUnit": "Unité commerciale"
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",
@@ -916,6 +931,8 @@
       "EditMetadataSuccess": "Les métadonnées du modèle ont bien été mises à jour",
       "EditTemplateSuccess": "Modèle mis à jour avec succès",
       "DeleteSuccess": "{modelName} supprimé avec succès",
+      "UpdatedSuccessfully": "{modelName} Mis à jour avec succés",
+      "CreatedSuccessfully": "{modelName} Créé avec succès",
       "ListUpdatedSucess": "{modelName} élément de liste mis à jour avec succès.",
       "ThanksHelp": "Merci de nous avoir contacté! Nous reviendrons vers vous bientôt!"
     }

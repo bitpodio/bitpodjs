@@ -196,6 +196,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.EventApp',
+        pluralEntity: 'Drawer.Events',
         query: eventList,
         defaultSort: 'createdDate DESC',
         type: 'graphql',
@@ -351,6 +353,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.BusinessUnit',
+        pluralEntity: 'Common.BusinessUnits',
         query: businessUnit,
         defaultSort: 'createdDate DESC',
         type: 'graphql',

@@ -286,6 +286,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.BusinessUnit',
+        pluralEntity: 'Common.BusinessUnits',
         query: businessUnit,
         defaultSort: 'createdDate DESC',
         type: 'graphql',
@@ -485,6 +487,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.Task',
+        pluralEntity: 'Common.Tasks',
         query: crmActivity,
         type: 'graphql',
         model: 'CRMActivity',

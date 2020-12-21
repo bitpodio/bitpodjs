@@ -9,6 +9,7 @@
     "SeatMapNo": "מפתמושב",
     "SurveyApp": "סֶקֶר",
     "HelpCenterMap": "מרכז עזרה",
+    "Help": "עֶזרָה",
     "HomePage": "Home page",
     "SignIn": "Sign in",
     "EditEventInformation": "ערוך מידע על האירוע",
@@ -725,7 +726,21 @@
     "GoToOldSite": "היכנס לאתר הישן",
     "SelectField": "בחר שדה",
     "DeleteImage":"מחק תמונה",
-    "QuestionDeletedSuccessfully":"השאלה נמחקה בהצלחה"
+    "QuestionDeletedSuccessfully":"השאלה נמחקה בהצלחה",
+    "SessionCaption": "מוֹשָׁב",
+    "RegistrationForms": "טפסי הרשמה",
+    "Badges": "תגים",
+    "Timezones": "אזורי זמן",
+    "EventPrivacies": "פרטיות לאירועים",
+    "EventTags": "תגי אירוע",
+    "TicketTypes": "סוגי כרטיסים",
+    "SessionTypes": "סוגי מושבים",
+    "QuestionControls": "בקרות שאלה",
+    "RefundMethods": "שיטות החזר",
+    "Reasons": "סיבות",
+    "BadgeCategories": "קטגוריות תג",
+    "ContactType": "סוג המגע",
+    "BusinessUnit": "יחידה עסקית"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",
@@ -917,6 +932,8 @@
       "EditMetadataSuccess": "מטא נתונים של תבנית עודכנו בהצלחה",
       "EditTemplateSuccess": "התבנית עודכנה בהצלחה",
       "DeleteSuccess": "{modelName} נמחק בהצלחה",
+      "UpdatedSuccessfully": "{modelName} עודכן בהצלחה",
+      "CreatedSuccessfully": "{modelName} נוצר בהצלחה",
       "ListUpdatedSucess": "{modelName} פריט הרשימה עודכן בהצלחה.",
       "ThanksHelp": "תודה שפנית אלינו! אנחנו נחזור אליך בקרוב!"
     }

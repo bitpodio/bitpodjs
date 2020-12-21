@@ -249,6 +249,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.Members',
+        pluralEntity: 'Drawer.Members',
         query: memberList,
         type: 'graphql',
         model: 'Customer',
