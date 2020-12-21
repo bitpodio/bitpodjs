@@ -69,13 +69,11 @@ export default {
                 )
               })
               .then((res) => {
-                debugger
                 this.snackbar = true
                 return res
               })
           }, Promise.resolve())
           .then(() => {
-            debugger
             this.snackbar = true
             return true
           })
