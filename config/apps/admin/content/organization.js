@@ -404,6 +404,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
+      itemTitle: 'Common.Task',
       default: false,
       fields: {
         Title: {
