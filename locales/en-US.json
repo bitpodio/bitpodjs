@@ -102,7 +102,7 @@
     "%": "%",
     "Active": "Active",
     "Inactive": "Inactive",
-    "Members": "Members",
+    "Members": "Member",
     "Information": "Information",
     "MaxUsage": "Max Usage",
     "ValidTill": "Valid Till",
@@ -723,7 +723,21 @@
     "PastEventMessage": "This event is no longer active.",
     "GoToOldSite": "Go to the old site",
     "SelectField": "Select a field",
-    "DeleteImage":"Delete Image"
+    "DeleteImage":"Delete Image",
+    "SessionCaption": "Session",
+    "RegistrationForms": "Registration Forms",
+    "Badges": "Badges",
+    "Timezones": "Timezones",
+    "EventPrivacies": "Event Privacies",
+    "EventTags": "Event Tags",
+    "TicketTypes": "Ticket Types",
+    "SessionTypes": "Session Types",
+    "QuestionControls": "Question Controls",
+    "RefundMethods": "Refund Methods",
+    "Reasons": "Reasons",
+    "BadgeCategories": "Badge Categories",
+    "ContactType": "Contact Type",
+    "BusinessUnit": "Business Unit"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",
@@ -917,6 +931,8 @@
       "EditMetadataSuccess": "Template metadata updated successfully",
       "EditTemplateSuccess": "Template updated successfully",
       "DeleteSuccess": "{modelName} Deleted Successfully",
+      "UpdatedSuccessfully": "{modelName} Updated Successfully",
+      "CreatedSuccessfully": "{modelName} Created Successfully",
       "ListUpdatedSucess": "{modelName} list item updated successfully.",
       "ThanksHelp": "Thanks for contacting us! We will get back to you soon!"
     }

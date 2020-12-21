@@ -59,6 +59,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.AccessKeyCaption',
+        pluralEntity: 'Common.AccessKeys',
         type: 'rest',
         getData: (ctx) =>
           getData(`/Users/${ctx.$auth.$state.user.data.email}/AccessKey`),

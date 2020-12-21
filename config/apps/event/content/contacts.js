@@ -392,6 +392,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.Contact',
+        pluralEntity: 'Common.Contacts',
         query: contactList,
         filter: {
           where: {},
@@ -450,6 +452,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.Contact',
+        pluralEntity: 'Common.Contacts',
         query: contactList,
         filter: {
           where: {},
@@ -538,6 +542,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.Registration',
+        pluralEntity: 'Common.Registrations',
         query: registrationList,
         defaultSort: 'createdDate DESC',
         type: 'graphql',
@@ -756,6 +762,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.Task',
+        pluralEntity: 'Common.Tasks',
         query: eventTasks,
         defaultSort: 'createdDate DESC',
         type: 'graphql',
@@ -842,6 +850,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.Task',
+        pluralEntity: 'Common.Tasks',
         query: eventTasks,
         defaultSort: 'createdDate DESC',
         type: 'graphql',

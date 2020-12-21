@@ -724,7 +724,21 @@
     "PastEventMessage": "यह ईवेंट अब सक्रिय नहीं है.",
     "GoToOldSite": "पुरानी साइट पर जाएं",
     "SelectField": "एक क्षेत्र का चयन करें",
-    "DeleteImage":"छवि हटाएं"
+    "DeleteImage":"छवि हटाएं",
+    "SessionCaption": "अधिवेशन",
+    "RegistrationForms": "पंजीकरण फार्म",
+    "Badges": "बैज",
+    "Timezones": "समय क्षेत्र",
+    "EventPrivacies": "इवेंट प्रिविसेस",
+    "EventTags": "इवेंट टैग",
+    "TicketTypes": "टिकट के प्रकार",
+    "SessionTypes": "सत्र प्रकार",
+    "QuestionControls": "प्रश्न नियंत्रण",
+    "RefundMethods": "वापसी के तरीके",
+    "Reasons": "कारणों",
+    "BadgeCategories": "बिल्ला श्रेणियाँ",
+    "ContactType": "संपर्क प्रकार",
+    "BusinessUnit": "व्यापार की इकाई"
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",
@@ -916,6 +930,8 @@
       "EditMetadataSuccess": "टेम्प्लेट मेटाडेटा सफलतापूर्वक अपडेट किया गया",
       "EditTemplateSuccess": "टेम्प्लेट सफलतापूर्वक अपडेट किया गया",
       "DeleteSuccess": "{modelName} सफलतापूर्वक हटा दिया गया",
+      "UpdatedSuccessfully": "{modelName} अद्यतन सफलतापूर्ण हो गया",
+      "CreatedSuccessfully": "{modelName} सफलतापूर्वक बनाया गया",
       "ListUpdatedSucess": "{modelName} सूची आइटम सफलतापूर्वक अपडेट किया गया।",
       "ThanksHelp": "हमे संपर्क करने के लिए धन्यवाद! हम तुमसे जल्द ही संपर्क करेंगे!"
     }
