@@ -6,7 +6,7 @@
     <v-list shaped class="d-block d-sm-none py-0 mt-n2">
       <v-list-item @click="helpDialog = !helpDialog">
         <v-list-item-action class="nav-icon">
-          <v-icon>mdi-help</v-icon>
+          <v-icon class="fs-18">mdi-help</v-icon>
         </v-list-item-action>
         <v-list-item-content>
           <v-list-item-title class="nav-title">
