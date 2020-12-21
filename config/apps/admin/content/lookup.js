@@ -184,6 +184,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.TimezoneCaption',
+        pluralEntity: 'Common.Timezones',
         query: generalConfiguration,
         defaultSort: 'createdDate DESC',
         type: 'graphql',
@@ -286,6 +288,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.EventPrivacy',
+        pluralEntity: 'Common.EventPrivacies',
         query: generalConfiguration,
         defaultSort: 'createdDate DESC',
         type: 'graphql',
@@ -388,6 +392,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.EventTag',
+        pluralEntity: 'Common.EventTags',
         query: generalConfiguration,
         defaultSort: 'createdDate DESC',
         type: 'graphql',
@@ -490,6 +496,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.TicketType',
+        pluralEntity: 'Common.TicketTypes',
         query: generalConfiguration,
         defaultSort: 'createdDate DESC',
         type: 'graphql',
@@ -593,6 +601,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.SessionType',
+        pluralEntity: 'Common.SessionTypes',
         query: generalConfiguration,
         defaultSort: 'createdDate DESC',
         type: 'graphql',
@@ -695,6 +705,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.QuestionControl',
+        pluralEntity: 'Common.QuestionControls',
         query: generalConfiguration,
         defaultSort: 'createdDate DESC',
         type: 'graphql',
@@ -797,6 +809,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.RefundMethod',
+        pluralEntity: 'Common.RefundMethods',
         query: generalConfiguration,
         defaultSort: 'createdDate DESC',
         type: 'graphql',
@@ -899,6 +913,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.Reason',
+        pluralEntity: 'Common.Reasons',
         query: generalConfiguration,
         defaultSort: 'createdDate DESC',
         type: 'graphql',
@@ -1012,6 +1028,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.BadgeCategory',
+        pluralEntity: 'Common.BadgeCategories',
         query: generalConfiguration,
         defaultSort: 'createdDate DESC',
         type: 'graphql',
@@ -1114,6 +1132,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.ContactType',
+        pluralEntity: 'Common.ContactTypes',
         query: generalConfiguration,
         defaultSort: 'createdDate DESC',
         type: 'graphql',
@@ -1216,6 +1236,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.Department',
+        pluralEntity: 'Common.Departments',
         query: generalConfiguration,
         defaultSort: 'createdDate DESC',
         type: 'graphql',

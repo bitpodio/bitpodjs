@@ -157,6 +157,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.RegistrationForm',
+        pluralEntity: 'Common.RegistrationForms',
         query: registrationForm,
         defaultSort: 'createdDate DESC',
         type: 'graphql',

@@ -122,6 +122,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.Badge',
+        pluralEntity: 'Common.Badges',
         query: badgeList,
         defaultSort: 'createdDate DESC',
         type: 'graphql',

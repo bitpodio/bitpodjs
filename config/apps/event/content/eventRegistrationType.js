@@ -118,6 +118,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.RegistrationType',
+        pluralEntity: 'Common.RegistrationTypes',
         query: registrationType,
         type: 'graphql',
         model: 'RegistrationType',

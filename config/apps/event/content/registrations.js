@@ -453,6 +453,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.Registration',
+        pluralEntity: 'Common.Registrations',
         query: registrationList,
         defaultSort: 'createdDate DESC',
         type: 'graphql',
@@ -896,6 +898,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.Registration',
+        pluralEntity: 'Common.Registrations',
         query: registrationList,
         defaultSort: 'createdDate DESC',
         type: 'graphql',
@@ -1036,6 +1040,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.SessionCaption',
+        pluralEntity: 'Common.Sessions',
         type: 'rest',
         getData: (ctx) =>
           getData(`Registrations/${ctx.$route.params.id}/SessionListId`),
@@ -1171,6 +1177,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.SessionCaption',
+        pluralEntity: 'Common.Sessions',
         type: 'rest',
         getData: (ctx) =>
           getData(`Registrations/${ctx.$route.params.id}/SessionListId`),
@@ -1503,6 +1511,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.Attendee',
+        pluralEntity: 'Common.Attendees',
         query: eventAttendees,
         defaultSort: 'createdDate DESC',
         type: 'graphql',
@@ -1621,6 +1631,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.Task',
+        pluralEntity: 'Common.Tasks',
         query: eventTasks,
         defaultSort: 'createdDate DESC',
         type: 'graphql',
@@ -2075,6 +2087,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.Attendee',
+        pluralEntity: 'Common.Attendees',
         query: eventAttendees,
         defaultSort: 'createdDate DESC',
         type: 'graphql',
