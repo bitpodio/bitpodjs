@@ -722,7 +722,8 @@
     "PastEventMessage": "Cet événement n'est plus actif.",
     "GoToOldSite": "Aller sur l'ancien site",
     "SelectField": "Sélectionnez un champ",
-    "DeleteImage":"Supprimer l'image"
+    "DeleteImage":"Supprimer l'image",
+    "QuestionDeletedSuccessfully":"Question supprimée avec succès"
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",

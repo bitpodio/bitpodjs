@@ -724,7 +724,8 @@
     "PastEventMessage": "यह ईवेंट अब सक्रिय नहीं है.",
     "GoToOldSite": "पुरानी साइट पर जाएं",
     "SelectField": "एक क्षेत्र का चयन करें",
-    "DeleteImage":"छवि हटाएं"
+    "DeleteImage":"छवि हटाएं",
+    "QuestionDeletedSuccessfully":"प्रश्न सफलतापूर्वक हटा दिया गया"
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",

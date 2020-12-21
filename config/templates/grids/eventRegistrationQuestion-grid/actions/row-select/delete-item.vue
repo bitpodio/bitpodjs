@@ -7,14 +7,8 @@
         ><i18n path="Drawer.Delete" />
       </v-btn>
     </v-col>
-    <v-snackbar v-model="snackbar" timeout="2000" top="true">
-      <i18n path="Common.ItemDeletedSuccessfully" />
-
-      <template v-slot:action="{ attrs }">
-        <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">
-          <i18n path="Drawer.Close" />
-        </v-btn>
-      </template>
+    <v-snackbar v-model="snackbar" timeout="3000" top="true">
+      <i18n path="Common.QuestionDeletedSuccessfully" />
     </v-snackbar>
   </div>
 </template>
@@ -40,6 +34,14 @@ export default {
       default: () => false,
     },
   },
+  watch: {
+    snackbar(newVal) {
+      if (!newVal) {
+        this.refresh()
+      }
+    },
+  },
+
   data() {
     return {
       dialog: false,
@@ -67,12 +69,13 @@ export default {
                 )
               })
               .then((res) => {
+                debugger
                 this.snackbar = true
-                this.refresh()
                 return res
               })
           }, Promise.resolve())
           .then(() => {
+            debugger
             this.snackbar = true
             return true
           })

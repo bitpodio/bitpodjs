@@ -724,7 +724,8 @@
     "PastEventMessage": "אירוע זה אינו פעיל יותר.",
     "GoToOldSite": "היכנס לאתר הישן",
     "SelectField": "בחר שדה",
-    "DeleteImage":"מחק תמונה"
+    "DeleteImage":"מחק תמונה",
+    "QuestionDeletedSuccessfully":"השאלה נמחקה בהצלחה"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",

@@ -723,7 +723,8 @@
     "PastEventMessage": "This event is no longer active.",
     "GoToOldSite": "Go to the old site",
     "SelectField": "Select a field",
-    "DeleteImage":"Delete Image"
+    "DeleteImage":"Delete Image",
+    "QuestionDeletedSuccessfully":"Question deleted successfully"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",
