@@ -147,7 +147,14 @@
           </v-list-item>
         </template>
       </v-list>
-      <Help class="d-block d-sm-none" />
+      <Help
+        class="d-block d-sm-none"
+        @clicked="
+          () => {
+            drawer = false
+          }
+        "
+      />
     </v-navigation-drawer>
 
     <v-dialog

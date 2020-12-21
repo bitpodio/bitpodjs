@@ -117,7 +117,14 @@
           </v-list-item>
         </template>
       </v-list>
-      <Help class="d-block d-sm-none" />
+      <Help
+        class="d-block d-sm-none"
+        @clicked="
+          () => {
+            drawer = false
+          }
+        "
+      />
     </v-navigation-drawer>
 
     <v-app-bar app flat class="greybg headernew pl-0" height="50">

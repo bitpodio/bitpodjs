@@ -4,7 +4,7 @@
       <v-icon> mdi-help</v-icon>
     </v-btn>
     <v-list shaped class="d-block d-sm-none py-0 mt-n2">
-      <v-list-item @click="helpDialog = !helpDialog">
+      <v-list-item @click="mobileHelp">
         <v-list-item-action class="nav-icon">
           <v-icon class="fs-18">mdi-help</v-icon>
         </v-list-item-action>
@@ -227,6 +227,10 @@ export default {
       this.helpDialog = false
       this.helpForm = true
       this.helpMessage = ''
+    },
+    mobileHelp() {
+      this.helpDialog = !this.helpDialog
+      this.$emit('clicked')
     },
   },
 }
