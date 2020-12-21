@@ -209,7 +209,7 @@ export default {
       customers: [],
       customerId: '',
       valid: false,
-      dueDate: '',
+      dueDate: null,
       duplicateMessage: '',
       isSaveButtonDisabled: false,
       timezonefield: {
@@ -479,6 +479,7 @@ export default {
       this.isTimezone = false
       this.task = {}
       this.Day = ''
+      this.dueDate = null
     },
     closeForm() {
       this.dialog = false

@@ -506,6 +506,7 @@ export default {
       this.isTimezone = false
       this.task = {}
       this.Day = ''
+      this.dueDate = null
     },
     closeForm() {
       this.dialog = false
