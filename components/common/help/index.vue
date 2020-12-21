@@ -1,22 +1,21 @@
 <template>
   <div class="help-section">
-    <v-btn
-      class="mx-2 help-button"
-      fab
-      small
-      outlined
-      color="primary"
-      @click="helpDialog = !helpDialog"
-    >
-      <v-icon>
-        mdi-help
-      </v-icon>
+    <v-btn icon class="d-none d-sm-inline" @click="helpDialog = !helpDialog">
+      <v-icon> mdi-help</v-icon>
     </v-btn>
-    <v-dialog
-      v-model="helpDialog"
-      content-class="help-box"
-      transition="dialog-bottom-transition"
-    >
+    <v-list shaped class="d-block d-sm-none py-0 mt-n2">
+      <v-list-item @click="mobileHelp">
+        <v-list-item-action class="nav-icon">
+          <v-icon class="fs-18">mdi-help</v-icon>
+        </v-list-item-action>
+        <v-list-item-content>
+          <v-list-item-title class="nav-title">
+            <i18n path="Common.Help" />
+          </v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+    </v-list>
+    <v-dialog v-model="helpDialog" content-class="help-box">
       <v-card>
         <div class="text-center pa-2 help-top-section positionRelative">
           <div class="robo-img mt-2">
@@ -228,6 +227,10 @@ export default {
       this.helpDialog = false
       this.helpForm = true
       this.helpMessage = ''
+    },
+    mobileHelp() {
+      this.helpDialog = !this.helpDialog
+      this.$emit('clicked')
     },
   },
 }

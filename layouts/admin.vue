@@ -117,6 +117,14 @@
           </v-list-item>
         </template>
       </v-list>
+      <Help
+        class="d-block d-sm-none"
+        @clicked="
+          () => {
+            drawer = false
+          }
+        "
+      />
     </v-navigation-drawer>
 
     <v-app-bar app flat class="greybg headernew pl-0" height="50">
@@ -144,6 +152,7 @@
         <v-spacer></v-spacer>
       </v-toolbar-title>
       <v-spacer></v-spacer>
+      <Help class="d-none d-sm-inline" />
       <AppDrawer />
       <LanguageSwitcher />
       <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
@@ -270,8 +279,6 @@
         </v-row>
       </v-container>
     </v-main>
-
-    <Help />
   </v-app>
 </template>
 
