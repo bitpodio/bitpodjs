@@ -977,7 +977,10 @@ export default {
             order: 'createdDate DESC',
             skip: 0,
             where: {
-              and: [{ Status: 'Open for registration' }],
+              and: [
+                { Status: 'Open for registration' },
+                { EndDate: { gte: new Date() } },
+              ],
             },
           },
           where: {
