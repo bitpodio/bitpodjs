@@ -2,7 +2,7 @@
   <div>
     <v-app-bar app flat class="greybg headernew pl-0" height="50">
       <v-toolbar-title
-        class="ml-n1 pl-0 px-2 py-1 logo-ds d-flex align-center appbar-left"
+        class="pl-0 px-2 py-1 logo-ds d-flex align-center appbar-left"
       >
         <span class="bitpod-logo logo-ds d-none d-sm-flex">
           <v-img
@@ -13,6 +13,9 @@
         <v-spacer></v-spacer>
       </v-toolbar-title>
       <v-spacer></v-spacer>
+      <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
+        <v-icon>mdi-invert-colors</v-icon>
+      </v-btn>
     </v-app-bar>
     <v-flex class="public-page-main">
       <v-flex class="public-main public-info pa-5 pt-6">
@@ -49,6 +52,7 @@
                     <iframe
                       id="rcChannel"
                       name="rcChannel"
+                      class="boxview"
                       :src="`https://chat.bitpod.io/channel/${registration.EventList.chatChannel}?layout=embedded`"
                       width="100%"
                       height="450"
@@ -199,187 +203,6 @@
                 </v-row>
               </div>
             </div>
-            <div
-              v-if="event && event.review && event.review.length"
-              class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-1 mr-0 mb-4 pb-2 d-none"
-            >
-              <v-flex class="d-flex justify-center align-center pb-3">
-                <h2 class="body-1 pb-0">
-                  <i class="fa fa-users pr-1" aria-hidden="true"></i>
-                  <i18n path="Common.Reviews" />
-                </h2>
-                <v-spacer></v-spacer>
-              </v-flex>
-              <v-divider></v-divider>
-              <v-list class="mt-2">
-                <v-list-item
-                  v-for="item in event.review"
-                  :key="item.id"
-                  class="px-0 mb-5"
-                >
-                  <v-list-item-avatar size="48" class="mr-2 ma-0 mt-n6">
-                    <v-avatar
-                      color="primary"
-                      size="36"
-                      v-bind="attrs"
-                      class="mr-"
-                      v-on="on"
-                    >
-                      <v-avatar
-                        color="primary"
-                        size="36"
-                        v-bind="attrs"
-                        v-on="on"
-                      >
-                        <span class="white--text Twitter-18">{{
-                          item.UserName
-                        }}</span>
-                      </v-avatar>
-                    </v-avatar>
-                  </v-list-item-avatar>
-
-                  <v-list-item-content class="py-0">
-                    <v-list-item-title
-                      class="fs-18"
-                      v-text="item.UserName"
-                    ></v-list-item-title>
-                    <v-list-item-subtitle class="mb-1">
-                      <v-rating
-                        color="yellow darken-3"
-                        background-color="grey darken-1"
-                        empty-icon="$ratingFull"
-                        large
-                        length="5"
-                        disabled
-                        :value="item.Rating"
-                        dense
-                        small
-                        class="ps-rating"
-                      ></v-rating>
-                    </v-list-item-subtitle>
-                    <v-list-item-subtitle
-                      class="body-2"
-                      v-text="item.Description"
-                    ></v-list-item-subtitle>
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list>
-            </div>
-            <div v-if="event.BusinessType === 'Single'" class="d-none">
-              <v-expansion-panels
-                accordion
-                flat
-                class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 mr-0 mb-4 pb-2"
-              >
-                <v-expansion-panel flat class="elevation-0 pa-0">
-                  <v-expansion-panel-header class="elevation-0 pa-0"
-                    ><v-flex class="d-flex justify-center align-center pb-0">
-                      <h2 class="body-1 pb-0">
-                        <i class="fa fa-ticket pr-1" aria-hidden="true"></i>
-                        <i18n path="Common.TicketsNotRequired" />
-                      </h2>
-                      <v-spacer></v-spacer> </v-flex
-                  ></v-expansion-panel-header>
-                  <v-expansion-panel-content class="pa-0">
-                    <v-divider></v-divider>
-                    <v-simple-table dense>
-                      <template v-slot:default>
-                        <thead>
-                          <tr>
-                            <th class="text-left">
-                              <i18n path="Common.Name" />
-                            </th>
-                            <th class="text-left">
-                              <i18n path="Common.Amount" />
-                            </th>
-                            <th class="text-left">
-                              <i18n path="Common.Quantity" />
-                            </th>
-                            <th class="text-left">
-                              <i18n path="Common.Total" />
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody v-if="event.seatReservation">
-                          <tr v-for="item in attendeeData" :key="item">
-                            <td>{{ item.ticketName }}</td>
-                            <td>{{ item.price }}</td>
-                            <td>
-                              <div class="total-align">{{ item.count }}</div>
-                            </td>
-                            <td>{{ item.total }}</td>
-                          </tr>
-                          <tr>
-                            <td></td>
-                            <td></td>
-                            <td>
-                              <span><i18n path="Common.Total" /></span>
-                              <span>{{ registration.TicketQuantity }}</span>
-                            </td>
-                            <td></td>
-                          </tr>
-                          <tr v-if="registration.Discount">
-                            <td></td>
-                            <td></td>
-                            <td><i18n path="Common.Discount" /></td>
-                            <td>
-                              {{ registration.Currency }}
-                              {{ registration.Discount }}
-                            </td>
-                          </tr>
-                          <tr>
-                            <td></td>
-                            <td></td>
-                            <td><i18n path="Common.Total" /></td>
-                            <td>
-                              {{ registration.Currency }}
-                              {{ registration.TotalAmount }}
-                            </td>
-                          </tr>
-                        </tbody>
-                        <tbody v-else>
-                          <tr v-for="item in attendeeData" :key="item">
-                            <td>{{ item.ticketName }}</td>
-                            <td>{{ item.ticketAmount }}</td>
-                            <td>
-                              <div class="total-align">{{ item.count }}</div>
-                            </td>
-                            <td>{{ item.ticketAmount * item.count }}</td>
-                          </tr>
-                          <tr>
-                            <td></td>
-                            <td></td>
-                            <td>
-                              <span><i18n path="Common.Total" /></span>
-                              <span>{{ registration.TicketQuantity }}</span>
-                            </td>
-                            <td></td>
-                          </tr>
-                          <tr v-if="registration.Discount">
-                            <td></td>
-                            <td></td>
-                            <td><i18n path="Common.Discount" /></td>
-                            <td>
-                              {{ registration.Currency }}
-                              {{ registration.Discount }}
-                            </td>
-                          </tr>
-                          <tr>
-                            <td></td>
-                            <td></td>
-                            <td><i18n path="Common.Total" /></td>
-                            <td>
-                              {{ registration.Currency }}
-                              {{ registration.TotalAmount }}
-                            </td>
-                          </tr>
-                        </tbody>
-                      </template>
-                    </v-simple-table>
-                  </v-expansion-panel-content>
-                </v-expansion-panel>
-              </v-expansion-panels>
-            </div>
           </v-flex>
           <v-flex column class="flex-30 pl-3">
             <v-skeleton-loader
@@ -417,7 +240,7 @@
                           <v-list-item
                             v-for="item in registration.SessionListId"
                             :key="item.id"
-                            class="xs12 sm4 md4 lg4 grey lighten-2 boxviewsmall pa-3 mb-4 mx-0 mr-0 pb-0 pt-0 session-view-in"
+                            class="xs12 sm4 md4 lg4 grey lighten-2 boxviewsmall pa-3 mb-4 mx-0 py-2 session-view-in"
                           >
                             <v-list-item-avatar
                               tile
@@ -642,210 +465,6 @@
                 </div>
               </div>
             </v-skeleton-loader>
-            <div
-              class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mb-4 mx-0 ml-md-2 mr-0 pb-2 d-none"
-            >
-              <v-flex class="d-flex justify-center align-center pb-2">
-                <h2 class="body-1 pb-0">
-                  <i class="fa-calendar pr-1" aria-hidden="true"></i>
-                  <i18n path="Common.DateTime" />
-                </h2>
-                <v-spacer></v-spacer>
-              </v-flex>
-              <v-divider></v-divider>
-
-              <v-flex my-3>
-                <v-skeleton-loader
-                  :loading="!eventImage"
-                  type="list-item-two-line"
-                  height="20"
-                  width="100%"
-                >
-                  <div
-                    v-if="event.BusinessType === 'Recurring'"
-                    class="body-1 my-n3"
-                  >
-                    <v-list
-                      v-if="!isPast"
-                      class="pa-0 if-rec"
-                      :data-title="event.BusinessType"
-                    >
-                      <v-list-item
-                        v-for="item in registration.attendee"
-                        :key="item.id"
-                        class="pa-0 if-rec-child"
-                      >
-                        <v-list-item-content class="py-0">
-                          <v-list-item-title>
-                            {{ formatDate(item.BookingDate) }}
-                          </v-list-item-title>
-                        </v-list-item-content>
-                      </v-list-item>
-                    </v-list>
-                    <div v-else class="py-2">
-                      <i18n path="Common.PastEventMessage" />
-                    </div>
-                  </div>
-                  <div v-else-if="isPast" class="py-2">
-                    <i18n path="Common.PastEventMessage" />
-                  </div>
-                  <div v-else class="body-1">
-                    {{ getEventStartDate() }} -<br />
-                    {{ getEventEndDate() }} -<br />
-                    {{ formatField(event && event.timeZone) }}
-                  </div>
-                </v-skeleton-loader>
-              </v-flex>
-            </div>
-            <div
-              class="xs12 sm4 md4 lg4 boxviewsmall pa-0 mb-4 mx-0 ml-md-2 mr-0 pb-2 d-none"
-            >
-              <v-flex class="d-flex justify-center align-center pb-2">
-                <h2 class="body-1 pb-0">
-                  <i class="fa-location pr-1" aria-hidden="true"></i>
-                  <i18n path="Common.Venue" />
-                </h2>
-                <v-spacer></v-spacer>
-              </v-flex>
-              <v-divider></v-divider>
-              <v-skeleton-loader
-                :loading="!eventImage"
-                type="list-item-two-line"
-                height="20"
-                width="100%"
-                class="my-3 boxview pa-3"
-              >
-                <div
-                  v-if="event.BusinessType === 'Single' && event.locationType"
-                  class="location-type"
-                >
-                  <v-text :class="event.locationType">{{
-                    event.locationType
-                  }}</v-text>
-                </div>
-                <div v-if="event.BusinessType === 'Recurring'">
-                  <div
-                    v-if="
-                      registration &&
-                      registration.SessionListId &&
-                      registration.SessionListId.length
-                    "
-                  >
-                    <div
-                      v-for="item in registration.SessionListId"
-                      :key="item.id"
-                      class="pt-2"
-                    >
-                      <v-text>{{ item.LocationType }}</v-text>
-                    </div>
-                  </div>
-                </div>
-                <div v-if="event.locationType === 'Bitpod Virtual'">
-                  <v-btn
-                    class="ma-3 ml-0"
-                    outlined
-                    color="success"
-                    :disabled="isPast"
-                    @click="startEvent(event.UniqLink)"
-                  >
-                    <i18n path="Common.JoinEvent" /><v-icon right>
-                      mdi-video
-                    </v-icon>
-                  </v-btn>
-                </div>
-                <div v-else-if="event.locationType === 'Online event'">
-                  <div>
-                    <v-chip class="ma-2 ml-0" color="primary" outlined pill>
-                      <i18n path="Common.OnlineEvent" />
-                    </v-chip>
-                  </div>
-                  <div v-if="event.locationType === 'Online event'">
-                    <a
-                      :href="!isPast && event.WebinarLink"
-                      target="_blank"
-                      class="text-decoration-none"
-                      ><v-btn
-                        class="ma-2 ml-0"
-                        outlined
-                        :disabled="isPast"
-                        color="success"
-                      >
-                        <i18n path="Common.JoinEvent" /><v-icon right>
-                          mdi-video
-                        </v-icon>
-                      </v-btn></a
-                    >
-                  </div>
-                </div>
-                <div v-else>
-                  <v-flex my-3>
-                    <div class="body-1">
-                      {{
-                        registration &&
-                        registration.EventList &&
-                        registration.EventList._VenueAddress &&
-                        registration.EventList._VenueAddress.AddressLine
-                      }}
-                      {{
-                        registration &&
-                        registration.EventList &&
-                        registration.EventList._VenueAddress &&
-                        registration.EventList._VenueAddress.City
-                      }}
-                      {{
-                        registration &&
-                        registration.EventList &&
-                        registration.EventList._VenueAddress &&
-                        registration.EventList._VenueAddress.State
-                      }}
-                      {{
-                        registration &&
-                        registration.EventList &&
-                        registration.EventList._VenueAddress &&
-                        registration.EventList._VenueAddress.Country
-                      }}
-                      {{
-                        registration &&
-                        registration.EventList &&
-                        registration.EventList._VenueAddress &&
-                        registration.EventList._VenueAddress.PostalCode
-                      }}
-                    </div>
-                  </v-flex>
-                </div>
-              </v-skeleton-loader>
-            </div>
-            <div
-              class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mb-4 mx-0 ml-md-2 mr-0 pb-2 d-none"
-            >
-              <v-flex class="d-flex justify-center align-center pb-2">
-                <h2 class="body-1 pb-0">
-                  <i class="fa-user pr-1" aria-hidden="true"></i>
-                  <i18n path="Common.Organizer" />
-                </h2>
-                <v-spacer></v-spacer>
-              </v-flex>
-              <v-divider></v-divider>
-
-              <v-flex my-3>
-                <v-skeleton-loader
-                  :loading="!eventImage"
-                  type="list-item-two-line"
-                  height="20"
-                  width="100%"
-                >
-                  <div class="body-1">
-                    {{
-                      formatField(
-                        registration &&
-                          registration.EventList &&
-                          registration.EventList.Organizer
-                      )
-                    }}
-                  </div>
-                </v-skeleton-loader>
-              </v-flex>
-            </div>
           </v-flex>
         </v-flex>
       </v-flex>
