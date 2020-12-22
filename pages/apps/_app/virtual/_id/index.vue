@@ -29,7 +29,7 @@
                   <iframe
                     width="100%"
                     height="400"
-                    src="https://www.youtube.com/embed/BtRL0fPBhwA"
+                    :src="videoSrc"
                     frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen
@@ -241,6 +241,13 @@
                             v-for="item in registration.SessionListId"
                             :key="item.id"
                             class="xs12 sm4 md4 lg4 grey lighten-2 boxviewsmall pa-3 mb-4 mx-0 py-2 session-view-in"
+                            :class="{
+                              selected:
+                                item.WebinarLink + '?autoplay=1' === videoSrc,
+                            }"
+                            @click="
+                              videoSrc = item.WebinarLink + '?autoplay=1' || ''
+                            "
                           >
                             <v-list-item-avatar
                               tile
@@ -303,15 +310,20 @@
                                 >
                                   <v-btn
                                     class="mt-2 mr-0"
-                                    outlined
+                                    depressed
                                     x-small
-                                    color="success"
+                                    color="error"
                                     :disabled="isPast"
-                                    @click="
-                                      startEvent(item.BitpodVirtualLink, true)
-                                    "
                                   >
                                     <i18n path="Common.Live" />
+                                  </v-btn>
+                                  <v-btn
+                                    class="mt-2 mr-0"
+                                    depressed
+                                    x-small
+                                    :disabled="isPast"
+                                  >
+                                    Watching
                                   </v-btn>
                                 </div>
                                 <div
@@ -320,16 +332,29 @@
                                   <a
                                     :href="!isPast && item.WebinarLink"
                                     target="_blank"
-                                    class="text-decoration-none"
+                                    class="text-decoration-none isLive"
                                     ><v-btn
                                       class="mt-2 mr-0"
-                                      outlined
+                                      depressed
                                       x-small
-                                      color="success"
+                                      color="error"
                                       :disabled="isPast"
                                     >
                                       <i18n path="Common.Live" /> </v-btn
                                   ></a>
+                                  <a
+                                    :href="!isPast && item.WebinarLink"
+                                    target="_blank"
+                                    class="text-decoration-none isWatchig"
+                                    ><v-btn
+                                      class="mt-2 mr-0"
+                                      depressed
+                                      x-small
+                                      :disabled="isPast"
+                                    >
+                                      Watching
+                                    </v-btn></a
+                                  >
                                 </div>
                               </div>
                             </v-list-item-icon>
@@ -491,6 +516,7 @@ export default {
       eventImage: false,
       attendeeData: {},
       isPast: false,
+      videoSrc: '',
     }
   },
   computed: {
@@ -612,6 +638,13 @@ export default {
             return this.$nuxt.error({ statusCode: 404 })
           } else {
             this.registration = result
+            if (
+              this.registration &&
+              this.registration.SessionListId &&
+              this.registration.SessionListId.length
+            ) {
+              this.videoSrc = this.registration.SessionListId[0].WebinarLink
+            }
             result.attendee.map((i) => {
               if (!this.attendeeData[i.TicketName]) {
                 this.attendeeData[i.TicketName] = {
@@ -786,6 +819,15 @@ export default {
 }
 .session-list .boxview:last-child {
   margin-bottom: 0 !important;
+}
+.isWatchig {
+  display: none;
+}
+.selected .isWatchig {
+  display: inline-block;
+}
+.selected .isLive {
+  display: none;
 }
 @media screen and (max-width: 600px) {
   .background-event-img {
