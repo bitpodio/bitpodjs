@@ -323,7 +323,7 @@
                                     x-small
                                     :disabled="isPast"
                                   >
-                                    Watching
+                                    <i18n path="Common.Watching" />
                                   </v-btn>
                                 </div>
                                 <div
@@ -352,9 +352,8 @@
                                       x-small
                                       :disabled="isPast"
                                     >
-                                      Watching
-                                    </v-btn></a
-                                  >
+                                      <i18n path="Common.Watching" /> </v-btn
+                                  ></a>
                                 </div>
                               </div>
                             </v-list-item-icon>
