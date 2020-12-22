@@ -35,7 +35,9 @@
                     allowfullscreen
                   ></iframe>
                 </div>
-                <div class="pa-2"><h2 class="white--text">Virtual</h2></div>
+                <div class="pa-2">
+                  <h2 class="white--text">{{ sessionName }}</h2>
+                </div>
               </div>
               <div
                 v-if="
@@ -246,7 +248,9 @@
                                 item.WebinarLink + '?autoplay=1' === videoSrc,
                             }"
                             @click="
-                              videoSrc = item.WebinarLink + '?autoplay=1' || ''
+                              ;(videoSrc =
+                                item.WebinarLink + '?autoplay=1' || ''),
+                                (sessionName = item.Name || '')
                             "
                           >
                             <v-list-item-avatar
@@ -516,6 +520,7 @@ export default {
       attendeeData: {},
       isPast: false,
       videoSrc: '',
+      sessionName: '',
     }
   },
   computed: {
@@ -643,6 +648,7 @@ export default {
               this.registration.SessionListId.length
             ) {
               this.videoSrc = this.registration.SessionListId[0].WebinarLink
+              this.sessionName = this.registration.SessionListId[0].Name
             }
             result.attendee.map((i) => {
               if (!this.attendeeData[i.TicketName]) {
