@@ -15,11 +15,11 @@
       <v-spacer></v-spacer>
     </v-app-bar>
     <v-flex class="public-page-main">
-      <v-flex class="public-main public-info pa-3">
+      <v-flex class="public-main public-info pa-5 pt-6">
         <v-flex d-flex flex-md-row flex-lg-row flex-column>
           <v-flex column class="flex-70 mr-0 mr-md-2">
             <div
-              class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-0 mr-0 mb-4 rounded-lg d-flex overflowHidden"
+              class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-0 mr-0 mb-4 mt-11 d-flex overflowHidden"
             >
               <div class="pa-0 flex-60 d-flex flex-column black">
                 <div>
@@ -42,27 +42,16 @@
                   registration.EventList.LocationType === 'Bitpod Virtual' &&
                   !registration.chatToken.includes('error')
                 "
-                class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-0 mx-0 mr-0 rounded-lg flex-40"
+                class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-0 mx-0 mr-0 flex-40"
               >
                 <div>
-                  <v-flex class="d-flex justify-center align-center pb-0">
-                    <h2 class="body-1 pa-2 pt-3">
-                      <i
-                        class="fa fa-message-square pr-1"
-                        aria-hidden="true"
-                      ></i>
-                      <i18n path="Common.Chat" />
-                    </h2>
-                    <v-spacer></v-spacer>
-                  </v-flex>
-                  <v-divider></v-divider>
                   <div class="body-1 mt-2">
                     <iframe
                       id="rcChannel"
                       name="rcChannel"
                       :src="`https://chat.bitpod.io/channel/${registration.EventList.chatChannel}?layout=embedded`"
                       width="100%"
-                      height="400"
+                      height="450"
                       frameBorder="0"
                       allow="camera;microphone;fullscreen"
                       @load="authenticateIFrame()"
@@ -99,7 +88,7 @@
                 v-if="
                   event && event.speakers && Object.keys(event.speakers).length
                 "
-                class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2 rounded-lg"
+                class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2"
               >
                 <v-flex class="d-flex justify-center align-center pb-3">
                   <h2 class="body-1 pb-0">
@@ -169,7 +158,7 @@
                 registration.EventList.Other &&
                 registration.EventList.Other.length
               "
-              class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2 rounded-lg"
+              class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2"
             >
               <v-flex class="d-flex justify-center align-center pb-3">
                 <h2 class="body-1 pb-0">
@@ -184,7 +173,7 @@
                   <v-col
                     v-for="image in registration.EventList.Other"
                     :key="image"
-                    class="d-flex child-flex pl-0 pt-0 rounded-lg gallery-img"
+                    class="d-flex child-flex pl-0 pt-0 gallery-img"
                     cols="4"
                   >
                     <v-img
@@ -212,7 +201,7 @@
             </div>
             <div
               v-if="event && event.review && event.review.length"
-              class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-1 mr-0 mb-4 pb-2 rounded-lg d-none"
+              class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-1 mr-0 mb-4 pb-2 d-none"
             >
               <v-flex class="d-flex justify-center align-center pb-3">
                 <h2 class="body-1 pb-0">
@@ -280,7 +269,7 @@
               <v-expansion-panels
                 accordion
                 flat
-                class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 mr-0 mb-4 pb-2 rounded-lg"
+                class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 mr-0 mb-4 pb-2"
               >
                 <v-expansion-panel flat class="elevation-0 pa-0">
                   <v-expansion-panel-header class="elevation-0 pa-0"
@@ -392,14 +381,14 @@
               </v-expansion-panels>
             </div>
           </v-flex>
-          <v-flex column class="flex-30">
+          <v-flex column class="flex-30 pl-3">
             <v-skeleton-loader
               :loading="!eventImage"
               :tile="true"
               type="avatar"
               height="200px"
               width="100%"
-              class="rounded-lg ml-md-2"
+              class="ml-md-2"
             >
               <div>
                 <div v-if="event.BusinessType === 'Single'">
@@ -411,7 +400,7 @@
                     "
                   >
                     <div
-                      class="xs12 sm4 md4 lg4 boxviewsmall pa-0 mb-0 mx-0 mr-0 pb-2 rounded-lg"
+                      class="xs12 sm4 md4 lg4 boxviewsmall pa-0 mb-0 mx-0 mr-0 pb-2"
                     >
                       <v-flex class="d-flex justify-center align-center pb-3">
                         <h2 class="body-1 pb-0">
@@ -423,13 +412,12 @@
                         </h2>
                         <v-spacer></v-spacer>
                       </v-flex>
-                      <v-divider class="mb-2"></v-divider>
                       <div class="session-list">
                         <v-list class="pb -0">
                           <v-list-item
                             v-for="item in registration.SessionListId"
                             :key="item.id"
-                            class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mb-4 mx-0 mr-0 pb-0 rounded-lg pt-0 session-view-in"
+                            class="xs12 sm4 md4 lg4 grey lighten-2 boxviewsmall pa-3 mb-4 mx-0 mr-0 pb-0 pt-0 session-view-in"
                           >
                             <v-list-item-avatar
                               tile
@@ -537,7 +525,7 @@
                     "
                   >
                     <div
-                      class="xs12 sm4 md4 lg4 boxviewsmall pa-3 mb-4 mx-0 mr-0 pb-2 rounded-lg"
+                      class="xs12 sm4 md4 lg4 boxviewsmall pa-3 mb-4 mx-0 mr-0 pb-2"
                     >
                       <v-flex class="d-flex justify-center align-center pb-3">
                         <h2 class="body-1 pb-0">
@@ -655,7 +643,7 @@
               </div>
             </v-skeleton-loader>
             <div
-              class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mb-4 mx-0 ml-md-2 mr-0 pb-2 rounded-lg d-none"
+              class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mb-4 mx-0 ml-md-2 mr-0 pb-2 d-none"
             >
               <v-flex class="d-flex justify-center align-center pb-2">
                 <h2 class="body-1 pb-0">
@@ -710,7 +698,7 @@
               </v-flex>
             </div>
             <div
-              class="xs12 sm4 md4 lg4 boxviewsmall pa-0 mb-4 mx-0 ml-md-2 mr-0 pb-2 rounded-lg"
+              class="xs12 sm4 md4 lg4 boxviewsmall pa-0 mb-4 mx-0 ml-md-2 mr-0 pb-2 d-none"
             >
               <v-flex class="d-flex justify-center align-center pb-2">
                 <h2 class="body-1 pb-0">
@@ -725,7 +713,7 @@
                 type="list-item-two-line"
                 height="20"
                 width="100%"
-                class="my-3 boxview pa-3 rounded-lg"
+                class="my-3 boxview pa-3"
               >
                 <div
                   v-if="event.BusinessType === 'Single' && event.locationType"
@@ -828,7 +816,7 @@
               </v-skeleton-loader>
             </div>
             <div
-              class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mb-4 mx-0 ml-md-2 mr-0 pb-2 rounded-lg d-none"
+              class="xs12 sm4 md4 lg4 boxview boxviewsmall pa-3 mb-4 mx-0 ml-md-2 mr-0 pb-2 d-none"
             >
               <v-flex class="d-flex justify-center align-center pb-2">
                 <h2 class="body-1 pb-0">
