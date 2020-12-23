@@ -249,6 +249,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Drawer.DiscountCode',
+        pluralEntity: 'Common.DiscountCodes',
         query: discountCodes,
         defaultSort: 'createdDate DESC',
         type: 'graphql',

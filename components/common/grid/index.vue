@@ -138,9 +138,9 @@
         "
       >
         <v-data-table
+          :key="componentRerenderKey"
           v-model="selectedItems"
           dense
-          :key="componentRerenderKey"
           :headers="translate(headers)"
           :items="tableData.items"
           :single-select="singleSelect"
@@ -785,13 +785,18 @@ export default {
       if (dataSourceType === 'rest') {
         this.loadRestData()
       }
-      this.$apollo.queries.tableData.refresh()
-      this.snackbarText = `${modelName} Created Successfully`
-      this.snackbar = true
-      return userCreated
+      if (userCreated) {
+        this.$apollo.queries.tableData.refresh()
+        this.snackbarText = this.$t('Messages.Success.CreatedSuccessfully', {
+          modelName: this.$t(dataSource.singularEntity) || modelName,
+        })
+        this.snackbar = true
+        return userCreated
+      }
     },
     async onUpdateItem(data) {
       const modelName = getModelName(this.content, this.viewName)
+      const dataSource = getViewDataSource(this.content, this.viewName)
       const where = {
         id: data.id,
       }
@@ -806,13 +811,18 @@ export default {
           },
         },
       })
-      this.refresh()
-      this.snackbarText = `${modelName} Updated Successfully`
-      this.snackbar = true
-      return itemUpdated
+      if (itemUpdated) {
+        this.refresh()
+        this.snackbarText = this.$t('Messages.Success.UpdatedSuccessfully', {
+          modelName: this.$t(dataSource.singularEntity) || modelName,
+        })
+        this.snackbar = true
+        return itemUpdated
+      }
     },
     async onDeleteItem(ids) {
       const modelName = getModelName(this.content, this.viewName)
+      const dataSource = getViewDataSource(this.content, this.viewName)
       const deleteItemMutation = buildMutationDeleteQuery(modelName)
       try {
         const itemDeleted = await this.$apollo.mutate({
@@ -832,9 +842,14 @@ export default {
         })
         if (itemDeleted) {
           this.refresh()
-          this.snackbarText = this.$t('Messages.Success.DeleteSuccess', {
-            modelName,
-          })
+          this.snackbarText =
+            ids.length > 1
+              ? this.$t('Messages.Success.DeleteSuccess', {
+                  modelName: this.$t(dataSource.pluralEntity) || modelName,
+                })
+              : this.$t('Messages.Success.DeleteSuccess', {
+                  modelName: this.$t(dataSource.singularEntity) || modelName,
+                })
           this.snackbar = true
           return itemDeleted
         }

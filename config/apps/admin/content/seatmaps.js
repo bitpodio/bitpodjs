@@ -65,6 +65,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.SeatMap',
+        pluralEntity: 'Common.SeatMaps',
         query: seatmapsList,
         defaultSort: 'createdDate DESC',
         type: 'graphql',

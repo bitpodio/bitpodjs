@@ -521,7 +521,11 @@
             <SaveBtn
               v-if="dialog"
               color="primary"
-              :disabled="!valid || venueAddress.AddressLine === ''"
+              :disabled="
+                !valid ||
+                (session.LocationType === 'Custom' &&
+                  venueAddress.AddressLine === '')
+              "
               depressed
               :action="onSave"
               class="ml-2"

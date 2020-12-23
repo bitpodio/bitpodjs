@@ -242,6 +242,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.Template',
+        pluralEntity: 'Common.Templates',
         query: marketingTemplates,
         defaultSort: 'createdDate DESC',
         type: 'graphql',
@@ -484,6 +486,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.Template',
+        pluralEntity: 'Common.Templates',
         query: marketingTemplates,
         defaultSort: 'createdDate DESC',
         type: 'graphql',

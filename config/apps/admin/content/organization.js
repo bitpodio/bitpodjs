@@ -286,6 +286,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.BusinessUnit',
+        pluralEntity: 'Common.BusinessUnits',
         query: businessUnit,
         defaultSort: 'createdDate DESC',
         type: 'graphql',
@@ -402,6 +404,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
+      itemTitle: 'Common.Task',
       default: false,
       fields: {
         Title: {
@@ -484,6 +487,8 @@ export default {
         },
       },
       dataSource: {
+        singularEntity: 'Common.Task',
+        pluralEntity: 'Common.Tasks',
         query: crmActivity,
         type: 'graphql',
         model: 'CRMActivity',

@@ -210,25 +210,51 @@
             </template>
           </v-simple-table>
         </div>
-        <div
-          v-if="content"
-          class="xs12 sm8 md8 lg8 boxview pad-card pb-6 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
-        >
-          <div class="sticky d-flex flex-column justify-center boxview">
-            <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
-              <h2 class="body-1 pb-0">
-                <i class="fa fa-black-board pr-1" aria-hidden="true"></i>
-                <i18n path="Common.Sessions" />
-              </h2>
-              <v-spacer></v-spacer>
-            </v-flex>
-            <v-divider></v-divider>
+        <div v-if="data && data.event && data.event.BusinessType === 'Single'">
+          <div
+            v-if="content"
+            class="xs12 sm8 md8 lg8 boxview pad-card pb-6 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+          >
+            <div class="sticky d-flex flex-column justify-center boxview">
+              <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
+                <h2 class="body-1 pb-0">
+                  <i class="fa fa-black-board pr-1" aria-hidden="true"></i>
+                  <i18n path="Common.Sessions" />
+                </h2>
+                <v-spacer></v-spacer>
+              </v-flex>
+              <v-divider></v-divider>
+            </div>
+            <Grid
+              view-name="registrationSessions"
+              :content="content"
+              class="mt-n12"
+            />
           </div>
-          <Grid
-            view-name="registrationSessions"
-            :content="content"
-            class="mt-n12"
-          />
+        </div>
+        <div
+          v-if="data && data.event && data.event.BusinessType === 'Recurring'"
+        >
+          <div
+            v-if="content"
+            class="xs12 sm8 md8 lg8 boxview pad-card pb-6 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+          >
+            <div class="sticky d-flex flex-column justify-center boxview">
+              <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
+                <h2 class="body-1 pb-0">
+                  <i class="fa fa-black-board pr-1" aria-hidden="true"></i>
+                  <i18n path="Common.Sessions" />
+                </h2>
+                <v-spacer></v-spacer>
+              </v-flex>
+              <v-divider></v-divider>
+            </div>
+            <Grid
+              view-name="registrationRecurringSessions"
+              :content="content"
+              class="mt-n12"
+            />
+          </div>
         </div>
         <div
           v-if="content"
@@ -496,6 +522,23 @@
             <v-spacer></v-spacer>
           </v-flex>
           <v-divider></v-divider>
+          <div class="pt-2" v-for="item in resArray" :key="item">
+            <span class="pl-2">Q: {{ item.Question }}</span>
+            <div v-if="item.ControlType !== 'date'">
+              <v-chip class="ma-2" small label color="blue" text-color="white">
+                {{ 'Answer' }}
+              </v-chip>
+              <span v-for="ele in item.Answer" :key="ele">{{ ele }}</span>
+            </div>
+            <div v-else>
+              <v-chip class="ma-2" small label color="blue" text-color="white">
+                {{ 'Answer' }}
+              </v-chip>
+              <span v-for="ele in item.Answer" :key="ele">{{
+                formatDate(ele)
+              }}</span>
+            </div>
+          </div>
         </div>
       </v-flex>
       <editRegistration
@@ -548,6 +591,8 @@ export default {
       AddressLine: '',
       VenueName: '',
       attendeeData: {},
+      regData: {},
+      resArray: [],
     }
   },
   computed: {
@@ -622,6 +667,17 @@ export default {
           this.data.event = res.data
           this.StartDate = this.formatDate(this.data.event.StartDate)
           this.EndDate = this.formatDate(this.data.event.EndDate)
+          this.resArray = []
+          this.resArray = this.regData._QuestionResponse.map((i) => {
+            const questData = this.data.event._Survey.find(
+              (j) => j.id === i.QuestionId
+            )
+            return {
+              Question: questData ? questData.Question : '-',
+              Answer: i.Answer,
+              ControlType: questData ? questData.ControlType : '-',
+            }
+          })
           if (this.data.event.VenueName !== '') {
             this.VenueName = this.formatAddressField(this.data.event.VenueName)
           }
@@ -657,6 +713,7 @@ export default {
       },
       update(data) {
         const registration = formatGQLResult(data, 'Registration')
+        this.regData = registration.length > 0 ? registration[0] : {}
         this.getEventInfo()
         return {
           registration: registration.length > 0 ? registration[0] : {},
