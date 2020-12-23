@@ -559,8 +559,11 @@ body {
   content: '';
 }
 .custom-nav-drawer {
-  visibility: visible;
+  visibility: visible !important;
   transform: translateX(0%) !important;
+}
+.custom-nav-drawer .v-menu {
+    display: block;
 }
 .custom-nav-main {
   padding-left: 240px !important;
