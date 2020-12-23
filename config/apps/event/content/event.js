@@ -4244,9 +4244,6 @@ export default {
           new: {
             hidden: true,
           },
-          edit: {
-            hidden: false,
-          },
           delete: {
             hidden: true,
           },
