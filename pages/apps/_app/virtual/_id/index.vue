@@ -845,7 +845,9 @@ export default {
     box-shadow: none !important;
   }
   .flex-70,
-  .flex-30 {
+  .flex-30,
+  .flex-60,
+  .flex-40 {
     flex: 100% !important;
     width: 100% !important;
     max-width: 100% !important;
