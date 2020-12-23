@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-app-bar app flat class="greybg headernew pl-0" height="50">
+    <v-app-bar app flat class="greybg headernew pl-0 video-stream" height="50">
       <v-toolbar-title
         class="pl-0 px-2 py-1 logo-ds d-flex align-center appbar-left"
       >
@@ -18,7 +18,7 @@
       </v-btn>
     </v-app-bar>
     <v-flex class="public-page-main">
-      <v-flex class="public-main public-info pa-5 pt-6">
+      <v-flex class="public-main public-info pa-5">
         <v-flex d-flex flex-md-row flex-lg-row flex-column>
           <v-flex column class="flex-70 mr-0 mr-md-2">
             <div
@@ -819,6 +819,9 @@ export default {
 }
 .selected .isLive {
   display: none;
+}
+.video-stream {
+  min-height: 50px;
 }
 @media screen and (max-width: 600px) {
   .background-event-img {
