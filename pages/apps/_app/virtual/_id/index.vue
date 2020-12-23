@@ -434,9 +434,9 @@
                               item.WebinarLink + '?autoplay=1' === videoSrc,
                           }"
                           @click="
-                            ;(videoSrc =
-                              item.WebinarLink + '?autoplay=1' || ''),
-                              (sessionName = item.Name || '')
+                            () => {
+                              videoTileClick(item)
+                            }
                           "
                         >
                           <v-list-item-avatar
@@ -683,6 +683,7 @@
 <script>
 import format from 'date-fns/format'
 import { utcToZonedTime } from 'date-fns-tz'
+import _ from 'lodash'
 import { configLoaderMixin } from '~/utility'
 
 export default {
@@ -703,6 +704,7 @@ export default {
       sessionName: '',
       drawer: false,
       group: null,
+      currentVideo: '',
     }
   },
   computed: {
@@ -829,14 +831,32 @@ export default {
             return this.$nuxt.error({ statusCode: 404 })
           } else {
             this.registration = result
+            this.registration.SessionListId = _.sortBy(
+              this.registration.SessionListId,
+              ['StartDate']
+            )
             if (
               this.registration &&
               this.registration.SessionListId &&
               this.registration.SessionListId.length
             ) {
-              this.videoSrc =
-                this.registration.SessionListId[0].WebinarLink + '?autoplay=1'
-              this.sessionName = this.registration.SessionListId[0].Name
+              let selectedVideo = ''
+              if (this.$route.query.watch) {
+                selectedVideo = this.registration.SessionListId.find(
+                  (i) => i.id === this.$route.query.watch
+                )
+              } else {
+                this.$router.push(
+                  `${this.$route.path}?watch=${this.registration.SessionListId[0].id}`
+                )
+                this.videoSrc =
+                  this.registration.SessionListId[0].WebinarLink + '?autoplay=1'
+                this.sessionName = this.registration.SessionListId[0].Name
+              }
+              if (selectedVideo) {
+                this.videoSrc = selectedVideo.WebinarLink + '?autoplay=1'
+                this.sessionName = selectedVideo.Name
+              }
             }
             result.attendee.map((i) => {
               if (!this.attendeeData[i.TicketName]) {
@@ -917,6 +937,11 @@ export default {
           '*'
         )
       }, 2000)
+    },
+    videoTileClick(item) {
+      this.videoSrc = item.WebinarLink + '?autoplay=1' || ''
+      this.sessionName = item.Name || ''
+      this.$router.push(`${this.$route.path}?watch=${item.id}`)
     },
   },
 }
