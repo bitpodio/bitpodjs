@@ -410,7 +410,7 @@
     "Draft": "Draft",
     "Join": "Join",
     "BannerImage": "Banner Image",
-    "StartSettingUpYourEvent": "There aren't any live events, to start setting up your event use Create Event link",
+    "StartSettingUpYourEvent": "There aren't any upcoming live events, to start setting up your event use Create Event link",
     "NoRecentBuyer": "No Recent Buyer",
     "AllEvents": "All Events",
     "FirstName": "First Name *",
@@ -739,7 +739,12 @@
     "Reasons": "Reasons",
     "BadgeCategories": "Badge Categories",
     "ContactType": "Contact Type",
-    "BusinessUnit": "Business Unit"
+    "BusinessUnit": "Business Unit",
+    "ManageWebhook": "Manage Webhook",
+    "Test": "Test",
+    "SelectEvents": "Select Events",
+    "ViewMap": "View Map",
+    "URLRecommended": "URL(Recommended to use https://) *"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",
@@ -936,7 +941,11 @@
       "UpdatedSuccessfully": "{modelName} Updated Successfully",
       "CreatedSuccessfully": "{modelName} Created Successfully",
       "ListUpdatedSucess": "{modelName} list item updated successfully.",
-      "ThanksHelp": "Thanks for contacting us! We will get back to you soon!"
+      "ThanksHelp": "Thanks for contacting us! We will get back to you soon!",
+      "QuestionRecordCreatedSuccess":"Question created successfully",
+      "QuestionRecordUpdatedSuccess":"Question updated successfully",
+      "TicketRecordCreatedSuccess":"Ticket created successfully",
+      "TicketRecordUpdatedSuccess":"Ticket updated successfully"
     }
   },
   "$vuetify": {

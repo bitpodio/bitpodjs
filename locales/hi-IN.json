@@ -411,7 +411,7 @@
     "Draft": "Draft",
     "Join": "Join",
     "BannerImage": "Banner Image",
-    "StartSettingUpYourEvent": "There aren't any live events, to start setting up your event use Create Event link",
+    "StartSettingUpYourEvent": "कोई भी आगामी लाइव ईवेंट नहीं है, अपने ईवेंट का उपयोग शुरू करने के लिए ईवेंट बनाएं लिंक बनाएं",
     "NoRecentBuyer": "No Recent Buyer",
     "AllEvents": "All Events",
     "FirstName": "First Name *",
@@ -740,7 +740,12 @@
     "Reasons": "कारणों",
     "BadgeCategories": "बिल्ला श्रेणियाँ",
     "ContactType": "संपर्क प्रकार",
-    "BusinessUnit": "व्यापार की इकाई"
+    "BusinessUnit": "व्यापार की इकाई",
+    "ManageWebhook": "Webhook प्रबंधित करें",
+    "Test": "जाँच",
+    "SelectEvents": "घटनाक्रम का चयन करें",
+    "ViewMap": "मानचित्र",
+    "URLRecommended": "URL (https का उपयोग करने के लिए अनुशंसित: //) *"
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",
@@ -935,7 +940,11 @@
       "UpdatedSuccessfully": "{modelName} अद्यतन सफलतापूर्ण हो गया",
       "CreatedSuccessfully": "{modelName} सफलतापूर्वक बनाया गया",
       "ListUpdatedSucess": "{modelName} सूची आइटम सफलतापूर्वक अपडेट किया गया।",
-      "ThanksHelp": "हमे संपर्क करने के लिए धन्यवाद! हम तुमसे जल्द ही संपर्क करेंगे!"
+      "ThanksHelp": "हमे संपर्क करने के लिए धन्यवाद! हम तुमसे जल्द ही संपर्क करेंगे!",
+      "QuestionRecordCreatedSuccess":"प्रश्न सफलतापूर्वक बनाया गया",
+      "QuestionRecordUpdatedSuccess":"प्रश्न सफलतापूर्वक अपडेट किया गया",
+      "TicketRecordCreatedSuccess":"टिकट सफलतापूर्वक बनाया गया",
+      "TicketRecordUpdatedSuccess":"टिकट सफलतापूर्वक अपडेट किया गया"
     }
   },
   "$vuetify": {

@@ -29,5 +29,8 @@ export default {
       required: false,
     },
   },
+  mounted() {
+    this.$emit('has-custom-row-action', true)
+  },
 }
 </script>

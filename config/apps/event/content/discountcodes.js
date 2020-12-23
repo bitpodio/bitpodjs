@@ -324,6 +324,14 @@ export default {
         context: {
           basePath: '/discountcodes',
         },
+        actions: {
+          edit: {
+            hidden: true,
+          },
+          delete: {
+            hidden: true,
+          },
+        },
       },
       dataSource: {
         type: 'rest',

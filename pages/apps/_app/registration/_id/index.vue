@@ -524,19 +524,35 @@
           <v-divider></v-divider>
           <div class="pt-2" v-for="item in resArray" :key="item">
             <span class="pl-2">Q: {{ item.Question }}</span>
-            <div v-if="item.ControlType !== 'date'">
+            <div
+              v-if="
+                item.ControlType !== 'date' &&
+                item.ControlType !== 'checkbox' &&
+                item.ControlType !== 'radio' &&
+                item.ControlType !== 'dropdown'
+              "
+            >
               <v-chip class="ma-2" small label color="blue" text-color="white">
                 {{ 'Answer' }}
               </v-chip>
               <span v-for="ele in item.Answer" :key="ele">{{ ele }}</span>
             </div>
-            <div v-else>
+            <div v-else-if="item.ControlType === 'date'">
               <v-chip class="ma-2" small label color="blue" text-color="white">
                 {{ 'Answer' }}
               </v-chip>
               <span v-for="ele in item.Answer" :key="ele">{{
                 formatDate(ele)
               }}</span>
+            </div>
+            <div v-else>
+              <v-chip class="ma-2" small label color="blue" text-color="white">
+                {{ 'Answer' }}
+              </v-chip>
+              <span v-for="(ele, index) in item.Answer" :key="index"
+                >{{ ele
+                }}{{ index !== item.Answer.length - 1 ? ',' : '' }}</span
+              >
             </div>
           </div>
         </div>
