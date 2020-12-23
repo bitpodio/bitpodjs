@@ -21,8 +21,15 @@
       <v-flex class="public-main public-info pa-5">
         <v-flex d-flex flex-md-row flex-lg-row flex-column>
           <v-flex column class="flex-70 mr-0 mr-md-2">
+            <v-flex class="d-flex justify-center align-center pb-5 vs-hidden">
+              <h2 class="body-1 pb-0">
+                <i class="fa fa-black-board pr-1" aria-hidden="true"></i>
+                <i18n path="Common.Sessions" />
+              </h2>
+              <v-spacer></v-spacer>
+            </v-flex>
             <div
-              class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-0 mr-0 mb-4 mt-11 d-flex overflowHidden"
+              class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-0 mr-0 mb-4 d-flex overflowHidden"
             >
               <div class="pa-0 flex-60 d-flex flex-column black">
                 <div>
