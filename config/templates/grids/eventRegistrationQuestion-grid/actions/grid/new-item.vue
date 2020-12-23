@@ -240,7 +240,9 @@ export default {
       if (res) {
         this.dialog = false
         this.onReset()
-        this.snackbarText = this.$t('Messages.Success.QuestionRecordCreatedSuccess')
+        this.snackbarText = this.$t(
+          'Messages.Success.QuestionRecordCreatedSuccess'
+        )
         this.snackbar = true
         this.refresh()
       }
