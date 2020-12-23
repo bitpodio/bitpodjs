@@ -1,14 +1,185 @@
 <template>
   <div>
+    <v-navigation-drawer
+      v-model="drawer"
+      app
+      class="greybg d-block d-sm-none"
+      :width="260"
+      :right="$vuetify.rtl"
+    >
+      <v-list class="d-block d-sm-none mt-10">
+        <v-list-item-group v-model="group">
+          <v-list-item
+            v-for="item in registration.SessionListId"
+            :key="item.id"
+            class="xs12 sm4 md4 lg4 boxviewsmall pa-3 mb-4 mx-0 py-2 session-view-in"
+            :class="{
+              selected: item.WebinarLink + '?autoplay=1' === videoSrc,
+            }"
+            @click="
+              ;(videoSrc = item.WebinarLink + '?autoplay=1' || ''),
+                (sessionName = item.Name || '')
+            "
+          >
+            <v-list-item-avatar
+              tile
+              size="48"
+              class="my-0 session-view session-avatar"
+            >
+              <v-avatar
+                size="48"
+                tile
+                v-bind="attrs"
+                :style="{
+                  'background-color': getRandomColor(item.Name),
+                }"
+                v-on="on"
+              >
+                <div class="d-flex flex-column">
+                  <div v-if="item.StartDate">
+                    <div class="white--text text-h6 pt-0">
+                      {{ formatDateDay(item.StartDate) }}
+                    </div>
+                    <div class="white--text body-2 mt-n1">
+                      {{ formatDateMonth(item.StartDate) }}
+                    </div>
+                  </div>
+                  <div v-else>
+                    <v-icon class="white--text">fa-history</v-icon>
+                  </div>
+                </div>
+              </v-avatar>
+            </v-list-item-avatar>
+
+            <v-list-item-content class="py-0">
+              <v-list-item-title class="text-capitalize">{{
+                item.Name
+              }}</v-list-item-title>
+              <div v-if="item.StartDate" class="mt-1">
+                <v-list-item-subtitle class="session-date">
+                  {{ formatDateTime(item.StartDate, item.Timezone) }}
+                  <span v-if="item.Timezone" class="ml-1">{{
+                    item.Timezone
+                  }}</span>
+                </v-list-item-subtitle>
+              </div>
+              <div>
+                <div
+                  v-if="
+                    item.LocationType === 'Bitpod Virtual' &&
+                    event.BusinessType === 'Single'
+                  "
+                >
+                  <v-btn
+                    class="mt-1 mr-0"
+                    depressed
+                    x-small
+                    color="error"
+                    :disabled="isPast"
+                  >
+                    <i18n path="Common.Live" />
+                  </v-btn>
+                  <v-btn class="mt-1 mr-0" depressed x-small :disabled="isPast">
+                    <i18n path="Common.Watching" />
+                  </v-btn>
+                </div>
+                <div v-if="item.LocationType === 'Online event'">
+                  <a
+                    :href="!isPast && item.WebinarLink"
+                    target="_blank"
+                    class="text-decoration-none isLive"
+                    ><v-btn
+                      class="mt-1 mr-0"
+                      depressed
+                      x-small
+                      color="error"
+                      :disabled="isPast"
+                    >
+                      <i18n path="Common.Live" /> </v-btn
+                  ></a>
+                  <a
+                    :href="!isPast && item.WebinarLink"
+                    target="_blank"
+                    class="text-decoration-none isWatchig"
+                    ><v-btn
+                      class="mt-1 mr-0"
+                      depressed
+                      x-small
+                      :disabled="isPast"
+                    >
+                      <i18n path="Common.Watching" /> </v-btn
+                  ></a>
+                </div>
+              </div>
+            </v-list-item-content>
+
+            <v-list-item-icon class="ma-0 d-none">
+              <div>
+                <div
+                  v-if="
+                    item.LocationType === 'Bitpod Virtual' &&
+                    event.BusinessType === 'Single'
+                  "
+                >
+                  <v-btn
+                    class="mt-2 mr-0"
+                    depressed
+                    x-small
+                    color="error"
+                    :disabled="isPast"
+                  >
+                    <i18n path="Common.Live" />
+                  </v-btn>
+                  <v-btn class="mt-2 mr-0" depressed x-small :disabled="isPast">
+                    <i18n path="Common.Watching" />
+                  </v-btn>
+                </div>
+                <div v-if="item.LocationType === 'Online event'">
+                  <a
+                    :href="!isPast && item.WebinarLink"
+                    target="_blank"
+                    class="text-decoration-none isLive"
+                    ><v-btn
+                      class="mt-2 mr-0"
+                      depressed
+                      x-small
+                      color="error"
+                      :disabled="isPast"
+                    >
+                      <i18n path="Common.Live" /> </v-btn
+                  ></a>
+                  <a
+                    :href="!isPast && item.WebinarLink"
+                    target="_blank"
+                    class="text-decoration-none isWatchig"
+                    ><v-btn
+                      class="mt-2 mr-0"
+                      depressed
+                      x-small
+                      :disabled="isPast"
+                    >
+                      <i18n path="Common.Watching" /> </v-btn
+                  ></a>
+                </div>
+              </div>
+            </v-list-item-icon>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-navigation-drawer>
     <v-app-bar app flat class="greybg headernew pl-0 video-stream" height="50">
       <v-toolbar-title
         class="pl-0 px-2 py-1 logo-ds d-flex align-center appbar-left"
       >
+        <v-app-bar-nav-icon
+          :ripple="false"
+          size="24"
+          height="36px"
+          width="36px"
+          class="ml-0 ml-md-2 mr-2 mr-md-3 d-flex d-sm-none"
+          @click.stop="drawer = !drawer"
+        ></v-app-bar-nav-icon>
         <span class="bitpod-logo logo-ds d-none d-sm-flex">
-          <!-- <v-img
-            :src="$config.cdnUri + 'bitpod-logo-new.png'"
-            class="logofull mr-2"
-          ></v-img> -->
           <v-img
             v-if="
               event &&
@@ -45,7 +216,7 @@
               <v-spacer></v-spacer>
             </v-flex>
             <div
-              class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-0 mr-0 mb-4 d-flex overflowHidden"
+              class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-0 mr-0 mb-4 d-flex flex-column flex-sm-row overflowHidden"
             >
               <div class="pa-0 flex-60 d-flex flex-column black">
                 <div>
@@ -230,7 +401,7 @@
             </div>
           </v-flex>
           <v-flex column class="flex-30 pl-3">
-            <div>
+            <div class="d-none d-sm-block">
               <div v-if="event.BusinessType === 'Single'">
                 <div
                   v-if="
@@ -530,6 +701,8 @@ export default {
       isPast: false,
       videoSrc: '',
       sessionName: '',
+      drawer: false,
+      group: null,
     }
   },
   computed: {
@@ -546,6 +719,11 @@ export default {
     orgName() {
       return this.$store.state.currentOrg.name
       // return this.$store.state.currentOrgInfo.Name
+    },
+  },
+  watch: {
+    group() {
+      this.drawer = false
     },
   },
   mounted() {
@@ -850,6 +1028,16 @@ export default {
 .session-view-in.theme--dark {
   background-color: #3e3e3e !important;
 }
+.session-view-in.theme--dark.selected {
+  background: #1c1c1c !important;
+}
+.session-view-in.theme--light.selected {
+  background: #acacac !important;
+}
+.session-avatar {
+  position: relative;
+  top: -8px;
+}
 @media screen and (max-width: 600px) {
   .background-event-img {
     display: none;
@@ -882,6 +1070,9 @@ export default {
   }
   .event-right-info {
     min-height: auto !important;
+  }
+  .session-view-in.theme--dark {
+    background-color: #000 !important;
   }
 }
 </style>
