@@ -5,10 +5,26 @@
         class="pl-0 px-2 py-1 logo-ds d-flex align-center appbar-left"
       >
         <span class="bitpod-logo logo-ds d-none d-sm-flex">
-          <v-img
+          <!-- <v-img
             :src="$config.cdnUri + 'bitpod-logo-new.png'"
             class="logofull mr-2"
-          ></v-img>
+          ></v-img> -->
+          <v-img
+            v-if="
+              event &&
+              event.organizerContactDetails &&
+              event.organizerContactDetails.logo
+            "
+            :src="event.organizerContactDetails.logo"
+            class="logofull mr-2"
+          >
+          </v-img>
+          <v-img
+            v-else
+            :src="$config.cdnUri + 'nologo.png'"
+            class="logofull mr-2"
+          >
+          </v-img>
         </span>
         <v-spacer></v-spacer>
       </v-toolbar-title>
@@ -640,7 +656,8 @@ export default {
               this.registration.SessionListId &&
               this.registration.SessionListId.length
             ) {
-              this.videoSrc = this.registration.SessionListId[0].WebinarLink
+              this.videoSrc =
+                this.registration.SessionListId[0].WebinarLink + '?autoplay=1'
               this.sessionName = this.registration.SessionListId[0].Name
             }
             result.attendee.map((i) => {
@@ -829,6 +846,9 @@ export default {
 }
 .video-stream {
   min-height: 50px;
+}
+.session-view-in.theme--dark {
+  background-color: #1e1e1e !important;
 }
 @media screen and (max-width: 600px) {
   .background-event-img {
