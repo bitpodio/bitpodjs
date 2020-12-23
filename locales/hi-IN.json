@@ -935,7 +935,11 @@
       "UpdatedSuccessfully": "{modelName} अद्यतन सफलतापूर्ण हो गया",
       "CreatedSuccessfully": "{modelName} सफलतापूर्वक बनाया गया",
       "ListUpdatedSucess": "{modelName} सूची आइटम सफलतापूर्वक अपडेट किया गया।",
-      "ThanksHelp": "हमे संपर्क करने के लिए धन्यवाद! हम तुमसे जल्द ही संपर्क करेंगे!"
+      "ThanksHelp": "हमे संपर्क करने के लिए धन्यवाद! हम तुमसे जल्द ही संपर्क करेंगे!",
+      "QuestionRecordCreatedSuccess":"प्रश्न सफलतापूर्वक बनाया गया",
+      "QuestionRecordUpdatedSuccess":"प्रश्न सफलतापूर्वक अपडेट किया गया",
+      "TicketRecordCreatedSuccess":"टिकट सफलतापूर्वक बनाया गया",
+      "TicketRecordUpdatedSuccess":"टिकट सफलतापूर्वक अपडेट किया गया"
     }
   },
   "$vuetify": {

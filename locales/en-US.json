@@ -936,7 +936,11 @@
       "UpdatedSuccessfully": "{modelName} Updated Successfully",
       "CreatedSuccessfully": "{modelName} Created Successfully",
       "ListUpdatedSucess": "{modelName} list item updated successfully.",
-      "ThanksHelp": "Thanks for contacting us! We will get back to you soon!"
+      "ThanksHelp": "Thanks for contacting us! We will get back to you soon!",
+      "QuestionRecordCreatedSuccess":"Question created successfully",
+      "QuestionRecordUpdatedSuccess":"Question updated successfully",
+      "TicketRecordCreatedSuccess":"Ticket created successfully",
+      "TicketRecordUpdatedSuccess":"Ticket updated successfully"
     }
   },
   "$vuetify": {

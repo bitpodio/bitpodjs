@@ -440,7 +440,7 @@ export default {
         if (res) {
           this.onReset()
           this.dialog = false
-          this.snackbarText = this.$t('Messages.Success.RecordUpdatedSuccess')
+          this.snackbarText = this.$t('Messages.Success.TicketRecordUpdatedSuccess')
           this.snackbar = true
         }
       } catch (e) {
