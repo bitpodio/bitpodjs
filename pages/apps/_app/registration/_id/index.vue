@@ -549,7 +549,10 @@
               <v-chip class="ma-2" small label color="blue" text-color="white">
                 {{ 'Answer' }}
               </v-chip>
-              <span v-for="ele in item.Answer" :key="ele">{{ ele }}, </span>
+              <span v-for="(ele, index) in item.Answer" :key="index"
+                >{{ ele
+                }}{{ index !== item.Answer.length - 1 ? ',' : '' }}</span
+              >
             </div>
           </div>
         </div>

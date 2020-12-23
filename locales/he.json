@@ -940,7 +940,11 @@
       "UpdatedSuccessfully": "{modelName} עודכן בהצלחה",
       "CreatedSuccessfully": "{modelName} נוצר בהצלחה",
       "ListUpdatedSucess": "{modelName} פריט הרשימה עודכן בהצלחה.",
-      "ThanksHelp": "תודה שפנית אלינו! אנחנו נחזור אליך בקרוב!"
+      "ThanksHelp": "תודה שפנית אלינו! אנחנו נחזור אליך בקרוב!",
+      "QuestionRecordCreatedSuccess":"שאלה נוצרה בהצלחה",
+      "QuestionRecordUpdatedSuccess":"השאלה עודכנה בהצלחה",
+      "TicketRecordCreatedSuccess":"הכרטיס נוצר בהצלחה",
+      "TicketRecordUpdatedSuccess":"הכרטיס עודכן בהצלחה"
     }
   },
   "$vuetify": {
