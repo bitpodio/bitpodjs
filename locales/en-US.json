@@ -739,7 +739,12 @@
     "Reasons": "Reasons",
     "BadgeCategories": "Badge Categories",
     "ContactType": "Contact Type",
-    "BusinessUnit": "Business Unit"
+    "BusinessUnit": "Business Unit",
+    "ManageWebhook": "Manage Webhook",
+    "Test": "Test",
+    "SelectEvents": "Select Events",
+    "ViewMap": "View Map",
+    "URLRecommended": "URL(Recommended to use https://) *"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",
