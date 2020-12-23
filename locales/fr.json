@@ -738,7 +738,12 @@
     "Reasons": "Les raisons",
     "BadgeCategories": "Catégories de badges",
     "ContactType": "type de contact",
-    "BusinessUnit": "Unité commerciale"
+    "BusinessUnit": "Unité commerciale",
+    "ManageWebhook": "Gérer le Webhook",
+    "Test": "Tester",
+    "SelectEvents": "Sélectionnez des événements",
+    "ViewMap": "Voir la carte",
+    "URLRecommended": "URL (recommandé d'utiliser https: //) *"
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",
