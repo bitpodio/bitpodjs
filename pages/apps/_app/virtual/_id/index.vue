@@ -848,7 +848,7 @@ export default {
   min-height: 50px;
 }
 .session-view-in.theme--dark {
-  background-color: #1e1e1e !important;
+  background-color: #3e3e3e !important;
 }
 @media screen and (max-width: 600px) {
   .background-event-img {
