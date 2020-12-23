@@ -739,7 +739,12 @@
     "Reasons": "कारणों",
     "BadgeCategories": "बिल्ला श्रेणियाँ",
     "ContactType": "संपर्क प्रकार",
-    "BusinessUnit": "व्यापार की इकाई"
+    "BusinessUnit": "व्यापार की इकाई",
+    "ManageWebhook": "Webhook प्रबंधित करें",
+    "Test": "जाँच",
+    "SelectEvents": "घटनाक्रम का चयन करें",
+    "ViewMap": "मानचित्र",
+    "URLRecommended": "URL (https का उपयोग करने के लिए अनुशंसित: //) *"
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",

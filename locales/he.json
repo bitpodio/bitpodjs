@@ -739,7 +739,12 @@
     "Reasons": "סיבות",
     "BadgeCategories": "קטגוריות תג",
     "ContactType": "סוג המגע",
-    "BusinessUnit": "יחידה עסקית"
+    "BusinessUnit": "יחידה עסקית",
+    "ManageWebhook": "נהל את Webhook",
+    "Test": "מִבְחָן",
+    "SelectEvents": "בחר אירועים",
+    "ViewMap": "צפה במפה",
+    "URLRecommended": "כתובת אתר (מומלץ להשתמש ב- https: //) *"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",
