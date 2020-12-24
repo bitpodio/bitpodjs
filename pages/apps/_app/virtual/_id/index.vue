@@ -77,7 +77,7 @@
                     <i18n path="Common.Live" />
                   </v-btn>
                   <v-btn icon class="mt-2 mr-0" x-small :disabled="isPast">
-                    <v-icon>mdi-heart</v-icon>
+                    <v-icon>fa-eye</v-icon>
                   </v-btn>
                 </div>
                 <div v-if="item.LocationType === 'Online event'">
@@ -99,7 +99,7 @@
                     target="_blank"
                     class="text-decoration-none isWatchig"
                     ><v-btn class="mt-2 mr-0" icon x-small :disabled="isPast">
-                      <v-icon>mdi-heart</v-icon>
+                      <v-icon>fa-eye</v-icon>
                     </v-btn></a
                   >
                 </div>
