@@ -330,18 +330,12 @@ export default {
     strategies: {
       bitpod: {
         scheme: 'oauth2',
-        tokenEndPointUrl:
-          process.env.BITPOD_TOKEN_ENDPOINT_URL ||
-          'https://login.bitpod.io/auth/connect/token',
         userInfoEndPointUrl:
           process.env.BITPOD__USERINFO_ENDPOINT_URL ||
           'https://login.bitpod.io/auth/connect/userinfo',
-        authorization:
-          process.env.BITPOD_AUTHORIZATION_ENDPOINT_URL ||
-          'https://login.bitpod.io/auth/connect/authorize',
         endpoints: {
-          authorization: `${basePath}/authorize?provider=bitpod`,
-          token: 'api/connect/token?provider=bitpod',
+          authorization: `https://${process.env.PUBLIC_DOMAIN}/svc/oauth/login?siteId=SyUzCXGDwKB&nonce=state&provider=bitpod`,
+          token: `https://${process.env.PUBLIC_DOMAIN}/svc/oauth/refresh?provider=bitpod`,
           userInfo: 'api/connect/userinfo?provider=bitpod',
           logout:
             process.env.BITPOD_ENDSESSION_ENDPOINT_URL ||
