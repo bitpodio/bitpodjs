@@ -3,7 +3,7 @@
     <v-navigation-drawer
       v-model="drawer"
       app
-      class="greybg d-block d-sm-none"
+      class="greybg d-block d-sm-none session-nav"
       :width="260"
       :right="$vuetify.rtl"
     >
@@ -564,7 +564,6 @@ import format from 'date-fns/format'
 import { utcToZonedTime } from 'date-fns-tz'
 import _ from 'lodash'
 import { configLoaderMixin } from '~/utility'
-
 export default {
   layout: 'public',
   mixins: [configLoaderMixin],
@@ -609,8 +608,22 @@ export default {
   },
   mounted() {
     this.getRegistrationData()
+    this.initDarkMode()
   },
   methods: {
+    initDarkMode() {
+      debugger
+      const darkMediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+
+      darkMediaQuery.addEventListener('change', (e) => {
+        this.$vuetify.theme.dark = !this.$vuetify.theme.dark
+      })
+
+      if (darkMediaQuery.matches) {
+        console.log('change default light to dark theme')
+        setTimeout(() => (this.$vuetify.theme.dark = true), 1)
+      }
+    },
     formatDate(date) {
       return date ? format(new Date(date), 'PPp') : ''
     },
@@ -941,6 +954,9 @@ export default {
 .session-avatar {
   position: relative;
   top: -8px;
+}
+.session-nav .v-list .v-list-item--active {
+  color: inherit !important;
 }
 @media screen and (max-width: 600px) {
   .background-event-img {
