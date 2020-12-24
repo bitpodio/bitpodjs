@@ -412,6 +412,7 @@ export default {
       this.isDueDate = false
     },
     removeDueDate() {
+      this.dueDate = null
       delete this.task.DueDate
     },
     removeDayTime() {
@@ -483,9 +484,11 @@ export default {
       } else {
         this.hideDuedateTimezone()
         this.removeDueDateTimezone()
+        this.removeDueDate()
         this.hideDayTime()
         this.removeDayTime()
         this.removedAction()
+        this.removeSurvey()
       }
     },
     changeSurvey(value, context) {
@@ -506,6 +509,7 @@ export default {
       this.isTimezone = false
       this.task = {}
       this.Day = ''
+      this.dueDate = null
     },
     closeForm() {
       this.dialog = false

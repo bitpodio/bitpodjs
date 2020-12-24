@@ -23,6 +23,7 @@ query($filters: JSON) {
           _QuestionResponse {
             Answer
             id
+            QuestionId
           }
           PaymentMethod
           CheckIn

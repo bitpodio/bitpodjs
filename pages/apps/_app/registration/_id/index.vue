@@ -522,6 +522,39 @@
             <v-spacer></v-spacer>
           </v-flex>
           <v-divider></v-divider>
+          <div class="pt-2" v-for="item in resArray" :key="item">
+            <span class="pl-2">Q: {{ item.Question }}</span>
+            <div
+              v-if="
+                item.ControlType !== 'date' &&
+                item.ControlType !== 'checkbox' &&
+                item.ControlType !== 'radio' &&
+                item.ControlType !== 'dropdown'
+              "
+            >
+              <v-chip class="ma-2" small label color="blue" text-color="white">
+                {{ 'Answer' }}
+              </v-chip>
+              <span v-for="ele in item.Answer" :key="ele">{{ ele }}</span>
+            </div>
+            <div v-else-if="item.ControlType === 'date'">
+              <v-chip class="ma-2" small label color="blue" text-color="white">
+                {{ 'Answer' }}
+              </v-chip>
+              <span v-for="ele in item.Answer" :key="ele">{{
+                formatDate(ele)
+              }}</span>
+            </div>
+            <div v-else>
+              <v-chip class="ma-2" small label color="blue" text-color="white">
+                {{ 'Answer' }}
+              </v-chip>
+              <span v-for="(ele, index) in item.Answer" :key="index"
+                >{{ ele
+                }}{{ index !== item.Answer.length - 1 ? ',' : '' }}</span
+              >
+            </div>
+          </div>
         </div>
       </v-flex>
       <editRegistration
@@ -574,6 +607,8 @@ export default {
       AddressLine: '',
       VenueName: '',
       attendeeData: {},
+      regData: {},
+      resArray: [],
     }
   },
   computed: {
@@ -648,6 +683,17 @@ export default {
           this.data.event = res.data
           this.StartDate = this.formatDate(this.data.event.StartDate)
           this.EndDate = this.formatDate(this.data.event.EndDate)
+          this.resArray = []
+          this.resArray = this.regData._QuestionResponse.map((i) => {
+            const questData = this.data.event._Survey.find(
+              (j) => j.id === i.QuestionId
+            )
+            return {
+              Question: questData ? questData.Question : '-',
+              Answer: i.Answer,
+              ControlType: questData ? questData.ControlType : '-',
+            }
+          })
           if (this.data.event.VenueName !== '') {
             this.VenueName = this.formatAddressField(this.data.event.VenueName)
           }
@@ -683,6 +729,7 @@ export default {
       },
       update(data) {
         const registration = formatGQLResult(data, 'Registration')
+        this.regData = registration.length > 0 ? registration[0] : {}
         this.getEventInfo()
         return {
           registration: registration.length > 0 ? registration[0] : {},

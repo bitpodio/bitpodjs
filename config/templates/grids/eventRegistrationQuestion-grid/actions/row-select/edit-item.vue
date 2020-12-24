@@ -245,7 +245,9 @@ export default {
 
       if (res) {
         this.dialog = false
-        this.snackbarText = this.$t('Messages.Success.RecordUpdatedSuccess')
+        this.snackbarText = this.$t(
+          'Messages.Success.QuestionRecordUpdatedSuccess'
+        )
         this.snackbar = true
       }
     },

@@ -412,7 +412,7 @@
     "Draft": "Ébauche",
     "Join": "Rejoindre",
     "BannerImage": "Image de la bannière",
-    "StartSettingUpYourEvent": "Il n'y a pas d'événements en direct, pour commencer la configuration de votre événement, utilisez le lien Créer un événement",
+    "StartSettingUpYourEvent": "Il n'y a pas d'événements en direct à venir, pour commencer à configurer votre événement, utilisez le lien Créer un événement",
     "NoRecentBuyer": "Aucun acheteur récent",
     "AllEvents": "Tous les événements",
     "FirstName": "Prénom *",
@@ -726,6 +726,7 @@
     "GoToOldSite": "Aller sur l'ancien site",
     "SelectField": "Sélectionnez un champ",
     "DeleteImage":"Supprimer l'image",
+    "QuestionDeletedSuccessfully":"Question supprimée avec succès",
     "SessionCaption": "Session",
     "RegistrationForms": "Formulaires d'inscription",
     "Badges": "Badges",
@@ -739,7 +740,12 @@
     "Reasons": "Les raisons",
     "BadgeCategories": "Catégories de badges",
     "ContactType": "type de contact",
-    "BusinessUnit": "Unité commerciale"
+    "BusinessUnit": "Unité commerciale",
+    "ManageWebhook": "Gérer le Webhook",
+    "Test": "Tester",
+    "SelectEvents": "Sélectionnez des événements",
+    "ViewMap": "Voir la carte",
+    "URLRecommended": "URL (recommandé d'utiliser https: //) *"
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",
@@ -891,8 +897,9 @@
       "ConfirmResendRegistrationEmail": "Voulez-vous vraiment renvoyer les e-mails de confirmation?",
       "DeleteSeatMap": "Voulez-vous supprimer cette carte de siège?",
       "DeleteSeatMapEvent":"Voulez-vous supprimer ce plan de siège? Cette mise en page est déjà associée à Event.",
-      "DeleteEventQuestion":"Voulez-vous supprimer cette question?"
-
+      "DeleteEventQuestion":"Voulez-vous supprimer cette question?",
+      "RegistrationTypeDefault": "Un seul type d'enregistrement peut être défini par défaut",
+      "RegistrationTypeWarning": "Avertissement de type d'enregistrement"
     },
     "Success": {
       "CopiedClipboard": "Copié dans le presse-papiers",
@@ -935,7 +942,11 @@
       "UpdatedSuccessfully": "{modelName} Mis à jour avec succés",
       "CreatedSuccessfully": "{modelName} Créé avec succès",
       "ListUpdatedSucess": "{modelName} élément de liste mis à jour avec succès.",
-      "ThanksHelp": "Merci de nous avoir contacté! Nous reviendrons vers vous bientôt!"
+      "ThanksHelp": "Merci de nous avoir contacté! Nous reviendrons vers vous bientôt!",
+      "QuestionRecordCreatedSuccess":"Question créée avec succès",
+      "QuestionRecordUpdatedSuccess":"Question mise à jour avec succès",
+      "TicketRecordCreatedSuccess":"Ticket créé avec succès",
+      "TicketRecordUpdatedSuccess":"Billet mis à jour avec succès"
     }
   },
   "$vuetify": {

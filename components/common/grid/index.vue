@@ -26,18 +26,7 @@
             'elevation-1 boxview rounded': onlySticky && winWidth < 600,
           }"
         >
-          <div
-            v-if="
-            (hasGridOption ||
-            hasRowOption ||
-            (viewName &&
-            content.view &&
-            content.view[viewName] &&
-            content.view[viewName].template &&
-            content.view[viewName].template.actions &&
-            Object.values(content.view[viewName].template.actions).reduce((acc,i)=>{return acc || !i.hidden},false)) )"
-            class="grid-actions-menu"
-          >
+          <div v-if="showTripleDot" class="grid-actions-menu">
             <v-menu right :offset-y="offset" transition="slide-y-transition">
               <template v-slot:activator="{ on, attrs }">
                 <v-btn icon small v-bind="attrs" v-on="on">
@@ -52,7 +41,7 @@
                   :on-new-item-save="onNewItemSave"
                   :refresh="refresh"
                   :context="context"
-                  @hasGridOption="getGridOption"
+                  @has-custom-grid-action="getGridOption"
                 />
                 <component
                   :is="actionTemplates['row-select'] || null"
@@ -65,7 +54,7 @@
                   :refresh="refresh"
                   :context="context"
                   :get-action-items="getActionItems"
-                  @hasRowOption="getRowOption"
+                  @has-custom-row-action="getRowOption"
                 />
               </v-list>
             </v-menu>
@@ -84,7 +73,7 @@
                 :context="context"
                 :get-action-items="getActionItems"
                 class="d-inline-flex"
-                @hasRowOption="getRowOption"
+                @has-custom-row-action="getRowOption"
               />
               <component
                 :is="actionTemplates['grid'] || null"
@@ -94,7 +83,7 @@
                 :refresh="refresh"
                 :context="context"
                 class="d-inline-flex"
-                @hasGridOption="getGridOption"
+                @has-custom-grid-action="getGridOption"
               />
             </div>
           </div>
@@ -572,6 +561,27 @@ export default {
       const isLessItems = this.tableData.total > this.options.itemsPerPage
       return !isLessItems || this.hideDefaultFooter
     },
+    showTripleDot() {
+      if (this.hasGridOption) {
+        return true
+      } else if (this.hasRowOption) {
+        return this.selectedItems.length > 0
+      } else if (this.content.views?.[this.viewName]?.template?.actions) {
+        const hasNew = !this.content.views[this.viewName].template.actions.new
+          ?.hidden
+        const hasEdit = !this.content.views[this.viewName].template.actions.edit
+          ?.hidden
+        const hasDelete = !this.content.views[this.viewName].template.actions
+          .delete?.hidden
+        if (hasNew) {
+          return true
+        } else {
+          return this.selectedItems.length > 0 && (hasEdit || hasDelete)
+        }
+      } else {
+        return true
+      }
+    },
   },
   watch: {
     filters() {
@@ -734,11 +744,11 @@ export default {
         this.refresh()
       }
     },
-    getRowOption() {
-      this.hasRowOption = true
+    getRowOption(bool) {
+      this.hasRowOption = bool
     },
-    getGridOption() {
-      this.hasGridOption = true
+    getGridOption(bool) {
+      this.hasGridOption = bool
     },
     updatePagination(pagination) {
       // call rest
