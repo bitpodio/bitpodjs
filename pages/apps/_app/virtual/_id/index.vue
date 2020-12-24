@@ -17,8 +17,9 @@
               selected: item.WebinarLink + '?autoplay=1' === videoSrc,
             }"
             @click="
-              ;(videoSrc = item.WebinarLink + '?autoplay=1' || ''),
-                (sessionName = item.Name || '')
+              () => {
+                videoTileClick(item)
+              }
             "
           >
             <v-list-item-avatar
@@ -58,9 +59,6 @@
               <div v-if="item.StartDate" class="mt-1">
                 <v-list-item-subtitle class="session-date">
                   {{ formatDateTime(item.StartDate, item.Timezone) }}
-                  <span v-if="item.Timezone" class="ml-1">{{
-                    item.Timezone
-                  }}</span>
                 </v-list-item-subtitle>
               </div>
               <div>
@@ -283,122 +281,6 @@
                 />
               </v-flex>
             </div>
-            <div>
-              <div
-                v-if="
-                  event && event.speakers && Object.keys(event.speakers).length
-                "
-                class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2"
-              >
-                <v-flex class="d-flex justify-center align-center pb-3">
-                  <h2 class="body-1 pb-0">
-                    <i class="fa fa-mic pr-1" aria-hidden="true"></i>
-                    <i18n path="Common.Speakers" />
-                  </h2>
-                  <v-spacer></v-spacer>
-                </v-flex>
-                <v-divider></v-divider>
-                <div class="d-flex flex-wrap justify-center justify-md-start">
-                  <v-card
-                    v-for="item in Object.values(event.speakers)"
-                    :key="item.id"
-                    class="pb-speakers ma-4 ml-0 mb-0 ma-xs-4 elevation-0 greybg"
-                  >
-                    <div v-if="item.imageURL" class="overflow-hidden">
-                      <img
-                        :src="item.imageURL"
-                        height="160px"
-                        class="positionRelative speaker-img grey lighten-4"
-                      />
-                    </div>
-                    <div v-else class="overflow-hidden">
-                      <img
-                        :src="$config.cdnUri + 'default_profile.png'"
-                        height="160px"
-                        class="positionRelative speaker-img grey lighten-4"
-                      />
-                    </div>
-                    <v-text
-                      class="text-center fs-20 d-flex justify-center pt-1 text-capitalize"
-                      >{{ item.firstName }}</v-text
-                    >
-                    <v-card-actions class="pa-1 pt-0 d-flex justify-center">
-                      <v-btn
-                        icon
-                        :to="item.socialMedia.facebook"
-                        target="_blank"
-                      >
-                        <v-icon class="fs-18">mdi-facebook</v-icon>
-                      </v-btn>
-
-                      <v-btn
-                        icon
-                        :to="item.socialMedia.twitter"
-                        target="_blank"
-                      >
-                        <v-icon class="fs-18">mdi-twitter</v-icon>
-                      </v-btn>
-
-                      <v-btn
-                        icon
-                        :to="item.socialMedia.linkdin"
-                        target="_blank"
-                      >
-                        <v-icon class="fs-18">mdi-linkedin</v-icon>
-                      </v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </div>
-              </div>
-            </div>
-            <div
-              v-if="
-                registration &&
-                registration.EventList &&
-                registration.EventList.Other &&
-                registration.EventList.Other.length
-              "
-              class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-0 mb-4 pb-2"
-            >
-              <v-flex class="d-flex justify-center align-center pb-3">
-                <h2 class="body-1 pb-0">
-                  <i class="fa fa-users pr-1" aria-hidden="true"></i>
-                  <i18n path="Common.Gallery" />
-                </h2>
-                <v-spacer></v-spacer>
-              </v-flex>
-              <v-divider></v-divider>
-              <div class="pa-3">
-                <v-row>
-                  <v-col
-                    v-for="image in registration.EventList.Other"
-                    :key="image"
-                    class="d-flex child-flex pl-0 pt-0 gallery-img"
-                    cols="4"
-                  >
-                    <v-img
-                      :src="getAttachmentLink(image, true)"
-                      :lazy-src="getAttachmentLink(image, true)"
-                      aspect-ratio="1"
-                      class="grey lighten-4"
-                    >
-                      <template v-slot:placeholder>
-                        <v-row
-                          class="fill-height ma-0"
-                          align="center"
-                          justify="center"
-                        >
-                          <v-progress-circular
-                            indeterminate
-                            color="grey lighten-5"
-                          ></v-progress-circular>
-                        </v-row>
-                      </template>
-                    </v-img>
-                  </v-col>
-                </v-row>
-              </div>
-            </div>
           </v-flex>
           <v-flex column class="flex-30 pl-3">
             <div class="d-none d-sm-block">
@@ -480,9 +362,6 @@
                                 {{
                                   formatDateTime(item.StartDate, item.Timezone)
                                 }}
-                                <span v-if="item.Timezone" class="ml-1">{{
-                                  item.Timezone
-                                }}</span>
                               </v-list-item-subtitle>
                             </div>
                           </v-list-item-content>
