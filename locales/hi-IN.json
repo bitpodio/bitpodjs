@@ -897,7 +897,9 @@
       "ConfirmResendRegistrationEmail": "क्या आप वाकई पुष्टिकरण ईमेल को फिर से भेजना चाहते हैं?",
       "DeleteSeatMap": "क्या आप इस सीटमैप को हटाना चाहते हैं?",
       "DeleteSeatMapEvent":"क्या आप इस सीट का नक्शा हटाना चाहते हैं? यह लेआउट पहले से ईवेंट से जुड़ा हुआ है।",
-      "DeleteEventQuestion":"क्या आप इस प्रश्न को हटाना चाहते हैं?"
+      "DeleteEventQuestion":"क्या आप इस प्रश्न को हटाना चाहते हैं?",
+      "RegistrationTypeDefault": "केवल एक पंजीकरण प्रकार को डिफ़ॉल्ट पर सेट किया जा सकता है",
+      "RegistrationTypeWarning": "पंजीकरण प्रकार चेतावनी"
     },
     "Success": {
       "CopiedClipboard": "Copied to clipboard",
