@@ -12,7 +12,7 @@
           <v-list-item
             v-for="item in registration.SessionListId"
             :key="item.id"
-            class="xs12 sm4 md4 lg4 boxviewsmall pa-3 mb-4 mx-0 py-2 session-view-in"
+            class="xs12 sm4 md4 lg4 boxviewsmall pa-3 my-1 mx-0 py-2 session-view-in"
             :class="{
               selected: item.WebinarLink + '?autoplay=1' === videoSrc,
             }"
@@ -22,11 +22,7 @@
               }
             "
           >
-            <v-list-item-avatar
-              tile
-              size="48"
-              class="my-0 session-view session-avatar"
-            >
+            <v-list-item-avatar tile size="48" class="my-0 session-view">
               <v-avatar
                 size="48"
                 tile
@@ -61,57 +57,9 @@
                   {{ formatDateTime(item.StartDate, item.Timezone) }}
                 </v-list-item-subtitle>
               </div>
-              <div>
-                <div
-                  v-if="
-                    item.LocationType === 'Bitpod Virtual' &&
-                    event.BusinessType === 'Single'
-                  "
-                >
-                  <v-btn
-                    class="mt-1 mr-0"
-                    depressed
-                    x-small
-                    color="error"
-                    :disabled="isPast"
-                  >
-                    <i18n path="Common.Live" />
-                  </v-btn>
-                  <v-btn class="mt-1 mr-0" depressed x-small :disabled="isPast">
-                    <i18n path="Common.Watching" />
-                  </v-btn>
-                </div>
-                <div v-if="item.LocationType === 'Online event'">
-                  <a
-                    :href="!isPast && item.WebinarLink"
-                    target="_blank"
-                    class="text-decoration-none isLive"
-                    ><v-btn
-                      class="mt-1 mr-0"
-                      depressed
-                      x-small
-                      color="error"
-                      :disabled="isPast"
-                    >
-                      <i18n path="Common.Live" /> </v-btn
-                  ></a>
-                  <a
-                    :href="!isPast && item.WebinarLink"
-                    target="_blank"
-                    class="text-decoration-none isWatchig"
-                    ><v-btn
-                      class="mt-1 mr-0"
-                      depressed
-                      x-small
-                      :disabled="isPast"
-                    >
-                      <i18n path="Common.Watching" /> </v-btn
-                  ></a>
-                </div>
-              </div>
             </v-list-item-content>
 
-            <v-list-item-icon class="ma-0 d-none">
+            <v-list-item-icon class="ma-0">
               <div>
                 <div
                   v-if="
@@ -128,8 +76,8 @@
                   >
                     <i18n path="Common.Live" />
                   </v-btn>
-                  <v-btn class="mt-2 mr-0" depressed x-small :disabled="isPast">
-                    <i18n path="Common.Watching" />
+                  <v-btn icon class="mt-2 mr-0" x-small :disabled="isPast">
+                    <v-icon>mdi-heart</v-icon>
                   </v-btn>
                 </div>
                 <div v-if="item.LocationType === 'Online event'">
@@ -150,14 +98,10 @@
                     :href="!isPast && item.WebinarLink"
                     target="_blank"
                     class="text-decoration-none isWatchig"
-                    ><v-btn
-                      class="mt-2 mr-0"
-                      depressed
-                      x-small
-                      :disabled="isPast"
-                    >
-                      <i18n path="Common.Watching" /> </v-btn
-                  ></a>
+                    ><v-btn class="mt-2 mr-0" icon x-small :disabled="isPast">
+                      <v-icon>mdi-heart</v-icon>
+                    </v-btn></a
+                  >
                 </div>
               </div>
             </v-list-item-icon>
@@ -203,7 +147,7 @@
       </v-btn>
     </v-app-bar>
     <v-flex class="public-page-main">
-      <v-flex class="public-main public-info pa-5">
+      <v-flex class="public-main public-info pa-0 pa-sm-5">
         <v-flex d-flex flex-md-row flex-lg-row flex-column>
           <v-flex column class="flex-70 mr-0 mr-md-2">
             <v-flex class="d-flex justify-center align-center pb-5 vs-hidden">
@@ -258,7 +202,7 @@
                 </div>
               </div>
             </div>
-            <div>
+            <div class="pa-5 pa-sm-0">
               <div class="text-h5 text-capitalize">
                 {{ formatField(registration.EventName) }}
               </div>
