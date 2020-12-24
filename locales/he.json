@@ -897,7 +897,9 @@
       "ConfirmResendRegistrationEmail": "האם אתה בטוח שברצונך לשלוח שוב הודעות אישור?",
       "DeleteSeatMap": "האם אתה רוצה למחוק את מפת המושב הזו?",
       "DeleteSeatMapEvent": "האם אתה רוצה למחוק את מפת המושבים הזו? פריסה זו כבר משויכת לאירוע.",
-      "DeleteEventQuestion": "האם ברצונך למחוק שאלה זו?"
+      "DeleteEventQuestion": "האם ברצונך למחוק שאלה זו?",
+      "RegistrationTypeDefault": "ניתן להגדיר ברירת מחדל רק סוג רישום אחד",
+      "RegistrationTypeWarning": "אזהרת סוג רישום"
     },
     "Success": {
       "CopiedClipboard": "הועתק ללוח",

@@ -895,8 +895,9 @@
       "ConfirmResendRegistrationEmail": "Voulez-vous vraiment renvoyer les e-mails de confirmation?",
       "DeleteSeatMap": "Voulez-vous supprimer cette carte de siège?",
       "DeleteSeatMapEvent":"Voulez-vous supprimer ce plan de siège? Cette mise en page est déjà associée à Event.",
-      "DeleteEventQuestion":"Voulez-vous supprimer cette question?"
-
+      "DeleteEventQuestion":"Voulez-vous supprimer cette question?",
+      "RegistrationTypeDefault": "Un seul type d'enregistrement peut être défini par défaut",
+      "RegistrationTypeWarning": "Avertissement de type d'enregistrement"
     },
     "Success": {
       "CopiedClipboard": "Copié dans le presse-papiers",
