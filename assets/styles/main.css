@@ -70,6 +70,13 @@ body {
 .fc-view-harness-active{
  height: 1160px !important;
 }
+.badgelogoimg{
+  max-height: 50px !important;
+  width: auto !important;
+}
+.QRcode{
+  max-width: 70px !important;
+}
 .uploadFile {
   position: absolute !important;
   z-index: 1;
@@ -806,4 +813,5 @@ table > tbody > tr:last-child .key-align {
   .help-box {
     max-width: calc(100% - 25px);
   }
+  
 }

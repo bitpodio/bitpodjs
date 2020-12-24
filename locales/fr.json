@@ -311,7 +311,7 @@
     "OnlyAskWhen": "Ne demandez qu'à quel moment l'un de ces billets est acheté",
     "ItemDeletedSuccessfully": "L'élément a été supprimé.",
     "EditItem": "Editer l'article",
-    "EditSurveyQuestion": "Editer la question de l'enquête",
+    "EditSurveyQuestion": "Modifier la question d'inscription",
     "ConfirmationEmailSent": "E-mail de confirmation envoyé",
     "ResendRegistrationEmail": "renvoyer l'e-mail d'inscription",
     "JoinSession": "Session de jointure",
