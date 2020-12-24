@@ -133,13 +133,6 @@
             class="lounge-logofull mr-2"
           >
           </v-img>
-          <v-img
-            v-else
-            contain
-            :src="$config.cdnUri + 'nologo.png'"
-            class="lounge-logofull mr-2"
-          >
-          </v-img>
         </span>
         <v-spacer></v-spacer>
       </v-toolbar-title>
@@ -558,7 +551,6 @@ export default {
   },
   methods: {
     initDarkMode() {
-      debugger
       const darkMediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
 
       darkMediaQuery.addEventListener('change', (e) => {
