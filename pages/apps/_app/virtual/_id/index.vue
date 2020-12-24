@@ -556,6 +556,7 @@ export default {
   },
   methods: {
     initDarkMode() {
+      debugger
       const darkMediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
 
       darkMediaQuery.addEventListener('change', (e) => {
