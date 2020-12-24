@@ -550,18 +550,6 @@ export default {
     this.initDarkMode()
   },
   methods: {
-    initDarkMode() {
-      const darkMediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-
-      darkMediaQuery.addEventListener('change', (e) => {
-        this.$vuetify.theme.dark = !this.$vuetify.theme.dark
-      })
-
-      if (darkMediaQuery.matches) {
-        console.log('change default light to dark theme')
-        setTimeout(() => (this.$vuetify.theme.dark = true), 1)
-      }
-    },
     formatDate(date) {
       return date ? format(new Date(date), 'PPp') : ''
     },
@@ -772,6 +760,18 @@ export default {
       this.videoSrc = item.WebinarLink + '?autoplay=1' || ''
       this.sessionName = item.Name || ''
       this.$router.push(`${this.$route.path}?watch=${item.id}`)
+    },
+    initDarkMode() {
+      const darkMediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+
+      darkMediaQuery.addEventListener('change', (e) => {
+        this.$vuetify.theme.dark = !this.$vuetify.theme.dark
+      })
+
+      if (darkMediaQuery.matches) {
+        console.log('change default light to dark theme')
+        setTimeout(() => (this.$vuetify.theme.dark = true), 1)
+      }
     },
   },
 }
