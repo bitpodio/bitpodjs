@@ -105,7 +105,7 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/device',
     '@nuxtjs/apollo',
-    '@bitpod/auth-next',
+    '@bitpod/auth-nuxt',
     [
       'nuxt-gmaps',
       {
