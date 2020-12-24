@@ -121,7 +121,7 @@
           class="ml-0 ml-md-2 mr-2 mr-md-3 d-flex d-sm-none"
           @click.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
-        <span class="bitpod-logo logo-ds d-none d-sm-flex">
+        <span class="logo-ds d-none d-sm-flex">
           <v-img
             v-if="
               event &&
@@ -129,13 +129,15 @@
               event.organizerContactDetails.logo
             "
             :src="event.organizerContactDetails.logo"
-            class="logofull mr-2"
+            contain
+            class="lounge-logofull mr-2"
           >
           </v-img>
           <v-img
             v-else
+            contain
             :src="$config.cdnUri + 'nologo.png'"
-            class="logofull mr-2"
+            class="lounge-logofull mr-2"
           >
           </v-img>
         </span>
@@ -901,6 +903,11 @@ export default {
 }
 .session-nav .v-list .v-list-item--active {
   color: inherit !important;
+}
+.lounge-logofull {
+  max-height: 40px;
+  width: auto !important;
+  min-width: auto !important;
 }
 @media screen and (max-width: 600px) {
   .background-event-img {
