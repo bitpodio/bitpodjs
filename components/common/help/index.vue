@@ -199,26 +199,31 @@ export default {
     }
   },
   methods: {
-    async onSave() {
+    onSave() {
       this.formData.Name = this.$auth.$state.user.data.name
       this.formData.FullName = this.$auth.$state.user.data.name
       this.formData.Email = this.$auth.$state.user.data.email
       this.formData.Message = this.helpMessage
-      try {
-        const url = `https://${this.$config.axios.crmUrl}${nuxtconfig.axios.apiEndpoint}`
-        const res = await this.$axios.$post(`${url}Leads`, {
+      const url = `https://${this.$config.axios.crmUrl}${nuxtconfig.axios.apiEndpoint}`
+      const customAxiosInstance = this.$axios.create({
+        headers: {},
+      })
+      customAxiosInstance.setHeader('Authorization', '')
+      customAxiosInstance
+        .post(`${url}Leads`, {
           ...this.formData,
         })
-        if (res) {
+        .then((res) => {
           this.helpDialog = false
           this.helpForm = true
           this.onReset()
           this.snackbarText = this.$t('Messages.Success.ThanksHelp')
           this.snackbar = true
-        }
-      } catch (e) {
-        console.log('Error', e)
-      }
+          return res
+        })
+        .catch((e) => {
+          console.log('Error', e)
+        })
     },
     onReset() {
       this.helpMessage = ''
