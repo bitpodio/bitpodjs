@@ -118,7 +118,8 @@
                     dense
                     required
                     :error-messages="uniqueLinkValidationMsg"
-                    @keyup="changeUniqueLink($event)"
+                    @input="changeUniqueLink($event)"
+                    @change="changeUniqueLink($event)"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -522,7 +523,9 @@
         <SaveBtn
           v-if="currentTab > 2 && !isEventCreate && !isEventPublish"
           color="primary"
-          :disabled="isSaveButtonDisabled || !valid || !datevalid"
+          :disabled="
+            isSaveButtonDisabled || !valid || !datevalid || isInvalidEventLink
+          "
           depressed
           :action="saveRecord"
           class="ml-2"
@@ -1312,13 +1315,14 @@ export default {
     verifyUniqueLink(value) {
       value = value.toLowerCase().replace(/\s/g, '')
       value = value.trim()
-      const regex = RegExp(/^(?![0-9]*$)[a-zA-Z0-9]+$/)
+      const regex = RegExp(/^(?![0-9]*$){1,}[a-zA-Z0-9]+$/)
       if (regex.test(value)) {
         if (isNaN(value)) {
           this.eventData.UniqLink = value
           this.checkUniqueLink(this.eventData.UniqLink)
         }
       } else {
+        this.isUniqLinkValid = false
         this.isInvalidEventLink = true
         this.uniqueLinkMessage = this.$t('Messages.Warn.UniqueLinkFormat')
       }
