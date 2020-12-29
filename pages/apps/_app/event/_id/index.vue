@@ -68,7 +68,7 @@
                 </template>
 
                 <v-list dense>
-                  <!-- <v-list-item>
+                  <v-list-item @click="checkEventbriteSetup">
                     <v-list-item-icon class="mr-2">
                       <i class="fa fa-paperplane mt-1" aria-hidden="true"></i>
                     </v-list-item-icon>
@@ -77,7 +77,7 @@
                         ><i18n path="Drawer.Publishtoeventbrite"
                       /></v-list-item-title>
                     </v-list-item-content>
-                  </v-list-item> -->
+                  </v-list-item>
                   <v-list-item @click="isMakeCopy = true">
                     <v-list-item-icon class="mr-2">
                       <i class="fa fa-clone mt-1" aria-hidden="true"></i>
@@ -1462,6 +1462,10 @@
       <selectExistingSeatMap
         :select-existing-seat-map.sync="selectExistingSeatMap"
       />
+      <eventBriteForm
+        :key="eventBriteDialog"
+        :event-brite-dialog.sync="eventBriteDialog"
+      />
       <confirm ref="confirm"></confirm>
     </v-flex>
   </div>
@@ -1478,6 +1482,7 @@ import editEventSetting from './editEventSetting.vue'
 import editSiteSetting from './editSiteSetting.vue'
 import newBadgeForm from './newBadgeForm.vue'
 import editBadgeForm from './editBadgeForm.vue'
+import eventBriteForm from './eventBriteForm.vue'
 import makeCopy from './makeCopy.vue'
 import badge from '~/config/apps/event/gql/badge.gql'
 import organizationInfo from '~/config/apps/event/gql/organizationInfo.gql'
@@ -1504,6 +1509,7 @@ export default {
     copy,
     makeCopy,
     Notes,
+    eventBriteForm,
   },
   mixins: [configLoaderMixin],
   props: {
@@ -1518,6 +1524,7 @@ export default {
       loading: 0,
       dialog: false,
       selectExistingSeatMap: false,
+      eventBriteDialog: false,
       editeventform: false,
       editseoform: false,
       eventForm: false,
@@ -2326,6 +2333,31 @@ export default {
     },
     onEditSeatMap() {
       this.$router.push(this.localePath(`/apps/seatmap/${this.layoutId}`))
+    },
+    async checkEventbriteSetup() {
+      try {
+        const filter = { where: { ServiceId: 'eventbrite' } }
+        const url = `${this.$bitpod.getApiUrl()}Connections?filter=${JSON.stringify(
+          filter
+        )}`
+        const res = await this.$axios.get(`${url}`)
+        if (res) {
+          if (res && res.data && res.data[0].Status === 'Disconnected') {
+            await this.$refs.confirm.open(
+              this.$t('Common.NewBadge'),
+              this.$t('Messages.Warn.ReplaceBadge'),
+              { color: 'warning' }
+            )
+          } else {
+            this.eventBriteDialog = true
+          }
+        }
+      } catch (e) {
+        console.error(
+          `Error in apps/event/_id/index.vue while making a Get call to Connection model in method checkEventbriteSetup `,
+          e
+        )
+      }
     },
   },
   apollo: {

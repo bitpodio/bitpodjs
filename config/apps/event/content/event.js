@@ -3326,7 +3326,7 @@ export default {
           caption: ' ',
           searchEnable: false,
           sortEnable: false,
-          columnWidth: '100px',
+          columnWidth: '130px',
           type: 'string',
           hidden: false,
           inlineEdit: true,
