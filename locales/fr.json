@@ -12,6 +12,8 @@
     "Help": "Aidez-moi",
     "HomePage": "Page d'accueil",
     "SignIn": "Se connecter",
+    "Live": "Vivre",
+    "Watching": "En train de regarder",
     "EditEventInformation": "Editer les informations sur les événements",
     "Description": "Description",
     "EditEventSettings": "Editer les paramètres d'événement",
@@ -311,7 +313,7 @@
     "OnlyAskWhen": "Ne demandez qu'à quel moment l'un de ces billets est acheté",
     "ItemDeletedSuccessfully": "L'élément a été supprimé.",
     "EditItem": "Editer l'article",
-    "EditSurveyQuestion": "Editer la question de l'enquête",
+    "EditSurveyQuestion": "Modifier la question d'inscription",
     "ConfirmationEmailSent": "E-mail de confirmation envoyé",
     "ResendRegistrationEmail": "renvoyer l'e-mail d'inscription",
     "JoinSession": "Session de jointure",
@@ -895,8 +897,9 @@
       "ConfirmResendRegistrationEmail": "Voulez-vous vraiment renvoyer les e-mails de confirmation?",
       "DeleteSeatMap": "Voulez-vous supprimer cette carte de siège?",
       "DeleteSeatMapEvent":"Voulez-vous supprimer ce plan de siège? Cette mise en page est déjà associée à Event.",
-      "DeleteEventQuestion":"Voulez-vous supprimer cette question?"
-
+      "DeleteEventQuestion":"Voulez-vous supprimer cette question?",
+      "RegistrationTypeDefault": "Un seul type d'enregistrement peut être défini par défaut",
+      "RegistrationTypeWarning": "Avertissement de type d'enregistrement"
     },
     "Success": {
       "CopiedClipboard": "Copié dans le presse-papiers",

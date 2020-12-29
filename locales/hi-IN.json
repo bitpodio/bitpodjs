@@ -12,6 +12,8 @@
     "Help": "सहायता",
     "HomePage": "मुख पृष्ठ",
     "SignIn": "साइन इन करें",
+    "Live": "लाइव",
+    "Watching": "देख रहे",
     "EditEventInformation": "घटना की जानकारी संपादित करें",
     "Description": "विवरण",
     "EditEventSettings": "ईवेंट सेटिंग्स संपादित करें",
@@ -311,7 +313,7 @@
     "OnlyAskWhen": "केवल यह पूछें कि इनमें से एक टिकट कब खरीदा जाता है",
     "ItemDeletedSuccessfully": "आइटम सफलतापूर्वक हटा दिया गया।",
     "EditItem": "संपादित आइटम",
-    "EditSurveyQuestion": "सर्वेक्षण प्रश्न संपादित करें",
+    "EditSurveyQuestion": "पंजीकरण प्रश्न संपादित करें",
     "ConfirmationEmailSent": "पुष्टिकरण का ईमेल भेजा गया",
     "ResendRegistrationEmail": "पंजीकरण ईमेल पुनः भेजें",
     "JoinSession": "सत्र में शामिल हों",
@@ -897,7 +899,9 @@
       "ConfirmResendRegistrationEmail": "क्या आप वाकई पुष्टिकरण ईमेल को फिर से भेजना चाहते हैं?",
       "DeleteSeatMap": "क्या आप इस सीटमैप को हटाना चाहते हैं?",
       "DeleteSeatMapEvent":"क्या आप इस सीट का नक्शा हटाना चाहते हैं? यह लेआउट पहले से ईवेंट से जुड़ा हुआ है।",
-      "DeleteEventQuestion":"क्या आप इस प्रश्न को हटाना चाहते हैं?"
+      "DeleteEventQuestion":"क्या आप इस प्रश्न को हटाना चाहते हैं?",
+      "RegistrationTypeDefault": "केवल एक पंजीकरण प्रकार को डिफ़ॉल्ट पर सेट किया जा सकता है",
+      "RegistrationTypeWarning": "पंजीकरण प्रकार चेतावनी"
     },
     "Success": {
       "CopiedClipboard": "Copied to clipboard",
