@@ -948,7 +948,10 @@
       "QuestionRecordCreatedSuccess":"प्रश्न सफलतापूर्वक बनाया गया",
       "QuestionRecordUpdatedSuccess":"प्रश्न सफलतापूर्वक अपडेट किया गया",
       "TicketRecordCreatedSuccess":"टिकट सफलतापूर्वक बनाया गया",
-      "TicketRecordUpdatedSuccess":"टिकट सफलतापूर्वक अपडेट किया गया"
+      "TicketRecordUpdatedSuccess":"टिकट सफलतापूर्वक अपडेट किया गया",
+      "RegistrationFormUpdatedSuccess":"पंजीकरण फॉर्म सफलतापूर्वक अपडेट किया गया",
+      "SessionCreatedSuccess":"सत्र सफलतापूर्वक बनाया गया",
+      "SessionUpdatedSuccess":"Session updated successfully"
     }
   },
   "$vuetify": {

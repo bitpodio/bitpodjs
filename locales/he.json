@@ -948,7 +948,10 @@
       "QuestionRecordCreatedSuccess":"שאלה נוצרה בהצלחה",
       "QuestionRecordUpdatedSuccess":"השאלה עודכנה בהצלחה",
       "TicketRecordCreatedSuccess":"הכרטיס נוצר בהצלחה",
-      "TicketRecordUpdatedSuccess":"הכרטיס עודכן בהצלחה"
+      "TicketRecordUpdatedSuccess":"הכרטיס עודכן בהצלחה",
+      "RegistrationFormUpdatedSuccess":"טופס ההרשמה עודכן בהצלחה",
+      "SessionCreatedSuccess":"ההפעלה נוצרה בהצלחה",
+      "SessionUpdatedSuccess":"ההפעלה עודכנה בהצלחה"
     }
   },
   "$vuetify": {

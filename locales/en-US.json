@@ -949,7 +949,10 @@
       "QuestionRecordCreatedSuccess":"Question created successfully",
       "QuestionRecordUpdatedSuccess":"Question updated successfully",
       "TicketRecordCreatedSuccess":"Ticket created successfully",
-      "TicketRecordUpdatedSuccess":"Ticket updated successfully"
+      "TicketRecordUpdatedSuccess":"Ticket updated successfully",
+      "RegistrationFormUpdatedSuccess":"Registration Form updated successfully",
+      "SessionCreatedSuccess":"Session created successfully",
+      "SessionUpdatedSuccess":"Session updated successfully"
     }
   },
   "$vuetify": {

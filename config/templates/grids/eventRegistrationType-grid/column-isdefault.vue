@@ -25,9 +25,6 @@
 </template>
 
 <script>
-import gql from 'graphql-tag'
-import registrationType from '~/config/apps/event/gql/registrationType.gql'
-import { formatGQLResult } from '~/utility/gql.js'
 export default {
   props: {
     item: {
