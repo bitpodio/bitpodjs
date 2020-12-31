@@ -1043,8 +1043,11 @@ export default {
         singularEntity: 'Common.SessionCaption',
         pluralEntity: 'Common.Sessions',
         type: 'rest',
-        getData: (ctx) =>
-          getData(`Registrations/${ctx.$route.params.id}/SessionListId`),
+        getData: (ctx, isExporting = false) =>
+          getData(
+            `Registrations/${ctx.$route.params.id}/SessionListId`,
+            isExporting
+          ),
       },
       title: 'Sessions',
       type: 'list',
@@ -1180,8 +1183,11 @@ export default {
         singularEntity: 'Common.SessionCaption',
         pluralEntity: 'Common.Sessions',
         type: 'rest',
-        getData: (ctx) =>
-          getData(`Registrations/${ctx.$route.params.id}/SessionListId`),
+        getData: (ctx, isExporting = false) =>
+          getData(
+            `Registrations/${ctx.$route.params.id}/SessionListId`,
+            isExporting
+          ),
       },
       title: 'Sessions',
       type: 'list',
@@ -1745,8 +1751,11 @@ export default {
       },
       dataSource: {
         type: 'rest',
-        getData: (ctx) =>
-          getData(`Registrations/${ctx.$route.params.id}/SessionListId`),
+        getData: (ctx, isExporting = false) =>
+          getData(
+            `Registrations/${ctx.$route.params.id}/SessionListId`,
+            isExporting
+          ),
       },
       title: 'Sessions',
       type: 'list',

@@ -724,8 +724,8 @@
     "PastEventMessage": "This event is no longer active.",
     "GoToOldSite": "Go to the old site",
     "SelectField": "Select a field",
-    "DeleteImage":"Delete Image",
-    "QuestionDeletedSuccessfully":"Question deleted successfully",
+    "DeleteImage": "Delete Image",
+    "QuestionDeletedSuccessfully": "Question deleted successfully",
     "SessionCaption": "Session",
     "RegistrationForms": "Registration Forms",
     "Badges": "Badges",
@@ -744,7 +744,8 @@
     "Test": "Test",
     "SelectEvents": "Select Events",
     "ViewMap": "View Map",
-    "URLRecommended": "URL(Recommended to use https://) *"
+    "URLRecommended": "URL(Recommended to use https://) *",
+    "ExportInProgress": "Export in Progress, please stand by..."
   },
   "Drawer": {
     "CreateEventAction": "Create Event",
@@ -753,7 +754,7 @@
     "CreateUser": "Create User",
     "EditBadge": "Edit Badge",
     "DeleteEvent": "Delete Event",
-    "DeleteEventQuestion":"Delete Question",
+    "DeleteEventQuestion": "Delete Question",
     "DeleteUser": "Delete User",
     "Save": "Save",
     "Prev": "Prev",
@@ -789,7 +790,8 @@
     "DiscountCode": "Discount Code",
     "Members": "Members",
     "Contacts": "Contacts",
-    "SessionOverlaps": "Session Overlap Warning"
+    "SessionOverlaps": "Session Overlap Warning",
+    "ExportToCSV": "Export to CSV"
   },
   "FilterOptions": {
     "Is": "Is",
@@ -890,7 +892,7 @@
       "DeleteBadge": "Do you want to delete this badge?",
       "DeleteAccessKey": "Do you want to delete this access key?",
       "DeleteEvent": "Do you want to delete this event?",
-      "DeleteEventQuestion":"Do you want to delete this question?",
+      "DeleteEventQuestion": "Do you want to delete this question?",
       "ReplaceBadge": "New badge will replace your existing badge",
       "DeleteImage": "Do you want to delete this image?",
       "DeleteUser": "Do you want to delete this user?",
@@ -898,7 +900,7 @@
       "NoEventsFound": "No events found with name {searchKey}",
       "ConfirmResendRegistrationEmail": "Are you sure you want to resend confirmation emails?",
       "DeleteSeatMap": "Do you want to delete this seatmap?",
-      "DeleteSeatMapEvent":"Do you want to delete this seat map? This layout already associated with Event.",
+      "DeleteSeatMapEvent": "Do you want to delete this seat map? This layout already associated with Event.",
       "RegistrationTypeDefault": "Only one registration type can be set to default",
       "RegistrationTypeWarning": "Registration Type Warning"
     },
@@ -944,10 +946,10 @@
       "CreatedSuccessfully": "{modelName} Created Successfully",
       "ListUpdatedSucess": "{modelName} list item updated successfully.",
       "ThanksHelp": "Thanks for contacting us! We will get back to you soon!",
-      "QuestionRecordCreatedSuccess":"Question created successfully",
-      "QuestionRecordUpdatedSuccess":"Question updated successfully",
-      "TicketRecordCreatedSuccess":"Ticket created successfully",
-      "TicketRecordUpdatedSuccess":"Ticket updated successfully"
+      "QuestionRecordCreatedSuccess": "Question created successfully",
+      "QuestionRecordUpdatedSuccess": "Question updated successfully",
+      "TicketRecordCreatedSuccess": "Ticket created successfully",
+      "TicketRecordUpdatedSuccess": "Ticket updated successfully"
     }
   },
   "$vuetify": {

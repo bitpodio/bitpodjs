@@ -3303,7 +3303,8 @@ export default {
       },
       dataSource: {
         type: 'rest',
-        getData: (ctx) => getData(`Events/${ctx.$route.params.id}/Survey`),
+        getData: (ctx, isExporting = false) =>
+          getData(`Events/${ctx.$route.params.id}/Survey`, isExporting),
       },
       title: 'eventRegistrationQuestion',
       type: 'list',
@@ -3745,8 +3746,8 @@ export default {
         pluralEntity: 'Common.Speakers',
         model: 'Speaker',
         type: 'rest',
-        getData: (ctx) =>
-          getData(`Events/${ctx.$route.params.id}/EventSpeakers`),
+        getData: (ctx, isExporting = false) =>
+          getData(`Events/${ctx.$route.params.id}/EventSpeakers`, isExporting),
         mutation(ctx) {
           return {
             new: {
@@ -4253,8 +4254,11 @@ export default {
         singularEntity: 'Common.RegistrationForm',
         pluralEntity: 'Common.RegistrationForms',
         type: 'rest',
-        getData: (ctx) =>
-          getData(`Events/${ctx.$route.params.id}/RegistrationForm`),
+        getData: (ctx, isExporting = false) =>
+          getData(
+            `Events/${ctx.$route.params.id}/RegistrationForm`,
+            isExporting
+          ),
       },
       title: 'eventRegistrationForm',
       type: 'list',
@@ -5020,6 +5024,9 @@ export default {
         },
         actions: {
           new: {
+            hidden: true,
+          },
+          exportCsv: {
             hidden: true,
           },
           edit: {

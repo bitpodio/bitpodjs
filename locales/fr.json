@@ -717,14 +717,14 @@
     "ContactSupport": "Contactez le support",
     "LeaveMessage": "Laisser un message",
     "HowHelp": "Comment puis-je vous aider?",
-    "VersionNotSupported":"Le Presse-papiers n'est pas accessible dans ce navigateur.",
+    "VersionNotSupported": "Le Presse-papiers n'est pas accessible dans ce navigateur.",
     "DeleteSeatmap": "Supprimer la carte de siège",
     "DeleteNote": "Supprimer la note",
     "PastEventMessage": "Cet événement n'est plus actif.",
     "GoToOldSite": "Aller sur l'ancien site",
     "SelectField": "Sélectionnez un champ",
-    "DeleteImage":"Supprimer l'image",
-    "QuestionDeletedSuccessfully":"Question supprimée avec succès",
+    "DeleteImage": "Supprimer l'image",
+    "QuestionDeletedSuccessfully": "Question supprimée avec succès",
     "SessionCaption": "Session",
     "RegistrationForms": "Formulaires d'inscription",
     "Badges": "Badges",
@@ -743,7 +743,8 @@
     "Test": "Tester",
     "SelectEvents": "Sélectionnez des événements",
     "ViewMap": "Voir la carte",
-    "URLRecommended": "URL (recommandé d'utiliser https: //) *"
+    "URLRecommended": "URL (recommandé d'utiliser https: //) *",
+    "ExportInProgress": "Exportation en cours, veuillez patienter..."
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",
@@ -788,7 +789,8 @@
     "DiscountCode": "Code d'actualisation",
     "Members": "Membres",
     "Contacts": "Contacts",
-    "SessionOverlaps": "Avertissement de chevauchement de session"
+    "SessionOverlaps": "Avertissement de chevauchement de session",
+    "ExportToCSV": "Exporter au format CSV"
   },
   "FilterOptions": {
     "Is": "Est",
@@ -894,8 +896,8 @@
       "NoEventsFound": "Aucun événement trouvé avec nom {searchKey}",
       "ConfirmResendRegistrationEmail": "Voulez-vous vraiment renvoyer les e-mails de confirmation?",
       "DeleteSeatMap": "Voulez-vous supprimer cette carte de siège?",
-      "DeleteSeatMapEvent":"Voulez-vous supprimer ce plan de siège? Cette mise en page est déjà associée à Event.",
-      "DeleteEventQuestion":"Voulez-vous supprimer cette question?",
+      "DeleteSeatMapEvent": "Voulez-vous supprimer ce plan de siège? Cette mise en page est déjà associée à Event.",
+      "DeleteEventQuestion": "Voulez-vous supprimer cette question?",
       "RegistrationTypeDefault": "Un seul type d'enregistrement peut être défini par défaut",
       "RegistrationTypeWarning": "Avertissement de type d'enregistrement"
     },
@@ -941,10 +943,10 @@
       "CreatedSuccessfully": "{modelName} Créé avec succès",
       "ListUpdatedSucess": "{modelName} élément de liste mis à jour avec succès.",
       "ThanksHelp": "Merci de nous avoir contacté! Nous reviendrons vers vous bientôt!",
-      "QuestionRecordCreatedSuccess":"Question créée avec succès",
-      "QuestionRecordUpdatedSuccess":"Question mise à jour avec succès",
-      "TicketRecordCreatedSuccess":"Ticket créé avec succès",
-      "TicketRecordUpdatedSuccess":"Billet mis à jour avec succès"
+      "QuestionRecordCreatedSuccess": "Question créée avec succès",
+      "QuestionRecordUpdatedSuccess": "Question mise à jour avec succès",
+      "TicketRecordCreatedSuccess": "Ticket créé avec succès",
+      "TicketRecordUpdatedSuccess": "Billet mis à jour avec succès"
     }
   },
   "$vuetify": {

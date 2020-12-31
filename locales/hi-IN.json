@@ -725,8 +725,8 @@
     "PastEventMessage": "यह ईवेंट अब सक्रिय नहीं है.",
     "GoToOldSite": "पुरानी साइट पर जाएं",
     "SelectField": "एक क्षेत्र का चयन करें",
-    "DeleteImage":"छवि हटाएं",
-    "QuestionDeletedSuccessfully":"प्रश्न सफलतापूर्वक हटा दिया गया",
+    "DeleteImage": "छवि हटाएं",
+    "QuestionDeletedSuccessfully": "प्रश्न सफलतापूर्वक हटा दिया गया",
     "SessionCaption": "अधिवेशन",
     "RegistrationForms": "पंजीकरण फार्म",
     "Badges": "बैज",
@@ -745,7 +745,8 @@
     "Test": "जाँच",
     "SelectEvents": "घटनाक्रम का चयन करें",
     "ViewMap": "मानचित्र",
-    "URLRecommended": "URL (https का उपयोग करने के लिए अनुशंसित: //) *"
+    "URLRecommended": "URL (https का उपयोग करने के लिए अनुशंसित: //) *",
+    "ExportInProgress": "प्रगति में निर्यात करें, कृपया खड़े रहें..."
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",
@@ -790,7 +791,8 @@
     "DiscountCode": "छूट संकेत",
     "Members": "सदस्य",
     "Contacts": "संपर्क",
-    "SessionOverlaps": "अधिवेशन ओवरलैप चेतावनी"
+    "SessionOverlaps": "अधिवेशन ओवरलैप चेतावनी",
+    "ExportToCSV": "सीएसवी को निर्यात"
   },
   "FilterOptions": {
     "Is": "है",
@@ -896,8 +898,8 @@
       "NoEventsFound": "{searchKey} नाम के साथ कोई घटना नहीं मिली",
       "ConfirmResendRegistrationEmail": "क्या आप वाकई पुष्टिकरण ईमेल को फिर से भेजना चाहते हैं?",
       "DeleteSeatMap": "क्या आप इस सीटमैप को हटाना चाहते हैं?",
-      "DeleteSeatMapEvent":"क्या आप इस सीट का नक्शा हटाना चाहते हैं? यह लेआउट पहले से ईवेंट से जुड़ा हुआ है।",
-      "DeleteEventQuestion":"क्या आप इस प्रश्न को हटाना चाहते हैं?",
+      "DeleteSeatMapEvent": "क्या आप इस सीट का नक्शा हटाना चाहते हैं? यह लेआउट पहले से ईवेंट से जुड़ा हुआ है।",
+      "DeleteEventQuestion": "क्या आप इस प्रश्न को हटाना चाहते हैं?",
       "RegistrationTypeDefault": "केवल एक पंजीकरण प्रकार को डिफ़ॉल्ट पर सेट किया जा सकता है",
       "RegistrationTypeWarning": "पंजीकरण प्रकार चेतावनी"
     },
@@ -943,10 +945,10 @@
       "CreatedSuccessfully": "{modelName} सफलतापूर्वक बनाया गया",
       "ListUpdatedSucess": "{modelName} सूची आइटम सफलतापूर्वक अपडेट किया गया।",
       "ThanksHelp": "हमे संपर्क करने के लिए धन्यवाद! हम तुमसे जल्द ही संपर्क करेंगे!",
-      "QuestionRecordCreatedSuccess":"प्रश्न सफलतापूर्वक बनाया गया",
-      "QuestionRecordUpdatedSuccess":"प्रश्न सफलतापूर्वक अपडेट किया गया",
-      "TicketRecordCreatedSuccess":"टिकट सफलतापूर्वक बनाया गया",
-      "TicketRecordUpdatedSuccess":"टिकट सफलतापूर्वक अपडेट किया गया"
+      "QuestionRecordCreatedSuccess": "प्रश्न सफलतापूर्वक बनाया गया",
+      "QuestionRecordUpdatedSuccess": "प्रश्न सफलतापूर्वक अपडेट किया गया",
+      "TicketRecordCreatedSuccess": "टिकट सफलतापूर्वक बनाया गया",
+      "TicketRecordUpdatedSuccess": "टिकट सफलतापूर्वक अपडेट किया गया"
     }
   },
   "$vuetify": {
