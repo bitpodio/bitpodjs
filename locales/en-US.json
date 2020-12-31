@@ -12,6 +12,8 @@
     "Help": "Help",
     "HomePage": "Home page",
     "SignIn": "Sign in",
+    "Live": "Live",
+    "Watching": "Watching Now",
     "EditEventInformation": "Edit Event Information",
     "Description": "Description",
     "EditEventSettings": "Edit Event Settings",
@@ -311,7 +313,7 @@
     "OnlyAskWhen": "Only ask when one of these tickets are purchased",
     "ItemDeletedSuccessfully": "Item deleted successfully.",
     "EditItem": "Edit",
-    "EditSurveyQuestion": "Edit Survey Question",
+    "EditSurveyQuestion": "Edit Registration Question",
     "ConfirmationEmailSent": "Confirmation Email Sent",
     "ResendRegistrationEmail": "Resend Registration Email",
     "JoinSession": "Join Session",
@@ -946,10 +948,13 @@
       "CreatedSuccessfully": "{modelName} Created Successfully",
       "ListUpdatedSucess": "{modelName} list item updated successfully.",
       "ThanksHelp": "Thanks for contacting us! We will get back to you soon!",
-      "QuestionRecordCreatedSuccess": "Question created successfully",
-      "QuestionRecordUpdatedSuccess": "Question updated successfully",
-      "TicketRecordCreatedSuccess": "Ticket created successfully",
-      "TicketRecordUpdatedSuccess": "Ticket updated successfully"
+      "QuestionRecordCreatedSuccess":"Question created successfully",
+      "QuestionRecordUpdatedSuccess":"Question updated successfully",
+      "TicketRecordCreatedSuccess":"Ticket created successfully",
+      "TicketRecordUpdatedSuccess":"Ticket updated successfully",
+      "RegistrationFormUpdatedSuccess":"Registration Form updated successfully",
+      "SessionCreatedSuccess":"Session created successfully",
+      "SessionUpdatedSuccess":"Session updated successfully"
     }
   },
   "$vuetify": {

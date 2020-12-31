@@ -279,6 +279,9 @@ export default {
    */
   vuetify: {
     optionsPath: './vuetify.options.js',
+    theme: {
+      dark: false,
+    },
   },
   /*
    ** Build configuration

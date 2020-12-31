@@ -12,6 +12,8 @@
     "Help": "עֶזרָה",
     "HomePage": "Home page",
     "SignIn": "Sign in",
+    "Live": "לחיות",
+    "Watching": "צופה",
     "EditEventInformation": "ערוך מידע על האירוע",
     "Description": "תיאור",
     "EditEventSettings": "ערוך את הגדרות האירוע",
@@ -311,7 +313,7 @@
     "OnlyAskWhen": "שאל רק מתי אחד מהכרטיסים האלה נרכש",
     "ItemDeletedSuccessfully": "הפריט נמחק בהצלחה.",
     "EditItem": "ערוך פריט",
-    "EditSurveyQuestion": "ערוך את שאלת הסקר",
+    "EditSurveyQuestion": "ערוך את שאלת ההרשמה",
     "ConfirmationEmailSent": "Confirmation Email Sent",
     "ResendRegistrationEmail": "Resend Registration Email",
     "JoinSession": "Join Session",
@@ -945,10 +947,13 @@
       "CreatedSuccessfully": "{modelName} נוצר בהצלחה",
       "ListUpdatedSucess": "{modelName} פריט הרשימה עודכן בהצלחה.",
       "ThanksHelp": "תודה שפנית אלינו! אנחנו נחזור אליך בקרוב!",
-      "QuestionRecordCreatedSuccess": "שאלה נוצרה בהצלחה",
-      "QuestionRecordUpdatedSuccess": "השאלה עודכנה בהצלחה",
-      "TicketRecordCreatedSuccess": "הכרטיס נוצר בהצלחה",
-      "TicketRecordUpdatedSuccess": "הכרטיס עודכן בהצלחה"
+      "QuestionRecordCreatedSuccess":"שאלה נוצרה בהצלחה",
+      "QuestionRecordUpdatedSuccess":"השאלה עודכנה בהצלחה",
+      "TicketRecordCreatedSuccess":"הכרטיס נוצר בהצלחה",
+      "TicketRecordUpdatedSuccess":"הכרטיס עודכן בהצלחה",
+      "RegistrationFormUpdatedSuccess":"טופס ההרשמה עודכן בהצלחה",
+      "SessionCreatedSuccess":"ההפעלה נוצרה בהצלחה",
+      "SessionUpdatedSuccess":"ההפעלה עודכנה בהצלחה"
     }
   },
   "$vuetify": {

@@ -12,6 +12,8 @@
     "Help": "सहायता",
     "HomePage": "मुख पृष्ठ",
     "SignIn": "साइन इन करें",
+    "Live": "लाइव",
+    "Watching": "देख रहे",
     "EditEventInformation": "घटना की जानकारी संपादित करें",
     "Description": "विवरण",
     "EditEventSettings": "ईवेंट सेटिंग्स संपादित करें",
@@ -311,7 +313,7 @@
     "OnlyAskWhen": "केवल यह पूछें कि इनमें से एक टिकट कब खरीदा जाता है",
     "ItemDeletedSuccessfully": "आइटम सफलतापूर्वक हटा दिया गया।",
     "EditItem": "संपादित आइटम",
-    "EditSurveyQuestion": "सर्वेक्षण प्रश्न संपादित करें",
+    "EditSurveyQuestion": "पंजीकरण प्रश्न संपादित करें",
     "ConfirmationEmailSent": "पुष्टिकरण का ईमेल भेजा गया",
     "ResendRegistrationEmail": "पंजीकरण ईमेल पुनः भेजें",
     "JoinSession": "सत्र में शामिल हों",
@@ -945,10 +947,13 @@
       "CreatedSuccessfully": "{modelName} सफलतापूर्वक बनाया गया",
       "ListUpdatedSucess": "{modelName} सूची आइटम सफलतापूर्वक अपडेट किया गया।",
       "ThanksHelp": "हमे संपर्क करने के लिए धन्यवाद! हम तुमसे जल्द ही संपर्क करेंगे!",
-      "QuestionRecordCreatedSuccess": "प्रश्न सफलतापूर्वक बनाया गया",
-      "QuestionRecordUpdatedSuccess": "प्रश्न सफलतापूर्वक अपडेट किया गया",
-      "TicketRecordCreatedSuccess": "टिकट सफलतापूर्वक बनाया गया",
-      "TicketRecordUpdatedSuccess": "टिकट सफलतापूर्वक अपडेट किया गया"
+      "QuestionRecordCreatedSuccess":"प्रश्न सफलतापूर्वक बनाया गया",
+      "QuestionRecordUpdatedSuccess":"प्रश्न सफलतापूर्वक अपडेट किया गया",
+      "TicketRecordCreatedSuccess":"टिकट सफलतापूर्वक बनाया गया",
+      "TicketRecordUpdatedSuccess":"टिकट सफलतापूर्वक अपडेट किया गया",
+      "RegistrationFormUpdatedSuccess":"पंजीकरण फॉर्म सफलतापूर्वक अपडेट किया गया",
+      "SessionCreatedSuccess":"सत्र सफलतापूर्वक बनाया गया",
+      "SessionUpdatedSuccess":"Session updated successfully"
     }
   },
   "$vuetify": {
