@@ -237,7 +237,7 @@
         >
           <div
             v-if="content"
-            class="xs12 sm8 md8 lg8 boxview pad-card pb-6 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+            class="xs12 sm8 md8 lg8 boxview boxviewsmall pad-card pb-6 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
           >
             <div class="sticky d-flex flex-column justify-center boxview">
               <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
@@ -522,7 +522,7 @@
             <v-spacer></v-spacer>
           </v-flex>
           <v-divider></v-divider>
-          <div class="pt-2" v-for="item in resArray" :key="item">
+          <div v-for="item in resArray" :key="item" class="pt-2">
             <span class="pl-2">Q: {{ item.Question }}</span>
             <div
               v-if="

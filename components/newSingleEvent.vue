@@ -327,10 +327,10 @@
                         <th class="text-left pl-2 pl-md-0 e-td">
                           <i18n path="Common.Title" />
                         </th>
-                        <th class="text-left pl-2 e-td">
+                        <th class="text-left pl-2 e-td mxw-150">
                           <i18n path="Common.Type" />
                         </th>
-                        <th class="text-left pl-2 e-td">
+                        <th class="text-left pl-2 e-td mxw-150">
                           {{
                             $t('Common.Price', { currency: eventData.Currency })
                           }}
@@ -341,7 +341,7 @@
                         <th class="text-left pl-2 e-td">
                           <i18n path="Common.EndD" />
                         </th>
-                        <th class="text-left pl-2 e-td">
+                        <th class="text-left pl-2 e-td mxw-100">
                           <i18n path="Common.Quantity" />
                         </th>
                         <th class="text-left e-td"></th>
@@ -380,7 +380,10 @@
                             :disabled="isPriceDisabled(k)"
                           ></v-text-field>
                         </td>
-                        <td class="pa-2 pb-0 e-td" data-title="">
+                        <td
+                          class="pa-2 pb-0 e-td"
+                          :data-title="$t('Common.StartD')"
+                        >
                           <CustomDate
                             v-model="ticket.StartDate"
                             :label="$t('Common.StartD')"
@@ -390,7 +393,10 @@
                             type="datetime"
                           />
                         </td>
-                        <td class="pa-2 pb-0 e-td" data-title="">
+                        <td
+                          class="pa-2 pb-0 e-td"
+                          :data-title="$t('Common.EndD')"
+                        >
                           <CustomDate
                             v-model="ticket.EndDate"
                             :label="$t('Common.EndD')"
@@ -1454,5 +1460,13 @@ export default {
 .form-control:focus {
   border: 2px solid #1a73e8 !important;
   outline: #1a73e8;
+}
+.mxw-150 {
+  max-width: 150px;
+  width: 150px;
+}
+.mxw-100 {
+  max-width: 100px;
+  width: 100px;
 }
 </style>
