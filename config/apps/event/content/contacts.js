@@ -536,9 +536,20 @@ export default {
         },
       },
       template: {
-        name: 'link-grid',
+        name: 'contactRegistration-grid',
         context: {
           basePath: '/registration',
+        },
+        actions: {
+          new: {
+            hidden: true,
+          },
+          edit: {
+            hidden: true,
+          },
+          delete: {
+            hidden: true,
+          },
         },
       },
       dataSource: {

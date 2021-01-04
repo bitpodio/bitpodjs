@@ -14,12 +14,17 @@
       }}</v-card-text>
       <v-card-actions class="pt-0">
         <v-spacer></v-spacer>
-        <v-btn color="grey" text @click.native="cancel"
-          ><i18n path="Common.No"
-        /></v-btn>
-        <v-btn color="primary" text @click.native="agree"
-          ><i18n path="Common.Yes"
-        /></v-btn>
+        <div v-if="buttonTrueText">
+          <v-btn color="primary" text @click.native="agree">Okay</v-btn>
+        </div>
+        <div v-else>
+          <v-btn color="grey" text @click.native="cancel"
+            ><i18n path="Common.No"
+          /></v-btn>
+          <v-btn color="primary" text @click.native="agree"
+            ><i18n path="Common.Yes"
+          /></v-btn>
+        </div>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -33,6 +38,7 @@ export default {
     reject: null,
     message: null,
     title: null,
+    buttonTrueText: false,
     options: {
       color: 'primary',
       width: 450,
@@ -41,6 +47,9 @@ export default {
   }),
   methods: {
     open(title, message, options) {
+      options.buttonTrueText
+        ? (this.buttonTrueText = true)
+        : (this.buttonTrueText = false)
       this.dialog = true
       this.title = title
       this.message = message

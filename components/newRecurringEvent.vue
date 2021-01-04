@@ -609,6 +609,8 @@
                       required
                       :error-messages="uniqueLinkValidationMsg"
                       @keyup="changeUniqueLink($event)"
+                      @input="changeUniqueLink($event)"
+                      @change="changeUniqueLink($event)"
                     ></v-text-field>
                   </v-col>
                 </v-row>
@@ -825,7 +827,10 @@
                               :rules="validEndTimeRule(k)"
                             />
                           </td>
-                          <td class="pa-2 pb-0 st-date e-td" data-title="">
+                          <td
+                            class="pa-2 pb-0 st-date e-td"
+                            :data-title="$t('Common.SlotSize')"
+                          >
                             <div class="positionAbsolute">
                               <div
                                 class="autocomplete-dropdown positionRelative"
@@ -846,7 +851,7 @@
                           </td>
                           <td
                             class="pa-2 pb-0 event-timezone e-td"
-                            data-title=""
+                            :data-title="$t('Common.Timezone')"
                           >
                             <div class="positionAbsolute">
                               <div
@@ -865,7 +870,7 @@
 
                           <td
                             class="pa-2 pb-0 event-timezone e-td"
-                            data-title=""
+                            :data-title="$t('Common.RecurringEventLocation')"
                           >
                             <v-form
                               ref="locationForm"
@@ -1016,7 +1021,10 @@
           ><i18n path="Drawer.Next"
         /></v-btn>
         <SaveBtn
-          v-if="currentTab > 2 && !isEventCreate && !isEventPublish"
+          v-if="
+            (currentTab > 2 && !isEventCreate && !isEventPublish) ||
+            isInalidEventLink
+          "
           color="primary"
           :disabled="isSaveButtonDisabled"
           depressed
@@ -2337,7 +2345,7 @@ export default {
       value = value.toLowerCase().replace(/\s/g, '')
       value = value.trim()
       this.eventData.UniqLink = value
-      const regex = RegExp(/^(?![0-9]*$)[a-zA-Z0-9]+$/)
+      const regex = RegExp(/^(?![0-9]*$){1,}[a-zA-Z0-9]+$/)
       if (regex.test(value)) {
         if (isNaN(value)) {
           this.eventData.UniqLink = value

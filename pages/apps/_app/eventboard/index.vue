@@ -1025,6 +1025,8 @@ export default {
           })
           this.eventOnSaleLoaded = true
           this.eventOnSaleEmpty = false
+        } else {
+          this.eventOnSaleEmpty = true
         }
       },
       error(error) {
