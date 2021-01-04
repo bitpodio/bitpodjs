@@ -1162,6 +1162,11 @@ export default {
             )
           })
         if (res) {
+          console.debug(
+            `POST call is made to event model with response as:-${JSON.stringify(
+              res
+            )}`
+          )
           this.eventId = res.id
           const ticketList = []
 
@@ -1181,6 +1186,11 @@ export default {
               )
             })
           if (ticketRes) {
+            console.debug(
+              `POST call is made to ticket model with response as:-${JSON.stringify(
+                ticketRes
+              )}`
+            )
             this.isTicket = false
             this.isEventCreate = true
             return ticketRes
