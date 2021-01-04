@@ -1,5 +1,16 @@
 <template>
   <div>
+    <ExportLoader
+      :is-loading="exportInProgress"
+      :title="$t('Common.ExportInProgress')"
+      :view-name="viewName"
+      :loader-key="exportingGrid"
+      :stop-loading="
+        () => {
+          this.$store.commit('setExportInProgress', false)
+        }
+      "
+    />
     <template v-if="!!error">
       <div>
         <component :is="errorTemplate || null" :error="error" />
@@ -40,7 +51,6 @@
                   :view-name="viewName"
                   :on-new-item-save="onNewItemSave"
                   :on-csv-export="onCsvExport"
-                  :export-in-progress="exportInProgress"
                   :can-export="!!tableData.items.length"
                   :refresh="refresh"
                   :context="context"
@@ -85,7 +95,6 @@
                 :on-new-item-save="onNewItemSave"
                 :on-csv-export="onCsvExport"
                 :can-export="!!tableData.items.length"
-                :export-in-progress="exportInProgress"
                 :refresh="refresh"
                 :context="context"
                 class="d-inline-flex"
@@ -317,6 +326,7 @@ import {
   buildQueryVariables,
 } from '~/utility'
 import { formatGQLResult } from '~/utility/gql.js'
+import ExportLoader from '~/components/Loader.vue'
 
 const DEFAULT_GRID_PROPS = {
   hideDefaultHeader: false,
@@ -455,7 +465,7 @@ function downloadBlob(blob, filename) {
   a.click()
 }
 
-function prepareCSV(finalResult) {
+function prepareCSV(finalResult, modelName) {
   const replacer = (key, value) => {
     if (value === null) return ''
     else {
@@ -482,13 +492,14 @@ function prepareCSV(finalResult) {
       ),
     ].join('\r\n')
     const blob = new Blob([csvContent], { type: 'text/csv' })
-    downloadBlob(blob, 'test.csv')
+    downloadBlob(blob, `${modelName} - ${new Date().toLocaleDateString()}.csv`)
   }
 }
 
 export default {
   components: {
     FieldsFilter,
+    ExportLoader,
   },
   mixins: [templateLoaderMixin],
   props: {
@@ -577,6 +588,7 @@ export default {
       winWidth: window.innerWidth,
       itemPerPage: 0,
       componentRerenderKey: 0,
+      exportingGrid: 'not selected',
     }
   },
   computed: {
@@ -868,6 +880,8 @@ export default {
     async onCsvExport(data) {
       const dataSource = getViewDataSource(this.content, this.viewName)
       const dataSourceType = dataSource.type || 'graphql'
+      const modelName =
+        getModelName(this.content, this.viewName) || this.content.general.name
       if (dataSourceType === 'rest') {
         const { search, filters } = this
         const options = {
@@ -879,7 +893,10 @@ export default {
         try {
           this.$store.commit('setExportInProgress', true)
           const finalResult = await getDataFunc.call(this, options)
-          if (this.exportInProgress) prepareCSV(finalResult)
+          if (this.exportInProgress) {
+            this.exportingGrid = this.viewName
+            prepareCSV(finalResult, this.viewName)
+          }
           this.$store.commit('setExportInProgress', false)
         } catch (e) {
           console.error(`Error while exporting to CSV via rest`, e)
@@ -916,7 +933,6 @@ export default {
                 },
               })
               if (result) {
-                const modelName = getModelName(this.content, this.viewName)
                 const formattedResult = formatGQLResult(result.data, modelName)
                 if (formattedResult.length) {
                   finalResult = finalResult.concat(formattedResult)
@@ -934,7 +950,8 @@ export default {
             }
           }
           if (shouldDownload) {
-            prepareCSV(finalResult)
+            this.exportingGrid = this.viewName
+            prepareCSV(finalResult, this.viewName)
           }
           this.$store.commit('setExportInProgress', false)
         }

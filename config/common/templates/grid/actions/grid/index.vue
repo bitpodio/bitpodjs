@@ -19,7 +19,6 @@
         :view-name="viewName"
         :on-csv-export="onCsvExport"
         :can-export="canExport"
-        :export-in-progress="exportInProgress"
         :refresh="refresh"
         :context="context"
       />
@@ -48,10 +47,6 @@ export default {
     onCsvExport: {
       type: Function,
       default: () => {},
-    },
-    exportInProgress: {
-      type: Boolean,
-      default: false,
     },
     canExport: {
       type: Boolean,

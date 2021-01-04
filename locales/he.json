@@ -748,7 +748,7 @@
     "SelectEvents": "בחר אירועים",
     "ViewMap": "צפה במפה",
     "URLRecommended": "כתובת אתר (מומלץ להשתמש ב- https: //) *",
-    "ExportInProgress": "ייצוא בעיצומו, אנא עמדו"
+    "ExportInProgress": "מייצא"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",
@@ -947,13 +947,13 @@
       "CreatedSuccessfully": "{modelName} נוצר בהצלחה",
       "ListUpdatedSucess": "{modelName} פריט הרשימה עודכן בהצלחה.",
       "ThanksHelp": "תודה שפנית אלינו! אנחנו נחזור אליך בקרוב!",
-      "QuestionRecordCreatedSuccess":"שאלה נוצרה בהצלחה",
-      "QuestionRecordUpdatedSuccess":"השאלה עודכנה בהצלחה",
-      "TicketRecordCreatedSuccess":"הכרטיס נוצר בהצלחה",
-      "TicketRecordUpdatedSuccess":"הכרטיס עודכן בהצלחה",
-      "RegistrationFormUpdatedSuccess":"טופס ההרשמה עודכן בהצלחה",
-      "SessionCreatedSuccess":"ההפעלה נוצרה בהצלחה",
-      "SessionUpdatedSuccess":"ההפעלה עודכנה בהצלחה"
+      "QuestionRecordCreatedSuccess": "שאלה נוצרה בהצלחה",
+      "QuestionRecordUpdatedSuccess": "השאלה עודכנה בהצלחה",
+      "TicketRecordCreatedSuccess": "הכרטיס נוצר בהצלחה",
+      "TicketRecordUpdatedSuccess": "הכרטיס עודכן בהצלחה",
+      "RegistrationFormUpdatedSuccess": "טופס ההרשמה עודכן בהצלחה",
+      "SessionCreatedSuccess": "ההפעלה נוצרה בהצלחה",
+      "SessionUpdatedSuccess": "ההפעלה עודכנה בהצלחה"
     }
   },
   "$vuetify": {

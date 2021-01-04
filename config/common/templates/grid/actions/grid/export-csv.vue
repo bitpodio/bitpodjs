@@ -6,25 +6,6 @@
         <i18n path="Drawer.ExportToCSV" />
       </span>
     </v-btn>
-    <v-dialog v-model="exportInProgress" persistent width="300">
-      <v-card elevation="2" outlined tile>
-        <v-card-title class="mb-3">
-          <i18n path="Common.ExportInProgress" />
-        </v-card-title>
-        <v-card-text class="d-flex justify-center align-center">
-          <v-progress-circular
-            :size="70"
-            color="primary"
-            indeterminate
-          ></v-progress-circular>
-        </v-card-text>
-        <v-card-actions class="d-flex justify-end mt-2">
-          <v-btn color="primary" text @click.stop="cancelExport">
-            <i18n path="Drawer.Cancel" />
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
   </v-col>
 </template>
 
@@ -45,10 +26,6 @@ export default {
       type: Function,
       default: () => {},
     },
-    exportInProgress: {
-      type: Boolean,
-      default: false,
-    },
     canExport: {
       type: Boolean,
       default: false,
@@ -60,11 +37,6 @@ export default {
     errorMessage: {
       type: String,
       default: '',
-    },
-  },
-  methods: {
-    cancelExport() {
-      this.$store.commit('setExportInProgress', false)
     },
   },
 }
