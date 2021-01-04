@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="enableLoader" persistent max-width="450" z-index="200">
+  <v-dialog v-model="isLoading" persistent max-width="450" z-index="200">
     <v-card>
       <v-toolbar dark :color="barColor" dense flat>
         <v-toolbar-title class="white--text">{{ title }}</v-toolbar-title>
@@ -40,25 +40,6 @@ export default {
     stopLoading: {
       type: Function,
       default: () => {},
-    },
-    loaderKey: {
-      type: String,
-      default: undefined,
-    },
-    viewName: {
-      type: String,
-      required: true,
-    },
-  },
-  computed: {
-    enableLoader() {
-      console.debug(this.loaderKey)
-      console.debug(this.viewName)
-      if (this.loaderKey) {
-        return this.loaderKey === this.viewName && this.isLoading
-      } else {
-        return this.isLoading
-      }
     },
   },
 }

@@ -30,7 +30,7 @@ export const actions = {
 export const state = () => ({
   currentOrg: [],
   currentOrgInfo: {},
-  exportInProgress: false,
+  exportInProgress: { value: false, key: '' },
 })
 
 export const mutations = {

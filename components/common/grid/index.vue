@@ -3,11 +3,12 @@
     <ExportLoader
       :is-loading="exportInProgress"
       :title="$t('Common.ExportInProgress')"
-      :view-name="viewName"
-      :loader-key="exportingGrid"
       :stop-loading="
         () => {
-          this.$store.commit('setExportInProgress', false)
+          this.$store.commit('setExportInProgress', {
+            value: false,
+            key: '',
+          })
         }
       "
     />
@@ -588,7 +589,6 @@ export default {
       winWidth: window.innerWidth,
       itemPerPage: 0,
       componentRerenderKey: 0,
-      exportingGrid: 'not selected',
     }
   },
   computed: {
@@ -653,7 +653,10 @@ export default {
       }
     },
     exportInProgress() {
-      return this.$store.state.exportInProgress
+      return (
+        this.$store.state.exportInProgress.value &&
+        this.viewName === this.$store.state.exportInProgress.key
+      )
     },
   },
   watch: {
@@ -891,13 +894,18 @@ export default {
         }
         const getDataFunc = dataSource.getData.call(this, this, true)
         try {
-          this.$store.commit('setExportInProgress', true)
+          this.$store.commit('setExportInProgress', {
+            value: true,
+            key: this.viewName,
+          })
           const finalResult = await getDataFunc.call(this, options)
           if (this.exportInProgress) {
-            this.exportingGrid = this.viewName
             prepareCSV(finalResult, this.viewName)
           }
-          this.$store.commit('setExportInProgress', false)
+          this.$store.commit('setExportInProgress', {
+            value: false,
+            key: '',
+          })
         } catch (e) {
           console.error(`Error while exporting to CSV via rest`, e)
         }
@@ -920,7 +928,10 @@ export default {
         let finalResult = []
         let shouldDownload = false
         if (itemsPerPage !== -1) {
-          this.$store.commit('setExportInProgress', true)
+          this.$store.commit('setExportInProgress', {
+            value: true,
+            key: this.viewName,
+          })
           while (this.exportInProgress) {
             try {
               const result = await this.$apollo.query({
@@ -939,21 +950,32 @@ export default {
                   skip += 50
                 } else {
                   shouldDownload = true
-                  this.$store.commit('setExportInProgress', false)
+                  this.$store.commit('setExportInProgress', {
+                    value: false,
+                    key: '',
+                  })
                 }
               } else {
-                this.$store.commit('setExportInProgress', false)
+                this.$store.commit('setExportInProgress', {
+                  value: false,
+                  key: '',
+                })
               }
             } catch (e) {
               console.error(`Error while exporting to CSV via graphql`, e)
-              this.$store.commit('setExportInProgress', false)
+              this.$store.commit('setExportInProgress', {
+                value: false,
+                key: '',
+              })
             }
           }
           if (shouldDownload) {
-            this.exportingGrid = this.viewName
             prepareCSV(finalResult, this.viewName)
           }
-          this.$store.commit('setExportInProgress', false)
+          this.$store.commit('setExportInProgress', {
+            value: false,
+            key: '',
+          })
         }
       }
     },
