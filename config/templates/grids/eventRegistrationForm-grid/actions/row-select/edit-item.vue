@@ -53,8 +53,8 @@
               <v-col v-if="showCsvField" cols="12">
                 <v-text-field
                   v-model="CsvOptions"
-                  :label="$t('Common.Options')"
-                  :rules="[rules.required]"
+                  :label="getOptionsLabel($t('Common.OptionsCaption'))"
+                  :rules="optionRules()"
                   outlined
                   dense
                 ></v-text-field>
@@ -165,6 +165,32 @@ export default {
     }
   },
   methods: {
+    getOptionsLabel(optionLabel) {
+      if (
+        this.formData.Label === 'Email' ||
+        this.formData.Label === 'Country'
+      ) {
+        return `${optionLabel}`
+      } else {
+        return `${optionLabel}*`
+      }
+    },
+    optionRules() {
+      return [
+        (v) => {
+          if (
+            this.formData.Label === 'Email' ||
+            this.formData.Label === 'Country'
+          ) {
+            return true
+          } else if (v !== '') {
+            return true
+          } else {
+            return this.$t('Messages.Error.FieldRequired')
+          }
+        },
+      ]
+    },
     onReset() {
       this.$refs.form.reset()
       if (this.controlTypeDropDown.includes('Select')) {
@@ -224,12 +250,7 @@ export default {
 
         if (res) {
           this.formData = res
-          if (res.ControlType === 'email') {
-            this.controlTypeDropDown.unshift('Select')
-            this.controlType = 'Select'
-          } else {
-            this.controlType = res.ControlType
-          }
+          this.controlType = res.ControlType
           this.CsvOptions = res.Options.toString()
         }
       } catch (e) {
