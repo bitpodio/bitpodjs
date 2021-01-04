@@ -760,14 +760,14 @@
               v-if="curentTab > 0"
               depressed
               :disabled="acknowledgement"
-              @click="curentTab--"
+              @click="onPrev"
               ><i18n path="Drawer.Prev"
             /></v-btn>
             <v-btn
               v-if="curentTab < 3"
               color="primary"
               depressed
-              @click="curentTab++"
+              @click="onNext"
               ><i18n path="Drawer.Next"
             /></v-btn>
           </v-card-actions>
@@ -990,6 +990,14 @@ export default {
     this.$eventBus.$off('itemSelected')
   },
   methods: {
+    onPrev() {
+      this.curentTab--
+      document.getElementsByClassName('invite-inner')[0].scrollTop = 0
+    },
+    onNext() {
+      this.curentTab++
+      document.getElementsByClassName('invite-inner')[0].scrollTop = 0
+    },
     updateSelectedList(data) {
       if (data.viewName === 'Contacts') {
         this.selectedList = [...data.items]

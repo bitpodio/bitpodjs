@@ -946,7 +946,10 @@
       "QuestionRecordCreatedSuccess":"Question créée avec succès",
       "QuestionRecordUpdatedSuccess":"Question mise à jour avec succès",
       "TicketRecordCreatedSuccess":"Ticket créé avec succès",
-      "TicketRecordUpdatedSuccess":"Billet mis à jour avec succès"
+      "TicketRecordUpdatedSuccess":"Billet mis à jour avec succès",
+      "RegistrationFormUpdatedSuccess":"Formulaire d'inscription mis à jour avec succès",
+      "SessionCreatedSuccess":"Session créée avec succès",
+      "SessionUpdatedSuccess":"Session mise à jour avec succès"
     }
   },
   "$vuetify": {
