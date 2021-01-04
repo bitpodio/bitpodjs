@@ -70,6 +70,13 @@ body {
 .fc-view-harness-active{
  height: 1160px !important;
 }
+.badgelogoimg{
+  max-height: 50px !important;
+  width: auto !important;
+}
+.QRcode{
+  max-width: 70px !important;
+}
 .uploadFile {
   position: absolute !important;
   z-index: 1;
@@ -559,8 +566,11 @@ body {
   content: '';
 }
 .custom-nav-drawer {
-  visibility: visible;
+  visibility: visible !important;
   transform: translateX(0%) !important;
+}
+.custom-nav-drawer .v-menu {
+    display: block;
 }
 .custom-nav-main {
   padding-left: 240px !important;
@@ -802,5 +812,9 @@ table > tbody > tr:last-child .key-align {
   }
   .help-box {
     max-width: calc(100% - 25px);
+  }
+  .mxw-150, .mxw-100 {
+    max-width: 100%;
+    width: 100%;
   }
 }

@@ -688,9 +688,9 @@ export default {
       }
       if (res) {
         if (this.isEdit) {
-          this.snackbarText = this.$t('Messages.Success.RecordUpdatedSuccess')
+          this.snackbarText = this.$t('Messages.Success.SessionUpdatedSuccess')
         } else {
-          this.snackbarText = this.$t('Messages.Success.RecordCreateSuccess')
+          this.snackbarText = this.$t('Messages.Success.SessionCreatedSuccess')
         }
         this.snackbar = true
         this.closeForm()

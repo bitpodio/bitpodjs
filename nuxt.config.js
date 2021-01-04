@@ -236,6 +236,7 @@ export default {
    */
 
   axios: {
+    googleMapUrl: `https://www.google.com/maps`,
     apiEndpoint: '/svc/api/',
     baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
   },
@@ -278,6 +279,9 @@ export default {
    */
   vuetify: {
     optionsPath: './vuetify.options.js',
+    theme: {
+      dark: false,
+    },
   },
   /*
    ** Build configuration
