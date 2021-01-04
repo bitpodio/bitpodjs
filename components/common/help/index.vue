@@ -206,10 +206,14 @@ export default {
       this.formData.Message = this.helpMessage
       try {
         const url = `https://${this.$config.axios.crmUrl}${nuxtconfig.axios.apiEndpoint}`
-        const res = await this.$axios.$post(`${url}Leads`, {
+        const customAxiosInstance = await this.$axios.create({
+          headers: {},
+        })
+        customAxiosInstance.setHeader('Authorization', '')
+        customAxiosInstance.post(`${url}Leads`, {
           ...this.formData,
         })
-        if (res) {
+        if (customAxiosInstance) {
           this.helpDialog = false
           this.helpForm = true
           this.onReset()
