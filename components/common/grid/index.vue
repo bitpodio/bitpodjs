@@ -2,7 +2,8 @@
   <div>
     <ExportLoader
       :is-loading="exportInProgress"
-      :title="$t('Common.ExportInProgress')"
+      :title="$t('Drawer.ExportToCSV')"
+      :message="$t('Common.ExportInProgress')"
       :stop-loading="
         () => {
           this.$store.commit('setExportInProgress', {

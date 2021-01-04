@@ -1426,6 +1426,9 @@ export default {
           delete: {
             hidden: true,
           },
+          exportCsv: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
@@ -2723,6 +2726,9 @@ export default {
           delete: {
             hidden: true,
           },
+          exportCsv: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
@@ -3002,6 +3008,11 @@ export default {
         context: {
           basePath: '/event',
         },
+        actions: {
+          exportCsv: {
+            hidden: true,
+          },
+        },
       },
       dataSource: {
         singularEntity: 'Common.Ticket',
@@ -3215,6 +3226,11 @@ export default {
         context: {
           basePath: '/event',
         },
+        actions: {
+          exportCsv: {
+            hidden: true,
+          },
+        },
       },
       dataSource: {
         singularEntity: 'Drawer.DiscountCode',
@@ -3299,6 +3315,11 @@ export default {
         name: 'eventRegistrationQuestion-grid',
         context: {
           basePath: '/event',
+        },
+        actions: {
+          exportCsv: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
@@ -3498,6 +3519,11 @@ export default {
         name: 'eventSession-grid',
         context: {
           basePath: '/event',
+        },
+        actions: {
+          exportCsv: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
@@ -3739,6 +3765,11 @@ export default {
         name: 'eventSpeakers-grid',
         context: {
           basePath: '/event',
+        },
+        actions: {
+          exportCsv: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
@@ -4146,6 +4177,9 @@ export default {
           edit: {
             hidden: true,
           },
+          exportCsv: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
@@ -4246,6 +4280,9 @@ export default {
             hidden: true,
           },
           delete: {
+            hidden: true,
+          },
+          exportCsv: {
             hidden: true,
           },
         },
@@ -4778,6 +4815,11 @@ export default {
         context: {
           basePath: '/event',
         },
+        actions: {
+          exportCsv: {
+            hidden: true,
+          },
+        },
       },
       dataSource: {
         singularEntity: 'Common.RecurringSession',
@@ -4860,6 +4902,9 @@ export default {
             hidden: true,
           },
           edit: {
+            hidden: true,
+          },
+          exportCsv: {
             hidden: true,
           },
         },
@@ -4948,6 +4993,9 @@ export default {
             hidden: true,
           },
           delete: {
+            hidden: true,
+          },
+          exportCsv: {
             hidden: true,
           },
         },
@@ -5153,6 +5201,9 @@ export default {
             hidden: true,
           },
           delete: {
+            hidden: true,
+          },
+          exportCsv: {
             hidden: true,
           },
         },

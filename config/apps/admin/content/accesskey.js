@@ -50,6 +50,9 @@ export default {
           basePath: '/organization',
         },
         actions: {
+          exportCsv: {
+            hidden: true,
+          },
           edit: {
             hidden: true,
           },

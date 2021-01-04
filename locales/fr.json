@@ -746,7 +746,7 @@
     "SelectEvents": "Sélectionnez des événements",
     "ViewMap": "Voir la carte",
     "URLRecommended": "URL (recommandé d'utiliser https: //) *",
-    "ExportInProgress": "Exporter..."
+    "ExportInProgress": "Exportation en cours, veuillez patienter..."
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",
@@ -945,13 +945,13 @@
       "CreatedSuccessfully": "{modelName} Créé avec succès",
       "ListUpdatedSucess": "{modelName} élément de liste mis à jour avec succès.",
       "ThanksHelp": "Merci de nous avoir contacté! Nous reviendrons vers vous bientôt!",
-      "QuestionRecordCreatedSuccess": "Question créée avec succès",
-      "QuestionRecordUpdatedSuccess": "Question mise à jour avec succès",
-      "TicketRecordCreatedSuccess": "Ticket créé avec succès",
-      "TicketRecordUpdatedSuccess": "Billet mis à jour avec succès",
-      "RegistrationFormUpdatedSuccess": "Formulaire d'inscription mis à jour avec succès",
-      "SessionCreatedSuccess": "Session créée avec succès",
-      "SessionUpdatedSuccess": "Session mise à jour avec succès"
+      "QuestionRecordCreatedSuccess":"Question créée avec succès",
+      "QuestionRecordUpdatedSuccess":"Question mise à jour avec succès",
+      "TicketRecordCreatedSuccess":"Ticket créé avec succès",
+      "TicketRecordUpdatedSuccess":"Billet mis à jour avec succès",
+      "RegistrationFormUpdatedSuccess":"Formulaire d'inscription mis à jour avec succès",
+      "SessionCreatedSuccess":"Session créée avec succès",
+      "SessionUpdatedSuccess":"Session mise à jour avec succès"
     }
   },
   "$vuetify": {

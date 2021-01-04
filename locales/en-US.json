@@ -747,7 +747,7 @@
     "SelectEvents": "Select Events",
     "ViewMap": "View Map",
     "URLRecommended": "URL(Recommended to use https://) *",
-    "ExportInProgress": "Exporting..."
+    "ExportInProgress": "Export in Progress, please stand by..."
   },
   "Drawer": {
     "CreateEventAction": "Create Event",
@@ -948,13 +948,13 @@
       "CreatedSuccessfully": "{modelName} Created Successfully",
       "ListUpdatedSucess": "{modelName} list item updated successfully.",
       "ThanksHelp": "Thanks for contacting us! We will get back to you soon!",
-      "QuestionRecordCreatedSuccess": "Question created successfully",
-      "QuestionRecordUpdatedSuccess": "Question updated successfully",
-      "TicketRecordCreatedSuccess": "Ticket created successfully",
-      "TicketRecordUpdatedSuccess": "Ticket updated successfully",
-      "RegistrationFormUpdatedSuccess": "Registration Form updated successfully",
-      "SessionCreatedSuccess": "Session created successfully",
-      "SessionUpdatedSuccess": "Session updated successfully"
+      "QuestionRecordCreatedSuccess":"Question created successfully",
+      "QuestionRecordUpdatedSuccess":"Question updated successfully",
+      "TicketRecordCreatedSuccess":"Ticket created successfully",
+      "TicketRecordUpdatedSuccess":"Ticket updated successfully",
+      "RegistrationFormUpdatedSuccess":"Registration Form updated successfully",
+      "SessionCreatedSuccess":"Session created successfully",
+      "SessionUpdatedSuccess":"Session updated successfully"
     }
   },
   "$vuetify": {

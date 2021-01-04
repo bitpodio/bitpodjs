@@ -72,6 +72,11 @@ export default {
         context: {
           basePath: '/organization',
         },
+        actions: {
+          exportCsv: {
+            hidden: true,
+          },
+        },
       },
       dataSource: {
         type: 'rest',
