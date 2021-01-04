@@ -365,8 +365,7 @@ export default {
           'https://accounts.google.com/o/oauth2/v2/auth',
         endpoints: {
           authorization: `https://${process.env.PUBLIC_DOMAIN}/svc/oauth/login?siteId=H1734mqcw&nonce=state&provider=google&prompt=consent`,
-          token:
-            'https://${process.env.PUBLIC_DOMAIN}/svc/oauth/refresh?provider=google',
+          token: `https://${process.env.PUBLIC_DOMAIN}/svc/oauth/refresh?provider=google`,
           userInfo: 'api/connect/userinfo?provider=google',
         },
         accessType: 'offline',
