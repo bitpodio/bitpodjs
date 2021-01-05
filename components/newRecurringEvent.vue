@@ -827,7 +827,10 @@
                               :rules="validEndTimeRule(k)"
                             />
                           </td>
-                          <td class="pa-2 pb-0 st-date e-td" data-title="">
+                          <td
+                            class="pa-2 pb-0 st-date e-td"
+                            :data-title="$t('Common.SlotSize')"
+                          >
                             <div class="positionAbsolute">
                               <div
                                 class="autocomplete-dropdown positionRelative"
@@ -848,7 +851,7 @@
                           </td>
                           <td
                             class="pa-2 pb-0 event-timezone e-td"
-                            data-title=""
+                            :data-title="$t('Common.Timezone')"
                           >
                             <div class="positionAbsolute">
                               <div
@@ -867,7 +870,7 @@
 
                           <td
                             class="pa-2 pb-0 event-timezone e-td"
-                            data-title=""
+                            :data-title="$t('Common.RecurringEventLocation')"
                           >
                             <v-form
                               ref="locationForm"
