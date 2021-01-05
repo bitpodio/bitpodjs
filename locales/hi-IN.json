@@ -748,7 +748,7 @@
     "SelectEvents": "घटनाक्रम का चयन करें",
     "ViewMap": "मानचित्र",
     "URLRecommended": "URL (https का उपयोग करने के लिए अनुशंसित: //) *",
-    "ExportInProgress": "प्रगति में निर्यात करें, कृपया खड़े रहें..."
+    "ExportInProgress": "निर्यात प्रगति पर है..."
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",
@@ -947,13 +947,13 @@
       "CreatedSuccessfully": "{modelName} सफलतापूर्वक बनाया गया",
       "ListUpdatedSucess": "{modelName} सूची आइटम सफलतापूर्वक अपडेट किया गया।",
       "ThanksHelp": "हमे संपर्क करने के लिए धन्यवाद! हम तुमसे जल्द ही संपर्क करेंगे!",
-      "QuestionRecordCreatedSuccess":"प्रश्न सफलतापूर्वक बनाया गया",
-      "QuestionRecordUpdatedSuccess":"प्रश्न सफलतापूर्वक अपडेट किया गया",
-      "TicketRecordCreatedSuccess":"टिकट सफलतापूर्वक बनाया गया",
-      "TicketRecordUpdatedSuccess":"टिकट सफलतापूर्वक अपडेट किया गया",
-      "RegistrationFormUpdatedSuccess":"पंजीकरण फॉर्म सफलतापूर्वक अपडेट किया गया",
-      "SessionCreatedSuccess":"सत्र सफलतापूर्वक बनाया गया",
-      "SessionUpdatedSuccess":"Session updated successfully"
+      "QuestionRecordCreatedSuccess": "प्रश्न सफलतापूर्वक बनाया गया",
+      "QuestionRecordUpdatedSuccess": "प्रश्न सफलतापूर्वक अपडेट किया गया",
+      "TicketRecordCreatedSuccess": "टिकट सफलतापूर्वक बनाया गया",
+      "TicketRecordUpdatedSuccess": "टिकट सफलतापूर्वक अपडेट किया गया",
+      "RegistrationFormUpdatedSuccess": "पंजीकरण फॉर्म सफलतापूर्वक अपडेट किया गया",
+      "SessionCreatedSuccess": "सत्र सफलतापूर्वक बनाया गया",
+      "SessionUpdatedSuccess": "Session updated successfully"
     }
   },
   "$vuetify": {
