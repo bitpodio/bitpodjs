@@ -1025,7 +1025,7 @@ export default {
           })
           this.eventOnSaleLoaded = true
           this.eventOnSaleEmpty = false
-        } else {
+        } else if (!eventData.length && data.Event?.EventCount > 0) {
           this.eventOnSaleEmpty = true
         }
       },

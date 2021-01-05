@@ -72,11 +72,19 @@ export default {
         context: {
           basePath: '/organization',
         },
+        actions: {
+          exportCsv: {
+            hidden: true,
+          },
+        },
       },
       dataSource: {
         type: 'rest',
-        getData: (ctx) =>
-          getData(`Organizations/${ctx.$store.state.currentOrg.id}/Users`),
+        getData: (ctx, isExporting = false) =>
+          getData(
+            `Organizations/${ctx.$store.state.currentOrg.id}/Users`,
+            isExporting
+          ),
       },
       title: 'Common.Users',
       type: 'list',
