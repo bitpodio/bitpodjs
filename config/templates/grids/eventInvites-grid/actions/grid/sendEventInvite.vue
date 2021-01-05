@@ -700,7 +700,7 @@
                           <i18n path="Common.SubjectAndSender" />
                         </h4>
                         <v-btn class="ml-10" text small @click="curentTab = 0">
-                          <v-icon dark left>mdi-pencil</v-icon>
+                          <v-icon dark left>fa-pencil</v-icon>
                           <i18n path="Drawer.Edit" />
                         </v-btn>
                       </v-flex>
