@@ -334,7 +334,7 @@ export default {
           process.env.BITPOD__USERINFO_ENDPOINT_URL ||
           'https://login.bitpod.io/auth/connect/userinfo',
         endpoints: {
-          authorization: `https://${process.env.PUBLIC_DOMAIN}/svc/oauth/login?siteId=rklRLNaXv&nonce=state&provider=bitpod`,
+          authorization: `https://${process.env.PUBLIC_DOMAIN}/svc/oauth/login?siteId=${process.env.SITE_ID}&nonce=state&provider=bitpod`,
           token: `https://${process.env.PUBLIC_DOMAIN}/svc/oauth/refresh?provider=bitpod`,
           userInfo: 'api/connect/userinfo?provider=bitpod',
           logout:
@@ -368,7 +368,7 @@ export default {
           process.env.GOOGLE_AUTHORIZATION_ENDPOINT_URL ||
           'https://accounts.google.com/o/oauth2/v2/auth',
         endpoints: {
-          authorization: `https://${process.env.PUBLIC_DOMAIN}/svc/oauth/login?siteId=rklRLNaXv&nonce=state&provider=google&prompt=consent`,
+          authorization: `https://${process.env.PUBLIC_DOMAIN}/svc/oauth/login?siteId=${process.env.SITE_ID}&nonce=state&provider=google&prompt=consent`,
           token: `https://${process.env.PUBLIC_DOMAIN}/svc/oauth/refresh?provider=google`,
           userInfo: 'api/connect/userinfo?provider=google',
         },
