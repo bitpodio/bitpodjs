@@ -119,6 +119,9 @@ export default {
             hidden: false,
             caption: 'Common.CreateBadge',
           },
+          exportCsv: {
+            hidden: true,
+          },
         },
       },
       dataSource: {

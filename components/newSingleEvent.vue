@@ -114,12 +114,12 @@
                   <v-text-field
                     v-model="eventData.UniqLink"
                     :label="$t('Common.EventL')"
+                    :rules="[rules.required, rules.link]"
                     outlined
                     dense
                     required
                     :error-messages="uniqueLinkValidationMsg"
-                    @input="changeUniqueLink($event)"
-                    @change="changeUniqueLink($event)"
+                    @input="checkUniqueLink"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -522,7 +522,7 @@
           v-if="currentTab < 3"
           depressed
           color="primary"
-          :disabled="isNextDisabled()"
+          :disabled="!isUniqLinkValid || isInvalidEventLink || !valid"
           @click="next()"
           ><i18n path="Drawer.Next"
         /></v-btn>
@@ -797,6 +797,28 @@ export default {
   },
 
   methods: {
+    async checkUniqueLink() {
+      const where = { UniqLink: this.eventData.UniqLink }
+      const result = await this.$apollo.query({
+        query: gql`
+          ${eventCount}
+        `,
+        variables: {
+          where,
+        },
+        fetchPolicy: 'no-cache',
+      })
+      if (result.data.Event.EventCount > 0) {
+        this.isInvalidEventLink = true
+        this.uniqueLinkValidationMsg = this.$t(
+          'Messages.Error.UniqueLinkDuplicate'
+        )
+      } else {
+        this.isInvalidEventLink = false
+        this.isUniqLinkValid = true
+        this.uniqueLinkValidationMsg = ''
+      }
+    },
     ticketCountRules() {
       return [
         (v) => {
@@ -1325,9 +1347,6 @@ export default {
     changeEventName(event) {
       this.verifyUniqueLink(event.currentTarget.value)
     },
-    changeUniqueLink(event) {
-      this.verifyUniqueLink(event.currentTarget.value)
-    },
     verifyUniqueLink(value) {
       value = value.toLowerCase().replace(/\s/g, '')
       value = value.trim()
@@ -1343,26 +1362,6 @@ export default {
         this.uniqueLinkMessage = this.$t('Messages.Warn.UniqueLinkFormat')
       }
       this.eventData.UniqLink = value
-    },
-    async checkUniqueLink(value) {
-      const where = { UniqLink: value }
-      const result = await this.$apollo.query({
-        query: gql`
-          ${eventCount}
-        `,
-        variables: {
-          where,
-        },
-        fetchPolicy: 'no-cache',
-      })
-      if (result.data.Event.EventCount > 0) {
-        this.isUniqLinkValid = false
-        this.isInvalidEventLink = true
-        this.uniqueLinkMessage = this.$t('Messages.Error.UniqueLinkDuplicate')
-      } else {
-        this.isUniqLinkValid = true
-        this.isInvalidEventLink = false
-      }
     },
     changeLocation(value) {
       this.addresslineMessage = ''

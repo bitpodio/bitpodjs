@@ -1426,6 +1426,9 @@ export default {
           delete: {
             hidden: true,
           },
+          exportCsv: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
@@ -3215,6 +3218,11 @@ export default {
         context: {
           basePath: '/event',
         },
+        actions: {
+          exportCsv: {
+            hidden: true,
+          },
+        },
       },
       dataSource: {
         singularEntity: 'Drawer.DiscountCode',
@@ -3300,10 +3308,16 @@ export default {
         context: {
           basePath: '/event',
         },
+        actions: {
+          exportCsv: {
+            hidden: true,
+          },
+        },
       },
       dataSource: {
         type: 'rest',
-        getData: (ctx) => getData(`Events/${ctx.$route.params.id}/Survey`),
+        getData: (ctx, isExporting = false) =>
+          getData(`Events/${ctx.$route.params.id}/Survey`, isExporting),
       },
       title: 'eventRegistrationQuestion',
       type: 'list',
@@ -3497,6 +3511,11 @@ export default {
         name: 'eventSession-grid',
         context: {
           basePath: '/event',
+        },
+        actions: {
+          exportCsv: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
@@ -3739,14 +3758,19 @@ export default {
         context: {
           basePath: '/event',
         },
+        actions: {
+          exportCsv: {
+            hidden: true,
+          },
+        },
       },
       dataSource: {
         singularEntity: 'Common.Speaker',
         pluralEntity: 'Common.Speakers',
         model: 'Speaker',
         type: 'rest',
-        getData: (ctx) =>
-          getData(`Events/${ctx.$route.params.id}/EventSpeakers`),
+        getData: (ctx, isExporting = false) =>
+          getData(`Events/${ctx.$route.params.id}/EventSpeakers`, isExporting),
         mutation(ctx) {
           return {
             new: {
@@ -4145,6 +4169,9 @@ export default {
           edit: {
             hidden: true,
           },
+          exportCsv: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
@@ -4247,14 +4274,20 @@ export default {
           delete: {
             hidden: true,
           },
+          exportCsv: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
         singularEntity: 'Common.RegistrationForm',
         pluralEntity: 'Common.RegistrationForms',
         type: 'rest',
-        getData: (ctx) =>
-          getData(`Events/${ctx.$route.params.id}/RegistrationForm`),
+        getData: (ctx, isExporting = false) =>
+          getData(
+            `Events/${ctx.$route.params.id}/RegistrationForm`,
+            isExporting
+          ),
       },
       title: 'eventRegistrationForm',
       type: 'list',
@@ -4774,6 +4807,11 @@ export default {
         context: {
           basePath: '/event',
         },
+        actions: {
+          exportCsv: {
+            hidden: true,
+          },
+        },
       },
       dataSource: {
         singularEntity: 'Common.RecurringSession',
@@ -4856,6 +4894,9 @@ export default {
             hidden: true,
           },
           edit: {
+            hidden: true,
+          },
+          exportCsv: {
             hidden: true,
           },
         },
@@ -4946,6 +4987,9 @@ export default {
           delete: {
             hidden: true,
           },
+          exportCsv: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
@@ -5020,6 +5064,9 @@ export default {
         },
         actions: {
           new: {
+            hidden: true,
+          },
+          exportCsv: {
             hidden: true,
           },
           edit: {
@@ -5146,6 +5193,9 @@ export default {
             hidden: true,
           },
           delete: {
+            hidden: true,
+          },
+          exportCsv: {
             hidden: true,
           },
         },

@@ -1037,14 +1037,20 @@ export default {
           delete: {
             hidden: true,
           },
+          exportCsv: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
         singularEntity: 'Common.SessionCaption',
         pluralEntity: 'Common.Sessions',
         type: 'rest',
-        getData: (ctx) =>
-          getData(`Registrations/${ctx.$route.params.id}/SessionListId`),
+        getData: (ctx, isExporting = false) =>
+          getData(
+            `Registrations/${ctx.$route.params.id}/SessionListId`,
+            isExporting
+          ),
       },
       title: 'Sessions',
       type: 'list',
@@ -1174,14 +1180,20 @@ export default {
           delete: {
             hidden: true,
           },
+          exportCsv: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
         singularEntity: 'Common.SessionCaption',
         pluralEntity: 'Common.Sessions',
         type: 'rest',
-        getData: (ctx) =>
-          getData(`Registrations/${ctx.$route.params.id}/SessionListId`),
+        getData: (ctx, isExporting = false) =>
+          getData(
+            `Registrations/${ctx.$route.params.id}/SessionListId`,
+            isExporting
+          ),
       },
       title: 'Sessions',
       type: 'list',
@@ -1628,6 +1640,9 @@ export default {
           delete: {
             hidden: true,
           },
+          exportCsv: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
@@ -1741,12 +1756,18 @@ export default {
           delete: {
             hidden: true,
           },
+          exportCsv: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
         type: 'rest',
-        getData: (ctx) =>
-          getData(`Registrations/${ctx.$route.params.id}/SessionListId`),
+        getData: (ctx, isExporting = false) =>
+          getData(
+            `Registrations/${ctx.$route.params.id}/SessionListId`,
+            isExporting
+          ),
       },
       title: 'Sessions',
       type: 'list',
@@ -2082,6 +2103,9 @@ export default {
             hidden: true,
           },
           delete: {
+            hidden: true,
+          },
+          exportCsv: {
             hidden: true,
           },
         },
