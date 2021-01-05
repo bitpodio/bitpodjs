@@ -827,4 +827,8 @@ table > tbody > tr:last-child .key-align {
   .slide-form-default .v-card__title {
     word-break: break-word !important;
   }
+  .seatmap .v-data-footer {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
 }
