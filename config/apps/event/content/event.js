@@ -2726,9 +2726,6 @@ export default {
           delete: {
             hidden: true,
           },
-          exportCsv: {
-            hidden: true,
-          },
         },
       },
       dataSource: {
@@ -3007,11 +3004,6 @@ export default {
         name: 'eventTickets-grid',
         context: {
           basePath: '/event',
-        },
-        actions: {
-          exportCsv: {
-            hidden: true,
-          },
         },
       },
       dataSource: {
