@@ -284,6 +284,11 @@ export default {
         context: {
           basePath: '/organization',
         },
+        actions: {
+          exportCsv: {
+            hidden: true,
+          },
+        },
       },
       dataSource: {
         singularEntity: 'Common.BusinessUnit',
@@ -385,6 +390,9 @@ export default {
           delete: {
             hidden: true,
           },
+          exportCsv: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
@@ -484,6 +492,11 @@ export default {
         name: 'organizationTask-grid',
         context: {
           basePath: '/organization',
+        },
+        actions: {
+          exportCsv: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
