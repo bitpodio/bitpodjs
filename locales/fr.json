@@ -745,7 +745,11 @@
     "Test": "Tester",
     "SelectEvents": "Sélectionnez des événements",
     "ViewMap": "Voir la carte",
-    "URLRecommended": "URL (recommandé d'utiliser https: //) *"
+    "URLRecommended": "URL (recommandé d'utiliser https: //) *",
+    "EventNameHeader": "Nom de l'événement",
+    "RegistrationIdHeader": "ID d'enregistrement",
+    "TotalAmountHeader": "Montant total",
+    "PaymentMethodHeader": "Mode de paiement"
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",

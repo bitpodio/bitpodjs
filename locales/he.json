@@ -747,7 +747,11 @@
     "Test": "מִבְחָן",
     "SelectEvents": "בחר אירועים",
     "ViewMap": "צפה במפה",
-    "URLRecommended": "כתובת אתר (מומלץ להשתמש ב- https: //) *"
+    "URLRecommended": "כתובת אתר (מומלץ להשתמש ב- https: //) *",
+    "EventNameHeader": "שם אירוע",
+    "RegistrationIdHeader": "מזהה רישום",
+    "TotalAmountHeader": "הכמות הכוללת",
+    "PaymentMethodHeader": "אמצעי תשלום"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",

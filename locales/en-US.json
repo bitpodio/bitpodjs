@@ -746,7 +746,11 @@
     "Test": "Test",
     "SelectEvents": "Select Events",
     "ViewMap": "View Map",
-    "URLRecommended": "URL(Recommended to use https://) *"
+    "URLRecommended": "URL(Recommended to use https://) *",
+    "EventNameHeader": "Event Name",
+    "RegistrationIdHeader": "Registration Id",
+    "TotalAmountHeader": "Total Amount",
+    "PaymentMethodHeader": "Payment Method"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",
