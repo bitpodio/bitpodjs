@@ -751,7 +751,8 @@
     "EventNameHeader": "שם אירוע",
     "RegistrationIdHeader": "מזהה רישום",
     "TotalAmountHeader": "הכמות הכוללת",
-    "PaymentMethodHeader": "אמצעי תשלום"
+    "PaymentMethodHeader": "אמצעי תשלום",
+    "ExportInProgress": "הייצוא מתבצע"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",
@@ -796,7 +797,8 @@
     "DiscountCode": "Discount Code",
     "Members": "Members",
     "Contacts": "Contacts",
-    "SessionOverlaps": "אזהרת חפיפה של מושב"
+    "SessionOverlaps": "אזהרת חפיפה של מושב",
+    "ExportToCSV": "ייצא ל- CSV"
   },
   "FilterOptions": {
     "Is": "Is",
@@ -949,13 +951,13 @@
       "CreatedSuccessfully": "{modelName} נוצר בהצלחה",
       "ListUpdatedSucess": "{modelName} פריט הרשימה עודכן בהצלחה.",
       "ThanksHelp": "תודה שפנית אלינו! אנחנו נחזור אליך בקרוב!",
-      "QuestionRecordCreatedSuccess":"שאלה נוצרה בהצלחה",
-      "QuestionRecordUpdatedSuccess":"השאלה עודכנה בהצלחה",
-      "TicketRecordCreatedSuccess":"הכרטיס נוצר בהצלחה",
-      "TicketRecordUpdatedSuccess":"הכרטיס עודכן בהצלחה",
-      "RegistrationFormUpdatedSuccess":"טופס ההרשמה עודכן בהצלחה",
-      "SessionCreatedSuccess":"ההפעלה נוצרה בהצלחה",
-      "SessionUpdatedSuccess":"ההפעלה עודכנה בהצלחה"
+      "QuestionRecordCreatedSuccess": "שאלה נוצרה בהצלחה",
+      "QuestionRecordUpdatedSuccess": "השאלה עודכנה בהצלחה",
+      "TicketRecordCreatedSuccess": "הכרטיס נוצר בהצלחה",
+      "TicketRecordUpdatedSuccess": "הכרטיס עודכן בהצלחה",
+      "RegistrationFormUpdatedSuccess": "טופס ההרשמה עודכן בהצלחה",
+      "SessionCreatedSuccess": "ההפעלה נוצרה בהצלחה",
+      "SessionUpdatedSuccess": "ההפעלה עודכנה בהצלחה"
     }
   },
   "$vuetify": {

@@ -46,11 +46,15 @@ export default {
           delete: {
             hidden: true,
           },
+          exportCsv: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
         type: 'rest',
-        getData: (ctx) => getCustomData(`OrganizationInfos/roles`),
+        getData: (ctx, isExporting = false) =>
+          getCustomData(`OrganizationInfos/roles`, isExporting),
       },
       title: 'Common.Roles',
       type: 'list',

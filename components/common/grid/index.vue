@@ -1,5 +1,18 @@
 <template>
   <div>
+    <ExportLoader
+      :is-loading="exportInProgress"
+      :title="$t('Drawer.ExportToCSV')"
+      :message="$t('Common.ExportInProgress')"
+      :stop-loading="
+        () => {
+          this.$store.commit('setExportInProgress', {
+            value: false,
+            key: '',
+          })
+        }
+      "
+    />
     <template v-if="!!error">
       <div>
         <component :is="errorTemplate || null" :error="error" />
@@ -39,6 +52,8 @@
                   :content="content"
                   :view-name="viewName"
                   :on-new-item-save="onNewItemSave"
+                  :on-csv-export="onCsvExport"
+                  :can-export="!!tableData.items.length"
                   :refresh="refresh"
                   :context="context"
                   @has-custom-grid-action="getGridOption"
@@ -80,6 +95,8 @@
                 :content="content"
                 :view-name="viewName"
                 :on-new-item-save="onNewItemSave"
+                :on-csv-export="onCsvExport"
+                :can-export="!!tableData.items.length"
                 :refresh="refresh"
                 :context="context"
                 class="d-inline-flex"
@@ -310,6 +327,8 @@ import {
   getOrderQuery,
   buildQueryVariables,
 } from '~/utility'
+import { formatGQLResult } from '~/utility/gql.js'
+import ExportLoader from '~/components/Loader.vue'
 
 const DEFAULT_GRID_PROPS = {
   hideDefaultHeader: false,
@@ -434,9 +453,55 @@ function buildMutationUpsertQuery(modelName) {
   return `mutation($Inputs : ${modelName}UpsertWithWhereInput!){ ${modelName}{ ${modelName}UpsertWithWhere(input:$Inputs){ clientMutationId obj{ id } } } }`
 }
 
+function downloadBlob(blob, filename) {
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = filename || 'download'
+  const clickHandler = () => {
+    setTimeout(() => {
+      URL.revokeObjectURL(url)
+    }, 150)
+  }
+  a.addEventListener('click', clickHandler, { once: true })
+  a.click()
+}
+
+function prepareCSV(finalResult, modelName) {
+  const replacer = (key, value) => {
+    if (value === null) return ''
+    else {
+      let formattedVal = value
+      if (typeof value === 'object') {
+        formattedVal = JSON.stringify(value, (k, v) => (v === null ? '' : v))
+        formattedVal = formattedVal.replace(/"/g, "'")
+        return formattedVal
+      } else if (typeof value === 'string') {
+        formattedVal = formattedVal.replace(/"/g, "'")
+        return formattedVal
+      }
+      return value
+    }
+  }
+  if (finalResult[0]) {
+    const header = Object.keys(finalResult[0])
+    const csvContent = [
+      header.join(','),
+      ...finalResult.map((row) =>
+        header
+          .map((fieldName) => JSON.stringify(row[fieldName], replacer))
+          .join(',')
+      ),
+    ].join('\r\n')
+    const blob = new Blob([csvContent], { type: 'text/csv' })
+    downloadBlob(blob, `${modelName} - ${new Date().toLocaleDateString()}.csv`)
+  }
+}
+
 export default {
   components: {
     FieldsFilter,
+    ExportLoader,
   },
   mixins: [templateLoaderMixin],
   props: {
@@ -562,25 +627,37 @@ export default {
       return !isLessItems || this.hideDefaultFooter
     },
     showTripleDot() {
+      const templateActions = this.content.views?.[this.viewName]?.template
+        ?.actions
       if (this.hasGridOption) {
         return true
-      } else if (this.hasRowOption) {
+      } else if (
+        this.hasRowOption &&
+        templateActions?.new?.hidden &&
+        templateActions?.exportCsv?.hidden
+      ) {
         return this.selectedItems.length > 0
-      } else if (this.content.views?.[this.viewName]?.template?.actions) {
-        const hasNew = !this.content.views[this.viewName].template.actions.new
-          ?.hidden
-        const hasEdit = !this.content.views[this.viewName].template.actions.edit
-          ?.hidden
-        const hasDelete = !this.content.views[this.viewName].template.actions
-          .delete?.hidden
-        if (hasNew) {
+      } else if (templateActions) {
+        const hasNew = !templateActions.new?.hidden
+        const hasExport = !templateActions.exportCsv?.hidden
+        const hasEdit = !templateActions.edit?.hidden
+        const hasDelete = !templateActions.delete?.hidden
+        if (hasNew || hasExport) {
           return true
-        } else {
+        } else if (hasEdit || hasDelete) {
           return this.selectedItems.length > 0 && (hasEdit || hasDelete)
+        } else {
+          return false
         }
       } else {
         return true
       }
+    },
+    exportInProgress() {
+      return (
+        this.$store.state.exportInProgress.value &&
+        this.viewName === this.$store.state.exportInProgress.key
+      )
     },
   },
   watch: {
@@ -804,6 +881,105 @@ export default {
         return userCreated
       }
     },
+    async onCsvExport(data) {
+      const dataSource = getViewDataSource(this.content, this.viewName)
+      const dataSourceType = dataSource.type || 'graphql'
+      const modelName =
+        getModelName(this.content, this.viewName) || this.content.general.name
+      if (dataSourceType === 'rest') {
+        const { search, filters } = this
+        const options = {
+          ...this.options,
+          search,
+          filters,
+        }
+        const getDataFunc = dataSource.getData.call(this, this, true)
+        try {
+          this.$store.commit('setExportInProgress', {
+            value: true,
+            key: this.viewName,
+          })
+          const finalResult = await getDataFunc.call(this, options)
+          if (this.exportInProgress) {
+            prepareCSV(finalResult, this.viewName)
+          }
+          this.$store.commit('setExportInProgress', {
+            value: false,
+            key: '',
+          })
+        } catch (e) {
+          console.error(`Error while exporting to CSV via rest`, e)
+        }
+      } else {
+        const { content, viewName, search, filters } = this
+        const sortBy = this.options.sortBy
+        const sortDesc = this.options.sortDesc
+        const order = getOrderQuery(content, viewName, sortBy, sortDesc)
+        const where = buildQueryVariables({
+          viewName,
+          search,
+          filters,
+          filter: this.filter,
+          content,
+          ctx: this,
+        })
+        const itemsPerPage = this.options.itemsPerPage === -1 ? -1 : 50
+        let skip = 0
+        const limit = itemsPerPage === -1 ? 0 : itemsPerPage
+        let finalResult = []
+        let shouldDownload = false
+        if (itemsPerPage !== -1) {
+          this.$store.commit('setExportInProgress', {
+            value: true,
+            key: this.viewName,
+          })
+          while (this.exportInProgress) {
+            try {
+              const result = await this.$apollo.query({
+                query: gql`
+                  ${getViewQuery(this.content, this.viewName)}
+                `,
+                variables: {
+                  filters: { limit, skip, order, where },
+                  where: {},
+                },
+              })
+              if (result) {
+                const formattedResult = formatGQLResult(result.data, modelName)
+                if (formattedResult.length) {
+                  finalResult = finalResult.concat(formattedResult)
+                  skip += 50
+                } else {
+                  shouldDownload = true
+                  this.$store.commit('setExportInProgress', {
+                    value: false,
+                    key: '',
+                  })
+                }
+              } else {
+                this.$store.commit('setExportInProgress', {
+                  value: false,
+                  key: '',
+                })
+              }
+            } catch (e) {
+              console.error(`Error while exporting to CSV via graphql`, e)
+              this.$store.commit('setExportInProgress', {
+                value: false,
+                key: '',
+              })
+            }
+          }
+          if (shouldDownload) {
+            prepareCSV(finalResult, this.viewName)
+          }
+          this.$store.commit('setExportInProgress', {
+            value: false,
+            key: '',
+          })
+        }
+      }
+    },
     async onUpdateItem(data) {
       const modelName = getModelName(this.content, this.viewName)
       const dataSource = getViewDataSource(this.content, this.viewName)
@@ -894,9 +1070,6 @@ export default {
     async loadRestData() {
       const dataSource = getViewDataSource(this.content, this.viewName)
       const dataSourceType = dataSource.type || 'graphql'
-      console.debug('Data Source Type is: ', dataSourceType)
-      console.debug('this.content is: ', this.content)
-      console.debug('this.viewname is: ', this.viewname)
       if (dataSourceType === 'rest') {
         const { search, filters } = this
         const options = {
@@ -907,18 +1080,15 @@ export default {
 
         const getDataFunc = dataSource.getData.call(this, this)
         try {
-          console.debug('In try block')
           this.tableData = await getDataFunc.call(this, options)
           this.loading = false
         } catch (e) {
-          console.debug('In catch block')
           console.error(
             `Errors in components/common/grid/index.vue while calling method loadRestData`,
             e
           )
           this.loading = false
         }
-        console.debug('Done with try-catch block.')
       }
     },
     translate(headers) {

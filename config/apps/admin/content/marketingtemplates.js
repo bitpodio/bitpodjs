@@ -236,8 +236,10 @@ export default {
         },
         actions: {
           new: {
-            hidden: false,
             caption: 'Common.NewTemplate',
+          },
+          exportCsv: {
+            hidden: true,
           },
         },
       },
@@ -480,8 +482,10 @@ export default {
         },
         actions: {
           new: {
-            hidden: false,
             caption: 'Common.NewTemplate',
+          },
+          exportCsv: {
+            hidden: true,
           },
         },
       },
