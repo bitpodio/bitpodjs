@@ -747,6 +747,10 @@
     "SelectEvents": "Select Events",
     "ViewMap": "View Map",
     "URLRecommended": "URL(Recommended to use https://) *",
+    "EventNameHeader": "Event Name",
+    "RegistrationIdHeader": "Registration Id",
+    "TotalAmountHeader": "Total Amount",
+    "PaymentMethodHeader": "Payment Method",
     "ExportInProgress": "Export in progress..."
   },
   "Drawer": {
