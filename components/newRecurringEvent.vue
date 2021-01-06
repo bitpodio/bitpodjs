@@ -594,7 +594,7 @@
                       :label="$t('Common.Description')"
                     ></RichText>
                   </v-col>
-                  <v-col
+                  <!-- <v-col
                     cols="12"
                     sm="6"
                     md="6"
@@ -611,6 +611,24 @@
                       @keyup="changeUniqueLink($event)"
                       @input="changeUniqueLink($event)"
                       @change="changeUniqueLink($event)"
+                    ></v-text-field>
+                  </v-col> -->
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="6"
+                    class="pb-0 d-flex flex-column flex-md-row"
+                  >
+                    <div class="pt-2 mr-2">{{ eventLinkLabel }}</div>
+                    <v-text-field
+                      v-model="eventData.UniqLink"
+                      :label="$t('Common.EventL')"
+                      :rules="[rules.required, rules.link]"
+                      outlined
+                      dense
+                      required
+                      :error-messages="uniqueLinkValidationMsg"
+                      @input="checkUniqueLink"
                     ></v-text-field>
                   </v-col>
                 </v-row>
@@ -1016,17 +1034,16 @@
           v-if="currentTab < 3"
           depressed
           color="primary"
-          :disabled="isNextDisabled()"
+          :disabled="!isUniqLinkValid || isInalidEventLink || !valid"
           @click="next()"
           ><i18n path="Drawer.Next"
         /></v-btn>
         <SaveBtn
           v-if="
-            (currentTab > 2 && !isEventCreate && !isEventPublish) ||
-            isInalidEventLink
+            (currentTab > 2 && !isEventCreate && !isEventPublish)
           "
           color="primary"
-          :disabled="isSaveButtonDisabled"
+          :disabled="isSaveButtonDisabled || !valid || isInalidEventLink"
           depressed
           :action="saveRecord"
           class="ml-2"
@@ -1440,6 +1457,28 @@ export default {
     },
   },
   methods: {
+    async checkUniqueLink() {
+      const where = { UniqLink: this.eventData.UniqLink }
+      const result = await this.$apollo.query({
+        query: gql`
+          ${eventCount}
+        `,
+        variables: {
+          where,
+        },
+        fetchPolicy: 'no-cache',
+      })
+      if (result.data.Event.EventCount > 0) {
+        this.isInalidEventLink = true
+        this.uniqueLinkValidationMsg = this.$t(
+          'Messages.Error.UniqueLinkDuplicate'
+        )
+      } else {
+        this.isInalidEventLink = false
+        this.isUniqLinkValid = true
+        this.uniqueLinkValidationMsg = ''
+      }
+    },
     focusOut() {
       this.addressClicked = false
     },
@@ -2337,9 +2376,9 @@ export default {
     changeEventName(event) {
       this.verifyUniqueLink(event.currentTarget.value)
     },
-    changeUniqueLink(event) {
-      this.verifyUniqueLink(event.currentTarget.value)
-    },
+    // changeUniqueLink(event) {
+    //   this.verifyUniqueLink(event.currentTarget.value)
+    // },
     verifyUniqueLink(value) {
       this.isUniqLinkValid = false
       value = value.toLowerCase().replace(/\s/g, '')
@@ -2352,31 +2391,33 @@ export default {
           this.checkUniqueLink(this.eventData.UniqLink)
         }
       } else {
+        this.isUniqLinkValid = false
         this.isInalidEventLink = true
         this.uniqueLinkMessage = this.$t('Messages.Warn.UniqueLinkFormat')
       }
+      this.eventData.UniqLink = value
     },
-    async checkUniqueLink(value) {
-      this.isUniqLinkValid = true
-      const where = { UniqLink: value }
-      const result = await this.$apollo.query({
-        query: gql`
-          ${eventCount}
-        `,
-        variables: {
-          where,
-        },
-        fetchPolicy: 'no-cache',
-      })
-      if (result.data.Event.EventCount > 0) {
-        this.isUniqLinkValid = false
-        this.isInalidEventLink = true
-        this.uniqueLinkMessage = this.$t('Messages.Error.UniqueLinkDuplicate')
-      } else {
-        this.isInalidEventLink = false
-        this.isUniqLinkValid = true
-      }
-    },
+    // async checkUniqueLink(value) {
+    //   this.isUniqLinkValid = true
+    //   const where = { UniqLink: value }
+    //   const result = await this.$apollo.query({
+    //     query: gql`
+    //       ${eventCount}
+    //     `,
+    //     variables: {
+    //       where,
+    //     },
+    //     fetchPolicy: 'no-cache',
+    //   })
+    //   if (result.data.Event.EventCount > 0) {
+    //     this.isUniqLinkValid = false
+    //     this.isInalidEventLink = true
+    //     this.uniqueLinkMessage = this.$t('Messages.Error.UniqueLinkDuplicate')
+    //   } else {
+    //     this.isInalidEventLink = false
+    //     this.isUniqLinkValid = true
+    //   }
+    // },
     addTicketRow() {
       this.tickets.push({
         TicketId: this.tickets.length + 1,
