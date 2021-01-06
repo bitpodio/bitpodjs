@@ -401,6 +401,9 @@ export default {
     devtools: true,
   },
   generalConfig: {
+    googleGeocodeMapKey:
+      process.env.GOOGLE_Geocode_API_KEY ||
+      'AIzaSyA61em1JU4u503xgDdw0_9efBOlpYKvjpk',
     googleMapKey:
       process.env.GOOGLE_API_KEY || 'AIzaSyBKle17JR_zpGEzwARF0H8VFU9NeH9nh7c',
     googleMapGeocodeApi:
