@@ -746,6 +746,10 @@
     "SelectEvents": "Sélectionnez des événements",
     "ViewMap": "Voir la carte",
     "URLRecommended": "URL (recommandé d'utiliser https: //) *",
+    "EventNameHeader": "Nom de l'événement",
+    "RegistrationIdHeader": "ID d'enregistrement",
+    "TotalAmountHeader": "Montant total",
+    "PaymentMethodHeader": "Mode de paiement",
     "ExportInProgress": "Exportation en cours..."
   },
   "Drawer": {

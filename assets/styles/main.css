@@ -817,4 +817,21 @@ table > tbody > tr:last-child .key-align {
     max-width: 100%;
     width: 100%;
   }
+  .v-data-footer {
+    justify-content: flex-start !important;
+  }
+  .v-application--is-ltr .v-data-footer__pagination {
+      margin: 0 !important;
+  }
+  .slide-form .v-card__title,
+  .slide-form-default .v-card__title {
+    word-break: break-word !important;
+  }
+  .seatmap .v-data-footer {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+  td.v-data-table__mobile-row .ps-top6 {
+    right: -10px;
+  }
 }
