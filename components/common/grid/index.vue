@@ -467,7 +467,7 @@ function downloadBlob(blob, filename) {
   a.click()
 }
 
-function prepareCSV(finalResult, modelName) {
+function prepareCSV(finalResult, modelName, sortedFields, headerList) {
   const replacer = (key, value) => {
     if (value === null) return ''
     else {
@@ -484,12 +484,21 @@ function prepareCSV(finalResult, modelName) {
     }
   }
   if (finalResult[0]) {
-    const header = Object.keys(finalResult[0])
+    const header = headerList.map(({ text }) => text)
     const csvContent = [
       header.join(','),
       ...finalResult.map((row) =>
-        header
-          .map((fieldName) => JSON.stringify(row[fieldName], replacer))
+        sortedFields
+          .map((fieldName) => {
+            if (fieldName.includes('.')) {
+              return JSON.stringify(
+                fieldName.split('.').reduce((o, i) => o?.[i], row),
+                replacer
+              )
+            } else {
+              return JSON.stringify(row[fieldName], replacer)
+            }
+          })
           .join(',')
       ),
     ].join('\r\n')
@@ -886,6 +895,19 @@ export default {
       const dataSourceType = dataSource.type || 'graphql'
       const modelName =
         getModelName(this.content, this.viewName) || this.content.general.name
+      const gridFields = getGridFields(this.content, this.viewName)
+      const filteredFields = {}
+      for (const key in gridFields) {
+        if (gridFields[key].hidden) {
+          continue
+        }
+        filteredFields[key] = gridFields[key]
+      }
+      const sortedFields = Object.keys(filteredFields).sort(
+        (a, b) =>
+          filteredFields[a].displayOrder - filteredFields[b].displayOrder
+      )
+      const headerList = this.translate(this.headers)
       if (dataSourceType === 'rest') {
         const { search, filters } = this
         const options = {
@@ -901,7 +923,7 @@ export default {
           })
           const finalResult = await getDataFunc.call(this, options)
           if (this.exportInProgress) {
-            prepareCSV(finalResult, this.viewName)
+            prepareCSV(finalResult, this.viewName, sortedFields, headerList)
           }
           this.$store.commit('setExportInProgress', {
             value: false,
@@ -971,7 +993,7 @@ export default {
             }
           }
           if (shouldDownload) {
-            prepareCSV(finalResult, this.viewName)
+            prepareCSV(finalResult, this.viewName, sortedFields, headerList)
           }
           this.$store.commit('setExportInProgress', {
             value: false,
