@@ -594,25 +594,6 @@
                       :label="$t('Common.Description')"
                     ></RichText>
                   </v-col>
-                  <!-- <v-col
-                    cols="12"
-                    sm="6"
-                    md="6"
-                    class="pb-0 d-flex flex-column flex-md-row"
-                  >
-                    <div class="pt-2 mr-2">{{ eventLinkLabel }}</div>
-                    <v-text-field
-                      v-model="eventData.UniqLink"
-                      :label="$t('Common.EventL')"
-                      outlined
-                      dense
-                      required
-                      :error-messages="uniqueLinkValidationMsg"
-                      @keyup="changeUniqueLink($event)"
-                      @input="changeUniqueLink($event)"
-                      @change="changeUniqueLink($event)"
-                    ></v-text-field>
-                  </v-col> -->
                   <v-col
                     cols="12"
                     sm="6"
@@ -635,7 +616,6 @@
               </v-form>
             </v-card>
           </v-tab-item>
-
           <v-tab-item :value="'2'">
             <v-card flat>
               <v-form
@@ -2376,9 +2356,6 @@ export default {
     changeEventName(event) {
       this.verifyUniqueLink(event.currentTarget.value)
     },
-    // changeUniqueLink(event) {
-    //   this.verifyUniqueLink(event.currentTarget.value)
-    // },
     verifyUniqueLink(value) {
       this.isUniqLinkValid = false
       value = value.toLowerCase().replace(/\s/g, '')
@@ -2397,27 +2374,6 @@ export default {
       }
       this.eventData.UniqLink = value
     },
-    // async checkUniqueLink(value) {
-    //   this.isUniqLinkValid = true
-    //   const where = { UniqLink: value }
-    //   const result = await this.$apollo.query({
-    //     query: gql`
-    //       ${eventCount}
-    //     `,
-    //     variables: {
-    //       where,
-    //     },
-    //     fetchPolicy: 'no-cache',
-    //   })
-    //   if (result.data.Event.EventCount > 0) {
-    //     this.isUniqLinkValid = false
-    //     this.isInalidEventLink = true
-    //     this.uniqueLinkMessage = this.$t('Messages.Error.UniqueLinkDuplicate')
-    //   } else {
-    //     this.isInalidEventLink = false
-    //     this.isUniqLinkValid = true
-    //   }
-    // },
     addTicketRow() {
       this.tickets.push({
         TicketId: this.tickets.length + 1,
