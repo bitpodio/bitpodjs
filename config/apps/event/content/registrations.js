@@ -1335,7 +1335,7 @@ export default {
           searchEnable: true,
           sortEnable: true,
           columnWidth: '165px',
-          type: 'string',
+          type: 'number',
           hidden: false,
           inlineEdit: true,
           newForm: false,

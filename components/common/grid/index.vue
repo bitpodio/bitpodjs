@@ -365,6 +365,7 @@ function getTableHeader(content, viewName) {
         width: columnWidth,
         displayOrder,
         template,
+        class: type === 'number' ? 'text-right' : '',
       })
     }
   }
