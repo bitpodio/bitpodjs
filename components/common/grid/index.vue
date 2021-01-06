@@ -355,6 +355,7 @@ function getTableHeader(content, viewName) {
       template,
       hidden = false,
       type,
+      customExport = false,
     } = fields[fieldName]
     if (!hidden) {
       headers.push({
@@ -365,6 +366,7 @@ function getTableHeader(content, viewName) {
         width: columnWidth,
         displayOrder,
         template,
+        customExport,
       })
     }
   }
@@ -490,7 +492,16 @@ function prepareCSV(finalResult, modelName, sortedFields, headerList) {
       ...finalResult.map((row) =>
         sortedFields
           .map((fieldName) => {
-            if (fieldName.includes('.')) {
+            if (
+              headerList.filter((e) => e.value === fieldName)?.[0]?.customExport
+            ) {
+              return JSON.stringify(
+                headerList
+                  .filter((e) => e.value === fieldName)[0]
+                  .customExport(row[fieldName]),
+                replacer
+              )
+            } else if (fieldName.includes('.')) {
               return JSON.stringify(
                 fieldName.split('.').reduce((o, i) => o?.[i], row),
                 replacer
@@ -898,9 +909,7 @@ export default {
       const gridFields = getGridFields(this.content, this.viewName)
       const filteredFields = {}
       for (const key in gridFields) {
-        if (gridFields[key].hidden) {
-          continue
-        }
+        if (gridFields[key].hidden) continue
         filteredFields[key] = gridFields[key]
       }
       const sortedFields = Object.keys(filteredFields).sort(

@@ -621,6 +621,11 @@ export default {
           sortEnable: true,
           columnWidth: '150px',
           type: 'string',
+          customExport: (tags) => {
+            console.debug(tags)
+            if (tags && tags !== []) return tags.join(',')
+            return ''
+          },
         },
         VenueName: {
           displayOrder: 6,
