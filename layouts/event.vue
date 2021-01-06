@@ -331,7 +331,7 @@ export default {
       {
         icon: 'fa fa-calendar',
         text: 'Events',
-        to: '/apps/event/list/Event/live and draft event',
+        to: '/apps/event/list/Event/live-and-draft-event',
         allowedRoutes: [
           '/apps/event/list/Event/eventInvitaionHistory',
           '/apps/event/event/',
@@ -347,7 +347,7 @@ export default {
       {
         icon: 'fa fa-building',
         text: 'Discount Code',
-        to: '/apps/event/list/DiscountCodes/Discount Codes',
+        to: '/apps/event/list/DiscountCodes/Discount-Codes',
         allowedRoutes: ['/apps/event/discountcodes'],
       },
       { heading: 'Members' },
