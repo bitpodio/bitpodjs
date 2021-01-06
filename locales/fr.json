@@ -951,7 +951,8 @@
       "TicketRecordUpdatedSuccess": "Billet mis à jour avec succès",
       "RegistrationFormUpdatedSuccess": "Formulaire d'inscription mis à jour avec succès",
       "SessionCreatedSuccess": "Session créée avec succès",
-      "SessionUpdatedSuccess": "Session mise à jour avec succès"
+      "SessionUpdatedSuccess": "Session mise à jour avec succès",
+      "ContactImportSuccess":"Contacts importés avec succès"
     }
   },
   "$vuetify": {

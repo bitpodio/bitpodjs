@@ -953,7 +953,8 @@
       "TicketRecordUpdatedSuccess": "टिकट सफलतापूर्वक अपडेट किया गया",
       "RegistrationFormUpdatedSuccess": "पंजीकरण फॉर्म सफलतापूर्वक अपडेट किया गया",
       "SessionCreatedSuccess": "सत्र सफलतापूर्वक बनाया गया",
-      "SessionUpdatedSuccess": "Session updated successfully"
+      "SessionUpdatedSuccess": "सत्र सफलतापूर्वक अपडेट किया गया",
+      "ContactImportSuccess":"संपर्कों को सफल आयात किया गया"
     }
   },
   "$vuetify": {
