@@ -284,7 +284,7 @@
       </div>
       <div
         v-if="viewName === 'seatmaps'"
-        class="d-flex flex-sm-wrap flex-column flex-sm-row seat-skeleton-inner mt-10 pl-3"
+        class="d-flex flex-wrap flex-row seat-skeleton-inner mt-10 pl-3"
       >
         <v-skeleton-loader
           v-for="i in 10"
@@ -293,14 +293,14 @@
           type="card"
           width="155"
           height="125"
-          class="pl-0 pt-0 eventtiles ma-10 ml-0 mt-0"
+          class="pl-0 pt-0 eventtiles ma-3 ma-md-10 ml-0 mt-0 ml-md-0 mt-md-0"
         >
           <div></div>
         </v-skeleton-loader>
       </div>
       <div
         v-if="viewName === 'integration'"
-        class="d-flex flex-sm-wrap flex-column flex-sm-row seat-skeleton-inner mt-16 pl-5"
+        class="d-flex flex-wrap flex-row seat-skeleton-inner mt-16 pl-5"
       >
         <v-skeleton-loader
           v-for="i in 10"
@@ -309,7 +309,7 @@
           type="card"
           width="155"
           height="125"
-          class="pl-0 pt-0 eventtiles ma-10 ml-0 mt-0"
+          class="pl-0 pt-0 eventtiles ma-3 ma-md-10 ml-0 mt-0 ml-md-0 mt-md-0"
         >
           <div></div>
         </v-skeleton-loader>
@@ -367,6 +367,7 @@ function getTableHeader(content, viewName) {
         displayOrder,
         template,
         customExport,
+        class: type === 'number' ? 'text-right' : '',
       })
     }
   }

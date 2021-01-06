@@ -1280,7 +1280,7 @@ export default {
         (VenueName !== '' || City !== '' || State !== '' || Country !== '')
       ) {
         const addressObj = `${AddressLine},${VenueName},${City},${State},${Country},${PostalCode}`
-        const key = nuxtconfig.generalConfig.googleMapKey
+        const key = nuxtconfig.generalConfig.googleGeocodeMapKey
         const customAxiosInstance = this.$axios.create({
           headers: {},
         })
