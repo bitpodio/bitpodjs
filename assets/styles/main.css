@@ -831,4 +831,7 @@ table > tbody > tr:last-child .key-align {
     width: 100% !important;
     max-width: 100% !important;
   }
+  td.v-data-table__mobile-row .ps-top6 {
+    right: -10px;
+  }
 }
