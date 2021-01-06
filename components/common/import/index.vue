@@ -180,7 +180,6 @@ export default {
             await this.$axios.post(`${url}ImportJobs`, importObj)
             this.$parent.$parent.refresh()
           }
-          debugger
           this.snackbarText = this.$t('Messages.Success.ContactImportSuccess')
           this.snackbar = true
         }
