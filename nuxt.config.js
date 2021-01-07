@@ -316,11 +316,7 @@ export default {
       },
     },
   },
-  serverMiddleware: [
-    '~/api/index.js',
-    { path: '/callback', handler: '~/api/callback.js' },
-    { path: '/authorize', handler: '~/api/authorize.js' },
-  ],
+  serverMiddleware: ['~/api/index.js'],
   auth: {
     redirect: {
       login: '/login',
