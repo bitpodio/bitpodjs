@@ -1,6 +1,6 @@
 <template>
   <div v-if="content">
-    <Calendar :content="content" view-name="All-Events" />
+    <Calendar :content="content" view-name="All Events" />
   </div>
 </template>
 <script>

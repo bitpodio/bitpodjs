@@ -1,11 +1,5 @@
 <template>
   <div class="d-inline-flex">
-    <div v-if="item.LocationType === 'Venue'">
-      <div @click="routeToMap">
-        <i class="fa fa-map-marker blue--text" aria-hidden="true"></i>
-        <a class="blue--text"><i18n path="Common.ViewMap" /></a>
-      </div>
-    </div>
     <v-btn
       v-if="allowSession()"
       tile
@@ -32,7 +26,6 @@
 </template>
 
 <script>
-import nuxtconfig from '~/nuxt.config'
 export default {
   props: {
     item: {
@@ -83,22 +76,6 @@ export default {
     },
     goLive() {
       window.open(this.link)
-    },
-    routeToMap() {
-      if (this.item.LocationType === 'Venue') {
-        const lat =
-          this.item &&
-          this.item._CurrentAddress &&
-          this.item._CurrentAddress.LatLng &&
-          this.item._CurrentAddress.LatLng.lat
-        const lng =
-          this.item &&
-          this.item._CurrentAddress &&
-          this.item._CurrentAddress.LatLng &&
-          this.item._CurrentAddress.LatLng.lng
-        const URL = `${nuxtconfig.axios.googleMapUrl}?q=${lat},${lng}`
-        window.open(URL)
-      }
     },
   },
 }

@@ -50,9 +50,6 @@ export default {
           basePath: '/organization',
         },
         actions: {
-          exportCsv: {
-            hidden: true,
-          },
           edit: {
             hidden: true,
           },
@@ -65,11 +62,8 @@ export default {
         singularEntity: 'Common.AccessKeyCaption',
         pluralEntity: 'Common.AccessKeys',
         type: 'rest',
-        getData: (ctx, isExporting = false) =>
-          getData(
-            `/Users/${ctx.$auth.$state.user.data.email}/AccessKey`,
-            isExporting
-          ),
+        getData: (ctx) =>
+          getData(`/Users/${ctx.$auth.$state.user.data.email}/AccessKey`),
       },
       title: 'Common.AccessKeys',
       type: 'list',

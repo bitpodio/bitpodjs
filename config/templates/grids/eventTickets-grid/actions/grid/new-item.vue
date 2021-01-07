@@ -448,9 +448,7 @@ export default {
           this.dialog = false
           this.onReset()
           this.formData.Code = 'General admission'
-          this.snackbarText = this.$t(
-            'Messages.Success.TicketRecordCreatedSuccess'
-          )
+          this.snackbarText = this.$t('Messages.Success.RecordCreateSuccess')
           this.snackbar = true
           this.refresh()
         }

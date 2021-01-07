@@ -20,11 +20,13 @@
         @change="updateRegistrationType"
       ></v-checkbox>
     </div>
-    <confirm ref="confirm"></confirm>
   </div>
 </template>
 
 <script>
+import gql from 'graphql-tag'
+import registrationType from '~/config/apps/event/gql/registrationType.gql'
+import { formatGQLResult } from '~/utility/gql.js'
 export default {
   props: {
     item: {
@@ -45,49 +47,36 @@ export default {
   },
   methods: {
     async updateRegistrationType() {
-      try {
-        const filter = { where: { EventId: this.$route.query.event } }
-        const res = await this.$axios.$get(
-          `${this.$bitpod.getApiUrl()}RegistrationTypes?filter=${JSON.stringify(
-            filter
-          )}`
-        )
-        if (res) {
-          const count = res.filter((e) => e.isDefault === true).length
-          if (count >= 1 && this.checkbox) {
-            const confirmRes = await this.$refs.confirm.open(
-              this.$t('Messages.Warn.RegistrationTypeWarning'),
-              this.$t('Messages.Warn.RegistrationTypeDefault'),
-              { color: 'warning', buttonTrueText: 'Okay' }
-            )
-            if (confirmRes) {
-              this.checkbox = false
-              this.refresh()
+      const where = { EventId: this.$route.query.event }
+      const result = await this.$apollo.query({
+        query: gql`
+          ${registrationType}
+        `,
+        variables: {
+          filters: {
+            where,
+          },
+        },
+      })
+      const regType = formatGQLResult(result.data, 'RegistrationType')
+      const count = regType.filter((e) => e.isDefault === true).length
+      if (count >= 1 && this.checkbox) {
+        alert('Only one registration type can be set to default')
+        this.refresh()
+      } else {
+        try {
+          const res = await this.$axios.$put(
+            `${this.$bitpod.getApiUrl()}RegistrationTypes/${this.item.id}`,
+            {
+              isDefault: this.checkbox,
             }
-          } else {
-            try {
-              const res = await this.$axios.$put(
-                `${this.$bitpod.getApiUrl()}RegistrationTypes/${this.item.id}`,
-                {
-                  isDefault: this.checkbox,
-                }
-              )
-              if (res) {
-                this.refresh()
-              }
-            } catch (e) {
-              console.error(
-                `Error in config/templates/grids/eventRegistrationType-grid/common-isdefault.vue while PUT request to RegistrationType from updateRegistrationType method  context: Id:- ${this.item.id}`,
-                e
-              )
-            }
+          )
+          if (res) {
+            this.refresh()
           }
+        } catch (e) {
+          console.log('Error', e)
         }
-      } catch (e) {
-        console.error(
-          `Error in config/templates/grids/eventRegistrationType-grid/common-isdefault.vue while Get a RegistrationType from updateRegistrationType method  context: EventId:- ${this.$route.query.event}`,
-          e
-        )
       }
     },
   },

@@ -12,8 +12,6 @@
     "Help": "עֶזרָה",
     "HomePage": "Home page",
     "SignIn": "Sign in",
-    "Live": "לחיות",
-    "Watching": "צופה",
     "EditEventInformation": "ערוך מידע על האירוע",
     "Description": "תיאור",
     "EditEventSettings": "ערוך את הגדרות האירוע",
@@ -313,7 +311,7 @@
     "OnlyAskWhen": "שאל רק מתי אחד מהכרטיסים האלה נרכש",
     "ItemDeletedSuccessfully": "הפריט נמחק בהצלחה.",
     "EditItem": "ערוך פריט",
-    "EditSurveyQuestion": "ערוך את שאלת ההרשמה",
+    "EditSurveyQuestion": "ערוך את שאלת הסקר",
     "ConfirmationEmailSent": "Confirmation Email Sent",
     "ResendRegistrationEmail": "Resend Registration Email",
     "JoinSession": "Join Session",
@@ -413,7 +411,7 @@
     "Draft": "Draft",
     "Join": "Join",
     "BannerImage": "Banner Image",
-    "StartSettingUpYourEvent": "אין אירועים חיים קרובים, כדי להתחיל בהגדרת האירוע שלך השתמש בקישור צור אירוע",
+    "StartSettingUpYourEvent": "There aren't any live events, to start setting up your event use Create Event link",
     "NoRecentBuyer": "No Recent Buyer",
     "AllEvents": "All Events",
     "FirstName": "First Name *",
@@ -721,14 +719,23 @@
     "ContactSupport": "צור קשר עם תמיכה",
     "LeaveMessage": "השאר הודעה",
     "HowHelp": "איך אני יכול לעזור לך?",
-    "VersionNotSupported": "הלוח אינו נגיש בדפדפן זה.",
+    "VersionNotSupported":"הלוח אינו נגיש בדפדפן זה.",
     "DeleteSeatmap": "מחק מפת מושבים",
     "DeleteNote": "מחק הערה",
     "PastEventMessage": "אירוע זה אינו פעיל יותר.",
     "GoToOldSite": "היכנס לאתר הישן",
+    "SetupDomain": "You could be a business, an event organizer, or a professional community. Choose the banner under which you will host your events.",
+    "WelcomeToBitpod": "Welcome to Bitpod",
+    "NameYourOrganization": "Name your organization",
+    "SuffixRoute": "-event.bitpod.io",
+    "CreateOrganisation": "Create organisation",
+    "OrganizationName": "Organization Name*",
+    "CreateEventMessage": "Create your first Event! This is your playground. Feel free to invite friends and learn exciting ways to engage your audience on Bitpod-Event.",
+    "EventDateTime": "Event dateand time*",
+    "YourTitleHere": "Your title will be displayed here",
     "SelectField": "בחר שדה",
-    "DeleteImage": "מחק תמונה",
-    "QuestionDeletedSuccessfully": "השאלה נמחקה בהצלחה",
+    "DeleteImage":"מחק תמונה",
+    "QuestionDeletedSuccessfully":"השאלה נמחקה בהצלחה",
     "SessionCaption": "מוֹשָׁב",
     "RegistrationForms": "טפסי הרשמה",
     "Badges": "תגים",
@@ -742,17 +749,7 @@
     "Reasons": "סיבות",
     "BadgeCategories": "קטגוריות תג",
     "ContactType": "סוג המגע",
-    "BusinessUnit": "יחידה עסקית",
-    "ManageWebhook": "נהל את Webhook",
-    "Test": "מִבְחָן",
-    "SelectEvents": "בחר אירועים",
-    "ViewMap": "צפה במפה",
-    "URLRecommended": "כתובת אתר (מומלץ להשתמש ב- https: //) *",
-    "EventNameHeader": "שם אירוע",
-    "RegistrationIdHeader": "מזהה רישום",
-    "TotalAmountHeader": "הכמות הכוללת",
-    "PaymentMethodHeader": "אמצעי תשלום",
-    "ExportInProgress": "הייצוא מתבצע"
+    "BusinessUnit": "יחידה עסקית"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",
@@ -797,8 +794,7 @@
     "DiscountCode": "Discount Code",
     "Members": "Members",
     "Contacts": "Contacts",
-    "SessionOverlaps": "אזהרת חפיפה של מושב",
-    "ExportToCSV": "ייצא ל- CSV"
+    "SessionOverlaps": "אזהרת חפיפה של מושב"
   },
   "FilterOptions": {
     "Is": "Is",
@@ -824,6 +820,7 @@
   },
   "Messages": {
     "Error": {
+      "EventNameEmpty": "Event name cannot be empty",
       "SizeRequired": "Size is required",
       "ThisFieldRequired": "זהו שדה חובה",
       "InvalidDate": "תאריך לא חוקי",
@@ -883,7 +880,11 @@
       "OverlappingTimeSlot": "משבצת זמן חופפת לחריצים אחרים",
       "EndTimeMustBeGreater": "זמן הסיום חייב להיות גדול יותר משעת ההתחלה",
       "PermissionDenied": "אין לך הרשאה לבצע פעולה זו",
-      "roleAlreadyExits": "תפקיד {roles} זה כבר קיים"
+      "roleAlreadyExits": "תפקיד {roles} זה כבר קיים",
+      "MinimumCharacter": "Minimum 3 characters please",
+      "MaximumCharacter": "Maximum 20 characters please",
+      "NameMustStartWithAlphabet": "Name must start with alphabet",
+      "OrganisationAlreadyExists": "Organization already exists"
     },
     "Warn": {
       "UniqueLinkFormat": "אותיות אלפאנומריות באותיות קטנות בלבד",
@@ -904,10 +905,8 @@
       "NoEventsFound": "לא נמצאו אירועים עם שם {searchKey}",
       "ConfirmResendRegistrationEmail": "האם אתה בטוח שברצונך לשלוח שוב הודעות אישור?",
       "DeleteSeatMap": "האם אתה רוצה למחוק את מפת המושב הזו?",
-      "DeleteSeatMapEvent": "האם אתה רוצה למחוק את מפת המושבים הזו? פריסה זו כבר משויכת לאירוע.",
-      "DeleteEventQuestion": "האם ברצונך למחוק שאלה זו?",
-      "RegistrationTypeDefault": "ניתן להגדיר ברירת מחדל רק סוג רישום אחד",
-      "RegistrationTypeWarning": "אזהרת סוג רישום"
+      "DeleteSeatMapEvent":"האם אתה רוצה למחוק את מפת המושבים הזו? פריסה זו כבר משויכת לאירוע.",
+      "DeleteEventQuestion":"האם ברצונך למחוק שאלה זו?"
     },
     "Success": {
       "CopiedClipboard": "הועתק ללוח",
@@ -950,15 +949,7 @@
       "UpdatedSuccessfully": "{modelName} עודכן בהצלחה",
       "CreatedSuccessfully": "{modelName} נוצר בהצלחה",
       "ListUpdatedSucess": "{modelName} פריט הרשימה עודכן בהצלחה.",
-      "ThanksHelp": "תודה שפנית אלינו! אנחנו נחזור אליך בקרוב!",
-      "QuestionRecordCreatedSuccess": "שאלה נוצרה בהצלחה",
-      "QuestionRecordUpdatedSuccess": "השאלה עודכנה בהצלחה",
-      "TicketRecordCreatedSuccess": "הכרטיס נוצר בהצלחה",
-      "TicketRecordUpdatedSuccess": "הכרטיס עודכן בהצלחה",
-      "RegistrationFormUpdatedSuccess": "טופס ההרשמה עודכן בהצלחה",
-      "SessionCreatedSuccess": "ההפעלה נוצרה בהצלחה",
-      "SessionUpdatedSuccess": "ההפעלה עודכנה בהצלחה",
-      "ContactImportSuccess":"אנשי הקשר יובאו בהצלחה"
+      "ThanksHelp": "תודה שפנית אלינו! אנחנו נחזור אליך בקרוב!"
     }
   },
   "$vuetify": {

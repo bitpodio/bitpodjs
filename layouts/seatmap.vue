@@ -103,6 +103,7 @@
         </v-row>
       </v-container>
     </v-main>
+    <Help />
   </v-app>
 </template>
 

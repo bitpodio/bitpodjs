@@ -9,8 +9,7 @@ export function rules(i18n) {
         v
       ) || i18n.t('Messages.Error.EmailRequired'),
     link: (v) =>
-      /^(?![0-9]*$){1,}[a-zA-Z0-9]+$/i.test(v) ||
-      i18n.t('Messages.Warn.UniqueLinkFormat'),
+      /^[a-z0-9]+$/i.test(v) || i18n.t('Messages.Warn.UniqueLinkFormat'),
     onlineEventLink: (v) => {
       return !v
         ? i18n.t('Messages.Error.FieldRequired')

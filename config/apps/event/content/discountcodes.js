@@ -12,7 +12,7 @@ export default {
     name: 'OfferCode',
   },
   views: {
-    'Discount-Codes': {
+    'Discount Codes': {
       ui: {
         hideDefaultHeader: false,
         hideDefaultFooter: false,
@@ -30,7 +30,7 @@ export default {
           caption: 'Common.CurrentUsageCount',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '200px',
+          columnWidth: '220px',
           type: 'number',
           inlineEdit: false,
           newForm: false,
@@ -80,7 +80,7 @@ export default {
             displayOrder: 4,
           },
           displayOrder: 4,
-          caption: 'Common.IsActiveField',
+          caption: 'Common.IsActive',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '120px',
@@ -96,10 +96,10 @@ export default {
             displayOrder: 3,
           },
           displayOrder: 3,
-          caption: 'Common.IsPercentCaption',
+          caption: 'Common.IsPercent',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '140px',
+          columnWidth: '130px',
           type: 'checkbox',
           cssClasses: 'col-6 col-md-6',
           inlineEdit: true,
@@ -132,7 +132,7 @@ export default {
           caption: 'Common.OfferValue',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '130px',
           type: 'number',
           cssClasses: 'col-6 col-md-6',
           inlineEdit: true,
@@ -154,7 +154,7 @@ export default {
           caption: 'Common.MinApplicableAmount',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '210px',
+          columnWidth: '220px',
           type: 'number',
           cssClasses: 'col-6 col-md-6',
           inlineEdit: true,
@@ -171,7 +171,7 @@ export default {
           caption: 'Common.MaxApplicableAmount',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '200px',
+          columnWidth: '180px',
           type: 'number',
           cssClasses: 'col-6 col-md-6',
           inlineEdit: true,
@@ -202,7 +202,7 @@ export default {
           caption: 'Common.CreatedDate',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '250px',
           type: 'date',
           cssClasses: 'col-12 col-md-12',
           inlineEdit: false,
@@ -275,7 +275,7 @@ export default {
           caption: 'Common.FirstNameCaption',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '220px',
           type: 'string',
         },
         LastName: {
@@ -283,7 +283,7 @@ export default {
           caption: 'Common.LastNameCaption',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '180px',
           type: 'string',
         },
         Email: {
@@ -308,7 +308,7 @@ export default {
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
-          type: 'date',
+          type: 'datetime',
         },
         Action: {
           displayOrder: 7,
@@ -324,22 +324,11 @@ export default {
         context: {
           basePath: '/discountcodes',
         },
-        actions: {
-          edit: {
-            hidden: true,
-          },
-          delete: {
-            hidden: true,
-          },
-          exportCsv: {
-            hidden: true,
-          },
-        },
       },
       dataSource: {
         type: 'rest',
-        getData: (ctx, isExporting = false) =>
-          getData(`OfferCodes/${ctx.$route.params.id}/getMember`, isExporting),
+        getData: (ctx) =>
+          getData(`OfferCodes/${ctx.$route.params.id}/getMember`),
       },
       hidden: true,
       title: 'discountMembers',

@@ -50,7 +50,7 @@
 
                   <v-list>
                     <v-list-item @click="onRuleDelete(index)">
-                      <v-icon class="pr-2">fa-trash</v-icon>
+                      <v-icon class="pr-2">mdi-delete</v-icon>
                       <v-list-item-title
                         ><i18n path="Drawer.Delete"
                       /></v-list-item-title>

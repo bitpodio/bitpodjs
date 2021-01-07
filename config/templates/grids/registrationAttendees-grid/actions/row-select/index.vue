@@ -61,8 +61,5 @@ export default {
       default: () => {},
     },
   },
-  mounted() {
-    this.$emit('has-custom-row-action', true)
-  },
 }
 </script>

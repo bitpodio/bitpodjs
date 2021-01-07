@@ -63,9 +63,6 @@ export default {
           delete: {
             hidden: true,
           },
-          exportCsv: {
-            hidden: true,
-          },
         },
       },
       dataSource: {
@@ -194,9 +191,6 @@ export default {
             hidden: true,
           },
           delete: {
-            hidden: true,
-          },
-          exportCsv: {
             hidden: true,
           },
         },
@@ -354,9 +348,6 @@ export default {
             hidden: true,
           },
           delete: {
-            hidden: true,
-          },
-          exportCsv: {
             hidden: true,
           },
         },

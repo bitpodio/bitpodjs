@@ -70,13 +70,6 @@ body {
 .fc-view-harness-active{
  height: 1160px !important;
 }
-.badgelogoimg{
-  max-height: 50px !important;
-  width: auto !important;
-}
-.QRcode{
-  max-width: 70px !important;
-}
 .uploadFile {
   position: absolute !important;
   z-index: 1;
@@ -472,6 +465,9 @@ body {
 .vs-hidden {
   visibility: hidden;
 }
+.orgSuffix input {
+  text-align: right !important;
+}
 .recurring-event .vs-hidden {
   display: none;
 }
@@ -566,11 +562,8 @@ body {
   content: '';
 }
 .custom-nav-drawer {
-  visibility: visible !important;
+  visibility: visible;
   transform: translateX(0%) !important;
-}
-.custom-nav-drawer .v-menu {
-    display: block;
 }
 .custom-nav-main {
   padding-left: 240px !important;
@@ -812,26 +805,5 @@ table > tbody > tr:last-child .key-align {
   }
   .help-box {
     max-width: calc(100% - 25px);
-  }
-  .mxw-150, .mxw-100 {
-    max-width: 100%;
-    width: 100%;
-  }
-  .v-data-footer {
-    justify-content: flex-start !important;
-  }
-  .v-application--is-ltr .v-data-footer__pagination {
-      margin: 0 !important;
-  }
-  .slide-form .v-card__title,
-  .slide-form-default .v-card__title {
-    word-break: break-word !important;
-  }
-  .seatmap .v-data-footer {
-    width: 100% !important;
-    max-width: 100% !important;
-  }
-  td.v-data-table__mobile-row .ps-top6 {
-    right: -10px;
   }
 }

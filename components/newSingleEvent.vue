@@ -114,12 +114,11 @@
                   <v-text-field
                     v-model="eventData.UniqLink"
                     :label="$t('Common.EventL')"
-                    :rules="[rules.required, rules.link]"
                     outlined
                     dense
                     required
                     :error-messages="uniqueLinkValidationMsg"
-                    @input="checkUniqueLink"
+                    @keyup="changeUniqueLink($event)"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -327,10 +326,10 @@
                         <th class="text-left pl-2 pl-md-0 e-td">
                           <i18n path="Common.Title" />
                         </th>
-                        <th class="text-left pl-2 e-td mxw-150">
+                        <th class="text-left pl-2 e-td">
                           <i18n path="Common.Type" />
                         </th>
-                        <th class="text-left pl-2 e-td mxw-150">
+                        <th class="text-left pl-2 e-td">
                           {{
                             $t('Common.Price', { currency: eventData.Currency })
                           }}
@@ -341,7 +340,7 @@
                         <th class="text-left pl-2 e-td">
                           <i18n path="Common.EndD" />
                         </th>
-                        <th class="text-left pl-2 e-td mxw-100">
+                        <th class="text-left pl-2 e-td">
                           <i18n path="Common.Quantity" />
                         </th>
                         <th class="text-left e-td"></th>
@@ -380,10 +379,7 @@
                             :disabled="isPriceDisabled(k)"
                           ></v-text-field>
                         </td>
-                        <td
-                          class="pa-2 pb-0 e-td"
-                          :data-title="$t('Common.StartD')"
-                        >
+                        <td class="pa-2 pb-0 e-td" data-title="">
                           <CustomDate
                             v-model="ticket.StartDate"
                             :label="$t('Common.StartD')"
@@ -393,10 +389,7 @@
                             type="datetime"
                           />
                         </td>
-                        <td
-                          class="pa-2 pb-0 e-td"
-                          :data-title="$t('Common.EndD')"
-                        >
+                        <td class="pa-2 pb-0 e-td" data-title="">
                           <CustomDate
                             v-model="ticket.EndDate"
                             :label="$t('Common.EndD')"
@@ -522,16 +515,14 @@
           v-if="currentTab < 3"
           depressed
           color="primary"
-          :disabled="!isUniqLinkValid || isInvalidEventLink || !valid"
+          :disabled="isNextDisabled()"
           @click="next()"
           ><i18n path="Drawer.Next"
         /></v-btn>
         <SaveBtn
           v-if="currentTab > 2 && !isEventCreate && !isEventPublish"
           color="primary"
-          :disabled="
-            isSaveButtonDisabled || !valid || !datevalid || isInvalidEventLink
-          "
+          :disabled="isSaveButtonDisabled || !valid || !datevalid"
           depressed
           :action="saveRecord"
           class="ml-2"
@@ -797,28 +788,6 @@ export default {
   },
 
   methods: {
-    async checkUniqueLink() {
-      const where = { UniqLink: this.eventData.UniqLink }
-      const result = await this.$apollo.query({
-        query: gql`
-          ${eventCount}
-        `,
-        variables: {
-          where,
-        },
-        fetchPolicy: 'no-cache',
-      })
-      if (result.data.Event.EventCount > 0) {
-        this.isInvalidEventLink = true
-        this.uniqueLinkValidationMsg = this.$t(
-          'Messages.Error.UniqueLinkDuplicate'
-        )
-      } else {
-        this.isInvalidEventLink = false
-        this.isUniqLinkValid = true
-        this.uniqueLinkValidationMsg = ''
-      }
-    },
     ticketCountRules() {
       return [
         (v) => {
@@ -1190,11 +1159,6 @@ export default {
             )
           })
         if (res) {
-          console.debug(
-            `POST call is made to event model with response as:-${JSON.stringify(
-              res
-            )}`
-          )
           this.eventId = res.id
           const ticketList = []
 
@@ -1214,11 +1178,6 @@ export default {
               )
             })
           if (ticketRes) {
-            console.debug(
-              `POST call is made to ticket model with response as:-${JSON.stringify(
-                ticketRes
-              )}`
-            )
             this.isTicket = false
             this.isEventCreate = true
             return ticketRes
@@ -1280,7 +1239,7 @@ export default {
         (VenueName !== '' || City !== '' || State !== '' || Country !== '')
       ) {
         const addressObj = `${AddressLine},${VenueName},${City},${State},${Country},${PostalCode}`
-        const key = nuxtconfig.generalConfig.googleGeocodeMapKey
+        const key = nuxtconfig.generalConfig.googleMapKey
         const customAxiosInstance = this.$axios.create({
           headers: {},
         })
@@ -1347,21 +1306,43 @@ export default {
     changeEventName(event) {
       this.verifyUniqueLink(event.currentTarget.value)
     },
+    changeUniqueLink(event) {
+      this.verifyUniqueLink(event.currentTarget.value)
+    },
     verifyUniqueLink(value) {
       value = value.toLowerCase().replace(/\s/g, '')
       value = value.trim()
-      const regex = RegExp(/^(?![0-9]*$){1,}[a-zA-Z0-9]+$/)
+      const regex = RegExp(/^(?![0-9]*$)[a-zA-Z0-9]+$/)
       if (regex.test(value)) {
         if (isNaN(value)) {
           this.eventData.UniqLink = value
           this.checkUniqueLink(this.eventData.UniqLink)
         }
       } else {
-        this.isUniqLinkValid = false
         this.isInvalidEventLink = true
         this.uniqueLinkMessage = this.$t('Messages.Warn.UniqueLinkFormat')
       }
       this.eventData.UniqLink = value
+    },
+    async checkUniqueLink(value) {
+      const where = { UniqLink: value }
+      const result = await this.$apollo.query({
+        query: gql`
+          ${eventCount}
+        `,
+        variables: {
+          where,
+        },
+        fetchPolicy: 'no-cache',
+      })
+      if (result.data.Event.EventCount > 0) {
+        this.isUniqLinkValid = false
+        this.isInvalidEventLink = true
+        this.uniqueLinkMessage = this.$t('Messages.Error.UniqueLinkDuplicate')
+      } else {
+        this.isUniqLinkValid = true
+        this.isInvalidEventLink = false
+      }
     },
     changeLocation(value) {
       this.addresslineMessage = ''
@@ -1469,13 +1450,5 @@ export default {
 .form-control:focus {
   border: 2px solid #1a73e8 !important;
   outline: #1a73e8;
-}
-.mxw-150 {
-  max-width: 150px;
-  width: 150px;
-}
-.mxw-100 {
-  max-width: 100px;
-  width: 100px;
 }
 </style>

@@ -101,11 +101,6 @@
         </v-card>
       </template>
     </v-dialog>
-    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true" width="2px">
-      <div class="fs-16 text-center">
-        {{ snackbarText }}
-      </div>
-    </v-snackbar>
   </v-col>
 </template>
 <script>
@@ -138,9 +133,6 @@ export default {
       resetList: [],
       fileList: [],
       selectedFile: {},
-      snackbarText: '',
-      timeout: 3000,
-      snackbar: false,
     }
   },
   methods: {
@@ -180,8 +172,6 @@ export default {
             await this.$axios.post(`${url}ImportJobs`, importObj)
             this.$parent.$parent.refresh()
           }
-          this.snackbarText = this.$t('Messages.Success.ContactImportSuccess')
-          this.snackbar = true
         }
       } catch (e) {
         console.log('Error', e)

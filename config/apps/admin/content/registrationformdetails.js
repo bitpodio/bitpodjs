@@ -148,10 +148,10 @@ export default {
           new: {
             hidden: true,
           },
-          delete: {
-            hidden: true,
+          edit: {
+            hidden: false,
           },
-          exportCsv: {
+          delete: {
             hidden: true,
           },
         },

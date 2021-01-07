@@ -237,8 +237,6 @@ export default {
       if (this.template === 'General Template') {
         this.selectedList = this.$parent.$parent.$data.selectedItems
       }
-      this.$apollo.queries.MarketingTemplate.refresh()
-      this.$apollo.queries.editTemplate.refresh()
     },
     resetForm() {
       this.dialog = false

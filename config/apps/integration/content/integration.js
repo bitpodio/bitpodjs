@@ -56,9 +56,6 @@ export default {
           new: {
             hidden: true,
           },
-          exportCsv: {
-            hidden: true,
-          },
           edit: {
             hidden: true,
           },

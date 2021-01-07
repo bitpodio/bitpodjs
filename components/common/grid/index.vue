@@ -1,18 +1,5 @@
 <template>
   <div>
-    <ExportLoader
-      :is-loading="exportInProgress"
-      :title="$t('Drawer.ExportToCSV')"
-      :message="$t('Common.ExportInProgress')"
-      :stop-loading="
-        () => {
-          this.$store.commit('setExportInProgress', {
-            value: false,
-            key: '',
-          })
-        }
-      "
-    />
     <template v-if="!!error">
       <div>
         <component :is="errorTemplate || null" :error="error" />
@@ -39,7 +26,18 @@
             'elevation-1 boxview rounded': onlySticky && winWidth < 600,
           }"
         >
-          <div v-if="showTripleDot" class="grid-actions-menu">
+          <div
+            v-if="
+            (hasGridOption ||
+            hasRowOption ||
+            (viewName &&
+            content.view &&
+            content.view[viewName] &&
+            content.view[viewName].template &&
+            content.view[viewName].template.actions &&
+            Object.values(content.view[viewName].template.actions).reduce((acc,i)=>{return acc || !i.hidden},false)) )"
+            class="grid-actions-menu"
+          >
             <v-menu right :offset-y="offset" transition="slide-y-transition">
               <template v-slot:activator="{ on, attrs }">
                 <v-btn icon small v-bind="attrs" v-on="on">
@@ -52,11 +50,9 @@
                   :content="content"
                   :view-name="viewName"
                   :on-new-item-save="onNewItemSave"
-                  :on-csv-export="onCsvExport"
-                  :can-export="!!tableData.items.length"
                   :refresh="refresh"
                   :context="context"
-                  @has-custom-grid-action="getGridOption"
+                  @hasGridOption="getGridOption"
                 />
                 <component
                   :is="actionTemplates['row-select'] || null"
@@ -69,7 +65,7 @@
                   :refresh="refresh"
                   :context="context"
                   :get-action-items="getActionItems"
-                  @has-custom-row-action="getRowOption"
+                  @hasRowOption="getRowOption"
                 />
               </v-list>
             </v-menu>
@@ -88,19 +84,17 @@
                 :context="context"
                 :get-action-items="getActionItems"
                 class="d-inline-flex"
-                @has-custom-row-action="getRowOption"
+                @hasRowOption="getRowOption"
               />
               <component
                 :is="actionTemplates['grid'] || null"
                 :content="content"
                 :view-name="viewName"
                 :on-new-item-save="onNewItemSave"
-                :on-csv-export="onCsvExport"
-                :can-export="!!tableData.items.length"
                 :refresh="refresh"
                 :context="context"
                 class="d-inline-flex"
-                @has-custom-grid-action="getGridOption"
+                @hasGridOption="getGridOption"
               />
             </div>
           </div>
@@ -135,7 +129,7 @@
       <v-skeleton-loader
         :loading="loading"
         :type="
-          viewName === 'live-and-draft-event' ||
+          viewName === 'live and draft event' ||
           viewName === 'template' ||
           viewName === 'seatmaps' ||
           viewName === 'integration'
@@ -253,7 +247,7 @@
         </v-data-table>
       </v-skeleton-loader>
       <div
-        v-if="viewName === 'live-and-draft-event' && loading === true"
+        v-if="viewName === 'live and draft event' && loading === true"
         class="d-flex flex-sm-wrap flex-column flex-sm-row"
       >
         <v-skeleton-loader
@@ -284,7 +278,7 @@
       </div>
       <div
         v-if="viewName === 'seatmaps'"
-        class="d-flex flex-wrap flex-row seat-skeleton-inner mt-10 pl-3"
+        class="d-flex flex-sm-wrap flex-column flex-sm-row seat-skeleton-inner mt-10 pl-3"
       >
         <v-skeleton-loader
           v-for="i in 10"
@@ -293,14 +287,14 @@
           type="card"
           width="155"
           height="125"
-          class="pl-0 pt-0 eventtiles ma-3 ma-md-10 ml-0 mt-0 ml-md-0 mt-md-0"
+          class="pl-0 pt-0 eventtiles ma-10 ml-0 mt-0"
         >
           <div></div>
         </v-skeleton-loader>
       </div>
       <div
         v-if="viewName === 'integration'"
-        class="d-flex flex-wrap flex-row seat-skeleton-inner mt-16 pl-5"
+        class="d-flex flex-sm-wrap flex-column flex-sm-row seat-skeleton-inner mt-16 pl-5"
       >
         <v-skeleton-loader
           v-for="i in 10"
@@ -309,7 +303,7 @@
           type="card"
           width="155"
           height="125"
-          class="pl-0 pt-0 eventtiles ma-3 ma-md-10 ml-0 mt-0 ml-md-0 mt-md-0"
+          class="pl-0 pt-0 eventtiles ma-10 ml-0 mt-0"
         >
           <div></div>
         </v-skeleton-loader>
@@ -327,8 +321,6 @@ import {
   getOrderQuery,
   buildQueryVariables,
 } from '~/utility'
-import { formatGQLResult } from '~/utility/gql.js'
-import ExportLoader from '~/components/Loader.vue'
 
 const DEFAULT_GRID_PROPS = {
   hideDefaultHeader: false,
@@ -355,7 +347,6 @@ function getTableHeader(content, viewName) {
       template,
       hidden = false,
       type,
-      customExport = false,
     } = fields[fieldName]
     if (!hidden) {
       headers.push({
@@ -366,8 +357,6 @@ function getTableHeader(content, viewName) {
         width: columnWidth,
         displayOrder,
         template,
-        customExport,
-        class: type === 'number' ? 'text-right' : '',
       })
     }
   }
@@ -456,66 +445,9 @@ function buildMutationUpsertQuery(modelName) {
   return `mutation($Inputs : ${modelName}UpsertWithWhereInput!){ ${modelName}{ ${modelName}UpsertWithWhere(input:$Inputs){ clientMutationId obj{ id } } } }`
 }
 
-function downloadBlob(blob, filename) {
-  const url = URL.createObjectURL(blob)
-  const a = document.createElement('a')
-  a.href = url
-  a.download = filename || 'download'
-  const clickHandler = () => {
-    setTimeout(() => {
-      URL.revokeObjectURL(url)
-    }, 150)
-  }
-  a.addEventListener('click', clickHandler, { once: true })
-  a.click()
-}
-
-function prepareCSV(finalResult, modelName, headerList) {
-  const replacer = (key, value) => {
-    if (value === null) return ''
-    else {
-      let formattedVal = value
-      if (typeof value === 'object') {
-        formattedVal = JSON.stringify(value, (k, v) => (v === null ? '' : v))
-        formattedVal = formattedVal.replace(/"/g, "'")
-        return formattedVal
-      } else if (typeof value === 'string') {
-        formattedVal = formattedVal.replace(/"/g, "'")
-        return formattedVal
-      }
-      return value
-    }
-  }
-  if (finalResult[0]) {
-    const header = headerList.map(({ text }) => text)
-    const csvContent = [
-      header.join(','),
-      ...finalResult.map((row) =>
-        headerList
-          .map(({ value: fieldName, customExport }) => {
-            if (customExport) {
-              return JSON.stringify(customExport(row[fieldName]), replacer)
-            } else if (fieldName.includes('.')) {
-              return JSON.stringify(
-                fieldName.split('.').reduce((o, i) => o?.[i], row),
-                replacer
-              )
-            } else {
-              return JSON.stringify(row[fieldName], replacer)
-            }
-          })
-          .join(',')
-      ),
-    ].join('\r\n')
-    const blob = new Blob([csvContent], { type: 'text/csv' })
-    downloadBlob(blob, `${modelName} - ${new Date().toLocaleDateString()}.csv`)
-  }
-}
-
 export default {
   components: {
     FieldsFilter,
-    ExportLoader,
   },
   mixins: [templateLoaderMixin],
   props: {
@@ -639,39 +571,6 @@ export default {
     isHideDefaultFooter() {
       const isLessItems = this.tableData.total > this.options.itemsPerPage
       return !isLessItems || this.hideDefaultFooter
-    },
-    showTripleDot() {
-      const templateActions = this.content.views?.[this.viewName]?.template
-        ?.actions
-      if (this.hasGridOption) {
-        return true
-      } else if (
-        this.hasRowOption &&
-        templateActions?.new?.hidden &&
-        templateActions?.exportCsv?.hidden
-      ) {
-        return this.selectedItems.length > 0
-      } else if (templateActions) {
-        const hasNew = !templateActions.new?.hidden
-        const hasExport = !templateActions.exportCsv?.hidden
-        const hasEdit = !templateActions.edit?.hidden
-        const hasDelete = !templateActions.delete?.hidden
-        if (hasNew || hasExport) {
-          return true
-        } else if (hasEdit || hasDelete) {
-          return this.selectedItems.length > 0 && (hasEdit || hasDelete)
-        } else {
-          return false
-        }
-      } else {
-        return true
-      }
-    },
-    exportInProgress() {
-      return (
-        this.$store.state.exportInProgress.value &&
-        this.viewName === this.$store.state.exportInProgress.key
-      )
     },
   },
   watch: {
@@ -835,11 +734,11 @@ export default {
         this.refresh()
       }
     },
-    getRowOption(bool) {
-      this.hasRowOption = bool
+    getRowOption() {
+      this.hasRowOption = true
     },
-    getGridOption(bool) {
-      this.hasGridOption = bool
+    getGridOption() {
+      this.hasGridOption = true
     },
     updatePagination(pagination) {
       // call rest
@@ -893,106 +792,6 @@ export default {
         })
         this.snackbar = true
         return userCreated
-      }
-    },
-    async onCsvExport(data) {
-      const dataSource = getViewDataSource(this.content, this.viewName)
-      const dataSourceType = dataSource.type || 'graphql'
-      const modelName =
-        getModelName(this.content, this.viewName) || this.content.general.name
-      const headerList = this.translate(this.headers)
-      if (dataSourceType === 'rest') {
-        const { search, filters } = this
-        const options = {
-          ...this.options,
-          search,
-          filters,
-        }
-        const getDataFunc = dataSource.getData.call(this, this, true)
-        try {
-          this.$store.commit('setExportInProgress', {
-            value: true,
-            key: this.viewName,
-          })
-          const finalResult = await getDataFunc.call(this, options)
-          if (this.exportInProgress) {
-            prepareCSV(finalResult, this.viewName, headerList)
-          }
-          this.$store.commit('setExportInProgress', {
-            value: false,
-            key: '',
-          })
-        } catch (e) {
-          console.error(`Error while exporting to CSV via rest`, e)
-        }
-      } else {
-        const { content, viewName, search, filters } = this
-        const sortBy = this.options.sortBy
-        const sortDesc = this.options.sortDesc
-        const order = getOrderQuery(content, viewName, sortBy, sortDesc)
-        const where = buildQueryVariables({
-          viewName,
-          search,
-          filters,
-          filter: this.filter,
-          content,
-          ctx: this,
-        })
-        const itemsPerPage = this.options.itemsPerPage === -1 ? -1 : 50
-        let skip = 0
-        const limit = itemsPerPage === -1 ? 0 : itemsPerPage
-        let finalResult = []
-        let shouldDownload = false
-        if (itemsPerPage !== -1) {
-          this.$store.commit('setExportInProgress', {
-            value: true,
-            key: this.viewName,
-          })
-          while (this.exportInProgress) {
-            try {
-              const result = await this.$apollo.query({
-                query: gql`
-                  ${getViewQuery(this.content, this.viewName)}
-                `,
-                variables: {
-                  filters: { limit, skip, order, where },
-                  where: {},
-                },
-              })
-              if (result) {
-                const formattedResult = formatGQLResult(result.data, modelName)
-                if (formattedResult.length) {
-                  finalResult = finalResult.concat(formattedResult)
-                  skip += 50
-                } else {
-                  shouldDownload = true
-                  this.$store.commit('setExportInProgress', {
-                    value: false,
-                    key: '',
-                  })
-                }
-              } else {
-                this.$store.commit('setExportInProgress', {
-                  value: false,
-                  key: '',
-                })
-              }
-            } catch (e) {
-              console.error(`Error while exporting to CSV via graphql`, e)
-              this.$store.commit('setExportInProgress', {
-                value: false,
-                key: '',
-              })
-            }
-          }
-          if (shouldDownload) {
-            prepareCSV(finalResult, this.viewName, headerList)
-          }
-          this.$store.commit('setExportInProgress', {
-            value: false,
-            key: '',
-          })
-        }
       }
     },
     async onUpdateItem(data) {
@@ -1085,6 +884,9 @@ export default {
     async loadRestData() {
       const dataSource = getViewDataSource(this.content, this.viewName)
       const dataSourceType = dataSource.type || 'graphql'
+      console.debug('Data Source Type is: ', dataSourceType)
+      console.debug('this.content is: ', this.content)
+      console.debug('this.viewname is: ', this.viewname)
       if (dataSourceType === 'rest') {
         const { search, filters } = this
         const options = {
@@ -1095,15 +897,18 @@ export default {
 
         const getDataFunc = dataSource.getData.call(this, this)
         try {
+          console.debug('In try block')
           this.tableData = await getDataFunc.call(this, options)
           this.loading = false
         } catch (e) {
+          console.debug('In catch block')
           console.error(
             `Errors in components/common/grid/index.vue while calling method loadRestData`,
             e
           )
           this.loading = false
         }
+        console.debug('Done with try-catch block.')
       }
     },
     translate(headers) {

@@ -265,7 +265,7 @@ export default {
       {
         icon: 'fa fa-calendar',
         text: 'Events',
-        to: '/apps/event/list/Event/live-and-draft-event',
+        to: '/apps/event/list/Event/live and draft event',
       },
       {
         icon: 'fa fa-user-plus',
@@ -276,7 +276,7 @@ export default {
       {
         icon: 'fa fa-building',
         text: 'Discount Code',
-        to: '/apps/event/list/DiscountCodes/Discount-Codes',
+        to: '/apps/event/list/DiscountCodes/Discount Codes',
       },
       { heading: 'Members' },
       {

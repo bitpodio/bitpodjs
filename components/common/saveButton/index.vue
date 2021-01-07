@@ -4,6 +4,7 @@
       :disabled="disabled || keyPressed"
       :outlined="outlined"
       :small="small"
+      :x-large="xLarge"
       :dense="dense"
       :color="color"
       depressed
@@ -31,6 +32,11 @@ export default {
       required: false,
     },
     outlined: {
+      default: false,
+      type: Boolean,
+      required: false,
+    },
+    xLarge: {
       default: false,
       type: Boolean,
       required: false,

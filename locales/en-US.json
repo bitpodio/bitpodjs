@@ -12,8 +12,6 @@
     "Help": "Help",
     "HomePage": "Home page",
     "SignIn": "Sign in",
-    "Live": "Live",
-    "Watching": "Watching Now",
     "EditEventInformation": "Edit Event Information",
     "Description": "Description",
     "EditEventSettings": "Edit Event Settings",
@@ -313,7 +311,7 @@
     "OnlyAskWhen": "Only ask when one of these tickets are purchased",
     "ItemDeletedSuccessfully": "Item deleted successfully.",
     "EditItem": "Edit",
-    "EditSurveyQuestion": "Edit Registration Question",
+    "EditSurveyQuestion": "Edit Survey Question",
     "ConfirmationEmailSent": "Confirmation Email Sent",
     "ResendRegistrationEmail": "Resend Registration Email",
     "JoinSession": "Join Session",
@@ -412,7 +410,7 @@
     "Draft": "Draft",
     "Join": "Join",
     "BannerImage": "Banner Image",
-    "StartSettingUpYourEvent": "There aren't any upcoming live events, to start setting up your event use Create Event link",
+    "StartSettingUpYourEvent": "There aren't any live events, to start setting up your event use Create Event link",
     "NoRecentBuyer": "No Recent Buyer",
     "AllEvents": "All Events",
     "FirstName": "First Name *",
@@ -725,9 +723,18 @@
     "DeleteNote": "Delete Note",
     "PastEventMessage": "This event is no longer active.",
     "GoToOldSite": "Go to the old site",
+    "SetupDomain": "You could be a business, an event organizer, or a professional community. Choose the banner under which you will host your events.",
+    "WelcomeToBitpod": "Welcome to Bitpod",
+    "NameYourOrganization": "Name your organization",
+    "SuffixRoute": "-event.bitpod.io",
+    "CreateOrganisation": "Create organisation",
+    "OrganizationName": "Organization Name*",
+    "CreateEventMessage": "Create your first Event! This is your playground. Feel free to invite friends and learn exciting ways to engage your audience on Bitpod-Event.",
+    "EventDateTime": "Event dateand time*",
+    "YourTitleHere": "Your title will be displayed here",
     "SelectField": "Select a field",
-    "DeleteImage": "Delete Image",
-    "QuestionDeletedSuccessfully": "Question deleted successfully",
+    "DeleteImage":"Delete Image",
+    "QuestionDeletedSuccessfully":"Question deleted successfully",
     "SessionCaption": "Session",
     "RegistrationForms": "Registration Forms",
     "Badges": "Badges",
@@ -741,17 +748,7 @@
     "Reasons": "Reasons",
     "BadgeCategories": "Badge Categories",
     "ContactType": "Contact Type",
-    "BusinessUnit": "Business Unit",
-    "ManageWebhook": "Manage Webhook",
-    "Test": "Test",
-    "SelectEvents": "Select Events",
-    "ViewMap": "View Map",
-    "URLRecommended": "URL(Recommended to use https://) *",
-    "EventNameHeader": "Event Name",
-    "RegistrationIdHeader": "Registration Id",
-    "TotalAmountHeader": "Total Amount",
-    "PaymentMethodHeader": "Payment Method",
-    "ExportInProgress": "Export in progress..."
+    "BusinessUnit": "Business Unit"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",
@@ -760,7 +757,7 @@
     "CreateUser": "Create User",
     "EditBadge": "Edit Badge",
     "DeleteEvent": "Delete Event",
-    "DeleteEventQuestion": "Delete Question",
+    "DeleteEventQuestion":"Delete Question",
     "DeleteUser": "Delete User",
     "Save": "Save",
     "Prev": "Prev",
@@ -796,8 +793,7 @@
     "DiscountCode": "Discount Code",
     "Members": "Members",
     "Contacts": "Contacts",
-    "SessionOverlaps": "Session Overlap Warning",
-    "ExportToCSV": "Export to CSV"
+    "SessionOverlaps": "Session Overlap Warning"
   },
   "FilterOptions": {
     "Is": "Is",
@@ -823,6 +819,7 @@
   },
   "Messages": {
     "Error": {
+      "EventNameEmpty": "Event name cannot be empty",
       "SizeRequired": "Size is required",
       "ThisFieldRequired": "This field is required",
       "InvalidDate": "Invalid date",
@@ -883,7 +880,11 @@
       "OverlappingTimeSlot": "Time-slot overlapping with other slots",
       "EndTimeMustBeGreater": "End time must be greater then start time",
       "PermissionDenied": "You do not have permission to perform this operation",
-      "roleAlreadyExits": "This {roles} role already exists"
+      "roleAlreadyExits": "This {roles} role already exists",
+      "MinimumCharacter": "Minimum 3 characters please",
+      "MaximumCharacter": "Maximum 20 characters please",
+      "NameMustStartWithAlphabet": "Name must start with alphabet",
+      "OrganisationAlreadyExists": "Organization already exists"
     },
     "Warn": {
       "UniqueLinkFormat": "Lower case alphanumeric letters only",
@@ -898,7 +899,7 @@
       "DeleteBadge": "Do you want to delete this badge?",
       "DeleteAccessKey": "Do you want to delete this access key?",
       "DeleteEvent": "Do you want to delete this event?",
-      "DeleteEventQuestion": "Do you want to delete this question?",
+      "DeleteEventQuestion":"Do you want to delete this question?",
       "ReplaceBadge": "New badge will replace your existing badge",
       "DeleteImage": "Do you want to delete this image?",
       "DeleteUser": "Do you want to delete this user?",
@@ -906,9 +907,7 @@
       "NoEventsFound": "No events found with name {searchKey}",
       "ConfirmResendRegistrationEmail": "Are you sure you want to resend confirmation emails?",
       "DeleteSeatMap": "Do you want to delete this seatmap?",
-      "DeleteSeatMapEvent": "Do you want to delete this seat map? This layout already associated with Event.",
-      "RegistrationTypeDefault": "Only one registration type can be set to default",
-      "RegistrationTypeWarning": "Registration Type Warning"
+      "DeleteSeatMapEvent":"Do you want to delete this seat map? This layout already associated with Event."
     },
     "Success": {
       "CopiedClipboard": "Copied to clipboard",
@@ -951,15 +950,7 @@
       "UpdatedSuccessfully": "{modelName} Updated Successfully",
       "CreatedSuccessfully": "{modelName} Created Successfully",
       "ListUpdatedSucess": "{modelName} list item updated successfully.",
-      "ThanksHelp": "Thanks for contacting us! We will get back to you soon!",
-      "QuestionRecordCreatedSuccess": "Question created successfully",
-      "QuestionRecordUpdatedSuccess": "Question updated successfully",
-      "TicketRecordCreatedSuccess": "Ticket created successfully",
-      "TicketRecordUpdatedSuccess": "Ticket updated successfully",
-      "RegistrationFormUpdatedSuccess": "Registration Form updated successfully",
-      "SessionCreatedSuccess": "Session created successfully",
-      "SessionUpdatedSuccess": "Session updated successfully",
-      "ContactImportSuccess":"Contacts imported successfully"
+      "ThanksHelp": "Thanks for contacting us! We will get back to you soon!"
     }
   },
   "$vuetify": {

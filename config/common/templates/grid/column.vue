@@ -36,6 +36,5 @@ export default {
 <style scoped>
 .type-number {
   text-align: right;
-  padding-right: 50px;
 }
 </style>

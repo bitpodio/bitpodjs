@@ -11,18 +11,6 @@
         :context="context"
       />
     </v-list-item>
-    <v-list-item v-if="isHiddenAction('exportCsv') && canExport">
-      <component
-        :is="exportCSV || null"
-        v-if="isHiddenAction('export-csv')"
-        :content="content"
-        :view-name="viewName"
-        :on-csv-export="onCsvExport"
-        :can-export="canExport"
-        :refresh="refresh"
-        :context="context"
-      />
-    </v-list-item>
   </div>
 </template>
 <script>
@@ -44,14 +32,6 @@ export default {
       type: Function,
       default: () => {},
     },
-    onCsvExport: {
-      type: Function,
-      default: () => {},
-    },
-    canExport: {
-      type: Boolean,
-      default: false,
-    },
     refresh: {
       type: null,
       default: null,
@@ -64,7 +44,6 @@ export default {
   data() {
     return {
       newItem: null,
-      exportCSV: null,
     }
   },
   computed: {
@@ -74,12 +53,6 @@ export default {
           locations: [
             `templates/grids/${this.templateFolderName}/actions/grid/new-item.vue`,
             `common/templates/grid/actions/grid/new-item.vue`,
-          ],
-        },
-        exportCSV: {
-          locations: [
-            `templates/grids/${this.templateFolderName}/actions/grid/export-csv.vue`,
-            `common/templates/grid/actions/grid/export-csv.vue`,
           ],
         },
       }

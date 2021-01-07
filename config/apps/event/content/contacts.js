@@ -74,7 +74,7 @@ export default {
           caption: 'Common.TypeCaption',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '180px',
           type: 'lookup',
           newForm: true,
           editForm: true,
@@ -99,7 +99,7 @@ export default {
           caption: 'Common.JobTitle',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '170px',
+          columnWidth: '180px',
           type: 'string',
           newForm: true,
           editForm: true,
@@ -139,7 +139,7 @@ export default {
           caption: 'Common.Phone',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '180px',
           type: 'string',
           newForm: true,
           editForm: true,
@@ -185,7 +185,7 @@ export default {
           caption: 'Common.Phone',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '180px',
           type: 'string',
           hidden: true,
           newForm: false,
@@ -218,7 +218,7 @@ export default {
           caption: 'Common.Organization',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '160px',
+          columnWidth: '180px',
           type: 'string',
           hidden: false,
           newForm: false,
@@ -449,9 +449,6 @@ export default {
           delete: {
             hidden: true,
           },
-          exportCsv: {
-            hidden: true,
-          },
         },
       },
       dataSource: {
@@ -539,20 +536,9 @@ export default {
         },
       },
       template: {
-        name: 'contactRegistration-grid',
+        name: 'link-grid',
         context: {
           basePath: '/registration',
-        },
-        actions: {
-          new: {
-            hidden: true,
-          },
-          edit: {
-            hidden: true,
-          },
-          delete: {
-            hidden: true,
-          },
         },
       },
       dataSource: {
@@ -595,7 +581,7 @@ export default {
           caption: 'Common.Registered',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '125px',
           type: 'string',
         },
         'event.Title': {
@@ -611,7 +597,7 @@ export default {
           caption: 'Common.CampaignName',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '180px',
+          columnWidth: '150px',
           type: 'string',
         },
         Sent: {
@@ -619,7 +605,7 @@ export default {
           caption: 'Common.SentBounce',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '160px',
+          columnWidth: '135px',
           type: 'string',
         },
         Click: {
@@ -677,9 +663,6 @@ export default {
             hidden: true,
           },
           delete: {
-            hidden: true,
-          },
-          exportCsv: {
             hidden: true,
           },
         },
@@ -741,7 +724,7 @@ export default {
           caption: 'Common.CreatedDate',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '160px',
+          columnWidth: '150px',
           type: 'date',
         },
         DueDate: {
@@ -757,7 +740,7 @@ export default {
           caption: 'Common.TemplateNameCaption',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '170px',
+          columnWidth: '100px',
           type: 'string',
         },
       },
@@ -774,9 +757,6 @@ export default {
             hidden: true,
           },
           delete: {
-            hidden: true,
-          },
-          exportCsv: {
             hidden: true,
           },
         },
@@ -865,9 +845,6 @@ export default {
             hidden: true,
           },
           delete: {
-            hidden: true,
-          },
-          exportCsv: {
             hidden: true,
           },
         },

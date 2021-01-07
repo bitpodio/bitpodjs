@@ -22,7 +22,7 @@ export default {
     refresh,
   },
   mounted() {
-    this.$emit('has-custom-grid-action', true)
+    this.$emit('hasGridOption', true)
   },
 }
 </script>

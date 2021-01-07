@@ -423,17 +423,10 @@
               </v-row>
               <v-row v-if="dialog">
                 <v-col cols="12" class="mt-3">
-                  <v-select
+                  <Lookup
                     v-model="session.SessionTicket"
-                    :items="[...ticketOptions]"
-                    :label="$t('Common.SelectTickets')"
-                    item-text="Code"
-                    item-value="id"
-                    multiple
-                    required
-                    outlined
-                    dense
-                  ></v-select>
+                    :field="ticketProps()"
+                  />
                 </v-col>
               </v-row>
               <div class="col-md-12 pl-0">
@@ -646,6 +639,7 @@ export default {
       sessionResult: [],
       session,
       venueAddress,
+
       selectedDays: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'],
       phoneRules: [
         (v) => {
@@ -987,6 +981,20 @@ export default {
       this.customDuration = '15'
       this.isGroup = false
       this.isCustomMin = false
+    },
+    ticketProps() {
+      const items = this.ticketOptions
+      return {
+        type: 'lookup',
+        multiple: true,
+        caption: 'Select tickets for this session',
+        items,
+        dataSource: {
+          items,
+          itemText: 'Code',
+          itemValue: 'id',
+        },
+      }
     },
     setSelectedDays(selectedDays) {
       selectedDays.map((x) => {

@@ -263,7 +263,7 @@ export default {
           caption: 'Common.Default',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '120px',
+          columnWidth: '180px',
           type: 'string',
           newForm: false,
           editForm: false,
@@ -273,7 +273,7 @@ export default {
           caption: 'Drawer.Action',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '120px',
+          columnWidth: '180px',
           type: 'string',
           newForm: false,
           editForm: false,
@@ -283,11 +283,6 @@ export default {
         name: 'organizationBussinessUnit-grid',
         context: {
           basePath: '/organization',
-        },
-        actions: {
-          exportCsv: {
-            hidden: true,
-          },
         },
       },
       dataSource: {
@@ -390,9 +385,6 @@ export default {
           delete: {
             hidden: true,
           },
-          exportCsv: {
-            hidden: true,
-          },
         },
       },
       dataSource: {
@@ -452,7 +444,7 @@ export default {
           caption: 'Common.TypeCaption',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '120px',
+          columnWidth: '180px',
           type: 'string',
         },
         TemplateName: {
@@ -492,11 +484,6 @@ export default {
         name: 'organizationTask-grid',
         context: {
           basePath: '/organization',
-        },
-        actions: {
-          exportCsv: {
-            hidden: true,
-          },
         },
       },
       dataSource: {

@@ -302,7 +302,6 @@ import location from '~/config/apps/event/gql/location.gql'
 import speaker from '~/config/apps/event/gql/eventSpeakers.gql'
 import event from '~/config/apps/event/gql/event.gql'
 import { getIdFromAtob } from '~/utility'
-import nuxtconfig from '~/nuxt.config'
 import CustomDate from '~/components/common/form/date.vue'
 import SaveBtn from '~/components/common/saveButton'
 export default {
@@ -651,52 +650,7 @@ export default {
       let res = null
       if (this.session.LocationType === 'Venue') {
         if (this.venueAddress.AddressLine !== '') {
-          if (
-            this.venueAddress.LatLng.lat === 0 ||
-            this.venueAddress.LatLng.lng === 0
-          ) {
-            const Url = nuxtconfig.generalConfig.googleMapGeocodeApi
-            const key = nuxtconfig.generalConfig.googleGeocodeMapKey
-            const addressObj = `${this.venueAddress.AddressLine},${this.venueAddress.City},${this.venueAddress.State},${this.venueAddress.Country},${this.venueAddress.PostalCode}`
-
-            try {
-              const customAxiosInstance = this.$axios.create({
-                headers: {},
-              })
-              customAxiosInstance.setToken(false)
-              const res = await customAxiosInstance.get(
-                `${Url}?address=${addressObj}&key=${key}`
-              )
-              if (
-                res &&
-                res.data &&
-                res.data.results &&
-                res.data.results.length
-              ) {
-                this.venueAddress.LatLng.lat =
-                  res.data.results.length > 0
-                    ? res.data.results[0].geometry.location.lat
-                    : 0.0
-                this.venueAddress.LatLng.lng =
-                  res.data.results.length > 0
-                    ? res.data.results[0].geometry.location.lng
-                    : 0.0
-                this.session._CurrentAddress = this.venueAddress
-              } else {
-                console.error(
-                  `Error in session grid new session form on Save function While updating venueAddress context:- ${addressObj}`,
-                  res
-                )
-              }
-            } catch (e) {
-              console.error(
-                `Error in session grid new session form on Save function While updating venueAddress context:- ${addressObj}`,
-                e
-              )
-            }
-          } else {
-            this.session._CurrentAddress = this.venueAddress
-          }
+          this.session._CurrentAddress = this.venueAddress
         } else {
           this.addresslineMessage = this.$t('Messages.Error.ThisFieldRequired')
           return
@@ -734,9 +688,9 @@ export default {
       }
       if (res) {
         if (this.isEdit) {
-          this.snackbarText = this.$t('Messages.Success.SessionUpdatedSuccess')
+          this.snackbarText = this.$t('Messages.Success.RecordUpdatedSuccess')
         } else {
-          this.snackbarText = this.$t('Messages.Success.SessionCreatedSuccess')
+          this.snackbarText = this.$t('Messages.Success.RecordCreateSuccess')
         }
         this.snackbar = true
         this.closeForm()
