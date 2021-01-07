@@ -256,7 +256,7 @@ export default {
         model: 'Customer',
         defaultSort: 'createdDate DESC',
       },
-      title: 'Common.Members',
+      title: 'Drawer.Members',
       defaultSort: 'createdDate DESC',
     },
   },

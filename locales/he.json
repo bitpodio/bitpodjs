@@ -752,7 +752,9 @@
     "RegistrationIdHeader": "מזהה רישום",
     "TotalAmountHeader": "הכמות הכוללת",
     "PaymentMethodHeader": "אמצעי תשלום",
-    "ExportInProgress": "הייצוא מתבצע"
+    "ExportInProgress": "הייצוא מתבצע",
+    "NoDataAvailable": "אין נתונים זמינים",
+    "ServiceUnavailable": "שירותים לא זמינים"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",
