@@ -135,7 +135,7 @@
       <v-skeleton-loader
         :loading="loading"
         :type="
-          viewName === 'live and draft event' ||
+          viewName === 'live-and-draft-event' ||
           viewName === 'template' ||
           viewName === 'seatmaps' ||
           viewName === 'integration'
@@ -253,7 +253,7 @@
         </v-data-table>
       </v-skeleton-loader>
       <div
-        v-if="viewName === 'live and draft event' && loading === true"
+        v-if="viewName === 'live-and-draft-event' && loading === true"
         class="d-flex flex-sm-wrap flex-column flex-sm-row"
       >
         <v-skeleton-loader

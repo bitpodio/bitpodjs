@@ -25,7 +25,7 @@ export default {
     name: 'Event',
   },
   views: {
-    'All Events': {
+    'All-Events': {
       ui: {
         hideDefaultHeader: false,
         hideDefaultFooter: false,
@@ -728,7 +728,7 @@ export default {
       title: 'Common.Past',
       type: 'list',
     },
-    'live and draft event': {
+    'live-and-draft-event': {
       ui: {
         hideDefaultHeader: true,
         hideDefaultFooter: false,

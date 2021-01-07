@@ -957,7 +957,8 @@
       "TicketRecordUpdatedSuccess": "הכרטיס עודכן בהצלחה",
       "RegistrationFormUpdatedSuccess": "טופס ההרשמה עודכן בהצלחה",
       "SessionCreatedSuccess": "ההפעלה נוצרה בהצלחה",
-      "SessionUpdatedSuccess": "ההפעלה עודכנה בהצלחה"
+      "SessionUpdatedSuccess": "ההפעלה עודכנה בהצלחה",
+      "ContactImportSuccess":"אנשי הקשר יובאו בהצלחה"
     }
   },
   "$vuetify": {

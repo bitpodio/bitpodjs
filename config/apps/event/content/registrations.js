@@ -464,7 +464,7 @@ export default {
       title: 'Common.Registrations',
       type: 'list',
     },
-    'Abandoned Registrations': {
+    'Abandoned-Registrations': {
       ui: {
         hideDefaultHeader: false,
         hideDefaultFooter: false,

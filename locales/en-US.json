@@ -958,7 +958,8 @@
       "TicketRecordUpdatedSuccess": "Ticket updated successfully",
       "RegistrationFormUpdatedSuccess": "Registration Form updated successfully",
       "SessionCreatedSuccess": "Session created successfully",
-      "SessionUpdatedSuccess": "Session updated successfully"
+      "SessionUpdatedSuccess": "Session updated successfully",
+      "ContactImportSuccess":"Contacts imported successfully"
     }
   },
   "$vuetify": {

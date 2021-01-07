@@ -4,7 +4,7 @@ export const appList = (store) => [
     label: 'Common.EventApp',
     css: 'fa fa-video fs-36 red--text',
     type: 'route',
-    route: '/apps/event/list/Event/live and draft event',
+    route: '/apps/event/list/Event/live-and-draft-event',
     roles: ['$orguser', '$orgowner', 'EventAdmin', 'EventManager'],
   },
   {

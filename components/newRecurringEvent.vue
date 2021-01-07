@@ -604,20 +604,18 @@
                     <v-text-field
                       v-model="eventData.UniqLink"
                       :label="$t('Common.EventL')"
+                      :rules="[rules.required, rules.link]"
                       outlined
                       dense
                       required
                       :error-messages="uniqueLinkValidationMsg"
-                      @keyup="changeUniqueLink($event)"
-                      @input="changeUniqueLink($event)"
-                      @change="changeUniqueLink($event)"
+                      @input="checkUniqueLink"
                     ></v-text-field>
                   </v-col>
                 </v-row>
               </v-form>
             </v-card>
           </v-tab-item>
-
           <v-tab-item :value="'2'">
             <v-card flat>
               <v-form
@@ -1016,17 +1014,16 @@
           v-if="currentTab < 3"
           depressed
           color="primary"
-          :disabled="isNextDisabled()"
+          :disabled="!isUniqLinkValid || isInalidEventLink || !valid"
           @click="next()"
           ><i18n path="Drawer.Next"
         /></v-btn>
         <SaveBtn
           v-if="
-            (currentTab > 2 && !isEventCreate && !isEventPublish) ||
-            isInalidEventLink
+            (currentTab > 2 && !isEventCreate && !isEventPublish)
           "
           color="primary"
-          :disabled="isSaveButtonDisabled"
+          :disabled="isSaveButtonDisabled || !valid || isInalidEventLink"
           depressed
           :action="saveRecord"
           class="ml-2"
@@ -1440,6 +1437,28 @@ export default {
     },
   },
   methods: {
+    async checkUniqueLink() {
+      const where = { UniqLink: this.eventData.UniqLink }
+      const result = await this.$apollo.query({
+        query: gql`
+          ${eventCount}
+        `,
+        variables: {
+          where,
+        },
+        fetchPolicy: 'no-cache',
+      })
+      if (result.data.Event.EventCount > 0) {
+        this.isInalidEventLink = true
+        this.uniqueLinkValidationMsg = this.$t(
+          'Messages.Error.UniqueLinkDuplicate'
+        )
+      } else {
+        this.isInalidEventLink = false
+        this.isUniqLinkValid = true
+        this.uniqueLinkValidationMsg = ''
+      }
+    },
     focusOut() {
       this.addressClicked = false
     },
@@ -2337,9 +2356,6 @@ export default {
     changeEventName(event) {
       this.verifyUniqueLink(event.currentTarget.value)
     },
-    changeUniqueLink(event) {
-      this.verifyUniqueLink(event.currentTarget.value)
-    },
     verifyUniqueLink(value) {
       this.isUniqLinkValid = false
       value = value.toLowerCase().replace(/\s/g, '')
@@ -2352,30 +2368,11 @@ export default {
           this.checkUniqueLink(this.eventData.UniqLink)
         }
       } else {
+        this.isUniqLinkValid = false
         this.isInalidEventLink = true
         this.uniqueLinkMessage = this.$t('Messages.Warn.UniqueLinkFormat')
       }
-    },
-    async checkUniqueLink(value) {
-      this.isUniqLinkValid = true
-      const where = { UniqLink: value }
-      const result = await this.$apollo.query({
-        query: gql`
-          ${eventCount}
-        `,
-        variables: {
-          where,
-        },
-        fetchPolicy: 'no-cache',
-      })
-      if (result.data.Event.EventCount > 0) {
-        this.isUniqLinkValid = false
-        this.isInalidEventLink = true
-        this.uniqueLinkMessage = this.$t('Messages.Error.UniqueLinkDuplicate')
-      } else {
-        this.isInalidEventLink = false
-        this.isUniqLinkValid = true
-      }
+      this.eventData.UniqLink = value
     },
     addTicketRow() {
       this.tickets.push({

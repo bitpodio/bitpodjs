@@ -12,7 +12,7 @@ export default {
     name: 'OfferCode',
   },
   views: {
-    'Discount Codes': {
+    'Discount-Codes': {
       ui: {
         hideDefaultHeader: false,
         hideDefaultFooter: false,
