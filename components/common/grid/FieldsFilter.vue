@@ -21,7 +21,7 @@
           /></span>
         </div>
         <div
-          class="filter-fields-container"
+          class="filter-fields-container pl-1"
           :class="
             rules && rules.length > 0
               ? 'filter-fields-scroll'
