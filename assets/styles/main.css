@@ -819,6 +819,7 @@ table > tbody > tr:last-child .key-align {
   }
   .v-data-footer {
     justify-content: flex-start !important;
+    padding: 0 !important;
   }
   .v-application--is-ltr .v-data-footer__pagination {
       margin: 0 !important;
