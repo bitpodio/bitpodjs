@@ -1,5 +1,5 @@
 <template>
-  <div class="public-page-main">
+  <div>
     <v-flex class="detailview-head mb-3"
       ><v-btn class="ml-n3 back-icon" icon @click="goBack"
         ><v-icon class="fs-30">mdi-chevron-left</v-icon> </v-btn
@@ -8,7 +8,7 @@
     <v-flex d-flex flex-md-row flex-lg-row flex-column>
       <v-flex column class="mxw-w70">
         <div
-          class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+          class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg public-page-main"
         >
           <v-flex class="d-flex pb-1 flex-column flex-md-row">
             <div class="text-h4 text-capitalize event-title">

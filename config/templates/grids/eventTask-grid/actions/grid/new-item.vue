@@ -513,6 +513,7 @@ export default {
     },
     closeForm() {
       this.dialog = false
+      this.$eventBus.$emit('dialogOpen')
       this.resetForm()
     },
     async onSave() {

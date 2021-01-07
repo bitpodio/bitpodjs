@@ -249,6 +249,7 @@ export default {
       this.templateID = ''
       this.templateSubject = ''
       this.disableButton = false
+      this.$eventBus.$emit('dialogOpen')
     },
     setPreviewImage(url) {
       this.previewURL = url
@@ -289,6 +290,7 @@ export default {
       if (activityRes) {
         this.refresh()
         this.dialog = false
+        this.$eventBus.$emit('dialogOpen')
         this.$emit(
           'update-snackbar',
           this.$t('Messages.Success.EditTemplateSuccess')

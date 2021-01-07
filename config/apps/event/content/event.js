@@ -266,6 +266,10 @@ export default {
           newForm: false,
           editForm: true,
           multiple: true,
+          customExport: (tags) => {
+            if (tags && tags !== []) return tags.join(',')
+            return ''
+          },
           dataSource: {
             query: registrationStatusOptions,
             itemText: 'value',
@@ -621,6 +625,10 @@ export default {
           sortEnable: true,
           columnWidth: '150px',
           type: 'string',
+          customExport: (tags) => {
+            if (tags && tags !== []) return tags.join(',')
+            return ''
+          },
         },
         VenueName: {
           displayOrder: 6,
@@ -771,6 +779,10 @@ export default {
           sortEnable: true,
           columnWidth: '150px',
           type: 'string',
+          customExport: (tags) => {
+            if (tags && tags !== []) return tags.join(',')
+            return ''
+          },
         },
         VenueName: {
           displayOrder: 6,
