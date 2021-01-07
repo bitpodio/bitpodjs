@@ -147,6 +147,7 @@
           :key="componentRerenderKey"
           v-model="selectedItems"
           dense
+          :no-data-text="noDataText"
           :headers="translate(headers)"
           :items="tableData.items"
           :single-select="singleSelect"
@@ -591,6 +592,7 @@ export default {
       winWidth: window.innerWidth,
       itemPerPage: 0,
       componentRerenderKey: 0,
+      noDataText: '',
     }
   },
   computed: {
@@ -1082,12 +1084,14 @@ export default {
         const getDataFunc = dataSource.getData.call(this, this)
         try {
           this.tableData = await getDataFunc.call(this, options)
+          this.noDataText = this.$t('Common.NoDataAvailable')
           this.loading = false
         } catch (e) {
           console.error(
             `Errors in components/common/grid/index.vue while calling method loadRestData`,
             e
           )
+          this.noDataText = this.$t('Common.ServiceUnavailable')
           this.loading = false
         }
       }

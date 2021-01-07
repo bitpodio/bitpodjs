@@ -750,7 +750,9 @@
     "RegistrationIdHeader": "ID d'enregistrement",
     "TotalAmountHeader": "Montant total",
     "PaymentMethodHeader": "Mode de paiement",
-    "ExportInProgress": "Exportation en cours..."
+    "ExportInProgress": "Exportation en cours...",
+    "NoDataAvailable": "Pas de données disponibles",
+    "ServiceUnavailable": "Service indisponible"
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",
