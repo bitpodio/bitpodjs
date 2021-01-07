@@ -356,6 +356,7 @@ function getTableHeader(content, viewName) {
       template,
       hidden = false,
       type,
+      customExport = false,
     } = fields[fieldName]
     if (!hidden) {
       headers.push({
@@ -366,6 +367,7 @@ function getTableHeader(content, viewName) {
         width: columnWidth,
         displayOrder,
         template,
+        customExport,
         class: type === 'number' ? 'text-right' : '',
       })
     }
@@ -469,7 +471,7 @@ function downloadBlob(blob, filename) {
   a.click()
 }
 
-function prepareCSV(finalResult, modelName) {
+function prepareCSV(finalResult, modelName, headerList) {
   const replacer = (key, value) => {
     if (value === null) return ''
     else {
@@ -486,12 +488,23 @@ function prepareCSV(finalResult, modelName) {
     }
   }
   if (finalResult[0]) {
-    const header = Object.keys(finalResult[0])
+    const header = headerList.map(({ text }) => text)
     const csvContent = [
       header.join(','),
       ...finalResult.map((row) =>
-        header
-          .map((fieldName) => JSON.stringify(row[fieldName], replacer))
+        headerList
+          .map(({ value: fieldName, customExport }) => {
+            if (customExport) {
+              return JSON.stringify(customExport(row[fieldName]), replacer)
+            } else if (fieldName.includes('.')) {
+              return JSON.stringify(
+                fieldName.split('.').reduce((o, i) => o?.[i], row),
+                replacer
+              )
+            } else {
+              return JSON.stringify(row[fieldName], replacer)
+            }
+          })
           .join(',')
       ),
     ].join('\r\n')
@@ -889,6 +902,7 @@ export default {
       const dataSourceType = dataSource.type || 'graphql'
       const modelName =
         getModelName(this.content, this.viewName) || this.content.general.name
+      const headerList = this.translate(this.headers)
       if (dataSourceType === 'rest') {
         const { search, filters } = this
         const options = {
@@ -904,7 +918,7 @@ export default {
           })
           const finalResult = await getDataFunc.call(this, options)
           if (this.exportInProgress) {
-            prepareCSV(finalResult, this.viewName)
+            prepareCSV(finalResult, this.viewName, headerList)
           }
           this.$store.commit('setExportInProgress', {
             value: false,
@@ -974,7 +988,7 @@ export default {
             }
           }
           if (shouldDownload) {
-            prepareCSV(finalResult, this.viewName)
+            prepareCSV(finalResult, this.viewName, headerList)
           }
           this.$store.commit('setExportInProgress', {
             value: false,
