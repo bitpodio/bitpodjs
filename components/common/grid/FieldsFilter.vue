@@ -161,8 +161,10 @@ export default {
       ]
     },
     onRuleDelete(index) {
-      this.backupRules.push(this.rules[index])
-      this.rules = this.rules.filter((_, i) => i !== index)
+      if (this.rules.length > 1) {
+        this.backupRules.push(this.rules[index])
+        this.rules = this.rules.filter((_, i) => i !== index)
+      }
     },
     onRuleDuplicate(index) {
       this.rules = [...this.rules, { ...this.rules[index] }]

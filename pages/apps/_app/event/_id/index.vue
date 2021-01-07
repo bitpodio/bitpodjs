@@ -1666,11 +1666,17 @@ export default {
     this.getAttendees()
     setTimeout(this.openPrint, 3000)
     this.$eventBus.$on('update-seat-reservation', this.updateSeatReservation)
+    this.$eventBus.$on('seat-map-triggered', this.getScrollPosition)
   },
   beforeDestroy() {
     this.$eventBus.$off('update-seat-reservation')
+    this.$eventBus.$off('seat-map-triggered')
   },
   methods: {
+    getScrollPosition() {
+      const scrollPosition = this.$store.state.scrollPosition
+      document.documentElement.scrollTo(0, scrollPosition)
+    },
     getEventStartDate() {
       return this.$d(
         new Date(
@@ -1778,6 +1784,7 @@ export default {
         )
         if (res) {
           this.attendees = res.data
+          this.getScrollPosition()
         }
       } catch (e) {
         console.error(
@@ -2325,6 +2332,8 @@ export default {
       }
     },
     onEditSeatMap() {
+      const scrollPosition = document.documentElement.scrollTop
+      this.$store.commit('setScrollPosition', scrollPosition)
       this.$router.push(this.localePath(`/apps/seatmap/${this.layoutId}`))
     },
   },
