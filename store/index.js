@@ -31,6 +31,7 @@ export const state = () => ({
   currentOrg: [],
   currentOrgInfo: {},
   exportInProgress: { value: false, key: '' },
+  scrollPosition: '',
 })
 
 export const mutations = {
@@ -42,6 +43,9 @@ export const mutations = {
   },
   setExportInProgress(state, status) {
     state.exportInProgress = status
+  },
+  setScrollPosition(state, value) {
+    state.scrollPosition = value
   },
 }
 
