@@ -225,7 +225,7 @@ export default {
   methods: {
     messageReceived(e) {
       if (e.data === 'success' && this.redirectToOrg) {
-        location.href = `https://${this.orgname}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}/apps/event/list/Event/live and draft event`
+        location.href = `https://${this.orgname}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}/apps/event/list/Event/live-and-draft-event`
       }
     },
     iframeLoaded() {
@@ -311,7 +311,7 @@ export default {
           )
           if (ticketRes) {
             this.statusMessage = 'Redirecting to new Organization'
-            location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}/apps/event/list/Event/live and draft event`
+            location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}/apps/event/list/Event/live-and-draft-event`
           } else {
             this.statusMessage = ''
             this.resetBtn = !this.resetBtn
