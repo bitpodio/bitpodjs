@@ -1452,13 +1452,12 @@ export default {
       })
       if (result.data.Event.EventCount > 0) {
         this.isInalidEventLink = true
-        this.uniqueLinkValidationMsg = this.$t(
-          'Messages.Error.UniqueLinkDuplicate'
-        )
+        this.isUniqLinkValid = false
+        this.uniqueLinkMessage = this.$t('Messages.Error.UniqueLinkDuplicate')
       } else {
         this.isInalidEventLink = false
         this.isUniqLinkValid = true
-        this.uniqueLinkValidationMsg = ''
+        this.uniqueLinkMessage = ''
       }
     },
     focusOut() {
