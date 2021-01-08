@@ -33,7 +33,7 @@ const getUsersOrg = (store) => {
 export default function (context) {
   const { store, route, redirect, $auth } = context
 
-  if (getUsersOrg(store).name) {
+  if (getUsersOrg(store)?.name) {
     if (process.server) {
       const { req } = context
       const hostName = req.headers.host
