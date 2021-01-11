@@ -752,7 +752,8 @@
     "PaymentMethodHeader": "Mode de paiement",
     "ExportInProgress": "Exportation en cours...",
     "NoDataAvailable": "Pas de données disponibles",
-    "ServiceUnavailable": "Service indisponible"
+    "ServiceUnavailable": "Service indisponible",
+    "Upgrade": "Améliorer"
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",
