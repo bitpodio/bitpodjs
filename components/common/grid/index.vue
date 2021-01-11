@@ -306,7 +306,7 @@
         <v-skeleton-loader
           v-for="i in 10"
           :key="i"
-          loading="false"
+          :loading="loading"
           type="card"
           width="150"
           height="125"
