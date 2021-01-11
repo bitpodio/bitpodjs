@@ -225,11 +225,11 @@ export default {
   methods: {
     messageReceived(e) {
       if (e.data === 'success' && this.redirectToOrg) {
+        document.cookie = `auth.redirect=; Path=${this.$config.basePublicPath}; Expires=Thu, 01 Jan 1970 00:00:01 GMT;`
         location.href = `https://${this.orgname}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}/apps/event/list/Event/live-and-draft-event`
       }
     },
     iframeLoaded() {
-      console.debug(document.cookie)
       this.$refs.iframe.contentWindow.postMessage(document.cookie, '*')
     },
     async createOrg() {
@@ -312,6 +312,7 @@ export default {
           )
           if (ticketRes) {
             this.statusMessage = 'Redirecting to new Organization'
+            document.cookie = `auth.redirect=; Path=${this.$config.basePublicPath}; Expires=Thu, 01 Jan 1970 00:00:01 GMT;`
             location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}/apps/event/list/Event/live-and-draft-event`
           } else {
             this.statusMessage = ''
