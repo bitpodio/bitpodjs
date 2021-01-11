@@ -4,7 +4,7 @@
       <v-icon color="green">fa-check</v-icon>
     </div>
     <div v-else>
-      <v-icon color="red">fa-close</v-icon>
+      <v-icon color="red" class="fs-14">fa-close</v-icon>
     </div>
   </div>
 </template>
