@@ -754,7 +754,8 @@
     "PaymentMethodHeader": "אמצעי תשלום",
     "ExportInProgress": "הייצוא מתבצע",
     "NoDataAvailable": "אין נתונים זמינים",
-    "ServiceUnavailable": "שירותים לא זמינים"
+    "ServiceUnavailable": "שירותים לא זמינים",
+    "Upgrade": "שדרוג"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",
