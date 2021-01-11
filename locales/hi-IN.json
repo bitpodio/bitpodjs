@@ -763,7 +763,8 @@
     "PaymentMethodHeader": "भुगतान का तरीका",
     "ExportInProgress": "निर्यात प्रगति पर है...",
     "NoDataAvailable": "कोई डेटा उपलब्ध नहीं है",
-    "ServiceUnavailable": "सेवा उप्लब्ध् नहीं है"
+    "ServiceUnavailable": "सेवा उप्लब्ध् नहीं है",
+    "Upgrade": "अपग्रेड"
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",
