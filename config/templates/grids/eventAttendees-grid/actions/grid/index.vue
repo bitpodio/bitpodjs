@@ -4,7 +4,7 @@
       <importContact
         sample-file-name="v1574252622/Attendee.csv"
         :template-data="fieldNames"
-        model-name="attendee"
+        model-name="Attendee"
       />
     </v-list-item>
     <v-list-item>
