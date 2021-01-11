@@ -229,6 +229,7 @@ export default {
       }
     },
     iframeLoaded() {
+      console.debug(document.cookie)
       this.$refs.iframe.contentWindow.postMessage(document.cookie, '*')
     },
     async createOrg() {
