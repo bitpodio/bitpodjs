@@ -129,6 +129,7 @@ export default {
               if (eventData.data.dirtyCheck) {
                 this.popupDialog = true
               } else {
+                this.$eventBus.$emit('seat-map-triggered')
                 this.$router.back()
               }
             }

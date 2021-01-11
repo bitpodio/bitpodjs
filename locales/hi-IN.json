@@ -12,6 +12,8 @@
     "Help": "सहायता",
     "HomePage": "मुख पृष्ठ",
     "SignIn": "साइन इन करें",
+    "Live": "लाइव",
+    "Watching": "देख रहे",
     "EditEventInformation": "घटना की जानकारी संपादित करें",
     "Description": "विवरण",
     "EditEventSettings": "ईवेंट सेटिंग्स संपादित करें",
@@ -311,7 +313,7 @@
     "OnlyAskWhen": "केवल यह पूछें कि इनमें से एक टिकट कब खरीदा जाता है",
     "ItemDeletedSuccessfully": "आइटम सफलतापूर्वक हटा दिया गया।",
     "EditItem": "संपादित आइटम",
-    "EditSurveyQuestion": "सर्वेक्षण प्रश्न संपादित करें",
+    "EditSurveyQuestion": "पंजीकरण प्रश्न संपादित करें",
     "ConfirmationEmailSent": "पुष्टिकरण का ईमेल भेजा गया",
     "ResendRegistrationEmail": "पंजीकरण ईमेल पुनः भेजें",
     "JoinSession": "सत्र में शामिल हों",
@@ -411,7 +413,7 @@
     "Draft": "Draft",
     "Join": "Join",
     "BannerImage": "Banner Image",
-    "StartSettingUpYourEvent": "There aren't any live events, to start setting up your event use Create Event link",
+    "StartSettingUpYourEvent": "कोई भी आगामी लाइव ईवेंट नहीं है, अपने ईवेंट का उपयोग शुरू करने के लिए ईवेंट बनाएं लिंक बनाएं",
     "NoRecentBuyer": "No Recent Buyer",
     "AllEvents": "All Events",
     "FirstName": "First Name *",
@@ -725,8 +727,8 @@
     "PastEventMessage": "यह ईवेंट अब सक्रिय नहीं है.",
     "GoToOldSite": "पुरानी साइट पर जाएं",
     "SelectField": "एक क्षेत्र का चयन करें",
-    "DeleteImage":"छवि हटाएं",
-    "QuestionDeletedSuccessfully":"प्रश्न सफलतापूर्वक हटा दिया गया",
+    "DeleteImage": "छवि हटाएं",
+    "QuestionDeletedSuccessfully": "प्रश्न सफलतापूर्वक हटा दिया गया",
     "SessionCaption": "अधिवेशन",
     "RegistrationForms": "पंजीकरण फार्म",
     "Badges": "बैज",
@@ -740,7 +742,20 @@
     "Reasons": "कारणों",
     "BadgeCategories": "बिल्ला श्रेणियाँ",
     "ContactType": "संपर्क प्रकार",
-    "BusinessUnit": "व्यापार की इकाई"
+    "BusinessUnit": "व्यापार की इकाई",
+    "ManageWebhook": "Webhook प्रबंधित करें",
+    "Test": "जाँच",
+    "SelectEvents": "घटनाक्रम का चयन करें",
+    "ViewMap": "मानचित्र",
+    "URLRecommended": "URL (https का उपयोग करने के लिए अनुशंसित: //) *",
+    "EventNameHeader": "कार्यक्रम नाम",
+    "RegistrationIdHeader": "पंजीयन पहचान",
+    "TotalAmountHeader": "कुल रकम",
+    "PaymentMethodHeader": "भुगतान का तरीका",
+    "ExportInProgress": "निर्यात प्रगति पर है...",
+    "NoDataAvailable": "कोई डेटा उपलब्ध नहीं है",
+    "ServiceUnavailable": "सेवा उप्लब्ध् नहीं है",
+    "Upgrade": "अपग्रेड"
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",
@@ -785,7 +800,8 @@
     "DiscountCode": "छूट संकेत",
     "Members": "सदस्य",
     "Contacts": "संपर्क",
-    "SessionOverlaps": "अधिवेशन ओवरलैप चेतावनी"
+    "SessionOverlaps": "अधिवेशन ओवरलैप चेतावनी",
+    "ExportToCSV": "सीएसवी को निर्यात"
   },
   "FilterOptions": {
     "Is": "है",
@@ -891,8 +907,10 @@
       "NoEventsFound": "{searchKey} नाम के साथ कोई घटना नहीं मिली",
       "ConfirmResendRegistrationEmail": "क्या आप वाकई पुष्टिकरण ईमेल को फिर से भेजना चाहते हैं?",
       "DeleteSeatMap": "क्या आप इस सीटमैप को हटाना चाहते हैं?",
-      "DeleteSeatMapEvent":"क्या आप इस सीट का नक्शा हटाना चाहते हैं? यह लेआउट पहले से ईवेंट से जुड़ा हुआ है।",
-      "DeleteEventQuestion":"क्या आप इस प्रश्न को हटाना चाहते हैं?"
+      "DeleteSeatMapEvent": "क्या आप इस सीट का नक्शा हटाना चाहते हैं? यह लेआउट पहले से ईवेंट से जुड़ा हुआ है।",
+      "DeleteEventQuestion": "क्या आप इस प्रश्न को हटाना चाहते हैं?",
+      "RegistrationTypeDefault": "केवल एक पंजीकरण प्रकार को डिफ़ॉल्ट पर सेट किया जा सकता है",
+      "RegistrationTypeWarning": "पंजीकरण प्रकार चेतावनी"
     },
     "Success": {
       "CopiedClipboard": "Copied to clipboard",
@@ -935,7 +953,15 @@
       "UpdatedSuccessfully": "{modelName} अद्यतन सफलतापूर्ण हो गया",
       "CreatedSuccessfully": "{modelName} सफलतापूर्वक बनाया गया",
       "ListUpdatedSucess": "{modelName} सूची आइटम सफलतापूर्वक अपडेट किया गया।",
-      "ThanksHelp": "हमे संपर्क करने के लिए धन्यवाद! हम तुमसे जल्द ही संपर्क करेंगे!"
+      "ThanksHelp": "हमे संपर्क करने के लिए धन्यवाद! हम तुमसे जल्द ही संपर्क करेंगे!",
+      "QuestionRecordCreatedSuccess": "प्रश्न सफलतापूर्वक बनाया गया",
+      "QuestionRecordUpdatedSuccess": "प्रश्न सफलतापूर्वक अपडेट किया गया",
+      "TicketRecordCreatedSuccess": "टिकट सफलतापूर्वक बनाया गया",
+      "TicketRecordUpdatedSuccess": "टिकट सफलतापूर्वक अपडेट किया गया",
+      "RegistrationFormUpdatedSuccess": "पंजीकरण फॉर्म सफलतापूर्वक अपडेट किया गया",
+      "SessionCreatedSuccess": "सत्र सफलतापूर्वक बनाया गया",
+      "SessionUpdatedSuccess": "सत्र सफलतापूर्वक अपडेट किया गया",
+      "ContactImportSuccess":"संपर्कों को सफल आयात किया गया"
     }
   },
   "$vuetify": {

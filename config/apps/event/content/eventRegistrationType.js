@@ -116,6 +116,11 @@ export default {
         context: {
           basePath: '/event',
         },
+        actions: {
+          exportCsv: {
+            hidden: true,
+          },
+        },
       },
       dataSource: {
         singularEntity: 'Common.RegistrationType',

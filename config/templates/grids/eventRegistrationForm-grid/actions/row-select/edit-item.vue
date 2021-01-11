@@ -19,7 +19,7 @@
         <v-card-title
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
-          <h2 class="black--text pt-10 pb-9 font-weight-regular">
+          <h2 class="black--text pt-5 pb-4 font-weight-regular text-h5">
             <i18n path="Common.EditRegistrationForm" />
           </h2>
           <v-spacer></v-spacer>
@@ -53,8 +53,8 @@
               <v-col v-if="showCsvField" cols="12">
                 <v-text-field
                   v-model="CsvOptions"
-                  :label="$t('Common.Options')"
-                  :rules="[rules.required]"
+                  :label="getOptionsLabel($t('Common.OptionsCaption'))"
+                  :rules="optionRules()"
                   outlined
                   dense
                 ></v-text-field>
@@ -147,7 +147,7 @@ export default {
   watch: {
     snackbar(newVal) {
       if (!newVal) {
-        this.$parent.refresh()
+        this.refresh()
       }
     },
   },
@@ -165,6 +165,32 @@ export default {
     }
   },
   methods: {
+    getOptionsLabel(optionLabel) {
+      if (
+        this.formData.Label === 'Email' ||
+        this.formData.Label === 'Country'
+      ) {
+        return `${optionLabel}`
+      } else {
+        return `${optionLabel}*`
+      }
+    },
+    optionRules() {
+      return [
+        (v) => {
+          if (
+            this.formData.Label === 'Email' ||
+            this.formData.Label === 'Country'
+          ) {
+            return true
+          } else if (v !== '') {
+            return true
+          } else {
+            return this.$t('Messages.Error.FieldRequired')
+          }
+        },
+      ]
+    },
     onReset() {
       this.$refs.form.reset()
       if (this.controlTypeDropDown.includes('Select')) {
@@ -200,7 +226,9 @@ export default {
         )
         if (res) {
           this.dialog = false
-          this.snackbarText = this.$t('Messages.Success.RecordUpdatedSuccess')
+          this.snackbarText = this.$t(
+            'Messages.Success.RegistrationFormUpdatedSuccess'
+          )
           this.snackbar = true
         }
       } catch (e) {
@@ -222,12 +250,7 @@ export default {
 
         if (res) {
           this.formData = res
-          if (res.ControlType === 'email') {
-            this.controlTypeDropDown.unshift('Select')
-            this.controlType = 'Select'
-          } else {
-            this.controlType = res.ControlType
-          }
+          this.controlType = res.ControlType
           this.CsvOptions = res.Options.toString()
         }
       } catch (e) {

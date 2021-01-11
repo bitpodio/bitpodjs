@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-autocomplete
+    <v-select
       v-model="value"
       :items="items"
       :item-text="itemText"
@@ -13,7 +13,7 @@
       outlined
       dense
       @change="onLookupChange"
-    ></v-autocomplete>
+    ></v-select>
   </div>
 </template>
 

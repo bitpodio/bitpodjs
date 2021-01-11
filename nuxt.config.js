@@ -105,7 +105,7 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/device',
     '@nuxtjs/apollo',
-    '@bitpod/auth-next',
+    '@bitpod/auth-nuxt',
     [
       'nuxt-gmaps',
       {
@@ -236,6 +236,7 @@ export default {
    */
 
   axios: {
+    googleMapUrl: `https://www.google.com/maps`,
     apiEndpoint: '/svc/api/',
     baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
   },
@@ -278,6 +279,9 @@ export default {
    */
   vuetify: {
     optionsPath: './vuetify.options.js',
+    theme: {
+      dark: false,
+    },
   },
   /*
    ** Build configuration
@@ -315,11 +319,7 @@ export default {
       },
     },
   },
-  serverMiddleware: [
-    '~/api/index.js',
-    { path: '/callback', handler: '~/api/callback.js' },
-    { path: '/authorize', handler: '~/api/authorize.js' },
-  ],
+  serverMiddleware: ['~/api/index.js'],
   auth: {
     redirect: {
       login: '/login',
@@ -330,18 +330,16 @@ export default {
     strategies: {
       bitpod: {
         scheme: 'oauth2',
-        tokenEndPointUrl:
-          process.env.BITPOD_TOKEN_ENDPOINT_URL ||
-          'https://login.bitpod.io/auth/connect/token',
         userInfoEndPointUrl:
           process.env.BITPOD__USERINFO_ENDPOINT_URL ||
           'https://login.bitpod.io/auth/connect/userinfo',
-        authorization:
-          process.env.BITPOD_AUTHORIZATION_ENDPOINT_URL ||
-          'https://login.bitpod.io/auth/connect/authorize',
         endpoints: {
-          authorization: `${basePath}/authorize?provider=bitpod`,
-          token: 'api/connect/token?provider=bitpod',
+          authorization: `https://${
+            process.env.PUBLIC_DOMAIN
+          }/svc/oauth/login?siteId=${
+            process.env.SITE_ID || 'rklRLNaXv'
+          }&nonce=state&provider=bitpod`,
+          token: `https://${process.env.PUBLIC_DOMAIN}/svc/oauth/refresh?provider=bitpod`,
           userInfo: 'api/connect/userinfo?provider=bitpod',
           logout:
             process.env.BITPOD_ENDSESSION_ENDPOINT_URL ||
@@ -374,8 +372,12 @@ export default {
           process.env.GOOGLE_AUTHORIZATION_ENDPOINT_URL ||
           'https://accounts.google.com/o/oauth2/v2/auth',
         endpoints: {
-          authorization: `${basePath}/authorize?provider=google&prompt=consent`,
-          token: 'api/connect/token?provider=google',
+          authorization: `https://${
+            process.env.PUBLIC_DOMAIN
+          }/svc/oauth/login?siteId=${
+            process.env.SITE_ID || 'rklRLNaXv'
+          }&nonce=state&provider=google&prompt=consent`,
+          token: `https://${process.env.PUBLIC_DOMAIN}/svc/oauth/refresh?provider=google`,
           userInfo: 'api/connect/userinfo?provider=google',
         },
         accessType: 'offline',
@@ -399,6 +401,9 @@ export default {
     devtools: true,
   },
   generalConfig: {
+    googleGeocodeMapKey:
+      process.env.GOOGLE_Geocode_API_KEY ||
+      'AIzaSyA61em1JU4u503xgDdw0_9efBOlpYKvjpk',
     googleMapKey:
       process.env.GOOGLE_API_KEY || 'AIzaSyBKle17JR_zpGEzwARF0H8VFU9NeH9nh7c',
     googleMapGeocodeApi:

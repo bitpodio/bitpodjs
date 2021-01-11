@@ -237,6 +237,8 @@ export default {
       if (this.template === 'General Template') {
         this.selectedList = this.$parent.$parent.$data.selectedItems
       }
+      this.$apollo.queries.MarketingTemplate.refresh()
+      this.$apollo.queries.editTemplate.refresh()
     },
     resetForm() {
       this.dialog = false
@@ -247,6 +249,7 @@ export default {
       this.templateID = ''
       this.templateSubject = ''
       this.disableButton = false
+      this.$eventBus.$emit('dialogOpen')
     },
     setPreviewImage(url) {
       this.previewURL = url
@@ -287,6 +290,7 @@ export default {
       if (activityRes) {
         this.refresh()
         this.dialog = false
+        this.$eventBus.$emit('dialogOpen')
         this.$emit(
           'update-snackbar',
           this.$t('Messages.Success.EditTemplateSuccess')

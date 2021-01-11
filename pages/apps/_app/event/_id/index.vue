@@ -1,5 +1,5 @@
 <template>
-  <div class="public-page-main">
+  <div>
     <v-flex class="detailview-head mb-3"
       ><v-btn class="ml-n3 back-icon" icon @click="goBack"
         ><v-icon class="fs-30">mdi-chevron-left</v-icon> </v-btn
@@ -8,7 +8,7 @@
     <v-flex d-flex flex-md-row flex-lg-row flex-column>
       <v-flex column class="mxw-w70">
         <div
-          class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+          class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg public-page-main"
         >
           <v-flex class="d-flex pb-1 flex-column flex-md-row">
             <div class="text-h4 text-capitalize event-title">
@@ -1018,7 +1018,7 @@
         </div>
         <div
           v-if="content"
-          class="xs12 sm4 md4 lg4 boxview pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+          class="xs12 sm4 md4 lg4 boxview boxviewsmall pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
           <div class="sticky d-flex flex-column justify-center boxview">
             <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
@@ -1666,11 +1666,17 @@ export default {
     this.getAttendees()
     setTimeout(this.openPrint, 3000)
     this.$eventBus.$on('update-seat-reservation', this.updateSeatReservation)
+    this.$eventBus.$on('seat-map-triggered', this.getScrollPosition)
   },
   beforeDestroy() {
     this.$eventBus.$off('update-seat-reservation')
+    this.$eventBus.$off('seat-map-triggered')
   },
   methods: {
+    getScrollPosition() {
+      const scrollPosition = this.$store.state.scrollPosition
+      document.documentElement.scrollTo(0, scrollPosition)
+    },
     getEventStartDate() {
       return this.$d(
         new Date(
@@ -1778,6 +1784,7 @@ export default {
         )
         if (res) {
           this.attendees = res.data
+          this.getScrollPosition()
         }
       } catch (e) {
         console.error(
@@ -2325,6 +2332,8 @@ export default {
       }
     },
     onEditSeatMap() {
+      const scrollPosition = document.documentElement.scrollTop
+      this.$store.commit('setScrollPosition', scrollPosition)
       this.$router.push(this.localePath(`/apps/seatmap/${this.layoutId}`))
     },
   },

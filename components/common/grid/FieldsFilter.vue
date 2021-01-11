@@ -21,7 +21,7 @@
           /></span>
         </div>
         <div
-          class="filter-fields-container"
+          class="filter-fields-container pl-1"
           :class="
             rules && rules.length > 0
               ? 'filter-fields-scroll'
@@ -50,7 +50,7 @@
 
                   <v-list>
                     <v-list-item @click="onRuleDelete(index)">
-                      <v-icon class="pr-2">mdi-delete</v-icon>
+                      <v-icon class="pr-2">fa-trash</v-icon>
                       <v-list-item-title
                         ><i18n path="Drawer.Delete"
                       /></v-list-item-title>
@@ -161,8 +161,10 @@ export default {
       ]
     },
     onRuleDelete(index) {
-      this.backupRules.push(this.rules[index])
-      this.rules = this.rules.filter((_, i) => i !== index)
+      if (this.rules.length > 1) {
+        this.backupRules.push(this.rules[index])
+        this.rules = this.rules.filter((_, i) => i !== index)
+      }
     },
     onRuleDuplicate(index) {
       this.rules = [...this.rules, { ...this.rules[index] }]

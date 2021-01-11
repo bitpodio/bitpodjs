@@ -25,7 +25,7 @@ export default {
     name: 'Event',
   },
   views: {
-    'All Events': {
+    'All-Events': {
       ui: {
         hideDefaultHeader: false,
         hideDefaultFooter: false,
@@ -231,7 +231,7 @@ export default {
           caption: 'Common.Privacy',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '120px',
           type: 'lookup',
           hidden: false,
           cssClasses: 'col-12 col-md-6',
@@ -266,6 +266,10 @@ export default {
           newForm: false,
           editForm: true,
           multiple: true,
+          customExport: (tags) => {
+            if (tags && tags !== []) return tags.join(',')
+            return ''
+          },
           dataSource: {
             query: registrationStatusOptions,
             itemText: 'value',
@@ -519,7 +523,7 @@ export default {
           caption: 'Common.Currency',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '140px',
           type: 'lookup',
           hidden: false,
           cssClasses: 'col-12 col-md-6',
@@ -611,7 +615,7 @@ export default {
           caption: 'Common.Privacy',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '120px',
           type: 'string',
         },
         Tags: {
@@ -621,6 +625,10 @@ export default {
           sortEnable: true,
           columnWidth: '150px',
           type: 'string',
+          customExport: (tags) => {
+            if (tags && tags !== []) return tags.join(',')
+            return ''
+          },
         },
         VenueName: {
           displayOrder: 6,
@@ -675,7 +683,7 @@ export default {
           caption: 'Common.Currency',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '140px',
           type: 'string',
         },
         createdDate: {
@@ -720,7 +728,7 @@ export default {
       title: 'Common.Past',
       type: 'list',
     },
-    'live and draft event': {
+    'live-and-draft-event': {
       ui: {
         hideDefaultHeader: true,
         hideDefaultFooter: false,
@@ -771,6 +779,10 @@ export default {
           sortEnable: true,
           columnWidth: '150px',
           type: 'string',
+          customExport: (tags) => {
+            if (tags && tags !== []) return tags.join(',')
+            return ''
+          },
         },
         VenueName: {
           displayOrder: 6,
@@ -977,7 +989,7 @@ export default {
           caption: 'Common.RegisteredBy',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '170px',
           type: 'string',
           hidden: false,
           inlineEdit: true,
@@ -989,8 +1001,8 @@ export default {
           caption: 'Common.TicketAmount',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
-          type: 'string',
+          columnWidth: '170px',
+          type: 'number',
           hidden: false,
           inlineEdit: true,
           newForm: false,
@@ -1001,7 +1013,7 @@ export default {
           caption: 'Common.Organization',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '160px',
           type: 'string',
           form: {
             caption: 'Common.Organization',
@@ -1030,7 +1042,7 @@ export default {
           caption: 'Common.SeatNumber',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '160px',
           type: 'string',
           hidden: false,
           inlineEdit: true,
@@ -1042,7 +1054,7 @@ export default {
           caption: 'Common.Category',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '130px',
           type: 'string',
           hidden: false,
           inlineEdit: true,
@@ -1078,7 +1090,7 @@ export default {
           caption: 'Common.Status',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '130px',
           type: 'string',
           hidden: false,
           inlineEdit: true,
@@ -1426,6 +1438,9 @@ export default {
           delete: {
             hidden: true,
           },
+          exportCsv: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
@@ -1540,7 +1555,7 @@ export default {
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
-          type: 'string',
+          type: 'number',
           hidden: false,
           inlineEdit: true,
           newForm: false,
@@ -1976,7 +1991,7 @@ export default {
           caption: 'Common.Organization',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '160px',
           type: 'string',
           form: {
             caption: 'Common.Organization',
@@ -2030,8 +2045,8 @@ export default {
           caption: 'Common.Amount',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
-          type: 'string',
+          columnWidth: '110px',
+          type: 'number',
           hidden: false,
           inlineEdit: true,
           newForm: false,
@@ -2042,8 +2057,8 @@ export default {
           caption: 'Common.Attendees',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
-          type: 'string',
+          columnWidth: '140px',
+          type: 'number',
           hidden: false,
           inlineEdit: true,
           newForm: false,
@@ -2054,7 +2069,7 @@ export default {
           caption: 'Common.Status',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '120px',
           type: 'lookup',
           cssClasses: 'col-6 col-md-6',
           hidden: false,
@@ -2659,7 +2674,7 @@ export default {
           caption: 'Common.SentBounce',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '170px',
           type: 'string',
         },
         Click: {
@@ -2668,7 +2683,7 @@ export default {
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
-          type: 'string',
+          type: 'number',
         },
         Open: {
           displayOrder: 7,
@@ -2676,7 +2691,7 @@ export default {
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
-          type: 'string',
+          type: 'number',
         },
         Delivered: {
           displayOrder: 8,
@@ -2787,7 +2802,7 @@ export default {
           caption: 'Common.Amount',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '100px',
           type: 'number',
           cssClasses: 'col-12 col-md-6',
           hidden: false,
@@ -2814,7 +2829,7 @@ export default {
           label: 'Ticket Type',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '100px',
           type: 'lookup',
           cssClasses: 'col-12 col-md-6',
           hidden: false,
@@ -2842,7 +2857,7 @@ export default {
           caption: 'Common.MaxQty',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '100px',
+          columnWidth: '120px',
           type: 'number',
           cssClasses: 'col-12 col-md-6',
           hidden: false,
@@ -2919,8 +2934,8 @@ export default {
           caption: 'Common.AvailableQty',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
-          type: 'string',
+          columnWidth: '155px',
+          type: 'number',
           cssClasses: 'col-12 col-md-6',
           hidden: false,
           inlineEdit: true,
@@ -3108,7 +3123,7 @@ export default {
           caption: 'Common.Amount',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '120px',
+          columnWidth: '100px',
           type: 'number',
           cssClasses: 'col-6 col-md-6',
           inlineEdit: true,
@@ -3215,6 +3230,11 @@ export default {
         context: {
           basePath: '/event',
         },
+        actions: {
+          exportCsv: {
+            hidden: true,
+          },
+        },
       },
       dataSource: {
         singularEntity: 'Drawer.DiscountCode',
@@ -3283,8 +3303,8 @@ export default {
           caption: 'Common.DisplayOrd',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
-          type: 'string',
+          columnWidth: '160px',
+          type: 'number',
         },
         TicketName: {
           displayOrder: 6,
@@ -3300,10 +3320,16 @@ export default {
         context: {
           basePath: '/event',
         },
+        actions: {
+          exportCsv: {
+            hidden: true,
+          },
+        },
       },
       dataSource: {
         type: 'rest',
-        getData: (ctx) => getData(`Events/${ctx.$route.params.id}/Survey`),
+        getData: (ctx, isExporting = false) =>
+          getData(`Events/${ctx.$route.params.id}/Survey`, isExporting),
       },
       title: 'eventRegistrationQuestion',
       type: 'list',
@@ -3326,7 +3352,7 @@ export default {
           caption: ' ',
           searchEnable: false,
           sortEnable: false,
-          columnWidth: '100px',
+          columnWidth: '120px',
           type: 'string',
           hidden: false,
           inlineEdit: true,
@@ -3497,6 +3523,11 @@ export default {
         name: 'eventSession-grid',
         context: {
           basePath: '/event',
+        },
+        actions: {
+          exportCsv: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
@@ -3739,14 +3770,19 @@ export default {
         context: {
           basePath: '/event',
         },
+        actions: {
+          exportCsv: {
+            hidden: true,
+          },
+        },
       },
       dataSource: {
         singularEntity: 'Common.Speaker',
         pluralEntity: 'Common.Speakers',
         model: 'Speaker',
         type: 'rest',
-        getData: (ctx) =>
-          getData(`Events/${ctx.$route.params.id}/EventSpeakers`),
+        getData: (ctx, isExporting = false) =>
+          getData(`Events/${ctx.$route.params.id}/EventSpeakers`, isExporting),
         mutation(ctx) {
           return {
             new: {
@@ -4114,7 +4150,7 @@ export default {
           caption: 'Common.TemplateNameCaption',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '170px',
           type: 'string',
           cssClasses: 'col-12 col-md-12',
           hidden: false,
@@ -4143,6 +4179,9 @@ export default {
         },
         actions: {
           edit: {
+            hidden: true,
+          },
+          exportCsv: {
             hidden: true,
           },
         },
@@ -4199,7 +4238,7 @@ export default {
           caption: 'Common.TypeCaption',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '120px',
           type: 'string',
         },
         DisplayOrder: {
@@ -4207,15 +4246,15 @@ export default {
           caption: 'Common.DisplayOrd',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
-          type: 'string',
+          columnWidth: '155px',
+          type: 'number',
         },
         isShowField: {
           displayOrder: 5,
           caption: 'Common.Buyer',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '100px',
           type: 'string',
         },
         isAttendeeField: {
@@ -4223,7 +4262,7 @@ export default {
           caption: 'Common.Attendee',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '100px',
           type: 'string',
         },
         isRequired: {
@@ -4231,7 +4270,7 @@ export default {
           caption: 'Common.Required',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '100px',
           type: 'string',
         },
       },
@@ -4244,10 +4283,10 @@ export default {
           new: {
             hidden: true,
           },
-          edit: {
-            hidden: false,
-          },
           delete: {
+            hidden: true,
+          },
+          exportCsv: {
             hidden: true,
           },
         },
@@ -4256,8 +4295,11 @@ export default {
         singularEntity: 'Common.RegistrationForm',
         pluralEntity: 'Common.RegistrationForms',
         type: 'rest',
-        getData: (ctx) =>
-          getData(`Events/${ctx.$route.params.id}/RegistrationForm`),
+        getData: (ctx, isExporting = false) =>
+          getData(
+            `Events/${ctx.$route.params.id}/RegistrationForm`,
+            isExporting
+          ),
       },
       title: 'eventRegistrationForm',
       type: 'list',
@@ -4777,6 +4819,11 @@ export default {
         context: {
           basePath: '/event',
         },
+        actions: {
+          exportCsv: {
+            hidden: true,
+          },
+        },
       },
       dataSource: {
         singularEntity: 'Common.RecurringSession',
@@ -4859,6 +4906,9 @@ export default {
             hidden: true,
           },
           edit: {
+            hidden: true,
+          },
+          exportCsv: {
             hidden: true,
           },
         },
@@ -4949,6 +4999,9 @@ export default {
           delete: {
             hidden: true,
           },
+          exportCsv: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
@@ -5023,6 +5076,9 @@ export default {
         },
         actions: {
           new: {
+            hidden: true,
+          },
+          exportCsv: {
             hidden: true,
           },
           edit: {
@@ -5149,6 +5205,9 @@ export default {
             hidden: true,
           },
           delete: {
+            hidden: true,
+          },
+          exportCsv: {
             hidden: true,
           },
         },

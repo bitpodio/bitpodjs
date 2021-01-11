@@ -12,6 +12,8 @@
     "Help": "עֶזרָה",
     "HomePage": "Home page",
     "SignIn": "Sign in",
+    "Live": "לחיות",
+    "Watching": "צופה",
     "EditEventInformation": "ערוך מידע על האירוע",
     "Description": "תיאור",
     "EditEventSettings": "ערוך את הגדרות האירוע",
@@ -311,7 +313,7 @@
     "OnlyAskWhen": "שאל רק מתי אחד מהכרטיסים האלה נרכש",
     "ItemDeletedSuccessfully": "הפריט נמחק בהצלחה.",
     "EditItem": "ערוך פריט",
-    "EditSurveyQuestion": "ערוך את שאלת הסקר",
+    "EditSurveyQuestion": "ערוך את שאלת ההרשמה",
     "ConfirmationEmailSent": "Confirmation Email Sent",
     "ResendRegistrationEmail": "Resend Registration Email",
     "JoinSession": "Join Session",
@@ -411,7 +413,7 @@
     "Draft": "Draft",
     "Join": "Join",
     "BannerImage": "Banner Image",
-    "StartSettingUpYourEvent": "There aren't any live events, to start setting up your event use Create Event link",
+    "StartSettingUpYourEvent": "אין אירועים חיים קרובים, כדי להתחיל בהגדרת האירוע שלך השתמש בקישור צור אירוע",
     "NoRecentBuyer": "No Recent Buyer",
     "AllEvents": "All Events",
     "FirstName": "First Name *",
@@ -719,14 +721,14 @@
     "ContactSupport": "צור קשר עם תמיכה",
     "LeaveMessage": "השאר הודעה",
     "HowHelp": "איך אני יכול לעזור לך?",
-    "VersionNotSupported":"הלוח אינו נגיש בדפדפן זה.",
+    "VersionNotSupported": "הלוח אינו נגיש בדפדפן זה.",
     "DeleteSeatmap": "מחק מפת מושבים",
     "DeleteNote": "מחק הערה",
     "PastEventMessage": "אירוע זה אינו פעיל יותר.",
     "GoToOldSite": "היכנס לאתר הישן",
     "SelectField": "בחר שדה",
-    "DeleteImage":"מחק תמונה",
-    "QuestionDeletedSuccessfully":"השאלה נמחקה בהצלחה",
+    "DeleteImage": "מחק תמונה",
+    "QuestionDeletedSuccessfully": "השאלה נמחקה בהצלחה",
     "SessionCaption": "מוֹשָׁב",
     "RegistrationForms": "טפסי הרשמה",
     "Badges": "תגים",
@@ -740,7 +742,20 @@
     "Reasons": "סיבות",
     "BadgeCategories": "קטגוריות תג",
     "ContactType": "סוג המגע",
-    "BusinessUnit": "יחידה עסקית"
+    "BusinessUnit": "יחידה עסקית",
+    "ManageWebhook": "נהל את Webhook",
+    "Test": "מִבְחָן",
+    "SelectEvents": "בחר אירועים",
+    "ViewMap": "צפה במפה",
+    "URLRecommended": "כתובת אתר (מומלץ להשתמש ב- https: //) *",
+    "EventNameHeader": "שם אירוע",
+    "RegistrationIdHeader": "מזהה רישום",
+    "TotalAmountHeader": "הכמות הכוללת",
+    "PaymentMethodHeader": "אמצעי תשלום",
+    "ExportInProgress": "הייצוא מתבצע",
+    "NoDataAvailable": "אין נתונים זמינים",
+    "ServiceUnavailable": "שירותים לא זמינים",
+    "Upgrade": "שדרוג"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",
@@ -785,7 +800,8 @@
     "DiscountCode": "Discount Code",
     "Members": "Members",
     "Contacts": "Contacts",
-    "SessionOverlaps": "אזהרת חפיפה של מושב"
+    "SessionOverlaps": "אזהרת חפיפה של מושב",
+    "ExportToCSV": "ייצא ל- CSV"
   },
   "FilterOptions": {
     "Is": "Is",
@@ -891,8 +907,10 @@
       "NoEventsFound": "לא נמצאו אירועים עם שם {searchKey}",
       "ConfirmResendRegistrationEmail": "האם אתה בטוח שברצונך לשלוח שוב הודעות אישור?",
       "DeleteSeatMap": "האם אתה רוצה למחוק את מפת המושב הזו?",
-      "DeleteSeatMapEvent":"האם אתה רוצה למחוק את מפת המושבים הזו? פריסה זו כבר משויכת לאירוע.",
-      "DeleteEventQuestion":"האם ברצונך למחוק שאלה זו?"
+      "DeleteSeatMapEvent": "האם אתה רוצה למחוק את מפת המושבים הזו? פריסה זו כבר משויכת לאירוע.",
+      "DeleteEventQuestion": "האם ברצונך למחוק שאלה זו?",
+      "RegistrationTypeDefault": "ניתן להגדיר ברירת מחדל רק סוג רישום אחד",
+      "RegistrationTypeWarning": "אזהרת סוג רישום"
     },
     "Success": {
       "CopiedClipboard": "הועתק ללוח",
@@ -935,7 +953,15 @@
       "UpdatedSuccessfully": "{modelName} עודכן בהצלחה",
       "CreatedSuccessfully": "{modelName} נוצר בהצלחה",
       "ListUpdatedSucess": "{modelName} פריט הרשימה עודכן בהצלחה.",
-      "ThanksHelp": "תודה שפנית אלינו! אנחנו נחזור אליך בקרוב!"
+      "ThanksHelp": "תודה שפנית אלינו! אנחנו נחזור אליך בקרוב!",
+      "QuestionRecordCreatedSuccess": "שאלה נוצרה בהצלחה",
+      "QuestionRecordUpdatedSuccess": "השאלה עודכנה בהצלחה",
+      "TicketRecordCreatedSuccess": "הכרטיס נוצר בהצלחה",
+      "TicketRecordUpdatedSuccess": "הכרטיס עודכן בהצלחה",
+      "RegistrationFormUpdatedSuccess": "טופס ההרשמה עודכן בהצלחה",
+      "SessionCreatedSuccess": "ההפעלה נוצרה בהצלחה",
+      "SessionUpdatedSuccess": "ההפעלה עודכנה בהצלחה",
+      "ContactImportSuccess":"אנשי הקשר יובאו בהצלחה"
     }
   },
   "$vuetify": {

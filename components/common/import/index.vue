@@ -101,6 +101,11 @@
         </v-card>
       </template>
     </v-dialog>
+    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true" width="2px">
+      <div class="fs-16 text-center">
+        {{ snackbarText }}
+      </div>
+    </v-snackbar>
   </v-col>
 </template>
 <script>
@@ -132,6 +137,9 @@ export default {
       resetList: [],
       fileList: [],
       selectedFile: {},
+      snackbarText: '',
+      timeout: 3000,
+      snackbar: false,
     }
   },
   methods: {

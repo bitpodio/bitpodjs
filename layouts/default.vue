@@ -179,7 +179,7 @@
           <v-card>
             <v-list>
               <v-list-item>
-                <v-list-item-avatar size="48">
+                <v-list-item-avatar size="48" class="mt-0">
                   <v-avatar color="primary" size="48" v-bind="attrs" v-on="on">
                     <span class="white--text headline">{{
                       $auth.user.data.name && $auth.user.data.name[0]
@@ -187,13 +187,16 @@
                   </v-avatar>
                 </v-list-item-avatar>
 
-                <v-list-item-content>
+                <v-list-item-content class="mxcol-200">
                   <v-list-item-title>{{
                     $auth.user.data.name
                   }}</v-list-item-title>
                   <v-list-item-subtitle>{{
                     $auth.user.data.email
                   }}</v-list-item-subtitle>
+                  <div v-if="allowUpgrade">
+                    <Upgrade />
+                  </div>
                 </v-list-item-content>
               </v-list-item>
             </v-list>
@@ -234,10 +237,13 @@
 <script>
 import OrgnaizationList from '~/components/common/organization-list'
 import AppDrawer from '~/components/common/app-drawer'
+import Upgrade from '~/components/common/upgrade'
+import userUtils from '~/utility/userApps'
 export default {
   components: {
     OrgnaizationList,
     AppDrawer,
+    Upgrade,
   },
   props: {
     source: { type: String, default: '' },
@@ -255,6 +261,7 @@ export default {
     tabs: null,
     account: false,
     message: false,
+    allowUpgrade: false,
     items: [
       {
         icon: 'fa fa-grid',
@@ -265,7 +272,7 @@ export default {
       {
         icon: 'fa fa-calendar',
         text: 'Events',
-        to: '/apps/event/list/Event/live and draft event',
+        to: '/apps/event/list/Event/live-and-draft-event',
       },
       {
         icon: 'fa fa-user-plus',
@@ -276,7 +283,7 @@ export default {
       {
         icon: 'fa fa-building',
         text: 'Discount Code',
-        to: '/apps/event/list/DiscountCodes/Discount Codes',
+        to: '/apps/event/list/DiscountCodes/Discount-Codes',
       },
       { heading: 'Members' },
       {
@@ -299,6 +306,11 @@ export default {
       }
       await this.$apolloHelpers.onLogin(token, undefined, { expires: 7 })
     }
+  },
+  mounted() {
+    const userInfo = userUtils.userCurrentOrgInfo(this.$store) || {}
+    const userRoles = userInfo.roles || []
+    this.allowUpgrade = userRoles.includes('$orgowner')
   },
   methods: {
     async onLogout() {
