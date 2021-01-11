@@ -210,7 +210,7 @@ export default {
       this.$auth.$state.user.data
     ) {
       if (this.$auth.user.data.orgList.length) {
-        this.orgname = this.$auth.user.data.orgList[0].name
+        this.orgName = this.$auth.user.data.orgList[0].name
         this.redirectToOrg = true
       } else {
         this.tab = 1
@@ -226,7 +226,7 @@ export default {
     messageReceived(e) {
       if (e.data === 'success' && this.redirectToOrg) {
         document.cookie = `auth.redirect=; Path=${this.$config.basePublicPath}; Expires=Thu, 01 Jan 1970 00:00:01 GMT;`
-        location.href = `https://${this.orgname}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}/apps/event/list/Event/live-and-draft-event`
+        location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}/apps/event/list/Event/live-and-draft-event`
       }
     },
     iframeLoaded() {
