@@ -810,13 +810,12 @@ export default {
       })
       if (result.data.Event.EventCount > 0) {
         this.isInvalidEventLink = true
-        this.uniqueLinkValidationMsg = this.$t(
-          'Messages.Error.UniqueLinkDuplicate'
-        )
+        this.isUniqLinkValid = false
+        this.uniqueLinkMessage = this.$t('Messages.Error.UniqueLinkDuplicate')
       } else {
         this.isInvalidEventLink = false
         this.isUniqLinkValid = true
-        this.uniqueLinkValidationMsg = ''
+        this.uniqueLinkMessage = ''
       }
     },
     ticketCountRules() {

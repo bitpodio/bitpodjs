@@ -1,12 +1,12 @@
 <template>
   <div class="help-section">
     <v-btn icon class="d-none d-sm-inline" @click="helpDialog = !helpDialog">
-      <v-icon> mdi-help</v-icon>
+      <v-icon> fa-help-circle</v-icon>
     </v-btn>
     <v-list shaped class="d-block d-sm-none py-0 mt-n2">
       <v-list-item @click="mobileHelp">
         <v-list-item-action class="nav-icon">
-          <v-icon class="fs-18">mdi-help</v-icon>
+          <v-icon>fa-help-circle</v-icon>
         </v-list-item-action>
         <v-list-item-content>
           <v-list-item-title class="nav-title">

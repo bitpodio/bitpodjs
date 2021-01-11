@@ -809,7 +809,7 @@
                             class="pa-2 pb-0 st-date e-td"
                             data-title="Start Time"
                           >
-                            <Lookup
+                            <Select
                               v-model="session.StartTime"
                               :field="startTimeProps"
                               :rules="validStartTimeRule(k)"
@@ -819,7 +819,7 @@
                             class="pa-2 pb-0 st-date e-td"
                             data-title="End Time"
                           >
-                            <Lookup
+                            <Select
                               v-model="session.EndTime"
                               :field="endTimeProps"
                               :rules="validEndTimeRule(k)"
@@ -1039,6 +1039,7 @@ import gql from 'graphql-tag'
 import format from 'date-fns/format'
 import { formatTimezoneDateFieldsData } from '~/utility/form.js'
 import Lookup from '~/components/common/form/lookup.vue'
+import Select from '~/components/common/form/select.vue'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import Timezone from '~/components/common/form/timezone'
 import eventCount from '~/config/apps/event/gql/eventCount.gql'
@@ -1063,6 +1064,7 @@ export default {
     Timezone,
     CustomDate,
     SaveBtn,
+    Select,
     VueGoogleAutocomplete: () => import('vue-google-autocomplete'),
   },
   props: {
@@ -1173,7 +1175,7 @@ export default {
         },
       },
       startTimeProps: {
-        type: 'lookup',
+        type: 'select',
         dataSource: {
           query: registrationStatusOptions,
           itemText: 'value',
@@ -1186,7 +1188,7 @@ export default {
         },
       },
       endTimeProps: {
-        type: 'lookup',
+        type: 'select',
         dataSource: {
           query: registrationStatusOptions,
           itemText: 'value',
@@ -1450,13 +1452,12 @@ export default {
       })
       if (result.data.Event.EventCount > 0) {
         this.isInalidEventLink = true
-        this.uniqueLinkValidationMsg = this.$t(
-          'Messages.Error.UniqueLinkDuplicate'
-        )
+        this.isUniqLinkValid = false
+        this.uniqueLinkMessage = this.$t('Messages.Error.UniqueLinkDuplicate')
       } else {
         this.isInalidEventLink = false
         this.isUniqLinkValid = true
-        this.uniqueLinkValidationMsg = ''
+        this.uniqueLinkMessage = ''
       }
     },
     focusOut() {

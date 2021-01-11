@@ -828,11 +828,18 @@ table > tbody > tr:last-child .key-align {
   .slide-form-default .v-card__title {
     word-break: break-word !important;
   }
+  .slide-form .v-card__actions,
+  .slide-form-default .v-card__actions {
+      padding: 8px 24px !important;
+  }
   .seatmap .v-data-footer {
     width: 100% !important;
     max-width: 100% !important;
   }
   td.v-data-table__mobile-row .ps-top6 {
     right: -10px;
+  }
+  .type-number {
+    padding-right: 0 !important;
   }
 }
