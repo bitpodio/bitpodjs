@@ -376,7 +376,7 @@
                         <i18n path="Common.Contacts" />
                       </h4>
                     </div>
-                    <div v-if="dialog" class="borderRightGrey pr-3 mr-n3">
+                    <div v-if="dialog" class="pr-3 mr-n3">
                       <Grid
                         :value="selectedList"
                         view-name="InviteContacts"
