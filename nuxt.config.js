@@ -405,9 +405,4 @@ export default {
       process.env.GOOGLE_MAPS_GEOCODE_API ||
       'https://maps.googleapis.com/maps/api/geocode/json',
   },
-
-  mappingIds: {
-    contact: '5f7ac71841a664000a774fc0',
-    attendee: '5f7b46475ca471000bfecf9d',
-  },
 }

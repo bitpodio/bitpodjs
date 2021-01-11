@@ -23,7 +23,7 @@
       <importContact
         sample-file-name="v1573631144/Contact.csv"
         :template-data="fieldNames"
-        model-name="contact"
+        model-name="Contact"
       />
     </v-list-item>
   </div>
