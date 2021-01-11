@@ -110,7 +110,6 @@
 </template>
 <script>
 import File from '~/components/common/form/file.vue'
-import nuxtconfig from '~/nuxt.config'
 export default {
   components: {
     File,
@@ -155,10 +154,13 @@ export default {
     },
     async importContacts() {
       const url = this.$bitpod.getApiUrl()
+      const mappingRes = await this.$axios.$get(
+        `${url}mappings?filter={"where":{"mappingName":"${this.modelName}"}}`
+      )
       try {
         const formData = new FormData()
         formData.append('file', this.selectedFile)
-        formData.append('mappingId', nuxtconfig.mappingIds[this.modelName])
+        formData.append('mappingId', mappingRes[0].id)
         const res = await this.$axios.post(
           `${url}jobDetails/importData`,
           formData,
@@ -169,7 +171,7 @@ export default {
           }
         )
         if (res) {
-          if (this.modelName === 'attendee') {
+          if (this.modelName === 'Attendee') {
             const obj = res.data.res
             const importObj = {
               Type: obj.modelName,
@@ -182,6 +184,7 @@ export default {
           }
           this.snackbarText = this.$t('Messages.Success.ContactImportSuccess')
           this.snackbar = true
+          this.$emit('contacts-imported')
         }
       } catch (e) {
         console.log('Error', e)
