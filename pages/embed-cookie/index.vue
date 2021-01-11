@@ -11,7 +11,7 @@ export default {
   },
   methods: {
     messageReceived(e) {
-      e.data.split(';').map((i) => {
+      e.data.split('; ').map((i) => {
         document.cookie = i
       })
       window.parent.postMessage('success', '*')
