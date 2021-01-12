@@ -316,7 +316,7 @@ body {
   width: 100%;
 }
 .contactsGrid:hover {
-  overflow-y: auto;
+  overflow-y: scroll;
 }
 .tempCard {
   transition: opacity 0.4s ease-in-out;
