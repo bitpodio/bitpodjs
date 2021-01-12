@@ -285,7 +285,7 @@
       </div>
       <div
         v-if="viewName === 'seatmaps'"
-        class="d-flex flex-wrap flex-row seat-skeleton-inner mt-10 pl-3"
+        class="d-flex flex-wrap flex-row seat-skeleton-inner mt-10 pl-2"
       >
         <v-skeleton-loader
           v-for="i in 10"
@@ -301,14 +301,14 @@
       </div>
       <div
         v-if="viewName === 'integration'"
-        class="d-flex flex-wrap flex-row seat-skeleton-inner mt-16 pl-5"
+        class="d-flex flex-wrap flex-row seat-skeleton-inner mt-16 pl-2"
       >
         <v-skeleton-loader
           v-for="i in 10"
           :key="i"
           :loading="loading"
           type="card"
-          width="155"
+          width="150"
           height="125"
           class="pl-0 pt-0 eventtiles ma-3 ma-md-10 ml-0 mt-0 ml-md-0 mt-md-0"
         >

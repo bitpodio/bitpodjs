@@ -231,7 +231,7 @@
           <v-card>
             <v-list>
               <v-list-item>
-                <v-list-item-avatar size="48">
+                <v-list-item-avatar size="48" class="mt-0">
                   <v-avatar color="primary" size="48" v-bind="attrs" v-on="on">
                     <span class="white--text headline">{{
                       $auth.user.data.name && $auth.user.data.name[0]
@@ -239,13 +239,16 @@
                   </v-avatar>
                 </v-list-item-avatar>
 
-                <v-list-item-content>
+                <v-list-item-content class="mxcol-200">
                   <v-list-item-title>{{
                     $auth.user.data.name
                   }}</v-list-item-title>
                   <v-list-item-subtitle>{{
                     $auth.user.data.email
                   }}</v-list-item-subtitle>
+                  <div v-if="allowUpgrade">
+                    <Upgrade />
+                  </div>
                 </v-list-item-content>
               </v-list-item>
             </v-list>
@@ -294,6 +297,8 @@ import OrgnaizationList from '~/components/common/organization-list'
 import AppDrawer from '~/components/common/app-drawer'
 import Help from '~/components/common/help'
 import OldSite from '~/components/common/oldsite'
+import Upgrade from '~/components/common/upgrade'
+import userUtils from '~/utility/userApps'
 export default {
   middleware: ['auth', 'authorization'],
   components: {
@@ -301,6 +306,7 @@ export default {
     AppDrawer,
     Help,
     OldSite,
+    Upgrade,
   },
   props: {
     source: { type: String, default: '' },
@@ -320,6 +326,7 @@ export default {
     message: false,
     triggerReset: false,
     triggerRecEventReset: false,
+    allowUpgrade: false,
     activeClass: ' v-list-item--active',
     items: [
       {
@@ -378,6 +385,11 @@ export default {
       token = token.split(' ')[1]
     }
     await this.$apolloHelpers.onLogin(token, undefined, { expires: 7 })
+  },
+  mounted() {
+    const userInfo = userUtils.userCurrentOrgInfo(this.$store) || {}
+    const userRoles = userInfo.roles || []
+    this.allowUpgrade = userRoles.includes('$orgowner')
   },
   methods: {
     async onLogout() {
