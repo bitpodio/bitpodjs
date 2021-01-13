@@ -354,6 +354,17 @@ export default {
           inlineEdit: false,
           newForm: false,
           editForm: false,
+          customExport: (startDate) => {
+            if (startDate) {
+              const tempDate = new Date(startDate)
+              return (
+                tempDate.toLocaleDateString() +
+                ' ' +
+                tempDate.toLocaleTimeString()
+              )
+            }
+            return ''
+          },
         },
         TicketQuantity: {
           displayOrder: 9,
@@ -799,6 +810,17 @@ export default {
           inlineEdit: false,
           newForm: false,
           editForm: false,
+          customExport: (startDate) => {
+            if (startDate) {
+              const tempDate = new Date(startDate)
+              return (
+                tempDate.toLocaleDateString() +
+                ' ' +
+                tempDate.toLocaleTimeString()
+              )
+            }
+            return ''
+          },
         },
         TicketQuantity: {
           displayOrder: 9,
@@ -1389,6 +1411,17 @@ export default {
           inlineEdit: true,
           newForm: false,
           editForm: false,
+          customExport: (startDate) => {
+            if (startDate) {
+              const tempDate = new Date(startDate)
+              return (
+                tempDate.toLocaleDateString() +
+                ' ' +
+                tempDate.toLocaleTimeString()
+              )
+            }
+            return ''
+          },
         },
         '_CurrentAddress.AddressLine': {
           form: {

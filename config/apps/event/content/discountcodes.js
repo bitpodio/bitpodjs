@@ -122,6 +122,17 @@ export default {
           newForm: true,
           editForm: true,
           default: '',
+          customExport: (startDate) => {
+            if (startDate) {
+              const tempDate = new Date(startDate)
+              return (
+                tempDate.toLocaleDateString() +
+                ' ' +
+                tempDate.toLocaleTimeString()
+              )
+            }
+            return ''
+          },
         },
         offerValue: {
           form: {
@@ -208,6 +219,17 @@ export default {
           inlineEdit: false,
           newForm: false,
           editForm: false,
+          customExport: (startDate) => {
+            if (startDate) {
+              const tempDate = new Date(startDate)
+              return (
+                tempDate.toLocaleDateString() +
+                ' ' +
+                tempDate.toLocaleTimeString()
+              )
+            }
+            return ''
+          },
         },
         EventId: {
           form: {
