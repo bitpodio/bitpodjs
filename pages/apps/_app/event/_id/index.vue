@@ -1780,7 +1780,9 @@ export default {
       try {
         const url = this.$bitpod.getApiUrl()
         const res = await this.$axios.get(
-          `${url}Events/${this.$route && this.$route.params && this.$route.params.id}/Attende`
+          `${url}Events/${
+            this.$route && this.$route.params && this.$route.params.id
+          }/Attende`
         )
         if (res) {
           this.attendees = res.data
@@ -1788,7 +1790,9 @@ export default {
         }
       } catch (e) {
         console.error(
-          `Error in apps/event/_id/index.vue while making a GQL call to Attendee model in method getAttendees context: EventId:-${this.$route && this.$route.params && this.$route.params.id}`,
+          `Error in apps/event/_id/index.vue while making a GQL call to Attendee model in method getAttendees context: EventId:-${
+            this.$route && this.$route.params && this.$route.params.id
+          }`,
           e
         )
       }
