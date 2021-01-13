@@ -8,7 +8,7 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on">
-          <i class="fa fa-upload iconSize mr-1" aria-hidden="true"></i>
+          <i class="fa fa-download iconSize mr-1" aria-hidden="true"></i>
           <i18n path="Common.Import" />
         </v-btn>
       </template>
