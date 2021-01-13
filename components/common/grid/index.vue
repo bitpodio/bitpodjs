@@ -291,11 +291,11 @@
         <v-skeleton-loader
           v-for="i in 10"
           :key="i"
-          loading="true"
+          :loading="loading"
           type="card"
           width="226"
           height="300"
-          class="pa-4 pl-0 pt-0 eventtiles ma-2 ml-0 mt-0"
+          class="pa-0 eventtiles ma-3 ml-0 mt-0"
         >
           <div></div>
         </v-skeleton-loader>
