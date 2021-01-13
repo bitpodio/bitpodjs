@@ -138,6 +138,7 @@
           viewName === 'live-and-draft-event' ||
           viewName === 'template' ||
           viewName === 'seatmaps' ||
+          viewName === 'badge' ||
           viewName === 'integration'
             ? ''
             : 'table'
@@ -279,6 +280,22 @@
           type="card"
           width="236"
           class="pa-4 pl-0 pt-0 eventtiles ma-4 ml-0 mt-0"
+        >
+          <div></div>
+        </v-skeleton-loader>
+      </div>
+      <div
+        v-if="viewName === 'badge'"
+        class="d-flex flex-sm-wrap flex-column flex-sm-row"
+      >
+        <v-skeleton-loader
+          v-for="i in 10"
+          :key="i"
+          loading="true"
+          type="card"
+          width="226"
+          height="300"
+          class="pa-4 pl-0 pt-0 eventtiles ma-2 ml-0 mt-0"
         >
           <div></div>
         </v-skeleton-loader>
