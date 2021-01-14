@@ -279,7 +279,10 @@ export default {
             Status: 'Not ready',
             Timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
             Title: this.eventName,
-            UniqLink: this.eventName.replace(/[^A-Za-z0-9]/g, ''),
+            UniqLink: `${this.orgInfo.name}-${this.eventName}`.replace(
+              /[^A-Za-z0-9]/g,
+              ''
+            ),
             VenueName: '',
             WebinarLink: '',
             _VenueAddress: {},
