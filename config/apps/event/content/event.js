@@ -945,50 +945,19 @@ export default {
           where: {
             or: [
               {
-                and: [
-                  {
-                    or: [
-                      {
-                        StartDate: {
-                          lte: new Date(),
-                        },
-                      },
-                      {
-                        StartDate: {
-                          gte: new Date(),
-                        },
-                      },
-                      {
-                        StartDate: {
-                          exists: false,
-                        },
-                      },
-                      {
-                        StartDate: null,
-                      },
-                    ],
-                  },
-                  {
-                    or: [
-                      {
-                        StartDate: {
-                          gte: new Date(),
-                        },
-                      },
-                      {
-                        StartDate: {
-                          exists: false,
-                        },
-                      },
-                      {
-                        StartDate: null,
-                      },
-                    ],
-                  },
-                ],
+                EndDate: {
+                  gte: new Date(),
+                },
               },
               {
-                Status: 'Not ready',
+                EndDate: {
+                  exists: false,
+                },
+              },
+              {
+                StartDate: {
+                  gte: new Date(),
+                },
               },
             ],
           },
