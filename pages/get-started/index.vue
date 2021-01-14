@@ -261,7 +261,7 @@ export default {
       this.statusMessage = 'Creating your first event'
       try {
         this.endDateTime = new Date(
-          new Date().setDate(this.startDateTime.getDate() + 1)
+          new Date().setDate(this.startDateTime.getDate() + 4)
         )
         const res = await this.$axios.$post(
           `https://${this.$config.axios.backendBaseUrl}${nuxtconfig.axios.apiEndpoint}Events`,
