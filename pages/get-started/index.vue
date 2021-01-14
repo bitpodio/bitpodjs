@@ -197,7 +197,9 @@ export default {
   watch: {
     tab(newVal) {
       if (newVal === 2) {
-        this.startDateTime = new Date()
+        this.startDateTime = new Date(
+          new Date().setDate(new Date().getDate() + 1)
+        )
       }
     },
   },
@@ -258,8 +260,9 @@ export default {
     async createEvent() {
       this.statusMessage = 'Creating your first event'
       try {
-        this.endDateTime = new Date(this.startDateTime)
-        this.endDateTime.setDate(this.endDateTime.getDate() + 4)
+        this.endDateTime = new Date(
+          new Date().setDate(this.startDateTime.getDate() + 1)
+        )
         const res = await this.$axios.$post(
           `https://${this.$config.axios.backendBaseUrl}${nuxtconfig.axios.apiEndpoint}Events`,
           {
