@@ -125,6 +125,17 @@ export default {
           type: 'date',
           newForm: false,
           editForm: false,
+          customExport: (startDate) => {
+            if (startDate) {
+              const tempDate = new Date(startDate)
+              return (
+                tempDate.toLocaleDateString() +
+                ' ' +
+                tempDate.toLocaleTimeString()
+              )
+            }
+            return ''
+          },
         },
         createdBy: {
           displayOrder: 7,

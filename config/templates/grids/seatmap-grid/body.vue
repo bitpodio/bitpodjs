@@ -1,6 +1,6 @@
 <template>
   <v-flex class="greybg">
-    <v-col class="d-flex flex-wrap greybg pa-0 pl-3 pt-10 seatmap-inner">
+    <v-col class="d-flex flex-wrap greybg pa-0 pt-10 seatmap-inner">
       <v-hover v-slot:default="{ hover }" open-delay="200">
         <nuxt-link :to="seatmapRoute" class="text-decoration-none">
           <v-card

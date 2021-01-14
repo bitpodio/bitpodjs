@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div :id="viewName">
     <ExportLoader
       :is-loading="exportInProgress"
       :title="$t('Drawer.ExportToCSV')"
@@ -13,6 +13,7 @@
         }
       "
     />
+    <confirm ref="confirm"></confirm>
     <template v-if="!!error">
       <div>
         <component :is="errorTemplate || null" :error="error" />
@@ -39,7 +40,7 @@
             'elevation-1 boxview rounded': onlySticky && winWidth < 600,
           }"
         >
-          <div v-if="showTripleDot" class="grid-actions-menu">
+          <div v-if="showTripleDot && winWidth < 600" class="grid-actions-menu">
             <v-menu right :offset-y="offset" transition="slide-y-transition">
               <template v-slot:activator="{ on, attrs }">
                 <v-btn icon small v-bind="attrs" v-on="on">
@@ -74,22 +75,8 @@
               </v-list>
             </v-menu>
           </div>
-          <div class="grid-actions-spread">
-            <div class="d-flex">
-              <component
-                :is="actionTemplates['row-select'] || null"
-                v-if="selectedItems.length > 0"
-                :content="content"
-                :view-name="viewName"
-                :on-update-item="onUpdateItem"
-                :on-delete-item="onDeleteItem"
-                :items="selectedItems"
-                :refresh="refresh"
-                :context="context"
-                :get-action-items="getActionItems"
-                class="d-inline-flex"
-                @has-custom-row-action="getRowOption"
-              />
+          <div v-else-if="winWidth > 600" class="grid-actions-spread">
+            <div class="d-flex align-center">
               <component
                 :is="actionTemplates['grid'] || null"
                 :content="content"
@@ -102,9 +89,25 @@
                 class="d-inline-flex"
                 @has-custom-grid-action="getGridOption"
               />
+              <component
+                :is="actionTemplates['row-select'] || null"
+                v-if="
+                  selectedItems.length > 0 && actionsCount <= baseActionCount
+                "
+                :content="content"
+                :view-name="viewName"
+                :on-update-item="onUpdateItem"
+                :on-delete-item="onDeleteItem"
+                :items="selectedItems"
+                :refresh="refresh"
+                :context="context"
+                :get-action-items="getActionItems"
+                class="d-inline-flex"
+                @has-custom-row-action="getRowOption"
+              />
             </div>
           </div>
-          <div v-if="hideFilter">
+          <div v-if="hideFilter" class="grid-filter">
             <slot name="filter">
               <FieldsFilter
                 v-model="filters"
@@ -130,6 +133,32 @@
               ></v-text-field>
             </slot>
           </div>
+          <v-menu
+            v-if="selectedItems.length > 0 && actionsCount > baseActionCount"
+            right
+            :offset-y="offset"
+            transition="slide-y-transition"
+          >
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn icon small v-bind="attrs" v-on="on">
+                <v-icon>mdi-dots-vertical</v-icon>
+              </v-btn>
+            </template>
+            <v-list dense>
+              <component
+                :is="actionTemplates['row-select'] || null"
+                :content="content"
+                :view-name="viewName"
+                :on-update-item="onUpdateItem"
+                :on-delete-item="onDeleteItem"
+                :items="selectedItems"
+                :refresh="refresh"
+                :context="context"
+                :get-action-items="getActionItems"
+                @has-custom-row-action="getRowOption"
+              />
+            </v-list>
+          </v-menu>
         </div>
       </div>
       <v-skeleton-loader
@@ -138,6 +167,7 @@
           viewName === 'live-and-draft-event' ||
           viewName === 'template' ||
           viewName === 'seatmaps' ||
+          viewName === 'badge' ||
           viewName === 'integration'
             ? ''
             : 'table'
@@ -284,8 +314,24 @@
         </v-skeleton-loader>
       </div>
       <div
+        v-if="viewName === 'badge'"
+        class="d-flex flex-sm-wrap flex-column flex-sm-row"
+      >
+        <v-skeleton-loader
+          v-for="i in 10"
+          :key="i"
+          :loading="loading"
+          type="card"
+          width="226"
+          height="300"
+          class="pa-0 eventtiles ma-3 ml-0 mt-0"
+        >
+          <div></div>
+        </v-skeleton-loader>
+      </div>
+      <div
         v-if="viewName === 'seatmaps'"
-        class="d-flex flex-wrap flex-row seat-skeleton-inner mt-10 pl-3"
+        class="d-flex flex-wrap flex-row seat-skeleton-inner mt-10 pl-2"
       >
         <v-skeleton-loader
           v-for="i in 10"
@@ -301,14 +347,14 @@
       </div>
       <div
         v-if="viewName === 'integration'"
-        class="d-flex flex-wrap flex-row seat-skeleton-inner mt-16 pl-5"
+        class="d-flex flex-wrap flex-row seat-skeleton-inner mt-16 pl-2"
       >
         <v-skeleton-loader
           v-for="i in 10"
           :key="i"
           :loading="loading"
           type="card"
-          width="155"
+          width="150"
           height="125"
           class="pl-0 pt-0 eventtiles ma-3 ma-md-10 ml-0 mt-0 ml-md-0 mt-md-0"
         >
@@ -675,6 +721,40 @@ export default {
         this.viewName === this.$store.state.exportInProgress.key
       )
     },
+    actionsCount() {
+      if (this.winWidth > 600) {
+        const actionSpreadParents = document
+          .getElementById(this.viewName)
+          .getElementsByClassName('grid-actions-spread')?.[0]
+          ?.getElementsByClassName('d-flex')?.[0]
+          ?.getElementsByClassName('d-inline-flex')
+        const actionsSpreadCount =
+          [...actionSpreadParents].reduce(
+            (acc, elem) => acc + elem.childElementCount,
+            0
+          ) +
+          (document
+            .getElementById(this.viewName)
+            .getElementsByClassName('grid-filter')?.[0]
+            ? 1
+            : 0) +
+          (document
+            .getElementById(this.viewName)
+            .getElementsByClassName('grid-search-section')?.[0]
+            ? 1
+            : 0)
+        return actionsSpreadCount
+      }
+      return 0
+    },
+    baseActionCount() {
+      if (this.winWidth <= 1600 && this.winWidth >= 600) {
+        return 2
+      } else if (this.winWidth >= 1600) {
+        return 3
+      }
+      return 0
+    },
   },
   watch: {
     filters() {
@@ -696,6 +776,8 @@ export default {
     }, 2000)
     this.$eventBus.$on('unselectAll-record', this.unselectAllRecord)
     this.$eventBus.$on('eventInvites-grid-refresh', this.refreshGrid)
+    this.$eventBus.$on('toggle-snackbar', this.toggleSnackbar)
+    this.$eventBus.$on('toggle-confirm', this.toggleConfirm)
     if (this.loadRestData) {
       this.$eventBus.$on('user-created', this.loadRestData)
     }
@@ -733,12 +815,10 @@ export default {
         return el.parentElement.appendChild(sentinel)
       })
     }
-
     const fireEvent = (stuck, target) => {
       const e = new CustomEvent('sticky-change', { detail: { stuck, target } })
       document.dispatchEvent(e)
     }
-
     const observeHeaders = (container) => {
       this.headerObserver = new IntersectionObserver(
         (records, observer) => {
@@ -770,7 +850,6 @@ export default {
       const sentinels = addSentinels(container, 'sticky_sentinel--top')
       sentinels.forEach((el) => this.headerObserver.observe(el))
     }
-
     const observeFooters = (container) => {
       this.footerObserver = new IntersectionObserver(
         (records, observer) => {
@@ -803,14 +882,12 @@ export default {
       const sentinels = addSentinels(container, 'sticky_sentinel--bottom')
       sentinels.forEach((el) => this.footerObserver.observe(el))
     }
-
     const observeStickyHeaderChanges = (container) => {
       observeHeaders(container)
       observeFooters(container)
     }
-
-    observeStickyHeaderChanges(document.querySelector('#inspire'))
-
+    if (this.winWidth < 600)
+      observeStickyHeaderChanges(document.querySelector(`#${this.viewName}`))
     this.$nextTick(() => {
       window.addEventListener('resize', this.onResize)
     })
@@ -827,11 +904,36 @@ export default {
     this.$eventBus.$off('user-created')
     this.$eventBus.$off('grids-refresh')
     this.$eventBus.$off('unselectAll-record')
-    this.headerObserver.disconnect()
-    this.footerObserver.disconnect()
+    this.$eventBus.$off('toggle-snackbar')
+    this.$eventBus.$off('toggle-confirm')
+    this.headerObserver?.disconnect()
+    this.footerObserver?.disconnect()
     window.removeEventListener('resize', this.onResize)
   },
   methods: {
+    toggleSnackbar(toggleViewName, message, timeout = 3000) {
+      if (this.viewName === toggleViewName) {
+        this.snackbarText = message
+        this.timeout = timeout
+        this.snackbar = true
+      }
+    },
+    async toggleConfirm(
+      toggleViewName,
+      callbackEvent,
+      { title, message, options }
+    ) {
+      if (this.viewName === toggleViewName) {
+        const confirmResend = await this.$refs.confirm.open(
+          title,
+          message,
+          options
+        )
+        if (confirmResend) {
+          this.$eventBus.$emit(`${callbackEvent}`)
+        }
+      }
+    },
     refreshGrid(viewName) {
       if (viewName === this.viewName) {
         this.refresh()
@@ -1099,6 +1201,7 @@ export default {
         try {
           this.tableData = await getDataFunc.call(this, options)
           this.noDataText = this.$t('Common.NoDataAvailable')
+          this.componentRerenderKey += this.slotTemplates.body ? 1 : 0
           this.loading = false
         } catch (e) {
           console.error(
@@ -1163,6 +1266,7 @@ export default {
               }
             : {}
         if (Object.keys(data).length > 0) this.error = ''
+        this.componentRerenderKey += this.slotTemplates.body ? 1 : 0
         return tableData
       },
       result({ data, loading, networkStatus }) {

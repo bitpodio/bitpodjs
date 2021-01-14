@@ -1,7 +1,7 @@
 <template>
   <v-col v-if="canExport" class="px-0">
     <v-btn text small @click="onCsvExport">
-      <v-icon left>fa-download</v-icon>
+      <v-icon left>fa-upload</v-icon>
       <span>
         <i18n path="Drawer.ExportToCSV" />
       </span>

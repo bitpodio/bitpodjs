@@ -979,7 +979,17 @@ export default {
             where: {
               and: [
                 { Status: 'Open for registration' },
-                { EndDate: { gte: new Date() } },
+                {
+                  or: [
+                    { BusinessType: 'Recurring' },
+                    {
+                      and: [
+                        { EndDate: { gte: new Date() } },
+                        { BusinessType: 'Single' },
+                      ],
+                    },
+                  ],
+                },
               ],
             },
           },
