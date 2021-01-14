@@ -244,7 +244,6 @@ export default {
         this.resetBtn = !this.resetBtn
         if (res && res[1].success === true) {
           this.orgInfo = res[1].data
-          console.debug(this.orgInfo)
           this.tab = 2
         } else {
           this.snackbarText = 'Failed to create your Organisation.'
