@@ -172,7 +172,7 @@
             v-slot:activator="{ on, attrs }"
           >
             <v-avatar color="primary ml-2" size="30" v-bind="attrs" v-on="on">
-              <span class="white--text">{{
+              <span class="white--text" @click="userPlan">{{
                 $auth.user.data.name && $auth.user.data.name[0]
               }}</span>
             </v-avatar>
@@ -196,7 +196,12 @@
                     $auth.user.data.email
                   }}</v-list-item-subtitle>
                   <div v-if="allowUpgrade">
-                    <Upgrade />
+                    <div class="d-inline-flex mxcol-200 mt-1 align-center">
+                      <v-list-item-subtitle class="text-body-2">{{
+                        userPlanData
+                      }}</v-list-item-subtitle>
+                      <Upgrade />
+                    </div>
                   </div>
                 </v-list-item-content>
               </v-list-item>
@@ -325,6 +330,7 @@ export default {
       valid: false,
       allowUpgrade: false,
       rules: rules(this.$i18n),
+      userPlanData: '',
       formData: {
         emailId: '',
       },
@@ -419,6 +425,22 @@ export default {
           `Error in layouts/admin.vue while making a POST call to Users model from method onSave context:-URL:-${url}\n OrgId:-${orgId}\n formData:-${this.formData} `,
           e
         )
+      }
+    },
+    async userPlan() {
+      try {
+        const url = this.$bitpod.getApiUrl()
+        const res = await this.$axios.$get(
+          `${url}OrganizationInfos/getSubscription`
+        )
+        if (res) {
+          const obj = res.filter((a) => {
+            return a.isActive === true ? a : ''
+          })
+          this.userPlanData = obj[0].SubProduct.DisplayName
+        }
+      } catch (e) {
+        console.log(`Error `, e)
       }
     },
   },
