@@ -916,6 +916,7 @@ export default {
         this.snackbarText = message
         this.timeout = timeout
         this.snackbar = true
+        this.refresh()
       }
     },
     async toggleConfirm(
