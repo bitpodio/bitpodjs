@@ -428,11 +428,9 @@ export default {
       }
     },
     async userPlan() {
+      const url = `${this.$bitpod.getApiUrl()}OrganizationInfos/getSubscription`
       try {
-        const url = this.$bitpod.getApiUrl()
-        const res = await this.$axios.$get(
-          `${url}OrganizationInfos/getSubscription`
-        )
+        const res = await this.$axios.$get(url)
         if (res) {
           const obj = res.filter((a) => {
             return a.isActive === true ? a : ''
@@ -440,7 +438,10 @@ export default {
           this.userPlanData = obj[0].SubProduct.DisplayName
         }
       } catch (e) {
-        console.log(`Error `, e)
+        console.error(
+          `Error in layouts/admin.vue in userPlan method while making get call to custom API to get users subscription, context: ${url} `,
+          e
+        )
       }
     },
   },
