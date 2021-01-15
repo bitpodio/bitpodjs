@@ -165,6 +165,16 @@
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen
                   ></iframe>
+
+                  <video
+                    id="my_video_1"
+                    class="video-js vjs-default-skin"
+                    controls
+                    preload="auto"
+                    width="640"
+                    height="268"
+                    data-setup="{}"
+                  ></video>
                 </div>
                 <div class="pa-2">
                   <h2 class="white--text">{{ sessionName }}</h2>
@@ -549,6 +559,7 @@ export default {
   mounted() {
     this.getRegistrationData()
     this.initDarkMode()
+    this.videoStream()
   },
   methods: {
     formatDate(date) {
@@ -774,6 +785,16 @@ export default {
         console.log('change default light to dark theme')
         setTimeout(() => (this.$vuetify.theme.dark = true), 1)
       }
+    },
+    videoStream() {
+      const player = videojs('my_video_1')
+      // const videonew = item.BitpodVirtualLink.split('/')[3]
+      player.src({
+        src:
+          'https://live.bitpod.io/hls/${item.BitpodVirtualLink.split(' /
+          ')[3]}.m3u8',
+        type: 'application/x-mpegURL',
+      })
     },
   },
 }
