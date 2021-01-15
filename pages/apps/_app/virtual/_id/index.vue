@@ -1,5 +1,25 @@
 <template>
   <div>
+    <video-player
+      class="video-player-box"
+      ref="videoPlayer"
+      :options="playerOptions"
+      :playsinline="true"
+      customEventName="customstatechangedeventname"
+      @play="onPlayerPlay($event)"
+      @pause="onPlayerPause($event)"
+      @ended="onPlayerEnded($event)"
+      @waiting="onPlayerWaiting($event)"
+      @playing="onPlayerPlaying($event)"
+      @loadeddata="onPlayerLoadeddata($event)"
+      @timeupdate="onPlayerTimeupdate($event)"
+      @canplay="onPlayerCanplay($event)"
+      @canplaythrough="onPlayerCanplaythrough($event)"
+      @statechanged="playerStateChanged($event)"
+      @ready="playerReadied"
+    >
+    </video-player>
+
     <v-navigation-drawer
       v-model="drawer"
       app
@@ -165,8 +185,7 @@
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen
                   ></iframe>
-
-                  <video
+                  <!-- <video
                     id="my_video_1"
                     class="video-js vjs-default-skin"
                     controls
@@ -174,7 +193,7 @@
                     width="640"
                     height="268"
                     data-setup="{}"
-                  ></video>
+                  ></video> -->
                 </div>
                 <div class="pa-2">
                   <h2 class="white--text">{{ sessionName }}</h2>
@@ -513,9 +532,14 @@
 import format from 'date-fns/format'
 import { utcToZonedTime } from 'date-fns-tz'
 import _ from 'lodash'
+import { videoPlayer } from 'vue-video-player'
+import 'video.js/dist/video-js.css'
 import { configLoaderMixin } from '~/utility'
 export default {
   layout: 'public',
+  components: {
+    videoPlayer,
+  },
   mixins: [configLoaderMixin],
   data() {
     return {
@@ -533,6 +557,21 @@ export default {
       drawer: false,
       group: null,
       currentVideo: '',
+      playsinline: true,
+      playerOptions: {
+        muted: false,
+        language: 'en',
+        width: '900px',
+        height: '500px',
+        playbackRates: [0.7, 1.0, 1.5, 2.0],
+        sources: [
+          {
+            type: 'video/mp4',
+            src: 'https://live.bitpod.io/hls/check1.m3u8',
+          },
+        ],
+        poster: '',
+      },
     }
   },
   computed: {
@@ -550,6 +589,9 @@ export default {
       return this.$store.state.currentOrg.name
       // return this.$store.state.currentOrgInfo.Name
     },
+    player() {
+      return this.$refs.videoPlayer.player
+    },
   },
   watch: {
     group() {
@@ -559,7 +601,7 @@ export default {
   mounted() {
     this.getRegistrationData()
     this.initDarkMode()
-    this.videoStream()
+    // this.videoStream()
   },
   methods: {
     formatDate(date) {
@@ -786,16 +828,16 @@ export default {
         setTimeout(() => (this.$vuetify.theme.dark = true), 1)
       }
     },
-    videoStream() {
-      const player = videojs('my_video_1')
-      // const videonew = item.BitpodVirtualLink.split('/')[3]
-      player.src({
-        src:
-          'https://live.bitpod.io/hls/${item.BitpodVirtualLink.split(' /
-          ')[3]}.m3u8',
-        type: 'application/x-mpegURL',
-      })
-    },
+    // videoStream() {
+    //   // const player = videojs('my_video_1')
+    //   // const videonew = item.BitpodVirtualLink.split('/')[3]
+    //   player.src({
+    //     src:
+    //       'https://live.bitpod.io/hls/${item.BitpodVirtualLink.split(' /
+    //       ')[3]}.m3u8',
+    //     type: 'application/x-mpegURL',
+    //   })
+    // },
   },
 }
 </script>

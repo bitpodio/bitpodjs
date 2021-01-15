@@ -46,10 +46,6 @@ export default {
         href:
           'https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap',
       },
-      {
-        rel: 'stylesheet',
-        href: 'https://unpkg.com/video.js/dist/video-js.css',
-      },
     ],
     script: [
       {
@@ -65,19 +61,12 @@ export default {
         src:
           'https://cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js',
       },
-      {
-        src: 'https://unpkg.com/video.js/dist/video.js',
-      },
-      {
-        src:
-          'https://unpkg.com/videojs-contrib-hls/dist/videojs-contrib-hls.js',
-      },
     ],
   },
   /*
    ** Global CSS
    */
-  css: ['~/assets/styles/main.css'],
+  css: ['~/assets/styles/main.css', 'video.js/dist/video-js.css'],
   /*
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
@@ -85,8 +74,10 @@ export default {
   plugins: [
     '~/plugins/v-i18n.js',
     '~/plugins/eventBus.js',
+    // '~/plugins/video-player.js',
     '~/plugins/bitpod',
     { src: '~/plugins/v-datetime-picker.js', mode: 'client' },
+    { src: '~plugins/video-player.js', mode: 'client' },
   ],
   /*
    ** Auto import components
