@@ -1,5 +1,7 @@
 const basePath = process.env.PUBLIC_PATH || ''
 
+console.log(process.env.POST_GOOGLE_LOGOUT_REDIRECT_URI)
+
 export default {
   /*
    ** Nuxt rendering mode
@@ -326,7 +328,7 @@ export default {
       login: '/login',
       callback: '/callback',
       home: `${basePath}/apps/event/eventboard`,
-      logout: '/',
+      logout: 'https://event.test.bitpod.io/gs',
     },
     strategies: {
       bitpod: {
