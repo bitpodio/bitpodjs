@@ -384,6 +384,9 @@ export default {
         accessType: 'offline',
         prompt: 'consent',
         responseType: 'code',
+        logoutRedirectUri:
+          process.env.POST_GOOGLE_LOGOUT_REDIRECT_URI ||
+          'http://localhost:3000/',
         grantType: 'authorization_code',
         redirectUri:
           process.env.REDIRECT_URI || 'http://localhost:3000/callback',
