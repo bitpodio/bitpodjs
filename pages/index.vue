@@ -60,7 +60,9 @@ export default {
           .replace(/^ +/, '')
           .replace(
             /=.*/,
-            '=;expires=' + new Date().toUTCString() + `;path=${basePublicPath}`
+            '=;expires=' +
+              new Date().toUTCString() +
+              `;path=${this.$config.basePublicPath}`
           )
       })
       window.localStorage.clear()
