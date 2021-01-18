@@ -14,7 +14,7 @@
             :key="item.id"
             class="xs12 sm4 md4 lg4 boxviewsmall pa-3 my-1 mx-0 py-2 session-view-in"
             :class="{
-              selected: item.WebinarLink + '?autoplay=1' === videoSrc,
+              selected: item.BitpodVirtualLink + '?autoplay=1' === videoSrc,
             }"
             @click="
               () => {
@@ -252,7 +252,7 @@
                           class="xs12 sm4 md4 lg4 grey lighten-2 boxviewsmall pa-3 mb-4 mx-0 py-2 session-view-in"
                           :class="{
                             selected:
-                              item.WebinarLink + '?autoplay=1' === videoSrc,
+                              item.BitpodVirtualLink + '?autoplay=1' === videoSrc,
                           }"
                           @click="
                             () => {
@@ -668,11 +668,11 @@ export default {
                   `${this.$route.path}?watch=${this.registration.SessionListId[0].id}`
                 )
                 this.videoSrc =
-                  this.registration.SessionListId[0].WebinarLink + '?autoplay=1'
+                  this.registration.SessionListId[0].BitpodVirtualLink + '?autoplay=1'
                 this.sessionName = this.registration.SessionListId[0].Name
               }
               if (selectedVideo) {
-                this.videoSrc = selectedVideo.WebinarLink + '?autoplay=1'
+                this.videoSrc = selectedVideo.BitpodVirtualLink + '?autoplay=1'
                 this.sessionName = selectedVideo.Name
               }
             }
@@ -757,7 +757,7 @@ export default {
       }, 2000)
     },
     videoTileClick(item) {
-      this.videoSrc = item.WebinarLink + '?autoplay=1' || ''
+      this.videoSrc = item.BitpodVirtualLink + '?autoplay=1' || ''
       this.sessionName = item.Name || ''
       this.$router.push(`${this.$route.path}?watch=${item.id}`)
     },
