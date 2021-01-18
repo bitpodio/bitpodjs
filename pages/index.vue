@@ -46,6 +46,26 @@
 export default {
   layout: 'logoutlayout',
   components: {},
+  mounted() {
+    const urlParams = new URLSearchParams(window.location.search)
+    const logoutParam = urlParams.get('full-logout')
+    if (!!logoutParam) {
+      document.cookie.split(';').forEach(function (c) {
+        document.cookie = c
+          .replace(/^ +/, '')
+          .replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/')
+      })
+      document.cookie.split(';').forEach(function (c) {
+        document.cookie = c
+          .replace(/^ +/, '')
+          .replace(
+            /=.*/,
+            '=;expires=' + new Date().toUTCString() + `;path=${basePublicPath}`
+          )
+      })
+      window.localStorage.clear()
+    }
+  },
   methods: {
     async loginBitpod() {
       if (window.localStorage['auth.redirect']) {

@@ -328,7 +328,7 @@ export default {
       login: '/login',
       callback: '/callback',
       home: `${basePath}/apps/event/eventboard`,
-      logout: 'https://event.test.bitpod.io/gs',
+      logout: '/',
     },
     strategies: {
       bitpod: {
