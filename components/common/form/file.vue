@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div v-show="field.caption" style="position: relative">
+    <div v-show="field.caption" style="position: relative;">
       <h3
         class="font-weight-regular"
-        style="position: absolute; top: -12px; left: 8px"
+        style="position: absolute; top: -12px; left: 8px;"
       >
         {{ $t(field.caption) }}
       </h3>

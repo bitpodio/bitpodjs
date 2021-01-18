@@ -166,6 +166,17 @@
                     allowfullscreen
                   ></iframe>
                 </div>
+                <div>
+                  <video
+                    id="my_video_1"
+                    class="video-js vjs-default-skin"
+                    controls
+                    preload="auto"
+                    width="640"
+                    height="268"
+                    data-setup="{}"
+                  ></video>
+                </div>
                 <div class="pa-2">
                   <h2 class="white--text">{{ sessionName }}</h2>
                 </div>
@@ -502,6 +513,7 @@
 <script>
 import format from 'date-fns/format'
 import { utcToZonedTime } from 'date-fns-tz'
+import videojs from 'video.js'
 import _ from 'lodash'
 import { configLoaderMixin } from '~/utility'
 export default {
@@ -549,6 +561,7 @@ export default {
   mounted() {
     this.getRegistrationData()
     this.initDarkMode()
+    this.playLive()
   },
   methods: {
     formatDate(date) {
@@ -778,6 +791,13 @@ export default {
         console.log('change default light to dark theme')
         setTimeout(() => (this.$vuetify.theme.dark = true), 1)
       }
+    },
+    playLive() {
+      const player = videojs('my_video_1')
+      player.src({
+        src: 'https://live.bitpod.io/hls/newlive.m3u8',
+        type: 'application/x-mpegURL',
+      })
     },
   },
 }

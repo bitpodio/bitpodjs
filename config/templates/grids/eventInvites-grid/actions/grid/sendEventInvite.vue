@@ -159,7 +159,7 @@
                           <v-icon class="py-5" size="48">fa-star2</v-icon>
                           <h3
                             class="text-h5 my-2"
-                            style="font-size: 18px !important"
+                            style="font-size: 18px !important;"
                           >
                             <i18n path="Common.MyTemplates" />
                           </h3>
@@ -183,7 +183,7 @@
                           <v-icon class="py-5" size="48">fa-news</v-icon>
                           <h3
                             class="text-h5 my-2"
-                            style="font-size: 18px !important"
+                            style="font-size: 18px !important;"
                           >
                             <i18n path="Common.PreDesignedTemplates" />
                           </h3>
@@ -206,7 +206,7 @@
                           <v-icon class="py-5" size="48">fa-code1</v-icon>
                           <h3
                             class="text-h5 my-2"
-                            style="font-size: 18px !important"
+                            style="font-size: 18px !important;"
                           >
                             <i18n path="Common.RichTextEditor" />
                           </h3>
@@ -240,7 +240,7 @@
                       :key="item.id"
                       v-slot:default="{ hover }"
                     >
-                      <div style="position: relative">
+                      <div style="position: relative;">
                         <v-card
                           :elevation="hover ? 4 : 2"
                           class="ma-3 ml-0 mt-0"
@@ -520,19 +520,19 @@
                   </v-col>
                 </v-row>
                 <v-row v-else-if="scheduleInvite" class="ma-3 ml-0">
-                  <v-col style="max-width: 300px" class="pl-0 col-12 col-sm-5">
+                  <v-col style="max-width: 300px;" class="pl-0 col-12 col-sm-5">
                     <v-card align="center" justify="center" class="pb-10">
                       <v-icon class="py-2 pt-7" size="48">fa-calendar</v-icon>
                       <h3
                         class="text-h5 my-2"
-                        style="font-size: 20px !important"
+                        style="font-size: 20px !important;"
                       >
                         <i18n path="Common.FixedTimeAndTimeZone" />
                       </h3>
                       <h5 class="body-2 ma-2 mb-5">
                         <i18n path="Common.LaunchYourInvite" />
                       </h5>
-                      <div style="width: 200px">
+                      <div style="width: 200px;">
                         <CustomDate
                           v-model="scheduledTime"
                           :label="$t('Common.ScheduleDate')"
@@ -611,7 +611,7 @@
                       <v-icon class="py-2 pt-7" size="48">fa-mail</v-icon>
                       <h3
                         class="text-h5 my-2"
-                        style="font-size: 20px !important"
+                        style="font-size: 20px !important;"
                       >
                         <i18n path="Common.SendNow" />
                       </h3>
@@ -639,7 +639,7 @@
                       <v-icon class="py-2 pt-7" size="48">fa-calendar</v-icon>
                       <h3
                         class="text-h5 my-2"
-                        style="font-size: 20px !important"
+                        style="font-size: 20px !important;"
                       >
                         <i18n path="Common.ScheduleInvite" />
                       </h3>
@@ -667,7 +667,7 @@
                       <v-icon class="py-2 pt-7" size="48">fa-save</v-icon>
                       <h3
                         class="text-h5 my-2"
-                        style="font-size: 20px !important"
+                        style="font-size: 20px !important;"
                       >
                         <i18n path="Common.SaveAsDraft" />
                       </h3>

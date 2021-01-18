@@ -216,7 +216,7 @@
             </v-col>
             <div
               v-if="formData.LocationType === 'Venue'"
-              style="display: contents"
+              style="display: contents;"
             >
               <v-col cols="12" class="mt-n6 positionRelative">
                 <div v-if="addressClicked" class="address-legend">
@@ -238,7 +238,7 @@
                     @blur="focusOut"
                   >
                   </vue-google-autocomplete>
-                  <span v-if="errorAlert.message != ''" style="color: red">{{
+                  <span v-if="errorAlert.message != ''" style="color: red;">{{
                     errorAlert.message
                   }}</span>
                 </no-ssr>

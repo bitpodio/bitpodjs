@@ -9,13 +9,13 @@
           :class="{ scrollReplacement: !hasScroll }"
           @mouseenter="updateScroll"
         >
-          <div style="width: 1080px">
+          <div style="width: 1080px;">
             <div
               v-for="(data, index) in eventSummaryData"
               :key="index"
               class="white d-inline-block elevation-2 rounded"
               :class="{ 'mr-5': index < 4 }"
-              style="width: 200px; height: 60px"
+              style="width: 200px; height: 60px;"
             >
               <v-skeleton-loader
                 :loading="!eventSummaryLoaded"
@@ -30,12 +30,12 @@
                   @click="routeToAbandoned(data.click)"
                 >
                   <div
-                    style="width: 60px; height: 60px"
+                    style="width: 60px; height: 60px;"
                     :class="data.class"
                     class="rounded-l"
                   >
                     <v-icon
-                      style="font-size: 28px"
+                      style="font-size: 28px;"
                       class="pl-4 pt-4 white--text"
                       :class="data.icon"
                     ></v-icon>
@@ -75,13 +75,13 @@
               >
                 <div class="d-flex">
                   <div
-                    style="width: 70px; height: 70px"
+                    style="width: 70px; height: 70px;"
                     :class="data.class"
                     class="rounded-l"
                   >
                     <v-icon
                       v-if="data.type === 'Recurring'"
-                      style="font-size: 28px"
+                      style="font-size: 28px;"
                       class="pl-5 pt-5 white--text fa fa-timer rec-event"
                     ></v-icon>
                     <div v-else class="pt-3 positionRelative text-center pt-2">
@@ -93,7 +93,7 @@
                       </h4>
                     </div>
                   </div>
-                  <div v-if="data.imageUrl" style="width: 67px">
+                  <div v-if="data.imageUrl" style="width: 67px;">
                     <v-img
                       :src="getURL(data.imageUrl)"
                       :lazy-src="getURL(data.imageUrl)"
@@ -116,7 +116,7 @@
                       <v-icon class="fs-18">mdi-map-marker-outline</v-icon>
                       <div
                         class="fs-14 font-weight-regular text-truncate"
-                        style="width: 140px"
+                        style="width: 140px;"
                       >
                         {{ data.location }}
                       </div>
@@ -200,13 +200,13 @@
                 type="avatar"
                 height="50"
                 width="50"
-                style="position: relative; top: 10px; left: 10px"
+                style="position: relative; top: 10px; left: 10px;"
                 class="rounded"
               >
                 <div class="d-flex">
                   <div
                     v-if="recentBuyersLoaded"
-                    style="width: 50px; height: 50px"
+                    style="width: 50px; height: 50px;"
                     class="rounded"
                     :class="data.class"
                   >

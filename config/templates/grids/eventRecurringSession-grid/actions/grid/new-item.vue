@@ -291,7 +291,7 @@
                       ></vue-google-autocomplete>
                     </no-ssr>
                   </div>
-                  <span v-if="addresslineMessage != ''" style="color: red">{{
+                  <span v-if="addresslineMessage != ''" style="color: red;">{{
                     addresslineMessage
                   }}</span>
                 </v-col>
