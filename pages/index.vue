@@ -46,22 +46,6 @@
 export default {
   layout: 'logoutlayout',
   components: {},
-  mounted() {
-    const urlParams = new URLSearchParams(window.location.search)
-    const logoutParam = urlParams.get('full-logout')
-    if (logoutParam) {
-      console.debug(this)
-      console.debug(this.$auth)
-      document.cookie.split(';').forEach((c) => {
-        const cookieVal = c.trim()
-        const cookieKey = cookieVal.substring(0, c.indexOf('='))
-        this?.$auth.$storage.removeCookie(cookieKey, false)
-      })
-      Object.keys(localStorage).forEach((key) => {
-        this?.$auth.$storage.removeLocalStorage(key)
-      })
-    }
-  },
   methods: {
     async loginBitpod() {
       if (window.localStorage['auth.redirect']) {
