@@ -227,7 +227,22 @@ export default {
   methods: {
     messageReceived(e) {
       if (e.data === 'success' && this.redirectToOrg) {
-        document.cookie = `auth.redirect=; Path=${this.$config.basePublicPath}; Expires=Thu, 01 Jan 1970 00:00:01 GMT;`
+        document.cookie.split(';').forEach(function (c) {
+          document.cookie = c
+            .replace(/^ +/, '')
+            .replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/')
+        })
+        document.cookie.split(';').forEach(function (c) {
+          document.cookie = c
+            .replace(/^ +/, '')
+            .replace(
+              /=.*/,
+              '=;expires=' +
+                new Date().toUTCString() +
+                `;path=${this.$config.basePublicPath}`
+            )
+        })
+        localStorage.clear()
         location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}/apps/event/list/Event/live-and-draft-event`
       }
     },
@@ -318,7 +333,25 @@ export default {
           )
           if (ticketRes) {
             this.statusMessage = 'Redirecting to new Organization'
-            document.cookie = `auth.redirect=; Path=${this.$config.basePublicPath}; Expires=Thu, 01 Jan 1970 00:00:01 GMT;`
+            document.cookie.split(';').forEach(function (c) {
+              document.cookie = c
+                .replace(/^ +/, '')
+                .replace(
+                  /=.*/,
+                  '=;expires=' + new Date().toUTCString() + ';path=/'
+                )
+            })
+            document.cookie.split(';').forEach(function (c) {
+              document.cookie = c
+                .replace(/^ +/, '')
+                .replace(
+                  /=.*/,
+                  '=;expires=' +
+                    new Date().toUTCString() +
+                    `;path=${this.$config.basePublicPath}`
+                )
+            })
+            localStorage.clear()
             location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}/apps/event/list/Event/live-and-draft-event`
           } else {
             this.statusMessage = ''
