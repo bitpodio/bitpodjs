@@ -1,1 +1,2 @@
-<template> <nuxt /> </template>>
+<template><nuxt /></template>
+>

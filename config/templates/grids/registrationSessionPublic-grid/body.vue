@@ -36,9 +36,7 @@
         <v-list-item-icon>
           <v-btn class="ma-2" outlined color="success">
             <i18n path="Common.Join" />
-            <v-icon right>
-              mdi-video
-            </v-icon>
+            <v-icon right> mdi-video </v-icon>
           </v-btn>
         </v-list-item-icon>
       </v-list-item>

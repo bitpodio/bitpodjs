@@ -41,7 +41,7 @@
               <div class="chanel-icon d-flex ma-4 mr-6">
                 <i
                   class="fa fa-flag fs-18 d-flex align-center justify-center"
-                  style="background: #0cb14b;"
+                  style="background: #0cb14b"
                 ></i>
               </div>
               <div
@@ -64,7 +64,7 @@
               <div class="chanel-icon d-flex ma-4 mr-6">
                 <i
                   class="fa fa-support fs-18 d-flex align-center justify-center"
-                  style="background: #f4b400;"
+                  style="background: #f4b400"
                 ></i>
               </div>
               <div
@@ -87,7 +87,7 @@
               <div class="chanel-icon d-flex ma-4 mr-6">
                 <i
                   class="fa fa-youtube fs-18 d-flex align-center justify-center"
-                  style="background: #f25955;"
+                  style="background: #f25955"
                 ></i>
               </div>
               <div

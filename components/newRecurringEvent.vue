@@ -933,7 +933,7 @@
                   ></i>
                 </div>
                 <div class="pb-2 text-uppercase">
-                  <span class="text-uppercase Body 1" style="font-size: 20px;"
+                  <span class="text-uppercase Body 1" style="font-size: 20px"
                     ><i18n path="Common.EventHasBeenCreated"
                   /></span>
                 </div>
@@ -973,7 +973,7 @@
                   ></i>
                 </div>
                 <div class="pb-2">
-                  <span class="text-uppercase Body 1" style="font-size: 20px;">
+                  <span class="text-uppercase Body 1" style="font-size: 20px">
                     <i18n path="Common.EventHasBeenPublished"
                   /></span>
                 </div>
@@ -1019,9 +1019,7 @@
           ><i18n path="Drawer.Next"
         /></v-btn>
         <SaveBtn
-          v-if="
-            (currentTab > 2 && !isEventCreate && !isEventPublish)
-          "
+          v-if="currentTab > 2 && !isEventCreate && !isEventPublish"
           color="primary"
           :disabled="isSaveButtonDisabled || !valid || isInalidEventLink"
           depressed

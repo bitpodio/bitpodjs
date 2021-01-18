@@ -55,7 +55,7 @@
                         :key="item.id"
                         v-slot:default="{ hover }"
                       >
-                        <div style="position: relative;">
+                        <div style="position: relative">
                           <v-card
                             :elevation="hover ? 4 : 2"
                             class="ma-3 ml-0 mt-0"
@@ -145,7 +145,7 @@
                           <v-icon class="py-5" size="48">fa-code1</v-icon>
                           <h3
                             class="text-h5 my-2"
-                            style="font-size: 18px !important;"
+                            style="font-size: 18px !important"
                           >
                             <i18n path="Common.RichTextEditor" />
                           </h3>

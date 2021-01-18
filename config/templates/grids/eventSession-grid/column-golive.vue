@@ -16,9 +16,7 @@
       @click="goLive"
     >
       <i18n path="Common.JoinSession" />
-      <v-icon right>
-        mdi-video
-      </v-icon>
+      <v-icon right> mdi-video </v-icon>
     </v-btn>
     <copy
       v-if="link"

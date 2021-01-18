@@ -41,9 +41,7 @@
                 >
                   <i18n path="Common.JoinEvent" />
 
-                  <v-icon right class="fs-22">
-                    mdi-video
-                  </v-icon>
+                  <v-icon right class="fs-22"> mdi-video </v-icon>
                 </v-btn>
               </div>
               <div class="mr-2">
@@ -348,7 +346,7 @@
             v-model="Status"
             alt-labels
             class="elevation-0 boxview event-steper"
-            style="max-width: 800px;"
+            style="max-width: 800px"
           >
             <v-stepper-header success>
               <v-stepper-step

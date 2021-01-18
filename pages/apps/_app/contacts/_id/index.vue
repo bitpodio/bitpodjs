@@ -20,7 +20,7 @@
                         <v-list-item-avatar
                           v-if="lastPicId === ''"
                           size="62"
-                          style="margin: auto;"
+                          style="margin: auto"
                         >
                           <v-avatar
                             color="primary"

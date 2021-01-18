@@ -27,9 +27,7 @@
       class="text-center"
     >
       <div class="d-flex justify-center">
-        <v-icon x-large color="success">
-          fa-check-circle
-        </v-icon>
+        <v-icon x-large color="success"> fa-check-circle </v-icon>
       </div>
       <div>
         <timeAgo
@@ -43,7 +41,7 @@
       v-if="
         item.CheckIn !== null && item.Status !== 'Failed' && !isCustomMobile
       "
-      style="display: flex; height: 20px;"
+      style="display: flex; height: 20px"
       class="ma-2 pb-0 mt-1"
     >
       <v-icon color="success" class="pr-1 fs-14">mdi-check</v-icon>
@@ -72,7 +70,7 @@
         </v-card-title>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-form ref="form" v-model="valid" :lazy-validation="lazy">
-            <v-row style="justify-content: center;">
+            <v-row style="justify-content: center">
               <v-col cols="12" sm="10" md="8" class="pb-0 justify-center">
                 <v-flex my-3 d-flex justify-center align-center>
                   <!-- eslint-disable-next-line vue/no-v-html -->
@@ -109,7 +107,7 @@
       v-show="false"
       id="print"
       ref="iframe"
-      style="width: 500px; position: relative; height: 500px;"
+      style="width: 500px; position: relative; height: 500px"
     >
     </iframe>
   </div>

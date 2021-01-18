@@ -7,7 +7,7 @@
       v-show="false"
       id="print"
       ref="iframe"
-      style="width: 500px; position: relative; height: 500px;"
+      style="width: 500px; position: relative; height: 500px"
     >
     </iframe>
   </v-col>

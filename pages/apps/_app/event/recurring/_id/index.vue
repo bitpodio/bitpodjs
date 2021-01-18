@@ -284,7 +284,7 @@
             v-model="Status"
             alt-labels
             class="elevation-0 boxview event-steper"
-            style="max-width: 800px;"
+            style="max-width: 800px"
           >
             <v-stepper-header success>
               <v-stepper-step
