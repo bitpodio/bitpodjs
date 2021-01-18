@@ -54,7 +54,8 @@
                   ]"
                   outlined
                   dense
-                  @keyup="checkAvailablity"
+                  @keyup="startCheck"
+                  @keydown="cancelCheck"
                 ></v-text-field>
               </v-form>
               <div class="fs-20 pa-1">
@@ -162,6 +163,8 @@ export default {
       dialog: true,
       redirectToOrg: false,
       statusMessage: '',
+      checkTimeout: 3000,
+      checkTyping: null,
     }
   },
   computed: {
@@ -372,6 +375,14 @@ export default {
         this.snackbar = true
         console.error(err)
       }
+    },
+    cancelCheck() {
+      clearTimeout(this.checkTyping)
+    },
+    startCheck() {
+      clearTimeout(this.checkTyping)
+      this.allow = false
+      this.checkTyping = setTimeout(checkAvailablity, this.checkTimeout)
     },
     async checkAvailablity() {
       if (this.allowable) {
