@@ -14,7 +14,7 @@
             :key="item.id"
             class="xs12 sm4 md4 lg4 boxviewsmall pa-3 my-1 mx-0 py-2 session-view-in"
             :class="{
-              selected: item.WebinarLink + '?autoplay=1' === videoSrc,
+              selected: item.BitpodVirtualLink + '?autoplay=1' === videoSrc,
             }"
             @click="
               () => {
@@ -166,6 +166,25 @@
                     allowfullscreen
                   ></iframe>
                 </div>
+                <v-video
+                  ref="video"
+                  width="600"
+                  height="400"
+                  poster="//vjs.zencdn.net/v/oceans.png"
+                  class="video-js"
+                  webkit-playsinline
+                  playsinline
+                  x-webkit-airplay="allow"
+                  x5-video-player-type="h5"
+                  x5-video-player-fullscreen="true"
+                  x5-video-orientation="portraint"
+                  controls
+                  sources="https://live.bitpod.io/hls/newlive.m3u8"
+                  :options="playOpts.options"
+                  @ready="videoReady"
+                  @ended="videoEnd"
+                ></v-video>
+
                 <div class="pa-2">
                   <h2 class="white--text">{{ sessionName }}</h2>
                 </div>
@@ -252,7 +271,8 @@
                           class="xs12 sm4 md4 lg4 grey lighten-2 boxviewsmall pa-3 mb-4 mx-0 py-2 session-view-in"
                           :class="{
                             selected:
-                              item.WebinarLink + '?autoplay=1' === videoSrc,
+                              item.BitpodVirtualLink + '?autoplay=1' ===
+                              videoSrc,
                           }"
                           @click="
                             () => {
@@ -522,6 +542,15 @@ export default {
       drawer: false,
       group: null,
       currentVideo: '',
+      videos: ['https://live.bitpod.io/hls/newlive.m3u8'],
+      playOpts: {
+        options: {
+          controls: true,
+          // autoplay: true,
+          preload: 'auto',
+          techOrder: ['html5'],
+        },
+      },
     }
   },
   computed: {
@@ -668,11 +697,12 @@ export default {
                   `${this.$route.path}?watch=${this.registration.SessionListId[0].id}`
                 )
                 this.videoSrc =
-                  this.registration.SessionListId[0].WebinarLink + '?autoplay=1'
+                  this.registration.SessionListId[0].BitpodVirtualLink +
+                  '?autoplay=1'
                 this.sessionName = this.registration.SessionListId[0].Name
               }
               if (selectedVideo) {
-                this.videoSrc = selectedVideo.WebinarLink + '?autoplay=1'
+                this.videoSrc = selectedVideo.BitpodVirtualLink + '?autoplay=1'
                 this.sessionName = selectedVideo.Name
               }
             }
@@ -757,7 +787,11 @@ export default {
       }, 2000)
     },
     videoTileClick(item) {
-      this.videoSrc = item.WebinarLink + '?autoplay=1' || ''
+      // this.videoSrc = item.BitpodVirtualLink + '?autoplay=1' || ''
+      this.videoSrc =
+        `https://live.bitpod.io/hls/${
+          item.BitpodVirtualLink.split('/')[3]
+        }.m3u8` || ''
       this.sessionName = item.Name || ''
       this.$router.push(`${this.$route.path}?watch=${item.id}`)
     },
@@ -772,6 +806,14 @@ export default {
         console.log('change default light to dark theme')
         setTimeout(() => (this.$vuetify.theme.dark = true), 1)
       }
+    },
+    videoEnd() {
+      console.log('video end')
+    },
+    videoReady() {
+      const video = this.$refs.video.videojsObject
+      console.log('video msg start', video)
+      // video.play();
     },
   },
 }
@@ -900,6 +942,10 @@ export default {
   max-height: 40px;
   width: auto !important;
   min-width: auto !important;
+}
+.video-js {
+  width: 600px;
+  height: 400px;
 }
 @media screen and (max-width: 600px) {
   .background-event-img {
