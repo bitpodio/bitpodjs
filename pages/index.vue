@@ -50,22 +50,16 @@ export default {
     const urlParams = new URLSearchParams(window.location.search)
     const logoutParam = urlParams.get('full-logout')
     if (logoutParam) {
-      document.cookie.split(';').forEach(function (c) {
-        document.cookie = c
-          .replace(/^ +/, '')
-          .replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/')
+      console.debug(this)
+      console.debug(this.$auth)
+      document.cookie.split(';').forEach((c) => {
+        const cookieVal = c.trim()
+        const cookieKey = cookieVal.substring(0, c.indexOf('='))
+        this?.$auth.$storage.removeCookie(cookieKey, false)
       })
-      document.cookie.split(';').forEach(function (c) {
-        document.cookie = c
-          .replace(/^ +/, '')
-          .replace(
-            /=.*/,
-            '=;expires=' +
-              new Date().toUTCString() +
-              `;path=${this.$config.basePublicPath}`
-          )
+      Object.keys(localStorage).forEach((key) => {
+        this?.$auth.$storage.removeLocalStorage(key)
       })
-      localStorage.clear()
     }
   },
   methods: {
