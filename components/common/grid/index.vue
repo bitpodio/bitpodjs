@@ -1063,6 +1063,7 @@ export default {
                   filters: { limit, skip, order, where },
                   where: {},
                 },
+                fetchPolicy: 'no-cache',
               })
               if (result) {
                 const formattedResult = formatGQLResult(result.data, modelName)
