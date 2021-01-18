@@ -11,8 +11,9 @@ export default {
   },
   methods: {
     messageReceived(e) {
-      e.data.split('; ').map((i) => {
-        document.cookie = i
+      e.data.split(';').map((i) => {
+        const newCookie = i.trim() + ';path=/'
+        document.cookie = newCookie
       })
       window.parent.postMessage('success', '*')
     },
