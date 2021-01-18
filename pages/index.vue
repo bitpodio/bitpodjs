@@ -49,7 +49,7 @@ export default {
   mounted() {
     const urlParams = new URLSearchParams(window.location.search)
     const logoutParam = urlParams.get('full-logout')
-    if (!!logoutParam) {
+    if (logoutParam) {
       document.cookie.split(';').forEach(function (c) {
         document.cookie = c
           .replace(/^ +/, '')
