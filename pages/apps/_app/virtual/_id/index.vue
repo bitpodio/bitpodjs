@@ -157,25 +157,25 @@
             >
               <div class="pa-0 flex-60 d-flex flex-column black">
                 <div>
-                  <iframe
+                  <!-- <iframe
                     width="100%"
                     height="400"
                     :src="videoSrc"
                     frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowfullscreen
-                  ></iframe>
-                </div>
-                <div>
-                  <video
-                    id="my_video_1"
-                    class="video-js vjs-default-skin"
-                    controls
-                    preload="auto"
-                    width="640"
-                    height="268"
-                    data-setup="{}"
-                  ></video>
+                  ></iframe> -->
+                  <div>
+                    <video
+                      id="my_video_1"
+                      class="video-js vjs-default-skin"
+                      controls
+                      preload="auto"
+                      width="100%"
+                      height="400"
+                      data-setup="{}"
+                    ></video>
+                  </div>
                 </div>
                 <div class="pa-2">
                   <h2 class="white--text">{{ sessionName }}</h2>

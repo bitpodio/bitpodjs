@@ -46,6 +46,10 @@ export default {
         href:
           'https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap',
       },
+      {
+        rel: 'stylesheet',
+        href: 'https://unpkg.com/video.js/dist/video-js.css',
+      },
     ],
     script: [
       {
@@ -60,6 +64,13 @@ export default {
       {
         src:
           'https://cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js',
+      },
+      {
+        src: 'https://unpkg.com/video.js/dist/video.js',
+      },
+      {
+        src:
+          'https://unpkg.com/videojs-contrib-hls/dist/videojs-contrib-hls.js',
       },
     ],
   },
@@ -238,7 +249,7 @@ export default {
   axios: {
     googleMapUrl: `https://www.google.com/maps`,
     apiEndpoint: '/svc/api/',
-    baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
+    // baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
   },
 
   publicRuntimeConfig: {
@@ -308,7 +319,7 @@ export default {
         httpEndpoint: `https://${
           process.env.PUBLIC_DOMAIN || 'event.test.bitpod.io'
         }/svc/graphql`,
-        browserHttpEndpoint: '/svc/graphql',
+        // browserHttpEndpoint: '/svc/graphql',
       },
     },
     defaultOptions: {
