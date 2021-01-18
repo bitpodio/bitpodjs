@@ -1713,7 +1713,7 @@ export default {
     },
     goLive() {
       window.open(
-        `apps/event/live/${this.eventData.UniqLink}?e=${this.$route.params.id}&n=${this.eventData.Title}`
+        `apps/event/live/${this.$store.state.currentOrg.name}-${this.eventData.UniqLink}?e=${this.$route.params.id}&n=${this.eventData.Title}`
       )
     },
     openPrintForm() {
@@ -2117,7 +2117,7 @@ export default {
       return regUrl
     },
     viewBitpodVirtualLink() {
-      return `https://${this.$config.integrationLinks.BITOPD_VIRTUAL_LINK}/${this.data.event.UniqLink}`
+      return `https://${this.$config.integrationLinks.BITOPD_VIRTUAL_LINK}/${this.$store.state.currentOrg.name}-${this.data.event.UniqLink}`
     },
     formatDate(date) {
       return date ? format(new Date(date), 'PPp') : ''
