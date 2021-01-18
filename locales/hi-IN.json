@@ -961,7 +961,7 @@
       "RegistrationFormUpdatedSuccess": "पंजीकरण फॉर्म सफलतापूर्वक अपडेट किया गया",
       "SessionCreatedSuccess": "सत्र सफलतापूर्वक बनाया गया",
       "SessionUpdatedSuccess": "सत्र सफलतापूर्वक अपडेट किया गया",
-      "ContactImportSuccess":"संपर्कों को सफल आयात किया गया"
+      "ContactImportSuccess":"आयात निष्पादन शुरू हुआ"
     }
   },
   "$vuetify": {
