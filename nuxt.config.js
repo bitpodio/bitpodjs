@@ -1,7 +1,5 @@
 const basePath = process.env.PUBLIC_PATH || ''
 
-console.log(process.env.POST_GOOGLE_LOGOUT_REDIRECT_URI)
-
 export default {
   /*
    ** Nuxt rendering mode
