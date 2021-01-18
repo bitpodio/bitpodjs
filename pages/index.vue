@@ -65,7 +65,7 @@ export default {
               `;path=${this.$config.basePublicPath}`
           )
       })
-      window.localStorage.clear()
+      localStorage.clear()
     }
   },
   methods: {
