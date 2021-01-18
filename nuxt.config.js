@@ -328,7 +328,7 @@ export default {
       login: '/login',
       callback: '/callback',
       home: `${basePath}/apps/event/eventboard`,
-      logout: '/',
+      logout: 'https://event.test.bitpod.io/gs?full-logout=true',
     },
     strategies: {
       bitpod: {
@@ -386,9 +386,6 @@ export default {
         accessType: 'offline',
         prompt: 'consent',
         responseType: 'code',
-        logoutRedirectUri:
-          process.env.POST_GOOGLE_LOGOUT_REDIRECT_URI ||
-          'http://localhost:3000/',
         grantType: 'authorization_code',
         redirectUri:
           process.env.REDIRECT_URI || 'http://localhost:3000/callback',
