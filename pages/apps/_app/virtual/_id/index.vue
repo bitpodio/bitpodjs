@@ -777,8 +777,16 @@ export default {
         `https://live.bitpod.io/hls/${
           item.BitpodVirtualLink.split('/')[3]
         }.m3u8` || ''
+      this.playLive()
       this.sessionName = item.Name || ''
       this.$router.push(`${this.$route.path}?watch=${item.id}`)
+    },
+    playLive() {
+      const player = videojs('my_video_1')
+      player.src({
+        src: this.videoSrc,
+        type: 'application/x-mpegURL',
+      })
     },
     initDarkMode() {
       const darkMediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
@@ -791,13 +799,6 @@ export default {
         console.log('change default light to dark theme')
         setTimeout(() => (this.$vuetify.theme.dark = true), 1)
       }
-    },
-    playLive() {
-      const player = videojs('my_video_1')
-      player.src({
-        src: 'https://live.bitpod.io/hls/newlive.m3u8',
-        type: 'application/x-mpegURL',
-      })
     },
   },
 }
@@ -926,6 +927,10 @@ export default {
   max-height: 40px;
   width: auto !important;
   min-width: auto !important;
+}
+.my_video_1-dimensions {
+  width: 100%;
+  height: 400px;
 }
 @media screen and (max-width: 600px) {
   .background-event-img {
