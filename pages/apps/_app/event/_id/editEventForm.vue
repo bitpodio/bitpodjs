@@ -256,7 +256,11 @@
           <SaveButton
             v-if="eventForm"
             color="primary"
-            :disabled="VenueAddress.AddressLine === '' || !valid || !datevalid"
+            :disabled="
+              formData.LocationType === 'Venue'
+                ? VenueAddress.AddressLine === ''
+                : false || !valid || !datevalid
+            "
             depressed
             :action="onSave"
             class="ml-2"
