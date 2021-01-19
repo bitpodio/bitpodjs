@@ -100,7 +100,7 @@
             <SaveBtn
               dense
               color="primary"
-              :disabled="!allow && !processing"
+              :disabled="!allow && processing"
               :label="this.$t('Common.CreateOrganisation')"
               :action="createOrg"
               :reset="resetBtn"
