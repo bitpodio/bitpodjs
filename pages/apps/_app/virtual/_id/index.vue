@@ -171,6 +171,7 @@
                       class="video-js vjs-default-skin"
                       controls
                       preload="auto"
+                      autoplay="true"
                       width="100%"
                       height="400"
                       data-setup="{}"
