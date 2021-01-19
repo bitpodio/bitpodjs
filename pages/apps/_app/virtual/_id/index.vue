@@ -15,7 +15,7 @@
             class="xs12 sm4 md4 lg4 boxviewsmall pa-3 my-1 mx-0 py-2 session-view-in"
             :class="{
               selected:
-                `https://live.bitpod.io/hls/${
+                `${$config.rtmpLink}${
                   item.BitpodVirtualLink.split('/')[3]
                 }.m3u8` === videoSrc,
             }"
@@ -265,7 +265,7 @@
                           class="xs12 sm4 md4 lg4 grey lighten-2 boxviewsmall pa-3 mb-4 mx-0 py-2 session-view-in"
                           :class="{
                             selected:
-                              `https://live.bitpod.io/hls/${
+                              `${$config.rtmpLink}${
                                 item.BitpodVirtualLink.split('/')[3]
                               }.m3u8` === videoSrc,
                           }"
@@ -776,7 +776,7 @@ export default {
     },
     videoTileClick(item) {
       this.videoSrc =
-        `https://live.bitpod.io/hls/${
+        `${this.$config.rtmpLink}${
           item.BitpodVirtualLink.split('/')[3]
         }.m3u8` || ''
       this.playLive()
