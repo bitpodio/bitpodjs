@@ -863,6 +863,7 @@
                               :rules="[rules.required]"
                               :field="timezonefield"
                               :attach="`#timezone-select-${k}`"
+                              :has-wrap="true"
                             ></Timezone>
                           </td>
 
