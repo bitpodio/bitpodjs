@@ -675,6 +675,7 @@ export default {
       }
     },
     _components() {
+      debugger
       return {
         errorTemplate: {
           locations: [

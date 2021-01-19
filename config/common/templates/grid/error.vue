@@ -48,6 +48,8 @@ function getGQLAPIErrorMsg(err) {
 
 function getAPIErrorMessage(statusCode, msg) {
   let userErrorMsg = 'Something went wrong'
+  debugger
+  console.log('Printing the status code',statusCode)
   switch (statusCode) {
     case 401:
       if (msg === 'jwt expired')
@@ -62,6 +64,7 @@ function getAPIErrorMessage(statusCode, msg) {
       userErrorMsg = 'Service unavailable'
       break
   }
+  this.$auth.refreshTokens()
   return userErrorMsg
 }
 export default {
