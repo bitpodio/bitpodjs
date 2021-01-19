@@ -973,7 +973,7 @@
       "RegistrationFormUpdatedSuccess": "Formulaire d'inscription mis à jour avec succès",
       "SessionCreatedSuccess": "Session créée avec succès",
       "SessionUpdatedSuccess": "Session mise à jour avec succès",
-      "ContactImportSuccess": "Contacts importés avec succès"
+      "ContactImportSuccess":"L'exécution de l'importation a commencé"
     }
   },
   "$vuetify": {

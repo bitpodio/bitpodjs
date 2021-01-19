@@ -976,7 +976,7 @@
       "RegistrationFormUpdatedSuccess": "Registration Form updated successfully",
       "SessionCreatedSuccess": "Session created successfully",
       "SessionUpdatedSuccess": "Session updated successfully",
-      "ContactImportSuccess": "Contacts imported successfully"
+      "ContactImportSuccess":"Import execution started"
     }
   },
   "$vuetify": {
