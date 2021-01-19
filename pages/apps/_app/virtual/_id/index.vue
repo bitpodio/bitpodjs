@@ -14,7 +14,10 @@
             :key="item.id"
             class="xs12 sm4 md4 lg4 boxviewsmall pa-3 my-1 mx-0 py-2 session-view-in"
             :class="{
-              selected: item.BitpodVirtualLink + '?autoplay=1' === videoSrc,
+              selected:
+                `https://live.bitpod.io/hls/${
+                  item.BitpodVirtualLink.split('/')[3]
+                }.m3u8` === videoSrc,
             }"
             @click="
               () => {
@@ -68,7 +71,7 @@
                   "
                 >
                   <v-btn
-                    class="mt-2 mr-0"
+                    class="mt-2 mr-0 isLive"
                     depressed
                     x-small
                     color="error"
@@ -76,7 +79,12 @@
                   >
                     <i18n path="Common.Live" />
                   </v-btn>
-                  <v-btn icon class="mt-2 mr-0" x-small :disabled="isPast">
+                  <v-btn
+                    icon
+                    class="mt-2 mr-0 isWathcing"
+                    x-small
+                    :disabled="isPast"
+                  >
                     <v-icon>fa-eye</v-icon>
                   </v-btn>
                 </div>
@@ -264,8 +272,9 @@
                           class="xs12 sm4 md4 lg4 grey lighten-2 boxviewsmall pa-3 mb-4 mx-0 py-2 session-view-in"
                           :class="{
                             selected:
-                              item.BitpodVirtualLink + '?autoplay=1' ===
-                              videoSrc,
+                              `https://live.bitpod.io/hls/${
+                                item.BitpodVirtualLink.split('/')[3]
+                              }.m3u8` === videoSrc,
                           }"
                           @click="
                             () => {
@@ -327,7 +336,7 @@
                                 "
                               >
                                 <v-btn
-                                  class="mt-2 mr-0"
+                                  class="mt-2 mr-0 isLive"
                                   depressed
                                   x-small
                                   color="error"
@@ -336,7 +345,7 @@
                                   <i18n path="Common.Live" />
                                 </v-btn>
                                 <v-btn
-                                  class="mt-2 mr-0"
+                                  class="mt-2 mr-0 isWatchig"
                                   depressed
                                   x-small
                                   :disabled="isPast"
