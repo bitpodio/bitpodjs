@@ -165,14 +165,6 @@
             >
               <div class="pa-0 flex-60 d-flex flex-column black">
                 <div>
-                  <!-- <iframe
-                    width="100%"
-                    height="400"
-                    :src="videoSrc"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen
-                  ></iframe> -->
                   <div>
                     <video
                       id="my_video_1"
@@ -182,6 +174,7 @@
                       autoplay="true"
                       width="100%"
                       height="400"
+                      :poster="$config.cdnUri + 'poster.jpg'"
                       data-setup="{}"
                     ></video>
                   </div>
@@ -782,7 +775,6 @@ export default {
       }, 2000)
     },
     videoTileClick(item) {
-      // this.videoSrc = item.BitpodVirtualLink + '?autoplay=1' || ''
       this.videoSrc =
         `https://live.bitpod.io/hls/${
           item.BitpodVirtualLink.split('/')[3]
