@@ -353,9 +353,6 @@ export default {
                 )
             })
             localStorage.clear()
-            console.debug(localStorage)
-            console.debug(document.cookie)
-            debugger
             location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}/apps/event/list/Event/live-and-draft-event`
           } else {
             this.statusMessage = ''
