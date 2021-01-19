@@ -163,7 +163,7 @@ export default {
       dialog: true,
       redirectToOrg: false,
       statusMessage: '',
-      checkTimeout: 3000,
+      checkTimeout: 2000,
       checkTyping: null,
     }
   },
