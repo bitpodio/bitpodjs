@@ -260,6 +260,7 @@ export default {
       eventUrl: process.env.GET_EVENT_URL || 'event.test.bitpod.io',
       crmUrl: process.env.GET_CRM_URL || 'crmivijd.test.bitpod.io',
     },
+    basePublicPath: process.env.PUBLIC_PATH || '',
     cdnUri:
       'https://res.cloudinary.com/mytestlogo/image/upload/bitpodjs/images/',
     cdnCsvUri: 'https://res.cloudinary.com/mytestlogo/raw/upload/',

@@ -63,10 +63,24 @@ export default {
       if (window.localStorage['auth.redirect']) {
         window.localStorage['auth.redirect'] = ''
       }
-      document.cookie = 'auth.redirect=' + ''
+      const redirectCookie = this.$auth.$storage.getCookies()['auth.redirect']
+      if (redirectCookie && redirectCookie.includes('get-started')) {
+        document.cookie = `auth.redirect=${this.$config.basePublicPath}/get-started`
+      } else {
+        document.cookie = 'auth.redirect=' + ''
+      }
       return await this.$auth.loginWith('bitpod')
     },
     async loginGoogle() {
+      if (window.localStorage['auth.redirect']) {
+        window.localStorage['auth.redirect'] = ''
+      }
+      const redirectCookie = this.$auth.$storage.getCookies()['auth.redirect']
+      if (redirectCookie && redirectCookie.includes('get-started')) {
+        document.cookie = `auth.redirect=${this.$config.basePublicPath}/get-started`
+      } else {
+        document.cookie = 'auth.redirect=' + ''
+      }
       return await this.$auth.loginWith('google')
     },
   },
