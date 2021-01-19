@@ -380,7 +380,7 @@ export default {
     startCheck() {
       clearTimeout(this.checkTyping)
       this.allow = false
-      this.checkTyping = setTimeout(checkAvailablity, this.checkTimeout)
+      this.checkTyping = setTimeout(this.checkAvailablity, this.checkTimeout)
     },
     async checkAvailablity() {
       if (this.allowable) {
