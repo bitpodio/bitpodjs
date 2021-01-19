@@ -310,6 +310,7 @@ export default {
         )
         if (res) {
           this.statusMessage = 'Getting things ready'
+          this.startDateTime = new Date()
           const ticketRes = await this.$axios.$post(
             `https://${this.$config.axios.backendBaseUrl}${nuxtconfig.axios.apiEndpoint}Tickets`,
             [
