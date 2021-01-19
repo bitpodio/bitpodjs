@@ -230,12 +230,12 @@ export default {
   methods: {
     messageReceived(e) {
       if (e.data === 'success' && this.redirectToOrg) {
-        document.cookie.split(';').forEach(function (c) {
+        document.cookie.split(';').forEach((c) => {
           document.cookie = c
             .replace(/^ +/, '')
             .replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/')
         })
-        document.cookie.split(';').forEach(function (c) {
+        document.cookie.split(';').forEach((c) => {
           document.cookie = c
             .replace(/^ +/, '')
             .replace(
@@ -334,7 +334,7 @@ export default {
           )
           if (ticketRes) {
             this.statusMessage = 'Redirecting to new Organization'
-            document.cookie.split(';').forEach(function (c) {
+            document.cookie.split(';').forEach((c) => {
               document.cookie = c
                 .replace(/^ +/, '')
                 .replace(
@@ -342,7 +342,7 @@ export default {
                   '=;expires=' + new Date(0).toUTCString() + ';path=/'
                 )
             })
-            document.cookie.split(';').forEach(function (c) {
+            document.cookie.split(';').forEach((c) => {
               document.cookie = c
                 .replace(/^ +/, '')
                 .replace(
