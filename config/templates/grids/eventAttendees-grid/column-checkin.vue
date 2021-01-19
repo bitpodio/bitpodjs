@@ -27,9 +27,7 @@
       class="text-center"
     >
       <div class="d-flex justify-center">
-        <v-icon x-large color="success">
-          fa-check-circle
-        </v-icon>
+        <v-icon x-large color="success"> fa-check-circle </v-icon>
       </div>
       <div>
         <timeAgo

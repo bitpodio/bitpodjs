@@ -41,9 +41,7 @@
                 >
                   <i18n path="Common.JoinEvent" />
 
-                  <v-icon right class="fs-22">
-                    mdi-video
-                  </v-icon>
+                  <v-icon right class="fs-22"> mdi-video </v-icon>
                 </v-btn>
               </div>
               <div class="mr-2">

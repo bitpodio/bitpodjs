@@ -34,13 +34,6 @@ export default {
       default: () => false,
     },
   },
-  watch: {
-    snackbar(newVal) {
-      if (!newVal) {
-        this.refresh()
-      }
-    },
-  },
 
   data() {
     return {
@@ -48,6 +41,13 @@ export default {
       updateCount: 0,
       snackbar: false,
     }
+  },
+  watch: {
+    snackbar(newVal) {
+      if (!newVal) {
+        this.refresh()
+      }
+    },
   },
   methods: {
     async onDelete() {

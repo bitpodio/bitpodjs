@@ -19,7 +19,11 @@
             <v-icon v-if="actionType === 'Edit'" left class="fs-16"
               >fa-pencil</v-icon
             >
-            {{ (actionType === 'New' ? $t('Common.NewRecurringSession') : $t('Drawer.Edit')) }}
+            {{
+              actionType === 'New'
+                ? $t('Common.NewRecurringSession')
+                : $t('Drawer.Edit')
+            }}
           </v-btn>
         </template>
         <v-card>
@@ -27,7 +31,11 @@
             class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
           >
             <h2 class="black--text pt-5 pb-4 text-h5">
-              {{ (actionType === 'New' ? $t('Common.NewSession') : $t('Common.EditSession')) }}
+              {{
+                actionType === 'New'
+                  ? $t('Common.NewSession')
+                  : $t('Common.EditSession')
+              }}
             </h2>
 
             <v-spacer></v-spacer>
