@@ -939,8 +939,12 @@ export default {
   min-width: auto !important;
 }
 .my_video_1-dimensions {
-  width: 100%;
-  height: 400px;
+  width: 100% !important;
+  height: 400px !important;
+}
+.video-js {
+  width: 100% !important;
+  height: 400px !important;
 }
 @media screen and (max-width: 600px) {
   .background-event-img {
