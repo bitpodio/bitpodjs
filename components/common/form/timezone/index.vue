@@ -11,7 +11,14 @@
     dense
     outlined
     @change="onChange"
-  ></v-autocomplete>
+  >
+    <template v-slot:item="data" v-if="hasWrap">
+      <v-list-item-content
+        v-text="data.item.label"
+        class="wrap-slot"
+      ></v-list-item-content>
+    </template>
+  </v-autocomplete>
 </template>
 
 <script>
@@ -44,6 +51,10 @@ export default {
       type: [String, Boolean],
       default: false,
     },
+    hasWrap: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -68,3 +79,12 @@ export default {
   },
 }
 </script>
+<style scoped>
+.wrap-slot {
+  width: 100%;
+  overflow-wrap: break-word;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1rem;
+}
+</style>
