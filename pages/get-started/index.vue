@@ -45,7 +45,7 @@
                           ? $t('Messages.Error.MaximumCharacter')
                           : !/^[a-z]+$/i.test(v[0])
                           ? $t('Messages.Error.NameMustStartWithAlphabet')
-                          : !allow && allowable
+                          : !allow && allowable && !processing
                           ? $t('Messages.Error.OrganisationAlreadyExists')
                           : true
                       allowable = valid === true
@@ -165,6 +165,7 @@ export default {
       statusMessage: '',
       checkTimeout: 2000,
       checkTyping: null,
+      processing: false,
     }
   },
   computed: {
@@ -380,6 +381,7 @@ export default {
     startCheck() {
       clearTimeout(this.checkTyping)
       this.allow = false
+      this.processing = true
       this.checkTyping = setTimeout(this.checkAvailablity, this.checkTimeout)
     },
     async checkAvailablity() {
@@ -401,6 +403,7 @@ export default {
       } else {
         this.allow = false
       }
+      this.processing = false
     },
   },
 }
