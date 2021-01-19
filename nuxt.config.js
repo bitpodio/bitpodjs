@@ -46,6 +46,10 @@ export default {
         href:
           'https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap',
       },
+      {
+        rel: 'stylesheet',
+        href: 'https://unpkg.com/video.js/dist/video-js.css',
+      },
     ],
     script: [
       {
@@ -60,6 +64,13 @@ export default {
       {
         src:
           'https://cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js',
+      },
+      {
+        src: 'https://unpkg.com/video.js/dist/video.js',
+      },
+      {
+        src:
+          'https://unpkg.com/videojs-contrib-hls/dist/videojs-contrib-hls.js',
       },
     ],
   },
@@ -249,9 +260,11 @@ export default {
       eventUrl: process.env.GET_EVENT_URL || 'event.test.bitpod.io',
       crmUrl: process.env.GET_CRM_URL || 'crmivijd.test.bitpod.io',
     },
+    basePublicPath: process.env.PUBLIC_PATH || '',
     cdnUri:
       'https://res.cloudinary.com/mytestlogo/image/upload/bitpodjs/images/',
     cdnCsvUri: 'https://res.cloudinary.com/mytestlogo/raw/upload/',
+    rtmpLink: process.env.GET_RTMP_URL || 'https://live.bitpod.io/hls/',
     setting: {
       domains: {
         defaultPublicDomain:

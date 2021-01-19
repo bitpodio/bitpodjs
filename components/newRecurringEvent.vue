@@ -1020,9 +1020,7 @@
           ><i18n path="Drawer.Next"
         /></v-btn>
         <SaveBtn
-          v-if="
-            (currentTab > 2 && !isEventCreate && !isEventPublish)
-          "
+          v-if="currentTab > 2 && !isEventCreate && !isEventPublish"
           color="primary"
           :disabled="isSaveButtonDisabled || !valid || isInalidEventLink"
           depressed

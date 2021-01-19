@@ -672,6 +672,9 @@ table > tbody > tr:last-child .key-align {
   text-decoration: none !important;
   color: unset !important;
 }
+.vjs-error .vjs-error-display::before {
+  display: none !important;
+}
 @media (max-width: 800px) {
   .nav-bar {
     top: 50px !important;

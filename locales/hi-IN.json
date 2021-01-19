@@ -726,6 +726,15 @@
     "DeleteNote": "नोट हटाएँ",
     "PastEventMessage": "यह ईवेंट अब सक्रिय नहीं है.",
     "GoToOldSite": "पुरानी साइट पर जाएं",
+    "SetupDomain": "You could be a business, an event organizer, or a professional community. Choose the banner under which you will host your events.",
+    "WelcomeToBitpod": "Welcome to Bitpod",
+    "NameYourOrganization": "Name your organization",
+    "SuffixRoute": "-event.bitpod.io",
+    "CreateOrganisation": "Create organisation",
+    "OrganizationName": "Organization Name*",
+    "CreateEventMessage": "Create your first Event! This is your playground. Feel free to invite friends and learn exciting ways to engage your audience on Bitpod-Event.",
+    "EventDateTime": "Event dateand time*",
+    "YourTitleHere": "Your title will be displayed here",
     "SelectField": "एक क्षेत्र का चयन करें",
     "DeleteImage": "छवि हटाएं",
     "QuestionDeletedSuccessfully": "प्रश्न सफलतापूर्वक हटा दिया गया",
@@ -827,6 +836,7 @@
   },
   "Messages": {
     "Error": {
+      "EventNameEmpty": "Event name cannot be empty",
       "SizeRequired": "Size is required",
       "ThisFieldRequired": "यह फ़ील्ड आवश्यक है",
       "InvalidDate": "अमान्य तिथि",
@@ -886,7 +896,11 @@
       "OverlappingTimeSlot": "समय-स्लॉट अन्य स्लॉट के साथ अतिव्यापी",
       "EndTimeMustBeGreater": "अंत समय अधिक होना चाहिए फिर समय शुरू करें",
       "PermissionDenied": "आपको इस ऑपरेशन को करने की अनुमति नहीं है",
-      "roleAlreadyExits": "यह {roles} भूमिका पहले से मौजूद है"
+      "roleAlreadyExits": "यह {roles} भूमिका पहले से मौजूद है",
+      "MinimumCharacter": "Minimum 3 characters please",
+      "MaximumCharacter": "Maximum 20 characters please",
+      "NameMustStartWithAlphabet": "Name must start with alphabet",
+      "OrganisationAlreadyExists": "Organization already exists"
     },
     "Warn": {
       "UniqueLinkFormat": "केवल लोअर केस अल्फ़ान्यूमेरिक अक्षर",
@@ -961,7 +975,7 @@
       "RegistrationFormUpdatedSuccess": "पंजीकरण फॉर्म सफलतापूर्वक अपडेट किया गया",
       "SessionCreatedSuccess": "सत्र सफलतापूर्वक बनाया गया",
       "SessionUpdatedSuccess": "सत्र सफलतापूर्वक अपडेट किया गया",
-      "ContactImportSuccess":"संपर्कों को सफल आयात किया गया"
+      "ContactImportSuccess":"आयात निष्पादन शुरू हुआ"
     }
   },
   "$vuetify": {
