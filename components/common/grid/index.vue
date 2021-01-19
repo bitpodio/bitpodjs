@@ -193,7 +193,7 @@
           :class="hideDefaultHeader ? 'px-0 pt-0 istemplate' : 'px-2 pt-1'"
           :footer-props="{ 'items-per-page-options': [5, 10, 20, 50] }"
           :show-select="$device.isMobile || showSelect"
-          @update:options="updatePagination"
+          @change:options="updatePagination"
           @update:page="updatePageChange"
           @click:row="onRowClick"
           @input="onItemSelected"
@@ -956,6 +956,7 @@ export default {
     },
     updatePageChange(data) {
       this.loading = true
+      this.loadRestData()
     },
     onFilterClick(e) {
       this.isFilterApplied = true

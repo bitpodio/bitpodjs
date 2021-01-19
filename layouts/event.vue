@@ -222,12 +222,21 @@
             v-if="$auth.$state.loggedIn"
             v-slot:activator="{ on, attrs }"
           >
-            <v-avatar color="primary ml-2" size="30" v-bind="attrs" v-on="on">
-              <span class="white--text" @click="userPlan">{{
+            <v-btn
+              fab
+              depressed
+              x-small
+              color="primary"
+              v-bind="attrs"
+              v-on="on"
+              @click="userPlan"
+            >
+              <span class="white--text fs-16">{{
                 $auth.user.data.name && $auth.user.data.name[0]
               }}</span>
-            </v-avatar>
+            </v-btn>
           </template>
+
           <v-card>
             <v-list>
               <v-list-item>
