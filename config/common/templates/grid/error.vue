@@ -64,7 +64,14 @@ function getAPIErrorMessage(statusCode, msg) {
       userErrorMsg = 'Service unavailable'
       break
   }
-  this.$auth.refreshTokens()
+  debugger
+  if(statusCode === 401 && userErrorMsg){
+    if (window.localStorage['auth._refresh_token_expiration.bitpod']) {
+        window.localStorage['auth._refresh_token_expiration.bitpod'] = true
+      }
+      document.cookie = 'auth._refresh_token_expiration.bitpod=' + true
+    this.$auth.refreshTokens()
+  }
   return userErrorMsg
 }
 export default {
