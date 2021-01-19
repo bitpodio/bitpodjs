@@ -339,7 +339,7 @@ export default {
                 .replace(/^ +/, '')
                 .replace(
                   /=.*/,
-                  '=;expires=' + new Date().toUTCString() + ';path=/'
+                  '=;expires=' + new Date(0).toUTCString() + ';path=/'
                 )
             })
             document.cookie.split(';').forEach(function (c) {
@@ -348,11 +348,14 @@ export default {
                 .replace(
                   /=.*/,
                   '=;expires=' +
-                    new Date().toUTCString() +
+                    new Date(0).toUTCString() +
                     `;path=${this.$config.basePublicPath}`
                 )
             })
             localStorage.clear()
+            console.debug(localStorage)
+            console.debug(document.cookie)
+            debugger
             location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}/apps/event/list/Event/live-and-draft-event`
           } else {
             this.statusMessage = ''
