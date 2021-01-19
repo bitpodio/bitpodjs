@@ -100,7 +100,7 @@
             <SaveBtn
               dense
               color="primary"
-              :disabled="!allow"
+              :disabled="!allow && !processing"
               :label="this.$t('Common.CreateOrganisation')"
               :action="createOrg"
               :reset="resetBtn"
@@ -380,13 +380,11 @@ export default {
     },
     startCheck() {
       clearTimeout(this.checkTyping)
-      this.allow = false
       this.processing = true
       this.checkTyping = setTimeout(this.checkAvailablity, this.checkTimeout)
     },
     async checkAvailablity() {
       if (this.allowable) {
-        this.allow = false
         try {
           const res = await this.$axios.$get(
             `${this.$bitpod.getApiUrl()}OrganizationInfos/orgAvailable?name=${
@@ -395,15 +393,18 @@ export default {
           )
           if (res) {
             this.allow = res.result
+            this.processing = false
             this.$refs.form.validate()
           }
         } catch (err) {
+          this.processing = false
           console.error(err)
         }
       } else {
         this.allow = false
+        this.processing = false
+        this.$refs.form.validate()
       }
-      this.processing = false
     },
   },
 }
