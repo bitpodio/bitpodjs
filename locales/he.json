@@ -726,6 +726,15 @@
     "DeleteNote": "מחק הערה",
     "PastEventMessage": "אירוע זה אינו פעיל יותר.",
     "GoToOldSite": "היכנס לאתר הישן",
+    "SetupDomain": "You could be a business, an event organizer, or a professional community. Choose the banner under which you will host your events.",
+    "WelcomeToBitpod": "Welcome to Bitpod",
+    "NameYourOrganization": "Name your organization",
+    "SuffixRoute": "-event.bitpod.io",
+    "CreateOrganisation": "Create organisation",
+    "OrganizationName": "Organization Name*",
+    "CreateEventMessage": "Create your first Event! This is your playground. Feel free to invite friends and learn exciting ways to engage your audience on Bitpod-Event.",
+    "EventDateTime": "Event dateand time*",
+    "YourTitleHere": "Your title will be displayed here",
     "SelectField": "בחר שדה",
     "DeleteImage": "מחק תמונה",
     "QuestionDeletedSuccessfully": "השאלה נמחקה בהצלחה",
@@ -827,6 +836,7 @@
   },
   "Messages": {
     "Error": {
+      "EventNameEmpty": "Event name cannot be empty",
       "SizeRequired": "Size is required",
       "ThisFieldRequired": "זהו שדה חובה",
       "InvalidDate": "תאריך לא חוקי",
@@ -886,7 +896,11 @@
       "OverlappingTimeSlot": "משבצת זמן חופפת לחריצים אחרים",
       "EndTimeMustBeGreater": "זמן הסיום חייב להיות גדול יותר משעת ההתחלה",
       "PermissionDenied": "אין לך הרשאה לבצע פעולה זו",
-      "roleAlreadyExits": "תפקיד {roles} זה כבר קיים"
+      "roleAlreadyExits": "תפקיד {roles} זה כבר קיים",
+      "MinimumCharacter": "Minimum 3 characters please",
+      "MaximumCharacter": "Maximum 20 characters please",
+      "NameMustStartWithAlphabet": "Name must start with alphabet",
+      "OrganisationAlreadyExists": "Organization already exists"
     },
     "Warn": {
       "UniqueLinkFormat": "אותיות אלפאנומריות באותיות קטנות בלבד",
