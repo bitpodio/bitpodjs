@@ -100,7 +100,7 @@
             <SaveBtn
               dense
               color="primary"
-              :disabled="!allow && processing"
+              :disabled="!allow || processing"
               :label="this.$t('Common.CreateOrganisation')"
               :action="createOrg"
               :reset="resetBtn"
@@ -273,7 +273,10 @@ export default {
           'This Organisation is in use, maybe soft-deleted, Try with a new name.'
         this.snackbar = true
         this.resetBtn = !this.resetBtn
-        console.error(err)
+        console.error(
+          'Error while creating organization on /get-started. Error: ',
+          err
+        )
       }
     },
     async createEvent() {
@@ -372,7 +375,10 @@ export default {
         this.resetBtn = !this.resetBtn
         this.snackbarText = 'Failed to create Event.'
         this.snackbar = true
-        console.error(err)
+        console.error(
+          'Error while creating event on /get-started. Error: ',
+          err
+        )
       }
     },
     cancelCheck() {
@@ -398,7 +404,10 @@ export default {
           }
         } catch (err) {
           this.processing = false
-          console.error(err)
+          console.error(
+            'Error while checking if org exists on /get-started. Error: ',
+            err
+          )
         }
       } else {
         this.allow = false
