@@ -434,7 +434,7 @@ export default {
     async onSave() {
       const url = this.$bitpod.getApiUrl()
       this.getAttendeesId()
-      this.formData.Amount = parseInt(this.formData.Amount)
+      this.formData.Amount = parseFloat(this.formData.Amount)
       this.formData.DisplayOrder = parseInt(this.formData.DisplayOrder)
       this.formData.TicketCount = parseInt(this.formData.TicketCount)
       this.formData.AvailableCount = parseInt(this.formData.TicketCount)

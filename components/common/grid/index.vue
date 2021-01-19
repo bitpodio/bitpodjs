@@ -685,8 +685,7 @@ export default {
       }
     },
     isHideDefaultFooter() {
-      const isLessItems = this.tableData.total > this.options.itemsPerPage
-      return !isLessItems || this.hideDefaultFooter
+      return this.hideDefaultFooter
     },
     showTripleDot() {
       const templateActions = this.content.views?.[this.viewName]?.template
@@ -1063,6 +1062,7 @@ export default {
                   filters: { limit, skip, order, where },
                   where: {},
                 },
+                fetchPolicy: 'no-cache',
               })
               if (result) {
                 const formattedResult = formatGQLResult(result.data, modelName)
