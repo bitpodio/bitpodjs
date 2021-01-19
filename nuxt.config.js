@@ -263,7 +263,7 @@ export default {
     cdnUri:
       'https://res.cloudinary.com/mytestlogo/image/upload/bitpodjs/images/',
     cdnCsvUri: 'https://res.cloudinary.com/mytestlogo/raw/upload/',
-    rtmpLink: 'https://live.bitpod.io/hls/',
+    rtmpLink: process.env.GET_RTMP_URL || 'https://live.bitpod.io/hls/',
     setting: {
       domains: {
         defaultPublicDomain:
