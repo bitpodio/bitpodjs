@@ -5,13 +5,7 @@ export default {
    ** Nuxt rendering mode
    ** See https://nuxtjs.org/api/configuration-mode
    */
-  generate: {
-    minify: false,
-  },
-  build: {
-    dev:true
-  },
-  mode: 'universal',
+  mode: 'universal
   router: {
     base: basePath || '/',
   },
