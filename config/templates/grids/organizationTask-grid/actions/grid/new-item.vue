@@ -9,7 +9,11 @@
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on">
           <v-icon left>{{ buttonIcon }}</v-icon>
-          {{ (type === 'New' ? $t('Common.NewScheduleATask') : $t('Common.EditScheduleATask')) }}
+          {{
+            type === 'New'
+              ? $t('Common.NewScheduleATask')
+              : $t('Common.EditScheduleATask')
+          }}
         </v-btn>
       </template>
       <v-card>
@@ -17,7 +21,11 @@
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
           <h2 class="black--text pt-5 pb-4 text-h5">
-            {{ (type === 'New' ? $t('Common.NewScheduleATask') : $t('Common.EditScheduleATask')) }}
+            {{
+              type === 'New'
+                ? $t('Common.NewScheduleATask')
+                : $t('Common.EditScheduleATask')
+            }}
           </h2>
           <v-spacer></v-spacer>
           <div>
@@ -311,9 +319,6 @@ export default {
       },
     }
   },
-  mounted() {
-    this.setDueDate()
-  },
   computed: {
     filter() {
       if (
@@ -341,6 +346,9 @@ export default {
         type: 'Event_TaskAction',
       }
     },
+  },
+  mounted() {
+    this.setDueDate()
   },
 
   methods: {
@@ -385,6 +393,7 @@ export default {
       this.isDueDate = false
     },
     removeDueDate() {
+      this.dueDate = null
       delete this.task.DueDate
     },
     removeDayTime() {
@@ -458,9 +467,11 @@ export default {
       } else {
         this.hideDuedateTimezone()
         this.removeDueDateTimezone()
+        this.removeDueDate()
         this.hideDayTime()
         this.removeDayTime()
         this.removedAction()
+        this.removeSurvey()
       }
     },
     changeSurvey(value) {

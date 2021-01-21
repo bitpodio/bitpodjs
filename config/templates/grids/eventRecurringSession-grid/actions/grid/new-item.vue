@@ -19,7 +19,11 @@
             <v-icon v-if="actionType === 'Edit'" left class="fs-16"
               >fa-pencil</v-icon
             >
-            {{ (actionType === 'New' ? $t('Common.NewRecurringSession') : $t('Drawer.Edit')) }}
+            {{
+              actionType === 'New'
+                ? $t('Common.NewRecurringSession')
+                : $t('Drawer.Edit')
+            }}
           </v-btn>
         </template>
         <v-card>
@@ -27,7 +31,11 @@
             class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
           >
             <h2 class="black--text pt-5 pb-4 text-h5">
-              {{ (actionType === 'New' ? $t('Common.NewSession') : $t('Common.EditSession')) }}
+              {{
+                actionType === 'New'
+                  ? $t('Common.NewSession')
+                  : $t('Common.EditSession')
+              }}
             </h2>
 
             <v-spacer></v-spacer>
@@ -423,10 +431,17 @@
               </v-row>
               <v-row v-if="dialog">
                 <v-col cols="12" class="mt-3">
-                  <Lookup
+                  <v-select
                     v-model="session.SessionTicket"
-                    :field="ticketProps()"
-                  />
+                    :items="[...ticketOptions]"
+                    :label="$t('Common.SelectTickets')"
+                    item-text="Code"
+                    item-value="id"
+                    multiple
+                    required
+                    outlined
+                    dense
+                  ></v-select>
                 </v-col>
               </v-row>
               <div class="col-md-12 pl-0">
@@ -639,7 +654,6 @@ export default {
       sessionResult: [],
       session,
       venueAddress,
-
       selectedDays: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'],
       phoneRules: [
         (v) => {
@@ -981,20 +995,6 @@ export default {
       this.customDuration = '15'
       this.isGroup = false
       this.isCustomMin = false
-    },
-    ticketProps() {
-      const items = this.ticketOptions
-      return {
-        type: 'lookup',
-        multiple: true,
-        caption: 'Select tickets for this session',
-        items,
-        dataSource: {
-          items,
-          itemText: 'Code',
-          itemValue: 'id',
-        },
-      }
     },
     setSelectedDays(selectedDays) {
       selectedDays.map((x) => {

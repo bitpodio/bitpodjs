@@ -107,6 +107,7 @@ export default {
             variables: {
               filters: { where },
             },
+            fetchPolicy: 'no-cache',
           })
           const items = formatResult(result.data)
           this.items = items.map((item) => {

@@ -1,8 +1,8 @@
 <template>
   <v-flex class="greybg seatmap-inner">
     <div v-for="c in Category" :key="c">
-      <div class="ma-5">{{ c }}</div>
-      <div class="d-flex flex-wrap ml-5 mt-5">
+      <div class="mx-2 my-5">{{ c }}</div>
+      <div class="d-flex flex-wrap ml-2 mt-5">
         <div v-for="(item, index) in items" :key="item.MetaData.Category">
           <v-hover
             v-if="item.MetaData.Category === c"

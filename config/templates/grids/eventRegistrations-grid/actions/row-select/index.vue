@@ -21,7 +21,7 @@
       />
     </v-list-item>
     <v-list-item>
-      <resendRegistrationEmail :items="items" />
+      <resendRegistrationEmail :items="items" :view-name="viewName" />
     </v-list-item>
   </div>
 </template>
@@ -71,6 +71,9 @@ export default {
       default: () => {},
       required: false,
     },
+  },
+  mounted() {
+    this.$emit('has-custom-row-action', true)
   },
 }
 </script>

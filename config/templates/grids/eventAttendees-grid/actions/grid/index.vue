@@ -17,15 +17,28 @@
         :context="context"
       />
     </v-list-item>
+    <v-list-item v-if="canExport">
+      <export-csv
+        :content="content"
+        :view-name="viewName"
+        :on-csv-export="onCsvExport"
+        :export-in-progress="exportInProgress"
+        :can-export="canExport"
+        :refresh="refresh"
+        :context="context"
+      />
+    </v-list-item>
   </div>
 </template>
 
 <script>
 import newItem from '~/config/common/templates/grid/actions/grid/new-item.vue'
+import exportCsv from '~/config/common/templates/grid/actions/grid/export-csv.vue'
 import importContact from '~/components/common/import'
 export default {
   components: {
     newItem,
+    exportCsv,
     importContact,
   },
   props: {
@@ -59,6 +72,18 @@ export default {
       default: () => false,
       required: false,
     },
+    onCsvExport: {
+      type: Function,
+      default: () => {},
+    },
+    exportInProgress: {
+      type: Boolean,
+      default: false,
+    },
+    canExport: {
+      type: Boolean,
+      default: false,
+    },
     context: {
       type: Object,
       default: () => {},
@@ -79,7 +104,7 @@ export default {
     }
   },
   mounted() {
-    this.$emit('hasGridOption', true)
+    this.$emit('has-custom-grid-action', true)
   },
 }
 </script>

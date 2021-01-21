@@ -12,7 +12,7 @@ export default {
     name: 'OfferCode',
   },
   views: {
-    'Discount Codes': {
+    'Discount-Codes': {
       ui: {
         hideDefaultHeader: false,
         hideDefaultFooter: false,
@@ -30,7 +30,7 @@ export default {
           caption: 'Common.CurrentUsageCount',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '220px',
+          columnWidth: '200px',
           type: 'number',
           inlineEdit: false,
           newForm: false,
@@ -80,7 +80,7 @@ export default {
             displayOrder: 4,
           },
           displayOrder: 4,
-          caption: 'Common.IsActive',
+          caption: 'Common.IsActiveField',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '120px',
@@ -96,10 +96,10 @@ export default {
             displayOrder: 3,
           },
           displayOrder: 3,
-          caption: 'Common.IsPercent',
+          caption: 'Common.IsPercentCaption',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '130px',
+          columnWidth: '140px',
           type: 'checkbox',
           cssClasses: 'col-6 col-md-6',
           inlineEdit: true,
@@ -122,6 +122,17 @@ export default {
           newForm: true,
           editForm: true,
           default: '',
+          customExport: (startDate) => {
+            if (startDate) {
+              const tempDate = new Date(startDate)
+              return (
+                tempDate.toLocaleDateString() +
+                ' ' +
+                tempDate.toLocaleTimeString()
+              )
+            }
+            return ''
+          },
         },
         offerValue: {
           form: {
@@ -132,7 +143,7 @@ export default {
           caption: 'Common.OfferValue',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '130px',
+          columnWidth: '150px',
           type: 'number',
           cssClasses: 'col-6 col-md-6',
           inlineEdit: true,
@@ -154,7 +165,7 @@ export default {
           caption: 'Common.MinApplicableAmount',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '220px',
+          columnWidth: '210px',
           type: 'number',
           cssClasses: 'col-6 col-md-6',
           inlineEdit: true,
@@ -171,7 +182,7 @@ export default {
           caption: 'Common.MaxApplicableAmount',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '180px',
+          columnWidth: '200px',
           type: 'number',
           cssClasses: 'col-6 col-md-6',
           inlineEdit: true,
@@ -202,12 +213,23 @@ export default {
           caption: 'Common.CreatedDate',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '250px',
+          columnWidth: '150px',
           type: 'date',
           cssClasses: 'col-12 col-md-12',
           inlineEdit: false,
           newForm: false,
           editForm: false,
+          customExport: (startDate) => {
+            if (startDate) {
+              const tempDate = new Date(startDate)
+              return (
+                tempDate.toLocaleDateString() +
+                ' ' +
+                tempDate.toLocaleTimeString()
+              )
+            }
+            return ''
+          },
         },
         EventId: {
           form: {
@@ -275,7 +297,7 @@ export default {
           caption: 'Common.FirstNameCaption',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '220px',
+          columnWidth: '150px',
           type: 'string',
         },
         LastName: {
@@ -283,7 +305,7 @@ export default {
           caption: 'Common.LastNameCaption',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '180px',
+          columnWidth: '150px',
           type: 'string',
         },
         Email: {
@@ -308,7 +330,7 @@ export default {
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
-          type: 'datetime',
+          type: 'date',
         },
         Action: {
           displayOrder: 7,
@@ -324,11 +346,22 @@ export default {
         context: {
           basePath: '/discountcodes',
         },
+        actions: {
+          edit: {
+            hidden: true,
+          },
+          delete: {
+            hidden: true,
+          },
+          exportCsv: {
+            hidden: true,
+          },
+        },
       },
       dataSource: {
         type: 'rest',
-        getData: (ctx) =>
-          getData(`OfferCodes/${ctx.$route.params.id}/getMember`),
+        getData: (ctx, isExporting = false) =>
+          getData(`OfferCodes/${ctx.$route.params.id}/getMember`, isExporting),
       },
       hidden: true,
       title: 'discountMembers',

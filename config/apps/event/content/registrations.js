@@ -64,14 +64,14 @@ export default {
         },
         PaymentMethod: {
           displayOrder: 10,
-          caption: 'Common.PaymentMethod',
+          caption: 'Common.PaymentMethodHeader',
           form: {
             caption: 'PaymentMethod*',
             displayOrder: 13,
           },
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '180px',
           type: 'string',
           inlineEdit: false,
           newForm: false,
@@ -86,7 +86,7 @@ export default {
           },
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '170px',
           type: 'string',
           hidden: false,
           inlineEdit: true,
@@ -224,7 +224,7 @@ export default {
         },
         EventName: {
           displayOrder: 6,
-          caption: 'Common.EventName',
+          caption: 'Common.EventNameHeader',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -335,10 +335,10 @@ export default {
         },
         RegistrationId: {
           displayOrder: 6,
-          caption: 'Common.RegistrationId',
+          caption: 'Common.RegistrationIdHeader',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '180px',
+          columnWidth: '165px',
           type: 'string',
           inlineEdit: false,
           newForm: false,
@@ -354,6 +354,17 @@ export default {
           inlineEdit: false,
           newForm: false,
           editForm: false,
+          customExport: (startDate) => {
+            if (startDate) {
+              const tempDate = new Date(startDate)
+              return (
+                tempDate.toLocaleDateString() +
+                ' ' +
+                tempDate.toLocaleTimeString()
+              )
+            }
+            return ''
+          },
         },
         TicketQuantity: {
           displayOrder: 9,
@@ -364,7 +375,7 @@ export default {
           },
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '130px',
+          columnWidth: '140px',
           type: 'number',
           cssClasses: 'col-6 col-md-6',
           hidden: false,
@@ -386,10 +397,10 @@ export default {
         },
         TotalAmount: {
           displayOrder: 8,
-          caption: 'Common.TotalAmount',
+          caption: 'Common.TotalAmountHeader',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '160px',
           type: 'number',
           inlineEdit: false,
           newForm: false,
@@ -464,7 +475,7 @@ export default {
       title: 'Common.Registrations',
       type: 'list',
     },
-    'Abandoned Registrations': {
+    'Abandoned-Registrations': {
       ui: {
         hideDefaultHeader: false,
         hideDefaultFooter: false,
@@ -519,14 +530,14 @@ export default {
         },
         PaymentMethod: {
           displayOrder: 10,
-          caption: 'Common.PaymentMethod',
+          caption: 'Common.PaymentMethodHeader',
           form: {
             caption: 'PaymentMethod*',
             displayOrder: 13,
           },
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '180px',
           type: 'string',
           inlineEdit: false,
           newForm: false,
@@ -541,7 +552,7 @@ export default {
           },
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '170px',
           type: 'string',
           hidden: false,
           inlineEdit: true,
@@ -679,7 +690,7 @@ export default {
         },
         EventName: {
           displayOrder: 6,
-          caption: 'Common.EventName',
+          caption: 'Common.EventNameHeader',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '180px',
@@ -780,10 +791,10 @@ export default {
         },
         RegistrationId: {
           displayOrder: 6,
-          caption: 'Common.RegistrationId',
+          caption: 'Common.RegistrationIdHeader',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '180px',
+          columnWidth: '165px',
           type: 'string',
           inlineEdit: false,
           newForm: false,
@@ -799,6 +810,17 @@ export default {
           inlineEdit: false,
           newForm: false,
           editForm: false,
+          customExport: (startDate) => {
+            if (startDate) {
+              const tempDate = new Date(startDate)
+              return (
+                tempDate.toLocaleDateString() +
+                ' ' +
+                tempDate.toLocaleTimeString()
+              )
+            }
+            return ''
+          },
         },
         TicketQuantity: {
           displayOrder: 9,
@@ -809,7 +831,7 @@ export default {
           },
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '130px',
+          columnWidth: '140px',
           type: 'number',
           cssClasses: 'col-6 col-md-6',
           hidden: false,
@@ -831,10 +853,10 @@ export default {
         },
         TotalAmount: {
           displayOrder: 8,
-          caption: 'Common.TotalAmount',
+          caption: 'Common.TotalAmountHeader',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '160px',
           type: 'number',
           inlineEdit: false,
           newForm: false,
@@ -1037,14 +1059,20 @@ export default {
           delete: {
             hidden: true,
           },
+          exportCsv: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
         singularEntity: 'Common.SessionCaption',
         pluralEntity: 'Common.Sessions',
         type: 'rest',
-        getData: (ctx) =>
-          getData(`Registrations/${ctx.$route.params.id}/SessionListId`),
+        getData: (ctx, isExporting = false) =>
+          getData(
+            `Registrations/${ctx.$route.params.id}/SessionListId`,
+            isExporting
+          ),
       },
       title: 'Sessions',
       type: 'list',
@@ -1174,14 +1202,20 @@ export default {
           delete: {
             hidden: true,
           },
+          exportCsv: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
         singularEntity: 'Common.SessionCaption',
         pluralEntity: 'Common.Sessions',
         type: 'rest',
-        getData: (ctx) =>
-          getData(`Registrations/${ctx.$route.params.id}/SessionListId`),
+        getData: (ctx, isExporting = false) =>
+          getData(
+            `Registrations/${ctx.$route.params.id}/SessionListId`,
+            isExporting
+          ),
       },
       title: 'Sessions',
       type: 'list',
@@ -1322,8 +1356,8 @@ export default {
           caption: 'Common.TicketAmount',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
-          type: 'string',
+          columnWidth: '165px',
+          type: 'number',
           hidden: false,
           inlineEdit: true,
           newForm: false,
@@ -1334,7 +1368,7 @@ export default {
           caption: 'Common.SeatNumber',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '160px',
           type: 'string',
           hidden: false,
           inlineEdit: true,
@@ -1346,7 +1380,7 @@ export default {
           caption: 'Common.Organization',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '160px',
           type: 'string',
           cssClasses: 'col-6 col-md-6',
           hidden: false,
@@ -1377,6 +1411,17 @@ export default {
           inlineEdit: true,
           newForm: false,
           editForm: false,
+          customExport: (startDate) => {
+            if (startDate) {
+              const tempDate = new Date(startDate)
+              return (
+                tempDate.toLocaleDateString() +
+                ' ' +
+                tempDate.toLocaleTimeString()
+              )
+            }
+            return ''
+          },
         },
         '_CurrentAddress.AddressLine': {
           form: {
@@ -1582,10 +1627,10 @@ export default {
         },
         TemplateName: {
           displayOrder: 8,
-          caption: 'TemplateName',
+          caption: 'Common.TemplateNameCaption',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '170px',
           type: 'string',
         },
         createdBy: {
@@ -1593,7 +1638,7 @@ export default {
           caption: 'Common.CreatedBy',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '130px',
+          columnWidth: '150px',
           type: 'string',
         },
         createdDate: {
@@ -1601,7 +1646,7 @@ export default {
           caption: 'Common.CreatedDate',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '130px',
+          columnWidth: '150px',
           type: 'date',
         },
         DueDate: {
@@ -1626,6 +1671,9 @@ export default {
             hidden: true,
           },
           delete: {
+            hidden: true,
+          },
+          exportCsv: {
             hidden: true,
           },
         },
@@ -1741,12 +1789,18 @@ export default {
           delete: {
             hidden: true,
           },
+          exportCsv: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
         type: 'rest',
-        getData: (ctx) =>
-          getData(`Registrations/${ctx.$route.params.id}/SessionListId`),
+        getData: (ctx, isExporting = false) =>
+          getData(
+            `Registrations/${ctx.$route.params.id}/SessionListId`,
+            isExporting
+          ),
       },
       title: 'Sessions',
       type: 'list',
@@ -2082,6 +2136,9 @@ export default {
             hidden: true,
           },
           delete: {
+            hidden: true,
+          },
+          exportCsv: {
             hidden: true,
           },
         },

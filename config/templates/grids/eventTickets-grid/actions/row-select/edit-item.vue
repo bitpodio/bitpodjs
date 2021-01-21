@@ -1,8 +1,5 @@
 <template>
   <v-col class="px-0">
-    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
-      <div class="text-center">{{ snackbarText }}</div>
-    </v-snackbar>
     <v-dialog
       v-model="dialog"
       persistent
@@ -226,6 +223,10 @@ export default {
       default: null,
       required: false,
     },
+    viewName: {
+      type: String,
+      default: '',
+    },
   },
   data() {
     return {
@@ -249,9 +250,6 @@ export default {
       },
       Symbol: '',
       CheckEndDate: '',
-      snackbar: false,
-      snackbarText: '',
-      timeout: 3000,
     }
   },
   computed: {
@@ -311,13 +309,6 @@ export default {
             }
           },
         ],
-      }
-    },
-  },
-  watch: {
-    snackbar(newVal) {
-      if (!newVal) {
-        this.refresh()
       }
     },
   },
@@ -426,7 +417,7 @@ export default {
     async onSave() {
       const url = this.$bitpod.getApiUrl()
       this.getAttendeesId()
-      this.formData.Amount = parseInt(this.Amount)
+      this.formData.Amount = parseFloat(this.Amount)
       this.formData.DisplayOrder = parseInt(this.formData.DisplayOrder)
       this.formData.TicketCount = parseInt(this.formData.TicketCount)
       this.formData.AvailableCount = parseInt(this.formData.TicketCount)
@@ -440,8 +431,12 @@ export default {
         if (res) {
           this.onReset()
           this.dialog = false
-          this.snackbarText = this.$t('Messages.Success.RecordUpdatedSuccess')
-          this.snackbar = true
+          this.$eventBus.$emit(
+            'toggle-snackbar',
+            this.viewName,
+            this.$t('Messages.Success.TicketRecordUpdatedSuccess'),
+            3000
+          )
         }
       } catch (e) {
         console.log(
