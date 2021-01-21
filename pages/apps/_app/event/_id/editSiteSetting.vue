@@ -279,7 +279,7 @@ import gql from 'graphql-tag'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
-import templateList from '~/config/apps/event/gql/templateList.gql'
+// import templateList from '~/config/apps/event/gql/templateList.gql'
 import SaveButton from '~/components/common/saveButton'
 
 export default {
@@ -321,6 +321,24 @@ export default {
       })
   },
   methods: {
+    async getRegistrationSiteTemplates() {
+      const customAxiosInstance = this.$axios.create({
+        headers: {},
+      })
+      const primeOrgId = this.$config.axios.primeOrgId
+      customAxiosInstance.setHeader('x-org-id', primeOrgId)
+      const url = this.$bitpod.getApiUrl()
+      try {
+        const template = await customAxiosInstance.get(
+          `${url}/Templates?filter={"where":{"Name": {"inq": ["event", "Rhine", "Limmat", "Dark"]}}}`
+        )
+        this.formData = template.data
+      } catch (e) {
+        console.error(
+          `Error while fetching templates from Templates model while making a GET request from getRegistrationSiteTemplates method context: \n url:${url} \n primeOrgId:${primeOrgId}`
+        )
+      }
+    },
     setDefaultSelected() {
       if (this.eventData.BusinessType === 'Recurring') {
         this.selectedItem = 3
@@ -429,41 +447,8 @@ export default {
         })
     },
   },
+
   apollo: {
-    data: {
-      query() {
-        return gql`
-          ${templateList}
-        `
-      },
-      variables() {
-        return {
-          filters: {
-            where: {
-              Name: {
-                inq: ['event', 'Rhine', 'Limmat', 'Dark'],
-              },
-            },
-          },
-        }
-      },
-      update(data) {
-        const template = formatGQLResult(data, 'Template')
-        this.formData = template
-        return {
-          template: template.length > 0 ? template : {},
-        }
-      },
-      result({ data, loading, networkStatus }) {},
-      error(error) {
-        this.error = error
-        this.loading = 0
-      },
-      prefetch: false,
-      loadingKey: 'loading',
-      skip: false,
-      pollInterval: 0,
-    },
     data1: {
       query() {
         return gql`
@@ -495,6 +480,7 @@ export default {
         this.eventData = event.length > 0 ? { ...event[0] } : {}
         this.eventData.id = this.$route.params.id
         this.setDefaultSelected()
+        this.getRegistrationSiteTemplates()
         this.formData.forEach((ele, index) => {
           if (ele.Name === this.eventData.RegistrationSiteTemplate) {
             this.selectedItem = index
