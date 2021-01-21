@@ -46,10 +46,8 @@ function getGQLAPIErrorMsg(err) {
   return getAPIErrorMessage(statusCode, msg)
 }
 
-function getAPIErrorMessage(statusCode, msg) {
+const getAPIErrorMessage = (statusCode, msg) => {
   let userErrorMsg = 'Something went wrong'
-  debugger
-  console.log('Printing the status code',statusCode)
   switch (statusCode) {
     case 401:
       if (msg === 'jwt expired')
@@ -63,14 +61,6 @@ function getAPIErrorMessage(statusCode, msg) {
     case 502:
       userErrorMsg = 'Service unavailable'
       break
-  }
-  debugger
-  if(statusCode === 401 && userErrorMsg){
-    if (window.localStorage['auth._refresh_token_expiration.bitpod']) {
-        window.localStorage['auth._refresh_token_expiration.bitpod'] = true
-      }
-      document.cookie = 'auth._refresh_token_expiration.bitpod=' + true
-    this.$auth.refreshTokens()
   }
   return userErrorMsg
 }
