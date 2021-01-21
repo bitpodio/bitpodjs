@@ -344,7 +344,6 @@ export default {
           logout:
             process.env.BITPOD_ENDSESSION_ENDPOINT_URL ||
             'https://login.bitpod.io/auth/connect/endsession',
-          refresh: `https://${process.env.PUBLIC_DOMAIN}/svc/oauth/refresh?provider=bitpod`,
         },
         logoutRedirectUri: process.env.POST_LOGOUT_REDIRECT_URI,
         responseType: 'code',
@@ -360,7 +359,6 @@ export default {
         tokenType: 'Bearer',
         tokenKey: 'access_token',
         refreshTokenKey: 'refresh_token',
-        autoLogout: false,
       },
       google: {
         scheme: 'oauth2',

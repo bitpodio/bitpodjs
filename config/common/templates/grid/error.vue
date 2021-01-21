@@ -46,7 +46,7 @@ function getGQLAPIErrorMsg(err) {
   return getAPIErrorMessage(statusCode, msg)
 }
 
-const getAPIErrorMessage = (statusCode, msg) => {
+function getAPIErrorMessage(statusCode, msg) {
   let userErrorMsg = 'Something went wrong'
   switch (statusCode) {
     case 401:
