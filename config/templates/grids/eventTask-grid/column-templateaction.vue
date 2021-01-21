@@ -6,6 +6,7 @@
       </div>
     </v-snackbar>
     <v-menu
+      v-model="menu"
       left
       :offset-y="offset"
       transition="slide-y-transition"
@@ -81,12 +82,19 @@ export default {
       snackbar: false,
       timeout: '2000',
       snackbarText: '',
+      menu: true,
     }
+  },
+  mounted() {
+    this.$eventBus.$on('dialogOpen', this.closeMenu)
   },
   methods: {
     updateSnackbar(message) {
       this.snackbar = true
       this.snackbarText = message
+    },
+    closeMenu() {
+      this.menu = false
     },
   },
 }

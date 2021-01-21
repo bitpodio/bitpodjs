@@ -8,7 +8,7 @@
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on">
-          <i class="fa fa-upload iconSize mr-1" aria-hidden="true"></i>
+          <i class="fa fa-download fs-18 mr-1" aria-hidden="true"></i>
           <i18n path="Common.Import" />
         </v-btn>
       </template>
@@ -101,6 +101,11 @@
         </v-card>
       </template>
     </v-dialog>
+    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true" width="2px">
+      <div class="fs-16 text-center">
+        {{ snackbarText }}
+      </div>
+    </v-snackbar>
   </v-col>
 </template>
 <script>
@@ -132,6 +137,9 @@ export default {
       resetList: [],
       fileList: [],
       selectedFile: {},
+      snackbarText: '',
+      timeout: 3000,
+      snackbar: false,
     }
   },
   methods: {

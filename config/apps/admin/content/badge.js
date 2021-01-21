@@ -119,6 +119,9 @@ export default {
             hidden: false,
             caption: 'Common.CreateBadge',
           },
+          exportCsv: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
@@ -134,7 +137,7 @@ export default {
           where: { EventId: { exists: false } },
         },
       },
-      title: 'Common.Badge',
+      title: 'Common.BadgesTemplates',
       type: 'list',
     },
   },

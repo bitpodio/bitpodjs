@@ -1,5 +1,5 @@
 <template>
-  <div class="public-page-main">
+  <div>
     <v-flex class="detailview-head mb-3"
       ><v-btn class="ml-n3 back-icon" icon @click="goBack"
         ><v-icon class="fs-30">mdi-chevron-left</v-icon> </v-btn
@@ -8,7 +8,7 @@
     <v-flex d-flex flex-md-row flex-lg-row flex-column>
       <v-flex column class="mxw-w70">
         <div
-          class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+          class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg public-page-main"
         >
           <v-flex class="d-flex pb-1 flex-column flex-md-row">
             <div class="text-h4 text-capitalize event-title">
@@ -41,9 +41,7 @@
                 >
                   <i18n path="Common.JoinEvent" />
 
-                  <v-icon right class="fs-22">
-                    mdi-video
-                  </v-icon>
+                  <v-icon right class="fs-22"> mdi-video </v-icon>
                 </v-btn>
               </div>
               <div class="mr-2">
@@ -1018,7 +1016,7 @@
         </div>
         <div
           v-if="content"
-          class="xs12 sm4 md4 lg4 boxview pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+          class="xs12 sm4 md4 lg4 boxview boxviewsmall pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
           <div class="sticky d-flex flex-column justify-center boxview">
             <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
@@ -1666,11 +1664,17 @@ export default {
     this.getAttendees()
     setTimeout(this.openPrint, 3000)
     this.$eventBus.$on('update-seat-reservation', this.updateSeatReservation)
+    this.$eventBus.$on('seat-map-triggered', this.getScrollPosition)
   },
   beforeDestroy() {
     this.$eventBus.$off('update-seat-reservation')
+    this.$eventBus.$off('seat-map-triggered')
   },
   methods: {
+    getScrollPosition() {
+      const scrollPosition = this.$store.state.scrollPosition
+      document.documentElement.scrollTo(0, scrollPosition)
+    },
     getEventStartDate() {
       return this.$d(
         new Date(
@@ -1707,7 +1711,7 @@ export default {
     },
     goLive() {
       window.open(
-        `apps/event/live/${this.eventData.UniqLink}?e=${this.$route.params.id}&n=${this.eventData.Title}`
+        `apps/event/live/${this.$store.state.currentOrg.name}-${this.eventData.UniqLink}?e=${this.$route.params.id}&n=${this.eventData.Title}`
       )
     },
     openPrintForm() {
@@ -1774,14 +1778,19 @@ export default {
       try {
         const url = this.$bitpod.getApiUrl()
         const res = await this.$axios.get(
-          `${url}Events/${this.$route.params.id}/Attende`
+          `${url}Events/${
+            this.$route && this.$route.params && this.$route.params.id
+          }/Attende`
         )
         if (res) {
           this.attendees = res.data
+          this.getScrollPosition()
         }
       } catch (e) {
         console.error(
-          `Error in apps/event/_id/index.vue while making a GQL call to Attendee model in method getAttendees context: EventId:-${this.$route.params.id}`,
+          `Error in apps/event/_id/index.vue while making a GQL call to Attendee model in method getAttendees context: EventId:-${
+            this.$route && this.$route.params && this.$route.params.id
+          }`,
           e
         )
       }
@@ -2106,7 +2115,7 @@ export default {
       return regUrl
     },
     viewBitpodVirtualLink() {
-      return `https://${this.$config.integrationLinks.BITOPD_VIRTUAL_LINK}/${this.data.event.UniqLink}`
+      return `https://${this.$config.integrationLinks.BITOPD_VIRTUAL_LINK}/${this.$store.state.currentOrg.name}-${this.data.event.UniqLink}`
     },
     formatDate(date) {
       return date ? format(new Date(date), 'PPp') : ''
@@ -2325,6 +2334,8 @@ export default {
       }
     },
     onEditSeatMap() {
+      const scrollPosition = document.documentElement.scrollTop
+      this.$store.commit('setScrollPosition', scrollPosition)
       this.$router.push(this.localePath(`/apps/seatmap/${this.layoutId}`))
     },
   },

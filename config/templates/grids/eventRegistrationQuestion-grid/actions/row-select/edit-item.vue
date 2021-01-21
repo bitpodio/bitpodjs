@@ -19,7 +19,7 @@
         <v-card-title
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
-          <h2 class="black--text pt-10 pb-9 font-weight-regular">
+          <h2 class="black--text pt-5 pb-4 font-weight-regular text-h5">
             <i18n path="Common.EditSurveyQuestion" />
           </h2>
           <v-spacer></v-spacer>
@@ -245,7 +245,9 @@ export default {
 
       if (res) {
         this.dialog = false
-        this.snackbarText = this.$t('Messages.Success.RecordUpdatedSuccess')
+        this.snackbarText = this.$t(
+          'Messages.Success.QuestionRecordUpdatedSuccess'
+        )
         this.snackbar = true
       }
     },

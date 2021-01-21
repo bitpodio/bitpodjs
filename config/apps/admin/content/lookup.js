@@ -80,6 +80,11 @@ export default {
         context: {
           basePath: '/organization',
         },
+        actions: {
+          exportCsv: {
+            hidden: true,
+          },
+        },
       },
       dataSource: {
         query: generalConfiguration,
@@ -181,6 +186,11 @@ export default {
         name: '',
         context: {
           basePath: '/organization',
+        },
+        actions: {
+          exportCsv: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
@@ -286,6 +296,11 @@ export default {
         context: {
           basePath: '/organization',
         },
+        actions: {
+          exportCsv: {
+            hidden: true,
+          },
+        },
       },
       dataSource: {
         singularEntity: 'Common.EventPrivacy',
@@ -390,6 +405,11 @@ export default {
         context: {
           basePath: '/organization',
         },
+        actions: {
+          exportCsv: {
+            hidden: true,
+          },
+        },
       },
       dataSource: {
         singularEntity: 'Common.EventTag',
@@ -493,6 +513,11 @@ export default {
         name: '',
         context: {
           basePath: '/organization',
+        },
+        actions: {
+          exportCsv: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
@@ -599,6 +624,11 @@ export default {
         context: {
           basePath: '/organization',
         },
+        actions: {
+          exportCsv: {
+            hidden: true,
+          },
+        },
       },
       dataSource: {
         singularEntity: 'Common.SessionType',
@@ -702,6 +732,11 @@ export default {
         name: '',
         context: {
           basePath: '/organization',
+        },
+        actions: {
+          exportCsv: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
@@ -807,6 +842,11 @@ export default {
         context: {
           basePath: '/organization',
         },
+        actions: {
+          exportCsv: {
+            hidden: true,
+          },
+        },
       },
       dataSource: {
         singularEntity: 'Common.RefundMethod',
@@ -910,6 +950,11 @@ export default {
         name: '',
         context: {
           basePath: '/organization',
+        },
+        actions: {
+          exportCsv: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
@@ -1026,6 +1071,11 @@ export default {
         context: {
           basePath: '/organization',
         },
+        actions: {
+          exportCsv: {
+            hidden: true,
+          },
+        },
       },
       dataSource: {
         singularEntity: 'Common.BadgeCategory',
@@ -1130,6 +1180,11 @@ export default {
         context: {
           basePath: '/organization',
         },
+        actions: {
+          exportCsv: {
+            hidden: true,
+          },
+        },
       },
       dataSource: {
         singularEntity: 'Common.ContactType',
@@ -1233,6 +1288,11 @@ export default {
         name: '',
         context: {
           basePath: '/organization',
+        },
+        actions: {
+          exportCsv: {
+            hidden: true,
+          },
         },
       },
       dataSource: {

@@ -376,7 +376,7 @@
                         <i18n path="Common.Contacts" />
                       </h4>
                     </div>
-                    <div v-if="dialog" class="borderRightGrey pr-3 mr-n3">
+                    <div v-if="dialog" class="pr-3 mr-n3">
                       <Grid
                         :value="selectedList"
                         view-name="InviteContacts"
@@ -700,7 +700,7 @@
                           <i18n path="Common.SubjectAndSender" />
                         </h4>
                         <v-btn class="ml-10" text small @click="curentTab = 0">
-                          <v-icon dark left>mdi-pencil</v-icon>
+                          <v-icon dark left>fa-pencil</v-icon>
                           <i18n path="Drawer.Edit" />
                         </v-btn>
                       </v-flex>
@@ -760,14 +760,14 @@
               v-if="curentTab > 0"
               depressed
               :disabled="acknowledgement"
-              @click="curentTab--"
+              @click="onPrev"
               ><i18n path="Drawer.Prev"
             /></v-btn>
             <v-btn
               v-if="curentTab < 3"
               color="primary"
               depressed
-              @click="curentTab++"
+              @click="onNext"
               ><i18n path="Drawer.Next"
             /></v-btn>
           </v-card-actions>
@@ -990,6 +990,14 @@ export default {
     this.$eventBus.$off('itemSelected')
   },
   methods: {
+    onPrev() {
+      this.curentTab--
+      document.getElementsByClassName('invite-inner')[0].scrollTop = 0
+    },
+    onNext() {
+      this.curentTab++
+      document.getElementsByClassName('invite-inner')[0].scrollTop = 0
+    },
     updateSelectedList(data) {
       if (data.viewName === 'Contacts') {
         this.selectedList = [...data.items]

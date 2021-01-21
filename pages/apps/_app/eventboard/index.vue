@@ -735,7 +735,7 @@ export default {
   methods: {
     routeToLiveEvents(method) {
       this.$router.push(
-        this.localePath('/apps/event/list/Event/live and draft event')
+        this.localePath('/apps/event/list/Event/live-and-draft-event')
       )
     },
     routeToRegistrations(method) {
@@ -747,7 +747,7 @@ export default {
       if (method === 'routeToAbandoned') {
         this.$router.push(
           this.localePath(
-            '/apps/event/list/Registrations/Abandoned Registrations'
+            '/apps/event/list/Registrations/Abandoned-Registrations'
           )
         )
       }
@@ -979,7 +979,17 @@ export default {
             where: {
               and: [
                 { Status: 'Open for registration' },
-                { EndDate: { gte: new Date() } },
+                {
+                  or: [
+                    { BusinessType: 'Recurring' },
+                    {
+                      and: [
+                        { EndDate: { gte: new Date() } },
+                        { BusinessType: 'Single' },
+                      ],
+                    },
+                  ],
+                },
               ],
             },
           },
@@ -1025,6 +1035,8 @@ export default {
           })
           this.eventOnSaleLoaded = true
           this.eventOnSaleEmpty = false
+        } else if (!eventData.length && data.Event?.EventCount > 0) {
+          this.eventOnSaleEmpty = true
         }
       },
       error(error) {

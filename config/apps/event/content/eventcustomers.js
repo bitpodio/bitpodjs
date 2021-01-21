@@ -100,7 +100,7 @@ export default {
           caption: 'Common.BusinessNumber',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '130px',
+          columnWidth: '165px',
           type: 'string',
           cssClasses: 'col-12 col-md-6',
           hidden: false,
@@ -121,10 +121,21 @@ export default {
           caption: 'Common.CreatedDate',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '130px',
+          columnWidth: '150px',
           type: 'date',
           newForm: false,
           editForm: false,
+          customExport: (startDate) => {
+            if (startDate) {
+              const tempDate = new Date(startDate)
+              return (
+                tempDate.toLocaleDateString() +
+                ' ' +
+                tempDate.toLocaleTimeString()
+              )
+            }
+            return ''
+          },
         },
         createdBy: {
           displayOrder: 7,
@@ -256,7 +267,7 @@ export default {
         model: 'Customer',
         defaultSort: 'createdDate DESC',
       },
-      title: 'Common.Members',
+      title: 'Drawer.Members',
       defaultSort: 'createdDate DESC',
     },
   },

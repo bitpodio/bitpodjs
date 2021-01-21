@@ -604,18 +604,18 @@
                     <v-text-field
                       v-model="eventData.UniqLink"
                       :label="$t('Common.EventL')"
+                      :rules="[rules.required, rules.link]"
                       outlined
                       dense
                       required
                       :error-messages="uniqueLinkValidationMsg"
-                      @keyup="changeUniqueLink($event)"
+                      @input="checkUniqueLink"
                     ></v-text-field>
                   </v-col>
                 </v-row>
               </v-form>
             </v-card>
           </v-tab-item>
-
           <v-tab-item :value="'2'">
             <v-card flat>
               <v-form
@@ -809,7 +809,7 @@
                             class="pa-2 pb-0 st-date e-td"
                             data-title="Start Time"
                           >
-                            <Lookup
+                            <Select
                               v-model="session.StartTime"
                               :field="startTimeProps"
                               :rules="validStartTimeRule(k)"
@@ -819,13 +819,16 @@
                             class="pa-2 pb-0 st-date e-td"
                             data-title="End Time"
                           >
-                            <Lookup
+                            <Select
                               v-model="session.EndTime"
                               :field="endTimeProps"
                               :rules="validEndTimeRule(k)"
                             />
                           </td>
-                          <td class="pa-2 pb-0 st-date e-td" data-title="">
+                          <td
+                            class="pa-2 pb-0 st-date e-td"
+                            :data-title="$t('Common.SlotSize')"
+                          >
                             <div class="positionAbsolute">
                               <div
                                 class="autocomplete-dropdown positionRelative"
@@ -846,7 +849,7 @@
                           </td>
                           <td
                             class="pa-2 pb-0 event-timezone e-td"
-                            data-title=""
+                            :data-title="$t('Common.Timezone')"
                           >
                             <div class="positionAbsolute">
                               <div
@@ -860,12 +863,13 @@
                               :rules="[rules.required]"
                               :field="timezonefield"
                               :attach="`#timezone-select-${k}`"
+                              :has-wrap="true"
                             ></Timezone>
                           </td>
 
                           <td
                             class="pa-2 pb-0 event-timezone e-td"
-                            data-title=""
+                            :data-title="$t('Common.RecurringEventLocation')"
                           >
                             <v-form
                               ref="locationForm"
@@ -1011,14 +1015,14 @@
           v-if="currentTab < 3"
           depressed
           color="primary"
-          :disabled="isNextDisabled()"
+          :disabled="!isUniqLinkValid || isInalidEventLink || !valid"
           @click="next()"
           ><i18n path="Drawer.Next"
         /></v-btn>
         <SaveBtn
           v-if="currentTab > 2 && !isEventCreate && !isEventPublish"
           color="primary"
-          :disabled="isSaveButtonDisabled"
+          :disabled="isSaveButtonDisabled || !valid || isInalidEventLink"
           depressed
           :action="saveRecord"
           class="ml-2"
@@ -1034,6 +1038,7 @@ import gql from 'graphql-tag'
 import format from 'date-fns/format'
 import { formatTimezoneDateFieldsData } from '~/utility/form.js'
 import Lookup from '~/components/common/form/lookup.vue'
+import Select from '~/components/common/form/select.vue'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import Timezone from '~/components/common/form/timezone'
 import eventCount from '~/config/apps/event/gql/eventCount.gql'
@@ -1058,6 +1063,7 @@ export default {
     Timezone,
     CustomDate,
     SaveBtn,
+    Select,
     VueGoogleAutocomplete: () => import('vue-google-autocomplete'),
   },
   props: {
@@ -1168,7 +1174,7 @@ export default {
         },
       },
       startTimeProps: {
-        type: 'lookup',
+        type: 'select',
         dataSource: {
           query: registrationStatusOptions,
           itemText: 'value',
@@ -1181,7 +1187,7 @@ export default {
         },
       },
       endTimeProps: {
-        type: 'lookup',
+        type: 'select',
         dataSource: {
           query: registrationStatusOptions,
           itemText: 'value',
@@ -1432,6 +1438,27 @@ export default {
     },
   },
   methods: {
+    async checkUniqueLink() {
+      const where = { UniqLink: this.eventData.UniqLink }
+      const result = await this.$apollo.query({
+        query: gql`
+          ${eventCount}
+        `,
+        variables: {
+          where,
+        },
+        fetchPolicy: 'no-cache',
+      })
+      if (result.data.Event.EventCount > 0) {
+        this.isInalidEventLink = true
+        this.isUniqLinkValid = false
+        this.uniqueLinkMessage = this.$t('Messages.Error.UniqueLinkDuplicate')
+      } else {
+        this.isInalidEventLink = false
+        this.isUniqLinkValid = true
+        this.uniqueLinkMessage = ''
+      }
+    },
     focusOut() {
       this.addressClicked = false
     },
@@ -2329,45 +2356,23 @@ export default {
     changeEventName(event) {
       this.verifyUniqueLink(event.currentTarget.value)
     },
-    changeUniqueLink(event) {
-      this.verifyUniqueLink(event.currentTarget.value)
-    },
     verifyUniqueLink(value) {
       this.isUniqLinkValid = false
       value = value.toLowerCase().replace(/\s/g, '')
       value = value.trim()
       this.eventData.UniqLink = value
-      const regex = RegExp(/^(?![0-9]*$)[a-zA-Z0-9]+$/)
+      const regex = RegExp(/^(?![0-9]*$){1,}[a-zA-Z0-9]+$/)
       if (regex.test(value)) {
         if (isNaN(value)) {
           this.eventData.UniqLink = value
           this.checkUniqueLink(this.eventData.UniqLink)
         }
       } else {
+        this.isUniqLinkValid = false
         this.isInalidEventLink = true
         this.uniqueLinkMessage = this.$t('Messages.Warn.UniqueLinkFormat')
       }
-    },
-    async checkUniqueLink(value) {
-      this.isUniqLinkValid = true
-      const where = { UniqLink: value }
-      const result = await this.$apollo.query({
-        query: gql`
-          ${eventCount}
-        `,
-        variables: {
-          where,
-        },
-        fetchPolicy: 'no-cache',
-      })
-      if (result.data.Event.EventCount > 0) {
-        this.isUniqLinkValid = false
-        this.isInalidEventLink = true
-        this.uniqueLinkMessage = this.$t('Messages.Error.UniqueLinkDuplicate')
-      } else {
-        this.isInalidEventLink = false
-        this.isUniqLinkValid = true
-      }
+      this.eventData.UniqLink = value
     },
     addTicketRow() {
       this.tickets.push({

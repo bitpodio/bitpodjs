@@ -44,16 +44,24 @@
             v-if="$auth.$state.loggedIn"
             v-slot:activator="{ on, attrs }"
           >
-            <v-avatar color="primary ml-2" size="30" v-bind="attrs" v-on="on">
-              <span class="white--text">{{
+            <v-btn
+              fab
+              depressed
+              x-small
+              color="primary"
+              v-bind="attrs"
+              v-on="on"
+              @click="userPlan"
+            >
+              <span class="white--text fs-16">{{
                 $auth.user.data.name && $auth.user.data.name[0]
               }}</span>
-            </v-avatar>
+            </v-btn>
           </template>
           <v-card>
             <v-list>
               <v-list-item>
-                <v-list-item-avatar size="48">
+                <v-list-item-avatar size="48" class="mt-0">
                   <v-avatar color="primary" size="48" v-bind="attrs" v-on="on">
                     <span class="white--text headline">{{
                       $auth.user.data.name && $auth.user.data.name[0]
@@ -61,13 +69,21 @@
                   </v-avatar>
                 </v-list-item-avatar>
 
-                <v-list-item-content>
+                <v-list-item-content class="mxcol-200">
                   <v-list-item-title>{{
                     $auth.user.data.name
                   }}</v-list-item-title>
                   <v-list-item-subtitle>{{
                     $auth.user.data.email
                   }}</v-list-item-subtitle>
+                  <div v-if="allowUpgrade">
+                    <div class="d-inline-flex mxcol-200 mt-1 align-center">
+                      <v-list-item-subtitle class="text-body-2">{{
+                        userPlanData
+                      }}</v-list-item-subtitle>
+                      <Upgrade />
+                    </div>
+                  </div>
                 </v-list-item-content>
               </v-list-item>
             </v-list>
@@ -111,6 +127,8 @@ import OrgnaizationList from '~/components/common/organization-list'
 import AppDrawer from '~/components/common/app-drawer'
 import Help from '~/components/common/help'
 import OldSite from '~/components/common/oldsite'
+import Upgrade from '~/components/common/upgrade'
+import userUtils from '~/utility/userApps'
 export default {
   layout: 'integration',
   middleware: ['auth', 'authorization'],
@@ -119,6 +137,7 @@ export default {
     AppDrawer,
     Help,
     OldSite,
+    Upgrade,
   },
   data() {
     return {
@@ -134,6 +153,8 @@ export default {
       tabs: null,
       account: false,
       message: false,
+      allowUpgrade: false,
+      userPlanData: '',
     }
   },
   async created() {
@@ -143,10 +164,32 @@ export default {
     }
     await this.$apolloHelpers.onLogin(token, undefined, { expires: 7 })
   },
+  mounted() {
+    const userInfo = userUtils.userCurrentOrgInfo(this.$store) || {}
+    const userRoles = userInfo.roles || []
+    this.allowUpgrade = userRoles.includes('$orgowner')
+  },
   methods: {
     async onLogout() {
       this.$auth.logout()
       await this.$apolloHelpers.onLogout()
+    },
+    async userPlan() {
+      const url = `${this.$bitpod.getApiUrl()}OrganizationInfos/getSubscription`
+      try {
+        const res = await this.$axios.$get(url)
+        if (res) {
+          const obj = res.filter((a) => {
+            return a.isActive === true ? a : ''
+          })
+          this.userPlanData = obj[0].SubProduct.DisplayName
+        }
+      } catch (e) {
+        console.error(
+          `Error in layouts/integration.vue in userPlan method while making get call to custom API to get users subscription, context: ${url} `,
+          e
+        )
+      }
     },
   },
 }
