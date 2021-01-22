@@ -322,11 +322,12 @@ export default {
   },
   methods: {
     async getRegistrationSiteTemplates() {
-      const customAxiosInstance = this.$axios.create({
-        headers: {},
-      })
       const primeOrgId = this.$config.axios.primeOrgId
-      customAxiosInstance.setHeader('x-org-id', primeOrgId)
+      const customAxiosInstance = this.$axios.create({
+        headers: {
+          'x-org-id': primeOrgId,
+        },
+      })
       const url = this.$bitpod.getApiUrl()
       try {
         const template = await customAxiosInstance.get(
