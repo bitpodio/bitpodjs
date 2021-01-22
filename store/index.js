@@ -1,7 +1,6 @@
 import nuxtconfig from '../nuxt.config'
 export const actions = {
   async nuxtServerInit({ commit }, context) {
-    let postLogoutUrl = ''
     const origin = getApiUrl(
       context.req.headers.host,
       context.req,
@@ -24,13 +23,13 @@ export const actions = {
       commit('setCurrentOrgInfo', currentOrgInfo && currentOrgInfo[0])
       if (context && context.req.headers.host.includes('localhost')) {
         console.log('===>11', context.req)
-        postLogoutUrl = `http://${context.req.headers.host}/`
+        const postLogoutUrl = `http://${context.req.headers.host}/`
         console.log('===>1', postLogoutUrl)
-        context.app.$cookies.set('domain_url', postLogoutUrl)
+        context.app.$cookies.set('auth.domain_url', postLogoutUrl)
       } else {
-        postLogoutUrl = `https://${currentOrgRes.data.name}-${context.req.headers.host}/${this.$router.options.base}/`
+        const postLogoutUrl = `https://${currentOrgRes.data.name}-${context.req.headers.host}/${this.$router.options.base}/`
         console.log('===>1', postLogoutUrl)
-        context.app.$cookies.set('domain_url', postLogoutUrl)
+        context.app.$cookies.set('auth.domain_url', postLogoutUrl)
       }
     } catch (err) {
       commit('setCurrentOrg', err)
