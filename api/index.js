@@ -128,6 +128,38 @@ app.get('/connect/userinfo', async (req, res) => {
   }
 })
 
+
+// export default function
+// app.get('/connect/logout', async (req, res) => {
+//   const params = new URLSearchParams()
+//   const logoutUrl = nuxtconfig.auth.strategies.bitpod.sessionEndpointUri
+//   const provider = req.query.provider.split('?')[0]
+//   const idToken = req.query.provider.split('?')[1].split('=')[1]
+//   console.log('provider', provider)
+//   console.log('idToken', idToken)
+//   // const postLogoutRedirectUri =
+//   //   nuxtconfig.auth.strategies.bitpod.logoutRedirectUri
+//   params.append(
+//     'post_logout_redirect_uri',
+//     nuxtconfig.auth.strategies[provider].logoutRedirectUri
+//   )
+
+//   params.append('id_token_hint', idToken)
+
+//   console.log('logout', logoutUrl)
+//   // console.log('redirectUri', postLogoutRedirectUri)
+//   console.log('request in /connect/logout', req)
+//   console.log('params', params)
+//   if (req.query.provider === 'bitpod') {
+//     // const opts = {
+
+//     // }
+
+//     const res = await axios.post(`${logoutUrl}`, params)
+//     console.log('resoonse', res)
+//   }
+// })
+
 function getAxiosConfig(req) {
   return {
     headers: {

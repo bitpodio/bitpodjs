@@ -34,6 +34,7 @@
     "@nuxtjs/vuetify": "^1.11.2",
     "authentication-popups": "^0.0.8",
     "cookie-parser": "^1.4.5",
+    "cookie-universal-nuxt": "^2.1.4",
     "core-js": "2.6.10",
     "date-fns": "^2.15.0",
     "date-fns-tz": "^1.0.10",
