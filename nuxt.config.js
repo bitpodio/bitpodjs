@@ -5,6 +5,14 @@ export default {
    ** Nuxt rendering mode
    ** See https://nuxtjs.org/api/configuration-mode
    */
+  build: {
+    extend(config, { isClient }) {
+      // Extend only webpack config for client-bundle
+      if (isClient) {
+        config.optimization.minimize = false;
+      }
+    }
+  },
   mode: 'universal',
   router: {
     base: basePath || '/',
