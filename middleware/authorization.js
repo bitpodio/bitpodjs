@@ -42,6 +42,7 @@ export default function (context) {
         const provider = $auth.strategy.name
         const userFirstOrgName = getUsersOrg(store).name || ''
         const basePath = process.env.PUBLIC_PATH || ''
+        console.log("yo yo logs",publicDomain,hostName,userFirstOrgName);
         return redirect(
           `http://${userFirstOrgName}-${publicDomain}${basePath}/login?p=${provider}`
         )
