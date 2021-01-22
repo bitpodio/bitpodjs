@@ -28,7 +28,7 @@ export const actions = {
         console.log('===>1', postLogoutUrl)
         context.app.$cookies.set('domain_url', postLogoutUrl)
       } else {
-        postLogoutUrl = `${context.req.protocol}://${currentOrgRes.data.name}-${context.req.headers.host}/`
+        postLogoutUrl = `https://${currentOrgRes.data.name}-${context.req.headers.host}/${this.$router.options.base}/`
         console.log('===>1', postLogoutUrl)
         context.app.$cookies.set('domain_url', postLogoutUrl)
       }
