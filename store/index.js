@@ -29,13 +29,14 @@ export const actions = {
         console.log('===>1', postLogoutUrl)
         context.app.$cookies.set('auth.domain_url', postLogoutUrl)
       } else {
+        debugger
         console.log('its not localhost entered once')
         const logoutRedirect = context.app.$cookies.get('auth.domain_url')
         console.log('getting logoutRedirectUri', logoutRedirect)
         context.app.$cookies.remove('auth.domain_url')
         const logoutRedirect1 = context.app.$cookies.get('auth.domain_url')
         console.log('getting logoutRedirectUri after removed', logoutRedirect1)
-        const postLogoutUrl = `https://${currentOrgRes.data.name}-${context.req.headers.host}${this.$router.options.base}`
+        const postLogoutUrl = `https://${context.req.headers.host}${this.$router.options.base}`
         console.log('===>222', postLogoutUrl)
         context.app.$cookies.set('auth.domain_url', postLogoutUrl)
         const logoutRedirectUri = context.app.$cookies.get('auth.domain_url')
