@@ -31,7 +31,6 @@ export const actions = {
         context.app.$cookies.set('auth.domain_url', postLogoutUrl)
       } else {
         console.log('its not localhost entered once')
-        console.log('===>233', postLogoutUrl)
         const postLogoutUrl = `https://${currentOrgRes.data.name}-${context.req.headers.host}${this.$router.options.base}`
         console.log('===>222', postLogoutUrl)
         context.app.$cookies.set('auth.domain_url', postLogoutUrl)
