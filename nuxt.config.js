@@ -359,8 +359,6 @@ export default {
             process.env.BITPOD_ENDSESSION_ENDPOINT_URL ||
             'https://login.bitpod.io/auth/connect/endsession',
         },
-        logoutRedirectUri:
-          process.env.POST_LOGOUT_REDIRECT_URI || 'http://localhost:3000/',
         responseType: 'code',
         grantType: 'authorization_code',
         redirectUri:
