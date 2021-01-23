@@ -30,18 +30,26 @@ export const actions = {
         context.app.$cookies.set('auth.domain_url', postLogoutUrl)
       } else {
         console.log('its not localhost entered once')
+        const logoutRedirect = context.app.$cookies.get('auth.domain_url')
+        console.log('getting logoutRedirectUri', logoutRedirect)
+        context.app.$cookies.remove('auth.domain_url')
+        const logoutRedirect1 = context.app.$cookies.get('auth.domain_url')
+        console.log('getting logoutRedirectUri after removed', logoutRedirect1)
+        const postLogoutUrl = `https://${currentOrgRes.data.name}-${context.req.headers.host}${this.$router.options.base}`
+        console.log('===>222', postLogoutUrl)
+        context.app.$cookies.set('auth.domain_url', postLogoutUrl)
         const logoutRedirectUri = context.app.$cookies.get('auth.domain_url')
-        console.log('logoutRedirectUri', logoutRedirectUri)
-        if (logoutRedirectUri) {
-          console.log(' included so not setting', logoutRedirectUri)
-          return
-        } else {
-          console.log(' included in else  setting', logoutRedirectUri)
-          context.app.$cookies.remove('auth.domain_url')
-          const postLogoutUrl = `https://${currentOrgRes.data.name}-${context.req.headers.host}${this.$router.options.base}`
-          console.log('===>222', postLogoutUrl)
-          context.app.$cookies.set('auth.domain_url', postLogoutUrl)
-        }
+        console.log('after setting cookie', logoutRedirectUri)
+        // if (logoutRedirectUri) {
+        //   console.log(' included so not setting', logoutRedirectUri)
+        //   return
+        // } else {
+        //   console.log(' included in else  setting', logoutRedirectUri)
+        //   context.app.$cookies.remove('auth.domain_url')
+        //   const postLogoutUrl = `https://${currentOrgRes.data.name}-${context.req.headers.host}${this.$router.options.base}`
+        //   console.log('===>222', postLogoutUrl)
+        //   context.app.$cookies.set('auth.domain_url', postLogoutUrl)
+        // }
       }
     } catch (err) {
       commit('setCurrentOrg', err)
