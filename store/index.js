@@ -21,6 +21,13 @@ export const actions = {
       const currentOrgInfo = currentOrgInfoRes.data
       commit('setCurrentOrg', currentOrgRes.data)
       commit('setCurrentOrgInfo', currentOrgInfo && currentOrgInfo[0])
+      if (context && context.req.headers.host.includes('localhost')) {
+        const postLogoutUrl = `http://${context.req.headers.host}/`
+        context.app.$cookies.set('auth.domain_url', postLogoutUrl)
+      } else {
+        const postLogoutUrl = `https://${context.req.headers.host}${this.$router.options.base}`
+        context.app.$cookies.set('auth.domain_url', postLogoutUrl)
+      }
     } catch (err) {
       commit('setCurrentOrg', err)
     }
