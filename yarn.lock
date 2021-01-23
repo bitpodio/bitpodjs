@@ -945,10 +945,10 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
-"@bitpod/auth-nuxt@^5.0.0-1608819688.6754216":
-  version "5.0.0-1608819688.6754216"
-  resolved "https://registry.yarnpkg.com/@bitpod/auth-nuxt/-/auth-nuxt-5.0.0-1608819688.6754216.tgz#21f48b78c6cb89ce4d41cd1e06837bf8589ff21d"
-  integrity sha512-7dM07UZbkdBKyXEXMl8oQ4l6nyt9eI38bhdD6zs2FZs331Tp4oPXxpLZWuctiRAF1b6pBh1vcX783fv5V+2Fyg==
+"@bitpod/auth-nuxt@^5.0.0-1611342221.ecd93d3":
+  version "5.0.0-1611342221.ecd93d3"
+  resolved "https://registry.yarnpkg.com/@bitpod/auth-nuxt/-/auth-nuxt-5.0.0-1611342221.ecd93d3.tgz#621d504ad4771e3608c6151374c7884442b47bde"
+  integrity sha512-lZod0Wn02JiVRhd335LZUVwjgTcphN+AF20gYrbvCUR3uJclrMOevVcbVPBUjyJQ60YNjJURzo4ICIGLWcP75w==
   dependencies:
     "@nuxtjs/axios" "^5.12.0"
     body-parser "^1.19.0"
