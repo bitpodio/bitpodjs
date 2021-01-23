@@ -21,36 +21,12 @@ export const actions = {
       const currentOrgInfo = currentOrgInfoRes.data
       commit('setCurrentOrg', currentOrgRes.data)
       commit('setCurrentOrgInfo', currentOrgInfo && currentOrgInfo[0])
-      console.log('currentOrgRes.data.name', currentOrgRes.data.name)
       if (context && context.req.headers.host.includes('localhost')) {
-        console.log('its in localhost entered once')
-        console.log('===>11', context.req)
         const postLogoutUrl = `http://${context.req.headers.host}/`
-        console.log('===>1', postLogoutUrl)
         context.app.$cookies.set('auth.domain_url', postLogoutUrl)
       } else {
-        debugger
-        console.log('its not localhost entered once')
-        const logoutRedirect = context.app.$cookies.get('auth.domain_url')
-        console.log('getting logoutRedirectUri', logoutRedirect)
-        context.app.$cookies.remove('auth.domain_url')
-        const logoutRedirect1 = context.app.$cookies.get('auth.domain_url')
-        console.log('getting logoutRedirectUri after removed', logoutRedirect1)
         const postLogoutUrl = `https://${context.req.headers.host}${this.$router.options.base}`
-        console.log('===>222', postLogoutUrl)
         context.app.$cookies.set('auth.domain_url', postLogoutUrl)
-        const logoutRedirectUri = context.app.$cookies.get('auth.domain_url')
-        console.log('after setting cookie', logoutRedirectUri)
-        // if (logoutRedirectUri) {
-        //   console.log(' included so not setting', logoutRedirectUri)
-        //   return
-        // } else {
-        //   console.log(' included in else  setting', logoutRedirectUri)
-        //   context.app.$cookies.remove('auth.domain_url')
-        //   const postLogoutUrl = `https://${currentOrgRes.data.name}-${context.req.headers.host}${this.$router.options.base}`
-        //   console.log('===>222', postLogoutUrl)
-        //   context.app.$cookies.set('auth.domain_url', postLogoutUrl)
-        // }
       }
     } catch (err) {
       commit('setCurrentOrg', err)
