@@ -18,7 +18,6 @@ export const actions = {
         orgPromise,
         orgInfoPromise,
       ])
-      console.log('ENtered once')
       const currentOrgInfo = currentOrgInfoRes.data
       commit('setCurrentOrg', currentOrgRes.data)
       commit('setCurrentOrgInfo', currentOrgInfo && currentOrgInfo[0])
@@ -31,9 +30,14 @@ export const actions = {
         context.app.$cookies.set('auth.domain_url', postLogoutUrl)
       } else {
         console.log('its not localhost entered once')
-        const postLogoutUrl = `https://${currentOrgRes.data.name}-${context.req.headers.host}${this.$router.options.base}`
-        console.log('===>222', postLogoutUrl)
-        context.app.$cookies.set('auth.domain_url', postLogoutUrl)
+        const logoutRedirectUri = context.app.$cookies.get('auth.domain_url')
+        console.log('logoutRedirectUri',logoutRedirectUri)
+        if(logoutRedirectUri && !logoutRedirectUri.includes(`${currentOrgRes.data.name}`)){
+          console.log('not included so setting',logoutRedirectUri)
+          const postLogoutUrl = `https://${currentOrgRes.data.name}-${context.req.headers.host}${this.$router.options.base}`
+          console.log('===>222', postLogoutUrl)
+          context.app.$cookies.set('auth.domain_url', postLogoutUrl)
+        }
       }
     } catch (err) {
       commit('setCurrentOrg', err)
