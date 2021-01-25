@@ -42,7 +42,7 @@
         <iframe
           id="print"
           ref="iframe"
-          :src="`https://${orgName}-${$config.axios.backendBaseUrl}${$config.basePublicPath}/embed-cookie`"
+          :src="`https://bitpod-${$config.axios.backendBaseUrl}${$config.basePublicPath}/embed-cookie`"
           @load="iframeLoaded"
         >
         </iframe>
