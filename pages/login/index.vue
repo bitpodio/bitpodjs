@@ -81,9 +81,7 @@ export default {
       } else {
         document.cookie = 'auth.redirect=' + ''
       }
-      return await this.$auth.loginWith('google', {
-        params: { prompt: 'select_account' },
-      })
+      return await this.$auth.loginWith('google')
     },
   },
 }
