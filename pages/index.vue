@@ -38,6 +38,16 @@
           </v-btn>
         </v-card-text>
       </v-card>
+      <div v-if="(orgName) || redirectToOrg">
+        <iframe
+          id="print"
+          ref="iframe"
+          style="width: 0; position: absolute; height: 0;"
+          :src="`https://${orgName}-${$config.axios.backendBaseUrl}${$config.basePublicPath}/embed-cookie`"
+          @load="iframeLoaded"
+        >
+        </iframe>
+      </div>
     </v-flex>
   </v-layout>
 </template>
@@ -46,6 +56,31 @@
 export default {
   layout: 'logoutlayout',
   components: {},
+  data(){
+    return{
+      orgName:'',
+      redirectToOrg:false,
+    }
+  },
+  mounted() {
+    window.addEventListener('message', this.messageReceived, false)
+    if (
+      this.$auth &&
+      this.$auth.$state &&
+      this.$auth.$state.user &&
+      this.$auth.$state.user.data
+    ) {
+      if (this.$auth.user.data.orgList.length) {
+        this.orgName = this.$auth.user.data.orgList[0].name
+        this.redirectToOrg = true
+      } 
+      this.email = this.$auth.$state.user.data.email
+      this.name = this.$auth.$state.user.data.name
+    }
+  },
+  beforeDestroy() {
+    window.removeEventListener('message', this.messageReceived)
+  },
   methods: {
     async loginBitpod() {
       if (window.localStorage['auth.redirect']) {
@@ -58,6 +93,30 @@ export default {
       return await this.$auth.loginWith('google', {
         params: { prompt: 'select_account' },
       })
+    },
+    iframeLoaded() {
+      this.$refs.iframe.contentWindow.postMessage(document.cookie, '*')
+    },
+    messageReceived(e) {
+      if (e.data === 'success' && this.redirectToOrg) {
+        document.cookie.split(';').forEach((c) => {
+          document.cookie = c
+            .replace(/^ +/, '')
+            .replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/')
+        })
+        document.cookie.split(';').forEach((c) => {
+          document.cookie = c
+            .replace(/^ +/, '')
+            .replace(
+              /=.*/,
+              '=;expires=' +
+                new Date().toUTCString() +
+                `;path=${this.$config.basePublicPath}`
+            )
+        })
+        localStorage.clear()
+        location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}/apps/event/list/Event/live-and-draft-event`
+      }
     },
   },
 }

@@ -39,12 +39,13 @@ export default function (context) {
       const hostName = req.headers.host
       const publicDomain = process.env.PUBLIC_DOMAIN
       if (hostName === publicDomain) {
-        const provider = $auth.strategy.name
-        const userFirstOrgName = getUsersOrg(store).name || ''
+        // const provider = $auth.strategy.name
+        // const userFirstOrgName = getUsersOrg(store).name || ''
         const basePath = process.env.PUBLIC_PATH || ''
-        return redirect(
-          `http://${userFirstOrgName}-${publicDomain}${basePath}/login?p=${provider}`
-        )
+        return redirect(`http://${publicDomain}${basePath}/login`)
+        // return redirect(
+        //   `http://${userFirstOrgName}-${publicDomain}${basePath}/login?p=${provider}`
+        // )
       }
     }
     if (!isValidPage(store, route)) {
