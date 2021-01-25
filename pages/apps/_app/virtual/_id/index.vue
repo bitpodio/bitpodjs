@@ -171,7 +171,7 @@
                   <p>
                     <v-img
                       :src="$config.cdnUri + 'session-time-video.png'"
-                      max-width="100"
+                      min-width="100"
                       max-width="100"
                     >
                     </v-img>
