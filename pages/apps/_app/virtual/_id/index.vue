@@ -164,23 +164,29 @@
               class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-0 mr-0 mb-4 d-flex flex-column flex-sm-row overflowHidden"
             >
               <div class="pa-0 flex-60 d-flex flex-column black">
-                <div>
-                  <div>
-                    <video
-                      id="my_video_1"
-                      class="video-js vjs-default-skin"
-                      controls
-                      preload="auto"
-                      autoplay="true"
-                      width="100%"
-                      height="400"
-                      :poster="$config.cdnUri + 'poster.jpg'"
-                      data-setup="{}"
-                    ></video>
-                  </div>
+                <div
+                  v-if="sessionTime"
+                  class="session-player-msg d-flex flex-column align-center justify-center"
+                >
+                  <h2 class="white--text">This session hasn't started yet.</h2>
+                  <p class="white--text my-2">
+                    Try joining again on {{ sessionVideoTime }}
+                  </p>
                 </div>
-                <div class="pa-2">
-                  <h2 class="white--text">{{ sessionName }}</h2>
+                <div v-else class="session-player">
+                  <video
+                    id="my_video_1"
+                    class="video-js vjs-default-skin"
+                    controls
+                    preload="auto"
+                    autoplay="true"
+                    width="100%"
+                    height="400"
+                    data-setup="{}"
+                  ></video>
+                  <div class="pa-2">
+                    <h2 class="white--text">{{ sessionName }}</h2>
+                  </div>
                 </div>
               </div>
               <div
@@ -535,6 +541,8 @@ export default {
       isPast: false,
       videoSrc: '',
       sessionName: '',
+      sessionTime: '',
+      sessionVideoTime: '',
       drawer: false,
       group: null,
       currentVideo: '',
@@ -781,6 +789,13 @@ export default {
         }.m3u8` || ''
       this.playLive()
       this.sessionName = item.Name || ''
+      if (new Date().getTime() < new Date(item.StartDate).getTime()) {
+        debugger
+        this.sessionTime = true
+      } else {
+        this.sessionTime = false
+      }
+      this.sessionVideoTime = this.formatDate(new Date(item.StartDate)) || ''
       this.$router.push(`${this.$route.path}?watch=${item.id}`)
     },
     playLive() {
@@ -935,6 +950,10 @@ export default {
   height: 400px !important;
 }
 .video-js {
+  width: 100% !important;
+  height: 400px !important;
+}
+.session-player-msg {
   width: 100% !important;
   height: 400px !important;
 }
