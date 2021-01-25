@@ -42,7 +42,6 @@
         <iframe
           id="print"
           ref="iframe"
-          style="width: 0; position: absolute; height: 0;"
           :src="`https://${orgName}-${$config.axios.backendBaseUrl}${$config.basePublicPath}/embed-cookie`"
           @load="iframeLoaded"
         >
@@ -74,7 +73,7 @@ export default {
   //     return await this.$auth.loginWith(provider)
   //   }
   // },
-  mounted() {
+  beforeMount() {
     window.addEventListener('message', this.messageReceived, false)
     if (
       this.$auth &&
