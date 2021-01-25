@@ -170,8 +170,9 @@
                 >
                   <p>
                     <v-img
+                      :lazy-src="$config.cdnUri + 'session-time-video.png'"
                       :src="$config.cdnUri + 'session-time-video.png'"
-                      min-width="100"
+                      min-height="100"
                       max-width="100"
                     >
                     </v-img>
