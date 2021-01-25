@@ -168,8 +168,18 @@
                   v-if="sessionTime"
                   class="session-player-msg d-flex flex-column align-center justify-center"
                 >
-                  <h2 class="white--text">This session hasn't started yet.</h2>
-                  <p class="white--text my-2">
+                  <p>
+                    <v-img
+                      :src="$config.cdnUri + 'session-time-video.png'"
+                      max-width="100"
+                      max-width="100"
+                    >
+                    </v-img>
+                  </p>
+                  <h2 class="white--text mt-3">
+                    This session hasn't started yet.
+                  </h2>
+                  <p class="white--text mt-4 mb-0">
                     Try joining again on {{ sessionVideoTime }}
                   </p>
                 </div>
