@@ -38,7 +38,7 @@
           </v-btn>
         </v-card-text>
       </v-card>
-      <div v-if="(orgName) || redirectToOrg">
+      <div>
         <iframe
           id="print"
           ref="iframe"
