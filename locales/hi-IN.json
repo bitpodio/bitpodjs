@@ -764,7 +764,9 @@
     "ExportInProgress": "निर्यात प्रगति पर है...",
     "NoDataAvailable": "कोई डेटा उपलब्ध नहीं है",
     "ServiceUnavailable": "सेवा उप्लब्ध् नहीं है",
-    "Upgrade": "अपग्रेड"
+    "Upgrade": "अपग्रेड",
+    "SessionNotStart": "מושב זה עדיין לא התחיל.",
+    "TryJoinOn": "נסה להצטרף שוב בתאריך"
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",

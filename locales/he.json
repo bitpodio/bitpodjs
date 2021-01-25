@@ -764,7 +764,9 @@
     "ExportInProgress": "הייצוא מתבצע",
     "NoDataAvailable": "אין נתונים זמינים",
     "ServiceUnavailable": "שירותים לא זמינים",
-    "Upgrade": "שדרוג"
+    "Upgrade": "שדרוג",
+    "SessionNotStart": "यह सत्र अभी तक शुरू नहीं हुआ है.",
+    "TryJoinOn": "फिर से जुड़ने का प्रयास करें"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",
