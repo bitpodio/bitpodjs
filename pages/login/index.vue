@@ -90,7 +90,7 @@ export default {
       this.name = this.$auth.$state.user.data.name
     } else {
       console.log('===>replacing')
-      window.location.replace('/api/connect/userinfo')
+      return redirect('/api/connect/userinfo')
     }
   },
   beforeDestroy() {
