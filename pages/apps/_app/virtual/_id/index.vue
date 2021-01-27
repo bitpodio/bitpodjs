@@ -178,25 +178,27 @@
                     </v-img>
                   </p>
                   <h2 class="white--text mt-3">
-                    This session hasn't started yet.
+                    <i18n path="Common.SessionNotStart" />
                   </h2>
                   <p class="white--text mt-4 mb-0">
-                    Try joining again on {{ sessionVideoTime }}
+                    <i18n path="Common.TryJoinOn" /> {{ sessionVideoTime }}
                   </p>
                 </div>
                 <div v-else class="session-player">
-                  <video
-                    id="my_video_1"
-                    class="video-js vjs-default-skin"
-                    controls
-                    preload="auto"
-                    autoplay="true"
-                    width="100%"
-                    height="400"
-                    data-setup="{}"
-                  ></video>
-                  <div class="pa-2">
-                    <h2 class="white--text">{{ sessionName }}</h2>
+                  <div>
+                    <video
+                      id="my_video_1"
+                      class="video-js vjs-default-skin"
+                      controls
+                      preload="auto"
+                      autoplay="true"
+                      width="100%"
+                      height="400"
+                      data-setup="{}"
+                    ></video>
+                    <div class="pa-2">
+                      <h2 class="white--text">{{ sessionName }}</h2>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -552,7 +554,7 @@ export default {
       isPast: false,
       videoSrc: '',
       sessionName: '',
-      sessionTime: '',
+      sessionTime: false,
       sessionVideoTime: '',
       drawer: false,
       group: null,
@@ -704,13 +706,36 @@ export default {
                   `${this.$route.path}?watch=${this.registration.SessionListId[0].id}`
                 )
                 this.videoSrc =
-                  this.registration.SessionListId[0].BitpodVirtualLink +
-                  '?autoplay=1'
+                  `${this.$config.rtmpLink}${
+                    this.registration.SessionListId[0].BitpodVirtualLink.split(
+                      '/'
+                    )[3]
+                  }.m3u8?autoplay=1` || ''
+                if (
+                  new Date().getTime() <
+                  new Date(
+                    this.registration.SessionListId[0].StartDate
+                  ).getTime()
+                ) {
+                  this.sessionTime = true
+                } else {
+                  this.sessionTime = false
+                }
+                this.sessionVideoTime =
+                  this.formatDate(
+                    new Date(this.registration.SessionListId[0].StartDate)
+                  ) || ''
                 this.sessionName = this.registration.SessionListId[0].Name
               }
               if (selectedVideo) {
-                this.videoSrc = selectedVideo.BitpodVirtualLink + '?autoplay=1'
+                // this.videoSrc = selectedVideo.BitpodVirtualLink + '?autoplay=1'
+                this.videoSrc = `${this.$config.rtmpLink}${
+                  selectedVideo.BitpodVirtualLink.split('/')[3]
+                }.m3u8?autoplay=1`
                 this.sessionName = selectedVideo.Name
+                this.sessionVideoTime = this.formatDate(
+                  new Date(selectedVideo.StartDate)
+                )
               }
             }
             result.attendee.map((i) => {
@@ -801,7 +826,6 @@ export default {
       this.playLive()
       this.sessionName = item.Name || ''
       if (new Date().getTime() < new Date(item.StartDate).getTime()) {
-        debugger
         this.sessionTime = true
       } else {
         this.sessionTime = false
