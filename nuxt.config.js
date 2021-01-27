@@ -250,7 +250,7 @@ export default {
   axios: {
     googleMapUrl: `https://www.google.com/maps`,
     apiEndpoint: '/svc/api/',
-    // baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
+    baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
   },
 
   publicRuntimeConfig: {
@@ -322,7 +322,7 @@ export default {
         httpEndpoint: `https://${
           process.env.PUBLIC_DOMAIN || 'event.test.bitpod.io'
         }/svc/graphql`,
-        // browserHttpEndpoint: '/svc/graphql',
+        browserHttpEndpoint: '/svc/graphql',
       },
     },
     defaultOptions: {
