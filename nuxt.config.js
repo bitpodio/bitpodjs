@@ -338,6 +338,7 @@ export default {
     redirect: {
       login: '/login',
       callback: '/callback',
+      home: `${basePath}/apps/event/eventboard`,
       logout: '/',
     },
     strategies: {
