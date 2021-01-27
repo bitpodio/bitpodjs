@@ -250,7 +250,7 @@ export default {
   axios: {
     googleMapUrl: `https://www.google.com/maps`,
     apiEndpoint: '/svc/api/',
-    baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
+    // baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
   },
 
   publicRuntimeConfig: {
@@ -322,7 +322,7 @@ export default {
         httpEndpoint: `https://${
           process.env.PUBLIC_DOMAIN || 'event.test.bitpod.io'
         }/svc/graphql`,
-        browserHttpEndpoint: '/svc/graphql',
+        // browserHttpEndpoint: '/svc/graphql',
       },
     },
     defaultOptions: {
@@ -375,15 +375,15 @@ export default {
       },
       google: {
         scheme: 'oauth2',
-        // tokenEndPointUrl:
-        //   process.env.GOOGLE_TOKEN_ENDPOINT_URL ||
-        //   'https://oauth2.googleapis.com/token',
-        // userInfoEndPointUrl:
-        //   process.env.GOOGLE__USERINFO_ENDPOINT_URL ||
-        //   'https://oauth2.googleapis.com/tokeninfo',
-        // authorization:
-        //   process.env.GOOGLE_AUTHORIZATION_ENDPOINT_URL ||
-        //   'https://accounts.google.com/o/oauth2/auth',
+        tokenEndPointUrl:
+          process.env.GOOGLE_TOKEN_ENDPOINT_URL ||
+          'https://oauth2.googleapis.com/token',
+        userInfoEndPointUrl:
+          process.env.GOOGLE__USERINFO_ENDPOINT_URL ||
+          'https://oauth2.googleapis.com/tokeninfo',
+        authorization:
+          process.env.GOOGLE_AUTHORIZATION_ENDPOINT_URL ||
+          'https://accounts.google.com/o/oauth2/auth',
         endpoints: {
           authorization: `https://${
             process.env.PUBLIC_DOMAIN
