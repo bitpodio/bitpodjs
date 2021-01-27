@@ -49,7 +49,7 @@ export default function (context) {
         // this.$router.push('/login')
         console.log('cookie in autho.js',document.cookie)
         return redirect(
-          `https://${userFirstOrgName}-${publicDomain}${basePath}/login`
+          `https://${publicDomain}${basePath}/login`
         )
       }
     }
