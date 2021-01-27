@@ -76,26 +76,26 @@ export default {
   mounted() {
     debugger
     window.addEventListener('message', this.messageReceived, false)
-    if (
-      this.$auth &&
-      this.$auth.$state &&
-      this.$auth.$state.user &&
-      this.$auth.$state.user.data
-    ) {
-      if (this.$auth.user.data.orgList.length) {
-        this.orgName = this.$auth.user.data.orgList[0].name
-        this.redirectToOrg = true
-      }
-      this.email = this.$auth.$state.user.data.email
-      this.name = this.$auth.$state.user.data.name
-    } else {
-      console.log('===>replacing')
-      console.log('===>this.$auth', this.$auth)
-      console.log('===>this.$auth.$state', this.$auth.$state)
-      console.log('===>t this.$auth.$state.user',  this.$auth.$state.user)
-      console.log('===>t this.$auth.$state.user.data',  this.$auth.$state.user.data)
-      // return redirect('/api/connect/userinfo')
-    }
+    // if (
+    //   this.$auth &&
+    //   this.$auth.$state &&
+    //   this.$auth.$state.user &&
+    //   this.$auth.$state.user.data
+    // ) {
+    //   if (this.$auth.user.data.orgList.length) {
+    //     this.orgName = this.$auth.user.data.orgList[0].name
+    //     this.redirectToOrg = true
+    //   }
+    //   this.email = this.$auth.$state.user.data.email
+    //   this.name = this.$auth.$state.user.data.name
+    // } else {
+    //   console.log('===>replacing')
+    //   console.log('===>this.$auth', this.$auth)
+    //   console.log('===>this.$auth.$state', this.$auth.$state)
+    //   console.log('===>t this.$auth.$state.user',  this.$auth.$state.user)
+    //   console.log('===>t this.$auth.$state.user.data',  this.$auth.$state.user.data)
+    //   // return redirect('/api/connect/userinfo')
+    // }
   },
   beforeDestroy() {
     window.removeEventListener('message', this.messageReceived)

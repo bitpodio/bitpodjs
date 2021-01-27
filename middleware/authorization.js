@@ -47,7 +47,7 @@ export default function (context) {
         console.log('userFirstOrgName', userFirstOrgName)
         console.log('basePath', basePath)
         return redirect(
-          `http://${userFirstOrgName}-${publicDomain}${basePath}/login`
+          `http://${publicDomain}${basePath}/login`
         )
       }
     }
