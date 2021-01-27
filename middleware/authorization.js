@@ -46,10 +46,10 @@ export default function (context) {
         // return redirect(`http://${publicDomain}${basePath}/login`)
         console.log('userFirstOrgName', userFirstOrgName)
         console.log('basePath', basePath)
-        this.$router.push('/login')
-        // return redirect(
-        //   `https://${publicDomain}${basePath}/login`
-        // )
+        // this.$router.push('/login')
+        return redirect(
+          `https://${userFirstOrgName}-${publicDomain}${basePath}/login`
+        )
       }
     }
     if (!isValidPage(store, route)) {
