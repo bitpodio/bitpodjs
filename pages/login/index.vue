@@ -97,6 +97,7 @@ export default {
       this.$refs.iframe.contentWindow.postMessage(document.cookie, '*')
     },
     messageReceived(e) {
+      console.log('in message received section',e)
       if (e.data === 'success' && this.redirectToOrg) {
         document.cookie.split(';').forEach((c) => {
           document.cookie = c
@@ -113,8 +114,9 @@ export default {
                 `;path=${this.$config.basePublicPath}`
             )
         })
+        console.log('document cookie',document.cookie)
         localStorage.clear()
-        location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}/apps/event/list/Event/live-and-draft-event`
+        location.href = `https://bitpod-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}/apps/event/list/Event/live-and-draft-event`
       }
     },
     async loginBitpod() {
@@ -139,9 +141,7 @@ export default {
       } else {
         document.cookie = 'auth.redirect=' + ''
       }
-      return await this.$auth.loginWith('google', {
-        params: { prompt: 'select_account' },
-      })
+      return await this.$auth.loginWith('google')
     },
 
   },
