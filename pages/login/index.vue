@@ -61,10 +61,10 @@ export default {
       return !!this.$route.query.p
     },
   },
-  data(){
-    return{
-      orgName:'',
-      redirectToOrg:false,
+  data() {
+    return {
+      orgName: '',
+      redirectToOrg: false,
     }
   },
   // async beforeMount() {
@@ -74,6 +74,7 @@ export default {
   //   }
   // },
   beforeMount() {
+    debugger
     window.addEventListener('message', this.messageReceived, false)
     if (
       this.$auth &&
@@ -84,7 +85,7 @@ export default {
       if (this.$auth.user.data.orgList.length) {
         this.orgName = this.$auth.user.data.orgList[0].name
         this.redirectToOrg = true
-      } 
+      }
       this.email = this.$auth.$state.user.data.email
       this.name = this.$auth.$state.user.data.name
     }
@@ -97,7 +98,8 @@ export default {
       this.$refs.iframe.contentWindow.postMessage(document.cookie, '*')
     },
     messageReceived(e) {
-      console.log('in message received section',e)
+      debugger
+      console.log('in message received section', e)
       if (e.data === 'success' && this.redirectToOrg) {
         document.cookie.split(';').forEach((c) => {
           document.cookie = c
@@ -114,7 +116,7 @@ export default {
                 `;path=${this.$config.basePublicPath}`
             )
         })
-        console.log('document cookie',document.cookie)
+        console.log('document cookie', document.cookie)
         localStorage.clear()
         location.href = `https://bitpod-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}/apps/event/list/Event/live-and-draft-event`
       }
@@ -143,7 +145,6 @@ export default {
       }
       return await this.$auth.loginWith('google')
     },
-
   },
 }
 </script>

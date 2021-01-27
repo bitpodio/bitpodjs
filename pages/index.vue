@@ -38,7 +38,7 @@
           </v-btn>
         </v-card-text>
       </v-card>
-      <div v-if="(orgName) || redirectToOrg">
+      <div v-if="orgName || redirectToOrg">
         <iframe
           id="print"
           ref="iframe"
@@ -56,10 +56,10 @@
 export default {
   layout: 'logoutlayout',
   components: {},
-  data(){
-    return{
-      orgName:'',
-      redirectToOrg:false,
+  data() {
+    return {
+      orgName: '',
+      redirectToOrg: false,
     }
   },
   mounted() {
@@ -73,7 +73,7 @@ export default {
       if (this.$auth.user.data.orgList.length) {
         this.orgName = this.$auth.user.data.orgList[0].name
         this.redirectToOrg = true
-      } 
+      }
       this.email = this.$auth.$state.user.data.email
       this.name = this.$auth.$state.user.data.name
     }
