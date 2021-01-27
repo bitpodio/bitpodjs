@@ -65,6 +65,7 @@ export default {
     return {
       orgName: '',
       redirectToOrg: false,
+      setCookie:true,
     }
   },
   // async beforeMount() {
@@ -110,7 +111,7 @@ export default {
     messageReceived(e) {
       debugger
       console.log('in message received section', e)
-      if (e.data === 'success') {
+      if (e.data === 'success' && this.setCookie) {
         console.log('inside setting cookies message received section', e.data)
         // document.cookie.split(';').forEach((c) => {
         //   document.cookie = c
@@ -127,8 +128,9 @@ export default {
         //         `;path=${this.$config.basePublicPath}`
         //     )
         // })
-        // console.log('document cookie', document.cookie)
-        // localStorage.clear()
+        console.log('document cookie', document.cookie)
+        this.setCookie = false
+        localStorage.clear()
         location.href = `https://bitpod-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}/apps/event/list/Event/live-and-draft-event`
       }
     },
