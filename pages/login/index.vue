@@ -92,7 +92,8 @@ export default {
       console.log('===>replacing')
       console.log('===>this.$auth', this.$auth)
       console.log('===>this.$auth.$state', this.$auth.$state)
-
+      console.log('===>t this.$auth.$state.user',  this.$auth.$state.user)
+      console.log('===>t this.$auth.$state.user.data',  this.$auth.$state.user.data)
       // return redirect('/api/connect/userinfo')
     }
   },
@@ -108,23 +109,23 @@ export default {
       console.log('in message received section', e)
       if (e.data === 'success') {
         console.log('inside setting cookies message received section', e.data)
-        document.cookie.split(';').forEach((c) => {
-          document.cookie = c
-            .replace(/^ +/, '')
-            .replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/')
-        })
-        document.cookie.split(';').forEach((c) => {
-          document.cookie = c
-            .replace(/^ +/, '')
-            .replace(
-              /=.*/,
-              '=;expires=' +
-                new Date().toUTCString() +
-                `;path=${this.$config.basePublicPath}`
-            )
-        })
-        console.log('document cookie', document.cookie)
-        localStorage.clear()
+        // document.cookie.split(';').forEach((c) => {
+        //   document.cookie = c
+        //     .replace(/^ +/, '')
+        //     .replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/')
+        // })
+        // document.cookie.split(';').forEach((c) => {
+        //   document.cookie = c
+        //     .replace(/^ +/, '')
+        //     .replace(
+        //       /=.*/,
+        //       '=;expires=' +
+        //         new Date().toUTCString() +
+        //         `;path=${this.$config.basePublicPath}`
+        //     )
+        // })
+        // console.log('document cookie', document.cookie)
+        // localStorage.clear()
         location.href = `https://bitpod-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}/apps/event/list/Event/live-and-draft-event`
       }
     },
