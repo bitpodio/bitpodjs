@@ -126,7 +126,7 @@ app.get('/connect/userinfo', async (req, res) => {
       data: userDetails,
     })
   } catch (error) {
-    console.error(error.message, error.data, error)
+    console.log('great error', error.response.data)
     return res.status(404).send({ error })
   }
 })
