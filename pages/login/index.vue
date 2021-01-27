@@ -103,7 +103,7 @@ export default {
     messageReceived(e) {
       debugger
       console.log('in message received section', e)
-      if (e.data === 'success' && this.redirectToOrg) {
+      if (e.data === 'success') {
         console.log('inside setting cookies message received section', e.data)
         document.cookie.split(';').forEach((c) => {
           document.cookie = c
