@@ -104,12 +104,14 @@ app.get('/connect/userinfo', async (req, res) => {
   }
   try {
     if (req.query.provider === 'google') {
+      console.log('Userinfo endpoint', urls.userInfoEndPointUrl, req.headers.authorization.replace('Bearer ', ''))
       const userResponse = await axios.get(
         `${
           urls.userInfoEndPointUrl
         }?id_token=${req.headers.authorization.replace('Bearer ', '')}`
       )
       userData = userResponse.data
+      console.log('UserData', userData)
     } else {
       const userResponse = await axios.get(urls.userInfoEndPointUrl, config)
       userData = userResponse.data
@@ -124,6 +126,7 @@ app.get('/connect/userinfo', async (req, res) => {
       data: userDetails,
     })
   } catch (error) {
+    console.error(error.message, error.data, error)
     return res.status(404).send({ error })
   }
 })
