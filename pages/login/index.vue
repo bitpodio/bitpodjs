@@ -73,7 +73,7 @@ export default {
   //     return await this.$auth.loginWith(provider)
   //   }
   // },
-  beforeMount() {
+  mounted() {
     debugger
     window.addEventListener('message', this.messageReceived, false)
     if (
