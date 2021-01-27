@@ -39,6 +39,7 @@ export default function (context) {
       const hostName = req.headers.host
       const publicDomain = process.env.PUBLIC_DOMAIN
       if (hostName === publicDomain) {
+        console.log('got the host name',hostName,publicDomain)
         // const provider = $auth.strategy.name
         const userFirstOrgName = getUsersOrg(store).name || ''
         const basePath = process.env.PUBLIC_PATH || ''

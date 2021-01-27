@@ -11,6 +11,7 @@ export default {
   },
   methods: {
     messageReceived(e) {
+      console.log('embedd cookie called',e)
       e.data.split(';').map((i) => {
         const newCookie = i.trim() + '; path=/'
         document.cookie = newCookie
