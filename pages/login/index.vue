@@ -1,6 +1,6 @@
 <template>
   <v-layout column justify-center align-center class="login-view">
-    <v-flex v-if="!hasProvider" xs12 sm8 md6 class="login-box">
+    <v-flex xs12 sm8 md6 class="login-box">
       <v-card class="elevation-0 login-type">
         <v-card-title class="headline justify-center">
           <i18n path="Common.Login" />
