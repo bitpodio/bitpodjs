@@ -46,6 +46,22 @@
 export default {
   layout: 'logoutlayout',
   components: {},
+  mounted() {
+    let noRedirectCookie = true
+    document.cookie.split(';').forEach((c) => {
+      if (
+        c.trim().includes('auth.redirect=') &&
+        (!c.trim().substring(c.indexOf('=') + 1) ||
+          c.trim().substring(c.indexOf('=') + 1) === 'false')
+      ) {
+        noRedirectCookie = false
+        document.cookie = `auth.redirect=${this.$config.basePublicPath}/apps/event/eventboard; Path=${this.$config.basePublicPath}`
+      }
+    })
+    if (noRedirectCookie) {
+      document.cookie = `auth.redirect=${this.$config.basePublicPath}/apps/event/eventboard; Path=${this.$config.basePublicPath}`
+    }
+  },
   methods: {
     async loginBitpod() {
       if (window.localStorage['auth.redirect']) {
