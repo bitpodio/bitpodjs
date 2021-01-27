@@ -38,16 +38,16 @@
           </v-btn>
         </v-card-text>
       </v-card>
-      <div>
-        <iframe
-          id="print"
-          ref="iframe"
-          :src="`https://bitpod-${$config.axios.backendBaseUrl}${$config.basePublicPath}/embed-cookie`"
-          @load="iframeLoaded"
-        >
-        </iframe>
-      </div>
     </v-flex>
+    <div>
+      <iframe
+        id="print"
+        ref="iframe"
+        :src="`https://bitpod-${$config.axios.backendBaseUrl}${$config.basePublicPath}/embed-cookie`"
+        @load="iframeLoaded"
+      >
+      </iframe>
+    </div>
   </v-layout>
 </template>
 
@@ -92,8 +92,11 @@ export default {
       console.log('===>replacing')
       console.log('===>this.$auth', this.$auth)
       console.log('===>this.$auth.$state', this.$auth.$state)
-      console.log('===>t this.$auth.$state.user',  this.$auth.$state.user)
-      console.log('===>t this.$auth.$state.user.data',  this.$auth.$state.user.data)
+      console.log('===>t this.$auth.$state.user', this.$auth.$state.user)
+      console.log(
+        '===>t this.$auth.$state.user.data',
+        this.$auth.$state.user.data
+      )
       // return redirect('/api/connect/userinfo')
     }
   },
