@@ -88,6 +88,9 @@ export default {
       }
       this.email = this.$auth.$state.user.data.email
       this.name = this.$auth.$state.user.data.name
+    } else {
+      console.log('===>replacing')
+      window.location.replace('/api/connect/userinfo')
     }
   },
   beforeDestroy() {
