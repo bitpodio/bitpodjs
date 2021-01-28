@@ -28,7 +28,6 @@ export default {
     }
   },
   mounted() {
-    debugger
     window.addEventListener('message', this.messageReceived, false)
   },
   beforeDestroy() {
