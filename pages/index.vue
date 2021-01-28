@@ -38,16 +38,6 @@
           </v-btn>
         </v-card-text>
       </v-card>
-      <div v-if="orgName || redirectToOrg">
-        <iframe
-          id="print"
-          ref="iframe"
-          style="width: 0; position: absolute; height: 0;"
-          :src="`https://${orgName}-${$config.axios.backendBaseUrl}${$config.basePublicPath}/embed-cookie`"
-          @load="iframeLoaded"
-        >
-        </iframe>
-      </div>
     </v-flex>
   </v-layout>
 </template>
@@ -56,12 +46,6 @@
 export default {
   layout: 'logoutlayout',
   components: {},
-  data() {
-    return {
-      orgName: '',
-      redirectToOrg: false,
-    }
-  },
   mounted() {
     window.addEventListener('message', this.messageReceived, false)
     if (
@@ -93,30 +77,6 @@ export default {
       return await this.$auth.loginWith('google', {
         params: { prompt: 'select_account' },
       })
-    },
-    iframeLoaded() {
-      this.$refs.iframe.contentWindow.postMessage(document.cookie, '*')
-    },
-    messageReceived(e) {
-      if (e.data === 'success' && this.redirectToOrg) {
-        document.cookie.split(';').forEach((c) => {
-          document.cookie = c
-            .replace(/^ +/, '')
-            .replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/')
-        })
-        document.cookie.split(';').forEach((c) => {
-          document.cookie = c
-            .replace(/^ +/, '')
-            .replace(
-              /=.*/,
-              '=;expires=' +
-                new Date().toUTCString() +
-                `;path=${this.$config.basePublicPath}`
-            )
-        })
-        localStorage.clear()
-        location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}/apps/event/list/Event/live-and-draft-event`
-      }
     },
   },
 }

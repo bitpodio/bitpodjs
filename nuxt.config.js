@@ -384,13 +384,13 @@ export default {
           'https://oauth2.googleapis.com/tokeninfo',
         authorization:
           process.env.GOOGLE_AUTHORIZATION_ENDPOINT_URL ||
-          'https://accounts.google.com/o/oauth2/auth',
+          'https://accounts.google.com/o/oauth2/v2/auth',
         endpoints: {
           authorization: `https://${
             process.env.PUBLIC_DOMAIN
           }/svc/oauth/login?siteId=${
             process.env.SITE_ID || 'rklRLNaXv'
-          }&nonce=state&provider=google`,
+          }&nonce=state&provider=google&prompt=consent`,
           token: `https://${process.env.PUBLIC_DOMAIN}/svc/oauth/refresh?provider=google`,
           userInfo: 'api/connect/userinfo?provider=google',
         },
