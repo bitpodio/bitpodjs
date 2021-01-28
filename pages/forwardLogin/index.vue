@@ -36,19 +36,18 @@ export default {
     iframeLoaded() {
       console.log('all cookie while loading iframe', document.cookie)
       document.cookie = 'bitpodUrl=test123333'
-      //   document.getElementById('')
+      console.log('all cookie while loading iframe1', document.cookie)
       this.$refs.iframe.contentWindow.postMessage(document.cookie, '*')
     },
-    // messageReceived(e) {
-    //   debugger
-    //   console.log('in message received section', e)
-    //   if (e.data === 'success') {
-    //     console.log('inside setting cookies message received section', e.data)
-    //     console.log('document cookie', document.cookie)
-    //     location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}/apps/event/list/Event/live-and-draft-event`
-    //     // https://event.test.bitpod.io/forwardLogin
-    //   }
-    // },
+    messageReceived(e) {
+      debugger
+      console.log('in message received section', e)
+      if (e.data === 'success') {
+        console.log('inside setting cookies message received section', e.data)
+        console.log('document cookie', document.cookie)
+        location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}/apps/event/list/Event/live-and-draft-event`
+      }
+    },
   },
 }
 </script>
