@@ -22,7 +22,6 @@ export default {
   },
   beforeMount() {
     const domain = this.$route.query.targetDomain
-    console.log('Found the target domain', domain)
     if (domain) {
       this.orgName = domain
       this.loadIframe = true
@@ -37,18 +36,11 @@ export default {
   },
   methods: {
     iframeLoaded() {
-      console.log('all cookie while loading iframe', document.cookie)
       this.$refs.iframe.contentWindow.postMessage(document.cookie, '*')
     },
     messageReceived(e) {
-      debugger
-      console.log('in message received section', e)
       if (e.data === 'success') {
-        console.log('inside setting cookies message received section', e.data)
-        console.log('document cookie', document.cookie)
-        console.log('redirect route', nuxtconfig.auth.redirect.home)
         location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}${nuxtconfig.auth.redirect.home}`
-        // location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${nuxt}`
       }
     },
   },
