@@ -472,13 +472,14 @@
           </div>
         </v-flex>
       </div>
-      <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
-        <div class="fs-16 text-center">
-          {{ snackbarText }}
-        </div>
-      </v-snackbar>
-      <confirm ref="confirm"></confirm>
     </v-flex>
+
+    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
+      <div class="fs-16 text-center">
+        {{ snackbarText }}
+      </div>
+    </v-snackbar>
+    <confirm ref="confirm"></confirm>
     <div v-if="editOrgInfo">
       <editOrgInfoForm
         :edit-org-info.sync="editOrgInfo"
