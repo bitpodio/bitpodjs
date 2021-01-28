@@ -675,6 +675,9 @@ table > tbody > tr:last-child .key-align {
 .vjs-error .vjs-error-display::before {
   display: none !important;
 }
+.v-skeleton-loader {
+  width: 100%;
+}
 @media (max-width: 800px) {
   .nav-bar {
     top: 50px !important;
