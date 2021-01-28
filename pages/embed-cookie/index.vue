@@ -11,8 +11,8 @@ export default {
   },
   methods: {
     messageReceived(e) {
-      console.log('embedd cookie called',e)
-      console.log('cookie in embed.js',e.data)
+      console.log('embedd cookie called', e)
+      console.log('cookie in embed.js', e.data)
       e.data.split(';').map((i) => {
         const newCookie = i.trim() + '; path=/'
         document.cookie = newCookie

@@ -15,10 +15,10 @@
 export default {
   data() {
     return {
-        orgName:'',
+      orgName: '',
     }
   },
-  async beforeMount() {
+  beforeMount() {
     const domain = this.$route.query.targetDomain
     console.log('Found the target domain', domain)
     if (domain) {
