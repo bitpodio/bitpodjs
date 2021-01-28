@@ -260,6 +260,7 @@ export default {
       backendBaseUrl: process.env.PUBLIC_DOMAIN || 'event.test.bitpod.io',
       eventUrl: process.env.GET_EVENT_URL || 'event.test.bitpod.io',
       crmUrl: process.env.GET_CRM_URL || 'crmivijd.test.bitpod.io',
+      primeOrgId: '1',
     },
     basePublicPath: process.env.PUBLIC_PATH || '',
     cdnUri:
