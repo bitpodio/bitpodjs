@@ -31,7 +31,7 @@ const getUsersOrg = (store) => {
 }
 
 export default function (context) {
-  const { store, route, redirect, $auth } = context
+  const { store, route, redirect } = context
 
   if (getUsersOrg(store)?.name) {
     if (process.server) {
