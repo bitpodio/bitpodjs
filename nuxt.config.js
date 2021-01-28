@@ -369,7 +369,7 @@ export default {
             process.env.SITE_ID || 'rklRLNaXv'
           }&nonce=state&provider=bitpod`,
           token: `https://${process.env.PUBLIC_DOMAIN}/svc/oauth/refresh?provider=bitpod`,
-          userInfo: 'https://bitpod-event.test.bitpod.io/dev/api/connect/userinfo?provider=bitpod',
+          userInfo: 'api/connect/userinfo?provider=bitpod',
           logout:
             process.env.BITPOD_ENDSESSION_ENDPOINT_URL ||
             'https://login.bitpod.io/auth/connect/endsession',
@@ -407,7 +407,7 @@ export default {
             process.env.SITE_ID || 'rklRLNaXv'
           }&nonce=state&provider=google&prompt=consent`,
           token: `https://${process.env.PUBLIC_DOMAIN}/svc/oauth/refresh?provider=google`,
-          userInfo: 'https://bitpod-event.test.bitpod.io/dev/api/connect/userinfo?provider=google',
+          userInfo: 'api/connect/userinfo?provider=google',
         },
         accessType: 'offline',
         prompt: 'consent',
