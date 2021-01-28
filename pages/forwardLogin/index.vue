@@ -47,7 +47,7 @@ export default {
         console.log('inside setting cookies message received section', e.data)
         console.log('document cookie', document.cookie)
         console.log('redirect route', nuxtconfig.auth.redirect.home)
-        location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}/${nuxtconfig.auth.redirect.home}`
+        location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}${nuxtconfig.auth.redirect.home}`
         // location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${nuxt}`
       }
     },
