@@ -1,9 +1,10 @@
 <template>
-  <div>
+  <div v-if="(orgName && loadIframe)">
     <p>This is an iframe section forwarded</p>
     <iframe
       id="print"
       ref="iframe"
+      style="width: 0; position: absolute; height: 0;"
       :src="`https://${orgName}-${$config.axios.backendBaseUrl}${$config.basePublicPath}/embed-cookie`"
       @load="iframeLoaded"
     >
@@ -16,6 +17,7 @@ export default {
   data() {
     return {
       orgName: '',
+      loadIframe: false,
     }
   },
   beforeMount() {
@@ -23,6 +25,7 @@ export default {
     console.log('Found the target domain', domain)
     if (domain) {
       this.orgName = domain
+      this.loadIframe = true
     }
   },
   mounted() {
