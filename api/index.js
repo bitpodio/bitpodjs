@@ -6,7 +6,15 @@ const cookieParser = require('cookie-parser')
 const app = express()
 
 app.use(bodyParser.json())
+app.use((err, req, res, next)=>{
+  console.log('before cookie parser', req.path, err)
+  next();
+})
 app.use(cookieParser())
+app.use((err, req, res, next)=>{
+  console.log('after cookie parser', req.path, err)
+  next();
+})
 app.use(bodyParser.urlencoded({ extended: true }))
 
 function getTokenUserInfoUrl(ob) {
@@ -93,7 +101,6 @@ app.post('/connect/token', async (req, res) => {
     }
   }
 })
-
 app.get('/connect/userinfo', async (req, res) => {
   let userData
   const urls = getTokenUserInfoUrl(req.query)
@@ -130,7 +137,10 @@ app.get('/connect/userinfo', async (req, res) => {
     return res.status(404).send({ error })
   }
 })
-
+app.use((err, req, res, next)=>{
+  console.log('after main api', req.path, err)
+  next();
+})
 function getAxiosConfig(req) {
   return {
     headers: {
