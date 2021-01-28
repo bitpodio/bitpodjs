@@ -46,25 +46,6 @@
 export default {
   layout: 'logoutlayout',
   components: {},
-  mounted() {
-    window.addEventListener('message', this.messageReceived, false)
-    if (
-      this.$auth &&
-      this.$auth.$state &&
-      this.$auth.$state.user &&
-      this.$auth.$state.user.data
-    ) {
-      if (this.$auth.user.data.orgList.length) {
-        this.orgName = this.$auth.user.data.orgList[0].name
-        this.redirectToOrg = true
-      }
-      this.email = this.$auth.$state.user.data.email
-      this.name = this.$auth.$state.user.data.name
-    }
-  },
-  beforeDestroy() {
-    window.removeEventListener('message', this.messageReceived)
-  },
   methods: {
     async loginBitpod() {
       if (window.localStorage['auth.redirect']) {
