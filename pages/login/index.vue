@@ -65,7 +65,7 @@ export default {
     return {
       orgName: '',
       redirectToOrg: false,
-      setCookie:true,
+      setCookie: true,
     }
   },
   // async beforeMount() {
