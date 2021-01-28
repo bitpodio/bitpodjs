@@ -164,7 +164,27 @@
               class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-0 mr-0 mb-4 d-flex flex-column flex-sm-row overflowHidden"
             >
               <div class="pa-0 flex-60 d-flex flex-column black">
-                <div>
+                <div
+                  v-if="sessionTime"
+                  class="session-player-msg d-flex flex-column align-center justify-center"
+                >
+                  <p>
+                    <v-img
+                      :lazy-src="$config.cdnUri + 'session-time-video.png'"
+                      :src="$config.cdnUri + 'session-time-video.png'"
+                      min-height="100"
+                      max-width="100"
+                    >
+                    </v-img>
+                  </p>
+                  <h2 class="white--text mt-3">
+                    <i18n path="Common.SessionNotStart" />
+                  </h2>
+                  <p class="white--text mt-4 mb-0">
+                    <i18n path="Common.TryJoinOn" /> {{ sessionVideoTime }}
+                  </p>
+                </div>
+                <div v-else class="session-player">
                   <div>
                     <video
                       id="my_video_1"
@@ -174,13 +194,12 @@
                       autoplay="true"
                       width="100%"
                       height="400"
-                      :poster="$config.cdnUri + 'poster.jpg'"
                       data-setup="{}"
                     ></video>
+                    <div class="pa-2">
+                      <h2 class="white--text">{{ sessionName }}</h2>
+                    </div>
                   </div>
-                </div>
-                <div class="pa-2">
-                  <h2 class="white--text">{{ sessionName }}</h2>
                 </div>
               </div>
               <div
@@ -535,6 +554,8 @@ export default {
       isPast: false,
       videoSrc: '',
       sessionName: '',
+      sessionTime: false,
+      sessionVideoTime: '',
       drawer: false,
       group: null,
       currentVideo: '',
@@ -685,13 +706,36 @@ export default {
                   `${this.$route.path}?watch=${this.registration.SessionListId[0].id}`
                 )
                 this.videoSrc =
-                  this.registration.SessionListId[0].BitpodVirtualLink +
-                  '?autoplay=1'
+                  `${this.$config.rtmpLink}${
+                    this.registration.SessionListId[0].BitpodVirtualLink.split(
+                      '/'
+                    )[3]
+                  }.m3u8?autoplay=1` || ''
+                if (
+                  new Date().getTime() <
+                  new Date(
+                    this.registration.SessionListId[0].StartDate
+                  ).getTime()
+                ) {
+                  this.sessionTime = true
+                } else {
+                  this.sessionTime = false
+                }
+                this.sessionVideoTime =
+                  this.formatDate(
+                    new Date(this.registration.SessionListId[0].StartDate)
+                  ) || ''
                 this.sessionName = this.registration.SessionListId[0].Name
               }
               if (selectedVideo) {
-                this.videoSrc = selectedVideo.BitpodVirtualLink + '?autoplay=1'
+                // this.videoSrc = selectedVideo.BitpodVirtualLink + '?autoplay=1'
+                this.videoSrc = `${this.$config.rtmpLink}${
+                  selectedVideo.BitpodVirtualLink.split('/')[3]
+                }.m3u8?autoplay=1`
                 this.sessionName = selectedVideo.Name
+                this.sessionVideoTime = this.formatDate(
+                  new Date(selectedVideo.StartDate)
+                )
               }
             }
             result.attendee.map((i) => {
@@ -781,6 +825,12 @@ export default {
         }.m3u8` || ''
       this.playLive()
       this.sessionName = item.Name || ''
+      if (new Date().getTime() < new Date(item.StartDate).getTime()) {
+        this.sessionTime = true
+      } else {
+        this.sessionTime = false
+      }
+      this.sessionVideoTime = this.formatDate(new Date(item.StartDate)) || ''
       this.$router.push(`${this.$route.path}?watch=${item.id}`)
     },
     playLive() {
@@ -935,6 +985,10 @@ export default {
   height: 400px !important;
 }
 .video-js {
+  width: 100% !important;
+  height: 400px !important;
+}
+.session-player-msg {
   width: 100% !important;
   height: 400px !important;
 }
