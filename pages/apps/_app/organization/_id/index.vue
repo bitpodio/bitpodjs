@@ -568,6 +568,9 @@ export default {
       return this.contents ? this.contents.organization : null
     },
   },
+  mounted() {
+    debugger
+  },
   methods: {
     openOtherDialog(image) {
       this.otherDialogOpen = true
