@@ -1,10 +1,9 @@
 <template>
-  <div v-if="(orgName && loadIframe)">
+  <div v-if="orgName !== ''">
     <p>This is an iframe section forwarded</p>
     <iframe
       id="print"
       ref="iframe"
-      style="width: 0; position: absolute; height: 0;"
       :src="`https://${orgName}-${$config.axios.backendBaseUrl}${$config.basePublicPath}/embed-cookie`"
       @load="iframeLoaded"
     >
@@ -38,8 +37,6 @@ export default {
   methods: {
     iframeLoaded() {
       console.log('all cookie while loading iframe', document.cookie)
-      document.cookie = 'bitpodUrl=test123333'
-      console.log('all cookie while loading iframe1', document.cookie)
       this.$refs.iframe.contentWindow.postMessage(document.cookie, '*')
     },
     messageReceived(e) {
