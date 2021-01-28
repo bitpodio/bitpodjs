@@ -24,7 +24,6 @@
             <v-btn
               v-bind="attrs"
               color="primary"
-              dark
               depressed
               class="ma-3 block wd-full my-0 mb-1 ml-n4"
               v-on="on"
