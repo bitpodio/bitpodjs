@@ -36,7 +36,7 @@ export default {
     iframeLoaded() {
       console.log('all cookie while loading iframe', document.cookie)
       document.cookie = 'bitpodUrl=test123333'
-    //   document.getElementById('')
+      //   document.getElementById('')
       this.$refs.iframe.contentWindow.postMessage(document.cookie, '*')
     },
     // messageReceived(e) {
