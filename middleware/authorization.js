@@ -3,11 +3,14 @@ import { appList } from '~/config/apps/list'
 import { intersection } from '~/utility/object.js'
 
 const isValidPage = (store, route) => {
+  console.log('route.params.app in isValidPage', route.params.app)
   if (!route.params.app) {
     return true
   }
   const userCurrentOrg = userUtils.userCurrentOrgInfo(store) || {}
+  console.log('userCurrentOrg in isValidPage', userCurrentOrg)
   const userRoles = userCurrentOrg.roles || []
+  console.log('userRoles in isValidPage', userRoles)
   if (
     userRoles.includes('$orgowner') &&
     userCurrentOrg &&
@@ -17,9 +20,12 @@ const isValidPage = (store, route) => {
   }
   const currentRouteApp =
     appList(store).find(({ name }) => name === route.params.app) || {}
+  console.log('currentRouteApp in isValidPage', currentRouteApp)
   const currentRouteAppRoles = currentRouteApp.roles || []
+  console.log('currentRouteAppRoles in isValidPage', currentRouteAppRoles)
   const isAuthorizedApp =
     intersection(currentRouteAppRoles, userRoles).length > 0
+  console.log('isAuthorizedApp in isValidPage', isAuthorizedApp)
   return isAuthorizedApp
 }
 
@@ -49,6 +55,8 @@ export default function (context) {
         }
       }
       if (!isValidPage(store, route)) {
+        console.log('store in isValidPage', store)
+        console.log('route in isValidPage', route)
         return redirect('/unauthorized')
       }
     }
