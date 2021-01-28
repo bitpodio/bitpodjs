@@ -1,5 +1,5 @@
 <template>
-  <div v-if="orgName !== ''">
+  <div>
     <p>This is an iframe section forwarded</p>
     <iframe
       id="print"
