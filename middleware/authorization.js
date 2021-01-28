@@ -40,9 +40,9 @@ export default function (context) {
       const publicDomain = process.env.PUBLIC_DOMAIN
       if (hostName === publicDomain) {
         console.log('got the host name', hostName, publicDomain)
-        console.log('store',store)
-        console.log('route',route)
-        console.log('redirect',redirect)
+        console.log('store', store)
+        console.log('route', route)
+        console.log('redirect', redirect)
         // const provider = $auth.strategy.name
         const userFirstOrgName = getUsersOrg(store).name || ''
         const basePath = process.env.PUBLIC_PATH || ''
