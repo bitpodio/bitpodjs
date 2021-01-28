@@ -48,7 +48,7 @@ export default function (context) {
         console.log('basePath', basePath)
         // this.$router.push('/login')
         return redirect(
-          `https://${publicDomain}${basePath}/login`
+          `https://${userFirstOrgName}-${publicDomain}${basePath}/login`
         )
       }
     }
