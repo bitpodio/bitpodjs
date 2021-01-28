@@ -11,11 +11,13 @@ export default {
   },
   methods: {
     messageReceived(e) {
-      e.data.split(';').map((i) => {
-        const newCookie = i.trim() + '; path=/'
-        document.cookie = newCookie
-      })
-      window.parent.postMessage('success', '*')
+      if (e.data !== '') {
+        e.data.split(';').map((i) => {
+          const newCookie = i.trim() + '; path=/'
+          document.cookie = newCookie
+        })
+        window.parent.postMessage('success', '*')
+      }
     },
   },
 }
