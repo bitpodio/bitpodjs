@@ -763,7 +763,9 @@
     "ExportInProgress": "Export in progress...",
     "NoDataAvailable": "No data available",
     "ServiceUnavailable": "Service Unavailable",
-    "Upgrade": "Upgrade"
+    "Upgrade": "Upgrade",
+    "SessionNotStart": "This session hasn't started yet.",
+    "TryJoinOn": "Try joining again on"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",

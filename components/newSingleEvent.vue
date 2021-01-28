@@ -830,8 +830,8 @@ export default {
     },
     getBitpodVirtualLink() {
       return `https://${this.$config.integrationLinks.BITOPD_VIRTUAL_LINK}/${
-        this.eventLinkHint.split('/')[4]
-      }`
+        this.$store.state.currentOrg.name
+      }-${this.eventLinkHint.split('/')[4]}`
     },
     calculateTicketEndDate() {
       const endDate = this.eventData.EndDate

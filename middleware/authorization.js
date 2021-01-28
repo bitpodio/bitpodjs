@@ -34,29 +34,35 @@ export default function (context) {
   const { store, route, redirect } = context
 
   if (getUsersOrg(store)?.name) {
-    if (process.server) {
-      const { req } = context
-      const hostName = req.headers.host
-      const publicDomain = process.env.PUBLIC_DOMAIN
-      if (hostName === publicDomain) {
-        console.log('got the host name', hostName, publicDomain)
-        console.log('store', store)
-        console.log('route', route)
-        console.log('redirect', redirect)
-        // const provider = $auth.strategy.name
-        const userFirstOrgName = getUsersOrg(store).name || ''
-        const basePath = process.env.PUBLIC_PATH || ''
-        // return redirect(`http://${publicDomain}${basePath}/login`)
-        console.log('userFirstOrgName', userFirstOrgName)
-        console.log('basePath', basePath)
-        // this.$router.push('/login')
-        return redirect(
-          `https://${publicDomain}${basePath}/forwardLogin?targetDomain=${userFirstOrgName}`
-        )
+    const { store, route, redirect, $auth } = context
+    const userOrgStore = getUsersOrg(store)
+    if (userOrgStore && userOrgStore.name) {
+      if (process.server) {
+        const { req } = context
+        const hostName = req.headers.host
+        const publicDomain = process.env.PUBLIC_DOMAIN
+        if (hostName === publicDomain) {
+          console.log('got the host name', hostName, publicDomain)
+          console.log('store', store)
+          console.log('route', route)
+          console.log('redirect', redirect)
+          // const provider = $auth.strategy.name
+          const userFirstOrgName = getUsersOrg(store).name || ''
+          const provider = $auth.strategy.name
+          const userFirstOrgName = userOrgStore.name || ''
+          const basePath = process.env.PUBLIC_PATH || ''
+          // return redirect(`http://${publicDomain}${basePath}/login`)
+          console.log('userFirstOrgName', userFirstOrgName)
+          console.log('basePath', basePath)
+          // this.$router.push('/login')
+          return redirect(
+            `https://${publicDomain}${basePath}/forwardLogin?targetDomain=${userFirstOrgName}`
+          )
+        }
       }
-    }
-    if (!isValidPage(store, route)) {
-      return redirect('/unauthorized')
+      if (!isValidPage(store, route)) {
+        return redirect('/unauthorized')
+      }
     }
   }
 }
