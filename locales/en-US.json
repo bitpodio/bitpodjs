@@ -763,7 +763,24 @@
     "ExportInProgress": "Export in progress...",
     "NoDataAvailable": "No data available",
     "ServiceUnavailable": "Service Unavailable",
-    "Upgrade": "Upgrade"
+    "Upgrade": "Upgrade",
+    "QuickStart": "Quick Start",
+    "AboutApi": "About API",
+    "ApiExplorer": "API Explorer",
+    "GcpMarketplace": "GCP Marketplace",
+    "ReleaseNotes": "Release Notes",
+    "SecurityPolicy": "Security Policy",
+    "EventHelp": "Event",
+    "QuickBooks": "QuickBooks",
+    "Sage300": "Sage300",
+    "HubSpot": "HubSpot",
+    "Freshbook": "Freshbook",
+    "Xero": "Xero",
+    "Zoom": "Zoom",
+    "Gmail": "Gmail",
+    "Salesforce": "Salesforce",
+    "Api": "API",
+    "Introduction": "Introduction"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",
@@ -976,7 +993,7 @@
       "RegistrationFormUpdatedSuccess": "Registration Form updated successfully",
       "SessionCreatedSuccess": "Session created successfully",
       "SessionUpdatedSuccess": "Session updated successfully",
-      "ContactImportSuccess":"Import execution started"
+      "ContactImportSuccess": "Import execution started"
     }
   },
   "$vuetify": {

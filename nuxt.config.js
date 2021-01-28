@@ -8,6 +8,7 @@ export default {
   mode: 'universal',
   router: {
     base: basePath || '/',
+    middleware: ['helpRedirect'],
   },
   /*
    ** Nuxt target
@@ -276,13 +277,12 @@ export default {
       EVENT_LINK_HINT: `https://${
         process.env.PUBLIC_DOMAIN || 'event.test.bitpod.io'
       }/e/`,
-      //! Replace /adm/ with /admin/ on publishing help center for zoom and google meet help
       ZOOM_DOCUMENT_LINK: `https://${
         process.env.PUBLIC_DOMAIN || 'event.test.bitpod.io'
-      }/adm/apps/HelpCenter/Integrations/Zoom/views/Zoom`,
+      }${process.env.PUBLIC_PATH || ''}/apps/help-center/integrations/zoom`,
       GOOGLE_MEET_DOCUMENT_LINK: `https://${
         process.env.PUBLIC_DOMAIN || 'event.test.bitpod.io'
-      }/adm/apps/HelpCenter/Integrations/Gmail/views/Gmail`,
+      }${process.env.PUBLIC_PATH || ''}/apps/help-center/integrations/gmail`,
     },
   },
 
