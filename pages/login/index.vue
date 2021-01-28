@@ -61,80 +61,13 @@ export default {
       return !!this.$route.query.p
     },
   },
-  data() {
-    return {
-      orgName: '',
-      redirectToOrg: false,
-      setCookie: true,
+  async beforeMount() {
+    const provider = this.$route.query.p
+    if (provider) {
+      return await this.$auth.loginWith(provider)
     }
   },
-  // async beforeMount() {
-  //   const provider = this.$route.query.p
-  //   if (provider) {
-  //     return await this.$auth.loginWith(provider)
-  //   }
-  // },
-  mounted() {
-    debugger
-    window.addEventListener('message', this.messageReceived, false)
-    // if (
-    //   this.$auth &&
-    //   this.$auth.$state &&
-    //   this.$auth.$state.user &&
-    //   this.$auth.$state.user.data
-    // ) {
-    //   if (this.$auth.user.data.orgList.length) {
-    //     this.orgName = this.$auth.user.data.orgList[0].name
-    //     this.redirectToOrg = true
-    //   }
-    //   this.email = this.$auth.$state.user.data.email
-    //   this.name = this.$auth.$state.user.data.name
-    // } else {
-    //   console.log('===>replacing')
-    //   console.log('===>this.$auth', this.$auth)
-    //   console.log('===>this.$auth.$state', this.$auth.$state)
-    //   console.log('===>t this.$auth.$state.user', this.$auth.$state.user)
-    //   console.log(
-    //     '===>t this.$auth.$state.user.data',
-    //     this.$auth.$state.user.data
-    //   )
-    //   // return redirect('/api/connect/userinfo')
-    // }
-  },
-  beforeDestroy() {
-    window.removeEventListener('message', this.messageReceived)
-  },
   methods: {
-    iframeLoaded() {
-      console.log('all cookie while loading iframe', document.cookie)
-      this.$refs.iframe.contentWindow.postMessage(document.cookie, '*')
-    },
-    messageReceived(e) {
-      debugger
-      console.log('in message received section', e)
-      if (e.data === 'success' && this.setCookie) {
-        console.log('inside setting cookies message received section', e.data)
-        // document.cookie.split(';').forEach((c) => {
-        //   document.cookie = c
-        //     .replace(/^ +/, '')
-        //     .replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/')
-        // })
-        // document.cookie.split(';').forEach((c) => {
-        //   document.cookie = c
-        //     .replace(/^ +/, '')
-        //     .replace(
-        //       /=.*/,
-        //       '=;expires=' +
-        //         new Date().toUTCString() +
-        //         `;path=${this.$config.basePublicPath}`
-        //     )
-        // })
-        console.log('document cookie', document.cookie)
-        this.setCookie = false
-        // localStorage.clear()
-        location.href = `https://bitpod-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}/apps/event/list/Event/live-and-draft-event`
-      }
-    },
     async loginBitpod() {
       if (window.localStorage['auth.redirect']) {
         window.localStorage['auth.redirect'] = ''

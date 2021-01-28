@@ -74,9 +74,7 @@ export default {
       return await this.$auth.loginWith('bitpod')
     },
     async loginGoogle() {
-      return await this.$auth.loginWith('google', {
-        params: { prompt: 'select_account' },
-      })
+      return await this.$auth.loginWith('google')
     },
   },
 }
