@@ -5,6 +5,18 @@ export default {
    ** Nuxt rendering mode
    ** See https://nuxtjs.org/api/configuration-mode
    */
+  hooks: {
+    render: {
+      errorMiddleware(app) {
+        app.use((error, _req, _res, next) => {
+          if (error) {
+            console.log("Logged in errorMiddleware", error);
+          }
+          next(error);
+        });
+      },
+    },
+  },
   build: {
     extend(config, { isClient }) {
       // Extend only webpack config for client-bundle
