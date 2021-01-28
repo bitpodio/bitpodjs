@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "node --max-old-space-size=4096 node_modules/nuxt/bin/nuxt.js --hostname=0.0.0.0",
     "build": "nuxt build",
-    "start": "nuxt start --hostname=0.0.0.0 --max-http-header-size=200000",
+    "start": "node --max-http-header-size=200000 node_modules/nuxt/bin/nuxt.js start --hostname=0.0.0.0 ",
     "export": "nuxt export",
     "serve": "nuxt serve",
     "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
