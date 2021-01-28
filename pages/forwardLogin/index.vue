@@ -1,9 +1,9 @@
 <template>
   <div>
-    <p>This is an iframe section forwarded</p>
     <iframe
       id="print"
       ref="iframe"
+      style="width: 0; position: absolute; height: 0;"
       :src="`https://${orgName}-${$config.axios.backendBaseUrl}${$config.basePublicPath}/embed-cookie`"
       @load="iframeLoaded"
     >
