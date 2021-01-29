@@ -47,15 +47,19 @@ export const mutations = {
       ' Json state.config in numutation in setCurrentOrg',
       JSON.stringify(state)
     )
+    console.log(
+      ' Json payload.config in numutation in setCurrentOrg',
+      JSON.stringify(payload)
+    )
     console.log(' state.config in numutation in setCurrentOrg', state.config)
-    console.log(
-      ' state.currentOrg.config.headers in numutation in setCurrentOrg',
-      state.currentOrg.config.headers
-    )
-    console.log(
-      ' state.config.headers in numutation in setCurrentOrg',
-      state.config.headers
-    )
+    // console.log(
+    //   ' state.currentOrg.config.headers in numutation in setCurrentOrg',
+    //   state.currentOrg.config.headers
+    // )
+    // console.log(
+    //   ' state.config.headers in numutation in setCurrentOrg',
+    //   state.config.headers
+    // )
     console.log('payload in numutation in setCurrentOrg', payload)
     state.currentOrg = payload
   },
@@ -77,5 +81,7 @@ function getApiUrl(host, req, config) {
     return `https://${config.axios.backendBaseUrl}`
   }
   // const protocol = req.protocol
+  console.log('host', host)
+  console.log('protocol', req.protocol)
   return 'https://event.test.bitpod.io'
 }
