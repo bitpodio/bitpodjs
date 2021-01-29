@@ -81,6 +81,9 @@ export const mutations = {
     console.log('payload in numutation in setCurrentOrgInfo', payload)
     state.currentOrgInfo = payload
   },
+  setCommitError(state,payload){
+    state.commitError = payload
+  },
   setExportInProgress(state, status) {
     state.exportInProgress = status
   },
