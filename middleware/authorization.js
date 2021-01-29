@@ -7,6 +7,8 @@ const isValidPage = (store, route) => {
   if (!route.params.app) {
     return true
   }
+  console.log('store in isValidPage function before sending to userTUtils', store)
+  console.log('store.state.user in isValidPage function before sending to userTUtils', store.state.auth.user)
   const userCurrentOrg = userUtils.userCurrentOrgInfo(store) || {}
   console.log('userCurrentOrg in isValidPage', userCurrentOrg)
   const userRoles = userCurrentOrg.roles || []
@@ -38,15 +40,17 @@ const getUsersOrg = (store) => {
 
 export default function (context) {
   const { store, route, redirect } = context
-
+  console.log('store in auth.js', store)
   if (getUsersOrg(store)?.name) {
     const userOrgStore = getUsersOrg(store)
     if (userOrgStore && userOrgStore.name) {
+      console.log('inside if userOrgStore.name in auth.js', userOrgStore.name)
       if (process.server) {
         const { req } = context
         const hostName = req.headers.host
         const publicDomain = process.env.PUBLIC_DOMAIN
         if (hostName === publicDomain) {
+          console.log('hostname equal to publiDomain in auth.js', userOrgStore.name)
           const userFirstOrgName = getUsersOrg(store).name || ''
           const basePath = process.env.PUBLIC_PATH || ''
           return redirect(
@@ -54,6 +58,7 @@ export default function (context) {
           )
         }
       }
+      console.log('otside of process.server')
       if (!isValidPage(store, route)) {
         console.log('store in isValidPage', store)
         console.log('route in isValidPage', route)
