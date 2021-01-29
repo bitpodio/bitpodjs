@@ -32,8 +32,8 @@ const getUsersOrg = (store) => {
 
 export default function (context) {
   const { store, route, redirect } = context
-
-  if (getUsersOrg(store)?.name) {
+  const userOrgStore = getUsersOrg(store)
+  if (userOrgStore && userOrgStore.name) {
     const userOrgStore = getUsersOrg(store)
     if (userOrgStore && userOrgStore.name) {
       if (process.server) {
@@ -41,7 +41,7 @@ export default function (context) {
         const hostName = req.headers.host
         const publicDomain = process.env.PUBLIC_DOMAIN
         if (hostName === publicDomain) {
-          const userFirstOrgName = getUsersOrg(store).name || ''
+          const userFirstOrgName = userOrgStore.name || ''
           const basePath = process.env.PUBLIC_PATH || ''
           return redirect(
             `https://${publicDomain}${basePath}/forwardLogin?targetDomain=${userFirstOrgName}`
