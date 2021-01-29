@@ -12,7 +12,7 @@ export const actions = {
     console.log('token', context.app.$cookies.get('auth.id_token'))
     const token =
       context.app.$cookies.get('auth.id_token') ||
-      'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImVlYTFiMWY0MjgwN2E4Y2MxMzZhMDNhM2MxNmQyOWRiODI5NmRhZjAiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI0OTkyODM5MDk1MC1wbXU0bDczZnU2bXBjaW0yZ2RuZXJxZjYyazZvcHBxdC5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsImF1ZCI6IjQ5OTI4MzkwOTUwLXBtdTRsNzNmdTZtcGNpbTJnZG5lcnFmNjJrNm9wcHF0LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTAzNzUxMjU1NTM0NDczOTE0NTE4IiwiaGQiOiJiaXRwb2QuaW8iLCJlbWFpbCI6ImFtYXJ0eWFrdW1hckBiaXRwb2QuaW8iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6IlV0bzBsR0tRWk0wOUNLb3dzRE5HZWciLCJuYW1lIjoiQW1hcnR5YWt1bWFyIFJveSIsInBpY3R1cmUiOiJodHRwczovL2xoNS5nb29nbGV1c2VyY29udGVudC5jb20vLThhRUJZQkNZNXQwL0FBQUFBQUFBQUFJL0FBQUFBQUFBQUFBL0FNWnV1Y2w0cnF4eXNSYXpiTWZkT2t0cEhETHQxYV91NkEvczk2LWMvcGhvdG8uanBnIiwiZ2l2ZW5fbmFtZSI6IkFtYXJ0eWFrdW1hciIsImZhbWlseV9uYW1lIjoiUm95IiwibG9jYWxlIjoiZW4iLCJpYXQiOjE2MTE5MjAxOTEsImV4cCI6MTYxMTkyMzc5MX0.WYe9DhJCs6-n4bVIQaNB0ZHKH04nlrfsCBDtLu3dGKGWQ0vpVRrmKZLyvwarJpOMeOt3_Xe6uDTopPGZSjh6c_8xWP4T0-4WP9eb_EJGEO6cfZg2s0bXV-R0e1Ek9hyhjpoYd3pXAgcE3vZt8Sp5n2cfjTIrskKFsVOEVpAt5MPrbotbBxpd9f4np_7LABCqFJAuCLI6PDwAA71XTZUjH-HZJUyqvElcWwOoT50u-lomeY67Zib-Ko9qkMozcY3lxWjlHiVaVCrcPIOJlad2R9mPVxrZhEWUMGvQJ7WP27uqOyHTYFR8YeENPEASuypnSRwo_X9n_VUR36yAilvHEg'
+      'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImVlYTFiMWY0MjgwN2E4Y2MxMzZhMDNhM2MxNmQyOWRiODI5NmRhZjAiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI0OTkyODM5MDk1MC1wbXU0bDczZnU2bXBjaW0yZ2RuZXJxZjYyazZvcHBxdC5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsImF1ZCI6IjQ5OTI4MzkwOTUwLXBtdTRsNzNmdTZtcGNpbTJnZG5lcnFmNjJrNm9wcHF0LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTAzNzUxMjU1NTM0NDczOTE0NTE4IiwiaGQiOiJiaXRwb2QuaW8iLCJlbWFpbCI6ImFtYXJ0eWFrdW1hckBiaXRwb2QuaW8iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImIwelFMX0VIUmhVYkF3YzBfRHlDTXciLCJuYW1lIjoiQW1hcnR5YWt1bWFyIFJveSIsInBpY3R1cmUiOiJodHRwczovL2xoNS5nb29nbGV1c2VyY29udGVudC5jb20vLThhRUJZQkNZNXQwL0FBQUFBQUFBQUFJL0FBQUFBQUFBQUFBL0FNWnV1Y2w0cnF4eXNSYXpiTWZkT2t0cEhETHQxYV91NkEvczk2LWMvcGhvdG8uanBnIiwiZ2l2ZW5fbmFtZSI6IkFtYXJ0eWFrdW1hciIsImZhbWlseV9uYW1lIjoiUm95IiwibG9jYWxlIjoiZW4iLCJpYXQiOjE2MTE5MjIwOTgsImV4cCI6MTYxMTkyNTY5OH0.p9uvFv4ZZShQhCdyTybQENUBjDl41Bc8yuZF-z6pc_Rf0Ax1PVi3WxV4a6giI4Id9Hi2wOIpZuZeMvBUFfDxfUksi7u5RkdhrKLaAxhOv-efE9IsKa-s91JWhIobCNQyLUer86uo1se5wESP2Q0SLli1l2TjUiNpP9XkjR8LLP3xk1tDLJxIfVyPxRRiD7OL4DR-M_a5YHqHh6uUazWim5dI_C_3TfZjvmSjofRb1jmd28jQw1ZTIMFGJvYpzmEWh-3rDBOqrK_jcf8zJqhcx40rcMhL4e16xvEx3Iowxj9QKkQUzm72EI0W_w8F9nRBcWzs4P6WKNxdT_TusyCWpg'
     const headers = {
       authorization: token,
     }
@@ -20,7 +20,7 @@ export const actions = {
       const orgPromise = context.$axios.get(
         `${origin}${apiEndpoint}Organizations/this`,
         {
-          headers
+          headers,
         }
       )
       const orgInfoPromise = context.$axios.get(
@@ -31,6 +31,8 @@ export const actions = {
         orgPromise,
         orgInfoPromise,
       ])
+      console.log('currentOrgInfoRes.data', currentOrgInfoRes.data)
+      console.log(' currentOrgRes.data', currentOrgRes.data)
       const currentOrgInfo = currentOrgInfoRes.data
       commit('setCurrentOrg', currentOrgRes.data)
       commit('setCurrentOrgInfo', currentOrgInfo && currentOrgInfo[0])
