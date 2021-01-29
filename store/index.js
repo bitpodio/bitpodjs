@@ -7,9 +7,9 @@ export const actions = {
       context.$config
     )
     const apiEndpoint = nuxtconfig.axios.apiEndpoint
-
-    console.log('token', context.app.$cookies.get('auth._token.google'))
-    const token = context.app.$cookies.get('auth._token.google')
+    console.log('coookies', context.app.$cookies)
+    console.log('token', context.app.$cookies.get('auth.id_token'))
+    const token = context.app.$cookies.get('auth.id_token')
     const headers = {
       authorization: token,
     }
