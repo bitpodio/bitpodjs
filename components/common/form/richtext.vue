@@ -51,6 +51,7 @@ export default {
       content: this.value || '',
       config: {
         placeholder: '',
+        editorCssClass: 'rich-text-editor',
         extraButtons: [
           {
             name: '<h2 class="pb-1">+</h2>',
@@ -286,7 +287,8 @@ export default {
 }
 </script>
 <style>
-.rich-text-editor * {
+.rich-text-editor *,
+.rich-text-editor {
   -webkit-text-size-adjust: none;
   text-size-adjust: none;
 }
