@@ -6,7 +6,10 @@ export const actions = {
       context.req,
       context.$config
     )
-    console.log('printing the context.req.header.host', context.req.header.host)
+    console.log(
+      'printing the context.req.header.host',
+      context.req.headers.host
+    )
     console.log('printing the context.req.', context.req)
     const apiEndpoint = nuxtconfig.axios.apiEndpoint
     console.log('coookiesAll', context.app.$cookies.getAll())
