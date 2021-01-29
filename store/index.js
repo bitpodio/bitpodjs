@@ -95,6 +95,6 @@ function getApiUrl(host, req, config) {
   console.log('request', req)
   console.log('host', host)
   console.log('protocol', req.protocol)
-  return `https://${host}`
+  return `https://event.test.bitpod.io`
   // return 'https://event.test.bitpod.io'
 }
