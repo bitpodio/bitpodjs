@@ -9,7 +9,7 @@ export const actions = {
     const apiEndpoint = nuxtconfig.axios.apiEndpoint
     try {
       const orgPromise = context.$axios.get(
-        `${origin}${apiEndpoint}Organizations/this`
+        `${origin}${apiEndpoint}Organizations`
       )
       const orgInfoPromise = context.$axios.get(
         `${origin}${apiEndpoint}OrganizationInfos`
@@ -19,6 +19,8 @@ export const actions = {
         orgInfoPromise,
       ])
       const currentOrgInfo = currentOrgInfoRes.data
+      console.log('in store.js currentOrgInfoRes.data', currentOrgInfoRes.data)
+      console.log('in store.js currentOrgRes.data', currentOrgRes.data)
       commit('setCurrentOrg', currentOrgRes.data)
       commit('setCurrentOrgInfo', currentOrgInfo && currentOrgInfo[0])
       if (context && context.req.headers.host.includes('localhost')) {
@@ -43,9 +45,13 @@ export const state = () => ({
 
 export const mutations = {
   setCurrentOrg(state, payload) {
+    console.log('state in numutation in setCurrentOrg', state)
+    console.log('payload in numutation in setCurrentOrg', payload)
     state.currentOrg = payload
   },
   setCurrentOrgInfo(state, payload) {
+    console.log('state in numutation in setCurrentOrgInfo', state)
+    console.log('payload in numutation in setCurrentOrgInfo', payload)
     state.currentOrgInfo = payload
   },
   setExportInProgress(state, status) {
