@@ -10,24 +10,21 @@ export const actions = {
       'printing the context.req.header.host',
       context.req.headers.host
     )
-    console.log('printing the context.req.', context.req)
+    // console.log('printing the context.req.', context.req)
     const apiEndpoint = nuxtconfig.axios.apiEndpoint
-    console.log('coookiesAll', context.app.$cookies.getAll())
-    console.log('coookies', context.app.$cookies)
-    console.log('token', context.app.$cookies.get('auth.id_token'))
-    console.log('origin---', origin)
-    const token =
-      context.app.$cookies.get('auth.id_token') ||
-      'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImVlYTFiMWY0MjgwN2E4Y2MxMzZhMDNhM2MxNmQyOWRiODI5NmRhZjAiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI0OTkyODM5MDk1MC1wbXU0bDczZnU2bXBjaW0yZ2RuZXJxZjYyazZvcHBxdC5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsImF1ZCI6IjQ5OTI4MzkwOTUwLXBtdTRsNzNmdTZtcGNpbTJnZG5lcnFmNjJrNm9wcHF0LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTAzNzUxMjU1NTM0NDczOTE0NTE4IiwiaGQiOiJiaXRwb2QuaW8iLCJlbWFpbCI6ImFtYXJ0eWFrdW1hckBiaXRwb2QuaW8iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6InpVRF9xRmFVWEU5djBYRTh5bWNfWmciLCJuYW1lIjoiQW1hcnR5YWt1bWFyIFJveSIsInBpY3R1cmUiOiJodHRwczovL2xoNS5nb29nbGV1c2VyY29udGVudC5jb20vLThhRUJZQkNZNXQwL0FBQUFBQUFBQUFJL0FBQUFBQUFBQUFBL0FNWnV1Y2w0cnF4eXNSYXpiTWZkT2t0cEhETHQxYV91NkEvczk2LWMvcGhvdG8uanBnIiwiZ2l2ZW5fbmFtZSI6IkFtYXJ0eWFrdW1hciIsImZhbWlseV9uYW1lIjoiUm95IiwibG9jYWxlIjoiZW4iLCJpYXQiOjE2MTE5MzA3MTcsImV4cCI6MTYxMTkzNDMxN30.LCnTWQrjyyomRp_Ei0g1Y3LZOhpTNikxK83GvhjemnIwYkANWjIYGxbZgpCahTIqvQm9knovoxcOHlJYCN1cflIPyp11SiqfvMqIfIN2aBboaupUw5GDwL4foEz_Z8LLRn6olKfpuTviWysyoKVCCRhQAQhKgyDDp-BIFNmfxiR_bBXrmPFa3eWeXDDIw2Vdau2H-mpBchd18FJYTt5SbIcpObhr_NURBqFxm0kGcHQaEM0sXOUaNvq6z3UsFViFZWqZF1RQvJoWJstWaEgHx8yMUuBV638jSlYsVJf_UOXn-RnOvbjNau6_mf76JfzLGam6MDglp3BoyUNZ1Ui_0A'
-    const headers = {
-      authorization: token,
-    }
+    // console.log('coookiesAll', context.app.$cookies.getAll())
+    // console.log('coookies', context.app.$cookies)
+    // console.log('token', context.app.$cookies.get('auth.id_token'))
+    // console.log('origin---', origin)
+    // const token =
+    //   context.app.$cookies.get('auth.id_token') ||
+    //   'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6ImVlYTFiMWY0MjgwN2E4Y2MxMzZhMDNhM2MxNmQyOWRiODI5NmRhZjAiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI0OTkyODM5MDk1MC1wbXU0bDczZnU2bXBjaW0yZ2RuZXJxZjYyazZvcHBxdC5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsImF1ZCI6IjQ5OTI4MzkwOTUwLXBtdTRsNzNmdTZtcGNpbTJnZG5lcnFmNjJrNm9wcHF0LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTAzNzUxMjU1NTM0NDczOTE0NTE4IiwiaGQiOiJiaXRwb2QuaW8iLCJlbWFpbCI6ImFtYXJ0eWFrdW1hckBiaXRwb2QuaW8iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6InpVRF9xRmFVWEU5djBYRTh5bWNfWmciLCJuYW1lIjoiQW1hcnR5YWt1bWFyIFJveSIsInBpY3R1cmUiOiJodHRwczovL2xoNS5nb29nbGV1c2VyY29udGVudC5jb20vLThhRUJZQkNZNXQwL0FBQUFBQUFBQUFJL0FBQUFBQUFBQUFBL0FNWnV1Y2w0cnF4eXNSYXpiTWZkT2t0cEhETHQxYV91NkEvczk2LWMvcGhvdG8uanBnIiwiZ2l2ZW5fbmFtZSI6IkFtYXJ0eWFrdW1hciIsImZhbWlseV9uYW1lIjoiUm95IiwibG9jYWxlIjoiZW4iLCJpYXQiOjE2MTE5MzA3MTcsImV4cCI6MTYxMTkzNDMxN30.LCnTWQrjyyomRp_Ei0g1Y3LZOhpTNikxK83GvhjemnIwYkANWjIYGxbZgpCahTIqvQm9knovoxcOHlJYCN1cflIPyp11SiqfvMqIfIN2aBboaupUw5GDwL4foEz_Z8LLRn6olKfpuTviWysyoKVCCRhQAQhKgyDDp-BIFNmfxiR_bBXrmPFa3eWeXDDIw2Vdau2H-mpBchd18FJYTt5SbIcpObhr_NURBqFxm0kGcHQaEM0sXOUaNvq6z3UsFViFZWqZF1RQvJoWJstWaEgHx8yMUuBV638jSlYsVJf_UOXn-RnOvbjNau6_mf76JfzLGam6MDglp3BoyUNZ1Ui_0A'
+    // const headers = {
+    //   authorization: token,
+    // }
     try {
       const orgPromise = context.$axios.get(
-        `${origin}${apiEndpoint}Organizations/this`,
-        {
-          headers,
-        }
+        `${origin}${apiEndpoint}Organizations/this`
       )
       const orgInfoPromise = context.$axios.get(
         `${origin}${apiEndpoint}OrganizationInfos`
@@ -64,20 +61,20 @@ export const state = () => ({
 
 export const mutations = {
   setCurrentOrg(state, payload) {
-    console.log(
-      ' Json state.config in numutation in setCurrentOrg',
-      JSON.stringify(state)
-    )
+    // console.log(
+    //   ' Json state.config in numutation in setCurrentOrg',
+    //   JSON.stringify(state)
+    // )
     console.log(
       ' Json payload.config in numutation in setCurrentOrg',
       JSON.stringify(payload)
     )
-    console.log(' state in numutation in setCurrentOrg', state)
-    console.log('payload in numutation in setCurrentOrg', payload)
+    // console.log(' state in numutation in setCurrentOrg', state)
+    // console.log('payload in numutation in setCurrentOrg', payload)
     state.currentOrg = payload
   },
   setCurrentOrgInfo(state, payload) {
-    console.log('state in numutation in setCurrentOrgInfo', state)
+    // console.log('state in numutation in setCurrentOrgInfo', state)
     console.log('payload in numutation in setCurrentOrgInfo', payload)
     state.currentOrgInfo = payload
   },
