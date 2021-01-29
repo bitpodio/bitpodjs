@@ -1,10 +1,10 @@
 <template>
-  <div id="app">
+  <div id="app" class="rich-text-editor">
     <client-only>
       <div v-if="label || (field && field.form && field.form.caption)">
         {{ label || field.form.caption }}
       </div>
-      <div class="rich-text-editor" @click="rteClicked">
+      <div @click="rteClicked">
         <jodit-editor ref="rte" v-model="content" :config="config" />
       </div>
     </client-only>
@@ -285,7 +285,7 @@ export default {
   },
 }
 </script>
-<style scoped>
+<style>
 .rich-text-editor * {
   -webkit-text-size-adjust: none;
   text-size-adjust: none;
