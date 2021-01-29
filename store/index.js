@@ -50,7 +50,7 @@ export const actions = {
         context.app.$cookies.set('auth.domain_url', postLogoutUrl)
       }
     } catch (err) {
-      commit('setCurrentOrg', err)
+      commit('setCommitError', err)
     }
   },
 }
