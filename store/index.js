@@ -9,7 +9,7 @@ export const actions = {
     const apiEndpoint = nuxtconfig.axios.apiEndpoint
     try {
       const orgPromise = context.$axios.get(
-        `${origin}${apiEndpoint}Organizations`
+        `${origin}${apiEndpoint}Organizations/this`
       )
       const orgInfoPromise = context.$axios.get(
         `${origin}${apiEndpoint}OrganizationInfos`
@@ -19,8 +19,6 @@ export const actions = {
         orgInfoPromise,
       ])
       const currentOrgInfo = currentOrgInfoRes.data
-      console.log('in store.js currentOrgInfoRes.data', currentOrgInfoRes.data)
-      console.log('in store.js currentOrgRes.data', currentOrgRes.data)
       commit('setCurrentOrg', currentOrgRes.data)
       commit('setCurrentOrgInfo', currentOrgInfo && currentOrgInfo[0])
       if (context && context.req.headers.host.includes('localhost')) {
