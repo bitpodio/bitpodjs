@@ -442,12 +442,12 @@ body {
   background-color: transparent !important;
 }
 .mxw-w70 {
-  max-width: 70%;
-  width: 70%;
+  max-width: 70% !important;
+  width: 70% !important;
 }
 .mxw-w30 {
-  max-width: 30%;
-  width: 30%;
+  max-width: 30% !important;
+  width: 30% !important;
 }
 .seatmap .container.container--fluid {
   padding: 0 !important;
@@ -675,6 +675,9 @@ table > tbody > tr:last-child .key-align {
 .vjs-error .vjs-error-display::before {
   display: none !important;
 }
+.v-skeleton-loader {
+  width: 100%;
+}
 @media (max-width: 800px) {
   .nav-bar {
     top: 50px !important;
@@ -723,8 +726,8 @@ table > tbody > tr:last-child .key-align {
   }
   .mxw-w70,
   .mxw-w30 {
-    width: 100%;
-    max-width: 100%;
+    width: 100% !important;
+    max-width: 100% !important;
   }
   #res-tables thead.e-thead,
 	#res-tables tbody.e-tbody,
