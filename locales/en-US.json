@@ -765,7 +765,8 @@
     "ServiceUnavailable": "Service Unavailable",
     "Upgrade": "Upgrade",
     "SessionNotStart": "This session hasn't started yet.",
-    "TryJoinOn": "Try joining again on"
+    "TryJoinOn": "Try joining again on",
+    "CheckCalendarInvite": "Check calendar invite for joining link"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",

@@ -765,8 +765,9 @@
     "NoDataAvailable": "कोई डेटा उपलब्ध नहीं है",
     "ServiceUnavailable": "सेवा उप्लब्ध् नहीं है",
     "Upgrade": "अपग्रेड",
-    "SessionNotStart": "מושב זה עדיין לא התחיל.",
-    "TryJoinOn": "נסה להצטרף שוב בתאריך"
+    "SessionNotStart": "यह सत्र अभी तक शुरू नहीं हुआ है.",
+    "TryJoinOn": "फिर से जुड़ने का प्रयास करें",
+    "CheckCalendarInvite": "लिंक से जुड़ने के लिए कैलेंडर आमंत्रण की जाँच करें"
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",

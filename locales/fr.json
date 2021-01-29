@@ -764,7 +764,8 @@
     "ServiceUnavailable": "Service indisponible",
     "Upgrade": "Améliorer",
     "SessionNotStart": "Cette session n'a pas encore commencé.",
-    "TryJoinOn": "Essayez de vous joindre à nouveau sur"
+    "TryJoinOn": "Essayez de vous joindre à nouveau sur",
+    "CheckCalendarInvite": "Vérifier l'invitation du calendrier pour rejoindre le lien"
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",

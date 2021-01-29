@@ -678,6 +678,11 @@ table > tbody > tr:last-child .key-align {
 .v-skeleton-loader {
   width: 100%;
 }
+@media (min-width: 1904px) {
+  .boxviewlarge .v-data-table__wrapper {
+    margin-bottom: 0 !important;
+  }
+}
 @media (max-width: 800px) {
   .nav-bar {
     top: 50px !important;
