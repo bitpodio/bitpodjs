@@ -765,8 +765,9 @@
     "NoDataAvailable": "אין נתונים זמינים",
     "ServiceUnavailable": "שירותים לא זמינים",
     "Upgrade": "שדרוג",
-    "SessionNotStart": "यह सत्र अभी तक शुरू नहीं हुआ है.",
-    "TryJoinOn": "फिर से जुड़ने का प्रयास करें"
+    "SessionNotStart": "מושב זה עדיין לא התחיל.",
+    "TryJoinOn": "נסה להצטרף שוב בתאריך",
+    "CheckCalendarInvite": "בדוק את הזמנת לוח השנה להצטרפות לקישור"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",
