@@ -4,7 +4,7 @@
       <div v-if="label || (field && field.form && field.form.caption)">
         {{ label || field.form.caption }}
       </div>
-      <div @click="rteClicked">
+      <div :class="{ 'rich-text-editor': $device.isIos }" @click="rteClicked">
         <jodit-editor ref="rte" v-model="content" :config="config" />
       </div>
     </client-only>
@@ -285,3 +285,9 @@ export default {
   },
 }
 </script>
+<style scoped>
+.rich-text-editor {
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+}
+</style>
