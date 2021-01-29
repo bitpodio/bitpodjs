@@ -43,8 +43,19 @@ export const state = () => ({
 
 export const mutations = {
   setCurrentOrg(state, payload) {
-    console.log('state in numutation in setCurrentOrg', state)
-    console.log('header in numutation in setCurrentOrg', state.currentOrg.config.headers)
+    console.log(
+      ' Json state.config in numutation in setCurrentOrg',
+      JSON.stringify(state)
+    )
+    console.log(' state.config in numutation in setCurrentOrg', state.config)
+    console.log(
+      ' state.currentOrg.config.headers in numutation in setCurrentOrg',
+      state.currentOrg.config.headers
+    )
+    console.log(
+      ' state.config.headers in numutation in setCurrentOrg',
+      state.config.headers
+    )
     console.log('payload in numutation in setCurrentOrg', payload)
     state.currentOrg = payload
   },
