@@ -7,13 +7,21 @@ export const actions = {
       context.$config
     )
     const apiEndpoint = nuxtconfig.axios.apiEndpoint
+
+    console.log('token', context.app.$cookies.get('auth._token.google'))
+    const token = context.app.$cookies.get('auth._token.google')
+    const headers = {
+      authorization: token,
+    }
     try {
       const orgPromise = context.$axios.get(
-        `${origin}${apiEndpoint}Organizations/this`
+        `${origin}${apiEndpoint}Organizations/this`,
+        headers
       )
       const orgInfoPromise = context.$axios.get(
         `${origin}${apiEndpoint}OrganizationInfos`
       )
+      console.log('orgPromise', orgPromise)
       const [currentOrgRes, currentOrgInfoRes] = await Promise.all([
         orgPromise,
         orgInfoPromise,
@@ -51,7 +59,7 @@ export const mutations = {
       ' Json payload.config in numutation in setCurrentOrg',
       JSON.stringify(payload)
     )
-    console.log(' state.config in numutation in setCurrentOrg', state.config)
+    console.log(' state in numutation in setCurrentOrg', state)
     // console.log(
     //   ' state.currentOrg.config.headers in numutation in setCurrentOrg',
     //   state.currentOrg.config.headers
