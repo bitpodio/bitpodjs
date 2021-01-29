@@ -7,8 +7,14 @@ const isValidPage = (store, route) => {
   if (!route.params.app) {
     return true
   }
-  console.log('store in isValidPage function before sending to userTUtils', store)
-  console.log('store.state.user in isValidPage function before sending to userTUtils', store.state.auth.user)
+  console.log(
+    'store in isValidPage function before sending to userTUtils',
+    store
+  )
+  console.log(
+    'store.state.user in isValidPage function before sending to userTUtils',
+    store.state.auth.user
+  )
   const userCurrentOrg = userUtils.userCurrentOrgInfo(store) || {}
   console.log('userCurrentOrg in isValidPage', userCurrentOrg)
   const userRoles = userCurrentOrg.roles || []
@@ -50,7 +56,10 @@ export default function (context) {
         const hostName = req.headers.host
         const publicDomain = process.env.PUBLIC_DOMAIN
         if (hostName === publicDomain) {
-          console.log('hostname equal to publiDomain in auth.js', userOrgStore.name)
+          console.log(
+            'hostname equal to publiDomain in auth.js',
+            userOrgStore.name
+          )
           const userFirstOrgName = getUsersOrg(store).name || ''
           const basePath = process.env.PUBLIC_PATH || ''
           return redirect(
