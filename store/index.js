@@ -19,7 +19,9 @@ export const actions = {
     try {
       const orgPromise = context.$axios.get(
         `${origin}${apiEndpoint}Organizations/this`,
-        headers
+        {
+          headers
+        }
       )
       const orgInfoPromise = context.$axios.get(
         `${origin}${apiEndpoint}OrganizationInfos`
