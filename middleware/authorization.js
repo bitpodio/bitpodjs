@@ -17,25 +17,25 @@ const isValidPage = (store, route) => {
     console.log('userCurrentOrg===>', userCurrentOrg)
     const userRoles = userCurrentOrg.roles || []
     console.log('userRoles===>', userRoles)
+    if (
+      userRoles.includes('$orgowner') &&
+      userCurrentOrg &&
+      userCurrentOrg.id === 1
+    ) {
+      return true
+    }
+    const currentRouteApp =
+      appList(store).find(({ name }) => name === route.params.app) || {}
+    console.log('currentRouteApp===>', currentRouteApp)
+    const currentRouteAppRoles = currentRouteApp.roles || []
+    console.log('currentRouteAppRoles===>', currentRouteAppRoles)
+    const isAuthorizedApp =
+      intersection(currentRouteAppRoles, userRoles).length > 0
+    console.log('isAuthorizedApp from authorizationjs', isAuthorizedApp)
+    return isAuthorizedApp
   } else {
     console.log('store not initialized first', store.state.currentOrg.name)
   }
-  if (
-    userRoles.includes('$orgowner') &&
-    userCurrentOrg &&
-    userCurrentOrg.id === 1
-  ) {
-    return true
-  }
-  const currentRouteApp =
-    appList(store).find(({ name }) => name === route.params.app) || {}
-  console.log('currentRouteApp===>', currentRouteApp)
-  const currentRouteAppRoles = currentRouteApp.roles || []
-  console.log('currentRouteAppRoles===>', currentRouteAppRoles)
-  const isAuthorizedApp =
-    intersection(currentRouteAppRoles, userRoles).length > 0
-  console.log('isAuthorizedApp from authorizationjs', isAuthorizedApp)
-  return isAuthorizedApp
 }
 
 const getUsersOrg = (store) => {
