@@ -6,11 +6,13 @@ export const actions = {
     const origin = 'https://bitpod-event.test.bitpod.io/svc/api/'
     console.log('coookiesAll', context.app.$cookies.getAll())
     try {
-      const orgInfoPromise = context.$axios.get(`${origin}OrganizationInfos`)
+      const orgInfoPromise = await context.$axios.get(
+        `${origin}OrganizationInfos`
+      )
       console.log('received orgInfoPromise', orgInfoPromise)
-      const [currentInfoRes] = await Promise.all([orgInfoPromise])
-      console.log('received currentOrgRes', currentInfoRes.data)
-      commit('setCurrentOrgInfo', currentInfoRes && currentInfoRes.data[0])
+      // const [currentInfoRes] = await Promise.all([orgInfoPromise])
+      console.log('received currentOrgRes', orgInfoPromise.data[0])
+      commit('setCurrentOrgInfo', orgInfoPromise && orgInfoPromise.data[0])
     } catch (err) {
       console.log('error in catch', err)
     }
