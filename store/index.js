@@ -47,6 +47,11 @@ export const actions = {
         context.app.$cookies.set('auth.domain_url', postLogoutUrl)
       }
     } catch (err) {
+      console.log('in catch origin', origin)
+      console.log('in catch apiEndpoint', apiEndpoint)
+      console.log('in catch currentOrgInfoRes.data', currentOrgInfoRes.data)
+      console.log('in catch currentOrgRes.data', currentOrgRes.data)
+      console.log('in catch error',JSON.stringify(err))
       commit('setCommitError', err)
     }
   },
