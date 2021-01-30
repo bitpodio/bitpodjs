@@ -12,7 +12,7 @@ const isValidPage = (store, route) => {
     'store.state.currentOrg from the auth.js',
     store.state.currentOrg.name
   )
-  if (store.state.currentOrg.name) {
+  if (store.state.currentOrg.name !== 'Error') {
     const userCurrentOrg = userUtils.userCurrentOrgInfo(store) || {}
     console.log('userCurrentOrg===>', userCurrentOrg)
     const userRoles = userCurrentOrg.roles || []
@@ -34,6 +34,7 @@ const isValidPage = (store, route) => {
     console.log('isAuthorizedApp from authorizationjs', isAuthorizedApp)
     return isAuthorizedApp
   } else {
+    isValidPage(store, route)
     console.log('store not initialized first', store.state.currentOrg.name)
   }
 }
