@@ -8,11 +8,18 @@ const isValidPage = (store, route) => {
   }
   console.log('store from the auth.js', store)
   console.log('store.state.auth.user from the auth.js', store.state.auth.user)
-  console.log('store.state.currentOrg from the auth.js', store.state.currentOrg.name)
-  const userCurrentOrg = userUtils.userCurrentOrgInfo(store) || {}
-  console.log('userCurrentOrg===>', userCurrentOrg)
-  const userRoles = userCurrentOrg.roles || []
-  console.log('userRoles===>', userRoles)
+  console.log(
+    'store.state.currentOrg from the auth.js',
+    store.state.currentOrg.name
+  )
+  if (store.state.currentOrg.name) {
+    const userCurrentOrg = userUtils.userCurrentOrgInfo(store) || {}
+    console.log('userCurrentOrg===>', userCurrentOrg)
+    const userRoles = userCurrentOrg.roles || []
+    console.log('userRoles===>', userRoles)
+  } else {
+    console.log('store not initialized first', store.state.currentOrg.name)
+  }
   if (
     userRoles.includes('$orgowner') &&
     userCurrentOrg &&
