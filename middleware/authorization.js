@@ -33,9 +33,6 @@ const isValidPage = (store, route) => {
       intersection(currentRouteAppRoles, userRoles).length > 0
     console.log('isAuthorizedApp from authorizationjs', isAuthorizedApp)
     return isAuthorizedApp
-  } else {
-    isValidPage(store, route)
-    console.log('store not initialized first', store.state.currentOrg.name)
   }
 }
 
