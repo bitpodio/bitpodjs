@@ -7,7 +7,9 @@ const isValidPage = (store, route) => {
     return true
   }
   const userCurrentOrg = userUtils.userCurrentOrgInfo(store) || {}
+  console.log('userCurrentOrg===>', userCurrentOrg)
   const userRoles = userCurrentOrg.roles || []
+  console.log('userRoles===>', userRoles)
   if (
     userRoles.includes('$orgowner') &&
     userCurrentOrg &&
@@ -17,9 +19,12 @@ const isValidPage = (store, route) => {
   }
   const currentRouteApp =
     appList(store).find(({ name }) => name === route.params.app) || {}
+  console.log('currentRouteApp===>', currentRouteApp)
   const currentRouteAppRoles = currentRouteApp.roles || []
+  console.log('currentRouteAppRoles===>', currentRouteAppRoles)
   const isAuthorizedApp =
     intersection(currentRouteAppRoles, userRoles).length > 0
+  console.log('isAuthorizedApp from authorizationjs', isAuthorizedApp)
   return isAuthorizedApp
 }
 
@@ -48,6 +53,7 @@ export default function (context) {
           )
         }
       }
+      console.log('out of if loop redirecting to validPage')
       if (!isValidPage(store, route)) {
         return redirect('/unauthorized')
       }
