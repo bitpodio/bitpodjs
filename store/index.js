@@ -47,9 +47,23 @@ export const actions = {
     console.log('response from Orginfo', res.data[0])
     commit('setCurrentOrgInfo', res.data[0])
   },
-  async storeCurrentOrg({ commit }, context) {
+  async storeCurrentOrg({ commit, req }, context) {
+    // console.log('request in storeCurrentOrg', req)
+    // console.log(
+    //   'reques.header.cookie t in storeCurrentOrg',
+    //   context.headers.cookie
+    // )
+    // const parsedCookie = cookieparser.parse(req.headers.cookie)
+    // console.log('ParsedCookie', parsedCookie)
+    const token =
+      'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjAzYjJkMjJjMmZlY2Y4NzNlZDE5ZTViOGNmNzA0YWZiN2UyZWQ0YmUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI0OTkyODM5MDk1MC1wbXU0bDczZnU2bXBjaW0yZ2RuZXJxZjYyazZvcHBxdC5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsImF1ZCI6IjQ5OTI4MzkwOTUwLXBtdTRsNzNmdTZtcGNpbTJnZG5lcnFmNjJrNm9wcHF0LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTAzNzUxMjU1NTM0NDczOTE0NTE4IiwiaGQiOiJiaXRwb2QuaW8iLCJlbWFpbCI6ImFtYXJ0eWFrdW1hckBiaXRwb2QuaW8iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImFEbjd1Z3ZSTkRJZ21rWXhkS3dTbmciLCJuYW1lIjoiQW1hcnR5YWt1bWFyIFJveSIsInBpY3R1cmUiOiJodHRwczovL2xoNS5nb29nbGV1c2VyY29udGVudC5jb20vLThhRUJZQkNZNXQwL0FBQUFBQUFBQUFJL0FBQUFBQUFBQUFBL0FNWnV1Y2w0cnF4eXNSYXpiTWZkT2t0cEhETHQxYV91NkEvczk2LWMvcGhvdG8uanBnIiwiZ2l2ZW5fbmFtZSI6IkFtYXJ0eWFrdW1hciIsImZhbWlseV9uYW1lIjoiUm95IiwibG9jYWxlIjoiZW4iLCJpYXQiOjE2MTIwOTk1NzIsImV4cCI6MTYxMjEwMzE3Mn0.Gqw93JLOCeQ5Zc79UtH6d7v4Dvp7f2xQC1wbh4VBl244irgUdlHKOq0jlNRRD3H20U4z1M7AMj5Kmh1jHzisLp2qkRXdm2pIqQ2yC6NonuGUKGvYOP5fmTw2RZQYInYOmfeL2ypuSHwUsxC9HWvPNdhHFZa5tb8R_a1PQUQaUuSJrXqO3ju4RA2yvdcPIhliKmpUemobfAcUdyKdD9rNanF6IHjpWTxhODSkUhe9z1h-kiLA78PhJgejSPNe737xbr3SeBuDEDx4vGDQc8VWKEvVWDtxe5NJBiIfgSH4w-BQoEwkCyrvwEjitubRSM5xalgbbxDag7oE5Pe3SKaaQA'
+    const headers = {
+      Authorization: token,
+    }
     const origin = 'http://bitpod-event.test.bitpod.io/svc/api/'
-    const res = await this.$axios.get(`${origin}Organizations/this`)
+    const res = await this.$axios.get(`${origin}Organizations/this`, {
+      headers,
+    })
     console.log('response from currentOrg', res.data)
     commit('setCurrentOrg', res.data)
   },
