@@ -43,10 +43,14 @@ export const state = () => ({
 
 export const mutations = {
   setCurrentOrg(state, payload) {
+    console.log('payload in setCurrentOrg',payload)
     state.currentOrg = payload
+    console.log('success payload in setCurrentOrg')
   },
   setCurrentOrgInfo(state, payload) {
+    console.log('payload in setCurrentOrgInfo',payload)
     state.currentOrgInfo = payload
+    console.log('success payload in setCurrentOrg')
   },
   setExportInProgress(state, status) {
     state.exportInProgress = status
