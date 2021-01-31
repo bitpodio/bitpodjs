@@ -42,13 +42,13 @@ export const actions = {
   },
 
   async storeOrganizationInfo({ commit }, context) {
-    const origin = 'https://bitpod-event.test.bitpod.io/svc/api/'
+    const origin = 'http://bitpod-event.test.bitpod.io/svc/api/'
     const res = await this.$axios.get(`${origin}OrganizationInfos`)
     console.log('response from Orginfo', res.data[0])
     commit('setCurrentOrgInfo', res.data[0])
   },
   async storeCurrentOrg({ commit }, context) {
-    const origin = 'https://bitpod-event.test.bitpod.io/svc/api/'
+    const origin = 'http://bitpod-event.test.bitpod.io/svc/api/'
     const res = await this.$axios.get(`${origin}Organizations/this`)
     console.log('response from currentOrg', res.data)
     commit('setCurrentOrg', res.data)
