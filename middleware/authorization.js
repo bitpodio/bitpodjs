@@ -12,28 +12,26 @@ const isValidPage = (store, route) => {
     'store.state.currentOrg from the auth.js',
     store.state.currentOrg.name
   )
-  if (store.state.currentOrg.name !== 'Error') {
-    const userCurrentOrg = userUtils.userCurrentOrgInfo(store) || {}
-    console.log('userCurrentOrg===>', userCurrentOrg)
-    const userRoles = userCurrentOrg.roles || []
-    console.log('userRoles===>', userRoles)
-    if (
-      userRoles.includes('$orgowner') &&
-      userCurrentOrg &&
-      userCurrentOrg.id === 1
-    ) {
-      return true
-    }
-    const currentRouteApp =
-      appList(store).find(({ name }) => name === route.params.app) || {}
-    console.log('currentRouteApp===>', currentRouteApp)
-    const currentRouteAppRoles = currentRouteApp.roles || []
-    console.log('currentRouteAppRoles===>', currentRouteAppRoles)
-    const isAuthorizedApp =
-      intersection(currentRouteAppRoles, userRoles).length > 0
-    console.log('isAuthorizedApp from authorizationjs', isAuthorizedApp)
-    return isAuthorizedApp
+  const userCurrentOrg = userUtils.userCurrentOrgInfo(store) || {}
+  console.log('userCurrentOrg===>', userCurrentOrg)
+  const userRoles = userCurrentOrg.roles || []
+  console.log('userRoles===>', userRoles)
+  if (
+    userRoles.includes('$orgowner') &&
+    userCurrentOrg &&
+    userCurrentOrg.id === 1
+  ) {
+    return true
   }
+  const currentRouteApp =
+    appList(store).find(({ name }) => name === route.params.app) || {}
+  console.log('currentRouteApp===>', currentRouteApp)
+  const currentRouteAppRoles = currentRouteApp.roles || []
+  console.log('currentRouteAppRoles===>', currentRouteAppRoles)
+  const isAuthorizedApp =
+    intersection(currentRouteAppRoles, userRoles).length > 0
+  console.log('isAuthorizedApp from authorizationjs', isAuthorizedApp)
+  return isAuthorizedApp
 }
 
 const getUsersOrg = (store) => {
