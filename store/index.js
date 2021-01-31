@@ -65,5 +65,5 @@ function getApiUrl(host, req, config) {
     return `https://${config.axios.backendBaseUrl}`
   }
   // const protocol = req.protocol
-  return `https://${host}`
+  return `http://${host}`
 }
