@@ -42,7 +42,7 @@ const getUsersOrg = (store) => {
 }
 
 export default function (context) {
-  const { store, route, redirect } = context
+  const { store, route, redirect,$config } = context
   const userOrgStore = getUsersOrg(store)
   if (userOrgStore && userOrgStore.name) {
     const userOrgStore = getUsersOrg(store)
@@ -62,6 +62,9 @@ export default function (context) {
       console.log('out of if loop redirecting to validPage')
       if (!isValidPage(store, route)) {
         return redirect('/unauthorized')
+      }else{
+        console.log('its valid redirecting')
+        location.href = `https://${userOrgStore.name}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}${nuxtconfig.auth.redirect.home}`
       }
     }
   }
