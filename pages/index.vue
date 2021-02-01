@@ -51,28 +51,28 @@ export default {
     console.log('context===>', context)
     console.log('router', this.$route)
     // const { redirect } = context
-    const publicDomain = process.env.PUBLIC_DOMAIN
-    const basePath = process.env.PUBLIC_PATH || ''
+    const publicDomain = this.$config.axios.eventUrl
+    const basePath = this.$config.basePublicPath || ''
     const currentOrg = this.$store.state.currentOrg.name || ''
     console.log('publicDomain in login page ===>', publicDomain)
     console.log('basePath in login page ===>', basePath)
     console.log('currentOrg in login page ===>', currentOrg)
     if (this.$store.state.auth.loggedIn) {
       const provider = this.$store.state.auth.strategy
-      // if (provider === 'bitpod') {
+      if (provider === 'bitpod') {
         console.log('inside if provider is google')
         return await this.$auth.loginWith(provider)
-      // } else {
-      //   console.log('inside else provider is google')
-      //   window.location.replace(
-      //     `https://${publicDomain}${basePath}/forwardLogin?targetDomain=${currentOrg}`
-      //   )
+      } else {
+        console.log('inside else provider is google')
+        window.location.replace(
+          `https://${publicDomain}${basePath}/forwardLogin?targetDomain=${currentOrg}`
+        )
 
         // return redirect(
         //   `https://${publicDomain}${basePath}/forwardLogin?targetDomain=${currentOrg}`
         // )
       }
-    // }
+    }
   },
   methods: {
     async loginBitpod() {
