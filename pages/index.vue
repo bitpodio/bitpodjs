@@ -59,17 +59,20 @@ export default {
     console.log('currentOrg in login page ===>', currentOrg)
     if (this.$store.state.auth.loggedIn) {
       const provider = this.$store.state.auth.strategy
-      if (provider === 'bitpod') {
+      // if (provider === 'bitpod') {
         console.log('inside if provider is google')
         return await this.$auth.loginWith(provider)
-      } else {
-        console.log('inside else provider is google')
-        window.location.replace( `https://${publicDomain}${basePath}/forwardLogin?targetDomain=${currentOrg}`)
+      // } else {
+      //   console.log('inside else provider is google')
+      //   window.location.replace(
+      //     `https://${publicDomain}${basePath}/forwardLogin?targetDomain=${currentOrg}`
+      //   )
+
         // return redirect(
         //   `https://${publicDomain}${basePath}/forwardLogin?targetDomain=${currentOrg}`
         // )
       }
-    }
+    // }
   },
   methods: {
     async loginBitpod() {
