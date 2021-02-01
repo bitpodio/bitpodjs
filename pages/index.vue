@@ -46,24 +46,30 @@
 export default {
   layout: 'logoutlayout',
   components: {},
-  async beforeMount() {
+  async beforeMount(context) {
     debugger
+    console.log('context===>', context)
+    console.log('router', this.$route)
+    // const { redirect } = context
     const publicDomain = process.env.PUBLIC_DOMAIN
     const basePath = process.env.PUBLIC_PATH || ''
     const currentOrg = this.$store.state.currentOrg.name || ''
-    console.log('publicDomain in login page ===>',publicDomain)
-    console.log('basePath in login page ===>',basePath)
-    console.log('currentOrg in login page ===>',currentOrg)
+    console.log('publicDomain in login page ===>', publicDomain)
+    console.log('basePath in login page ===>', basePath)
+    console.log('currentOrg in login page ===>', currentOrg)
     if (this.$store.state.auth.loggedIn) {
       const provider = this.$store.state.auth.strategy
       if (provider === 'bitpod') {
-        console.log('inside if provider is google',)
+        console.log('inside if provider is google')
         return await this.$auth.loginWith(provider)
       } else {
         console.log('inside else provider is google')
-        return redirect(
+        this.$router.push(
           `https://${publicDomain}${basePath}/forwardLogin?targetDomain=${currentOrg}`
         )
+        // return redirect(
+        //   `https://${publicDomain}${basePath}/forwardLogin?targetDomain=${currentOrg}`
+        // )
       }
     }
   },
