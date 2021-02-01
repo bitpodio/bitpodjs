@@ -43,9 +43,13 @@ export const actions = {
 
   async storeOrganizationInfo({ commit }, context) {
     const origin = 'http://bitpod-event.test.bitpod.io/svc/api/'
-    const res = await this.$axios.get(`${origin}OrganizationInfos`)
-    console.log('response from Orginfo', res.data[0])
-    commit('setCurrentOrgInfo', res.data[0])
+    try {
+      const res = await this.$axios.get(`${origin}OrganizationInfos`)
+      console.log('response from Orginfo', res.data[0])
+      commit('setCurrentOrgInfo', res.data[0])
+    } catch (e) {
+      console.log('error in storeOrganizationInfo', e)
+    }
   },
   async storeCurrentOrg({ commit, req }, context) {
     // console.log('request in storeCurrentOrg', req)
@@ -56,16 +60,20 @@ export const actions = {
     // const parsedCookie = cookieparser.parse(req.headers.cookie)
     // console.log('ParsedCookie', parsedCookie)
     const token =
-      'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjAzYjJkMjJjMmZlY2Y4NzNlZDE5ZTViOGNmNzA0YWZiN2UyZWQ0YmUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI0OTkyODM5MDk1MC1wbXU0bDczZnU2bXBjaW0yZ2RuZXJxZjYyazZvcHBxdC5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsImF1ZCI6IjQ5OTI4MzkwOTUwLXBtdTRsNzNmdTZtcGNpbTJnZG5lcnFmNjJrNm9wcHF0LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTAzNzUxMjU1NTM0NDczOTE0NTE4IiwiaGQiOiJiaXRwb2QuaW8iLCJlbWFpbCI6ImFtYXJ0eWFrdW1hckBiaXRwb2QuaW8iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImxGZGUyY203V2pNb1FIbjlNNXoxYXciLCJuYW1lIjoiQW1hcnR5YWt1bWFyIFJveSIsInBpY3R1cmUiOiJodHRwczovL2xoNS5nb29nbGV1c2VyY29udGVudC5jb20vLThhRUJZQkNZNXQwL0FBQUFBQUFBQUFJL0FBQUFBQUFBQUFBL0FNWnV1Y2w0cnF4eXNSYXpiTWZkT2t0cEhETHQxYV91NkEvczk2LWMvcGhvdG8uanBnIiwiZ2l2ZW5fbmFtZSI6IkFtYXJ0eWFrdW1hciIsImZhbWlseV9uYW1lIjoiUm95IiwibG9jYWxlIjoiZW4iLCJpYXQiOjE2MTIxNTE2MDYsImV4cCI6MTYxMjE1NTIwNn0.bqwTN1zBZx703g2qa74FXSUUdmrZHjydtulI5KPZ2xBRkZ1p66qk9YEwRMvui1zd-6KZL0DK5V4pjp0qMertPsCgzSlUNaexCMbdNT7XM7dODRbClpZwtqI90lhCyPmBvEYJn_kc_Ty4zyyonfO2hl_MrQmw3jBW8YFpeK4c7gQMyfbmu28moo1awguIhLcvZEY1VxEbjWDYkYaawNqJDm44y1fnBNVeB5AFlTNe97FBhh924DtfpHJoqwQKmaqe-JSSIsh4eYvIpBTqEgJhUz5bwsFIP9H2JrPZb-KmZWYnukjXaxIcI_spTdUKnHFL30IqBwkVugr1x8NZjgEscg'
+      'Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjAzYjJkMjJjMmZlY2Y4NzNlZDE5ZTViOGNmNzA0YWZiN2UyZWQ0YmUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI0OTkyODM5MDk1MC1wbXU0bDczZnU2bXBjaW0yZ2RuZXJxZjYyazZvcHBxdC5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsImF1ZCI6IjQ5OTI4MzkwOTUwLXBtdTRsNzNmdTZtcGNpbTJnZG5lcnFmNjJrNm9wcHF0LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTAzNzUxMjU1NTM0NDczOTE0NTE4IiwiaGQiOiJiaXRwb2QuaW8iLCJlbWFpbCI6ImFtYXJ0eWFrdW1hckBiaXRwb2QuaW8iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6IkE1akNFLUNkeXBYY2ZuQ2pDTWlEX3ciLCJuYW1lIjoiQW1hcnR5YWt1bWFyIFJveSIsInBpY3R1cmUiOiJodHRwczovL2xoNS5nb29nbGV1c2VyY29udGVudC5jb20vLThhRUJZQkNZNXQwL0FBQUFBQUFBQUFJL0FBQUFBQUFBQUFBL0FNWnV1Y2w0cnF4eXNSYXpiTWZkT2t0cEhETHQxYV91NkEvczk2LWMvcGhvdG8uanBnIiwiZ2l2ZW5fbmFtZSI6IkFtYXJ0eWFrdW1hciIsImZhbWlseV9uYW1lIjoiUm95IiwibG9jYWxlIjoiZW4iLCJpYXQiOjE2MTIxNTMyNzQsImV4cCI6MTYxMjE1Njg3NH0.ozC3VA6fzW2lUbDkEhOsTOk8Nh4CM7mKWVE6jvWc18GpcZWs-ZgDsxlcgklSfbhHAEGJA7knMXlK_9IwN-Z5hS67bd7OAJ9EGZXdxaX7W63nbjgMpiOzZIEHYRJCoth2sB2WVsWqRRXlFBJDCS486P-YXw_vcIiL_lZrH0eW62cAk9D6N9DKGUVICsNxHWrlJZDmeJi8ObKJMUO6F64zD6L4SLDyeQBb8jcN1TX7EIQjIWRD3Fpus9COD4qfU-D56SN7Dqoo9Ev4bFTjfNIbFB4mJIl2mrQr2wZ2NaKKnOY7Pbm5sllW64vCmK00OE6IuDa9hxemSTjabRHvZFsdjQ'
     const headers = {
       Authorization: token,
     }
     const origin = 'http://bitpod-event.test.bitpod.io/svc/api/'
-    const res = await this.$axios.get(`${origin}Organizations/this`, {
-      headers,
-    })
-    console.log('response from currentOrg', res.data)
-    commit('setCurrentOrg', res.data)
+    try {
+      const res = await this.$axios.get(`${origin}Organizations/this`, {
+        headers,
+      })
+      console.log('response from currentOrg', res.data)
+      commit('setCurrentOrg', res.data)
+    } catch (e) {
+      console.log('error in storeCurrentOrg', e)
+    }
   },
 }
 

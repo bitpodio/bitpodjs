@@ -1,7 +1,6 @@
 import userUtils from '~/utility/userApps'
 import { appList } from '~/config/apps/list'
 import { intersection } from '~/utility/object.js'
-import nuxtconfig from '~/nuxt.config'
 
 const isValidPage = (store, route) => {
   if (!route.params.app) {
