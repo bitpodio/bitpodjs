@@ -7,11 +7,14 @@
       :width="260"
       :right="$vuetify.rtl"
     >
-      <v-list class="d-block d-sm-none mt-10">
+      <v-list
+        v-for="item in registration.SessionListId"
+        :key="item.id"
+        class="d-block d-sm-none mt-10"
+      >
         <v-list-item-group v-model="group">
           <v-list-item
-            v-for="item in registration.SessionListId"
-            :key="item.id"
+            v-if="item.LocationType === 'Bitpod Virtual'"
             class="xs12 sm4 md4 lg4 boxviewsmall pa-3 my-1 mx-0 py-2 session-view-in"
             :class="{
               selected:
