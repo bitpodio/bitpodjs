@@ -37,10 +37,13 @@ export default function (context) {
     const userOrgStore = getUsersOrg(store)
     if (userOrgStore && userOrgStore.name) {
       if (process.server) {
+        isLoggedIn = store.state.auth.loggedIn
+        console.log('inside if and is server===>')
+        console.log('isLoggedIn===>',isLoggedIn)
         const { req } = context
         const hostName = req.headers.host
         const publicDomain = process.env.PUBLIC_DOMAIN
-        if (hostName === publicDomain) {
+        if (hostName === publicDomain || isLoggedIn) {
           const userFirstOrgName = userOrgStore.name || ''
           const basePath = process.env.PUBLIC_PATH || ''
           return redirect(
