@@ -277,10 +277,13 @@
                       <v-spacer></v-spacer>
                     </v-flex>
                     <div class="session-list">
-                      <v-list class="pb -0">
+                      <v-list
+                        v-for="item in registration.SessionListId"
+                        :key="item.id"
+                        class="pb-0"
+                      >
                         <v-list-item
-                          v-for="item in registration.SessionListId"
-                          :key="item.id"
+                          v-if="item.LocationType === 'Bitpod Virtual'"
                           class="xs12 sm4 md4 lg4 grey lighten-2 boxviewsmall pa-3 mb-4 mx-0 py-2 session-view-in"
                           :class="{
                             selected:
