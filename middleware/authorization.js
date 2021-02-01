@@ -63,9 +63,6 @@ export default function (context) {
       console.log('out of if loop redirecting to validPage')
       if (!isValidPage(store, route)) {
         return redirect('/unauthorized')
-      } else {
-        console.log('its valid redirecting')
-        location.href = `https://${userOrgStore.name}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}${nuxtconfig.auth.redirect.home}`
       }
     }
   }
