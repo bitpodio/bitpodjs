@@ -64,9 +64,7 @@ export default {
         return await this.$auth.loginWith(provider)
       } else {
         console.log('inside else provider is google')
-        this.$router.push(
-          `https://${publicDomain}${basePath}/forwardLogin?targetDomain=${currentOrg}`
-        )
+        window.location.replace( `https://${publicDomain}${basePath}/forwardLogin?targetDomain=${currentOrg}`)
         // return redirect(
         //   `https://${publicDomain}${basePath}/forwardLogin?targetDomain=${currentOrg}`
         // )
