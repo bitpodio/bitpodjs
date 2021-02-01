@@ -47,10 +47,6 @@ export default {
   layout: 'logoutlayout',
   components: {},
   async beforeMount(context) {
-    debugger
-    console.log('context===>', context)
-    console.log('router', this.$route)
-    // const { redirect } = context
     const publicDomain = this.$config.axios.eventUrl
     const basePath = this.$config.basePublicPath || ''
     const currentOrg = this.$store.state.currentOrg.name || ''
@@ -67,10 +63,6 @@ export default {
         window.location.replace(
           `https://${publicDomain}${basePath}/forwardLogin?targetDomain=${currentOrg}`
         )
-
-        // return redirect(
-        //   `https://${publicDomain}${basePath}/forwardLogin?targetDomain=${currentOrg}`
-        // )
       }
     }
   },

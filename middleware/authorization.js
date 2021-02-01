@@ -37,14 +37,9 @@ export default function (context) {
     const userOrgStore = getUsersOrg(store)
     if (userOrgStore && userOrgStore.name) {
       if (process.server) {
-        const isLoggedIn = store.state.auth.loggedIn
-        console.log('inside if and is server===>')
-        console.log('isLoggedIn===>', isLoggedIn)
         const { req } = context
         const hostName = req.headers.host
-        console.log('hostName===>', hostName)
         const publicDomain = process.env.PUBLIC_DOMAIN
-        console.log('publicDomain===>', publicDomain)
         if (!hostName.includes('localhost')) {
           if (hostName === publicDomain) {
             const userFirstOrgName = userOrgStore.name || ''
