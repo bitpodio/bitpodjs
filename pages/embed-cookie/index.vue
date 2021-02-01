@@ -11,6 +11,7 @@ export default {
   },
   methods: {
     messageReceived(e) {
+      console.log('message received in embed cookie', e.data)
       if (e.data !== '') {
         e.data.split(';').map((i) => {
           const newCookie = i.trim() + '; path=/'

@@ -35,6 +35,10 @@ export default {
   },
   methods: {
     iframeLoaded() {
+      console.log(
+        'document.cookie that is passed to embed cookie',
+        document.cookie
+      )
       this.$refs.iframe.contentWindow.postMessage(document.cookie, '*')
     },
     messageReceived(e) {
