@@ -46,6 +46,13 @@
 export default {
   layout: 'logoutlayout',
   components: {},
+  async beforeMount() {
+    debugger
+    if (this.$store.state.auth.loggedIn) {
+      const provider = this.$store.state.auth.strategy
+      return await this.$auth.loginWith(provider)
+    }
+  },
   methods: {
     async loginBitpod() {
       if (window.localStorage['auth.redirect']) {
