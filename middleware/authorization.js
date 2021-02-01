@@ -8,6 +8,7 @@ const isValidPage = (store, route) => {
   }
   const userCurrentOrg = userUtils.userCurrentOrgInfo(store) || {}
   const userRoles = userCurrentOrg.roles || []
+  console.log('In isValidPage ', userCurrentOrg)
   if (
     userRoles.includes('$orgowner') &&
     userCurrentOrg &&
@@ -16,7 +17,10 @@ const isValidPage = (store, route) => {
     return true
   }
   const currentRouteApp =
-    appList(store).find(({ name }) => name === route.params.app) || {}
+    appList(store).find(({ name }) => {
+      console.log('app name match', name, route.params.app)
+      return name === route.params.app
+    }) || {}
   const currentRouteAppRoles = currentRouteApp.roles || []
   const isAuthorizedApp =
     intersection(currentRouteAppRoles, userRoles).length > 0
@@ -38,6 +42,7 @@ export default function (context) {
       const { req } = context
       const hostName = req.headers.host
       const publicDomain = process.env.PUBLIC_DOMAIN
+      console.log('Inside request initiation - server',JSON.stringify(req.headers), publicDomain)
       if (hostName === publicDomain) {
         const provider = $auth.strategy.name
         const userFirstOrgName = getUsersOrg(store).name || ''

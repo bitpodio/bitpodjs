@@ -1,6 +1,7 @@
 import { _get } from '~/utility/object.js'
 
 const userCurrentOrgInfo = (store) => {
+  console.log('In userApps.js ',JSON.stringify(store.state))
   const currentOrg = store.state.currentOrg
   const orgList = store.state.auth.user
     ? store.state.auth.user.data.orgList
