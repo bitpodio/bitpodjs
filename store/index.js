@@ -42,7 +42,7 @@ export const actions = {
   },
 
   async storeOrganizationInfo({ commit }, context) {
-    const origin = 'https://bitpod-event.test.bitpod.io/svc/api/'
+    const origin = 'http://bitpod-event.test.bitpod.io/svc/api/'
     try {
       const res = await this.$axios.get(`${origin}OrganizationInfos`)
       console.log('response from Orginfo', res.data[0])
@@ -71,7 +71,7 @@ export const actions = {
     const headers = {
       Authorization: token,
     }
-    const origin = 'https://bitpod-event.test.bitpod.io/svc/api/'
+    const origin = 'http://bitpod-event.test.bitpod.io/svc/api/'
     try {
       const res = await this.$axios.get(`${origin}Organizations/this`, {
         headers,
