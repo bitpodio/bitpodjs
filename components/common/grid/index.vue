@@ -185,7 +185,9 @@
           :options.sync="options"
           :server-items-length="tableData.total"
           :hide-default-header="hideDefaultHeader"
-          :hide-default-footer="isHideDefaultFooter"
+          :hide-default-footer="
+            tableData.items.length ? isHideDefaultFooter : true
+          "
           :show-expand="showExpand"
           :single-expand="singleExpand"
           item-key="id"
