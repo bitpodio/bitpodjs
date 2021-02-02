@@ -44,26 +44,8 @@
 <script>
 import nuxtconfig from '~/nuxt.config'
 
-function cookieLocalClear() {
-  document.cookie.split(';').forEach((c) => {
-    document.cookie = c
-      .replace(/^ +/, '')
-      .replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/')
-  })
-  document.cookie.split(';').forEach((c) => {
-    document.cookie = c
-      .replace(/^ +/, '')
-      .replace(
-        /=.*/,
-        '=;expires=' +
-          new Date().toUTCString() +
-          `;path=${this.$config.basePublicPath}`
-      )
-  })
-  localStorage.clear()
-}
-
 export default {
+  layout: 'only-page',
   data() {
     return {
       orgName: '',
@@ -98,6 +80,24 @@ export default {
       )
       this.$refs.iframe.contentWindow.postMessage(document.cookie, '*')
     },
+    cookieLocalClear() {
+      document.cookie.split(';').forEach((c) => {
+        document.cookie = c
+          .replace(/^ +/, '')
+          .replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/')
+      })
+      document.cookie.split(';').forEach((c) => {
+        document.cookie = c
+          .replace(/^ +/, '')
+          .replace(
+            /=.*/,
+            '=;expires=' +
+              new Date().toUTCString() +
+              `;path=${this.$config.basePublicPath}`
+          )
+      })
+      localStorage.clear()
+    },
     messageReceived(e) {
       console.log('message received from the the iframe', e.data)
       if (e.data === 'success') {
@@ -115,7 +115,7 @@ export default {
             if (!jobData.length) {
               //! Currently old orgs don't have a jobstatus.
               //! Considers an org to be old one if jobData's length is empty
-              cookieLocalClear()
+              this.cookieLocalClear()
               location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}${nuxtconfig.auth.redirect.home}`
             } else {
               const jobInfo = jobData[0]
@@ -135,7 +135,7 @@ export default {
                   lastStatus.Code === 0
                 ) {
                   this.statusMessage = 'Redirecting to new Organization'
-                  cookieLocalClear()
+                  this.cookieLocalClear()
                   location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}${nuxtconfig.auth.redirect.home}`
                 } else {
                   this.statusMessage = this.$t(
