@@ -52,6 +52,7 @@ export default {
       statusMessage: '',
       titleMessage: '',
       showLoader: false,
+      dialog: true,
     }
   },
   created() {
