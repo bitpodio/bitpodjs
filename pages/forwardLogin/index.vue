@@ -45,7 +45,6 @@
 import nuxtconfig from '~/nuxt.config'
 
 export default {
-  layout: 'only-page',
   data() {
     return {
       orgName: '',
