@@ -84,7 +84,7 @@ export default {
               `${this.$bitpod.getApiUrl()}OrgSetups?filter={"orgId": ${orgId}}`,
               {
                 headers: {
-                  'x-org-id': this.orgInfo.id,
+                  'x-org-id': orgId,
                 },
               }
             )
