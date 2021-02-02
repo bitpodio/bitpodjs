@@ -64,7 +64,7 @@ function cookieLocalClear() {
 }
 
 export default {
-  layout: 'only-nav',
+  layout: 'only-page',
   data() {
     return {
       orgName: '',
