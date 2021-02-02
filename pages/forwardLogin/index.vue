@@ -64,7 +64,6 @@ function cookieLocalClear() {
 }
 
 export default {
-  layout: 'only-page',
   data() {
     return {
       orgName: '',
@@ -113,8 +112,6 @@ export default {
                 },
               }
             )
-            console.debug(jobData)
-            debugger
             if (!jobData.length) {
               //! Currently old orgs don't have a jobstatus.
               //! Considers an org to be old one if jobData's length is empty
