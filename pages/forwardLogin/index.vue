@@ -111,7 +111,7 @@ export default {
                 const lastStatus =
                   jobInfo._SetupStatus[jobInfo._SetupStatus.length - 1]
                 if (
-                  lastStatus.Message === 'full setup completed' &&
+                  lastStatus.Message === 'full setup completedxyz' &&
                   lastStatus.Code === 0
                 ) {
                   this.statusMessage = 'Redirecting to new Organization'
