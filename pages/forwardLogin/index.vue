@@ -88,7 +88,9 @@ export default {
                 },
               }
             )
-            if (jobData.length) {
+            console.debug(jobData)
+            debugger
+            if (!jobData.length) {
               //! Currently old orgs don't have a jobstatus.
               //! Considers an org to be old one if jobData's length is empty
               location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}${nuxtconfig.auth.redirect.home}`
