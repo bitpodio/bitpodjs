@@ -35,9 +35,14 @@ export default {
   },
   methods: {
     iframeLoaded() {
+      console.log(
+        'document.cookie that is passed to embed cookie',
+        document.cookie
+      )
       this.$refs.iframe.contentWindow.postMessage(document.cookie, '*')
     },
     messageReceived(e) {
+      console.log('message received from the the iframe', e.data)
       if (e.data === 'success') {
         location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}${nuxtconfig.auth.redirect.home}`
       }

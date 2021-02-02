@@ -2372,6 +2372,7 @@ export default {
         const eventSummary =
           (data.Event && data.Event.EventGetEventSummery) || {}
         this.eventData = event.length > 0 ? event[0] : {}
+        console.log('Logs for publish event data issue', this.eventData)
         this.badgeData = badge.length > 0 ? badge[0] : {}
         this.eventData_sectionHeading =
           this.eventData._sectionHeading !== null
