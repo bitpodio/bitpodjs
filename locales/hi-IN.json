@@ -900,10 +900,13 @@
       "EndTimeMustBeGreater": "अंत समय अधिक होना चाहिए फिर समय शुरू करें",
       "PermissionDenied": "आपको इस ऑपरेशन को करने की अनुमति नहीं है",
       "roleAlreadyExits": "यह {roles} भूमिका पहले से मौजूद है",
-      "MinimumCharacter": "Minimum 3 characters please",
-      "MaximumCharacter": "Maximum 20 characters please",
-      "NameMustStartWithAlphabet": "Name must start with alphabet",
-      "OrganisationAlreadyExists": "Organization already exists"
+      "MinimumCharacter": "कृपया न्यूनतम 3 वर्ण",
+      "MaximumCharacter": "कृपया अधिकतम 20 वर्ण",
+      "NameMustStartWithAlphabet": "नाम वर्णमाला से शुरू होना चाहिए",
+      "OrganisationAlreadyExists": "संगठन पहले से मौजूद है",
+      "SetupErrorTitle": "एक त्रुटि हुई",
+      "SetupExitCode1": "आपके संगठन की स्थापना करते समय एक त्रुटि हुई, कृपया समर्थन से संपर्क करें।",
+      "SetupExitCodeCatch": "आपके संगठन की स्थापना करते समय एक त्रुटि हुई, कृपया समर्थन से संपर्क करें।"
     },
     "Warn": {
       "UniqueLinkFormat": "केवल लोअर केस अल्फ़ान्यूमेरिक अक्षर",
@@ -978,7 +981,11 @@
       "RegistrationFormUpdatedSuccess": "पंजीकरण फॉर्म सफलतापूर्वक अपडेट किया गया",
       "SessionCreatedSuccess": "सत्र सफलतापूर्वक बनाया गया",
       "SessionUpdatedSuccess": "सत्र सफलतापूर्वक अपडेट किया गया",
-      "ContactImportSuccess":"आयात निष्पादन शुरू हुआ"
+      "ContactImportSuccess": "आयात निष्पादन शुरू हुआ"
+    },
+    "Information": {
+      "SetupInProgressTitle": "सेटअप प्रगति पर है",
+      "SetupInProgressText": "कृपया प्रतीक्षा करें जब तक हम आपके संगठन को सेट करते हैं, इसमें कुछ समय लग सकता है।"
     }
   },
   "$vuetify": {
