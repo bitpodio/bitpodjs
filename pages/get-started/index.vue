@@ -347,10 +347,7 @@ export default {
           WebinarLink: '',
           _VenueAddress: {},
         }
-        console.debug(eventObj)
         const obj = { orgData: this.orgInfo, eventData: eventObj }
-        console.debug(obj)
-        debugger
         try {
           const scheduledJob = (
             await this.$axios.$post(
@@ -363,7 +360,6 @@ export default {
               }
             )
           )['1']
-          debugger
           if (scheduledJob.Status) {
             const jobStatusChecker = async () => {
               try {
