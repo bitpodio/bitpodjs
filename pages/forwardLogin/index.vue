@@ -44,6 +44,7 @@
 <script>
 import nuxtconfig from '~/nuxt.config'
 export default {
+  layout: 'only-nav',
   data() {
     return {
       orgName: '',
@@ -112,7 +113,7 @@ export default {
                 const lastStatus =
                   jobInfo._SetupStatus[jobInfo._SetupStatus.length - 1]
                 if (
-                  lastStatus.Message === 'full setup completedxyz' &&
+                  lastStatus.Message === 'full setup completed' &&
                   lastStatus.Code === 0
                 ) {
                   this.statusMessage = 'Redirecting to new Organization'
@@ -138,10 +139,10 @@ export default {
                   location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}${nuxtconfig.auth.redirect.home}`
                 } else {
                   this.statusMessage = this.$t(
-                    'Messages.Information.SetupInProgressTitle'
+                    'Messages.Information.SetupInProgressText'
                   )
                   this.titleMessage = this.$t(
-                    'Messages.Information.SetupInProgressText'
+                    'Messages.Information.SetupInProgressTitle'
                   )
                   this.showDialog = true
                   this.showLoader = true
@@ -149,10 +150,10 @@ export default {
                 }
               } else {
                 this.statusMessage = this.$t(
-                  'Messages.Information.SetupInProgressTitle'
+                  'Messages.Information.SetupInProgressText'
                 )
                 this.titleMessage = this.$t(
-                  'Messages.Information.SetupInProgressText'
+                  'Messages.Information.SetupInProgressTitle'
                 )
                 this.showLoader = true
                 this.showDialog = true
