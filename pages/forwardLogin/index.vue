@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-dialog
-      v-if="tab > 0"
+      v-if="showDialog"
       v-model="dialog"
       persistent
       scrollable
@@ -18,7 +18,7 @@
         </v-card-title>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0 d-flex">
           <v-progress-circular
-            v-if="tab === 2"
+            v-if="showLoader"
             :size="40"
             color="primary"
             class="ma-2 mr-4"
@@ -48,15 +48,18 @@ export default {
     return {
       orgName: '',
       loadIframe: false,
-      tab: 0,
+      showDialog: false,
       statusMessage: '',
       titleMessage: '',
+      showLoader: false,
     }
   },
   beforeMount() {
     const domain = this.$route.query.targetDomain
+    console.log('domain.. ', domain)
     if (domain) {
       this.orgName = domain
+      console.log('orgName.. ', this.orgName)
       this.loadIframe = true
     }
   },
@@ -103,7 +106,7 @@ export default {
                   `Messages.Error.SetupExitCode${errorCode}`
                 )
                 this.titleMessage = this.$t('Messages.Error.SetupErrorTitle')
-                this.tab = 1
+                this.showDialog = true
               } else if (jobInfo._SetupStatus.length) {
                 const lastStatus =
                   jobInfo._SetupStatus[jobInfo._SetupStatus.length - 1]
@@ -139,7 +142,8 @@ export default {
                   this.titleMessage = this.$t(
                     'Messages.Information.SetupInProgressText'
                   )
-                  this.tab = 2
+                  this.showDialog = true
+                  this.showLoader = true
                   setTimeout(jobStatusChecker, 1000)
                 }
               } else {
@@ -149,14 +153,15 @@ export default {
                 this.titleMessage = this.$t(
                   'Messages.Information.SetupInProgressText'
                 )
-                this.tab = 2
+                this.showLoader = true
+                this.showDialog = true
                 setTimeout(jobStatusChecker, 1000)
               }
             }
           } catch (err) {
             this.statusMessage = this.$t('Messages.Error.SetupExitCodeCatch')
             this.titleMessage = this.$t('Messages.Error.SetupErrorTitle')
-            this.tab = 1
+            this.showDialog = true
             console.error(
               'Error while checking status of setup job on /forwardLogin. Error: ',
               err
