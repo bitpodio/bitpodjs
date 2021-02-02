@@ -898,10 +898,13 @@
       "EndTimeMustBeGreater": "L'heure de fin doit être supérieure à l'heure de début",
       "PermissionDenied": "Vous n'êtes pas autorisé à effectuer cette opération",
       "roleAlreadyExits": "Ce rôle {roles} existe déjà",
-      "MinimumCharacter": "Minimum 3 characters please",
-      "MaximumCharacter": "Maximum 20 characters please",
-      "NameMustStartWithAlphabet": "Name must start with alphabet",
-      "OrganisationAlreadyExists": "Organization already exists"
+      "MinimumCharacter": "Minimum 3 caractères s'il vous plaît",
+      "MaximumCharacter": "Maximum 20 caractères s'il vous plaît",
+      "NameMustStartWithAlphabet": "Le nom doit commencer par l'alphabet",
+      "OrganisationAlreadyExists": "L'organisation existe déjà",
+      "SetupErrorTitle": "Une erreur s'est produite",
+      "SetupExitCode1": "Une erreur s'est produite lors de la configuration de votre organisation, veuillez contacter l'assistance.",
+      "SetupExitCodeCatch": "Une erreur s'est produite lors de la configuration de votre organisation, veuillez contacter l'assistance."
     },
     "Warn": {
       "UniqueLinkFormat": "Minuscules lettres alphanumériques uniquement",
@@ -976,7 +979,11 @@
       "RegistrationFormUpdatedSuccess": "Formulaire d'inscription mis à jour avec succès",
       "SessionCreatedSuccess": "Session créée avec succès",
       "SessionUpdatedSuccess": "Session mise à jour avec succès",
-      "ContactImportSuccess":"L'exécution de l'importation a commencé"
+      "ContactImportSuccess": "L'exécution de l'importation a commencé"
+    },
+    "Information": {
+      "SetupInProgressTitle": "configuration en cours",
+      "SetupInProgressText": "Veuillez patienter pendant que nous configurons votre organisation, cela peut prendre un certain temps."
     }
   },
   "$vuetify": {

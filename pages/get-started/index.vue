@@ -20,7 +20,9 @@
             {{
               tab === 1
                 ? $t('Common.NameYourOrganization')
-                : $t('Drawer.CreateEventAction')
+                : tab === 2
+                ? $t('Drawer.CreateEventAction')
+                : ''
             }}
           </h2>
           <v-spacer></v-spacer>
@@ -96,24 +98,28 @@
         <v-card-actions
           class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
         >
-          <div v-if="tab === 1">
+          <div v-if="tab === 1" class="d-flex">
             <SaveBtn
+              class="mt-1"
               dense
               color="primary"
               :disabled="!allow || processing"
               :label="this.$t('Common.CreateOrganisation')"
-              :action="createOrg"
+              :action="stepOne"
               :reset="resetBtn"
             ></SaveBtn>
+            <div v-if="allowable" class="fs-14 pa-3 statusMessage">
+              {{ statusMessage }}
+            </div>
           </div>
           <div v-if="tab === 2" class="d-flex">
             <SaveBtn
               class="mt-1"
               dense
               color="primary"
-              :disabled="!eventName || invalidDate"
+              :disabled="!eventName || invalidDate || processing"
               :label="this.$t('Drawer.CreateEventAction')"
-              :action="createEvent"
+              :action="stepTwo"
               :reset="resetBtn"
             ></SaveBtn>
             <div class="fs-14 pa-3 statusMessage">{{ statusMessage }}</div>
@@ -121,7 +127,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <div v-if="(orgName && tab === 2) || redirectToOrg">
+    <div v-if="(orgName && tab === 2)">
       <iframe
         id="print"
         ref="iframe"
@@ -161,11 +167,11 @@ export default {
       invalidDate: false,
       orgInfo: {},
       dialog: true,
-      redirectToOrg: false,
       statusMessage: '',
       checkTimeout: 2000,
       checkTyping: null,
       processing: false,
+      dataTransfered: false,
     }
   },
   computed: {
@@ -215,10 +221,7 @@ export default {
       this.$auth.$state.user &&
       this.$auth.$state.user.data
     ) {
-      if (this.$auth.user.data.orgList.length) {
-        this.orgName = this.$auth.user.data.orgList[0].name
-        this.redirectToOrg = true
-      } else {
+      if (!this.$auth.user.data.orgList.length) {
         this.tab = 1
       }
       this.email = this.$auth.$state.user.data.email
@@ -230,28 +233,143 @@ export default {
   },
   methods: {
     messageReceived(e) {
-      if (e.data === 'success' && this.redirectToOrg) {
-        document.cookie.split(';').forEach((c) => {
-          document.cookie = c
-            .replace(/^ +/, '')
-            .replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/')
-        })
-        document.cookie.split(';').forEach((c) => {
-          document.cookie = c
-            .replace(/^ +/, '')
-            .replace(
-              /=.*/,
-              '=;expires=' +
-                new Date().toUTCString() +
-                `;path=${this.$config.basePublicPath}`
-            )
-        })
-        localStorage.clear()
-        location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}/apps/event/list/Event/live-and-draft-event`
+      if (e.data === 'success') {
+        this.dataTransfered = true
       }
     },
     iframeLoaded() {
       this.$refs.iframe.contentWindow.postMessage(document.cookie, '*')
+    },
+    stepOne() {
+      this.resetBtn = !this.resetBtn
+      this.tab = 2
+    },
+    async stepTwo() {
+      this.processing = true
+      this.statusMessage = 'Creating your organization'
+      this.orgInfo = await this.createOrg()
+      if (!this.orgInfo) {
+        this.tab = 1
+      } else {
+        this.statusMessage = 'Setting up your organization'
+        this.endDateTime = new Date(
+          new Date().setDate(this.startDateTime.getDate() + 4)
+        )
+        const eventObj = {
+          BusinessType: 'Single',
+          Currency: 'USD',
+          Description: "I'm a demo event",
+          EndDate: this.endDateTime,
+          EventManager: this.email,
+          JoiningInstruction: '',
+          LocationType: 'Bitpod Virtual',
+          Organizer: this.name,
+          Privacy: 'Public',
+          StartDate: this.startDateTime,
+          Status: 'Not ready',
+          Timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+          Title: this.eventName,
+          UniqLink: `${this.eventName}`.replace(/[^A-Za-z0-9]/g, ''),
+          VenueName: '',
+          WebinarLink: '',
+          _VenueAddress: {},
+        }
+        const obj = { orgData: this.orgInfo, eventData: eventObj }
+        try {
+          const scheduledJob = (
+            await this.$axios.$post(
+              `https://${this.$config.axios.backendBaseUrl}${nuxtconfig.axios.apiEndpoint}OrgSetups/scheduleSetup`,
+              obj,
+              {
+                headers: {
+                  'x-org-id': this.orgInfo.id,
+                },
+              }
+            )
+          )['1']
+          if (scheduledJob.Status) {
+            const jobStatusChecker = async () => {
+              try {
+                const jobInfo = await this.$axios.$get(
+                  `${this.$bitpod.getApiUrl()}OrgSetups/${scheduledJob.id}`,
+                  {
+                    headers: {
+                      'x-org-id': this.orgInfo.id,
+                    },
+                  }
+                )
+                if (jobInfo._SetupErrors.length) {
+                  this.snackbarText = 'Failed to setup your organisation.'
+                  this.snackbar = true
+                  this.tab = 1
+                  this.processing = false
+                  this.resetBtn = !this.resetBtn
+                } else if (jobInfo._SetupStatus.length) {
+                  const lastStatus =
+                    jobInfo._SetupStatus[jobInfo._SetupStatus.length - 1]
+                  if (
+                    lastStatus.Message === 'full setup completed' &&
+                    lastStatus.Code === 0
+                  ) {
+                    this.statusMessage = 'Redirecting to new organization'
+                    document.cookie.split(';').forEach((c) => {
+                      document.cookie = c
+                        .replace(/^ +/, '')
+                        .replace(
+                          /=.*/,
+                          '=;expires=' + new Date(0).toUTCString() + ';path=/'
+                        )
+                    })
+                    document.cookie.split(';').forEach((c) => {
+                      document.cookie = c
+                        .replace(/^ +/, '')
+                        .replace(
+                          /=.*/,
+                          '=;expires=' +
+                            new Date(0).toUTCString() +
+                            `;path=${this.$config.basePublicPath}`
+                        )
+                    })
+                    localStorage.clear()
+                    location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}/apps/event/list/Event/live-and-draft-event`
+                  } else {
+                    setTimeout(jobStatusChecker, 1000)
+                  }
+                } else {
+                  setTimeout(jobStatusChecker, 1000)
+                }
+              } catch (err) {
+                this.snackbarText = 'Failed to setup your organisation.'
+                this.snackbar = true
+                this.tab = 1
+                this.processing = false
+                this.resetBtn = !this.resetBtn
+                console.error(
+                  'Error while checking status of setup job on /get-started. Error: ',
+                  err
+                )
+              }
+            }
+            setTimeout(jobStatusChecker, 1000)
+          } else {
+            this.snackbarText = 'Failed to setup your organisation.'
+            this.snackbar = true
+            this.tab = 1
+            this.processing = false
+            this.resetBtn = !this.resetBtn
+          }
+        } catch (err) {
+          this.snackbarText = 'Failed to setup your organisation.'
+          this.snackbar = true
+          this.tab = 1
+          this.processing = false
+          this.resetBtn = !this.resetBtn
+          console.error(
+            'Error while setting up organization on /get-started. Error: ',
+            err
+          )
+        }
+      }
     },
     async createOrg() {
       try {
@@ -260,125 +378,26 @@ export default {
             this.orgName
           }`
         )
-        this.resetBtn = !this.resetBtn
         if (res && res[1].success === true) {
-          this.orgInfo = res[1].data
-          this.tab = 2
+          return res[1].data
         } else {
-          this.snackbarText = 'Failed to create your Organisation.'
+          this.resetBtn = !this.resetBtn
+          this.statusMessage = ''
+          this.snackbarText = 'Failed to create your organisation.'
           this.snackbar = true
+          return false
         }
       } catch (err) {
+        this.statusMessage = ''
         this.snackbarText =
-          'This Organisation is in use, maybe soft-deleted, Try with a new name.'
+          'This organisation is in use or may be soft-deleted. Try with a new name.'
         this.snackbar = true
         this.resetBtn = !this.resetBtn
         console.error(
           'Error while creating organization on /get-started. Error: ',
           err
         )
-      }
-    },
-    async createEvent() {
-      this.statusMessage = 'Creating your first event'
-      try {
-        this.endDateTime = new Date(
-          new Date().setDate(this.startDateTime.getDate() + 4)
-        )
-        const res = await this.$axios.$post(
-          `https://${this.$config.axios.backendBaseUrl}${nuxtconfig.axios.apiEndpoint}Events`,
-          {
-            BusinessType: 'Single',
-            Currency: 'USD',
-            Description: "I'm a demo event",
-            EndDate: this.endDateTime,
-            EventManager: this.email,
-            JoiningInstruction: '',
-            LocationType: 'Bitpod Virtual',
-            Organizer: this.name,
-            Privacy: 'Public',
-            StartDate: this.startDateTime,
-            Status: 'Not ready',
-            Timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-            Title: this.eventName,
-            UniqLink: `${this.eventName}`.replace(/[^A-Za-z0-9]/g, ''),
-            VenueName: '',
-            WebinarLink: '',
-            _VenueAddress: {},
-          },
-          {
-            headers: {
-              'x-org-id': this.orgInfo.id,
-            },
-          }
-        )
-        if (res) {
-          this.statusMessage = 'Getting things ready'
-          this.startDateTime = new Date()
-          const ticketRes = await this.$axios.$post(
-            `https://${this.$config.axios.backendBaseUrl}${nuxtconfig.axios.apiEndpoint}Tickets`,
-            [
-              {
-                Amount: 0,
-                AvailableCount: 100,
-                Code: 'General admission',
-                EndDate: this.endDateTime,
-                Events: res.id,
-                StartDate: this.startDateTime,
-                TicketCount: 100,
-                TicketId: 0,
-                Type: 'Free',
-              },
-            ],
-            {
-              headers: {
-                'x-org-id': this.orgInfo.id,
-              },
-            }
-          )
-          if (ticketRes) {
-            this.statusMessage = 'Redirecting to new Organization'
-            document.cookie.split(';').forEach((c) => {
-              document.cookie = c
-                .replace(/^ +/, '')
-                .replace(
-                  /=.*/,
-                  '=;expires=' + new Date(0).toUTCString() + ';path=/'
-                )
-            })
-            document.cookie.split(';').forEach((c) => {
-              document.cookie = c
-                .replace(/^ +/, '')
-                .replace(
-                  /=.*/,
-                  '=;expires=' +
-                    new Date(0).toUTCString() +
-                    `;path=${this.$config.basePublicPath}`
-                )
-            })
-            localStorage.clear()
-            location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}/apps/event/list/Event/live-and-draft-event`
-          } else {
-            this.statusMessage = ''
-            this.resetBtn = !this.resetBtn
-            this.snackbarText = 'Failed to create Ticket.'
-            this.snackbar = true
-          }
-        } else {
-          this.statusMessage = ''
-          this.resetBtn = !this.resetBtn
-          this.snackbarText = 'Failed to create Event.'
-          this.snackbar = true
-        }
-      } catch (err) {
-        this.statusMessage = ''
-        this.resetBtn = !this.resetBtn
-        this.snackbarText = 'Failed to create Event.'
-        this.snackbar = true
-        console.error(
-          'Error while creating event on /get-started. Error: ',
-          err
-        )
+        return false
       }
     },
     cancelCheck() {
@@ -387,6 +406,7 @@ export default {
     startCheck() {
       clearTimeout(this.checkTyping)
       this.processing = true
+      this.statusMessage = 'Verifying availability'
       this.checkTyping = setTimeout(this.checkAvailablity, this.checkTimeout)
     },
     async checkAvailablity() {
@@ -400,10 +420,12 @@ export default {
           if (res) {
             this.allow = res.result
             this.processing = false
+            this.statusMessage = ''
             this.$refs.form.validate()
           }
         } catch (err) {
           this.processing = false
+          this.statusMessage = ''
           console.error(
             'Error while checking if org exists on /get-started. Error: ',
             err
@@ -412,6 +434,7 @@ export default {
       } else {
         this.allow = false
         this.processing = false
+        this.statusMessage = ''
         this.$refs.form.validate()
       }
     },

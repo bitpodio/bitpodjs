@@ -15,7 +15,11 @@ export default {
       if (e.data !== '') {
         e.data.split(';').map((i) => {
           const newCookie = i.trim() + '; path=/'
-          document.cookie = newCookie
+          document.cookie = newCookie.includes(
+            `auth.redirect=${this.$config.basePublicPath}/get-started`
+          )
+            ? ''
+            : newCookie
         })
         window.parent.postMessage('success', '*')
       }

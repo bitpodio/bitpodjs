@@ -900,10 +900,13 @@
       "EndTimeMustBeGreater": "זמן הסיום חייב להיות גדול יותר משעת ההתחלה",
       "PermissionDenied": "אין לך הרשאה לבצע פעולה זו",
       "roleAlreadyExits": "תפקיד {roles} זה כבר קיים",
-      "MinimumCharacter": "Minimum 3 characters please",
-      "MaximumCharacter": "Maximum 20 characters please",
-      "NameMustStartWithAlphabet": "Name must start with alphabet",
-      "OrganisationAlreadyExists": "Organization already exists"
+      "MinimumCharacter": "מינימום 3 תווים בבקשה",
+      "MaximumCharacter": "מקסימום 20 תווים בבקשה",
+      "NameMustStartWithAlphabet": "השם חייב להתחיל באלף בית",
+      "OrganisationAlreadyExists": "ארגון כבר קיים",
+      "SetupErrorTitle": "חלה שגיאה",
+      "SetupExitCode1": "אירעה שגיאה בהקמת הארגון שלך, אנא צור קשר עם התמיכה",
+      "SetupExitCodeCatch": "אירעה שגיאה בהקמת הארגון שלך, אנא צור קשר עם התמיכה"
     },
     "Warn": {
       "UniqueLinkFormat": "אותיות אלפאנומריות באותיות קטנות בלבד",
@@ -978,7 +981,11 @@
       "RegistrationFormUpdatedSuccess": "טופס ההרשמה עודכן בהצלחה",
       "SessionCreatedSuccess": "ההפעלה נוצרה בהצלחה",
       "SessionUpdatedSuccess": "ההפעלה עודכנה בהצלחה",
-      "ContactImportSuccess":"ביצוע הייבוא ​​החל"
+      "ContactImportSuccess": "ביצוע הייבוא ​​החל"
+    },
+    "Information": {
+      "SetupInProgressTitle": "ההתקנה בעיצומה",
+      "SetupInProgressText": "אנא המתן בזמן שנקבע את הארגון שלך, זה עלול לקחת זמן מה"
     }
   },
   "$vuetify": {
