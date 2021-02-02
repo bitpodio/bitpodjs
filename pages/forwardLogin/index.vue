@@ -54,7 +54,7 @@ export default {
       showLoader: false,
     }
   },
-  beforeMount() {
+  created() {
     const domain = this.$route.query.targetDomain
     console.log('domain.. ', domain)
     if (domain) {
