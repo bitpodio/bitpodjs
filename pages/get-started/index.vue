@@ -22,7 +22,7 @@
                 ? $t('Common.NameYourOrganization')
                 : tab === 2
                 ? $t('Drawer.CreateEventAction')
-                : 'Error'
+                : ''
             }}
           </h2>
           <v-spacer></v-spacer>
@@ -93,14 +93,8 @@
               </v-form>
             </div>
           </div>
-          <div v-if="tab === 3">
-            <div class="fs-16 mb-4 message">
-              An error occured while creating you organization, please get in
-              touch with customer support.
-            </div>
-          </div>
         </v-card-text>
-        <v-divider v-if="tab !== 3"></v-divider>
+        <v-divider></v-divider>
         <v-card-actions
           class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
         >
@@ -133,7 +127,7 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <div v-if="(orgName && tab === 2) || redirectToOrg">
+    <div v-if="(orgName && tab === 2)">
       <iframe
         id="print"
         ref="iframe"
@@ -173,11 +167,11 @@ export default {
       invalidDate: false,
       orgInfo: {},
       dialog: true,
-      redirectToOrg: false,
       statusMessage: '',
       checkTimeout: 2000,
       checkTyping: null,
       processing: false,
+      dataTransfered: false,
     }
   },
   computed: {
@@ -227,10 +221,7 @@ export default {
       this.$auth.$state.user &&
       this.$auth.$state.user.data
     ) {
-      if (this.$auth.user.data.orgList.length) {
-        this.orgName = this.$auth.user.data.orgList[0].name
-        this.redirectToOrg = true
-      } else {
+      if (!this.$auth.user.data.orgList.length) {
         this.tab = 1
       }
       this.email = this.$auth.$state.user.data.email
@@ -242,72 +233,8 @@ export default {
   },
   methods: {
     messageReceived(e) {
-      if (e.data === 'success' && this.redirectToOrg) {
-        const orgId = this.$auth.user.data.orgList[0].id
-        this.tab = 2
-        this.statusMessage = 'Setting up your Organization'
-        this.processing = true
-        const jobStatusChecker = async () => {
-          try {
-            const jobInfo = await this.$axios.$get(
-              `${this.$bitpod.getApiUrl()}OrgSetups?filter={"orgId": ${orgId}}`,
-              {
-                headers: {
-                  'x-org-id': this.orgInfo.id,
-                },
-              }
-            )[0]
-            if (jobInfo._SetupErrors.length) {
-              this.processing = false
-              this.statusMessage = ''
-              this.snackbarText = 'Failed to setup your Organisation.'
-              this.snackbar = true
-              this.tab = 3
-            } else if (jobInfo._SetupStatus.length) {
-              const lastStatus =
-                jobInfo._SetupStatus[jobInfo._SetupStatus.length - 1]
-              if (
-                lastStatus.Message === 'full setup completed' &&
-                lastStatus.Code === 0
-              ) {
-                this.statusMessage = 'Redirecting to new Organization'
-                document.cookie.split(';').forEach((c) => {
-                  document.cookie = c
-                    .replace(/^ +/, '')
-                    .replace(
-                      /=.*/,
-                      '=;expires=' + new Date().toUTCString() + ';path=/'
-                    )
-                })
-                document.cookie.split(';').forEach((c) => {
-                  document.cookie = c
-                    .replace(/^ +/, '')
-                    .replace(
-                      /=.*/,
-                      '=;expires=' +
-                        new Date().toUTCString() +
-                        `;path=${this.$config.basePublicPath}`
-                    )
-                })
-                localStorage.clear()
-                location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}/apps/event/list/Event/live-and-draft-event`
-              } else {
-                setTimeout(jobStatusChecker, 1000)
-              }
-            } else {
-              setTimeout(jobStatusChecker, 1000)
-            }
-          } catch (err) {
-            this.snackbarText = 'Failed to setup your Organisation.'
-            this.snackbar = true
-            this.tab = 3
-            console.error(
-              'Error while checking status of setup job on /get-started. Error: ',
-              err
-            )
-          }
-        }
-        setTimeout(jobStatusChecker, 1000)
+      if (e.data === 'success') {
+        this.dataTransfered = true
       }
     },
     iframeLoaded() {
@@ -319,12 +246,12 @@ export default {
     },
     async stepTwo() {
       this.processing = true
-      this.statusMessage = 'Creating your Organization'
+      this.statusMessage = 'Creating your organization'
       this.orgInfo = await this.createOrg()
       if (!this.orgInfo) {
         this.tab = 1
       } else {
-        this.statusMessage = 'Setting up your Organization'
+        this.statusMessage = 'Setting up your organization'
         this.endDateTime = new Date(
           new Date().setDate(this.startDateTime.getDate() + 4)
         )
@@ -372,7 +299,7 @@ export default {
                   }
                 )
                 if (jobInfo._SetupErrors.length) {
-                  this.snackbarText = 'Failed to setup your Organisation.'
+                  this.snackbarText = 'Failed to setup your organisation.'
                   this.snackbar = true
                   this.tab = 1
                   this.processing = false
@@ -384,7 +311,7 @@ export default {
                     lastStatus.Message === 'full setup completed' &&
                     lastStatus.Code === 0
                   ) {
-                    this.statusMessage = 'Redirecting to new Organization'
+                    this.statusMessage = 'Redirecting to new organization'
                     document.cookie.split(';').forEach((c) => {
                       document.cookie = c
                         .replace(/^ +/, '')
@@ -412,7 +339,7 @@ export default {
                   setTimeout(jobStatusChecker, 1000)
                 }
               } catch (err) {
-                this.snackbarText = 'Failed to setup your Organisation.'
+                this.snackbarText = 'Failed to setup your organisation.'
                 this.snackbar = true
                 this.tab = 1
                 this.processing = false
@@ -425,14 +352,14 @@ export default {
             }
             setTimeout(jobStatusChecker, 1000)
           } else {
-            this.snackbarText = 'Failed to setup your Organisation.'
+            this.snackbarText = 'Failed to setup your organisation.'
             this.snackbar = true
             this.tab = 1
             this.processing = false
             this.resetBtn = !this.resetBtn
           }
         } catch (err) {
-          this.snackbarText = 'Failed to setup your Organisation.'
+          this.snackbarText = 'Failed to setup your organisation.'
           this.snackbar = true
           this.tab = 1
           this.processing = false
@@ -456,14 +383,14 @@ export default {
         } else {
           this.resetBtn = !this.resetBtn
           this.statusMessage = ''
-          this.snackbarText = 'Failed to create your Organisation.'
+          this.snackbarText = 'Failed to create your organisation.'
           this.snackbar = true
           return false
         }
       } catch (err) {
         this.statusMessage = ''
         this.snackbarText =
-          'This Organisation is in use, maybe soft-deleted, Try with a new name.'
+          'This organisation is in use or may be soft-deleted. Try with a new name.'
         this.snackbar = true
         this.resetBtn = !this.resetBtn
         console.error(
@@ -479,7 +406,7 @@ export default {
     startCheck() {
       clearTimeout(this.checkTyping)
       this.processing = true
-      this.statusMessage = 'Verifying Availability'
+      this.statusMessage = 'Verifying availability'
       this.checkTyping = setTimeout(this.checkAvailablity, this.checkTimeout)
     },
     async checkAvailablity() {
