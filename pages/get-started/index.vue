@@ -244,6 +244,9 @@ export default {
     messageReceived(e) {
       if (e.data === 'success' && this.redirectToOrg) {
         const orgId = this.$auth.user.data.orgList[0].id
+        this.tab = 2
+        this.statusMessage = 'Setting up your Organization'
+        this.processing = true
         const jobStatusChecker = async () => {
           try {
             const jobInfo = await this.$axios.$get(
@@ -255,6 +258,8 @@ export default {
               }
             )[0]
             if (jobInfo._SetupErrors.length) {
+              this.processing = false
+              this.statusMessage = ''
               this.snackbarText = 'Failed to setup your Organisation.'
               this.snackbar = true
               this.tab = 3
@@ -262,9 +267,10 @@ export default {
               const lastStatus =
                 jobInfo._SetupStatus[jobInfo._SetupStatus.length - 1]
               if (
-                lastStatus.Message === 'organization setup completed' &&
+                lastStatus.Message === 'full setup completed' &&
                 lastStatus.Code === 0
               ) {
+                this.statusMessage = 'Redirecting to new Organization'
                 document.cookie.split(';').forEach((c) => {
                   document.cookie = c
                     .replace(/^ +/, '')
@@ -319,11 +325,37 @@ export default {
         this.tab = 1
       } else {
         this.statusMessage = 'Setting up your Organization'
+        this.endDateTime = new Date(
+          new Date().setDate(this.startDateTime.getDate() + 4)
+        )
+        const eventObj = {
+          BusinessType: 'Single',
+          Currency: 'USD',
+          Description: "I'm a demo event",
+          EndDate: this.endDateTime,
+          EventManager: this.email,
+          JoiningInstruction: '',
+          LocationType: 'Bitpod Virtual',
+          Organizer: this.name,
+          Privacy: 'Public',
+          StartDate: this.startDateTime,
+          Status: 'Not ready',
+          Timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+          Title: this.eventName,
+          UniqLink: `${this.eventName}`.replace(/[^A-Za-z0-9]/g, ''),
+          VenueName: '',
+          WebinarLink: '',
+          _VenueAddress: {},
+        }
+        console.debug(eventObj)
+        const obj = { orgData: this.orgInfo, eventData: eventObj }
+        console.debug(obj)
+        debugger
         try {
           const scheduledJob = (
             await this.$axios.$post(
               `https://${this.$config.axios.backendBaseUrl}${nuxtconfig.axios.apiEndpoint}OrgSetups/scheduleSetup`,
-              this.orgInfo,
+              obj,
               {
                 headers: {
                   'x-org-id': this.orgInfo.id,
@@ -331,6 +363,7 @@ export default {
               }
             )
           )['1']
+          debugger
           if (scheduledJob.Status) {
             const jobStatusChecker = async () => {
               try {
@@ -352,10 +385,30 @@ export default {
                   const lastStatus =
                     jobInfo._SetupStatus[jobInfo._SetupStatus.length - 1]
                   if (
-                    lastStatus.Message === 'organization setup completed' &&
+                    lastStatus.Message === 'full setup completed' &&
                     lastStatus.Code === 0
                   ) {
-                    this.createEvent()
+                    this.statusMessage = 'Redirecting to new Organization'
+                    document.cookie.split(';').forEach((c) => {
+                      document.cookie = c
+                        .replace(/^ +/, '')
+                        .replace(
+                          /=.*/,
+                          '=;expires=' + new Date(0).toUTCString() + ';path=/'
+                        )
+                    })
+                    document.cookie.split(';').forEach((c) => {
+                      document.cookie = c
+                        .replace(/^ +/, '')
+                        .replace(
+                          /=.*/,
+                          '=;expires=' +
+                            new Date(0).toUTCString() +
+                            `;path=${this.$config.basePublicPath}`
+                        )
+                    })
+                    localStorage.clear()
+                    location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}/apps/event/list/Event/live-and-draft-event`
                   } else {
                     setTimeout(jobStatusChecker, 1000)
                   }
@@ -422,108 +475,6 @@ export default {
           err
         )
         return false
-      }
-    },
-    async createEvent() {
-      this.statusMessage = 'Creating your first event'
-      try {
-        this.endDateTime = new Date(
-          new Date().setDate(this.startDateTime.getDate() + 4)
-        )
-        const res = await this.$axios.$post(
-          `https://${this.$config.axios.backendBaseUrl}${nuxtconfig.axios.apiEndpoint}Events`,
-          {
-            BusinessType: 'Single',
-            Currency: 'USD',
-            Description: "I'm a demo event",
-            EndDate: this.endDateTime,
-            EventManager: this.email,
-            JoiningInstruction: '',
-            LocationType: 'Bitpod Virtual',
-            Organizer: this.name,
-            Privacy: 'Public',
-            StartDate: this.startDateTime,
-            Status: 'Not ready',
-            Timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-            Title: this.eventName,
-            UniqLink: `${this.eventName}`.replace(/[^A-Za-z0-9]/g, ''),
-            VenueName: '',
-            WebinarLink: '',
-            _VenueAddress: {},
-          },
-          {
-            headers: {
-              'x-org-id': this.orgInfo.id,
-            },
-          }
-        )
-        if (res) {
-          this.statusMessage = 'Getting things ready'
-          this.startDateTime = new Date()
-          const ticketRes = await this.$axios.$post(
-            `https://${this.$config.axios.backendBaseUrl}${nuxtconfig.axios.apiEndpoint}Tickets`,
-            [
-              {
-                Amount: 0,
-                AvailableCount: 100,
-                Code: 'General admission',
-                EndDate: this.endDateTime,
-                Events: res.id,
-                StartDate: this.startDateTime,
-                TicketCount: 100,
-                TicketId: 0,
-                Type: 'Free',
-              },
-            ],
-            {
-              headers: {
-                'x-org-id': this.orgInfo.id,
-              },
-            }
-          )
-          if (ticketRes) {
-            this.statusMessage = 'Redirecting to new Organization'
-            document.cookie.split(';').forEach((c) => {
-              document.cookie = c
-                .replace(/^ +/, '')
-                .replace(
-                  /=.*/,
-                  '=;expires=' + new Date(0).toUTCString() + ';path=/'
-                )
-            })
-            document.cookie.split(';').forEach((c) => {
-              document.cookie = c
-                .replace(/^ +/, '')
-                .replace(
-                  /=.*/,
-                  '=;expires=' +
-                    new Date(0).toUTCString() +
-                    `;path=${this.$config.basePublicPath}`
-                )
-            })
-            localStorage.clear()
-            location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}/apps/event/list/Event/live-and-draft-event`
-          } else {
-            this.statusMessage = ''
-            this.resetBtn = !this.resetBtn
-            this.snackbarText = 'Failed to create Ticket.'
-            this.snackbar = true
-          }
-        } else {
-          this.statusMessage = ''
-          this.resetBtn = !this.resetBtn
-          this.snackbarText = 'Failed to create Event.'
-          this.snackbar = true
-        }
-      } catch (err) {
-        this.statusMessage = ''
-        this.resetBtn = !this.resetBtn
-        this.snackbarText = 'Failed to create Event.'
-        this.snackbar = true
-        console.error(
-          'Error while creating event on /get-started. Error: ',
-          err
-        )
       }
     },
     cancelCheck() {
