@@ -401,6 +401,18 @@
                                   </v-btn>
                                 </a>
                               </div>
+                              <div
+                                v-if="
+                                  registration.EventList.BusinessType ===
+                                    'Recurring' &&
+                                  registration.SessionListId[0].LocationType ===
+                                    'Google Meet'
+                                "
+                              >
+                                <v-alert dense outlined type="info">
+                                  <i18n path="Common.CheckCalendarInvite"
+                                /></v-alert>
+                              </div>
                             </div>
                           </v-list-item-icon>
                         </v-list-item>

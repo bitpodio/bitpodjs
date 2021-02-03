@@ -725,6 +725,15 @@
     "DeleteNote": "Delete Note",
     "PastEventMessage": "This event is no longer active.",
     "GoToOldSite": "Go to the old site",
+    "SetupDomain": "You could be a business, an event organizer, or a professional community. Choose the banner under which you will host your events.",
+    "WelcomeToBitpod": "Welcome to Bitpod",
+    "NameYourOrganization": "Name your organization",
+    "SuffixRoute": "-event.bitpod.io",
+    "CreateOrganisation": "Create organisation",
+    "OrganizationName": "Organization Name*",
+    "CreateEventMessage": "Create your first Event! This is your playground. Feel free to invite friends and learn exciting ways to engage your audience on Bitpod-Event.",
+    "EventDateTime": "Event dateand time*",
+    "YourTitleHere": "Your title will be displayed here",
     "SelectField": "Select a field",
     "DeleteImage": "Delete Image",
     "QuestionDeletedSuccessfully": "Question deleted successfully",
@@ -754,7 +763,10 @@
     "ExportInProgress": "Export in progress...",
     "NoDataAvailable": "No data available",
     "ServiceUnavailable": "Service Unavailable",
-    "Upgrade": "Upgrade"
+    "Upgrade": "Upgrade",
+    "SessionNotStart": "This session hasn't started yet.",
+    "TryJoinOn": "Try joining again on",
+    "CheckCalendarInvite": "Check calendar invite for joining link"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",
@@ -826,6 +838,7 @@
   },
   "Messages": {
     "Error": {
+      "EventNameEmpty": "Event name cannot be empty",
       "SizeRequired": "Size is required",
       "ThisFieldRequired": "This field is required",
       "InvalidDate": "Invalid date",
@@ -886,7 +899,14 @@
       "OverlappingTimeSlot": "Time-slot overlapping with other slots",
       "EndTimeMustBeGreater": "End time must be greater then start time",
       "PermissionDenied": "You do not have permission to perform this operation",
-      "roleAlreadyExits": "This {roles} role already exists"
+      "roleAlreadyExits": "This {roles} role already exists",
+      "MinimumCharacter": "Minimum 3 characters please",
+      "MaximumCharacter": "Maximum 20 characters please",
+      "NameMustStartWithAlphabet": "Name must start with alphabet",
+      "OrganisationAlreadyExists": "Organization already exists",
+      "SetupErrorTitle": "An error occured",
+      "SetupExitCode1": "An error occured while setting up your organization, please get in touch with support.",
+      "SetupExitCodeCatch": "An error occured while setting up your organization, please get in touch with support."
     },
     "Warn": {
       "UniqueLinkFormat": "Lower case alphanumeric letters only",
@@ -962,7 +982,11 @@
       "RegistrationFormUpdatedSuccess": "Registration Form updated successfully",
       "SessionCreatedSuccess": "Session created successfully",
       "SessionUpdatedSuccess": "Session updated successfully",
-      "ContactImportSuccess":"Import execution started"
+      "ContactImportSuccess": "Import execution started"
+    },
+    "Information": {
+      "SetupInProgressTitle": "Setup in progress",
+      "SetupInProgressText": "Please wait while we setup your organization, this may take a while."
     }
   },
   "$vuetify": {

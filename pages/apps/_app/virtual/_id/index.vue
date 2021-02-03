@@ -7,14 +7,20 @@
       :width="260"
       :right="$vuetify.rtl"
     >
-      <v-list class="d-block d-sm-none mt-10">
+      <v-list
+        v-for="item in registration.SessionListId"
+        :key="item.id"
+        class="d-block d-sm-none mt-10"
+      >
         <v-list-item-group v-model="group">
           <v-list-item
-            v-for="item in registration.SessionListId"
-            :key="item.id"
+            v-if="item.LocationType === 'Bitpod Virtual'"
             class="xs12 sm4 md4 lg4 boxviewsmall pa-3 my-1 mx-0 py-2 session-view-in"
             :class="{
-              selected: item.WebinarLink + '?autoplay=1' === videoSrc,
+              selected:
+                `${$config.rtmpLink}${
+                  item.BitpodVirtualLink.split('/')[3]
+                }.m3u8` === videoSrc,
             }"
             @click="
               () => {
@@ -68,7 +74,7 @@
                   "
                 >
                   <v-btn
-                    class="mt-2 mr-0"
+                    class="mt-2 mr-0 isLive"
                     depressed
                     x-small
                     color="error"
@@ -76,7 +82,12 @@
                   >
                     <i18n path="Common.Live" />
                   </v-btn>
-                  <v-btn icon class="mt-2 mr-0" x-small :disabled="isPast">
+                  <v-btn
+                    icon
+                    class="mt-2 mr-0 isWathcing"
+                    x-small
+                    :disabled="isPast"
+                  >
                     <v-icon>fa-eye</v-icon>
                   </v-btn>
                 </div>
@@ -156,18 +167,42 @@
               class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-0 mr-0 mb-4 d-flex flex-column flex-sm-row overflowHidden"
             >
               <div class="pa-0 flex-60 d-flex flex-column black">
-                <div>
-                  <iframe
-                    width="100%"
-                    height="400"
-                    :src="videoSrc"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen
-                  ></iframe>
+                <div
+                  v-if="sessionTime"
+                  class="session-player-msg d-flex flex-column align-center justify-center"
+                >
+                  <p>
+                    <v-img
+                      :lazy-src="$config.cdnUri + 'session-time-video.png'"
+                      :src="$config.cdnUri + 'session-time-video.png'"
+                      min-height="100"
+                      max-width="100"
+                    >
+                    </v-img>
+                  </p>
+                  <h2 class="white--text mt-3">
+                    <i18n path="Common.SessionNotStart" />
+                  </h2>
+                  <p class="white--text mt-4 mb-0">
+                    <i18n path="Common.TryJoinOn" /> {{ sessionVideoTime }}
+                  </p>
                 </div>
-                <div class="pa-2">
-                  <h2 class="white--text">{{ sessionName }}</h2>
+                <div v-else class="session-player">
+                  <div>
+                    <video
+                      id="my_video_1"
+                      class="video-js vjs-default-skin"
+                      controls
+                      preload="auto"
+                      autoplay="true"
+                      width="100%"
+                      height="400"
+                      data-setup="{}"
+                    ></video>
+                    <div class="pa-2">
+                      <h2 class="white--text">{{ sessionName }}</h2>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div
@@ -245,14 +280,19 @@
                       <v-spacer></v-spacer>
                     </v-flex>
                     <div class="session-list">
-                      <v-list class="pb -0">
+                      <v-list
+                        v-for="item in registration.SessionListId"
+                        :key="item.id"
+                        class="pb-0"
+                      >
                         <v-list-item
-                          v-for="item in registration.SessionListId"
-                          :key="item.id"
+                          v-if="item.LocationType === 'Bitpod Virtual'"
                           class="xs12 sm4 md4 lg4 grey lighten-2 boxviewsmall pa-3 mb-4 mx-0 py-2 session-view-in"
                           :class="{
                             selected:
-                              item.WebinarLink + '?autoplay=1' === videoSrc,
+                              `${$config.rtmpLink}${
+                                item.BitpodVirtualLink.split('/')[3]
+                              }.m3u8` === videoSrc,
                           }"
                           @click="
                             () => {
@@ -314,7 +354,7 @@
                                 "
                               >
                                 <v-btn
-                                  class="mt-2 mr-0"
+                                  class="mt-2 mr-0 isLive"
                                   depressed
                                   x-small
                                   color="error"
@@ -323,7 +363,7 @@
                                   <i18n path="Common.Live" />
                                 </v-btn>
                                 <v-btn
-                                  class="mt-2 mr-0"
+                                  class="mt-2 mr-0 isWatchig"
                                   depressed
                                   x-small
                                   :disabled="isPast"
@@ -501,6 +541,7 @@
 <script>
 import format from 'date-fns/format'
 import { utcToZonedTime } from 'date-fns-tz'
+import videojs from 'video.js'
 import _ from 'lodash'
 import { configLoaderMixin } from '~/utility'
 export default {
@@ -519,6 +560,8 @@ export default {
       isPast: false,
       videoSrc: '',
       sessionName: '',
+      sessionTime: false,
+      sessionVideoTime: '',
       drawer: false,
       group: null,
       currentVideo: '',
@@ -548,6 +591,7 @@ export default {
   mounted() {
     this.getRegistrationData()
     this.initDarkMode()
+    this.playLive()
   },
   methods: {
     formatDate(date) {
@@ -668,12 +712,36 @@ export default {
                   `${this.$route.path}?watch=${this.registration.SessionListId[0].id}`
                 )
                 this.videoSrc =
-                  this.registration.SessionListId[0].WebinarLink + '?autoplay=1'
+                  `${this.$config.rtmpLink}${
+                    this.registration.SessionListId[0].BitpodVirtualLink.split(
+                      '/'
+                    )[3]
+                  }.m3u8?autoplay=1` || ''
+                if (
+                  new Date().getTime() <
+                  new Date(
+                    this.registration.SessionListId[0].StartDate
+                  ).getTime()
+                ) {
+                  this.sessionTime = true
+                } else {
+                  this.sessionTime = false
+                }
+                this.sessionVideoTime =
+                  this.formatDate(
+                    new Date(this.registration.SessionListId[0].StartDate)
+                  ) || ''
                 this.sessionName = this.registration.SessionListId[0].Name
               }
               if (selectedVideo) {
-                this.videoSrc = selectedVideo.WebinarLink + '?autoplay=1'
+                // this.videoSrc = selectedVideo.BitpodVirtualLink + '?autoplay=1'
+                this.videoSrc = `${this.$config.rtmpLink}${
+                  selectedVideo.BitpodVirtualLink.split('/')[3]
+                }.m3u8?autoplay=1`
                 this.sessionName = selectedVideo.Name
+                this.sessionVideoTime = this.formatDate(
+                  new Date(selectedVideo.StartDate)
+                )
               }
             }
             result.attendee.map((i) => {
@@ -757,9 +825,26 @@ export default {
       }, 2000)
     },
     videoTileClick(item) {
-      this.videoSrc = item.WebinarLink + '?autoplay=1' || ''
+      this.videoSrc =
+        `${this.$config.rtmpLink}${
+          item.BitpodVirtualLink.split('/')[3]
+        }.m3u8` || ''
+      this.playLive()
       this.sessionName = item.Name || ''
+      if (new Date().getTime() < new Date(item.StartDate).getTime()) {
+        this.sessionTime = true
+      } else {
+        this.sessionTime = false
+      }
+      this.sessionVideoTime = this.formatDate(new Date(item.StartDate)) || ''
       this.$router.push(`${this.$route.path}?watch=${item.id}`)
+    },
+    playLive() {
+      const player = videojs('my_video_1')
+      player.src({
+        src: this.videoSrc,
+        type: 'application/x-mpegURL',
+      })
     },
     initDarkMode() {
       const darkMediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
@@ -900,6 +985,18 @@ export default {
   max-height: 40px;
   width: auto !important;
   min-width: auto !important;
+}
+.my_video_1-dimensions {
+  width: 100% !important;
+  height: 400px !important;
+}
+.video-js {
+  width: 100% !important;
+  height: 400px !important;
+}
+.session-player-msg {
+  width: 100% !important;
+  height: 400px !important;
 }
 @media screen and (max-width: 600px) {
   .background-event-img {

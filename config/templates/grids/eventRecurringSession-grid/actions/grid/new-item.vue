@@ -19,7 +19,11 @@
             <v-icon v-if="actionType === 'Edit'" left class="fs-16"
               >fa-pencil</v-icon
             >
-            {{ (actionType === 'New' ? $t('Common.NewRecurringSession') : $t('Drawer.Edit')) }}
+            {{
+              actionType === 'New'
+                ? $t('Common.NewRecurringSession')
+                : $t('Drawer.Edit')
+            }}
           </v-btn>
         </template>
         <v-card>
@@ -27,7 +31,11 @@
             class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
           >
             <h2 class="black--text pt-5 pb-4 text-h5">
-              {{ (actionType === 'New' ? $t('Common.NewSession') : $t('Common.EditSession')) }}
+              {{
+                actionType === 'New'
+                  ? $t('Common.NewSession')
+                  : $t('Common.EditSession')
+              }}
             </h2>
 
             <v-spacer></v-spacer>
@@ -1196,6 +1204,7 @@ export default {
       this.session.TicketName = TicketName
     },
     async onSave() {
+      console.debug('New recurring session', this.session)
       if (this.session.StartTime > this.session.EndTime) {
         this.timeSlotMessage = this.$t('Messages.Error.StartEndTime')
         this.resetBtn = !this.resetBtn
@@ -1292,6 +1301,7 @@ export default {
         let exceptionRes = null
 
         if (this.actionType === 'New') {
+          console.debug('New recurring session', this.session)
           try {
             res = await this.$axios.$post(`${baseUrl}Sessions`, {
               ...this.session,
@@ -1324,6 +1334,7 @@ export default {
             return exceptionRes
           }
         } else if (this.actionType === 'Edit') {
+          console.debug('Edit recurring session', this.session)
           try {
             res = await this.$axios.$patch(
               `${baseUrl}Sessions/${this.session.id}`,

@@ -82,7 +82,7 @@ export default {
       snackbar: false,
       timeout: '2000',
       snackbarText: '',
-      menu: true,
+      menu: false,
     }
   },
   mounted() {

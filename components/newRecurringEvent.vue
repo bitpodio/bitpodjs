@@ -863,6 +863,7 @@
                               :rules="[rules.required]"
                               :field="timezonefield"
                               :attach="`#timezone-select-${k}`"
+                              :has-wrap="true"
                             ></Timezone>
                           </td>
 
@@ -1019,9 +1020,7 @@
           ><i18n path="Drawer.Next"
         /></v-btn>
         <SaveBtn
-          v-if="
-            (currentTab > 2 && !isEventCreate && !isEventPublish)
-          "
+          v-if="currentTab > 2 && !isEventCreate && !isEventPublish"
           color="primary"
           :disabled="isSaveButtonDisabled || !valid || isInalidEventLink"
           depressed
@@ -2051,21 +2050,15 @@ export default {
       }
       this.isEventPublish = true
       this.isEventCreate = false
-      const modelName = 'Event'
-      const where = {
-        id: this.eventId,
+      const url = this.$bitpod.getApiUrl()
+      try {
+        await this.$axios.patch(`${url}Events/${this.eventId}`, eventStatus)
+      } catch (e) {
+        console.error(
+          `Error in app/Event/newRecurringEvent.vue while making a PATCH call to Event model from method eventPublish context:-URL:-${url}\n formData:-${this.formData}\n id:-${this.eventId} `,
+          e
+        )
       }
-      const editItemMutation = this.buildMutationUpsertQuery(modelName)
-      await this.$apollo.mutate({
-        mutation: gql(editItemMutation),
-        variables: {
-          Inputs: {
-            where,
-            data: eventStatus,
-            clientMutationId: `${modelName} list item updated successfully.`,
-          },
-        },
-      })
     },
     changeTicketType(index) {
       if (this.tickets[index].Type === 'Free') {
@@ -2251,7 +2244,7 @@ export default {
 
             this.tickets.forEach(function (ticket) {
               ticket.Events = res.id
-              ticket.Amount = parseInt(ticket.Amount)
+              ticket.Amount = parseFloat(ticket.Amount)
               ticket.TicketCount = parseInt(ticket.TicketCount)
               ticket.AvailableCount = parseInt(ticket.TicketCount)
               ticketList.push(ticket)

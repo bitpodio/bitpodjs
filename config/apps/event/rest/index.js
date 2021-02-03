@@ -113,7 +113,7 @@ export function getCustomData(modelName) {
     const resPromise = this.$axios.$get(`${apiUrl}${modelName}`)
     // to execute parallel call
     const [res] = await Promise.all([resPromise])
-    if (this.viewName !== 'integrations' || this.viewName !== 'integration') {
+    if (this.viewName !== 'integrations' && this.viewName !== 'integration') {
       const skipRes = res.slice(skip)
       const finalRes = skipRes.slice(0, limit)
       return { items: finalRes, total: res.length }

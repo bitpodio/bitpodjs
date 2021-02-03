@@ -726,6 +726,15 @@
     "DeleteNote": "नोट हटाएँ",
     "PastEventMessage": "यह ईवेंट अब सक्रिय नहीं है.",
     "GoToOldSite": "पुरानी साइट पर जाएं",
+    "SetupDomain": "You could be a business, an event organizer, or a professional community. Choose the banner under which you will host your events.",
+    "WelcomeToBitpod": "Welcome to Bitpod",
+    "NameYourOrganization": "Name your organization",
+    "SuffixRoute": "-event.bitpod.io",
+    "CreateOrganisation": "Create organisation",
+    "OrganizationName": "Organization Name*",
+    "CreateEventMessage": "Create your first Event! This is your playground. Feel free to invite friends and learn exciting ways to engage your audience on Bitpod-Event.",
+    "EventDateTime": "Event dateand time*",
+    "YourTitleHere": "Your title will be displayed here",
     "SelectField": "एक क्षेत्र का चयन करें",
     "DeleteImage": "छवि हटाएं",
     "QuestionDeletedSuccessfully": "प्रश्न सफलतापूर्वक हटा दिया गया",
@@ -755,7 +764,10 @@
     "ExportInProgress": "निर्यात प्रगति पर है...",
     "NoDataAvailable": "कोई डेटा उपलब्ध नहीं है",
     "ServiceUnavailable": "सेवा उप्लब्ध् नहीं है",
-    "Upgrade": "अपग्रेड"
+    "Upgrade": "अपग्रेड",
+    "SessionNotStart": "यह सत्र अभी तक शुरू नहीं हुआ है.",
+    "TryJoinOn": "फिर से जुड़ने का प्रयास करें",
+    "CheckCalendarInvite": "लिंक से जुड़ने के लिए कैलेंडर आमंत्रण की जाँच करें"
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",
@@ -827,6 +839,7 @@
   },
   "Messages": {
     "Error": {
+      "EventNameEmpty": "Event name cannot be empty",
       "SizeRequired": "Size is required",
       "ThisFieldRequired": "यह फ़ील्ड आवश्यक है",
       "InvalidDate": "अमान्य तिथि",
@@ -886,7 +899,14 @@
       "OverlappingTimeSlot": "समय-स्लॉट अन्य स्लॉट के साथ अतिव्यापी",
       "EndTimeMustBeGreater": "अंत समय अधिक होना चाहिए फिर समय शुरू करें",
       "PermissionDenied": "आपको इस ऑपरेशन को करने की अनुमति नहीं है",
-      "roleAlreadyExits": "यह {roles} भूमिका पहले से मौजूद है"
+      "roleAlreadyExits": "यह {roles} भूमिका पहले से मौजूद है",
+      "MinimumCharacter": "कृपया न्यूनतम 3 वर्ण",
+      "MaximumCharacter": "कृपया अधिकतम 20 वर्ण",
+      "NameMustStartWithAlphabet": "नाम वर्णमाला से शुरू होना चाहिए",
+      "OrganisationAlreadyExists": "संगठन पहले से मौजूद है",
+      "SetupErrorTitle": "एक त्रुटि हुई",
+      "SetupExitCode1": "आपके संगठन की स्थापना करते समय एक त्रुटि हुई, कृपया समर्थन से संपर्क करें।",
+      "SetupExitCodeCatch": "आपके संगठन की स्थापना करते समय एक त्रुटि हुई, कृपया समर्थन से संपर्क करें।"
     },
     "Warn": {
       "UniqueLinkFormat": "केवल लोअर केस अल्फ़ान्यूमेरिक अक्षर",
@@ -961,7 +981,11 @@
       "RegistrationFormUpdatedSuccess": "पंजीकरण फॉर्म सफलतापूर्वक अपडेट किया गया",
       "SessionCreatedSuccess": "सत्र सफलतापूर्वक बनाया गया",
       "SessionUpdatedSuccess": "सत्र सफलतापूर्वक अपडेट किया गया",
-      "ContactImportSuccess":"आयात निष्पादन शुरू हुआ"
+      "ContactImportSuccess": "आयात निष्पादन शुरू हुआ"
+    },
+    "Information": {
+      "SetupInProgressTitle": "सेटअप प्रगति पर है",
+      "SetupInProgressText": "कृपया प्रतीक्षा करें जब तक हम आपके संगठन को सेट करते हैं, इसमें कुछ समय लग सकता है।"
     }
   },
   "$vuetify": {
