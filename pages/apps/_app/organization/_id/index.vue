@@ -268,7 +268,7 @@
             <v-flex class="py-2"></v-flex>
           </div>
         </v-flex>
-        <v-flex column class="mxw-w30  flex-column">
+        <v-flex column class="mxw-w30 d-flex flex-column">
           <div
             class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-2 box-grey"
           >
