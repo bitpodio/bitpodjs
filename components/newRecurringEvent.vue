@@ -679,6 +679,7 @@
                             <Lookup
                               v-model="ticket.Type"
                               :field="ticketTypeProps"
+                              :t-id="`RecurringTicketType-${k}`"
                               :on-change="changeTicketType(k)"
                             />
                           </td>

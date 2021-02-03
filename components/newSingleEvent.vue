@@ -365,6 +365,7 @@
                             v-model="ticket.Type"
                             :field="ticketTypeProps"
                             class="v-tickettype"
+                            :t-id="`SingleTicketType-${k}`"
                             :on-change="changeTicketType(k)"
                           />
                         </td>
