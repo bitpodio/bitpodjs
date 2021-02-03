@@ -242,21 +242,7 @@
                 ><i18n path="Common.LogoImage"
               /></v-card-text>
             </v-card>
-            <v-dialog v-model="otherDialogOpen" max-width="600">
-              <v-card>
-                <v-card-title class="pa-1">
-                  <v-spacer></v-spacer>
-                  <div>
-                    <v-btn icon @click="otherDialogOpen = false">
-                      <v-icon>mdi-close</v-icon>
-                    </v-btn>
-                  </div>
-                </v-card-title>
-                <v-img :src="displaySelectedOtherImage"> </v-img>
-              </v-card>
-            </v-dialog>
           </div>
-          <div class="py-2"></div>
         </div>
       </div>
       <div class="mxw-w30 d-flex flex-column">
@@ -518,6 +504,19 @@
         :snackbar.sync="snackbar"
       />
     </div>
+    <v-dialog v-model="otherDialogOpen" max-width="600">
+      <v-card>
+        <v-card-title class="pa-1">
+          <v-spacer></v-spacer>
+          <div>
+            <v-btn icon @click="otherDialogOpen = false">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </div>
+        </v-card-title>
+        <v-img :src="displaySelectedOtherImage"> </v-img>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
