@@ -906,7 +906,8 @@
       "OrganisationAlreadyExists": "Organization already exists",
       "SetupErrorTitle": "An error occured",
       "SetupExitCode1": "An error occured while setting up your organization, please get in touch with support.",
-      "SetupExitCodeCatch": "An error occured while setting up your organization, please get in touch with support."
+      "SetupExitCodeCatch": "An error occured while setting up your organization, please get in touch with support.",
+      "SetupExitCodeTimeout": "An error occured while setting up your organization, please get in touch with support."
     },
     "Warn": {
       "UniqueLinkFormat": "Lower case alphanumeric letters only",

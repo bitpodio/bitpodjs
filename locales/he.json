@@ -906,7 +906,8 @@
       "OrganisationAlreadyExists": "ארגון כבר קיים",
       "SetupErrorTitle": "חלה שגיאה",
       "SetupExitCode1": "אירעה שגיאה בהקמת הארגון שלך, אנא צור קשר עם התמיכה",
-      "SetupExitCodeCatch": "אירעה שגיאה בהקמת הארגון שלך, אנא צור קשר עם התמיכה"
+      "SetupExitCodeCatch": "אירעה שגיאה בהקמת הארגון שלך, אנא צור קשר עם התמיכה",
+      "SetupExitCodeTimeout": "אירעה שגיאה בהקמת הארגון שלך, אנא צור קשר עם התמיכה"
     },
     "Warn": {
       "UniqueLinkFormat": "אותיות אלפאנומריות באותיות קטנות בלבד",

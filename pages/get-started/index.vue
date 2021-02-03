@@ -22,7 +22,7 @@
                 ? $t('Common.NameYourOrganization')
                 : tab === 2
                 ? $t('Drawer.CreateEventAction')
-                : ''
+                : $t('Messages.Error.SetupErrorTitle')
             }}
           </h2>
           <v-spacer></v-spacer>
@@ -93,8 +93,13 @@
               </v-form>
             </div>
           </div>
+          <div v-if="tab === 3">
+            <div class="fs-16 mb-4 message">
+              {{ $t('Messages.Error.SetupExitCodeTimeout') }}
+            </div>
+          </div>
         </v-card-text>
-        <v-divider></v-divider>
+        <v-divider v-if="tab !== 3"></v-divider>
         <v-card-actions
           class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
         >
@@ -298,45 +303,54 @@ export default {
                     },
                   }
                 )
-                if (jobInfo._SetupErrors.length) {
-                  this.snackbarText = 'Failed to setup your organisation.'
-                  this.snackbar = true
-                  this.tab = 1
-                  this.processing = false
-                  this.resetBtn = !this.resetBtn
-                } else if (jobInfo._SetupStatus.length) {
-                  const lastStatus =
-                    jobInfo._SetupStatus[jobInfo._SetupStatus.length - 1]
-                  if (
-                    lastStatus.Message === 'full setup completed' &&
-                    lastStatus.Code === 0
-                  ) {
-                    this.statusMessage = 'Redirecting to new organization'
-                    document.cookie.split(';').forEach((c) => {
-                      document.cookie = c
-                        .replace(/^ +/, '')
-                        .replace(
-                          /=.*/,
-                          '=;expires=' + new Date(0).toUTCString() + ';path=/'
-                        )
-                    })
-                    document.cookie.split(';').forEach((c) => {
-                      document.cookie = c
-                        .replace(/^ +/, '')
-                        .replace(
-                          /=.*/,
-                          '=;expires=' +
-                            new Date(0).toUTCString() +
-                            `;path=${this.$config.basePublicPath}`
-                        )
-                    })
-                    localStorage.clear()
-                    location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}/apps/event/list/Event/live-and-draft-event`
+                if (
+                  Object.keys(jobInfo).length &&
+                  new Date() - new Date(jobInfo.createdDate) < 90000
+                ) {
+                  if (jobInfo._SetupErrors.length) {
+                    this.snackbarText = 'Failed to setup your organisation.'
+                    this.snackbar = true
+                    this.tab = 1
+                    this.processing = false
+                    this.resetBtn = !this.resetBtn
+                  } else if (jobInfo._SetupStatus.length) {
+                    const lastStatus =
+                      jobInfo._SetupStatus[jobInfo._SetupStatus.length - 1]
+                    if (
+                      lastStatus.Message === 'full setup completed' &&
+                      lastStatus.Code === 0
+                    ) {
+                      this.statusMessage = 'Redirecting to new organization'
+                      document.cookie.split(';').forEach((c) => {
+                        document.cookie = c
+                          .replace(/^ +/, '')
+                          .replace(
+                            /=.*/,
+                            '=;expires=' + new Date(0).toUTCString() + ';path=/'
+                          )
+                      })
+                      document.cookie.split(';').forEach((c) => {
+                        document.cookie = c
+                          .replace(/^ +/, '')
+                          .replace(
+                            /=.*/,
+                            '=;expires=' +
+                              new Date(0).toUTCString() +
+                              `;path=${this.$config.basePublicPath}`
+                          )
+                      })
+                      localStorage.clear()
+                      location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}/apps/event/list/Event/live-and-draft-event`
+                    } else {
+                      setTimeout(jobStatusChecker, 1000)
+                    }
                   } else {
                     setTimeout(jobStatusChecker, 1000)
                   }
                 } else {
-                  setTimeout(jobStatusChecker, 1000)
+                  this.processing = false
+                  this.resetBtn = !this.resetBtn
+                  this.tab = 3
                 }
               } catch (err) {
                 this.snackbarText = 'Failed to setup your organisation.'
