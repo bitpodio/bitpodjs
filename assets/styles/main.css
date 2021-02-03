@@ -682,6 +682,9 @@ table > tbody > tr:last-child .key-align {
   .boxviewlarge .v-data-table__wrapper {
     margin-bottom: 0 !important;
   }
+  .event-title {
+    max-width: calc(100% - 230px);
+  }
 }
 @media (max-width: 800px) {
   .nav-bar {
