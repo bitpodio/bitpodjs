@@ -251,12 +251,12 @@ export default {
     },
     async stepTwo() {
       this.processing = true
-      this.statusMessage = 'Creating your organization'
+      this.statusMessage = this.$t('Messages.Information.CreatingOrg')
       this.orgInfo = await this.createOrg()
       if (!this.orgInfo) {
         this.tab = 1
       } else {
-        this.statusMessage = 'Setting up your organization'
+        this.statusMessage = this.$t('Messages.Information.SettingUpOrg')
         this.endDateTime = new Date(
           new Date().setDate(this.startDateTime.getDate() + 4)
         )
@@ -308,7 +308,7 @@ export default {
                   new Date() - new Date(jobInfo.createdDate) < 90000
                 ) {
                   if (jobInfo._SetupErrors.length) {
-                    this.snackbarText = 'Failed to setup your organisation.'
+                    this.snackbarText = this.$t('Messages.Error.SetupOrgFailed')
                     this.snackbar = true
                     this.tab = 1
                     this.processing = false
@@ -320,7 +320,9 @@ export default {
                       lastStatus.Message === 'full setup completed' &&
                       lastStatus.Code === 0
                     ) {
-                      this.statusMessage = 'Redirecting to new organization'
+                      this.statusMessage = this.$t(
+                        'Messages.Information.OrgRedirectStart'
+                      )
                       document.cookie.split(';').forEach((c) => {
                         document.cookie = c
                           .replace(/^ +/, '')
@@ -353,7 +355,7 @@ export default {
                   this.tab = 3
                 }
               } catch (err) {
-                this.snackbarText = 'Failed to setup your organisation.'
+                this.snackbarText = this.$t('Messages.Error.SetupOrgFailed')
                 this.snackbar = true
                 this.tab = 1
                 this.processing = false
@@ -366,14 +368,14 @@ export default {
             }
             setTimeout(jobStatusChecker, 1000)
           } else {
-            this.snackbarText = 'Failed to setup your organisation.'
+            this.snackbarText = this.$t('Messages.Error.SetupOrgFailed')
             this.snackbar = true
             this.tab = 1
             this.processing = false
             this.resetBtn = !this.resetBtn
           }
         } catch (err) {
-          this.snackbarText = 'Failed to setup your organisation.'
+          this.snackbarText = this.$t('Messages.Error.SetupOrgFailed')
           this.snackbar = true
           this.tab = 1
           this.processing = false
@@ -397,14 +399,13 @@ export default {
         } else {
           this.resetBtn = !this.resetBtn
           this.statusMessage = ''
-          this.snackbarText = 'Failed to create your organisation.'
+          this.snackbarText = this.$t('Messages.Error.CreateOrgFailed')
           this.snackbar = true
           return false
         }
       } catch (err) {
         this.statusMessage = ''
-        this.snackbarText =
-          'This organisation is in use or may be soft-deleted. Try with a new name.'
+        this.snackbarText = this.$t('Messages.Error.CreateOrgCatch')
         this.snackbar = true
         this.resetBtn = !this.resetBtn
         console.error(
@@ -420,7 +421,7 @@ export default {
     startCheck() {
       clearTimeout(this.checkTyping)
       this.processing = true
-      this.statusMessage = 'Verifying availability'
+      this.statusMessage = this.$t('Messages.Information.VerifyingOrgNameAvail')
       this.checkTyping = setTimeout(this.checkAvailablity, this.checkTimeout)
     },
     async checkAvailablity() {

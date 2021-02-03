@@ -907,7 +907,10 @@
       "SetupErrorTitle": "חלה שגיאה",
       "SetupExitCode1": "אירעה שגיאה בהקמת הארגון שלך, אנא צור קשר עם התמיכה",
       "SetupExitCodeCatch": "אירעה שגיאה בהקמת הארגון שלך, אנא צור קשר עם התמיכה",
-      "SetupExitCodeTimeout": "אירעה שגיאה בהקמת הארגון שלך, אנא צור קשר עם התמיכה"
+      "SetupExitCodeTimeout": "אירעה שגיאה בהקמת הארגון שלך, אנא צור קשר עם התמיכה",
+      "SetupOrgFailed": "הגדרת הארגון שלך נכשלה",
+      "CreateOrgFailed": "יצירת הארגון שלך נכשלה",
+      "CreateOrgCatch": "ארגון זה נמצא בשימוש או עלול להימחק באופן רך. נסה עם שם חדש"
     },
     "Warn": {
       "UniqueLinkFormat": "אותיות אלפאנומריות באותיות קטנות בלבד",
@@ -986,7 +989,11 @@
     },
     "Information": {
       "SetupInProgressTitle": "ההתקנה בעיצומה",
-      "SetupInProgressText": "אנא המתן בזמן שנקבע את הארגון שלך, זה עלול לקחת זמן מה"
+      "SetupInProgressText": "אנא המתן בזמן שנקבע את הארגון שלך, זה עלול לקחת זמן מה",
+      "OrgRedirectStart": "מפנה לארגון חדש",
+      "CreatingOrg": "יצירת הארגון שלך",
+      "SettingUpOrg": "הגדרת הארגון שלך עשויה להימשך זמן מה",
+      "VerifyingOrgNameAvail": "אימות זמינות"
     }
   },
   "$vuetify": {
