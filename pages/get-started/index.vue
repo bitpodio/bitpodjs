@@ -22,7 +22,7 @@
                 ? $t('Common.NameYourOrganization')
                 : tab === 2
                 ? $t('Drawer.CreateEventAction')
-                : ''
+                : $t('Messages.Error.SetupErrorTitle')
             }}
           </h2>
           <v-spacer></v-spacer>
@@ -93,8 +93,13 @@
               </v-form>
             </div>
           </div>
+          <div v-if="tab === 3">
+            <div class="fs-16 mb-4 message">
+              {{ $t('Messages.Error.SetupExitCodeTimeout') }}
+            </div>
+          </div>
         </v-card-text>
-        <v-divider></v-divider>
+        <v-divider v-if="tab !== 3"></v-divider>
         <v-card-actions
           class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
         >
@@ -246,12 +251,12 @@ export default {
     },
     async stepTwo() {
       this.processing = true
-      this.statusMessage = 'Creating your organization'
+      this.statusMessage = this.$t('Messages.Information.CreatingOrg')
       this.orgInfo = await this.createOrg()
       if (!this.orgInfo) {
         this.tab = 1
       } else {
-        this.statusMessage = 'Setting up your organization'
+        this.statusMessage = this.$t('Messages.Information.SettingUpOrg')
         this.endDateTime = new Date(
           new Date().setDate(this.startDateTime.getDate() + 4)
         )
@@ -298,48 +303,59 @@ export default {
                     },
                   }
                 )
-                if (jobInfo._SetupErrors.length) {
-                  this.snackbarText = 'Failed to setup your organisation.'
-                  this.snackbar = true
-                  this.tab = 1
-                  this.processing = false
-                  this.resetBtn = !this.resetBtn
-                } else if (jobInfo._SetupStatus.length) {
-                  const lastStatus =
-                    jobInfo._SetupStatus[jobInfo._SetupStatus.length - 1]
-                  if (
-                    lastStatus.Message === 'full setup completed' &&
-                    lastStatus.Code === 0
-                  ) {
-                    this.statusMessage = 'Redirecting to new organization'
-                    document.cookie.split(';').forEach((c) => {
-                      document.cookie = c
-                        .replace(/^ +/, '')
-                        .replace(
-                          /=.*/,
-                          '=;expires=' + new Date(0).toUTCString() + ';path=/'
-                        )
-                    })
-                    document.cookie.split(';').forEach((c) => {
-                      document.cookie = c
-                        .replace(/^ +/, '')
-                        .replace(
-                          /=.*/,
-                          '=;expires=' +
-                            new Date(0).toUTCString() +
-                            `;path=${this.$config.basePublicPath}`
-                        )
-                    })
-                    localStorage.clear()
-                    location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}/apps/event/list/Event/live-and-draft-event`
+                if (
+                  Object.keys(jobInfo).length &&
+                  new Date() - new Date(jobInfo.createdDate) < 90000
+                ) {
+                  if (jobInfo._SetupErrors.length) {
+                    this.snackbarText = this.$t('Messages.Error.SetupOrgFailed')
+                    this.snackbar = true
+                    this.tab = 1
+                    this.processing = false
+                    this.resetBtn = !this.resetBtn
+                  } else if (jobInfo._SetupStatus.length) {
+                    const lastStatus =
+                      jobInfo._SetupStatus[jobInfo._SetupStatus.length - 1]
+                    if (
+                      lastStatus.Message === 'full setup completed' &&
+                      lastStatus.Code === 0
+                    ) {
+                      this.statusMessage = this.$t(
+                        'Messages.Information.OrgRedirectStart'
+                      )
+                      document.cookie.split(';').forEach((c) => {
+                        document.cookie = c
+                          .replace(/^ +/, '')
+                          .replace(
+                            /=.*/,
+                            '=;expires=' + new Date(0).toUTCString() + ';path=/'
+                          )
+                      })
+                      document.cookie.split(';').forEach((c) => {
+                        document.cookie = c
+                          .replace(/^ +/, '')
+                          .replace(
+                            /=.*/,
+                            '=;expires=' +
+                              new Date(0).toUTCString() +
+                              `;path=${this.$config.basePublicPath}`
+                          )
+                      })
+                      localStorage.clear()
+                      location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}/apps/event/list/Event/live-and-draft-event`
+                    } else {
+                      setTimeout(jobStatusChecker, 1000)
+                    }
                   } else {
                     setTimeout(jobStatusChecker, 1000)
                   }
                 } else {
-                  setTimeout(jobStatusChecker, 1000)
+                  this.processing = false
+                  this.resetBtn = !this.resetBtn
+                  this.tab = 3
                 }
               } catch (err) {
-                this.snackbarText = 'Failed to setup your organisation.'
+                this.snackbarText = this.$t('Messages.Error.SetupOrgFailed')
                 this.snackbar = true
                 this.tab = 1
                 this.processing = false
@@ -352,14 +368,14 @@ export default {
             }
             setTimeout(jobStatusChecker, 1000)
           } else {
-            this.snackbarText = 'Failed to setup your organisation.'
+            this.snackbarText = this.$t('Messages.Error.SetupOrgFailed')
             this.snackbar = true
             this.tab = 1
             this.processing = false
             this.resetBtn = !this.resetBtn
           }
         } catch (err) {
-          this.snackbarText = 'Failed to setup your organisation.'
+          this.snackbarText = this.$t('Messages.Error.SetupOrgFailed')
           this.snackbar = true
           this.tab = 1
           this.processing = false
@@ -383,14 +399,13 @@ export default {
         } else {
           this.resetBtn = !this.resetBtn
           this.statusMessage = ''
-          this.snackbarText = 'Failed to create your organisation.'
+          this.snackbarText = this.$t('Messages.Error.CreateOrgFailed')
           this.snackbar = true
           return false
         }
       } catch (err) {
         this.statusMessage = ''
-        this.snackbarText =
-          'This organisation is in use or may be soft-deleted. Try with a new name.'
+        this.snackbarText = this.$t('Messages.Error.CreateOrgCatch')
         this.snackbar = true
         this.resetBtn = !this.resetBtn
         console.error(
@@ -406,7 +421,7 @@ export default {
     startCheck() {
       clearTimeout(this.checkTyping)
       this.processing = true
-      this.statusMessage = 'Verifying availability'
+      this.statusMessage = this.$t('Messages.Information.VerifyingOrgNameAvail')
       this.checkTyping = setTimeout(this.checkAvailablity, this.checkTimeout)
     },
     async checkAvailablity() {
