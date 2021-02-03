@@ -904,7 +904,11 @@
       "OrganisationAlreadyExists": "L'organisation existe déjà",
       "SetupErrorTitle": "Une erreur s'est produite",
       "SetupExitCode1": "Une erreur s'est produite lors de la configuration de votre organisation, veuillez contacter l'assistance.",
-      "SetupExitCodeCatch": "Une erreur s'est produite lors de la configuration de votre organisation, veuillez contacter l'assistance."
+      "SetupExitCodeCatch": "Une erreur s'est produite lors de la configuration de votre organisation, veuillez contacter l'assistance.",
+      "SetupExitCodeTimeout": "Une erreur s'est produite lors de la configuration de votre organisation, veuillez contacter l'assistance.",
+      "SetupOrgFailed": "Échec de la configuration de votre organisation.",
+      "CreateOrgFailed": "Échec de la création de votre organisation.",
+      "CreateOrgCatch": "Cette organisation est utilisée ou peut être supprimée de manière réversible. Essayez avec un nouveau nom."
     },
     "Warn": {
       "UniqueLinkFormat": "Minuscules lettres alphanumériques uniquement",
@@ -983,7 +987,11 @@
     },
     "Information": {
       "SetupInProgressTitle": "configuration en cours",
-      "SetupInProgressText": "Veuillez patienter pendant que nous configurons votre organisation, cela peut prendre un certain temps."
+      "SetupInProgressText": "Veuillez patienter pendant que nous configurons votre organisation, cela peut prendre un certain temps.",
+      "OrgRedirectStart": "Redirection vers une nouvelle organisation",
+      "CreatingOrg": "Créer votre organisation",
+      "SettingUpOrg": "La configuration de votre organisation peut prendre un certain temps.",
+      "VerifyingOrgNameAvail": "Vérification de la disponibilité"
     }
   },
   "$vuetify": {

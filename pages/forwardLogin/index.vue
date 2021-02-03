@@ -97,7 +97,10 @@ export default {
               //! Currently old orgs don't have a jobstatus.
               //! Considers an org to be old one if jobData's length is empty
               location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}${nuxtconfig.auth.redirect.home}`
-            } else {
+            } else if (
+              jobData.length &&
+              new Date() - new Date(jobData[0].createdDate) < 90000
+            ) {
               const jobInfo = jobData[0]
               if (jobInfo._SetupErrors.length) {
                 const errorCode =
@@ -138,6 +141,12 @@ export default {
                 this.showDialog = true
                 setTimeout(jobStatusChecker, 1000)
               }
+            } else {
+              this.statusMessage = this.$t(
+                'Messages.Error.SetupExitCodeTimeout'
+              )
+              this.titleMessage = this.$t('Messages.Error.SetupErrorTitle')
+              this.showDialog = true
             }
           } catch (err) {
             this.statusMessage = this.$t('Messages.Error.SetupExitCodeCatch')

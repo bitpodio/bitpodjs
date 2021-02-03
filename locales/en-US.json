@@ -906,7 +906,11 @@
       "OrganisationAlreadyExists": "Organization already exists",
       "SetupErrorTitle": "An error occured",
       "SetupExitCode1": "An error occured while setting up your organization, please get in touch with support.",
-      "SetupExitCodeCatch": "An error occured while setting up your organization, please get in touch with support."
+      "SetupExitCodeCatch": "An error occured while setting up your organization, please get in touch with support.",
+      "SetupExitCodeTimeout": "An error occured while setting up your organization, please get in touch with support.",
+      "SetupOrgFailed": "Failed to setup your organisation.",
+      "CreateOrgFailed": "Failed to create your organisation.",
+      "CreateOrgCatch": "This organisation is in use or may be soft-deleted. Try with a new name."
     },
     "Warn": {
       "UniqueLinkFormat": "Lower case alphanumeric letters only",
@@ -986,7 +990,11 @@
     },
     "Information": {
       "SetupInProgressTitle": "Setup in progress",
-      "SetupInProgressText": "Please wait while we setup your organization, this may take a while."
+      "SetupInProgressText": "Please wait while we setup your organization, this may take a while.",
+      "OrgRedirectStart": "Redirecting to new organization",
+      "CreatingOrg": "Creating your organization",
+      "SettingUpOrg": "Setting up your organization, this may take a while.",
+      "VerifyingOrgNameAvail": "Verifying availability"
     }
   },
   "$vuetify": {
