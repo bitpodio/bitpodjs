@@ -2050,21 +2050,15 @@ export default {
       }
       this.isEventPublish = true
       this.isEventCreate = false
-      const modelName = 'Event'
-      const where = {
-        id: this.eventId,
+      const url = this.$bitpod.getApiUrl()
+      try {
+        await this.$axios.patch(`${url}Events/${this.eventId}`, eventStatus)
+      } catch (e) {
+        console.error(
+          `Error in app/Event/newRecurringEvent.vue while making a PATCH call to Event model from method eventPublish context:-URL:-${url}\n formData:-${this.formData}\n id:-${this.eventId} `,
+          e
+        )
       }
-      const editItemMutation = this.buildMutationUpsertQuery(modelName)
-      await this.$apollo.mutate({
-        mutation: gql(editItemMutation),
-        variables: {
-          Inputs: {
-            where,
-            data: eventStatus,
-            clientMutationId: `${modelName} list item updated successfully.`,
-          },
-        },
-      })
     },
     changeTicketType(index) {
       if (this.tickets[index].Type === 'Free') {

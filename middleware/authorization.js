@@ -40,12 +40,14 @@ export default function (context) {
         const { req } = context
         const hostName = req.headers.host
         const publicDomain = process.env.PUBLIC_DOMAIN
-        if (hostName === publicDomain) {
-          const userFirstOrgName = userOrgStore.name || ''
-          const basePath = process.env.PUBLIC_PATH || ''
-          return redirect(
-            `https://${publicDomain}${basePath}/forwardLogin?targetDomain=${userFirstOrgName}`
-          )
+        if (!hostName.includes('localhost')) {
+          if (hostName === publicDomain) {
+            const userFirstOrgName = userOrgStore.name || ''
+            const basePath = process.env.PUBLIC_PATH || ''
+            return redirect(
+              `https://${publicDomain}${basePath}/forwardLogin?targetDomain=${userFirstOrgName}`
+            )
+          }
         }
       }
       if (!isValidPage(store, route)) {
