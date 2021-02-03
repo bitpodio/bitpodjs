@@ -2,7 +2,7 @@
   <div>
     <div>
       <v-flex class="d-flex flex-md-row flex-lg-row flex-column">
-        <v-flex column class="mxw-w70 flex-column">
+        <v-flex column class="mxw-w70 d-flex flex-column">
           <div
             class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
           >
@@ -268,7 +268,7 @@
             <v-flex class="py-2"></v-flex>
           </div>
         </v-flex>
-        <v-flex column class="mxw-w30 flex-column">
+        <v-flex column class="mxw-w30  flex-column">
           <div
             class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-2 box-grey"
           >
