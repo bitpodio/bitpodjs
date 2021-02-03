@@ -2,6 +2,7 @@
   <div>
     <v-autocomplete
       v-model="value"
+      :t-id="tId"
       :items="items"
       :item-text="itemText"
       :item-value="itemValue"
@@ -66,6 +67,10 @@ export default {
       type: Function,
       required: false,
       default: () => null,
+    },
+    tId: {
+      type: String,
+      default: '',
     },
   },
   data() {
