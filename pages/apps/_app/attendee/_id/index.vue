@@ -990,7 +990,7 @@ export default {
         window.open(`${roomName}?e=${this.event.id}`)
       } else {
         window.open(
-          `https://meet.bitpod.io/${this.store.state.currentOrg.name}-${roomName}?e=${this.event.id}`
+          `https://meet.bitpod.io/${this.$store.state.currentOrg.name}-${roomName}?e=${this.event.id}`
         )
       }
     },
