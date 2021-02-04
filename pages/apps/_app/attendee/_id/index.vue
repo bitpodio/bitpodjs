@@ -985,10 +985,13 @@ export default {
       return fieldValue || ' '
     },
     startEvent(roomName, isFullLink) {
+      debugger
       if (isFullLink) {
         window.open(`${roomName}?e=${this.event.id}`)
       } else {
-        window.open(`https://meet.bitpod.io/${roomName}?e=${this.event.id}`)
+        window.open(
+          `https://meet.bitpod.io/${this.store.state.currentOrg.name}-${roomName}?e=${this.event.id}`
+        )
       }
     },
     getEventStartDate() {
