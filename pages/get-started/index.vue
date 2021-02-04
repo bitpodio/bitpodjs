@@ -59,8 +59,19 @@
                   @keyup="startCheck"
                   @keydown="cancelCheck"
                 ></v-text-field>
+                <div
+                  v-if="!processing && allow"
+                  class="valid-org success--text mt-n5 mb-2 ml-2"
+                >
+                  {{
+                    $t('Messages.Success.OrgNameSuccess', {
+                      orgName: orgName,
+                      suffixRoute: $t('Common.SuffixRoute'),
+                    })
+                  }}
+                </div>
               </v-form>
-              <div class="fs-20 pa-1">
+              <div class="fs-20 mt-2 ml-1">
                 {{ $t('Common.SuffixRoute') }}
               </div>
             </div>
@@ -105,7 +116,7 @@
         >
           <div v-if="tab === 1" class="d-flex">
             <SaveBtn
-              class="mt-1"
+              class="my-1"
               dense
               color="primary"
               :disabled="!allow || processing"
@@ -113,13 +124,16 @@
               :action="stepOne"
               :reset="resetBtn"
             ></SaveBtn>
-            <div v-if="allowable" class="fs-14 pa-3 statusMessage">
+            <div
+              v-if="allowable"
+              class="fs-14 pa-3 statusMessage primary--text"
+            >
               {{ statusMessage }}
             </div>
           </div>
           <div v-if="tab === 2" class="d-flex">
             <SaveBtn
-              class="mt-1"
+              class="my-1"
               dense
               color="primary"
               :disabled="!eventName || invalidDate || processing"
@@ -127,7 +141,9 @@
               :action="stepTwo"
               :reset="resetBtn"
             ></SaveBtn>
-            <div class="fs-14 pa-3 statusMessage">{{ statusMessage }}</div>
+            <div class="fs-14 pa-3 statusMessage primary--text">
+              {{ statusMessage }}
+            </div>
           </div>
         </v-card-actions>
       </v-card>
@@ -432,12 +448,10 @@ export default {
               this.orgName
             }`
           )
-          if (res) {
-            this.allow = res.result
-            this.processing = false
-            this.statusMessage = ''
-            this.$refs.form.validate()
-          }
+          this.allow = res
+          this.processing = false
+          this.statusMessage = ''
+          this.$refs.form.validate()
         } catch (err) {
           this.processing = false
           this.statusMessage = ''
@@ -469,5 +483,11 @@ export default {
 }
 .statusMessage {
   height: 14px;
+}
+.valid-org {
+  font-size: 12px;
+  line-height: 12px;
+  word-break: break-word;
+  hyphens: auto;
 }
 </style>

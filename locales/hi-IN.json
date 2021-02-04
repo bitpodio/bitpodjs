@@ -726,13 +726,13 @@
     "DeleteNote": "नोट हटाएँ",
     "PastEventMessage": "यह ईवेंट अब सक्रिय नहीं है.",
     "GoToOldSite": "पुरानी साइट पर जाएं",
-    "SetupDomain": "You could be a business, an event organizer, or a professional community. Choose the banner under which you will host your events.",
+    "SetupDomain": "अपना संगठन नाम दर्ज करें, इसका उपयोग आपके अद्वितीय साइट url को सेट करने के लिए किया जाएगा।",
     "WelcomeToBitpod": "Welcome to Bitpod",
-    "NameYourOrganization": "Name your organization",
+    "NameYourOrganization": "अपना संगठन सेट करें",
     "SuffixRoute": "-event.bitpod.io",
     "CreateOrganisation": "Create organisation",
     "OrganizationName": "Organization Name*",
-    "CreateEventMessage": "Create your first Event! This is your playground. Feel free to invite friends and learn exciting ways to engage your audience on Bitpod-Event.",
+    "CreateEventMessage": "अपने ईवेंट के बारे में जानने के लिए अपने ईवेंट के बारे में जानने के लिए ईवेंट नाम और विवरण दर्ज करें, उन विवरणों को जोड़ें जो किसी को इसमें शामिल होना चाहिए।",
     "EventDateTime": "Event dateand time*",
     "YourTitleHere": "Your title will be displayed here",
     "SelectField": "एक क्षेत्र का चयन करें",
@@ -903,7 +903,7 @@
       "MinimumCharacter": "कृपया न्यूनतम 3 वर्ण",
       "MaximumCharacter": "कृपया अधिकतम 20 वर्ण",
       "NameMustStartWithAlphabet": "नाम वर्णमाला से शुरू होना चाहिए",
-      "OrganisationAlreadyExists": "संगठन पहले से मौजूद है",
+      "OrganisationAlreadyExists": "यह नाम पहले ही ले लिया गया है",
       "SetupErrorTitle": "एक त्रुटि हुई",
       "SetupExitCode1": "आपके संगठन की स्थापना करते समय एक त्रुटि हुई, कृपया समर्थन से संपर्क करें।",
       "SetupExitCodeCatch": "आपके संगठन की स्थापना करते समय एक त्रुटि हुई, कृपया समर्थन से संपर्क करें।",
@@ -989,7 +989,8 @@
       "RegistrationFormUpdatedSuccess": "पंजीकरण फॉर्म सफलतापूर्वक अपडेट किया गया",
       "SessionCreatedSuccess": "सत्र सफलतापूर्वक बनाया गया",
       "SessionUpdatedSuccess": "सत्र सफलतापूर्वक अपडेट किया गया",
-      "ContactImportSuccess": "आयात निष्पादन शुरू हुआ"
+      "ContactImportSuccess": "आयात निष्पादन शुरू हुआ",
+      "OrgNameSuccess": "https://{orgName}{suffixRoute} उपलब्ध है"
     },
     "Information": {
       "SetupInProgressTitle": "सेटअप प्रगति पर है",
@@ -997,7 +998,7 @@
       "OrgRedirectStart": "नए संगठन में पुनर्निर्देशित करना",
       "CreatingOrg": "अपना संगठन बनाना",
       "SettingUpOrg": "अपना संगठन सेट करना, इसमें कुछ समय लग सकता है।",
-      "VerifyingOrgNameAvail": "उपलब्धता का सत्यापन"
+      "VerifyingOrgNameAvail": "उपलब्धता की जाँच"
     }
   },
   "$vuetify": {
