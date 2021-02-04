@@ -25,6 +25,7 @@
         :accept="accept"
         prepend-icon="mdi-cloud-upload"
         @change="onChange"
+        @click="clearInput($event)"
       ></v-file-input>
     </div>
     <div v-if="!hidePreview" :class="{ 'pt-12': allowSecondUpload }">
@@ -130,6 +131,9 @@ export default {
     },
     uploadClicked() {
       this.$refs.test.$el.firstElementChild.firstElementChild.firstElementChild.click()
+    },
+    clearInput(event) {
+      event.target.value = ''
     },
     async onChange(files) {
       const fileUploadPromises = files.map((file) => this.uploadFile(file))
