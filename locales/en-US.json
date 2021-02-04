@@ -935,7 +935,11 @@
       "DeleteSeatMap": "Do you want to delete this seatmap?",
       "DeleteSeatMapEvent": "Do you want to delete this seat map? This layout already associated with Event.",
       "RegistrationTypeDefault": "Only one registration type can be set to default",
-      "RegistrationTypeWarning": "Registration Type Warning"
+      "RegistrationTypeWarning": "Registration Type Warning",
+      "PaymentGatewayWarning":"Payment Gateway Warning",
+      "PaymentGatewayDefault":"Only one Payment connection can be connected.",
+      "SeatMapDefault":"Seatmap Warning",
+      "SeatMapWarning":"There are unsaved changes which will be lost if you close without saving, are you sure?"
     },
     "Success": {
       "CopiedClipboard": "Copied to clipboard",

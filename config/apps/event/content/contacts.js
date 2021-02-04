@@ -892,7 +892,7 @@ export default {
         model: 'CRMActivity',
         filter(ctx) {
           return {
-            where: {},
+            where: { Type: 'Mass Email' },
           }
         },
       },

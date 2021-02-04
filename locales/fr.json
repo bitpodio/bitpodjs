@@ -932,7 +932,11 @@
       "DeleteSeatMapEvent": "Voulez-vous supprimer ce plan de siège? Cette mise en page est déjà associée à Event.",
       "DeleteEventQuestion": "Voulez-vous supprimer cette question?",
       "RegistrationTypeDefault": "Un seul type d'enregistrement peut être défini par défaut",
-      "RegistrationTypeWarning": "Avertissement de type d'enregistrement"
+      "RegistrationTypeWarning": "Avertissement de type d'enregistrement",
+      "PaymentGatewayWarning": "Avertissement de passerelle de paiement",
+      "PaymentGatewayDefault": "Une seule connexion de paiement peut être connectée.",
+      "SeatMapDefault":"Avertissement de plan de siège",
+      "SeatMapWarning":"Certaines modifications non enregistrées seront perdues si vous fermez sans enregistrer, êtes-vous sûr?"
     },
     "Success": {
       "CopiedClipboard": "Copié dans le presse-papiers",
