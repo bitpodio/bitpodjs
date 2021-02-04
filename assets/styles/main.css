@@ -442,11 +442,13 @@ body {
   background-color: transparent !important;
 }
 .mxw-w70 {
+  min-width: 70% !important;
   max-width: 70% !important;
   width: 70% !important;
 }
 .mxw-w30 {
   max-width: 30% !important;
+  min-width: 30% !important;
   width: 30% !important;
 }
 .seatmap .container.container--fluid {

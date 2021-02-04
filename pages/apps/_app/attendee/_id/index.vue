@@ -409,9 +409,13 @@
                                     'Google Meet'
                                 "
                               >
-                                <v-alert dense outlined type="info">
-                                  <i18n path="Common.CheckCalendarInvite"
-                                /></v-alert>
+                                <p class="pb-0 fs-14 primary--text">
+                                  <i
+                                    class="fa-info-circle pr-1"
+                                    aria-hidden="true"
+                                  ></i>
+                                  <i18n path="Common.CheckCalendarInvite" />
+                                </p>
                               </div>
                             </div>
                           </v-list-item-icon>
@@ -988,7 +992,9 @@ export default {
       if (isFullLink) {
         window.open(`${roomName}?e=${this.event.id}`)
       } else {
-        window.open(`https://meet.bitpod.io/${roomName}?e=${this.event.id}`)
+        window.open(
+          `https://meet.bitpod.io/${this.$store.state.currentOrg.name}-${roomName}?e=${this.event.id}`
+        )
       }
     },
     getEventStartDate() {
