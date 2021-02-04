@@ -179,7 +179,7 @@
             :disabled="
               !valid ||
               !datevalid ||
-              (formData.Type !== 'Free' && formData.Amount < 1) ||
+              (formData.Type !== 'Free' && formData.Amount <= 0) ||
               formData.Code === ''
             "
             :label="this.$t('Drawer.Save')"
