@@ -724,13 +724,13 @@
     "DeleteNote": "Supprimer la note",
     "PastEventMessage": "Cet événement n'est plus actif.",
     "GoToOldSite": "Aller sur l'ancien site",
-    "SetupDomain": "You could be a business, an event organizer, or a professional community. Choose the banner under which you will host your events.",
+    "SetupDomain": "Entrez le nom de votre organisation, il sera utilisé pour configurer votre URL de site unique.",
     "WelcomeToBitpod": "Welcome to Bitpod",
-    "NameYourOrganization": "Name your organization",
+    "NameYourOrganization": "Configurez votre organisation",
     "SuffixRoute": "-event.bitpod.io",
     "CreateOrganisation": "Create organisation",
     "OrganizationName": "Organization Name*",
-    "CreateEventMessage": "Create your first Event! This is your playground. Feel free to invite friends and learn exciting ways to engage your audience on Bitpod-Event.",
+    "CreateEventMessage": "Entrez le nom et les détails de l'événement pour aider votre public à en savoir plus sur votre événement, ajoutez des détails qui soulignent pourquoi quelqu'un devrait y assister.",
     "EventDateTime": "Event dateand time*",
     "YourTitleHere": "Your title will be displayed here",
     "SelectField": "Sélectionnez un champ",
@@ -901,7 +901,7 @@
       "MinimumCharacter": "Minimum 3 caractères s'il vous plaît",
       "MaximumCharacter": "Maximum 20 caractères s'il vous plaît",
       "NameMustStartWithAlphabet": "Le nom doit commencer par l'alphabet",
-      "OrganisationAlreadyExists": "L'organisation existe déjà",
+      "OrganisationAlreadyExists": "Ce nom est déjà pris",
       "SetupErrorTitle": "Une erreur s'est produite",
       "SetupExitCode1": "Une erreur s'est produite lors de la configuration de votre organisation, veuillez contacter l'assistance.",
       "SetupExitCodeCatch": "Une erreur s'est produite lors de la configuration de votre organisation, veuillez contacter l'assistance.",
@@ -983,7 +983,8 @@
       "RegistrationFormUpdatedSuccess": "Formulaire d'inscription mis à jour avec succès",
       "SessionCreatedSuccess": "Session créée avec succès",
       "SessionUpdatedSuccess": "Session mise à jour avec succès",
-      "ContactImportSuccess": "L'exécution de l'importation a commencé"
+      "ContactImportSuccess": "L'exécution de l'importation a commencé",
+      "OrgNameSuccess": "https://{orgName}{suffixRoute} est disponible"
     },
     "Information": {
       "SetupInProgressTitle": "configuration en cours",
@@ -991,7 +992,7 @@
       "OrgRedirectStart": "Redirection vers une nouvelle organisation",
       "CreatingOrg": "Créer votre organisation",
       "SettingUpOrg": "La configuration de votre organisation peut prendre un certain temps.",
-      "VerifyingOrgNameAvail": "Vérification de la disponibilité"
+      "VerifyingOrgNameAvail": "vérifier les disponibilités"
     }
   },
   "$vuetify": {
