@@ -394,6 +394,7 @@ export default {
     },
   },
   async created() {
+    debugger
     let token = this.$auth.strategy.token.get()
     if (token) {
       token = token.split(' ')[1]
@@ -401,11 +402,37 @@ export default {
     await this.$apolloHelpers.onLogin(token, undefined, { expires: 7 })
   },
   mounted() {
+    debugger
     const userInfo = userUtils.userCurrentOrgInfo(this.$store) || {}
     const userRoles = userInfo.roles || []
     this.allowUpgrade = userRoles.includes('$orgowner')
+    this.$eventBus.$on('setNewToken', this.setToken)
+
+    // this.setToken()
+    // window.setInterval(() => {
+    //   debugger
+    //   // let lastCookie = document.cookie
+    //   // // console.log('trigger lastcookie outside', lastCookie)
+    //   // return function () {
+    //   //   const currentCookie = document.cookie
+    //   //   // console.log('trigger currentCookie inside', currentCookie)
+    //   //   if (currentCookie !== lastCookie) {
+    //   //     lastCookie = currentCookie // store latest cookie
+    //   //     console.log('trigger currentCookie not same inside', lastCookie)
+    //   //   }
+    //   // }
+    //   this.setToken()
+    // }, 1000)
   },
   methods: {
+    async setToken() {
+      debugger
+      let token = this.$auth.strategy.token.get()
+      if (token) {
+        token = token.split(' ')[1]
+      }
+      await this.$apolloHelpers.onLogin(token, undefined, { expires: 7 })
+    },
     async onLogout() {
       await this.$apolloHelpers.onLogout()
       this.$auth.logout()

@@ -393,7 +393,14 @@ export default {
     }
   },
   mounted() {
+    debugger
     this.$eventBus.$on('searched-key', this.searchKeyChanged)
+    if (
+      this.$cookies.get('auth._token.bitpod').split(' ')[1] !==
+      this.$cookies.get('apollo-token')
+    ) {
+      this.$eventBus.$emit('setNewToken')
+    }
   },
   methods: {
     searchKeyChanged(data) {
