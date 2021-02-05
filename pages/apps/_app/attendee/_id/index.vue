@@ -990,7 +990,7 @@ export default {
       const baseUrl = this.$bitpod.getApiUrl()
       const regUrl = baseUrl.replace(
         '/svc/api/',
-        `${this.$config.basePublicPath}/apps/event/virtual`
+        `${this.$config.basePublicPath}/apps/event/virtual/`
       )
       if (isFullLink) {
         window.open(`${regUrl}${this.registration.id}?watch=${roomName}`)
