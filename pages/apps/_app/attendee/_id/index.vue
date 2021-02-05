@@ -211,9 +211,7 @@
                                 outlined
                                 color="success"
                                 :disabled="isPast"
-                                @click="
-                                  startEvent(item.BitpodVirtualLink, true)
-                                "
+                                @click="startEvent(item.id, true)"
                               >
                                 <i18n path="Common.JoinSession" /><v-icon right>
                                   mdi-video
@@ -989,8 +987,14 @@ export default {
       return fieldValue || ' '
     },
     startEvent(roomName, isFullLink) {
+      debugger
+      const baseUrl = this.$bitpod.getApiUrl()
+      const regUrl = baseUrl.replace(
+        'svc/api',
+        `${this.$config.basePublicPath}/apps/event/virtual`
+      )
       if (isFullLink) {
-        window.open(`${roomName}?e=${this.event.id}`)
+        window.open(`${regUrl}${this.registration.id}?watch=${roomName}`)
       } else {
         window.open(
           `https://meet.bitpod.io/${this.$store.state.currentOrg.name}-${roomName}?e=${this.event.id}`
