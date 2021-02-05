@@ -989,7 +989,7 @@ export default {
     startEvent(roomName, isFullLink) {
       const baseUrl = this.$bitpod.getApiUrl()
       const regUrl = baseUrl.replace(
-        'svc/api',
+        '/svc/api/',
         `${this.$config.basePublicPath}/apps/event/virtual`
       )
       if (isFullLink) {
