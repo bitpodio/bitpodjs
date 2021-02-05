@@ -305,7 +305,21 @@ export const configLoaderMixin = {
   },
   data() {
     return {
+      token: this.$auth.$storage.getCookies()['auth._token.bitpod'],
       contents: null,
+    }
+  },
+  async created() {
+    console.debug('access token received from the cookie', this.token)
+    if (
+      this.token.split(' ')[1] !==
+      this.$auth.$storage.getCookies()['apollo-token']
+    ) {
+      let token = this.$auth.strategy.token.get()
+      if (token) {
+        token = token.split(' ')[1]
+      }
+      await this.$apolloHelpers.onLogin(token, undefined, { expires: 7 })
     }
   },
   async mounted() {

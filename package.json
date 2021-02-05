@@ -15,7 +15,7 @@
     "precommit": "yarn lint"
   },
   "dependencies": {
-    "@bitpod/auth-nuxt": "^5.0.0-1611342221.ecd93d3",
+    "@bitpod/auth-nuxt": "^5.0.0-1612519677.1f1fc62",
     "@fullcalendar/core": "^5.3.1",
     "@fullcalendar/daygrid": "^5.3.0",
     "@fullcalendar/interaction": "^5.3.0",
