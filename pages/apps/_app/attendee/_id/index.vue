@@ -995,8 +995,10 @@ export default {
       if (isFullLink) {
         window.open(`${regUrl}${this.registration.id}?watch=${roomName}`)
       } else {
+        debugger
+        const orgName = window.location.origin.split('-')[0].split('//')[1]
         window.open(
-          `https://meet.bitpod.io/${this.$store.state.currentOrg.name}-${roomName}?e=${this.event.id}`
+          `https://meet.bitpod.io/${orgName}-${roomName}?e=${this.event.id}`
         )
       }
     },
