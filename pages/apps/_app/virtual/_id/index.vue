@@ -258,7 +258,13 @@
           </v-flex>
           <v-flex column class="flex-30 pl-3">
             <div class="d-none d-sm-block">
-              <div v-if="event.BusinessType === 'Single'">
+              <div
+                v-if="
+                  registration &&
+                  registration.EventList &&
+                  registration.EventList.BusinessType === 'Single'
+                "
+              >
                 <div
                   v-if="
                     registration &&
