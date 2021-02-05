@@ -725,13 +725,13 @@
     "DeleteNote": "Delete Note",
     "PastEventMessage": "This event is no longer active.",
     "GoToOldSite": "Go to the old site",
-    "SetupDomain": "You could be a business, an event organizer, or a professional community. Choose the banner under which you will host your events.",
+    "SetupDomain": "Enter your organization name, this will be used to set up your unique site url.",
     "WelcomeToBitpod": "Welcome to Bitpod",
-    "NameYourOrganization": "Name your organization",
+    "NameYourOrganization": "Setup your organization",
     "SuffixRoute": "-event.bitpod.io",
     "CreateOrganisation": "Create organisation",
     "OrganizationName": "Organization Name*",
-    "CreateEventMessage": "Create your first Event! This is your playground. Feel free to invite friends and learn exciting ways to engage your audience on Bitpod-Event.",
+    "CreateEventMessage": "Enter event name and details to help your audience learn about your event, add details that highlights why someone should attend it.",
     "EventDateTime": "Event dateand time*",
     "YourTitleHere": "Your title will be displayed here",
     "SelectField": "Select a field",
@@ -903,7 +903,7 @@
       "MinimumCharacter": "Minimum 3 characters please",
       "MaximumCharacter": "Maximum 20 characters please",
       "NameMustStartWithAlphabet": "Name must start with alphabet",
-      "OrganisationAlreadyExists": "Organization already exists",
+      "OrganisationAlreadyExists": "This name is already taken",
       "SetupErrorTitle": "An error occured",
       "SetupExitCode1": "An error occured while setting up your organization, please get in touch with support.",
       "SetupExitCodeCatch": "An error occured while setting up your organization, please get in touch with support.",
@@ -935,7 +935,11 @@
       "DeleteSeatMap": "Do you want to delete this seatmap?",
       "DeleteSeatMapEvent": "Do you want to delete this seat map? This layout already associated with Event.",
       "RegistrationTypeDefault": "Only one registration type can be set to default",
-      "RegistrationTypeWarning": "Registration Type Warning"
+      "RegistrationTypeWarning": "Registration Type Warning",
+      "PaymentGatewayWarning":"Payment Gateway Warning",
+      "PaymentGatewayDefault":"Only one Payment connection can be connected.",
+      "SeatMapDefault":"Seatmap Warning",
+      "SeatMapWarning":"There are unsaved changes which will be lost if you close without saving, are you sure?"
     },
     "Success": {
       "CopiedClipboard": "Copied to clipboard",
@@ -986,7 +990,8 @@
       "RegistrationFormUpdatedSuccess": "Registration Form updated successfully",
       "SessionCreatedSuccess": "Session created successfully",
       "SessionUpdatedSuccess": "Session updated successfully",
-      "ContactImportSuccess": "Import execution started"
+      "ContactImportSuccess": "Import execution started",
+      "OrgNameSuccess": "https://{orgName}{suffixRoute} is available"
     },
     "Information": {
       "SetupInProgressTitle": "Setup in progress",
@@ -994,7 +999,7 @@
       "OrgRedirectStart": "Redirecting to new organization",
       "CreatingOrg": "Creating your organization",
       "SettingUpOrg": "Setting up your organization, this may take a while.",
-      "VerifyingOrgNameAvail": "Verifying availability"
+      "VerifyingOrgNameAvail": "Checking availability"
     }
   },
   "$vuetify": {

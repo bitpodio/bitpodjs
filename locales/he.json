@@ -726,13 +726,13 @@
     "DeleteNote": "מחק הערה",
     "PastEventMessage": "אירוע זה אינו פעיל יותר.",
     "GoToOldSite": "היכנס לאתר הישן",
-    "SetupDomain": "You could be a business, an event organizer, or a professional community. Choose the banner under which you will host your events.",
+    "SetupDomain": "הזן את שם הארגון שלך, זה ישמש להגדרת כתובת האתר הייחודית שלך.",
     "WelcomeToBitpod": "Welcome to Bitpod",
-    "NameYourOrganization": "Name your organization",
+    "NameYourOrganization": "הגדר את הארגון שלך",
     "SuffixRoute": "-event.bitpod.io",
     "CreateOrganisation": "Create organisation",
     "OrganizationName": "Organization Name*",
-    "CreateEventMessage": "Create your first Event! This is your playground. Feel free to invite friends and learn exciting ways to engage your audience on Bitpod-Event.",
+    "CreateEventMessage": "הזן שם אירוע ופרטים שיעזרו לקהל שלך ללמוד על האירוע שלך, הוסף פרטים המדגישים מדוע מישהו צריך להשתתף בו.",
     "EventDateTime": "Event dateand time*",
     "YourTitleHere": "Your title will be displayed here",
     "SelectField": "בחר שדה",
@@ -903,7 +903,7 @@
       "MinimumCharacter": "מינימום 3 תווים בבקשה",
       "MaximumCharacter": "מקסימום 20 תווים בבקשה",
       "NameMustStartWithAlphabet": "השם חייב להתחיל באלף בית",
-      "OrganisationAlreadyExists": "ארגון כבר קיים",
+      "OrganisationAlreadyExists": "שם זה כבר נלקח",
       "SetupErrorTitle": "חלה שגיאה",
       "SetupExitCode1": "אירעה שגיאה בהקמת הארגון שלך, אנא צור קשר עם התמיכה",
       "SetupExitCodeCatch": "אירעה שגיאה בהקמת הארגון שלך, אנא צור קשר עם התמיכה",
@@ -934,7 +934,11 @@
       "DeleteSeatMapEvent": "האם אתה רוצה למחוק את מפת המושבים הזו? פריסה זו כבר משויכת לאירוע.",
       "DeleteEventQuestion": "האם ברצונך למחוק שאלה זו?",
       "RegistrationTypeDefault": "ניתן להגדיר ברירת מחדל רק סוג רישום אחד",
-      "RegistrationTypeWarning": "אזהרת סוג רישום"
+      "RegistrationTypeWarning": "אזהרת סוג רישום",
+      "PaymentGatewayWarning":"אזהרת שער תשלום",
+      "PaymentGatewayDefault":"ניתן לחבר רק חיבור תשלום אחד.",
+      "SeatMapDefault":"אזהרת מפת מושב",
+      "SeatMapWarning":"ישנם שינויים שלא נשמרו אשר יאבדו אם תסגור מבלי לשמור, האם אתה בטוח?"
     },
     "Success": {
       "CopiedClipboard": "הועתק ללוח",
@@ -985,7 +989,8 @@
       "RegistrationFormUpdatedSuccess": "טופס ההרשמה עודכן בהצלחה",
       "SessionCreatedSuccess": "ההפעלה נוצרה בהצלחה",
       "SessionUpdatedSuccess": "ההפעלה עודכנה בהצלחה",
-      "ContactImportSuccess": "ביצוע הייבוא ​​החל"
+      "ContactImportSuccess": "ביצוע הייבוא ​​החל",
+      "OrgNameSuccess": "https://{orgName}{suffixRoute} זמין"
     },
     "Information": {
       "SetupInProgressTitle": "ההתקנה בעיצומה",
@@ -993,7 +998,7 @@
       "OrgRedirectStart": "מפנה לארגון חדש",
       "CreatingOrg": "יצירת הארגון שלך",
       "SettingUpOrg": "הגדרת הארגון שלך עשויה להימשך זמן מה",
-      "VerifyingOrgNameAvail": "אימות זמינות"
+      "VerifyingOrgNameAvail": "בודק זמינות"
     }
   },
   "$vuetify": {

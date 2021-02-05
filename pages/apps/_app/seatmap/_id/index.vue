@@ -4,28 +4,7 @@
     <v-snackbar v-model="snackbar" :timeout="timeout" top="true" width="2px">
       <div class="fs-16 text-center">{{ snackbarText }}</div>
     </v-snackbar>
-    <v-dialog v-model="popupDialog" width="500">
-      <v-card>
-        <v-card-text class="pt-3">
-          <i18n path="Common.UnsavedChanges" />
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="primary" small dark dense @click="closeSeatMap">
-            <i18n path="Drawer.OK" />
-          </v-btn>
-          <v-btn
-            color="primary"
-            small
-            outlined
-            dense
-            @click="popupDialog = false"
-          >
-            <i18n path="Drawer.Cancel" />
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    <confirm ref="confirm"></confirm>
   </div>
 </template>
 <script>
@@ -70,7 +49,6 @@ export default {
       seatmapData: null,
       loading: false,
       iframe: { src: `${seatmapUrl}seatmap`, loaded: false },
-      popupDialog: false,
     }
   },
   mounted() {
@@ -127,7 +105,14 @@ export default {
             // eslint-disable-next-line no-lone-blocks
             {
               if (eventData.data.dirtyCheck) {
-                this.popupDialog = true
+                const confirmRes = await this.$refs.confirm.open(
+                  this.$t('Messages.Warn.SeatMapDefault'),
+                  this.$t('Messages.Warn.SeatMapWarning'),
+                  { color: 'warning' }
+                )
+                if (confirmRes) {
+                  this.closeSeatMap()
+                }
               } else {
                 this.$eventBus.$emit('seat-map-triggered')
                 this.$router.back()
@@ -201,7 +186,6 @@ export default {
       }
     },
     closeSeatMap() {
-      this.popupDialog = false
       this.$router.back()
     },
   },
