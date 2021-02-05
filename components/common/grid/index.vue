@@ -109,11 +109,7 @@
           </div>
           <div v-if="hideFilter" class="grid-filter">
             <slot name="filter">
-              <FieldsFilter
-                v-model="filters"
-                :is-filter-applied="isFilterApplied"
-                :fields="filterableFields"
-              />
+              <FieldsFilter v-model="filters" :fields="filterableFields" />
             </slot>
           </div>
           <div
@@ -625,7 +621,6 @@ export default {
       loading: true,
       totalCount: 0,
       options: {},
-      isFilterApplied: false,
       filterFields: {},
       filters: { rules: [], ruleCondition: 'and' },
       component: [],
@@ -963,9 +958,6 @@ export default {
     updatePageChange(data) {
       this.loading = true
       this.loadRestData()
-    },
-    onFilterClick(e) {
-      this.isFilterApplied = true
     },
     onRowClick(item, props) {
       if (!this.showSelect && !this.$device.isMobile) {
