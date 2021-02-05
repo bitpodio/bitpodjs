@@ -987,7 +987,6 @@ export default {
       return fieldValue || ' '
     },
     startEvent(roomName, isFullLink) {
-      debugger
       const baseUrl = this.$bitpod.getApiUrl()
       const regUrl = baseUrl.replace(
         'svc/api',
