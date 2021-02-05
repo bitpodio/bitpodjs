@@ -310,6 +310,7 @@ export const configLoaderMixin = {
     }
   },
   async created() {
+    console.debug('access token received from the cookie', this.token)
     if (
       this.token.split(' ')[1] !==
       this.$auth.$storage.getCookies()['apollo-token']
