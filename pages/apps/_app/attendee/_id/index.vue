@@ -211,9 +211,7 @@
                                 outlined
                                 color="success"
                                 :disabled="isPast"
-                                @click="
-                                  startEvent(item.BitpodVirtualLink, true)
-                                "
+                                @click="startEvent(item.id, true)"
                               >
                                 <i18n path="Common.JoinSession" /><v-icon right>
                                   mdi-video
@@ -400,6 +398,22 @@
                                     </v-icon>
                                   </v-btn>
                                 </a>
+                              </div>
+                              <div
+                                v-if="
+                                  registration.EventList.BusinessType ===
+                                    'Recurring' &&
+                                  registration.SessionListId[0].LocationType ===
+                                    'Google Meet'
+                                "
+                              >
+                                <p class="pb-0 fs-14 primary--text">
+                                  <i
+                                    class="fa-info-circle pr-1"
+                                    aria-hidden="true"
+                                  ></i>
+                                  <i18n path="Common.CheckCalendarInvite" />
+                                </p>
                               </div>
                             </div>
                           </v-list-item-icon>
@@ -656,20 +670,11 @@
                       <tbody v-else>
                         <tr v-for="item in attendeeData" :key="item">
                           <td>{{ item.ticketName }}</td>
-                          <td>{{ item.ticketAmount }}</td>
+                          <td>{{ registration.Currency }} {{ item.price }}</td>
                           <td>
                             <div class="total-align">{{ item.count }}</div>
                           </td>
-                          <td>{{ item.ticketAmount * item.count }}</td>
-                        </tr>
-                        <tr>
-                          <td></td>
-                          <td></td>
-                          <td>
-                            <span><i18n path="Common.Total" /></span>
-                            <span>{{ registration.TicketQuantity }}</span>
-                          </td>
-                          <td></td>
+                          <td>{{ registration.Currency }} {{ item.total }}</td>
                         </tr>
                         <tr v-if="registration.Discount">
                           <td></td>
@@ -973,10 +978,20 @@ export default {
       return fieldValue || ' '
     },
     startEvent(roomName, isFullLink) {
+      const baseUrl = this.$bitpod.getApiUrl()
+      const regUrl = baseUrl.replace(
+        '/svc/api/',
+        `${this.$config.basePublicPath}/apps/event/virtual/`
+      )
       if (isFullLink) {
-        window.open(`${roomName}?e=${this.event.id}`)
+        window.open(`${regUrl}${this.registration.id}?watch=${roomName}`)
       } else {
-        window.open(`https://meet.bitpod.io/${roomName}?e=${this.event.id}`)
+        const currentOrgName = window.location.origin
+          .split('-')[0]
+          .split('//')[1]
+        window.open(
+          `https://meet.bitpod.io/${currentOrgName}-${roomName}?e=${this.event.id}`
+        )
       }
     },
     getEventStartDate() {
@@ -1049,25 +1064,17 @@ export default {
           } else {
             this.registration = result
             result.attendee.map((i) => {
-              if (!this.attendeeData[i.TicketName]) {
-                this.attendeeData[i.TicketName] = {
+              if (!this.attendeeData[i.TicketId]) {
+                this.attendeeData[i.TicketId] = {
                   count: 1,
                   ticketName: i.TicketName,
                   price: i.TicketAmount,
                   total: i.TicketAmount,
                 }
               } else {
-                this.attendeeData[i.TicketName].count++
-                this.attendeeData[i.TicketName].total += i.TicketAmount
+                this.attendeeData[i.TicketId].count++
+                this.attendeeData[i.TicketId].total += i.TicketAmount
               }
-            })
-            Object.values(this.attendeeData).map((i) => {
-              const ticketname = this.registration.TicketListId.find((j) => {
-                return j.Code === i.ticketName
-              })
-              return Object.assign(i, {
-                ticketAmount: ticketname ? ticketname.Amount || 0 : 0,
-              })
             })
             this.getEventData(result.EventId)
           }

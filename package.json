@@ -1,6 +1,6 @@
 {
   "name": "bitpodjs",
-  "version": "1.1.9",
+  "version": "1.1.10",
   "private": true,
   "scripts": {
     "dev": "nuxt",
@@ -15,7 +15,7 @@
     "precommit": "yarn lint"
   },
   "dependencies": {
-    "@bitpod/auth-nuxt": "^5.0.0-1608819688.6754216",
+    "@bitpod/auth-nuxt": "^5.0.0-1612781833.7c85851",
     "@fullcalendar/core": "^5.3.1",
     "@fullcalendar/daygrid": "^5.3.0",
     "@fullcalendar/interaction": "^5.3.0",
@@ -34,6 +34,7 @@
     "@nuxtjs/vuetify": "^1.11.2",
     "authentication-popups": "^0.0.8",
     "cookie-parser": "^1.4.5",
+    "cookie-universal-nuxt": "^2.1.4",
     "core-js": "2.6.10",
     "date-fns": "^2.15.0",
     "date-fns-tz": "^1.0.10",
