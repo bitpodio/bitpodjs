@@ -787,7 +787,7 @@
         </div>
         <div
           v-if="content"
-          class="xs12 sm4 md4 lg4 boxview pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+          class="xs12 sm4 md4 lg4 boxview boxviewlarge pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
           <div class="sticky d-flex flex-column justify-center boxview">
             <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
@@ -823,7 +823,7 @@
         </div>
         <div
           v-if="content"
-          class="xs12 sm4 md4 lg4 boxview pad-card pb-6 mr-2 mb-4 elevation-1 positionRelative rounded-lg"
+          class="xs12 sm4 md4 lg4 boxview boxviewlarge pad-card pb-6 mr-2 mb-4 elevation-1 positionRelative rounded-lg"
         >
           <div class="sticky d-flex flex-column justify-center boxview">
             <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
@@ -943,7 +943,7 @@
         </div>
         <div
           v-if="content"
-          class="xs12 sm4 md4 lg4 boxview pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+          class="xs12 sm4 md4 lg4 boxview boxviewlarge pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
           <div class="sticky d-flex flex-column justify-center boxview">
             <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
@@ -963,7 +963,7 @@
         </div>
         <div
           v-if="content"
-          class="xs12 sm4 md4 lg4 boxview pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+          class="xs12 sm4 md4 lg4 boxview boxviewlarge pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
           <div class="sticky d-flex flex-column justify-center boxview">
             <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
@@ -979,7 +979,7 @@
         </div>
         <div
           v-if="content"
-          class="xs12 sm4 md4 lg4 boxview pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+          class="xs12 sm4 md4 lg4 boxview boxviewlarge pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
           <div class="sticky d-flex flex-column justify-center boxview">
             <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
@@ -2372,6 +2372,7 @@ export default {
         const eventSummary =
           (data.Event && data.Event.EventGetEventSummery) || {}
         this.eventData = event.length > 0 ? event[0] : {}
+        console.log('Logs for publish event data issue', this.eventData)
         this.badgeData = badge.length > 0 ? badge[0] : {}
         this.eventData_sectionHeading =
           this.eventData._sectionHeading !== null

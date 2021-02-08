@@ -726,13 +726,13 @@
     "DeleteNote": "नोट हटाएँ",
     "PastEventMessage": "यह ईवेंट अब सक्रिय नहीं है.",
     "GoToOldSite": "पुरानी साइट पर जाएं",
-    "SetupDomain": "You could be a business, an event organizer, or a professional community. Choose the banner under which you will host your events.",
+    "SetupDomain": "अपना संगठन नाम दर्ज करें, इसका उपयोग आपके अद्वितीय साइट url को सेट करने के लिए किया जाएगा।",
     "WelcomeToBitpod": "Welcome to Bitpod",
-    "NameYourOrganization": "Name your organization",
+    "NameYourOrganization": "अपना संगठन सेट करें",
     "SuffixRoute": "-event.bitpod.io",
     "CreateOrganisation": "Create organisation",
     "OrganizationName": "Organization Name*",
-    "CreateEventMessage": "Create your first Event! This is your playground. Feel free to invite friends and learn exciting ways to engage your audience on Bitpod-Event.",
+    "CreateEventMessage": "अपने ईवेंट के बारे में जानने के लिए अपने ईवेंट के बारे में जानने के लिए ईवेंट नाम और विवरण दर्ज करें, उन विवरणों को जोड़ें जो किसी को इसमें शामिल होना चाहिए।",
     "EventDateTime": "Event dateand time*",
     "YourTitleHere": "Your title will be displayed here",
     "SelectField": "एक क्षेत्र का चयन करें",
@@ -764,7 +764,10 @@
     "ExportInProgress": "निर्यात प्रगति पर है...",
     "NoDataAvailable": "कोई डेटा उपलब्ध नहीं है",
     "ServiceUnavailable": "सेवा उप्लब्ध् नहीं है",
-    "Upgrade": "अपग्रेड"
+    "Upgrade": "अपग्रेड",
+    "SessionNotStart": "यह सत्र अभी तक शुरू नहीं हुआ है.",
+    "TryJoinOn": "फिर से जुड़ने का प्रयास करें",
+    "CheckCalendarInvite": "लिंक से जुड़ने के लिए कैलेंडर आमंत्रण की जाँच करें"
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",
@@ -897,10 +900,17 @@
       "EndTimeMustBeGreater": "अंत समय अधिक होना चाहिए फिर समय शुरू करें",
       "PermissionDenied": "आपको इस ऑपरेशन को करने की अनुमति नहीं है",
       "roleAlreadyExits": "यह {roles} भूमिका पहले से मौजूद है",
-      "MinimumCharacter": "Minimum 3 characters please",
-      "MaximumCharacter": "Maximum 20 characters please",
-      "NameMustStartWithAlphabet": "Name must start with alphabet",
-      "OrganisationAlreadyExists": "Organization already exists"
+      "MinimumCharacter": "कृपया न्यूनतम 3 वर्ण",
+      "MaximumCharacter": "कृपया अधिकतम 20 वर्ण",
+      "NameMustStartWithAlphabet": "नाम वर्णमाला से शुरू होना चाहिए",
+      "OrganisationAlreadyExists": "यह नाम पहले ही ले लिया गया है",
+      "SetupErrorTitle": "एक त्रुटि हुई",
+      "SetupExitCode1": "आपके संगठन की स्थापना करते समय एक त्रुटि हुई, कृपया समर्थन से संपर्क करें।",
+      "SetupExitCodeCatch": "आपके संगठन की स्थापना करते समय एक त्रुटि हुई, कृपया समर्थन से संपर्क करें।",
+      "SetupExitCodeTimeout": "आपके संगठन की स्थापना करते समय एक त्रुटि हुई, कृपया समर्थन से संपर्क करें।",
+      "SetupOrgFailed": "आपके संगठन को सेटअप करने में विफल।",
+      "CreateOrgFailed": "अपना संगठन बनाने में विफल।",
+      "CreateOrgCatch": "यह संगठन उपयोग में है या सॉफ्ट-डिलीट हो सकता है। एक नए नाम के साथ प्रयास करें।"
     },
     "Warn": {
       "UniqueLinkFormat": "केवल लोअर केस अल्फ़ान्यूमेरिक अक्षर",
@@ -924,7 +934,11 @@
       "DeleteSeatMapEvent": "क्या आप इस सीट का नक्शा हटाना चाहते हैं? यह लेआउट पहले से ईवेंट से जुड़ा हुआ है।",
       "DeleteEventQuestion": "क्या आप इस प्रश्न को हटाना चाहते हैं?",
       "RegistrationTypeDefault": "केवल एक पंजीकरण प्रकार को डिफ़ॉल्ट पर सेट किया जा सकता है",
-      "RegistrationTypeWarning": "पंजीकरण प्रकार चेतावनी"
+      "RegistrationTypeWarning": "पंजीकरण प्रकार चेतावनी",
+      "PaymentGatewayWarning":"पेमेंट गेटवे वार्निंग",
+      "PaymentGatewayDefault":"केवल एक भुगतान कनेक्शन जुड़ा हो सकता है।",
+      "SeatMapDefault":"सीटमैप चेतावनी",
+      "SeatMapWarning":"बिना सहेजे हुए परिवर्तन हैं जो बिना बचत के बंद होने पर खो जाएंगे, क्या आप सुनिश्चित हैं?"
     },
     "Success": {
       "CopiedClipboard": "Copied to clipboard",
@@ -975,7 +989,16 @@
       "RegistrationFormUpdatedSuccess": "पंजीकरण फॉर्म सफलतापूर्वक अपडेट किया गया",
       "SessionCreatedSuccess": "सत्र सफलतापूर्वक बनाया गया",
       "SessionUpdatedSuccess": "सत्र सफलतापूर्वक अपडेट किया गया",
-      "ContactImportSuccess":"आयात निष्पादन शुरू हुआ"
+      "ContactImportSuccess": "आयात निष्पादन शुरू हुआ",
+      "OrgNameSuccess": "https://{orgName}{suffixRoute} उपलब्ध है"
+    },
+    "Information": {
+      "SetupInProgressTitle": "सेटअप प्रगति पर है",
+      "SetupInProgressText": "कृपया प्रतीक्षा करें जब तक हम आपके संगठन को सेट करते हैं, इसमें कुछ समय लग सकता है।",
+      "OrgRedirectStart": "नए संगठन में पुनर्निर्देशित करना",
+      "CreatingOrg": "अपना संगठन बनाना",
+      "SettingUpOrg": "अपना संगठन सेट करना, इसमें कुछ समय लग सकता है।",
+      "VerifyingOrgNameAvail": "उपलब्धता की जाँच"
     }
   },
   "$vuetify": {

@@ -31,24 +31,28 @@ const getUsersOrg = (store) => {
 }
 
 export default function (context) {
-  const { store, route, redirect, $auth } = context
-
-  if (getUsersOrg(store)?.name) {
-    if (process.server) {
-      const { req } = context
-      const hostName = req.headers.host
-      const publicDomain = process.env.PUBLIC_DOMAIN
-      if (hostName === publicDomain) {
-        const provider = $auth.strategy.name
-        const userFirstOrgName = getUsersOrg(store).name || ''
-        const basePath = process.env.PUBLIC_PATH || ''
-        return redirect(
-          `http://${userFirstOrgName}-${publicDomain}${basePath}/login?p=${provider}`
-        )
+  const { store, route, redirect } = context
+  const userOrgStore = getUsersOrg(store)
+  if (userOrgStore && userOrgStore.name) {
+    const userOrgStore = getUsersOrg(store)
+    if (userOrgStore && userOrgStore.name) {
+      if (process.server) {
+        const { req } = context
+        const hostName = req.headers.host
+        const publicDomain = process.env.PUBLIC_DOMAIN
+        if (!hostName.includes('localhost')) {
+          if (hostName === publicDomain) {
+            const userFirstOrgName = userOrgStore.name || ''
+            const basePath = process.env.PUBLIC_PATH || ''
+            return redirect(
+              `https://${publicDomain}${basePath}/forwardLogin?targetDomain=${userFirstOrgName}`
+            )
+          }
+        }
       }
-    }
-    if (!isValidPage(store, route)) {
-      return redirect('/unauthorized')
+      if (!isValidPage(store, route)) {
+        return redirect('/unauthorized')
+      }
     }
   }
 }

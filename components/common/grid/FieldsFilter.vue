@@ -5,7 +5,7 @@
         <v-btn
           text
           small
-          :color="value.length > 0 ? 'blue' : 'text--primary'"
+          :color="value.rules.length > 0 ? 'blue' : 'text--primary'"
           class="filter-btn"
           v-bind="attrs"
           v-on="on"
@@ -67,14 +67,25 @@
             </div>
           </div>
           <v-spacer></v-spacer>
-          <v-btn
-            text
-            depressed
-            color="primary"
-            class="filter-btn mt-2"
-            @click="onAddFilter"
-            ><i18n class="d-block" path="Common.AddFilter"
-          /></v-btn>
+          <div>
+            <v-btn
+              text
+              depressed
+              color="primary"
+              class="filter-btn mt-2"
+              @click="onAddFilter"
+              ><i18n class="d-block" path="Common.AddFilter"
+            /></v-btn>
+            <v-btn
+              text
+              depressed
+              class="filter-btn mt-2"
+              @click="onClearFilters"
+            >
+              <!-- <i18n class="d-block" path="Common.AddFilter" /> -->
+              Clear filters
+            </v-btn>
+          </div>
         </div>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -97,10 +108,6 @@ export default {
   props: {
     fields: {
       type: Object,
-      required: true,
-    },
-    isFilterApplied: {
-      type: Boolean,
       required: true,
     },
     value: {
@@ -128,8 +135,7 @@ export default {
       if (newVal && this.backupRules.length) {
         this.rules.push(...this.backupRules)
         this.backupRules = []
-      }
-      if (newVal === true && this.filterCount === 0) {
+      } else if (newVal && this.filterCount === 0) {
         this.filterCount = 1
         this.onAddFilter()
       }
@@ -147,7 +153,17 @@ export default {
     onApply() {
       this.menu = false
       this.backupRules = []
-      const { rules, ruleCondition } = this
+      let { rules } = this
+      const { ruleCondition } = this
+      if (
+        rules.length === 1 &&
+        rules[0].field === '' &&
+        rules[0].value === ''
+      ) {
+        this.rules = []
+        this.filterCount = 0
+        rules = []
+      }
       this.$emit('input', { rules, ruleCondition })
     },
     setFieldValues(fieldName, filterValues) {
@@ -173,7 +189,20 @@ export default {
       this.ruleCondition = condition
     },
     onCancel() {
+      if (
+        this.rules.length === 1 &&
+        this.rules[0].field === '' &&
+        this.rules[0].value === ''
+      ) {
+        this.filterCount = 0
+        this.rules = []
+      }
       this.menu = false
+    },
+    onClearFilters() {
+      this.backupRules = this.rules
+      this.rules = [{ field: '', operator: 'contains', value: '' }]
+      this.ruleCondition = 'and'
     },
   },
 }

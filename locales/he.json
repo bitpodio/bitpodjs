@@ -726,13 +726,13 @@
     "DeleteNote": "מחק הערה",
     "PastEventMessage": "אירוע זה אינו פעיל יותר.",
     "GoToOldSite": "היכנס לאתר הישן",
-    "SetupDomain": "You could be a business, an event organizer, or a professional community. Choose the banner under which you will host your events.",
+    "SetupDomain": "הזן את שם הארגון שלך, זה ישמש להגדרת כתובת האתר הייחודית שלך.",
     "WelcomeToBitpod": "Welcome to Bitpod",
-    "NameYourOrganization": "Name your organization",
+    "NameYourOrganization": "הגדר את הארגון שלך",
     "SuffixRoute": "-event.bitpod.io",
     "CreateOrganisation": "Create organisation",
     "OrganizationName": "Organization Name*",
-    "CreateEventMessage": "Create your first Event! This is your playground. Feel free to invite friends and learn exciting ways to engage your audience on Bitpod-Event.",
+    "CreateEventMessage": "הזן שם אירוע ופרטים שיעזרו לקהל שלך ללמוד על האירוע שלך, הוסף פרטים המדגישים מדוע מישהו צריך להשתתף בו.",
     "EventDateTime": "Event dateand time*",
     "YourTitleHere": "Your title will be displayed here",
     "SelectField": "בחר שדה",
@@ -764,7 +764,10 @@
     "ExportInProgress": "הייצוא מתבצע",
     "NoDataAvailable": "אין נתונים זמינים",
     "ServiceUnavailable": "שירותים לא זמינים",
-    "Upgrade": "שדרוג"
+    "Upgrade": "שדרוג",
+    "SessionNotStart": "מושב זה עדיין לא התחיל.",
+    "TryJoinOn": "נסה להצטרף שוב בתאריך",
+    "CheckCalendarInvite": "בדוק את הזמנת לוח השנה להצטרפות לקישור"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",
@@ -897,10 +900,17 @@
       "EndTimeMustBeGreater": "זמן הסיום חייב להיות גדול יותר משעת ההתחלה",
       "PermissionDenied": "אין לך הרשאה לבצע פעולה זו",
       "roleAlreadyExits": "תפקיד {roles} זה כבר קיים",
-      "MinimumCharacter": "Minimum 3 characters please",
-      "MaximumCharacter": "Maximum 20 characters please",
-      "NameMustStartWithAlphabet": "Name must start with alphabet",
-      "OrganisationAlreadyExists": "Organization already exists"
+      "MinimumCharacter": "מינימום 3 תווים בבקשה",
+      "MaximumCharacter": "מקסימום 20 תווים בבקשה",
+      "NameMustStartWithAlphabet": "השם חייב להתחיל באלף בית",
+      "OrganisationAlreadyExists": "שם זה כבר נלקח",
+      "SetupErrorTitle": "חלה שגיאה",
+      "SetupExitCode1": "אירעה שגיאה בהקמת הארגון שלך, אנא צור קשר עם התמיכה",
+      "SetupExitCodeCatch": "אירעה שגיאה בהקמת הארגון שלך, אנא צור קשר עם התמיכה",
+      "SetupExitCodeTimeout": "אירעה שגיאה בהקמת הארגון שלך, אנא צור קשר עם התמיכה",
+      "SetupOrgFailed": "הגדרת הארגון שלך נכשלה",
+      "CreateOrgFailed": "יצירת הארגון שלך נכשלה",
+      "CreateOrgCatch": "ארגון זה נמצא בשימוש או עלול להימחק באופן רך. נסה עם שם חדש"
     },
     "Warn": {
       "UniqueLinkFormat": "אותיות אלפאנומריות באותיות קטנות בלבד",
@@ -924,7 +934,11 @@
       "DeleteSeatMapEvent": "האם אתה רוצה למחוק את מפת המושבים הזו? פריסה זו כבר משויכת לאירוע.",
       "DeleteEventQuestion": "האם ברצונך למחוק שאלה זו?",
       "RegistrationTypeDefault": "ניתן להגדיר ברירת מחדל רק סוג רישום אחד",
-      "RegistrationTypeWarning": "אזהרת סוג רישום"
+      "RegistrationTypeWarning": "אזהרת סוג רישום",
+      "PaymentGatewayWarning":"אזהרת שער תשלום",
+      "PaymentGatewayDefault":"ניתן לחבר רק חיבור תשלום אחד.",
+      "SeatMapDefault":"אזהרת מפת מושב",
+      "SeatMapWarning":"ישנם שינויים שלא נשמרו אשר יאבדו אם תסגור מבלי לשמור, האם אתה בטוח?"
     },
     "Success": {
       "CopiedClipboard": "הועתק ללוח",
@@ -975,7 +989,16 @@
       "RegistrationFormUpdatedSuccess": "טופס ההרשמה עודכן בהצלחה",
       "SessionCreatedSuccess": "ההפעלה נוצרה בהצלחה",
       "SessionUpdatedSuccess": "ההפעלה עודכנה בהצלחה",
-      "ContactImportSuccess":"ביצוע הייבוא ​​החל"
+      "ContactImportSuccess": "ביצוע הייבוא ​​החל",
+      "OrgNameSuccess": "https://{orgName}{suffixRoute} זמין"
+    },
+    "Information": {
+      "SetupInProgressTitle": "ההתקנה בעיצומה",
+      "SetupInProgressText": "אנא המתן בזמן שנקבע את הארגון שלך, זה עלול לקחת זמן מה",
+      "OrgRedirectStart": "מפנה לארגון חדש",
+      "CreatingOrg": "יצירת הארגון שלך",
+      "SettingUpOrg": "הגדרת הארגון שלך עשויה להימשך זמן מה",
+      "VerifyingOrgNameAvail": "בודק זמינות"
     }
   },
   "$vuetify": {

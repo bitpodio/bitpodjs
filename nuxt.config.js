@@ -117,6 +117,7 @@ export default {
     '@nuxtjs/device',
     '@nuxtjs/apollo',
     '@bitpod/auth-nuxt',
+    'cookie-universal-nuxt',
     [
       'nuxt-gmaps',
       {
@@ -359,7 +360,6 @@ export default {
             process.env.BITPOD_ENDSESSION_ENDPOINT_URL ||
             'https://login.bitpod.io/auth/connect/endsession',
         },
-        logoutRedirectUri: process.env.POST_LOGOUT_REDIRECT_URI,
         responseType: 'code',
         grantType: 'authorization_code',
         redirectUri:

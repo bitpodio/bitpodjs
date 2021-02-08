@@ -724,13 +724,13 @@
     "DeleteNote": "Supprimer la note",
     "PastEventMessage": "Cet événement n'est plus actif.",
     "GoToOldSite": "Aller sur l'ancien site",
-    "SetupDomain": "You could be a business, an event organizer, or a professional community. Choose the banner under which you will host your events.",
+    "SetupDomain": "Entrez le nom de votre organisation, il sera utilisé pour configurer votre URL de site unique.",
     "WelcomeToBitpod": "Welcome to Bitpod",
-    "NameYourOrganization": "Name your organization",
+    "NameYourOrganization": "Configurez votre organisation",
     "SuffixRoute": "-event.bitpod.io",
     "CreateOrganisation": "Create organisation",
     "OrganizationName": "Organization Name*",
-    "CreateEventMessage": "Create your first Event! This is your playground. Feel free to invite friends and learn exciting ways to engage your audience on Bitpod-Event.",
+    "CreateEventMessage": "Entrez le nom et les détails de l'événement pour aider votre public à en savoir plus sur votre événement, ajoutez des détails qui soulignent pourquoi quelqu'un devrait y assister.",
     "EventDateTime": "Event dateand time*",
     "YourTitleHere": "Your title will be displayed here",
     "SelectField": "Sélectionnez un champ",
@@ -762,7 +762,10 @@
     "ExportInProgress": "Exportation en cours...",
     "NoDataAvailable": "Pas de données disponibles",
     "ServiceUnavailable": "Service indisponible",
-    "Upgrade": "Améliorer"
+    "Upgrade": "Améliorer",
+    "SessionNotStart": "Cette session n'a pas encore commencé.",
+    "TryJoinOn": "Essayez de vous joindre à nouveau sur",
+    "CheckCalendarInvite": "Vérifier l'invitation du calendrier pour rejoindre le lien"
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",
@@ -895,10 +898,17 @@
       "EndTimeMustBeGreater": "L'heure de fin doit être supérieure à l'heure de début",
       "PermissionDenied": "Vous n'êtes pas autorisé à effectuer cette opération",
       "roleAlreadyExits": "Ce rôle {roles} existe déjà",
-      "MinimumCharacter": "Minimum 3 characters please",
-      "MaximumCharacter": "Maximum 20 characters please",
-      "NameMustStartWithAlphabet": "Name must start with alphabet",
-      "OrganisationAlreadyExists": "Organization already exists"
+      "MinimumCharacter": "Minimum 3 caractères s'il vous plaît",
+      "MaximumCharacter": "Maximum 20 caractères s'il vous plaît",
+      "NameMustStartWithAlphabet": "Le nom doit commencer par l'alphabet",
+      "OrganisationAlreadyExists": "Ce nom est déjà pris",
+      "SetupErrorTitle": "Une erreur s'est produite",
+      "SetupExitCode1": "Une erreur s'est produite lors de la configuration de votre organisation, veuillez contacter l'assistance.",
+      "SetupExitCodeCatch": "Une erreur s'est produite lors de la configuration de votre organisation, veuillez contacter l'assistance.",
+      "SetupExitCodeTimeout": "Une erreur s'est produite lors de la configuration de votre organisation, veuillez contacter l'assistance.",
+      "SetupOrgFailed": "Échec de la configuration de votre organisation.",
+      "CreateOrgFailed": "Échec de la création de votre organisation.",
+      "CreateOrgCatch": "Cette organisation est utilisée ou peut être supprimée de manière réversible. Essayez avec un nouveau nom."
     },
     "Warn": {
       "UniqueLinkFormat": "Minuscules lettres alphanumériques uniquement",
@@ -922,7 +932,11 @@
       "DeleteSeatMapEvent": "Voulez-vous supprimer ce plan de siège? Cette mise en page est déjà associée à Event.",
       "DeleteEventQuestion": "Voulez-vous supprimer cette question?",
       "RegistrationTypeDefault": "Un seul type d'enregistrement peut être défini par défaut",
-      "RegistrationTypeWarning": "Avertissement de type d'enregistrement"
+      "RegistrationTypeWarning": "Avertissement de type d'enregistrement",
+      "PaymentGatewayWarning": "Avertissement de passerelle de paiement",
+      "PaymentGatewayDefault": "Une seule connexion de paiement peut être connectée.",
+      "SeatMapDefault":"Avertissement de plan de siège",
+      "SeatMapWarning":"Certaines modifications non enregistrées seront perdues si vous fermez sans enregistrer, êtes-vous sûr?"
     },
     "Success": {
       "CopiedClipboard": "Copié dans le presse-papiers",
@@ -973,7 +987,16 @@
       "RegistrationFormUpdatedSuccess": "Formulaire d'inscription mis à jour avec succès",
       "SessionCreatedSuccess": "Session créée avec succès",
       "SessionUpdatedSuccess": "Session mise à jour avec succès",
-      "ContactImportSuccess":"L'exécution de l'importation a commencé"
+      "ContactImportSuccess": "L'exécution de l'importation a commencé",
+      "OrgNameSuccess": "https://{orgName}{suffixRoute} est disponible"
+    },
+    "Information": {
+      "SetupInProgressTitle": "configuration en cours",
+      "SetupInProgressText": "Veuillez patienter pendant que nous configurons votre organisation, cela peut prendre un certain temps.",
+      "OrgRedirectStart": "Redirection vers une nouvelle organisation",
+      "CreatingOrg": "Créer votre organisation",
+      "SettingUpOrg": "La configuration de votre organisation peut prendre un certain temps.",
+      "VerifyingOrgNameAvail": "vérifier les disponibilités"
     }
   },
   "$vuetify": {
