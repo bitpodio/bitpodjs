@@ -765,7 +765,8 @@
     "Upgrade": "Améliorer",
     "SessionNotStart": "Cette session n'a pas encore commencé.",
     "TryJoinOn": "Essayez de vous joindre à nouveau sur",
-    "CheckCalendarInvite": "Vérifier l'invitation du calendrier pour rejoindre le lien"
+    "CheckCalendarInvite": "Vérifier l'invitation du calendrier pour rejoindre le lien",
+    "ClearFilter": "Effacer les filtres"
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",
@@ -935,8 +936,8 @@
       "RegistrationTypeWarning": "Avertissement de type d'enregistrement",
       "PaymentGatewayWarning": "Avertissement de passerelle de paiement",
       "PaymentGatewayDefault": "Une seule connexion de paiement peut être connectée.",
-      "SeatMapDefault":"Avertissement de plan de siège",
-      "SeatMapWarning":"Certaines modifications non enregistrées seront perdues si vous fermez sans enregistrer, êtes-vous sûr?"
+      "SeatMapDefault": "Avertissement de plan de siège",
+      "SeatMapWarning": "Certaines modifications non enregistrées seront perdues si vous fermez sans enregistrer, êtes-vous sûr?"
     },
     "Success": {
       "CopiedClipboard": "Copié dans le presse-papiers",

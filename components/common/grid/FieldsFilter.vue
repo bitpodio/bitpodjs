@@ -82,8 +82,7 @@
               class="filter-btn mt-2"
               @click="onClearFilters"
             >
-              <!-- <i18n class="d-block" path="Common.AddFilter" /> -->
-              Clear filters
+              <i18n class="d-block" path="Common.ClearFilter" />
             </v-btn>
           </div>
         </div>
