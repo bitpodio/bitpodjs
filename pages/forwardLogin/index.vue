@@ -33,12 +33,6 @@
     <iframe
       id="print"
       ref="iframe"
-      :src="`https://${$config.axios.backendBaseUrl}${$config.basePublicPath}/embed-cookie`"
-      @load="iframecookieDeleted"
-    />
-    <iframe
-      id="print"
-      ref="iframe"
       style="width: 0; position: absolute; height: 0;"
       :src="`https://${orgName}-${$config.axios.backendBaseUrl}${$config.basePublicPath}/embed-cookie`"
       @load="iframeLoaded"
@@ -78,16 +72,6 @@ export default {
     window.removeEventListener('message', this.messageReceived)
   },
   methods: {
-    iframecookieDeleted() {
-      debugger
-      console.log(
-        'document.cookie that is passed to embed cookie',
-        document.cookie
-      )
-      this.$refs.iframe.contentWindow.postMessage(document.cookie, '*')
-      this.$apolloHelpers.onLogout()
-      this.$auth.logout()
-    },
     iframeLoaded() {
       console.log(
         'document.cookie that is passed to embed cookie',
