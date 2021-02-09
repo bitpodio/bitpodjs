@@ -990,7 +990,7 @@
       "SessionCreatedSuccess": "ההפעלה נוצרה בהצלחה",
       "SessionUpdatedSuccess": "ההפעלה עודכנה בהצלחה",
       "ContactImportSuccess": "ביצוע הייבוא ​​החל",
-      "OrgNameSuccess": "https://{orgName}{suffixRoute} זמין"
+      "OrgNameSuccess": "https://{orgName}-{suffixRoute} זמין"
     },
     "Information": {
       "SetupInProgressTitle": "ההתקנה בעיצומה",

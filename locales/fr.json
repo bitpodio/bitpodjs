@@ -988,7 +988,7 @@
       "SessionCreatedSuccess": "Session créée avec succès",
       "SessionUpdatedSuccess": "Session mise à jour avec succès",
       "ContactImportSuccess": "L'exécution de l'importation a commencé",
-      "OrgNameSuccess": "https://{orgName}{suffixRoute} est disponible"
+      "OrgNameSuccess": "https://{orgName}-{suffixRoute} est disponible"
     },
     "Information": {
       "SetupInProgressTitle": "configuration en cours",

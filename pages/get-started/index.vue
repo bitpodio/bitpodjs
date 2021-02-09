@@ -66,13 +66,13 @@
                   {{
                     $t('Messages.Success.OrgNameSuccess', {
                       orgName: orgName,
-                      suffixRoute: $t('Common.SuffixRoute'),
+                      suffixRoute: $config.setting.domains.defaultPublicDomain,
                     })
                   }}
                 </div>
               </v-form>
               <div class="fs-20 mt-2 ml-1">
-                {{ $t('Common.SuffixRoute') }}
+                -{{ $config.setting.domains.defaultPublicDomain }}
               </div>
             </div>
           </div>
