@@ -767,7 +767,8 @@
     "Upgrade": "שדרוג",
     "SessionNotStart": "מושב זה עדיין לא התחיל.",
     "TryJoinOn": "נסה להצטרף שוב בתאריך",
-    "CheckCalendarInvite": "בדוק את הזמנת לוח השנה להצטרפות לקישור"
+    "CheckCalendarInvite": "בדוק את הזמנת לוח השנה להצטרפות לקישור",
+    "SubTotal": "סך הכל"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",

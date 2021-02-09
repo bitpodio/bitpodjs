@@ -651,10 +651,11 @@ export default {
       let res = null
       if (this.session.LocationType === 'Venue') {
         if (this.venueAddress.AddressLine !== '') {
-          if (
-            this.venueAddress.LatLng.lat === 0 ||
-            this.venueAddress.LatLng.lng === 0
-          ) {
+          if (this.venueAddress) {
+            this.venueAddress.LatLng = {
+              lat: '',
+              lng: '',
+            }
             const Url = nuxtconfig.generalConfig.googleMapGeocodeApi
             const key = nuxtconfig.generalConfig.googleGeocodeMapKey
             const addressObj = `${this.venueAddress.AddressLine},${this.venueAddress.City},${this.venueAddress.State},${this.venueAddress.Country},${this.venueAddress.PostalCode}`

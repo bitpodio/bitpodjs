@@ -765,7 +765,8 @@
     "Upgrade": "Améliorer",
     "SessionNotStart": "Cette session n'a pas encore commencé.",
     "TryJoinOn": "Essayez de vous joindre à nouveau sur",
-    "CheckCalendarInvite": "Vérifier l'invitation du calendrier pour rejoindre le lien"
+    "CheckCalendarInvite": "Vérifier l'invitation du calendrier pour rejoindre le lien",
+    "SubTotal": "Sous-total"
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",
