@@ -402,9 +402,13 @@ export default {
     }
   },
   methods: {
-    async onLogout() {
+    onLogout() {
+      debugger
+      // return redirect(
+      //   `https://${publicDomain}${basePath}/forwardLogin?`
+      // )
       this.$auth.logout()
-      await this.$apolloHelpers.onLogout()
+      this.$apolloHelpers.onLogout()
     },
   },
 }

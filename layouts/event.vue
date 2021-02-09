@@ -406,9 +406,19 @@ export default {
     this.allowUpgrade = userRoles.includes('$orgowner')
   },
   methods: {
-    async onLogout() {
-      await this.$apolloHelpers.onLogout()
-      this.$auth.logout()
+    onLogout(context) {
+      debugger
+      const publicDomain = this.$config.axios.eventUrl
+      console.log('in logout publicDomain', publicDomain)
+      const basePath = this.$config.basePublicPath || ''
+      console.log('in logout basePath', basePath)
+      const currentOrg = this.$store.state.currentOrg.name || ''
+      console.log('in logout currentOrg', currentOrg)
+      if (this.$store.state.auth.loggedIn && currentOrg === 'bitpod') {
+        window.location.replace(
+          `https://${currentOrg}-${publicDomain}${basePath}/forwardLogin`
+        )
+      }
     },
     closeSingleEventForm() {
       this.dialog1 = false
