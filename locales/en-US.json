@@ -766,7 +766,8 @@
     "Upgrade": "Upgrade",
     "SessionNotStart": "This session hasn't started yet.",
     "TryJoinOn": "Try joining again on",
-    "CheckCalendarInvite": "Check calendar invite for joining link"
+    "CheckCalendarInvite": "Check calendar invite for joining link",
+    "SubTotal": "Sub Total"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",

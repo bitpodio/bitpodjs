@@ -767,7 +767,8 @@
     "Upgrade": "अपग्रेड",
     "SessionNotStart": "यह सत्र अभी तक शुरू नहीं हुआ है.",
     "TryJoinOn": "फिर से जुड़ने का प्रयास करें",
-    "CheckCalendarInvite": "लिंक से जुड़ने के लिए कैलेंडर आमंत्रण की जाँच करें"
+    "CheckCalendarInvite": "लिंक से जुड़ने के लिए कैलेंडर आमंत्रण की जाँच करें",
+    "SubTotal": "उप कुल"
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",
