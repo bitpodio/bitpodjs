@@ -767,7 +767,8 @@
     "SessionNotStart": "This session hasn't started yet.",
     "TryJoinOn": "Try joining again on",
     "CheckCalendarInvite": "Check calendar invite for joining link",
-    "ClearFilter": "Clear filters"
+    "ClearFilter": "Clear filters",
+    "SubTotal": "Sub Total"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",

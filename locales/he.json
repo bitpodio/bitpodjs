@@ -768,7 +768,8 @@
     "SessionNotStart": "מושב זה עדיין לא התחיל.",
     "TryJoinOn": "נסה להצטרף שוב בתאריך",
     "CheckCalendarInvite": "בדוק את הזמנת לוח השנה להצטרפות לקישור",
-    "ClearFilter": "נקה מסננים"
+    "ClearFilter": "נקה מסננים",
+    "SubTotal": "סך הכל"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",
