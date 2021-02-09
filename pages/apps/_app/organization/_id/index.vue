@@ -693,6 +693,16 @@ export default {
           }`,
           this.formData
         )
+        const hostName = this.$cookies.get('auth.domain_url')
+
+        const cloudinaryData = {
+          imgId: data[0],
+          imgname: hostName,
+        }
+        await this.$axios.post(
+          `${this.$bitpod.getApiUrl()}OrganizationInfos/uploadcloudinary`,
+          cloudinaryData
+        )
         this.refresh()
       } catch (e) {
         console.log('Error', e)
