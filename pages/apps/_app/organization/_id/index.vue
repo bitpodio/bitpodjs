@@ -693,7 +693,7 @@ export default {
           }`,
           this.formData
         )
-        const hostName = this.$cookies.get('auth.domain_url')
+        const hostName = `https://${this.$config.setting.domains.defaultPublicDomain}` // 'https://bitpod-event.test.bitpod.io' // this.$cookies.get('auth.domain_url')
 
         const cloudinaryData = {
           imgId: data[0],
