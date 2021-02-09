@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-snackbar v-model="snackbar" :timeout="2000" :top="true" width="2px">
+    <v-snackbar v-model="snackbar" :timeout="3000" :top="true" width="2px">
       <div class="fs-16 text-center">
         {{ snackbarText }}
       </div>
@@ -66,13 +66,13 @@
                   {{
                     $t('Messages.Success.OrgNameSuccess', {
                       orgName: orgName,
-                      suffixRoute: $t('Common.SuffixRoute'),
+                      suffixRoute: $config.setting.domains.defaultPublicDomain,
                     })
                   }}
                 </div>
               </v-form>
               <div class="fs-20 mt-2 ml-1">
-                {{ $t('Common.SuffixRoute') }}
+                -{{ $config.setting.domains.defaultPublicDomain }}
               </div>
             </div>
           </div>
@@ -326,7 +326,7 @@ export default {
                   if (jobInfo._SetupErrors.length) {
                     this.snackbarText = this.$t('Messages.Error.SetupOrgFailed')
                     this.snackbar = true
-                    this.tab = 1
+                    this.tab = 3
                     this.processing = false
                     this.resetBtn = !this.resetBtn
                   } else if (jobInfo._SetupStatus.length) {
@@ -373,7 +373,7 @@ export default {
               } catch (err) {
                 this.snackbarText = this.$t('Messages.Error.SetupOrgFailed')
                 this.snackbar = true
-                this.tab = 1
+                this.tab = 3
                 this.processing = false
                 this.resetBtn = !this.resetBtn
                 console.error(
@@ -386,14 +386,14 @@ export default {
           } else {
             this.snackbarText = this.$t('Messages.Error.SetupOrgFailed')
             this.snackbar = true
-            this.tab = 1
+            this.tab = 3
             this.processing = false
             this.resetBtn = !this.resetBtn
           }
         } catch (err) {
           this.snackbarText = this.$t('Messages.Error.SetupOrgFailed')
           this.snackbar = true
-          this.tab = 1
+          this.tab = 3
           this.processing = false
           this.resetBtn = !this.resetBtn
           console.error(

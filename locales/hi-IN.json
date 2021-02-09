@@ -992,7 +992,7 @@
       "SessionCreatedSuccess": "सत्र सफलतापूर्वक बनाया गया",
       "SessionUpdatedSuccess": "सत्र सफलतापूर्वक अपडेट किया गया",
       "ContactImportSuccess": "आयात निष्पादन शुरू हुआ",
-      "OrgNameSuccess": "https://{orgName}{suffixRoute} उपलब्ध है"
+      "OrgNameSuccess": "https://{orgName}-{suffixRoute} उपलब्ध है"
     },
     "Information": {
       "SetupInProgressTitle": "सेटअप प्रगति पर है",
