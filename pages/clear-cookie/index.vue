@@ -4,7 +4,6 @@
 <script>
 export default {
   mounted() {
-    console.log('on mounted in clear-cookie')
     window.addEventListener('message', this.messageReceived, false)
   },
   beforeDestroy() {
@@ -12,10 +11,9 @@ export default {
   },
   methods: {
     messageReceived(e) {
-      console.log('message received in clear cookie1', e)
       console.log('message received in clear cookie', e.data)
       if (e.data !== '') {
-        console.log('got data in message received in clear cookie', e.data)
+        console.debug('got data in message received in clear cookie', e.data)
         e.data.split(';').forEach((c) => {
           document.cookie = c
             .replace(/^ +/, '')

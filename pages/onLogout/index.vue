@@ -13,7 +13,6 @@
 <script>
 export default {
   mounted() {
-    console.log('on mounted in onLogout')
     window.addEventListener('message', this.messageReceived, false)
   },
   beforeDestroy() {
@@ -21,7 +20,6 @@ export default {
   },
   methods: {
     iframecookieDeleted() {
-      debugger
       console.log(
         'document.cookie that is passed to clear cookie',
         document.cookie
