@@ -30,6 +30,7 @@ export default {
     messageReceived(e) {
       console.log('message received from the the iframe', e.data)
       if (e.data === 'success') {
+        this.$auth.logout()
         this.$apolloHelpers.onLogout()
       }
     },
