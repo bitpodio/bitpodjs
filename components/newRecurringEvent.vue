@@ -1078,6 +1078,7 @@ export default {
     },
   },
   data() {
+    debugger
     return {
       rules: rules(this.$i18n),
       resetBtn: false,
@@ -1671,6 +1672,7 @@ export default {
       this.venueAddress.LatLng.lng = addressData.longitude || ''
     },
     openWindow(link) {
+      debugger
       window.open(link, '_blank')
     },
     changeType(value) {
