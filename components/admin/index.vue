@@ -403,10 +403,6 @@ export default {
   },
   methods: {
     onLogout() {
-      debugger
-      // return redirect(
-      //   `https://${publicDomain}${basePath}/forwardLogin?`
-      // )
       this.$auth.logout()
       this.$apolloHelpers.onLogout()
     },
