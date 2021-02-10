@@ -16,7 +16,25 @@ export default {
       console.log('message received in clear cookie', e.data)
       if (e.data !== '') {
         console.log('got data in message received in clear cookie', e.data)
-        this.$cookies.removeAll()
+        e.data.split(';').forEach((c) => {
+          document.cookie = c
+            .replace(/^ +/, '')
+            .replace(
+              /=.*/,
+              '=;expires=' + new Date(0).toUTCString() + ';path=/'
+            )
+        })
+        e.data.split(';').forEach((c) => {
+          document.cookie = c
+            .replace(/^ +/, '')
+            .replace(
+              /=.*/,
+              '=;expires=' +
+                new Date(0).toUTCString() +
+                `;path=${this.$config.basePublicPath}`
+            )
+        })
+        localStorage.clear()
         window.parent.postMessage('success', '*')
       }
     },
