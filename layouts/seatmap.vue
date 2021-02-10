@@ -172,7 +172,7 @@ export default {
     this.allowUpgrade = userRoles.includes('$orgowner')
   },
   methods: {
-   onLogout(context) {
+    onLogout(context) {
       debugger
       const publicDomain = this.$config.axios.eventUrl
       console.log('in logout publicDomain', publicDomain)
