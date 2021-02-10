@@ -416,7 +416,7 @@ export default {
       console.log('in logout currentOrg', currentOrg)
       if (this.$store.state.auth.loggedIn && currentOrg === 'bitpod') {
         window.location.replace(
-          `https://${currentOrg}-${publicDomain}${basePath}/onLogout`
+          `https://${publicDomain}${basePath}/onLogout`
         )
       }
     },
