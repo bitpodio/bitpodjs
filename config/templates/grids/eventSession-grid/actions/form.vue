@@ -157,16 +157,14 @@
               <v-col cols="12" class="pb-0 pt-0">
                 <div v-if="session.LocationType === 'Zoom'">
                   <i18n path="Common.SendZoomJoiningInfo" />
-                  <a href="" @click.stop.prevent="openWindow(zoomDocumentLink)"
+                  <a :href="zoomDocumentLink" target="_blank"
                     ><i18n path="Common.ClickHere"
                   /></a>
                   <i18n path="Common.ForDocumentation" />
                 </div>
                 <div v-if="session.LocationType === 'Google Meet'">
                   <i18n path="Common.SendGoogleMeetJoiningInfo" />
-                  <a
-                    href=""
-                    @click.stop.prevent="openWindow(googleMeetDocumentLink)"
+                  <a :href="googleMeetDocumentLink" target="_blank"
                     ><i18n path="Common.ClickHere"
                   /></a>
                   <i18n path="Common.ForDocumentation" />
@@ -625,9 +623,6 @@ export default {
     changeType(value) {
       this.session.MaxAllow = parseInt(this.session.MaxAllow) || 5
       this.isGroup = value === 'Group'
-    },
-    openWindow(link) {
-      window.open(link, '_blank')
     },
     async onSave() {
       const baseUrl = this.$bitpod.getApiUrl()
