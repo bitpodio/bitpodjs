@@ -3,6 +3,7 @@
     <iframe
       id="print"
       ref="iframe"
+      style="width: 0; position: absolute; height: 0;"
       :src="`https://${$config.axios.backendBaseUrl}${$config.basePublicPath}/clear-cookie`"
       @load="iframecookieDeleted"
     />
