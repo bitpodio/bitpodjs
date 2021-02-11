@@ -414,12 +414,16 @@ export default {
     const userInfo = userUtils.userCurrentOrgInfo(this.$store) || {}
     const userRoles = userInfo.roles || []
     this.allowUpgrade = userRoles.includes('$orgowner')
+    window.addEventListener('message', this.messageReceived, false)
+  },
+  beforeDestroy() {
+    window.removeEventListener('message', this.messageReceived)
   },
   methods: {
     onLogout(context) {
-      const publicDomain = this.$config.axios.eventUrl
-      const basePath = this.$config.basePublicPath || ''
-      const currentOrg = this.$store.state.currentOrg.name || ''
+      // const publicDomain = this.$config.axios.eventUrl
+      // const basePath = this.$config.basePublicPath || ''
+      // const currentOrg = this.$store.state.currentOrg.name || ''
       if (this.$store.state.auth.loggedIn) {
         this.logoutClicked = true
         // window.location.replace(
@@ -461,6 +465,20 @@ export default {
           `Error in layouts/event.vue in userPlan method while making get call to custom API to get users subscription, context: ${url} `,
           e
         )
+      }
+    },
+    iframecookieDeleted() {
+      console.log(
+        'document.cookie that is passed to clear cookie',
+        document.cookie
+      )
+      this.$refs.iframe.contentWindow.postMessage(document.cookie, '*')
+    },
+    messageReceived(e) {
+      console.log('message received from the the iframe', e.data)
+      if (e.data === 'success') {
+        this.$auth.logout()
+        this.$apolloHelpers.onLogout()
       }
     },
   },
