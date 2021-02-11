@@ -14,7 +14,7 @@ export default {
       console.log('message received in clear cookie', e.data)
       if (e.data) {
         console.debug('got data in message received in clear cookie', e.data)
-        document.cookie.split(';').forEach((c) => {
+        e.data.split(';').forEach((c) => {
           document.cookie = c
             .replace(/^ +/, '')
             .replace(
@@ -22,7 +22,7 @@ export default {
               '=;expires=' + new Date(0).toUTCString() + ';path=/'
             )
         })
-        document.cooke.split(';').forEach((c) => {
+        e.data.split(';').forEach((c) => {
           document.cookie = c
             .replace(/^ +/, '')
             .replace(
