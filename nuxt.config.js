@@ -288,7 +288,7 @@ export default {
     },
     auth: {
       defaultLoginStrategy: process.env.DEFAULT_LOGIN_STRATEGY || 'bitpod',
-  },
+    },
   },
 
   /*
