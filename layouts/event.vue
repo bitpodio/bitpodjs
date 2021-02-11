@@ -421,14 +421,8 @@ export default {
   },
   methods: {
     onLogout(context) {
-      // const publicDomain = this.$config.axios.eventUrl
-      // const basePath = this.$config.basePublicPath || ''
-      // const currentOrg = this.$store.state.currentOrg.name || ''
       if (this.$store.state.auth.loggedIn) {
         this.logoutClicked = true
-        // window.location.replace(
-        //   `https://${currentOrg}-${publicDomain}${basePath}/onLogout`
-        // )
       }
     },
     closeSingleEventForm() {

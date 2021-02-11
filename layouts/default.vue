@@ -244,6 +244,15 @@
         </v-row>
       </v-container>
     </v-main>
+    <div v-if="logoutClicked">
+      <iframe
+        id="print"
+        ref="iframe"
+        style="width: 0; position: absolute; height: 0;"
+        :src="`https://${$config.axios.backendBaseUrl}${$config.basePublicPath}/clear-cookie`"
+        @load="iframecookieDeleted"
+      />
+    </div>
   </v-app>
 </template>
 
@@ -276,6 +285,7 @@ export default {
     message: false,
     allowUpgrade: false,
     userPlanData: '',
+    logoutClicked: false,
     items: [
       {
         icon: 'fa fa-grid',
@@ -325,16 +335,15 @@ export default {
     const userInfo = userUtils.userCurrentOrgInfo(this.$store) || {}
     const userRoles = userInfo.roles || []
     this.allowUpgrade = userRoles.includes('$orgowner')
+    window.addEventListener('message', this.messageReceived, false)
+  },
+  beforeDestroy() {
+    window.removeEventListener('message', this.messageReceived)
   },
   methods: {
     onLogout(context) {
-      const publicDomain = this.$config.axios.eventUrl
-      const basePath = this.$config.basePublicPath || ''
-      const currentOrg = this.$store.state.currentOrg.name || ''
       if (this.$store.state.auth.loggedIn) {
-        window.location.replace(
-          `https://${currentOrg}-${publicDomain}${basePath}/onLogout`
-        )
+        this.logoutClicked = true
       }
     },
     closeSingleEventForm() {
@@ -358,6 +367,20 @@ export default {
           `Error in layouts/default.vue in userPlan method while making get call to custom API to get users subscription, context: ${url} `,
           e
         )
+      }
+    },
+    iframecookieDeleted() {
+      console.log(
+        'document.cookie that is passed to clear cookie',
+        document.cookie
+      )
+      this.$refs.iframe.contentWindow.postMessage(document.cookie, '*')
+    },
+    messageReceived(e) {
+      console.log('message received from the the iframe', e.data)
+      if (e.data === 'success') {
+        this.$auth.logout()
+        this.$apolloHelpers.onLogout()
       }
     },
   },
