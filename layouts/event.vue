@@ -351,7 +351,7 @@ export default {
     allowUpgrade: false,
     activeClass: ' v-list-item--active',
     userPlanData: '',
-    logoutClicked: false,
+    // logoutClicked: false,
     items: [
       {
         icon: 'fa fa-grid',
@@ -415,7 +415,7 @@ export default {
     const userRoles = userInfo.roles || []
     this.allowUpgrade = userRoles.includes('$orgowner')
     window.addEventListener('message', this.messageReceived, false)
-    this.logoutClicked = false
+    // this.logoutClicked = false
   },
   beforeDestroy() {
     window.removeEventListener('message', this.messageReceived)
@@ -424,7 +424,7 @@ export default {
     onLogout(context) {
       debugger
       if (this.$store.state.auth.loggedIn) {
-        this.logoutClicked = true
+        // this.logoutClicked = true
       }
     },
     closeSingleEventForm() {

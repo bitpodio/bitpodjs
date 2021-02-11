@@ -346,7 +346,7 @@ export default {
       message: false,
       valid: false,
       allowUpgrade: false,
-      logoutClicked: false,
+      // logoutClicked: false,
       rules: rules(this.$i18n),
       userPlanData: '',
       formData: {
@@ -418,7 +418,7 @@ export default {
   methods: {
     onLogout(context) {
       if (this.$store.state.auth.loggedIn) {
-        this.logoutClicked = true
+        // this.logoutClicked = true
       }
     },
     onClose() {

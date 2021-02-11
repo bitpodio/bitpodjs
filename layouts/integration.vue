@@ -164,7 +164,7 @@ export default {
       message: false,
       allowUpgrade: false,
       userPlanData: '',
-      logoutClicked: false,
+      // logoutClicked: false,
     }
   },
   async created() {
@@ -186,7 +186,7 @@ export default {
   methods: {
     onLogout(context) {
       if (this.$store.state.auth.loggedIn) {
-        this.logoutClicked = true
+        // this.logoutClicked = true
       }
     },
     async userPlan() {
