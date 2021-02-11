@@ -142,9 +142,7 @@ export default {
               jobData.length &&
               !jobData[0]._SetupErrors.length &&
               jobData[0]._SetupStatus[jobData[0]._SetupStatus.length - 1]
-                .Message === 'full setup completed' &&
-              jobData[0]._SetupStatus[jobData[0]._SetupStatus.length - 1]
-                .Code === 0
+                .Code === 200
             ) {
               location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}${nuxtconfig.auth.redirect.home}`
             } else {
