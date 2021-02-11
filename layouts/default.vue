@@ -343,7 +343,7 @@ export default {
   methods: {
     onLogout(context) {
       if (this.$store.state.auth.loggedIn) {
-        // this.logoutClicked = true
+        this.logoutClicked = true
       }
     },
     closeSingleEventForm() {
