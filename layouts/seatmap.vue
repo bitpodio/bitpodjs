@@ -208,20 +208,20 @@ export default {
         )
       }
     },
-    iframecookieDeleted() {
-      console.log(
-        'document.cookie that is passed to clear cookie',
-        document.cookie
-      )
-      this.$refs.iframe.contentWindow.postMessage(document.cookie, '*')
-    },
-    messageReceived(e) {
-      console.log('message received from the the iframe', e.data)
-      if (e.data === 'success') {
-        this.$auth.logout()
-        this.$apolloHelpers.onLogout()
-      }
-    },
+    // iframecookieDeleted() {
+    //   console.log(
+    //     'document.cookie that is passed to clear cookie',
+    //     document.cookie
+    //   )
+    //   this.$refs.iframe.contentWindow.postMessage(document.cookie, '*')
+    // },
+    // messageReceived(e) {
+    //   console.log('message received from the the iframe', e.data)
+    //   if (e.data === 'success') {
+    //     this.$auth.logout()
+    //     this.$apolloHelpers.onLogout()
+    //   }
+    // },
   },
 }
 </script>

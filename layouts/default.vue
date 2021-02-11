@@ -285,7 +285,7 @@ export default {
     message: false,
     allowUpgrade: false,
     userPlanData: '',
-    logoutClicked: false,
+    // logoutClicked: false,
     items: [
       {
         icon: 'fa fa-grid',
@@ -343,7 +343,7 @@ export default {
   methods: {
     onLogout(context) {
       if (this.$store.state.auth.loggedIn) {
-        this.logoutClicked = true
+        // this.logoutClicked = true
       }
     },
     closeSingleEventForm() {
@@ -369,20 +369,20 @@ export default {
         )
       }
     },
-    iframecookieDeleted() {
-      console.log(
-        'document.cookie that is passed to clear cookie',
-        document.cookie
-      )
-      this.$refs.iframe.contentWindow.postMessage(document.cookie, '*')
-    },
-    messageReceived(e) {
-      console.log('message received from the the iframe', e.data)
-      if (e.data === 'success') {
-        this.$auth.logout()
-        this.$apolloHelpers.onLogout()
-      }
-    },
+    // iframecookieDeleted() {
+    //   console.log(
+    //     'document.cookie that is passed to clear cookie',
+    //     document.cookie
+    //   )
+    //   this.$refs.iframe.contentWindow.postMessage(document.cookie, '*')
+    // },
+    // messageReceived(e) {
+    //   console.log('message received from the the iframe', e.data)
+    //   if (e.data === 'success') {
+    //     this.$auth.logout()
+    //     this.$apolloHelpers.onLogout()
+    //   }
+    // },
   },
 }
 </script>

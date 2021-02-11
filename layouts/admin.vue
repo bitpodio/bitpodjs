@@ -295,7 +295,7 @@
         </v-row>
       </v-container>
     </v-main>
-    <!-- <div v-if="logoutClicked">
+    <div v-if="logoutClicked">
       <iframe
         id="print"
         ref="iframe"
@@ -303,7 +303,7 @@
         :src="`https://${$config.axios.backendBaseUrl}${$config.basePublicPath}/clear-cookie`"
         @load="iframecookieDeleted"
       />
-    </div> -->
+    </div>
   </v-app>
 </template>
 
@@ -346,7 +346,7 @@ export default {
       message: false,
       valid: false,
       allowUpgrade: false,
-      // logoutClicked: false,
+      logoutClicked: false,
       rules: rules(this.$i18n),
       userPlanData: '',
       formData: {
@@ -418,7 +418,7 @@ export default {
   methods: {
     onLogout(context) {
       if (this.$store.state.auth.loggedIn) {
-        // this.logoutClicked = true
+        this.logoutClicked = true
       }
     },
     onClose() {
