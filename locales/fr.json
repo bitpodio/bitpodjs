@@ -905,7 +905,7 @@
       "NameMustStartWithAlphabet": "Le nom doit commencer par l'alphabet",
       "OrganisationAlreadyExists": "Ce nom est déjà pris",
       "SetupErrorTitle": "Une erreur s'est produite",
-      "SetupExitCode1": "Une erreur s'est produite lors de la configuration de votre organisation, veuillez contacter l'assistance.",
+      "SetupExitCode": "Erreur {code}: Une erreur s'est produite lors de la configuration de votre organisation, veuillez contacter l'assistance.",
       "SetupExitCodeCatch": "Une erreur s'est produite lors de la configuration de votre organisation, veuillez contacter l'assistance.",
       "SetupExitCodeTimeout": "Une erreur s'est produite lors de la configuration de votre organisation, veuillez contacter l'assistance.",
       "SetupOrgFailed": "Échec de la configuration de votre organisation.",

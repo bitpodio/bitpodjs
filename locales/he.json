@@ -907,7 +907,7 @@
       "NameMustStartWithAlphabet": "השם חייב להתחיל באלף בית",
       "OrganisationAlreadyExists": "שם זה כבר נלקח",
       "SetupErrorTitle": "חלה שגיאה",
-      "SetupExitCode1": "אירעה שגיאה בהקמת הארגון שלך, אנא צור קשר עם התמיכה",
+      "SetupExitCode": "שגיאה {code}: אירעה שגיאה בהקמת הארגון שלך, אנא צור קשר עם התמיכה",
       "SetupExitCodeCatch": "אירעה שגיאה בהקמת הארגון שלך, אנא צור קשר עם התמיכה",
       "SetupExitCodeTimeout": "אירעה שגיאה בהקמת הארגון שלך, אנא צור קשר עם התמיכה",
       "SetupOrgFailed": "הגדרת הארגון שלך נכשלה",
