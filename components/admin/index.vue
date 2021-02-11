@@ -402,9 +402,9 @@ export default {
     }
   },
   methods: {
-    onLogout() {
+    async onLogout() {
       this.$auth.logout()
-      this.$apolloHelpers.onLogout()
+      await this.$apolloHelpers.onLogout()
     },
   },
 }
