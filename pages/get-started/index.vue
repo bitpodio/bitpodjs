@@ -235,19 +235,28 @@ export default {
       }
     },
   },
-  mounted() {
+  async mounted() {
     window.addEventListener('message', this.messageReceived, false)
-    if (
-      this.$auth &&
-      this.$auth.$state &&
-      this.$auth.$state.user &&
-      this.$auth.$state.user.data
-    ) {
-      if (!this.$auth.user.data.orgList.length) {
-        this.tab = 1
+    if (this.$auth && this.$auth.loggedIn) {
+      this.$auth.$storage.removeCookie('redirect', {})
+      if (
+        this.$auth.$state &&
+        this.$auth.$state.user &&
+        this.$auth.$state.user.data
+      ) {
+        if (!this.$auth.user.data.orgList.length) {
+          this.tab = 1
+        }
+        this.email = this.$auth.$state.user.data.email
+        this.name = this.$auth.$state.user.data.name
       }
-      this.email = this.$auth.$state.user.data.email
-      this.name = this.$auth.$state.user.data.name
+    } else {
+      this.$auth.$storage.setCookie(
+        'redirect',
+        `${this.$config.basePublicPath}/get-started`,
+        {}
+      )
+      await this.$auth.loginWith(this.$config.auth.defaultLoginStrategy)
     }
   },
   beforeDestroy() {

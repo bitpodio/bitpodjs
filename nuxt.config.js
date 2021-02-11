@@ -286,6 +286,9 @@ export default {
         process.env.PUBLIC_DOMAIN || 'event.test.bitpod.io'
       }/adm/docs/HelpCenter/Integrations/Gmail/views/Gmail`,
     },
+    auth: {
+      defaultLoginStrategy: process.env.DEFAULT_LOGIN_STRATEGY || 'bitpod',
+    },
   },
 
   /*
