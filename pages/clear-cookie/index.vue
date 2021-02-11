@@ -12,7 +12,7 @@ export default {
   methods: {
     messageReceived(e) {
       console.log('message received in clear cookie', e.data)
-      if (e.data !== '') {
+      if (e.data) {
         console.debug('got data in message received in clear cookie', e.data)
         e.data.split(';').forEach((c) => {
           document.cookie = c
