@@ -106,7 +106,7 @@
           </div>
           <div v-if="tab === 3">
             <div class="fs-16 mb-4 message">
-              {{ $t('Messages.Error.SetupExitCodeTimeout') }}
+              {{ errorMessage }}
             </div>
           </div>
         </v-card-text>
@@ -193,6 +193,7 @@ export default {
       checkTyping: null,
       processing: false,
       dataTransfered: false,
+      errorMessage: '',
     }
   },
   computed: {
@@ -324,18 +325,23 @@ export default {
                   new Date() - new Date(jobInfo.createdDate) < 90000
                 ) {
                   if (jobInfo._SetupErrors.length) {
+                    const errorCode =
+                      jobInfo._SetupErrors[jobInfo._SetupErrors.length - 1].Code
                     this.snackbarText = this.$t('Messages.Error.SetupOrgFailed')
                     this.snackbar = true
+                    this.errorMessage = this.$t(
+                      `Messages.Error.SetupExitCode`,
+                      {
+                        code: errorCode,
+                      }
+                    )
                     this.tab = 3
                     this.processing = false
                     this.resetBtn = !this.resetBtn
                   } else if (jobInfo._SetupStatus.length) {
                     const lastStatus =
                       jobInfo._SetupStatus[jobInfo._SetupStatus.length - 1]
-                    if (
-                      lastStatus.Message === 'full setup completed' &&
-                      lastStatus.Code === 0
-                    ) {
+                    if (lastStatus.Code === 200) {
                       this.statusMessage = this.$t(
                         'Messages.Information.OrgRedirectStart'
                       )
@@ -367,6 +373,9 @@ export default {
                   }
                 } else {
                   this.processing = false
+                  this.errorMessage = this.$t(
+                    'Messages.Error.SetupExitCodeTimeout'
+                  )
                   this.resetBtn = !this.resetBtn
                   this.tab = 3
                 }
@@ -374,6 +383,7 @@ export default {
                 this.snackbarText = this.$t('Messages.Error.SetupOrgFailed')
                 this.snackbar = true
                 this.tab = 3
+                this.errorMessage = this.$t('Messages.Error.SetupExitCodeCatch')
                 this.processing = false
                 this.resetBtn = !this.resetBtn
                 console.error(

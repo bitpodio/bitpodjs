@@ -907,7 +907,7 @@
       "NameMustStartWithAlphabet": "Name must start with alphabet",
       "OrganisationAlreadyExists": "This name is already taken",
       "SetupErrorTitle": "An error occured",
-      "SetupExitCode1": "An error occured while setting up your organization, please get in touch with support.",
+      "SetupExitCode": "Error {code}: An error occured while setting up your organization, please get in touch with support.",
       "SetupExitCodeCatch": "An error occured while setting up your organization, please get in touch with support.",
       "SetupExitCodeTimeout": "An error occured while setting up your organization, please get in touch with support.",
       "SetupOrgFailed": "Failed to setup your organisation.",
