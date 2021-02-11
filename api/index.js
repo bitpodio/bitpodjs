@@ -8,6 +8,19 @@ const app = express()
 app.use(bodyParser.json())
 app.use(cookieParser())
 app.use(bodyParser.urlencoded({ extended: true }))
+let checkMemoryLeaks = () => {
+  console.debug('Memory leak detection enabled.');
+  const memwatch = require('memwatch-next');
+  const heapdump = require('heapdump');
+  memwatch.on('leak', (info) => {
+    console.warn('Memory leak detected:\n', info);
+    heapdump.writeSnapshot((err, filename) => {
+      if (err) console.error(err);
+      else console.warn('Wrote snapshot (at /home/app): ' + filename);
+    })
+  })
+}
+checkMemoryLeaks()
 
 function getTokenUserInfoUrl(ob) {
   const provider = ob.provider
