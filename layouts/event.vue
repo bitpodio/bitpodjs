@@ -302,6 +302,15 @@
         </v-row>
       </v-container>
     </v-main>
+    <div v-if="logoutClicked">
+      <iframe
+        id="print"
+        ref="iframe"
+        style="width: 0; position: absolute; height: 0;"
+        :src="`https://${$config.axios.backendBaseUrl}${$config.basePublicPath}/clear-cookie`"
+        @load="iframecookieDeleted"
+      />
+    </div>
   </v-app>
 </template>
 
@@ -342,6 +351,7 @@ export default {
     allowUpgrade: false,
     activeClass: ' v-list-item--active',
     userPlanData: '',
+    logoutClicked: false,
     items: [
       {
         icon: 'fa fa-grid',
@@ -411,9 +421,10 @@ export default {
       const basePath = this.$config.basePublicPath || ''
       const currentOrg = this.$store.state.currentOrg.name || ''
       if (this.$store.state.auth.loggedIn) {
-        window.location.replace(
-          `https://${currentOrg}-${publicDomain}${basePath}/onLogout`
-        )
+        this.logoutClicked = true
+        // window.location.replace(
+        //   `https://${currentOrg}-${publicDomain}${basePath}/onLogout`
+        // )
       }
     },
     closeSingleEventForm() {
