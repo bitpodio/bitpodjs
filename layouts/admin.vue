@@ -295,7 +295,7 @@
         </v-row>
       </v-container>
     </v-main>
-    <div v-if="logoutClicked">
+    <!-- <div v-if="logoutClicked">
       <iframe
         id="print"
         ref="iframe"
@@ -303,7 +303,7 @@
         :src="`https://${$config.axios.backendBaseUrl}${$config.basePublicPath}/clear-cookie`"
         @load="iframecookieDeleted"
       />
-    </div>
+    </div> -->
   </v-app>
 </template>
 
