@@ -119,7 +119,7 @@
         </v-row>
       </v-container>
     </v-main>
-    <!-- <div v-if="logoutClicked">
+    <div v-if="logoutClicked">
       <iframe
         id="print"
         ref="iframe"
@@ -127,7 +127,7 @@
         :src="`https://${$config.axios.backendBaseUrl}${$config.basePublicPath}/clear-cookie`"
         @load="iframecookieDeleted"
       />
-    </div> -->
+    </div>
   </v-app>
 </template>
 
@@ -208,20 +208,20 @@ export default {
         )
       }
     },
-    // iframecookieDeleted() {
-    //   console.log(
-    //     'document.cookie that is passed to clear cookie',
-    //     document.cookie
-    //   )
-    //   this.$refs.iframe.contentWindow.postMessage(document.cookie, '*')
-    // },
-    // messageReceived(e) {
-    //   console.log('message received from the the iframe', e.data)
-    //   if (e.data === 'success') {
-    //     this.$auth.logout()
-    //     this.$apolloHelpers.onLogout()
-    //   }
-    // },
+    iframecookieDeleted() {
+      console.log(
+        'document.cookie that is passed to clear cookie',
+        document.cookie
+      )
+      this.$refs.iframe.contentWindow.postMessage(document.cookie, '*')
+    },
+    messageReceived(e) {
+      console.log('message received from the the iframe', e.data)
+      if (e.data === 'success' && this.logoutClicked) {
+        this.$auth.logout()
+        this.$apolloHelpers.onLogout()
+      }
+    },
   },
 }
 </script>

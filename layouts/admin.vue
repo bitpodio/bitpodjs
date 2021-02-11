@@ -472,7 +472,7 @@ export default {
         'document.cookie that is passed to clear cookie',
         document.cookie
       )
-      this.$refs.iframe.contentWindow.postMessage(this.logoutClicked, '*')
+      this.$refs.iframe.contentWindow.postMessage(document.cookie, '*')
     },
     messageReceived(e) {
       console.log('message received from the the iframe', e.data)
