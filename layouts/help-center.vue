@@ -109,7 +109,8 @@
         </span>
         <i18n
           path="Common.HelpCenterMap"
-          class="d-inline-flex align-center mx-0 mx-md-2 ml-0 ml-md-1 text-h5"
+          class="d-inline-flex align-center mx-0 mx-md-2 ml-0 ml-md-1"
+          :class="$device.isMobile ? 'text-h6' : 'text-h5'"
         />
         <v-spacer></v-spacer>
       </v-toolbar-title>

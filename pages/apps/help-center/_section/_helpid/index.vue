@@ -49,8 +49,9 @@ export default {
 
 <style scoped>
 .help-doc {
+  display: block;
   width: 100%;
-  height: calc(100vh - 61px);
+  height: calc(100vh - 54px);
   border-width: 0;
 }
 </style>

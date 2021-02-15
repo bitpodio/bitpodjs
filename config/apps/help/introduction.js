@@ -36,7 +36,7 @@ export default {
       dataSource: {
         type: 'iFrame',
         url:
-          'https://test.bitpod.io/swagger.html?url=https://eventwnnwx.test.bitpod.io/\nsvc/explorer/swagger.json',
+          'https://test.bitpod.io/swagger.html?url=https://event.test.bitpod.io/\nsvc/explorer/swagger.json',
         role: 'application',
       },
     },

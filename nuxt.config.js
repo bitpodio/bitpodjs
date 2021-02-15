@@ -281,10 +281,10 @@ export default {
       }/e/`,
       ZOOM_DOCUMENT_LINK: `https://${
         process.env.PUBLIC_DOMAIN || 'event.test.bitpod.io'
-      }/adm/docs/HelpCenter/Integrations/Zoom/views/Zoom`,
+      }${process.env.PUBLIC_PATH || ''}/apps/help-center/integrations/zoom`,
       GOOGLE_MEET_DOCUMENT_LINK: `https://${
         process.env.PUBLIC_DOMAIN || 'event.test.bitpod.io'
-      }/adm/docs/HelpCenter/Integrations/Gmail/views/Gmail`,
+      }${process.env.PUBLIC_PATH || ''}/apps/help-center/integrations/gmail`,
     },
     auth: {
       defaultLoginStrategy: process.env.DEFAULT_LOGIN_STRATEGY || 'bitpod',
