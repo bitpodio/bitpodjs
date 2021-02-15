@@ -118,6 +118,7 @@ export default {
     '@nuxtjs/device',
     '@nuxtjs/apollo',
     '@bitpod/auth-nuxt',
+    'cookie-universal-nuxt',
     [
       'nuxt-gmaps',
       {
@@ -260,6 +261,7 @@ export default {
       backendBaseUrl: process.env.PUBLIC_DOMAIN || 'event.test.bitpod.io',
       eventUrl: process.env.GET_EVENT_URL || 'event.test.bitpod.io',
       crmUrl: process.env.GET_CRM_URL || 'crmivijd.test.bitpod.io',
+      primeOrgId: '1',
     },
     basePublicPath: process.env.PUBLIC_PATH || '',
     cdnUri:
@@ -279,10 +281,13 @@ export default {
       }/e/`,
       ZOOM_DOCUMENT_LINK: `https://${
         process.env.PUBLIC_DOMAIN || 'event.test.bitpod.io'
-      }${process.env.PUBLIC_PATH || ''}/apps/help-center/integrations/zoom`,
+      }/adm/docs/HelpCenter/Integrations/Zoom/views/Zoom`,
       GOOGLE_MEET_DOCUMENT_LINK: `https://${
         process.env.PUBLIC_DOMAIN || 'event.test.bitpod.io'
-      }${process.env.PUBLIC_PATH || ''}/apps/help-center/integrations/gmail`,
+      }/adm/docs/HelpCenter/Integrations/Gmail/views/Gmail`,
+    },
+    auth: {
+      defaultLoginStrategy: process.env.DEFAULT_LOGIN_STRATEGY || 'bitpod',
     },
   },
 
@@ -358,7 +363,6 @@ export default {
             process.env.BITPOD_ENDSESSION_ENDPOINT_URL ||
             'https://login.bitpod.io/auth/connect/endsession',
         },
-        logoutRedirectUri: process.env.POST_LOGOUT_REDIRECT_URI,
         responseType: 'code',
         grantType: 'authorization_code',
         redirectUri:

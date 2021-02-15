@@ -97,7 +97,7 @@
 import Help from '~/components/common/help'
 export default {
   layout: 'only-nav',
-  middleware: ['auth', 'authorization'],
+  middleware: ['authorization'],
   components: {
     Help,
   },

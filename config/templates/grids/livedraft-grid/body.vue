@@ -62,11 +62,18 @@
                   <div class="text--secondary pa-2 pb-0 body-2 pl-0 pt-0">
                     {{ formatedDate(item.StartDate, item.Timezone) }}
                   </div>
-                  <v-card-title
-                    class="text-h5 grey--text text--darken-4 text-truncate d-block text-capitalize pa-2 pt-0 pb-1 pl-0"
-                  >
-                    {{ item.Title }}
-                  </v-card-title>
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-card-title
+                        class="text-h5 grey--text text--darken-4 text-truncate d-block text-capitalize pa-2 pt-0 pb-1 pl-0"
+                        v-bind="attrs"
+                        v-on="on"
+                      >
+                        {{ item.Title }}
+                      </v-card-title>
+                    </template>
+                    <span>{{ item.Title }}</span>
+                  </v-tooltip>
                   <div
                     class="text--secondary pa-2 pb-0 pt-0 body-2 text-truncate d-block pl-0"
                   >
@@ -219,11 +226,18 @@
                   >
                     {{ getEventStartDate(item.StartDate, item.Timezone) }}
                   </div>
-                  <v-card-title
-                    class="text-h5 grey--text text--darken-4 text-truncate d-block text-capitalize pa-2 pt-0 pb-1 pl-0"
-                  >
-                    {{ item.Title }}
-                  </v-card-title>
+                  <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }">
+                      <v-card-title
+                        class="text-h5 grey--text text--darken-4 text-truncate d-block text-capitalize pa-2 pt-0 pb-1 pl-0"
+                        v-bind="attrs"
+                        v-on="on"
+                      >
+                        {{ item.Title }}
+                      </v-card-title>
+                    </template>
+                    <span>{{ item.Title }}</span>
+                  </v-tooltip>
                   <div
                     class="text--secondary pa-2 pb-0 pt-0 body-2 text-truncate d-block pl-0"
                   >
@@ -522,5 +536,8 @@ export default {
   top: 5px;
   z-index: 4;
   pointer-events: none;
+}
+.v-tooltip__content {
+  margin-left: -90px !important;
 }
 </style>

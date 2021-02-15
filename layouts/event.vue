@@ -24,7 +24,6 @@
             <v-btn
               v-bind="attrs"
               color="primary"
-              dark
               depressed
               class="ma-3 block wd-full my-0 mb-1 ml-n4"
               v-on="on"
@@ -303,6 +302,15 @@
         </v-row>
       </v-container>
     </v-main>
+    <div v-if="logoutClicked">
+      <iframe
+        id="print"
+        ref="iframe"
+        style="width: 0; position: absolute; height: 0;"
+        :src="`https://${$config.axios.backendBaseUrl}${$config.basePublicPath}/clear-cookie`"
+        @load="iframecookieDeleted"
+      />
+    </div>
   </v-app>
 </template>
 
@@ -343,6 +351,7 @@ export default {
     allowUpgrade: false,
     activeClass: ' v-list-item--active',
     userPlanData: '',
+    logoutClicked: false,
     items: [
       {
         icon: 'fa fa-grid',
@@ -405,11 +414,17 @@ export default {
     const userInfo = userUtils.userCurrentOrgInfo(this.$store) || {}
     const userRoles = userInfo.roles || []
     this.allowUpgrade = userRoles.includes('$orgowner')
+    window.addEventListener('message', this.messageReceived, false)
+  },
+  beforeDestroy() {
+    window.removeEventListener('message', this.messageReceived)
   },
   methods: {
-    async onLogout() {
-      await this.$apolloHelpers.onLogout()
-      this.$auth.logout()
+    onLogout(context) {
+      debugger
+      if (this.$store.state.auth.loggedIn) {
+        this.logoutClicked = true
+      }
     },
     closeSingleEventForm() {
       this.dialog1 = false
@@ -445,6 +460,20 @@ export default {
           `Error in layouts/event.vue in userPlan method while making get call to custom API to get users subscription, context: ${url} `,
           e
         )
+      }
+    },
+    iframecookieDeleted() {
+      console.log(
+        'document.cookie that is passed to clear cookie',
+        document.cookie
+      )
+      this.$refs.iframe.contentWindow.postMessage(document.cookie, '*')
+    },
+    messageReceived(e) {
+      console.log('message received from the the iframe', e.data)
+      if (e.data === 'success' && this.logoutClicked) {
+        this.$auth.logout()
+        this.$apolloHelpers.onLogout()
       }
     },
   },

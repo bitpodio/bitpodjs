@@ -246,9 +246,7 @@
                   <div v-if="session.LocationType === 'Zoom'">
                     <i class="fa fa-bulb" aria-hidden="true"></i>
                     <i18n path="Common.SendZoomJoiningInfo" />
-                    <a
-                      href=""
-                      @click.stop.prevent="openWindow(zoomDocumentLink)"
+                    <a :href="zoomDocumentLink" target="_blank"
                       ><i18n path="Common.ClickHere"
                     /></a>
                     <i18n path="Common.ForDocumentation" />
@@ -256,9 +254,7 @@
                   <div v-if="session.LocationType === 'Google Meet'">
                     <i class="fa fa-bulb" aria-hidden="true"></i>
                     <i18n path="Common.SendGoogleMeetJoiningInfo" />
-                    <a
-                      href=""
-                      @click.stop.prevent="openWindow(googleMeetDocumentLink)"
+                    <a :href="googleMeetDocumentLink" target="_blank"
                       ><i18n path="Common.ClickHere"
                     /></a>
                     <i18n path="Common.ForDocumentation" />
@@ -1183,10 +1179,6 @@ export default {
         this.isCustomMin = false
       }
     },
-
-    openWindow(link) {
-      window.open(link, '_blank')
-    },
     setTicketName() {
       const cloneTickets = JSON.parse(JSON.stringify(this.ticketOptions))
       let TicketName = ''
@@ -1204,6 +1196,7 @@ export default {
       this.session.TicketName = TicketName
     },
     async onSave() {
+      console.debug('New recurring session', this.session)
       if (this.session.StartTime > this.session.EndTime) {
         this.timeSlotMessage = this.$t('Messages.Error.StartEndTime')
         this.resetBtn = !this.resetBtn
@@ -1300,6 +1293,7 @@ export default {
         let exceptionRes = null
 
         if (this.actionType === 'New') {
+          console.debug('New recurring session', this.session)
           try {
             res = await this.$axios.$post(`${baseUrl}Sessions`, {
               ...this.session,
@@ -1332,6 +1326,7 @@ export default {
             return exceptionRes
           }
         } else if (this.actionType === 'Edit') {
+          console.debug('Edit recurring session', this.session)
           try {
             res = await this.$axios.$patch(
               `${baseUrl}Sessions/${this.session.id}`,

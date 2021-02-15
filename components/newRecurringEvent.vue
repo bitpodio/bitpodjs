@@ -679,6 +679,7 @@
                             <Lookup
                               v-model="ticket.Type"
                               :field="ticketTypeProps"
+                              :t-id="`RecurringTicketType-${k}`"
                               :on-change="changeTicketType(k)"
                             />
                           </td>
@@ -740,16 +741,14 @@
                 /></v-btn>
                 <div v-if="isZoom">
                   <i18n path="Common.SendZoomJoiningInfo" />
-                  <a href="" @click.stop.prevent="openWindow(zoomDocumentLink)"
+                  <a :href="zoomDocumentLink" target="_blank"
                     ><i18n path="Common.ClickHere"
                   /></a>
                   <i18n path="Common.ForDocumentation" />
                 </div>
                 <div v-if="isGoogleMeet">
                   <i18n path="Common.SendGoogleMeetJoiningInfo" />
-                  <a
-                    href=""
-                    @click.stop.prevent="openWindow(googleMeetDocumentLink)"
+                  <a :href="googleMeetDocumentLink" target="_blank"
                     ><i18n path="Common.ClickHere"
                   /></a>
                   <i18n path="Common.ForDocumentation" />
@@ -1669,9 +1668,6 @@ export default {
       this.venueAddress.LatLng.lat = addressData.latitude || ''
       this.venueAddress.LatLng.lng = addressData.longitude || ''
     },
-    openWindow(link) {
-      window.open(link, '_blank')
-    },
     changeType(value) {
       this.MaxAllow = this.sessions[this.selectedSession].MaxAllow || 5
       this.isGroup = value === 'Group'
@@ -2050,21 +2046,15 @@ export default {
       }
       this.isEventPublish = true
       this.isEventCreate = false
-      const modelName = 'Event'
-      const where = {
-        id: this.eventId,
+      const url = this.$bitpod.getApiUrl()
+      try {
+        await this.$axios.patch(`${url}Events/${this.eventId}`, eventStatus)
+      } catch (e) {
+        console.error(
+          `Error in app/Event/newRecurringEvent.vue while making a PATCH call to Event model from method eventPublish context:-URL:-${url}\n formData:-${this.formData}\n id:-${this.eventId} `,
+          e
+        )
       }
-      const editItemMutation = this.buildMutationUpsertQuery(modelName)
-      await this.$apollo.mutate({
-        mutation: gql(editItemMutation),
-        variables: {
-          Inputs: {
-            where,
-            data: eventStatus,
-            clientMutationId: `${modelName} list item updated successfully.`,
-          },
-        },
-      })
     },
     changeTicketType(index) {
       if (this.tickets[index].Type === 'Free') {
@@ -2250,7 +2240,7 @@ export default {
 
             this.tickets.forEach(function (ticket) {
               ticket.Events = res.id
-              ticket.Amount = parseInt(ticket.Amount)
+              ticket.Amount = parseFloat(ticket.Amount)
               ticket.TicketCount = parseInt(ticket.TicketCount)
               ticket.AvailableCount = parseInt(ticket.TicketCount)
               ticketList.push(ticket)

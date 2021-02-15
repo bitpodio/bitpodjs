@@ -46,6 +46,21 @@
 export default {
   layout: 'logoutlayout',
   components: {},
+  async beforeMount(context) {
+    const publicDomain = this.$config.axios.eventUrl
+    const basePath = this.$config.basePublicPath || ''
+    const currentOrg = this.$store.state.currentOrg.name || ''
+    if (this.$store.state.auth.loggedIn) {
+      const provider = this.$store.state.auth.strategy
+      if (provider === 'bitpod') {
+        return await this.$auth.loginWith(provider)
+      } else {
+        window.location.replace(
+          `https://${publicDomain}${basePath}/forwardLogin?targetDomain=${currentOrg}`
+        )
+      }
+    }
+  },
   methods: {
     async loginBitpod() {
       if (window.localStorage['auth.redirect']) {

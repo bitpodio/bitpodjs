@@ -109,11 +109,7 @@
           </div>
           <div v-if="hideFilter" class="grid-filter">
             <slot name="filter">
-              <FieldsFilter
-                v-model="filters"
-                :is-filter-applied="isFilterApplied"
-                :fields="filterableFields"
-              />
+              <FieldsFilter v-model="filters" :fields="filterableFields" />
             </slot>
           </div>
           <div
@@ -185,13 +181,13 @@
           :options.sync="options"
           :server-items-length="tableData.total"
           :hide-default-header="hideDefaultHeader"
-          :hide-default-footer="isHideDefaultFooter"
+          :hide-default-footer="showPagination()"
           :show-expand="showExpand"
           :single-expand="singleExpand"
           item-key="id"
           class="elevation-0 v-grid"
           :class="hideDefaultHeader ? 'px-0 pt-0 istemplate' : 'px-2 pt-1'"
-          :footer-props="{ 'items-per-page-options': [5, 10, 20, 50] }"
+          :footer-props="{ 'items-per-page-options': perPageOption }"
           :show-select="$device.isMobile || showSelect"
           @change:options="updatePagination"
           @update:page="updatePageChange"
@@ -616,6 +612,7 @@ export default {
     const headers = getTableHeader(this.content, this.viewName, this)
     const gridProps = getGridsProps(this.content, this.viewName)
     return {
+      perPageOption: [5, 10, 20, 50],
       headers,
       tableData: {
         items: [],
@@ -624,7 +621,6 @@ export default {
       loading: true,
       totalCount: 0,
       options: {},
-      isFilterApplied: false,
       filterFields: {},
       filters: { rules: [], ruleCondition: 'and' },
       component: [],
@@ -651,7 +647,7 @@ export default {
       winWidth: window.innerWidth,
       itemPerPage: 0,
       componentRerenderKey: 0,
-      noDataText: '',
+      noDataText: this.$t('Common.NoDataAvailable'),
     }
   },
   computed: {
@@ -910,6 +906,11 @@ export default {
     window.removeEventListener('resize', this.onResize)
   },
   methods: {
+    showPagination() {
+      return this.tableData.total >= this.perPageOption[0]
+        ? this.isHideDefaultFooter
+        : true
+    },
     toggleSnackbar(toggleViewName, message, timeout = 3000) {
       if (this.viewName === toggleViewName) {
         this.snackbarText = message
@@ -957,9 +958,6 @@ export default {
     updatePageChange(data) {
       this.loading = true
       this.loadRestData()
-    },
-    onFilterClick(e) {
-      this.isFilterApplied = true
     },
     onRowClick(item, props) {
       if (!this.showSelect && !this.$device.isMobile) {
