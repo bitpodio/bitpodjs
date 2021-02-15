@@ -21,8 +21,8 @@ export const appList = (store) => [
     name: 'HelpCenter',
     label: 'Common.HelpCenterMap',
     css: 'fa fa-help-circle fs-36 success--text',
-    type: 'url',
-    href: 'https://event.bitpod.io/adm/docs/HelpCenter/',
+    type: 'route',
+    href: '/apps/help-center',
     roles: ['$orguser'],
   },
   {
