@@ -137,12 +137,12 @@
                       >
                         <v-checkbox
                           v-model="connectionStatus[selectedServiceId]"
-                          label="Status"
                           color="green"
                           dense
                           class="mr-2 mt-1 black--text"
                           @click="updateConnection(item)"
                         ></v-checkbox>
+                        <span class="Status">Status</span>
                       </v-list-item>
                     </v-list>
                   </v-menu>
@@ -450,6 +450,9 @@ export default {
 }
 .inactive-connection {
   border-bottom: 2px solid grey;
+}
+.Status {
+  margin-bottom: 10px;
 }
 @media (max-width: 600px) {
   .seatmap-inner {
