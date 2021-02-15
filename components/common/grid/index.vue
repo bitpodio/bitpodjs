@@ -897,7 +897,7 @@ export default {
   },
   beforeDestroy() {
     this.$eventBus.$off('user-created')
-    this.$eventBus.$off('grids-refresh')
+    this.$eventBus.$off('grid-refresh')
     this.$eventBus.$off('unselectAll-record')
     this.$eventBus.$off('toggle-snackbar')
     this.$eventBus.$off('toggle-confirm')
