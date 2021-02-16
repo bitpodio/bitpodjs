@@ -767,7 +767,9 @@
     "Upgrade": "שדרוג",
     "SessionNotStart": "מושב זה עדיין לא התחיל.",
     "TryJoinOn": "נסה להצטרף שוב בתאריך",
-    "CheckCalendarInvite": "בדוק את הזמנת לוח השנה להצטרפות לקישור"
+    "CheckCalendarInvite": "בדוק את הזמנת לוח השנה להצטרפות לקישור",
+    "ClearFilter": "נקה מסננים",
+    "SubTotal": "סך הכל"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",
@@ -905,7 +907,7 @@
       "NameMustStartWithAlphabet": "השם חייב להתחיל באלף בית",
       "OrganisationAlreadyExists": "שם זה כבר נלקח",
       "SetupErrorTitle": "חלה שגיאה",
-      "SetupExitCode1": "אירעה שגיאה בהקמת הארגון שלך, אנא צור קשר עם התמיכה",
+      "SetupExitCode": "שגיאה {code}: אירעה שגיאה בהקמת הארגון שלך, אנא צור קשר עם התמיכה",
       "SetupExitCodeCatch": "אירעה שגיאה בהקמת הארגון שלך, אנא צור קשר עם התמיכה",
       "SetupExitCodeTimeout": "אירעה שגיאה בהקמת הארגון שלך, אנא צור קשר עם התמיכה",
       "SetupOrgFailed": "הגדרת הארגון שלך נכשלה",
@@ -935,10 +937,10 @@
       "DeleteEventQuestion": "האם ברצונך למחוק שאלה זו?",
       "RegistrationTypeDefault": "ניתן להגדיר ברירת מחדל רק סוג רישום אחד",
       "RegistrationTypeWarning": "אזהרת סוג רישום",
-      "PaymentGatewayWarning":"אזהרת שער תשלום",
-      "PaymentGatewayDefault":"ניתן לחבר רק חיבור תשלום אחד.",
-      "SeatMapDefault":"אזהרת מפת מושב",
-      "SeatMapWarning":"ישנם שינויים שלא נשמרו אשר יאבדו אם תסגור מבלי לשמור, האם אתה בטוח?"
+      "PaymentGatewayWarning": "אזהרת שער תשלום",
+      "PaymentGatewayDefault": "ניתן לחבר רק חיבור תשלום אחד.",
+      "SeatMapDefault": "אזהרת מפת מושב",
+      "SeatMapWarning": "ישנם שינויים שלא נשמרו אשר יאבדו אם תסגור מבלי לשמור, האם אתה בטוח?"
     },
     "Success": {
       "CopiedClipboard": "הועתק ללוח",
@@ -990,7 +992,7 @@
       "SessionCreatedSuccess": "ההפעלה נוצרה בהצלחה",
       "SessionUpdatedSuccess": "ההפעלה עודכנה בהצלחה",
       "ContactImportSuccess": "ביצוע הייבוא ​​החל",
-      "OrgNameSuccess": "https://{orgName}{suffixRoute} זמין"
+      "OrgNameSuccess": "https://{orgName}-{suffixRoute} זמין"
     },
     "Information": {
       "SetupInProgressTitle": "ההתקנה בעיצומה",

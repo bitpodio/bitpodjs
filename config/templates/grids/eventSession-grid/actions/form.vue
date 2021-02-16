@@ -157,16 +157,14 @@
               <v-col cols="12" class="pb-0 pt-0">
                 <div v-if="session.LocationType === 'Zoom'">
                   <i18n path="Common.SendZoomJoiningInfo" />
-                  <a href="" @click.stop.prevent="openWindow(zoomDocumentLink)"
+                  <a :href="zoomDocumentLink" target="_blank"
                     ><i18n path="Common.ClickHere"
                   /></a>
                   <i18n path="Common.ForDocumentation" />
                 </div>
                 <div v-if="session.LocationType === 'Google Meet'">
                   <i18n path="Common.SendGoogleMeetJoiningInfo" />
-                  <a
-                    href=""
-                    @click.stop.prevent="openWindow(googleMeetDocumentLink)"
+                  <a :href="googleMeetDocumentLink" target="_blank"
                     ><i18n path="Common.ClickHere"
                   /></a>
                   <i18n path="Common.ForDocumentation" />
@@ -626,9 +624,6 @@ export default {
       this.session.MaxAllow = parseInt(this.session.MaxAllow) || 5
       this.isGroup = value === 'Group'
     },
-    openWindow(link) {
-      window.open(link, '_blank')
-    },
     async onSave() {
       const baseUrl = this.$bitpod.getApiUrl()
       this.session.EventId = this.$route.params.id
@@ -651,10 +646,11 @@ export default {
       let res = null
       if (this.session.LocationType === 'Venue') {
         if (this.venueAddress.AddressLine !== '') {
-          if (
-            this.venueAddress.LatLng.lat === 0 ||
-            this.venueAddress.LatLng.lng === 0
-          ) {
+          if (this.venueAddress) {
+            this.venueAddress.LatLng = {
+              lat: '',
+              lng: '',
+            }
             const Url = nuxtconfig.generalConfig.googleMapGeocodeApi
             const key = nuxtconfig.generalConfig.googleGeocodeMapKey
             const addressObj = `${this.venueAddress.AddressLine},${this.venueAddress.City},${this.venueAddress.State},${this.venueAddress.Country},${this.venueAddress.PostalCode}`

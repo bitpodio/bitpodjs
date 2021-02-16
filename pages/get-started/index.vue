@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-snackbar v-model="snackbar" :timeout="2000" :top="true" width="2px">
+    <v-snackbar v-model="snackbar" :timeout="3000" :top="true" width="2px">
       <div class="fs-16 text-center">
         {{ snackbarText }}
       </div>
@@ -66,13 +66,13 @@
                   {{
                     $t('Messages.Success.OrgNameSuccess', {
                       orgName: orgName,
-                      suffixRoute: $t('Common.SuffixRoute'),
+                      suffixRoute: $config.setting.domains.defaultPublicDomain,
                     })
                   }}
                 </div>
               </v-form>
               <div class="fs-20 mt-2 ml-1">
-                {{ $t('Common.SuffixRoute') }}
+                -{{ $config.setting.domains.defaultPublicDomain }}
               </div>
             </div>
           </div>
@@ -106,7 +106,7 @@
           </div>
           <div v-if="tab === 3">
             <div class="fs-16 mb-4 message">
-              {{ $t('Messages.Error.SetupExitCodeTimeout') }}
+              {{ errorMessage }}
             </div>
           </div>
         </v-card-text>
@@ -193,6 +193,7 @@ export default {
       checkTyping: null,
       processing: false,
       dataTransfered: false,
+      errorMessage: '',
     }
   },
   computed: {
@@ -234,19 +235,28 @@ export default {
       }
     },
   },
-  mounted() {
+  async mounted() {
     window.addEventListener('message', this.messageReceived, false)
-    if (
-      this.$auth &&
-      this.$auth.$state &&
-      this.$auth.$state.user &&
-      this.$auth.$state.user.data
-    ) {
-      if (!this.$auth.user.data.orgList.length) {
-        this.tab = 1
+    if (this.$auth && this.$auth.loggedIn) {
+      this.$auth.$storage.removeCookie('redirect', {})
+      if (
+        this.$auth.$state &&
+        this.$auth.$state.user &&
+        this.$auth.$state.user.data
+      ) {
+        if (!this.$auth.user.data.orgList.length) {
+          this.tab = 1
+        }
+        this.email = this.$auth.$state.user.data.email
+        this.name = this.$auth.$state.user.data.name
       }
-      this.email = this.$auth.$state.user.data.email
-      this.name = this.$auth.$state.user.data.name
+    } else {
+      this.$auth.$storage.setCookie(
+        'redirect',
+        `${this.$config.basePublicPath}/get-started`,
+        {}
+      )
+      await this.$auth.loginWith(this.$config.auth.defaultLoginStrategy)
     }
   },
   beforeDestroy() {
@@ -324,18 +334,23 @@ export default {
                   new Date() - new Date(jobInfo.createdDate) < 90000
                 ) {
                   if (jobInfo._SetupErrors.length) {
+                    const errorCode =
+                      jobInfo._SetupErrors[jobInfo._SetupErrors.length - 1].Code
                     this.snackbarText = this.$t('Messages.Error.SetupOrgFailed')
                     this.snackbar = true
-                    this.tab = 1
+                    this.errorMessage = this.$t(
+                      `Messages.Error.SetupExitCode`,
+                      {
+                        code: errorCode,
+                      }
+                    )
+                    this.tab = 3
                     this.processing = false
                     this.resetBtn = !this.resetBtn
                   } else if (jobInfo._SetupStatus.length) {
                     const lastStatus =
                       jobInfo._SetupStatus[jobInfo._SetupStatus.length - 1]
-                    if (
-                      lastStatus.Message === 'full setup completed' &&
-                      lastStatus.Code === 0
-                    ) {
+                    if (lastStatus.Code === 200) {
                       this.statusMessage = this.$t(
                         'Messages.Information.OrgRedirectStart'
                       )
@@ -367,13 +382,17 @@ export default {
                   }
                 } else {
                   this.processing = false
+                  this.errorMessage = this.$t(
+                    'Messages.Error.SetupExitCodeTimeout'
+                  )
                   this.resetBtn = !this.resetBtn
                   this.tab = 3
                 }
               } catch (err) {
                 this.snackbarText = this.$t('Messages.Error.SetupOrgFailed')
                 this.snackbar = true
-                this.tab = 1
+                this.tab = 3
+                this.errorMessage = this.$t('Messages.Error.SetupExitCodeCatch')
                 this.processing = false
                 this.resetBtn = !this.resetBtn
                 console.error(
@@ -386,14 +405,14 @@ export default {
           } else {
             this.snackbarText = this.$t('Messages.Error.SetupOrgFailed')
             this.snackbar = true
-            this.tab = 1
+            this.tab = 3
             this.processing = false
             this.resetBtn = !this.resetBtn
           }
         } catch (err) {
           this.snackbarText = this.$t('Messages.Error.SetupOrgFailed')
           this.snackbar = true
-          this.tab = 1
+          this.tab = 3
           this.processing = false
           this.resetBtn = !this.resetBtn
           console.error(
