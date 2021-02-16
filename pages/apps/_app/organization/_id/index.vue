@@ -683,6 +683,13 @@ export default {
       }
     },
     async uploadOrgLogo(data) {
+      debugger
+      console.log('formData 1 ', this)
+      console.log('formData 2 ', this.formData)
+      console.log('formData 3 ', this.formData.Image)
+      console.log('formData 4 ', this.data.organization)
+      console.log('formData 5 ', this.data.organization.Image)
+      debugger
       this.allow = true
       this.formData.Image = []
       this.formData.Image.push(data[0])
@@ -696,6 +703,19 @@ export default {
         this.refresh()
       } catch (e) {
         console.log('Error', e)
+      }
+      try {
+        const obj = {
+          imgname: this.$bitpod.getApiUrl().replace('/svc/api/', ''),
+          imgId: data[0],
+          deleteImgId: this.data.organization.Image[0],
+        }
+        console.log('formData 5 ', this.data.organization.Image)
+        const url = `${this.$bitpod.getApiUrl()}OrganizationInfos/uploadcloudinary`
+        debugger
+        await this.$axios.$post(url, obj)
+      } catch (e) {
+        console.log('Error in uploadcloudinary', e)
       }
     },
     formatDate(date) {
