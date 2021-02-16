@@ -51,6 +51,7 @@ export default function (context) {
     if (!isValidPage(store, route)) {
       return redirect('/unauthorized')
     }
+    return
   }
   return redirect('/unauthorized')
 }
