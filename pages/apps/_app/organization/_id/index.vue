@@ -708,7 +708,9 @@ export default {
         const obj = {
           imgname: this.$bitpod.getApiUrl().replace('/svc/api/', ''),
           imgId: data[0],
-          deleteImgId: this.data.organization.Image[0],
+          deleteImgId: this.data.organization.Image.length
+            ? this.data.organization.Image[0]
+            : '',
         }
         console.log('formData 5 ', this.data.organization.Image)
         const url = `${this.$bitpod.getApiUrl()}OrganizationInfos/uploadcloudinary`
