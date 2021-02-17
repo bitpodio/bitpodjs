@@ -105,18 +105,15 @@ export default {
               if (jobInfo._SetupErrors.length) {
                 const errorCode =
                   jobInfo._SetupErrors[jobInfo._SetupErrors.length - 1].Code
-                this.statusMessage = this.$t(
-                  `Messages.Error.SetupExitCode${errorCode}`
-                )
+                this.statusMessage = this.$t(`Messages.Error.SetupExitCode`, {
+                  code: errorCode,
+                })
                 this.titleMessage = this.$t('Messages.Error.SetupErrorTitle')
                 this.showDialog = true
               } else if (jobInfo._SetupStatus.length) {
                 const lastStatus =
                   jobInfo._SetupStatus[jobInfo._SetupStatus.length - 1]
-                if (
-                  lastStatus.Message === 'full setup completed' &&
-                  lastStatus.Code === 0
-                ) {
+                if (lastStatus.Code === 200) {
                   this.statusMessage = 'Redirecting to new Organization'
                   location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}${nuxtconfig.auth.redirect.home}`
                 } else {
@@ -145,9 +142,7 @@ export default {
               jobData.length &&
               !jobData[0]._SetupErrors.length &&
               jobData[0]._SetupStatus[jobData[0]._SetupStatus.length - 1]
-                .Message === 'full setup completed' &&
-              jobData[0]._SetupStatus[jobData[0]._SetupStatus.length - 1]
-                .Code === 0
+                .Code === 200
             ) {
               location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}${nuxtconfig.auth.redirect.home}`
             } else {

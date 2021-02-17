@@ -741,16 +741,14 @@
                 /></v-btn>
                 <div v-if="isZoom">
                   <i18n path="Common.SendZoomJoiningInfo" />
-                  <a href="" @click.stop.prevent="openWindow(zoomDocumentLink)"
+                  <a :href="zoomDocumentLink" target="_blank"
                     ><i18n path="Common.ClickHere"
                   /></a>
                   <i18n path="Common.ForDocumentation" />
                 </div>
                 <div v-if="isGoogleMeet">
                   <i18n path="Common.SendGoogleMeetJoiningInfo" />
-                  <a
-                    href=""
-                    @click.stop.prevent="openWindow(googleMeetDocumentLink)"
+                  <a :href="googleMeetDocumentLink" target="_blank"
                     ><i18n path="Common.ClickHere"
                   /></a>
                   <i18n path="Common.ForDocumentation" />
@@ -1669,9 +1667,6 @@ export default {
       this.venueAddress.State = addressData.administrative_area_level_1 || ''
       this.venueAddress.LatLng.lat = addressData.latitude || ''
       this.venueAddress.LatLng.lng = addressData.longitude || ''
-    },
-    openWindow(link) {
-      window.open(link, '_blank')
     },
     changeType(value) {
       this.MaxAllow = this.sessions[this.selectedSession].MaxAllow || 5

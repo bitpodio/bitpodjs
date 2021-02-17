@@ -647,7 +647,7 @@ export default {
       winWidth: window.innerWidth,
       itemPerPage: 0,
       componentRerenderKey: 0,
-      noDataText: '',
+      noDataText: this.$t('Common.NoDataAvailable'),
     }
   },
   computed: {
