@@ -246,9 +246,7 @@
                   <div v-if="session.LocationType === 'Zoom'">
                     <i class="fa fa-bulb" aria-hidden="true"></i>
                     <i18n path="Common.SendZoomJoiningInfo" />
-                    <a
-                      href=""
-                      @click.stop.prevent="openWindow(zoomDocumentLink)"
+                    <a :href="zoomDocumentLink" target="_blank"
                       ><i18n path="Common.ClickHere"
                     /></a>
                     <i18n path="Common.ForDocumentation" />
@@ -256,9 +254,7 @@
                   <div v-if="session.LocationType === 'Google Meet'">
                     <i class="fa fa-bulb" aria-hidden="true"></i>
                     <i18n path="Common.SendGoogleMeetJoiningInfo" />
-                    <a
-                      href=""
-                      @click.stop.prevent="openWindow(googleMeetDocumentLink)"
+                    <a :href="googleMeetDocumentLink" target="_blank"
                       ><i18n path="Common.ClickHere"
                     /></a>
                     <i18n path="Common.ForDocumentation" />
@@ -1182,10 +1178,6 @@ export default {
       } else {
         this.isCustomMin = false
       }
-    },
-
-    openWindow(link) {
-      window.open(link, '_blank')
     },
     setTicketName() {
       const cloneTickets = JSON.parse(JSON.stringify(this.ticketOptions))

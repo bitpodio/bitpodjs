@@ -116,7 +116,7 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/device',
     '@nuxtjs/apollo',
-    '@bitpod/auth-nuxt',
+    '@bitpod/auth-nuxt-custom',
     'cookie-universal-nuxt',
     [
       'nuxt-gmaps',
@@ -281,10 +281,13 @@ export default {
       //! Replace /adm/ with /admin/ on publishing help center for zoom and google meet help
       ZOOM_DOCUMENT_LINK: `https://${
         process.env.PUBLIC_DOMAIN || 'event.test.bitpod.io'
-      }/adm/apps/HelpCenter/Integrations/Zoom/views/Zoom`,
+      }/adm/docs/HelpCenter/Integrations/Zoom/views/Zoom`,
       GOOGLE_MEET_DOCUMENT_LINK: `https://${
         process.env.PUBLIC_DOMAIN || 'event.test.bitpod.io'
-      }/adm/apps/HelpCenter/Integrations/Gmail/views/Gmail`,
+      }/adm/docs/HelpCenter/Integrations/Gmail/views/Gmail`,
+    },
+    auth: {
+      defaultLoginStrategy: process.env.DEFAULT_LOGIN_STRATEGY || 'bitpod',
     },
   },
 

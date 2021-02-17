@@ -765,7 +765,9 @@
     "Upgrade": "Améliorer",
     "SessionNotStart": "Cette session n'a pas encore commencé.",
     "TryJoinOn": "Essayez de vous joindre à nouveau sur",
-    "CheckCalendarInvite": "Vérifier l'invitation du calendrier pour rejoindre le lien"
+    "CheckCalendarInvite": "Vérifier l'invitation du calendrier pour rejoindre le lien",
+    "ClearFilter": "Effacer les filtres",
+    "SubTotal": "Sous-total"
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",
@@ -903,7 +905,7 @@
       "NameMustStartWithAlphabet": "Le nom doit commencer par l'alphabet",
       "OrganisationAlreadyExists": "Ce nom est déjà pris",
       "SetupErrorTitle": "Une erreur s'est produite",
-      "SetupExitCode1": "Une erreur s'est produite lors de la configuration de votre organisation, veuillez contacter l'assistance.",
+      "SetupExitCode": "Erreur {code}: Une erreur s'est produite lors de la configuration de votre organisation, veuillez contacter l'assistance.",
       "SetupExitCodeCatch": "Une erreur s'est produite lors de la configuration de votre organisation, veuillez contacter l'assistance.",
       "SetupExitCodeTimeout": "Une erreur s'est produite lors de la configuration de votre organisation, veuillez contacter l'assistance.",
       "SetupOrgFailed": "Échec de la configuration de votre organisation.",
@@ -935,8 +937,8 @@
       "RegistrationTypeWarning": "Avertissement de type d'enregistrement",
       "PaymentGatewayWarning": "Avertissement de passerelle de paiement",
       "PaymentGatewayDefault": "Une seule connexion de paiement peut être connectée.",
-      "SeatMapDefault":"Avertissement de plan de siège",
-      "SeatMapWarning":"Certaines modifications non enregistrées seront perdues si vous fermez sans enregistrer, êtes-vous sûr?"
+      "SeatMapDefault": "Avertissement de plan de siège",
+      "SeatMapWarning": "Certaines modifications non enregistrées seront perdues si vous fermez sans enregistrer, êtes-vous sûr?"
     },
     "Success": {
       "CopiedClipboard": "Copié dans le presse-papiers",
@@ -988,7 +990,7 @@
       "SessionCreatedSuccess": "Session créée avec succès",
       "SessionUpdatedSuccess": "Session mise à jour avec succès",
       "ContactImportSuccess": "L'exécution de l'importation a commencé",
-      "OrgNameSuccess": "https://{orgName}{suffixRoute} est disponible"
+      "OrgNameSuccess": "https://{orgName}-{suffixRoute} est disponible"
     },
     "Information": {
       "SetupInProgressTitle": "configuration en cours",
