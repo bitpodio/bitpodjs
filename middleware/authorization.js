@@ -53,5 +53,7 @@ export default function (context) {
     }
     return
   }
-  return redirect('/unauthorized')
+  if (context.route.fullPath !== `/get-started`) {
+    return redirect('/unauthorized')
+  }
 }
