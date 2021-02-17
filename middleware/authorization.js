@@ -53,5 +53,9 @@ export default function (context) {
     }
     return
   }
-  return redirect('/unauthorized')
+  if (
+    context.route.fullPath !== `${context.$config.basePublicPath}/get-started`
+  ) {
+    return redirect('/unauthorized')
+  }
 }
