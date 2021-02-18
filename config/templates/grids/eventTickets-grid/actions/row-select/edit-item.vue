@@ -467,7 +467,6 @@ export default {
         .map((k) => k.id)
     },
     getTickets() {
-      debugger
       this.items.map((ele) => {
         this.CheckEndDate = this.context.event.EndDate
         this.formData = { ...ele }
