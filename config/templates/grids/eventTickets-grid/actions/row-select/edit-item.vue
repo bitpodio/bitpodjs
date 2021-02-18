@@ -107,7 +107,7 @@
               </v-col>
               <v-col class="col-12 col-md-6">
                 <v-text-field
-                  v-model="formData.TicketCount"
+                  v-model="formData.AvailableCount"
                   :label="$t('Common.TicketCountRequired')"
                   :rules="ticketCountRules()"
                   type="number"
@@ -420,7 +420,7 @@ export default {
       this.formData.Amount = parseFloat(this.Amount)
       this.formData.DisplayOrder = parseInt(this.formData.DisplayOrder)
       this.formData.TicketCount = parseInt(this.formData.TicketCount)
-      this.formData.AvailableCount = parseInt(this.formData.TicketCount)
+      this.formData.AvailableCount = parseInt(this.formData.AvailableCount)
       this.formData.Events = this.$route.params.id
       this.formData.Status = this.eventStatus
       try {

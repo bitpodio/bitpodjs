@@ -47,6 +47,6 @@ export const appList = (store) => [
     css: 'fa fa fa-link1 fs-36 warning--text',
     type: 'route',
     route: '/apps/integration/list/integration/integration',
-    roles: ['$orguser'],
+    roles: ['$developer', '$orgowner', 'EventAdmin', 'Events', 'SFIntegration'],
   },
 ]

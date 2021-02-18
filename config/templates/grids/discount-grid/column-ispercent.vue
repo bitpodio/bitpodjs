@@ -46,12 +46,9 @@ export default {
     async updateRegForm() {
       const url = this.$bitpod.getApiUrl()
       try {
-        const res = await this.$axios.$put(
-          `${url}/svc/api/OfferCodes/${this.item.id}`,
-          {
-            isPercent: this.checkbox,
-          }
-        )
+        const res = await this.$axios.$put(`${url}OfferCodes/${this.item.id}`, {
+          isPercent: this.checkbox,
+        })
         if (res) {
           this.refresh()
         }
