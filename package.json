@@ -1,11 +1,12 @@
 {
   "name": "bitpodjs",
-  "version": "1.1.10",
+  "version": "1.1.11",
   "private": true,
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "node --max-http-header-size=25000 node_modules/nuxt/bin/nuxt.js start --hostname=0.0.0.0",
+    "debug": "node --max-http-header-size=25000 --inspect-brk --inspect node_modules/nuxt/bin/nuxt.js start --hostname=0.0.0.0",
     "export": "nuxt export",
     "serve": "nuxt serve",
     "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
@@ -15,7 +16,7 @@
     "precommit": "yarn lint"
   },
   "dependencies": {
-    "@bitpod/auth-nuxt": "^5.0.0-1612781833.7c85851",
+    "@bitpod/auth-nuxt-custom": "^5.0.0-1613129613.5ff65ad",
     "@fullcalendar/core": "^5.3.1",
     "@fullcalendar/daygrid": "^5.3.0",
     "@fullcalendar/interaction": "^5.3.0",

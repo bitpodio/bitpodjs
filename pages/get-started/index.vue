@@ -114,7 +114,7 @@
         <v-card-actions
           class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
         >
-          <div v-if="tab === 1" class="d-flex">
+          <div v-if="tab === 1" class="d-flex w-full flex-wrap">
             <SaveBtn
               class="my-1"
               dense
@@ -124,12 +124,23 @@
               :action="stepOne"
               :reset="resetBtn"
             ></SaveBtn>
-            <div
-              v-if="allowable"
-              class="fs-14 pa-3 statusMessage primary--text"
-            >
-              {{ statusMessage }}
+            <div class="flex-grow-1">
+              <div
+                v-if="allowable"
+                class="fs-14 pa-3 statusMessage primary--text"
+              >
+                {{ statusMessage }}
+              </div>
             </div>
+            <v-btn
+              text
+              class="my-1"
+              :loading="loggingOut"
+              :disabled="loggingOut"
+              @click="onLogout"
+            >
+              <i18n path="Drawer.Cancel" />
+            </v-btn>
           </div>
           <div v-if="tab === 2" class="d-flex">
             <SaveBtn
@@ -194,6 +205,7 @@ export default {
       processing: false,
       dataTransfered: false,
       errorMessage: '',
+      loggingOut: false,
     }
   },
   computed: {
@@ -484,6 +496,12 @@ export default {
         this.statusMessage = ''
         this.$refs.form.validate()
       }
+    },
+    async onLogout() {
+      this.processing = true
+      this.loggingOut = true
+      this.$auth.logout()
+      await this.$apolloHelpers.onLogout()
     },
   },
 }
