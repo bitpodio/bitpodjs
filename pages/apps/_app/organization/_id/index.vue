@@ -700,15 +700,15 @@ export default {
           e
         )
       }
+      const obj = {
+        imgname: this.$bitpod.getApiUrl().replace('/svc/api/', ''),
+        imgId: data[0],
+        deleteImgId: this.data.organization.Image.length
+          ? this.data.organization.Image[0]
+          : '',
+      }
+      const url = `${this.$bitpod.getApiUrl()}OrganizationInfos/uploadcloudinary`
       try {
-        const obj = {
-          imgname: this.$bitpod.getApiUrl().replace('/svc/api/', ''),
-          imgId: data[0],
-          deleteImgId: this.data.organization.Image.length
-            ? this.data.organization.Image[0]
-            : '',
-        }
-        const url = `${this.$bitpod.getApiUrl()}OrganizationInfos/uploadcloudinary`
         await this.$axios.$post(url, obj)
       } catch (e) {
         console.error(
