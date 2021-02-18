@@ -462,10 +462,9 @@ export default {
     async checkAvailablity() {
       if (this.allowable) {
         try {
+          const orgName = this.orgName.toLowerCase()
           const res = await this.$axios.$get(
-            `${this.$bitpod.getApiUrl()}OrganizationInfos/orgAvailable?name=${
-              this.orgName
-            }`
+            `${this.$bitpod.getApiUrl()}OrganizationInfos/orgAvailable?name=${orgName}`
           )
           this.allow = res
           this.processing = false
