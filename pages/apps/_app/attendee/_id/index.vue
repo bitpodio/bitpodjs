@@ -184,9 +184,15 @@
                           </v-list-item-avatar>
 
                           <v-list-item-content>
-                            <v-list-item-title class="text-capitalize">{{
-                              item.Name
-                            }}</v-list-item-title>
+                            <v-list-item-title class="text-capitalize d-flex"
+                              ><div>{{ item.Name }}</div>
+                              <div v-if="checkLiveSession(item)">
+                                <div class="ring-container ml-2">
+                                  <div class="ringring"></div>
+                                  <div class="circle-ring"></div>
+                                </div>
+                              </div>
+                            </v-list-item-title>
                             <div v-if="item.StartDate" class="mt-1">
                               <v-list-item-subtitle class="session-date">
                                 {{
@@ -676,6 +682,15 @@
                           </td>
                           <td>{{ registration.Currency }} {{ item.total }}</td>
                         </tr>
+                        <tr>
+                          <td></td>
+                          <td></td>
+                          <td><i18n path="Common.SubTotal" /></td>
+                          <td>
+                            {{ registration.Currency }}
+                            {{ registration.SubTotal }}
+                          </td>
+                        </tr>
                         <tr v-if="registration.Discount">
                           <td></td>
                           <td></td>
@@ -932,6 +947,7 @@ export default {
       eventImage: false,
       attendeeData: {},
       isPast: false,
+      isSessionLive: false,
     }
   },
   computed: {
@@ -1134,6 +1150,30 @@ export default {
           '*'
         )
       }, 2000)
+    },
+    checkLiveSession(item) {
+      const liveStart =
+        new Date().getTime() > new Date(item.StartDate).getTime()
+      const liveEnd =
+        new Date().getTime() <
+        new Date(
+          new Date(item.StartDate).getTime() + item.Duration * 60000
+        ).getTime()
+      console.log('checkStart', new Date(item.StartDate).getTime())
+      console.log(
+        'checkEndrt',
+        new Date(
+          new Date(item.StartDate).getTime() + item.Duration * 60000
+        ).getTime()
+      )
+      console.log('Name', item.Name)
+      console.log('Livestart', liveStart)
+      console.log('liveEnd', liveEnd)
+      if (liveStart && liveEnd) {
+        return true
+      } else {
+        return false
+      }
     },
   },
 }
