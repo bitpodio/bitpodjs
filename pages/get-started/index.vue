@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-snackbar v-model="snackbar" :timeout="2000" :top="true" width="2px">
+    <v-snackbar v-model="snackbar" :timeout="3000" :top="true" width="2px">
       <div class="fs-16 text-center">
         {{ snackbarText }}
       </div>
@@ -66,13 +66,13 @@
                   {{
                     $t('Messages.Success.OrgNameSuccess', {
                       orgName: orgName,
-                      suffixRoute: $t('Common.SuffixRoute'),
+                      suffixRoute: $config.setting.domains.defaultPublicDomain,
                     })
                   }}
                 </div>
               </v-form>
               <div class="fs-20 mt-2 ml-1">
-                {{ $t('Common.SuffixRoute') }}
+                -{{ $config.setting.domains.defaultPublicDomain }}
               </div>
             </div>
           </div>
@@ -106,7 +106,7 @@
           </div>
           <div v-if="tab === 3">
             <div class="fs-16 mb-4 message">
-              {{ $t('Messages.Error.SetupExitCodeTimeout') }}
+              {{ errorMessage }}
             </div>
           </div>
         </v-card-text>
@@ -114,7 +114,7 @@
         <v-card-actions
           class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
         >
-          <div v-if="tab === 1" class="d-flex">
+          <div v-if="tab === 1" class="d-flex w-full flex-wrap">
             <SaveBtn
               class="my-1"
               dense
@@ -124,12 +124,23 @@
               :action="stepOne"
               :reset="resetBtn"
             ></SaveBtn>
-            <div
-              v-if="allowable"
-              class="fs-14 pa-3 statusMessage primary--text"
-            >
-              {{ statusMessage }}
+            <div class="flex-grow-1">
+              <div
+                v-if="allowable"
+                class="fs-14 pa-3 statusMessage primary--text"
+              >
+                {{ statusMessage }}
+              </div>
             </div>
+            <v-btn
+              text
+              class="my-1"
+              :loading="loggingOut"
+              :disabled="loggingOut"
+              @click="onLogout"
+            >
+              <i18n path="Drawer.Cancel" />
+            </v-btn>
           </div>
           <div v-if="tab === 2" class="d-flex">
             <SaveBtn
@@ -193,6 +204,8 @@ export default {
       checkTyping: null,
       processing: false,
       dataTransfered: false,
+      errorMessage: '',
+      loggingOut: false,
     }
   },
   computed: {
@@ -234,19 +247,28 @@ export default {
       }
     },
   },
-  mounted() {
+  async mounted() {
     window.addEventListener('message', this.messageReceived, false)
-    if (
-      this.$auth &&
-      this.$auth.$state &&
-      this.$auth.$state.user &&
-      this.$auth.$state.user.data
-    ) {
-      if (!this.$auth.user.data.orgList.length) {
-        this.tab = 1
+    if (this.$auth && this.$auth.loggedIn) {
+      this.$auth.$storage.removeCookie('redirect', {})
+      if (
+        this.$auth.$state &&
+        this.$auth.$state.user &&
+        this.$auth.$state.user.data
+      ) {
+        if (!this.$auth.user.data.orgList.length) {
+          this.tab = 1
+        }
+        this.email = this.$auth.$state.user.data.email
+        this.name = this.$auth.$state.user.data.name
       }
-      this.email = this.$auth.$state.user.data.email
-      this.name = this.$auth.$state.user.data.name
+    } else {
+      this.$auth.$storage.setCookie(
+        'redirect',
+        `${this.$config.basePublicPath}/get-started`,
+        {}
+      )
+      await this.$auth.loginWith(this.$config.auth.defaultLoginStrategy)
     }
   },
   beforeDestroy() {
@@ -324,18 +346,23 @@ export default {
                   new Date() - new Date(jobInfo.createdDate) < 90000
                 ) {
                   if (jobInfo._SetupErrors.length) {
+                    const errorCode =
+                      jobInfo._SetupErrors[jobInfo._SetupErrors.length - 1].Code
                     this.snackbarText = this.$t('Messages.Error.SetupOrgFailed')
                     this.snackbar = true
-                    this.tab = 1
+                    this.errorMessage = this.$t(
+                      `Messages.Error.SetupExitCode`,
+                      {
+                        code: errorCode,
+                      }
+                    )
+                    this.tab = 3
                     this.processing = false
                     this.resetBtn = !this.resetBtn
                   } else if (jobInfo._SetupStatus.length) {
                     const lastStatus =
                       jobInfo._SetupStatus[jobInfo._SetupStatus.length - 1]
-                    if (
-                      lastStatus.Message === 'full setup completed' &&
-                      lastStatus.Code === 0
-                    ) {
+                    if (lastStatus.Code === 200) {
                       this.statusMessage = this.$t(
                         'Messages.Information.OrgRedirectStart'
                       )
@@ -367,13 +394,17 @@ export default {
                   }
                 } else {
                   this.processing = false
+                  this.errorMessage = this.$t(
+                    'Messages.Error.SetupExitCodeTimeout'
+                  )
                   this.resetBtn = !this.resetBtn
                   this.tab = 3
                 }
               } catch (err) {
                 this.snackbarText = this.$t('Messages.Error.SetupOrgFailed')
                 this.snackbar = true
-                this.tab = 1
+                this.tab = 3
+                this.errorMessage = this.$t('Messages.Error.SetupExitCodeCatch')
                 this.processing = false
                 this.resetBtn = !this.resetBtn
                 console.error(
@@ -386,14 +417,14 @@ export default {
           } else {
             this.snackbarText = this.$t('Messages.Error.SetupOrgFailed')
             this.snackbar = true
-            this.tab = 1
+            this.tab = 3
             this.processing = false
             this.resetBtn = !this.resetBtn
           }
         } catch (err) {
           this.snackbarText = this.$t('Messages.Error.SetupOrgFailed')
           this.snackbar = true
-          this.tab = 1
+          this.tab = 3
           this.processing = false
           this.resetBtn = !this.resetBtn
           console.error(
@@ -443,10 +474,9 @@ export default {
     async checkAvailablity() {
       if (this.allowable) {
         try {
+          const orgName = this.orgName.toLowerCase()
           const res = await this.$axios.$get(
-            `${this.$bitpod.getApiUrl()}OrganizationInfos/orgAvailable?name=${
-              this.orgName
-            }`
+            `${this.$bitpod.getApiUrl()}OrganizationInfos/orgAvailable?name=${orgName}`
           )
           this.allow = res
           this.processing = false
@@ -466,6 +496,12 @@ export default {
         this.statusMessage = ''
         this.$refs.form.validate()
       }
+    },
+    async onLogout() {
+      this.processing = true
+      this.loggingOut = true
+      this.$auth.logout()
+      await this.$apolloHelpers.onLogout()
     },
   },
 }

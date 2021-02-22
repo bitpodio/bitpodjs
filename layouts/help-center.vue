@@ -4,10 +4,10 @@
       v-model="drawer"
       app
       class="nav-bar greybg"
-      :width="240"
       :class="{
         'custom-nav-drawer': !$vuetify.breakpoint.smAndDown && drawer === null,
       }"
+      :width="240"
       :right="$vuetify.rtl"
     >
       <div class="d-flex d-sm-none pl-3">
@@ -18,29 +18,12 @@
           ></v-img>
         </span>
       </div>
-      <div class="text-center mt-4 pl-1">
-        <v-btn
-          v-bind="attrs"
-          color="blue darken-2"
-          dark
-          depressed
-          class="ma-3 block wd-full my-0 mb-1 ml-n4"
-          v-on="on"
-          @click.native="dialog = true"
-        >
-          <i18n path="Drawer.CreateUser" />
-        </v-btn>
-      </div>
       <v-list shaped>
         <template v-for="item in items">
           <v-row v-if="item.heading" :key="item.heading" align="center">
             <div class="pa-0 pl-5">
               <v-subheader v-if="item.heading" class="nav-subheader pl-2">
-                <i18n v-if="item.heading === 'Event'" path="Common.EventApp" />
-                <i18n
-                  v-if="item.heading === 'Security'"
-                  path="Common.Security"
-                />
+                {{ item.heading }}
               </v-subheader>
             </div>
           </v-row>
@@ -83,35 +66,14 @@
             :to="localePath(item.to)"
             router
             exact
+            :class="matchRoute(item.to)"
           >
             <v-list-item-action class="nav-icon">
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-action>
             <v-list-item-content>
               <v-list-item-title class="nav-title">
-                <i18n
-                  v-if="item.text === 'Organization'"
-                  path="Common.Organization"
-                />
-                <i18n v-if="item.text === 'Lookups'" path="Common.Lookups" />
-                <i18n
-                  v-if="item.text === 'Templates'"
-                  path="Common.Templates"
-                />
-                <i18n
-                  v-if="item.text === 'Badges Templates'"
-                  path="Common.BadgesTemplates"
-                />
-                <i18n
-                  v-if="item.text === 'Registration Form'"
-                  path="Common.RegistrationForm"
-                />
-                <i18n v-if="item.text === 'Roles'" path="Common.Roles" />
-                <i18n v-if="item.text === 'Users'" path="Common.Users" />
-                <i18n
-                  v-if="item.text === 'Access Keys'"
-                  path="Common.AccessKeys"
-                />
+                {{ item.text }}
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -146,8 +108,9 @@
           ></v-img>
         </span>
         <i18n
-          path="Common.AdminApp"
-          class="d-inline-flex align-center mx-0 mx-md-2 ml-0 ml-md-1 text-h5"
+          path="Common.HelpCenterMap"
+          class="d-inline-flex align-center mx-0 mx-md-2 ml-0 ml-md-1"
+          :class="$device.isMobile ? 'text-h6' : 'text-h5'"
         />
         <v-spacer></v-spacer>
       </v-toolbar-title>
@@ -185,6 +148,7 @@
               }}</span>
             </v-btn>
           </template>
+
           <v-card>
             <v-list>
               <v-list-item>
@@ -227,55 +191,6 @@
             </v-list>
           </v-card>
         </v-menu>
-        <v-dialog
-          v-model="dialog"
-          persistent
-          scrollable
-          content-class="slide-form-default"
-        >
-          <v-card>
-            <v-card-title
-              class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
-            >
-              <h2 class="black--text pt-5 pb-4 font-weight-regular text-h5">
-                <i18n path="Common.NewUser" />
-              </h2>
-              <v-spacer></v-spacer>
-              <div>
-                <v-btn icon @click="onClose">
-                  <v-icon>mdi-close</v-icon>
-                </v-btn>
-              </div>
-            </v-card-title>
-            <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
-              <v-form ref="form" v-model="valid" :lazy-validation="lazy">
-                <v-row>
-                  <v-col cols="12" sm="10" md="8" class="pb-0">
-                    <v-text-field
-                      v-model="email"
-                      :label="$t('Common.EnterEmail')"
-                      :rules="[rules.email, rules.required]"
-                      outlined
-                      dense
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-              </v-form>
-            </v-card-text>
-            <v-divider></v-divider>
-            <v-card-actions
-              class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
-            >
-              <v-btn
-                color="primary"
-                :disabled="!valid"
-                depressed
-                @click="onSave"
-                ><i18n path="Drawer.Save"
-              /></v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
       </div>
       <div v-else>
         <v-btn class="ma-2" outlined color="primary" to="/login">
@@ -284,10 +199,15 @@
       </div>
     </v-app-bar>
 
-    <v-main class="greybg">
-      <v-container fluid>
+    <v-main
+      class="greybg"
+      :class="{
+        'custom-nav-main': !$vuetify.breakpoint.smAndDown && drawer === null,
+      }"
+    >
+      <v-container fluid class="pa-0">
         <v-row>
-          <v-col class="pt-0">
+          <v-col class="pt-1 pb-0">
             <div>
               <nuxt />
             </div>
@@ -295,26 +215,17 @@
         </v-row>
       </v-container>
     </v-main>
-    <div v-if="logoutClicked">
-      <iframe
-        id="print"
-        ref="iframe"
-        style="width: 0; position: absolute; height: 0;"
-        :src="`https://${$config.axios.backendBaseUrl}${$config.basePublicPath}/clear-cookie`"
-        @load="iframecookieDeleted"
-      />
-    </div>
   </v-app>
 </template>
 
 <script>
 import OrgnaizationList from '~/components/common/organization-list'
 import AppDrawer from '~/components/common/app-drawer'
-import { rules } from '~/utility/rules.js'
 import Help from '~/components/common/help'
 import OldSite from '~/components/common/oldsite'
 import Upgrade from '~/components/common/upgrade'
 import userUtils from '~/utility/userApps'
+import HelpCenter from '~/config/apps/help'
 export default {
   middleware: ['auth', 'authorization'],
   components: {
@@ -325,79 +236,32 @@ export default {
     Upgrade,
   },
   props: {
-    refresh: {
-      type: Function,
-      default: () => false,
-    },
+    source: { type: String, default: '' },
   },
-  data() {
-    return {
-      date: new Date().toISOString().substr(0, 10),
-      menu: false,
-      modal: false,
-      menu2: false,
-      drawer: null,
-      dialog1: false,
-      dialog: false,
-      notifications: false,
-      sound: true,
-      tabs: null,
-      account: false,
-      message: false,
-      valid: false,
-      allowUpgrade: false,
-      logoutClicked: false,
-      rules: rules(this.$i18n),
-      userPlanData: '',
-      formData: {
-        emailId: '',
-      },
-      email: '',
-      items: [
-        { heading: 'Event' },
-        {
-          icon: 'fa fa-network',
-          text: 'Organization',
-          to: `/apps/admin/organization/${this.$store.state.currentOrgInfo.id}`,
-        },
-        {
-          icon: 'fa fa-cog',
-          text: 'Lookups',
-          to: '/apps/admin/organization/lookups',
-        },
-        {
-          icon: 'fa fa-file',
-          text: 'Templates',
-          to: '/apps/admin/list/marketingtemplates/template',
-        },
-        {
-          icon: 'fa fa-id-badge',
-          text: 'Badges Templates',
-          to: '/apps/admin/list/badge/badge',
-        },
-        {
-          icon: 'fa fa-file-text-o',
-          text: 'Registration Form',
-          to: '/apps/admin/list/registrationformdetails/registration form',
-        },
-        { heading: 'Security' },
-        {
-          icon: 'fa fa-shield',
-          text: 'Roles',
-          to: '/apps/admin/list/userroles/userroles',
-        },
-        {
-          icon: 'fa fa-users',
-          text: 'Users',
-          to: '/apps/admin/list/users/users',
-        },
-        {
-          icon: 'fa fa-key',
-          text: 'Access Keys',
-          to: '/apps/admin/list/accesskey/accesskey',
-        },
-      ],
-    }
+  data: () => ({
+    date: new Date().toISOString().substr(0, 10),
+    menu: false,
+    modal: false,
+    menu2: false,
+    drawer: null,
+    dialog1: false,
+    dialog: false,
+    notifications: false,
+    sound: true,
+    tabs: null,
+    account: false,
+    message: false,
+    triggerReset: false,
+    triggerRecEventReset: false,
+    allowUpgrade: false,
+    activeClass: ' v-list-item--active',
+    userPlanData: '',
+    items: [],
+  }),
+  computed: {
+    currentPage() {
+      return this.$route.path
+    },
   },
   async created() {
     let token = this.$auth.strategy.token.get()
@@ -405,50 +269,46 @@ export default {
       token = token.split(' ')[1]
     }
     await this.$apolloHelpers.onLogin(token, undefined, { expires: 7 })
+    Object.keys(HelpCenter).forEach((sectionName) => {
+      this.items = this.items.concat({
+        heading: this.$t(HelpCenter[sectionName].general.title),
+      })
+      Object.keys(HelpCenter[sectionName].views).forEach((viewName) => {
+        this.items = this.items.concat({
+          text: this.$t(HelpCenter[sectionName].views[viewName].title),
+          to: HelpCenter[sectionName].views[viewName].to,
+        })
+      })
+    })
   },
   mounted() {
     const userInfo = userUtils.userCurrentOrgInfo(this.$store) || {}
     const userRoles = userInfo.roles || []
     this.allowUpgrade = userRoles.includes('$orgowner')
-    window.addEventListener('message', this.messageReceived, false)
-  },
-  beforeDestroy() {
-    window.removeEventListener('message', this.messageReceived)
   },
   methods: {
-    onLogout(context) {
-      if (this.$store.state.auth.loggedIn) {
-        this.logoutClicked = true
-      }
+    async onLogout() {
+      await this.$apolloHelpers.onLogout()
+      this.$auth.logout()
     },
-    onClose() {
+    closeSingleEventForm() {
+      this.dialog1 = false
+    },
+    closeRecurringEventForm() {
       this.dialog = false
-      this.onReset()
     },
-    onReset() {
-      this.$refs.form.reset()
-    },
-    async onSave() {
-      const url = this.$bitpod.getApiUrl()
-      this.formData.emailId = this.email
-      const orgId = this.$store.state.currentOrg.id
-      this.formData.id = orgId
-      try {
-        const res = await this.$axios.$post(
-          `${url}Organizations/${orgId}/Users`,
-          this.formData
-        )
-        if (res) {
-          this.dialog = false
-          this.onReset()
-          this.$eventBus.$emit('user-created')
+    matchRoute(toRoute) {
+      return this.items.reduce((acc, i) => {
+        if (!i.allowedRoutes || i.to !== toRoute) {
+          return acc
         }
-      } catch (e) {
-        console.log(
-          `Error in layouts/admin.vue while making a POST call to Users model from method onSave context:-URL:-${url}\n OrgId:-${orgId}\n formData:-${this.formData} `,
-          e
-        )
-      }
+        const routeMatched = i.allowedRoutes.reduce((accc, j) => {
+          return accc || this.currentPage.includes(j)
+        }, false)
+        return acc || routeMatched
+      }, false)
+        ? this.activeClass
+        : ''
     },
     async userPlan() {
       const url = `${this.$bitpod.getApiUrl()}OrganizationInfos/getSubscription`
@@ -462,25 +322,33 @@ export default {
         }
       } catch (e) {
         console.error(
-          `Error in layouts/admin.vue in userPlan method while making get call to custom API to get users subscription, context: ${url} `,
+          `Error in layouts/event.vue in userPlan method while making get call to custom API to get users subscription, context: ${url} `,
           e
         )
-      }
-    },
-    iframecookieDeleted() {
-      console.log(
-        'document.cookie that is passed to clear cookie',
-        document.cookie
-      )
-      this.$refs.iframe.contentWindow.postMessage(document.cookie, '*')
-    },
-    messageReceived(e) {
-      console.log('message received from the the iframe', e.data)
-      if (e.data === 'success' && this.logoutClicked) {
-        this.$auth.logout()
-        this.$apolloHelpers.onLogout()
       }
     },
   },
 }
 </script>
+<style>
+::-webkit-scrollbar {
+  display: none;
+}
+.nav-bar > div.v-navigation-drawer__content::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+  background-color: #f5f5f5;
+}
+.nav-bar > div.v-navigation-drawer__content::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: #f5f5f5;
+  display: unset;
+}
+
+.nav-bar > div.v-navigation-drawer__content::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #ccc;
+}
+</style>

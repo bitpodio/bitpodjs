@@ -200,10 +200,43 @@
                 <tr>
                   <td></td>
                   <td></td>
+                  <td><i18n path="Common.SubTotal" /></td>
+                  <td>
+                    <i18n-n
+                      v-if="regData.Currency"
+                      :value="regData.SubTotal"
+                      :format="{ key: 'currency', currency: regData.Currency }"
+                      :locale="$i18n.locale"
+                    >
+                    </i18n-n>
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td><i18n path="Common.Discount" /></td>
+                  <td>
+                    <i18n-n
+                      v-if="regData.Currency"
+                      :value="regData.Discount"
+                      :format="{ key: 'currency', currency: regData.Currency }"
+                      :locale="$i18n.locale"
+                    >
+                    </i18n-n>
+                  </td>
+                </tr>
+                <tr>
+                  <td></td>
+                  <td></td>
                   <td><i18n path="Common.Total" /></td>
                   <td>
-                    {{ data.registration.Currency
-                    }}{{ data.registration.TotalAmount }}
+                    <i18n-n
+                      v-if="regData.Currency"
+                      :value="regData.TotalAmount"
+                      :format="{ key: 'currency', currency: regData.Currency }"
+                      :locale="$i18n.locale"
+                    >
+                    </i18n-n>
                   </td>
                 </tr>
               </tbody>

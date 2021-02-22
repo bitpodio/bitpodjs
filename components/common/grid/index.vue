@@ -647,7 +647,7 @@ export default {
       winWidth: window.innerWidth,
       itemPerPage: 0,
       componentRerenderKey: 0,
-      noDataText: '',
+      noDataText: this.$t('Common.NoDataAvailable'),
     }
   },
   computed: {
@@ -897,7 +897,7 @@ export default {
   },
   beforeDestroy() {
     this.$eventBus.$off('user-created')
-    this.$eventBus.$off('grids-refresh')
+    this.$eventBus.$off('grid-refresh')
     this.$eventBus.$off('unselectAll-record')
     this.$eventBus.$off('toggle-snackbar')
     this.$eventBus.$off('toggle-confirm')

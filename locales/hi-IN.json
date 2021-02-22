@@ -765,9 +765,28 @@
     "NoDataAvailable": "कोई डेटा उपलब्ध नहीं है",
     "ServiceUnavailable": "सेवा उप्लब्ध् नहीं है",
     "Upgrade": "अपग्रेड",
+    "QuickStart": "जल्दी शुरू",
+    "AboutApi": "API के बारे में",
+    "ApiExplorer": "API एक्सप्लोरर",
+    "GcpMarketplace": "GCP Marketplace",
+    "ReleaseNotes": "जारी नोट्‍स",
+    "SecurityPolicy": "सुरक्षा नीति",
+    "EventHelp": "प्रतिस्पर्धा",
+    "QuickBooks": "QuickBooks",
+    "Sage300": "Sage300",
+    "HubSpot": "HubSpot",
+    "Freshbook": "Freshbook",
+    "Xero": "Xero",
+    "Zoom": "Zoom",
+    "Gmail": "Gmail",
+    "Salesforce": "Salesforce",
+    "Api": "API",
+    "Introduction": "परिचय",
     "SessionNotStart": "यह सत्र अभी तक शुरू नहीं हुआ है.",
     "TryJoinOn": "फिर से जुड़ने का प्रयास करें",
-    "CheckCalendarInvite": "लिंक से जुड़ने के लिए कैलेंडर आमंत्रण की जाँच करें"
+    "CheckCalendarInvite": "लिंक से जुड़ने के लिए कैलेंडर आमंत्रण की जाँच करें",
+    "ClearFilter": "फ़िल्टर साफ़ करें",
+    "SubTotal": "उप कुल"
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",
@@ -905,7 +924,7 @@
       "NameMustStartWithAlphabet": "नाम वर्णमाला से शुरू होना चाहिए",
       "OrganisationAlreadyExists": "यह नाम पहले ही ले लिया गया है",
       "SetupErrorTitle": "एक त्रुटि हुई",
-      "SetupExitCode1": "आपके संगठन की स्थापना करते समय एक त्रुटि हुई, कृपया समर्थन से संपर्क करें।",
+      "SetupExitCode": "त्रुटि {code}: आपके संगठन की स्थापना करते समय एक त्रुटि हुई, कृपया समर्थन से संपर्क करें।",
       "SetupExitCodeCatch": "आपके संगठन की स्थापना करते समय एक त्रुटि हुई, कृपया समर्थन से संपर्क करें।",
       "SetupExitCodeTimeout": "आपके संगठन की स्थापना करते समय एक त्रुटि हुई, कृपया समर्थन से संपर्क करें।",
       "SetupOrgFailed": "आपके संगठन को सेटअप करने में विफल।",
@@ -935,10 +954,10 @@
       "DeleteEventQuestion": "क्या आप इस प्रश्न को हटाना चाहते हैं?",
       "RegistrationTypeDefault": "केवल एक पंजीकरण प्रकार को डिफ़ॉल्ट पर सेट किया जा सकता है",
       "RegistrationTypeWarning": "पंजीकरण प्रकार चेतावनी",
-      "PaymentGatewayWarning":"पेमेंट गेटवे वार्निंग",
-      "PaymentGatewayDefault":"केवल एक भुगतान कनेक्शन जुड़ा हो सकता है।",
-      "SeatMapDefault":"सीटमैप चेतावनी",
-      "SeatMapWarning":"बिना सहेजे हुए परिवर्तन हैं जो बिना बचत के बंद होने पर खो जाएंगे, क्या आप सुनिश्चित हैं?"
+      "PaymentGatewayWarning": "पेमेंट गेटवे वार्निंग",
+      "PaymentGatewayDefault": "केवल एक भुगतान कनेक्शन जुड़ा हो सकता है।",
+      "SeatMapDefault": "सीटमैप चेतावनी",
+      "SeatMapWarning": "बिना सहेजे हुए परिवर्तन हैं जो बिना बचत के बंद होने पर खो जाएंगे, क्या आप सुनिश्चित हैं?"
     },
     "Success": {
       "CopiedClipboard": "Copied to clipboard",
@@ -990,7 +1009,7 @@
       "SessionCreatedSuccess": "सत्र सफलतापूर्वक बनाया गया",
       "SessionUpdatedSuccess": "सत्र सफलतापूर्वक अपडेट किया गया",
       "ContactImportSuccess": "आयात निष्पादन शुरू हुआ",
-      "OrgNameSuccess": "https://{orgName}{suffixRoute} उपलब्ध है"
+      "OrgNameSuccess": "https://{orgName}-{suffixRoute} उपलब्ध है"
     },
     "Information": {
       "SetupInProgressTitle": "सेटअप प्रगति पर है",

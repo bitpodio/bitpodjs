@@ -764,9 +764,28 @@
     "NoDataAvailable": "No data available",
     "ServiceUnavailable": "Service Unavailable",
     "Upgrade": "Upgrade",
+    "QuickStart": "Quick Start",
+    "AboutApi": "About API",
+    "ApiExplorer": "API Explorer",
+    "GcpMarketplace": "GCP Marketplace",
+    "ReleaseNotes": "Release Notes",
+    "SecurityPolicy": "Security Policy",
+    "EventHelp": "Event",
+    "QuickBooks": "QuickBooks",
+    "Sage300": "Sage300",
+    "HubSpot": "HubSpot",
+    "Freshbook": "Freshbook",
+    "Xero": "Xero",
+    "Zoom": "Zoom",
+    "Gmail": "Gmail",
+    "Salesforce": "Salesforce",
+    "Api": "API",
+    "Introduction": "Introduction",
     "SessionNotStart": "This session hasn't started yet.",
     "TryJoinOn": "Try joining again on",
-    "CheckCalendarInvite": "Check calendar invite for joining link"
+    "CheckCalendarInvite": "Check calendar invite for joining link",
+    "ClearFilter": "Clear filters",
+    "SubTotal": "Sub Total"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",
@@ -905,7 +924,7 @@
       "NameMustStartWithAlphabet": "Name must start with alphabet",
       "OrganisationAlreadyExists": "This name is already taken",
       "SetupErrorTitle": "An error occured",
-      "SetupExitCode1": "An error occured while setting up your organization, please get in touch with support.",
+      "SetupExitCode": "Error {code}: An error occured while setting up your organization, please get in touch with support.",
       "SetupExitCodeCatch": "An error occured while setting up your organization, please get in touch with support.",
       "SetupExitCodeTimeout": "An error occured while setting up your organization, please get in touch with support.",
       "SetupOrgFailed": "Failed to setup your organisation.",
@@ -936,10 +955,10 @@
       "DeleteSeatMapEvent": "Do you want to delete this seat map? This layout already associated with Event.",
       "RegistrationTypeDefault": "Only one registration type can be set to default",
       "RegistrationTypeWarning": "Registration Type Warning",
-      "PaymentGatewayWarning":"Payment Gateway Warning",
-      "PaymentGatewayDefault":"Only one Payment connection can be connected.",
-      "SeatMapDefault":"Seatmap Warning",
-      "SeatMapWarning":"There are unsaved changes which will be lost if you close without saving, are you sure?"
+      "PaymentGatewayWarning": "Payment Gateway Warning",
+      "PaymentGatewayDefault": "Only one Payment connection can be connected.",
+      "SeatMapDefault": "Seatmap Warning",
+      "SeatMapWarning": "There are unsaved changes which will be lost if you close without saving, are you sure?"
     },
     "Success": {
       "CopiedClipboard": "Copied to clipboard",
@@ -991,7 +1010,7 @@
       "SessionCreatedSuccess": "Session created successfully",
       "SessionUpdatedSuccess": "Session updated successfully",
       "ContactImportSuccess": "Import execution started",
-      "OrgNameSuccess": "https://{orgName}{suffixRoute} is available"
+      "OrgNameSuccess": "https://{orgName}-{suffixRoute} is available"
     },
     "Information": {
       "SetupInProgressTitle": "Setup in progress",

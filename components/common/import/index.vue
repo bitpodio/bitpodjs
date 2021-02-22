@@ -180,11 +180,11 @@ export default {
               EventId: this.$route.params.id,
             }
             await this.$axios.post(`${url}ImportJobs`, importObj)
-            this.$parent.$parent.refresh()
+            this.$eventBus.$emit('grid-refresh')
           }
           this.snackbarText = this.$t('Messages.Success.ContactImportSuccess')
           this.snackbar = true
-          this.$emit('contacts-imported')
+          this.$eventBus.$emit('grid-refresh')
         }
       } catch (e) {
         console.log('Error', e)

@@ -10,6 +10,8 @@ query($filters: JSON) {
           FirstName
           SubTotal
           TotalAmount
+          Discount
+          Currency
           TicketQuantity
           CompanyName
           SessionId
