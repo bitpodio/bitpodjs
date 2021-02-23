@@ -993,7 +993,7 @@ export default {
         `${this.$config.basePublicPath}/apps/event/virtual/`
       )
       if (isFullLink) {
-        window.open(`${regUrl}${this.registration.id}?watch=${roomName}`)
+        window.open(`${regUrl}${this.registration.id}`)
       } else {
         const currentOrgName = window.location.origin
           .split('-')[0]
