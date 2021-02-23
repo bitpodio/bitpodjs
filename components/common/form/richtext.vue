@@ -180,7 +180,7 @@ export default {
             },
           },
         ],
-
+        editorCssClass: 'no-scale',
         allowResizeX: true,
         allowResizeY: true,
         zIndex: 99999,
@@ -285,3 +285,11 @@ export default {
   },
 }
 </script>
+<style>
+.no-scale,
+.no-scale * {
+  text-size-adjust: none !important;
+  -webkit-text-size-adjust: none !important;
+  font-size: 16px;
+}
+</style>
