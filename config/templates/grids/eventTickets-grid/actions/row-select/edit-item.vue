@@ -312,6 +312,23 @@ export default {
       }
     },
   },
+  watch: {
+    async dialog(newVal) {
+      if (newVal) {
+        try {
+          const res = await this.getRegistrationType()
+          if (res) {
+            this.registrationTypeDropdown = res.map((i) => i.Name)
+          }
+        } catch (e) {
+          console.log(
+            `Error in templates/grids/eventTickets/actions/row-select/edit-item.vue while making a GQL call to Ticket model from method getRegistrationType`,
+            e
+          )
+        }
+      }
+    },
+  },
   async mounted() {
     try {
       const res = await this.getDropDownData('TicketType')
@@ -550,6 +567,7 @@ export default {
               },
             },
           },
+          fetchPolicy: 'no-cache',
         })
         if (result) {
           const generalConfig = formatGQLResult(result.data, 'RegistrationType')
