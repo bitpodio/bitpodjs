@@ -52,6 +52,8 @@ export default {
           SHOW_JITSI_WATERMARK: false,
           SHOW_WATERMARK_FOR_GUESTS: false,
           SHOW_CHROME_EXTENSION_BANNER: false,
+          CHAT_TOKEN: this.$route.query.p,
+          CHAT_CHANNEL: this.$route.query.o,
         },
         onload: this.onIFrameLoad,
       }
