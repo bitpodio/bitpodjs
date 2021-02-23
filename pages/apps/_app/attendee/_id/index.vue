@@ -682,15 +682,6 @@
                           </td>
                           <td>{{ registration.Currency }} {{ item.total }}</td>
                         </tr>
-                        <tr>
-                          <td></td>
-                          <td></td>
-                          <td><i18n path="Common.SubTotal" /></td>
-                          <td>
-                            {{ registration.Currency }}
-                            {{ registration.SubTotal }}
-                          </td>
-                        </tr>
                         <tr v-if="registration.Discount">
                           <td></td>
                           <td></td>
