@@ -1711,7 +1711,7 @@ export default {
     },
     goLive() {
       window.open(
-        `apps/event/live/${this.$store.state.currentOrg.name}-${this.eventData.UniqLink}?e=${this.$route.params.id}&n=${this.eventData.Title}&o=${this.eventData.chatChannel}&p=rth_e-WvBjDtlWa42jrofICoxlB50aNcvW_Oskst6Du`
+        `apps/event/live/${this.$store.state.currentOrg.name}-${this.eventData.UniqLink}?e=${this.$route.params.id}&n=${this.eventData.Title}&o=${this.eventData.chatChannel}`
       )
     },
     openPrintForm() {
