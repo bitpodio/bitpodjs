@@ -22,8 +22,8 @@ export const appList = (store) => [
     label: 'Common.HelpCenterMap',
     css: 'fa fa-help-circle fs-36 success--text',
     type: 'route',
-    href: '/apps/help-center',
-    roles: ['$orguser'],
+    route: '/apps/help-center',
+    roles: [],
   },
   {
     name: 'Survey',
