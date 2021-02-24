@@ -198,6 +198,7 @@
                       width="100%"
                       height="400"
                       data-setup="{}"
+                      :poster="$config.cdnUri + 'live-stream.png'"
                     ></video>
                     <div class="pa-2">
                       <h2 class="white--text">{{ sessionName }}</h2>
@@ -838,7 +839,7 @@ export default {
       this.playLive()
       this.sessionName = item.Name || ''
       if (new Date().getTime() < new Date(item.StartDate).getTime()) {
-        this.sessionTime = true
+        this.sessionTime = false
       } else {
         this.sessionTime = false
       }
