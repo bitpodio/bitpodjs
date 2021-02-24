@@ -929,7 +929,8 @@
       "SetupExitCodeTimeout": "An error occured while setting up your organization, please get in touch with support.",
       "SetupOrgFailed": "Failed to setup your organisation.",
       "CreateOrgFailed": "Failed to create your organisation.",
-      "CreateOrgCatch": "This organisation is in use or may be soft-deleted. Try with a new name."
+      "CreateOrgCatch": "This organisation is in use or may be soft-deleted. Try with a new name.",
+      "CreateOrgFull": "Failed to create your organisation."
     },
     "Warn": {
       "UniqueLinkFormat": "Lower case alphanumeric letters only",
