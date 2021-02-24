@@ -200,7 +200,7 @@
     </v-app-bar>
 
     <v-main
-      class="greybg"
+      class="greybg help-center"
       :class="{
         'custom-nav-main': !$vuetify.breakpoint.smAndDown && drawer === null,
       }"
@@ -227,6 +227,11 @@ import Upgrade from '~/components/common/upgrade'
 import userUtils from '~/utility/userApps'
 import HelpCenter from '~/config/apps/help'
 export default {
+  head: {
+    bodyAttrs: {
+      class: 'help-center',
+    },
+  },
   middleware: ['auth', 'authorization'],
   components: {
     OrgnaizationList,
@@ -330,12 +335,12 @@ export default {
   },
 }
 </script>
-<style scoped>
-::-webkit-scrollbar {
+<style>
+.help-center::-webkit-scrollbar {
   display: none;
 }
 .nav-bar > div.v-navigation-drawer__content::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: inset 0 0 6px rgba(182, 175, 175, 0.3);
   border-radius: 6px;
   background-color: #f5f5f5;
 }
