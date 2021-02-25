@@ -730,7 +730,7 @@ export default {
                     this.registration.SessionListId[0].StartDate
                   ).getTime()
                 ) {
-                  this.sessionTime = true
+                  this.sessionTime = false
                 } else {
                   this.sessionTime = false
                 }
