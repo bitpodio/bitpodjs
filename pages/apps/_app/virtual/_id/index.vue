@@ -141,6 +141,7 @@
             "
             :src="event.organizerContactDetails.logo"
             contain
+            position="left center"
             class="lounge-logofull mr-2"
           >
           </v-img>
