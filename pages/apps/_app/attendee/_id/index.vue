@@ -1150,9 +1150,9 @@ export default {
         new Date(
           new Date(item.StartDate).getTime() + item.Duration * 60000
         ).getTime()
-      console.log('checkStart', new Date(item.StartDate).getTime())
+      console.log('Session Start', new Date(item.StartDate).getTime())
       console.log(
-        'checkEndrt',
+        'session end',
         new Date(
           new Date(item.StartDate).getTime() + item.Duration * 60000
         ).getTime()
