@@ -108,7 +108,7 @@
                           ></i>
                         </v-list-item-icon>
                         <v-list-item-content>
-                          <v-list-item-title>{{
+                          <v-list-item-title class="item-title">{{
                             $t('Drawer.Edit')
                           }}</v-list-item-title>
                         </v-list-item-content>
@@ -124,7 +124,7 @@
                           <i class="fa fa-trash mt-1" aria-hidden="true"></i>
                         </v-list-item-icon>
                         <v-list-item-content>
-                          <v-list-item-title>{{
+                          <v-list-item-title class="item-title">{{
                             $t('Drawer.Delete')
                           }}</v-list-item-title>
                         </v-list-item-content>
@@ -134,15 +134,16 @@
                           item.Status === 'Connected' ||
                           item.Status === 'Disconnected'
                         "
+                        class="pl-3"
                       >
                         <v-checkbox
                           v-model="connectionStatus[selectedServiceId]"
                           color="green"
                           dense
-                          class="mr-2 mt-1 black--text"
+                          class="mt-1 black--text"
                           @click="updateConnection(item)"
                         ></v-checkbox>
-                        <span class="Status">Status</span>
+                        <span class="Status">{{ $t('Common.Status') }}</span>
                       </v-list-item>
                     </v-list>
                   </v-menu>
@@ -453,6 +454,13 @@ export default {
 }
 .Status {
   margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1rem;
+  padding-left: 3px;
+}
+.item-title {
+  font-size: 14px;
 }
 @media (max-width: 600px) {
   .seatmap-inner {

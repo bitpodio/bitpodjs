@@ -44,6 +44,7 @@ export default {
   },
   methods: {
     async updateRegForm() {
+      event.stopPropagation()
       const url = this.$bitpod.getApiUrl()
       try {
         const res = await this.$axios.$put(
