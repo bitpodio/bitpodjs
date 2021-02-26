@@ -44,6 +44,7 @@ export default {
   },
   methods: {
     async updateOfferCode() {
+      event.stopPropagation()
       const url = this.$bitpod.getApiUrl()
       try {
         const res = await this.$axios.$put(`${url}OfferCodes/${this.item.id}`, {
