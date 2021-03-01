@@ -208,7 +208,10 @@ export default {
           }
         }
       } catch (e) {
-        console.log('Error', e)
+        console.error(
+          `Error in components/common/import/index.vue while calling importContacts function context: ModelName =${this.modelName}`,
+          e
+        )
       }
       this.dialog = false
       this.fileList = []
