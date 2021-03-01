@@ -1011,7 +1011,9 @@
       "SessionCreatedSuccess": "Session created successfully",
       "SessionUpdatedSuccess": "Session updated successfully",
       "ContactImportSuccess": "Import execution started",
-      "OrgNameSuccess": "https://{orgName}-{suffixRoute} is available"
+      "OrgNameSuccess": "https://{orgName}-{suffixRoute} is available",
+      "ContactImported": "Contacts Imported Sucessfully",
+      "ContactImportedFailed": "Contacts Import Failed"
     },
     "Information": {
       "SetupInProgressTitle": "Setup in progress",
