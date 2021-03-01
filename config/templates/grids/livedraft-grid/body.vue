@@ -81,7 +81,7 @@
                       formatAddressField(
                         item._VenueAddress && item._VenueAddress.City
                       )
-                    }}
+                    }},
                     {{
                       formatAddressField(
                         item._VenueAddress && item._VenueAddress.Country
@@ -243,7 +243,11 @@
                   >
                     {{
                       formatAddressField(
-                        item._VenueAddress && item._VenueAddress.City
+                        item._VenueAddress &&
+                          item._VenueAddress.City !== '' &&
+                          item._VenueAddress.City !== null
+                          ? item._VenueAddress.City + ','
+                          : ''
                       )
                     }}
                     {{
