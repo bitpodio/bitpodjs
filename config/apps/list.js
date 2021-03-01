@@ -23,7 +23,7 @@ export const appList = (store) => [
     css: 'fa fa-help-circle fs-36 success--text',
     type: 'route',
     route: '/apps/help-center',
-    roles: [],
+    roles: ['$authenticated'],
   },
   {
     name: 'Survey',
