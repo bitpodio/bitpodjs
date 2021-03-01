@@ -35,6 +35,9 @@ body {
 .slide-form-default {
   width: 60% !important;
 }
+.slide-site-settings-form-height {
+  min-height: 700px;
+}
 .v-dialog {
   margin: 0 12px !important;
 }

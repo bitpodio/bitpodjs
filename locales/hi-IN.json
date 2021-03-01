@@ -139,7 +139,7 @@
     "ViewAll": "सभी देखें",
     "10DaysTicketsSale": "10 दिन टिकट बिक्री",
     "RecentBuyers": "हाल के खरीदार",
-    "InvitationsConversionByEvent": "ईवेंट द्वारा रूपांतरण रूपांतरण",
+    "InvitationsConversionByEvent": "ईवेंट द्वारा रूपांतरण",
     "SaleByGeoLocation": "जियो लोकेशन द्वारा बिक्री",
     "TicketsSold": "टिकट बिक गए",
     "InvitationsConversionTrend": "निमंत्रण रूपांतरण की प्रवृत्ति",
@@ -1010,7 +1010,9 @@
       "SessionCreatedSuccess": "सत्र सफलतापूर्वक बनाया गया",
       "SessionUpdatedSuccess": "सत्र सफलतापूर्वक अपडेट किया गया",
       "ContactImportSuccess": "आयात निष्पादन शुरू हुआ",
-      "OrgNameSuccess": "https://{orgName}-{suffixRoute} उपलब्ध है"
+      "OrgNameSuccess": "https://{orgName}-{suffixRoute} उपलब्ध है",
+      "ContactImported": "आयातित आयात से संपर्क करें",
+      "ContactImportedFailed": "संपर्क विफल हुआ"
     },
     "Information": {
       "SetupInProgressTitle": "सेटअप प्रगति पर है",

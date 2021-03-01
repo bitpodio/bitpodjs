@@ -48,7 +48,7 @@
     "Invites": "Invite",
     "Invite": "Invite",
     "Emails": "Eclous",
-    "Notes": "Notes",
+    "Notes": "Remarques",
     "Tickets": "Des billets",
     "DiscountCodes": "Codes de remise",
     "Discount": "Remise",
@@ -1008,7 +1008,9 @@
       "SessionCreatedSuccess": "Session créée avec succès",
       "SessionUpdatedSuccess": "Session mise à jour avec succès",
       "ContactImportSuccess": "L'exécution de l'importation a commencé",
-      "OrgNameSuccess": "https://{orgName}-{suffixRoute} est disponible"
+      "OrgNameSuccess": "https://{orgName}-{suffixRoute} est disponible",
+      "ContactImported": "Contacts importé avec succès",
+      "ContactImportedFailed": "L'importation des contacts a échoué"
     },
     "Information": {
       "SetupInProgressTitle": "configuration en cours",

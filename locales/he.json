@@ -1010,7 +1010,9 @@
       "SessionCreatedSuccess": "ההפעלה נוצרה בהצלחה",
       "SessionUpdatedSuccess": "ההפעלה עודכנה בהצלחה",
       "ContactImportSuccess": "ביצוע הייבוא ​​החל",
-      "OrgNameSuccess": "https://{orgName}-{suffixRoute} זמין"
+      "OrgNameSuccess": "https://{orgName}-{suffixRoute} זמין",
+      "ContactImported": "צור קשר מיובא בהצלחה",
+      "ContactImportedFailed": "ייבוא ​​אנשי הקשר נכשל"
     },
     "Information": {
       "SetupInProgressTitle": "ההתקנה בעיצומה",

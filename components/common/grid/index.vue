@@ -189,7 +189,7 @@
           :class="hideDefaultHeader ? 'px-0 pt-0 istemplate' : 'px-2 pt-1'"
           :footer-props="{ 'items-per-page-options': perPageOption }"
           :show-select="$device.isMobile || showSelect"
-          @change:options="updatePagination"
+          @update:options="updatePagination"
           @update:page="updatePageChange"
           @click:row="onRowClick"
           @input="onItemSelected"
@@ -952,8 +952,8 @@ export default {
         this.loading = true
         this.itemPerPage = pagination.itemsPerPage
         this.$apollo.queries.tableData.refresh()
+        this.loadRestData()
       }
-      this.loadRestData()
     },
     updatePageChange(data) {
       this.loading = true
