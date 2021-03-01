@@ -421,7 +421,6 @@ export default {
   },
   methods: {
     onLogout(context) {
-      debugger
       if (this.$store.state.auth.loggedIn) {
         this.logoutClicked = true
       }
