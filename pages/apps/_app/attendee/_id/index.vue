@@ -1159,16 +1159,6 @@ export default {
         new Date(
           new Date(item.StartDate).getTime() + item.Duration * 60000
         ).getTime()
-      console.log('Session Start', new Date(item.StartDate).getTime())
-      console.log(
-        'session end',
-        new Date(
-          new Date(item.StartDate).getTime() + item.Duration * 60000
-        ).getTime()
-      )
-      console.log('Name', item.Name)
-      console.log('Livestart', liveStart)
-      console.log('liveEnd', liveEnd)
       if (liveStart && liveEnd) {
         return true
       } else {
