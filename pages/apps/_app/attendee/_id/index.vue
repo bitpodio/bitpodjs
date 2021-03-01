@@ -1160,9 +1160,7 @@ export default {
           new Date(item.StartDate).getTime() + item.Duration * 60000
         ).getTime()
       if (liveStart && liveEnd) {
-        return true
-      } else {
-        return false
+        return liveStart && liveEnd
       }
     },
   },
