@@ -184,9 +184,15 @@
                           </v-list-item-avatar>
 
                           <v-list-item-content>
-                            <v-list-item-title class="text-capitalize">{{
-                              item.Name
-                            }}</v-list-item-title>
+                            <v-list-item-title class="text-capitalize d-flex"
+                              ><div>{{ item.Name }}</div>
+                              <div v-if="checkLiveSession(item)">
+                                <div class="ring-container ml-2">
+                                  <div class="ringring"></div>
+                                  <div class="circle-ring"></div>
+                                </div>
+                              </div>
+                            </v-list-item-title>
                             <div v-if="item.StartDate" class="mt-1">
                               <v-list-item-subtitle class="session-date">
                                 {{
@@ -941,6 +947,7 @@ export default {
       eventImage: false,
       attendeeData: {},
       isPast: false,
+      isSessionLive: false,
     }
   },
   computed: {
@@ -1143,6 +1150,16 @@ export default {
           '*'
         )
       }, 2000)
+    },
+    checkLiveSession(item) {
+      const liveStart =
+        new Date().getTime() > new Date(item.StartDate).getTime()
+      const liveEnd =
+        new Date().getTime() <
+        new Date(
+          new Date(item.StartDate).getTime() + item.Duration * 60000
+        ).getTime()
+      return liveStart && liveEnd
     },
   },
 }

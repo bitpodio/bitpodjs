@@ -36,6 +36,7 @@ query($filters: JSON, $where: JSON) {
           MaxNoRegistrations
           Message
           MinDaysCancelling
+          chatChannel
           Organizer
           Privacy
           Project

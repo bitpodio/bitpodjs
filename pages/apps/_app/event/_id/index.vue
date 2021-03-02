@@ -1723,7 +1723,7 @@ export default {
     },
     goLive() {
       window.open(
-        `apps/event/live/${this.$store.state.currentOrg.name}-${this.eventData.UniqLink}?e=${this.$route.params.id}&n=${this.eventData.Title}`
+        `apps/event/live/${this.$store.state.currentOrg.name}-${this.eventData.UniqLink}?e=${this.$route.params.id}&n=${this.eventData.Title}&o=${this.eventData.chatChannel}`
       )
     },
     openPrintForm() {
