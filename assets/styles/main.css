@@ -715,6 +715,9 @@ table > tbody > tr:last-child .key-align {
 .w-full{
   width: 100%;
 }
+#integrations .v-data-table tbody tr.v-data-table__selected {
+    background: transparent !important;
+}
 @media (min-width: 1904px) {
   .boxviewlarge .v-data-table__wrapper {
     margin-bottom: 0 !important;
