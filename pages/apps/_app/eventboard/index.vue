@@ -1,6 +1,9 @@
 <template>
   <div class="public-page-main">
-    <div>
+    <div v-if="error !== ''" class="pt-3">
+      <i18n path="Common.AccessRequired" />
+    </div>
+    <div v-else>
       <v-row class="px-3">
         <v-col
           ref="summaryBlock"
@@ -475,8 +478,11 @@ import { getIdFromAtob } from '~/utility'
 import timeAgo from '~/components/common/timeAgo'
 import eventList from '~/config/apps/event/gql/eventlist.gql'
 import registrationList from '~/config/apps/event/gql/registrationList.gql'
+import { configLoaderMixin } from '~/utility'
+
 export default {
   layout: 'event',
+  mixins: [configLoaderMixin],
   components: {
     GChart,
     timeAgo,
@@ -722,6 +728,7 @@ export default {
       recentBuyersEmpty: false,
       saleEventCount: 0,
       buyersCount: 0,
+      error: '',
     }
   },
   mounted() {
@@ -801,6 +808,7 @@ export default {
           return data
         })
         .catch((err) => {
+          debugger
           return err
         })
     },
@@ -875,6 +883,7 @@ export default {
           return data
         })
         .catch((err) => {
+          debugger
           return err
         })
     },
@@ -907,10 +916,12 @@ export default {
           return data
         })
         .catch((err) => {
+          debugger
           return err
         })
     },
     getGeoData() {
+      debugger
       this.$axios
         .get(
           `${this.$bitpod.getApiUrl()}Registrations/aggregate?filter=${JSON.stringify(
@@ -927,6 +938,7 @@ export default {
           return data
         })
         .catch((err) => {
+          debugger
           return err
         })
     },
@@ -959,6 +971,7 @@ export default {
           return data
         })
         .catch((err) => {
+          debugger
           return err
         })
     },
@@ -1040,6 +1053,7 @@ export default {
         }
       },
       error(error) {
+        debugger
         this.error = error
         this.loading = 0
       },
@@ -1102,6 +1116,7 @@ export default {
         }
       },
       error(error) {
+        debugger
         this.error = error
         this.loading = 0
       },
@@ -1152,6 +1167,7 @@ export default {
         }
       },
       error(error) {
+        debugger
         this.error = error
         this.loading = 0
       },
