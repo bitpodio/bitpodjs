@@ -893,4 +893,7 @@ table > tbody > tr:last-child .key-align {
   .type-number {
     padding-right: 0 !important;
   }
+  .parentWidth {
+    max-width: 100% !important;
+  }
 }
