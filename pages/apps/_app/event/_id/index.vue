@@ -185,7 +185,13 @@
                     "
                     class="blue--text"
                   >
-                    {{ formatAddressField(data.event.VenueName) }}
+                    {{
+                      formatAddressField(
+                        data.event.VenueName !== ''
+                          ? data.event.VenueName + ','
+                          : ''
+                      )
+                    }}
                   </a>
                   <a class="blue--text">
                     {{
@@ -197,19 +203,25 @@
                     {{
                       formatAddressField(
                         data.event._VenueAddress &&
-                          data.event._VenueAddress.City
+                          data.event._VenueAddress.City !== ''
+                          ? data.event._VenueAddress.City + ','
+                          : ''
                       )
                     }}
                     {{
                       formatAddressField(
                         data.event._VenueAddress &&
-                          data.event._VenueAddress.State
+                          data.event._VenueAddress.State !== ''
+                          ? data.event._VenueAddress.State + ','
+                          : ''
                       )
                     }}
                     {{
                       formatAddressField(
                         data.event._VenueAddress &&
-                          data.event._VenueAddress.Country
+                          data.event._VenueAddress.Country !== ''
+                          ? data.event._VenueAddress.Country + ','
+                          : ''
                       )
                     }}
                     {{
