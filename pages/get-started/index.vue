@@ -291,9 +291,7 @@ export default {
       this.processing = true
       this.statusMessage = this.$t('Messages.Information.CreatingOrg')
       this.orgInfo = await this.createOrg()
-      if (!this.orgInfo) {
-        this.tab = 1
-      } else {
+      if (this.orgInfo) {
         this.statusMessage = this.$t('Messages.Information.SettingUpOrg')
         this.endDateTime = new Date(
           new Date().setDate(this.startDateTime.getDate() + 4)
@@ -448,13 +446,33 @@ export default {
           this.statusMessage = ''
           this.snackbarText = this.$t('Messages.Error.CreateOrgFailed')
           this.snackbar = true
+          this.tab = 1
           return false
         }
       } catch (err) {
-        this.statusMessage = ''
-        this.snackbarText = this.$t('Messages.Error.CreateOrgCatch')
-        this.snackbar = true
-        this.resetBtn = !this.resetBtn
+        const { statusCode } = err.response.data.error.data
+        if (statusCode === 422) {
+          this.statusMessage = ''
+          this.snackbarText = this.$t('Messages.Error.CreateOrgCatch')
+          this.snackbar = true
+          this.resetBtn = !this.resetBtn
+          this.tab = 1
+        } else if (statusCode === 405) {
+          this.statusMessage = ''
+          this.resetBtn = !this.resetBtn
+          this.errorMessage = this.$t('Messages.Error.SetupExitCode', {
+            code: statusCode,
+          })
+          this.snackbarText = this.$t('Messages.Error.CreateOrgFull')
+          this.snackbar = true
+          this.tab = 3
+        } else {
+          this.statusMessage = ''
+          this.snackbarText = this.$t('Messages.Error.CreateOrgFailed')
+          this.snackbar = true
+          this.resetBtn = !this.resetBtn
+          this.tab = 1
+        }
         console.error(
           'Error while creating organization on /get-started. Error: ',
           err
@@ -474,10 +492,9 @@ export default {
     async checkAvailablity() {
       if (this.allowable) {
         try {
+          const orgName = this.orgName.toLowerCase()
           const res = await this.$axios.$get(
-            `${this.$bitpod.getApiUrl()}OrganizationInfos/orgAvailable?name=${
-              this.orgName
-            }`
+            `${this.$bitpod.getApiUrl()}OrganizationInfos/orgAvailable?name=${orgName}`
           )
           this.allow = res
           this.processing = false

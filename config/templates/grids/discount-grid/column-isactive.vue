@@ -2,7 +2,7 @@
   <div class="positionRelative ps-top6">
     <div>
       <v-checkbox
-        v-model="checkbox"
+        v-model="item.isActive"
         :success="item.isActive"
         :error="!item.isActive"
         dense
@@ -28,17 +28,12 @@ export default {
       required: false,
     },
   },
-  data() {
-    return {
-      checkbox: this.item.isActive,
-    }
-  },
   methods: {
     async updateRegForm() {
       const url = this.$bitpod.getApiUrl()
       try {
         const res = await this.$axios.$put(`${url}OfferCodes/${this.item.id}`, {
-          isActive: this.checkbox,
+          isActive: this.item.isActive,
         })
         if (res) {
           this.refresh()

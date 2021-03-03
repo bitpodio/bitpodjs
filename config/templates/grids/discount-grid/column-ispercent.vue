@@ -2,7 +2,7 @@
   <div class="positionRelative ps-top6">
     <div v-if="item.isPercent === true">
       <v-checkbox
-        v-model="checkbox"
+        v-model="item.isPercent"
         success
         dense
         height="20"
@@ -12,7 +12,7 @@
     </div>
     <div v-else>
       <v-checkbox
-        v-model="checkbox"
+        v-model="item.isPercent"
         error
         dense
         height="20"
@@ -37,21 +37,13 @@ export default {
       required: false,
     },
   },
-  data() {
-    return {
-      checkbox: this.item.isPercent,
-    }
-  },
   methods: {
     async updateRegForm() {
       const url = this.$bitpod.getApiUrl()
       try {
-        const res = await this.$axios.$put(
-          `${url}/svc/api/OfferCodes/${this.item.id}`,
-          {
-            isPercent: this.checkbox,
-          }
-        )
+        const res = await this.$axios.$put(`${url}OfferCodes/${this.item.id}`, {
+          isPercent: this.item.isPercent,
+        })
         if (res) {
           this.refresh()
         }
