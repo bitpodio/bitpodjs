@@ -786,7 +786,8 @@
     "TryJoinOn": "נסה להצטרף שוב בתאריך",
     "CheckCalendarInvite": "בדוק את הזמנת לוח השנה להצטרפות לקישור",
     "ClearFilter": "נקה מסננים",
-    "SubTotal": "סך הכל"
+    "SubTotal": "סך הכל",
+    "AccessRequired":"הגישה לא ניתנה, צרו קשר עם התמיכה לבקשת הגישה"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",
