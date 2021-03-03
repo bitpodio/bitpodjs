@@ -289,6 +289,10 @@ export default {
     auth: {
       defaultLoginStrategy: process.env.DEFAULT_LOGIN_STRATEGY || 'bitpod',
     },
+    studioUrl: process.env.STUDIO_URL || 'test.bitpod.io',
+    swaggerUrl:
+      process.env.SWAGGER_URL ||
+      'https://event.test.bitpod.io/svc/explorer/swagger.json',
   },
 
   /*
