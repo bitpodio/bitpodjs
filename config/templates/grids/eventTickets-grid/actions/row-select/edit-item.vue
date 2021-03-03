@@ -107,7 +107,7 @@
               </v-col>
               <v-col class="col-12 col-md-6">
                 <v-text-field
-                  v-model="formData.TicketCount"
+                  v-model="formData.AvailableCount"
                   :label="$t('Common.TicketCountRequired')"
                   :rules="ticketCountRules()"
                   type="number"
@@ -312,6 +312,23 @@ export default {
       }
     },
   },
+  watch: {
+    async dialog(newVal) {
+      if (newVal) {
+        try {
+          const res = await this.getRegistrationType()
+          if (res) {
+            this.registrationTypeDropdown = res.map((i) => i.Name)
+          }
+        } catch (e) {
+          console.log(
+            `Error in templates/grids/eventTickets/actions/row-select/edit-item.vue while making a GQL call to Ticket model from method getRegistrationType`,
+            e
+          )
+        }
+      }
+    },
+  },
   async mounted() {
     try {
       const res = await this.getDropDownData('TicketType')
@@ -420,7 +437,7 @@ export default {
       this.formData.Amount = parseFloat(this.Amount)
       this.formData.DisplayOrder = parseInt(this.formData.DisplayOrder)
       this.formData.TicketCount = parseInt(this.formData.TicketCount)
-      this.formData.AvailableCount = parseInt(this.formData.TicketCount)
+      this.formData.AvailableCount = parseInt(this.formData.AvailableCount)
       this.formData.Events = this.$route.params.id
       this.formData.Status = this.eventStatus
       try {
@@ -550,6 +567,7 @@ export default {
               },
             },
           },
+          fetchPolicy: 'no-cache',
         })
         if (result) {
           const generalConfig = formatGQLResult(result.data, 'RegistrationType')

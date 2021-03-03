@@ -676,6 +676,15 @@
                           </td>
                           <td>{{ registration.Currency }} {{ item.total }}</td>
                         </tr>
+                        <tr>
+                          <td></td>
+                          <td></td>
+                          <td><i18n path="Common.SubTotal" /></td>
+                          <td>
+                            {{ registration.Currency }}
+                            {{ registration.SubTotal }}
+                          </td>
+                        </tr>
                         <tr v-if="registration.Discount">
                           <td></td>
                           <td></td>
@@ -984,7 +993,7 @@ export default {
         `${this.$config.basePublicPath}/apps/event/virtual/`
       )
       if (isFullLink) {
-        window.open(`${regUrl}${this.registration.id}?watch=${roomName}`)
+        window.open(`${regUrl}${this.registration.id}`)
       } else {
         const currentOrgName = window.location.origin
           .split('-')[0]

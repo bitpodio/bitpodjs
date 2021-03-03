@@ -24,22 +24,40 @@
               </h1>
             </v-col>
             <v-col class="col-md-10 col-lg-10 col-8">
-              <div class="col-md-12 pb-0 pt-0">
-                <span v-if="data.discount.isActive === true">
+              <div class="col-md-12 pb-0 pt-0 public-page-main">
+                <div v-if="data.discount.isActive === true" class="d-flex">
                   <i
-                    class="fa fa-thumbs-up pr-1 success--text"
+                    class="fa fa-thumbs-up pr-1 success--text discount-Active"
                     aria-hidden="true"
                   ></i>
-                  <i18n path="Common.Active" class="ml-2" />
-                </span>
-                <span v-else>
+                  <v-skeleton-loader
+                    :loading="!discountDataLoaded"
+                    :tile="true"
+                    class="rounded-lg"
+                    type="avatar"
+                    height="25"
+                    width="100"
+                  >
+                    <i18n path="Common.Active" class="ml-2" />
+                  </v-skeleton-loader>
+                </div>
+                <div v-else class="d-flex">
                   <i
-                    class="fa fa-thumbs-down pr-1"
+                    class="fa fa-thumbs-down pr-1 pt-1"
                     text-color="error"
                     aria-hidden="true"
                   ></i>
-                  <i18n path="Common.Inactive" class="ml-2" />
-                </span>
+                  <v-skeleton-loader
+                    :loading="!discountDataLoaded"
+                    :tile="true"
+                    class="rounded-lg"
+                    type="avatar"
+                    height="25"
+                    width="100"
+                  >
+                    <i18n path="Common.Inactive" class="ml-2" />
+                  </v-skeleton-loader>
+                </div>
               </div>
               <div class="col-md-12 pt-2 pb-0">
                 <h2>{{ formatField(data.discount.eventName) }}</h2>
@@ -149,6 +167,7 @@ export default {
   data() {
     return {
       loading: 0,
+      discountDataLoaded: false,
       data: {
         discount: {},
       },
@@ -188,6 +207,7 @@ export default {
       },
       update(data) {
         const discount = formatGQLResult(data, 'OfferCode')
+        this.discountDataLoaded = true
         return {
           discount: discount.length > 0 ? discount[0] : {},
         }
@@ -209,6 +229,9 @@ export default {
 <style scoped>
 .discount-top {
   border: 1px solid #e6e6e6;
+}
+.discount-Active {
+  padding-top: 2px;
 }
 @media (max-width: 500px) {
   .pad-card {

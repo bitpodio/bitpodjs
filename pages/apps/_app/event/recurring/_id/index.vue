@@ -1651,11 +1651,11 @@ export default {
     },
     viewRegistration() {
       const orgName = this.$store.state.currentOrg.name
-      if (orgName === 'bitpod') {
-        const regUrl = `https://${this.$config.axios.eventUrl}/e/${this.data.event.UniqLink}`
+      if (orgName) {
+        const regUrl = `https://${orgName}-${this.$config.axios.eventUrl}/e/${this.data.event.UniqLink}`
         window.open(`${regUrl}`, '_blank')
       } else {
-        const regUrl = `https://${orgName}-${this.$config.axios.eventUrl}/e/${this.data.event.UniqLink}`
+        const regUrl = `https://${this.$config.axios.eventUrl}/e/${this.data.event.UniqLink}`
         window.open(`${regUrl}`, '_blank')
       }
     },

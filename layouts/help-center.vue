@@ -18,65 +18,12 @@
           ></v-img>
         </span>
       </div>
-      <div class="text-center mt-3 mb-1 pl-1">
-        <v-menu>
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              v-bind="attrs"
-              color="primary"
-              depressed
-              class="ma-3 block wd-full my-0 mb-1 ml-n4"
-              v-on="on"
-            >
-              <i18n path="Drawer.CreateEventAction" />
-            </v-btn>
-          </template>
-
-          <v-list dense>
-            <v-list-item
-              @click="
-                triggerReset = !triggerReset
-                dialog1 = !dialog1
-              "
-            >
-              <v-list-item-icon class="mr-2">
-                <v-icon class="fs-16 mr-2">fa-calendar</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title
-                  ><i18n path="Drawer.SingleEventAction"
-                /></v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item
-              @click="
-                triggerRecEventReset = !triggerRecEventReset
-                dialog = !dialog
-              "
-            >
-              <v-list-item-icon class="mr-2">
-                <v-icon class="fs-16 mr-2">fa-history</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title
-                  ><i18n path="Drawer.RecurringEventAction"
-                /></v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-      </div>
       <v-list shaped>
         <template v-for="item in items">
           <v-row v-if="item.heading" :key="item.heading" align="center">
             <div class="pa-0 pl-5">
               <v-subheader v-if="item.heading" class="nav-subheader pl-2">
-                <i18n v-if="item.heading === 'Event'" path="Common.EventApp" />
-                <i18n
-                  v-if="item.heading === 'Promotions'"
-                  path="Common.Promotions"
-                />
-                <i18n v-if="item.heading === 'Members'" path="Common.Members" />
+                {{ item.heading }}
               </v-subheader>
             </div>
           </v-row>
@@ -126,21 +73,7 @@
             </v-list-item-action>
             <v-list-item-content>
               <v-list-item-title class="nav-title">
-                <i18n
-                  v-if="item.text === 'Eventboard'"
-                  path="Drawer.Eventboard"
-                />
-                <i18n v-if="item.text === 'Events'" path="Drawer.Events" />
-                <i18n
-                  v-if="item.text === 'Registrations'"
-                  path="Drawer.Registrations"
-                />
-                <i18n
-                  v-if="item.text === 'Discount Code'"
-                  path="Drawer.DiscountCode"
-                />
-                <i18n v-if="item.text === 'Members'" path="Drawer.Members" />
-                <i18n v-if="item.text === 'Contacts'" path="Drawer.Contacts" />
+                {{ item.text }}
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -155,27 +88,6 @@
         "
       />
     </v-navigation-drawer>
-
-    <v-dialog
-      v-model="dialog1"
-      persistent
-      scrollable
-      content-class="slide-form"
-    >
-      <NewSingleEvent
-        v-if="dialog1"
-        :reset-data="triggerReset"
-        :on-form-close="closeSingleEventForm"
-      />
-    </v-dialog>
-
-    <v-dialog v-model="dialog" persistent scrollable content-class="slide-form">
-      <NewRecurringEvent
-        v-if="dialog"
-        :reset-data="triggerRecEventReset"
-        :on-form-close="closeRecurringEventForm"
-      />
-    </v-dialog>
 
     <v-app-bar app flat class="greybg headernew pl-0" height="50">
       <v-toolbar-title
@@ -196,8 +108,9 @@
           ></v-img>
         </span>
         <i18n
-          path="Common.AppTitle"
-          class="d-inline-flex align-center mx-0 mx-md-2 ml-0 ml-md-1 text-h5"
+          path="Common.HelpCenterMap"
+          class="d-inline-flex align-center mx-0 mx-md-2 ml-0 ml-md-1"
+          :class="$device.isMobile ? 'text-h6' : 'text-h5'"
         />
         <v-spacer></v-spacer>
       </v-toolbar-title>
@@ -287,14 +200,14 @@
     </v-app-bar>
 
     <v-main
-      class="greybg"
+      class="greybg help-center"
       :class="{
         'custom-nav-main': !$vuetify.breakpoint.smAndDown && drawer === null,
       }"
     >
-      <v-container fluid>
+      <v-container fluid class="pa-0">
         <v-row>
-          <v-col class="pt-0">
+          <v-col class="pt-1 pb-0">
             <div>
               <nuxt />
             </div>
@@ -302,15 +215,6 @@
         </v-row>
       </v-container>
     </v-main>
-    <div v-if="logoutClicked">
-      <iframe
-        id="print"
-        ref="iframe"
-        style="width: 0; position: absolute; height: 0;"
-        :src="`https://${$config.axios.backendBaseUrl}${$config.basePublicPath}/clear-cookie`"
-        @load="iframecookieDeleted"
-      />
-    </div>
   </v-app>
 </template>
 
@@ -321,7 +225,13 @@ import Help from '~/components/common/help'
 import OldSite from '~/components/common/oldsite'
 import Upgrade from '~/components/common/upgrade'
 import userUtils from '~/utility/userApps'
+import HelpCenterFunc from '~/config/apps/help'
 export default {
+  head: {
+    bodyAttrs: {
+      class: 'help-center',
+    },
+  },
   middleware: ['auth', 'authorization'],
   components: {
     OrgnaizationList,
@@ -351,52 +261,7 @@ export default {
     allowUpgrade: false,
     activeClass: ' v-list-item--active',
     userPlanData: '',
-    logoutClicked: false,
-    items: [
-      {
-        icon: 'fa fa-grid',
-        text: 'Eventboard',
-        to: '/apps/event/eventboard',
-      },
-      { heading: 'Event' },
-      {
-        icon: 'fa fa-calendar',
-        text: 'Events',
-        to: '/apps/event/list/Event/live-and-draft-event',
-        allowedRoutes: [
-          '/apps/event/list/Event/eventInvitaionHistory',
-          '/apps/event/event/',
-        ],
-      },
-      {
-        icon: 'fa fa-user-plus',
-        text: 'Registrations',
-        to: '/apps/event/list/Registrations/Registrations',
-        allowedRoutes: ['/apps/event/registration'],
-      },
-      { heading: 'Promotions' },
-      {
-        icon: 'fa fa-building',
-        text: 'Discount Code',
-        to: '/apps/event/list/DiscountCodes/Discount-Codes',
-        allowedRoutes: ['/apps/event/discountcodes'],
-      },
-      { heading: 'Members' },
-      {
-        icon: 'fa fa-users',
-        text: 'Members',
-        to: '/apps/event/list/EventCustomers/Members',
-      },
-      {
-        icon: 'fa fa-address-book-o',
-        text: 'Contacts',
-        to: '/apps/event/list/Contacts/Contacts',
-        allowedRoutes: [
-          '/apps/event/contacts/',
-          'apps/event/list/Contacts/Invites',
-        ],
-      },
-    ],
+    items: [],
   }),
   computed: {
     currentPage() {
@@ -409,21 +274,28 @@ export default {
       token = token.split(' ')[1]
     }
     await this.$apolloHelpers.onLogin(token, undefined, { expires: 7 })
+    const HelpCenter = HelpCenterFunc(this.$config)
+    Object.keys(HelpCenter).forEach((sectionName) => {
+      this.items = this.items.concat({
+        heading: this.$t(HelpCenter[sectionName].general.title),
+      })
+      Object.keys(HelpCenter[sectionName].views).forEach((viewName) => {
+        this.items = this.items.concat({
+          text: this.$t(HelpCenter[sectionName].views[viewName].title),
+          to: HelpCenter[sectionName].views[viewName].to,
+        })
+      })
+    })
   },
   mounted() {
     const userInfo = userUtils.userCurrentOrgInfo(this.$store) || {}
     const userRoles = userInfo.roles || []
     this.allowUpgrade = userRoles.includes('$orgowner')
-    window.addEventListener('message', this.messageReceived, false)
-  },
-  beforeDestroy() {
-    window.removeEventListener('message', this.messageReceived)
   },
   methods: {
-    onLogout(context) {
-      if (this.$store.state.auth.loggedIn) {
-        this.logoutClicked = true
-      }
+    async onLogout() {
+      await this.$apolloHelpers.onLogout()
+      this.$auth.logout()
     },
     closeSingleEventForm() {
       this.dialog1 = false
@@ -461,20 +333,28 @@ export default {
         )
       }
     },
-    iframecookieDeleted() {
-      console.log(
-        'document.cookie that is passed to clear cookie',
-        document.cookie
-      )
-      this.$refs.iframe.contentWindow.postMessage(document.cookie, '*')
-    },
-    messageReceived(e) {
-      console.log('message received from the the iframe', e.data)
-      if (e.data === 'success' && this.logoutClicked) {
-        this.$auth.logout()
-        this.$apolloHelpers.onLogout()
-      }
-    },
   },
 }
 </script>
+<style>
+.help-center::-webkit-scrollbar {
+  display: none;
+}
+.nav-bar > div.v-navigation-drawer__content::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(182, 175, 175, 0.3);
+  border-radius: 6px;
+  background-color: #f5f5f5;
+}
+.nav-bar > div.v-navigation-drawer__content::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: #f5f5f5;
+  display: unset;
+}
+
+.nav-bar > div.v-navigation-drawer__content::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #ccc;
+}
+</style>

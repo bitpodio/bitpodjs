@@ -53,7 +53,10 @@ export default function (context) {
     }
     return
   }
-  if (context.route.fullPath !== `/get-started`) {
+  if (
+    context.route.fullPath !== `/get-started` &&
+    !context.req.headers.host.includes('localhost')
+  ) {
     return redirect('/unauthorized')
   }
 }
