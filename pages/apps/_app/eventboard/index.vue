@@ -808,7 +808,6 @@ export default {
           return data
         })
         .catch((err) => {
-          debugger
           return err
         })
     },
@@ -883,7 +882,6 @@ export default {
           return data
         })
         .catch((err) => {
-          debugger
           return err
         })
     },
@@ -916,12 +914,10 @@ export default {
           return data
         })
         .catch((err) => {
-          debugger
           return err
         })
     },
     getGeoData() {
-      debugger
       this.$axios
         .get(
           `${this.$bitpod.getApiUrl()}Registrations/aggregate?filter=${JSON.stringify(
@@ -938,7 +934,6 @@ export default {
           return data
         })
         .catch((err) => {
-          debugger
           return err
         })
     },
@@ -971,7 +966,6 @@ export default {
           return data
         })
         .catch((err) => {
-          debugger
           return err
         })
     },
@@ -1053,7 +1047,6 @@ export default {
         }
       },
       error(error) {
-        debugger
         this.error = error
         this.loading = 0
       },
@@ -1116,7 +1109,6 @@ export default {
         }
       },
       error(error) {
-        debugger
         this.error = error
         this.loading = 0
       },
@@ -1167,7 +1159,6 @@ export default {
         }
       },
       error(error) {
-        debugger
         this.error = error
         this.loading = 0
       },
