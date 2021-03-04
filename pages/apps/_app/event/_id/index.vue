@@ -793,7 +793,7 @@
             <v-card
               v-for="image in data.event.LiveStreamBanner"
               :key="image"
-              class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-5 pr-3 elevation-0 cardImg rounded"
+              class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-5 pr-3 elevation-0 cardImg rounded cursorPointer"
             >
               <span class="cardDelete">
                 <i
@@ -809,7 +809,6 @@
                 max-width="150"
                 max-height="150"
                 width="150"
-                contain
                 @click.stop="liveStreamDialog = true"
               >
                 <template v-slot:placeholder>

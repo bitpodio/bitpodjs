@@ -554,7 +554,6 @@ export default {
       group: null,
       currentVideo: '',
       liveStreamBannerUrl: '',
-      videoPlayer: null,
     }
   },
   computed: {
@@ -666,7 +665,6 @@ export default {
       window.open(`apps/event/live/${roomName}?e=${this.$route.params.id}`)
     },
     getAttachmentLink(id) {
-      debugger
       if (id) {
         const url = this.$bitpod.getApiUrl()
         const attachmentUrl = `${url}Attachments/download/${id}`
@@ -825,7 +823,6 @@ export default {
         `${this.$config.rtmpLink}${
           item.BitpodVirtualLink.split('/')[3]
         }.m3u8` || ''
-      this.destroyVideoPlayer()
       this.playLive()
       this.sessionName = item.Name || ''
       if (new Date().getTime() < new Date(item.StartDate).getTime()) {
@@ -843,8 +840,7 @@ export default {
       //   type: 'application/x-mpegURL',
       // })
 
-      const videoSrc1 = this.videoSrc
-      const setVideoPlayer = this.setVideoPlayer
+      const videoSrcLive = this.videoSrc
       const myVideoPlayer = {
         checkInterval: 5,
         readyStateOneDuration: 0,
@@ -852,7 +848,6 @@ export default {
         modal: null,
 
         healthCheck() {
-          debugger
           const error = this.player.error()
           console.log(error)
           if (error) {
@@ -902,10 +897,9 @@ export default {
           this.player = videojs('my_video_1', {
             errorDisplay: false,
           })
-          setVideoPlayer(this.player)
           this.player.src({
             // src: 'https://live.bitpod.io/hls/virtualbitpod-virtual-5zr8.m3u8',
-            src: videoSrc1,
+            src: videoSrcLive,
             type: 'application/x-mpegURL',
             withCredentials: false,
           })
@@ -916,14 +910,6 @@ export default {
       setInterval(function () {
         myVideoPlayer.healthCheck()
       }, myVideoPlayer.checkInterval * 1000)
-    },
-    destroyVideoPlayer() {
-      if (this.videoPlayer && this.videoPlayer.dispose) {
-        this.videoPlayer.dispose()
-      }
-    },
-    setVideoPlayer(player) {
-      this.videoPlayer = player
     },
     initDarkMode() {
       const darkMediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
