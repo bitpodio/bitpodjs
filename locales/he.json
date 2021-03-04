@@ -672,7 +672,7 @@
     "ShowMore": "Show More",
     "SelectOnePriorInvite": "to select one of the prior invite",
     "NewRecurringSession": "New Recurring Session",
-    "EditSession": "Edit Session",
+    "EditSession": "ערוך מושב",
     "CustomErrorMessage": "custom {errorMessage}",
     "MoreAbout": "More info about",
     "HeaderTemplate": "header Template",
@@ -787,7 +787,9 @@
     "CheckCalendarInvite": "בדוק את הזמנת לוח השנה להצטרפות לקישור",
     "ClearFilter": "נקה מסננים",
     "SubTotal": "סך הכל",
-    "AccessRequired":"הגישה לא ניתנה, צרו קשר עם התמיכה לבקשת הגישה"
+    "AccessRequired":"הגישה לא ניתנה, צרו קשר עם התמיכה לבקשת הגישה",
+    "SendEventInvite": "שלח הזמנה לאירוע",
+    "ScheduleTask": "קבע משימה"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",

@@ -672,7 +672,7 @@
     "ShowMore": "Show More",
     "SelectOnePriorInvite": "to select one of the prior invite",
     "NewRecurringSession": "New Recurring Session",
-    "EditSession": "Edit Session",
+    "EditSession": "सत्र संपादित करें",
     "CustomErrorMessage": "custom {errorMessage}",
     "MoreAbout": "More info about",
     "HeaderTemplate": "header Template",
@@ -787,7 +787,9 @@
     "CheckCalendarInvite": "लिंक से जुड़ने के लिए कैलेंडर आमंत्रण की जाँच करें",
     "ClearFilter": "फ़िल्टर साफ़ करें",
     "SubTotal": "उप कुल",
-    "AccessRequired":"पहुँच की अनुमति नहीं दी, पहुँच का अनुरोध करने के लिए संपर्क समर्थन"
+    "AccessRequired":"पहुँच की अनुमति नहीं दी, पहुँच का अनुरोध करने के लिए संपर्क समर्थन",
+    "SendEventInvite": "ईवेंट आमंत्रण भेजें",
+    "ScheduleTask": "एक कार्य अनुसूची"
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",

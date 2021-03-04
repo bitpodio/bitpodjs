@@ -1,6 +1,11 @@
 <template>
   <v-col class="text-center px-0">
-    <v-dialog v-model="menu" :close-on-content-click="false" max-width="700">
+    <v-dialog
+      v-model="menu"
+      persistent
+      :close-on-content-click="false"
+      max-width="700"
+    >
       <template v-slot:activator="{ on, attrs }">
         <v-btn
           text

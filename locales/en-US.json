@@ -786,7 +786,9 @@
     "CheckCalendarInvite": "Check calendar invite for joining link",
     "ClearFilter": "Clear filters",
     "SubTotal": "Sub Total",
-    "AccessRequired":"Access not granted, contact support to request access"
+    "AccessRequired":"Access not granted, contact support to request access",
+    "SendEventInvite": "send event invite",
+    "ScheduleTask": "Schedule a Task"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",
