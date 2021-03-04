@@ -785,7 +785,9 @@
     "CheckCalendarInvite": "Vérifier l'invitation du calendrier pour rejoindre le lien",
     "ClearFilter": "Effacer les filtres",
     "SubTotal": "Sous-total",
-    "AccessRequired":"Accès non accordé, contactez le support pour demander l'accès"
+    "AccessRequired":"Accès non accordé, contactez le support pour demander l'accès",
+    "SendEventInvite": "envoyer une invitation à un événement",
+    "ScheduleTask": "Planifier une tâche"
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",
