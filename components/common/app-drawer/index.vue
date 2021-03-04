@@ -18,6 +18,7 @@
               v-if="app.route"
               :to="localePath(app.route)"
               class="text-decoration-none"
+              :target="app.name === 'HelpCenter' ? '_blank' : '_self'"
             >
               <v-flex
                 class="d-flex justify-center align-center flex-column app-view"
@@ -71,7 +72,10 @@ export default {
   computed: {
     userApps() {
       const userInfo = userUtils.userCurrentOrgInfo(this.$store) || {}
-      const userRoles = userInfo.roles || []
+      const userRoles = [
+        ...(userInfo.roles || []),
+        ...(this.$auth.$state.loggedIn ? ['$authenticated'] : []),
+      ]
       if (userRoles.includes('$orgowner') && userInfo && userInfo.id === 1) {
         return this.apps
       }
