@@ -554,6 +554,9 @@ export default {
       group: null,
       currentVideo: '',
       liveStreamBannerUrl: '',
+      videoPlayer: null,
+      intervalId: null,
+      modalObject: null,
     }
   },
   computed: {
@@ -823,6 +826,9 @@ export default {
         `${this.$config.rtmpLink}${
           item.BitpodVirtualLink.split('/')[3]
         }.m3u8` || ''
+      if (this.modalObject && this.modalObject.opened_) {
+        this.modalObject.close()
+      }
       this.playLive()
       this.sessionName = item.Name || ''
       if (new Date().getTime() < new Date(item.StartDate).getTime()) {
@@ -833,6 +839,9 @@ export default {
       this.sessionVideoTime = this.formatDate(new Date(item.StartDate)) || ''
       this.$router.push(`${this.$route.path}?watch=${item.id}`)
     },
+    setIntervalId(id) {
+      this.intervalId = id
+    },
     playLive() {
       // const player = videojs('my_video_1')
       // player.src({
@@ -841,6 +850,8 @@ export default {
       // })
 
       const videoSrcLive = this.videoSrc
+      const setVideoPlayer = this.setVideoPlayer
+      const setModalObject = this.setModalObject
       const myVideoPlayer = {
         checkInterval: 5,
         readyStateOneDuration: 0,
@@ -853,6 +864,7 @@ export default {
           if (error) {
             if (!(this.modal && this.modal.opened_)) {
               this.modal = this.player.createModal('Live stream offline')
+              setModalObject(this.modal)
             }
             this.play()
             return
@@ -897,6 +909,7 @@ export default {
           this.player = videojs('my_video_1', {
             errorDisplay: false,
           })
+          setVideoPlayer(this.player)
           this.player.src({
             // src: 'https://live.bitpod.io/hls/virtualbitpod-virtual-5zr8.m3u8',
             src: videoSrcLive,
@@ -906,10 +919,19 @@ export default {
           this.player.play()
         },
       }
+      if (this.intervalId) {
+        clearInterval(this.intervalId)
+      }
       myVideoPlayer.play()
-      setInterval(function () {
+      this.intervalId = setInterval(function () {
         myVideoPlayer.healthCheck()
       }, myVideoPlayer.checkInterval * 1000)
+    },
+    setModalObject(obj) {
+      this.modalObject = obj
+    },
+    setVideoPlayer(player) {
+      this.videoPlayer = player
     },
     initDarkMode() {
       const darkMediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
