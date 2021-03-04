@@ -786,7 +786,8 @@
     "TryJoinOn": "נסה להצטרף שוב בתאריך",
     "CheckCalendarInvite": "בדוק את הזמנת לוח השנה להצטרפות לקישור",
     "ClearFilter": "נקה מסננים",
-    "SubTotal": "סך הכל"
+    "SubTotal": "סך הכל",
+    "AccessRequired":"הגישה לא ניתנה, צרו קשר עם התמיכה לבקשת הגישה"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",
@@ -1010,7 +1011,9 @@
       "SessionCreatedSuccess": "ההפעלה נוצרה בהצלחה",
       "SessionUpdatedSuccess": "ההפעלה עודכנה בהצלחה",
       "ContactImportSuccess": "ביצוע הייבוא ​​החל",
-      "OrgNameSuccess": "https://{orgName}-{suffixRoute} זמין"
+      "OrgNameSuccess": "https://{orgName}-{suffixRoute} זמין",
+      "ContactImported": "צור קשר מיובא בהצלחה",
+      "ContactImportedFailed": "ייבוא ​​אנשי הקשר נכשל"
     },
     "Information": {
       "SetupInProgressTitle": "ההתקנה בעיצומה",

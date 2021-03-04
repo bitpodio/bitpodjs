@@ -25,6 +25,7 @@
               v-bind="attrs"
               color="primary"
               depressed
+              :disabled="allowUser"
               class="ma-3 block wd-full my-0 mb-1 ml-n4"
               v-on="on"
             >
@@ -349,6 +350,7 @@ export default {
     triggerReset: false,
     triggerRecEventReset: false,
     allowUpgrade: false,
+    allowUser: false,
     activeClass: ' v-list-item--active',
     userPlanData: '',
     logoutClicked: false,
@@ -413,6 +415,7 @@ export default {
   mounted() {
     const userInfo = userUtils.userCurrentOrgInfo(this.$store) || {}
     const userRoles = userInfo.roles || []
+    this.allowUser = userRoles.length === 1 && userRoles.includes('$orguser')
     this.allowUpgrade = userRoles.includes('$orgowner')
     window.addEventListener('message', this.messageReceived, false)
   },
@@ -421,7 +424,6 @@ export default {
   },
   methods: {
     onLogout(context) {
-      debugger
       if (this.$store.state.auth.loggedIn) {
         this.logoutClicked = true
       }

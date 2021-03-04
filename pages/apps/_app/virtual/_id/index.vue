@@ -141,6 +141,7 @@
             "
             :src="event.organizerContactDetails.logo"
             contain
+            position="left center"
             class="lounge-logofull mr-2"
           >
           </v-img>
@@ -198,6 +199,7 @@
                       width="100%"
                       height="400"
                       data-setup="{}"
+                      :poster="$config.cdnUri + 'live-stream.png'"
                     ></video>
                     <div class="pa-2">
                       <h2 class="white--text">{{ sessionName }}</h2>
@@ -729,7 +731,7 @@ export default {
                     this.registration.SessionListId[0].StartDate
                   ).getTime()
                 ) {
-                  this.sessionTime = true
+                  this.sessionTime = false
                 } else {
                   this.sessionTime = false
                 }
@@ -838,7 +840,7 @@ export default {
       this.playLive()
       this.sessionName = item.Name || ''
       if (new Date().getTime() < new Date(item.StartDate).getTime()) {
-        this.sessionTime = true
+        this.sessionTime = false
       } else {
         this.sessionTime = false
       }

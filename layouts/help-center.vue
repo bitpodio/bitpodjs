@@ -225,7 +225,7 @@ import Help from '~/components/common/help'
 import OldSite from '~/components/common/oldsite'
 import Upgrade from '~/components/common/upgrade'
 import userUtils from '~/utility/userApps'
-import HelpCenter from '~/config/apps/help'
+import HelpCenterFunc from '~/config/apps/help'
 export default {
   head: {
     bodyAttrs: {
@@ -274,6 +274,7 @@ export default {
       token = token.split(' ')[1]
     }
     await this.$apolloHelpers.onLogin(token, undefined, { expires: 7 })
+    const HelpCenter = HelpCenterFunc(this.$config)
     Object.keys(HelpCenter).forEach((sectionName) => {
       this.items = this.items.concat({
         heading: this.$t(HelpCenter[sectionName].general.title),

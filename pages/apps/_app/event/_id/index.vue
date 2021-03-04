@@ -185,7 +185,13 @@
                     "
                     class="blue--text"
                   >
-                    {{ formatAddressField(data.event.VenueName) }}
+                    {{
+                      formatAddressField(
+                        data.event.VenueName !== ''
+                          ? data.event.VenueName + ','
+                          : ''
+                      )
+                    }}
                   </a>
                   <a class="blue--text">
                     {{
@@ -197,19 +203,25 @@
                     {{
                       formatAddressField(
                         data.event._VenueAddress &&
-                          data.event._VenueAddress.City
+                          data.event._VenueAddress.City !== ''
+                          ? data.event._VenueAddress.City + ','
+                          : ''
                       )
                     }}
                     {{
                       formatAddressField(
                         data.event._VenueAddress &&
-                          data.event._VenueAddress.State
+                          data.event._VenueAddress.State !== ''
+                          ? data.event._VenueAddress.State + ','
+                          : ''
                       )
                     }}
                     {{
                       formatAddressField(
                         data.event._VenueAddress &&
-                          data.event._VenueAddress.Country
+                          data.event._VenueAddress.Country !== ''
+                          ? data.event._VenueAddress.Country + ','
+                          : ''
                       )
                     }}
                     {{
@@ -1685,7 +1697,9 @@ export default {
       )
     },
     goBack() {
-      this.$router.back()
+      this.$router.push(
+        this.localePath(`/apps/event/list/Event/live-and-draft-event`)
+      )
     },
     getEventEndDate() {
       return this.$d(
@@ -1711,7 +1725,7 @@ export default {
     },
     goLive() {
       window.open(
-        `apps/event/live/${this.$store.state.currentOrg.name}-${this.eventData.UniqLink}?e=${this.$route.params.id}&n=${this.eventData.Title}`
+        `apps/event/live/${this.$store.state.currentOrg.name}-${this.eventData.UniqLink}?e=${this.$route.params.id}&n=${this.eventData.Title}&o=${this.eventData.chatChannel}`
       )
     },
     openPrintForm() {

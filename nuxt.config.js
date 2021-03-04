@@ -66,13 +66,6 @@ export default {
         src:
           'https://cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js',
       },
-      {
-        src: 'https://unpkg.com/video.js/dist/video.js',
-      },
-      {
-        src:
-          'https://unpkg.com/videojs-contrib-hls/dist/videojs-contrib-hls.js',
-      },
     ],
   },
   /*
@@ -289,6 +282,10 @@ export default {
     auth: {
       defaultLoginStrategy: process.env.DEFAULT_LOGIN_STRATEGY || 'bitpod',
     },
+    studioUrl: process.env.STUDIO_URL || 'test.bitpod.io',
+    swaggerUrl:
+      process.env.SWAGGER_URL ||
+      'https://event.test.bitpod.io/svc/explorer/swagger.json',
   },
 
   /*

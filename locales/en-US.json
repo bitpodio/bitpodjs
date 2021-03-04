@@ -785,7 +785,8 @@
     "TryJoinOn": "Try joining again on",
     "CheckCalendarInvite": "Check calendar invite for joining link",
     "ClearFilter": "Clear filters",
-    "SubTotal": "Sub Total"
+    "SubTotal": "Sub Total",
+    "AccessRequired":"Access not granted, contact support to request access"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",
@@ -931,6 +932,7 @@
       "CreateOrgFailed": "Failed to create your organisation.",
       "CreateOrgCatch": "This organisation is in use or may be soft-deleted. Try with a new name.",
       "CreateOrgFull": "Failed to create your organisation."
+      
     },
     "Warn": {
       "UniqueLinkFormat": "Lower case alphanumeric letters only",
@@ -1011,7 +1013,9 @@
       "SessionCreatedSuccess": "Session created successfully",
       "SessionUpdatedSuccess": "Session updated successfully",
       "ContactImportSuccess": "Import execution started",
-      "OrgNameSuccess": "https://{orgName}-{suffixRoute} is available"
+      "OrgNameSuccess": "https://{orgName}-{suffixRoute} is available",
+      "ContactImported": "Contacts Imported Sucessfully",
+      "ContactImportedFailed": "Contacts Import Failed"
     },
     "Information": {
       "SetupInProgressTitle": "Setup in progress",

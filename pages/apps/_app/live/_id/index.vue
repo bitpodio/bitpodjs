@@ -35,6 +35,7 @@ export default {
       snackbar: false,
       snackbarText: '',
       participantsBackup: {},
+      chatToken: '',
     }
   },
   computed: {
@@ -52,6 +53,8 @@ export default {
           SHOW_JITSI_WATERMARK: false,
           SHOW_WATERMARK_FOR_GUESTS: false,
           SHOW_CHROME_EXTENSION_BANNER: false,
+          CHAT_TOKEN: this.authChatToken(),
+          CHAT_CHANNEL: this.$route.query.o,
         },
         onload: this.onIFrameLoad,
       }
@@ -72,6 +75,20 @@ export default {
     }
   },
   methods: {
+    async authChatToken() {
+      try {
+        const url = `${this.$bitpod.getApiUrl()}Events/getChatToken?channelName=${
+          this.$route.query.o
+        }`
+        const response = await this.$axios.get(url)
+        if (response) {
+          this.chatToken = response.data.authToken
+          return this.chatToken
+        }
+      } catch (err) {
+        console.error(`Error while fetching chat Token`, err)
+      }
+    },
     uploadComment(e, message) {
       const info = this.participantsBackup[e.id]
       const note = `${info.displayName || info.formattedDisplayName} ${
