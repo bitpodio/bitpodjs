@@ -732,6 +732,12 @@ table > tbody > tr:last-child .key-align {
   background: #585858 !important;
   border-radius: 5px !important;
 }
+.vjs-seeking .vjs-loading-spinner, .vjs-waiting .vjs-loading-spinner {
+  display: none !important;
+}
+.video-js .vjs-modal-dialog {
+  background: transparent !important;
+}
 @media (min-width: 1904px) {
   .boxviewlarge .v-data-table__wrapper {
     margin-bottom: 0 !important;

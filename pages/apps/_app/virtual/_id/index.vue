@@ -199,7 +199,13 @@
                       width="100%"
                       height="400"
                       data-setup="{}"
-                      :poster="$config.cdnUri + 'live-stream.png'"
+                      :poster="
+                        getAttachmentLink(
+                          registration &&
+                            registration.EventList &&
+                            registration.EventList.LiveStreamBanner[0]
+                        )
+                      "
                     ></video>
                     <div class="pa-2">
                       <h2 class="white--text">{{ sessionName }}</h2>
@@ -689,7 +695,7 @@ export default {
         const attachmentUrl = `${url}Attachments/download/${id}`
         return attachmentUrl
       }
-      return `${this.$config.cdnUri}live-stream.png`
+      return `${this.$config.cdnUri}live-poster.png`
     },
     async getRegistrationData() {
       const URL = `${this.$bitpod.getApiUrl()}Registrations/findRegistration?regId=${
