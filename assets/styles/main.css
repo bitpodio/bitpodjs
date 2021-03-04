@@ -735,6 +735,9 @@ table > tbody > tr:last-child .key-align {
 .vjs-seeking .vjs-loading-spinner, .vjs-waiting .vjs-loading-spinner {
   display: none !important;
 }
+.vjs-poster {
+    display: none !important;
+}
 .video-js .vjs-modal-dialog {
   background: transparent !important;
 }
