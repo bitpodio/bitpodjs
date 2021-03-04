@@ -683,12 +683,13 @@ export default {
       }
       window.open(`apps/event/live/${roomName}?e=${this.$route.params.id}`)
     },
-    getAttachmentLink(id, isDownloadLink) {
-      const url = this.$bitpod.getApiUrl()
-      const attachmentUrl = `${url}Attachments${
-        isDownloadLink ? '/download' : ''
-      }${id ? '/' + id : ''}`
-      return attachmentUrl
+    getAttachmentLink(id) {
+      if (id) {
+        const url = this.$bitpod.getApiUrl()
+        const attachmentUrl = `${url}Attachments/download/${id}`
+        return attachmentUrl
+      }
+      return `${this.$config.cdnUri}live-stream.png`
     },
     async getRegistrationData() {
       const URL = `${this.$bitpod.getApiUrl()}Registrations/findRegistration?regId=${
@@ -848,11 +849,82 @@ export default {
       this.$router.push(`${this.$route.path}?watch=${item.id}`)
     },
     playLive() {
-      const player = videojs('my_video_1')
-      player.src({
-        src: this.videoSrc,
-        type: 'application/x-mpegURL',
-      })
+      // const player = videojs('my_video_1')
+      // player.src({
+      //   src: this.videoSrc,
+      //   type: 'application/x-mpegURL',
+      // })
+
+      const videoSrc1 = this.videoSrc
+      const myVideoPlayer = {
+        checkInterval: 5,
+        readyStateOneDuration: 0,
+        readyStateTwoDuration: 0,
+        modal: null,
+
+        healthCheck() {
+          const error = this.player.error()
+          console.log(error)
+          if (error) {
+            if (!(this.modal && this.modal.opened_)) {
+              this.modal = this.player.createModal('Live stream offline')
+            }
+            this.play()
+            return
+          }
+          if (this.modal && this.modal.opened_) {
+            this.modal.close()
+          }
+
+          const readyState = this.player.readyState()
+          console.log(readyState)
+          switch (readyState) {
+            case 0:
+              this.play()
+              return
+            case 1:
+              this.readyStateOneDuration += this.checkInterval
+              break
+            case 2:
+              this.readyStateTwoDuration += this.checkInterval
+              break
+            default:
+              return
+          }
+          console.log(this.readyStateOneDuration)
+          console.log(this.readyStateTwoDuration)
+          if (
+            this.readyStateOneDuration >= 15 ||
+            this.readyStateTwoDuration >= 15
+          ) {
+            this.play()
+          }
+        },
+
+        play() {
+          this.readyStateOneDuration = 0
+          this.readyStateTwoDuration = 0
+          try {
+            // console.log('destroying old player');
+            // this.player.dispose();
+            this.player = null
+          } catch (e) {}
+          this.player = videojs('my_video_1', {
+            errorDisplay: false,
+          })
+          this.player.src({
+            // src: 'https://live.bitpod.io/hls/virtualbitpod-virtual-5zr8.m3u8',
+            src: videoSrc1,
+            type: 'application/x-mpegURL',
+            withCredentials: false,
+          })
+          this.player.play()
+        },
+      }
+      myVideoPlayer.play()
+      setInterval(function () {
+        myVideoPlayer.healthCheck()
+      }, myVideoPlayer.checkInterval * 1000)
     },
     initDarkMode() {
       const darkMediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
