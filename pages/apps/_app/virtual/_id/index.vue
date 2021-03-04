@@ -555,6 +555,8 @@ export default {
       currentVideo: '',
       liveStreamBannerUrl: '',
       videoPlayer: null,
+      intervalId: null,
+      modalObject: null,
     }
   },
   computed: {
@@ -821,11 +823,14 @@ export default {
       }, 2000)
     },
     videoTileClick(item) {
+      debugger
       this.videoSrc =
         `${this.$config.rtmpLink}${
           item.BitpodVirtualLink.split('/')[3]
         }.m3u8` || ''
-      this.destroyVideoPlayer()
+      if (this.modalObject && this.modalObject.opened_) {
+        this.modalObject.close()
+      }
       this.playLive()
       this.sessionName = item.Name || ''
       if (new Date().getTime() < new Date(item.StartDate).getTime()) {
@@ -836,15 +841,19 @@ export default {
       this.sessionVideoTime = this.formatDate(new Date(item.StartDate)) || ''
       this.$router.push(`${this.$route.path}?watch=${item.id}`)
     },
+    setIntervalId(id) {
+      this.intervalId = id
+    },
     playLive() {
       // const player = videojs('my_video_1')
       // player.src({
       //   src: this.videoSrc,
       //   type: 'application/x-mpegURL',
       // })
-
+      debugger
       const videoSrc1 = this.videoSrc
       const setVideoPlayer = this.setVideoPlayer
+      const setModalObject = this.setModalObject
       const myVideoPlayer = {
         checkInterval: 5,
         readyStateOneDuration: 0,
@@ -858,6 +867,7 @@ export default {
           if (error) {
             if (!(this.modal && this.modal.opened_)) {
               this.modal = this.player.createModal('Live stream offline')
+              setModalObject(this.modal)
             }
             this.play()
             return
@@ -912,15 +922,16 @@ export default {
           this.player.play()
         },
       }
+      if (this.intervalId) {
+        clearInterval(this.intervalId)
+      }
       myVideoPlayer.play()
-      setInterval(function () {
+      this.intervalId = setInterval(function () {
         myVideoPlayer.healthCheck()
       }, myVideoPlayer.checkInterval * 1000)
     },
-    destroyVideoPlayer() {
-      if (this.videoPlayer && this.videoPlayer.dispose) {
-        this.videoPlayer.dispose()
-      }
+    setModalObject(obj) {
+      this.modalObject = obj
     },
     setVideoPlayer(player) {
       this.videoPlayer = player
