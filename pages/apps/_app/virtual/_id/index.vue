@@ -168,27 +168,7 @@
               class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-0 mr-0 mb-4 d-flex flex-column flex-sm-row overflowHidden"
             >
               <div class="pa-0 flex-60 d-flex flex-column black">
-                <div
-                  v-if="sessionTime"
-                  class="session-player-msg d-flex flex-column align-center justify-center"
-                >
-                  <p>
-                    <v-img
-                      :lazy-src="$config.cdnUri + 'session-time-video.png'"
-                      :src="$config.cdnUri + 'session-time-video.png'"
-                      min-height="100"
-                      max-width="100"
-                    >
-                    </v-img>
-                  </p>
-                  <h2 class="white--text mt-3">
-                    <i18n path="Common.SessionNotStart" />
-                  </h2>
-                  <p class="white--text mt-4 mb-0">
-                    <i18n path="Common.TryJoinOn" /> {{ sessionVideoTime }}
-                  </p>
-                </div>
-                <div v-else class="session-player">
+                <div class="session-player">
                   <div>
                     <video
                       id="my_video_1"
@@ -199,13 +179,7 @@
                       width="100%"
                       height="400"
                       data-setup="{}"
-                      :poster="
-                        getAttachmentLink(
-                          registration &&
-                            registration.EventList &&
-                            registration.EventList.LiveStreamBanner[0]
-                        )
-                      "
+                      :poster="liveStreamBannerUrl"
                     ></video>
                     <div class="pa-2">
                       <h2 class="white--text">{{ sessionName }}</h2>
@@ -579,6 +553,7 @@ export default {
       drawer: false,
       group: null,
       currentVideo: '',
+      liveStreamBannerUrl: '',
     }
   },
   computed: {
@@ -690,10 +665,11 @@ export default {
       window.open(`apps/event/live/${roomName}?e=${this.$route.params.id}`)
     },
     getAttachmentLink(id) {
+      debugger
       if (id) {
         const url = this.$bitpod.getApiUrl()
         const attachmentUrl = `${url}Attachments/download/${id}`
-        return attachmentUrl
+        this.liveStreamBannerUrl = attachmentUrl
       }
       return `${this.$config.cdnUri}live-poster.png`
     },
@@ -708,6 +684,9 @@ export default {
             return this.$nuxt.error({ statusCode: 404 })
           } else {
             this.registration = result
+            this.getAttachmentLink(
+              this.registration.EventList.LiveStreamBanner[0]
+            )
             this.registration.SessionListId = _.sortBy(
               this.registration.SessionListId,
               ['StartDate']
