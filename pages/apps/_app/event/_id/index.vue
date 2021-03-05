@@ -1790,7 +1790,9 @@ export default {
       )
     },
     goBack() {
-      this.$router.back()
+      this.$router.push(
+        this.localePath(`/apps/event/list/Event/live-and-draft-event`)
+      )
     },
     getEventEndDate() {
       return this.$d(

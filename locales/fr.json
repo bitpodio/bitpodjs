@@ -785,7 +785,10 @@
     "TryJoinOn": "Essayez de vous joindre à nouveau sur",
     "CheckCalendarInvite": "Vérifier l'invitation du calendrier pour rejoindre le lien",
     "ClearFilter": "Effacer les filtres",
-    "SubTotal": "Sous-total"
+    "SubTotal": "Sous-total",
+    "AccessRequired":"Accès non accordé, contactez le support pour demander l'accès",
+    "SendEventInvite": "envoyer une invitation à un événement",
+    "ScheduleTask": "Planifier une tâche"
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",

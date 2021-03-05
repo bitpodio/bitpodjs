@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import HelpCenter from '~/config/apps/help'
+import HelpCenterFunc from '~/config/apps/help'
 
 export default {
   layout: 'help-center',
@@ -31,6 +31,7 @@ export default {
     },
   },
   created() {
+    const HelpCenter = HelpCenterFunc(this.$config)
     Object.keys(HelpCenter).forEach((sectionName) => {
       Object.keys(HelpCenter[sectionName].views).forEach((viewName) => {
         const viewInfo = HelpCenter[sectionName].views[viewName]
