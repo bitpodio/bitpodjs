@@ -731,6 +731,7 @@ table > tbody > tr:last-child .key-align {
   font-size: 16px !important;
   background: #585858 !important;
   border-radius: 5px !important;
+  margin-bottom: 10px !important;
 }
 .vjs-seeking .vjs-loading-spinner, .vjs-waiting .vjs-loading-spinner {
   display: none !important;
