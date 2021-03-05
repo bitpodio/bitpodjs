@@ -31,6 +31,7 @@
       </v-card>
     </v-dialog>
     <iframe
+      loading="lazy"
       id="print"
       ref="iframe"
       style="width: 0; position: absolute; height: 0;"
