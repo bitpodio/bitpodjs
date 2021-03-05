@@ -312,7 +312,7 @@ export const configLoaderMixin = {
   async created() {
     console.debug('access token received from the cookie', this.token)
     const strategy = this.$auth.$storage.getCookies()['auth.strategy']
-    if (strategy === 'bitpod') {
+    if (strategy === 'bitpod' || strategy === 'google') {
       if (
         this.token.split(' ')[1] !==
         this.$auth.$storage.getCookies()['apollo-token']

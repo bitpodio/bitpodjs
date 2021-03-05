@@ -31,8 +31,7 @@
       </v-card>
     </v-dialog>
     <iframe
-      loading="lazy"
-      id="print"
+      loading="auto"
       ref="iframe"
       style="width: 0; position: absolute; height: 0;"
       :src="`https://${orgName}-${$config.axios.backendBaseUrl}${$config.basePublicPath}/embed-cookie`"
