@@ -1079,7 +1079,9 @@ export default {
 }
 .video-js {
   width: 100% !important;
-  height: 400px !important;
+  height: 100% !important;
+  object-fit: fill !important;
+  min-height: 410px !important;
 }
 .session-player-msg {
   width: 100% !important;
