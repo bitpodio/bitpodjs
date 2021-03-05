@@ -1082,6 +1082,13 @@ export default {
   height: 100% !important;
   object-fit: fill !important;
   min-height: 410px !important;
+  max-height: 410px !important;
+}
+.vjs-fullscreen .video-js {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  max-height: 100% !important;
 }
 .session-player-msg {
   width: 100% !important;
