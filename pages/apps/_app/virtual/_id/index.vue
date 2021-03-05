@@ -843,12 +843,6 @@ export default {
       this.intervalId = id
     },
     playLive() {
-      // const player = videojs('my_video_1')
-      // player.src({
-      //   src: this.videoSrc,
-      //   type: 'application/x-mpegURL',
-      // })
-
       const videoSrcLive = this.videoSrc
       const setVideoPlayer = this.setVideoPlayer
       const setModalObject = this.setModalObject
@@ -902,8 +896,6 @@ export default {
           this.readyStateOneDuration = 0
           this.readyStateTwoDuration = 0
           try {
-            // console.log('destroying old player');
-            // this.player.dispose();
             this.player = null
           } catch (e) {}
           this.player = videojs('my_video_1', {
@@ -911,7 +903,6 @@ export default {
           })
           setVideoPlayer(this.player)
           this.player.src({
-            // src: 'https://live.bitpod.io/hls/virtualbitpod-virtual-5zr8.m3u8',
             src: videoSrcLive,
             type: 'application/x-mpegURL',
             withCredentials: false,
