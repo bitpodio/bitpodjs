@@ -789,7 +789,9 @@
     "SubTotal": "उप कुल",
     "AccessRequired":"पहुँच की अनुमति नहीं दी, पहुँच का अनुरोध करने के लिए संपर्क समर्थन",
     "SendEventInvite": "ईवेंट आमंत्रण भेजें",
-    "ScheduleTask": "एक कार्य अनुसूची"
+    "ScheduleTask": "एक कार्य अनुसूची",
+    "AttendeeImportSuccess": "सहभागी सफलतापूर्वक आयात किया गया",
+    "AttendeeImportFailed": "सहभागी आयात विफल"
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",

@@ -789,7 +789,9 @@
     "SubTotal": "סך הכל",
     "AccessRequired":"הגישה לא ניתנה, צרו קשר עם התמיכה לבקשת הגישה",
     "SendEventInvite": "שלח הזמנה לאירוע",
-    "ScheduleTask": "קבע משימה"
+    "ScheduleTask": "קבע משימה",
+    "AttendeeImportSuccess": "משתתף יובא בהצלחה",
+    "AttendeeImportFailed": "ייבוא ​​המשתתף נכשל"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",
