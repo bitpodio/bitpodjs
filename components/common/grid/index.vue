@@ -289,7 +289,7 @@
           :loading="!!loading"
           type="card"
           width="264"
-          class="pa-4 pl-0 pt-0 eventtiles ma-4 ml-0 mt-0"
+          class="pa-4 pl-0 pt-0 eventtiles ma-sm-4 ml-sm-0 mt-sm-0 mx-auto my-2"
         >
           <div></div>
         </v-skeleton-loader>
