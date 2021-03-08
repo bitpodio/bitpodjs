@@ -315,7 +315,10 @@ export const configLoaderMixin = {
     } else {
       this.token = this.$auth.$storage.getCookies()['auth._token.google']
     }
-    console.debug('access token received from the cookie in utility/index.js', this.token)
+    console.debug(
+      'access token received from the cookie in utility/index.js',
+      this.token
+    )
     const strategy = this.$auth.$storage.getCookies()['auth.strategy']
     if (strategy === 'bitpod' || strategy === 'google') {
       if (
