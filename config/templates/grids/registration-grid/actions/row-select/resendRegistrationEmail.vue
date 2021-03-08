@@ -54,7 +54,7 @@ export default {
       //   { color: 'warning' }
       // )
       // console.log('asd==>', confirmResend)
-      if (res) {
+      // if (res) {
         try {
           await this.$axios.$post(
             `${this.$bitpod.getApiUrl()}CRMACTIVITIES/cloneActivityForResendEmail`,
@@ -71,6 +71,6 @@ export default {
         }
       }
     },
-  },
+  // },
 }
 </script>
