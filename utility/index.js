@@ -310,13 +310,12 @@ export const configLoaderMixin = {
     }
   },
   async created() {
-    debugger
-    if (this.$auth.$storage.getCookies()['auth._token.bitpod']) {
+    if (this.$auth.$storage.getCookies()['auth._token.bitpod'] !== 'false') {
       this.token = this.$auth.$storage.getCookies()['auth._token.bitpod']
     } else {
       this.token = this.$auth.$storage.getCookies()['auth._token.google']
     }
-    console.debug('access token received from the cookie', this.token)
+    console.debug('access token received from the cookie in utility/index.js', this.token)
     const strategy = this.$auth.$storage.getCookies()['auth.strategy']
     if (strategy === 'bitpod' || strategy === 'google') {
       if (
