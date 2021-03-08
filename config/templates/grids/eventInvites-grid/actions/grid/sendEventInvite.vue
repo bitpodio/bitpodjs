@@ -24,7 +24,7 @@
             <v-icon dark left>{{
               template === 'General Template' ? 'mdi-email-outline' : 'mdi-plus'
             }}</v-icon>
-            {{ buttonLabel }}
+            <i18n path="Common.SendEventInvite" />
           </v-btn>
         </v-col>
       </template>
@@ -841,7 +841,7 @@ export default {
   props: {
     buttonLabel: {
       type: String,
-      default: 'send event invite',
+      default: 'Common.SendEventInvite',
       required: false,
     },
     template: {

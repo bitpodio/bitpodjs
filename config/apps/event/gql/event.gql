@@ -47,6 +47,7 @@ query($filters: JSON, $badgeFilter: JSON, $eventId: String) {
           StartDate
           Status
           Logo
+          LiveStreamBanner
           Banner
           Images
           Other

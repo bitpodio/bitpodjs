@@ -40,6 +40,7 @@
     "BadgeLogo": "Badge Logo",
     "EventB": "Event Banner(680x350)",
     "Other": "Other",
+    "LiveStreamBanner": "Live Stream Banner",
     "EventBanner": "Event Banner",
     "LogoImage": "Logo Image",
     "Attendees": "Attendees",
@@ -786,7 +787,11 @@
     "CheckCalendarInvite": "Check calendar invite for joining link",
     "ClearFilter": "Clear filters",
     "SubTotal": "Sub Total",
-    "AccessRequired":"Access not granted, contact support to request access"
+    "AccessRequired":"Access not granted, contact support to request access",
+    "SendEventInvite": "send event invite",
+    "ScheduleTask": "Schedule a Task",
+    "AttendeeImportSuccess": "Attendee Imported Successfully",
+    "AttendeeImportFailed": "Attendee Import Failed"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",

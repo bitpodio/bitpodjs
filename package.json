@@ -41,11 +41,13 @@
     "date-fns-tz": "^1.0.10",
     "jodit-vue": "^2.2.1",
     "lodash": "^4.17.20",
+    "mux.js": "^5.9.2",
     "nuxt": "^2.13.0",
     "nuxt-gmaps": "^1.2.5",
     "nuxt-i18n": "^6.15.1",
     "rrule": "2.6.4",
     "video.js": "^7.10.2",
+    "videojs-contrib-hls": "^5.15.0",
     "vue-google-autocomplete": "^1.1.0",
     "vue-google-charts": "^0.3.3",
     "vuetify-datetime-picker": "^2.1.1"
