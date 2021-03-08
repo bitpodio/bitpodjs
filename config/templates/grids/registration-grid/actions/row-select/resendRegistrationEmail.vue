@@ -24,12 +24,6 @@ export default {
       default: '',
     },
   },
-  data() {
-    return {
-      snackbar: false,
-      timeout: 3000,
-    }
-  },
   mounted() {
     this.$eventBus.$on('resend-reg-email', this.resendRegistrationEmail)
   },
