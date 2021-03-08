@@ -7,7 +7,8 @@
       :dense="dense"
       :color="color"
       depressed
-      @click="buttonClicked"
+      :type="hasSubmitAction ? 'submit' : 'button'"
+      @click="hasSubmitAction ? '' : buttonClicked"
     >
       {{ label }}
       <v-icon v-show="keyPressed" right dark>
@@ -60,6 +61,14 @@ export default {
       type: Boolean,
       required: false,
     },
+    hasSubmitAction: {
+      default: false,
+      type: Boolean,
+    },
+    formName: {
+      default: '',
+      type: String,
+    },
   },
   data() {
     return {
@@ -71,10 +80,21 @@ export default {
       this.keyPressed = false
     },
   },
+  mounted() {
+    this.$eventBus.$on('form-submitted', this.submitAction)
+  },
+  beforeDestroy() {
+    this.$eventBus.$off('form-submitted')
+  },
   methods: {
     buttonClicked() {
       this.action()
       this.keyPressed = true
+    },
+    submitAction(triggerForm) {
+      if (this.hasSubmitAction && triggerForm === this.formName) {
+        this.buttonClicked()
+      }
     },
   },
 }
