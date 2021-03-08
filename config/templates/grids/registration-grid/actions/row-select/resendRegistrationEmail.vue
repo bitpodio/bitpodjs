@@ -1,6 +1,5 @@
 <template>
   <v-col class="px-0">
-    <confirm ref="confirm"></confirm>
     <v-snackbar v-model="snackbar" :timeout="timeout" :top="true" width="2px"
       ><div class="fs-16 text-center">
         <i18n path="Common.ConfirmationEmailSent" /></div
@@ -9,6 +8,7 @@
       <v-icon left>mdi-email-outline</v-icon>
       <i18n path="Common.ResendRegistrationEmail" />
     </v-btn>
+    <confirm ref="resendEmailConfirm"></confirm>
   </v-col>
 </template>
 <script>
@@ -40,13 +40,21 @@ export default {
   },
   methods: {
     async resendRegistrationEmail() {
+      debugger
       const regIds = this.items.map((e) => e.id)
-      const confirmResend = await this.$refs.confirm.open(
-        this.$t('Common.ResendRegistrationEmail'),
-        this.$t('Messages.Warn.ConfirmResendRegistrationEmail'),
+      const res = await this.$refs.resendEmailConfirm.open(
+        this.$t('Common.NewBadge'),
+        this.$t('Messages.Warn.ReplaceBadge'),
         { color: 'warning' }
       )
-      if (confirmResend) {
+      // console.log('===>112',res)
+      // const confirmResend = await this.$refs.confirm.open(
+      //   this.$t('Common.ResendRegistrationEmail'),
+      //   this.$t('Messages.Warn.ConfirmResendRegistrationEmail'),
+      //   { color: 'warning' }
+      // )
+      // console.log('asd==>', confirmResend)
+      if (res) {
         try {
           await this.$axios.$post(
             `${this.$bitpod.getApiUrl()}CRMACTIVITIES/cloneActivityForResendEmail`,
