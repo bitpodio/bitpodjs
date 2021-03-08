@@ -789,7 +789,9 @@
     "SubTotal": "Sub Total",
     "AccessRequired":"Access not granted, contact support to request access",
     "SendEventInvite": "send event invite",
-    "ScheduleTask": "Schedule a Task"
+    "ScheduleTask": "Schedule a Task",
+    "AttendeeImportSuccess": "Attendee Imported Successfully",
+    "AttendeeImportFailed": "Attendee Import Failed"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",

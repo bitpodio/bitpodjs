@@ -788,7 +788,9 @@
     "SubTotal": "Sous-total",
     "AccessRequired":"Accès non accordé, contactez le support pour demander l'accès",
     "SendEventInvite": "envoyer une invitation à un événement",
-    "ScheduleTask": "Planifier une tâche"
+    "ScheduleTask": "Planifier une tâche",
+    "AttendeeImportSuccess": "Participant importé avec succès",
+    "AttendeeImportFailed": "L'importation des participants a échoué"
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",
