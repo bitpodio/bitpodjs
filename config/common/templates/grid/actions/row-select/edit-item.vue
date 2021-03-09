@@ -138,6 +138,7 @@ export default {
       if (newVal) {
         this.updateCount = this.updateCount + 1
         this.formData = generateFormData(this.items[0])
+        this.errorMessage = ''
       }
     },
   },

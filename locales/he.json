@@ -40,6 +40,7 @@
     "BadgeLogo": "לוגו של התג",
     "EventB": "מודעת אירועים (680x350)",
     "Other": "אַחֵר",
+    "LiveStreamBanner": "באנר סטרימינג בשידור חי",
     "EventBanner": "מודעת אירועים",
     "LogoImage": "תמונת לוגו",
     "Attendees": "Attendees",
@@ -672,7 +673,7 @@
     "ShowMore": "Show More",
     "SelectOnePriorInvite": "to select one of the prior invite",
     "NewRecurringSession": "New Recurring Session",
-    "EditSession": "Edit Session",
+    "EditSession": "ערוך מושב",
     "CustomErrorMessage": "custom {errorMessage}",
     "MoreAbout": "More info about",
     "HeaderTemplate": "header Template",
@@ -787,7 +788,11 @@
     "CheckCalendarInvite": "בדוק את הזמנת לוח השנה להצטרפות לקישור",
     "ClearFilter": "נקה מסננים",
     "SubTotal": "סך הכל",
-    "AccessRequired":"הגישה לא ניתנה, צרו קשר עם התמיכה לבקשת הגישה"
+    "AccessRequired":"הגישה לא ניתנה, צרו קשר עם התמיכה לבקשת הגישה",
+    "SendEventInvite": "שלח הזמנה לאירוע",
+    "ScheduleTask": "קבע משימה",
+    "AttendeeImportSuccess": "משתתף יובא בהצלחה",
+    "AttendeeImportFailed": "ייבוא ​​המשתתף נכשל"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",
@@ -931,7 +936,8 @@
       "SetupOrgFailed": "הגדרת הארגון שלך נכשלה",
       "CreateOrgFailed": "יצירת הארגון שלך נכשלה",
       "CreateOrgCatch": "ארגון זה נמצא בשימוש או עלול להימחק באופן רך. נסה עם שם חדש",
-      "CreateOrgFull": "יצירת הארגון שלך נכשלה"
+      "CreateOrgFull": "יצירת הארגון שלך נכשלה",
+      "MemberExists": "חבר כבר קיים"
     },
     "Warn": {
       "UniqueLinkFormat": "אותיות אלפאנומריות באותיות קטנות בלבד",
