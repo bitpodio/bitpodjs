@@ -15,7 +15,13 @@
         </div>
       </v-card-title>
       <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
-        <v-form ref="form" v-model="valid" :lazy-validation="lazy">
+        <v-form
+          ref="form"
+          v-model="valid"
+          :lazy-validation="lazy"
+          id="new-webhook-form"
+          @submit.prevent="onSaveButton"
+        >
           <v-row>
             <v-col cols="12" class="d-flex">
               <v-text-field
@@ -75,7 +81,8 @@
           color="primary"
           :disabled="!valid"
           depressed
-          @click="onSaveButton"
+          type="submit"
+          form="new-webhook-form"
           ><i18n path="Drawer.Save"
         /></v-btn>
       </v-card-actions>

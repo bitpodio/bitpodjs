@@ -786,7 +786,7 @@
     "CheckCalendarInvite": "Vérifier l'invitation du calendrier pour rejoindre le lien",
     "ClearFilter": "Effacer les filtres",
     "SubTotal": "Sous-total",
-    "AccessRequired":"Accès non accordé, contactez le support pour demander l'accès",
+    "AccessRequired": "Accès non accordé, contactez le support pour demander l'accès",
     "SendEventInvite": "envoyer une invitation à un événement",
     "ScheduleTask": "Planifier une tâche",
     "AttendeeImportSuccess": "Participant importé avec succès",
@@ -934,7 +934,8 @@
       "SetupOrgFailed": "Échec de la configuration de votre organisation.",
       "CreateOrgFailed": "Échec de la création de votre organisation.",
       "CreateOrgCatch": "Cette organisation est utilisée ou peut être supprimée de manière réversible. Essayez avec un nouveau nom.",
-      "CreateOrgFull": "Échec de la création de votre organisation."
+      "CreateOrgFull": "Échec de la création de votre organisation.",
+      "MemberExists": "Le membre existe déjà"
     },
     "Warn": {
       "UniqueLinkFormat": "Minuscules lettres alphanumériques uniquement",
