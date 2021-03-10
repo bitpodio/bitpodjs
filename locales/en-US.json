@@ -785,7 +785,8 @@
     "TryJoinOn": "Try joining again on",
     "CheckCalendarInvite": "Check calendar invite for joining link",
     "ClearFilter": "Clear filters",
-    "SubTotal": "Sub Total"
+    "SubTotal": "Sub Total",
+    "Esign":"E-Sign"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",

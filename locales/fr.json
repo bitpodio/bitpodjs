@@ -784,7 +784,8 @@
     "TryJoinOn": "Essayez de vous joindre à nouveau sur",
     "CheckCalendarInvite": "Vérifier l'invitation du calendrier pour rejoindre le lien",
     "ClearFilter": "Effacer les filtres",
-    "SubTotal": "Sous-total"
+    "SubTotal": "Sous-total",
+    "Esign":"E-Sign"
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",

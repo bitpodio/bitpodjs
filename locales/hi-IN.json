@@ -786,7 +786,8 @@
     "TryJoinOn": "फिर से जुड़ने का प्रयास करें",
     "CheckCalendarInvite": "लिंक से जुड़ने के लिए कैलेंडर आमंत्रण की जाँच करें",
     "ClearFilter": "फ़िल्टर साफ़ करें",
-    "SubTotal": "उप कुल"
+    "SubTotal": "उप कुल",
+    "Esign":"ई-साइन"
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",
