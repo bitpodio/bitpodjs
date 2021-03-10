@@ -8,7 +8,7 @@
       :color="color"
       depressed
       :type="hasSubmitAction ? 'submit' : 'button'"
-      @click="hasSubmitAction ? '' : buttonClicked"
+      @click="hasSubmitAction ? () => {} : buttonClicked()"
     >
       {{ label }}
       <v-icon v-show="keyPressed" right dark>
