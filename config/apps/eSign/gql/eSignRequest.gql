@@ -1,0 +1,20 @@
+query($filters: JSON, $where: JSON) {
+  ESignRequest {
+    ESignRequestFind(filter: $filters) {
+      edges {
+        node {
+          id
+          DocumentText
+          DocumentTemplate
+          createdDate
+          createdBy
+          __typename
+        }
+        __typename
+      }
+      __typename
+    }
+    ESignRequestCount(where: $where)
+    __typename
+  }
+}
