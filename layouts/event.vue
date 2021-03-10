@@ -316,12 +316,14 @@
 </template>
 
 <script>
+// import murmurhash from 'murmurhash'
 import OrgnaizationList from '~/components/common/organization-list'
 import AppDrawer from '~/components/common/app-drawer'
 import Help from '~/components/common/help'
 import OldSite from '~/components/common/oldsite'
 import Upgrade from '~/components/common/upgrade'
 import userUtils from '~/utility/userApps'
+const murmurhash = require('murmurhash')
 export default {
   middleware: ['auth', 'authorization'],
   components: {
@@ -418,11 +420,31 @@ export default {
     this.allowUser = userRoles.length === 1 && userRoles.includes('$orguser')
     this.allowUpgrade = userRoles.includes('$orgowner')
     window.addEventListener('message', this.messageReceived, false)
+    debugger
+    const checkId = murmurhash.v2(
+      this.$auth.user.data.email,
+      this.$config.seedValue
+    )
+    console.log('checkID', checkId)
+    this.createUserHash(checkId)
   },
   beforeDestroy() {
     window.removeEventListener('message', this.messageReceived)
   },
   methods: {
+    async createUserHash(id) {
+      const url = `${this.$bitpod.getApiUrl()}UserHashes`
+      // const data = { id, userId: this.$auth.user.data.email }
+      try {
+        const res = await this.$axios.$get(`${url}/${id}`)
+        if (res) {
+          debugger
+          console.log('res', res)
+        }
+      } catch (e) {
+        console.error(`error, context: ${url}/${id} `, e)
+      }
+    },
     onLogout(context) {
       if (this.$store.state.auth.loggedIn) {
         this.logoutClicked = true
