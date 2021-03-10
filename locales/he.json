@@ -796,7 +796,8 @@
     "LoginRequired": "התחבר לחשבונך כדי להשתמש ב- API Explorer.",
     "SendManyMails": "שלחת לי יותר מדי מיילים",
     "StopReceiveMails": "כבר לא רציתי לקבל את המיילים האלה",
-    "NeverSignedForMails": "מעולם לא נרשמתי לרשימת התפוצה הזו"
+    "NeverSignedForMails": "מעולם לא נרשמתי לרשימת התפוצה הזו",
+    "Esign":"סימן אלקטרוני"
   },
   "Drawer": {
     "UnSubscribeMsg": "אנא בחר סיבה לביטול הרישום לניוזלטר. זה יעזור לנו לשפר את השירותים שלנו.",

@@ -49,4 +49,12 @@ export const appList = (store) => [
     route: '/apps/integration/list/integration/integration',
     roles: ['$developer', '$orgowner', 'EventAdmin', 'Events', 'SFIntegration'],
   },
+  {
+    name: 'E-Sign',
+    label: 'Common.Esign',
+    css: 'fa fa-help-circle fs-36 success--text',
+    type: 'route',
+    route: '/apps/e-sign',
+    roles: [],
+  },
 ]

@@ -794,7 +794,8 @@
     "LoginRequired": "Connectez-vous avec votre compte pour utiliser l'API Explorer.",
     "SendManyMails": "Vous m'avez envoyé trop de mails",
     "StopReceiveMails": "Je ne voulais plus recevoir ces mails",
-    "NeverSignedForMails": "Je ne me suis jamais inscrit à cette liste de diffusion"
+    "NeverSignedForMails": "Je ne me suis jamais inscrit à cette liste de diffusion",
+    "Esign":"E-Sign"
   },
   "Drawer": {
     "UnSubscribeMsg": "Veuillez sélectionner une raison pour vous désinscrire de la newsletter. Cela nous aidera à améliorer nos services.",
