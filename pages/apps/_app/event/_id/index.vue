@@ -509,6 +509,7 @@
                   </v-list-item-title>
                 </v-list-item>
                 <v-list-item
+                  v-if="data.event.LocationType === 'Bitpod Virtual'"
                   class="cursorPointer"
                   @click.native="checkLiveStreamClicked"
                 >
@@ -798,7 +799,7 @@
               <span class="cardDelete">
                 <i
                   class="fa-trash pa-2 cursorPointer"
-                  @click="deleteLogoFile(image)"
+                  @click="deleteLiveStreamBanner(image)"
                 ></i>
               </span>
               <v-img
@@ -2350,6 +2351,26 @@ export default {
         }
       }
     },
+    async deleteLiveStreamBanner(id) {
+      const url = this.$bitpod.getApiUrl()
+      const checkRes = await this.$refs.confirm.open(
+        this.$t('Common.DeleteImage'),
+        this.$t('Messages.Warn.DeleteImage'),
+        { color: 'error lighten-1' }
+      )
+      if (checkRes) {
+        const res = await this.$axios.delete(
+          `${url}Events/${this.$route.params.id}/LiveStream/${id}`
+        )
+        if (res) {
+          this.snackbarText = this.$t(
+            'Messages.Success.AttachmentDeleteSuccess'
+          )
+          this.snackbar = true
+          this.refresh()
+        }
+      }
+    },
     redirectIntegration() {
       this.$router.push(
         this.localePath(
@@ -2535,7 +2556,7 @@ export default {
           event[0].LiveStreamBanner &&
           event[0].LiveStreamBanner.length > 0
         ) {
-          this.getLiveStreamName()
+          this.getLiveStreamName(event[0].LiveStreamBanner[0])
         }
         return {
           event: event.length > 0 ? event[0] : {},
