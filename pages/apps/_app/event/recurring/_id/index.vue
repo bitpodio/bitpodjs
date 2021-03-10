@@ -1873,10 +1873,8 @@ export default {
         this.$route.params.id
       }/getSession`
       const res = await this.$axios.get(`${url}`)
-      console.log('res==>', res)
       if (res) {
         this.eventLocationType = res.data[0].LocationType
-        console.log('eventLocationType==>', this.eventLocationType)
       }
     },
     updateReg: _.debounce(function () {
