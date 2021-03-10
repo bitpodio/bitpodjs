@@ -95,13 +95,16 @@ app.post('/connect/token', async (req, res) => {
 })
 
 app.get('/connect/userinfo', async (req, res) => {
+  console.log('this is in the /connect/userInfo', req)
   let userData
   const urls = getTokenUserInfoUrl(req.query)
+  console.log('urls in the function is ', urls)
   const config = {
     headers: {
       Authorization: req.headers.authorization,
     },
   }
+  console.log('header is being set in config', config)
   try {
     if (req.query.provider === 'google') {
       const userResponse = await axios.get(
@@ -111,19 +114,28 @@ app.get('/connect/userinfo', async (req, res) => {
       )
       userData = userResponse.data
     } else {
+      console.log(
+        'in the else block calling the userInfo api urls.userInfoEndPointUrl ==>',
+        urls.userInfoEndPointUrl
+      )
       const userResponse = await axios.get(urls.userInfoEndPointUrl, config)
       userData = userResponse.data
+      console.log('got the userdata', userData)
     }
+    console.log('calling the fetchUserOrgsDetails')
     const userOrgsDetails = await fetchUserOrgsDetails(req)
+    console.log('userorDetails', userOrgsDetails)
     const userDetails = {
       ...userOrgsDetails,
       ...userData,
     }
+    console.log('all details userDetails', userDetails)
     res.json({
       status: 200,
       data: userDetails,
     })
   } catch (error) {
+    console.log('in the error', error)
     return res.status(404).send({ error })
   }
 })
@@ -148,9 +160,13 @@ function getApiUrl(req) {
 }
 
 async function fetchUserOrgs(req) {
+  console.log('called the fetchUserOrgs', req)
   const origin = getApiUrl(req)
+  console.log('called the origin', origin)
   const config = getAxiosConfig(req)
+  console.log('called the config', config)
   const apiEndpoint = nuxtconfig.axios.apiEndpoint
+  console.log('called the apiEndpoint', apiEndpoint)
   let userOrgList = {}
   try {
     const orgResponse = await axios.get(
@@ -158,6 +174,7 @@ async function fetchUserOrgs(req) {
       config
     )
     userOrgList = orgResponse.data
+    console.log('called the userOrgList', userOrgList)
   } catch (error) {
     userOrgList = {
       error,
