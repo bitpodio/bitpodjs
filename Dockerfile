@@ -1,8 +1,6 @@
 FROM nikolaik/python-nodejs:python3.8-nodejs10-alpine
 #FROM node:current-alpine
-RUN apk --no-cache add git
-
-RUN apk --no-cache add curl
+RUN apk --no-cache add git curl
 
 ENV app="/home/app"
 
