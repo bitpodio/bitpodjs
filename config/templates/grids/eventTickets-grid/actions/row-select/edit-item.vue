@@ -31,6 +31,7 @@
             ref="form"
             v-model="valid"
             :lazy-validation="lazy"
+            :id="formName"
             @submit.prevent="submitForm"
           >
             <v-row>
@@ -197,7 +198,8 @@
             depressed
             :action="onSave"
             :has-submit-action="true"
-            form-name="edit-eventTickets-form"
+            :has-external-submit="true"
+            :form-name="formName"
           ></SaveBtn>
         </v-card-actions>
       </v-card>
@@ -257,6 +259,7 @@ export default {
       },
       Symbol: '',
       CheckEndDate: '',
+      formName: 'edit-eventTickets-form',
     }
   },
   computed: {
@@ -588,7 +591,7 @@ export default {
       }
     },
     submitForm() {
-      this.$eventBus.$emit('form-submitted', 'edit-eventTickets-form')
+      this.$eventBus.$emit('form-submitted', this.formName)
     },
   },
 }
