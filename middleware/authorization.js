@@ -31,17 +31,25 @@ const getUsersOrg = (store) => {
 }
 
 export default function (context) {
+  console.log('inside the auth middleware')
   const { store, route, redirect } = context
   const userOrgStore = getUsersOrg(store)
+  console.log('inside the auth middleware userOrgStore',userOrgStore.name)
   if (userOrgStore && userOrgStore.name) {
     if (process.server) {
       const { req } = context
       const hostName = req.headers.host
+      console.log('inside the auth middleware hostName',hostName)
       const publicDomain = process.env.PUBLIC_DOMAIN
+      console.log('inside the auth middleware publicDomain',publicDomain)
       if (!hostName.includes('localhost')) {
         if (hostName === publicDomain) {
+          console.log('hostName and publicDomain are same')
           const userFirstOrgName = userOrgStore.name || ''
+          console.log('userFirstOrgName ==>', userFirstOrgName)
           const basePath = process.env.PUBLIC_PATH || ''
+          console.log('basePath ==>', basePath)
+          console.log('redirecting to forward login')
           return redirect(
             `https://${publicDomain}${basePath}/forwardLogin?targetDomain=${userFirstOrgName}`
           )

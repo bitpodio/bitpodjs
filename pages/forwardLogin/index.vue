@@ -33,7 +33,6 @@
     <iframe
       id="print"
       ref="iframe"
-      style="width: 0; position: absolute; height: 0;"
       :src="`https://${orgName}-${$config.axios.backendBaseUrl}${$config.basePublicPath}/embed-cookie`"
       @load="iframeLoaded"
     >
@@ -82,87 +81,87 @@ export default {
     messageReceived(e) {
       console.log('message received from the the iframe', e.data)
       if (e.data === 'success') {
-        // const orgId = this.$auth.user.data.orgList[0].id
-        // const jobStatusChecker = async () => {
-        //   try {
-        //     const jobData = await this.$axios.$get(
-        //       `${this.$bitpod.getApiUrl()}OrgSetups?filter={"orgId": ${orgId}}`,
-        //       {
-        //         headers: {
-        //           'x-org-id': orgId,
-        //         },
-        //       }
-        //     )
-        //     if (!jobData.length) {
-        //       //! Currently old orgs don't have a jobstatus.
-        //       //! Considers an org to be old one if jobData's length is empty
-        //       location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}${nuxtconfig.auth.redirect.home}`
-        //     } else if (
-        //       jobData.length &&
-        //       new Date() - new Date(jobData[0].createdDate) < 90000
-        //     ) {
-        //       const jobInfo = jobData[0]
-        //       if (jobInfo._SetupErrors.length) {
-        //         const errorCode =
-        //           jobInfo._SetupErrors[jobInfo._SetupErrors.length - 1].Code
-        //         this.statusMessage = this.$t(`Messages.Error.SetupExitCode`, {
-        //           code: errorCode,
-        //         })
-        //         this.titleMessage = this.$t('Messages.Error.SetupErrorTitle')
-        //         this.showDialog = true
-        //       } else if (jobInfo._SetupStatus.length) {
-        //         const lastStatus =
-        //           jobInfo._SetupStatus[jobInfo._SetupStatus.length - 1]
-        //         if (lastStatus.Code === 200) {
-        //           this.statusMessage = 'Redirecting to new Organization'
-        //           location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}${nuxtconfig.auth.redirect.home}`
-        //         } else {
-        //           this.statusMessage = this.$t(
-        //             'Messages.Information.SetupInProgressText'
-        //           )
-        //           this.titleMessage = this.$t(
-        //             'Messages.Information.SetupInProgressTitle'
-        //           )
-        //           this.showDialog = true
-        //           this.showLoader = true
-        //           setTimeout(jobStatusChecker, 1000)
-        //         }
-        //       } else {
-        //         this.statusMessage = this.$t(
-        //           'Messages.Information.SetupInProgressText'
-        //         )
-        //         this.titleMessage = this.$t(
-        //           'Messages.Information.SetupInProgressTitle'
-        //         )
-        //         this.showLoader = true
-        //         this.showDialog = true
-        //         setTimeout(jobStatusChecker, 1000)
-        //       }
-        //     } else if (
-        //       jobData.length &&
-        //       !jobData[0]._SetupErrors.length &&
-        //       jobData[0]._SetupStatus[jobData[0]._SetupStatus.length - 1]
-        //         .Code === 200
-        //     ) {
+        const orgId = this.$auth.user.data.orgList[0].id
+        const jobStatusChecker = async () => {
+          try {
+            const jobData = await this.$axios.$get(
+              `${this.$bitpod.getApiUrl()}OrgSetups?filter={"orgId": ${orgId}}`,
+              {
+                headers: {
+                  'x-org-id': orgId,
+                },
+              }
+            )
+            if (!jobData.length) {
+              //! Currently old orgs don't have a jobstatus.
+              //! Considers an org to be old one if jobData's length is empty
               location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}${nuxtconfig.auth.redirect.home}`
-        //     } else {
-        //       this.statusMessage = this.$t(
-        //         'Messages.Error.SetupExitCodeTimeout'
-        //       )
-        //       this.titleMessage = this.$t('Messages.Error.SetupErrorTitle')
-        //       this.showDialog = true
-        //     }
-        //   } catch (err) {
-        //     this.statusMessage = this.$t('Messages.Error.SetupExitCodeCatch')
-        //     this.titleMessage = this.$t('Messages.Error.SetupErrorTitle')
-        //     this.showDialog = true
-        //     console.error(
-        //       'Error while checking status of setup job on /forwardLogin. Error: ',
-        //       err
-        //     )
-        //   }
-        // }
-        // setTimeout(jobStatusChecker, 1000)
+            } else if (
+              jobData.length &&
+              new Date() - new Date(jobData[0].createdDate) < 90000
+            ) {
+              const jobInfo = jobData[0]
+              if (jobInfo._SetupErrors.length) {
+                const errorCode =
+                  jobInfo._SetupErrors[jobInfo._SetupErrors.length - 1].Code
+                this.statusMessage = this.$t(`Messages.Error.SetupExitCode`, {
+                  code: errorCode,
+                })
+                this.titleMessage = this.$t('Messages.Error.SetupErrorTitle')
+                this.showDialog = true
+              } else if (jobInfo._SetupStatus.length) {
+                const lastStatus =
+                  jobInfo._SetupStatus[jobInfo._SetupStatus.length - 1]
+                if (lastStatus.Code === 200) {
+                  this.statusMessage = 'Redirecting to new Organization'
+                  location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}${nuxtconfig.auth.redirect.home}`
+                } else {
+                  this.statusMessage = this.$t(
+                    'Messages.Information.SetupInProgressText'
+                  )
+                  this.titleMessage = this.$t(
+                    'Messages.Information.SetupInProgressTitle'
+                  )
+                  this.showDialog = true
+                  this.showLoader = true
+                  setTimeout(jobStatusChecker, 1000)
+                }
+              } else {
+                this.statusMessage = this.$t(
+                  'Messages.Information.SetupInProgressText'
+                )
+                this.titleMessage = this.$t(
+                  'Messages.Information.SetupInProgressTitle'
+                )
+                this.showLoader = true
+                this.showDialog = true
+                setTimeout(jobStatusChecker, 1000)
+              }
+            } else if (
+              jobData.length &&
+              !jobData[0]._SetupErrors.length &&
+              jobData[0]._SetupStatus[jobData[0]._SetupStatus.length - 1]
+                .Code === 200
+            ) {
+              location.href = `https://${this.orgName}-${this.$config.axios.backendBaseUrl}${this.$config.basePublicPath}${nuxtconfig.auth.redirect.home}`
+            } else {
+              this.statusMessage = this.$t(
+                'Messages.Error.SetupExitCodeTimeout'
+              )
+              this.titleMessage = this.$t('Messages.Error.SetupErrorTitle')
+              this.showDialog = true
+            }
+          } catch (err) {
+            this.statusMessage = this.$t('Messages.Error.SetupExitCodeCatch')
+            this.titleMessage = this.$t('Messages.Error.SetupErrorTitle')
+            this.showDialog = true
+            console.error(
+              'Error while checking status of setup job on /forwardLogin. Error: ',
+              err
+            )
+          }
+        }
+        setTimeout(jobStatusChecker, 1000)
       }
     },
   },

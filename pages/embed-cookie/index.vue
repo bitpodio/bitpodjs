@@ -21,6 +21,7 @@ export default {
             ? ''
             : newCookie
         })
+        console.log('passing the cookies back to iframe')
         window.parent.postMessage('success', '*')
       }
     },
