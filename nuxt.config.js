@@ -80,6 +80,7 @@ export default {
     '~/plugins/v-i18n.js',
     '~/plugins/eventBus.js',
     '~/plugins/bitpod',
+    '~/plugins/v-gtag.js',
     { src: '~/plugins/v-datetime-picker.js', mode: 'client' },
   ],
   /*
