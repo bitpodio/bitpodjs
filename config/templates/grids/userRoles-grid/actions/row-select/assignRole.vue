@@ -27,7 +27,13 @@
           </div>
         </v-card-title>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
-          <v-form ref="form" v-model="valid" :lazy-validation="lazy">
+          <v-form
+            ref="form"
+            v-model="valid"
+            :lazy-validation="lazy"
+            @submit.prevent="onSave"
+            id="assign-role-form"
+          >
             <v-row>
               <v-col cols="12">
                 <v-text-field
@@ -61,7 +67,8 @@
             color="primary"
             :disabled="!valid || roles === ''"
             depressed
-            @click="onSave"
+            type="submit"
+            form="assign-role-form"
             ><i18n path="Drawer.Save"
           /></v-btn>
         </v-card-actions>

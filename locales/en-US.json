@@ -787,9 +787,11 @@
     "CheckCalendarInvite": "Check calendar invite for joining link",
     "ClearFilter": "Clear filters",
     "SubTotal": "Sub Total",
-    "AccessRequired":"Access not granted, contact support to request access",
+    "AccessRequired": "Access not granted, contact support to request access",
     "SendEventInvite": "send event invite",
-    "ScheduleTask": "Schedule a Task"
+    "ScheduleTask": "Schedule a Task",
+    "AttendeeImportSuccess": "Attendee Imported Successfully",
+    "AttendeeImportFailed": "Attendee Import Failed"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",
@@ -934,8 +936,8 @@
       "SetupOrgFailed": "Failed to setup your organisation.",
       "CreateOrgFailed": "Failed to create your organisation.",
       "CreateOrgCatch": "This organisation is in use or may be soft-deleted. Try with a new name.",
-      "CreateOrgFull": "Failed to create your organisation."
-      
+      "CreateOrgFull": "Failed to create your organisation.",
+      "MemberExists": "Member already exists!"
     },
     "Warn": {
       "UniqueLinkFormat": "Lower case alphanumeric letters only",

@@ -29,7 +29,13 @@
           </div>
         </v-card-title>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
-          <v-form ref="form" v-model="valid" :lazy-validation="lazy">
+          <v-form
+            ref="form"
+            v-model="valid"
+            :lazy-validation="lazy"
+            @submit.prevent="onSave"
+            id="new-userRoles-item-form"
+          >
             <v-row>
               <v-col cols="12" sm="10" md="8" class="pb-0">
                 <v-text-field
@@ -47,7 +53,12 @@
         <v-card-actions
           class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
         >
-          <v-btn color="primary" :disabled="!valid" depressed @click="onSave"
+          <v-btn
+            color="primary"
+            :disabled="!valid"
+            depressed
+            type="submit"
+            form="new-userRoles-item-form"
             ><i18n path="Drawer.Save"
           /></v-btn>
         </v-card-actions>
@@ -109,27 +120,29 @@ export default {
       this.dialog = false
     },
     async onSave() {
-      const url = this.$bitpod.getApiUrl()
-      this.formData.emailId = this.email
-      const orgId = this.$store.state.currentOrg.id
-      this.formData.id = orgId
-      try {
-        const res = await this.$axios.$post(
-          `${url}Organizations/${orgId}/Users`,
-          this.formData
-        )
-        if (res) {
-          this.dialog = false
-          this.onReset()
-          this.snackbarText = this.$t('Messages.Success.RecordCreateSuccess')
-          this.snackbar = true
-          this.refresh()
+      if (this.valid) {
+        const url = this.$bitpod.getApiUrl()
+        this.formData.emailId = this.email
+        const orgId = this.$store.state.currentOrg.id
+        this.formData.id = orgId
+        try {
+          const res = await this.$axios.$post(
+            `${url}Organizations/${orgId}/Users`,
+            this.formData
+          )
+          if (res) {
+            this.dialog = false
+            this.onReset()
+            this.snackbarText = this.$t('Messages.Success.RecordCreateSuccess')
+            this.snackbar = true
+            this.refresh()
+          }
+        } catch (e) {
+          console.log(
+            `Error in templates/grids/userRoles-grid/actions/grid/new-item.vue while making a POST call to Users model from method onSave context:-URL:-${url}\n OrgId:-${orgId}\n formData:-${this.formData} `,
+            e
+          )
         }
-      } catch (e) {
-        console.log(
-          `Error in templates/grids/userRoles-grid/actions/grid/new-item.vue while making a POST call to Users model from method onSave context:-URL:-${url}\n OrgId:-${orgId}\n formData:-${this.formData} `,
-          e
-        )
       }
     },
   },

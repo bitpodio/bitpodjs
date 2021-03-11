@@ -295,7 +295,7 @@
         </v-skeleton-loader>
       </div>
       <div
-        v-if="viewName === 'template'"
+        v-if="viewName === 'template' && loading === true"
         class="d-flex flex-sm-wrap flex-column flex-sm-row mt-12"
       >
         <v-skeleton-loader
@@ -326,7 +326,7 @@
         </v-skeleton-loader>
       </div>
       <div
-        v-if="viewName === 'seatmaps'"
+        v-if="viewName === 'seatmaps' && loading === true"
         class="d-flex flex-wrap flex-row seat-skeleton-inner mt-10 pl-2"
       >
         <v-skeleton-loader
@@ -342,7 +342,7 @@
         </v-skeleton-loader>
       </div>
       <div
-        v-if="viewName === 'integration'"
+        v-if="viewName === 'integration' && loading === true"
         class="d-flex flex-wrap flex-row seat-skeleton-inner mt-16 pl-2"
       >
         <v-skeleton-loader
