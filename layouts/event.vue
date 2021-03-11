@@ -420,7 +420,6 @@ export default {
     this.allowUser = userRoles.length === 1 && userRoles.includes('$orguser')
     this.allowUpgrade = userRoles.includes('$orgowner')
     window.addEventListener('message', this.messageReceived, false)
-    debugger
     const checkId = murmurhash.v2(
       this.$auth.user.data.email,
       this.$config.seedValue
@@ -432,17 +431,26 @@ export default {
     window.removeEventListener('message', this.messageReceived)
   },
   methods: {
-    async createUserHash(id) {
+    async createUserHash(checkId) {
       const url = `${this.$bitpod.getApiUrl()}UserHashes`
-      // const data = { id, userId: this.$auth.user.data.email }
+      const data = { id: checkId, userId: this.$auth.user.data.email }
+      let filter = { where: { id: checkId } }
+      filter = JSON.stringify(filter)
       try {
-        const res = await this.$axios.$get(`${url}/${id}`)
-        if (res) {
-          debugger
+        const res = await this.$axios.$get(`${url}?filter=${filter}`)
+        if (res.length === 0) {
           console.log('res', res)
+          try {
+            const res = await this.$axios.$post(url, data)
+            if (res) {
+              console.log('res', res)
+            }
+          } catch (e) {
+            console.error(`error, context: ${url} `, e)
+          }
         }
       } catch (e) {
-        console.error(`error, context: ${url}/${id} `, e)
+        console.error(`error, context: ${url}`, e)
       }
     },
     onLogout(context) {
