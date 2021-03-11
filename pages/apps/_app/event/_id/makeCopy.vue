@@ -27,12 +27,18 @@
         </div>
       </v-card>
     </v-dialog>
-    <v-form ref="form" v-model="valid" :lazy-validation="lazy">
-      <v-dialog
-        v-model="isMakeCopy"
-        persistent
-        scrollable
-        content-class="slide-form-default"
+
+    <v-dialog
+      v-model="isMakeCopy"
+      persistent
+      scrollable
+      content-class="slide-form-default"
+    >
+      <v-form
+        ref="form"
+        v-model="valid"
+        :lazy-validation="lazy"
+        @submit.prevent="submitForm"
       >
         <v-card>
           <v-card-title
@@ -316,13 +322,15 @@
               "
               depressed
               :action="onSave"
+              :has-submit-action="true"
+              :form-name="formName"
               class="ml-2"
               ><i18n path="Drawer.Copy"
             /></SaveBtn>
           </v-card-actions>
         </v-card>
-      </v-dialog>
-    </v-form>
+      </v-form>
+    </v-dialog>
   </div>
 </template>
 
@@ -408,6 +416,7 @@ export default {
         lat: 0.0,
         lng: 0.0,
       },
+      formName: 'copy-event-form',
     }
   },
   computed: {
@@ -646,6 +655,9 @@ export default {
         this.copyEventId = res.result.id
         return res
       }
+    },
+    submitForm() {
+      this.$eventBus.$emit('form-submitted', this.formName)
     },
   },
   apollo: {
