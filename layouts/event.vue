@@ -434,6 +434,7 @@ export default {
     async createUserHash(checkId) {
       const url = `${this.$bitpod.getApiUrl()}UserHashes`
       const data = { id: checkId, userId: this.$auth.user.data.email }
+      debugger
       let filter = { where: { id: checkId } }
       filter = JSON.stringify(filter)
       try {
