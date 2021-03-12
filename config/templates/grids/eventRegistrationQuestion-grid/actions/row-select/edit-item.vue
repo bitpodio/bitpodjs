@@ -34,6 +34,7 @@
             ref="form"
             v-model="valid"
             :lazy-validation="lazy"
+            :id="formName"
             @submit.prevent="submitForm"
           >
             <v-row>
@@ -115,7 +116,8 @@
             depressed
             :action="onSave"
             :has-submit-action="true"
-            form-name="edit-eventRegistration-form"
+            :has-external-submit="true"
+            :form-name="formName"
           ></SaveBtn>
         </v-card-actions>
       </v-card>
@@ -172,6 +174,7 @@ export default {
       snackbarText: '',
       snackbar: false,
       timeout: 2000,
+      formName: 'edit-eventRegistration-form',
     }
   },
   computed: {
@@ -321,7 +324,7 @@ export default {
         })
     },
     submitForm() {
-      this.$eventBus.$emit('form-submitted', 'edit-eventRegistration-form')
+      this.$eventBus.$emit('form-submitted', this.formName)
     },
   },
 }

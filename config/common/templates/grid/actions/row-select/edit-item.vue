@@ -31,7 +31,13 @@
         </div>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-container>
-            <v-form ref="form" v-model="valid" :lazy-validation="lazy">
+            <v-form
+              ref="form"
+              v-model="valid"
+              :lazy-validation="lazy"
+              :id="formName"
+              @submit.prevent="submitForm"
+            >
               <v-row>
                 <v-col
                   v-for="field in fields"
@@ -66,6 +72,9 @@
             depressed
             :action="onSave"
             :reset="resetBtn"
+            :has-submit-action="true"
+            :has-external-submit="true"
+            :form-name="formName"
           ></SaveBtn>
         </v-card-actions>
       </v-card>
@@ -127,6 +136,7 @@ export default {
       valid: true,
       lazy: false,
       resetBtn: false,
+      formName: `edit-${this.viewName}-form`,
     }
   },
   watch: {
@@ -179,6 +189,9 @@ export default {
       return Object.assign({}, field, {
         form: { caption: this.$t(field.form.caption) },
       })
+    },
+    submitForm() {
+      this.$eventBus.$emit('form-submitted', this.formName)
     },
   },
 }

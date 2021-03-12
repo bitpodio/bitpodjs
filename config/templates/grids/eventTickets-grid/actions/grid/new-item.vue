@@ -33,6 +33,7 @@
             ref="form"
             v-model="valid"
             :lazy-validation="lazy"
+            :id="formName"
             @submit.prevent="submitForm"
           >
             <v-row>
@@ -77,7 +78,7 @@
                       v-model="eventData.EndDate"
                       time-format="hh:mm a"
                       date-format="MMMM dd, yyyy"
-                      :label="getDateLabel($t('Common.StartDate'))"
+                      :label="getDateLabel($t('Common.EndDate'))"
                       :text-field-props="eventEndDateProps"
                       :on-change="changeEndDate()"
                     >
@@ -191,7 +192,8 @@
             depressed
             :action="onSave"
             :has-submit-action="true"
-            form-name="new-eventTickets-form"
+            :has-external-submit="true"
+            :form-name="formName"
           ></SaveBtn>
         </v-card-actions>
       </v-card>
@@ -264,6 +266,7 @@ export default {
       StartDate: '',
       EndDate: '',
       CheckEndDate: '',
+      formName: 'new-eventTickets-form',
     }
   },
   computed: {
@@ -577,7 +580,7 @@ export default {
       }
     },
     submitForm() {
-      this.$eventBus.$emit('form-submitted', 'edit-eventTickets-form')
+      this.$eventBus.$emit('form-submitted', this.formName)
     },
   },
   apollo: {

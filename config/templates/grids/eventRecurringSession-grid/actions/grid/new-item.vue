@@ -51,6 +51,7 @@
           >
             <v-form
               ref="form"
+              :id="formName"
               v-model="valid"
               :lazy-validation="lazy"
               @submit.prevent="submitForm"
@@ -545,7 +546,8 @@
               depressed
               :action="onSave"
               :has-submit-action="true"
-              form-name="new-eventRecurring-form"
+              :form-name="formName"
+              :has-external-submit="true"
               class="ml-2"
               :reset="resetBtn"
               ><i18n path="Drawer.Save"
@@ -786,6 +788,7 @@ export default {
         type: 'Timezone',
         fieldName: 'session.Timezone',
       },
+      formName: 'new-eventRecurring-form',
     }
   },
   computed: {
@@ -1356,7 +1359,7 @@ export default {
       }
     },
     submitForm() {
-      this.$eventBus.$emit('form-submitted', 'new-eventRecurring-form')
+      this.$eventBus.$emit('form-submitted', this.formName)
     },
   },
   apollo: {

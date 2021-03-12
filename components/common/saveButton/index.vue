@@ -8,6 +8,7 @@
       :color="color"
       depressed
       :type="hasSubmitAction ? 'submit' : 'button'"
+      :form="hasExternalSubmit ? formName : null"
       @click="hasSubmitAction ? () => {} : buttonClicked()"
     >
       {{ label }}
@@ -68,6 +69,10 @@ export default {
     formName: {
       default: '',
       type: String,
+    },
+    hasExternalSubmit: {
+      default: false,
+      type: Boolean,
     },
   },
   data() {
