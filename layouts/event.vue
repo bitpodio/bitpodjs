@@ -460,6 +460,10 @@ export default {
       } catch (e) {
         console.error(`error, context: ${url}`, e)
       }
+      window.ga('set', 'userId', checkId)
+      window.ga(function (tracker) {
+        console.log('tracker', tracker)
+      })
     },
     onLogout(context) {
       if (this.$store.state.auth.loggedIn) {
