@@ -446,10 +446,12 @@ export default {
             const res = await this.$axios.$post(url, data)
             if (res) {
               console.log('res', res)
-              this.$ga('set', 'userId', checkId)
+              window.ga('set', 'userId', checkId)
               window.ga(function (tracker) {
                 console.log('tracker', tracker)
               })
+              // this.$ga('set', 'userId', checkId)
+              debugger
             }
           } catch (e) {
             console.error(`error, context: ${url} `, e)
