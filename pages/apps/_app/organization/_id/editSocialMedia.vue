@@ -110,9 +110,6 @@ export default {
       this.$emit('update:editSocialMedia', false)
       this.onReset()
     },
-    refresh() {
-      this.$refs.form.$parent.$parent.refresh()
-    },
     async onSave() {
       const url = this.$bitpod.getApiUrl()
       this.formData.Currency = this.currency
@@ -125,7 +122,7 @@ export default {
           this.onClose()
           this.$emit('update:snackbar', true)
           this.$store.commit('setCurrentOrgInfo', this.formData)
-          this.refresh()
+          this.$eventBus.$emit('organization-details-updated')
         }
       } catch (e) {
         console.log(

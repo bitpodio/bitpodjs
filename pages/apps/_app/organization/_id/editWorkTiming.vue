@@ -199,7 +199,7 @@ export default {
           this.onClose()
           this.$emit('update:snackbar', true)
           this.$store.commit('setCurrentOrgInfo', this.formData)
-          this.refresh()
+          this.$eventBus.$emit('organization-details-updated')
         }
       } catch (e) {
         console.log(

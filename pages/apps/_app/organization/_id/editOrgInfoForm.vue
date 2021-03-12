@@ -168,9 +168,6 @@ export default {
       this.$emit('update:editOrgInfo', false)
       this.onReset()
     },
-    refresh() {
-      this.$refs.form.$parent.$parent.refresh()
-    },
     setAddress() {
       this.formData._CurrentAddress.AddressLine = this.venueAddress.AddressLine
       this.formData._CurrentAddress.City = this.venueAddress.City
@@ -192,7 +189,7 @@ export default {
           this.onClose()
           this.$emit('update:snackbar', true)
           this.$store.commit('setCurrentOrgInfo', this.formData)
-          this.refresh()
+          this.$eventBus.$emit('organization-details-updated')
         }
       } catch (e) {
         console.log(
