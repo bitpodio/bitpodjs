@@ -785,7 +785,19 @@
     "CheckCalendarInvite": "Vérifier l'invitation du calendrier pour rejoindre le lien",
     "ClearFilter": "Effacer les filtres",
     "SubTotal": "Sous-total",
-    "Esign":"E-Sign"
+    "Esign":"E-Sign",
+    "RecepientList": "Liste des destinataires",
+    "NewEsignRequest": "Nouvelle demande de signature électronique",
+    "NewEsignTemplate": "Nouveau modèle de signature",
+    "SelectRecepients": "Dans la liste de contacts ci-dessous, sélectionnez les contacts qui doivent recevoir le document à signer.",
+    "CreateNewSignatureTemplate": "Nouveau modèle",
+    "CreateNewSignatureTemplateDescription": "Un endroit où vous pouvez ajouter un nouveau modèle de document.",
+    "ExistingSignatureTemplate": "Sélectionnez un modèle existant",
+    "ExistingSignatureTemplateDescription": "Modèles prêts à l'emploi pour envoyer des documents rapidement.",
+    "SelectTemplateType": "Utilisez un modèle existant ou ajoutez un nouveau modèle.",
+    "Recepients": "Bénéficiaires",
+    "SignatureBasicInformation": "Commencez par saisir les informations de base sur votre document, puis appuyez sur suivant.",
+    "SendDocumentNow": "Envoyez le document tout de suite."
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",

@@ -1,4 +1,5 @@
 import eSignRequestList from '../gql/eSignRequest.gql'
+import contactList from '~/config/apps/event/gql/contactList.gql'
 
 export default {
   views: {
@@ -78,6 +79,69 @@ export default {
       },
       title: 'E-Sign-Request',
       type: 'list',
+    },
+    InviteContacts: {
+      ui: {
+        hideDefaultHeader: false,
+        hideDefaultFooter: false,
+        showExpand: false,
+        singleExpand: false,
+        showSelect: true,
+        hideFilter: true,
+        hideSearch: true,
+      },
+      fields: {
+        Email: {
+          displayOrder: 1,
+          caption: 'Common.EmailCaption',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '180px',
+          type: 'string',
+        },
+        FullName: {
+          displayOrder: 2,
+          caption: 'Common.FullName',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '180px',
+          type: 'string',
+        },
+      },
+      template: {
+        name: '',
+        context: {
+          basePath: '/contacts',
+        },
+        actions: {
+          new: {
+            hidden: true,
+          },
+          edit: {
+            hidden: true,
+          },
+          delete: {
+            hidden: true,
+          },
+          exportCsv: {
+            hidden: true,
+          },
+        },
+      },
+      dataSource: {
+        singularEntity: 'Common.Contact',
+        pluralEntity: 'Common.Contacts',
+        query: contactList,
+        filter: {
+          where: {},
+        },
+        type: 'graphql',
+        model: 'Contact',
+        defaultSort: 'createdDate DESC',
+      },
+      hidden: true,
+      title: 'Contacts',
+      defaultSort: 'createdDate DESC',
     },
   },
 }
