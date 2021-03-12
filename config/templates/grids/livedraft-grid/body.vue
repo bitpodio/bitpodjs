@@ -370,7 +370,7 @@
       </v-row>
     </div>
     <div v-if="eventForm">
-      <editEventForm :id="id" :event-form.sync="eventForm" :refresh="refresh" />
+      <editEventForm :id="id" :event-form.sync="eventForm" :refresh="refresh"/>
     </div>
     <makeCopy :id="id" :key="count" :is-make-copy.sync="isMakeCopy" />
     <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">

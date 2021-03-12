@@ -547,6 +547,7 @@ export default {
             this.$eventBus.$emit('event-details-updated', res)
             this.$eventBus.$emit('on-event-update', res)
             this.$eventBus.$emit('update-event-details')
+            this.refresh()
             this.close()
             this.$emit(
               'update:snackbarText',
@@ -578,6 +579,7 @@ export default {
             this.close()
             this.$eventBus.$emit('on-event-update', res)
             this.$eventBus.$emit('update-event-details', this.refresh)
+            this.refresh()
             this.$emit('update:snackbar', true)
             this.$emit(
               'update:snackbarText',
