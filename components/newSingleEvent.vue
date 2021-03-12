@@ -42,27 +42,29 @@
         <v-tabs-items v-model="tabs">
           <v-tab-item :value="'1'">
             <v-card flat>
-              <p>
-                <i18n path="Common.EnterEventName" />
-              </p>
-              <v-row>
-                <v-col cols="12" class="pb-0">
-                  <v-text-field
-                    v-model="eventData.Title"
-                    :rules="[rules.required]"
-                    :label="$t('Common.EventTitle')"
-                    required
-                    dense
-                    outlined
-                    @keyup="changeEventName($event)"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
               <v-form
-                ref="dateform"
-                v-model="datevalid"
+                ref="eventPart1Form"
+                v-model="valid"
                 :lazy-validation="lazy"
+                id="new-singleEvent-tab1-form"
+                @submit.prevent="next()"
               >
+                <p>
+                  <i18n path="Common.EnterEventName" />
+                </p>
+                <v-row>
+                  <v-col cols="12" class="pb-0">
+                    <v-text-field
+                      v-model="eventData.Title"
+                      :rules="[rules.required]"
+                      :label="$t('Common.EventTitle')"
+                      required
+                      dense
+                      outlined
+                      @keyup="changeEventName($event)"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
                 <v-row>
                   <v-col cols="12" sm="6" md="4" class="pb-0">
                     <CustomDate
@@ -95,58 +97,59 @@
                     ></Timezone>
                   </v-col>
                 </v-row>
-              </v-form>
-              <v-row>
-                <v-col cols="12" class="pb-4 pt-2">
-                  <RichText
-                    v-model="eventData.Description"
-                    class="mb-3"
-                    :label="$t('Common.Description')"
-                  ></RichText>
-                </v-col>
-                <v-col
-                  cols="12"
-                  sm="6"
-                  md="6"
-                  class="pb-0 d-flex flex-column flex-md-row"
-                >
-                  <div class="pt-2 mr-2">{{ eventLinkLabel }}</div>
-                  <v-text-field
-                    v-model="eventData.UniqLink"
-                    :label="$t('Common.EventL')"
-                    :rules="[rules.required, rules.link]"
-                    outlined
-                    dense
-                    required
-                    :error-messages="uniqueLinkValidationMsg"
-                    @input="checkUniqueLink"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
-            </v-card>
-          </v-tab-item>
-
-          <v-tab-item :value="'2'">
-            <v-card flat>
-              <v-row>
-                <v-col cols="12" sm="6" md="6" class="pl-0 pt-0 pb-0">
-                  <v-col class="pb-0">
-                    <v-select
-                      v-model="eventData.LocationType"
-                      :items="locationTypeLookupOptions"
-                      label="Location Type*"
-                      required
+                <v-row>
+                  <v-col cols="12" class="pb-4 pt-2">
+                    <RichText
+                      v-model="eventData.Description"
+                      class="mb-3"
+                      :label="$t('Common.Description')"
+                    ></RichText>
+                  </v-col>
+                  <v-col
+                    cols="12"
+                    sm="6"
+                    md="6"
+                    class="pb-0 d-flex flex-column flex-md-row"
+                  >
+                    <div class="pt-2 mr-2">{{ eventLinkLabel }}</div>
+                    <v-text-field
+                      v-model="eventData.UniqLink"
+                      :label="$t('Common.EventL')"
+                      :rules="[rules.required, rules.link]"
                       outlined
                       dense
-                      class="v-tickettype"
-                      @change="changeLocation($event)"
-                    ></v-select>
+                      required
+                      :error-messages="uniqueLinkValidationMsg"
+                      @input="checkUniqueLink"
+                    ></v-text-field>
                   </v-col>
-                  <v-form
-                    ref="webinarLinkForm"
-                    v-model="datevalid"
-                    :lazy-validation="lazy"
-                  >
+                </v-row>
+              </v-form>
+            </v-card>
+          </v-tab-item>
+          <v-tab-item :value="'2'">
+            <v-card flat>
+              <v-form
+                v-model="valid"
+                ref="webinarLinkForm"
+                :lazy-validation="lazy"
+                id="new-singleEvent-tab2-form"
+                @submit.prevent="next()"
+              >
+                <v-row>
+                  <v-col cols="12" sm="6" md="6" class="pl-0 pt-0 pb-0">
+                    <v-col class="pb-0">
+                      <v-select
+                        v-model="eventData.LocationType"
+                        :items="locationTypeLookupOptions"
+                        label="Location Type*"
+                        required
+                        outlined
+                        dense
+                        class="v-tickettype"
+                        @change="changeLocation($event)"
+                      ></v-select>
+                    </v-col>
                     <v-col v-if="isOnlineEvent" cols="12" class="pb-0">
                       <v-text-field
                         v-model="eventData.WebinarLink"
@@ -161,273 +164,289 @@
                         required
                       ></v-text-field>
                     </v-col>
-                  </v-form>
-                  <v-col v-if="isOnlineEvent" cols="12" class="pb-0">
-                    <v-textarea
-                      v-model="eventData.JoiningInstruction"
-                      :label="$t('Common.AdditionalOnlineEvent')"
-                      outlined
-                      required
-                      dense
-                    ></v-textarea>
-                  </v-col>
-                  <v-col v-if="isBitpodVirtual" cols="12" class="pb-0">
-                    <v-text-field
-                      :label="$t('Common.BitpodVirtualLink')"
-                      outlined
-                      dense
-                      disabled
-                      :value="getBitpodVirtualLink()"
-                    ></v-text-field>
-                  </v-col>
+                    <v-col v-if="isOnlineEvent" cols="12" class="pb-0">
+                      <v-textarea
+                        v-model="eventData.JoiningInstruction"
+                        :label="$t('Common.AdditionalOnlineEvent')"
+                        outlined
+                        required
+                        dense
+                      ></v-textarea>
+                    </v-col>
+                    <v-col v-if="isBitpodVirtual" cols="12" class="pb-0">
+                      <v-text-field
+                        :label="$t('Common.BitpodVirtualLink')"
+                        outlined
+                        dense
+                        disabled
+                        :value="getBitpodVirtualLink()"
+                      ></v-text-field>
+                    </v-col>
 
-                  <v-col v-if="isVenue" cols="12" class="pb-6 positionRelative">
-                    <div
-                      v-if="addressClicked || !!venueAddress.AddressLine"
-                      class="address-legend"
+                    <v-col
+                      v-if="isVenue"
+                      cols="12"
+                      class="pb-6 positionRelative"
                     >
-                      {{ $t('Common.AddressRequired') }}
-                    </div>
-                    <no-ssr>
-                      <vue-google-autocomplete
-                        id="map"
-                        ref="venueAddress.AddressLine"
-                        v-model="venueAddress.AddressLine"
-                        class="form-control pa-3 d-block rounded"
-                        :placeholder="!addressClicked && $t('Common.Address')"
-                        :required="true"
-                        @placechanged="getAddressData"
-                        @focus="removeSearchAddress(true)"
-                        @change="changeAddressData($event)"
-                        @blur="focusOut"
-                      ></vue-google-autocomplete>
-                    </no-ssr>
-                    <div
-                      v-show="addresslineMessage !== ''"
-                      class="red--text pa-3 pt-0 pb-0 body-2 positionAbsolute"
-                    >
-                      {{ addresslineMessage }}
-                    </div>
-                  </v-col>
-                  <v-col v-if="isVenue" cols="12" class="pb-0">
-                    <v-text-field
-                      v-model="eventData.VenueName"
-                      :label="$t('Common.VenueName')"
-                      outlined
-                      dense
-                      @change="changeAddress()"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col v-if="isVenue" cols="12" class="pb-0">
-                    <v-text-field
-                      v-model="venueAddress.City"
-                      :label="$t('Common.City')"
-                      outlined
-                      dense
-                      @change="changeAddress()"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col v-if="isVenue" cols="12" class="pb-0">
-                    <v-text-field
-                      v-model="venueAddress.State"
-                      :label="$t('Common.State')"
-                      outlined
-                      dense
-                      @change="changeAddress()"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col v-if="isVenue" cols="12" class="pb-0">
-                    <v-text-field
-                      v-model="venueAddress.Country"
-                      :label="$t('Common.Country')"
-                      outlined
-                      dense
-                      @change="changeAddress()"
-                    ></v-text-field>
-                  </v-col>
-                  <v-col v-if="isVenue" cols="12" class="pb-0">
-                    <v-text-field
-                      v-model="venueAddress.PostalCode"
-                      :label="$t('Common.ZipCode')"
-                      outlined
-                      dense
-                    ></v-text-field>
-                  </v-col>
-                </v-col>
-                <v-col
-                  v-if="eventData.LocationType === 'Venue'"
-                  cols="12"
-                  sm="6"
-                  md="6"
-                  class="pb-0"
-                >
-                  <v-col
-                    v-if="isMap && locations[0] && locations[0].lat"
-                    class="pa-0"
-                  >
-                    <div class="flex"></div>
-                    <div :key="`${locations[0].lat}-${locations[0].lng}`">
-                      <GMap
-                        ref="gMap"
-                        language="en"
-                        :cluster="{ options: { styles: clusterStyle } }"
-                        :center="gMapCenter"
-                        :options="{
-                          fullscreenControl: false,
-                          styles: mapStyle,
-                        }"
-                        :zoom="15"
-                        @bounds_changed="checkForMarkers"
+                      <div
+                        v-if="addressClicked || !!venueAddress.AddressLine"
+                        class="address-legend"
                       >
-                        <GMapMarker
-                          v-for="location in locations"
-                          :key="`${location.lat}-${location.lng}`"
-                          :position="{ lat: location.lat, lng: location.lng }"
+                        {{ $t('Common.AddressRequired') }}
+                      </div>
+                      <no-ssr>
+                        <vue-google-autocomplete
+                          id="map"
+                          ref="venueAddress.AddressLine"
+                          v-model="venueAddress.AddressLine"
+                          class="form-control pa-3 d-block rounded"
+                          :placeholder="!addressClicked && $t('Common.Address')"
+                          :required="true"
+                          @placechanged="getAddressData"
+                          @focus="removeSearchAddress(true)"
+                          @change="changeAddressData($event)"
+                          @blur="focusOut"
+                        ></vue-google-autocomplete>
+                      </no-ssr>
+                      <div
+                        v-show="addresslineMessage !== ''"
+                        class="red--text pa-3 pt-0 pb-0 body-2 positionAbsolute"
+                      >
+                        {{ addresslineMessage }}
+                      </div>
+                    </v-col>
+                    <v-col v-if="isVenue" cols="12" class="pb-0">
+                      <v-text-field
+                        v-model="eventData.VenueName"
+                        :label="$t('Common.VenueName')"
+                        outlined
+                        dense
+                        @change="changeAddress()"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col v-if="isVenue" cols="12" class="pb-0">
+                      <v-text-field
+                        v-model="venueAddress.City"
+                        :label="$t('Common.City')"
+                        outlined
+                        dense
+                        @change="changeAddress()"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col v-if="isVenue" cols="12" class="pb-0">
+                      <v-text-field
+                        v-model="venueAddress.State"
+                        :label="$t('Common.State')"
+                        outlined
+                        dense
+                        @change="changeAddress()"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col v-if="isVenue" cols="12" class="pb-0">
+                      <v-text-field
+                        v-model="venueAddress.Country"
+                        :label="$t('Common.Country')"
+                        outlined
+                        dense
+                        @change="changeAddress()"
+                      ></v-text-field>
+                    </v-col>
+                    <v-col v-if="isVenue" cols="12" class="pb-0">
+                      <v-text-field
+                        v-model="venueAddress.PostalCode"
+                        :label="$t('Common.ZipCode')"
+                        outlined
+                        dense
+                      ></v-text-field>
+                    </v-col>
+                  </v-col>
+                  <v-col
+                    v-if="eventData.LocationType === 'Venue'"
+                    cols="12"
+                    sm="6"
+                    md="6"
+                    class="pb-0"
+                  >
+                    <v-col
+                      v-if="isMap && locations[0] && locations[0].lat"
+                      class="pa-0"
+                    >
+                      <div class="flex"></div>
+                      <div :key="`${locations[0].lat}-${locations[0].lng}`">
+                        <GMap
+                          ref="gMap"
+                          language="en"
+                          :cluster="{ options: { styles: clusterStyle } }"
+                          :center="gMapCenter"
                           :options="{
-                            icon: pins.selected,
+                            fullscreenControl: false,
+                            styles: mapStyle,
                           }"
-                          @click="currentLocation = location"
+                          :zoom="15"
+                          @bounds_changed="checkForMarkers"
                         >
-                          <GMapInfoWindow :options="{ maxWidth: 200 }">
-                            <code
-                              >lat: {{ location.lat }}, lng:
-                              {{ location.lng }}</code
-                            >
-                          </GMapInfoWindow>
-                        </GMapMarker>
-                        <GMapCircle :options="circleOptions" />
-                      </GMap>
-                    </div>
+                          <GMapMarker
+                            v-for="location in locations"
+                            :key="`${location.lat}-${location.lng}`"
+                            :position="{ lat: location.lat, lng: location.lng }"
+                            :options="{
+                              icon: pins.selected,
+                            }"
+                            @click="currentLocation = location"
+                          >
+                            <GMapInfoWindow :options="{ maxWidth: 200 }">
+                              <code
+                                >lat: {{ location.lat }}, lng:
+                                {{ location.lng }}</code
+                              >
+                            </GMapInfoWindow>
+                          </GMapMarker>
+                          <GMapCircle :options="circleOptions" />
+                        </GMap>
+                      </div>
+                    </v-col>
+                    <v-col v-else class="pa-0">
+                      <v-flex class="grey lighten-2 map-contain"></v-flex>
+                    </v-col>
                   </v-col>
-                  <v-col v-else class="pa-0">
-                    <v-flex class="grey lighten-2 map-contain"></v-flex>
-                  </v-col>
-                </v-col>
-              </v-row>
+                </v-row>
+              </v-form>
             </v-card>
           </v-tab-item>
-
           <v-tab-item :value="'3'">
             <v-card v-if="isTicket" flat>
-              <p>
-                <i18n path="Common.SetupEventTickets" />
-              </p>
-              <v-btn
-                class="ma-2 ml-0 mb-3"
-                outlined
-                color="indigo"
-                @click="addTicketRow"
-                ><i18n path="Common.AddTickets"
-              /></v-btn>
-              <div id="res-tables">
-                <v-simple-table class="event-table">
-                  <template v-slot:default>
-                    <thead class="e-thead">
-                      <tr class="e-tr">
-                        <th class="text-left pl-2 pl-md-0 e-td">
-                          <i18n path="Common.Title" />
-                        </th>
-                        <th class="text-left pl-2 e-td mxw-150">
-                          <i18n path="Common.Type" />
-                        </th>
-                        <th class="text-left pl-2 e-td mxw-150">
-                          {{
-                            $t('Common.Price', { currency: eventData.Currency })
-                          }}
-                        </th>
-                        <th class="text-left pl-2 e-td">
-                          <i18n path="Common.StartD" />
-                        </th>
-                        <th class="text-left pl-2 e-td">
-                          <i18n path="Common.EndD" />
-                        </th>
-                        <th class="text-left pl-2 e-td mxw-100">
-                          <i18n path="Common.Quantity" />
-                        </th>
-                        <th class="text-left e-td"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="(ticket, k) in tickets" :key="k" class="e-tr">
-                        <td
-                          class="pa-2 pb-0 pl-2 pl-md-0 e-td"
-                          data-title="Title"
+              <v-form
+                v-model="valid"
+                :lazy-validation="lazy"
+                :id="formName"
+                @submit.prevent="submitForm"
+              >
+                <p>
+                  <i18n path="Common.SetupEventTickets" />
+                </p>
+                <v-btn
+                  class="ma-2 ml-0 mb-3"
+                  outlined
+                  color="indigo"
+                  @click="addTicketRow"
+                  ><i18n path="Common.AddTickets"
+                /></v-btn>
+                <div id="res-tables">
+                  <v-simple-table class="event-table">
+                    <template v-slot:default>
+                      <thead class="e-thead">
+                        <tr class="e-tr">
+                          <th class="text-left pl-2 pl-md-0 e-td">
+                            <i18n path="Common.Title" />
+                          </th>
+                          <th class="text-left pl-2 e-td mxw-150">
+                            <i18n path="Common.Type" />
+                          </th>
+                          <th class="text-left pl-2 e-td mxw-150">
+                            {{
+                              $t('Common.Price', {
+                                currency: eventData.Currency,
+                              })
+                            }}
+                          </th>
+                          <th class="text-left pl-2 e-td">
+                            <i18n path="Common.StartD" />
+                          </th>
+                          <th class="text-left pl-2 e-td">
+                            <i18n path="Common.EndD" />
+                          </th>
+                          <th class="text-left pl-2 e-td mxw-100">
+                            <i18n path="Common.Quantity" />
+                          </th>
+                          <th class="text-left e-td"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr
+                          v-for="(ticket, k) in tickets"
+                          :key="k"
+                          class="e-tr"
                         >
-                          <v-text-field
-                            v-model="ticket.Code"
-                            :rules="[rules.required]"
-                            outlined
-                            dense
-                          ></v-text-field>
-                        </td>
-                        <td class="pa-2 pb-0 e-td" data-title="Type">
-                          <Lookup
-                            v-model="ticket.Type"
-                            :field="ticketTypeProps"
-                            class="v-tickettype"
-                            :t-id="`SingleTicketType-${k}`"
-                            :on-change="changeTicketType(k)"
-                          />
-                        </td>
-                        <td class="pa-2 pb-0 e-td" data-title="Price">
-                          <v-text-field
-                            v-model="ticket.Amount"
-                            outlined
-                            dense
-                            value
-                            type="Number"
-                            min="0"
-                            onkeydown="return event.keyCode !== 69 && event.keyCode !== 189"
-                            :disabled="isPriceDisabled(k)"
-                          ></v-text-field>
-                        </td>
-                        <td
-                          class="pa-2 pb-0 e-td"
-                          :data-title="$t('Common.StartD')"
-                        >
-                          <CustomDate
-                            v-model="ticket.StartDate"
-                            :label="$t('Common.StartD')"
-                            :field="ticketStartDateField"
-                            :rules="ticketStartDateRule(k)"
-                            :on-change="changeTicketStartDate"
-                            type="datetime"
-                          />
-                        </td>
-                        <td
-                          class="pa-2 pb-0 e-td"
-                          :data-title="$t('Common.EndD')"
-                        >
-                          <CustomDate
-                            v-model="ticket.EndDate"
-                            :label="$t('Common.EndD')"
-                            :field="ticketEndDateField"
-                            :rules="ticketEndDateRule(k)"
-                            :on-change="changeTicketEndDate"
-                            type="datetime"
-                          />
-                        </td>
-                        <td class="pa-2 pb-0 e-td" data-title="Quantity">
-                          <v-text-field
-                            v-model="ticket.TicketCount"
-                            outlined
-                            dense
-                            type="Number"
-                            min="0"
-                            :rules="ticketCountRules()"
-                            onkeydown="return event.keyCode !== 69 && event.keyCode !== 189"
-                          ></v-text-field>
-                        </td>
-                        <td class="pa-2 pt-0 e-td" data-title="">
-                          <v-btn icon class="mt-1" @click="deleteTicket(k)">
-                            <v-icon>fa-trash</v-icon>
-                          </v-btn>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </template>
-                </v-simple-table>
-              </div>
+                          <td
+                            class="pa-2 pb-0 pl-2 pl-md-0 e-td"
+                            data-title="Title"
+                          >
+                            <v-text-field
+                              v-model="ticket.Code"
+                              :rules="[rules.required]"
+                              outlined
+                              dense
+                            ></v-text-field>
+                          </td>
+                          <td class="pa-2 pb-0 e-td" data-title="Type">
+                            <Lookup
+                              v-model="ticket.Type"
+                              :field="ticketTypeProps"
+                              class="v-tickettype"
+                              :t-id="`SingleTicketType-${k}`"
+                              :on-change="changeTicketType(k)"
+                            />
+                          </td>
+                          <td class="pa-2 pb-0 e-td" data-title="Price">
+                            <v-text-field
+                              v-model="ticket.Amount"
+                              outlined
+                              dense
+                              value
+                              type="Number"
+                              min="0"
+                              onkeydown="return event.keyCode !== 69 && event.keyCode !== 189"
+                              :disabled="isPriceDisabled(k)"
+                            ></v-text-field>
+                          </td>
+                          <td
+                            class="pa-2 pb-0 e-td"
+                            :data-title="$t('Common.StartD')"
+                          >
+                            <CustomDate
+                              v-model="ticket.StartDate"
+                              :label="$t('Common.StartD')"
+                              :field="ticketStartDateField"
+                              :rules="ticketStartDateRule(k)"
+                              :on-change="changeTicketStartDate"
+                              type="datetime"
+                            />
+                          </td>
+                          <td
+                            class="pa-2 pb-0 e-td"
+                            :data-title="$t('Common.EndD')"
+                          >
+                            <CustomDate
+                              v-model="ticket.EndDate"
+                              :label="$t('Common.EndD')"
+                              :field="ticketEndDateField"
+                              :rules="ticketEndDateRule(k)"
+                              :on-change="changeTicketEndDate"
+                              type="datetime"
+                            />
+                          </td>
+                          <td class="pa-2 pb-0 e-td" data-title="Quantity">
+                            <v-text-field
+                              v-model="ticket.TicketCount"
+                              outlined
+                              dense
+                              type="Number"
+                              min="0"
+                              :rules="ticketCountRules()"
+                              onkeydown="return event.keyCode !== 69 && event.keyCode !== 189"
+                            ></v-text-field>
+                          </td>
+                          <td class="pa-2 pt-0 e-td" data-title="">
+                            <v-btn icon class="mt-1" @click="deleteTicket(k)">
+                              <v-icon>fa-trash</v-icon>
+                            </v-btn>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </template>
+                  </v-simple-table>
+                </div>
+              </v-form>
             </v-card>
             <v-card
               v-else
@@ -524,7 +543,12 @@
           depressed
           color="primary"
           :disabled="!isUniqLinkValid || isInvalidEventLink || !valid"
-          @click="next()"
+          type="submit"
+          :form="
+            currentTab === 1
+              ? 'new-singleEvent-tab1-form'
+              : 'new-singleEvent-tab2-form'
+          "
           ><i18n path="Drawer.Next"
         /></v-btn>
         <SaveBtn
@@ -535,6 +559,9 @@
           "
           depressed
           :action="saveRecord"
+          :has-submit-action="true"
+          :has-external-submit="true"
+          :form-name="formName"
           class="ml-2"
           ><i18n path="Drawer.Save"
         /></SaveBtn>
@@ -601,6 +628,7 @@ export default {
       locationsVisibleOnMap: '',
       circleOptions: {},
       locations: [],
+      formName: 'new-singleEvent-tab3-form',
       pins: {
         selected:
           'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAHUSURBVHgB5VU7SwNBEJ7LmZBgMC+UdKKx0MZCG2srwcbCB2glpFDQ3to/IegvSAIWPrBJIySlipUKKqYLaHJ3iWIelzu/DTk8j71H7MQPltmZnflmZ3b3juivQ3BzCIfDI4FAYBvTRV3XR7tBglCCOIP9oFwuv/46QSwWWwfZIaaDNi7vGOlqtZqhfhPE4/EViAy5V6ljE8uVSuXYc4JkMjncarUeMR0ib5Db7fZEvV6vWBd8PG+Q73LIFYyj3lAsa1G/37/D4+JWgPbcQkybd9jpdGYVRXlmSiQSSYmieMWmhgMuwI0kSTPkpQJgzKJnDfJuKYryBJH7sVNBSPGI7BKoFl3n+GguMY4JHiz6GtoybiisRczmEtPFAM+Ifl6i5DmTKYqeX+Nssj19lUz9N2J4XNxDTiQSkwi4oz6ADU3hLdxb7dwW9RyL5B0FHrltAgZUsEce4eRrmwB3ugCRJ3fk4VvsOwEDHtcWxKeDy4emaWmHdRKdFpvNphQKhdhFmOet42D3sftTJw7X/wHgw/U8h1ywkJ/gYJeI/wi/g8kdmqqqG5Alk62Er+emG7nXBFSr1aroNSNknwOVzZnNS6xIHtFoNF6CweAbpheyLOfo3+ALfrSuzJ1F8EsAAAAASUVORK5CYII=',
@@ -843,10 +871,10 @@ export default {
       }
     },
     changeStartDate() {
-      this.$refs.dateform && this.$refs.dateform.validate()
+      this.$refs.eventPart1Form && this.$refs.eventPart1Form.validate()
     },
     changeEndDate(value) {
-      this.$refs.dateform && this.$refs.dateform.validate()
+      this.$refs.eventPart1Form && this.$refs.eventPart1Form.validate()
       this.calculateTicketEndDate()
     },
     changeTicketStartDate() {
@@ -1397,6 +1425,9 @@ export default {
         EndDate: this.eventData.EndDate,
         TicketCount: 100,
       })
+    },
+    submitForm() {
+      this.$eventBus.$emit('form-submitted', this.formName)
     },
   },
 
