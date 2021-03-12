@@ -788,6 +788,7 @@
     "CheckCalendarInvite": "בדוק את הזמנת לוח השנה להצטרפות לקישור",
     "ClearFilter": "נקה מסננים",
     "SubTotal": "סך הכל",
+<<<<<<< HEAD
     "AccessRequired": "הגישה לא ניתנה, צרו קשר עם התמיכה לבקשת הגישה",
     "SendEventInvite": "שלח הזמנה לאירוע",
     "ScheduleTask": "קבע משימה",
@@ -798,6 +799,21 @@
     "StopReceiveMails": "כבר לא רציתי לקבל את המיילים האלה",
     "NeverSignedForMails": "מעולם לא נרשמתי לרשימת התפוצה הזו",
     "Esign":"סימן אלקטרוני"
+=======
+    "Esign":"סימן אלקטרוני",
+    "RecepientList": "רשימת נמענים",
+    "NewEsignRequest": "בקשת eSign חדשה",
+    "NewEsignTemplate": "תבנית חתימה חדשה",
+    "SelectRecepients": "מרשימת אנשי הקשר למטה בחר באנשי הקשר שצריכים לקבל את המסמך שייחתם.",
+    "CreateNewSignatureTemplate": "תבנית חדשה",
+    "CreateNewSignatureTemplateDescription": "מקום בו תוכלו להוסיף תבנית מסמך חדשה.",
+    "ExistingSignatureTemplate": "בחר תבנית קיימת",
+    "ExistingSignatureTemplateDescription": "תבניות מוכנות לשימוש לשליחת מסמכים במהירות.",
+    "SelectTemplateType": "השתמש בתבנית קיימת או הוסף תבנית חדשה.",
+    "Recepients": "נמענים",
+    "SignatureBasicInformation": "התחל עם הזנת מידע בסיסי על המסמך שלך ואז לחץ על הבא.",
+    "SendDocumentNow": "שלח מסמך מיד."
+>>>>>>> 806d0db6 (feat: add new eSign request form)
   },
   "Drawer": {
     "UnSubscribeMsg": "אנא בחר סיבה לביטול הרישום לניוזלטר. זה יעזור לנו לשפר את השירותים שלנו.",

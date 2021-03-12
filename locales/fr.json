@@ -786,6 +786,7 @@
     "CheckCalendarInvite": "Vérifier l'invitation du calendrier pour rejoindre le lien",
     "ClearFilter": "Effacer les filtres",
     "SubTotal": "Sous-total",
+<<<<<<< HEAD
     "AccessRequired": "Accès non accordé, contactez le support pour demander l'accès",
     "SendEventInvite": "envoyer une invitation à un événement",
     "ScheduleTask": "Planifier une tâche",
@@ -796,6 +797,21 @@
     "StopReceiveMails": "Je ne voulais plus recevoir ces mails",
     "NeverSignedForMails": "Je ne me suis jamais inscrit à cette liste de diffusion",
     "Esign":"E-Sign"
+=======
+    "Esign":"E-Sign",
+    "RecepientList": "Liste des destinataires",
+    "NewEsignRequest": "Nouvelle demande de signature électronique",
+    "NewEsignTemplate": "Nouveau modèle de signature",
+    "SelectRecepients": "Dans la liste de contacts ci-dessous, sélectionnez les contacts qui doivent recevoir le document à signer.",
+    "CreateNewSignatureTemplate": "Nouveau modèle",
+    "CreateNewSignatureTemplateDescription": "Un endroit où vous pouvez ajouter un nouveau modèle de document.",
+    "ExistingSignatureTemplate": "Sélectionnez un modèle existant",
+    "ExistingSignatureTemplateDescription": "Modèles prêts à l'emploi pour envoyer des documents rapidement.",
+    "SelectTemplateType": "Utilisez un modèle existant ou ajoutez un nouveau modèle.",
+    "Recepients": "Bénéficiaires",
+    "SignatureBasicInformation": "Commencez par saisir les informations de base sur votre document, puis appuyez sur suivant.",
+    "SendDocumentNow": "Envoyez le document tout de suite."
+>>>>>>> 806d0db6 (feat: add new eSign request form)
   },
   "Drawer": {
     "UnSubscribeMsg": "Veuillez sélectionner une raison pour vous désinscrire de la newsletter. Cela nous aidera à améliorer nos services.",
