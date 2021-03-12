@@ -344,6 +344,7 @@ export default {
     },
   },
   async mounted() {
+    this.$eventBus.$on('on-event-update', this.updateDetails)
     try {
       const res = await this.getDropDownData('TicketType')
       if (res) {
@@ -368,7 +369,18 @@ export default {
     }
     this.getAttendeeType()
   },
+  beforeDestroy() {
+    this.$eventBus.$off('on-event-update')
+  },
   methods: {
+    updateDetails(newDetails) {
+      if (newDetails && this.eventData) {
+        this.eventData = { ...newDetails }
+        this.CheckEndDate = this.eventData.EndDate
+        this.getCurrencySymbol(this.eventData.Currency)
+        this.getTicketDate()
+      }
+    },
     ticketCountRules() {
       return [
         (v) => {

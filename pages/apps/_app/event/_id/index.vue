@@ -1771,10 +1771,12 @@ export default {
     setTimeout(this.openPrint, 3000)
     this.$eventBus.$on('update-seat-reservation', this.updateSeatReservation)
     this.$eventBus.$on('seat-map-triggered', this.getScrollPosition)
+    this.$eventBus.$on('update-event-details', this.refresh)
   },
   beforeDestroy() {
     this.$eventBus.$off('update-seat-reservation')
     this.$eventBus.$off('seat-map-triggered')
+    this.$eventBus.$off('update-event-details')
   },
   methods: {
     getScrollPosition() {

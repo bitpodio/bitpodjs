@@ -477,10 +477,6 @@ export default {
 
       this.onReset()
     },
-    refreshGrid() {
-      this.$refs.form.$parent.$parent.refresh()
-      this.$apollo.queries.data.refresh()
-    },
     getAddressData(addressData, placeResultData, id) {
       this.addressClicked = true
       this.VenueAddress.AddressLine = addressData.route
@@ -549,14 +545,14 @@ export default {
           )
           if (res) {
             this.$eventBus.$emit('event-details-updated', res)
+            this.$eventBus.$emit('on-event-update', res)
+            this.$eventBus.$emit('update-event-details')
             this.close()
             this.$emit(
               'update:snackbarText',
               this.$t('Messages.Success.EventDetailsUpdateSuccess')
             )
             this.$emit('update:snackbar', true)
-            this.refreshGrid()
-            this.refresh()
             this.data.event = res
           }
         } catch (e) {
@@ -580,14 +576,14 @@ export default {
           )
           if (res) {
             this.close()
+            this.$eventBus.$emit('on-event-update', res)
+            this.$eventBus.$emit('update-event-details', this.refresh)
             this.$emit('update:snackbar', true)
             this.$emit(
               'update:snackbarText',
               this.$t('Messages.Success.EventDetailsUpdateSuccess')
             )
             this.$emit('update:snackbar', true)
-            this.refreshGrid()
-            this.refresh()
             return (this.data.event = res)
           }
         } catch (e) {
