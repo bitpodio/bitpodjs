@@ -420,6 +420,7 @@ export default {
     this.allowUser = userRoles.length === 1 && userRoles.includes('$orguser')
     this.allowUpgrade = userRoles.includes('$orgowner')
     window.addEventListener('message', this.messageReceived, false)
+    debugger
     const checkId = murmurhash.v2(
       this.$auth.user.data.email,
       this.$config.seedValue
@@ -445,6 +446,10 @@ export default {
             const res = await this.$axios.$post(url, data)
             if (res) {
               console.log('res', res)
+              this.$ga('set', 'userId', checkId)
+              window.ga(function (tracker) {
+                console.log('tracker', tracker)
+              })
             }
           } catch (e) {
             console.error(`error, context: ${url} `, e)
