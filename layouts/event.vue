@@ -413,6 +413,10 @@ export default {
     await this.$apolloHelpers.onLogin(token, undefined, { expires: 7 })
   },
   mounted() {
+    const loginStatus = this.$auth.strategy.token.get()
+    if (!loginStatus) {
+      location.replace('/unauthorized')
+    }
     const userInfo = userUtils.userCurrentOrgInfo(this.$store) || {}
     const userRoles = userInfo.roles || []
     this.allowUser = userRoles.length === 1 && userRoles.includes('$orguser')
@@ -471,11 +475,11 @@ export default {
       )
       this.$refs.iframe.contentWindow.postMessage(document.cookie, '*')
     },
-    messageReceived(e) {
+    async messageReceived(e) {
       console.log('message received from the the iframe', e.data)
       if (e.data === 'success' && this.logoutClicked) {
+        await this.$apolloHelpers.onLogout()
         this.$auth.logout()
-        this.$apolloHelpers.onLogout()
       }
     },
   },
