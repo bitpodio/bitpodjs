@@ -787,7 +787,6 @@
     "CheckCalendarInvite": "Check calendar invite for joining link",
     "ClearFilter": "Clear filters",
     "SubTotal": "Sub Total",
-<<<<<<< HEAD
     "AccessRequired": "Access not granted, contact support to request access",
     "SendEventInvite": "send event invite",
     "ScheduleTask": "Schedule a Task",
@@ -797,11 +796,9 @@
     "SendManyMails": "You have send me too many mails",
     "StopReceiveMails": "I no longer wanted to receive these mails",
     "NeverSignedForMails": "I never signed up for this mailing list",
-    "Esign":"E-Sign"
-=======
     "Esign":"E-Sign",
     "RecepientList": "Recepient List",
-    "NewEsignRequest": "New eSign Request",
+    "NewEsignRequest": "New E-Sign Request",
     "NewEsignTemplate": "New Signature Template",
     "SelectRecepients": "From the contact list below, select the contacts who should receive the document to be signed.",
     "CreateNewSignatureTemplate": "New Template",
@@ -811,8 +808,9 @@
     "SelectTemplateType": "Use an existing template or add a new template.",
     "Recepients": "Recepients",
     "SignatureBasicInformation": "Start with entering basic information about your document and then press next.",
-    "SendDocumentNow": "Send document right away."
->>>>>>> 806d0db6 (feat: add new eSign request form)
+    "SendDocumentNow": "Send document right away.",
+    "RecepientDetail": "Recepient Details",
+    "EmailInfo": "Email Info"
   },
   "Drawer": {
     "UnSubscribeMsg": "Please select a reason to unsubscribe from newsletter. This will help us to improve our services.",

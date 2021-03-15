@@ -786,7 +786,6 @@
     "CheckCalendarInvite": "Vérifier l'invitation du calendrier pour rejoindre le lien",
     "ClearFilter": "Effacer les filtres",
     "SubTotal": "Sous-total",
-<<<<<<< HEAD
     "AccessRequired": "Accès non accordé, contactez le support pour demander l'accès",
     "SendEventInvite": "envoyer une invitation à un événement",
     "ScheduleTask": "Planifier une tâche",
@@ -796,8 +795,6 @@
     "SendManyMails": "Vous m'avez envoyé trop de mails",
     "StopReceiveMails": "Je ne voulais plus recevoir ces mails",
     "NeverSignedForMails": "Je ne me suis jamais inscrit à cette liste de diffusion",
-    "Esign":"E-Sign"
-=======
     "Esign":"E-Sign",
     "RecepientList": "Liste des destinataires",
     "NewEsignRequest": "Nouvelle demande de signature électronique",
@@ -810,8 +807,9 @@
     "SelectTemplateType": "Utilisez un modèle existant ou ajoutez un nouveau modèle.",
     "Recepients": "Bénéficiaires",
     "SignatureBasicInformation": "Commencez par saisir les informations de base sur votre document, puis appuyez sur suivant.",
-    "SendDocumentNow": "Envoyez le document tout de suite."
->>>>>>> 806d0db6 (feat: add new eSign request form)
+    "SendDocumentNow": "Envoyez le document tout de suite.",
+    "RecepientDetail": "Détail du destinataire",
+    "EmailInfo": "Informations e-mail"
   },
   "Drawer": {
     "UnSubscribeMsg": "Veuillez sélectionner une raison pour vous désinscrire de la newsletter. Cela nous aidera à améliorer nos services.",

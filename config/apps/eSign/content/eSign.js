@@ -92,6 +92,10 @@ export default {
       },
       fields: {
         Email: {
+          form: {
+            caption: 'Common.Email',
+            displayOrder: 2,
+          },
           displayOrder: 1,
           caption: 'Common.EmailCaption',
           searchEnable: true,
@@ -100,6 +104,10 @@ export default {
           type: 'string',
         },
         FullName: {
+          form: {
+            caption: 'Common.FullName',
+            displayOrder: 1,
+          },
           displayOrder: 2,
           caption: 'Common.FullName',
           searchEnable: true,
@@ -115,7 +123,7 @@ export default {
         },
         actions: {
           new: {
-            hidden: true,
+            hidden: false,
           },
           edit: {
             hidden: true,

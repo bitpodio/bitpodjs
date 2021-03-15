@@ -32,14 +32,16 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn
-            color="blue darken-1"
-            text
-            @click="addNewTemplateFormDialog = false"
-          >
+          <v-progress-circular
+            v-if="newTemplateFormLoading"
+            class="mx-5"
+            indeterminate
+            color="primary"
+          ></v-progress-circular>
+          <v-btn depressed @click="addNewTemplateFormDialog = false">
             <i18n path="Drawer.Close" />
           </v-btn>
-          <v-btn color="blue darken-1" text @click="handleAddNewTemplateForm">
+          <v-btn color="primary" depressed @click="handleAddNewTemplateForm">
             <i18n path="Drawer.Save" />
           </v-btn>
         </v-card-actions>
@@ -66,16 +68,16 @@
               </v-btn>
             </div>
             <v-tabs v-model="curentTab" left height="36">
-              <v-tab :disabled="disableNext" class="px-0 mr-4">
+              <v-tab class="px-0 mr-4">
                 <i18n path="Common.Template" />
               </v-tab>
-              <v-tab :disabled="disableNext" class="px-0 mr-4">
+              <v-tab class="px-0 mr-4">
                 <i18n path="Common.Recepients" />
               </v-tab>
               <v-tab class="px-0 mr-4">
-                <i18n path="Common.BasicInfo" />
+                <i18n path="Common.EmailInfo" />
               </v-tab>
-              <v-tab :disabled="disableNext" class="px-0 mr-4">
+              <v-tab :disabled="disableTab" class="px-0 mr-4">
                 <i18n path="Common.Verify" />
               </v-tab>
             </v-tabs>
@@ -172,28 +174,7 @@
                           height="250"
                           width="250"
                         >
-                          <div v-if="item.ImageURL !== null" class="pa-1">
-                            <v-img
-                              :src="item.ImageURL"
-                              :lazy-src="item.ImageURL"
-                              aspect-ratio="1"
-                              min-height="240"
-                              max-height="240"
-                              contain
-                            >
-                              <template v-slot:placeholder>
-                                <v-img
-                                  :src="
-                                    $config.cdnUri + 'new-invitee-image.png'
-                                  "
-                                  min-height="200"
-                                  max-height="200"
-                                >
-                                </v-img>
-                              </template>
-                            </v-img>
-                          </div>
-                          <div v-else class="pa-1">
+                          <div class="pa-1">
                             <v-img
                               :src="$config.cdnUri + 'new-invitee-image.png'"
                               class="grey lighten-2"
@@ -201,6 +182,11 @@
                               max-height="200"
                             >
                             </v-img>
+                          </div>
+                          <div
+                            class="text-truncate text-center text-capitalize text-h5 pb-5"
+                          >
+                            {{ item.Name }}
                           </div>
                         </v-card>
                         <div
@@ -218,12 +204,10 @@
                             class="ma-2"
                             outlined
                             color="primary"
-                            @click="setPreview(item)"
+                            :href="item.DocumentUrl"
+                            target="_blank"
                             ><i18n path="Drawer.View"
                           /></v-btn>
-                        </div>
-                        <div class="text-truncate text-center text-capitalize">
-                          {{ item.Name }}
                         </div>
                       </div>
                     </v-hover>
@@ -476,7 +460,7 @@
                           >fa-address-book-o</v-icon
                         >
                         <h4 class="mt-1 body-1">
-                          <i18n path="Common.ContactDetail" />
+                          <i18n path="Common.RecepientDetail" />
                         </h4>
                       </v-flex>
                     </div>
@@ -537,6 +521,11 @@ export default {
       type: Boolean,
       required: true,
     },
+    refresh: {
+      type: Function,
+      default: () => false,
+      required: false,
+    },
   },
   data() {
     return {
@@ -558,7 +547,9 @@ export default {
       addNewTemplateFormName: '',
       addNewTemplateFormURL: '',
       disableNext: false,
+      disableTab: true,
       postEsignRequestData: {},
+      newTemplateFormLoading: false,
     }
   },
   watch: {
@@ -574,8 +565,13 @@ export default {
       }
     },
     subject(val) {
-      if (val !== '') this.disableNext = false
-      else if (this.curentTab === 2) this.disableNext = true
+      if (val !== '') {
+        this.disableNext = false
+        this.disableTab = false
+      } else if (this.curentTab === 2) {
+        this.disableNext = true
+        this.disableTab = true
+      }
     },
   },
   mounted() {
@@ -602,6 +598,7 @@ export default {
       }
     },
     content() {
+      console.log(this.contents)
       return this.contents ? this.contents.eSignRequest : null
     },
     updateList(data) {
@@ -638,15 +635,17 @@ export default {
         )
         if (response) {
           console.log(response)
+          this.newTemplateDialog = false
+          this.refresh()
         }
       } catch (err) {
         console.error(err)
       }
     },
     chooseTemplate(index) {
-      this.choosedTemplate = index
       switch (index) {
         case 1:
+          this.choosedTemplate = 0
           this.addNewTemplateFormDialog = true
           break
         case 2:
@@ -656,32 +655,43 @@ export default {
       }
     },
     async handleAddNewTemplateForm() {
-      const addNewTemplateFormObject = {
-        Name: this.addNewTemplateFormName,
-        DocumentUrl: this.addNewTemplateFormURL,
-      }
-      const bitpodURL = `${this.$bitpod.getApiUrl()}ESIGNTEMPLATES`
-      try {
-        const response = await this.$axios.$post(
-          bitpodURL,
-          addNewTemplateFormObject
-        )
-        if (response) {
-          this.postEsignRequestData = {
-            ...this.postEsignRequestData,
-            documentId: response.id,
-            documentUrl: response.DocumentUrl,
-          }
-          this.choosedTemplate = 0
-          this.curentTab = 1
-          console.log(response)
+      if (
+        this.addNewTemplateFormName.length < 2 ||
+        this.addNewTemplateFormURL.length < 5
+      ) {
+        this.snackbar = true
+        this.snackbarText = 'Please enter valid input'
+      } else {
+        this.newTemplateFormLoading = true
+        const addNewTemplateFormObject = {
+          Name: this.addNewTemplateFormName,
+          DocumentUrl: this.addNewTemplateFormURL,
         }
-      } catch (err) {
-        console.error(err)
+        const bitpodURL = `${this.$bitpod.getApiUrl()}ESIGNTEMPLATES`
+        try {
+          const response = await this.$axios.$post(
+            bitpodURL,
+            addNewTemplateFormObject
+          )
+          if (response) {
+            this.postEsignRequestData = {
+              ...this.postEsignRequestData,
+              documentId: response.id,
+              documentUrl: response.DocumentUrl,
+            }
+            this.newTemplateFormLoading = false
+            this.choosedTemplate = 0
+            this.curentTab = 1
+            console.log(response)
+          }
+        } catch (err) {
+          this.snackbar = true
+          this.snackbarText = 'Request Failed'
+          console.error(err)
+        }
+        this.RTEValue = 'template'
+        this.addNewTemplateFormDialog = false
       }
-      console.log(addNewTemplateFormObject)
-      this.RTEValue = 'template'
-      this.addNewTemplateFormDialog = false
     },
     async getExistingTemplate() {
       const bitpodURL = `${this.$bitpod.getApiUrl()}ESIGNTEMPLATES`
@@ -712,6 +722,14 @@ export default {
 }
 </script>
 <style scoped>
+.contactsGrid {
+  padding-right: 12px;
+}
+
+.contactsGrid:hover {
+  padding-right: 6px;
+}
+
 .invite-inner {
   height: calc(100vh - 100px);
 }

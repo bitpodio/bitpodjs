@@ -31,7 +31,7 @@
               <v-card-text
                 class="font-weight-medium text-center positionRelative subtitle-1 seat-card pb-0"
               >
-                <i class="fa fa-grid-alt fs-36 warning--text"></i>
+                <i class="fa fa-document fs-36 warning--text"></i>
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on, attrs }">
                     <span v-bind="attrs">
@@ -39,7 +39,7 @@
                         class="body-1 grey--text text--darken-1 text-truncate"
                         v-on="on"
                       >
-                        {{ item.Name }}
+                        {{ item.DocumentTemplate }}
                       </div>
                     </span>
                   </template>
@@ -96,7 +96,7 @@
       </v-col>
     </v-flex>
     <div v-if="dialog">
-      <ESignForm :new-template-dialog.sync="dialog" />
+      <ESignForm :new-template-dialog.sync="dialog" :refresh="refresh" />
     </div>
   </div>
 </template>
@@ -111,6 +111,11 @@ export default {
   props: {
     items: { type: Array, default: () => [] },
     offset: { type: Boolean, default: false },
+    refresh: {
+      type: Function,
+      default: () => false,
+      required: false,
+    },
   },
   data() {
     return {
