@@ -11855,11 +11855,6 @@ url-parse-lax@^1.0.0:
   dependencies:
     prepend-http "^1.0.1"
 
-url-search-params-polyfill@^8.1.0:
-  version "8.1.0"
-  resolved "https://registry.yarnpkg.com/url-search-params-polyfill/-/url-search-params-polyfill-8.1.0.tgz#5c15b69687165bfd4f6c7d8a161d70d85385885b"
-  integrity sha512-MRG3vzXyG20BJ2fox50/9ZRoe+2h3RM7DIudVD2u/GY9MtayO1Dkrna76IUOak+uoUPVWbyR0pHCzxctP/eDYQ==
-
 url-toolkit@^2.1.3, url-toolkit@^2.1.6:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/url-toolkit/-/url-toolkit-2.2.1.tgz#89009ed3d62a3574de079532a7266c14d2cc1c4f"
@@ -12193,13 +12188,6 @@ vue-google-charts@^0.3.3:
   integrity sha512-dvp5C0m3uAfB7PbAWPOqnYGJLUKyK0NPmnjOE8FDUhVySeErojOPZVd5zNOq4m9RhhwmNFP31bsxVYNb+0+f9w==
   dependencies:
     debounce "^1.1.0"
-
-vue-gtm@^3.4.1:
-  version "3.4.1"
-  resolved "https://registry.yarnpkg.com/vue-gtm/-/vue-gtm-3.4.1.tgz#eb41baf407787a6fea1b38a583d4e0da5f5e9af1"
-  integrity sha512-ImKsIihUWY5DwVoaRlQp9pTuij4zIdzcAYbJ/mWc713dii2EhRPisHSk/MbhRmjIJ4Tf7hG71O5tnd4Wl3Hf2Q==
-  dependencies:
-    url-search-params-polyfill "^8.1.0"
 
 vue-hot-reload-api@^2.3.0:
   version "2.3.4"
