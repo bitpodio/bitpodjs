@@ -23,7 +23,13 @@
           </div>
         </v-card-title>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
-          <v-form ref="form" v-model="validDateRange" :lazy-validation="lazy">
+          <v-form
+            ref="form"
+            v-model="validDateRange"
+            :lazy-validation="lazy"
+            id="set-recurring-date-range-form"
+            @submit.prevent="setSchedule"
+          >
             <v-row>
               <v-col cols="12" class="mt-4 pb-0">
                 <Lookup
@@ -90,7 +96,13 @@
           </v-form>
         </v-card-text>
         <div class="px-6 px-md-10 px-lg-10 px-xl-15 mb-3">
-          <v-btn depressed color="primary" class="mr-1" @click="setSchedule">
+          <v-btn
+            depressed
+            color="primary"
+            class="mr-1"
+            type="submit"
+            form="set-recurring-date-range-form"
+          >
             <i18n path="Common.Apply" />
           </v-btn>
           <v-btn depressed color="grey lighten-2" @click="isDateRange = false">
@@ -125,6 +137,8 @@
             ref="durationform"
             v-model="validDuration"
             :lazy-validation="lazy"
+            id="set-recurring-duration-form"
+            @submit.prevent="setDuration"
           >
             <v-row>
               <v-col cols="12" class="mt-3">
@@ -142,7 +156,13 @@
           </v-form>
         </v-card-text>
         <div class="px-6 px-md-10 px-lg-10 px-xl-15 mb-3">
-          <v-btn depressed class="mr-1" color="primary" @click="setDuration">
+          <v-btn
+            depressed
+            class="mr-1"
+            color="primary"
+            type="submit"
+            form="set-recurring-duration-form"
+          >
             <i18n path="Common.Apply" />
           </v-btn>
           <v-btn depressed color="grey lighten-2" @click="isDuration = false">
@@ -173,7 +193,13 @@
           </div>
         </v-card-title>
         <v-card-text class="v-location px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
-          <v-form ref="phoneform" v-model="validPhone" :lazy-validation="lazy">
+          <v-form
+            ref="phoneform"
+            v-model="validPhone"
+            :lazy-validation="lazy"
+            id="set-recurring-phone-form"
+            @submit.prevent="setPhone"
+          >
             <v-row>
               <v-col cols="12" class="mt-3">
                 <v-text-field
@@ -188,7 +214,13 @@
           </v-form>
         </v-card-text>
         <div class="px-6 px-md-10 px-lg-10 px-xl-15 mb-3">
-          <v-btn depressed class="mr-1" color="primary" @click="setPhone">
+          <v-btn
+            depressed
+            class="mr-1"
+            color="primary"
+            type="submit"
+            form="set-recurring-phone-form"
+          >
             <i18n path="Common.Apply" />
           </v-btn>
           <v-btn depressed color="grey lighten-2" @click="isPhone = false">
@@ -223,6 +255,8 @@
             ref="meetingform"
             v-model="validOnlineMeeting"
             :lazy-validation="lazy"
+            id="set-recurring-online-form"
+            @submit.prevent="setOnlineMeeting"
           >
             <v-row>
               <v-col cols="12" class="mt-3">
@@ -242,7 +276,8 @@
             depressed
             class="mr-1"
             color="primary"
-            @click="setOnlineMeeting"
+            type="submit"
+            form="set-recurring-online-form"
           >
             <i18n path="Common.Apply" />
           </v-btn>
@@ -278,76 +313,86 @@
           </div>
         </v-card-title>
         <v-card-text class="v-location px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
-          <v-row>
-            <v-col cols="12" class="mt-3 mb-3 positionRelative">
-              <div v-if="addressClicked" class="address-legend">
-                {{ $t('Common.AddressRequired') }}
-              </div>
-              <no-ssr>
-                <vue-google-autocomplete
-                  id="map"
-                  ref="venueAddress.AddressLine"
-                  v-model="venueAddress.AddressLine"
-                  class="form-control pa-3 d-block rounded"
-                  :required="true"
-                  :placeholder="!addressClicked && $t('Common.AddressRequired')"
-                  @placechanged="getAddressData"
-                  @focus="removeSearchAddress(true)"
-                  @blur="focusOut"
-                  @change="changeAddressData($event)"
-                ></vue-google-autocomplete>
-              </no-ssr>
-              <div
-                v-show="addresslineMessage !== ''"
-                class="red--text pa-3 pt-0 body-1"
-              >
-                {{ addresslineMessage }}
-              </div>
-            </v-col>
-            <v-col cols="6" class="pb-0">
-              <v-text-field
-                v-model="venueAddress.City"
-                :label="$t('Common.City')"
-                outlined
-                dense
-                @change="changeAddress()"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="6" class="pb-0">
-              <v-text-field
-                v-model="venueAddress.State"
-                :label="$t('Common.State')"
-                outlined
-                dense
-                @change="changeAddress()"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="6" class="pb-0">
-              <v-text-field
-                v-model="venueAddress.Country"
-                :label="$t('Common.Country')"
-                outlined
-                dense
-                @change="changeAddress()"
-              ></v-text-field>
-            </v-col>
-            <v-col cols="6" class="pb-0">
-              <v-text-field
-                v-model="venueAddress.PostalCode"
-                :label="$t('Common.ZipCode')"
-                outlined
-                dense
-                @change="changeAddress()"
-              ></v-text-field>
-            </v-col>
-          </v-row>
+          <v-form
+            v-model="validCustomAddress"
+            :lazy-validation="lazy"
+            id="set-recurring-custom-form"
+            @submit.prevent="setCustomLocation"
+          >
+            <v-row>
+              <v-col cols="12" class="mt-3 mb-3 positionRelative">
+                <div v-if="addressClicked" class="address-legend">
+                  {{ $t('Common.AddressRequired') }}
+                </div>
+                <no-ssr>
+                  <vue-google-autocomplete
+                    id="map"
+                    ref="venueAddress.AddressLine"
+                    v-model="venueAddress.AddressLine"
+                    class="form-control pa-3 d-block rounded"
+                    :required="true"
+                    :placeholder="
+                      !addressClicked && $t('Common.AddressRequired')
+                    "
+                    @placechanged="getAddressData"
+                    @focus="removeSearchAddress(true)"
+                    @blur="focusOut"
+                    @change="changeAddressData($event)"
+                  ></vue-google-autocomplete>
+                </no-ssr>
+                <div
+                  v-show="addresslineMessage !== ''"
+                  class="red--text pa-3 pt-0 body-1"
+                >
+                  {{ addresslineMessage }}
+                </div>
+              </v-col>
+              <v-col cols="6" class="pb-0">
+                <v-text-field
+                  v-model="venueAddress.City"
+                  :label="$t('Common.City')"
+                  outlined
+                  dense
+                  @change="changeAddress()"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="6" class="pb-0">
+                <v-text-field
+                  v-model="venueAddress.State"
+                  :label="$t('Common.State')"
+                  outlined
+                  dense
+                  @change="changeAddress()"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="6" class="pb-0">
+                <v-text-field
+                  v-model="venueAddress.Country"
+                  :label="$t('Common.Country')"
+                  outlined
+                  dense
+                  @change="changeAddress()"
+                ></v-text-field>
+              </v-col>
+              <v-col cols="6" class="pb-0">
+                <v-text-field
+                  v-model="venueAddress.PostalCode"
+                  :label="$t('Common.ZipCode')"
+                  outlined
+                  dense
+                  @change="changeAddress()"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-form>
         </v-card-text>
         <div class="px-6 px-md-10 px-lg-10 px-xl-15 mb-3">
           <v-btn
             depressed
             class="mr-1"
             color="primary"
-            @click="setCustomLocation"
+            type="submit"
+            form="set-recurring-custom-form"
           >
             <i18n path="Common.Apply" />
           </v-btn>
@@ -389,6 +434,8 @@
             ref="personmeetingform"
             v-model="validPersonMeeting"
             :lazy-validation="lazy"
+            id="set-recurring-person-form"
+            @submit.prevent="setPersonMeeting"
           >
             <v-row>
               <v-col cols="12" class="mt-3">
@@ -406,7 +453,8 @@
             depressed
             color="primary"
             class="mr-1"
-            @click="setPersonMeeting"
+            type="submit"
+            form="set-recurring-person-form"
           >
             <i18n path="Common.Apply" />
           </v-btn>
@@ -492,7 +540,13 @@
           </div>
         </v-card-title>
         <v-card-text class="v-location px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
-          <v-form ref="typeform" v-model="validType" :lazy-validation="lazy">
+          <v-form
+            ref="typeform"
+            v-model="validType"
+            :lazy-validation="lazy"
+            id="set-recurring-type-form"
+            @submit.prevent="setType"
+          >
             <v-row>
               <v-col cols="12" class="mt-4 pb-0">
                 <Lookup
@@ -515,7 +569,13 @@
           </v-form>
         </v-card-text>
         <div class="px-6 px-md-10 px-lg-10 px-xl-15 mb-3">
-          <v-btn depressed color="primary" class="mr-1" @click="setType">
+          <v-btn
+            depressed
+            color="primary"
+            class="mr-1"
+            type="submit"
+            form="set-recurring-type-form"
+          >
             <i18n path="Common.Apply" />
           </v-btn>
           <v-btn depressed color="grey lighten-2" @click="isType = false">
@@ -574,6 +634,8 @@
                 ref="validBasicInfoForm"
                 v-model="validBasicInfo"
                 :lazy-validation="lazy"
+                id="new-recurringEvent-tab1-form"
+                @submit.prevent="next()"
               >
                 <v-row>
                   <v-col cols="12" class="pb-0">
@@ -622,6 +684,8 @@
                 ref="validTicketsForm"
                 v-model="validTickets"
                 :lazy-validation="lazy"
+                id="new-recurringEvent-tab2-form"
+                @submit.prevent="next()"
               >
                 <p>
                   <i18n path="Common.SetupEventTickets" />
@@ -1015,7 +1079,12 @@
           depressed
           color="primary"
           :disabled="!isUniqLinkValid || isInalidEventLink || !valid"
-          @click="next()"
+          type="submit"
+          :form="
+            currentTab === 1
+              ? 'new-recurringEvent-tab1-form'
+              : 'new-recurringEvent-tab2-form'
+          "
           ><i18n path="Drawer.Next"
         /></v-btn>
         <SaveBtn
