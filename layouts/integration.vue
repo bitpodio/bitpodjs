@@ -177,7 +177,7 @@ export default {
   mounted() {
     const loginStatus = this.$auth.strategy.token.get()
     if (!loginStatus) {
-      location.replace('/unauthorized')
+      location.replace(`${this.$config.basePublicPath}/unauthorized`)
     }
     const userInfo = userUtils.userCurrentOrgInfo(this.$store) || {}
     const userRoles = userInfo.roles || []
