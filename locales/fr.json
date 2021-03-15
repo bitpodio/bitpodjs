@@ -797,7 +797,9 @@
     "SelectTemplateType": "Utilisez un modèle existant ou ajoutez un nouveau modèle.",
     "Recepients": "Bénéficiaires",
     "SignatureBasicInformation": "Commencez par saisir les informations de base sur votre document, puis appuyez sur suivant.",
-    "SendDocumentNow": "Envoyez le document tout de suite."
+    "SendDocumentNow": "Envoyez le document tout de suite.",
+    "RecepientDetail": "Détail du destinataire",
+    "EmailInfo": "Informations e-mail"
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",

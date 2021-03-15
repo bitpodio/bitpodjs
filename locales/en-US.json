@@ -788,7 +788,7 @@
     "SubTotal": "Sub Total",
     "Esign":"E-Sign",
     "RecepientList": "Recepient List",
-    "NewEsignRequest": "New eSign Request",
+    "NewEsignRequest": "New E-Sign Request",
     "NewEsignTemplate": "New Signature Template",
     "SelectRecepients": "From the contact list below, select the contacts who should receive the document to be signed.",
     "CreateNewSignatureTemplate": "New Template",
@@ -798,7 +798,9 @@
     "SelectTemplateType": "Use an existing template or add a new template.",
     "Recepients": "Recepients",
     "SignatureBasicInformation": "Start with entering basic information about your document and then press next.",
-    "SendDocumentNow": "Send document right away."
+    "SendDocumentNow": "Send document right away.",
+    "RecepientDetail": "Recepient Details",
+    "EmailInfo": "Email Info"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",
