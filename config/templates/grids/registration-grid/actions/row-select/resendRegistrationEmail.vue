@@ -1,6 +1,11 @@
 <template>
   <v-col class="px-0">
-    <v-btn text small v-bind="attrs" v-on="on" @click="confirmResendMail">
+    <confirm ref="confirm"></confirm>
+    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true" width="2px"
+      ><div class="fs-16 text-center">
+        <i18n path="Common.ConfirmationEmailSent" /></div
+    ></v-snackbar>
+    <v-btn text small v-bind="attrs" v-on="on" @click="resendRegistrationEmail">
       <v-icon left>mdi-email-outline</v-icon>
       <i18n path="Common.ResendRegistrationEmail" />
     </v-btn>
@@ -19,52 +24,45 @@ export default {
       default: () => false,
       required: false,
     },
-    viewName: {
-      type: String,
-      default: '',
-    },
   },
-  mounted() {
-    this.$eventBus.$on('resend-reg-email', this.resendRegistrationEmail)
+  data() {
+    return {
+      snackbar: false,
+      timeout: 3000,
+    }
   },
-  beforeDestroy() {
-    this.$eventBus.$off('resend-reg-email')
-  },
-  methods: {
-    confirmResendMail() {
-      debugger
-      this.$eventBus.$emit(
-        'toggle-confirm',
-        this.viewName,
-        'resend-reg-email',
-        {
-          title: this.$t('Common.ResendRegistrationEmail'),
-          message: this.$t('Messages.Warn.ConfirmResendRegistrationEmail'),
-          options: { color: 'warning' },
-        }
-      )
-    },
-    async resendRegistrationEmail() {
-      const regIds = this.items.map((e) => e.id)
-      const url = this.$bitpod.getApiUrl()
-      const URL = `${url}CRMACTIVITIES/cloneActivityForResendEmail`
-      try {
-        await this.$axios.$post(URL, {
-          regIds,
-        })
-        this.$eventBus.$emit(
-          'toggle-snackbar',
-          this.viewName,
-          this.$t('Common.ConfirmationEmailSent'),
-          3000
-        )
-      } catch (e) {
-        console.error(
-          `Errors in config/templates/grids/eventegistations-grid/actions/row-select/resendRegistrationEmail.vue on resendRegistrationEmail method context: API: ${URL} \n regIds ${regIds}`,
-          e
-        )
+  watch: {
+    snackbar(newVal) {
+      if (!newVal) {
+        this.$parent.$parent.refresh()
       }
     },
-  }
+  },
+  methods: {
+    async resendRegistrationEmail() {
+      const regIds = this.items.map((e) => e.id)
+      const confirmResend = await this.$refs.confirm.open(
+        this.$t('Common.ResendRegistrationEmail'),
+        this.$t('Messages.Warn.ConfirmResendRegistrationEmail'),
+        { color: 'warning' }
+      )
+      if (confirmResend) {
+        try {
+          await this.$axios.$post(
+            `${this.$bitpod.getApiUrl()}CRMACTIVITIES/cloneActivityForResendEmail`,
+            {
+              regIds,
+            }
+          )
+          this.snackbar = true
+        } catch (e) {
+          console.error(
+            `Errors in config/templates/grids/registations-grid/actions/row-select/resendRegistrationEmail.vue on resendRegistrationEmail method context: regIds ${regIds}`,
+            e
+          )
+        }
+      }
+    },
+  },
 }
 </script>

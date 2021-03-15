@@ -1,11 +1,11 @@
 <template>
-  <v-form ref="form" v-model="valid">
-    <v-dialog
-      v-model="eventSetting"
-      persistent
-      scrollable
-      content-class="slide-form-default"
-    >
+  <v-dialog
+    v-model="eventSetting"
+    persistent
+    scrollable
+    content-class="slide-form-default"
+  >
+    <v-form ref="form" v-model="valid" @submit.prevent="submitForm">
       <v-card>
         <v-card-title
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
@@ -92,13 +92,15 @@
             :disabled="!valid || isInvalidEventLink"
             depressed
             :action="onSave"
+            :has-submit-action="true"
+            form-name="edit-eventSetting-form"
             class="ml-2"
             ><i18n path="Drawer.Save"
           /></SaveButton>
         </v-card-actions>
       </v-card>
-    </v-dialog>
-  </v-form>
+    </v-form>
+  </v-dialog>
 </template>
 
 <script>
@@ -195,9 +197,6 @@ export default {
       this.$emit('update:eventSetting', false)
       this.onReset()
     },
-    refresh() {
-      this.$refs.form.$parent.$parent.refresh()
-    },
     async onSave() {
       this.formData.Currency = this.currency
       this.formData.Privacy = this.privacy
@@ -218,7 +217,7 @@ export default {
             this.$t('Messages.Success.EventDetailsUpdateSuccess')
           )
           this.$emit('update:snackbar', true)
-          this.refresh()
+          this.$eventBus.$emit('update-event-details')
           this.data.event = res
         }
       } catch (e) {
@@ -281,6 +280,9 @@ export default {
         this.isInvalidEventLink = false
         this.uniqueLinkMessage = ''
       }
+    },
+    submitForm() {
+      this.$eventBus.$emit('form-submitted', 'edit-eventSetting-form')
     },
   },
   apollo: {

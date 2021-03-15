@@ -21,7 +21,7 @@
       />
     </v-list-item>
     <v-list-item>
-      <resendRegistrationEmail :items="items" :view-name="viewName" />
+      <resendRegistrationEmail :items="items" />
     </v-list-item>
   </div>
 </template>

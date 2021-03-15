@@ -27,7 +27,12 @@
           </div>
         </v-card-title>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
-          <v-form ref="form" v-model="valid" :lazy-validation="lazy">
+          <v-form
+            ref="form"
+            v-model="valid"
+            :lazy-validation="lazy"
+            @submit.prevent="submitForm"
+          >
             <v-row>
               <v-col cols="12">
                 <v-text-field
@@ -191,6 +196,8 @@
             :label="this.$t('Drawer.Save')"
             depressed
             :action="onSave"
+            :has-submit-action="true"
+            form-name="edit-eventTickets-form"
           ></SaveBtn>
         </v-card-actions>
       </v-card>
@@ -579,6 +586,9 @@ export default {
           e
         )
       }
+    },
+    submitForm() {
+      this.$eventBus.$emit('form-submitted', 'edit-eventTickets-form')
     },
   },
 }

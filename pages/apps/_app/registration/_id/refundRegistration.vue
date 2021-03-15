@@ -11,12 +11,17 @@
         {{ snackbarText }}
       </div>
     </v-snackbar>
-    <v-form ref="form" v-model="valid" :lazy-validation="lazy">
-      <v-dialog
-        v-model="isRefund"
-        persistent
-        scrollable
-        content-class="slide-form-default"
+    <v-dialog
+      v-model="isRefund"
+      persistent
+      scrollable
+      content-class="slide-form-default"
+    >
+      <v-form
+        ref="form"
+        v-model="valid"
+        :lazy-validation="lazy"
+        @submit.prevent="submitForm"
       >
         <v-card>
           <v-card-title
@@ -108,13 +113,15 @@
               :disabled="!valid"
               depressed
               :action="onSave"
+              :has-submit-action="true"
+              form-name="refund-registrationMain-form"
               class="ml-2"
               ><i18n path="Drawer.Submit"
             /></SaveBtn>
           </v-card-actions>
         </v-card>
-      </v-dialog>
-    </v-form>
+      </v-form>
+    </v-dialog>
   </div>
 </template>
 
@@ -261,6 +268,9 @@ export default {
         this.snackbar = true
         return res
       }
+    },
+    submitForm() {
+      this.$eventBus.$emit('form-submitted', 'refund-registrationMain-form')
     },
   },
   apollo: {

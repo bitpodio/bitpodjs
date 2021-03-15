@@ -415,7 +415,7 @@ export default {
             this.$t('Messages.Success.EventRegSiteDetailsUpdateSuccess')
           )
           this.$emit('update:snackbar', true)
-          this.refresh()
+          this.$eventBus.$emit('update-event-details')
           this.sectionHeading = res._sectionHeading
         }
       } catch (e) {

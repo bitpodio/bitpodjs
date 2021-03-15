@@ -29,7 +29,12 @@
           </div>
         </v-card-title>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
-          <v-form ref="form" v-model="valid" :lazy-validation="lazy">
+          <v-form
+            ref="form"
+            v-model="valid"
+            :lazy-validation="lazy"
+            @submit.prevent="submitForm"
+          >
             <v-row>
               <v-col cols="12">
                 <v-text-field
@@ -185,6 +190,8 @@
             :label="this.$t('Drawer.Save')"
             depressed
             :action="onSave"
+            :has-submit-action="true"
+            form-name="new-eventTickets-form"
           ></SaveBtn>
         </v-card-actions>
       </v-card>
@@ -337,6 +344,7 @@ export default {
     },
   },
   async mounted() {
+    this.$eventBus.$on('on-event-update', this.updateDetails)
     try {
       const res = await this.getDropDownData('TicketType')
       if (res) {
@@ -361,7 +369,18 @@ export default {
     }
     this.getAttendeeType()
   },
+  beforeDestroy() {
+    this.$eventBus.$off('on-event-update')
+  },
   methods: {
+    updateDetails(newDetails) {
+      if (newDetails && this.eventData) {
+        this.eventData = { ...newDetails }
+        this.CheckEndDate = this.eventData.EndDate
+        this.getCurrencySymbol(this.eventData.Currency)
+        this.getTicketDate()
+      }
+    },
     ticketCountRules() {
       return [
         (v) => {
@@ -568,6 +587,9 @@ export default {
           e
         )
       }
+    },
+    submitForm() {
+      this.$eventBus.$emit('form-submitted', 'edit-eventTickets-form')
     },
   },
   apollo: {

@@ -1,11 +1,16 @@
 <template>
   <v-layout>
-    <v-form ref="form" v-model="valid">
-      <v-dialog
-        v-model="selectExistingSeatMap"
-        persistent
-        scrollable
-        content-class="slide-form"
+    <v-dialog
+      v-model="selectExistingSeatMap"
+      persistent
+      scrollable
+      content-class="slide-form"
+    >
+      <v-form
+        ref="form"
+        v-model="valid"
+        id="select-existing-seatmap-form"
+        @submit.prevent="updateLayoutId(item.id)"
       >
         <v-card>
           <v-card-title
@@ -60,7 +65,8 @@
                               dense
                               small
                               color="primary"
-                              @click="updateLayoutId(item.id)"
+                              type="submit"
+                              form="select-existing-seatmap-form"
                               ><i18n path="Common.Select"
                             /></v-btn>
                           </div>
@@ -79,8 +85,8 @@
           </v-card-text>
           <v-divider></v-divider>
         </v-card>
-      </v-dialog>
-    </v-form>
+      </v-form>
+    </v-dialog>
     <v-snackbar v-model="snackbar" timeout="500" :top="true">
       <div class="text-center">
         {{ snackbarText }}
