@@ -92,9 +92,11 @@ export default {
         'admin-default-template-logo.png'
       if (str) {
         if (items.regType !== null) {
-          const index = document && document
-            .getElementsByClassName('badge-category')[0]
-            .outerHTML.indexOf('background')
+          const index =
+            document &&
+            document
+              .getElementsByClassName('badge-category')[0]
+              .outerHTML.indexOf('background')
           str = str.replace(
             document.getElementsByClassName('badge-category')[0].outerHTML &&
               document
