@@ -12249,6 +12249,11 @@ vue-style-loader@^4.1.0:
     hash-sum "^1.0.2"
     loader-utils "^1.0.2"
 
+vue-tag-manager@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/vue-tag-manager/-/vue-tag-manager-0.1.2.tgz#9602f944118a4fc849c1cff80aa3f57439685994"
+  integrity sha512-w1dKcPiBSpVZfsjyL+wdjjBjB1KWWnDjOQuKvbDa7JXjUDB5gOoD3fp2w4zRYCW0Ia5VW/k8ZFWMC+6Ldn/3YA==
+
 vue-template-compiler@^2.6.11:
   version "2.6.11"
   resolved "https://registry.yarnpkg.com/vue-template-compiler/-/vue-template-compiler-2.6.11.tgz#c04704ef8f498b153130018993e56309d4698080"
