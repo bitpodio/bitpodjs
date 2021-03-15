@@ -413,6 +413,10 @@ export default {
     await this.$apolloHelpers.onLogin(token, undefined, { expires: 7 })
   },
   mounted() {
+    const loginStatus = this.$auth.strategy.token.get()
+    if (!loginStatus) {
+      location.replace(`${this.$config.basePublicPath}/unauthorized`)
+    }
     const userInfo = userUtils.userCurrentOrgInfo(this.$store) || {}
     const userRoles = userInfo.roles || []
     this.allowUser = userRoles.length === 1 && userRoles.includes('$orguser')

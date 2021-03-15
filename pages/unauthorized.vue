@@ -11,7 +11,7 @@
         v-if="$auth.$state.loggedIn"
       >
         or click the logout button below to log into a different account</span
-      >.
+      ><span v-else> or click the button below to log into an account</span>.
     </p>
     <v-btn
       v-if="$auth.$state.loggedIn"
@@ -22,6 +22,9 @@
       @click="onLogout"
     >
       <i18n path="Common.Logout" />
+    </v-btn>
+    <v-btn v-else color="primary" class="mt-2" to="/">
+      <i18n path="Common.Login" />
     </v-btn>
   </div>
 </template>
