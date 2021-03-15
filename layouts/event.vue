@@ -475,11 +475,11 @@ export default {
       )
       this.$refs.iframe.contentWindow.postMessage(document.cookie, '*')
     },
-    async messageReceived(e) {
+    messageReceived(e) {
       console.log('message received from the the iframe', e.data)
       if (e.data === 'success' && this.logoutClicked) {
-        await this.$apolloHelpers.onLogout()
         this.$auth.logout()
+        this.$apolloHelpers.onLogout()
       }
     },
   },
