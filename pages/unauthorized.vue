@@ -11,7 +11,7 @@
         v-if="$auth.$state.loggedIn"
       >
         or click the logout button below to log into a different account</span
-      ><span v-else> or click the button below to log into an account.</span>.
+      ><span v-else> or click the button below to log into an account</span>.
     </p>
     <v-btn
       v-if="$auth.$state.loggedIn"
