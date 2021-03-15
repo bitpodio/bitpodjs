@@ -177,6 +177,10 @@ export default {
     }
   },
   mounted() {
+    const loginStatus = this.$auth.strategy.token.get()
+    if (!loginStatus) {
+      location.replace('/unauthorized')
+    }
     const userInfo = userUtils.userCurrentOrgInfo(this.$store) || {}
     const userRoles = userInfo.roles || []
     this.allowUpgrade = userRoles.includes('$orgowner')
