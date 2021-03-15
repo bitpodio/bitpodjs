@@ -31,6 +31,8 @@ query($filters: JSON, $where: JSON) {
           }
           regType {
             Name
+            ColorCode
+            id
           }
           registration {
             id
