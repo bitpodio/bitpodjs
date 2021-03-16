@@ -446,7 +446,9 @@ export default {
             const res = await this.$axios.$post(url, data)
             if (res) {
               console.log('res', res)
-              window.ga('set', 'userId', checkId)
+              window.ga('create', 'UA-192083281-1', 'auto') // create tracking object
+              window.ga('set', 'userId', checkId) // userId set after tracking object
+              window.ga('send', 'pageview')
               window.ga(function (tracker) {
                 console.log('tracker', tracker)
               })
@@ -460,7 +462,9 @@ export default {
       } catch (e) {
         console.error(`error, context: ${url}`, e)
       }
-      window.ga('set', 'userId', checkId)
+      window.ga('create', 'UA-192083281-1', 'auto') // create tracking object
+      window.ga('set', 'userId', checkId) // userId set after tracking object
+      window.ga('send', 'pageview')
       window.ga(function (tracker) {
         console.log('tracker', tracker)
       })
