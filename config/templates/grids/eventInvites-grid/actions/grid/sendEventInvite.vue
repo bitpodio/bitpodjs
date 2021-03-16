@@ -572,11 +572,11 @@
                 >
                   <v-col cols="12" class="red lighten-5">
                     <h4 class="body-1 py-2">
-                      <i18n path="Common.ContentDetails" />
+                      <i18n path="Common.ContactDetails" />
                     </h4>
                     <v-flex class="flexInLargeScreen">
                       <h5 class="body-2 mt-2 mr-2">
-                        <i18n path="Common.NotAddedContent" />
+                        <i18n path="Common.NotAddedContact" />
                       </h5>
                       <v-btn color="blue" outlined @click="curentTab = 2"
                         ><i18n path="Common.SelectContact"
@@ -587,11 +587,11 @@
                 <v-row v-else-if="!RTEValue" class="ma-3 ml-0 mb-6">
                   <v-col cols="12" class="red lighten-5">
                     <h4 class="body-1 py-2">
-                      <i18n path="Common.ContactDetails" />
+                      <i18n path="Common.ContentDetails" />
                     </h4>
                     <v-flex class="flexInLargeScreen">
                       <h5 class="body-2 mt-2 mr-2">
-                        <i18n path="Common.NotAddedContact" />
+                        <i18n path="Common.NotAddedContent" />
                       </h5>
                       <v-btn color="blue" outlined @click="curentTab = 1"
                         ><i18n path="Common.SelectContent"
