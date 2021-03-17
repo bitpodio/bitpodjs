@@ -1,6 +1,6 @@
 <template>
   <div class="public-page-main">
-    <div v-if="gqlError !== ''" class="pt-3">
+    <div v-if="error !== ''" class="pt-3">
       <i18n path="Common.AccessRequired" />
     </div>
     <div v-else>
@@ -728,7 +728,7 @@ export default {
       recentBuyersEmpty: false,
       saleEventCount: 0,
       buyersCount: 0,
-      gqlError: '',
+      error: '',
     }
   },
   mounted() {
@@ -1047,9 +1047,7 @@ export default {
         }
       },
       error(error) {
-        if (error.message.split(':')[1] === ' Access denied') {
-          this.gqlError = error
-        }
+        this.error = error
         this.loading = 0
       },
       prefetch: false,
@@ -1111,9 +1109,7 @@ export default {
         }
       },
       error(error) {
-        if (error.message.split(':')[1] === ' Access denied') {
-          this.gqlError = error
-        }
+        this.error = error
         this.loading = 0
       },
       prefetch: false,
@@ -1163,9 +1159,7 @@ export default {
         }
       },
       error(error) {
-        if (error.message.split(':')[1] === ' Access denied') {
-          this.gqlError = error
-        }
+        this.error = error
         this.loading = 0
       },
       prefetch: false,
