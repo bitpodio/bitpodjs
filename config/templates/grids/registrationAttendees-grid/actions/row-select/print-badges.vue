@@ -72,7 +72,6 @@ export default {
       this.$refs.iframe.contentWindow.document.close()
     },
     getBadge(str, items) {
-      debugger
       const logoUrl =
         nuxtconfig.publicRuntimeConfig.cdnUri +
         'admin-default-template-logo.png'
