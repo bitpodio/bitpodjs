@@ -15,13 +15,7 @@
         </div>
       </v-card-title>
       <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
-        <v-form
-          ref="form"
-          v-model="valid"
-          :lazy-validation="lazy"
-          id="new-bitpodsurvey-form"
-          @submit.prevent="onSave(formData)"
-        >
+        <v-form ref="form" v-model="valid" :lazy-validation="lazy">
           <v-row>
             <v-col cols="12" class="pb-0">
               <v-text-field
@@ -53,11 +47,7 @@
       <v-card-actions
         class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
       >
-        <v-btn
-          color="primary"
-          depressed
-          type="submit"
-          form="new-bitpodsurvey-form"
+        <v-btn color="primary" depressed @click="onSave(formData)"
           ><i18n path="Drawer.Save"
         /></v-btn>
       </v-card-actions>

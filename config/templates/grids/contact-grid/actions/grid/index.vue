@@ -87,14 +87,7 @@ export default {
   },
   data() {
     return {
-      fieldNames: [
-        { Field: 'FirstName', Required: true },
-        { Field: 'LastName', Required: true },
-        { Field: 'Email', Required: true },
-        { Field: 'CellPhone', Required: true },
-        { Field: 'Organization', Required: false },
-        { Field: 'Job', Required: false },
-      ],
+      fieldNames: ['FirstName', 'LastName', 'Email', 'Organization', 'Job'],
     }
   },
   mounted() {

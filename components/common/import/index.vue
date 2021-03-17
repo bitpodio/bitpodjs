@@ -37,13 +37,7 @@
               <a :href="getDownloadLink()"
                 ><i18n path="Common.DownloadSampleFile"
               /></a>
-              <div
-                :class="
-                  modelName === 'Contact'
-                    ? fieldTableContact
-                    : fieldTableAttendee
-                "
-              >
+              <div class="fieldTable my-2">
                 <v-simple-table dense class="wrapper">
                   <template v-slot:default>
                     <thead>
@@ -54,29 +48,12 @@
                         <th class="text-left element">
                           <i18n path="Common.DataType" />
                         </th>
-                        <th
-                          v-if="modelName === 'Contact'"
-                          class="text-left element"
-                        >
-                          Required
-                        </th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr v-for="(item, index) in templateData" :key="index">
-                        <td>{{ item.Field }}</td>
+                        <td>{{ item }}</td>
                         <td class="element"><i18n path="Common.String" /></td>
-                        <td v-if="modelName === 'Contact'" class="element">
-                          <v-checkbox
-                            v-model="item.Required"
-                            :success="item.Required"
-                            :error="item.Required"
-                            dense
-                            disabled
-                            height="20"
-                            class="ma-0 pa-0 required"
-                          ></v-checkbox>
-                        </td>
                       </tr>
                     </tbody>
                   </template>
@@ -118,17 +95,8 @@
               depressed
               :disabled="!fileList.length"
               @click="importContacts"
-              ><i18n path="Common.Import" /><v-icon
-                v-show="keyPressed"
-                right
-                dark
-              >
-                mdi-spin mdi-loading mdi-24px
-              </v-icon></v-btn
-            >
-            <div class="fs-14 pl-3 statusMessage primary--text">
-              {{ statusMessage }}
-            </div>
+              ><i18n path="Common.Import"
+            /></v-btn>
           </v-card-actions>
         </v-card>
       </template>
@@ -172,18 +140,7 @@ export default {
       snackbarText: '',
       timeout: 3000,
       snackbar: false,
-      keyPressed: false,
-      fieldTableContact: 'fieldTableContact my-2',
-      fieldTableAttendee: 'fieldTable my-2',
-      statusMessage: '',
     }
-  },
-  watch: {
-    dialog(newVal) {
-      if (newVal) {
-        this.statusMessage = ''
-      }
-    },
   },
   methods: {
     getDownloadLink() {
@@ -196,9 +153,6 @@ export default {
       this.selectedFile = data
     },
     async importContacts() {
-      this.keyPressed = true
-      this.statusMessage = this.$t('Messages.Success.ContactImportSuccess')
-      this.fileList = []
       const url = this.$bitpod.getApiUrl()
       const mappingRes = await this.$axios.$get(
         `${url}mappings?filter={"where":{"mappingName":"${this.modelName}"}}`
@@ -225,40 +179,20 @@ export default {
               JobId: obj.jobId,
               EventId: this.$route.params.id,
             }
-            const importJobResponse = await this.$axios.post(
-              `${url}ImportJobs`,
-              importObj
-            )
-            if (importJobResponse) {
-              let success = 0
-              const importJobId = importJobResponse.data.id
-              while (success !== 1) {
-                const response = await this.$axios.get(
-                  `${url}ImportJobs/${importJobId}`
-                )
-                if (response.data.Status === 'Success') {
-                  this.dialog = false
-                  success = 1
-                  this.snackbarText = this.$t('Common.AttendeeImportSuccess')
-                  this.snackbar = true
-                } else if (response.data.Status === 'Failure') {
-                  this.snackbarText = this.$t('Common.AttendeeImportFailed')
-                  this.snackbar = true
-                  break
-                }
-              }
-            }
+            await this.$axios.post(`${url}ImportJobs`, importObj)
             this.$eventBus.$emit('grid-refresh')
           }
           if (this.modelName === 'Contact') {
+            this.dialog = false
             const jobId = res.data.res.jobId
+            this.snackbarText = this.$t('Messages.Success.ContactImportSuccess')
+            this.snackbar = true
             let success = 0
             while (success !== 1) {
               const response = await this.$axios.get(
                 `${url}jobDetails/${jobId}`
               )
               if (response.data.processStatus === 'Success') {
-                this.dialog = false
                 success = 1
                 this.snackbarText = this.$t('Messages.Success.ContactImported')
                 this.snackbar = true
@@ -281,7 +215,6 @@ export default {
       }
       this.dialog = false
       this.fileList = []
-      this.keyPressed = false
     },
   },
 }
@@ -293,21 +226,10 @@ export default {
 .fieldTable {
   width: 220px;
 }
-.fieldTableContact {
-  width: 290px;
-}
-.required {
-  position: relative;
-  top: 10px;
-  left: 10px;
-}
 .wrapper {
   border: 1px solid lightgray;
 }
 .element {
   border-left: 1px solid lightgray;
-}
-.statusMessage {
-  height: 14px;
 }
 </style>

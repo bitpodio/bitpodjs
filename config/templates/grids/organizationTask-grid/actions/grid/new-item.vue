@@ -35,13 +35,7 @@
           </div>
         </v-card-title>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
-          <v-form
-            ref="form"
-            v-model="valid"
-            :lazy-validation="lazy"
-            id="new-orgTask-form"
-            @submit.prevent="onSave"
-          >
+          <v-form ref="form" v-model="valid" :lazy-validation="lazy">
             <v-row>
               <v-col cols="12" sm="6" md="12">
                 <v-text-field
@@ -137,8 +131,7 @@
             color="primary"
             :disabled="!valid || isSaveButtonDisabled || task.Status === ''"
             depressed
-            type="submit"
-            form="new-orgTask-form"
+            @click.native="onSave"
             ><i18n path="Drawer.Save" />
           </v-btn>
         </v-card-actions>

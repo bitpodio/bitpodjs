@@ -581,12 +581,6 @@ export default {
       return this.contents ? this.contents.organization : null
     },
   },
-  mounted() {
-    this.$eventBus.$on('organization-details-updated', this.refresh)
-  },
-  beforeDestroy() {
-    this.$eventBus.$off('organization-details-updated')
-  },
   methods: {
     openOtherDialog(image) {
       this.otherDialogOpen = true

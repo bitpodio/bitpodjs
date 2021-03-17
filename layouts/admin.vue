@@ -248,13 +248,7 @@
               </div>
             </v-card-title>
             <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
-              <v-form
-                ref="form"
-                id="new-user-form"
-                v-model="valid"
-                :lazy-validation="lazy"
-                @submit.prevent="onSave"
-              >
+              <v-form ref="form" v-model="valid" :lazy-validation="lazy">
                 <v-row>
                   <v-col cols="12" sm="10" md="8" class="pb-0">
                     <v-text-field
@@ -273,11 +267,10 @@
               class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
             >
               <v-btn
-                type="submit"
                 color="primary"
                 :disabled="!valid"
                 depressed
-                form="new-user-form"
+                @click="onSave"
                 ><i18n path="Drawer.Save"
               /></v-btn>
             </v-card-actions>
@@ -436,27 +429,25 @@ export default {
       this.$refs.form.reset()
     },
     async onSave() {
-      if (this.valid) {
-        const url = this.$bitpod.getApiUrl()
-        this.formData.emailId = this.email
-        const orgId = this.$store.state.currentOrg.id
-        this.formData.id = orgId
-        try {
-          const res = await this.$axios.$post(
-            `${url}Organizations/${orgId}/Users`,
-            this.formData
-          )
-          if (res) {
-            this.dialog = false
-            this.onReset()
-            this.$eventBus.$emit('user-created')
-          }
-        } catch (e) {
-          console.log(
-            `Error in layouts/admin.vue while making a POST call to Users model from method onSave context:-URL:-${url}\n OrgId:-${orgId}\n formData:-${this.formData} `,
-            e
-          )
+      const url = this.$bitpod.getApiUrl()
+      this.formData.emailId = this.email
+      const orgId = this.$store.state.currentOrg.id
+      this.formData.id = orgId
+      try {
+        const res = await this.$axios.$post(
+          `${url}Organizations/${orgId}/Users`,
+          this.formData
+        )
+        if (res) {
+          this.dialog = false
+          this.onReset()
+          this.$eventBus.$emit('user-created')
         }
+      } catch (e) {
+        console.log(
+          `Error in layouts/admin.vue while making a POST call to Users model from method onSave context:-URL:-${url}\n OrgId:-${orgId}\n formData:-${this.formData} `,
+          e
+        )
       }
     },
     async userPlan() {

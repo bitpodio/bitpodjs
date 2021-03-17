@@ -26,13 +26,7 @@
           </div>
         </v-card-title>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0 small-form">
-          <v-form
-            ref="form"
-            v-model="valid"
-            :lazy-validation="lazy"
-            id="new-discount-member-form"
-            @submit.prevent="onSave"
-          >
+          <v-form ref="form" v-model="valid" :lazy-validation="lazy">
             <v-row>
               <v-col cols="12">
                 <Lookup
@@ -58,8 +52,7 @@
             color="primary"
             :disabled="!valid || isSaveButtonDisabled"
             depressed
-            type="submit"
-            form="new-discount-member-form"
+            @click.native="onSave"
             ><i18n path="Drawer.Save"
           /></v-btn>
         </v-card-actions>
@@ -114,32 +107,30 @@ export default {
       this.$refs.form && this.$refs.form.reset()
     },
     async onSave() {
-      if (this.valid) {
-        this.duplicateMessage = ''
-        this.isSaveButtonDisabled = true
-        const offerCodeId = this.$route.params.id
-        const baseUrl = this.$bitpod.getApiUrl()
-        let res = null
-        try {
-          res = await this.$axios.$put(
-            `${baseUrl}OfferCodes/${offerCodeId}/getMember/rel/${this.customerId}`
-          )
-        } catch (error) {
-          this.isSaveButtonDisabled = false
-          if (error.response.status === 422) {
-            this.duplicateMessage = this.$t('Messages.Error.MemberExists')
-          }
-          console.log(
-            `Error in Discountcode grid add member on Save function - context: offercodeid - ${offerCodeId} , customerId - ${this.customerId}`
-          )
+      this.duplicateMessage = ''
+      this.isSaveButtonDisabled = true
+      const offerCodeId = this.$route.params.id
+      const baseUrl = this.$bitpod.getApiUrl()
+      let res = null
+      try {
+        res = await this.$axios.$put(
+          `${baseUrl}OfferCodes/${offerCodeId}/getMember/rel/${this.customerId}`
+        )
+      } catch (error) {
+        this.isSaveButtonDisabled = false
+        if (error.response.status === 422) {
+          this.duplicateMessage = 'Already exist member!'
         }
-        if (res) {
-          this.dialog = false
-          this.refresh()
-          this.$refs.form.reset()
-          this.isSaveButtonDisabled = false
-          return res
-        }
+        console.log(
+          `Error in Discountcode grid add member on Save function - context: offercodeid - ${offerCodeId} , customerId - ${this.customerId}`
+        )
+      }
+      if (res) {
+        this.dialog = false
+        this.refresh()
+        this.$refs.form.reset()
+        this.isSaveButtonDisabled = false
+        return res
       }
     },
   },

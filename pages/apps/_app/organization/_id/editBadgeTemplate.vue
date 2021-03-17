@@ -1,12 +1,12 @@
 <template>
   <v-layout>
-    <v-dialog
-      v-model="editTemplate"
-      persistent
-      scrollable
-      content-class="slide-form-default"
-    >
-      <v-form ref="form" v-model="valid" @submit.prevent="submitForm">
+    <v-form ref="form" v-model="valid">
+      <v-dialog
+        v-model="editTemplate"
+        persistent
+        scrollable
+        content-class="slide-form-default"
+      >
         <v-card>
           <v-card-title
             class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
@@ -62,15 +62,13 @@
               depressed
               :disabled="!valid || isSaveButtonDisabled"
               :action="onSave"
-              :has-submit-action="true"
-              form-name="edit-badgeTemplate-form"
               class="ml-2"
               ><i18n path="Drawer.Save"
             /></SaveBtn>
           </v-card-actions>
         </v-card>
-      </v-form>
-    </v-dialog>
+      </v-dialog>
+    </v-form>
   </v-layout>
 </template>
 
@@ -198,9 +196,6 @@ export default {
           this.$t('Messages.Success.EditTemplateSuccess')
         )
       }
-    },
-    submitForm() {
-      this.$eventBus.$emit('form-submitted', 'edit-badgeTemplate-form')
     },
   },
 }

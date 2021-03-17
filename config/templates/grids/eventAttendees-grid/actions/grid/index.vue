@@ -93,13 +93,13 @@ export default {
   data() {
     return {
       fieldNames: [
-        { Field: 'Salutation' },
-        { Field: 'FirstName' },
-        { Field: 'LastName' },
-        { Field: 'Email' },
-        { Field: 'Phone' },
-        { Field: 'CompanyName' },
-        { Field: 'Job Title' },
+        'Salutation',
+        'FirstName',
+        'LastName',
+        'Email',
+        'Phone',
+        'CompanyName',
+        'Job Title',
       ],
     }
   },

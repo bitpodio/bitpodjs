@@ -207,7 +207,6 @@ export default {
       timeout: 1000,
       dialogBox: false,
       dialogText: '',
-      isRefreshed: false,
     }
   },
   mounted() {
@@ -323,7 +322,6 @@ export default {
     },
     onDots(serviceId) {
       this.selectedServiceId = serviceId && serviceId.toLowerCase()
-      this.isRefreshed = true
     },
     async updateConnection(item) {
       const id = item.id
@@ -336,10 +334,7 @@ export default {
             const res = await this.$axios.$put(url, data)
             if (res) {
               this.connectionStatus[this.selectedServiceId] = false
-              if (this.isRefreshed) {
-                this.refresh()
-                this.isRefreshed = false
-              }
+              this.refresh()
               this.snackbarText = this.$t(
                 'Messages.Success.ConnectionSuccessfully'
               )
@@ -382,10 +377,7 @@ export default {
                       this.snackbarText = this.$t(
                         'Messages.Success.ConnectionSuccessfully'
                       )
-                      if (this.isRefreshed) {
-                        this.refresh()
-                        this.isRefreshed = false
-                      }
+                      this.refresh()
                       this.snackbar = true
                     }
                   } catch (e) {
@@ -410,10 +402,7 @@ export default {
                 this.snackbarText = this.$t(
                   'Messages.Success.ConnectionSuccessfully'
                 )
-                if (this.isRefreshed) {
-                  this.refresh()
-                  this.isRefreshed = false
-                }
+                this.refresh()
                 this.snackbar = true
               }
             } catch (e) {

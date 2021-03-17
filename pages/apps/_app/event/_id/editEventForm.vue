@@ -1,11 +1,11 @@
 <template>
-  <v-dialog
-    v-model="eventForm"
-    persistent
-    scrollable
-    content-class="slide-form-default"
-  >
-    <v-form ref="form" v-model="valid" @submit.prevent="submitForm">
+  <v-form ref="form" v-model="valid">
+    <v-dialog
+      v-model="eventForm"
+      persistent
+      scrollable
+      content-class="slide-form-default"
+    >
       <v-card>
         <v-card-title
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
@@ -263,15 +263,13 @@
             "
             depressed
             :action="onSave"
-            :has-submit-action="true"
-            form-name="edit-eventForm-form"
             class="ml-2"
             ><i18n path="Drawer.Save"
           /></SaveButton>
         </v-card-actions>
       </v-card>
-    </v-form>
-  </v-dialog>
+    </v-dialog>
+  </v-form>
 </template>
 <script>
 import gql from 'graphql-tag'
@@ -477,6 +475,10 @@ export default {
 
       this.onReset()
     },
+    refreshGrid() {
+      this.$refs.form.$parent.$parent.refresh()
+      this.$apollo.queries.data.refresh()
+    },
     getAddressData(addressData, placeResultData, id) {
       this.addressClicked = true
       this.VenueAddress.AddressLine = addressData.route
@@ -545,15 +547,14 @@ export default {
           )
           if (res) {
             this.$eventBus.$emit('event-details-updated', res)
-            this.$eventBus.$emit('on-event-update', res)
-            this.$eventBus.$emit('update-event-details')
-            this.refresh()
             this.close()
             this.$emit(
               'update:snackbarText',
               this.$t('Messages.Success.EventDetailsUpdateSuccess')
             )
             this.$emit('update:snackbar', true)
+            this.refreshGrid()
+            this.refresh()
             this.data.event = res
           }
         } catch (e) {
@@ -577,15 +578,14 @@ export default {
           )
           if (res) {
             this.close()
-            this.$eventBus.$emit('on-event-update', res)
-            this.$eventBus.$emit('update-event-details', this.refresh)
-            this.refresh()
             this.$emit('update:snackbar', true)
             this.$emit(
               'update:snackbarText',
               this.$t('Messages.Success.EventDetailsUpdateSuccess')
             )
             this.$emit('update:snackbar', true)
+            this.refreshGrid()
+            this.refresh()
             return (this.data.event = res)
           }
         } catch (e) {
@@ -623,9 +623,6 @@ export default {
           e
         )
       }
-    },
-    submitForm() {
-      this.$eventBus.$emit('form-submitted', 'edit-eventForm-form')
     },
   },
   apollo: {

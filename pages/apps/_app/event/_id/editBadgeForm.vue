@@ -120,7 +120,7 @@ export default {
           Template: this.RTEValue,
         })
         if (res) {
-          this.$eventBus.$emit('update-event-details')
+          this.$refs.editBadgeDialog.$parent.$parent.refresh()
           this.close()
           this.$emit(
             'update:snackbarText',

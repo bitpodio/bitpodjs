@@ -49,12 +49,7 @@
             v-if="dialog"
             class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0"
           >
-            <v-form
-              ref="form"
-              v-model="valid"
-              :lazy-validation="lazy"
-              @submit.prevent="submitForm"
-            >
+            <v-form ref="form" v-model="valid" :lazy-validation="lazy">
               <div
                 v-show="timeSlotMessage !== ''"
                 class="col-md-12 pl-0 pb-2 red--text pa-3 pt-0 body-1"
@@ -544,8 +539,6 @@
               "
               depressed
               :action="onSave"
-              :has-submit-action="true"
-              form-name="new-eventRecurring-form"
               class="ml-2"
               :reset="resetBtn"
               ><i18n path="Drawer.Save"
@@ -1354,9 +1347,6 @@ export default {
           }
         }
       }
-    },
-    submitForm() {
-      this.$eventBus.$emit('form-submitted', 'new-eventRecurring-form')
     },
   },
   apollo: {

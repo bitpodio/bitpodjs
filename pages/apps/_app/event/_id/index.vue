@@ -508,24 +508,6 @@
                     <i18n path="Common.Other" />
                   </v-list-item-title>
                 </v-list-item>
-                <v-list-item
-                  v-if="data.event.LocationType === 'Bitpod Virtual'"
-                  class="cursorPointer"
-                  @click.native="checkLiveStreamClicked"
-                >
-                  <v-list-item-title>
-                    <File
-                      :field="liveStreamField"
-                      :no-btn-look="true"
-                      :block="true"
-                      :open-file-dialog="liveStreamBannerDialog"
-                      :value="checkArray"
-                      :hide-preview="true"
-                      @input="fileUploadedLiveStream"
-                    />
-                    <i18n path="Common.LiveStreamBanner" />
-                  </v-list-item-title>
-                </v-list-item>
               </v-list>
             </v-menu>
           </v-flex>
@@ -789,76 +771,6 @@
                   </div>
                 </v-card-title>
                 <v-img :src="displaySelectedOtherImage"> </v-img>
-              </v-card>
-            </v-dialog>
-            <v-card
-              v-for="image in data.event.LiveStreamBanner"
-              :key="image"
-              class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-5 pr-3 elevation-0 cardImg rounded cursorPointer"
-            >
-              <span class="cardDelete">
-                <i
-                  class="fa-trash pa-2 cursorPointer"
-                  @click="deleteLiveStreamBanner(image)"
-                ></i>
-              </span>
-              <v-img
-                :src="getAttachmentLink(image, true)"
-                :lazy-src="getAttachmentLink(image, true)"
-                aspect-ratio="1"
-                class="rounded white"
-                max-width="150"
-                max-height="150"
-                width="150"
-                @click.stop="liveStreamDialog = true"
-              >
-                <template v-slot:placeholder>
-                  <v-row
-                    class="fill-height ma-0"
-                    align="center"
-                    justify="center"
-                  >
-                    <v-progress-circular
-                      indeterminate
-                      color="grey lighten-5"
-                    ></v-progress-circular>
-                  </v-row>
-                </template>
-              </v-img>
-              <v-flex class="mt-1 d-flex">
-                <v-card-text class="pa-0 pb-1 d-inline-block"
-                  ><a
-                    class="d-inline-block text-truncate anchorTag"
-                    :href="getAttachmentLink(image, true)"
-                    >{{ logoName }}</a
-                  ></v-card-text
-                >
-                <copy :text-to-copy="getImageUrl(image)" :unique-id="image" />
-              </v-flex>
-              <v-card-text class="pa-0 mt-n2"
-                ><i18n path="Common.LiveStreamBanner"
-              /></v-card-text>
-            </v-card>
-            <v-dialog v-model="liveStreamDialog" max-width="600">
-              <v-card>
-                <v-card-title class="pa-1">
-                  <v-spacer></v-spacer>
-                  <div>
-                    <v-btn icon @click="liveStreamDialog = false">
-                      <v-icon>mdi-close</v-icon>
-                    </v-btn>
-                  </div>
-                </v-card-title>
-                <v-card-text class="pa-1">
-                  <v-card
-                    v-for="image in data.event.LiveStreamBanner"
-                    :key="image"
-                    class="mx-auto elevation-0"
-                    @click.stop="liveStreamDialog = true"
-                  >
-                    <v-img :src="getAttachmentLink(image, true)"> </v-img>
-                  </v-card>
-                </v-card-text>
               </v-card>
             </v-dialog>
           </div>
@@ -1631,14 +1543,11 @@ export default {
       bannerDialog: false,
       dbannerDialog: false,
       otherDialogOpen: false,
-      liveStreamDialog: false,
-      liveStreamBannerDialog: false,
       formData: {
         Logo: [],
         Images: [],
         ImagesURL: [],
         Other: [],
-        LiveStreamBanner: [],
       },
       eventData: {},
       checkArray: [],
@@ -1657,9 +1566,6 @@ export default {
       },
       otherFileField: {
         multiple: true,
-      },
-      liveStreamField: {
-        multiple: false,
       },
       bannerName: '',
       OtherImageName: [],
@@ -1771,12 +1677,10 @@ export default {
     setTimeout(this.openPrint, 3000)
     this.$eventBus.$on('update-seat-reservation', this.updateSeatReservation)
     this.$eventBus.$on('seat-map-triggered', this.getScrollPosition)
-    this.$eventBus.$on('update-event-details', this.refresh)
   },
   beforeDestroy() {
     this.$eventBus.$off('update-seat-reservation')
     this.$eventBus.$off('seat-map-triggered')
-    this.$eventBus.$off('update-event-details')
   },
   methods: {
     getScrollPosition() {
@@ -2128,20 +2032,6 @@ export default {
         )
       }
     },
-    async getLiveStreamName(imageId) {
-      const url = this.$bitpod.getApiUrl()
-      try {
-        const res = await this.$axios.$get(`${url}Attachments/${imageId}`)
-        if (res) {
-          this.logoName = res.fileName
-        }
-      } catch (e) {
-        console.error(
-          `Error in apps/event/_id/index.vue while making a GET call to Attachment model in method getLogoName context: URL:- ${url} \n ImageId:-${imageId}`,
-          e
-        )
-      }
-    },
     refresh() {
       this.$apollo.queries.data.refresh()
     },
@@ -2163,13 +2053,6 @@ export default {
       if (this.allow) {
         this.checkArray = []
         this.otherDialog = !this.otherDialog
-        this.allow = false
-      }
-    },
-    checkLiveStreamClicked() {
-      if (this.allow) {
-        this.checkArray = []
-        this.liveStreamBannerDialog = !this.liveStreamBannerDialog
         this.allow = false
       }
     },
@@ -2198,16 +2081,6 @@ export default {
       if (data.length > 0) {
         this.formData.Other.push(data)
         this.updateOtherImageGallery(data)
-      }
-    },
-    fileUploadedLiveStream(data) {
-      this.allow = true
-      if (data.length > 0) {
-        this.formData.LiveStreamBanner = []
-        this.formData.LiveStreamBanner.push(data[0])
-        this.updateEventGallery({
-          LiveStreamBanner: this.formData.LiveStreamBanner,
-        })
       }
     },
     async updateEventGallery(formData) {
@@ -2343,26 +2216,6 @@ export default {
       if (checkRes) {
         const res = await this.$axios.delete(
           `${url}Events/${this.$route.params.id}/Others/${id}`
-        )
-        if (res) {
-          this.snackbarText = this.$t(
-            'Messages.Success.AttachmentDeleteSuccess'
-          )
-          this.snackbar = true
-          this.refresh()
-        }
-      }
-    },
-    async deleteLiveStreamBanner(id) {
-      const url = this.$bitpod.getApiUrl()
-      const checkRes = await this.$refs.confirm.open(
-        this.$t('Common.DeleteImage'),
-        this.$t('Messages.Warn.DeleteImage'),
-        { color: 'error lighten-1' }
-      )
-      if (checkRes) {
-        const res = await this.$axios.delete(
-          `${url}Events/${this.$route.params.id}/LiveStream/${id}`
         )
         if (res) {
           this.snackbarText = this.$t(
@@ -2553,13 +2406,7 @@ export default {
         if (event[0] && event[0].Other && event[0].Other.length > 0) {
           this.getImageName()
         }
-        if (
-          event[0] &&
-          event[0].LiveStreamBanner &&
-          event[0].LiveStreamBanner.length > 0
-        ) {
-          this.getLiveStreamName(event[0].LiveStreamBanner[0])
-        }
+
         return {
           event: event.length > 0 ? event[0] : {},
           badge: badge.length > 0 ? badge[0] : {},

@@ -248,7 +248,7 @@ export default {
           ...this.formData,
         })
         if (res) {
-          this.$eventBus.$emit('update-event-details')
+          this.$refs.badgeDialog.$parent.$parent.refresh()
           this.close()
           this.$emit(
             'update:snackbarText',
