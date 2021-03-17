@@ -42,37 +42,6 @@ export default {
     }
   },
   methods: {
-    // getDefaultBadge(str,items) {
-    //   const logoUrl =
-    //     nuxtconfig.publicRuntimeConfig.cdnUri +
-    //     'admin-default-template-logo.png'
-    //   if (str) {
-    //     if (items.regType !== null) {
-    //       const index =
-    //         document &&
-    //         document
-    //           .getElementsByClassName('badge-category')[0]
-    //           .outerHTML.indexOf('background')
-    //       str = str.replace(
-    //         document.getElementsByClassName('badge-category')[0].outerHTML &&
-    //           document
-    //             .getElementsByClassName('badge-category')[0]
-    //             .outerHTML.substring(100, 118)
-    //             .split(':')[1],
-    //         `${items.regType && items.regType.ColorCode}`
-    //       )
-    //     }
-    //     str = str
-    //       .replace('{{ FullName }}', `${this.$auth.user.data.name}`)
-    //       .replace('{{ Category }}', `${this.getBadgeCategory}`)
-    //       .replace('{{ Organization }}', `${this.$store.state.currentOrg.name}`)
-    //       .replace(logoUrl, this.getAttachmentLink(this.logoId, true))
-    //     if (this.data.event && this.data.event.Title) {
-    //       str = str.replace('{{ EventName }}', `${this.data.event.Title}`)
-    //     }
-    //   }
-    //   return str
-    // },
     openPrintForm() {
       const logoUrl = `src="${
         nuxtconfig.publicRuntimeConfig.cdnUri +
