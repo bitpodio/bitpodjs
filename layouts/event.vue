@@ -323,6 +323,7 @@ import Help from '~/components/common/help'
 import OldSite from '~/components/common/oldsite'
 import Upgrade from '~/components/common/upgrade'
 import userUtils from '~/utility/userApps'
+import nuxtconfig from '~/nuxt.config'
 const murmurhash = require('murmurhash')
 export default {
   middleware: ['auth', 'authorization'],
@@ -433,7 +434,8 @@ export default {
   },
   methods: {
     async createUserHash(checkId) {
-      const url = `${this.$bitpod.getApiUrl()}UserHashes`
+      // const url = `${this.$bitpod.getApiUrl()}UserHashes`
+      const url = `https://${this.$config.axios.crmUrl}${nuxtconfig.axios.apiEndpoint}UserHashes`
       const data = { id: checkId, userId: this.$auth.user.data.email }
       debugger
       let filter = { where: { id: checkId } }
@@ -446,7 +448,7 @@ export default {
             const res = await this.$axios.$post(url, data)
             if (res) {
               console.log('res', res)
-              window.ga('create', 'UA-192083281-1', 'auto') // create tracking object
+              window.ga('create', this.$config.gaTrackingCode, 'auto') // create tracking object
               window.ga('set', 'userId', checkId) // userId set after tracking object
               window.ga('send', 'pageview')
               window.ga(function (tracker) {
@@ -462,7 +464,7 @@ export default {
       } catch (e) {
         console.error(`error, context: ${url}`, e)
       }
-      window.ga('create', 'UA-192083281-1', 'auto') // create tracking object
+      window.ga('create', this.$config.gaTrackingCode, 'auto') // create tracking object
       window.ga('set', 'userId', checkId) // userId set after tracking object
       window.ga('send', 'pageview')
       window.ga(function (tracker) {
