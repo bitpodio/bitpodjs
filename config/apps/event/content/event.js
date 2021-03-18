@@ -988,9 +988,15 @@ export default {
                 },
               },
               {
+                EndDate: null,
+              },
+              {
                 StartDate: {
                   gte: new Date(),
                 },
+              },
+              {
+                StartDate: null,
               },
             ],
           },
