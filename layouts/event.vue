@@ -437,37 +437,7 @@ export default {
     window.removeEventListener('message', this.messageReceived)
   },
   methods: {
-    async createUserHash(checkId) {
-      // const url = `${this.$bitpod.getApiUrl()}UserHashes`
-      const url = `https://${this.$config.axios.crmUrl}${nuxtconfig.axios.apiEndpoint}UserHashes`
-      const data = { id: checkId, userId: this.$auth.user.data.email }
-      debugger
-      let filter = { where: { id: checkId } }
-      filter = JSON.stringify(filter)
-      try {
-        const res = await this.$axios.$get(`${url}?filter=${filter}`)
-        if (res.length === 0) {
-          console.log('res', res)
-          try {
-            const res = await this.$axios.$post(url, data)
-            if (res) {
-              console.log('res', res)
-              window.ga('create', this.$config.gaTrackingCode, 'auto') // create tracking object
-              window.ga('set', 'userId', checkId) // userId set after tracking object
-              window.ga('send', 'pageview')
-              window.ga(function (tracker) {
-                console.log('tracker', tracker)
-              })
-              // this.$ga('set', 'userId', checkId)
-              debugger
-            }
-          } catch (e) {
-            console.error(`error, context: ${url} `, e)
-          }
-        }
-      } catch (e) {
-        console.error(`error, context: ${url}`, e)
-      }
+    createUserHash(checkId) {
       window.ga('create', this.$config.gaTrackingCode, 'auto') // create tracking object
       window.ga('set', 'userId', checkId) // userId set after tracking object
       window.ga('send', 'pageview')
