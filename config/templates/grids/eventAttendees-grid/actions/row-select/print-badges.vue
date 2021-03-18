@@ -101,7 +101,7 @@ export default {
             document.getElementsByClassName('badge-category')[0].outerHTML &&
               document
                 .getElementsByClassName('badge-category')[0]
-                .outerHTML.substring(100, 118)
+                .outerHTML.substring(index, 118)
                 .split(':')[1],
             `${items.regType && items.regType.ColorCode}`
           )
