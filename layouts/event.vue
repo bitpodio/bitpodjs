@@ -323,7 +323,6 @@ import Help from '~/components/common/help'
 import OldSite from '~/components/common/oldsite'
 import Upgrade from '~/components/common/upgrade'
 import userUtils from '~/utility/userApps'
-import nuxtconfig from '~/nuxt.config'
 const murmurhash = require('murmurhash')
 export default {
   middleware: ['auth', 'authorization'],
