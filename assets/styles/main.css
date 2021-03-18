@@ -738,10 +738,13 @@ table > tbody > tr:last-child .key-align {
   display: none !important;
 }
 .vjs-poster {
-    display: none !important;
+  display: none !important;
 }
 .video-js .vjs-modal-dialog {
   background: transparent !important;
+}
+.default-banner-label {
+  min-height: 24px;
 }
 @media (min-width: 1904px) {
   .boxviewlarge .v-data-table__wrapper {
