@@ -797,9 +797,7 @@
     "StopReceiveMails": "I no longer wanted to receive these mails",
     "NeverSignedForMails": "I never signed up for this mailing list",
     "Esign":"E-Sign",
-    "RecepientList": "Recepient List",
     "NewEsignRequest": "New E-Sign Request",
-    "NewEsignTemplate": "New Signature Template",
     "SelectRecepients": "From the contact list below, select the contacts who should receive the document to be signed.",
     "CreateNewSignatureTemplate": "New Template",
     "CreateNewSignatureTemplateDescription": "A place where you can add a new document template.",
@@ -807,10 +805,15 @@
     "ExistingSignatureTemplateDescription": "Ready-to-use templates to send documents quickly.",
     "SelectTemplateType": "Use an existing template or add a new template.",
     "Recepients": "Recepients",
+    "Recepient": "Recepient",
     "SignatureBasicInformation": "Start with entering basic information about your document and then press next.",
     "SendDocumentNow": "Send document right away.",
     "RecepientDetail": "Recepient Details",
-    "EmailInfo": "Email Info"
+    "EmailInfo": "Email Info",
+    "AddRecepient": "Add Recepient",
+    "Party": "Party",
+    "SelectRecepient": "Select Recepient",
+    "NewRecepient": "New Recepient"
   },
   "Drawer": {
     "UnSubscribeMsg": "Please select a reason to unsubscribe from newsletter. This will help us to improve our services.",

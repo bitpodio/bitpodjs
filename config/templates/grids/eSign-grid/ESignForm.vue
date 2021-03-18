@@ -8,7 +8,9 @@
     <v-dialog v-model="addNewTemplateFormDialog" persistent max-width="600px">
       <v-card>
         <v-card-title>
-          <span class="headline"><i18n path="Common.NewEsignTemplate" /></span>
+          <span class="headline"
+            ><i18n path="Common.CreateNewSignatureTemplate"
+          /></span>
         </v-card-title>
         <v-card-text>
           <v-container>
@@ -23,7 +25,7 @@
               <v-col cols="12">
                 <v-text-field
                   v-model="addNewTemplateFormURL"
-                  label="URL*"
+                  label="Google Document URL*"
                   required
                 ></v-text-field>
               </v-col>
@@ -32,18 +34,118 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-progress-circular
-            v-if="newTemplateFormLoading"
-            class="mx-5"
-            indeterminate
-            color="primary"
-          ></v-progress-circular>
           <v-btn depressed @click="addNewTemplateFormDialog = false">
             <i18n path="Drawer.Close" />
           </v-btn>
-          <v-btn color="primary" depressed @click="handleAddNewTemplateForm">
-            <i18n path="Drawer.Save" />
+          <SaveBtn
+            color="primary"
+            class="sendButtons"
+            :reset="toggleLoading"
+            :label="this.$t('Drawer.Send')"
+            :action="handleAddNewTemplateForm"
+          ></SaveBtn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <v-dialog v-model="addNewRecepientFormDialog" persistent max-width="600px">
+      <v-card v-if="addNewRecepientFormPage == 1">
+        <v-card-title>
+          <span class="headline"><i18n path="Common.AddRecepient" /></span>
+        </v-card-title>
+        <v-card-text>
+          <v-container>
+            <v-row>
+              <v-col cols="12">
+                <v-text-field
+                  v-model="addNewRecepientFormName"
+                  label="Name*"
+                  outlined
+                  required
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  v-model="addNewRecepientFormEmail"
+                  label="Email*"
+                  outlined
+                  required
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-select
+                  v-model="selectedParty"
+                  outlined
+                  :items="unselectedParties"
+                  :label="this.$t('Common.Party')"
+                >
+                </v-select>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            depressed
+            @click="
+              {
+                addNewRecepientFormDialog = false
+                addNewRecepientFormPage = 0
+              }
+            "
+          >
+            <i18n path="Drawer.Close" />
           </v-btn>
+          <SaveBtn
+            color="primary"
+            class="sendButtons"
+            :reset="toggleLoading"
+            :label="this.$t('Drawer.Send')"
+            :action="handleAddNewRecepientForm"
+          ></SaveBtn>
+        </v-card-actions>
+      </v-card>
+      <v-card v-else>
+        <v-card-title>
+          <span class="headline"><i18n path="Common.SelectRecepient" /></span>
+        </v-card-title>
+        <v-card-text>
+          <v-container>
+            <v-row>
+              <v-col cols="12">
+                <v-autocomplete
+                  v-model="selectedRecepient"
+                  :items="contactList"
+                  :item-text="(item) => `${item.FullName} (${item.Email})`"
+                  outlined
+                  :label="this.$t('Common.Recepient')"
+                  return-object
+                >
+                </v-autocomplete>
+              </v-col>
+              <v-col cols="12">
+                <v-select
+                  v-model="selectedParty"
+                  outlined
+                  :items="unselectedParties"
+                  :label="this.$t('Common.Party')"
+                >
+                </v-select>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn text @click="addNewRecepientFormPage = 1"
+            ><i18n path="Common.NewRecepient"
+          /></v-btn>
+          <v-spacer></v-spacer>
+          <v-btn depressed @click="addNewRecepientFormDialog = false">
+            <i18n path="Drawer.Close" />
+          </v-btn>
+          <v-btn color="primary" @click="handleSelectRecepient">
+            <i18n path="Drawer.Save"
+          /></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -71,13 +173,13 @@
               <v-tab class="px-0 mr-4">
                 <i18n path="Common.Template" />
               </v-tab>
-              <v-tab class="px-0 mr-4">
+              <v-tab :disabled="curentTab < 1" class="px-0 mr-4">
                 <i18n path="Common.Recepients" />
               </v-tab>
-              <v-tab class="px-0 mr-4">
+              <v-tab :disabled="curentTab < 2" class="px-0 mr-4">
                 <i18n path="Common.EmailInfo" />
               </v-tab>
-              <v-tab :disabled="disableTab" class="px-0 mr-4">
+              <v-tab :disabled="curentTab < 3" class="px-0 mr-4">
                 <i18n path="Common.Verify" />
               </v-tab>
             </v-tabs>
@@ -238,7 +340,7 @@
                       color="primary"
                       @click="
                         choosedTemplate = 0
-                        RTEValue = ''
+                        templateSelected = false
                       "
                       ><i18n path="Drawer.XDiscard"
                     /></v-btn>
@@ -252,50 +354,38 @@
                   </p>
                 </v-card>
                 <v-row>
-                  <v-col class="contactsGrid col-12 col-sm-6">
+                  <v-col class="contactsGrid col-12">
                     <div class="borderBottomGrey pb-1">
-                      <v-checkbox
-                        v-model="selectAll"
-                        class="ma-0 pa-0 float-right"
-                        :label="$t('Common.SelectAll')"
-                      >
-                      </v-checkbox>
-                      <v-icon size="18" class="mr-1">fa-address-book-o</v-icon>
-                      <h4 class="d-inline body-1">
-                        <i18n path="Common.Contacts" />
-                      </h4>
-                    </div>
-                    <div class="pr-3 mr-n3">
-                      <Grid
-                        :value="selectedList"
-                        view-name="InviteContacts"
-                        :content="content()"
-                        @onSelectedListChange="updateList"
-                      />
-                    </div>
-                  </v-col>
-                  <v-col class="contactsGrid col-12 col-sm-6">
-                    <div class="borderBottomGrey pb-1">
-                      <v-icon size="18">mdi-email-outline</v-icon>
-                      <h4 class="d-inline body-1">
-                        <i18n path="Common.RecepientList" />
-                      </h4>
+                      <v-layout class="pl-3 mb-n1" row justify-space-between>
+                        <div>
+                          <v-icon class="pb-1" size="18"
+                            >mdi-email-outline</v-icon
+                          >
+                          <h4 class="d-inline body-1">
+                            <i18n path="Common.Recepients" />
+                          </h4>
+                        </div>
+                        <v-btn text small @click="addRecepientFormOpen">
+                          <v-icon size="18">mdi-plus</v-icon>
+                          <i18n path="Common.New" />
+                        </v-btn>
+                      </v-layout>
                     </div>
                     <div>
                       <div
-                        v-for="(item, key) in selectedList"
-                        :key="item.Email"
+                        v-for="item in selectedList"
+                        :key="item.id"
                         class="borderBottomGrey py-2 pl-2"
                       >
                         <v-btn
                           class="float-right fc-icon"
                           text
                           small
-                          @click="unselectContact(key)"
+                          @click="unselectContact(item)"
                         >
                           <i class="fa fa-trash fs-16" aria-hidden="true"></i>
                         </v-btn>
-                        {{ item.FullName }} ({{ item.Email }})
+                        {{ item.type }} - {{ item.FullName }} ({{ item.Email }})
                       </div>
                     </div>
                   </v-col>
@@ -343,6 +433,14 @@
                           ></v-text-field>
                         </v-col>
                         <v-col cols="12" class="pb-0">
+                          <v-text-field
+                            v-model="message"
+                            :label="$t('Common.Message')"
+                            outlined
+                            dense
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12" class="pb-0">
                           <v-icon class="amber--text">fa-bulb</v-icon>
                           <v-card-text class="d-inline pa-0">
                             {{
@@ -359,10 +457,7 @@
                 </v-card>
               </v-tab-item>
               <v-tab-item class="tabContent">
-                <v-row
-                  v-if="!selectedList.length && !selectAll"
-                  class="ma-3 ml-0 mb-6"
-                >
+                <v-row v-if="!selectedList.length" class="ma-3 ml-0 mb-6">
                   <v-col cols="12" class="red lighten-5">
                     <h4 class="body-1 py-2">
                       <i18n path="Common.ContentDetails" />
@@ -377,7 +472,7 @@
                     </v-flex>
                   </v-col>
                 </v-row>
-                <v-row v-else-if="!RTEValue" class="ma-3 ml-0 mb-6">
+                <v-row v-else-if="!templateSelected" class="ma-3 ml-0 mb-6">
                   <v-col cols="12" class="red lighten-5">
                     <h4 class="body-1 py-2">
                       <i18n path="Common.ContactDetails" />
@@ -465,7 +560,7 @@
                       </v-flex>
                     </div>
                     <div
-                      v-for="(item, key) in selectedList"
+                      v-for="item in selectedList"
                       :key="item.Email"
                       class="borderBottomGrey py-2 pl-2"
                     >
@@ -473,7 +568,7 @@
                         class="float-right fc-icon"
                         text
                         small
-                        @click="unselectContact(key)"
+                        @click="unselectContact(item)"
                       >
                         <i class="fa fa-trash fs-16" aria-hidden="true"></i>
                       </v-btn>
@@ -507,12 +602,10 @@
 </template>
 
 <script>
-import Grid from '~/components/common/grid'
 import SaveBtn from '~/components/common/saveButton'
 import { configLoaderMixin } from '~/utility'
 export default {
   components: {
-    Grid,
     SaveBtn,
   },
   mixins: [configLoaderMixin],
@@ -533,51 +626,62 @@ export default {
       templateItems: [],
       selectedList: [],
       curentTab: 0,
-      subject: ``,
+      subject: '',
       senderName: (this.$auth && this.$auth.user.data.name) || '',
       sender: (this.$auth && this.$auth.user.data.email) || '',
       setReplyTo: (this.$auth && this.$auth.user.data.email) || '',
+      message: '',
       choosedTemplate: 0,
-      RTEValue: '',
+      templateSelected: false,
       snackbar: false,
       disableButton: false,
-      selectAll: false,
       isFrench: false,
       addNewTemplateFormDialog: false,
       addNewTemplateFormName: '',
       addNewTemplateFormURL: '',
-      disableNext: false,
+      addNewRecepientFormDialog: false,
+      addNewRecepientFormPage: 0,
+      addNewRecepientFormName: '',
+      addNewRecepientFormEmail: '',
       disableTab: true,
       postEsignRequestData: {},
-      newTemplateFormLoading: false,
+      contactLoaded: false,
+      contactList: [],
+      selectedRecepient: {},
+      selectedParty: '',
+      documentText: '',
+      parties: [],
+      unselectedParties: [],
+      toggleLoading: false,
     }
   },
-  watch: {
-    curentTab(val) {
-      if (val === 2) {
-        if (this.subject === '') {
-          this.disableNext = true
-        } else {
-          this.disableNext = false
-        }
-      } else {
-        this.disableNext = false
-      }
-    },
-    subject(val) {
-      if (val !== '') {
-        this.disableNext = false
-        this.disableTab = false
-      } else if (this.curentTab === 2) {
-        this.disableNext = true
-        this.disableTab = true
-      }
+  computed: {
+    disableNext() {
+      if (this.templateSelected === false) return true
+      else if (
+        this.curentTab === 1 &&
+        this.selectedList.length < this.parties.length
+      )
+        return true
+      else if (this.curentTab === 2 && this.subject === '') return true
+      return false
     },
   },
-  mounted() {
+  async mounted() {
     this.$eventBus.$on('itemSelected', this.updateSelectedList)
     if (this.$i18n.locale === 'fr') {
       this.isFrench = true
+    }
+    const bitpodURL = `${this.$bitpod.getApiUrl()}Contacts`
+    try {
+      const response = await this.$axios.$get(bitpodURL)
+      if (response) {
+        this.contactList = response
+      }
+    } catch (err) {
+      this.snackbar = true
+      this.snackbarText = 'Failed to load contacts.'
+      console.error(err)
     }
   },
   beforeDestroy() {
@@ -597,36 +701,38 @@ export default {
         this.selectedList = [...data.items]
       }
     },
-    content() {
-      console.log(this.contents)
-      return this.contents ? this.contents.eSignRequest : null
-    },
-    updateList(data) {
-      this.selectedList = data
-    },
     resetForm() {
       this.$emit('update:newTemplateDialog', false)
       this.selectedList = []
       this.choosedTemplate = 0
       this.curentTab = 0
-      this.RTEValue = ''
+      this.templateSelected = false
       this.disableButton = false
     },
-    unselectContact(index) {
-      this.selectedList = this.selectedList.filter((i, key) => key !== index)
-    },
-    setPreview(item) {
-      console.log(item)
+    unselectContact(unselectedItem) {
+      this.selectedList = this.selectedList.filter((item) => {
+        if (unselectedItem.id === item.id) {
+          this.unselectedParties.push(item.type)
+          return false
+        }
+        return true
+      })
     },
     async sendNow() {
       this.postEsignRequestData = {
         ...this.postEsignRequestData,
-        selectedList: this.selectedList.map((item) => item.id),
+        selectedList: this.selectedList.map((item) => ({
+          FullName: item.FullName,
+          Email: item.Email,
+          type: item.type,
+        })),
         subject: this.subject,
         senderName: this.senderName,
         senderEmail: this.sender,
         setReplyTo: this.setReplyTo,
+        Message: this.message,
       }
+      console.log(this.postEsignRequestData)
       const bitpodURL = `${this.$bitpod.getApiUrl()}ESIGNREQUESTS/createESignRequest`
       try {
         const response = await this.$axios.$post(
@@ -635,7 +741,7 @@ export default {
         )
         if (response) {
           console.log(response)
-          this.newTemplateDialog = false
+          this.$emit('update:newTemplateDialog', false)
           this.refresh()
         }
       } catch (err) {
@@ -662,11 +768,11 @@ export default {
         this.snackbar = true
         this.snackbarText = 'Please enter valid input'
       } else {
-        this.newTemplateFormLoading = true
         const addNewTemplateFormObject = {
           Name: this.addNewTemplateFormName,
           DocumentUrl: this.addNewTemplateFormURL,
         }
+        this.getHTMLTemplate(this.addNewTemplateFormURL)
         const bitpodURL = `${this.$bitpod.getApiUrl()}ESIGNTEMPLATES`
         try {
           const response = await this.$axios.$post(
@@ -679,19 +785,98 @@ export default {
               documentId: response.id,
               documentUrl: response.DocumentUrl,
             }
-            this.newTemplateFormLoading = false
             this.choosedTemplate = 0
             this.curentTab = 1
-            console.log(response)
+            this.selectedList = []
           }
         } catch (err) {
           this.snackbar = true
           this.snackbarText = 'Request Failed'
           console.error(err)
         }
-        this.RTEValue = 'template'
+        this.templateSelected = true
+        this.toggleLoading = !this.toggleLoading
+        this.subject = `Signature requested for ${this.addNewTemplateFormName}`
         this.addNewTemplateFormDialog = false
       }
+    },
+    async handleAddNewRecepientForm() {
+      if (
+        this.addNewRecepientFormName.length < 2 ||
+        this.addNewRecepientFormEmail.length < 5 ||
+        this.selectedParty === ''
+      ) {
+        this.snackbar = true
+        this.snackbarText = 'Please fill out all fields'
+        this.toggleLoading = !this.toggleLoading
+        return
+      }
+      const addNewRecepientFormObject = {
+        FullName: this.addNewRecepientFormName,
+        Email: this.addNewRecepientFormEmail,
+      }
+      const bitpodURL = `${this.$bitpod.getApiUrl()}/Contacts`
+      try {
+        const response = await this.$axios.$post(
+          bitpodURL,
+          addNewRecepientFormObject
+        )
+        if (response) {
+          this.selectedList.push({ ...response, type: this.selectedParty })
+          this.unselectedParties = this.unselectedParties.filter(
+            (item) => item.type !== this.selectedParty
+          )
+          this.addNewRecepientFormName = ''
+          this.addNewRecepientFormEmail = ''
+          this.selectedParty = ''
+          this.addNewRecepientFormPage = 0
+        }
+      } catch (err) {
+        this.snackbar = true
+        this.snackbarText = 'Request Failed'
+        console.error(err)
+      }
+      this.toggleLoading = !this.toggleLoading
+      this.addNewRecepientFormDialog = false
+    },
+    handleSelectRecepient() {
+      if (
+        Object.keys(this.selectedRecepient).length === 0 ||
+        this.selectedParty === ''
+      ) {
+        this.snackbar = true
+        this.snackbarText = 'Please fill all fields'
+        return
+      }
+      let isPresent = false
+      for (const item of this.selectedList) {
+        if (item.id === this.selectedRecepient.id) {
+          isPresent = true
+        }
+      }
+      if (!isPresent) {
+        this.selectedList.push({
+          ...this.selectedRecepient,
+          type: this.selectedParty,
+        })
+        this.unselectedParties = this.unselectedParties.filter(
+          (item) => this.selectedParty !== item
+        )
+        this.selectedRecepient = {}
+        this.selectedParty = ''
+        this.addNewRecepientFormDialog = false
+      } else {
+        this.snackbar = true
+        this.snackbarText = 'This recepient has already been selected'
+      }
+    },
+    addRecepientFormOpen() {
+      if (this.unselectedParties.length === 0) {
+        this.snackbar = true
+        this.snackbarText = 'All parties have been assigned'
+        return
+      }
+      this.addNewRecepientFormDialog = true
     },
     async getExistingTemplate() {
       const bitpodURL = `${this.$bitpod.getApiUrl()}ESIGNTEMPLATES`
@@ -700,23 +885,38 @@ export default {
         if (response) {
           this.templateItems = response
           this.choosedTemplate = 2
-          console.log(response)
         }
       } catch (err) {
         console.error(err)
       }
     },
     selectSignTemplate(item) {
-      console.log('Template has been selected')
       this.curentTab = 1
       this.choosedTemplate = 0
-      this.RTEValue = 'template'
+      this.templateSelected = true
+      this.getHTMLTemplate(item.DocumentUrl)
       this.postEsignRequestData = {
         ...this.postEsignRequestData,
         documentId: item.id,
         documentUrl: item.DocumentUrl,
       }
-      console.log('LOGGER', this.RTEValue, this.postEsignRequestData)
+      this.subject = `Signature requested for ${item.Name}`
+    },
+    async getHTMLTemplate(documentUrl) {
+      const regExp = /{{ESign\.(\w+)}}/g
+      try {
+        const res = await this.$axios.get(documentUrl)
+        this.documentText = res.data
+        const matches = []
+        let tempMatch
+        while ((tempMatch = regExp.exec(this.documentText)) !== null) {
+          matches.push(tempMatch[1])
+        }
+        this.parties = [...new Set(matches)]
+        this.unselectedParties = this.parties
+      } catch (err) {
+        console.error(err)
+      }
     },
   },
 }

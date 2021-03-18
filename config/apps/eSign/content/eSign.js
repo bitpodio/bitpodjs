@@ -123,7 +123,7 @@ export default {
         },
         actions: {
           new: {
-            hidden: false,
+            hidden: true,
           },
           edit: {
             hidden: true,
