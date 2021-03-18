@@ -430,20 +430,26 @@ export default {
       this.$config.seedValue
     )
     console.log('checkID', checkId)
-    this.createUserHash(checkId)
+    // this.createUserHash(checkId)
+    window.ga('create', this.$config.gaTrackingCode, 'auto') // create tracking object
+    window.ga('set', 'userId', checkId) // userId set after tracking object
+    window.ga('send', 'pageview')
+    window.ga(function (tracker) {
+      console.log('tracker', tracker)
+    })
   },
   beforeDestroy() {
     window.removeEventListener('message', this.messageReceived)
   },
   methods: {
-    createUserHash(checkId) {
-      window.ga('create', this.$config.gaTrackingCode, 'auto') // create tracking object
-      window.ga('set', 'userId', checkId) // userId set after tracking object
-      window.ga('send', 'pageview')
-      window.ga(function (tracker) {
-        console.log('tracker', tracker)
-      })
-    },
+    // createUserHash(checkId) {
+    //   window.ga('create', this.$config.gaTrackingCode, 'auto') // create tracking object
+    //   window.ga('set', 'userId', checkId) // userId set after tracking object
+    //   window.ga('send', 'pageview')
+    //   window.ga(function (tracker) {
+    //     console.log('tracker', tracker)
+    //   })
+    // },
     onLogout(context) {
       if (this.$store.state.auth.loggedIn) {
         this.logoutClicked = true
