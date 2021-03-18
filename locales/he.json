@@ -788,9 +788,7 @@
     "ClearFilter": "נקה מסננים",
     "SubTotal": "סך הכל",
     "Esign":"סימן אלקטרוני",
-    "RecepientList": "רשימת נמענים",
     "NewEsignRequest": "בקשת סימן אלקטרוני חדשה",
-    "NewEsignTemplate": "תבנית חתימה חדשה",
     "SelectRecepients": "מרשימת אנשי הקשר למטה בחר באנשי הקשר שצריכים לקבל את המסמך שייחתם.",
     "CreateNewSignatureTemplate": "תבנית חדשה",
     "CreateNewSignatureTemplateDescription": "מקום בו תוכלו להוסיף תבנית מסמך חדשה.",
@@ -798,10 +796,15 @@
     "ExistingSignatureTemplateDescription": "תבניות מוכנות לשימוש לשליחת מסמכים במהירות.",
     "SelectTemplateType": "השתמש בתבנית קיימת או הוסף תבנית חדשה.",
     "Recepients": "נמענים",
+    "Recepient": "מקבל",
     "SignatureBasicInformation": "התחל עם הזנת מידע בסיסי על המסמך שלך ואז לחץ על הבא.",
     "SendDocumentNow": "שלח מסמך מיד.",
     "RecepientDetail": "פרט נמען",
-    "EmailInfo": "פרטי דואל"
+    "EmailInfo": "פרטי דואל",
+    "AddRecepient": "הוסף נמען",
+    "Party": "מפלגה",
+    "SelectRecepient": "בחר נמען",
+    "NewRecepient": "מקבל חדש"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",

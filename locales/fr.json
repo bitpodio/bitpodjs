@@ -786,9 +786,7 @@
     "ClearFilter": "Effacer les filtres",
     "SubTotal": "Sous-total",
     "Esign":"E-Sign",
-    "RecepientList": "Liste des destinataires",
     "NewEsignRequest": "Nouvelle demande de signature électronique",
-    "NewEsignTemplate": "Nouveau modèle de signature",
     "SelectRecepients": "Dans la liste de contacts ci-dessous, sélectionnez les contacts qui doivent recevoir le document à signer.",
     "CreateNewSignatureTemplate": "Nouveau modèle",
     "CreateNewSignatureTemplateDescription": "Un endroit où vous pouvez ajouter un nouveau modèle de document.",
@@ -796,10 +794,15 @@
     "ExistingSignatureTemplateDescription": "Modèles prêts à l'emploi pour envoyer des documents rapidement.",
     "SelectTemplateType": "Utilisez un modèle existant ou ajoutez un nouveau modèle.",
     "Recepients": "Bénéficiaires",
+    "Recepient": "Destinataire",
     "SignatureBasicInformation": "Commencez par saisir les informations de base sur votre document, puis appuyez sur suivant.",
     "SendDocumentNow": "Envoyez le document tout de suite.",
     "RecepientDetail": "Détail du destinataire",
-    "EmailInfo": "Informations e-mail"
+    "EmailInfo": "Informations e-mail",
+    "AddRecepient": "Ajouter un destinataire",
+    "Party": "Faire la fête",
+    "SelectRecepient": "Sélectionnez le destinataire",
+    "NewRecepient": "Nouveau destinataire"
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",

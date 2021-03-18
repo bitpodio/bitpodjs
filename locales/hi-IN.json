@@ -788,9 +788,7 @@
     "ClearFilter": "फ़िल्टर साफ़ करें",
     "SubTotal": "उप कुल",
     "Esign":"ई-साइन",
-    "RecepientList": "प्राप्तकर्ताओं की सूची",
     "NewEsignRequest": "नया ई-साइन अनुरोध",
-    "NewEsignTemplate": "नया हस्ताक्षर टेम्पलेट",
     "SelectRecepients": "מרשימת אנשי הקשר למטה בחר באנשי הקשר שצריכים לקבל את המסמך שייחתם.",
     "CreateNewSignatureTemplate": "नया टेम्पलेट",
     "CreateNewSignatureTemplateDescription": "वह स्थान जहाँ आप एक नया दस्तावेज़ टेम्पलेट जोड़ सकते हैं।",
@@ -798,10 +796,15 @@
     "ExistingSignatureTemplateDescription": "दस्तावेजों को जल्दी भेजने के लिए तैयार-से-उपयोग करने वाले टेम्पलेट।",
     "SelectTemplateType": "मौजूदा टेम्प्लेट का उपयोग करें या नया टेम्प्लेट जोड़ें।",
     "Recepients": "प्राप्तकर्ताओं",
+    "Recepient": "प्राप्त करनेवाला",
     "SignatureBasicInformation": "अपने दस्तावेज़ के बारे में बुनियादी जानकारी दर्ज करने के साथ शुरू करें और फिर अगला दबाएं।",
     "SendDocumentNow": "दस्तावेज़ तुरंत भेजें।",
     "RecepientDetail": "प्रापक विस्तार",
-    "EmailInfo": "ईमेल जानकारी"
+    "EmailInfo": "ईमेल जानकारी",
+    "AddRecepient": "प्राप्तकर्ता को जोड़ें",
+    "Party": "पार्टी",
+    "SelectRecepient": "प्राप्तकर्ता का चयन करें",
+    "NewRecepient": "नई प्राप्तकर्ता"
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",
