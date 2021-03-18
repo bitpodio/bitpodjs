@@ -121,7 +121,7 @@
                     dense
                     required
                     :error-messages="uniqueLinkValidationMsg"
-                    @input="updateEventUniqLink"
+                    @input="updateEventTitle"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -554,7 +554,7 @@ import CustomDate from '~/components/common/form/date.vue'
 import Lookup from '~/components/common/form/lookup.vue'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import Timezone from '~/components/common/form/timezone'
-// import eventCount from '~/config/apps/event/gql/eventCount.gql'
+import eventCount from '~/config/apps/event/gql/eventCount.gql'
 import orgInfoLocationType from '~/config/apps/event/gql/orgInfoLocationType.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import nuxtconfig from '~/nuxt.config'
@@ -698,7 +698,6 @@ export default {
           TicketCount: 100,
         },
       ],
-      eventCount: 0,
     }
   },
   computed: {
@@ -805,80 +804,26 @@ export default {
     updateEventTitle: _.debounce(function (event) {
       this.checkUniqueLink(event)
     }, 500),
-    updateEventUniqLink: _.debounce(function (event) {
-      this.checkUniqueLink()
-    }, 500),
     async checkUniqueLink() {
-      console.log('checking the UniquLink===>')
-      const filter = { where: { UniqLink: this.eventData.UniqLink } }
-      // const where = { UniqLink: this.eventData.UniqLink }
-      // const result = await this.$apollo.query({
-      //   query: gql`
-      //     ${eventCount}
-      //   `,
-      //   variables: {
-      //     where,
-      //   },
-      //   fetchPolicy: 'no-cache',
-      // })
-      // const eventFilter = {'where':{
-      //   UniqueLink:
-      // }}
-      try {
-        const res = await this.$axios.get(
-          `${this.$bitpod.getApiUrl()}Events?filter=${JSON.stringify(filter)}`
-        )
-        console.log('res==>', res)
-        if (res.data.length > 0) {
-          this.eventCount = res.data.length
-          console.log('got the result data and its gt then 0', res.data.length)
-          this.isInvalidEventLink = true
-          console.log('this.isInvalidEventLink', this.isInvalidEventLink)
-          this.isUniqLinkValid = false
-          console.log('this.isUniqLinkValid', this.isUniqLinkValid)
-          this.uniqueLinkMessage = this.$t('Messages.Error.UniqueLinkDuplicate')
-        } else {
-          debugger
-          this.eventCount = res.data.length
-          console.log('event link ', this.eventData.UniqLink)
-          console.log('got the result data and its lt then 0', res.data.length)
-          console.log('no error')
-          this.isInvalidEventLink = false
-          console.log('this.isInvalidEventLink', this.isInvalidEventLink)
-          this.isUniqLinkValid = true
-          console.log('this.isUniqLinkValid', this.isUniqLinkValid)
-          this.uniqueLinkMessage = ''
-        }
-      } catch (e) {
-        console.log('error', e)
+      const where = { UniqLink: this.eventData.UniqLink }
+      const result = await this.$apollo.query({
+        query: gql`
+          ${eventCount}
+        `,
+        variables: {
+          where,
+        },
+        fetchPolicy: 'no-cache',
+      })
+      if (result.data.Event.EventCount > 0) {
+        this.isInvalidEventLink = true
+        this.isUniqLinkValid = false
+        this.uniqueLinkMessage = this.$t('Messages.Error.UniqueLinkDuplicate')
+      } else {
+        this.isInvalidEventLink = false
+        this.isUniqLinkValid = true
+        this.uniqueLinkMessage = ''
       }
-
-      // if (result.data.Event.EventCount > 0) {
-      //   this.eventCount = result.data.Event.EventCount
-      //   console.log(
-      //     'got the result data and its gt then 0',
-      //     result.data.Event.EventCount
-      //   )
-      //   this.isInvalidEventLink = true
-      //   console.log('this.isInvalidEventLink', this.isInvalidEventLink)
-      //   this.isUniqLinkValid = false
-      //   console.log('this.isUniqLinkValid', this.isUniqLinkValid)
-      //   this.uniqueLinkMessage = this.$t('Messages.Error.UniqueLinkDuplicate')
-      // } else {
-      //   debugger
-      //   this.eventCount = result.data.Event.EventCount
-      //   console.log('event link ', this.eventData.UniqLink)
-      //   console.log(
-      //     'got the result data and its lt then 0',
-      //     result.data.Event.EventCount
-      //   )
-      //   console.log('no error')
-      //   this.isInvalidEventLink = false
-      //   console.log('this.isInvalidEventLink', this.isInvalidEventLink)
-      //   this.isUniqLinkValid = true
-      //   console.log('this.isUniqLinkValid', this.isUniqLinkValid)
-      //   this.uniqueLinkMessage = ''
-      // }
     },
     ticketCountRules() {
       return [
