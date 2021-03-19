@@ -310,7 +310,7 @@
         </v-skeleton-loader>
       </div>
       <div
-        v-if="viewName === 'badge'"
+        v-if="viewName === 'badge' && loading === true"
         class="d-flex flex-sm-wrap flex-column flex-sm-row"
       >
         <v-skeleton-loader
