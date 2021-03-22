@@ -906,6 +906,7 @@ export default {
       invalid: true,
       templateObject: '',
       isFrench: false,
+      emailSubject: '',
     }
   },
   computed: {
@@ -1069,6 +1070,10 @@ export default {
       if (this.editDraft) {
         this.prefilData()
       } else {
+        this.senderName = (this.$auth && this.$auth.user.data.name) || ''
+        this.sender = (this.$auth && this.$auth.user.data.email) || ''
+        this.setReplyTo = (this.$auth && this.$auth.user.data.email) || ''
+        this.subject = this.emailSubject
         this.selectedList = []
         this.choosedTemplate = 0
         this.curentTab = 0
@@ -1248,6 +1253,7 @@ export default {
           this.subject = `Join us for ${
             data.Event.EventFind.edges[0].node.Title
           } | ${new Date().toDateString()}`
+          this.emailSubject = this.subject
         }
       },
       error(error) {
