@@ -1,10 +1,14 @@
 <template>
   <div>
     <iframe
+      v-if="iFrameSrc.requiresAuth ? $auth.loggedIn : true"
       :src="iFrameSrc.url"
       :role="iFrameSrc.role"
       class="help-doc"
     ></iframe>
+    <div v-else class="px-2">
+      {{ $t('Common.LoginRequired') }}
+    </div>
   </div>
 </template>
 
@@ -26,7 +30,7 @@ export default {
         (frame) => frame.name === pageName && frame.section === sectionName
       )?.[0]
       return src
-        ? { url: src.url, role: src.role }
+        ? { url: src.url, role: src.role, requiresAuth: src.requiresAuth }
         : this.$nuxt.error({ statusCode: 404 })
     },
   },
@@ -41,6 +45,7 @@ export default {
           section: urlParams[urlParams.length - 2],
           url: viewInfo.dataSource.url,
           role: viewInfo.dataSource.role,
+          requiresAuth: viewInfo.requiresAuth || false,
         })
       })
     })

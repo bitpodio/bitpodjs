@@ -48,7 +48,7 @@
     "Invites": "Invite",
     "Invite": "Invite",
     "Emails": "Eclous",
-    "Notes": "Notes",
+    "Notes": "Remarques",
     "Tickets": "Des billets",
     "DiscountCodes": "Codes de remise",
     "Discount": "Remise",
@@ -784,7 +784,9 @@
     "TryJoinOn": "Essayez de vous joindre à nouveau sur",
     "CheckCalendarInvite": "Vérifier l'invitation du calendrier pour rejoindre le lien",
     "ClearFilter": "Effacer les filtres",
-    "SubTotal": "Sous-total"
+    "SubTotal": "Sous-total",
+    "AccessRequired": "Accès non accordé, contactez le support pour demander l'accès",
+    "LoginRequired": "Connectez-vous avec votre compte pour utiliser l'API Explorer."
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",
@@ -1008,7 +1010,9 @@
       "SessionCreatedSuccess": "Session créée avec succès",
       "SessionUpdatedSuccess": "Session mise à jour avec succès",
       "ContactImportSuccess": "L'exécution de l'importation a commencé",
-      "OrgNameSuccess": "https://{orgName}-{suffixRoute} est disponible"
+      "OrgNameSuccess": "https://{orgName}-{suffixRoute} est disponible",
+      "ContactImported": "Contacts importé avec succès",
+      "ContactImportedFailed": "L'importation des contacts a échoué"
     },
     "Information": {
       "SetupInProgressTitle": "configuration en cours",
