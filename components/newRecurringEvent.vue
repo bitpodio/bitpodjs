@@ -773,7 +773,11 @@
                             ></v-text-field>
                           </td>
                           <td class="pa-2 pb-0 e-td">
-                            <v-btn icon class="mt-1" @click="deleteTicket(k)">
+                            <v-btn
+                              icon
+                              class="mt-1"
+                              @click="deleteTicket(k)"
+                            >
                               <v-icon>fa-trash</v-icon>
                             </v-btn>
                           </td>
@@ -2136,10 +2140,18 @@ export default {
     deleteTicket(index) {
       if (this.tickets.length > 1) {
         this.tickets.splice(index, 1)
+        this.deleteSessionTicket(index)
       } else {
         const ticket = this.ticketDefaultData()
         this.tickets = [ticket]
       }
+    },
+    deleteSessionTicket(index) {
+      this.sessions.forEach((ele) => {
+        if (ele.SessionTicket.length >= 1) {
+          ele.SessionTicket.splice(index, 1)
+        }
+      })
     },
     deleteSession(index) {
       if (this.sessions.length > 1) {
