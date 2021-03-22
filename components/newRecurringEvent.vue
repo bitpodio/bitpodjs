@@ -773,11 +773,7 @@
                             ></v-text-field>
                           </td>
                           <td class="pa-2 pb-0 e-td">
-                            <v-btn
-                              icon
-                              class="mt-1"
-                              @click="deleteTicket(k)"
-                            >
+                            <v-btn icon class="mt-1" @click="deleteTicket(k)">
                               <v-icon>fa-trash</v-icon>
                             </v-btn>
                           </td>
