@@ -787,7 +787,7 @@
     "ClearFilter": "Clear filters",
     "SubTotal": "Sub Total",
     "AccessRequired": "Access not granted, contact support to request access",
-    "LoginRequired": "You need to login to view this page."
+    "LoginRequired": "Login with your account to use the API Explorer."
   },
   "Drawer": {
     "CreateEventAction": "Create Event",
