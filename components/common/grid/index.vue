@@ -130,7 +130,11 @@
             </slot>
           </div>
           <v-menu
-            v-if="selectedItems.length > 0 && actionsCount > baseActionCount"
+            v-if="
+              selectedItems.length > 0 &&
+              actionsCount > baseActionCount &&
+              !hasHiddenRowAction
+            "
             right
             :offset-y="offset"
             transition="slide-y-transition"
@@ -749,6 +753,16 @@ export default {
         return 3
       }
       return 0
+    },
+    hasHiddenRowAction() {
+      const templateActions = this.content.views?.[this.viewName]?.template
+        ?.actions
+      if (templateActions) {
+        const hasHiddenEdit = templateActions.edit?.hidden
+        const hasHiddenDelete = templateActions.delete?.hidden
+        return hasHiddenEdit || hasHiddenDelete
+      }
+      return false
     },
   },
   watch: {
