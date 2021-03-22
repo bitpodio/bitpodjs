@@ -787,7 +787,8 @@
     "CheckCalendarInvite": "בדוק את הזמנת לוח השנה להצטרפות לקישור",
     "ClearFilter": "נקה מסננים",
     "SubTotal": "סך הכל",
-    "AccessRequired":"הגישה לא ניתנה, צרו קשר עם התמיכה לבקשת הגישה"
+    "AccessRequired": "הגישה לא ניתנה, צרו קשר עם התמיכה לבקשת הגישה",
+    "LoginRequired": "עליכם להתחבר בכדי להציג דף זה."
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",
