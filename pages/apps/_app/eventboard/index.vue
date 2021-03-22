@@ -1,6 +1,9 @@
 <template>
   <div class="public-page-main">
-    <div>
+    <div v-if="gqlError !== ''" class="pt-3">
+      <i18n path="Common.AccessRequired" />
+    </div>
+    <div v-else>
       <v-row class="px-3">
         <v-col
           ref="summaryBlock"
@@ -475,8 +478,11 @@ import { getIdFromAtob } from '~/utility'
 import timeAgo from '~/components/common/timeAgo'
 import eventList from '~/config/apps/event/gql/eventlist.gql'
 import registrationList from '~/config/apps/event/gql/registrationList.gql'
+import { configLoaderMixin } from '~/utility'
+
 export default {
   layout: 'event',
+  mixins: [configLoaderMixin],
   components: {
     GChart,
     timeAgo,
@@ -722,6 +728,7 @@ export default {
       recentBuyersEmpty: false,
       saleEventCount: 0,
       buyersCount: 0,
+      gqlError: '',
     }
   },
   mounted() {
@@ -1040,7 +1047,9 @@ export default {
         }
       },
       error(error) {
-        this.error = error
+        if (error.message.split(':')[1] === ' Access denied') {
+          this.gqlError = error
+        }
         this.loading = 0
       },
       prefetch: false,
@@ -1102,7 +1111,9 @@ export default {
         }
       },
       error(error) {
-        this.error = error
+        if (error.message.split(':')[1] === ' Access denied') {
+          this.gqlError = error
+        }
         this.loading = 0
       },
       prefetch: false,
@@ -1152,7 +1163,9 @@ export default {
         }
       },
       error(error) {
-        this.error = error
+        if (error.message.split(':')[1] === ' Access denied') {
+          this.gqlError = error
+        }
         this.loading = 0
       },
       prefetch: false,

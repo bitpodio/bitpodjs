@@ -5,7 +5,7 @@
         v-model="siteSetting"
         persistent
         scrollable
-        content-class="slide-form-default"
+        content-class="slide-form-default slide-site-settings-form-height"
       >
         <v-card>
           <v-card-title

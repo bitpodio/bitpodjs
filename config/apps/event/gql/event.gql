@@ -14,6 +14,7 @@ query($filters: JSON, $badgeFilter: JSON, $eventId: String) {
           UniqLink
           isRefundable
           allowChat
+          chatChannel
           RegistrationSiteTemplate
           ShowAttendeeForm
           CapturePoint

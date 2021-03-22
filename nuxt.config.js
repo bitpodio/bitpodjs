@@ -66,13 +66,6 @@ export default {
         src:
           'https://cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js',
       },
-      {
-        src: 'https://unpkg.com/video.js/dist/video.js',
-      },
-      {
-        src:
-          'https://unpkg.com/videojs-contrib-hls/dist/videojs-contrib-hls.js',
-      },
     ],
   },
   /*
@@ -341,7 +334,7 @@ export default {
       },
     },
   },
-  serverMiddleware: ['~/api/index.js'],
+  serverMiddleware: ['~/api/index.js', '~/server-middleware/no-cache'],
   auth: {
     redirect: {
       login: '/login',
