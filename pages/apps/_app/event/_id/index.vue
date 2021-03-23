@@ -559,6 +559,9 @@
                   </v-row>
                 </template>
               </v-img>
+              <v-card-text class="pa-0 default-banner-label"
+                ><i18n path="Common.BannerImage"
+              /></v-card-text>
               <v-flex class="mt-1 d-flex otherImg">
                 <v-card-text class="pa-0 pb-1"
                   ><a
@@ -569,9 +572,6 @@
                 >
                 <copy :text-to-copy="getImageUrl(image)" :unique-id="image" />
               </v-flex>
-              <v-card-text class="pa-0 mt-n2"
-                ><i18n path="Common.BannerImage"
-              /></v-card-text>
             </v-card>
             <v-dialog v-model="dbannerDialog" max-width="600">
               <v-card>
@@ -1771,10 +1771,12 @@ export default {
     setTimeout(this.openPrint, 3000)
     this.$eventBus.$on('update-seat-reservation', this.updateSeatReservation)
     this.$eventBus.$on('seat-map-triggered', this.getScrollPosition)
+    this.$eventBus.$on('update-event-details', this.refresh)
   },
   beforeDestroy() {
     this.$eventBus.$off('update-seat-reservation')
     this.$eventBus.$off('seat-map-triggered')
+    this.$eventBus.$off('update-event-details')
   },
   methods: {
     getScrollPosition() {
@@ -2642,9 +2644,9 @@ export default {
 .cardImg:hover .cardDelete {
   display: inline-block;
 }
-
 .otherImg {
   visibility: hidden;
+  min-height: 33px;
 }
 .anchorTag {
   max-width: 120px;
