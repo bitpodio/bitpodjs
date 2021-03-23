@@ -791,7 +791,10 @@
     "ScheduleTask": "Planifier une tâche",
     "AttendeeImportSuccess": "Participant importé avec succès",
     "AttendeeImportFailed": "L'importation des participants a échoué",
-    "LoginRequired": "Connectez-vous avec votre compte pour utiliser l'API Explorer."
+    "LoginRequired": "Connectez-vous avec votre compte pour utiliser l'API Explorer.",
+    "SendManyMails":"Vous m'avez envoyé trop de mails",
+    "StopReceiveMails":"Je ne voulais plus recevoir ces mails",
+    "NeverSignedForMails":"Je ne me suis jamais inscrit à cette liste de diffusion"
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",

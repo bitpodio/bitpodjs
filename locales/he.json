@@ -793,7 +793,10 @@
     "ScheduleTask": "קבע משימה",
     "AttendeeImportSuccess": "משתתף יובא בהצלחה",
     "AttendeeImportFailed": "ייבוא ​​המשתתף נכשל",
-    "LoginRequired": "התחבר לחשבונך כדי להשתמש ב- API Explorer."
+    "LoginRequired": "התחבר לחשבונך כדי להשתמש ב- API Explorer.",
+    "SendManyMails":"שלחת לי יותר מדי מיילים",
+    "StopReceiveMails":"כבר לא רציתי לקבל את המיילים האלה",
+    "NeverSignedForMails":"מעולם לא נרשמתי לרשימת התפוצה הזו"
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",
