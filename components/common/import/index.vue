@@ -182,12 +182,36 @@ export default {
             await this.$axios.post(`${url}ImportJobs`, importObj)
             this.$eventBus.$emit('grid-refresh')
           }
-          this.snackbarText = this.$t('Messages.Success.ContactImportSuccess')
-          this.snackbar = true
-          this.$eventBus.$emit('grid-refresh')
+          if (this.modelName === 'Contact') {
+            this.dialog = false
+            const jobId = res.data.res.jobId
+            this.snackbarText = this.$t('Messages.Success.ContactImportSuccess')
+            this.snackbar = true
+            let success = 0
+            while (success !== 1) {
+              const response = await this.$axios.get(
+                `${url}jobDetails/${jobId}`
+              )
+              if (response.data.processStatus === 'Success') {
+                success = 1
+                this.snackbarText = this.$t('Messages.Success.ContactImported')
+                this.snackbar = true
+              } else if (response.data.processStatus === 'Failure') {
+                this.snackbarText = this.$t(
+                  'Messages.Success.ContactImportedFailed'
+                )
+                this.snackbar = true
+                break
+              }
+            }
+            this.$eventBus.$emit('grid-refresh')
+          }
         }
       } catch (e) {
-        console.log('Error', e)
+        console.error(
+          `Error in components/common/import/index.vue while calling importContacts function context: ModelName =${this.modelName}`,
+          e
+        )
       }
       this.dialog = false
       this.fileList = []

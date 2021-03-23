@@ -785,7 +785,9 @@
     "TryJoinOn": "Try joining again on",
     "CheckCalendarInvite": "Check calendar invite for joining link",
     "ClearFilter": "Clear filters",
-    "SubTotal": "Sub Total"
+    "SubTotal": "Sub Total",
+    "AccessRequired": "Access not granted, contact support to request access",
+    "LoginRequired": "Login with your account to use the API Explorer."
   },
   "Drawer": {
     "CreateEventAction": "Create Event",
@@ -1011,7 +1013,9 @@
       "SessionCreatedSuccess": "Session created successfully",
       "SessionUpdatedSuccess": "Session updated successfully",
       "ContactImportSuccess": "Import execution started",
-      "OrgNameSuccess": "https://{orgName}-{suffixRoute} is available"
+      "OrgNameSuccess": "https://{orgName}-{suffixRoute} is available",
+      "ContactImported": "Contacts Imported Sucessfully",
+      "ContactImportedFailed": "Contacts Import Failed"
     },
     "Information": {
       "SetupInProgressTitle": "Setup in progress",
