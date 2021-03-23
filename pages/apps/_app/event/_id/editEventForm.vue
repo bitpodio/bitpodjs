@@ -549,14 +549,15 @@ export default {
           )
           if (res) {
             this.$eventBus.$emit('event-details-updated', res)
+            this.$eventBus.$emit('on-event-update', res)
+            this.$eventBus.$emit('update-event-details')
+            this.refresh()
             this.close()
             this.$emit(
               'update:snackbarText',
               this.$t('Messages.Success.EventDetailsUpdateSuccess')
             )
             this.$emit('update:snackbar', true)
-            this.refreshGrid()
-            this.refresh()
             this.data.event = res
           }
         } catch (e) {
@@ -581,13 +582,14 @@ export default {
           if (res) {
             this.close()
             this.$emit('update:snackbar', true)
+            this.$eventBus.$emit('on-event-update', res)
+            this.$eventBus.$emit('update-event-details', this.refresh)
+            this.refresh()
             this.$emit(
               'update:snackbarText',
               this.$t('Messages.Success.EventDetailsUpdateSuccess')
             )
             this.$emit('update:snackbar', true)
-            this.refreshGrid()
-            this.refresh()
             return (this.data.event = res)
           }
         } catch (e) {

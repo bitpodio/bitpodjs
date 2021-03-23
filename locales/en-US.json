@@ -791,7 +791,8 @@
     "SendEventInvite": "send event invite",
     "ScheduleTask": "Schedule a Task",
     "AttendeeImportSuccess": "Attendee Imported Successfully",
-    "AttendeeImportFailed": "Attendee Import Failed"
+    "AttendeeImportFailed": "Attendee Import Failed",
+    "LoginRequired": "Login with your account to use the API Explorer."
   },
   "Drawer": {
     "CreateEventAction": "Create Event",

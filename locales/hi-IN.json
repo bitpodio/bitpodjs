@@ -788,11 +788,12 @@
     "CheckCalendarInvite": "लिंक से जुड़ने के लिए कैलेंडर आमंत्रण की जाँच करें",
     "ClearFilter": "फ़िल्टर साफ़ करें",
     "SubTotal": "उप कुल",
-    "AccessRequired":"पहुँच की अनुमति नहीं दी, पहुँच का अनुरोध करने के लिए संपर्क समर्थन",
+    "AccessRequired": "पहुँच की अनुमति नहीं दी, पहुँच का अनुरोध करने के लिए संपर्क समर्थन",
     "SendEventInvite": "ईवेंट आमंत्रण भेजें",
     "ScheduleTask": "एक कार्य अनुसूची",
     "AttendeeImportSuccess": "सहभागी सफलतापूर्वक आयात किया गया",
-    "AttendeeImportFailed": "सहभागी आयात विफल"
+    "AttendeeImportFailed": "सहभागी आयात विफल",
+    "LoginRequired": "एपीआई एक्सप्लोरर का उपयोग करने के लिए अपने खाते के साथ लॉगिन करें।"
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",
