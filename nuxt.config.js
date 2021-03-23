@@ -334,7 +334,7 @@ export default {
       },
     },
   },
-  serverMiddleware: ['~/api/index.js'],
+  serverMiddleware: ['~/api/index.js', '~/server-middleware/no-cache'],
   auth: {
     redirect: {
       login: '/login',

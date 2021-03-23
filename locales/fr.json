@@ -790,7 +790,8 @@
     "SendEventInvite": "envoyer une invitation à un événement",
     "ScheduleTask": "Planifier une tâche",
     "AttendeeImportSuccess": "Participant importé avec succès",
-    "AttendeeImportFailed": "L'importation des participants a échoué"
+    "AttendeeImportFailed": "L'importation des participants a échoué",
+    "LoginRequired": "Connectez-vous avec votre compte pour utiliser l'API Explorer."
   },
   "Drawer": {
     "CreateEventAction": "Créer un événement",
