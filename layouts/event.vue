@@ -316,7 +316,6 @@
 </template>
 
 <script>
-// import murmurhash from 'murmurhash'
 import OrgnaizationList from '~/components/common/organization-list'
 import AppDrawer from '~/components/common/app-drawer'
 import Help from '~/components/common/help'
