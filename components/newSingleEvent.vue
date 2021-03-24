@@ -66,22 +66,6 @@
                 id="new-singleEvent-tab1-form"
                 @submit.prevent="next()"
               >
-                <p>
-                  <i18n path="Common.EnterEventName" />
-                </p>
-                <v-row>
-                  <v-col cols="12" class="pb-0">
-                    <v-text-field
-                      v-model="eventData.Title"
-                      :rules="[rules.required]"
-                      :label="$t('Common.EventTitle')"
-                      required
-                      dense
-                      outlined
-                      @keyup="changeEventName($event)"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
                 <v-row>
                   <v-col cols="12" sm="6" md="4" class="pb-0">
                     <CustomDate
@@ -142,34 +126,6 @@
                   </v-col>
                 </v-row>
               </v-form>
-              <v-row>
-                <v-col cols="12" class="pb-4 pt-2">
-                  <RichText
-                    v-model="eventData.Description"
-                    class="mb-3"
-                    :label="$t('Common.Description')"
-                  ></RichText>
-                </v-col>
-                <v-col
-                  cols="12"
-                  sm="6"
-                  md="6"
-                  class="pb-0 d-flex flex-column flex-md-row"
-                >
-                  <div class="pt-2 mr-2">{{ eventLinkLabel }}</div>
-                  <v-text-field
-                    v-model="eventData.UniqLink"
-                    :label="$t('Common.EventL')"
-                    :rules="[rules.required, rules.link]"
-                    debounce="500"
-                    outlined
-                    dense
-                    required
-                    :error-messages="uniqueLinkValidationMsg"
-                    @input="updateEventTitle"
-                  ></v-text-field>
-                </v-col>
-              </v-row>
             </v-card>
           </v-tab-item>
           <v-tab-item :value="'2'">
