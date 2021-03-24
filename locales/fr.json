@@ -971,6 +971,7 @@
       "CommentDeletedSuccessfully": "La suppression du commentaire a abouti.",
       "FailedDeleteComment": "Echec de la suppression du commentaire.",
       "AccessKeySecretCopied": "Clé d'accès et secret copiée dans le presse-papiers",
+      "UserDeletedSuccessfully":"L'utilisateur a bien été supprimé",
       "EventDetailsUpdateSuccess": "Détails de l'événement mis à jour avec succès",
       "OrgDetailsUpdateSuccess": "Détails de l'organisation mis à jour avec succès",
       "DeletedSuccessfully": "Elément supprimé avec succès",

@@ -1397,6 +1397,12 @@ export default {
       eventLocationType: '',
     }
   },
+  mounted() {
+    this.$eventBus.$on('update-event-details', this.refresh)
+  },
+  beforeDestroy() {
+    this.$eventBus.$off('update-event-details')
+  },
   computed: {
     content() {
       return this.contents ? this.contents.Event : null

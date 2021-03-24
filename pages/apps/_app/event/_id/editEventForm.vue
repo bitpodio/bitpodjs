@@ -581,9 +581,9 @@ export default {
           )
           if (res) {
             this.close()
-            this.$emit('update:snackbar', true)
+            this.$eventBus.$emit('event-details-updated', res)
             this.$eventBus.$emit('on-event-update', res)
-            this.$eventBus.$emit('update-event-details', this.refresh)
+            this.$eventBus.$emit('update-event-details')
             this.refresh()
             this.$emit(
               'update:snackbarText',
