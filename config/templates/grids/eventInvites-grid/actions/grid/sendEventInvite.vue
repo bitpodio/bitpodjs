@@ -572,11 +572,11 @@
                 >
                   <v-col cols="12" class="red lighten-5">
                     <h4 class="body-1 py-2">
-                      <i18n path="Common.ContentDetails" />
+                      <i18n path="Common.ContactDetails" />
                     </h4>
                     <v-flex class="flexInLargeScreen">
                       <h5 class="body-2 mt-2 mr-2">
-                        <i18n path="Common.NotAddedContent" />
+                        <i18n path="Common.NotAddedContact" />
                       </h5>
                       <v-btn color="blue" outlined @click="curentTab = 2"
                         ><i18n path="Common.SelectContact"
@@ -587,11 +587,11 @@
                 <v-row v-else-if="!RTEValue" class="ma-3 ml-0 mb-6">
                   <v-col cols="12" class="red lighten-5">
                     <h4 class="body-1 py-2">
-                      <i18n path="Common.ContactDetails" />
+                      <i18n path="Common.ContentDetails" />
                     </h4>
                     <v-flex class="flexInLargeScreen">
                       <h5 class="body-2 mt-2 mr-2">
-                        <i18n path="Common.NotAddedContact" />
+                        <i18n path="Common.NotAddedContent" />
                       </h5>
                       <v-btn color="blue" outlined @click="curentTab = 1"
                         ><i18n path="Common.SelectContent"
@@ -906,6 +906,7 @@ export default {
       invalid: true,
       templateObject: '',
       isFrench: false,
+      emailSubject: '',
     }
   },
   computed: {
@@ -1069,6 +1070,10 @@ export default {
       if (this.editDraft) {
         this.prefilData()
       } else {
+        this.senderName = (this.$auth && this.$auth.user.data.name) || ''
+        this.sender = (this.$auth && this.$auth.user.data.email) || ''
+        this.setReplyTo = (this.$auth && this.$auth.user.data.email) || ''
+        this.subject = this.emailSubject
         this.selectedList = []
         this.choosedTemplate = 0
         this.curentTab = 0
@@ -1248,6 +1253,7 @@ export default {
           this.subject = `Join us for ${
             data.Event.EventFind.edges[0].node.Title
           } | ${new Date().toDateString()}`
+          this.emailSubject = this.subject
         }
       },
       error(error) {

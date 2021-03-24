@@ -2136,10 +2136,18 @@ export default {
     deleteTicket(index) {
       if (this.tickets.length > 1) {
         this.tickets.splice(index, 1)
+        this.deleteSessionTicket(index)
       } else {
         const ticket = this.ticketDefaultData()
         this.tickets = [ticket]
       }
+    },
+    deleteSessionTicket(index) {
+      this.sessions.forEach((ele) => {
+        if (ele.SessionTicket.length >= 1) {
+          ele.SessionTicket.splice(index, 1)
+        }
+      })
     },
     deleteSession(index) {
       if (this.sessions.length > 1) {

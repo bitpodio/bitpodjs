@@ -74,8 +74,9 @@ export default {
       const endDate = new Date(this.item.StartDate)
       endDate.setMinutes(endDate.getMinutes() + this.item.Duration)
       return (
-        this.item.LocationType === 'Bitpod Virtual' ||
-        this.item.LocationType === 'Online event'
+        (this.item.LocationType === 'Bitpod Virtual' ||
+          this.item.LocationType === 'Online event') &&
+        endDate.getTime() > new Date().getTime()
       )
     },
     goLive() {
