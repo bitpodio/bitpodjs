@@ -1512,9 +1512,6 @@ export default {
     updateEventTitle: _.debounce(function (event) {
       this.checkUniqueLink(event)
     }, 500),
-    // updateEventUniqLink: _.debounce(function (event) {
-    //   this.checkUniqueLink()
-    // }, 500),
     async checkUniqueLink() {
       const where = { UniqLink: this.eventData.UniqLink }
       const result = await this.$apollo.query({
