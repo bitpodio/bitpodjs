@@ -42,6 +42,23 @@
         <v-tabs-items v-model="tabs">
           <v-tab-item :value="'1'">
             <v-card flat>
+              <p>
+                <i18n path="Common.EnterEventName" />
+              </p>
+              <v-row>
+                <v-col cols="12" class="pb-0">
+                  <v-text-field
+                    v-model="eventData.Title"
+                    :rules="[rules.required]"
+                    :label="$t('Common.EventTitle')"
+                    debounce="500"
+                    required
+                    dense
+                    outlined
+                    @keyup="changeEventName($event)"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
               <v-form
                 ref="eventPart1Form"
                 v-model="valid"
@@ -49,22 +66,6 @@
                 id="new-singleEvent-tab1-form"
                 @submit.prevent="next()"
               >
-                <p>
-                  <i18n path="Common.EnterEventName" />
-                </p>
-                <v-row>
-                  <v-col cols="12" class="pb-0">
-                    <v-text-field
-                      v-model="eventData.Title"
-                      :rules="[rules.required]"
-                      :label="$t('Common.EventTitle')"
-                      required
-                      dense
-                      outlined
-                      @keyup="changeEventName($event)"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
                 <v-row>
                   <v-col cols="12" sm="6" md="4" class="pb-0">
                     <CustomDate
@@ -574,6 +575,7 @@ import addMonths from 'date-fns/addMonths'
 import addDays from 'date-fns/addDays'
 import { zonedTimeToUtc } from 'date-fns-tz'
 import gql from 'graphql-tag'
+import _ from 'lodash'
 import CustomDate from '~/components/common/form/date.vue'
 import Lookup from '~/components/common/form/lookup.vue'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
@@ -826,6 +828,9 @@ export default {
   },
 
   methods: {
+    updateEventTitle: _.debounce(function (event) {
+      this.checkUniqueLink(event)
+    }, 500),
     async checkUniqueLink() {
       const where = { UniqLink: this.eventData.UniqLink }
       const result = await this.$apollo.query({
@@ -1376,7 +1381,7 @@ export default {
       if (regex.test(value)) {
         if (isNaN(value)) {
           this.eventData.UniqLink = value
-          this.checkUniqueLink(this.eventData.UniqLink)
+          this.updateEventTitle(this.eventData.UniqLink)
         }
       } else {
         this.isUniqLinkValid = false

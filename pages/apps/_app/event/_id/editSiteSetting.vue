@@ -364,9 +364,6 @@ export default {
       this.$emit('update:siteSetting', false)
       this.onReset()
     },
-    refresh() {
-      this.$refs.form.$parent.$parent.refresh()
-    },
     onReset() {
       this.$refs.form.reset()
       this.tabs = '1'
@@ -415,7 +412,7 @@ export default {
             this.$t('Messages.Success.EventRegSiteDetailsUpdateSuccess')
           )
           this.$emit('update:snackbar', true)
-          this.refresh()
+          this.$eventBus.$emit('update-event-details')
           this.sectionHeading = res._sectionHeading
         }
       } catch (e) {

@@ -182,9 +182,6 @@ export default {
       this.$emit('update:editWorkTiming', false)
       this.onReset()
     },
-    refresh() {
-      this.$refs.form.$parent.$parent.refresh()
-    },
     async onSave() {
       const url = this.$bitpod.getApiUrl()
       this.formData.weekDay = this.selectedDays
@@ -199,7 +196,7 @@ export default {
           this.onClose()
           this.$emit('update:snackbar', true)
           this.$store.commit('setCurrentOrgInfo', this.formData)
-          this.refresh()
+          this.$eventBus.$emit('org-details-updated')
         }
       } catch (e) {
         console.log(
