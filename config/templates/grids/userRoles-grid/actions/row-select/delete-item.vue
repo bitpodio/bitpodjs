@@ -8,7 +8,7 @@
       </v-btn>
     </v-col>
     <v-snackbar v-model="snackbar" timeout="2000" top="true">
-      <i18n path="Common.ItemDeletedSuccessfully" />
+      <i18n path="Messages.Success.UserDeletedSuccessfully" />
     </v-snackbar>
   </div>
 </template>
@@ -54,7 +54,7 @@ export default {
             `${url}Organizations/${this.items[0].orgId}/Users/${this.items[0].email}
         `
           )
-          this.snackbarText = this.$t('Messages.Success.DeletedSuccessfully')
+          this.snackbarText = this.$t('Messages.Success.UserDeletedSuccessfully')
           this.snackbar = true
         }
       } catch (e) {

@@ -197,9 +197,6 @@ export default {
       this.$emit('update:eventSetting', false)
       this.onReset()
     },
-    refresh() {
-      this.$refs.form.$parent.$parent.refresh()
-    },
     async onSave() {
       this.formData.Currency = this.currency
       this.formData.Privacy = this.privacy
@@ -220,7 +217,7 @@ export default {
             this.$t('Messages.Success.EventDetailsUpdateSuccess')
           )
           this.$emit('update:snackbar', true)
-          this.refresh()
+          this.$eventBus.$emit('update-event-details')
           this.data.event = res
         }
       } catch (e) {

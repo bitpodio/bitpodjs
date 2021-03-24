@@ -976,6 +976,7 @@
       "EventDetailsUpdateSuccess": "Event details updated successfully",
       "OrgDetailsUpdateSuccess": "Organization details updated successfully",
       "AccessKeySecretCopied": "Access Key and Secret copied to clipboard",
+      "UserDeletedSuccessfully":"User deleted successfully",
       "DeletedSuccessfully": "Item deleted successfully",
       "EventDeletedSuccessfully": "Event deleted successfully",
       "SuccessfulCheckedIn": "Congratulations, You have successfully checked in.",
