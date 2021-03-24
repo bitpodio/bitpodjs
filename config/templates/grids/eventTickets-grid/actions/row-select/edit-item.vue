@@ -581,6 +581,7 @@ export default {
         })
         if (result) {
           const generalConfig = formatGQLResult(result.data, 'RegistrationType')
+          this.getTickets()
           return generalConfig
         }
       } catch (e) {
