@@ -260,6 +260,8 @@ export default {
         this.formData.UniqLink !== '' &&
         this.formData.UniqLink !== this.data.event.UniqLink
       ) {
+        const value = this.formData.UniqLink.toLowerCase().replace(/\s/g, '')
+        this.formData.UniqLink = value.trim()
         const where = { UniqLink: this.formData.UniqLink }
         const result = await this.$apollo.query({
           query: gql`
