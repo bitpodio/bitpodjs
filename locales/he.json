@@ -788,11 +788,12 @@
     "CheckCalendarInvite": "בדוק את הזמנת לוח השנה להצטרפות לקישור",
     "ClearFilter": "נקה מסננים",
     "SubTotal": "סך הכל",
-    "AccessRequired":"הגישה לא ניתנה, צרו קשר עם התמיכה לבקשת הגישה",
+    "AccessRequired": "הגישה לא ניתנה, צרו קשר עם התמיכה לבקשת הגישה",
     "SendEventInvite": "שלח הזמנה לאירוע",
     "ScheduleTask": "קבע משימה",
     "AttendeeImportSuccess": "משתתף יובא בהצלחה",
-    "AttendeeImportFailed": "ייבוא ​​המשתתף נכשל"
+    "AttendeeImportFailed": "ייבוא ​​המשתתף נכשל",
+    "LoginRequired": "התחבר לחשבונך כדי להשתמש ב- API Explorer."
   },
   "Drawer": {
     "CreateEventAction": "צור אירוע",

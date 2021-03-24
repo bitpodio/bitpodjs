@@ -1304,7 +1304,7 @@
           :snackbar-text.sync="snackbarText"
         />
       </div>
-      <makeCopy :is-make-copy.sync="isMakeCopy" />
+      <makeCopy :key="isMakeCopy" :is-make-copy.sync="isMakeCopy" />
       <confirm ref="confirm"></confirm>
     </v-flex>
   </div>

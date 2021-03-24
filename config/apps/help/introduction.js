@@ -34,6 +34,7 @@ export default function (config) {
         type: 'page',
         displayOrder: 3,
         to: '/apps/help-center/introduction/api-explorer',
+        requiresAuth: true,
         dataSource: {
           type: 'iFrame',
           url: `https://${config.studioUrl}/swagger.html?url=${config.swaggerUrl}`,
