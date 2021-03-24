@@ -322,6 +322,7 @@ import Help from '~/components/common/help'
 import OldSite from '~/components/common/oldsite'
 import Upgrade from '~/components/common/upgrade'
 import userUtils from '~/utility/userApps'
+const murmurhash = require('murmurhash')
 export default {
   middleware: ['auth', 'authorization'],
   components: {
@@ -413,11 +414,22 @@ export default {
     await this.$apolloHelpers.onLogin(token, undefined, { expires: 7 })
   },
   mounted() {
+    const loginStatus = this.$auth.strategy.token.get()
+    if (!loginStatus) {
+      location.replace(`${this.$config.basePublicPath}/unauthorized`)
+    }
     const userInfo = userUtils.userCurrentOrgInfo(this.$store) || {}
     const userRoles = userInfo.roles || []
     this.allowUser = userRoles.length === 1 && userRoles.includes('$orguser')
     this.allowUpgrade = userRoles.includes('$orgowner')
     window.addEventListener('message', this.messageReceived, false)
+    const checkId = murmurhash.v2(
+      this.$auth.user.data.email,
+      this.$config.seedValue
+    )
+    window.ga('create', this.$config.gaTrackingCode, 'auto')
+    window.ga('set', 'userId', checkId)
+    window.ga('send', 'pageview')
   },
   beforeDestroy() {
     window.removeEventListener('message', this.messageReceived)

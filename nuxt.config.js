@@ -80,6 +80,8 @@ export default {
     '~/plugins/v-i18n.js',
     '~/plugins/eventBus.js',
     '~/plugins/bitpod',
+    '~/plugins/v-gtag.js',
+    '~/plugins/v-gtm.js',
     { src: '~/plugins/v-datetime-picker.js', mode: 'client' },
   ],
   /*
@@ -257,6 +259,10 @@ export default {
       primeOrgId: '1',
     },
     basePublicPath: process.env.PUBLIC_PATH || '',
+    gaTrackingCode: process.env.GET_TRACKING_CODE || 'UA-192083281-1',
+    gaGtmCode: process.env.GET_GTM_CODE || 'GTM-54VGK22',
+    seedValue:
+      process.env.GET_SEED_VALUE || '2da90066-c9d9-43d0-bdce-5f6bb07e9dea',
     cdnUri:
       'https://res.cloudinary.com/mytestlogo/image/upload/bitpodjs/images/',
     cdnCsvUri: 'https://res.cloudinary.com/mytestlogo/raw/upload/',
@@ -334,7 +340,7 @@ export default {
       },
     },
   },
-  serverMiddleware: ['~/api/index.js'],
+  serverMiddleware: ['~/api/index.js', '~/server-middleware/no-cache'],
   auth: {
     redirect: {
       login: '/login',

@@ -130,7 +130,11 @@
             </slot>
           </div>
           <v-menu
-            v-if="selectedItems.length > 0 && actionsCount > baseActionCount"
+            v-if="
+              selectedItems.length > 0 &&
+              actionsCount > baseActionCount &&
+              !hasHiddenRowAction
+            "
             right
             :offset-y="offset"
             transition="slide-y-transition"
@@ -289,13 +293,13 @@
           :loading="!!loading"
           type="card"
           width="264"
-          class="pa-4 pl-0 pt-0 eventtiles ma-4 ml-0 mt-0"
+          class="pa-4 pl-0 pt-0 eventtiles ma-sm-4 ml-sm-0 mt-sm-0 mx-auto my-2"
         >
           <div></div>
         </v-skeleton-loader>
       </div>
       <div
-        v-if="viewName === 'template'"
+        v-if="viewName === 'template' && loading === true"
         class="d-flex flex-sm-wrap flex-column flex-sm-row mt-12"
       >
         <v-skeleton-loader
@@ -310,7 +314,7 @@
         </v-skeleton-loader>
       </div>
       <div
-        v-if="viewName === 'badge'"
+        v-if="viewName === 'badge' && loading === true"
         class="d-flex flex-sm-wrap flex-column flex-sm-row"
       >
         <v-skeleton-loader
@@ -326,7 +330,7 @@
         </v-skeleton-loader>
       </div>
       <div
-        v-if="viewName === 'seatmaps'"
+        v-if="viewName === 'seatmaps' && loading === true"
         class="d-flex flex-wrap flex-row seat-skeleton-inner mt-10 pl-2"
       >
         <v-skeleton-loader
@@ -342,7 +346,7 @@
         </v-skeleton-loader>
       </div>
       <div
-        v-if="viewName === 'integration'"
+        v-if="viewName === 'integration' && loading === true"
         class="d-flex flex-wrap flex-row seat-skeleton-inner mt-16 pl-2"
       >
         <v-skeleton-loader
@@ -749,6 +753,16 @@ export default {
         return 3
       }
       return 0
+    },
+    hasHiddenRowAction() {
+      const templateActions = this.content.views?.[this.viewName]?.template
+        ?.actions
+      if (templateActions) {
+        const hasHiddenEdit = templateActions.edit?.hidden
+        const hasHiddenDelete = templateActions.delete?.hidden
+        return hasHiddenEdit || hasHiddenDelete
+      }
+      return false
     },
   },
   watch: {

@@ -60,7 +60,7 @@
             </v-list-item>
           </v-list-group>
           <v-list-item
-            v-else
+            v-else-if="item.requiresAuth ? $auth.loggedIn : true"
             :key="item.text"
             link
             :to="localePath(item.to)"
@@ -232,7 +232,6 @@ export default {
       class: 'help-center',
     },
   },
-  middleware: ['auth', 'authorization'],
   components: {
     OrgnaizationList,
     AppDrawer,
@@ -283,11 +282,16 @@ export default {
         this.items = this.items.concat({
           text: this.$t(HelpCenter[sectionName].views[viewName].title),
           to: HelpCenter[sectionName].views[viewName].to,
+          requiresAuth: HelpCenter[sectionName].views[viewName].requiresAuth,
         })
       })
     })
   },
   mounted() {
+    const loginStatus = this.$auth.strategy.token.get()
+    if (!loginStatus) {
+      location.replace(`${this.$config.basePublicPath}/unauthorized`)
+    }
     const userInfo = userUtils.userCurrentOrgInfo(this.$store) || {}
     const userRoles = userInfo.roles || []
     this.allowUpgrade = userRoles.includes('$orgowner')

@@ -1,11 +1,11 @@
 <template>
-  <v-form ref="form" v-model="valid">
-    <v-dialog
-      v-model="eventForm"
-      persistent
-      scrollable
-      content-class="slide-form-default"
-    >
+  <v-dialog
+    v-model="eventForm"
+    persistent
+    scrollable
+    content-class="slide-form-default"
+  >
+    <v-form ref="form" v-model="valid" @submit.prevent="submitForm">
       <v-card>
         <v-card-title
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
@@ -263,13 +263,15 @@
             "
             depressed
             :action="onSave"
+            :has-submit-action="true"
+            form-name="edit-eventForm-form"
             class="ml-2"
             ><i18n path="Drawer.Save"
           /></SaveButton>
         </v-card-actions>
       </v-card>
-    </v-dialog>
-  </v-form>
+    </v-form>
+  </v-dialog>
 </template>
 <script>
 import gql from 'graphql-tag'
@@ -625,6 +627,9 @@ export default {
           e
         )
       }
+    },
+    submitForm() {
+      this.$eventBus.$emit('form-submitted', 'edit-eventForm-form')
     },
   },
   apollo: {

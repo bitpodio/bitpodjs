@@ -254,24 +254,39 @@ export default {
         nuxtconfig.publicRuntimeConfig.cdnUri +
         'admin-default-template-logo.png'
       if (str) {
-        str = str
-          .replace('{{ FullName }}', `${items.FullName}`)
-          .replace(
-            '{{ Category }}',
-            `${(items.regType && items.regType.Name) || 'Guest'}`
-          )
-          .replace('{{ Organization }}', `${items.CompanyName || ''}`)
-        if (this.logoId !== '') {
+        if (items.regType !== null) {
+          const index =
+            document &&
+            document
+              .getElementsByClassName('badge-category')[0]
+              .outerHTML.indexOf('background')
           str = str.replace(
-            logoUrl,
-            this.getAttachmentLink(this.logoId, true) || logoUrl
+            document.getElementsByClassName('badge-category')[0].outerHTML &&
+              document
+                .getElementsByClassName('badge-category')[0]
+                .outerHTML.substring(index, 118)
+                .split(':')[1],
+            `${items.regType && items.regType.ColorCode}`
           )
-        }
-        if (this.context.event && this.context.event.Title) {
-          str = str.replace('{{ EventName }}', `${this.context.event.Title}`)
+          str = str
+            .replace('{{ FullName }}', `${items.FullName}`)
+            .replace(
+              '{{ Category }}',
+              `${(items.regType && items.regType.Name) || 'Guest'}`
+            )
+            .replace('{{ Organization }}', `${items.CompanyName || ''}`)
+          if (this.logoId !== '') {
+            str = str.replace(
+              logoUrl,
+              this.getAttachmentLink(this.logoId, true) || logoUrl
+            )
+          }
+          if (this.context.event && this.context.event.Title) {
+            str = str.replace('{{ EventName }}', `${this.context.event.Title}`)
+          }
+          return str
         }
       }
-      return str
     },
     getAttachmentLink(id, isDownloadLink) {
       const url = this.$bitpod.getApiUrl()

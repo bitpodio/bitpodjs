@@ -40,6 +40,7 @@
     "BadgeLogo": "बैज लोगो",
     "EventB": "इवेंट बैनर (680x350)",
     "Other": "अन्य",
+    "LiveStreamBanner": "लाइव स्ट्रीम बैनर",
     "EventBanner": "इवेंट बैनर",
     "LogoImage": "लोगो छवि",
     "ManageSchedule": "शेड्यूल प्रबंधित करें",
@@ -672,7 +673,7 @@
     "ShowMore": "Show More",
     "SelectOnePriorInvite": "to select one of the prior invite",
     "NewRecurringSession": "New Recurring Session",
-    "EditSession": "Edit Session",
+    "EditSession": "सत्र संपादित करें",
     "CustomErrorMessage": "custom {errorMessage}",
     "MoreAbout": "More info about",
     "HeaderTemplate": "header Template",
@@ -787,7 +788,12 @@
     "CheckCalendarInvite": "लिंक से जुड़ने के लिए कैलेंडर आमंत्रण की जाँच करें",
     "ClearFilter": "फ़िल्टर साफ़ करें",
     "SubTotal": "उप कुल",
-    "AccessRequired":"पहुँच की अनुमति नहीं दी, पहुँच का अनुरोध करने के लिए संपर्क समर्थन"
+    "AccessRequired": "पहुँच की अनुमति नहीं दी, पहुँच का अनुरोध करने के लिए संपर्क समर्थन",
+    "SendEventInvite": "ईवेंट आमंत्रण भेजें",
+    "ScheduleTask": "एक कार्य अनुसूची",
+    "AttendeeImportSuccess": "सहभागी सफलतापूर्वक आयात किया गया",
+    "AttendeeImportFailed": "सहभागी आयात विफल",
+    "LoginRequired": "एपीआई एक्सप्लोरर का उपयोग करने के लिए अपने खाते के साथ लॉगिन करें।"
   },
   "Drawer": {
     "CreateEventAction": "इवेंट बनाएँ",
@@ -931,7 +937,8 @@
       "SetupOrgFailed": "आपके संगठन को सेटअप करने में विफल।",
       "CreateOrgFailed": "अपना संगठन बनाने में विफल।",
       "CreateOrgCatch": "यह संगठन उपयोग में है या सॉफ्ट-डिलीट हो सकता है। एक नए नाम के साथ प्रयास करें।",
-      "CreateOrgFull": "अपना संगठन बनाने में विफल।"
+      "CreateOrgFull": "अपना संगठन बनाने में विफल।",
+      "MemberExists": "सदस्य पहले से मौजूद है!"
     },
     "Warn": {
       "UniqueLinkFormat": "केवल लोअर केस अल्फ़ान्यूमेरिक अक्षर",
