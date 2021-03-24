@@ -66,14 +66,6 @@
               You have unsubscribed successfully
             </h2>
           </v-card-title>
-          <!-- <v-divider class="ml-10 mr-11"></v-divider>
-          <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-4">
-            <v-row class="unsubscribeBox pt-4 mt-3 ml-2">
-              <v-col cols="12" class="py-0">
-                <h3>You have unsubscribed successfully</h3>
-              </v-col>
-            </v-row>
-          </v-card-text> -->
         </v-card>
       </v-form>
     </v-dialog>
@@ -134,7 +126,6 @@ export default {
           ...object,
         })
         if (res) {
-          console.log(res)
           this.dialog = false
           this.successUnsubscribe = true
         }
