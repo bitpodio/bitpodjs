@@ -428,7 +428,6 @@ export default {
       this.$auth.user.data.email,
       this.$config.seedValue
     )
-    console.log('checkID', checkId)
     window.ga('create', this.$config.gaTrackingCode, 'auto')
     window.ga('set', 'userId', checkId)
     window.ga('send', 'pageview')
