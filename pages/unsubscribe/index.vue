@@ -130,7 +130,7 @@ export default {
           this.successUnsubscribe = true
         }
       } catch (e) {
-        console.log('Error', e)
+        console.log(`Error in unsubscribe layout while making POST call to Unsubscribes model context:-URL:${url}\n email:${this.email}\n Reason:${this.reason}\n CampaignId:${this.campaignId}`)
       }
     },
     submitForm() {
