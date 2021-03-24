@@ -74,21 +74,6 @@
                     </template>
                     <span>{{ item.Title }}</span>
                   </v-tooltip>
-                  <div
-                    class="text--secondary pa-2 pb-0 pt-0 body-2 text-truncate d-block pl-0"
-                  >
-                    {{
-                      formatAddressField(
-                        item._VenueAddress && item._VenueAddress.City
-                      )
-                    }},
-                    {{
-                      formatAddressField(
-                        item._VenueAddress && item._VenueAddress.Country
-                      )
-                    }}
-                    <!-- {{ item._VenueAddress.Country }} -->
-                  </div>
                 </v-flex>
               </nuxt-link>
               <v-card-actions class="pt-0 pl-4 tiles-action">

@@ -119,9 +119,6 @@ export default {
       this.$emit('update:seoForm', false)
       this.onReset()
     },
-    refresh() {
-      this.$refs.form.$parent.$parent.refresh()
-    },
     onReset() {
       this.seoData.SEOTitle = ''
       this.SEODesc = ''
@@ -146,7 +143,7 @@ export default {
             this.$t('Messages.Success.EventDetailsUpdateSuccess')
           )
           this.$emit('update:snackbar', true)
-          this.refresh()
+          this.$eventBus.$emit('update-event-details')
           this.data.event = res
         }
       } catch (e) {
