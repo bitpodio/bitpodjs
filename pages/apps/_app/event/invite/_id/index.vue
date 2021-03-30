@@ -17,11 +17,11 @@
           class="xs12 sm8 md8 lg8 boxview pa-3 mr-0 mb-4 pb-2 elevation-1 rounded-lg"
         >
           <v-flex class="d-flex justify-center align-center pb-0">
-            <v-tooltip left>
+            <v-tooltip bottom>
               <template v-slot:activator="{ on, attrs }">
                 <div
                   v-bind="attrs"
-                  class="text-h4 text-capitalize d-inline-block text-truncate col-md-10 pa-0"
+                  class="fs-20 text-capitalize d-inline-block text-truncate col-md-10 pa-0"
                   v-on="on"
                 >
                   {{ data.invites.Title }}
