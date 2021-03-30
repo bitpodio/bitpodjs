@@ -2145,6 +2145,7 @@ export default {
       if (this.tickets.length > 1) {
         this.tickets.splice(index, 1)
         this.deleteSessionTicket(index)
+        this.setSessionTicket()
       } else {
         const ticket = this.ticketDefaultData()
         this.tickets = [ticket]
