@@ -526,6 +526,7 @@ body {
     text-overflow: ellipsis;
     display: block;
     float: left;
+    text-align: left;
 }
 .v-application--is-rtl .attendeeCount {
   left: 10px;

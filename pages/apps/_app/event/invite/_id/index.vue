@@ -21,7 +21,7 @@
               <template v-slot:activator="{ on, attrs }">
                 <div
                   v-bind="attrs"
-                  class="text-h4 text-capitalize d-inline-block text-truncate col-md-10 pa-0"
+                  class="fs-20 text-capitalize d-inline-block text-truncate col-md-10 pa-0"
                   v-on="on"
                 >
                   {{ data.invites.Title }}
