@@ -980,6 +980,7 @@
       "OrgDetailsUpdateSuccess": "संगठन का विवरण सफलतापूर्वक अपडेट किया गया",
       "DeletedSuccessfully": "आइटम सफलतापूर्वक हटा दिया गया",
       "UserDeletedSuccessfully":"उपयोगकर्ता सफलतापूर्वक हटा दिया गया",
+      "UserCreatedSuccessfully":"उपयोगकर्ता सफलतापूर्वक बनाया गया",
       "SuccessfulCheckedIn": "बधाई हो, आपने सफलतापूर्वक जाँच कर ली है।",
       "ConnectionSuccessfully": "Connection Updated Successfully",
       "ConnectionDeletedSuccessfully": "Connection deleted Successfully",

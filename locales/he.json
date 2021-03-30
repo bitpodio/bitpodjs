@@ -978,6 +978,7 @@
       "AccessKeySecretCopied": "מפתח מפתח וסוד הועתק ללוח",
       "DeletedSuccessfully": "הפריט נמחק בהצלחה",
       "UserDeletedSuccessfully":"המשתמש נמחק בהצלחה",
+      "UserCreatedSuccessfully":"המשתמש נוצר בהצלחה",
       "EventDetailsUpdateSuccess": "פרטי האירוע עודכנו בהצלחה",
       "OrgDetailsUpdateSuccess": "פרטי הארגון עודכנו בהצלחה",
       "SuccessfulCheckedIn.": "מזל טוב, נכנסת בהצלחה.",
