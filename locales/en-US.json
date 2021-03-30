@@ -793,10 +793,9 @@
     "AttendeeImportSuccess": "Attendee Imported Successfully",
     "AttendeeImportFailed": "Attendee Import Failed",
     "LoginRequired": "Login with your account to use the API Explorer.",
-    "SendManyMails":"You have send me too many mails",
-    "StopReceiveMails":"I no longer wanted to receive these mails",
-    "NeverSignedForMails":"I never signed up for this mailing list"
-
+    "SendManyMails": "You have send me too many mails",
+    "StopReceiveMails": "I no longer wanted to receive these mails",
+    "NeverSignedForMails": "I never signed up for this mailing list"
   },
   "Drawer": {
     "CreateEventAction": "Create Event",
@@ -980,8 +979,8 @@
       "EventDetailsUpdateSuccess": "Event details updated successfully",
       "OrgDetailsUpdateSuccess": "Organization details updated successfully",
       "AccessKeySecretCopied": "Access Key and Secret copied to clipboard",
-      "UserDeletedSuccessfully":"User deleted successfully",
-      "UserCreatedSuccessfully":"User created successfully",
+      "UserDeletedSuccessfully": "User deleted successfully",
+      "UserCreatedSuccessfully": "User created successfully",
       "DeletedSuccessfully": "Item deleted successfully",
       "EventDeletedSuccessfully": "Event deleted successfully",
       "SuccessfulCheckedIn": "Congratulations, You have successfully checked in.",
