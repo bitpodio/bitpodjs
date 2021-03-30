@@ -1960,12 +1960,9 @@ export default {
           }
         })
       })
-      console.log('this.SessionTicket', this.SessionTicket)
-      console.log('cloneTickets', cloneTickets)
       this.sessions[this.selectedSession].TicketName = TicketName
       this.sessions[this.selectedSession].SessionTicket = this.SessionTicket
       const sessions = [...this.sessions]
-      console.log()
       this.sessions = sessions
     },
     setScheduleType(type) {
