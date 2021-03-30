@@ -17,7 +17,7 @@
           class="xs12 sm8 md8 lg8 boxview pa-3 mr-0 mb-4 pb-2 elevation-1 rounded-lg"
         >
           <v-flex class="d-flex justify-center align-center pb-0">
-            <v-tooltip bottom>
+            <v-tooltip left>
               <template v-slot:activator="{ on, attrs }">
                 <div
                   v-bind="attrs"
