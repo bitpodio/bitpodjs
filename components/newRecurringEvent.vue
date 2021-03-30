@@ -1960,9 +1960,12 @@ export default {
           }
         })
       })
+      console.log('this.SessionTicket', this.SessionTicket)
+      console.log('cloneTickets', cloneTickets)
       this.sessions[this.selectedSession].TicketName = TicketName
       this.sessions[this.selectedSession].SessionTicket = this.SessionTicket
       const sessions = [...this.sessions]
+      console.log()
       this.sessions = sessions
     },
     setScheduleType(type) {
@@ -2145,6 +2148,7 @@ export default {
       if (this.tickets.length > 1) {
         this.tickets.splice(index, 1)
         this.deleteSessionTicket(index)
+        this.setSessionTicket()
       } else {
         const ticket = this.ticketDefaultData()
         this.tickets = [ticket]
