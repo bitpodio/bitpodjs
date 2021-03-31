@@ -419,20 +419,15 @@ export default {
     this.allowUser = userRoles.length === 1 && userRoles.includes('$orguser')
     this.allowUpgrade = userRoles.includes('$orgowner')
     window.addEventListener('message', this.messageReceived, false)
-    debugger
     const checkId = murmurhash.v2(
       this.$auth.user.data.email,
       this.$config.seedValue
     )
-    console.log('checkID', checkId)
     setTimeout(() => {
       if (window && window.ga) {
         window.ga('create', this.$config.gaTrackingCode, 'auto')
         window.ga('set', 'userId', checkId)
         window.ga('send', 'pageview')
-        window.ga(function (tracker) {
-          console.log('tracker', tracker)
-        })
       }
     }, 1500)
   },
