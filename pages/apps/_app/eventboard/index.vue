@@ -474,19 +474,17 @@ import {
   pieData,
 } from './aggregateFilters.js'
 import { formatGQLResult } from '~/utility/gql.js'
-import { getIdFromAtob } from '~/utility'
+import { getIdFromAtob, configLoaderMixin } from '~/utility'
 import timeAgo from '~/components/common/timeAgo'
 import eventList from '~/config/apps/event/gql/eventlist.gql'
 import registrationList from '~/config/apps/event/gql/registrationList.gql'
-import { configLoaderMixin } from '~/utility'
 
 export default {
-  layout: 'event',
-  mixins: [configLoaderMixin],
   components: {
     GChart,
     timeAgo,
   },
+  mixins: [configLoaderMixin],
   data() {
     return {
       lineChartEvents: {

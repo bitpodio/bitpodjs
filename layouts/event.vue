@@ -423,9 +423,13 @@ export default {
       this.$auth.user.data.email,
       this.$config.seedValue
     )
-    window.ga('create', this.$config.gaTrackingCode, 'auto')
-    window.ga('set', 'userId', checkId)
-    window.ga('send', 'pageview')
+    setTimeout(() => {
+      if (window && window.ga) {
+        window.ga('create', this.$config.gaTrackingCode, 'auto')
+        window.ga('set', 'userId', checkId)
+        window.ga('send', 'pageview')
+      }
+    }, 1500)
   },
   beforeDestroy() {
     window.removeEventListener('message', this.messageReceived)
