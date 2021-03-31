@@ -425,12 +425,16 @@ export default {
       this.$config.seedValue
     )
     console.log('checkID', checkId)
-    window.ga('create', this.$config.gaTrackingCode, 'auto')
-    window.ga('set', 'userId', checkId)
-    window.ga('send', 'pageview')
-    window.ga(function (tracker) {
-      console.log('tracker', tracker)
-    })
+    setTimeout(() => {
+      if (window && window.ga) {
+        window.ga('create', this.$config.gaTrackingCode, 'auto')
+        window.ga('set', 'userId', checkId)
+        window.ga('send', 'pageview')
+        window.ga(function (tracker) {
+          console.log('tracker', tracker)
+        })
+      }
+    }, 1500)
   },
   beforeDestroy() {
     window.removeEventListener('message', this.messageReceived)
