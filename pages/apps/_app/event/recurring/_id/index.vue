@@ -1465,7 +1465,9 @@ export default {
       this.displaySelectedOtherImage = this.getAttachmentLink(image, true)
     },
     goBack() {
-      this.$router.back()
+      this.$router.push(
+        this.localePath(`/apps/event/list/Event/live-and-draft-event`)
+      )
     },
     async getBannerImageName(imageId) {
       const url = this.$bitpod.getApiUrl()
