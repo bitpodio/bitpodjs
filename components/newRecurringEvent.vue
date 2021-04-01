@@ -2132,7 +2132,6 @@ export default {
       }
     },
     changeTicketType(index) {
-      debugger
       return () => {
         if (this.tickets[index].Type === 'Free') {
           this.tickets[index].Amount = 0
