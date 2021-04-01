@@ -2132,10 +2132,13 @@ export default {
       }
     },
     changeTicketType(index) {
-      if (this.tickets[index].Type === 'Free') {
-        this.tickets[index].Amount = 0
-      } else {
-        this.tickets[index].Amount = 1
+      debugger
+      return () => {
+        if (this.tickets[index].Type === 'Free') {
+          this.tickets[index].Amount = 0
+        } else {
+          this.tickets[index].Amount = 1
+        }
       }
     },
     isPriceDisabled(index) {
