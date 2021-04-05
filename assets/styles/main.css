@@ -314,12 +314,9 @@ body {
   padding: 0 !important;
 }
 .contactsGrid {
-  overflow: hidden;
+  overflow-y: auto;
   max-height: 500px !important;
   width: 100%;
-}
-.contactsGrid:hover {
-  overflow-y: scroll;
 }
 .tempCard {
   transition: opacity 0.4s ease-in-out;
