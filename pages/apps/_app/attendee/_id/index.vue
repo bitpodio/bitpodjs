@@ -188,7 +188,7 @@
                               ><div>{{ item.Name }}</div>
                               <div
                                 v-if="checkLiveSession(item)"
-                                class="live-ring-section"
+                                class="live-view-section"
                               >
                                 <div class="ring-container ml-2">
                                   <div class="ringring"></div>
