@@ -71,6 +71,9 @@ export const customVDialog = {
       }
       window.addEventListener('focusin', this.onFocusin)
     },
+    unbind() {
+      window.removeEventListener('focusin', this.onFocusin)
+    },
     postData: _.debounce(function () {
       postGaData(this.obj)
     }, 100),
