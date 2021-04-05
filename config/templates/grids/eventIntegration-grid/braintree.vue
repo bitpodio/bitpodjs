@@ -79,7 +79,7 @@
           :disabled="!valid"
           depressed
           type="submit"
-          form="new-bitpod-form"
+          form="new-braintree-form"
           ><i18n path="Drawer.Save"
         /></v-btn>
       </v-card-actions>
