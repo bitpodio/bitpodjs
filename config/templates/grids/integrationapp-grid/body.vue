@@ -247,7 +247,28 @@ export default {
       }
       const connobj = {}
       connobj.ServiceId = itemObj.ServiceId
-      connobj.Status = 'Connected'
+      try {
+        const filter = {
+          where: {
+            and: [{ Status: 'Connected' }, { 'MetaData.Category': 'Payment' }],
+          },
+        }
+        const filterurl = `${this.$bitpod.getApiUrl()}Connections?filter=${JSON.stringify(
+          filter
+        )}`
+        const res = await this.$axios.$get(filterurl)
+        if (res.length) {
+          connobj.Status = 'Disconnected'
+        } else {
+          connobj.Status = 'Connected'
+        }
+      } catch (e) {
+        console.error(
+          'Error in config/templates/grid/eventIntegration-grid/column-integrate.vue while making a axios call to Connection model from method onSave',
+          e
+        )
+      }
+
       connobj.ProfileId = itemObj.ProfileId
       connobj.ProfileName = itemObj.ProfileName
       connobj.MetaData = formData

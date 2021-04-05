@@ -10,22 +10,7 @@
     <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
       <div class="text-center">{{ snackbarText }}</div>
     </v-snackbar>
-
-    <v-dialog v-model="dialog" top max-width="400">
-      <v-card>
-        <v-card-text class="pt-4 pb-0 body-1">
-          {{ dialogText }}
-        </v-card-text>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-
-          <v-btn text @click="dialog = false">
-            <i18n path="Common.Ok" />
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    <confirm ref="confirm"></confirm>
   </div>
 </template>
 
@@ -133,8 +118,11 @@ export default {
           }
         }
       } else {
-        this.dialogText = 'Please setup the connection to make it active.'
-        this.dialog = true
+        await this.$refs.confirm.open(
+          this.$t('Messages.Warn.SetupWarning'),
+          this.$t('Messages.Warn.SetupConnection'),
+          { color: 'warning', buttonTrueText: 'Okay' }
+        )
       }
     },
   },

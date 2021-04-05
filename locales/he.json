@@ -969,7 +969,9 @@
       "PaymentGatewayWarning": "אזהרת שער תשלום",
       "PaymentGatewayDefault": "ניתן לחבר רק חיבור תשלום אחד.",
       "SeatMapDefault": "אזהרת מפת מושב",
-      "SeatMapWarning": "ישנם שינויים שלא נשמרו אשר יאבדו אם תסגור מבלי לשמור, האם אתה בטוח?"
+      "SeatMapWarning": "ישנם שינויים שלא נשמרו אשר יאבדו אם תסגור מבלי לשמור, האם אתה בטוח?",
+      "SetupWarning":"הגדרת אזהרת חיבור",
+      "SetupConnection":"אנא הגדר את החיבור כדי שיהיה פעיל."
     },
     "Success": {
       "CopiedClipboard": "הועתק ללוח",
