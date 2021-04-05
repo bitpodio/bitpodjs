@@ -2606,7 +2606,6 @@ export default {
       update(data) {
         const attendeeTest = formatGQLResult(data, 'Attendee')
         this.attendees = attendeeTest.length > 0 ? attendeeTest : {}
-        console.log('Logs for publish event data issue', this.attendeeTest)
         return {
           attendeeTest: attendeeTest.length > 0 ? attendeeTest : {},
         }
