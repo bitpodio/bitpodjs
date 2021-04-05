@@ -681,7 +681,7 @@ table > tbody > tr:last-child .key-align {
 .v-skeleton-loader {
   width: 100%;
 }
-.ring-container {
+.live-view-section .ring-container {
     position: relative;
 }
 .circle-ring {
