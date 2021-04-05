@@ -186,7 +186,10 @@
                           <v-list-item-content>
                             <v-list-item-title class="text-capitalize d-flex"
                               ><div>{{ item.Name }}</div>
-                              <div v-if="checkLiveSession(item)">
+                              <div
+                                v-if="checkLiveSession(item)"
+                                class="live-ring-section"
+                              >
                                 <div class="ring-container ml-2">
                                   <div class="ringring"></div>
                                   <div class="circle-ring"></div>
