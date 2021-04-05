@@ -314,12 +314,9 @@ body {
   padding: 0 !important;
 }
 .contactsGrid {
-  overflow: hidden;
+  overflow-y: auto;
   max-height: 500px !important;
   width: 100%;
-}
-.contactsGrid:hover {
-  overflow-y: scroll;
 }
 .tempCard {
   transition: opacity 0.4s ease-in-out;
@@ -684,7 +681,7 @@ table > tbody > tr:last-child .key-align {
 .v-skeleton-loader {
   width: 100%;
 }
-.ring-container {
+.live-view-section .ring-container {
     position: relative;
 }
 .circle-ring {
@@ -746,6 +743,9 @@ table > tbody > tr:last-child .key-align {
 }
 .default-banner-label {
   min-height: 24px;
+}
+.invitee-tooltip.v-tooltip__content {
+  margin-top: -10px;
 }
 @media (min-width: 1904px) {
   .boxviewlarge .v-data-table__wrapper {
