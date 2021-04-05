@@ -541,6 +541,8 @@
                     </div>
                     <div><i18n path="Common.Subject" /></div>
                     <div class="blue--text pt-1 body-1">{{ subject }}</div>
+                    <div><i18n path="Common.Message" /></div>
+                    <div class="blue--text pt-1 body-1">{{ message }}</div>
                   </v-col>
                   <v-col cols="6" class="pl-0">
                     <div><i18n path="Common.SenderAddress" /></div>
