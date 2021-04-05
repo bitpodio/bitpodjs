@@ -744,6 +744,9 @@ table > tbody > tr:last-child .key-align {
 .default-banner-label {
   min-height: 24px;
 }
+.invitee-tooltip.v-tooltip__content {
+  margin-top: -10px;
+}
 @media (min-width: 1904px) {
   .boxviewlarge .v-data-table__wrapper {
     margin-bottom: 0 !important;
