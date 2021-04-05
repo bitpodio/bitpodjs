@@ -970,7 +970,9 @@
       "PaymentGatewayWarning": "Payment Gateway Warning",
       "PaymentGatewayDefault": "Only one Payment connection can be connected.",
       "SeatMapDefault": "Seatmap Warning",
-      "SeatMapWarning": "There are unsaved changes which will be lost if you close without saving, are you sure?"
+      "SeatMapWarning": "There are unsaved changes which will be lost if you close without saving, are you sure?",
+      "SetupWarning":"Setup Connection Warning",
+      "SetupConnection":"Please setup the connection to make it active."
     },
     "Success": {
       "CopiedClipboard": "Copied to clipboard",

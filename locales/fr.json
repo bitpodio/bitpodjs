@@ -967,7 +967,9 @@
       "PaymentGatewayWarning": "Avertissement de passerelle de paiement",
       "PaymentGatewayDefault": "Une seule connexion de paiement peut être connectée.",
       "SeatMapDefault": "Avertissement de plan de siège",
-      "SeatMapWarning": "Certaines modifications non enregistrées seront perdues si vous fermez sans enregistrer, êtes-vous sûr?"
+      "SeatMapWarning": "Certaines modifications non enregistrées seront perdues si vous fermez sans enregistrer, êtes-vous sûr?",
+      "SetupWarning":"Avertissement de connexion de configuration",
+      "SetupConnection":"Veuillez configurer la connexion pour la rendre active."
     },
     "Success": {
       "CopiedClipboard": "Copié dans le presse-papiers",

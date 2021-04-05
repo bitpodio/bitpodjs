@@ -969,7 +969,9 @@
       "PaymentGatewayWarning": "पेमेंट गेटवे वार्निंग",
       "PaymentGatewayDefault": "केवल एक भुगतान कनेक्शन जुड़ा हो सकता है।",
       "SeatMapDefault": "सीटमैप चेतावनी",
-      "SeatMapWarning": "बिना सहेजे हुए परिवर्तन हैं जो बिना बचत के बंद होने पर खो जाएंगे, क्या आप सुनिश्चित हैं?"
+      "SeatMapWarning": "बिना सहेजे हुए परिवर्तन हैं जो बिना बचत के बंद होने पर खो जाएंगे, क्या आप सुनिश्चित हैं?",
+      "SetupWarning":"कनेक्शन चेतावनी",
+      "SetupConnection":"कृपया इसे सक्रिय करने के लिए कनेक्शन सेटअप करें।"
     },
     "Success": {
       "CopiedClipboard": "Copied to clipboard",
