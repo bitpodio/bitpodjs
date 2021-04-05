@@ -336,3 +336,8 @@ export const configLoaderMixin = {
 export function getIdFromAtob(encodedId) {
   return encodedId ? atob(encodedId).split(':')[1] : ''
 }
+
+export function postGaData(obj) {
+  console.debug('postGaData', obj)
+  window.ga('send', obj)
+}
