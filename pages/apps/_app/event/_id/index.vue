@@ -2013,13 +2013,11 @@ export default {
         nuxtconfig.publicRuntimeConfig.cdnUri +
         'admin-default-template-logo.png'
       if (str) {
-        if (ele.regtype !== null) {
-          const strDom = parser.parseFromString(str, 'text/html')
-          strDom
-            .getElementsByClassName('badge-category')[0]
-            .style.setProperty('--defaultColor', `${ele.regType.ColorCode}`)
-          str = strDom.documentElement.innerHTML
-        }
+        const strDom = parser.parseFromString(str, 'text/html')
+        strDom
+          .getElementsByClassName('badge-category')[0]
+          .style.setProperty('--defaultColor', `${ele.regType.ColorCode}`)
+        str = strDom.documentElement.innerHTML
         str = str
           .replace('{{ FullName }}', `${ele.FullName}`)
           .replace(
