@@ -129,7 +129,7 @@
                             {{
                               $t('Common.YouMayReferInviteMembers', {
                                 contactTemplateData:
-                                  ' ${Registration.FirstName} ${Registration.LastName} ${OrganizationInfo.Name}',
+                                  ' ${Contact.FirstName} ${Contact.LastName} ${OrganizationInfo.Name}',
                               })
                             }}</v-card-text
                           >
