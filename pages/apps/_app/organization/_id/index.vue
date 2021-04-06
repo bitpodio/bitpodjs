@@ -3,7 +3,7 @@
     <div class="d-flex flex-column flex-sm-row flex-md-row flex-lg-row">
       <div class="mxw-w70 d-flex flex-column">
         <div
-          class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+          class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg d-none"
         >
           <v-row>
             <v-col class="col-md-12 col-12 pt-0">
