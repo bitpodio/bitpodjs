@@ -1101,7 +1101,6 @@ export default {
       this.currentTab = parseInt(this.tabs) - 1
       this.tabs = `${this.currentTab}`
       this.scrollToTop()
-      this.resetLocation()
     },
     setNextTab() {
       this.currentTab = parseInt(this.tabs) + 1

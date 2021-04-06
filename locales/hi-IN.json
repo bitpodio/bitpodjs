@@ -799,6 +799,8 @@
     "NeverSignedForMails": "मैंने इस मेलिंग सूची के लिए कभी साइन अप नहीं किया"
   },
   "Drawer": {
+    "UnSubscribeMsg": "कृपया न्यूज़लेटर से सदस्यता समाप्त करने का कारण चुनें। इससे हमें अपनी सेवाओं को बेहतर बनाने में मदद मिलेगी।",
+    "UnSubscribeAction": "सदस्यता रद्द",
     "CreateEventAction": "इवेंट बनाएँ",
     "SingleEventAction": "एकल कार्यक्रम",
     "RecurringEventAction": "पुनरावर्ती ईवेंट",

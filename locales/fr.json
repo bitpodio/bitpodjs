@@ -797,6 +797,8 @@
     "NeverSignedForMails": "Je ne me suis jamais inscrit à cette liste de diffusion"
   },
   "Drawer": {
+    "UnSubscribeMsg": "Veuillez sélectionner une raison pour vous désinscrire de la newsletter. Cela nous aidera à améliorer nos services.",
+    "UnSubscribeAction": "Se désabonner",
     "CreateEventAction": "Créer un événement",
     "SingleEventAction": "Evénement unique",
     "RecurringEventAction": "Evénement récurrent",

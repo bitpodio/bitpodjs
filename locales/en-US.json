@@ -798,6 +798,8 @@
     "NeverSignedForMails": "I never signed up for this mailing list"
   },
   "Drawer": {
+    "UnSubscribeMsg": "Please select a reason to unsubscribe from newsletter. This will help us to improve our services.",
+    "UnSubscribeAction": "Unsubscribe",
     "CreateEventAction": "Create Event",
     "SingleEventAction": "Single Event",
     "RecurringEventAction": "Recurring Event",
@@ -971,8 +973,8 @@
       "PaymentGatewayDefault": "Only one Payment connection can be connected.",
       "SeatMapDefault": "Seatmap Warning",
       "SeatMapWarning": "There are unsaved changes which will be lost if you close without saving, are you sure?",
-      "SetupWarning":"Setup Connection Warning",
-      "SetupConnection":"Please setup the connection to make it active."
+      "SetupWarning": "Setup Connection Warning",
+      "SetupConnection": "Please setup the connection to make it active."
     },
     "Success": {
       "CopiedClipboard": "Copied to clipboard",

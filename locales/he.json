@@ -799,6 +799,8 @@
     "NeverSignedForMails": "מעולם לא נרשמתי לרשימת התפוצה הזו"
   },
   "Drawer": {
+    "UnSubscribeMsg": "אנא בחר סיבה לביטול הרישום לניוזלטר. זה יעזור לנו לשפר את השירותים שלנו.",
+    "UnSubscribeAction": "בטל את הרישום",
     "CreateEventAction": "צור אירוע",
     "SingleEventAction": "Single Event",
     "RecurringEventAction": "Recurring Event",
