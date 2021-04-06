@@ -2008,23 +2008,16 @@ export default {
       }
     },
     getBadgePrinted(str, ele) {
+      const parser = new DOMParser()
       const logoUrl =
         nuxtconfig.publicRuntimeConfig.cdnUri +
         'admin-default-template-logo.png'
       if (str) {
-        const index =
-          document &&
-          document
-            .getElementsByClassName('badge-category')[0]
-            .outerHTML.indexOf('background')
-        str = str.replace(
-          document.getElementsByClassName('badge-category')[0].outerHTML &&
-            document
-              .getElementsByClassName('badge-category')[0]
-              .outerHTML.substring(index, 118)
-              .split(':')[1],
-          `${ele && ele.regType.ColorCode}`
-        )
+        const strDom = parser.parseFromString(str, 'text/html')
+        strDom
+          .getElementsByClassName('badge-category')[0]
+          .style.setProperty('--defaultColor', `${ele.regType.ColorCode}`)
+        str = strDom.documentElement.innerHTML
         str = str
           .replace('{{ FullName }}', `${ele.FullName}`)
           .replace(
