@@ -11,13 +11,13 @@
           <v-card-title
             class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pt-4 pb-4 d-flex align-start"
           >
-            <h2 class="black--text pb-0 text-h5">
+            <h2 class="black--text pb-0 mb-n1 text-h5">
               <i18n path="Drawer.UnSubscribeAction" />
             </h2>
           </v-card-title>
           <v-divider class="ml-10 mr-11"></v-divider>
           <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-4">
-            <h2 class="black--text pb-0 text-h5">
+            <h2 class="black--text pb-0 mt-n2 text-h5">
               <i18n path="Drawer.UnSubscribeMsg" />
             </h2>
             <v-row class="unsubscribeBox pt-4 mt-3 ml-1 mr-1">
@@ -55,7 +55,7 @@
       persistent
       scrollable
       content-class="slide-form-default"
-      max-width="592px"
+      max-width="480px"
     >
       <v-form ref="form" v-model="valid" @submit.prevent="submitForm">
         <v-card>
@@ -63,7 +63,7 @@
             class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pt-4 pb-4 d-flex align-start"
           >
             <h2 class="black--text pt-4 pb-0 text-h5">
-              <i18n path="Drawer.UnsubscribeSuccessMsg" />
+              <i18n path="Messages.Success.UnsubscribeSuccessMsg" />
             </h2>
           </v-card-title>
         </v-card>
