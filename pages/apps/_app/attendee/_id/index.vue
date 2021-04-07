@@ -971,6 +971,10 @@ export default {
   },
   mounted() {
     this.getRegistrationData()
+    window.setInterval(() => {
+      debugger
+      this.checkLiveSession()
+    }, 1000)
   },
   methods: {
     formatDate(date) {
