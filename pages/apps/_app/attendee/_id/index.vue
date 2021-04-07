@@ -970,10 +970,10 @@ export default {
     },
   },
   mounted() {
-    this.getRegistrationData()
+    // this.getRegistrationData()
     window.setInterval(() => {
       debugger
-      this.checkLiveSession()
+      this.getRegistrationData()
     }, 1000)
   },
   methods: {
