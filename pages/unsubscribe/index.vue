@@ -11,17 +11,16 @@
           <v-card-title
             class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pt-4 pb-4 d-flex align-start"
           >
-            <h2>
-              Unsubscribe
+            <h2 class="black--text pb-0 mb-n1 text-h5">
+              <i18n path="Drawer.UnSubscribeAction" />
             </h2>
           </v-card-title>
           <v-divider class="ml-10 mr-11"></v-divider>
           <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-4">
-            <h2>
-              Please select a reason to unsubscribe from newsletter. This will
-              help us to improve our services.
-            </h2>
-            <v-row class="unsubscribeBox pt-4 mt-3 ml-2">
+            <div class="black--text pb-0 mt-n2 fs-20">
+              <i18n path="Drawer.UnSubscribeMsg" />
+            </div>
+            <v-row class="unsubscribeBox pt-4 mt-3 ml-1 mr-1">
               <v-col cols="12" class="py-0">
                 <v-radio-group v-model="reason">
                   <v-radio
@@ -56,14 +55,15 @@
       persistent
       scrollable
       content-class="slide-form-default"
+      max-width="480px"
     >
       <v-form ref="form" v-model="valid" @submit.prevent="submitForm">
         <v-card>
           <v-card-title
-            class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pt-4 pb-4 d-flex align-start"
+            class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pt-1 pb-4 d-flex align-start"
           >
-            <h2>
-              You have unsubscribed successfully
+            <h2 class="black--text pt-4 pb-0 text-h5">
+              <i18n path="Messages.Success.UnsubscribeSuccessMsg" />
             </h2>
           </v-card-title>
         </v-card>
