@@ -970,11 +970,7 @@ export default {
     },
   },
   mounted() {
-    // this.getRegistrationData()
-    window.setInterval(() => {
-      debugger
-      this.getRegistrationData()
-    }, 1000)
+    this.getRegistrationData()
   },
   methods: {
     formatDate(date) {
