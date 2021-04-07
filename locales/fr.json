@@ -974,6 +974,7 @@
       "SetupConnection":"Veuillez configurer la connexion pour la rendre active."
     },
     "Success": {
+      "UnsubscribeSuccessMsg":"Vous vous êtes désabonné avec succès",
       "CopiedClipboard": "Copié dans le presse-papiers",
       "CommentDeletedSuccessfully": "La suppression du commentaire a abouti.",
       "FailedDeleteComment": "Echec de la suppression du commentaire.",

@@ -976,6 +976,7 @@
       "SetupConnection":"אנא הגדר את החיבור כדי שיהיה פעיל."
     },
     "Success": {
+      "UnsubscribeSuccessMsg":"ביטלת את הרישום בהצלחה",
       "CopiedClipboard": "הועתק ללוח",
       "CommentDeletedSuccessfully": "Comment deleted successfully.",
       "FailedDeleteComment": "Failed to delete comment.",

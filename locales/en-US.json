@@ -977,6 +977,7 @@
       "SetupConnection": "Please setup the connection to make it active."
     },
     "Success": {
+      "UnsubscribeSuccessMsg":"You have unsubscribed successfully",
       "CopiedClipboard": "Copied to clipboard",
       "CommentDeletedSuccessfully": "Comment deleted successfully.",
       "FailedDeleteComment": "Failed to delete comment.",

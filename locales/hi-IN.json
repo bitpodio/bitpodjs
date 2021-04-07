@@ -976,6 +976,7 @@
       "SetupConnection":"कृपया इसे सक्रिय करने के लिए कनेक्शन सेटअप करें।"
     },
     "Success": {
+      "UnsubscribeSuccessMsg":"आपने सफलतापूर्वक सदस्यता समाप्त कर ली है",
       "CopiedClipboard": "Copied to clipboard",
       "CommentDeletedSuccessfully": "Comment deleted successfully.",
       "FailedDeleteComment": "Failed to delete comment.",
