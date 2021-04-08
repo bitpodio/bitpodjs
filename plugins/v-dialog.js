@@ -84,16 +84,10 @@ export const customVDialog = {
           .getElementsByClassName('v-card__title')[0]
           .getElementsByClassName('v-tabs').length
       if (isTab) {
-        this.$refs.content
+        return this.$refs.content
           .getElementsByClassName('v-card__title')[0]
-          .getElementsByClassName('v-tabs')[0]
-          .replaceWith('')
-        return (
-          this.$refs.content.getElementsByClassName('v-card__title')[0] &&
-          this.$refs.content
-            .getElementsByClassName('v-card__title')[0]
-            .textContent.trim()
-        )
+          .getElementsByClassName('black--text')[0]
+          .textContent.trim()
       } else {
         return (
           this.$refs.content.getElementsByClassName('v-card__title')[0] &&
