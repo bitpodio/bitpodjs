@@ -230,7 +230,9 @@
                       formatAddressField(
                         item._VenueAddress &&
                           item._VenueAddress.Country !== '' &&
-                          item._VenueAddress.Country !== null
+                          item._VenueAddress.Country !== null &&
+                          item._VenueAddress.City !== '' &&
+                          item._VenueAddress.City !== null
                           ? item._VenueAddress.City + ','
                           : ''
                       )
