@@ -951,6 +951,7 @@ export default {
       attendeeData: {},
       isPast: false,
       isSessionLive: false,
+      liveSession: [],
     }
   },
   computed: {
@@ -969,8 +970,14 @@ export default {
       // return this.$store.state.currentOrgInfo.Name
     },
   },
+  created() {
+    this.$eventBus.$on('refresh-stores-list', () => {
+      this.$forceUpdate()
+    })
+  },
   mounted() {
     this.getRegistrationData()
+    this.checkLiveView()
   },
   methods: {
     formatDate(date) {
@@ -1163,6 +1170,18 @@ export default {
           new Date(item.StartDate).getTime() + item.Duration * 60000
         ).getTime()
       return liveStart && liveEnd
+    },
+    checkLiveView() {
+      debugger
+      const self = this
+      setInterval(() => {
+        // self.checkLiveSession(self.liveSession)
+        self.registration.SessionListId.map((e) => {
+          self.checkLiveSession(e)
+        })
+        this.$eventBus.$emit('refresh-stores-list')
+        console.log('test', this.registration.SessionListId)
+      }, 10000)
     },
   },
 }
