@@ -951,7 +951,6 @@ export default {
       attendeeData: {},
       isPast: false,
       isSessionLive: false,
-      liveSession: [],
     }
   },
   computed: {
@@ -971,7 +970,7 @@ export default {
     },
   },
   created() {
-    this.$eventBus.$on('refresh-stores-list', () => {
+    this.$eventBus.$on('refresh-session-list', () => {
       this.$forceUpdate()
     })
   },
@@ -1172,16 +1171,13 @@ export default {
       return liveStart && liveEnd
     },
     checkLiveView() {
-      debugger
       const self = this
       setInterval(() => {
-        // self.checkLiveSession(self.liveSession)
         self.registration.SessionListId.map((e) => {
           self.checkLiveSession(e)
         })
-        this.$eventBus.$emit('refresh-stores-list')
-        console.log('test', this.registration.SessionListId)
-      }, 10000)
+        this.$eventBus.$emit('refresh-session-list')
+      }, 30000)
     },
   },
 }
