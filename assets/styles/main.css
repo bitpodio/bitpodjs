@@ -754,6 +754,9 @@ table > tbody > tr:last-child .key-align {
   .event-title {
     max-width: calc(100% - 230px);
   }
+  .type-number {
+    padding-right: 60 !important;
+  }
 }
 @media (max-width: 800px) {
   .nav-bar {
