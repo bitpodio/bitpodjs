@@ -57,6 +57,14 @@
           <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
             <v-row>
               <v-col cols="12" sm="12" md="12">
+                <!-- <v-skeleton-loader
+                  :loading="loading"
+                  v-bind="attrs"
+                  class="rounded-lg"
+                  type="card"
+                  height="40"
+                  width="250"
+                > -->
                 <v-text-field
                   v-model="Title"
                   :rules="[rules.required]"
@@ -64,12 +72,21 @@
                   dense
                   outlined
                 ></v-text-field>
+                <!-- </v-skeleton-loader> -->
               </v-col>
             </v-row>
 
             <v-form ref="dateform" v-model="datevalid" :lazy-validation="lazy">
               <v-row>
                 <v-col v-if="isVenue || isOnline" cols="12" sm="4" md="4">
+                  <!-- <v-skeleton-loader
+                    :loading="loading"
+                    v-bind="attrs"
+                    class="rounded-lg"
+                    type="date-picker"
+                    height="40"
+                    width="250"
+                  > -->
                   <CustomDate
                     v-model="StartDate"
                     :label="$t('Common.StartD')"
@@ -78,8 +95,17 @@
                     :on-change="changeStartDate()"
                     type="datetime"
                   />
+                  <!-- </v-skeleton-loader> -->
                 </v-col>
                 <v-col v-if="isVenue || isOnline" cols="12" sm="4" md="4">
+                  <!-- <v-skeleton-loader
+                    :loading="loading"
+                    v-bind="attrs"
+                    class="rounded-lg"
+                    type="date-picker"
+                    height="40"
+                    width="250"
+                  > -->
                   <CustomDate
                     v-model="EndDate"
                     :label="$t('Common.EndD')"
@@ -88,14 +114,24 @@
                     :on-change="changeEndDate()"
                     type="datetime"
                   />
+                  <!-- </v-skeleton-loader> -->
                 </v-col>
 
                 <v-col v-if="isVenue || isOnline" cols="12" sm="4" md="4">
+                  <!-- <v-skeleton-loader
+                    :loading="loading"
+                    v-bind="attrs"
+                    class="rounded-lg"
+                    type="card"
+                    height="40"
+                    width="250"
+                  > -->
                   <Timezone
                     v-model="eventData.Timezone"
                     :field="timezonefield"
                     class="v-timezone"
                   ></Timezone>
+                  <!-- </v-skeleton-loader> -->
                 </v-col>
               </v-row>
             </v-form>
@@ -107,6 +143,14 @@
                 md="8"
                 class="text-links pb-0 d-flex flex-column flex-md-row"
               >
+                <!-- <v-skeleton-loader
+                  :loading="loading"
+                  v-bind="attrs"
+                  class="rounded-lg"
+                  type="card"
+                  height="40"
+                  width="250"
+                > -->
                 <div class="pt-2 mr-2">{{ eventLinkHint }}</div>
                 <v-text-field
                   v-model="UniqLink"
@@ -118,18 +162,36 @@
                   :error-messages="uniqueLinkMessage"
                   @keyup="changeUniqueLink($event)"
                 ></v-text-field>
+                <!-- </v-skeleton-loader> -->
               </v-col>
             </v-row>
             <v-row v-if="isOnline">
               <v-col cols="12" class="pb-0">
+                <!-- <v-skeleton-loader
+                  :loading="loading"
+                  v-bind="attrs"
+                  class="rounded-lg"
+                  type="card"
+                  height="40"
+                  width="250"
+                > -->
                 <v-text-field
                   v-model="eventData.WebinarLink"
                   :label="$t('Common.OnlineEventLinkReq')"
                   outlined
                   dense
                 ></v-text-field>
+                <!-- </v-skeleton-loader> -->
               </v-col>
               <v-col cols="12" class="pb-0">
+                <!-- <v-skeleton-loader
+                  :loading="loading"
+                  v-bind="attrs"
+                  class="rounded-lg"
+                  type="card"
+                  height="40"
+                  width="250"
+                > -->
                 <v-textarea
                   v-model="eventData.JoiningInstruction"
                   :label="$t('Common.AdditionalOnlineEvent')"
@@ -137,132 +199,207 @@
                   dense
                   rows="2"
                 ></v-textarea>
+                <!-- </v-skeleton-loader> -->
               </v-col>
             </v-row>
-            <div v-if="isVenue" class="col-md-12 pl-0">
-              <v-flex class="d-flex justify-center align-center pb-1">
-                <h2 class="body-1 pb-1 primary--text">
-                  <i class="fa fa-map-marker" aria-hidden="true"></i>
-                  <i18n path="Common.Venue" />
-                </h2>
-                <v-spacer></v-spacer>
-              </v-flex>
-            </div>
-            <v-row>
-              <v-col cols="12" sm="6" md="6" class="pl-0 pt-0 pb-0">
-                <v-col v-if="isVenue" cols="12" class="pb-6 pt-0">
-                  <div class="positionRelative">
-                    <div v-if="addressClicked" class="address-legend">
-                      {{ $t('Common.AddressRequired') }}
+            <v-skeleton-loader
+              :loading="loading"
+              v-bind="attrs"
+              type="card"
+              height="500"
+              width="400"
+            >
+              <div v-if="isVenue" class="col-md-12 pl-0">
+                <v-flex class="d-flex justify-center align-center pb-1">
+                  <h2 class="body-1 pb-1 primary--text">
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    <i18n path="Common.Venue" />
+                  </h2>
+                  <v-spacer></v-spacer>
+                </v-flex>
+              </div>
+              <v-row>
+                <v-col cols="12" sm="6" md="6" class="pl-0 pt-0 pb-0">
+                  <v-col v-if="isVenue" cols="12" class="pb-6 pt-0">
+                    <!-- <v-skeleton-loader
+                        :loading="loading"
+                        v-bind="attrs"
+                        class="rounded-lg"
+                        type="card"
+                        height="40"
+                        width="250"
+                      > -->
+                    <div class="positionRelative">
+                      <div v-if="addressClicked" class="address-legend">
+                        {{ $t('Common.AddressRequired') }}
+                      </div>
+                      <no-ssr>
+                        <vue-google-autocomplete
+                          id="map"
+                          ref="venueAddress.AddressLine"
+                          v-model="venueAddress.AddressLine"
+                          class="form-control pa-3 d-block rounded"
+                          :placeholder="!addressClicked && $t('Common.Address')"
+                          :required="true"
+                          @placechanged="getAddressData"
+                          @focus="focusIn"
+                          @blur="focusOut"
+                          @change="changeAddressData($event)"
+                        ></vue-google-autocomplete>
+                      </no-ssr>
                     </div>
-                    <no-ssr>
-                      <vue-google-autocomplete
-                        id="map"
-                        ref="venueAddress.AddressLine"
-                        v-model="venueAddress.AddressLine"
-                        class="form-control pa-3 d-block rounded"
-                        :placeholder="!addressClicked && $t('Common.Address')"
-                        :required="true"
-                        @placechanged="getAddressData"
-                        @focus="focusIn"
-                        @blur="focusOut"
-                        @change="changeAddressData($event)"
-                      ></vue-google-autocomplete>
-                    </no-ssr>
-                  </div>
-                  <div
-                    v-show="addresslineMessage !== ''"
-                    class="red--text pa-3 pt-0 body-1"
-                  >
-                    {{ addresslineMessage }}
-                  </div>
-                </v-col>
-                <v-col v-if="isVenue" cols="12" class="pb-0">
-                  <v-text-field
-                    v-model="eventData.VenueName"
-                    :label="$t('Common.VenueName')"
-                    outlined
-                    dense
-                  ></v-text-field>
-                </v-col>
-
-                <v-row class="px-2">
-                  <v-col v-if="isVenue" cols="12" sm="6" md="6" class="pb-0">
-                    <v-text-field
-                      v-model="venueAddress.City"
-                      :label="$t('Common.City')"
-                      outlined
-                      dense
-                    ></v-text-field>
-                  </v-col>
-                  <v-col v-if="isVenue" cols="12" sm="6" md="6" class="pb-0">
-                    <v-text-field
-                      v-model="venueAddress.State"
-                      :label="$t('Common.State')"
-                      outlined
-                      dense
-                    ></v-text-field>
-                  </v-col>
-                  <v-col v-if="isVenue" cols="12" sm="6" md="6" class="pb-0">
-                    <v-text-field
-                      v-model="venueAddress.Country"
-                      :label="$t('Common.Country')"
-                      outlined
-                      dense
-                    ></v-text-field>
-                  </v-col>
-                  <v-col v-if="isVenue" cols="12" sm="6" md="6" class="pb-0">
-                    <v-text-field
-                      v-model="venueAddress.PostalCode"
-                      :label="$t('Common.ZipCode')"
-                      outlined
-                      dense
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-              </v-col>
-              <v-col cols="12" sm="6" md="6" class="pb-0 pa-0">
-                <v-col v-if="isMap" class="event-map pa-0">
-                  <div class="flex"></div>
-                  <div
-                    v-if="locations[0] && locations[0].lat"
-                    :key="`${locations[0].lat}-${locations[0].lng}`"
-                  >
-                    <GMap
-                      ref="gMap"
-                      language="en"
-                      class="event-map"
-                      :cluster="{ options: { styles: clusterStyle } }"
-                      :center="gMapCenter"
-                      :options="{
-                        fullscreenControl: false,
-                        styles: mapStyle,
-                      }"
-                      :zoom="15"
-                      @bounds_changed="checkForMarkers"
+                    <div
+                      v-show="addresslineMessage !== ''"
+                      class="red--text pa-3 pt-0 body-1"
                     >
-                      <GMapMarker
-                        v-for="location in locations"
-                        :key="`${location.lat}-${location.lng}`"
-                        :position="{ lat: location.lat, lng: location.lng }"
-                        :options="{
-                          icon: pins.selected,
-                        }"
-                        @click="currentLocation = location"
-                      >
-                        <GMapInfoWindow :options="{ maxWidth: 200 }">
-                          <code
-                            >lat: {{ location.lat }}, lng:
-                            {{ location.lng }}</code
-                          >
-                        </GMapInfoWindow>
-                      </GMapMarker>
-                      <GMapCircle :options="circleOptions" />
-                    </GMap>
-                  </div>
+                      {{ addresslineMessage }}
+                    </div>
+                    <!-- </v-skeleton-loader> -->
+                  </v-col>
+                  <v-col v-if="isVenue" cols="12" class="pb-0">
+                    <!-- <v-skeleton-loader
+                        :loading="loading"
+                        v-bind="attrs"
+                        class="rounded-lg"
+                        type="card"
+                        height="40"
+                        width="250"
+                      > -->
+                    <v-text-field
+                      v-model="eventData.VenueName"
+                      :label="$t('Common.VenueName')"
+                      outlined
+                      dense
+                    ></v-text-field>
+                    <!-- </v-skeleton-loader> -->
+                  </v-col>
+
+                  <v-row class="px-2">
+                    <v-col v-if="isVenue" cols="12" sm="6" md="6" class="pb-0">
+                      <!-- <v-skeleton-loader
+                          :loading="loading"
+                          v-bind="attrs"
+                          class="rounded-lg"
+                          type="card"
+                          height="40"
+                          width="250"
+                        > -->
+                      <v-text-field
+                        v-model="venueAddress.City"
+                        :label="$t('Common.City')"
+                        outlined
+                        dense
+                      ></v-text-field>
+                      <!-- </v-skeleton-loader> -->
+                    </v-col>
+                    <v-col v-if="isVenue" cols="12" sm="6" md="6" class="pb-0">
+                      <!-- <v-skeleton-loader
+                          :loading="loading"
+                          v-bind="attrs"
+                          class="rounded-lg"
+                          type="card"
+                          height="40"
+                          width="250"
+                        > -->
+                      <v-text-field
+                        v-model="venueAddress.State"
+                        :label="$t('Common.State')"
+                        outlined
+                        dense
+                      ></v-text-field>
+                      <!-- </v-skeleton-loader> -->
+                    </v-col>
+                    <v-col v-if="isVenue" cols="12" sm="6" md="6" class="pb-0">
+                      <!-- <v-skeleton-loader
+                          :loading="loading"
+                          v-bind="attrs"
+                          class="rounded-lg"
+                          type="card"
+                          height="40"
+                          width="250"
+                        > -->
+                      <v-text-field
+                        v-model="venueAddress.Country"
+                        :label="$t('Common.Country')"
+                        outlined
+                        dense
+                      ></v-text-field>
+                      <!-- </v-skeleton-loader> -->
+                    </v-col>
+                    <v-col v-if="isVenue" cols="12" sm="6" md="6" class="pb-0">
+                      <!-- <v-skeleton-loader
+                          :loading="loading"
+                          v-bind="attrs"
+                          class="rounded-lg"
+                          type="card"
+                          height="40"
+                          width="250"
+                        > -->
+                      <v-text-field
+                        v-model="venueAddress.PostalCode"
+                        :label="$t('Common.ZipCode')"
+                        outlined
+                        dense
+                      ></v-text-field>
+                      <!-- </v-skeleton-loader> -->
+                    </v-col>
+                  </v-row>
                 </v-col>
-              </v-col>
-            </v-row>
+                <v-col cols="12" sm="6" md="6" class="pb-0 pa-0">
+                  <v-col v-if="isMap" class="event-map pa-0">
+                    <!-- <v-skeleton-loader
+                        :loading="loading"
+                        v-bind="attrs"
+                        class="rounded-lg"
+                        type="card"
+                        height="40"
+                        width="250"
+                      > -->
+                    <div class="flex"></div>
+                    <div
+                      v-if="locations[0] && locations[0].lat"
+                      :key="`${locations[0].lat}-${locations[0].lng}`"
+                    >
+                      <GMap
+                        ref="gMap"
+                        language="en"
+                        class="event-map"
+                        :cluster="{ options: { styles: clusterStyle } }"
+                        :center="gMapCenter"
+                        :options="{
+                          fullscreenControl: false,
+                          styles: mapStyle,
+                        }"
+                        :zoom="15"
+                        @bounds_changed="checkForMarkers"
+                      >
+                        <GMapMarker
+                          v-for="location in locations"
+                          :key="`${location.lat}-${location.lng}`"
+                          :position="{
+                            lat: location.lat,
+                            lng: location.lng,
+                          }"
+                          :options="{
+                            icon: pins.selected,
+                          }"
+                          @click="currentLocation = location"
+                        >
+                          <GMapInfoWindow :options="{ maxWidth: 200 }">
+                            <code
+                              >lat: {{ location.lat }}, lng:
+                              {{ location.lng }}</code
+                            >
+                          </GMapInfoWindow>
+                        </GMapMarker>
+                        <GMapCircle :options="circleOptions" />
+                      </GMap>
+                    </div>
+                    <!-- </v-skeleton-loader> -->
+                  </v-col>
+                </v-col>
+              </v-row>
+            </v-skeleton-loader>
             <div class="col-md-12 pl-0">
               <v-flex class="d-flex justify-center align-center pb-1">
                 <h2 class="body-1 pb-1 fs-16">
@@ -365,6 +502,7 @@ export default {
   },
   data() {
     return {
+      loading: true,
       rules: rules(this.$i18n),
       datevalid: false,
       valid: false,
@@ -417,6 +555,7 @@ export default {
         lng: 0.0,
       },
       formName: 'copy-event-form',
+      show: false,
     }
   },
   computed: {
@@ -686,7 +825,9 @@ export default {
         ) {
           this.Title = `Copy of ${this.eventData.Title}`
         }
-
+        if (this.eventData.LocationType === 'Venue') {
+          this.show = true
+        }
         this.StartDate = new Date(this.eventData.StartDate)
         this.EndDate = new Date(this.eventData.EndDate)
         this.eventData.UniqLink = ''
@@ -710,7 +851,9 @@ export default {
           event: event.length > 0 ? event[0] : {},
         }
       },
-      result({ data, loading, networkStatus }) {},
+      result({ data, loading, networkStatus }) {
+        this.loading = false
+      },
       error(error) {
         this.error = error
         this.loading = 0
