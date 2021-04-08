@@ -969,8 +969,14 @@ export default {
       // return this.$store.state.currentOrgInfo.Name
     },
   },
+  created() {
+    this.$eventBus.$on('refresh-session-list', () => {
+      this.$forceUpdate()
+    })
+  },
   mounted() {
     this.getRegistrationData()
+    this.checkLiveView()
   },
   methods: {
     formatDate(date) {
@@ -1163,6 +1169,15 @@ export default {
           new Date(item.StartDate).getTime() + item.Duration * 60000
         ).getTime()
       return liveStart && liveEnd
+    },
+    checkLiveView() {
+      const self = this
+      setInterval(() => {
+        self.registration.SessionListId.map((e) => {
+          self.checkLiveSession(e)
+        })
+        this.$eventBus.$emit('refresh-session-list')
+      }, 30000)
     },
   },
 }
