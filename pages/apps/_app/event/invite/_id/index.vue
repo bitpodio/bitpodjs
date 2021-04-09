@@ -384,7 +384,6 @@ export default {
         )}`
       )
       if (res) {
-        debugger
         this.analytics = res.data[0] || {}
         return res
       }
