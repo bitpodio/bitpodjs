@@ -350,7 +350,7 @@ export default {
               Unsubscribed: {
                 $sum: { $cond: [{ $eq: ['$Unsubscribed', true] }, 1, 0] },
               },
-              Open: { $sum: { $cond: [{ $gte: ['$Open', 1] }, 1, 0] } },
+              Open: { $sum: '$Open' },
               Delivered: {
                 $sum: { $cond: [{ $eq: ['$Delivered', true] }, 1, 0] },
               },
