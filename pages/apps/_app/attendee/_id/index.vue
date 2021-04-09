@@ -951,6 +951,7 @@ export default {
       attendeeData: {},
       isPast: false,
       isSessionLive: false,
+      interval: null,
     }
   },
   computed: {
@@ -973,6 +974,10 @@ export default {
     this.$eventBus.$on('refresh-session-list', () => {
       this.$forceUpdate()
     })
+  },
+  beforeDestroy() {
+    clearInterval(this.interval)
+    this.$eventBus.$off('refresh-session-list')
   },
   mounted() {
     this.getRegistrationData()
@@ -1172,7 +1177,7 @@ export default {
     },
     checkLiveView() {
       const self = this
-      setInterval(() => {
+      this.interval = setInterval(() => {
         self.registration.SessionListId.map((e) => {
           self.checkLiveSession(e)
         })
