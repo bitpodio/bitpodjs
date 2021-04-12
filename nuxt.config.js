@@ -303,6 +303,12 @@ export default {
     optionsPath: './vuetify.options.js',
     theme: {
       dark: false,
+      options: {
+        themeCache: {
+          get: (key) => localStorage.getItem(key),
+          set: (key, value) => localStorage.setItem(key, value),
+        },
+      },
     },
   },
   /*
