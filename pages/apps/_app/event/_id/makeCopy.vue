@@ -230,14 +230,6 @@
                 </v-col>
                 <v-col cols="12" sm="6" md="6" class="pb-0 pa-0">
                   <v-col v-if="isMap" class="event-map pa-0">
-                    <!-- <v-skeleton-loader
-                        :loading="loading"
-                        v-bind="attrs"
-                        class="rounded-lg"
-                        type="card"
-                        height="40"
-                        width="250"
-                      > -->
                     <div class="flex"></div>
                     <div
                       v-if="locations[0] && locations[0].lat"
@@ -278,7 +270,6 @@
                         <GMapCircle :options="circleOptions" />
                       </GMap>
                     </div>
-                    <!-- </v-skeleton-loader> -->
                   </v-col>
                 </v-col>
               </v-row>
