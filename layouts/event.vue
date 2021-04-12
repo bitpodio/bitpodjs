@@ -430,6 +430,20 @@ export default {
         window.ga('send', 'pageview')
       }
     }, 1500)
+    const theme = localStorage.getItem('dark_theme')
+    if (theme) {
+      if (theme === 'true') {
+        this.$vuetify.theme.dark = true
+      } else {
+        this.$vuetify.theme.dark = false
+      }
+    } else if (
+      window.matchMedia &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches
+    ) {
+      this.$vuetify.theme.dark = true
+      localStorage.setItem('dark_theme', this.$vuetify.theme.dark.toString())
+    }
   },
   beforeDestroy() {
     window.removeEventListener('message', this.messageReceived)
