@@ -57,14 +57,6 @@
           <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
             <v-row>
               <v-col cols="12" sm="12" md="12">
-                <!-- <v-skeleton-loader
-                  :loading="loading"
-                  v-bind="attrs"
-                  class="rounded-lg"
-                  type="card"
-                  height="40"
-                  width="250"
-                > -->
                 <v-text-field
                   v-model="Title"
                   :rules="[rules.required]"
@@ -72,21 +64,12 @@
                   dense
                   outlined
                 ></v-text-field>
-                <!-- </v-skeleton-loader> -->
               </v-col>
             </v-row>
 
             <v-form ref="dateform" v-model="datevalid" :lazy-validation="lazy">
               <v-row>
                 <v-col v-if="isVenue || isOnline" cols="12" sm="4" md="4">
-                  <!-- <v-skeleton-loader
-                    :loading="loading"
-                    v-bind="attrs"
-                    class="rounded-lg"
-                    type="date-picker"
-                    height="40"
-                    width="250"
-                  > -->
                   <CustomDate
                     v-model="StartDate"
                     :label="$t('Common.StartD')"
@@ -95,17 +78,8 @@
                     :on-change="changeStartDate()"
                     type="datetime"
                   />
-                  <!-- </v-skeleton-loader> -->
                 </v-col>
                 <v-col v-if="isVenue || isOnline" cols="12" sm="4" md="4">
-                  <!-- <v-skeleton-loader
-                    :loading="loading"
-                    v-bind="attrs"
-                    class="rounded-lg"
-                    type="date-picker"
-                    height="40"
-                    width="250"
-                  > -->
                   <CustomDate
                     v-model="EndDate"
                     :label="$t('Common.EndD')"
@@ -114,24 +88,14 @@
                     :on-change="changeEndDate()"
                     type="datetime"
                   />
-                  <!-- </v-skeleton-loader> -->
                 </v-col>
 
                 <v-col v-if="isVenue || isOnline" cols="12" sm="4" md="4">
-                  <!-- <v-skeleton-loader
-                    :loading="loading"
-                    v-bind="attrs"
-                    class="rounded-lg"
-                    type="card"
-                    height="40"
-                    width="250"
-                  > -->
                   <Timezone
                     v-model="eventData.Timezone"
                     :field="timezonefield"
                     class="v-timezone"
                   ></Timezone>
-                  <!-- </v-skeleton-loader> -->
                 </v-col>
               </v-row>
             </v-form>
@@ -143,14 +107,6 @@
                 md="8"
                 class="text-links pb-0 d-flex flex-column flex-md-row"
               >
-                <!-- <v-skeleton-loader
-                  :loading="loading"
-                  v-bind="attrs"
-                  class="rounded-lg"
-                  type="card"
-                  height="40"
-                  width="250"
-                > -->
                 <div class="pt-2 mr-2">{{ eventLinkHint }}</div>
                 <v-text-field
                   v-model="UniqLink"
@@ -162,36 +118,18 @@
                   :error-messages="uniqueLinkMessage"
                   @keyup="changeUniqueLink($event)"
                 ></v-text-field>
-                <!-- </v-skeleton-loader> -->
               </v-col>
             </v-row>
             <v-row v-if="isOnline">
               <v-col cols="12" class="pb-0">
-                <!-- <v-skeleton-loader
-                  :loading="loading"
-                  v-bind="attrs"
-                  class="rounded-lg"
-                  type="card"
-                  height="40"
-                  width="250"
-                > -->
                 <v-text-field
                   v-model="eventData.WebinarLink"
                   :label="$t('Common.OnlineEventLinkReq')"
                   outlined
                   dense
                 ></v-text-field>
-                <!-- </v-skeleton-loader> -->
               </v-col>
               <v-col cols="12" class="pb-0">
-                <!-- <v-skeleton-loader
-                  :loading="loading"
-                  v-bind="attrs"
-                  class="rounded-lg"
-                  type="card"
-                  height="40"
-                  width="250"
-                > -->
                 <v-textarea
                   v-model="eventData.JoiningInstruction"
                   :label="$t('Common.AdditionalOnlineEvent')"
@@ -199,7 +137,6 @@
                   dense
                   rows="2"
                 ></v-textarea>
-                <!-- </v-skeleton-loader> -->
               </v-col>
             </v-row>
             <v-skeleton-loader
@@ -207,7 +144,7 @@
               v-bind="attrs"
               type="card"
               height="500"
-              width="400"
+              width="500"
             >
               <div v-if="isVenue" class="col-md-12 pl-0">
                 <v-flex class="d-flex justify-center align-center pb-1">
@@ -221,14 +158,6 @@
               <v-row>
                 <v-col cols="12" sm="6" md="6" class="pl-0 pt-0 pb-0">
                   <v-col v-if="isVenue" cols="12" class="pb-6 pt-0">
-                    <!-- <v-skeleton-loader
-                        :loading="loading"
-                        v-bind="attrs"
-                        class="rounded-lg"
-                        type="card"
-                        height="40"
-                        width="250"
-                      > -->
                     <div class="positionRelative">
                       <div v-if="addressClicked" class="address-legend">
                         {{ $t('Common.AddressRequired') }}
@@ -254,94 +183,48 @@
                     >
                       {{ addresslineMessage }}
                     </div>
-                    <!-- </v-skeleton-loader> -->
                   </v-col>
                   <v-col v-if="isVenue" cols="12" class="pb-0">
-                    <!-- <v-skeleton-loader
-                        :loading="loading"
-                        v-bind="attrs"
-                        class="rounded-lg"
-                        type="card"
-                        height="40"
-                        width="250"
-                      > -->
                     <v-text-field
                       v-model="eventData.VenueName"
                       :label="$t('Common.VenueName')"
                       outlined
                       dense
                     ></v-text-field>
-                    <!-- </v-skeleton-loader> -->
                   </v-col>
 
                   <v-row class="px-2">
                     <v-col v-if="isVenue" cols="12" sm="6" md="6" class="pb-0">
-                      <!-- <v-skeleton-loader
-                          :loading="loading"
-                          v-bind="attrs"
-                          class="rounded-lg"
-                          type="card"
-                          height="40"
-                          width="250"
-                        > -->
                       <v-text-field
                         v-model="venueAddress.City"
                         :label="$t('Common.City')"
                         outlined
                         dense
                       ></v-text-field>
-                      <!-- </v-skeleton-loader> -->
                     </v-col>
                     <v-col v-if="isVenue" cols="12" sm="6" md="6" class="pb-0">
-                      <!-- <v-skeleton-loader
-                          :loading="loading"
-                          v-bind="attrs"
-                          class="rounded-lg"
-                          type="card"
-                          height="40"
-                          width="250"
-                        > -->
                       <v-text-field
                         v-model="venueAddress.State"
                         :label="$t('Common.State')"
                         outlined
                         dense
                       ></v-text-field>
-                      <!-- </v-skeleton-loader> -->
                     </v-col>
                     <v-col v-if="isVenue" cols="12" sm="6" md="6" class="pb-0">
-                      <!-- <v-skeleton-loader
-                          :loading="loading"
-                          v-bind="attrs"
-                          class="rounded-lg"
-                          type="card"
-                          height="40"
-                          width="250"
-                        > -->
                       <v-text-field
                         v-model="venueAddress.Country"
                         :label="$t('Common.Country')"
                         outlined
                         dense
                       ></v-text-field>
-                      <!-- </v-skeleton-loader> -->
                     </v-col>
                     <v-col v-if="isVenue" cols="12" sm="6" md="6" class="pb-0">
-                      <!-- <v-skeleton-loader
-                          :loading="loading"
-                          v-bind="attrs"
-                          class="rounded-lg"
-                          type="card"
-                          height="40"
-                          width="250"
-                        > -->
                       <v-text-field
                         v-model="venueAddress.PostalCode"
                         :label="$t('Common.ZipCode')"
                         outlined
                         dense
                       ></v-text-field>
-                      <!-- </v-skeleton-loader> -->
                     </v-col>
                   </v-row>
                 </v-col>
