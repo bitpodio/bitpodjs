@@ -83,7 +83,8 @@ export default {
     '~/plugins/v-gtag.js',
     '~/plugins/v-gtm.js',
     { src: '~/plugins/v-datetime-picker.js', mode: 'client' },
-    { src: '~/plugins/v-dialog.js', mode: 'client' },
+    { src: '~/plugins/v-dialog.js' },
+    // { src: '~/plugins/v-dialog.js', mode: 'client' },
   ],
   /*
    ** Auto import components
