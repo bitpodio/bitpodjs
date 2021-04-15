@@ -82,7 +82,6 @@ export default {
     '~/plugins/bitpod',
     '~/plugins/v-gtag.js',
     '~/plugins/v-gtm.js',
-    '~/plugins/v-dialog.js',
     { src: '~/plugins/v-datetime-picker.js', mode: 'client' },
     // { src: '~/plugins/v-dialog.js', mode: 'client' },
   ],
