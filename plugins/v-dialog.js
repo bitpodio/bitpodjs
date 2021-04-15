@@ -29,7 +29,6 @@ export const customVDialog = {
             eventAction: 'Button-Click',
             eventLabel: this.formLabel + ' > ' + this.buttonText,
           }
-          console.debug('isTargetButtonAction', this.obj)
           this.postData()
         }
       } else if (isTargetClose) {
@@ -41,7 +40,6 @@ export const customVDialog = {
             eventAction: 'Close',
             eventLabel: this.formLabel,
           }
-          console.debug('isTargetClose', this.obj)
           this.postData()
         }
       }
@@ -69,7 +67,6 @@ export const customVDialog = {
           eventAction: 'Show',
           eventLabel: this.formLabel,
         }
-        console.debug('bind', this.obj)
         this.postData()
       }
       window.addEventListener('focusin', this.onFocusin)
@@ -78,7 +75,6 @@ export const customVDialog = {
       window.removeEventListener('focusin', this.onFocusin)
     },
     postData: _.debounce(function () {
-      console.debug('postData', this.obj)
       postGaData(this.obj)
     }, 100),
     getFormLabel() {
