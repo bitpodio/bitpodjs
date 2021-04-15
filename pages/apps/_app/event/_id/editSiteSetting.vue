@@ -351,7 +351,7 @@ export default {
       if (this.eventData.BusinessType === 'Recurring') {
         this.selectTemplate('Dark')
       } else {
-        this.selectTemplate('Event')
+        this.selectTemplate('event')
       }
     },
     changeTab() {
