@@ -21,7 +21,7 @@
         <template v-slot:activator="{ on, attrs }">
           <v-btn text small v-bind="attrs" v-on="on">
             <v-icon left>{{ buttonIcon }}</v-icon>
-            {{ buttonLabel }}
+            {{ $t('Common.ScheduleTask') }}
           </v-btn>
         </template>
         <v-card>
@@ -46,7 +46,13 @@
             </div>
           </v-card-title>
           <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
-            <v-form ref="form" v-model="valid" :lazy-validation="lazy">
+            <v-form
+              ref="form"
+              v-model="valid"
+              :lazy-validation="lazy"
+              :id="formName"
+              @submit.prevent="submitForm"
+            >
               <v-row>
                 <v-col cols="12" sm="6" md="12">
                   <v-text-field
@@ -144,6 +150,9 @@
               :disabled="!valid || isSaveButtonDisabled || task.Status === ''"
               depressed
               :action="onSave"
+              :has-external-submit="true"
+              :has-submit-action="true"
+              :form-name="formName"
               class="ml-2"
               ><i18n path="Drawer.Save"
             /></SaveBtn>
@@ -318,6 +327,7 @@ export default {
           },
         },
       },
+      formName: 'new-eventTask-form',
     }
   },
   computed: {
@@ -561,6 +571,9 @@ export default {
         this.isSaveButtonDisabled = false
         return res
       }
+    },
+    submitForm() {
+      this.$eventBus.$emit('form-submitted', this.formName)
     },
   },
 }

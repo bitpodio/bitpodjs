@@ -36,7 +36,8 @@ body {
   width: 60% !important;
 }
 .slide-site-settings-form-height {
-  min-height: 500px;
+  min-height: 580px;
+  max-height: 100%;
 }
 .v-dialog {
   margin: 0 12px !important;
@@ -314,12 +315,9 @@ body {
   padding: 0 !important;
 }
 .contactsGrid {
-  overflow: hidden;
+  overflow-y: auto;
   max-height: 500px !important;
   width: 100%;
-}
-.contactsGrid:hover {
-  overflow-y: scroll;
 }
 .tempCard {
   transition: opacity 0.4s ease-in-out;
@@ -526,6 +524,7 @@ body {
     text-overflow: ellipsis;
     display: block;
     float: left;
+    text-align: left;
 }
 .v-application--is-rtl .attendeeCount {
   left: 10px;
@@ -683,7 +682,7 @@ table > tbody > tr:last-child .key-align {
 .v-skeleton-loader {
   width: 100%;
 }
-.ring-container {
+.live-view-section .ring-container {
     position: relative;
 }
 .circle-ring {
@@ -715,12 +714,49 @@ table > tbody > tr:last-child .key-align {
 .w-full{
   width: 100%;
 }
+#integrations .v-data-table tbody tr.v-data-table__selected {
+    background: transparent !important;
+}
+.video-js .vjs-control.vjs-close-button {
+  display: none !important;
+}
+.vjs-modal-dialog .vjs-modal-dialog-content {
+  width: auto !important;
+  height: auto !important;
+  padding: 10px !important;
+  top: unset !important;
+  bottom: 0 !important;
+  left: unset !important;
+  right: 10px !important;
+  font-size: 16px !important;
+  background: #585858 !important;
+  border-radius: 5px !important;
+  margin-bottom: 10px !important;
+}
+.vjs-seeking .vjs-loading-spinner, .vjs-waiting .vjs-loading-spinner {
+  display: none !important;
+}
+.vjs-poster {
+  display: none !important;
+}
+.video-js .vjs-modal-dialog {
+  background: transparent !important;
+}
+.default-banner-label {
+  min-height: 24px;
+}
+.invitee-tooltip.v-tooltip__content {
+  margin-top: -10px;
+}
 @media (min-width: 1904px) {
   .boxviewlarge .v-data-table__wrapper {
     margin-bottom: 0 !important;
   }
   .event-title {
     max-width: calc(100% - 230px);
+  }
+  .type-number {
+    padding-right: 60 !important;
   }
 }
 @media (max-width: 800px) {
@@ -892,5 +928,8 @@ table > tbody > tr:last-child .key-align {
   }
   .type-number {
     padding-right: 0 !important;
+  }
+  .parentWidth {
+    max-width: 100% !important;
   }
 }

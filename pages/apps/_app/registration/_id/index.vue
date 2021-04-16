@@ -496,8 +496,7 @@
             <div class="body-1">
               {{
                 formatField(
-                  data.registration._CustomerPayment &&
-                    data.registration._CustomerPayment.brand
+                  regData._CustomerPayment && regData._CustomerPayment.brand
                 )
               }}
             </div>
@@ -508,8 +507,8 @@
             <div class="body-1">
               {{
                 formatField(
-                  data.registration._CustomerPayment &&
-                    data.registration._CustomerPayment.card_holder_name
+                  regData._CustomerPayment &&
+                    regData._CustomerPayment.card_holder_name
                 )
               }}
             </div>
@@ -520,8 +519,7 @@
             <div class="body-1">
               {{
                 formatField(
-                  data.registration._CustomerPayment &&
-                    data.registration._CustomerPayment.last4
+                  regData._CustomerPayment && regData._CustomerPayment.last4
                 )
               }}
             </div>
@@ -532,9 +530,8 @@
             <div class="body-1">
               {{
                 formatField(
-                  data.registration._CustomerPayment &&
-                    data.registration._CustomerPayment
-                      .processorAuthorizationCode
+                  regData._CustomerPayment &&
+                    regData._CustomerPayment.processorAuthorizationCode
                 )
               }}
             </div>
@@ -730,10 +727,24 @@ export default {
           if (this.data.event.VenueName !== '') {
             this.VenueName = this.formatAddressField(this.data.event.VenueName)
           }
-          if (this.data.event._VenueAddress.length > 0) {
+          if (Object.keys(this.data.event._VenueAddress).length > 0) {
             this.AddressLine = this.formatAddressField(
               this.data.event._VenueAddress.AddressLine
             )
+            if (this.data.event._VenueAddress.City !== '') {
+              this.AddressLine =
+                this.AddressLine + ',' + this.data.event._VenueAddress.City
+            }
+            if (this.data.event._VenueAddress.Country !== '') {
+              this.AddressLine =
+                this.AddressLine + ',' + this.data.event._VenueAddress.Country
+            }
+            if (this.data.event._VenueAddress.PostalCode !== '') {
+              this.AddressLine =
+                this.AddressLine +
+                ',' +
+                this.data.event._VenueAddress.PostalCode
+            }
           }
         }
       } catch (e) {

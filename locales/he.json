@@ -40,6 +40,7 @@
     "BadgeLogo": "לוגו של התג",
     "EventB": "מודעת אירועים (680x350)",
     "Other": "אַחֵר",
+    "LiveStreamBanner": "באנר סטרימינג בשידור חי",
     "EventBanner": "מודעת אירועים",
     "LogoImage": "תמונת לוגו",
     "Attendees": "Attendees",
@@ -672,7 +673,7 @@
     "ShowMore": "Show More",
     "SelectOnePriorInvite": "to select one of the prior invite",
     "NewRecurringSession": "New Recurring Session",
-    "EditSession": "Edit Session",
+    "EditSession": "ערוך מושב",
     "CustomErrorMessage": "custom {errorMessage}",
     "MoreAbout": "More info about",
     "HeaderTemplate": "header Template",
@@ -788,9 +789,18 @@
     "ClearFilter": "נקה מסננים",
     "SubTotal": "סך הכל",
     "AccessRequired": "הגישה לא ניתנה, צרו קשר עם התמיכה לבקשת הגישה",
-    "LoginRequired": "התחבר לחשבונך כדי להשתמש ב- API Explorer."
+    "SendEventInvite": "שלח הזמנה לאירוע",
+    "ScheduleTask": "קבע משימה",
+    "AttendeeImportSuccess": "משתתף יובא בהצלחה",
+    "AttendeeImportFailed": "ייבוא ​​המשתתף נכשל",
+    "LoginRequired": "התחבר לחשבונך כדי להשתמש ב- API Explorer.",
+    "SendManyMails": "שלחת לי יותר מדי מיילים",
+    "StopReceiveMails": "כבר לא רציתי לקבל את המיילים האלה",
+    "NeverSignedForMails": "מעולם לא נרשמתי לרשימת התפוצה הזו"
   },
   "Drawer": {
+    "UnSubscribeMsg": "אנא בחר סיבה לביטול הרישום לניוזלטר. זה יעזור לנו לשפר את השירותים שלנו.",
+    "UnSubscribeAction": "בטל את הרישום",
     "CreateEventAction": "צור אירוע",
     "SingleEventAction": "Single Event",
     "RecurringEventAction": "Recurring Event",
@@ -932,7 +942,8 @@
       "SetupOrgFailed": "הגדרת הארגון שלך נכשלה",
       "CreateOrgFailed": "יצירת הארגון שלך נכשלה",
       "CreateOrgCatch": "ארגון זה נמצא בשימוש או עלול להימחק באופן רך. נסה עם שם חדש",
-      "CreateOrgFull": "יצירת הארגון שלך נכשלה"
+      "CreateOrgFull": "יצירת הארגון שלך נכשלה",
+      "MemberExists": "חבר כבר קיים"
     },
     "Warn": {
       "UniqueLinkFormat": "אותיות אלפאנומריות באותיות קטנות בלבד",
@@ -960,14 +971,19 @@
       "PaymentGatewayWarning": "אזהרת שער תשלום",
       "PaymentGatewayDefault": "ניתן לחבר רק חיבור תשלום אחד.",
       "SeatMapDefault": "אזהרת מפת מושב",
-      "SeatMapWarning": "ישנם שינויים שלא נשמרו אשר יאבדו אם תסגור מבלי לשמור, האם אתה בטוח?"
+      "SeatMapWarning": "ישנם שינויים שלא נשמרו אשר יאבדו אם תסגור מבלי לשמור, האם אתה בטוח?",
+      "SetupWarning":"הגדרת אזהרת חיבור",
+      "SetupConnection":"אנא הגדר את החיבור כדי שיהיה פעיל."
     },
     "Success": {
+      "UnsubscribeSuccessMsg":"ביטלת את הרישום בהצלחה",
       "CopiedClipboard": "הועתק ללוח",
       "CommentDeletedSuccessfully": "Comment deleted successfully.",
       "FailedDeleteComment": "Failed to delete comment.",
       "AccessKeySecretCopied": "מפתח מפתח וסוד הועתק ללוח",
       "DeletedSuccessfully": "הפריט נמחק בהצלחה",
+      "UserDeletedSuccessfully": "המשתמש נמחק בהצלחה",
+      "UserCreatedSuccessfully": "המשתמש נוצר בהצלחה",
       "EventDetailsUpdateSuccess": "פרטי האירוע עודכנו בהצלחה",
       "OrgDetailsUpdateSuccess": "פרטי הארגון עודכנו בהצלחה",
       "SuccessfulCheckedIn.": "מזל טוב, נכנסת בהצלחה.",

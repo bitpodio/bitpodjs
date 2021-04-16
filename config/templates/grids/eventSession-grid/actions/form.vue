@@ -32,7 +32,12 @@
           </div>
         </v-card-title>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
-          <v-form ref="form" v-model="valid">
+          <v-form
+            ref="form"
+            v-model="valid"
+            :id="formName"
+            @submit.prevent="submitForm"
+          >
             <v-row v-if="dialog">
               <v-col cols="12" class="pb-0">
                 <v-text-field
@@ -283,6 +288,9 @@
             depressed
             :reset="resetSave"
             :action="onSave"
+            :has-external-submit="true"
+            :has-submit-action="true"
+            :form-name="formName"
           ></SaveBtn>
         </v-card-actions>
       </v-card>
@@ -426,6 +434,7 @@ export default {
         type: 'Timezone',
         fieldName: 'session.Timezone',
       },
+      formName: 'event-session-form',
     }
   },
   computed: {
@@ -760,6 +769,9 @@ export default {
         PostalCode: '',
         LatLng: { lat: 0.0, lng: 0.0 },
       }
+    },
+    submitForm() {
+      this.$eventBus.$emit('form-submitted', this.formName)
     },
   },
   apollo: {

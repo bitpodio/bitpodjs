@@ -24,7 +24,7 @@
             <v-icon dark left>{{
               template === 'General Template' ? 'mdi-email-outline' : 'mdi-plus'
             }}</v-icon>
-            {{ buttonLabel }}
+            <i18n path="Common.SendEventInvite" />
           </v-btn>
         </v-col>
       </template>
@@ -69,6 +69,7 @@
                       <v-row>
                         <v-col cols="12" class="pb-0">
                           <v-text-field
+                            ref="subjectfield"
                             v-model="subject"
                             :label="$t('Common.SubjectRequired')"
                             outlined
@@ -129,7 +130,7 @@
                             {{
                               $t('Common.YouMayReferInviteMembers', {
                                 contactTemplateData:
-                                  ' ${Registration.FirstName} ${Registration.LastName} ${OrganizationInfo.Name}',
+                                  ' ${Contact.FirstName} ${Contact.LastName} ${OrganizationInfo.Name}',
                               })
                             }}</v-card-text
                           >
@@ -841,7 +842,7 @@ export default {
   props: {
     buttonLabel: {
       type: String,
-      default: 'send event invite',
+      default: 'Common.SendEventInvite',
       required: false,
     },
     template: {
@@ -906,6 +907,7 @@ export default {
       invalid: true,
       templateObject: '',
       isFrench: false,
+      emailSubject: '',
     }
   },
   computed: {
@@ -1031,6 +1033,7 @@ export default {
     async prefilData() {
       this.choosedTemplate = 3
       this.subject = this.draftData.Title
+      this.templateID = this.draftData.TemplateId
       this.senderName = this.draftData.SenderName
       this.sender = this.draftData.Owner
       this.setReplyTo = this.draftData.ReplyTo
@@ -1062,13 +1065,23 @@ export default {
       return this.contents ? this.contents.Event : null
     },
     updateList(data) {
-      this.selectedList = data
+      if (!this.editDraft) {
+        this.selectedList = data
+      }
     },
     resetForm() {
       this.dialog = false
       if (this.editDraft) {
         this.prefilData()
       } else {
+        this.senderName = (this.$auth && this.$auth.user.data.name) || ''
+        this.sender = (this.$auth && this.$auth.user.data.email) || ''
+        this.setReplyTo = (this.$auth && this.$auth.user.data.email) || ''
+        if (this.$route.params && this.$route.params.id) {
+          this.subject = this.emailSubject
+        } else {
+          this.$refs.subjectfield.reset()
+        }
         this.selectedList = []
         this.choosedTemplate = 0
         this.curentTab = 0
@@ -1116,7 +1129,9 @@ export default {
         ReplyTo: this.setReplyTo,
         SenderName: this.senderName,
         Status: 'Start',
-        TemplateId: getIdFromAtob(this.templateID),
+        TemplateId: this.editDraft
+          ? this.templateID
+          : getIdFromAtob(this.templateID),
         TemplateName: this.templateSubject,
         Title: this.subject,
         Type: 'Mass Email',
@@ -1248,6 +1263,7 @@ export default {
           this.subject = `Join us for ${
             data.Event.EventFind.edges[0].node.Title
           } | ${new Date().toDateString()}`
+          this.emailSubject = this.subject
         }
       },
       error(error) {

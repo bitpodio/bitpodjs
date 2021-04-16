@@ -63,11 +63,19 @@
                           v-if="item.Status"
                           class="body-1 grey--text text--darken-1 d-block text-truncate service-text mt-1"
                         >
-                          {{ item.ProfileName }}
+                          {{
+                            item.ProfileName === ''
+                              ? item.ServiceId
+                              : item.ProfileName
+                          }}
                         </div></span
                       >
                     </template>
-                    <span>{{ item.ProfileName }}</span>
+                    <span>{{
+                      item.ProfileName === ''
+                        ? item.ServiceId
+                        : item.ProfileName
+                    }}</span>
                   </v-tooltip>
                 </div>
               </v-card-text>
@@ -207,6 +215,7 @@ export default {
       timeout: 1000,
       dialogBox: false,
       dialogText: '',
+      isRefreshed: false,
     }
   },
   mounted() {
@@ -246,7 +255,32 @@ export default {
       }
       const connobj = {}
       connobj.ServiceId = itemObj.ServiceId
-      connobj.Status = 'Connected'
+      try {
+        const filter = {
+          where: {
+            and: [
+              { Status: 'Connected' },
+              { 'MetaData.Category': 'Payment' },
+              { 'MetaData.eventId': { exists: false } },
+            ],
+          },
+        }
+        const filterurl = `${this.$bitpod.getApiUrl()}Connections?filter=${JSON.stringify(
+          filter
+        )}`
+        const res = await this.$axios.$get(filterurl)
+        if (res.length) {
+          connobj.Status = 'Disconnected'
+        } else {
+          connobj.Status = 'Connected'
+        }
+      } catch (e) {
+        console.error(
+          'Error in config/templates/grid/eventIntegration-grid/column-integrate.vue while making a axios call to Connection model from method onSave',
+          e
+        )
+      }
+
       connobj.ProfileId = itemObj.ProfileId
       connobj.ProfileName = itemObj.ProfileName
       connobj.MetaData = formData
@@ -322,6 +356,7 @@ export default {
     },
     onDots(serviceId) {
       this.selectedServiceId = serviceId && serviceId.toLowerCase()
+      this.isRefreshed = true
     },
     async updateConnection(item) {
       const id = item.id
@@ -334,7 +369,10 @@ export default {
             const res = await this.$axios.$put(url, data)
             if (res) {
               this.connectionStatus[this.selectedServiceId] = false
-              this.refresh()
+              if (this.isRefreshed) {
+                this.refresh()
+                this.isRefreshed = false
+              }
               this.snackbarText = this.$t(
                 'Messages.Success.ConnectionSuccessfully'
               )
@@ -352,6 +390,7 @@ export default {
               and: [
                 { Status: 'Connected' },
                 { 'MetaData.Category': 'Payment' },
+                { 'MetaData.eventId': { exists: false } },
               ],
             },
           }
@@ -377,7 +416,10 @@ export default {
                       this.snackbarText = this.$t(
                         'Messages.Success.ConnectionSuccessfully'
                       )
-                      this.refresh()
+                      if (this.isRefreshed) {
+                        this.refresh()
+                        this.isRefreshed = false
+                      }
                       this.snackbar = true
                     }
                   } catch (e) {
@@ -402,7 +444,10 @@ export default {
                 this.snackbarText = this.$t(
                   'Messages.Success.ConnectionSuccessfully'
                 )
-                this.refresh()
+                if (this.isRefreshed) {
+                  this.refresh()
+                  this.isRefreshed = false
+                }
                 this.snackbar = true
               }
             } catch (e) {

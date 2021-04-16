@@ -27,12 +27,18 @@
         </div>
       </v-card>
     </v-dialog>
-    <v-form ref="form" v-model="valid" :lazy-validation="lazy">
-      <v-dialog
-        v-model="isMakeCopy"
-        persistent
-        scrollable
-        content-class="slide-form-default"
+
+    <v-dialog
+      v-model="isMakeCopy"
+      persistent
+      scrollable
+      content-class="slide-form-default"
+    >
+      <v-form
+        ref="form"
+        v-model="valid"
+        :lazy-validation="lazy"
+        @submit.prevent="submitForm"
       >
         <v-card>
           <v-card-title
@@ -133,130 +139,141 @@
                 ></v-textarea>
               </v-col>
             </v-row>
-            <div v-if="isVenue" class="col-md-12 pl-0">
-              <v-flex class="d-flex justify-center align-center pb-1">
-                <h2 class="body-1 pb-1 primary--text">
-                  <i class="fa fa-map-marker" aria-hidden="true"></i>
-                  <i18n path="Common.Venue" />
-                </h2>
-                <v-spacer></v-spacer>
-              </v-flex>
-            </div>
-            <v-row>
-              <v-col cols="12" sm="6" md="6" class="pl-0 pt-0 pb-0">
-                <v-col v-if="isVenue" cols="12" class="pb-6 pt-0">
-                  <div class="positionRelative">
-                    <div v-if="addressClicked" class="address-legend">
-                      {{ $t('Common.AddressRequired') }}
+            <v-skeleton-loader
+              :loading="loading"
+              v-bind="attrs"
+              type="card"
+              height="500"
+              width="500"
+            >
+              <div v-if="isVenue" class="col-md-12 pl-0">
+                <v-flex class="d-flex justify-center align-center pb-1">
+                  <h2 class="body-1 pb-1 primary--text">
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    <i18n path="Common.Venue" />
+                  </h2>
+                  <v-spacer></v-spacer>
+                </v-flex>
+              </div>
+              <v-row>
+                <v-col cols="12" sm="6" md="6" class="pl-0 pt-0 pb-0">
+                  <v-col v-if="isVenue" cols="12" class="pb-6 pt-0">
+                    <div class="positionRelative">
+                      <div v-if="addressClicked" class="address-legend">
+                        {{ $t('Common.AddressRequired') }}
+                      </div>
+                      <no-ssr>
+                        <vue-google-autocomplete
+                          id="map"
+                          ref="venueAddress.AddressLine"
+                          v-model="venueAddress.AddressLine"
+                          class="form-control pa-3 d-block rounded"
+                          :placeholder="!addressClicked && $t('Common.Address')"
+                          :required="true"
+                          @placechanged="getAddressData"
+                          @focus="focusIn"
+                          @blur="focusOut"
+                          @change="changeAddressData($event)"
+                        ></vue-google-autocomplete>
+                      </no-ssr>
                     </div>
-                    <no-ssr>
-                      <vue-google-autocomplete
-                        id="map"
-                        ref="venueAddress.AddressLine"
-                        v-model="venueAddress.AddressLine"
-                        class="form-control pa-3 d-block rounded"
-                        :placeholder="!addressClicked && $t('Common.Address')"
-                        :required="true"
-                        @placechanged="getAddressData"
-                        @focus="focusIn"
-                        @blur="focusOut"
-                        @change="changeAddressData($event)"
-                      ></vue-google-autocomplete>
-                    </no-ssr>
-                  </div>
-                  <div
-                    v-show="addresslineMessage !== ''"
-                    class="red--text pa-3 pt-0 body-1"
-                  >
-                    {{ addresslineMessage }}
-                  </div>
-                </v-col>
-                <v-col v-if="isVenue" cols="12" class="pb-0">
-                  <v-text-field
-                    v-model="eventData.VenueName"
-                    :label="$t('Common.VenueName')"
-                    outlined
-                    dense
-                  ></v-text-field>
-                </v-col>
-
-                <v-row class="px-2">
-                  <v-col v-if="isVenue" cols="12" sm="6" md="6" class="pb-0">
-                    <v-text-field
-                      v-model="venueAddress.City"
-                      :label="$t('Common.City')"
-                      outlined
-                      dense
-                    ></v-text-field>
-                  </v-col>
-                  <v-col v-if="isVenue" cols="12" sm="6" md="6" class="pb-0">
-                    <v-text-field
-                      v-model="venueAddress.State"
-                      :label="$t('Common.State')"
-                      outlined
-                      dense
-                    ></v-text-field>
-                  </v-col>
-                  <v-col v-if="isVenue" cols="12" sm="6" md="6" class="pb-0">
-                    <v-text-field
-                      v-model="venueAddress.Country"
-                      :label="$t('Common.Country')"
-                      outlined
-                      dense
-                    ></v-text-field>
-                  </v-col>
-                  <v-col v-if="isVenue" cols="12" sm="6" md="6" class="pb-0">
-                    <v-text-field
-                      v-model="venueAddress.PostalCode"
-                      :label="$t('Common.ZipCode')"
-                      outlined
-                      dense
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-              </v-col>
-              <v-col cols="12" sm="6" md="6" class="pb-0 pa-0">
-                <v-col v-if="isMap" class="event-map pa-0">
-                  <div class="flex"></div>
-                  <div
-                    v-if="locations[0] && locations[0].lat"
-                    :key="`${locations[0].lat}-${locations[0].lng}`"
-                  >
-                    <GMap
-                      ref="gMap"
-                      language="en"
-                      class="event-map"
-                      :cluster="{ options: { styles: clusterStyle } }"
-                      :center="gMapCenter"
-                      :options="{
-                        fullscreenControl: false,
-                        styles: mapStyle,
-                      }"
-                      :zoom="15"
-                      @bounds_changed="checkForMarkers"
+                    <div
+                      v-show="addresslineMessage !== ''"
+                      class="red--text pa-3 pt-0 body-1"
                     >
-                      <GMapMarker
-                        v-for="location in locations"
-                        :key="`${location.lat}-${location.lng}`"
-                        :position="{ lat: location.lat, lng: location.lng }"
-                        :options="{
-                          icon: pins.selected,
-                        }"
-                        @click="currentLocation = location"
-                      >
-                        <GMapInfoWindow :options="{ maxWidth: 200 }">
-                          <code
-                            >lat: {{ location.lat }}, lng:
-                            {{ location.lng }}</code
-                          >
-                        </GMapInfoWindow>
-                      </GMapMarker>
-                      <GMapCircle :options="circleOptions" />
-                    </GMap>
-                  </div>
+                      {{ addresslineMessage }}
+                    </div>
+                  </v-col>
+                  <v-col v-if="isVenue" cols="12" class="pb-0">
+                    <v-text-field
+                      v-model="eventData.VenueName"
+                      :label="$t('Common.VenueName')"
+                      outlined
+                      dense
+                    ></v-text-field>
+                  </v-col>
+
+                  <v-row class="px-2">
+                    <v-col v-if="isVenue" cols="12" sm="6" md="6" class="pb-0">
+                      <v-text-field
+                        v-model="venueAddress.City"
+                        :label="$t('Common.City')"
+                        outlined
+                        dense
+                      ></v-text-field>
+                    </v-col>
+                    <v-col v-if="isVenue" cols="12" sm="6" md="6" class="pb-0">
+                      <v-text-field
+                        v-model="venueAddress.State"
+                        :label="$t('Common.State')"
+                        outlined
+                        dense
+                      ></v-text-field>
+                    </v-col>
+                    <v-col v-if="isVenue" cols="12" sm="6" md="6" class="pb-0">
+                      <v-text-field
+                        v-model="venueAddress.Country"
+                        :label="$t('Common.Country')"
+                        outlined
+                        dense
+                      ></v-text-field>
+                    </v-col>
+                    <v-col v-if="isVenue" cols="12" sm="6" md="6" class="pb-0">
+                      <v-text-field
+                        v-model="venueAddress.PostalCode"
+                        :label="$t('Common.ZipCode')"
+                        outlined
+                        dense
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
                 </v-col>
-              </v-col>
-            </v-row>
+                <v-col cols="12" sm="6" md="6" class="pb-0 pa-0">
+                  <v-col v-if="isMap" class="event-map pa-0">
+                    <div class="flex"></div>
+                    <div
+                      v-if="locations[0] && locations[0].lat"
+                      :key="`${locations[0].lat}-${locations[0].lng}`"
+                    >
+                      <GMap
+                        ref="gMap"
+                        language="en"
+                        class="event-map"
+                        :cluster="{ options: { styles: clusterStyle } }"
+                        :center="gMapCenter"
+                        :options="{
+                          fullscreenControl: false,
+                          styles: mapStyle,
+                        }"
+                        :zoom="15"
+                        @bounds_changed="checkForMarkers"
+                      >
+                        <GMapMarker
+                          v-for="location in locations"
+                          :key="`${location.lat}-${location.lng}`"
+                          :position="{
+                            lat: location.lat,
+                            lng: location.lng,
+                          }"
+                          :options="{
+                            icon: pins.selected,
+                          }"
+                          @click="currentLocation = location"
+                        >
+                          <GMapInfoWindow :options="{ maxWidth: 200 }">
+                            <code
+                              >lat: {{ location.lat }}, lng:
+                              {{ location.lng }}</code
+                            >
+                          </GMapInfoWindow>
+                        </GMapMarker>
+                        <GMapCircle :options="circleOptions" />
+                      </GMap>
+                    </div>
+                  </v-col>
+                </v-col>
+              </v-row>
+            </v-skeleton-loader>
             <div class="col-md-12 pl-0">
               <v-flex class="d-flex justify-center align-center pb-1">
                 <h2 class="body-1 pb-1 fs-16">
@@ -316,13 +333,15 @@
               "
               depressed
               :action="onSave"
+              :has-submit-action="true"
+              :form-name="formName"
               class="ml-2"
               ><i18n path="Drawer.Copy"
             /></SaveBtn>
           </v-card-actions>
         </v-card>
-      </v-dialog>
-    </v-form>
+      </v-form>
+    </v-dialog>
   </div>
 </template>
 
@@ -357,6 +376,7 @@ export default {
   },
   data() {
     return {
+      loading: true,
       rules: rules(this.$i18n),
       datevalid: false,
       valid: false,
@@ -408,6 +428,8 @@ export default {
         lat: 0.0,
         lng: 0.0,
       },
+      formName: 'copy-event-form',
+      show: false,
     }
   },
   computed: {
@@ -647,6 +669,9 @@ export default {
         return res
       }
     },
+    submitForm() {
+      this.$eventBus.$emit('form-submitted', this.formName)
+    },
   },
   apollo: {
     data: {
@@ -674,7 +699,9 @@ export default {
         ) {
           this.Title = `Copy of ${this.eventData.Title}`
         }
-
+        if (this.eventData.LocationType === 'Venue') {
+          this.show = true
+        }
         this.StartDate = new Date(this.eventData.StartDate)
         this.EndDate = new Date(this.eventData.EndDate)
         this.eventData.UniqLink = ''
@@ -698,7 +725,9 @@ export default {
           event: event.length > 0 ? event[0] : {},
         }
       },
-      result({ data, loading, networkStatus }) {},
+      result({ data, loading, networkStatus }) {
+        this.loading = false
+      },
       error(error) {
         this.error = error
         this.loading = 0

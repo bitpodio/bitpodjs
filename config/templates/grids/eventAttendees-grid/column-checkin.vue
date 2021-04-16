@@ -250,10 +250,18 @@ export default {
       }
     },
     getBadge(str, items) {
+      const parser = new DOMParser()
       const logoUrl =
         nuxtconfig.publicRuntimeConfig.cdnUri +
         'admin-default-template-logo.png'
       if (str) {
+        if (items.regType !== null) {
+          const strDom = parser.parseFromString(str, 'text/html')
+          strDom
+            .getElementsByClassName('badge-category')[0]
+            .style.setProperty('--defaultColor', `${items.regType.ColorCode}`)
+          str = strDom.documentElement.innerHTML
+        }
         str = str
           .replace('{{ FullName }}', `${items.FullName}`)
           .replace(
@@ -270,8 +278,8 @@ export default {
         if (this.context.event && this.context.event.Title) {
           str = str.replace('{{ EventName }}', `${this.context.event.Title}`)
         }
+        return str
       }
-      return str
     },
     getAttachmentLink(id, isDownloadLink) {
       const url = this.$bitpod.getApiUrl()

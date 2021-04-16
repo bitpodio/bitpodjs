@@ -42,22 +42,6 @@ export default {
     }
   },
   methods: {
-    getDefaultBadge(str) {
-      const logoUrl =
-        nuxtconfig.publicRuntimeConfig.cdnUri +
-        'admin-default-template-logo.png'
-      if (str) {
-        str = str
-          .replace('{{ FullName }}', `${this.$auth.user.data.name}`)
-          .replace('{{ Category }}', `${this.getBadgeCategory}`)
-          .replace('{{ Organization }}', `${this.$store.state.currentOrg.name}`)
-          .replace(logoUrl, this.getAttachmentLink(this.logoId, true))
-        if (this.data.event && this.data.event.Title) {
-          str = str.replace('{{ EventName }}', `${this.data.event.Title}`)
-        }
-      }
-      return str
-    },
     openPrintForm() {
       const logoUrl = `src="${
         nuxtconfig.publicRuntimeConfig.cdnUri +
@@ -88,10 +72,18 @@ export default {
       this.$refs.iframe.contentWindow.document.close()
     },
     getBadge(str, items) {
+      const parser = new DOMParser()
       const logoUrl =
         nuxtconfig.publicRuntimeConfig.cdnUri +
         'admin-default-template-logo.png'
       if (str) {
+        if (items.regType !== null) {
+          const strDom = parser.parseFromString(str, 'text/html')
+          strDom
+            .getElementsByClassName('badge-category')[0]
+            .style.setProperty('--defaultColor', `${items.regType.ColorCode}`)
+          str = strDom.documentElement.innerHTML
+        }
         str = str
           .replace('{{ FullName }}', `${items.FullName}`)
           .replace(
