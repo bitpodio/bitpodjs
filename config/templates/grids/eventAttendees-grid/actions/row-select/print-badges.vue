@@ -87,10 +87,18 @@ export default {
       this.$refs.iframe.contentWindow.document.close()
     },
     getBadge(str, items) {
+      const parser = new DOMParser()
       const logoUrl =
         nuxtconfig.publicRuntimeConfig.cdnUri +
         'admin-default-template-logo.png'
       if (str) {
+        if (items.regType !== null) {
+          const strDom = parser.parseFromString(str, 'text/html')
+          strDom
+            .getElementsByClassName('badge-category')[0]
+            .style.setProperty('--defaultColor', `${items.regType.ColorCode}`)
+          str = strDom.documentElement.innerHTML
+        }
         str = str
           .replace('{{ FullName }}', `${items.FullName}`)
           .replace(

@@ -351,7 +351,7 @@ export default {
       if (this.eventData.BusinessType === 'Recurring') {
         this.selectTemplate('Dark')
       } else {
-        this.selectTemplate('Event')
+        this.selectTemplate('event')
       }
     },
     changeTab() {
@@ -363,9 +363,6 @@ export default {
     close() {
       this.$emit('update:siteSetting', false)
       this.onReset()
-    },
-    refresh() {
-      this.$refs.form.$parent.$parent.refresh()
     },
     onReset() {
       this.$refs.form.reset()
@@ -415,7 +412,7 @@ export default {
             this.$t('Messages.Success.EventRegSiteDetailsUpdateSuccess')
           )
           this.$emit('update:snackbar', true)
-          this.refresh()
+          this.$eventBus.$emit('update-event-details')
           this.sectionHeading = res._sectionHeading
         }
       } catch (e) {

@@ -104,7 +104,7 @@ export default {
     },
   },
   mounted() {
-    this.onCalendarChange()
+    this.$emit('input', this.date)
     if (this.field.type === 'datetime') {
       this.$refs.dateTimeComponent.$children[0].onClickOutside = this.outsideClicked
     }

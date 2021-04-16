@@ -15,7 +15,13 @@
         </div>
       </v-card-title>
       <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
-        <v-form ref="form" v-model="valid" :lazy-validation="lazy">
+        <v-form
+          ref="form"
+          v-model="valid"
+          :lazy-validation="lazy"
+          id="new-hubspot-form"
+          @submit.prevent="onSave(formData)"
+        >
           <v-row> </v-row>
         </v-form>
       </v-card-text>
@@ -27,7 +33,8 @@
           color="primary"
           :disabled="!valid"
           depressed
-          @click="onSave(formData)"
+          type="submit"
+          form="new-hubspot-form"
           ><i18n path="Drawer.Save"
         /></v-btn>
       </v-card-actions>

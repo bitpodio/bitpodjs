@@ -467,6 +467,9 @@
                   </v-row>
                 </template>
               </v-img>
+              <v-card-text class="pa-0 default-banner-label"
+                ><i18n path="Common.BannerImage"
+              /></v-card-text>
               <v-flex class="mt-1 d-flex otherImg">
                 <v-card-text class="pa-0 pb-1"
                   ><a
@@ -477,9 +480,6 @@
                 >
                 <copy :text-to-copy="getImageUrl(image)" :unique-id="image" />
               </v-flex>
-              <v-card-text class="pa-0 mt-n2"
-                ><i18n path="Common.BannerImage"
-              /></v-card-text>
             </v-card>
             <v-card
               v-for="image in data.event.Images"
@@ -684,6 +684,76 @@
                   </div>
                 </v-card-title>
                 <v-img :src="displaySelectedOtherImage"> </v-img>
+              </v-card>
+            </v-dialog>
+            <v-card
+              v-for="image in data.event.LiveStreamBanner"
+              :key="image"
+              class="d-inline-block mx-auto ma-4 ml-0 mr-0 pa-5 pr-3 elevation-0 cardImg rounded cursorPointer"
+            >
+              <span class="cardDelete">
+                <i
+                  class="fa-trash pa-2 cursorPointer"
+                  @click="deleteLiveStreamBanner(image)"
+                ></i>
+              </span>
+              <v-img
+                :src="getAttachmentLink(image, true)"
+                :lazy-src="getAttachmentLink(image, true)"
+                aspect-ratio="1"
+                class="rounded white"
+                max-width="150"
+                max-height="150"
+                width="150"
+                @click.stop="liveStreamDialog = true"
+              >
+                <template v-slot:placeholder>
+                  <v-row
+                    class="fill-height ma-0"
+                    align="center"
+                    justify="center"
+                  >
+                    <v-progress-circular
+                      indeterminate
+                      color="grey lighten-5"
+                    ></v-progress-circular>
+                  </v-row>
+                </template>
+              </v-img>
+              <v-flex class="mt-1 d-flex">
+                <v-card-text class="pa-0 pb-1 d-inline-block"
+                  ><a
+                    class="d-inline-block text-truncate anchorTag"
+                    :href="getAttachmentLink(image, true)"
+                    >{{ logoName }}</a
+                  ></v-card-text
+                >
+                <copy :text-to-copy="getImageUrl(image)" :unique-id="image" />
+              </v-flex>
+              <v-card-text class="pa-0 mt-n2"
+                ><i18n path="Common.LiveStreamBanner"
+              /></v-card-text>
+            </v-card>
+            <v-dialog v-model="liveStreamDialog" max-width="600">
+              <v-card>
+                <v-card-title class="pa-1">
+                  <v-spacer></v-spacer>
+                  <div>
+                    <v-btn icon @click="liveStreamDialog = false">
+                      <v-icon>mdi-close</v-icon>
+                    </v-btn>
+                  </div>
+                </v-card-title>
+                <v-card-text class="pa-1">
+                  <v-card
+                    v-for="image in data.event.LiveStreamBanner"
+                    :key="image"
+                    class="mx-auto elevation-0"
+                    @click.stop="liveStreamDialog = true"
+                  >
+                    <v-img :src="getAttachmentLink(image, true)"> </v-img>
+                  </v-card>
+                </v-card-text>
               </v-card>
             </v-dialog>
           </div>
@@ -1216,7 +1286,7 @@
           :snackbar-text.sync="snackbarText"
         />
       </div>
-      <makeCopy :is-make-copy.sync="isMakeCopy" />
+      <makeCopy :key="isMakeCopy" :is-make-copy.sync="isMakeCopy" />
       <confirm ref="confirm"></confirm>
     </v-flex>
   </div>
@@ -1302,7 +1372,14 @@ export default {
       logoName: '',
       allow: true,
       displaySelectedOtherImage: '',
+      eventLocationType: '',
     }
+  },
+  mounted() {
+    this.$eventBus.$on('update-event-details', this.refresh)
+  },
+  beforeDestroy() {
+    this.$eventBus.$off('update-event-details')
   },
   computed: {
     content() {
@@ -1388,7 +1465,9 @@ export default {
       this.displaySelectedOtherImage = this.getAttachmentLink(image, true)
     },
     goBack() {
-      this.$router.back()
+      this.$router.push(
+        this.localePath(`/apps/event/list/Event/live-and-draft-event`)
+      )
     },
     async getBannerImageName(imageId) {
       const url = this.$bitpod.getApiUrl()
@@ -1576,6 +1655,26 @@ export default {
         }
       }
     },
+    async deleteLiveStreamBanner(id) {
+      const url = this.$bitpod.getApiUrl()
+      const checkRes = await this.$refs.confirm.open(
+        this.$t('Common.DeleteImage'),
+        this.$t('Messages.Warn.DeleteImage'),
+        { color: 'error lighten-1' }
+      )
+      if (checkRes) {
+        const res = await this.$axios.delete(
+          `${url}Events/${this.$route.params.id}/LiveStream/${id}`
+        )
+        if (res) {
+          this.snackbarText = this.$t(
+            'Messages.Success.AttachmentDeleteSuccess'
+          )
+          this.snackbar = true
+          this.refresh()
+        }
+      }
+    },
     getImageUrl(imageId) {
       const downloadLink = this.getAttachmentLink(imageId, true)
       return downloadLink
@@ -1724,6 +1823,15 @@ export default {
         )
       }
     },
+    async getEventSession() {
+      const url = `${this.$bitpod.getApiUrl()}Events/${
+        this.$route.params.id
+      }/getSession`
+      const res = await this.$axios.get(`${url}`)
+      if (res) {
+        this.eventLocationType = res.data[0].LocationType
+      }
+    },
     updateReg: _.debounce(function () {
       this.updateEvent()
     }, 500),
@@ -1769,6 +1877,7 @@ export default {
             : {}
         this.updateStepper()
         this.updateRegistrationSetting(this.eventData)
+        this.getEventSession()
         this.eventUniqueLink = `https://${this.$config.axios.eventUrl}/e/${
           event[0] && event[0].UniqLink
         }`
@@ -1783,6 +1892,13 @@ export default {
         }
         if (event[0] && event[0].Other && event[0].Other.length > 0) {
           this.getImageName()
+        }
+        if (
+          event[0] &&
+          event[0].LiveStreamBanner &&
+          event[0].LiveStreamBanner.length > 0
+        ) {
+          this.getLiveStreamName(event[0].LiveStreamBanner[0])
         }
 
         return {
@@ -1854,6 +1970,7 @@ export default {
   bottom: 28px;
 }
 .otherImg {
+  min-height: 33px;
   visibility: hidden;
 }
 .anchorTag {
