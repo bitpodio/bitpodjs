@@ -170,6 +170,8 @@ export default {
         const newEditFormData = { ...mutationObject.edit, ...newFormData }
 
         try {
+          delete newEditFormData.createdBy
+          delete newEditFormData.createdDate
           await this.onUpdateItem(newEditFormData)
           this.dialog = false
         } catch (error) {

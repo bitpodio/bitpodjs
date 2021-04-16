@@ -136,7 +136,6 @@ export default {
       this.body = this.selected.Body ? this.selected.Body : ''
       this.$emit('update:editTemplate', false)
     },
-
     async onSave() {
       this.isSaveButtonDisabled = true
       const url = this.$bitpod.getApiUrl()
@@ -164,9 +163,9 @@ export default {
         this.onClose()
       }
     },
-  },
-  submitForm() {
-    this.$eventBus.$emit('form-submitted', 'edit-inviteTemplate-form')
+    submitForm() {
+      this.$eventBus.$emit('form-submitted', 'edit-inviteTemplate-form')
+    },
   },
 }
 </script>

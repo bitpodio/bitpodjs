@@ -792,9 +792,14 @@
     "ScheduleTask": "Schedule a Task",
     "AttendeeImportSuccess": "Attendee Imported Successfully",
     "AttendeeImportFailed": "Attendee Import Failed",
-    "LoginRequired": "Login with your account to use the API Explorer."
+    "LoginRequired": "Login with your account to use the API Explorer.",
+    "SendManyMails": "You have send me too many mails",
+    "StopReceiveMails": "I no longer wanted to receive these mails",
+    "NeverSignedForMails": "I never signed up for this mailing list"
   },
   "Drawer": {
+    "UnSubscribeMsg": "Please select a reason to unsubscribe from newsletter. This will help us to improve our services.",
+    "UnSubscribeAction": "Unsubscribe",
     "CreateEventAction": "Create Event",
     "SingleEventAction": "Single Event",
     "RecurringEventAction": "Recurring Event",
@@ -967,15 +972,20 @@
       "PaymentGatewayWarning": "Payment Gateway Warning",
       "PaymentGatewayDefault": "Only one Payment connection can be connected.",
       "SeatMapDefault": "Seatmap Warning",
-      "SeatMapWarning": "There are unsaved changes which will be lost if you close without saving, are you sure?"
+      "SeatMapWarning": "There are unsaved changes which will be lost if you close without saving, are you sure?",
+      "SetupWarning": "Setup Connection Warning",
+      "SetupConnection": "Please setup the connection to make it active."
     },
     "Success": {
+      "UnsubscribeSuccessMsg":"You have unsubscribed successfully",
       "CopiedClipboard": "Copied to clipboard",
       "CommentDeletedSuccessfully": "Comment deleted successfully.",
       "FailedDeleteComment": "Failed to delete comment.",
       "EventDetailsUpdateSuccess": "Event details updated successfully",
       "OrgDetailsUpdateSuccess": "Organization details updated successfully",
       "AccessKeySecretCopied": "Access Key and Secret copied to clipboard",
+      "UserDeletedSuccessfully": "User deleted successfully",
+      "UserCreatedSuccessfully": "User created successfully",
       "DeletedSuccessfully": "Item deleted successfully",
       "EventDeletedSuccessfully": "Event deleted successfully",
       "SuccessfulCheckedIn": "Congratulations, You have successfully checked in.",

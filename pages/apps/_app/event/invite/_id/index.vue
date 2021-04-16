@@ -20,7 +20,18 @@
             <div
               class="text-h4 text-capitalize d-inline-block text-truncate col-md-10 pa-0"
             >
-              {{ data.invites.Title }}
+              <v-tooltip bottom content-class="invitee-tooltip">
+                <template v-slot:activator="{ on, attrs }">
+                  <span
+                    class="text-h4 text-capitalize"
+                    v-bind="attrs"
+                    v-on="on"
+                  >
+                    {{ data.invites.Title }}
+                  </span>
+                </template>
+                <span>{{ data.invites.Title }}</span>
+              </v-tooltip>
             </div>
             <v-spacer></v-spacer>
             <div class="mr-2 invite-actions d-none">
@@ -339,7 +350,7 @@ export default {
               Unsubscribed: {
                 $sum: { $cond: [{ $eq: ['$Unsubscribed', true] }, 1, 0] },
               },
-              Open: { $sum: { $cond: [{ $gte: ['$Open', 1] }, 1, 0] } },
+              Open: { $sum: '$Open' },
               Delivered: {
                 $sum: { $cond: [{ $eq: ['$Delivered', true] }, 1, 0] },
               },

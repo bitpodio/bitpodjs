@@ -39,6 +39,7 @@
             <v-row>
               <v-col cols="12" sm="10" md="8" class="pb-0">
                 <v-text-field
+                  ref="emailField"
                   v-model="email"
                   :label="$t('Common.EnterEmail')"
                   :rules="[rules.email, rules.required]"
@@ -112,10 +113,8 @@ export default {
     }
   },
   methods: {
-    onReset() {
-      this.$refs.form.reset()
-    },
     onClose() {
+      this.formData.emailId = ''
       this.$refs.form.reset()
       this.dialog = false
     },
@@ -131,11 +130,15 @@ export default {
             this.formData
           )
           if (res) {
-            this.dialog = false
-            this.onReset()
-            this.snackbarText = this.$t('Messages.Success.RecordCreateSuccess')
-            this.snackbar = true
-            this.refresh()
+            this.$refs.emailField.blur()
+            this.onClose()
+            this.$nextTick(() => {
+              this.snackbarText = this.$t(
+                'Messages.Success.UserCreatedSuccessfully'
+              )
+              this.snackbar = true
+              this.refresh()
+            })
           }
         } catch (e) {
           console.log(

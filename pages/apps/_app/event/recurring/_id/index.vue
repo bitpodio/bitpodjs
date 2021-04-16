@@ -434,24 +434,6 @@
                     <i18n path="Common.Other" />
                   </v-list-item-title>
                 </v-list-item>
-                <v-list-item
-                  v-if="eventLocationType === 'Bitpod Virtual'"
-                  class="cursorPointer"
-                  @click.native="checkLiveStreamClicked"
-                >
-                  <v-list-item-title>
-                    <File
-                      :field="liveStreamField"
-                      :no-btn-look="true"
-                      :block="true"
-                      :open-file-dialog="liveStreamBannerDialog"
-                      :value="checkArray"
-                      :hide-preview="true"
-                      @input="fileUploadedLiveStream"
-                    />
-                    <i18n path="Common.LiveStreamBanner" />
-                  </v-list-item-title>
-                </v-list-item>
               </v-list>
             </v-menu>
           </v-flex>
@@ -1363,9 +1345,6 @@ export default {
         showimagegallery: false,
         showeventreviews: false,
       },
-      liveStreamField: {
-        multiple: false,
-      },
       snackbar: false,
       timeout: '1000',
       snackbarText: '',
@@ -1380,7 +1359,6 @@ export default {
         Images: [],
         ImagesURL: [],
         Other: [],
-        LiveStreamBanner: [],
       },
       checkArray: [],
       fileField: {
@@ -1396,6 +1374,12 @@ export default {
       displaySelectedOtherImage: '',
       eventLocationType: '',
     }
+  },
+  mounted() {
+    this.$eventBus.$on('update-event-details', this.refresh)
+  },
+  beforeDestroy() {
+    this.$eventBus.$off('update-event-details')
   },
   computed: {
     content() {
@@ -1481,7 +1465,9 @@ export default {
       this.displaySelectedOtherImage = this.getAttachmentLink(image, true)
     },
     goBack() {
-      this.$router.back()
+      this.$router.push(
+        this.localePath(`/apps/event/list/Event/live-and-draft-event`)
+      )
     },
     async getBannerImageName(imageId) {
       const url = this.$bitpod.getApiUrl()
@@ -1520,20 +1506,6 @@ export default {
       )
       this.OtherImageName = imageData
     },
-    async getLiveStreamName(imageId) {
-      const url = this.$bitpod.getApiUrl()
-      try {
-        const res = await this.$axios.$get(`${url}Attachments/${imageId}`)
-        if (res) {
-          this.logoName = res.fileName
-        }
-      } catch (e) {
-        console.error(
-          `Error in apps/event/_id/index.vue while making a GET call to Attachment model in method getLogoName context: URL:- ${url} \n ImageId:-${imageId}`,
-          e
-        )
-      }
-    },
     checkLogoClicked() {
       if (this.allow) {
         this.checkArray = []
@@ -1552,13 +1524,6 @@ export default {
       if (this.allow) {
         this.checkArray = []
         this.otherDialog = !this.otherDialog
-        this.allow = false
-      }
-    },
-    checkLiveStreamClicked() {
-      if (this.allow) {
-        this.checkArray = []
-        this.liveStreamBannerDialog = !this.liveStreamBannerDialog
         this.allow = false
       }
     },
@@ -1587,16 +1552,6 @@ export default {
       if (data.length > 0) {
         this.formData.Other.push(data)
         this.updateOtherImageGallery(data)
-      }
-    },
-    fileUploadedLiveStream(data) {
-      this.allow = true
-      if (data.length > 0) {
-        this.formData.LiveStreamBanner = []
-        this.formData.LiveStreamBanner.push(data[0])
-        this.updateEventGallery({
-          LiveStreamBanner: this.formData.LiveStreamBanner,
-        })
       }
     },
     async updateEventGallery(formData) {

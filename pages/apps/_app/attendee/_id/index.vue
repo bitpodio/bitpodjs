@@ -186,7 +186,10 @@
                           <v-list-item-content>
                             <v-list-item-title class="text-capitalize d-flex"
                               ><div>{{ item.Name }}</div>
-                              <div v-if="checkLiveSession(item)">
+                              <div
+                                v-if="checkLiveSession(item)"
+                                class="live-view-section"
+                              >
                                 <div class="ring-container ml-2">
                                   <div class="ringring"></div>
                                   <div class="circle-ring"></div>
@@ -948,6 +951,7 @@ export default {
       attendeeData: {},
       isPast: false,
       isSessionLive: false,
+      interval: null,
     }
   },
   computed: {
@@ -966,8 +970,18 @@ export default {
       // return this.$store.state.currentOrgInfo.Name
     },
   },
+  created() {
+    this.$eventBus.$on('refresh-session-list', () => {
+      this.$forceUpdate()
+    })
+  },
+  beforeDestroy() {
+    clearInterval(this.interval)
+    this.$eventBus.$off('refresh-session-list')
+  },
   mounted() {
     this.getRegistrationData()
+    this.checkLiveView()
   },
   methods: {
     formatDate(date) {
@@ -1160,6 +1174,15 @@ export default {
           new Date(item.StartDate).getTime() + item.Duration * 60000
         ).getTime()
       return liveStart && liveEnd
+    },
+    checkLiveView() {
+      const self = this
+      this.interval = setInterval(() => {
+        self.registration.SessionListId.map((e) => {
+          self.checkLiveSession(e)
+        })
+        this.$eventBus.$emit('refresh-session-list')
+      }, 30000)
     },
   },
 }

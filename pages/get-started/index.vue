@@ -206,6 +206,7 @@ export default {
       dataTransfered: false,
       errorMessage: '',
       loggingOut: false,
+      utmData: {},
     }
   },
   computed: {
@@ -251,6 +252,13 @@ export default {
     window.addEventListener('message', this.messageReceived, false)
     if (this.$auth && this.$auth.loggedIn) {
       this.$auth.$storage.removeCookie('redirect', {})
+      this.utmData = {
+        utmSource: localStorage.getItem('utm_source') || location.origin,
+        utmMedium: localStorage.getItem('utm_medium') || '',
+        utmCampaign: localStorage.getItem('utm_campaign') || '',
+        utmTerm: localStorage.getItem('utm_term') || '',
+        utmContent: localStorage.getItem('utm_content') || '',
+      }
       if (
         this.$auth.$state &&
         this.$auth.$state.user &&
@@ -268,6 +276,11 @@ export default {
         `${this.$config.basePublicPath}/get-started`,
         {}
       )
+      localStorage.setItem('utm_source', this.$route.query.utm_source || '')
+      localStorage.setItem('utm_medium', this.$route.query.utm_medium || '')
+      localStorage.setItem('utm_campaign', this.$route.query.utm_campaign || '')
+      localStorage.setItem('utm_term', this.$route.query.utm_term || '')
+      localStorage.setItem('utm_content', this.$route.query.utm_content || '')
       await this.$auth.loginWith(this.$config.auth.defaultLoginStrategy)
     }
   },
@@ -315,7 +328,11 @@ export default {
           WebinarLink: '',
           _VenueAddress: {},
         }
-        const obj = { orgData: this.orgInfo, eventData: eventObj }
+        const obj = {
+          orgData: this.orgInfo,
+          eventData: eventObj,
+          leadData: this.utmData,
+        }
         try {
           const scheduledJob = (
             await this.$axios.$post(
