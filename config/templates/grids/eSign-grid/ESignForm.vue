@@ -48,7 +48,7 @@
       </v-card>
     </v-dialog>
     <v-dialog v-model="addNewRecepientFormDialog" persistent max-width="600px">
-      <v-card v-if="addNewRecepientFormPage == 1">
+      <v-card>
         <v-card-title>
           <span class="headline"><i18n path="Common.AddRecepient" /></span>
         </v-card-title>
@@ -71,15 +71,6 @@
                   required
                 ></v-text-field>
               </v-col>
-              <v-col cols="12">
-                <v-select
-                  v-model="selectedParty"
-                  outlined
-                  :items="unselectedParties"
-                  :label="this.$t('Common.Party')"
-                >
-                </v-select>
-              </v-col>
             </v-row>
           </v-container>
         </v-card-text>
@@ -89,8 +80,9 @@
             depressed
             @click="
               {
+                addNewRecepientFormName = ''
+                addNewRecepientFormEmail = ''
                 addNewRecepientFormDialog = false
-                addNewRecepientFormPage = 0
               }
             "
           >
@@ -103,49 +95,6 @@
             :label="this.$t('Drawer.Send')"
             :action="handleAddNewRecepientForm"
           ></SaveBtn>
-        </v-card-actions>
-      </v-card>
-      <v-card v-else>
-        <v-card-title>
-          <span class="headline"><i18n path="Common.SelectRecepient" /></span>
-        </v-card-title>
-        <v-card-text>
-          <v-container>
-            <v-row>
-              <v-col cols="12">
-                <v-autocomplete
-                  v-model="selectedRecepient"
-                  :items="contactList"
-                  :item-text="(item) => `${item.FullName} (${item.Email})`"
-                  outlined
-                  :label="this.$t('Common.Recepient')"
-                  return-object
-                >
-                </v-autocomplete>
-              </v-col>
-              <v-col cols="12">
-                <v-select
-                  v-model="selectedParty"
-                  outlined
-                  :items="unselectedParties"
-                  :label="this.$t('Common.Party')"
-                >
-                </v-select>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-card-text>
-        <v-card-actions>
-          <v-btn text @click="addNewRecepientFormPage = 1"
-            ><i18n path="Common.NewRecepient"
-          /></v-btn>
-          <v-spacer></v-spacer>
-          <v-btn depressed @click="addNewRecepientFormDialog = false">
-            <i18n path="Drawer.Close" />
-          </v-btn>
-          <v-btn color="primary" @click="handleSelectRecepient">
-            <i18n path="Drawer.Save"
-          /></v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -271,19 +220,22 @@
                       <div style="position: relative;">
                         <v-card
                           :elevation="hover ? 4 : 2"
-                          class="ma-3 ml-0 mt-0"
+                          class="ma-3 ml-0 mt-0 text-center"
                           :class="{ 'on-hover': hover }"
                           height="250"
                           width="250"
                         >
                           <div class="pa-1">
-                            <v-img
+                            <!-- <v-img
                               :src="$config.cdnUri + 'new-invitee-image.png'"
                               class="grey lighten-2"
                               min-height="200"
                               max-height="200"
                             >
-                            </v-img>
+                            </v-img> -->
+                            <v-icon class="py-5" color="primary" size="168"
+                              >fa-document</v-icon
+                            >
                           </div>
                           <div
                             class="text-truncate text-center text-capitalize text-h5 pb-5"
@@ -355,39 +307,73 @@
                 </v-card>
                 <v-row>
                   <v-col class="contactsGrid col-12">
-                    <div class="borderBottomGrey pb-1">
-                      <v-layout class="pl-3 mb-n1" row justify-space-between>
-                        <div>
-                          <v-icon class="pb-1" size="18"
-                            >mdi-email-outline</v-icon
+                    <v-simple-table>
+                      <template v-slot:default>
+                        <thead>
+                          <tr>
+                            <th class="text-left pl-2 pl-md-0">
+                              Recepient Type*
+                            </th>
+                            <th class="text-left pl-2 mxw-150">
+                              Contact*
+                            </th>
+                            <th class="text-left"></th>
+                          </tr>
+                        </thead>
+                        <tbody v-if="toggleRecepientLoading">
+                          <td width="20%" class="pa-2 pb-0 pl-2 pl-md-0">
+                            <v-skeleton-loader
+                              type="list-item@4"
+                            ></v-skeleton-loader>
+                          </td>
+                          <td width="90%" class="pa-2 pb-0">
+                            <v-skeleton-loader
+                              type="list-item@4"
+                            ></v-skeleton-loader>
+                          </td>
+                        </tbody>
+                        <tbody v-else>
+                          <tr
+                            v-for="(item, index) in selectedList"
+                            :key="index"
                           >
-                          <h4 class="d-inline body-1">
-                            <i18n path="Common.Recepients" />
-                          </h4>
-                        </div>
-                        <v-btn text small @click="addRecepientFormOpen">
-                          <v-icon size="18">mdi-plus</v-icon>
-                          <i18n path="Common.New" />
-                        </v-btn>
-                      </v-layout>
-                    </div>
-                    <div>
-                      <div
-                        v-for="item in selectedList"
-                        :key="item.id"
-                        class="borderBottomGrey py-2 pl-2"
-                      >
-                        <v-btn
-                          class="float-right fc-icon"
-                          text
-                          small
-                          @click="unselectContact(item)"
-                        >
-                          <i class="fa fa-trash fs-16" aria-hidden="true"></i>
-                        </v-btn>
-                        {{ item.type }} - {{ item.FullName }} ({{ item.Email }})
-                      </div>
-                    </div>
+                            <td width="20%" class="pa-2 pb-0 pl-2 pl-md-0">
+                              {{ item.type }}
+                            </td>
+                            <td width="75%" class="pa-2 pb-0">
+                              <v-autocomplete
+                                v-model="selectedListNewContacts[index]"
+                                :items="contactList"
+                                :item-text="
+                                  (item) => `${item.FullName} (${item.Email})`
+                                "
+                                return-object
+                                outlined
+                                :label="$t('Common.Select')"
+                                dense
+                                :hide-details="true"
+                                @input="updateSelectedListInput(index)"
+                              >
+                                <template v-slot:selection>
+                                  {{
+                                    `${selectedListNewContacts[index].FullName} (${selectedListNewContacts[index].Email})`
+                                  }}
+                                </template>
+                              </v-autocomplete>
+                            </td>
+                            <td width="5%" class="pa-2 pt-3">
+                              <v-btn
+                                icon
+                                class="mt-1"
+                                @click="addRecepientFormOpen(index)"
+                              >
+                                <v-icon>fa-plus</v-icon>
+                              </v-btn>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </template>
+                    </v-simple-table>
                   </v-col>
                 </v-row>
               </v-tab-item>
@@ -566,14 +552,6 @@
                       :key="item.Email"
                       class="borderBottomGrey py-2 pl-2"
                     >
-                      <v-btn
-                        class="float-right fc-icon"
-                        text
-                        small
-                        @click="unselectContact(item)"
-                      >
-                        <i class="fa fa-trash fs-16" aria-hidden="true"></i>
-                      </v-btn>
                       {{ item.FullName }} ({{ item.Email }})
                     </div>
                   </v-col>
@@ -627,6 +605,7 @@ export default {
       snackbarText: '',
       templateItems: [],
       selectedList: [],
+      selectedListNewContacts: [],
       curentTab: 0,
       subject: '',
       senderName: (this.$auth && this.$auth.user.data.name) || '',
@@ -642,7 +621,6 @@ export default {
       addNewTemplateFormName: '',
       addNewTemplateFormURL: '',
       addNewRecepientFormDialog: false,
-      addNewRecepientFormPage: 0,
       addNewRecepientFormName: '',
       addNewRecepientFormEmail: '',
       disableTab: true,
@@ -653,19 +631,20 @@ export default {
       selectedParty: '',
       documentText: '',
       parties: [],
-      unselectedParties: [],
       toggleLoading: false,
+      toggleRecepientLoading: true,
+      newRecepientIndex: 0,
     }
   },
   computed: {
     disableNext() {
       if (this.templateSelected === false) return true
-      else if (
-        this.curentTab === 1 &&
-        this.selectedList.length < this.parties.length
-      )
-        return true
-      else if (this.curentTab === 2 && this.subject === '') return true
+      else if (this.curentTab === 1) {
+        if (this.toggleRecepientLoading === true) return true
+        for (const item of this.selectedList) {
+          if (item.Email === '' || item.FullName === '') return true
+        }
+      } else if (this.curentTab === 2 && this.subject === '') return true
       return false
     },
   },
@@ -703,6 +682,14 @@ export default {
         this.selectedList = [...data.items]
       }
     },
+    updateSelectedListInput(index) {
+      console.log(this.selectedList[index])
+      this.$set(this.selectedList, index, {
+        ...this.selectedList[index],
+        FullName: this.selectedListNewContacts[index].FullName,
+        Email: this.selectedListNewContacts[index].Email,
+      })
+    },
     resetForm() {
       this.$emit('update:newTemplateDialog', false)
       this.selectedList = []
@@ -710,15 +697,6 @@ export default {
       this.curentTab = 0
       this.templateSelected = false
       this.disableButton = false
-    },
-    unselectContact(unselectedItem) {
-      this.selectedList = this.selectedList.filter((item) => {
-        if (unselectedItem.id === item.id) {
-          this.unselectedParties.push(item.type)
-          return false
-        }
-        return true
-      })
     },
     async sendNow() {
       this.postEsignRequestData = {
@@ -774,7 +752,7 @@ export default {
           Name: this.addNewTemplateFormName,
           DocumentUrl: this.addNewTemplateFormURL,
         }
-        this.getHTMLTemplate(this.addNewTemplateFormURL)
+        this.toggleRecepientLoading = true
         const bitpodURL = `${this.$bitpod.getApiUrl()}ESIGNTEMPLATES`
         try {
           const response = await this.$axios.$post(
@@ -787,6 +765,7 @@ export default {
               documentId: response.id,
               documentUrl: response.DocumentUrl,
             }
+            this.getHTMLTemplate(this.addNewTemplateFormURL)
             this.choosedTemplate = 0
             this.curentTab = 1
             this.selectedList = []
@@ -805,8 +784,7 @@ export default {
     async handleAddNewRecepientForm() {
       if (
         this.addNewRecepientFormName.length < 2 ||
-        this.addNewRecepientFormEmail.length < 5 ||
-        this.selectedParty === ''
+        this.addNewRecepientFormEmail.length < 5
       ) {
         this.snackbar = true
         this.snackbarText = 'Please fill out all fields'
@@ -824,14 +802,21 @@ export default {
           addNewRecepientFormObject
         )
         if (response) {
-          this.selectedList.push({ ...response, type: this.selectedParty })
-          this.unselectedParties = this.unselectedParties.filter(
-            (item) => item.type !== this.selectedParty
+          const signObject = {
+            ...this.selectedList[this.newRecepientIndex],
+            FullName: response.FullName,
+            Email: response.Email,
+          }
+          this.contactList.push(signObject)
+          this.$set(
+            this.selectedListNewContacts,
+            this.newRecepientIndex,
+            signObject
           )
+          this.$set(this.selectedList, this.newRecepientIndex, signObject)
           this.addNewRecepientFormName = ''
           this.addNewRecepientFormEmail = ''
           this.selectedParty = ''
-          this.addNewRecepientFormPage = 0
         }
       } catch (err) {
         this.snackbar = true
@@ -841,43 +826,8 @@ export default {
       this.toggleLoading = !this.toggleLoading
       this.addNewRecepientFormDialog = false
     },
-    handleSelectRecepient() {
-      if (
-        Object.keys(this.selectedRecepient).length === 0 ||
-        this.selectedParty === ''
-      ) {
-        this.snackbar = true
-        this.snackbarText = 'Please fill all fields'
-        return
-      }
-      let isPresent = false
-      for (const item of this.selectedList) {
-        if (item.id === this.selectedRecepient.id) {
-          isPresent = true
-        }
-      }
-      if (!isPresent) {
-        this.selectedList.push({
-          ...this.selectedRecepient,
-          type: this.selectedParty,
-        })
-        this.unselectedParties = this.unselectedParties.filter(
-          (item) => this.selectedParty !== item
-        )
-        this.selectedRecepient = {}
-        this.selectedParty = ''
-        this.addNewRecepientFormDialog = false
-      } else {
-        this.snackbar = true
-        this.snackbarText = 'This recepient has already been selected'
-      }
-    },
-    addRecepientFormOpen() {
-      if (this.unselectedParties.length === 0) {
-        this.snackbar = true
-        this.snackbarText = 'All parties have been assigned'
-        return
-      }
+    addRecepientFormOpen(index) {
+      this.newRecepientIndex = index
       this.addNewRecepientFormDialog = true
     },
     async getExistingTemplate() {
@@ -893,6 +843,7 @@ export default {
       }
     },
     selectSignTemplate(item) {
+      this.toggleRecepientLoading = true
       this.curentTab = 1
       this.choosedTemplate = 0
       this.templateSelected = true
@@ -915,7 +866,16 @@ export default {
           matches.push(tempMatch[1])
         }
         this.parties = [...new Set(matches)]
-        this.unselectedParties = this.parties
+        this.selectedList = []
+        this.parties.forEach((item) => {
+          this.selectedList.push({
+            FullName: '',
+            Email: '',
+            type: item,
+          })
+          this.selectedListNewContacts.push({ FullName: '', Email: '' })
+        })
+        this.toggleRecepientLoading = false
       } catch (err) {
         console.error(err)
       }
