@@ -683,12 +683,19 @@ export default {
       }
     },
     updateSelectedListInput(index) {
-      console.log(this.selectedList[index])
-      this.$set(this.selectedList, index, {
-        ...this.selectedList[index],
-        FullName: this.selectedListNewContacts[index].FullName,
-        Email: this.selectedListNewContacts[index].Email,
-      })
+      console.log(this.selectedList[index], this.selectedListNewContacts[index])
+      if (this.selectedListNewContacts[index]) {
+        this.$set(this.selectedList, index, {
+          ...this.selectedList[index],
+          FullName: this.selectedListNewContacts[index].FullName,
+          Email: this.selectedListNewContacts[index].Email,
+        })
+      } else {
+        this.$set(this.selectedListNewContacts, index, {
+          FullName: '',
+          Email: '',
+        })
+      }
     },
     resetForm() {
       this.$emit('update:newTemplateDialog', false)
@@ -875,6 +882,7 @@ export default {
           })
           this.selectedListNewContacts.push({ FullName: '', Email: '' })
         })
+        console.log(this.selectedList)
         this.toggleRecepientLoading = false
       } catch (err) {
         console.error(err)

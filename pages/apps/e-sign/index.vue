@@ -4,7 +4,6 @@
       id="signature-app"
       src="https://signature.zapto.org"
       width="100%"
-      height="600px"
       @load="sendData"
     />
   </div>
@@ -31,6 +30,8 @@ export default {
           recepientSignature: data.defaultSign,
           handlebarsData: data.handlebarsData,
           requestID: data.request.id,
+          emailSubject: data.request.Subject,
+          emailText: data.request.EmailText,
         }
         try {
           console.log({ patchData }, bitpodURL)
@@ -67,3 +68,9 @@ export default {
   },
 }
 </script>
+
+<style>
+#signature-app {
+  height: 90vh;
+}
+</style>
