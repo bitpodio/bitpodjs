@@ -1001,7 +1001,10 @@ export default {
       document.getElementsByClassName('invite-inner')[0].scrollTop = 0
     },
     updateSelectedList(data) {
-      if (data.viewName === 'Contacts') {
+      if (
+        data.viewName === 'Contacts' ||
+        (data.viewName === 'InviteContacts' && !this.editDraft)
+      ) {
         this.selectedList = [...data.items]
       }
     },
@@ -1065,7 +1068,10 @@ export default {
       return this.contents ? this.contents.Event : null
     },
     updateList(data) {
-      if (!this.editDraft) {
+      if (this.editDraft) {
+        const index = data.length
+        this.selectedList.push(data[index - 1])
+      } else {
         this.selectedList = data
       }
     },

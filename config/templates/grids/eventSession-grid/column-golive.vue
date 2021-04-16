@@ -7,7 +7,8 @@
       </div>
     </div>
     <v-btn
-      v-if="allowSession()"
+      v-if="item.LocationType !== 'Venue'"
+      :disabled="allowSession()"
       tile
       depressed
       color="success"
@@ -72,11 +73,11 @@ export default {
         this.copyLink = ''
       }
       const endDate = new Date(this.item.StartDate)
-      endDate.setMinutes(endDate.getMinutes() + this.item.Duration)
+      endDate.setMinutes(endDate.getMinutes() + this.item.Duration + 15)
       return (
         (this.item.LocationType === 'Bitpod Virtual' ||
           this.item.LocationType === 'Online event') &&
-        endDate.getTime() > new Date().getTime()
+        endDate.getTime() < new Date().getTime()
       )
     },
     goLive() {
