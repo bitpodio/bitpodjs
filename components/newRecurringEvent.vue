@@ -643,6 +643,7 @@
                       v-model="eventData.Title"
                       :rules="[rules.required]"
                       :label="$t('Common.EventTitle')"
+                      debounce="500"
                       required
                       dense
                       outlined
@@ -667,11 +668,12 @@
                       v-model="eventData.UniqLink"
                       :label="$t('Common.EventL')"
                       :rules="[rules.required, rules.link]"
+                      debounce="500"
                       outlined
                       dense
                       required
                       :error-messages="uniqueLinkValidationMsg"
-                      @input="checkUniqueLink"
+                      @input="updateEventTitle"
                     ></v-text-field>
                   </v-col>
                 </v-row>
@@ -1104,6 +1106,7 @@
 <script>
 import gql from 'graphql-tag'
 import format from 'date-fns/format'
+import _ from 'lodash'
 import { formatTimezoneDateFieldsData } from '~/utility/form.js'
 import Lookup from '~/components/common/form/lookup.vue'
 import Select from '~/components/common/form/select.vue'
@@ -1506,6 +1509,9 @@ export default {
     },
   },
   methods: {
+    updateEventTitle: _.debounce(function (event) {
+      this.checkUniqueLink(event)
+    }, 500),
     async checkUniqueLink() {
       const where = { UniqLink: this.eventData.UniqLink }
       const result = await this.$apollo.query({
@@ -2126,8 +2132,12 @@ export default {
       }
     },
     changeTicketType(index) {
-      if (this.tickets[index].Type === 'Free') {
-        this.tickets[index].Amount = 0
+      return () => {
+        if (this.tickets[index].Type === 'Free') {
+          this.tickets[index].Amount = 0
+        } else {
+          this.tickets[index].Amount = 1
+        }
       }
     },
     isPriceDisabled(index) {
@@ -2137,6 +2147,7 @@ export default {
       if (this.tickets.length > 1) {
         this.tickets.splice(index, 1)
         this.deleteSessionTicket(index)
+        this.setSessionTicket()
       } else {
         const ticket = this.ticketDefaultData()
         this.tickets = [ticket]
@@ -2432,7 +2443,7 @@ export default {
       if (regex.test(value)) {
         if (isNaN(value)) {
           this.eventData.UniqLink = value
-          this.checkUniqueLink(this.eventData.UniqLink)
+          this.updateEventTitle(this.eventData.UniqLink)
         }
       } else {
         this.isUniqLinkValid = false

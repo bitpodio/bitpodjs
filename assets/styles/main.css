@@ -36,7 +36,8 @@ body {
   width: 60% !important;
 }
 .slide-site-settings-form-height {
-  min-height: 500px;
+  min-height: 580px;
+  max-height: 100%;
 }
 .v-dialog {
   margin: 0 12px !important;
@@ -314,12 +315,9 @@ body {
   padding: 0 !important;
 }
 .contactsGrid {
-  overflow: hidden;
+  overflow-y: auto;
   max-height: 500px !important;
   width: 100%;
-}
-.contactsGrid:hover {
-  overflow-y: scroll;
 }
 .tempCard {
   transition: opacity 0.4s ease-in-out;
@@ -526,6 +524,7 @@ body {
     text-overflow: ellipsis;
     display: block;
     float: left;
+    text-align: left;
 }
 .v-application--is-rtl .attendeeCount {
   left: 10px;
@@ -683,7 +682,7 @@ table > tbody > tr:last-child .key-align {
 .v-skeleton-loader {
   width: 100%;
 }
-.ring-container {
+.live-view-section .ring-container {
     position: relative;
 }
 .circle-ring {
@@ -746,12 +745,18 @@ table > tbody > tr:last-child .key-align {
 .default-banner-label {
   min-height: 24px;
 }
+.invitee-tooltip.v-tooltip__content {
+  margin-top: -10px;
+}
 @media (min-width: 1904px) {
   .boxviewlarge .v-data-table__wrapper {
     margin-bottom: 0 !important;
   }
   .event-title {
     max-width: calc(100% - 230px);
+  }
+  .type-number {
+    padding-right: 60 !important;
   }
 }
 @media (max-width: 800px) {

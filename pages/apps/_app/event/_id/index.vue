@@ -1578,6 +1578,7 @@ import newBadgeForm from './newBadgeForm.vue'
 import editBadgeForm from './editBadgeForm.vue'
 import makeCopy from './makeCopy.vue'
 import badge from '~/config/apps/event/gql/badge.gql'
+import eventAttendees from '~/config/apps/event/gql/eventAttendees.gql'
 import organizationInfo from '~/config/apps/event/gql/organizationInfo.gql'
 import nuxtconfig from '~/nuxt.config'
 import Grid from '~/components/common/grid'
@@ -1683,6 +1684,7 @@ export default {
       switchDailog: false,
       layoutName: '',
       popupDialog: false,
+      attendeeTest: {},
     }
   },
   computed: {
@@ -1767,7 +1769,6 @@ export default {
     },
   },
   mounted() {
-    this.getAttendees()
     setTimeout(this.openPrint, 3000)
     this.$eventBus.$on('update-seat-reservation', this.updateSeatReservation)
     this.$eventBus.$on('seat-map-triggered', this.getScrollPosition)
@@ -1830,7 +1831,6 @@ export default {
         'admin-default-template-logo.png'
       }"`
       let str
-      this.getAttendees()
       if (this.attendees.length > 0) {
         this.attendees.map((ele) => {
           if (this.logoId !== '') {
@@ -2008,10 +2008,16 @@ export default {
       }
     },
     getBadgePrinted(str, ele) {
+      const parser = new DOMParser()
       const logoUrl =
         nuxtconfig.publicRuntimeConfig.cdnUri +
         'admin-default-template-logo.png'
       if (str) {
+        const strDom = parser.parseFromString(str, 'text/html')
+        strDom
+          .getElementsByClassName('badge-category')[0]
+          .style.setProperty('--defaultColor', `${ele.regType.ColorCode}`)
+        str = strDom.documentElement.innerHTML
         str = str
           .replace('{{ FullName }}', `${ele.FullName}`)
           .replace(
@@ -2543,7 +2549,6 @@ export default {
         this.updateRegistrationSetting(this.eventData)
         this.getSeatMap(this.eventData)
         this.updateStepper()
-        this.getAttendees()
         if (event[0] && event[0].Images && event[0].Images.length > 0) {
           this.getBannerImageName(event[0].Images[0])
         }
@@ -2564,6 +2569,38 @@ export default {
           event: event.length > 0 ? event[0] : {},
           badge: badge.length > 0 ? badge[0] : {},
           eventSummary,
+        }
+      },
+      result({ data, loading, networkStatus }) {},
+      error(error) {
+        this.error = error
+        this.loading = 0
+      },
+      prefetch: false,
+      loadingKey: 'loading',
+      skip: false,
+      pollInterval: 0,
+    },
+    data1: {
+      query() {
+        return gql`
+          ${eventAttendees}
+        `
+      },
+      variables() {
+        return {
+          filters: {
+            where: {
+              EventId: this.$route.params.id,
+            },
+          },
+        }
+      },
+      update(data) {
+        const attendeeTest = formatGQLResult(data, 'Attendee')
+        this.attendees = attendeeTest.length > 0 ? attendeeTest : {}
+        return {
+          attendeeTest: attendeeTest.length > 0 ? attendeeTest : {},
         }
       },
       result({ data, loading, networkStatus }) {},

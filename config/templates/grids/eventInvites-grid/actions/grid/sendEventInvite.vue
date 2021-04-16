@@ -69,6 +69,7 @@
                       <v-row>
                         <v-col cols="12" class="pb-0">
                           <v-text-field
+                            ref="subjectfield"
                             v-model="subject"
                             :label="$t('Common.SubjectRequired')"
                             outlined
@@ -129,7 +130,7 @@
                             {{
                               $t('Common.YouMayReferInviteMembers', {
                                 contactTemplateData:
-                                  ' ${Registration.FirstName} ${Registration.LastName} ${OrganizationInfo.Name}',
+                                  ' ${Contact.FirstName} ${Contact.LastName} ${OrganizationInfo.Name}',
                               })
                             }}</v-card-text
                           >
@@ -1032,6 +1033,7 @@ export default {
     async prefilData() {
       this.choosedTemplate = 3
       this.subject = this.draftData.Title
+      this.templateID = this.draftData.TemplateId
       this.senderName = this.draftData.SenderName
       this.sender = this.draftData.Owner
       this.setReplyTo = this.draftData.ReplyTo
@@ -1063,7 +1065,9 @@ export default {
       return this.contents ? this.contents.Event : null
     },
     updateList(data) {
-      this.selectedList = data
+      if (!this.editDraft) {
+        this.selectedList = data
+      }
     },
     resetForm() {
       this.dialog = false
@@ -1073,7 +1077,11 @@ export default {
         this.senderName = (this.$auth && this.$auth.user.data.name) || ''
         this.sender = (this.$auth && this.$auth.user.data.email) || ''
         this.setReplyTo = (this.$auth && this.$auth.user.data.email) || ''
-        this.subject = this.emailSubject
+        if (this.$route.params && this.$route.params.id) {
+          this.subject = this.emailSubject
+        } else {
+          this.$refs.subjectfield.reset()
+        }
         this.selectedList = []
         this.choosedTemplate = 0
         this.curentTab = 0
@@ -1121,7 +1129,9 @@ export default {
         ReplyTo: this.setReplyTo,
         SenderName: this.senderName,
         Status: 'Start',
-        TemplateId: getIdFromAtob(this.templateID),
+        TemplateId: this.editDraft
+          ? this.templateID
+          : getIdFromAtob(this.templateID),
         TemplateName: this.templateSubject,
         Title: this.subject,
         Type: 'Mass Email',

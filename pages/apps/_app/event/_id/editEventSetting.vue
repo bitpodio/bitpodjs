@@ -197,9 +197,6 @@ export default {
       this.$emit('update:eventSetting', false)
       this.onReset()
     },
-    refresh() {
-      this.$refs.form.$parent.$parent.refresh()
-    },
     async onSave() {
       this.formData.Currency = this.currency
       this.formData.Privacy = this.privacy
@@ -220,7 +217,7 @@ export default {
             this.$t('Messages.Success.EventDetailsUpdateSuccess')
           )
           this.$emit('update:snackbar', true)
-          this.refresh()
+          this.$eventBus.$emit('update-event-details')
           this.data.event = res
         }
       } catch (e) {
@@ -263,6 +260,8 @@ export default {
         this.formData.UniqLink !== '' &&
         this.formData.UniqLink !== this.data.event.UniqLink
       ) {
+        const value = this.formData.UniqLink.toLowerCase().replace(/\s/g, '')
+        this.formData.UniqLink = value.trim()
         const where = { UniqLink: this.formData.UniqLink }
         const result = await this.$apollo.query({
           query: gql`
