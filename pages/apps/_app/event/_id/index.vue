@@ -902,6 +902,7 @@
           <Grid
             view-name="eventRegistrations"
             :content="content"
+            :context="data"
             class="mt-n12"
           />
         </div>
@@ -1016,6 +1017,12 @@
                 view-name="eventTickets"
                 :content="content"
                 :context="data"
+                :no-action="!data.event.HasTickets"
+                :has-custom-no-data-text="
+                  !data.event.HasTickets
+                    ? $t('Common.TicketsNotRequiredToggle')
+                    : ''
+                "
                 class="mt-n14"
               />
             </div>
@@ -1038,6 +1045,12 @@
           <Grid
             view-name="eventDiscountCodes"
             :content="content"
+            :no-action="!data.event.HasTickets"
+            :has-custom-no-data-text="
+              !data.event.HasTickets
+                ? $t('Common.TicketsNotRequiredToggle')
+                : ''
+            "
             class="mt-n12"
           />
         </div>
@@ -1075,7 +1088,15 @@
             </v-flex>
             <v-divider></v-divider>
           </div>
-          <Grid view-name="eventSession" :content="content" class="mt-n12" />
+          <Grid
+            view-name="eventSession"
+            :content="content"
+            class="mt-n12"
+            :no-action="!data.event.HasTickets"
+            :has-custom-no-data-text="
+              !data.event.HasTickets ? $t('Common.SessionsNotAvailable') : ''
+            "
+          />
         </div>
         <div
           v-if="content"
@@ -1367,7 +1388,7 @@
               <div v-html="formatField(data.event.CancellationPolicy)"></div>
             </div>
           </v-flex>
-          <v-flex class="d-block text-truncate">
+          <v-flex v-if="data.event.HasTickets" class="d-block text-truncate">
             <v-checkbox
               v-model="data.event.isRefundable"
               dense
@@ -1403,7 +1424,7 @@
               @change="updateReg"
             ></v-checkbox>
           </v-flex>
-          <v-flex class="d-block text-truncate">
+          <v-flex v-if="data.event.HasTickets" class="d-block text-truncate">
             <v-checkbox
               v-model="data.event.ShowRemainingTickets"
               dense
@@ -1543,6 +1564,7 @@
           :site-setting.sync="siteSetting"
           :snackbar.sync="snackbar"
           :snackbar-text.sync="snackbarText"
+          :has-tickets="data.event.HasTickets"
         />
       </div>
       <makeCopy :key="isMakeCopy" :is-make-copy.sync="isMakeCopy" />

@@ -172,6 +172,9 @@
             ? ''
             : 'table'
         "
+        :class="{
+          'mt-16 mt-sm-14': this.hasCustomNoDataText && noAction,
+        }"
       >
         <v-data-table
           :key="componentRerenderKey"
@@ -611,6 +614,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    hasCustomNoDataText: {
+      type: String,
+      default: '',
+    },
   },
   data() {
     const headers = getTableHeader(this.content, this.viewName, this)
@@ -651,7 +658,9 @@ export default {
       winWidth: window.innerWidth,
       itemPerPage: 0,
       componentRerenderKey: 0,
-      noDataText: this.$t('Common.NoDataAvailable'),
+      noDataText: this.hasCustomNoDataText
+        ? this.hasCustomNoDataText
+        : this.$t('Common.NoDataAvailable'),
     }
   },
   computed: {
@@ -1214,7 +1223,9 @@ export default {
         const getDataFunc = dataSource.getData.call(this, this)
         try {
           this.tableData = await getDataFunc.call(this, options)
-          this.noDataText = this.$t('Common.NoDataAvailable')
+          this.noDataText = this.hasCustomNoDataText
+            ? this.hasCustomNoDataText
+            : this.$t('Common.NoDataAvailable')
           this.componentRerenderKey += this.slotTemplates.body ? 1 : 0
           this.loading = false
         } catch (e) {
@@ -1222,7 +1233,9 @@ export default {
             `Errors in components/common/grid/index.vue while calling method loadRestData`,
             e
           )
-          this.noDataText = this.$t('Common.ServiceUnavailable')
+          this.noDataText = this.hasCustomNoDataText
+            ? this.hasCustomNoDataText
+            : this.$t('Common.ServiceUnavailable')
           this.loading = false
         }
       }
