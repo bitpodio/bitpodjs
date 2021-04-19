@@ -471,7 +471,7 @@
                                     color="success"
                                     :disabled="isPast"
                                   >
-                                    <i18n path="Common.JoinSession" /><v-icon
+                                    <i18n path="Common.StartSession" /><v-icon
                                       right
                                     >
                                       mdi-video
@@ -502,7 +502,7 @@
                                     color="success"
                                     :disabled="isPast"
                                   >
-                                    <i18n path="Common.JoinSession" /><v-icon
+                                    <i18n path="Common.StartSession" /><v-icon
                                       right
                                     >
                                       mdi-video
