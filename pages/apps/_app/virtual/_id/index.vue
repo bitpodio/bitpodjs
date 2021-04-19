@@ -1063,6 +1063,9 @@ export default {
   max-height: 40px;
   width: auto !important;
   min-width: auto !important;
+  max-width: 110px !important;
+  margin-left: 4px;
+  height: auto;
 }
 .my_video_1-dimensions {
   width: 100% !important;
