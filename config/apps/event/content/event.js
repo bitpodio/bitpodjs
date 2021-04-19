@@ -1360,6 +1360,13 @@ export default {
           newForm: true,
           editForm: true,
           filterEnable: false,
+          visible(value, data) {
+            const hasTicket =
+              this.context &&
+              this.context.event &&
+              this.context.event.HasTickets
+            return hasTicket
+          },
           rules: [
             function (v) {
               return !!v || this.$t('Messages.Error.TicketSelected')
@@ -2117,6 +2124,13 @@ export default {
           editForm: true,
           multiple: true,
           filterEnable: false,
+          visible(value, data) {
+            const hasTicket =
+              this.context &&
+              this.context.event &&
+              this.context.event.HasTickets
+            return hasTicket
+          },
           rules: [
             function (v) {
               return !!v || this.$t('Messages.Error.TicketRequired')

@@ -83,7 +83,7 @@
                   dense
                 ></v-checkbox>
               </v-col>
-              <v-col cols="12">
+              <v-col v-if="hasTicket" cols="12">
                 <span><i18n path="Common.OnlyAskWhen" /> </span>
                 <v-select
                   v-model="tickets"
@@ -144,6 +144,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    context: {
+      type: null,
+      default: null,
+    },
   },
   data() {
     return {
@@ -170,6 +174,8 @@ export default {
       timeout: 2000,
       snackbarText: '',
       formName: 'new-eventRegistration-form',
+      hasTicket:
+        this.context && this.context.event && this.context.event.HasTickets,
     }
   },
   computed: {
