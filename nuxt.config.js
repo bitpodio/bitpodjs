@@ -38,9 +38,9 @@ export default {
     link: [
       {
         rel: 'icon',
-        type: 'image/x-icon',
+        type: 'image/png',
         href:
-          'https://res.cloudinary.com/mytestlogo/image/upload/bitpodjs/images/favicon.ico',
+          'https://res.cloudinary.com/mytestlogo/image/upload/bitpodjs/images/favicon-bitpod.png',
       },
       {
         rel: 'stylesheet',
