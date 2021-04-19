@@ -97,7 +97,11 @@ export const formValidationMixin = {
           propFields[field.fieldName] = defaultValue
         } else if (
           field[propName] &&
-          field[propName](this.formData[field.fieldName], this.formData)
+          field[propName].call(
+            this,
+            this.formData[field.fieldName],
+            this.formData
+          )
         ) {
           propFields[field.fieldName] = true
         } else {

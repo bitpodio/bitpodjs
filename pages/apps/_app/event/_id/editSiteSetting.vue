@@ -141,7 +141,7 @@
                         dense
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="12">
+                    <v-col v-if="hasTickets" cols="12">
                       <v-text-field
                         v-model="sectionHeading.session"
                         :label="$t('Common.LabelForSessions')"
@@ -157,7 +157,7 @@
                         dense
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="12">
+                    <v-col v-if="hasTickets" cols="12">
                       <v-text-field
                         v-model="sectionHeading.ticketsectionlabel"
                         :label="$t('Common.LabelForTickets')"
@@ -165,7 +165,7 @@
                         dense
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="12">
+                    <v-col v-if="hasTickets" cols="12">
                       <v-text-field
                         v-model="sectionHeading.ticketlabel"
                         :label="$t('Common.LabelTickets')"
@@ -290,6 +290,10 @@ export default {
     siteSetting: {
       type: Boolean,
       default: false,
+    },
+    hasTickets: {
+      type: Boolean,
+      default: true,
     },
   },
   data() {

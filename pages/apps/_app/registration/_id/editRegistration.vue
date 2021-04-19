@@ -152,6 +152,7 @@
               <v-col cols="12" sm="6" md="6">
                 <v-autocomplete
                   v-model="regData.TicketId"
+                  :disabled="!eventHasTickets"
                   :items="tickets"
                   item-text="codeAmount"
                   item-value="id"
@@ -252,6 +253,7 @@ export default {
       isSessionLoading: false,
       valid: false,
       lazy: false,
+      eventHasTickets: true,
       data: {
         event: {},
       },
@@ -330,6 +332,8 @@ export default {
           filters: { where },
         },
       })
+      const tempEvent = this.events.filter((event) => event.id === eventId)
+      this.eventHasTickets = tempEvent[0] && tempEvent[0].HasTickets
       let tickets = formatGQLResult(result.data, 'Ticket')
       tickets = tickets.length > 0 ? tickets : []
       this.tickets = tickets.map(({ id, ...rest }) => ({
@@ -337,7 +341,7 @@ export default {
         codeAmount: `${rest.Code} ${rest.Amount}`,
         ...rest,
       }))
-      if (isReg) {
+      if (isReg && this.eventHasTickets) {
         this.regData.TicketId && this.ticketChange(this.regData.TicketId)
       } else {
         this.regData.TicketId = []

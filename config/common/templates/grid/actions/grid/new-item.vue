@@ -46,7 +46,9 @@
                   :is="formControl(field) || null"
                   v-model="formData[field.fieldName]"
                   :field="translate(field)"
-                  :rules="rulesArray(field)"
+                  :rules="
+                    visible[field.fieldName] === false ? [] : rulesArray(field)
+                  "
                   :readonly="readonly[field.fieldName]"
                   :filter="filter[field.fieldName]"
                   :field-name="field.fieldName"

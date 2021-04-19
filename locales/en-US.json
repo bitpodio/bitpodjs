@@ -795,7 +795,9 @@
     "LoginRequired": "Login with your account to use the API Explorer.",
     "SendManyMails": "You have send me too many mails",
     "StopReceiveMails": "I no longer wanted to receive these mails",
-    "NeverSignedForMails": "I never signed up for this mailing list"
+    "NeverSignedForMails": "I never signed up for this mailing list",
+    "TicketsNotRequiredToggle": "This event does not require tickets",
+    "SessionsNotAvailable": "Sessions require events to be ticketed"
   },
   "Drawer": {
     "UnSubscribeMsg": "Please select a reason to unsubscribe from newsletter. This will help us to improve our services.",
