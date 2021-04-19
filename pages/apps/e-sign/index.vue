@@ -10,7 +10,7 @@
 </template>
 <script>
 export default {
-  layout: 'eSign',
+  layout: 'public',
   beforeMount() {
     window.addEventListener('message', this.handleSubmitDocument)
   },
