@@ -39,7 +39,7 @@
                   class="rounded"
                   @click="goLive"
                 >
-                  <i18n path="Common.JoinEvent" />
+                  <i18n path="Common.StartEvent" />
 
                   <v-icon right class="fs-22"> mdi-video </v-icon>
                 </v-btn>
