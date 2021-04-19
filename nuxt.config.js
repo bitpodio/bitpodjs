@@ -1,4 +1,5 @@
 const basePath = process.env.PUBLIC_PATH || ''
+console.log('############## public path env var ###########', process.env.PUBLIC_PATH)
 
 export default {
   /*
