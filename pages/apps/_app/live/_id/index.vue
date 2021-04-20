@@ -109,8 +109,8 @@ export default {
       }
       jitsi.addEventListener('participantRoleChanged', (e) => {
         if (e.role === 'moderator') {
-          // below line used for enable password in start live stream
-          jitsi.executeCommand('password', this.$route.params.id.split('-')[2])
+          // uncomment below line to protect meetings with password
+          // jitsi.executeCommand('password', this.$route.params.id.split('-')[2])
           jitsi.executeCommand('toggleLobby', true)
           jitsi.addEventListener('participantJoined', (e) => {
             this.participantsBackup = { ...jitsi.jitsiApi._participants }
