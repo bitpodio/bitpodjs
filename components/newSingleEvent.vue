@@ -1415,12 +1415,24 @@ export default {
         this.isBitpodVirtual = false
         this.eventData.WebinarLink = ''
         this.eventData.JoiningInstruction = ''
+        this.venueAddress.AddressLine = ''
+        this.eventData.VenueName = ''
+        this.venueAddress.City = ''
+        this.venueAddress.State = ''
+        this.venueAddress.Country = ''
+        this.venueAddress.PostalCode = ''
       }
       if (value === 'Bitpod Virtual') {
         this.isVenue = false
         this.isOnlineEvent = false
         this.isMap = false
         this.isBitpodVirtual = true
+        this.venueAddress.AddressLine = ''
+        this.eventData.VenueName = ''
+        this.venueAddress.City = ''
+        this.venueAddress.State = ''
+        this.venueAddress.Country = ''
+        this.venueAddress.PostalCode = ''
       }
     },
     addTicketRow() {
