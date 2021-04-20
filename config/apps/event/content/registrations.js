@@ -250,7 +250,7 @@ export default {
           hidden: true,
           inlineEdit: true,
           newForm: true,
-          editForm: true,
+          editForm: false,
           rules: [
             function (v) {
               return !!v || this.$t('Messages.Error.ThisFieldRequired')
@@ -285,7 +285,7 @@ export default {
           hidden: true,
           inlineEdit: true,
           newForm: true,
-          editForm: true,
+          editForm: false,
           dataSource: {
             query: registrationType,
             itemText: 'Name',
@@ -311,7 +311,7 @@ export default {
           hidden: false,
           inlineEdit: true,
           newForm: true,
-          editForm: true,
+          editForm: false,
           dataSource: {
             type: 'rest',
             itemText: 'value',
@@ -381,7 +381,7 @@ export default {
           hidden: false,
           inlineEdit: true,
           newForm: true,
-          editForm: true,
+          editForm: false,
           minimumValue: '1',
         },
         FullName: {
@@ -433,7 +433,7 @@ export default {
           type: 'lookup',
           inlineEdit: false,
           newForm: true,
-          editForm: true,
+          editForm: false,
           hidden: true,
           multiple: true,
           readonly(value, data) {

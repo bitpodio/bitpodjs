@@ -731,10 +731,15 @@ export default {
           if (this.data.event.VenueName !== '') {
             this.VenueName = this.formatAddressField(this.data.event.VenueName)
           }
-          if (Object.keys(this.data.event._VenueAddress).length > 0) {
-            this.AddressLine = this.formatAddressField(
-              this.data.event._VenueAddress.AddressLine
-            )
+          if (
+            this.data.event._VenueAddress.AddressLine !== null &&
+            Object.keys(this.data.event._VenueAddress).length > 0
+          ) {
+            if (this.data.event._VenueAddress.AddressLine !== '') {
+              this.AddressLine = this.formatAddressField(
+                this.data.event._VenueAddress.AddressLine
+              )
+            }
             if (this.data.event._VenueAddress.City !== '') {
               this.AddressLine =
                 this.AddressLine + ',' + this.data.event._VenueAddress.City
