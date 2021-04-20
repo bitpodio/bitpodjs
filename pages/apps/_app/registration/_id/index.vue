@@ -714,7 +714,6 @@ export default {
           `${url}Registrations/${this.$route.params.id}/EventList`
         )
         if (res && res.data) {
-          debugger
           this.data.event = res.data
           this.StartDate = this.formatDate(this.data.event.StartDate)
           this.EndDate = this.formatDate(this.data.event.EndDate)
