@@ -827,7 +827,7 @@
                   :disabled="isPast"
                   @click="startEvent(event.UniqLink)"
                 >
-                  <i18n path="Common.StartEvent" /><v-icon right>
+                  <i18n path="Common.JoinEvent" /><v-icon right>
                     mdi-video
                   </v-icon>
                 </v-btn>
@@ -849,7 +849,7 @@
                       :disabled="isPast"
                       color="success"
                     >
-                      <i18n path="Common.StartEvent" /><v-icon right>
+                      <i18n path="Common.JoinEvent" /><v-icon right>
                         mdi-video
                       </v-icon>
                     </v-btn></a
