@@ -9,7 +9,7 @@
       class="rounded"
       @click="goLive"
     >
-      <i18n path="Common.JoinSession" />
+      <i18n path="Common.StartSession" />
       <v-icon right> mdi-video </v-icon>
     </v-btn>
     <copy

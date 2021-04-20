@@ -36,7 +36,12 @@ export default {
       },
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '~/assets/logo.png' },
+      {
+        rel: 'icon',
+        type: 'image/png',
+        href:
+          'https://res.cloudinary.com/mytestlogo/image/upload/bitpodjs/images/favicon-bitpod.png',
+      },
       {
         rel: 'stylesheet',
         href:
