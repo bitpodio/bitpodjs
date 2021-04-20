@@ -276,7 +276,7 @@
                           class="xs12 sm4 md4 lg4 grey lighten-2 boxviewsmall pa-3 mb-4 mx-0 py-2 session-view-in"
                           :class="{
                             selected:
-                              `${$config.rtmpLink}${event.id}.m3u8` ===
+                              `${$config.rtmpLink}${event.UniqLink}.m3u8` ===
                               videoSrc,
                           }"
                           @click="videoEventClick"
@@ -912,7 +912,8 @@ export default {
       }, 2000)
     },
     videoEventClick() {
-      this.videoSrc = `${this.$config.rtmpLink}${this.event.id}.m3u8` || ''
+      this.videoSrc =
+        `${this.$config.rtmpLink}${this.event.UniqLink}.m3u8` || ''
       this.playLive()
       this.sessionName = this.event.name || ''
     },
