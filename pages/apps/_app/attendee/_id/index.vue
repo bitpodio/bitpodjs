@@ -825,7 +825,7 @@
                   outlined
                   color="success"
                   :disabled="isPast"
-                  @click="startEvent(event.UniqLink)"
+                  @click="startEvent(event.UniqLink, true)"
                 >
                   <i18n path="Common.JoinEvent" /><v-icon right>
                     mdi-video
