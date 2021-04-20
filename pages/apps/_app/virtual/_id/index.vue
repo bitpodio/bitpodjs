@@ -353,6 +353,12 @@
                                   <i18n path="Common.Watching" />
                                 </v-btn>
                               </div>
+                              <div class="text-right fs-18 pt-2">
+                                <i
+                                  aria-hidden="true"
+                                  class="fa fa-video red--text"
+                                ></i>
+                              </div>
                             </div>
                           </v-list-item-icon>
                         </v-list-item>
