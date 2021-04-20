@@ -55,6 +55,7 @@ export default {
           SHOW_CHROME_EXTENSION_BANNER: false,
           CHAT_TOKEN: this.authChatToken(),
           CHAT_CHANNEL: this.$route.query.o,
+          RTMP_URL: this.$route.query.p,
         },
         onload: this.onIFrameLoad,
       }
@@ -108,6 +109,7 @@ export default {
       }
       jitsi.addEventListener('participantRoleChanged', (e) => {
         if (e.role === 'moderator') {
+          // below line used for enable password in start live stream
           jitsi.executeCommand('password', this.$route.params.id.split('-')[2])
           jitsi.executeCommand('toggleLobby', true)
           jitsi.addEventListener('participantJoined', (e) => {
