@@ -325,14 +325,21 @@
                 <p>
                   <i18n path="Common.SetupEventTickets" />
                 </p>
-                <v-btn
-                  class="ma-2 ml-0 mb-3"
-                  outlined
-                  color="indigo"
-                  @click="addTicketRow"
-                  ><i18n path="Common.AddTickets"
-                /></v-btn>
-                <div id="res-tables">
+                <div class="d-flex align-center flex-wrap">
+                  <v-btn
+                    :disabled="!eventData.HasTickets"
+                    class="ma-2 ml-0 mb-3 mr-3"
+                    outlined
+                    color="indigo"
+                    @click="addTicketRow"
+                    ><i18n path="Common.AddTickets"
+                  /></v-btn>
+                  <v-checkbox
+                    v-model="TicketToggle"
+                    :label="$t('Common.TicketsNotRequiredToggle')"
+                  ></v-checkbox>
+                </div>
+                <div id="res-tables" v-if="eventData.HasTickets">
                   <v-simple-table class="event-table">
                     <template v-slot:default>
                       <thead class="e-thead">
@@ -688,6 +695,7 @@ export default {
         LocationType: 'Venue',
         VenueName: '',
         _VenueAddress: {},
+        HasTickets: true,
       },
       venueAddress: {
         AddressLine: '',
@@ -811,6 +819,14 @@ export default {
     uniqueLinkValidationMsg() {
       const errorMessage = this.isInvalidEventLink ? this.uniqueLinkMessage : ''
       return errorMessage
+    },
+    TicketToggle: {
+      get() {
+        return !this.eventData.HasTickets
+      },
+      set(newVal) {
+        this.eventData.HasTickets = !newVal
+      },
     },
   },
 
@@ -1226,32 +1242,36 @@ export default {
             )}`
           )
           this.eventId = res.id
-          const ticketList = []
-
-          this.tickets.forEach(function (ticket) {
-            ticket.Events = res.id
-            ticket.Amount = parseFloat(ticket.Amount)
-            ticket.TicketCount = parseInt(ticket.TicketCount)
-            ticket.AvailableCount = parseInt(ticket.TicketCount)
-            ticketList.push(ticket)
-          })
-
-          ticketRes = await this.$axios
-            .$post(`${baseUrl}Tickets`, ticketList)
-            .catch((e) => {
-              console.error(
-                `Error in Save function of new single event form, context: create ticket , eventId: ${this.eventId},  baseUrl: ${baseUrl} ticketList: ${this.ticketList} error: ${e}`
-              )
+          if (this.eventData.HasTickets) {
+            const ticketList = []
+            this.tickets.forEach(function (ticket) {
+              ticket.Events = res.id
+              ticket.Amount = parseFloat(ticket.Amount)
+              ticket.TicketCount = parseInt(ticket.TicketCount)
+              ticket.AvailableCount = parseInt(ticket.TicketCount)
+              ticketList.push(ticket)
             })
-          if (ticketRes) {
-            console.debug(
-              `POST call is made to ticket model with response as:-${JSON.stringify(
-                ticketRes
-              )}`
-            )
+
+            ticketRes = await this.$axios
+              .$post(`${baseUrl}Tickets`, ticketList)
+              .catch((e) => {
+                console.error(
+                  `Error in Save function of new single event form, context: create ticket , eventId: ${this.eventId},  baseUrl: ${baseUrl} ticketList: ${this.ticketList} error: ${e}`
+                )
+              })
+            if (ticketRes) {
+              console.debug(
+                `POST call is made to ticket model with response as:-${JSON.stringify(
+                  ticketRes
+                )}`
+              )
+              this.isTicket = false
+              this.isEventCreate = true
+              return ticketRes
+            }
+          } else {
             this.isTicket = false
             this.isEventCreate = true
-            return ticketRes
           }
         }
       }

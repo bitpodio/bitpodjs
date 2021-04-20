@@ -218,6 +218,7 @@
     "IndicatesRequiredField": "*indicates required field",
     "Seatmaps": "Seatmaps",
     "JoinEvent": "Join Event",
+    "StartEvent": "התחל אירוע",
     "NewSeatMap": "New Seat Map",
     "SelectExistingSeatMap": "Select Existing Seat Map",
     "DeleteLayout": "are you sure you want to delete layout",
@@ -318,6 +319,7 @@
     "ConfirmationEmailSent": "Confirmation Email Sent",
     "ResendRegistrationEmail": "Resend Registration Email",
     "JoinSession": "Join Session",
+    "StartSession": "התחל מושב",
     "NewSession": "מושב חדש",
     "NewScheduleATask": "קבע משימה",
     "EditScheduleATask": "ערוך משימת לוח זמנים",
@@ -796,7 +798,9 @@
     "LoginRequired": "התחבר לחשבונך כדי להשתמש ב- API Explorer.",
     "SendManyMails": "שלחת לי יותר מדי מיילים",
     "StopReceiveMails": "כבר לא רציתי לקבל את המיילים האלה",
-    "NeverSignedForMails": "מעולם לא נרשמתי לרשימת התפוצה הזו"
+    "NeverSignedForMails": "מעולם לא נרשמתי לרשימת התפוצה הזו",
+    "TicketsNotRequiredToggle": "לאירוע זה אין צורך בכרטיסים",
+    "SessionsNotAvailable": "הפעלות דורשות כרטיסים לאירועים"
   },
   "Drawer": {
     "UnSubscribeMsg": "אנא בחר סיבה לביטול הרישום לניוזלטר. זה יעזור לנו לשפר את השירותים שלנו.",

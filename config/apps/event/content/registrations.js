@@ -1512,6 +1512,13 @@ export default {
           inlineEdit: true,
           newForm: true,
           editForm: true,
+          visible(value, data) {
+            const hasTicket =
+              this.context &&
+              this.context.event &&
+              this.context.event.HasTickets
+            return hasTicket
+          },
           dataSource: {
             query: eventTickets,
             itemText: 'Code',

@@ -39,7 +39,7 @@ query($filters: JSON, $eventFilters: JSON) {
     EventFind(filter: $eventFilters) {
       edges {
         node {
-          id Title StartDate EndDate BusinessType Status
+          id Title StartDate EndDate BusinessType Status HasTickets
         }
       }
     }
