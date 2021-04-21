@@ -34,7 +34,7 @@
             ref="form"
             v-model="valid"
             :lazy-validation="lazy"
-            id="edit-eventRegistration-form"
+            :id="formName"
             @submit.prevent="onSave"
           >
             <v-row>
@@ -89,7 +89,7 @@
             :disabled="!valid || !controlType || controlType === 'Select'"
             depressed
             type="submit"
-            form="new-eventRegistration-form"
+            :form="formName"
             ><i18n path="Drawer.Save"
           /></v-btn>
         </v-card-actions>
@@ -138,6 +138,7 @@ export default {
       snackbarText: '',
       snackbar: false,
       timeout: 3000,
+      formName: 'edit-eventRegistration-form',
     }
   },
   computed: {
@@ -203,6 +204,9 @@ export default {
       if (this.controlTypeDropDown.includes('Select')) {
         this.controlTypeDropDown.shift()
       }
+    },
+    submitForm() {
+      this.$eventBus.$emit('form-submitted', this.formName)
     },
     onClose() {
       this.dialog = false
