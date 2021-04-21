@@ -177,7 +177,7 @@ export default {
           caption: 'Common.TypeCaption',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '250px',
+          columnWidth: '200px',
           type: 'string',
         },
         Email: {

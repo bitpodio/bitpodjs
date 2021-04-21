@@ -162,12 +162,13 @@
 
 <script>
 import gql from 'graphql-tag'
-import ESignRequest from '~/config/apps/e-sign/gql/eSignRequest.gql'
+import ESignRequest from '~/config/apps/eSign/gql/eSignRequest.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import Grid from '~/components/common/grid'
 import { configLoaderMixin } from '~/utility'
 
 export default {
+  layout: 'event',
   components: {
     Grid,
   },

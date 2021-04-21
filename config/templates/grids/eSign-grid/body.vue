@@ -28,7 +28,7 @@
             class="ma-3 ma-md-10 ml-0 mt-0 ml-md-0 mt-md-0 seat-maps"
           >
             <nuxt-link
-              :to="`/apps/e-sign/${item.id}`"
+              :to="`/apps/eSign/eSign/${item.id}`"
               class="text-decoration-none"
             >
               <v-card-text
