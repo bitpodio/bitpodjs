@@ -557,6 +557,7 @@
               ? 'new-singleEvent-tab1-form'
               : 'new-singleEvent-tab2-form'
           "
+          t-id="new-single-event-next"
           ><i18n path="Drawer.Next"
         /></v-btn>
         <SaveBtn

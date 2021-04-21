@@ -208,6 +208,7 @@
                   outlined
                   dense
                   :rules="phoneRules()"
+                  t-id="new-recurring-event-phone"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -266,6 +267,7 @@
                   :rules="[rules.onlineEventLink]"
                   outlined
                   dense
+                  t-id="new-recurring-event-online"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -1087,6 +1089,7 @@
               ? 'new-recurringEvent-tab1-form'
               : 'new-recurringEvent-tab2-form'
           "
+          t-id="new-recurring-event-next"
           ><i18n path="Drawer.Next"
         /></v-btn>
         <SaveBtn
