@@ -478,7 +478,6 @@ export default {
         }
       },
       update(data) {
-        debugger
         const event = formatGQLResult(data, 'Event')
         this.sectionHeading =
           event.length > 0 ? { ...event[0]._sectionHeading } : {}
