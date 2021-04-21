@@ -7,6 +7,88 @@
       :width="260"
       :right="$vuetify.rtl"
     >
+      <v-list class="d-block d-sm-none mt-10">
+        <v-list-item-group v-model="group">
+          <v-list-item
+            v-if="event && event.locationType === 'Bitpod Virtual'"
+            class="xs12 sm4 md4 lg4 boxviewsmall pa-3 my-1 mx-0 py-2 session-view-in"
+            :class="{
+              selected:
+                `${$config.rtmpLink}${event.UniqLink}.m3u8` === videoSrc,
+            }"
+            @click="videoEventClick"
+          >
+            <v-list-item-avatar tile size="48" class="my-0 session-view">
+              <v-avatar
+                size="48"
+                tile
+                v-bind="attrs"
+                :style="{
+                  'background-color': getRandomColor(event.name),
+                }"
+                v-on="on"
+              >
+                <div class="d-flex flex-column">
+                  <div v-if="event && event.startDateTime">
+                    <div class="white--text text-h6 pt-0">
+                      {{ formatDateDay(event.startDateTime) }}
+                    </div>
+                    <div class="white--text body-2 mt-n1">
+                      {{ formatDateMonth(event.startDateTime) }}
+                    </div>
+                  </div>
+                  <div v-else>
+                    <v-icon class="white--text">fa-history</v-icon>
+                  </div>
+                </div>
+              </v-avatar>
+            </v-list-item-avatar>
+
+            <v-list-item-content class="py-0">
+              <v-list-item-title class="text-capitalize">{{
+                event && event.name
+              }}</v-list-item-title>
+              <div v-if="event && event.startDateTime" class="mt-1">
+                <v-list-item-subtitle class="session-date">
+                  {{ formatDateTime(event.startDateTime) }}
+                </v-list-item-subtitle>
+              </div>
+            </v-list-item-content>
+
+            <v-list-item-icon class="ma-0">
+              <div>
+                <div
+                  v-if="
+                    event.locationType === 'Bitpod Virtual' &&
+                    event.BusinessType === 'Single'
+                  "
+                >
+                  <v-btn
+                    class="mt-2 mr-0 isLive"
+                    depressed
+                    x-small
+                    color="error"
+                    :disabled="isPast"
+                  >
+                    <i18n path="Common.Live" />
+                  </v-btn>
+                  <v-btn
+                    class="mt-2 mr-0 isWatchig"
+                    depressed
+                    x-small
+                    :disabled="isPast"
+                  >
+                    <i18n path="Common.Watching" />
+                  </v-btn>
+                </div>
+                <div class="text-right fs-18 pt-2 event-view-tile">
+                  <i aria-hidden="true" class="fa fa-star"></i>
+                </div>
+              </div>
+            </v-list-item-icon>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
       <v-list
         v-for="item in registration.SessionListId"
         :key="item.id"
@@ -268,6 +350,104 @@
                       <v-spacer></v-spacer>
                     </v-flex>
                     <div class="session-list">
+                      <v-list class="pb-0">
+                        <v-list-item
+                          v-if="
+                            event && event.locationType === 'Bitpod Virtual'
+                          "
+                          class="xs12 sm4 md4 lg4 grey lighten-2 boxviewsmall pa-3 mb-4 mx-0 py-2 session-view-in"
+                          :class="{
+                            selected:
+                              `${$config.rtmpLink}${event.UniqLink}.m3u8` ===
+                              videoSrc,
+                          }"
+                          @click="videoEventClick"
+                        >
+                          <v-list-item-avatar
+                            tile
+                            size="48"
+                            class="my-0 session-view"
+                          >
+                            <v-avatar
+                              size="48"
+                              tile
+                              v-bind="attrs"
+                              :style="{
+                                'background-color': getRandomColor(event.name),
+                              }"
+                              v-on="on"
+                            >
+                              <div class="d-flex flex-column">
+                                <div v-if="event && event.startDateTime">
+                                  <div class="white--text text-h6 pt-0">
+                                    {{ formatDateDay(event.startDateTime) }}
+                                  </div>
+                                  <div class="white--text body-2 mt-n1">
+                                    {{ formatDateMonth(event.startDateTime) }}
+                                  </div>
+                                </div>
+                                <div v-else>
+                                  <v-icon class="white--text"
+                                    >fa-history</v-icon
+                                  >
+                                </div>
+                              </div>
+                            </v-avatar>
+                          </v-list-item-avatar>
+
+                          <v-list-item-content>
+                            <v-list-item-title class="text-capitalize">{{
+                              event && event.name
+                            }}</v-list-item-title>
+                            <div
+                              v-if="event && event.startDateTime"
+                              class="mt-1"
+                            >
+                              <v-list-item-subtitle class="session-date">
+                                {{ formatDateTime(event.startDateTime) }}
+                              </v-list-item-subtitle>
+                            </div>
+                          </v-list-item-content>
+
+                          <v-list-item-icon class="ma-0">
+                            <div>
+                              <div
+                                v-if="
+                                  event.locationType === 'Bitpod Virtual' &&
+                                  event.BusinessType === 'Single'
+                                "
+                              >
+                                <v-btn
+                                  class="mt-2 mr-0 isLive"
+                                  depressed
+                                  x-small
+                                  color="error"
+                                  :disabled="isPast"
+                                >
+                                  <i18n path="Common.Live" />
+                                </v-btn>
+                                <v-btn
+                                  class="mt-2 mr-0 isWatchig"
+                                  depressed
+                                  x-small
+                                  :disabled="isPast"
+                                >
+                                  <i18n path="Common.Watching" />
+                                </v-btn>
+                              </div>
+                              <div
+                                class="text-right fs-18 pt-2 event-view-tile"
+                              >
+                                <i
+                                  aria-hidden="true"
+                                  class="fa fa-star red--text"
+                                ></i>
+                              </div>
+                            </div>
+                          </v-list-item-icon>
+                        </v-list-item>
+                      </v-list>
+
                       <v-list
                         v-for="item in registration.SessionListId"
                         :key="item.id"
@@ -821,6 +1001,12 @@ export default {
         )
       }, 2000)
     },
+    videoEventClick() {
+      this.videoSrc =
+        `${this.$config.rtmpLink}${this.event.UniqLink}.m3u8` || ''
+      this.playLive()
+      this.sessionName = this.event.name || ''
+    },
     videoTileClick(item) {
       this.videoSrc =
         `${this.$config.rtmpLink}${
@@ -1087,6 +1273,12 @@ export default {
 .session-player-msg {
   width: 100% !important;
   height: 400px !important;
+}
+.event-view-tile {
+  position: relative;
+  right: -5px;
+  bottom: -10px;
+  color: #6a6a6a !important;
 }
 @media screen and (max-width: 600px) {
   .background-event-img {
