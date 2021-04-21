@@ -186,10 +186,11 @@
                     ref="venueAddress.AddressLine"
                     v-model="venueAddress.AddressLine"
                     class="form-control pa-3 d-block rounded"
-                    placeholder="Address*"
+                    :placeholder="!addressClicked && $t('Common.Address')"
                     :required="true"
                     @placechanged="getAddressData"
                     @change="changeAddressData($event)"
+                    @blur="focusOut"
                   ></vue-google-autocomplete>
                 </no-ssr>
                 <div
@@ -338,6 +339,7 @@ export default {
   },
   data() {
     return {
+      addressClicked: false,
       resetSave: false,
       commonKey: 0,
       customDuration: '50',
@@ -604,6 +606,7 @@ export default {
       }
     },
     changeAddressData(value) {
+      this.removeSearchAddress(true)
       if (value === ' ' || value === '') {
         this.resetSave = !this.resetSave
         this.addresslineMessage = this.$t('Messages.Error.ThisFieldRequired')
@@ -611,6 +614,21 @@ export default {
         this.addresslineMessage = ''
       }
       this.venueAddress.AddressLine = value
+    },
+    focusOut() {
+      this.addressClicked = false
+    },
+    removeSearchAddress(isAddressClicked) {
+      if (isAddressClicked) {
+        this.addressClicked = true
+      }
+      setTimeout(() => {
+        Object.values(
+          document.getElementsByClassName('pac-container pac-logo')
+        ).map((i) => {
+          i.style.display = 'none'
+        })
+      }, 1000)
     },
     getAddressData(addressData, placeResultData, id) {
       this.venueAddress.AddressLine =
