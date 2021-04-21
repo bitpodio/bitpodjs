@@ -896,8 +896,6 @@ export default {
               this.registration.SessionListId,
               ['StartDate']
             )
-            debugger
-
             if (
               this.registration &&
               this.registration.SessionListId &&
