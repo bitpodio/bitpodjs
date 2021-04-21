@@ -1046,8 +1046,12 @@ export default {
     videoEventClick() {
       this.videoSrc =
         `${this.$config.rtmpLink}${this.event.UniqLink}.m3u8` || ''
+      if (this.modalObject && this.modalObject.opened_) {
+        this.modalObject.close()
+      }
       this.playLive()
       this.sessionName = this.event.name || ''
+      this.$router.push(`${this.$route.path}?watch=${this.event.id}`)
     },
     videoTileClick(item) {
       this.videoSrc =
