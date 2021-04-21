@@ -1,8 +1,14 @@
 <template>
   <div>
-    <iframe
+    <!-- <iframe
       id="signature-app"
       src="https://signature.zapto.org"
+      width="100%"
+      @load="sendData"
+    /> -->
+    <iframe
+      id="signature-app"
+      src="http://localhost:8080"
       width="100%"
       @load="sendData"
     />
@@ -29,11 +35,14 @@ export default {
           recepientList: data.allRecepients.map((item) => item.id),
           recepientSignature: data.defaultSign,
           handlebarsData: data.handlebarsData,
+          declineSign: data.declineSign,
           requestID: data.request.id,
           emailSubject: data.request.Subject,
-          emailText: data.request.EmailText,
+          senderEmail: data.request.SenderEmail,
+          hostUrl: this.$bitpod.getApiUrl(),
         }
         try {
+          console.log(bitpodURL)
           console.log({ patchData }, bitpodURL)
           const signRecepientResponse = await this.$axios.$patch(
             bitpodURL,

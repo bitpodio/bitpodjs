@@ -1,4 +1,5 @@
 import eSignRequestList from '../gql/eSignRequest.gql'
+import { getData } from '~/config/apps/event/rest'
 import contactList from '~/config/apps/event/gql/contactList.gql'
 
 export default {
@@ -150,6 +151,85 @@ export default {
       hidden: true,
       title: 'Contacts',
       defaultSort: 'createdDate DESC',
+    },
+    eSignRequestRecepients: {
+      ui: {
+        hideDefaultHeader: false,
+        hideDefaultFooter: false,
+        showExpand: false,
+        singleExpand: false,
+        showSelect: true,
+        hideFilter: false,
+        hideSearch: true,
+      },
+      default: true,
+      fields: {
+        FullName: {
+          displayOrder: 1,
+          caption: 'Common.FullName',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '250px',
+          type: 'string',
+        },
+        type: {
+          displayOrder: 2,
+          caption: 'Common.TypeCaption',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '250px',
+          type: 'string',
+        },
+        Email: {
+          displayOrder: 3,
+          caption: 'Common.EmailCaption',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+        },
+        Status: {
+          displayOrder: 4,
+          caption: 'Common.Status',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+        },
+      },
+      template: {
+        name: '',
+        context: {
+          basePath: '',
+        },
+        actions: {
+          new: {
+            hidden: true,
+          },
+          edit: {
+            hidden: true,
+          },
+          delete: {
+            hidden: true,
+          },
+          exportCsv: {
+            hidden: true,
+          },
+        },
+      },
+      dataSource: {
+        singularEntity: 'Common.Speaker',
+        pluralEntity: 'Common.Speakers',
+        model: 'ESignRequest',
+        type: 'rest',
+        getData: (ctx, isExporting = false) =>
+          getData(
+            `ESIGNREQUESTS/${ctx.$route.params.id}/Recepient`,
+            isExporting
+          ),
+      },
+      title: 'E-Sign-Request',
+      type: 'list',
     },
   },
 }

@@ -6,6 +6,11 @@ query($filters: JSON, $where: JSON) {
           id
           DocumentText
           DocumentTemplate
+          Subject
+          SenderName
+          SenderEmail
+          ReplyTo
+          EmailText
           createdDate
           createdBy
           __typename
