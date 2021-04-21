@@ -190,7 +190,6 @@
                     :required="true"
                     @placechanged="getAddressData"
                     @change="changeAddressData($event)"
-                    @blur="focusOut"
                   ></vue-google-autocomplete>
                 </no-ssr>
                 <div
@@ -606,7 +605,6 @@ export default {
       }
     },
     changeAddressData(value) {
-      this.removeSearchAddress(true)
       if (value === ' ' || value === '') {
         this.resetSave = !this.resetSave
         this.addresslineMessage = this.$t('Messages.Error.ThisFieldRequired')
@@ -614,9 +612,7 @@ export default {
         this.addresslineMessage = ''
       }
       this.venueAddress.AddressLine = value
-    },
-    focusOut() {
-      this.addressClicked = false
+      this.removeSearchAddress(true)
     },
     removeSearchAddress(isAddressClicked) {
       if (isAddressClicked) {
@@ -625,8 +621,8 @@ export default {
       setTimeout(() => {
         Object.values(
           document.getElementsByClassName('pac-container pac-logo')
-        ).map((i) => {
-          i.style.display = 'none'
+        ).forEach((i) => {
+          i.remove()
         })
       }, 1000)
     },
