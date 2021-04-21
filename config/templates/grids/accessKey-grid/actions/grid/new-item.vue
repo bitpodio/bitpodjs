@@ -10,7 +10,7 @@
       content-class="slide-form-default"
     >
       <template v-slot:activator="{ on, attrs }">
-        <v-btn text small v-bind="attrs" v-on="on" @click="dialog = true">
+        <v-btn text small v-bind="attrs" v-on="on" @click="onNew">
           <v-icon left>mdi-plus</v-icon> <i18n path="Common.New" />
         </v-btn>
       </template>
@@ -30,10 +30,10 @@
         </v-card-title>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-form
+            id="new-accessKey-form"
             ref="form"
             v-model="valid"
             :lazy-validation="lazy"
-            id="new-accessKey-form"
             @submit.prevent="onSave"
           >
             <v-row>
@@ -72,6 +72,8 @@
 </template>
 
 <script>
+import { postGaData } from '~/utility/index.js'
+
 export default {
   props: {
     refresh: {
@@ -118,14 +120,20 @@ export default {
     },
   },
   methods: {
+    onNew() {
+      this.dialog = true
+      postGaData('New', this.$t('Common.CreateAccessKey'))
+    },
     onReset() {
       this.$refs.form.reset()
     },
     onClose() {
       this.$refs.form.reset()
       this.dialog = false
+      postGaData('Close', this.$t('Common.CreateAccessKey'))
     },
     async onSave() {
+      postGaData(this.$t('Drawer.Save'), this.$t('Common.CreateAccessKey'))
       if (this.valid) {
         const url = this.$bitpod.getApiUrl()
         this.formData.expiresat = this.accessKeyDate

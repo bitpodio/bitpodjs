@@ -110,6 +110,7 @@ import event from '~/config/apps/event/gql/event.gql'
 import eventCount from '~/config/apps/event/gql/eventCount.gql'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import { formatGQLResult } from '~/utility/gql.js'
+import { postGaData } from '~/utility/index.js'
 import SaveButton from '~/components/common/saveButton'
 
 export default {
@@ -147,6 +148,13 @@ export default {
       return `https://${this.$config.axios.eventUrl}/e/${this.formData.UniqLink}`
     },
   },
+  watch: {
+    valid(newVal) {
+      if (newVal) {
+        postGaData('Edit', this.$t('Common.EditEventSettings'))
+      }
+    },
+  },
   async mounted() {
     try {
       const res = await this.getDropDownData('EventPrivacy')
@@ -171,7 +179,6 @@ export default {
       )
     }
   },
-
   methods: {
     eventLinkLabel() {
       return `${this.$bitpod.getApiUrl().replace('svc/api', 'e')}`
@@ -196,8 +203,10 @@ export default {
     close() {
       this.$emit('update:eventSetting', false)
       this.onReset()
+      postGaData('Close', this.$t('Common.EditEventSettings'))
     },
     async onSave() {
+      postGaData(this.$t('Drawer.Save'), this.$t('Common.EditEventSettings'))
       this.formData.Currency = this.currency
       this.formData.Privacy = this.privacy
       const url = this.$bitpod.getApiUrl()

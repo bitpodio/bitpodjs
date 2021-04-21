@@ -411,6 +411,7 @@ import { rules } from '~/utility/rules.js'
 import event from '~/config/apps/event/gql/event.gql'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import { formatGQLResult } from '~/utility/gql.js'
+import { postGaData } from '~/utility/index.js'
 import Timezone from '~/components/common/form/timezone'
 import SaveBtn from '~/components/common/saveButton'
 import File from '~/components/common/form/file.vue'
@@ -605,6 +606,7 @@ export default {
     },
     getQuestions() {
       this.dialog = true
+      postGaData('Edit', this.$t('Common.EditEvent'))
     },
     outsideClicked() {
       this.$refs.dateTimeComponent.okHandler()
@@ -649,6 +651,7 @@ export default {
       //   this.$emit('update:eventForm', false)
       //   this.onReset()
       this.dialog = false
+      postGaData('Close', this.$t('Common.EditEvent'))
     },
     getAddressData(addressData, placeResultData, id) {
       this.addressClicked = true
@@ -679,6 +682,7 @@ export default {
       }
     },
     async onSave() {
+      postGaData(this.$t('Drawer.Save'), this.$t('Common.EditEvent'))
       const url = this.$bitpod.getApiUrl()
       this.formData.Tags = this.tags
       this.formData.StartDate = this.StartDate

@@ -86,6 +86,7 @@ import { formatGQLResult } from '~/utility/gql.js'
 import organization from '~/config/apps/admin/gql/organization.gql'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import SaveButton from '~/components/common/saveButton'
+import { postGaData } from '~/utility/index.js'
 
 export default {
   components: {
@@ -113,6 +114,13 @@ export default {
       currency: [],
     }
   },
+  watch: {
+    valid(newVal) {
+      if (newVal) {
+        postGaData('Edit', this.$t('Common.EditOrganizationSetting'))
+      }
+    },
+  },
   async mounted() {
     try {
       const res = await this.getDropDownData('Currency')
@@ -136,8 +144,13 @@ export default {
     onClose() {
       this.$emit('update:editOrgSetting', false)
       this.onReset()
+      postGaData('Close', this.$t('Common.EditOrganizationSetting'))
     },
     async onSave() {
+      postGaData(
+        this.$t('Drawer.Save'),
+        this.$t('Common.EditOrganizationSetting')
+      )
       const url = this.$bitpod.getApiUrl()
       this.formData.Currency = this.currency
       try {

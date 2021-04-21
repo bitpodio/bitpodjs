@@ -85,6 +85,7 @@ import gql from 'graphql-tag'
 import { rules } from '~/utility/rules.js'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
+import { postGaData } from '~/utility/index.js'
 import SaveButton from '~/components/common/saveButton'
 
 export default {
@@ -114,10 +115,18 @@ export default {
       },
     }
   },
+  watch: {
+    valid(newVal) {
+      if (newVal) {
+        postGaData('Edit', this.$t('Common.EditSeoDetails'))
+      }
+    },
+  },
   methods: {
     close() {
       this.$emit('update:seoForm', false)
       this.onReset()
+      postGaData('Close', this.$t('Common.EditSeoDetails'))
     },
     onReset() {
       this.seoData.SEOTitle = ''
@@ -126,6 +135,7 @@ export default {
       this.AutoUpdateSEOElements = ''
     },
     async onSave() {
+      postGaData(this.$t('Drawer.Save'), this.$t('Common.EditSeoDetails'))
       delete this.formData._VenueAddress
       this.formData.SEOTitle = this.seoTitle
       try {

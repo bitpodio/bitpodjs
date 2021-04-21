@@ -60,10 +60,10 @@
                 </v-col>
               </v-row>
               <v-form
+                id="new-singleEvent-tab1-form"
                 ref="eventPart1Form"
                 v-model="valid"
                 :lazy-validation="lazy"
-                id="new-singleEvent-tab1-form"
                 @submit.prevent="next()"
               >
                 <v-row>
@@ -131,10 +131,10 @@
           <v-tab-item :value="'2'">
             <v-card flat>
               <v-form
-                v-model="valid"
-                ref="webinarLinkForm"
-                :lazy-validation="lazy"
                 id="new-singleEvent-tab2-form"
+                ref="webinarLinkForm"
+                v-model="valid"
+                :lazy-validation="lazy"
                 @submit.prevent="next()"
               >
                 <v-row>
@@ -317,9 +317,9 @@
           <v-tab-item :value="'3'">
             <v-card v-if="isTicket" flat>
               <v-form
+                :id="formName"
                 v-model="valid"
                 :lazy-validation="lazy"
-                :id="formName"
                 @submit.prevent="submitForm"
               >
                 <p>
@@ -585,6 +585,7 @@ import orgInfoLocationType from '~/config/apps/event/gql/orgInfoLocationType.gql
 import { formatGQLResult } from '~/utility/gql.js'
 import nuxtconfig from '~/nuxt.config'
 import { rules } from '~/utility/rules.js'
+import { postGaData } from '~/utility/index.js'
 import SaveBtn from '~/components/common/saveButton'
 
 export default {
@@ -825,6 +826,11 @@ export default {
       const ticket = this.ticketDefaultData()
       this.tickets = [ticket]
     },
+    valid(newVal) {
+      if (newVal) {
+        postGaData('New', this.$t('Drawer.CreateEventAction'))
+      }
+    },
   },
 
   methods: {
@@ -902,6 +908,7 @@ export default {
       this.onFormClose()
       this.tabs = '1'
       this.resetForm()
+      postGaData('Close', this.$t('Drawer.CreateEventAction'))
     },
     closeForm() {
       this.onFormClose()
@@ -1183,6 +1190,7 @@ export default {
       }
     },
     async saveRecord() {
+      postGaData(this.$t('Drawer.Save'), this.$t('Drawer.CreateEventAction'))
       const isValidTicket = this.tickets.map((ticket, index) => {
         return (
           ticket.Code !== '' &&

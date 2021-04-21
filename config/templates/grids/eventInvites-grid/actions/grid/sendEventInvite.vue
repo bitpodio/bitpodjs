@@ -829,6 +829,7 @@ import CustomDate from '~/components/common/form/date.vue'
 import SaveBtn from '~/components/common/saveButton'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin, getIdFromAtob } from '~/utility'
+import { postGaData } from '~/utility/index.js'
 import marketingTemplates from '~/config/apps/admin/gql/marketingTemplates.gql'
 export default {
   components: {
@@ -978,6 +979,11 @@ export default {
         }
       }
     },
+    dialog(newVal) {
+      if (newVal) {
+        postGaData('New', this.$t('Common.NewEmailInvite'))
+      }
+    },
   },
   mounted() {
     this.$eventBus.$on('itemSelected', this.updateSelectedList)
@@ -1096,6 +1102,7 @@ export default {
         this.scheduledTime = ''
         this.scheduleInvite = false
       }
+      postGaData('Close', this.$t('Common.NewEmailInvite'))
     },
     previousInviteSelect(data) {
       if (data && data.length) {
@@ -1116,6 +1123,13 @@ export default {
       return this.templateItems.find((i) => i.Body === this.RTEValue)
     },
     sendNow(type) {
+      const buttonLabel =
+        type === 'Schedule'
+          ? this.$t('Drawer.Schedule')
+          : type === 'Draft'
+          ? this.$t('Common.SaveAsDraft')
+          : this.$t('Drawer.Send')
+      postGaData(buttonLabel, this.$t('Common.NewEmailInvite'))
       const url = this.$bitpod.getApiUrl()
       this.disableButton = true
       const exceptionURL = `${url}CRMACTIVITIES`

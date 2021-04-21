@@ -218,6 +218,7 @@ import eventSession from '~/config/apps/event/gql/eventSession.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import { getIdFromAtob } from '~/utility'
+import { postGaData } from '~/utility/index.js'
 import SaveBtn from '~/components/common/saveButton'
 
 export default {
@@ -318,6 +319,11 @@ export default {
     updateForm() {
       this.$apollo.queries.data.refresh()
     },
+    valid(newVal) {
+      if (newVal) {
+        postGaData('Edit', this.$t('Common.EditRegistration'))
+      }
+    },
   },
   methods: {
     async eventChange(eventId, isReg) {
@@ -364,6 +370,7 @@ export default {
       this.isSessionLoading = false
     },
     close() {
+      postGaData('Close', this.$t('Common.EditRegistration'))
       this.regData = { ...this.regDetails }
       if (this.regDetails._CurrentAddress) {
         this.venueAddress = {}
@@ -375,6 +382,7 @@ export default {
       this.$apollo.queries.data.refresh()
     },
     async onSave() {
+      postGaData(this.$t('Drawer.Save'), this.$t('Common.EditRegistration'))
       delete this.regData.__typename
       if (this.regData._Refund === null) {
         delete this.regData._Refund

@@ -30,10 +30,10 @@
         </v-card-title>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-form
+            :id="formName"
             ref="form"
             v-model="valid"
             :lazy-validation="lazy"
-            :id="formName"
             @submit.prevent="submitForm"
           >
             <v-row>
@@ -129,6 +129,7 @@ import eventTicket from '~/config/apps/event/gql/eventTickets.gql'
 import SaveBtn from '~/components/common/saveButton'
 import { formatGQLResult } from '~/utility/gql.js'
 import { getIdFromAtob } from '~/utility'
+import { postGaData } from '~/utility/index.js'
 import { rules } from '~/utility/rules.js'
 export default {
   components: {
@@ -181,6 +182,13 @@ export default {
       )
     },
   },
+  watch: {
+    dialog(newVal) {
+      if (newVal) {
+        postGaData('New', this.$t('Common.NewQuestion'))
+      }
+    },
+  },
   mounted() {
     this.getDropDownData('ControlType')
       .then((res) => {
@@ -222,8 +230,10 @@ export default {
     onClose() {
       this.dialog = false
       this.onReset()
+      postGaData('Close', this.$t('Common.NewQuestion'))
     },
     async onSave() {
+      postGaData(this.$t('Drawer.Save'), this.$t('Common.NewQuestion'))
       this.formData.ControlType = this.controlType
       this.formData.DisplayOrder = parseInt(this.formData.DisplayOrder)
       if (
