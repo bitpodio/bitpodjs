@@ -3,15 +3,15 @@
     <v-navigation-drawer
       v-model="drawer"
       app
-      class="greybg d-block d-sm-none session-nav"
+      class="greybg d-none d-sm-none session-nav"
       :width="260"
       :right="$vuetify.rtl"
     >
-      <v-list class="d-block d-sm-none mt-10">
+      <v-list class="d-none d-sm-none mt-10">
         <v-list-item-group v-model="group">
           <v-list-item
             v-if="event && event.locationType === 'Bitpod Virtual'"
-            class="xs12 sm4 md4 lg4 boxviewsmall pa-3 my-1 mx-0 py-2 session-view-in"
+            class="xs12 sm4 md4 lg4 boxviewsmall pa-3 my-0 mx-0 py-1 session-view-in"
             :class="{
               selected:
                 `${$config.rtmpLink}${event.UniqLink}.m3u8` === videoSrc,
@@ -62,6 +62,11 @@
                     event.locationType === 'Bitpod Virtual' &&
                     event.BusinessType === 'Single'
                   "
+                  class="mobile-view-btn"
+                  :class="{
+                    selectedMobile:
+                      `${$config.rtmpLink}${event.UniqLink}.m3u8` === videoSrc,
+                  }"
                 >
                   <v-btn
                     class="mt-2 mr-0 isLive"
@@ -73,12 +78,12 @@
                     <i18n path="Common.Live" />
                   </v-btn>
                   <v-btn
-                    class="mt-2 mr-0 isWatchig"
-                    depressed
+                    icon
+                    class="mt-2 mr-0 isWathcing ismobile"
                     x-small
                     :disabled="isPast"
                   >
-                    <i18n path="Common.Watching" />
+                    <v-icon>fa-eye</v-icon>
                   </v-btn>
                 </div>
                 <div class="text-right fs-18 pt-2 event-view-tile">
@@ -92,12 +97,12 @@
       <v-list
         v-for="item in registration.SessionListId"
         :key="item.id"
-        class="d-block d-sm-none mt-10"
+        class="d-none d-sm-none"
       >
         <v-list-item-group v-model="group">
           <v-list-item
             v-if="item.LocationType === 'Bitpod Virtual'"
-            class="xs12 sm4 md4 lg4 boxviewsmall pa-3 my-1 mx-0 py-2 session-view-in"
+            class="xs12 sm4 md4 lg4 boxviewsmall pa-3 mt-0 mx-0 py-1 session-view-in"
             :class="{
               selected:
                 `${$config.rtmpLink}${
@@ -154,6 +159,13 @@
                     item.LocationType === 'Bitpod Virtual' &&
                     event.BusinessType === 'Single'
                   "
+                  class="mobile-view-btn"
+                  :class="{
+                    selectedMobile:
+                      `${$config.rtmpLink}${
+                        item.BitpodVirtualLink.split('/')[3]
+                      }.m3u8` === videoSrc,
+                  }"
                 >
                   <v-btn
                     class="mt-2 mr-0 isLive"
@@ -211,7 +223,7 @@
           size="24"
           height="36px"
           width="36px"
-          class="ml-0 ml-md-2 mr-2 mr-md-3 d-flex d-sm-none"
+          class="ml-0 ml-md-2 mr-2 mr-md-3 d-none d-sm-none"
           @click.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
         <span class="logo-ds d-none d-sm-flex">
@@ -239,7 +251,9 @@
       <v-flex class="public-main public-info pa-0 pa-sm-5">
         <v-flex d-flex flex-md-row flex-lg-row flex-column>
           <v-flex column class="flex-70 mr-0 mr-md-2">
-            <v-flex class="d-flex justify-center align-center pb-5 vs-hidden">
+            <v-flex
+              class="d-flex justify-center align-center pb-md-5 pb-xs-0 vs-hidden"
+            >
               <h2 class="body-1 pb-0">
                 <i class="fa fa-black-board pr-1" aria-hidden="true"></i>
                 <i18n path="Common.Sessions" />
@@ -296,7 +310,7 @@
                 </div>
               </div>
             </div>
-            <div class="pa-5 pa-sm-0">
+            <div class="pa-2 pl-sm-0 pa-sm-5">
               <div class="text-h5 text-capitalize">
                 {{ formatField(registration.EventName) }}
               </div>
@@ -320,8 +334,8 @@
               </v-flex>
             </div>
           </v-flex>
-          <v-flex column class="flex-30 pl-3">
-            <div class="d-none d-sm-block">
+          <v-flex column class="flex-30 pl-3 pr-sm-0 pr-3">
+            <div>
               <div
                 v-if="
                   registration &&
@@ -329,13 +343,7 @@
                   registration.EventList.BusinessType === 'Single'
                 "
               >
-                <div
-                  v-if="
-                    registration &&
-                    registration.SessionListId &&
-                    registration.SessionListId.length
-                  "
-                >
+                <div>
                   <div
                     class="xs12 sm4 md4 lg4 boxviewsmall pa-0 mb-0 mx-0 mr-0 pb-2"
                   >
@@ -396,9 +404,17 @@
                           </v-list-item-avatar>
 
                           <v-list-item-content>
-                            <v-list-item-title class="text-capitalize">{{
-                              event && event.name
-                            }}</v-list-item-title>
+                            <v-tooltip bottom>
+                              <template v-slot:activator="{ on, attrs }">
+                                <v-list-item-title
+                                  class="text-capitalize"
+                                  v-bind="attrs"
+                                  v-on="on"
+                                  >{{ event && event.name }}</v-list-item-title
+                                >
+                              </template>
+                              <span>{{ event && event.name }}</span>
+                            </v-tooltip>
                             <div
                               v-if="event && event.startDateTime"
                               class="mt-1"
@@ -438,10 +454,7 @@
                               <div
                                 class="text-right fs-18 pt-2 event-view-tile"
                               >
-                                <i
-                                  aria-hidden="true"
-                                  class="fa fa-star red--text"
-                                ></i>
+                                <i aria-hidden="true" class="fa fa-star"></i>
                               </div>
                             </div>
                           </v-list-item-icon>
@@ -501,9 +514,18 @@
                           </v-list-item-avatar>
 
                           <v-list-item-content>
-                            <v-list-item-title class="text-capitalize">{{
-                              item.Name
-                            }}</v-list-item-title>
+                            <v-tooltip bottom>
+                              <template v-slot:activator="{ on, attrs }">
+                                <v-list-item-title
+                                  class="text-capitalize"
+                                  v-bind="attrs"
+                                  v-on="on"
+                                  >{{ item.Name }}</v-list-item-title
+                                >
+                              </template>
+                              <span>{{ item.Name }}</span>
+                            </v-tooltip>
+
                             <div v-if="item.StartDate" class="mt-1">
                               <v-list-item-subtitle class="session-date">
                                 {{
@@ -921,6 +943,24 @@ export default {
                 )
               }
             }
+            if (this.registration && this.registration.EventName) {
+              let selectedEventVideo = ''
+              if (this.$route.query.watch) {
+                selectedEventVideo = this.registration.EventId
+              } else {
+                this.$router.push(
+                  `${this.$route.path}?watch=${this.registration.EventId}`
+                )
+                this.videoSrc =
+                  `${this.$config.rtmpLink}${this.registration.EventList.UniqLink}.m3u8?autoplay=1` ||
+                  ''
+                this.sessionName = this.registration.EventName
+              }
+              if (selectedEventVideo) {
+                this.videoSrc = `${this.$config.rtmpLink}${selectedEventVideo.UniqLink}.m3u8?autoplay=1`
+                this.sessionName = selectedEventVideo.EventName
+              }
+            }
             result.attendee.map((i) => {
               if (!this.attendeeData[i.TicketName]) {
                 this.attendeeData[i.TicketName] = {
@@ -1004,8 +1044,12 @@ export default {
     videoEventClick() {
       this.videoSrc =
         `${this.$config.rtmpLink}${this.event.UniqLink}.m3u8` || ''
+      if (this.modalObject && this.modalObject.opened_) {
+        this.modalObject.close()
+      }
       this.playLive()
       this.sessionName = this.event.name || ''
+      this.$router.push(`${this.$route.path}?watch=${this.event.id}`)
     },
     videoTileClick(item) {
       this.videoSrc =
@@ -1276,9 +1320,18 @@ export default {
 }
 .event-view-tile {
   position: relative;
-  right: -5px;
+  right: 0;
   bottom: -10px;
   color: #6a6a6a !important;
+}
+.mobile-view-btn .isWathcing {
+  display: none;
+}
+.mobile-view-btn.selectedMobile .isWathcing {
+  display: inline-block;
+}
+.mobile-view-btn.selectedMobile .isLive {
+  display: none;
 }
 @media screen and (max-width: 600px) {
   .background-event-img {
