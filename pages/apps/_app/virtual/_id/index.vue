@@ -1268,6 +1268,9 @@ export default {
 .isWatchig {
   display: none;
 }
+.isLive {
+  display: none !important;
+}
 .selected .isWatchig {
   display: inline-block;
 }
@@ -1336,9 +1339,6 @@ export default {
 }
 .mobile-view-btn.selectedMobile .isLive {
   display: none;
-}
-.isLive {
-  display: none !important;
 }
 @media screen and (max-width: 600px) {
   .background-event-img {
