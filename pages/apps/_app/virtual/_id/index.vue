@@ -1337,6 +1337,9 @@ export default {
 .mobile-view-btn.selectedMobile .isLive {
   display: none;
 }
+.isLive {
+  display: none !important;
+}
 @media screen and (max-width: 600px) {
   .background-event-img {
     display: none;
