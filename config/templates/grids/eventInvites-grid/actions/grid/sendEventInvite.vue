@@ -906,6 +906,7 @@ export default {
       templateObject: '',
       isFrench: false,
       emailSubject: '',
+      cloneObj: [],
     }
   },
   computed: {
@@ -1064,6 +1065,7 @@ export default {
         })
       )
       this.selectedList = data
+      this.cloneObj = data
     },
     content() {
       return this.contents ? this.contents.Contacts : null
@@ -1073,8 +1075,15 @@ export default {
     },
     updateList(data) {
       if (this.editDraft) {
-        const index = data.length
-        this.selectedList.push(data[index - 1])
+        this.selectedList = []
+        this.selectedList = data
+        if (this.cloneObj.length > 0) {
+          this.cloneObj.forEach((ele) => {
+            this.selectedList.push(ele)
+          })
+
+          this.cloneObj = []
+        }
       } else {
         this.selectedList = data
       }
