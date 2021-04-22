@@ -278,7 +278,9 @@
                       :poster="liveStreamBannerUrl"
                     ></video>
                     <div class="pa-2">
-                      <h2 class="white--text">{{ sessionName }}</h2>
+                      <h2 class="white--text text-capitalize">
+                        {{ sessionName }}
+                      </h2>
                     </div>
                   </div>
                 </div>
