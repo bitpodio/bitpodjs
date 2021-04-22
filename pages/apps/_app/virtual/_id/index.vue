@@ -278,7 +278,9 @@
                       :poster="liveStreamBannerUrl"
                     ></video>
                     <div class="pa-2">
-                      <h2 class="white--text">{{ sessionName }}</h2>
+                      <h2 class="white--text text-capitalize">
+                        {{ sessionName }}
+                      </h2>
                     </div>
                   </div>
                 </div>
@@ -784,6 +786,7 @@ export default {
   },
   mounted() {
     this.getRegistrationData()
+    this.getEventData()
     this.initDarkMode()
     this.playLive()
   },
@@ -1004,6 +1007,7 @@ export default {
           if (res) {
             this.event = res.result
             this.eventImage = true
+            this.videoEventClick()
             if (this.event.BusinessType === 'Single') {
               this.isPast =
                 new Date().getTime() >
@@ -1263,6 +1267,9 @@ export default {
 }
 .isWatchig {
   display: none;
+}
+.isLive {
+  display: none !important;
 }
 .selected .isWatchig {
   display: inline-block;
