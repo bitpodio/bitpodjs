@@ -784,6 +784,7 @@ export default {
   },
   mounted() {
     this.getRegistrationData()
+    this.getEventData()
     this.initDarkMode()
     this.playLive()
   },
@@ -1004,6 +1005,7 @@ export default {
           if (res) {
             this.event = res.result
             this.eventImage = true
+            this.videoEventClick()
             if (this.event.BusinessType === 'Single') {
               this.isPast =
                 new Date().getTime() >
