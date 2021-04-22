@@ -1670,7 +1670,9 @@ export default {
       otherFileId: '',
       isMakeCopy: false,
       data: {
-        event: {},
+        event: {
+          HasTickets: true,
+        },
         badge: {},
         eventSummary: {},
       },
