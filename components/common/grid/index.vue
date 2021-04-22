@@ -1205,7 +1205,7 @@ export default {
       this.selectedItems = []
     },
     unselectAllRecord(viewName) {
-      if (viewName === this.viewName) {
+      if (viewName === this.viewName || viewName === 'inviteeEventTasks') {
         this.selectedItems = []
       }
     },
