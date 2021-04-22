@@ -1075,7 +1075,6 @@ export default {
     },
     updateList(data) {
       if (this.editDraft) {
-        this.selectedList = []
         this.selectedList = data
         if (this.cloneObj.length > 0) {
           this.cloneObj.forEach((ele) => {
