@@ -346,7 +346,7 @@
     "RegisteredOn": "Registered on {date}",
     "EnterEventName": "Enter event name and details to help your audience learn about your event, add details that highlights why someone should attend it.",
     "SetupEventTickets": "Setup event tickets and price, you can also set tickets validity so early birds can be offered better pricing.",
-    "AddTickets": "Add Tickets",
+    "AddTickets": "Add Ticket",
     "Title": "Title*",
     "Type": "Type*",
     "Price": "Price {currency}",

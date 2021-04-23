@@ -346,7 +346,7 @@
     "RegisteredOn": "Enregistra le {date}",
     "EnterEventName": "Entrez le nom de l'événement et les détails pour aider votre public à en savoir plus sur votre événement, ajoutez des détails qui mettent en évidence les raisons pour lesquelles quelqu'un devrait y assister.",
     "SetupEventTickets": "Configurez les tickets d'événement et le prix, vous pouvez également définir la validité des tickets pour que les premiers oiseaux puissent se voir offrir une meilleure tarification.",
-    "AddTickets": "Ajouter des tickets",
+    "AddTickets": "Ajouter un ticket",
     "Title": "Titre *",
     "Type": "Type *",
     "Price": "Prix {currency}",
