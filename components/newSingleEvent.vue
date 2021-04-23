@@ -328,7 +328,7 @@
                 <div class="d-flex align-center flex-wrap">
                   <v-btn
                     :disabled="!eventData.HasTickets"
-                    class="ma-2 ml-0 mb-3 mr-3"
+                    class="ma-2 ml-0 mb-3 mr-8"
                     outlined
                     color="indigo"
                     @click="addTicketRow"
