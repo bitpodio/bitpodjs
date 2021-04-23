@@ -145,8 +145,8 @@ export default {
       default: false,
     },
     context: {
-      type: null,
-      default: null,
+      type: Object,
+      default: () => {},
     },
   },
   data() {
@@ -188,6 +188,7 @@ export default {
     },
   },
   mounted() {
+    debugger
     this.getDropDownData('ControlType')
       .then((res) => {
         this.controlTypeDropDown = res.map((i) => i.value)
