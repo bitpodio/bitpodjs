@@ -1,4 +1,5 @@
 import eSignRequestList from '../gql/eSignRequest.gql'
+import eSignTaskList from '~/config/apps/event/gql/eventTasks.gql'
 import { getData } from '~/config/apps/event/rest'
 import contactList from '~/config/apps/event/gql/contactList.gql'
 
@@ -152,7 +153,7 @@ export default {
       title: 'Contacts',
       defaultSort: 'createdDate DESC',
     },
-    eSignRequestRecepients: {
+    eSignRequestRecipients: {
       ui: {
         hideDefaultHeader: false,
         hideDefaultFooter: false,
@@ -198,7 +199,7 @@ export default {
         },
       },
       template: {
-        name: '',
+        name: 'eRequestRecipients-grid',
         context: {
           basePath: '',
         },
@@ -224,11 +225,204 @@ export default {
         type: 'rest',
         getData: (ctx, isExporting = false) =>
           getData(
-            `ESIGNREQUESTS/${ctx.$route.params.id}/Recepient`,
+            `ESIGNREQUESTS/${ctx.$route.params.id}/Recipient`,
             isExporting
           ),
       },
       title: 'E-Sign-Request',
+      type: 'list',
+    },
+    eSignTasks: {
+      ui: {
+        hideDefaultHeader: false,
+        hideDefaultFooter: false,
+        showExpand: false,
+        singleExpand: false,
+        showSelect: false,
+        hideFilter: true,
+        hideSearch: true,
+      },
+      itemTitle: 'Common.Task',
+      hidden: true,
+      fields: {
+        Title: {
+          form: {
+            caption: 'Common.Title',
+            displayOrder: 1,
+          },
+          displayOrder: 2,
+          caption: 'Common.TitleCaption',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+          cssClasses: 'col-12 col-md-12',
+          hidden: false,
+          inlineEdit: true,
+          newForm: true,
+          editForm: true,
+        },
+        Category: {
+          form: {
+            caption: 'Common.CategoryRequired',
+            displayOrder: 2,
+          },
+          displayOrder: 5,
+          caption: 'Common.Category',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'lookup',
+          cssClasses: 'col-6 col-md-6',
+          hidden: false,
+          inlineEdit: true,
+          newForm: true,
+          editForm: true,
+        },
+        Status: {
+          form: {
+            caption: 'Common.StatusRequired',
+            displayOrder: 3,
+          },
+          displayOrder: 3,
+          caption: 'Common.Status',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'lookup',
+          cssClasses: 'col-6 col-md-6',
+          hidden: false,
+          inlineEdit: true,
+          newForm: true,
+          editForm: true,
+        },
+        Action: {
+          form: {
+            caption: 'Action *',
+            displayOrder: 4,
+          },
+          displayOrder: 4,
+          caption: 'Common.WaitFor',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'lookup',
+          cssClasses: 'col-6 col-md-6',
+          hidden: false,
+          inlineEdit: true,
+          newForm: true,
+          editForm: true,
+        },
+        DueDate: {
+          form: {
+            caption: 'DueDate *',
+            displayOrder: 4,
+          },
+          displayOrder: 7,
+          caption: 'Common.DueDate',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'datetime',
+          hidden: false,
+          inlineEdit: true,
+          newForm: true,
+          editForm: true,
+        },
+        Type: {
+          displayOrder: 6,
+          caption: 'Common.TypeCaption',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+          cssClasses: 'col-12 col-md-12',
+          hidden: false,
+          inlineEdit: true,
+          newForm: false,
+          editForm: false,
+        },
+        createdDate: {
+          displayOrder: 8,
+          caption: 'Common.CreatedDate',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'datetime',
+          cssClasses: 'col-12 col-md-12',
+          hidden: false,
+          inlineEdit: true,
+          newForm: false,
+          editForm: false,
+        },
+        createdBy: {
+          displayOrder: 9,
+          caption: 'Common.CreatedBy',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+          cssClasses: 'col-12 col-md-12',
+          hidden: false,
+          inlineEdit: true,
+          newForm: false,
+          editForm: false,
+        },
+        TemplateName: {
+          displayOrder: 10,
+          caption: 'Common.TemplateNameCaption',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '170px',
+          type: 'string',
+          cssClasses: 'col-12 col-md-12',
+          hidden: false,
+          inlineEdit: true,
+          newForm: false,
+          editForm: false,
+        },
+      },
+      template: {
+        // name: '',
+        name: '',
+        context: {
+          // basePath: '/event',
+          basePath: '',
+        },
+        actions: {
+          new: {
+            hidden: true,
+          },
+          edit: {
+            hidden: true,
+          },
+          delete: {
+            hidden: true,
+          },
+          exportCsv: {
+            hidden: true,
+          },
+          filter: {
+            hidden: true,
+          },
+        },
+      },
+      dataSource: {
+        singularEntity: 'Common.Task',
+        pluralEntity: 'Common.Tasks',
+        query: eSignTaskList,
+        defaultSort: 'createdDate DESC',
+        type: 'graphql',
+        model: 'CRMActivity',
+        filter(ctx) {
+          return {
+            where: {
+              and: [{ ESignRequestId: ctx.$route.params.id }],
+            },
+          }
+        },
+      },
+      title: 'eSignTasks',
       type: 'list',
     },
   },

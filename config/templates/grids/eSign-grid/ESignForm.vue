@@ -47,17 +47,17 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-dialog v-model="addNewRecepientFormDialog" persistent max-width="600px">
+    <v-dialog v-model="addNewRecipientFormDialog" persistent max-width="600px">
       <v-card>
         <v-card-title>
-          <span class="headline"><i18n path="Common.AddRecepient" /></span>
+          <span class="headline"><i18n path="Common.AddRecipient" /></span>
         </v-card-title>
         <v-card-text>
           <v-container>
             <v-row>
               <v-col cols="12">
                 <v-text-field
-                  v-model="addNewRecepientFormName"
+                  v-model="addNewRecipientFormName"
                   label="Name*"
                   outlined
                   required
@@ -65,7 +65,7 @@
               </v-col>
               <v-col cols="12">
                 <v-text-field
-                  v-model="addNewRecepientFormEmail"
+                  v-model="addNewRecipientFormEmail"
                   label="Email*"
                   outlined
                   required
@@ -80,9 +80,9 @@
             depressed
             @click="
               {
-                addNewRecepientFormName = ''
-                addNewRecepientFormEmail = ''
-                addNewRecepientFormDialog = false
+                addNewRecipientFormName = ''
+                addNewRecipientFormEmail = ''
+                addNewRecipientFormDialog = false
               }
             "
           >
@@ -93,7 +93,7 @@
             class="sendButtons"
             :reset="toggleLoading"
             :label="this.$t('Drawer.Send')"
-            :action="handleAddNewRecepientForm"
+            :action="handleAddNewRecipientForm"
           ></SaveBtn>
         </v-card-actions>
       </v-card>
@@ -123,7 +123,7 @@
                 <i18n path="Common.Template" />
               </v-tab>
               <v-tab :disabled="curentTab < 1" class="px-0 mr-4">
-                <i18n path="Common.Recepients" />
+                <i18n path="Common.Recipients" />
               </v-tab>
               <v-tab :disabled="curentTab < 2" class="px-0 mr-4">
                 <i18n path="Common.EmailInfo" />
@@ -302,7 +302,7 @@
               <v-tab-item class="tabContent">
                 <v-card flat>
                   <p class="mt-5 mb-4">
-                    <i18n path="Common.SelectRecepients" />
+                    <i18n path="Common.SelectRecipients" />
                   </p>
                 </v-card>
                 <v-row>
@@ -312,7 +312,7 @@
                         <thead>
                           <tr>
                             <th class="text-left pl-2 pl-md-0">
-                              Recepient Type*
+                              Recipient Type*
                             </th>
                             <th class="text-left pl-2 mxw-150">
                               Contact*
@@ -320,7 +320,7 @@
                             <th class="text-left"></th>
                           </tr>
                         </thead>
-                        <tbody v-if="toggleRecepientLoading">
+                        <tbody v-if="toggleRecipientLoading">
                           <td width="20%" class="pa-2 pb-0 pl-2 pl-md-0">
                             <v-skeleton-loader
                               type="list-item@4"
@@ -365,7 +365,7 @@
                               <v-btn
                                 icon
                                 class="mt-1"
-                                @click="addRecepientFormOpen(index)"
+                                @click="addRecipientFormOpen(index)"
                               >
                                 <v-icon>fa-plus</v-icon>
                               </v-btn>
@@ -543,7 +543,7 @@
                           >fa-address-book-o</v-icon
                         >
                         <h4 class="mt-1 body-1">
-                          <i18n path="Common.RecepientDetail" />
+                          <i18n path="Common.RecipientDetail" />
                         </h4>
                       </v-flex>
                     </div>
@@ -620,27 +620,27 @@ export default {
       addNewTemplateFormDialog: false,
       addNewTemplateFormName: '',
       addNewTemplateFormURL: '',
-      addNewRecepientFormDialog: false,
-      addNewRecepientFormName: '',
-      addNewRecepientFormEmail: '',
+      addNewRecipientFormDialog: false,
+      addNewRecipientFormName: '',
+      addNewRecipientFormEmail: '',
       disableTab: true,
       postEsignRequestData: {},
       contactLoaded: false,
       contactList: [],
-      selectedRecepient: {},
+      selectedRecipient: {},
       selectedParty: '',
       documentText: '',
       parties: [],
       toggleLoading: false,
-      toggleRecepientLoading: true,
-      newRecepientIndex: 0,
+      toggleRecipientLoading: true,
+      newRecipientIndex: 0,
     }
   },
   computed: {
     disableNext() {
       if (this.templateSelected === false) return true
       else if (this.curentTab === 1) {
-        if (this.toggleRecepientLoading === true) return true
+        if (this.toggleRecipientLoading === true) return true
         for (const item of this.selectedList) {
           if (item.Email === '' || item.FullName === '') return true
         }
@@ -759,7 +759,7 @@ export default {
           Name: this.addNewTemplateFormName,
           DocumentUrl: this.addNewTemplateFormURL,
         }
-        this.toggleRecepientLoading = true
+        this.toggleRecipientLoading = true
         const bitpodURL = `${this.$bitpod.getApiUrl()}ESIGNTEMPLATES`
         try {
           const response = await this.$axios.$post(
@@ -788,41 +788,41 @@ export default {
         this.addNewTemplateFormDialog = false
       }
     },
-    async handleAddNewRecepientForm() {
+    async handleAddNewRecipientForm() {
       if (
-        this.addNewRecepientFormName.length < 2 ||
-        this.addNewRecepientFormEmail.length < 5
+        this.addNewRecipientFormName.length < 2 ||
+        this.addNewRecipientFormEmail.length < 5
       ) {
         this.snackbar = true
         this.snackbarText = 'Please fill out all fields'
         this.toggleLoading = !this.toggleLoading
         return
       }
-      const addNewRecepientFormObject = {
-        FullName: this.addNewRecepientFormName,
-        Email: this.addNewRecepientFormEmail,
+      const addNewRecipientFormObject = {
+        FullName: this.addNewRecipientFormName,
+        Email: this.addNewRecipientFormEmail,
       }
       const bitpodURL = `${this.$bitpod.getApiUrl()}/Contacts`
       try {
         const response = await this.$axios.$post(
           bitpodURL,
-          addNewRecepientFormObject
+          addNewRecipientFormObject
         )
         if (response) {
           const signObject = {
-            ...this.selectedList[this.newRecepientIndex],
+            ...this.selectedList[this.newRecipientIndex],
             FullName: response.FullName,
             Email: response.Email,
           }
           this.contactList.push(signObject)
           this.$set(
             this.selectedListNewContacts,
-            this.newRecepientIndex,
+            this.newRecipientIndex,
             signObject
           )
-          this.$set(this.selectedList, this.newRecepientIndex, signObject)
-          this.addNewRecepientFormName = ''
-          this.addNewRecepientFormEmail = ''
+          this.$set(this.selectedList, this.newRecipientIndex, signObject)
+          this.addNewRecipientFormName = ''
+          this.addNewRecipientFormEmail = ''
           this.selectedParty = ''
         }
       } catch (err) {
@@ -831,11 +831,11 @@ export default {
         console.error(err)
       }
       this.toggleLoading = !this.toggleLoading
-      this.addNewRecepientFormDialog = false
+      this.addNewRecipientFormDialog = false
     },
-    addRecepientFormOpen(index) {
-      this.newRecepientIndex = index
-      this.addNewRecepientFormDialog = true
+    addRecipientFormOpen(index) {
+      this.newRecipientIndex = index
+      this.addNewRecipientFormDialog = true
     },
     async getExistingTemplate() {
       const bitpodURL = `${this.$bitpod.getApiUrl()}ESIGNTEMPLATES`
@@ -850,7 +850,7 @@ export default {
       }
     },
     selectSignTemplate(item) {
-      this.toggleRecepientLoading = true
+      this.toggleRecipientLoading = true
       this.curentTab = 1
       this.choosedTemplate = 0
       this.templateSelected = true
@@ -883,7 +883,7 @@ export default {
           this.selectedListNewContacts.push({ FullName: '', Email: '' })
         })
         console.log(this.selectedList)
-        this.toggleRecepientLoading = false
+        this.toggleRecipientLoading = false
       } catch (err) {
         console.error(err)
       }

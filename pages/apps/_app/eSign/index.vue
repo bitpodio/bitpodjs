@@ -28,12 +28,12 @@ export default {
       if (event.data && event.data.type === 'signInfo') {
         const data = event.data
         console.log(data)
-        const bitpodURL = `${this.$bitpod.getApiUrl()}ESIGNRECEPIENTS/updateESignRecepientStatus`
+        const bitpodURL = `${this.$bitpod.getApiUrl()}ESIGNRECIPIENTS/updateESignRecipientStatus`
         const patchData = {
-          recepientID: data.recepient.id,
-          ESignStoreID: data.recepient.ESignStoreID,
-          recepientList: data.allRecepients.map((item) => item.id),
-          recepientSignature: data.defaultSign,
+          recipientID: data.recipient.id,
+          ESignStoreId: data.recipient.ESignStoreId,
+          recipientList: data.allRecipients.map((item) => item.id),
+          recipientSignature: data.defaultSign,
           handlebarsData: data.handlebarsData,
           declineSign: data.declineSign,
           requestID: data.request.id,
@@ -44,12 +44,12 @@ export default {
         try {
           console.log(bitpodURL)
           console.log({ patchData }, bitpodURL)
-          const signRecepientResponse = await this.$axios.$patch(
+          const signRecipientResponse = await this.$axios.$patch(
             bitpodURL,
             patchData
           )
-          if (signRecepientResponse) {
-            console.log(signRecepientResponse)
+          if (signRecipientResponse) {
+            console.log(signRecipientResponse)
           }
         } catch (err) {
           console.error(err)
@@ -59,9 +59,9 @@ export default {
     async sendData() {
       console.log('Loaded')
       const queryParams = this.$route.query
-      const bitpodURL = `${this.$bitpod.getApiUrl()}ESIGNRECEPIENTS/eSignDocumentForRecipient?requestID=${
+      const bitpodURL = `${this.$bitpod.getApiUrl()}ESIGNRECIPIENTS/eSignDocumentForRecipient?requestID=${
         queryParams.requestID
-      }&recepientID=${queryParams.recepientID}`
+      }&recipientID=${queryParams.recipientID}`
       try {
         const response = await this.$axios.$get(bitpodURL)
         if (response) {

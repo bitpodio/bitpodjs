@@ -27,10 +27,7 @@
             :elevation="hover ? 1 : 0"
             class="ma-3 ma-md-10 ml-0 mt-0 ml-md-0 mt-md-0 seat-maps"
           >
-            <nuxt-link
-              :to="`/apps/eSign/eSign/${item.id}`"
-              class="text-decoration-none"
-            >
+            <nuxt-link :to="eSignRoutes(item.id)" class="text-decoration-none">
               <v-card-text
                 class="font-weight-medium text-center positionRelative subtitle-1 seat-card pb-0"
               >
@@ -128,6 +125,9 @@ export default {
   methods: {
     handleNewTemplate() {
       this.dialog = true
+    },
+    eSignRoutes(id) {
+      return this.localePath(`/apps/eSign/eSign/${id}`)
     },
   },
 }

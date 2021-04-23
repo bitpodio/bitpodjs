@@ -7,7 +7,9 @@ query($filters: JSON, $where: JSON) {
           DocumentText
           DocumentTemplate
           Subject
+          Status
           SenderName
+          SignedDocument
           SenderEmail
           ReplyTo
           EmailText

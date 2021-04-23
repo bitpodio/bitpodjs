@@ -218,7 +218,9 @@ export default {
     getLink(id) {
       const url = this.$bitpod.getApiUrl()
       return `${url}${this.modelName}/${this.$route.params.id}/${
-        this.modelName === 'Events' ? 'Comments' : 'Comment'
+        this.modelName === 'Events' || this.modelName === 'ESIGNREQUESTS'
+          ? 'Comments'
+          : 'Comment'
       }/${id || ''}`
     },
     uploaded(data) {
