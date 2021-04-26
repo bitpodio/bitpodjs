@@ -6,15 +6,17 @@
       class="nav-bar greybg"
       :width="280"
     >
-      <div class="text-center mt-4">
+    <div class="d-block d-sm-none my-3">
         <v-menu>
           <template v-slot:activator="{ on, attrs }">
             <v-btn
               v-bind="attrs"
+              outlined
+              small
               color="primary"
-              dark
               depressed
-              class="ma-3 block wd-full my-0 mb-1 ml-n4"
+              :disabled="allowUser"
+              class="mx-3 wd-full"
               v-on="on"
             >
               <i18n path="Drawer.CreateEventAction" />
@@ -22,7 +24,12 @@
           </template>
 
           <v-list dense>
-            <v-list-item @click="dialog1 = !dialog1">
+            <v-list-item
+              @click="
+                triggerReset = !triggerReset
+                dialog1 = !dialog1
+              "
+            >
               <v-list-item-icon class="mr-2">
                 <v-icon class="fs-16 mr-2">fa-calendar</v-icon>
               </v-list-item-icon>
@@ -32,7 +39,62 @@
                 /></v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-            <v-list-item @click="dialog = !dialog">
+            <v-list-item
+              @click="
+                triggerRecEventReset = !triggerRecEventReset
+                dialog = !dialog
+              "
+            >
+              <v-list-item-icon class="mr-2">
+                <v-icon class="fs-16 mr-2">fa-history</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title
+                  ><i18n path="Drawer.RecurringEventAction"
+                /></v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      </div><div class="d-block d-sm-none my-3">
+        <v-menu>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              v-bind="attrs"
+              outlined
+              small
+              color="primary"
+              depressed
+              :disabled="allowUser"
+              class="mx-3 wd-full"
+              v-on="on"
+            >
+              <i18n path="Drawer.CreateEventAction" />
+            </v-btn>
+          </template>
+
+          <v-list dense>
+            <v-list-item
+              @click="
+                triggerReset = !triggerReset
+                dialog1 = !dialog1
+              "
+            >
+              <v-list-item-icon class="mr-2">
+                <v-icon class="fs-16 mr-2">fa-calendar</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title
+                  ><i18n path="Drawer.SingleEventAction"
+                /></v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item
+              @click="
+                triggerRecEventReset = !triggerRecEventReset
+                dialog = !dialog
+              "
+            >
               <v-list-item-icon class="mr-2">
                 <v-icon class="fs-16 mr-2">fa-history</v-icon>
               </v-list-item-icon>
