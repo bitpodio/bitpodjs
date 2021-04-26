@@ -1,5 +1,8 @@
 <template>
   <v-flex class="greybg seatmap-inner">
+    <div class="fs-18 min-h36 mt-3 ml-2">
+      <i18n path="Common.Integration" />
+    </div>
     <div v-for="c in Category" :key="c">
       <div class="mx-2 my-5">{{ c }}</div>
       <div class="d-flex flex-wrap ml-2 mt-5">
