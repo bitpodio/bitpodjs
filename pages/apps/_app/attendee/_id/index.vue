@@ -222,9 +222,7 @@
                                 :disabled="isPast"
                                 @click="startEvent(item.id, true)"
                               >
-                                <i18n path="Common.StartSession" /><v-icon
-                                  right
-                                >
+                                <i18n path="Common.JoinSession" /><v-icon right>
                                   mdi-video
                                 </v-icon>
                               </v-btn>
@@ -240,7 +238,7 @@
                                   color="success"
                                   :disabled="isPast"
                                 >
-                                  <i18n path="Common.StartSession" /><v-icon
+                                  <i18n path="Common.JoinSession" /><v-icon
                                     right
                                   >
                                     mdi-video
@@ -371,7 +369,7 @@
                                     color="success"
                                     :disabled="isPast"
                                   >
-                                    <i18n path="Common.StartSession" /><v-icon
+                                    <i18n path="Common.JoinSession" /><v-icon
                                       right
                                     >
                                       mdi-video
@@ -402,7 +400,7 @@
                                     color="success"
                                     :disabled="isPast"
                                   >
-                                    <i18n path="Common.StartSession" /><v-icon
+                                    <i18n path="Common.JoinSession" /><v-icon
                                       right
                                     >
                                       mdi-video
@@ -827,9 +825,9 @@
                   outlined
                   color="success"
                   :disabled="isPast"
-                  @click="startEvent(event.UniqLink)"
+                  @click="startEvent(event.UniqLink, true)"
                 >
-                  <i18n path="Common.StartEvent" /><v-icon right>
+                  <i18n path="Common.JoinEvent" /><v-icon right>
                     mdi-video
                   </v-icon>
                 </v-btn>
@@ -851,7 +849,7 @@
                       :disabled="isPast"
                       color="success"
                     >
-                      <i18n path="Common.StartEvent" /><v-icon right>
+                      <i18n path="Common.JoinEvent" /><v-icon right>
                         mdi-video
                       </v-icon>
                     </v-btn></a

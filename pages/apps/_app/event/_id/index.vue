@@ -1071,6 +1071,7 @@
           <Grid
             view-name="eventRegistrationQuestion"
             :content="content"
+            :context="data"
             class="mt-n12"
           />
         </div>
@@ -1670,7 +1671,9 @@ export default {
       otherFileId: '',
       isMakeCopy: false,
       data: {
-        event: {},
+        event: {
+          HasTickets: true,
+        },
         badge: {},
         eventSummary: {},
       },
@@ -1844,7 +1847,7 @@ export default {
     },
     goLive() {
       window.open(
-        `apps/event/live/${this.$store.state.currentOrg.name}-${this.eventData.UniqLink}?e=${this.$route.params.id}&n=${this.eventData.Title}&o=${this.eventData.chatChannel}`
+        `apps/event/live/${this.$store.state.currentOrg.name}-${this.eventData.UniqLink}?e=${this.$route.params.id}&n=${this.eventData.Title}&o=${this.eventData.chatChannel}&p=${this.$config.rtmpURL}${this.eventData.UniqLink}`
       )
     },
     openPrintForm() {

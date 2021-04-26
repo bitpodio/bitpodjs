@@ -63,7 +63,7 @@ export default {
           (this.item.BitpodVirtualLink &&
             this.item.BitpodVirtualLink.split('/')[3]) ||
           'undefined'
-        this.link = `apps/event/live/${roomName}?e=${this.$route.params.id}&n=${this.item.Name}`
+        this.link = `apps/event/live/${roomName}?e=${this.$route.params.id}&n=${this.item.Name}&p=${this.$config.rtmpURL}${roomName}`
         this.copyLink = `https://${this.$config.integrationLinks.BITOPD_VIRTUAL_LINK}/${roomName}`
       } else if (this.item.LocationType === 'Online event') {
         this.link = this.item.WebinarLink || ''

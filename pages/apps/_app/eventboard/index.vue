@@ -161,29 +161,31 @@
           <h3 class="font-weight-regular pb-2">
             <i18n path="Common.10DaysTicketsSale" />
           </h3>
-          <div
-            v-if="!ticketSoldLoaded || !ticketSoldReady"
-            class="rounded white elevation-2 chartHeight positionRelative"
-          >
+          <div class="rounded white elevation-2 chartHeight">
             <div
-              v-for="i in 5"
-              :key="i"
-              class="mx-14 borderBottomGrey dummyChart"
-            ></div>
-          </div>
-          <div
-            class="elevation-2 rounded overflowHidden"
-            :class="{
-              visiblityNone: !(ticketSoldLoaded && ticketSoldReady),
-            }"
-          >
-            <GChart
-              type="LineChart"
-              :data="ticketSaleData"
-              :options="ticketSalechartOptions"
-              :resize-debounce="100"
-              :events="lineChartEvents"
-            />
+              v-if="!ticketSoldLoaded || !ticketSoldReady"
+              class="rounded chartHeight positionRelative"
+            >
+              <div
+                v-for="i in 5"
+                :key="i"
+                class="mx-14 borderBottomGrey dummyChart"
+              ></div>
+            </div>
+            <div
+              class="rounded overflowHidden"
+              :class="{
+                visiblityNone: !(ticketSoldLoaded && ticketSoldReady),
+              }"
+            >
+              <GChart
+                type="LineChart"
+                :data="ticketSaleData"
+                :options="ticketSalechartOptions"
+                :resize-debounce="100"
+                :events="lineChartEvents"
+              />
+            </div>
           </div>
         </v-col>
         <v-col class="col-12 col-sm-6 col-md-4 parentWidth">
@@ -282,181 +284,194 @@
           <h3 class="font-weight-regular pb-2">
             <i18n path="Common.InvitationsConversionByEvent" />
           </h3>
-          <div
-            v-if="!conversionLoaded || !conversionReady"
-            class="rounded white elevation-2 chartHeight"
-          >
+          <div class="rounded white elevation-2 chartHeight">
             <div
-              v-for="i in 5"
-              :key="i"
-              class="mx-14 borderBottomGrey dummyChart"
-            ></div>
-          </div>
-          <div
-            class="elevation-2 rounded overflowHidden"
-            :class="{
-              visiblityNone: !(conversionLoaded && conversionReady),
-            }"
-          >
-            <GChart
-              type="BubbleChart"
-              :data="conversionBubbleData"
-              :options="conversionBubbleOptions"
-              :resize-debounce="100"
-              :events="bubbleChartEvents"
-            />
+              v-if="!conversionLoaded || !conversionReady"
+              class="rounded chartHeight"
+            >
+              <div
+                v-for="i in 5"
+                :key="i"
+                class="mx-14 borderBottomGrey dummyChart"
+              ></div>
+            </div>
+            <div
+              class="rounded overflowHidden"
+              :class="{
+                visiblityNone: !(conversionLoaded && conversionReady),
+              }"
+            >
+              <GChart
+                type="BubbleChart"
+                :data="conversionBubbleData"
+                :options="conversionBubbleOptions"
+                :resize-debounce="100"
+                :events="bubbleChartEvents"
+              />
+            </div>
           </div>
         </v-col>
         <v-col class="col-12 col-sm-6 col-md-4 parentWidth">
           <h3 class="font-weight-regular pb-2">
             <i18n path="Common.SaleByGeoLocation" />
           </h3>
-          <div
-            v-if="!geoLocationLoaded || !geoLocationReady"
-            class="rounded white elevation-2 chartHeight"
-          >
-            <v-img
-              src="https://res.cloudinary.com/mytestlogo/image/upload/v1574258140/GeoChartBlank_cde6u6.png"
-              lazy-src="https://res.cloudinary.com/mytestlogo/image/upload/v1574258140/GeoChartBlank_cde6u6.png"
-              aspect-ratio="1"
-              min-height="316"
-              max-height="316"
-              contain
+          <div class="rounded white elevation-2 chartHeight">
+            <div
+              v-if="!geoLocationLoaded || !geoLocationReady"
+              class="rounded chartHeight"
             >
-            </v-img>
+              <v-img
+                src="https://res.cloudinary.com/mytestlogo/image/upload/v1574258140/GeoChartBlank_cde6u6.png"
+                lazy-src="https://res.cloudinary.com/mytestlogo/image/upload/v1574258140/GeoChartBlank_cde6u6.png"
+                aspect-ratio="1"
+                min-height="316"
+                max-height="316"
+                contain
+              >
+              </v-img>
+            </div>
+            <div
+              class="rounded overflowHidden"
+              :class="{
+                visiblityNone: !(geoLocationLoaded && geoLocationReady),
+              }"
+            >
+              <GChart
+                type="GeoChart"
+                :data="geoLocationData"
+                :options="geoLocationOptions"
+                :resize-debounce="100"
+                :events="geoChartEvents"
+                :settings="{ packages: ['geochart'] }"
+              />
+            </div>
           </div>
-          <div
-            class="elevation-2 rounded overflowHidden"
-            :class="{
-              visiblityNone: !(geoLocationLoaded && geoLocationReady),
-            }"
-          >
-            <GChart
-              type="GeoChart"
-              :data="geoLocationData"
-              :options="geoLocationOptions"
-              :resize-debounce="100"
-              :events="geoChartEvents"
-              :settings="{ packages: ['geochart'] }"
-            /></div
-        ></v-col>
+        </v-col>
         <v-col class="col-12 col-sm-6 col-md-4 parentWidth">
           <h3 class="font-weight-regular pb-2">
             <i18n path="Common.TicketsSold" />
           </h3>
-          <div
-            v-if="!pieLoaded || !pieReady"
-            class="rounded white elevation-2 chartHeight"
-          >
-            <div class="pt-11 positionRelative text-center">
-              <div class="pt-15 holeWrapper">
-                <div class="pieHole white d-inline-block rounded-circle"></div>
+          <div class="rounded white elevation-2 chartHeight">
+            <div v-if="!pieLoaded || !pieReady" class="rounded chartHeight">
+              <div class="pt-11 positionRelative text-center">
+                <div class="pt-15 holeWrapper">
+                  <div
+                    class="pieHole white d-inline-block rounded-circle"
+                  ></div>
+                </div>
+                <div class="pie-dummy rounded-circle mx-auto"></div>
               </div>
-              <div class="pie-dummy rounded-circle mx-auto"></div>
+            </div>
+            <div
+              class="rounded overflowHidden"
+              :class="{
+                visiblityNone: !(pieLoaded && pieReady),
+              }"
+            >
+              <GChart
+                type="PieChart"
+                :data="pieChartData"
+                :options="pieChartOptions"
+                :resize-debounce="100"
+                :events="pieChartEvents"
+              />
             </div>
           </div>
-          <div
-            class="elevation-2 rounded overflowHidden"
-            :class="{
-              visiblityNone: !(pieLoaded && pieReady),
-            }"
-          >
-            <GChart
-              type="PieChart"
-              :data="pieChartData"
-              :options="pieChartOptions"
-              :resize-debounce="100"
-              :events="pieChartEvents"
-            /></div
-        ></v-col>
+        </v-col>
       </v-row>
       <v-row>
         <v-col class="col-12 col-sm-6 col-md-4 parentWidth">
           <h3 class="font-weight-regular pb-2">
             <i18n path="Common.InvitationsConversionTrend" />
           </h3>
-          <div
-            v-if="!conversionTrendLoaded || !conversionTrendReady"
-            class="rounded white elevation-2 chartHeight"
-          >
+          <div class="rounded white elevation-2 chartHeight">
             <div
-              v-for="i in 5"
-              :key="i"
-              class="mx-14 borderBottomGrey dummyChart"
-            ></div>
-          </div>
-          <div
-            class="elevation-2 rounded overflowHidden"
-            :class="{
-              visiblityNone: !(conversionTrendLoaded && conversionTrendReady),
-            }"
-          >
-            <GChart
-              type="AreaChart"
-              :data="conversionAreaData"
-              :options="conversionAreaOptions"
-              :resize-debounce="100"
-              :events="areaChartEvents"
-            />
+              v-if="!conversionTrendLoaded || !conversionTrendReady"
+              class="rounded chartHeight"
+            >
+              <div
+                v-for="i in 5"
+                :key="i"
+                class="mx-14 borderBottomGrey dummyChart"
+              ></div>
+            </div>
+            <div
+              class="rounded overflowHidden"
+              :class="{
+                visiblityNone: !(conversionTrendLoaded && conversionTrendReady),
+              }"
+            >
+              <GChart
+                type="AreaChart"
+                :data="conversionAreaData"
+                :options="conversionAreaOptions"
+                :resize-debounce="100"
+                :events="areaChartEvents"
+              />
+            </div>
           </div>
         </v-col>
         <v-col class="col-12 col-sm-6 col-md-4 parentWidth">
           <h3 class="font-weight-regular pb-2">
             <i18n path="Common.SessionsSold" />
           </h3>
-          <div
-            v-if="!sessionLoaded || !sessionReady"
-            class="rounded white elevation-2 chartHeight"
-          >
+          <div class="rounded white elevation-2 chartHeight">
             <div
-              v-for="i in 5"
-              :key="i"
-              class="mx-14 borderBottomGrey dummyChart"
-            ></div>
-          </div>
-          <div
-            class="elevation-2 rounded overflowHidden"
-            :class="{
-              visiblityNone: !(sessionLoaded && sessionReady),
-            }"
-          >
-            <GChart
-              type="LineChart"
-              :data="sessionSaleData"
-              :options="sessionSalechartOptions"
-              :resize-debounce="100"
-              :events="sessionlineChartEvents"
-            />
+              v-if="!sessionLoaded || !sessionReady"
+              class="rounded chartHeight"
+            >
+              <div
+                v-for="i in 5"
+                :key="i"
+                class="mx-14 borderBottomGrey dummyChart"
+              ></div>
+            </div>
+            <div
+              class="rounded overflowHidden"
+              :class="{
+                visiblityNone: !(sessionLoaded && sessionReady),
+              }"
+            >
+              <GChart
+                type="LineChart"
+                :data="sessionSaleData"
+                :options="sessionSalechartOptions"
+                :resize-debounce="100"
+                :events="sessionlineChartEvents"
+              />
+            </div>
           </div>
         </v-col>
         <v-col class="col-12 col-sm-6 col-md-4 parentWidth">
           <h3 class="font-weight-regular pb-2">
             <i18n path="Common.EventsTimeline" />
           </h3>
-          <div
-            v-if="!eventTimelineLoaded || !eventTimelineReady"
-            class="rounded white elevation-2 chartHeight"
-          >
+          <div class="rounded white elevation-2 chartHeight">
             <div
-              v-for="i in 5"
-              :key="i"
-              class="mx-14 borderBottomGrey dummyChart"
-            ></div>
-          </div>
-          <div
-            class="elevation-2 rounded overflowHidden white pa-6"
-            :class="{
-              visiblityNone: !(eventTimelineLoaded && eventTimelineReady),
-            }"
-          >
-            <GChart
-              type="Timeline"
-              :data="timelineData"
-              :options="timelineOptions"
-              :resize-debounce="100"
-              :events="timelineChartEvents"
-              :settings="{ packages: ['timeline'] }"
-            />
+              v-if="!eventTimelineLoaded || !eventTimelineReady"
+              class="rounded chartHeight"
+            >
+              <div
+                v-for="i in 5"
+                :key="i"
+                class="mx-14 borderBottomGrey dummyChart"
+              ></div>
+            </div>
+            <div
+              class="rounded overflowHidden white pa-6"
+              :class="{
+                visiblityNone: !(eventTimelineLoaded && eventTimelineReady),
+              }"
+            >
+              <GChart
+                type="Timeline"
+                :data="timelineData"
+                :options="timelineOptions"
+                :resize-debounce="100"
+                :events="timelineChartEvents"
+                :settings="{ packages: ['timeline'] }"
+              />
+            </div>
           </div>
         </v-col>
       </v-row>

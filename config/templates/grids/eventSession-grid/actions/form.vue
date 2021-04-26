@@ -186,7 +186,7 @@
                     ref="venueAddress.AddressLine"
                     v-model="venueAddress.AddressLine"
                     class="form-control pa-3 d-block rounded"
-                    placeholder="Address*"
+                    :placeholder="!addressClicked && $t('Common.Address')"
                     :required="true"
                     @placechanged="getAddressData"
                     @change="changeAddressData($event)"
@@ -338,6 +338,7 @@ export default {
   },
   data() {
     return {
+      addressClicked: false,
       resetSave: false,
       commonKey: 0,
       customDuration: '50',
@@ -611,6 +612,19 @@ export default {
         this.addresslineMessage = ''
       }
       this.venueAddress.AddressLine = value
+      this.removeSearchAddress(true)
+    },
+    removeSearchAddress(isAddressClicked) {
+      if (isAddressClicked) {
+        this.addressClicked = true
+      }
+      setTimeout(() => {
+        Object.values(
+          document.getElementsByClassName('pac-container pac-logo')
+        ).forEach((i) => {
+          i.remove()
+        })
+      }, 1000)
     },
     getAddressData(addressData, placeResultData, id) {
       this.venueAddress.AddressLine =

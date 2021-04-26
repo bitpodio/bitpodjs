@@ -146,8 +146,8 @@ export default {
       default: false,
     },
     context: {
-      type: null,
-      default: null,
+      type: Object,
+      default: () => {},
     },
   },
   data() {

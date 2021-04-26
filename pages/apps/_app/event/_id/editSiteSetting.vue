@@ -338,6 +338,11 @@ export default {
           `${url}/Templates?filter={"where":{"Name": {"inq": ["event", "Rhine", "Limmat", "Dark"]}}}`
         )
         this.formData = template.data
+        this.formData.forEach((ele, index) => {
+          if (ele.Name === this.eventData.RegistrationSiteTemplate) {
+            this.selectedItem = index
+          }
+        })
       } catch (e) {
         console.error(
           `Error while fetching templates from Templates model while making a GET request from getRegistrationSiteTemplates method context: \n url:${url} \n primeOrgId:${primeOrgId}`
@@ -481,13 +486,14 @@ export default {
         this.animation = this.sectionHeading.animation
         this.eventData = event.length > 0 ? { ...event[0] } : {}
         this.eventData.id = this.$route.params.id
-        this.setDefaultSelected()
+        if (
+          this.eventData.RegistrationSiteTemplate === '' ||
+          this.eventData.RegistrationSiteTemplate === null
+        ) {
+          this.setDefaultSelected()
+        }
         this.getRegistrationSiteTemplates()
-        this.formData.forEach((ele, index) => {
-          if (ele.Name === this.eventData.RegistrationSiteTemplate) {
-            this.selectedItem = index
-          }
-        })
+
         return {
           event: event.length > 0 ? event : {},
         }

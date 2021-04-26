@@ -748,6 +748,10 @@ table > tbody > tr:last-child .key-align {
 .invitee-tooltip.v-tooltip__content {
   margin-top: -10px;
 }
+.app-title-text {
+  font-size: 20px;
+  color: rgba(0, 0, 0, 0.60)
+}
 @media (min-width: 1904px) {
   .boxviewlarge .v-data-table__wrapper {
     margin-bottom: 0 !important;
