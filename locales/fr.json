@@ -798,7 +798,8 @@
     "StopReceiveMails": "Je ne voulais plus recevoir ces mails",
     "NeverSignedForMails": "Je ne me suis jamais inscrit à cette liste de diffusion",
     "TicketsNotRequiredToggle": "Cet événement ne nécessite pas de billets",
-    "SessionsNotAvailable": "Les sessions nécessitent des billets pour les événements"
+    "SessionsNotAvailable": "Les sessions nécessitent des billets pour les événements",
+    "Language": "Langue"
   },
   "Drawer": {
     "UnSubscribeMsg": "Veuillez sélectionner une raison pour vous désinscrire de la newsletter. Cela nous aidera à améliorer nos services.",
