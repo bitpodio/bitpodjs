@@ -799,7 +799,8 @@
     "StopReceiveMails": "I no longer wanted to receive these mails",
     "NeverSignedForMails": "I never signed up for this mailing list",
     "TicketsNotRequiredToggle": "This event does not require tickets",
-    "SessionsNotAvailable": "Sessions require events to be ticketed"
+    "SessionsNotAvailable": "Sessions require events to be ticketed",
+    "Language": "Language"
   },
   "Drawer": {
     "UnSubscribeMsg": "Please select a reason to unsubscribe from newsletter. This will help us to improve our services.",
