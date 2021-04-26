@@ -456,12 +456,16 @@ export default {
             this.orgName
           }`
         )
-        if (res && res[1].success === true) {
+        if (res && res[1] && res[1].success) {
           return res[1].data
         } else {
           this.resetBtn = !this.resetBtn
           this.statusMessage = ''
-          this.snackbarText = this.$t('Messages.Error.CreateOrgFailed')
+          if (res.error && res.error.status === 261) {
+            this.snackbarText = this.$t('Messages.Error.SetupExitCodeCatch')
+          } else {
+            this.snackbarText = this.$t('Messages.Error.CreateOrgFailed')
+          }
           this.snackbar = true
           this.tab = 1
           return false
