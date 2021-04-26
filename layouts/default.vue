@@ -6,14 +6,6 @@
       class="nav-bar greybg"
       :width="280"
     >
-      <div class="d-flex d-sm-none pl-3">
-        <span class="bitpod-logo logo-ds">
-          <v-img
-            :src="$config.cdnUri + 'bitpod-logo-blk2.svg'"
-            class="logofull mr-2"
-          ></v-img>
-        </span>
-      </div>
       <div class="text-center mt-4">
         <v-menu>
           <template v-slot:activator="{ on, attrs }">
@@ -137,10 +129,10 @@
           size="24"
           height="36px"
           width="36px"
-          class="ml-0 ml-md-2 mr-2 mr-md-3"
+          class="ml-0 mx-md-2 mr-0 d-inline d-sm-none"
           @click.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
-        <span class="bitpod-logo logo-ds d-none d-sm-flex">
+        <span class="bitpod-logo logo-ds px-3">
           <v-img
             :src="$config.cdnUri + 'bitpod-logo-blk2.svg'"
             class="logofull mr-2"
@@ -153,11 +145,59 @@
         <v-spacer></v-spacer>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
-        <v-icon>mdi-invert-colors</v-icon>
-      </v-btn>
+      <div class="d-none d-sm-flex">
+        <v-menu>
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              v-bind="attrs"
+              outlined
+              small
+              color="primary"
+              depressed
+              :disabled="allowUser"
+              class="mx-3"
+              v-on="on"
+            >
+              <i18n path="Drawer.CreateEventAction" />
+            </v-btn>
+          </template>
+
+          <v-list dense>
+            <v-list-item
+              @click="
+                triggerReset = !triggerReset
+                dialog1 = !dialog1
+              "
+            >
+              <v-list-item-icon class="mr-2">
+                <v-icon class="fs-16 mr-2">fa-calendar</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title
+                  ><i18n path="Drawer.SingleEventAction"
+                /></v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item
+              @click="
+                triggerRecEventReset = !triggerRecEventReset
+                dialog = !dialog
+              "
+            >
+              <v-list-item-icon class="mr-2">
+                <v-icon class="fs-16 mr-2">fa-history</v-icon>
+              </v-list-item-icon>
+              <v-list-item-content>
+                <v-list-item-title
+                  ><i18n path="Drawer.RecurringEventAction"
+                /></v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      </div>
       <AppDrawer />
-      <div v-if="$auth.$state.loggedIn">
+      <div v-if="$auth.$state.loggedIn" class="ml-3">
         <v-menu
           v-model="account"
           :close-on-content-click="false"
@@ -216,6 +256,7 @@
             <v-list-item>
               <OrgnaizationList />
             </v-list-item>
+            <Theme />
             <v-list dense class="pt-0">
               <v-list-item>
                 <v-btn text small color="primary" @click="onLogout">
@@ -261,11 +302,13 @@ import OrgnaizationList from '~/components/common/organization-list'
 import AppDrawer from '~/components/common/app-drawer'
 import Upgrade from '~/components/common/upgrade'
 import userUtils from '~/utility/userApps'
+import Theme from '~/components/common/theme'
 export default {
   components: {
     OrgnaizationList,
     AppDrawer,
     Upgrade,
+    Theme,
   },
   props: {
     source: { type: String, default: '' },

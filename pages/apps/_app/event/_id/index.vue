@@ -1071,6 +1071,7 @@
           <Grid
             view-name="eventRegistrationQuestion"
             :content="content"
+            :context="data"
             class="mt-n12"
           />
         </div>
