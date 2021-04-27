@@ -6,7 +6,7 @@
       class="nav-bar greybg"
       :width="280"
     >
-    <div class="d-block d-sm-none my-3">
+      <div class="d-block d-sm-none my-3">
         <v-menu>
           <template v-slot:activator="{ on, attrs }">
             <v-btn
@@ -56,7 +56,8 @@
             </v-list-item>
           </v-list>
         </v-menu>
-      </div><div class="d-block d-sm-none my-3">
+      </div>
+      <div class="d-block d-sm-none my-3">
         <v-menu>
           <template v-slot:activator="{ on, attrs }">
             <v-btn
