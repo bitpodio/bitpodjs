@@ -5,38 +5,43 @@
         {{ snackbarText }}
       </div>
     </v-snackbar>
-    <v-dialog v-model="addNewTemplateFormDialog" persistent max-width="600px">
-      <v-card>
-        <v-card-title>
-          <span class="headline"
-            ><i18n path="Common.CreateNewSignatureTemplate"
-          /></span>
-        </v-card-title>
-        <v-card-text>
-          <v-container>
-            <v-row>
-              <v-col cols="12">
-                <v-text-field
-                  v-model="addNewTemplateFormName"
-                  label="Name*"
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12">
-                <v-text-field
-                  v-model="addNewTemplateFormURL"
-                  label="Google Document URL*"
-                  required
-                ></v-text-field>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-card-text>
-        <v-card-actions>
+    <v-dialog v-model="addNewTemplateFormDialog" persistent max-width="60%">
+      <v-sheet>
+        <v-card-title
+          class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
+        >
+          <h2 class="black--text pt-5 pb-4 font-weight-regular text-h5">
+            <i18n path="Common.CreateNewSignatureTemplate" />
+          </h2>
           <v-spacer></v-spacer>
-          <v-btn depressed @click="addNewTemplateFormDialog = false">
-            <i18n path="Drawer.Close" />
-          </v-btn>
+          <div>
+            <v-btn icon @click="addNewTemplateFormDialog = false">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </div>
+        </v-card-title>
+        <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
+          <v-row>
+            <v-col cols="12" md="6" class="pb-0">
+              <v-text-field
+                v-model="addNewTemplateFormName"
+                :label="$t('Common.Name')"
+                required
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" md="6" class="pb-0">
+              <v-text-field
+                v-model="addNewTemplateFormURL"
+                label="Google Document URL*"
+                required
+              ></v-text-field>
+            </v-col>
+          </v-row>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions
+          class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
+        >
           <SaveBtn
             color="primary"
             class="sendButtons"
@@ -45,58 +50,75 @@
             :action="handleAddNewTemplateForm"
           ></SaveBtn>
         </v-card-actions>
-      </v-card>
+      </v-sheet>
     </v-dialog>
-    <v-dialog v-model="addNewRecipientFormDialog" persistent max-width="600px">
-      <v-card>
-        <v-card-title>
-          <span class="headline"><i18n path="Common.AddRecipient" /></span>
-        </v-card-title>
-        <v-card-text>
-          <v-container>
-            <v-row>
-              <v-col cols="12">
-                <v-text-field
-                  v-model="addNewRecipientFormName"
-                  label="Name*"
-                  outlined
-                  required
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12">
-                <v-text-field
-                  v-model="addNewRecipientFormEmail"
-                  label="Email*"
-                  outlined
-                  required
-                ></v-text-field>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-card-text>
-        <v-card-actions>
+    <v-dialog v-model="addNewRecipientFormDialog" persistent width="60%">
+      <v-sheet>
+        <v-card-title
+          class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
+        >
+          <h2 class="black--text pt-5 pb-4 font-weight-regular text-h5">
+            New Contact
+          </h2>
           <v-spacer></v-spacer>
-          <v-btn
-            depressed
-            @click="
-              {
-                addNewRecipientFormName = ''
-                addNewRecipientFormEmail = ''
-                addNewRecipientFormDialog = false
-              }
-            "
-          >
-            <i18n path="Drawer.Close" />
-          </v-btn>
+          <div>
+            <v-btn
+              icon
+              @click="
+                {
+                  addNewRecipientFormFirstName = ''
+                  addNewRecipientFormLastName = ''
+                  addNewRecipientFormName = ''
+                  addNewRecipientFormEmail = ''
+                  addNewRecipientFormDialog = false
+                }
+              "
+            >
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </div>
+        </v-card-title>
+        <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
+          <v-row>
+            <v-col cols="12" md="6" class="pb-0">
+              <v-text-field
+                v-model="addNewRecipientFormFirstName"
+                :label="$t('Common.FirstName')"
+                outlined
+                dense
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" md="6" class="pb-0">
+              <v-text-field
+                v-model="addNewRecipientFormLastName"
+                :label="$t('Common.LastName')"
+                outlined
+                dense
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" md="6" class="pb-0">
+              <v-text-field
+                v-model="addNewRecipientFormEmail"
+                :label="$t('Common.EnterEmail')"
+                outlined
+                dense
+              ></v-text-field>
+            </v-col>
+          </v-row>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions
+          class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
+        >
           <SaveBtn
             color="primary"
             class="sendButtons"
             :reset="toggleLoading"
-            :label="this.$t('Drawer.Send')"
+            :label="this.$t('Drawer.Save')"
             :action="handleAddNewRecipientForm"
           ></SaveBtn>
         </v-card-actions>
-      </v-card>
+      </v-sheet>
     </v-dialog>
     <v-dialog
       v-model="newTemplateDialog"
@@ -222,23 +244,16 @@
                           :elevation="hover ? 4 : 2"
                           class="ma-3 ml-0 mt-0 text-center"
                           :class="{ 'on-hover': hover }"
-                          height="250"
+                          height="150"
                           width="250"
                         >
                           <div class="pa-1">
-                            <!-- <v-img
-                              :src="$config.cdnUri + 'new-invitee-image.png'"
-                              class="grey lighten-2"
-                              min-height="200"
-                              max-height="200"
-                            >
-                            </v-img> -->
-                            <v-icon class="py-5" color="primary" size="168"
+                            <v-icon class="py-5" color="secondary" size="48"
                               >fa-document</v-icon
                             >
                           </div>
                           <div
-                            class="text-truncate text-center text-capitalize text-h5 pb-5"
+                            class="text-truncate text-center text-capitalize text-h5 pb-5 px-2"
                           >
                             {{ item.Name }}
                           </div>
@@ -249,15 +264,15 @@
                         >
                           <v-btn
                             class="my-2 mx-0"
-                            outlined
                             color="primary"
+                            outlined
                             @click="selectSignTemplate(item)"
                             ><i18n path="Common.Select"
                           /></v-btn>
                           <v-btn
                             class="ma-2"
-                            outlined
                             color="primary"
+                            outlined
                             :href="item.DocumentUrl"
                             target="_blank"
                             ><i18n path="Drawer.View"
@@ -326,7 +341,7 @@
                               type="list-item@4"
                             ></v-skeleton-loader>
                           </td>
-                          <td width="90%" class="pa-2 pb-0">
+                          <td width="60%" class="pa-2 pb-0">
                             <v-skeleton-loader
                               type="list-item@4"
                             ></v-skeleton-loader>
@@ -336,11 +351,12 @@
                           <tr
                             v-for="(item, index) in selectedList"
                             :key="index"
+                            class="contactsRow"
                           >
                             <td width="20%" class="pa-2 pb-0 pl-2 pl-md-0">
                               {{ item.type }}
                             </td>
-                            <td width="75%" class="pa-2 pb-0">
+                            <td width="60%" class="pa-2 pb-0">
                               <v-autocomplete
                                 v-model="selectedListNewContacts[index]"
                                 :items="contactList"
@@ -361,14 +377,21 @@
                                 </template>
                               </v-autocomplete>
                             </td>
-                            <td width="5%" class="pa-2 pt-3">
-                              <v-btn
-                                icon
-                                class="mt-1"
-                                @click="addRecipientFormOpen(index)"
-                              >
-                                <v-icon>fa-plus</v-icon>
-                              </v-btn>
+                            <td width="20%" class="pa-2 pt-3">
+                              <v-tooltip left>
+                                <template v-slot:activator="{ on, attrs }">
+                                  <v-btn
+                                    class="mt-1"
+                                    icon
+                                    v-bind="attrs"
+                                    v-on="on"
+                                    @click="addRecipientFormOpen(index)"
+                                  >
+                                    <v-icon color="primary">fa-plus</v-icon>
+                                  </v-btn>
+                                </template>
+                                <span>New Contact</span>
+                              </v-tooltip>
                             </td>
                           </tr>
                         </tbody>
@@ -419,20 +442,20 @@
                           ></v-text-field>
                         </v-col>
                         <v-col cols="12" class="pb-0">
-                          <v-text-field
+                          <v-textarea
                             v-model="message"
                             :label="$t('Common.Message')"
                             outlined
                             dense
-                          ></v-text-field>
+                          ></v-textarea>
                         </v-col>
                         <v-col cols="12" class="pb-0">
                           <v-icon class="amber--text">fa-bulb</v-icon>
                           <v-card-text class="d-inline pa-0">
                             {{
-                              $t('Common.YouMayReferInviteMembers', {
+                              $t('Common.YouMayReferRecipients', {
                                 contactTemplateData:
-                                  ' ${Registration.FirstName} ${Registration.LastName} ${OrganizationInfo.Name}',
+                                  ' ${Recipient.FullName} ${OrganizationInfo.Name}',
                               })
                             }}</v-card-text
                           >
@@ -621,6 +644,8 @@ export default {
       addNewTemplateFormName: '',
       addNewTemplateFormURL: '',
       addNewRecipientFormDialog: false,
+      addNewRecipientFormFirstName: '',
+      addNewRecipientFormLastName: '',
       addNewRecipientFormName: '',
       addNewRecipientFormEmail: '',
       disableTab: true,
@@ -790,7 +815,8 @@ export default {
     },
     async handleAddNewRecipientForm() {
       if (
-        this.addNewRecipientFormName.length < 2 ||
+        (this.addNewRecipientFormFirstName.length < 2 &&
+          this.addNewRecipientFormLastName.length < 2) ||
         this.addNewRecipientFormEmail.length < 5
       ) {
         this.snackbar = true
@@ -799,7 +825,8 @@ export default {
         return
       }
       const addNewRecipientFormObject = {
-        FullName: this.addNewRecipientFormName,
+        FirstName: this.addNewRecipientFormFirstName,
+        LastName: this.addNewRecipientFormLastName,
         Email: this.addNewRecipientFormEmail,
       }
       const bitpodURL = `${this.$bitpod.getApiUrl()}/Contacts`
@@ -808,6 +835,7 @@ export default {
           bitpodURL,
           addNewRecipientFormObject
         )
+        console.log(response)
         if (response) {
           const signObject = {
             ...this.selectedList[this.newRecipientIndex],
@@ -821,13 +849,18 @@ export default {
             signObject
           )
           this.$set(this.selectedList, this.newRecipientIndex, signObject)
-          this.addNewRecipientFormName = ''
+          this.addNewRecipientFormFirstName = ''
+          this.addNewRecipientFormLastName = ''
           this.addNewRecipientFormEmail = ''
           this.selectedParty = ''
         }
       } catch (err) {
         this.snackbar = true
         this.snackbarText = 'Request Failed'
+        this.addNewRecipientFormFirstName = ''
+        this.addNewRecipientFormLastName = ''
+        this.addNewRecipientFormEmail = ''
+        this.selectedParty = ''
         console.error(err)
       }
       this.toggleLoading = !this.toggleLoading
@@ -863,7 +896,7 @@ export default {
       this.subject = `Signature requested for ${item.Name}`
     },
     async getHTMLTemplate(documentUrl) {
-      const regExp = /{{ESign\.(\w+)}}/g
+      const regExp = /{{{ESign\.(\w+)[.[\w]+]?}}}/g
       try {
         const res = await this.$axios.get(documentUrl)
         this.documentText = res.data
@@ -896,8 +929,8 @@ export default {
   padding-right: 12px;
 }
 
-.contactsGrid:hover {
-  padding-right: 6px;
+.contactsRow:hover {
+  background-color: transparent !important;
 }
 
 .invite-inner {

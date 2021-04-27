@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-flex class="detailview-head mb-3 pl-8"
+    <v-flex class="detailview-head mb-3 pl-8 my-8"
       ><v-btn class="ml-n3 back-icon" icon @click="goBack"
         ><v-icon class="fs-30">mdi-chevron-left</v-icon> </v-btn
       ><v-text class="fs-18 min-h36">ESign Request</v-text></v-flex
@@ -12,7 +12,7 @@
         >
           <v-row>
             <v-col class="col-md-5 col-12 pt-0">
-              <v-card class="elevation-0 mt-n2">
+              <v-card class="elevation-0 my-2">
                 <v-list class="pt-0">
                   <v-list-item class="pl-0">
                     <v-list-item-avatar size="62">
@@ -29,13 +29,12 @@
                           {{ data.requestData.Subject }}
                         </h2>
                       </v-list-item-title>
-                      <v-list-item-subtitle>
+                      <v-list-item-subtitle class="pt-2">
                         <v-chip
-                          small
                           :class="{
-                            warning: data.requestData.Status === 'Pending',
-                            info: data.requestData.Status === 'Inprogress',
+                            warning: data.requestData.Status === 'Inprogress',
                             success: data.requestData.Status === 'Completed',
+                            error: data.requestData.Status === 'Declined',
                           }"
                         >
                           {{ data.requestData.Status }}</v-chip
@@ -45,62 +44,82 @@
                   </v-list-item>
                 </v-list>
               </v-card>
-              <div
-                v-if="
-                  data.requestData.SignedDocument &&
-                  data.requestData.SignedDocument.length > 0
-                "
-                class="py-2 d-inline-flex"
-              >
-                <v-icon class="fs-16 mr-2 success--text"
-                  >mdi-checkbox-marked-circle</v-icon
-                >
-                <a
-                  :href="
-                    getSignedDocumentUrl(data.requestData.SignedDocument[0])
-                  "
-                  class="text-truncate url-link"
-                  >{{
-                    getSignedDocumentUrl(
-                      data.requestData.SignedDocument[0]
-                    ).substr(0, 35) + '...'
-                  }}</a
-                >
-                <copy
-                  class="pl-2"
-                  :text-to-copy="
-                    getSignedDocumentUrl(data.requestData.SignedDocument[0])
-                  "
-                  icon-size="20"
-                  tooltip="Copy final pdf link"
-                />
-              </div>
             </v-col>
-            <v-col class="col-md-5 col-12 pt-0">
-              <div class="text-truncate my-3 mt-0">
-                <v-icon class="mr-2 fs-16">mdi-email-outline</v-icon>
-                {{ data.requestData.SenderEmail }}
-              </div>
-              <div
-                v-if="data.requestData.DocumentTemplate"
-                class="d-inline-flex"
-              >
-                <v-icon class="mr-2 fs-16">mdi-link</v-icon>
-                <a :href="data.requestData.DocumentTemplate">{{
-                  data.requestData.DocumentTemplate.substr(0, 35) + '...'
-                }}</a>
-                <copy
-                  class="pl-2"
-                  :text-to-copy="data.requestData.DocumentTemplate"
-                  icon-size="20"
-                  tooltip="Copy document template link"
-                />
+            <v-spacer></v-spacer>
+            <v-col class="col-md-5 col-12 py-2">
+              <div class="d-flex justify-end">
+                <div
+                  v-if="
+                    data.requestData.SignedDocument &&
+                    data.requestData.SignedDocument.length > 0
+                  "
+                  class="mr-2"
+                >
+                  <v-btn
+                    depressed
+                    tile
+                    color="success"
+                    class="rounded"
+                    @click="
+                      openLink(
+                        getSignedDocumentUrl(data.requestData.SignedDocument[0])
+                      )
+                    "
+                  >
+                    Signed Doc
+                    <v-icon right class="fs-22"> mdi-download </v-icon>
+                  </v-btn>
+                </div>
+                <div class="mr-2">
+                  <v-btn
+                    depressed
+                    color="primary"
+                    @click="openLink(data.requestData.DocumentTemplate)"
+                    >Template
+                    <v-icon right class="fs-22"> fa-document </v-icon>
+                  </v-btn>
+                </div>
+                <v-menu
+                  v-if="
+                    data.requestData.SignedDocument &&
+                    data.requestData.SignedDocument.length > 0
+                  "
+                  left
+                  :offset-y="offset"
+                  transition="slide-y-transition"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn icon small v-bind="attrs" v-on="on">
+                      <v-icon>mdi-dots-vertical</v-icon>
+                    </v-btn>
+                  </template>
+                  <v-list dense>
+                    <v-list-item
+                      @click="
+                        copyDownloadLink(
+                          getSignedDocumentUrl(
+                            data.requestData.SignedDocument[0]
+                          )
+                        )
+                      "
+                    >
+                      <v-list-item-icon class="mr-2">
+                        <i class="fa fa-clone mt-1" aria-hidden="true"></i>
+                      </v-list-item-icon>
+                      <v-list-item-content>
+                        <v-list-item-title
+                          >Copy Download Link</v-list-item-title
+                        >
+                      </v-list-item-content>
+                    </v-list-item>
+                  </v-list>
+                </v-menu>
               </div>
             </v-col>
           </v-row>
           <v-divider></v-divider>
           <v-flex class="d-flex flex-row align-center flex-wrap pt-2 pt-sm-0">
-            <v-chip pill class="greybg" v-on="on">
+            <v-chip class="greybg" v-on="on">
               <v-avatar left color="warning" size="24">
                 <span class="white--text name-initial">{{
                   data.requestData.SenderName
@@ -127,7 +146,7 @@
         <div>
           <div
             v-if="content"
-            class="xs12 sm8 md8 lg8 boxview pad-card pb-6 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
+            class="xs12 sm8 md8 lg8 pad-card pb-6 mr-2 mb-4 pb-2 elevation-1 rounded-lg recipientGrid"
           >
             <div class="sticky d-flex flex-column justify-center boxview">
               <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
@@ -164,7 +183,7 @@
             view-name="eSignTasks"
             :content="content"
             :context="data"
-            class="mt-n12"
+            class="mt-12"
           />
         </div>
         <div
@@ -232,7 +251,6 @@ import gql from 'graphql-tag'
 import ESignRequest from '~/config/apps/eSign/gql/eSignRequest.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import Grid from '~/components/common/grid'
-import copy from '~/components/common/copy'
 import Notes from '~/components/common/notes'
 import { configLoaderMixin } from '~/utility'
 
@@ -241,7 +259,6 @@ export default {
   components: {
     Grid,
     Notes,
-    copy,
   },
   mixins: [configLoaderMixin],
   data() {
@@ -295,8 +312,17 @@ export default {
       this.$router.back()
     },
     getSignedDocumentUrl(id) {
-      console.log(id)
-      return `${this.$bitpod.getApiUrl()}/Attachments/download/${id}`
+      return `${this.$bitpod.getApiUrl()}Attachments/download/${id}`
+    },
+    openLink(link) {
+      window.open(link)
+    },
+    async copyDownloadLink(value) {
+      try {
+        await navigator.clipboard.writeText(value)
+      } catch (e) {
+        console.error('Something went wrong', e)
+      }
     },
   },
 }
@@ -315,5 +341,9 @@ export default {
   .pad-card {
     padding: 12px 12px 0 12px;
   }
+}
+
+.recipientGrid {
+  background-color: #fff;
 }
 </style>

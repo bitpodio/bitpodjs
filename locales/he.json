@@ -807,7 +807,7 @@
     "SelectTemplateType": "השתמש בתבנית קיימת או הוסף תבנית חדשה.",
     "Recipients": "נמענים",
     "Recipient": "מקבל",
-    "SignatureBasicInformation": "התחל עם הזנת מידע בסיסי על המסמך שלך ואז לחץ על הבא.",
+    "SignatureBasicInformation": "התחל בהזנת מידע על הנושא והשולח.",
     "SendDocumentNow": "שלח מסמך מיד.",
     "RecipientDetail": "פרט נמען",
     "EmailInfo": "פרטי דואל",
@@ -815,7 +815,8 @@
     "Party": "מפלגה",
     "SelectRecipient": "בחר נמען",
     "NewRecipient": "מקבל חדש",
-    "CreatedOn": "נוצר בתאריך {date}"
+    "CreatedOn": "נוצר בתאריך {date}",
+    "YouMayReferRecipients": "אתה יכול להפנות את נתוני הנמענים באמצעות ביטויים של מציין מיקום בשורת הנושא. למשל: {contactTemplateData}"
   },
   "Drawer": {
     "UnSubscribeMsg": "אנא בחר סיבה לביטול הרישום לניוזלטר. זה יעזור לנו לשפר את השירותים שלנו.",

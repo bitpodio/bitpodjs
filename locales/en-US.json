@@ -806,7 +806,7 @@
     "SelectTemplateType": "Use an existing template or add a new template.",
     "Recipients": "Recipients",
     "Recipient": "Recipient",
-    "SignatureBasicInformation": "Start with entering basic information about your document and then press next.",
+    "SignatureBasicInformation": "Start with entering information about the subject and sender.",
     "SendDocumentNow": "Send document right away.",
     "RecipientDetail": "Recipient Details",
     "EmailInfo": "Email Info",
@@ -814,7 +814,8 @@
     "Party": "Party",
     "SelectRecipient": "Select Recipient",
     "NewRecipient": "New Recipient",
-    "CreatedOn": "Created on {date}"
+    "CreatedOn": "Created on {date}",
+    "YouMayReferRecipients": "You may refer recipients data by using placeholder expressions in the subject line. e.g:{contactTemplateData}"
   },
   "Drawer": {
     "UnSubscribeMsg": "Please select a reason to unsubscribe from newsletter. This will help us to improve our services.",

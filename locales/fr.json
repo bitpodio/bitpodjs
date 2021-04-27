@@ -805,7 +805,7 @@
     "SelectTemplateType": "Utilisez un modèle existant ou ajoutez un nouveau modèle.",
     "Recipients": "Bénéficiaires",
     "Recipient": "Destinataire",
-    "SignatureBasicInformation": "Commencez par saisir les informations de base sur votre document, puis appuyez sur suivant.",
+    "SignatureBasicInformation": "Commencez par saisir des informations sur le sujet et l'expéditeur.",
     "SendDocumentNow": "Envoyez le document tout de suite.",
     "RecipientDetail": "Détail du destinataire",
     "EmailInfo": "Informations e-mail",
@@ -813,7 +813,8 @@
     "Party": "Faire la fête",
     "SelectRecipient": "Sélectionnez le destinataire",
     "NewRecipient": "Nouveau destinataire",
-    "CreatedOn": "Créé le {date}"
+    "CreatedOn": "Créé le {date}",
+    "YouMayReferRecipients": "Vous pouvez faire référence aux données des destinataires en utilisant des expressions d'espace réservé dans la ligne d'objet. Par exemple: {contactTemplateData}"
   },
   "Drawer": {
     "UnSubscribeMsg": "Veuillez sélectionner une raison pour vous désinscrire de la newsletter. Cela nous aidera à améliorer nos services.",

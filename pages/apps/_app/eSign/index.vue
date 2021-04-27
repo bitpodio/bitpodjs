@@ -34,6 +34,7 @@ export default {
           ESignStoreId: data.recipient.ESignStoreId,
           recipientList: data.allRecipients.map((item) => item.id),
           recipientSignature: data.defaultSign,
+          recipientInitials: data.defaultInitials,
           handlebarsData: data.handlebarsData,
           declineSign: data.declineSign,
           requestID: data.request.id,

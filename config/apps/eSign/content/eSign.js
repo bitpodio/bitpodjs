@@ -159,7 +159,7 @@ export default {
         hideDefaultFooter: false,
         showExpand: false,
         singleExpand: false,
-        showSelect: true,
+        showSelect: false,
         hideFilter: false,
         hideSearch: true,
       },
@@ -170,7 +170,6 @@ export default {
           caption: 'Common.FullName',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '250px',
           type: 'string',
         },
         type: {
@@ -178,7 +177,6 @@ export default {
           caption: 'Common.TypeCaption',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '200px',
           type: 'string',
         },
         Email: {
@@ -186,7 +184,6 @@ export default {
           caption: 'Common.EmailCaption',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
           type: 'string',
         },
         Status: {
@@ -194,7 +191,6 @@ export default {
           caption: 'Common.Status',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
           type: 'string',
         },
       },
@@ -239,7 +235,7 @@ export default {
         showExpand: false,
         singleExpand: false,
         showSelect: false,
-        hideFilter: true,
+        hideFilter: false,
         hideSearch: true,
       },
       itemTitle: 'Common.Task',
@@ -400,9 +396,6 @@ export default {
             hidden: true,
           },
           exportCsv: {
-            hidden: true,
-          },
-          filter: {
             hidden: true,
           },
         },
