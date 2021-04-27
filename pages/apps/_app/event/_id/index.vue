@@ -864,7 +864,6 @@
           </div>
         </div>
         <div
-          v-if="content"
           class="xs12 sm4 md4 lg4 boxview pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
           <div class="sticky d-flex flex-column justify-center boxview">
@@ -877,16 +876,17 @@
             </v-flex>
             <v-divider></v-divider>
           </div>
-          <Grid
-            view-name="eventAttendees"
-            :content="content"
-            :context="data"
-            :has-mobile-custom-view="true"
-            class="mt-n12"
-          />
+          <div v-if="content">
+            <Grid
+              view-name="eventAttendees"
+              :content="content"
+              :context="data"
+              :has-mobile-custom-view="true"
+              class="mt-n12"
+            />
+          </div>
         </div>
         <div
-          v-if="content"
           class="xs12 sm4 md4 lg4 boxview boxviewlarge pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
           <div class="sticky d-flex flex-column justify-center boxview">
@@ -899,15 +899,16 @@
             </v-flex>
             <v-divider></v-divider>
           </div>
-          <Grid
-            view-name="eventRegistrations"
-            :content="content"
-            :context="data"
-            class="mt-n12"
-          />
+          <div v-if="content">
+            <Grid
+              view-name="eventRegistrations"
+              :content="content"
+              :context="data"
+              class="mt-n12"
+            />
+          </div>
         </div>
         <div
-          v-if="content"
           class="xs12 sm4 md4 lg4 boxview pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
           <div class="sticky d-flex flex-column justify-center boxview">
@@ -920,7 +921,9 @@
             </v-flex>
             <v-divider></v-divider>
           </div>
-          <Grid view-name="eventInvites" :content="content" class="mt-n12" />
+          <div v-if="content">
+            <Grid view-name="eventInvites" :content="content" class="mt-n12" />
+          </div>
         </div>
         <div
           v-if="content"
@@ -1055,7 +1058,6 @@
           />
         </div>
         <div
-          v-if="content"
           class="xs12 sm4 md4 lg4 boxview boxviewlarge pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
           <div class="sticky d-flex flex-column justify-center boxview">
@@ -1068,15 +1070,16 @@
             </v-flex>
             <v-divider></v-divider>
           </div>
-          <Grid
-            view-name="eventRegistrationQuestion"
-            :content="content"
-            :context="data"
-            class="mt-n12"
-          />
+          <div v-if="content">
+            <Grid
+              view-name="eventRegistrationQuestion"
+              :content="content"
+              :context="data"
+              class="mt-n12"
+            />
+          </div>
         </div>
         <div
-          v-if="content"
           class="xs12 sm4 md4 lg4 boxview boxviewlarge pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
           <div class="sticky d-flex flex-column justify-center boxview">
@@ -1089,18 +1092,19 @@
             </v-flex>
             <v-divider></v-divider>
           </div>
-          <Grid
-            view-name="eventSession"
-            :content="content"
-            class="mt-n12"
-            :no-action="!data.event.HasTickets"
-            :has-custom-no-data-text="
-              !data.event.HasTickets ? $t('Common.SessionsNotAvailable') : ''
-            "
-          />
+          <div v-if="content">
+            <Grid
+              view-name="eventSession"
+              :content="content"
+              class="mt-n12"
+              :no-action="!data.event.HasTickets"
+              :has-custom-no-data-text="
+                !data.event.HasTickets ? $t('Common.SessionsNotAvailable') : ''
+              "
+            />
+          </div>
         </div>
         <div
-          v-if="content"
           class="xs12 sm4 md4 lg4 boxview boxviewlarge pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
           <div class="sticky d-flex flex-column justify-center boxview">
@@ -1113,10 +1117,11 @@
             </v-flex>
             <v-divider></v-divider>
           </div>
-          <Grid view-name="eventSpeakers" :content="content" class="mt-n12" />
+          <div v-if="content">
+            <Grid view-name="eventSpeakers" :content="content" class="mt-n12" />
+          </div>
         </div>
         <div
-          v-if="content"
           class="xs12 sm4 md4 lg4 boxview pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
           <div class="sticky d-flex flex-column justify-center boxview">
@@ -1129,15 +1134,16 @@
             </v-flex>
             <v-divider></v-divider>
           </div>
-          <Grid
-            view-name="eventTasks"
-            :content="content"
-            :context="data"
-            class="mt-n12"
-          />
+          <div v-if="content">
+            <Grid
+              view-name="eventTasks"
+              :content="content"
+              :context="data"
+              class="mt-n12"
+            />
+          </div>
         </div>
         <div
-          v-if="content"
           class="xs12 sm4 md4 lg4 boxview boxviewsmall pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
           <div class="sticky d-flex flex-column justify-center boxview">
@@ -1150,11 +1156,13 @@
             </v-flex>
             <v-divider></v-divider>
           </div>
-          <Grid
-            view-name="eventRegistrationForm"
-            :content="content"
-            class="mt-n12"
-          />
+          <div v-if="content">
+            <Grid
+              view-name="eventRegistrationForm"
+              :content="content"
+              class="mt-n12"
+            />
+          </div>
         </div>
         <div
           class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 mr-2 mb-4 elevation-1 rounded-lg"
