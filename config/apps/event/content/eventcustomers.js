@@ -254,9 +254,9 @@ export default {
         },
       },
       template: {
-        name: '',
+        name: 'member-grid',
         context: {
-          basePath: '/contacts',
+          basePath: '/member',
         },
       },
       dataSource: {
