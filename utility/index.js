@@ -8,6 +8,7 @@ import endOfYesterday from 'date-fns/endOfYesterday'
 import startOfDay from 'date-fns/startOfDay'
 import endOfDay from 'date-fns/endOfDay'
 import MissingComponent from './missing-component.vue'
+const murmurhash = require('murmurhash')
 
 export function importTemplate(templatePath) {
   return () => import(`~/config/${templatePath}`)
@@ -334,6 +335,18 @@ export const configLoaderMixin = {
       `~/config/apps/${this.$route.params.app}/content`
     )
     this.contents = contentFactory.default
+    debugger
+    const checkId = murmurhash.v2(
+      this.$auth.user.data.email,
+      this.$config.seedValue
+    )
+    setTimeout(() => {
+      if (window && window.ga) {
+        window.ga('create', this.$config.gaTrackingCode, 'auto')
+        window.ga('set', 'userId', checkId)
+        window.ga('send', 'pageview')
+      }
+    }, 1500)
   },
 }
 
