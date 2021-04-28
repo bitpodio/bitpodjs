@@ -4,6 +4,7 @@
       v-model="drawer"
       app
       class="nav-bar greybg"
+      disable-resize-watcher
       :class="{
         'custom-nav-drawer': !$vuetify.breakpoint.smAndDown && drawer === null,
       }"
@@ -247,8 +248,8 @@
           </v-list>
         </v-menu>
       </div>
-      <AppDrawer />
       <Help class="d-none d-sm-inline" />
+      <AppDrawer />
       <div v-if="$auth.$state.loggedIn" class="ml-3">
         <v-menu
           v-model="account"

@@ -3,6 +3,7 @@
     <v-navigation-drawer
       v-model="drawer"
       app
+      disable-resize-watcher
       class="nav-bar greybg"
       :width="240"
       :class="{

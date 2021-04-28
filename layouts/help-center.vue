@@ -3,6 +3,7 @@
     <v-navigation-drawer
       v-model="drawer"
       app
+      disable-resize-watcher
       class="nav-bar greybg"
       :class="{
         'custom-nav-drawer': !$vuetify.breakpoint.smAndDown && drawer === null,
@@ -227,11 +228,6 @@ import Upgrade from '~/components/common/upgrade'
 import userUtils from '~/utility/userApps'
 import HelpCenterFunc from '~/config/apps/help'
 export default {
-  head: {
-    bodyAttrs: {
-      class: 'help-center',
-    },
-  },
   components: {
     OrgnaizationList,
     AppDrawer,
@@ -332,6 +328,11 @@ export default {
           e
         )
       }
+    },
+  },
+  head: {
+    bodyAttrs: {
+      class: 'help-center',
     },
   },
 }
