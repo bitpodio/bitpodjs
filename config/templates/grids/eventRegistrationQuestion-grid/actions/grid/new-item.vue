@@ -257,7 +257,7 @@ export default {
       if (res) {
         this.onClose()
         this.$refs.questionField.blur()
-        this.$nextTick(()=>{
+        this.$nextTick(() => {
           this.snackbarText = this.$t(
             'Messages.Success.QuestionRecordCreatedSuccess'
           )
