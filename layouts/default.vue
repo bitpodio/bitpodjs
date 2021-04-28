@@ -5,7 +5,7 @@
       app
       disable-resize-watcher
       class="nav-bar greybg"
-      :width="280"
+      :width="240"
     >
       <div class="px-4 pt-3 pb-1">
         <i18n path="Common.AppTitle" class="app-title-text" />
