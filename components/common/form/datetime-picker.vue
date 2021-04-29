@@ -20,6 +20,14 @@
             ></v-progress-linear>
           </slot>
         </template>
+        <template v-if="hasErrorTooltip" v-slot:message="{ message, key }">
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <span v-bind="attrs" v-on="on" :key="key">{{ message }}</span>
+            </template>
+            <span :key="key">{{ message }}</span>
+          </v-tooltip>
+        </template>
         <i
           slot="append"
           class="fa-calendar fs-22 grey--text"
@@ -128,6 +136,10 @@ export default {
     timePickerProps: {
       type: Object,
       default: () => {},
+    },
+    hasErrorTooltip: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
