@@ -3,59 +3,12 @@
     <v-navigation-drawer
       v-model="drawer"
       app
+      disable-resize-watcher
       class="nav-bar greybg"
-      :width="280"
+      :width="240"
     >
-      <div class="d-block d-sm-none my-3">
-        <v-menu>
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              v-bind="attrs"
-              outlined
-              small
-              color="primary"
-              depressed
-              :disabled="allowUser"
-              class="mx-3 wd-full"
-              v-on="on"
-            >
-              <i18n path="Drawer.CreateEventAction" />
-            </v-btn>
-          </template>
-
-          <v-list dense>
-            <v-list-item
-              @click="
-                triggerReset = !triggerReset
-                dialog1 = !dialog1
-              "
-            >
-              <v-list-item-icon class="mr-2">
-                <v-icon class="fs-16 mr-2">fa-calendar</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title
-                  ><i18n path="Drawer.SingleEventAction"
-                /></v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item
-              @click="
-                triggerRecEventReset = !triggerRecEventReset
-                dialog = !dialog
-              "
-            >
-              <v-list-item-icon class="mr-2">
-                <v-icon class="fs-16 mr-2">fa-history</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title
-                  ><i18n path="Drawer.RecurringEventAction"
-                /></v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list>
-        </v-menu>
+      <div class="px-4 pt-3 pb-1">
+        <i18n path="Common.AppTitle" class="app-title-text" />
       </div>
       <div class="d-block d-sm-none my-3">
         <v-menu>
@@ -192,7 +145,7 @@
           size="24"
           height="36px"
           width="36px"
-          class="ml-0 mx-md-2 mr-0 d-inline d-sm-none"
+          class="ml-0 mr-0 d-lg-none"
           @click.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
         <span class="bitpod-logo logo-ds px-3">
