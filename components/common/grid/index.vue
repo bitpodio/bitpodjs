@@ -1217,8 +1217,8 @@ export default {
       this.selectedItems = []
     },
     unselectAllRecord(viewName) {
-      if (viewName === this.viewName || viewName === 'inviteeEventTasks') {
-        this.selectedItems = []
+      if (viewName === 'inviteeEventTasks') {
+        this.refreshGrid(viewName)
       }
     },
     async loadRestData() {
