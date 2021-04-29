@@ -67,6 +67,7 @@
               <v-col cols="12">
                 <v-text-field
                   v-model="formData.DisplayOrder"
+                  ref="questionField"
                   :rules="[rules.required]"
                   :label="$t('Common.DisplayOrder')"
                   type="number"
@@ -173,7 +174,7 @@ export default {
       snackbar: false,
       timeout: 2000,
       snackbarText: '',
-      formName: 'new-eventRegistration-form',
+      formName: 'new-eventRegistrationQuestion-form',
       hasTicket:
         this.context && this.context.event && this.context.event.HasTickets,
     }
@@ -254,13 +255,15 @@ export default {
         })
         .catch((e) => console.log('Error', e))
       if (res) {
-        this.dialog = false
-        this.onReset()
-        this.snackbarText = this.$t(
-          'Messages.Success.QuestionRecordCreatedSuccess'
-        )
-        this.snackbar = true
-        this.refresh()
+        this.onClose()
+        this.$refs.questionField.blur()
+        this.$nextTick(() => {
+          this.snackbarText = this.$t(
+            'Messages.Success.QuestionRecordCreatedSuccess'
+          )
+          this.snackbar = true
+          this.refresh()
+        })
       }
     },
 

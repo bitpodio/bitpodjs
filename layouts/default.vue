@@ -3,18 +3,24 @@
     <v-navigation-drawer
       v-model="drawer"
       app
+      disable-resize-watcher
       class="nav-bar greybg"
-      :width="280"
+      :width="240"
     >
-      <div class="text-center mt-4">
+      <div class="px-4 pt-3 pb-1">
+        <i18n path="Common.AppTitle" class="app-title-text" />
+      </div>
+      <div class="d-block d-sm-none my-3">
         <v-menu>
           <template v-slot:activator="{ on, attrs }">
             <v-btn
               v-bind="attrs"
+              outlined
+              small
               color="primary"
-              dark
               depressed
-              class="ma-3 block wd-full my-0 mb-1 ml-n4"
+              :disabled="allowUser"
+              class="mx-3 wd-full"
               v-on="on"
             >
               <i18n path="Drawer.CreateEventAction" />
@@ -22,7 +28,12 @@
           </template>
 
           <v-list dense>
-            <v-list-item @click="dialog1 = !dialog1">
+            <v-list-item
+              @click="
+                triggerReset = !triggerReset
+                dialog1 = !dialog1
+              "
+            >
               <v-list-item-icon class="mr-2">
                 <v-icon class="fs-16 mr-2">fa-calendar</v-icon>
               </v-list-item-icon>
@@ -32,7 +43,12 @@
                 /></v-list-item-title>
               </v-list-item-content>
             </v-list-item>
-            <v-list-item @click="dialog = !dialog">
+            <v-list-item
+              @click="
+                triggerRecEventReset = !triggerRecEventReset
+                dialog = !dialog
+              "
+            >
               <v-list-item-icon class="mr-2">
                 <v-icon class="fs-16 mr-2">fa-history</v-icon>
               </v-list-item-icon>
@@ -129,7 +145,7 @@
           size="24"
           height="36px"
           width="36px"
-          class="ml-0 mx-md-2 mr-0 d-inline d-sm-none"
+          class="ml-0 mr-0 d-lg-none"
           @click.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
         <span class="bitpod-logo logo-ds px-3">
@@ -138,10 +154,6 @@
             class="logofull mr-2"
           ></v-img>
         </span>
-        <i18n
-          path="Common.EventApp"
-          class="d-inline-flex align-center mx-0 mx-md-2 ml-0 ml-md-1 text-h5"
-        />
         <v-spacer></v-spacer>
       </v-toolbar-title>
       <v-spacer></v-spacer>

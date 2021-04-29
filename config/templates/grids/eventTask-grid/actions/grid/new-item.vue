@@ -21,7 +21,11 @@
         <template v-slot:activator="{ on, attrs }">
           <v-btn text small v-bind="attrs" v-on="on">
             <v-icon left>{{ buttonIcon }}</v-icon>
-            {{ $t('Common.ScheduleTask') }}
+            {{
+              item && item.id
+                ? $t('Common.EditScheduleATask')
+                : $t('Common.ScheduleTask')
+            }}
           </v-btn>
         </template>
         <v-card>
@@ -29,14 +33,8 @@
             class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
           >
             <h2 class="black--text pt-5 pb-4 text-h5">
-              <i18n
-                v-if="buttonLabel === 'Edit Activity'"
-                path="Common.EditScheduleATask"
-              />
-              <i18n
-                v-if="buttonLabel !== 'Edit Activity'"
-                path="Common.NewScheduleATask"
-              />
+              <i18n v-if="item && item.id" path="Common.EditScheduleATask" />
+              <i18n path="Common.NewScheduleATask" />
             </h2>
             <v-spacer></v-spacer>
             <div>
@@ -47,10 +45,10 @@
           </v-card-title>
           <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
             <v-form
+              :id="formName"
               ref="form"
               v-model="valid"
               :lazy-validation="lazy"
-              :id="formName"
               @submit.prevent="submitForm"
             >
               <v-row>

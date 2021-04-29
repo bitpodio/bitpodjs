@@ -442,7 +442,18 @@
                               min="0"
                               :rules="ticketCountRules()"
                               onkeydown="return event.keyCode !== 69 && event.keyCode !== 189"
-                            ></v-text-field>
+                            >
+                              <template v-slot:message="{ message, key }">
+                                <v-tooltip bottom>
+                                  <template v-slot:activator="{ on, attrs }">
+                                    <span v-bind="attrs" v-on="on" :key="key">{{
+                                      message
+                                    }}</span>
+                                  </template>
+                                  <span :key="key">{{ message }}</span>
+                                </v-tooltip>
+                              </template>
+                            </v-text-field>
                           </td>
                           <td class="pa-2 pt-0 e-td" data-title="">
                             <v-btn icon class="mt-1" @click="deleteTicket(k)">
