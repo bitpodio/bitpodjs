@@ -145,7 +145,7 @@
           size="24"
           height="36px"
           width="36px"
-          class="ml-0 mx-md-2 mr-0 d-inline d-sm-none"
+          class="ml-0 mr-0 d-lg-none"
           @click.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
         <span class="bitpod-logo logo-ds px-3">
