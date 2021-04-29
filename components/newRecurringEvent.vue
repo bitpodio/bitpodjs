@@ -879,6 +879,7 @@
                             <Select
                               v-model="session.StartTime"
                               :field="startTimeProps"
+                              :has-error-tooltip="true"
                               :rules="validStartTimeRule(k)"
                             />
                           </td>
@@ -889,6 +890,7 @@
                             <Select
                               v-model="session.EndTime"
                               :field="endTimeProps"
+                              :has-error-tooltip="true"
                               :rules="validEndTimeRule(k)"
                             />
                           </td>
@@ -2321,6 +2323,7 @@ export default {
           const res = await this.$axios
             .$post(`${baseUrl}Events`, {
               ...this.eventData,
+              HasTickets: true,
             })
             .catch((e) => {
               console.error(

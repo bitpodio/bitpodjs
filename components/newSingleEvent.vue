@@ -416,6 +416,7 @@
                               :label="$t('Common.StartD')"
                               :field="ticketStartDateField"
                               :rules="ticketStartDateRule(k)"
+                              :has-error-tooltip="true"
                               :on-change="changeTicketStartDate"
                               type="datetime"
                             />
@@ -429,6 +430,7 @@
                               :label="$t('Common.EndD')"
                               :field="ticketEndDateField"
                               :rules="ticketEndDateRule(k)"
+                              :has-error-tooltip="true"
                               :on-change="changeTicketEndDate"
                               type="datetime"
                             />
