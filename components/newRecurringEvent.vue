@@ -1808,6 +1808,11 @@ export default {
           this.isZoom = false
           this.isLocationMessage = false
         }
+        if (this.sessions[index].LocationType === 'Bitpod Virtual') {
+          this.isGoogleMeet = false
+          this.isZoom = false
+          this.isLocationMessage = false
+        }
       }
     },
     changeDuration(index) {
