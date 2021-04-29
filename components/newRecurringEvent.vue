@@ -1751,7 +1751,6 @@ export default {
       this.isGroup = value === 'Group'
     },
     changelocationType(index) {
-      debugger
       return () => {
         this.selectedSession = index
         if (this.sessions[index].LocationType === 'Phone call') {
@@ -1810,7 +1809,6 @@ export default {
           this.isLocationMessage = false
         }
         if (this.sessions[index].LocationType === 'Bitpod Virtual') {
-          debugger
           this.isGoogleMeet = false
           this.isZoom = false
           this.isLocationMessage = false
