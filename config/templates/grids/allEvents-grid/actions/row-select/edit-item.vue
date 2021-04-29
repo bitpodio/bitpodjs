@@ -1,8 +1,5 @@
 <template>
   <v-col class="px-0">
-    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
-      <div class="text-center">{{ snackbarText }}</div>
-    </v-snackbar>
     <v-dialog
       v-model="dialog"
       persistent
@@ -433,6 +430,10 @@ export default {
       required: false,
       default: () => false,
     },
+    viewName: {
+      type: String,
+      default: '',
+    },
   },
   data() {
     return {
@@ -491,6 +492,9 @@ export default {
       status: '',
       privacy: '',
       currency: '',
+      snackbar: false,
+      snackbarText: this.$t('Messages.Success.EventDetailsUpdateSuccess'),
+      timeout: '3000',
     }
   },
   computed: {
@@ -723,7 +727,13 @@ export default {
           })
           if (res) {
             this.onClose()
-            this.refresh()
+
+            this.$eventBus.$emit(
+              'toggle-snackbar',
+              this.viewName,
+              this.snackbarText,
+              3000
+            )
             this.data.event = res
           }
         } catch (e) {
@@ -744,7 +754,12 @@ export default {
           })
           if (res) {
             this.onClose()
-            this.refresh()
+            this.$eventBus.$emit(
+              'toggle-snackbar',
+              this.viewName,
+              this.snackbarText,
+              3000
+            )
             return (this.data.event = res)
           }
         } catch (e) {
