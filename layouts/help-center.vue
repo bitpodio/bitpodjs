@@ -3,6 +3,7 @@
     <v-navigation-drawer
       v-model="drawer"
       app
+      disable-resize-watcher
       class="nav-bar greybg"
       :class="{
         'custom-nav-drawer': !$vuetify.breakpoint.smAndDown && drawer === null,
@@ -98,7 +99,7 @@
           size="24"
           height="36px"
           width="36px"
-          class="ml-0 ml-md-2 mr-2 mr-md-3"
+          class="ml-0 mr-0 d-lg-none"
           @click.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
         <span class="bitpod-logo logo-ds d-none d-sm-flex">
@@ -227,11 +228,6 @@ import Upgrade from '~/components/common/upgrade'
 import userUtils from '~/utility/userApps'
 import HelpCenterFunc from '~/config/apps/help'
 export default {
-  head: {
-    bodyAttrs: {
-      class: 'help-center',
-    },
-  },
   components: {
     OrgnaizationList,
     AppDrawer,
@@ -332,6 +328,11 @@ export default {
           e
         )
       }
+    },
+  },
+  head: {
+    bodyAttrs: {
+      class: 'help-center',
     },
   },
 }

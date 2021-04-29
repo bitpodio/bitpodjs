@@ -147,7 +147,7 @@ body {
   display: none !important;
 }
 .nav-bar {
-  top: 55px !important;
+  top: 50px !important;
 }
 .nav-bar:hover .nav-drawer {
   display: block !important;
@@ -764,9 +764,6 @@ table > tbody > tr:last-child .key-align {
   }
 }
 @media (max-width: 800px) {
-  .nav-bar {
-    top: 50px !important;
-  }
   .participantButton {
     font-size: 16px !important;
     padding-top: 6px !important;
