@@ -420,19 +420,6 @@ export default {
         to: '/apps/event/list/Registrations/Registrations',
         allowedRoutes: ['/apps/event/registration'],
       },
-      { heading: 'Promotions' },
-      {
-        icon: 'fa fa-building',
-        text: 'Discount Code',
-        to: '/apps/event/list/DiscountCodes/Discount-Codes',
-        allowedRoutes: ['/apps/event/discountcodes'],
-      },
-      { heading: 'Members' },
-      {
-        icon: 'fa fa-users',
-        text: 'Members',
-        to: '/apps/event/list/EventCustomers/Members',
-      },
       {
         icon: 'fa fa-address-book-o',
         text: 'Contacts',
@@ -441,6 +428,13 @@ export default {
           '/apps/event/contacts/',
           'apps/event/list/Contacts/Invites',
         ],
+      },
+      { heading: 'Promotions' },
+      {
+        icon: 'fa fa-building',
+        text: 'Discount Code',
+        to: '/apps/event/list/DiscountCodes/Discount-Codes',
+        allowedRoutes: ['/apps/event/discountcodes'],
       },
     ],
   }),
