@@ -46,7 +46,7 @@
             color="primary"
             class="sendButtons"
             :reset="toggleLoading"
-            :label="this.$t('Drawer.Send')"
+            :label="this.$t('Drawer.Save')"
             :action="handleAddNewTemplateForm"
           ></SaveBtn>
         </v-card-actions>
@@ -357,23 +357,56 @@
                               {{ item.type }}
                             </td>
                             <td width="60%" class="pa-2 pb-0">
-                              <v-autocomplete
-                                v-model="selectedListNewContacts[index]"
+                              <!-- <v-autocomplete
                                 :items="contactList"
                                 :item-text="
                                   (item) => `${item.FullName} (${item.Email})`
                                 "
+                                :search-input.sync="contactListSearch"
+                                outlined
+                              >
+                              </v-autocomplete> -->
+                              <v-autocomplete
+                                v-model="selectedListNewContacts[index]"
+                                :items="disabledContactList(index)"
+                                item-value="id"
+                                item-text="FullName"
                                 return-object
                                 outlined
+                                :search-input.sync="contactListSearch[index]"
                                 :label="$t('Common.Select')"
                                 dense
-                                :hide-details="true"
+                                hide-details
+                                :hide-no-data="!contactListResultsFound"
                                 @input="updateSelectedListInput(index)"
+                                @focus="focusSelectedListInput"
                               >
                                 <template v-slot:selection>
                                   {{
                                     `${selectedListNewContacts[index].FullName} (${selectedListNewContacts[index].Email})`
                                   }}
+                                </template>
+                                <template v-slot:append>
+                                  <v-progress-circular
+                                    v-if="loadingContactList[index]"
+                                    size="18"
+                                    width="3"
+                                    color="primary"
+                                    indeterminate
+                                  />
+                                  <v-icon>mdi-menu-down</v-icon>
+                                </template>
+                                <template v-slot:item="data">
+                                  <template>
+                                    <v-list-item-content>
+                                      <v-list-item-title>{{
+                                        data.item.FullName
+                                      }}</v-list-item-title>
+                                      <v-list-item-subtitle>{{
+                                        data.item.Email
+                                      }}</v-list-item-subtitle>
+                                    </v-list-item-content>
+                                  </template>
                                 </template>
                               </v-autocomplete>
                             </td>
@@ -605,6 +638,7 @@
 </template>
 
 <script>
+import _ from 'lodash'
 import SaveBtn from '~/components/common/saveButton'
 import { configLoaderMixin } from '~/utility'
 export default {
@@ -652,6 +686,13 @@ export default {
       postEsignRequestData: {},
       contactLoaded: false,
       contactList: [],
+      contactListSearch: [],
+      contactListSearchText: '',
+      disableSearch: false,
+      loadingContactList: [],
+      contactListResultsFound: false,
+      selectedRecipientList: [],
+      contactIsSet: [],
       selectedRecipient: {},
       selectedParty: '',
       documentText: '',
@@ -666,29 +707,50 @@ export default {
       if (this.templateSelected === false) return true
       else if (this.curentTab === 1) {
         if (this.toggleRecipientLoading === true) return true
-        for (const item of this.selectedList) {
-          if (item.Email === '' || item.FullName === '') return true
-        }
+        if (this.contactIsSet.some((item) => item === false)) return true
       } else if (this.curentTab === 2 && this.subject === '') return true
       return false
     },
   },
-  async mounted() {
+  watch: {
+    contactListSearch(val) {
+      console.log(val)
+      for (const [index, item] of val.entries()) {
+        if (item && item.length > 3 && item !== this.contactListSearchText) {
+          this.contactListResultsFound = false
+          this.contactListSearchText = item
+          console.log(this.contactListSearchText)
+          this.loadingContactList[index] = true
+          this.disableSearch = false
+          this.getContacts()
+        } else if (item && item.length <= 3) {
+          this.contactListResultsFound = false
+          this.loadingContactList[index] = false
+          this.disableSearch = true
+          this.contactListSearchText = item
+        }
+      }
+    },
+    selectedRecipientList(val) {
+      console.log(val)
+    },
+  },
+  mounted() {
     this.$eventBus.$on('itemSelected', this.updateSelectedList)
     if (this.$i18n.locale === 'fr') {
       this.isFrench = true
     }
-    const bitpodURL = `${this.$bitpod.getApiUrl()}Contacts`
-    try {
-      const response = await this.$axios.$get(bitpodURL)
-      if (response) {
-        this.contactList = response
-      }
-    } catch (err) {
-      this.snackbar = true
-      this.snackbarText = 'Failed to load contacts.'
-      console.error(err)
-    }
+    // const bitpodURL = `${this.$bitpod.getApiUrl()}Contacts`
+    // try {
+    //   const response = await this.$axios.$get(bitpodURL)
+    //   if (response) {
+    //     this.contactList = response
+    //   }
+    // } catch (err) {
+    //   this.snackbar = true
+    //   this.snackbarText = 'Failed to load contacts.'
+    //   console.error(err)
+    // }
   },
   beforeDestroy() {
     this.$eventBus.$off('itemSelected')
@@ -710,17 +772,24 @@ export default {
     updateSelectedListInput(index) {
       console.log(this.selectedList[index], this.selectedListNewContacts[index])
       if (this.selectedListNewContacts[index]) {
+        this.selectedRecipientList.push(this.selectedListNewContacts[index])
         this.$set(this.selectedList, index, {
           ...this.selectedList[index],
           FullName: this.selectedListNewContacts[index].FullName,
           Email: this.selectedListNewContacts[index].Email,
         })
+        this.$set(this.contactIsSet, index, true)
       } else {
         this.$set(this.selectedListNewContacts, index, {
           FullName: '',
           Email: '',
         })
+        this.$set(this.contactIsSet, index, false)
       }
+    },
+    focusSelectedListInput() {
+      this.contactListResultsFound = false
+      this.contactList = []
     },
     resetForm() {
       this.$emit('update:newTemplateDialog', false)
@@ -849,6 +918,8 @@ export default {
             signObject
           )
           this.$set(this.selectedList, this.newRecipientIndex, signObject)
+          this.$set(this.contactIsSet, this.newRecipientIndex, true)
+          this.selectedRecipientList.push(signObject)
           this.addNewRecipientFormFirstName = ''
           this.addNewRecipientFormLastName = ''
           this.addNewRecipientFormEmail = ''
@@ -907,6 +978,10 @@ export default {
         }
         this.parties = [...new Set(matches)]
         this.selectedList = []
+        this.selectedListNewContacts = []
+        this.contactListSearch = []
+        this.loadingContactList = []
+        this.contactIsSet = []
         this.parties.forEach((item) => {
           this.selectedList.push({
             FullName: '',
@@ -914,13 +989,46 @@ export default {
             type: item,
           })
           this.selectedListNewContacts.push({ FullName: '', Email: '' })
+          this.contactListSearch.push('')
+          this.loadingContactList.push(false)
+          this.contactIsSet.push(false)
         })
+        if (this.parties.length <= 0) {
+          this.templateSelected = false
+          this.curentTab = 0
+          this.snackbarText =
+            'This template does not contain any signature fields. Kindly choose a different template.'
+          this.snackbar = true
+        }
         console.log(this.selectedList)
         this.toggleRecipientLoading = false
       } catch (err) {
         console.error(err)
       }
     },
+    disabledContactList(index) {
+      console.log(this.selectedListNewContacts[index], this.selectedList[index])
+      if (this.contactIsSet[index]) return this.selectedRecipientList
+      else return this.contactList
+    },
+    getContacts: _.debounce(async function () {
+      if (!this.disableSearch) {
+        const filterText = this.contactListSearchText
+        const bitpodURL = `${this.$bitpod.getApiUrl()}Contacts?filter={"where":{"FullName":{"like":"${filterText}","options":"i"}}}`
+        try {
+          const response = await this.$axios.$get(bitpodURL)
+          if (response && filterText === this.contactListSearchText) {
+            this.contactList = response
+            this.loadingContactList = this.loadingContactList.fill(false)
+            this.contactListResultsFound = true
+          }
+        } catch (err) {
+          this.snackbar = true
+          this.snackbarText = 'Failed to load contacts.'
+          console.error(err)
+        }
+      }
+    }, 500),
   },
 }
 </script>

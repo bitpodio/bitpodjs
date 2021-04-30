@@ -39,7 +39,7 @@
                         class="body-1 grey--text text--darken-1 text-truncate"
                         v-on="on"
                       >
-                        {{ item.DocumentTemplate }}
+                        {{ item.Subject }}
                       </div>
                     </span>
                   </template>
