@@ -4,8 +4,46 @@ query($filters: JSON) {
       edges {
         node {
           id
+          Tags
+          LastName
+          FirstName
           Email
+          Description
+          CustomerOwner
           CustomerName
+          CustomerId
+          CustomerCode
+          ContactNumber
+          BusinessNumber
+          Approved
+          Website
+          Industry
+          CustomerSite
+          Rating
+          ParentCustomerName
+          NumberOfEmployees
+          AnnualRevenue
+          TickerSymbol
+          Type
+          # Ownership
+          createdDate
+          createdBy
+          _BillingAddress {
+            id
+            State
+            PostalCode
+            LatLng {
+              lat
+              lng
+            }
+            Country
+            City
+            AddressLine
+            createdDate
+            createdBy
+            modifiedDate
+            modifiedBy
+          }
         }
       }
     }
