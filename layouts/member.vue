@@ -4,76 +4,20 @@
       v-model="drawer"
       app
       class="nav-bar greybg"
+      :width="240"
       :class="{
         'custom-nav-drawer': !$vuetify.breakpoint.smAndDown && drawer === null,
       }"
-      :width="240"
       :right="$vuetify.rtl"
     >
       <div class="px-4 pt-3 pb-1">
-        <i18n path="Common.AppTitle" class="app-title-text" />
-      </div>
-      <div class="d-block d-sm-none my-3">
-        <v-menu>
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              v-bind="attrs"
-              outlined
-              small
-              color="primary"
-              depressed
-              :disabled="allowUser"
-              class="mx-3 wd-full"
-              v-on="on"
-            >
-              <i18n path="Drawer.CreateEventAction" />
-            </v-btn>
-          </template>
-
-          <v-list dense>
-            <v-list-item
-              @click="
-                triggerReset = !triggerReset
-                dialog1 = !dialog1
-              "
-            >
-              <v-list-item-icon class="mr-2">
-                <v-icon class="fs-16 mr-2">fa-calendar</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title
-                  ><i18n path="Drawer.SingleEventAction"
-                /></v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item
-              @click="
-                triggerRecEventReset = !triggerRecEventReset
-                dialog = !dialog
-              "
-            >
-              <v-list-item-icon class="mr-2">
-                <v-icon class="fs-16 mr-2">fa-history</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title
-                  ><i18n path="Drawer.RecurringEventAction"
-                /></v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list>
-        </v-menu>
+        <i18n path="Common.MembershipApp" class="app-title-text" />
       </div>
       <v-list shaped>
         <template v-for="item in items">
           <v-row v-if="item.heading" :key="item.heading" align="center">
             <div class="pa-0 pl-5">
               <v-subheader v-if="item.heading" class="nav-subheader pl-2">
-                <i18n v-if="item.heading === 'Event'" path="Common.EventApp" />
-                <i18n
-                  v-if="item.heading === 'Promotions'"
-                  path="Common.Promotions"
-                />
                 <i18n v-if="item.heading === 'Members'" path="Common.Members" />
               </v-subheader>
             </div>
@@ -117,26 +61,12 @@
             :to="localePath(item.to)"
             router
             exact
-            :class="matchRoute(item.to)"
           >
             <v-list-item-action class="nav-icon">
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-action>
             <v-list-item-content>
               <v-list-item-title class="nav-title">
-                <i18n
-                  v-if="item.text === 'Eventboard'"
-                  path="Drawer.Eventboard"
-                />
-                <i18n v-if="item.text === 'Events'" path="Drawer.Events" />
-                <i18n
-                  v-if="item.text === 'Registrations'"
-                  path="Drawer.Registrations"
-                />
-                <i18n
-                  v-if="item.text === 'Discount Code'"
-                  path="Drawer.DiscountCode"
-                />
                 <i18n v-if="item.text === 'Members'" path="Drawer.Members" />
                 <i18n v-if="item.text === 'Contacts'" path="Drawer.Contacts" />
               </v-list-item-title>
@@ -145,7 +75,7 @@
         </template>
       </v-list>
       <Help
-        class="d-block d-sm-none mr-3"
+        class="d-block d-sm-none"
         @clicked="
           () => {
             drawer = false
@@ -153,27 +83,6 @@
         "
       />
     </v-navigation-drawer>
-
-    <v-dialog
-      v-model="dialog1"
-      persistent
-      scrollable
-      content-class="slide-form"
-    >
-      <NewSingleEvent
-        v-if="dialog1"
-        :reset-data="triggerReset"
-        :on-form-close="closeSingleEventForm"
-      />
-    </v-dialog>
-
-    <v-dialog v-model="dialog" persistent scrollable content-class="slide-form">
-      <NewRecurringEvent
-        v-if="dialog"
-        :reset-data="triggerRecEventReset"
-        :on-form-close="closeRecurringEventForm"
-      />
-    </v-dialog>
 
     <v-app-bar app flat class="greybg headernew pl-0" height="50">
       <v-toolbar-title
@@ -196,57 +105,6 @@
         <v-spacer></v-spacer>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <div class="d-none d-sm-flex">
-        <v-menu>
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              v-bind="attrs"
-              outlined
-              small
-              color="primary"
-              depressed
-              :disabled="allowUser"
-              class="mx-3"
-              v-on="on"
-            >
-              <i18n path="Drawer.CreateEventAction" />
-            </v-btn>
-          </template>
-
-          <v-list dense>
-            <v-list-item
-              @click="
-                triggerReset = !triggerReset
-                dialog1 = !dialog1
-              "
-            >
-              <v-list-item-icon class="mr-2">
-                <v-icon class="fs-16 mr-2">fa-calendar</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title
-                  ><i18n path="Drawer.SingleEventAction"
-                /></v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item
-              @click="
-                triggerRecEventReset = !triggerRecEventReset
-                dialog = !dialog
-              "
-            >
-              <v-list-item-icon class="mr-2">
-                <v-icon class="fs-16 mr-2">fa-history</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title
-                  ><i18n path="Drawer.RecurringEventAction"
-                /></v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list>
-        </v-menu>
-      </div>
       <Help class="d-none d-sm-inline" />
       <AppDrawer />
       <div v-if="$auth.$state.loggedIn" class="ml-3">
@@ -276,7 +134,6 @@
               }}</span>
             </v-btn>
           </template>
-
           <v-card>
             <v-list>
               <v-list-item>
@@ -320,6 +177,62 @@
             </v-list>
           </v-card>
         </v-menu>
+        <v-dialog
+          v-model="dialog"
+          persistent
+          scrollable
+          content-class="slide-form-default"
+        >
+          <v-card>
+            <v-card-title
+              class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
+            >
+              <h2 class="black--text pt-5 pb-4 font-weight-regular text-h5">
+                <i18n path="Common.NewUser" />
+              </h2>
+              <v-spacer></v-spacer>
+              <div>
+                <v-btn icon @click="onClose">
+                  <v-icon>mdi-close</v-icon>
+                </v-btn>
+              </div>
+            </v-card-title>
+            <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
+              <v-form
+                id="new-user-form"
+                ref="form"
+                v-model="valid"
+                :lazy-validation="lazy"
+                @submit.prevent="onSave"
+              >
+                <v-row>
+                  <v-col cols="12" sm="10" md="8" class="pb-0">
+                    <v-text-field
+                      v-model="email"
+                      :label="$t('Common.EnterEmail')"
+                      :rules="[rules.email, rules.required]"
+                      outlined
+                      dense
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+              </v-form>
+            </v-card-text>
+            <v-divider></v-divider>
+            <v-card-actions
+              class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
+            >
+              <v-btn
+                type="submit"
+                color="primary"
+                :disabled="!valid"
+                depressed
+                form="new-user-form"
+                ><i18n path="Drawer.Save"
+              /></v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </div>
       <div v-else>
         <v-btn class="ma-2" outlined color="primary" to="/login">
@@ -328,12 +241,7 @@
       </div>
     </v-app-bar>
 
-    <v-main
-      class="greybg"
-      :class="{
-        'custom-nav-main': !$vuetify.breakpoint.smAndDown && drawer === null,
-      }"
-    >
+    <v-main class="greybg">
       <v-container fluid>
         <v-row>
           <v-col class="pt-0">
@@ -359,12 +267,12 @@
 <script>
 import OrgnaizationList from '~/components/common/organization-list'
 import AppDrawer from '~/components/common/app-drawer'
+import { rules } from '~/utility/rules.js'
 import Help from '~/components/common/help'
 import OldSite from '~/components/common/oldsite'
-import Theme from '~/components/common/theme'
 import Upgrade from '~/components/common/upgrade'
+import Theme from '~/components/common/theme'
 import userUtils from '~/utility/userApps'
-const murmurhash = require('murmurhash')
 export default {
   middleware: ['auth', 'authorization'],
   components: {
@@ -376,72 +284,52 @@ export default {
     Theme,
   },
   props: {
-    source: { type: String, default: '' },
-  },
-  data: () => ({
-    date: new Date().toISOString().substr(0, 10),
-    menu: false,
-    modal: false,
-    menu2: false,
-    drawer: null,
-    dialog1: false,
-    dialog: false,
-    notifications: false,
-    sound: true,
-    tabs: null,
-    account: false,
-    message: false,
-    triggerReset: false,
-    triggerRecEventReset: false,
-    allowUpgrade: false,
-    allowUser: false,
-    activeClass: ' v-list-item--active',
-    userPlanData: '',
-    logoutClicked: false,
-    items: [
-      {
-        icon: 'fa fa-grid',
-        text: 'Eventboard',
-        to: '/apps/event/eventboard',
-      },
-      { heading: 'Event' },
-      {
-        icon: 'fa fa-calendar',
-        text: 'Events',
-        to: '/apps/event/list/Event/live-and-draft-event',
-        allowedRoutes: [
-          '/apps/event/list/Event/eventInvitaionHistory',
-          '/apps/event/event/',
-        ],
-      },
-      {
-        icon: 'fa fa-user-plus',
-        text: 'Registrations',
-        to: '/apps/event/list/Registrations/Registrations',
-        allowedRoutes: ['/apps/event/registration'],
-      },
-      {
-        icon: 'fa fa-address-book-o',
-        text: 'Contacts',
-        to: '/apps/event/list/Contacts/Contacts',
-        allowedRoutes: [
-          '/apps/event/contacts/',
-          'apps/event/list/Contacts/Invites',
-        ],
-      },
-      { heading: 'Promotions' },
-      {
-        icon: 'fa fa-building',
-        text: 'Discount Code',
-        to: '/apps/event/list/DiscountCodes/Discount-Codes',
-        allowedRoutes: ['/apps/event/discountcodes'],
-      },
-    ],
-  }),
-  computed: {
-    currentPage() {
-      return this.$route.path
+    refresh: {
+      type: Function,
+      default: () => false,
     },
+  },
+  data() {
+    return {
+      date: new Date().toISOString().substr(0, 10),
+      menu: false,
+      modal: false,
+      menu2: false,
+      drawer: null,
+      dialog1: false,
+      dialog: false,
+      notifications: false,
+      sound: true,
+      tabs: null,
+      account: false,
+      message: false,
+      valid: false,
+      allowUpgrade: false,
+      logoutClicked: false,
+      rules: rules(this.$i18n),
+      userPlanData: '',
+      formData: {
+        emailId: '',
+      },
+      email: '',
+      items: [
+        { heading: 'Members' },
+        {
+          icon: 'fa fa-users',
+          text: 'Members',
+          to: '/apps/member/list/Member/Members',
+        },
+        {
+          icon: 'fa fa-address-book-o',
+          text: 'Contacts',
+          to: '/apps/member/list/Contacts/Contacts',
+          allowedRoutes: [
+            '/apps/member/contacts/',
+            'apps/member/list/Contacts/Invites',
+          ],
+        },
+      ],
+    }
   },
   async created() {
     let token = this.$auth.strategy.token.get()
@@ -453,20 +341,8 @@ export default {
   mounted() {
     const userInfo = userUtils.userCurrentOrgInfo(this.$store) || {}
     const userRoles = userInfo.roles || []
-    this.allowUser = userRoles.length === 1 && userRoles.includes('$orguser')
     this.allowUpgrade = userRoles.includes('$orgowner')
     window.addEventListener('message', this.messageReceived, false)
-    const checkId = murmurhash.v2(
-      this.$auth.user.data.email,
-      this.$config.seedValue
-    )
-    setTimeout(() => {
-      if (window && window.ga) {
-        window.ga('create', this.$config.gaTrackingCode, 'auto')
-        window.ga('set', 'userId', checkId)
-        window.ga('send', 'pageview')
-      }
-    }, 1500)
   },
   beforeDestroy() {
     window.removeEventListener('message', this.messageReceived)
@@ -477,24 +353,36 @@ export default {
         this.logoutClicked = true
       }
     },
-    closeSingleEventForm() {
-      this.dialog1 = false
-    },
-    closeRecurringEventForm() {
+    onClose() {
       this.dialog = false
+      this.onReset()
     },
-    matchRoute(toRoute) {
-      return this.items.reduce((acc, i) => {
-        if (!i.allowedRoutes || i.to !== toRoute) {
-          return acc
+    onReset() {
+      this.$refs.form.reset()
+    },
+    async onSave() {
+      if (this.valid) {
+        const url = this.$bitpod.getApiUrl()
+        this.formData.emailId = this.email
+        const orgId = this.$store.state.currentOrg.id
+        this.formData.id = orgId
+        try {
+          const res = await this.$axios.$post(
+            `${url}Organizations/${orgId}/Users`,
+            this.formData
+          )
+          if (res) {
+            this.dialog = false
+            this.onReset()
+            this.$eventBus.$emit('user-created')
+          }
+        } catch (e) {
+          console.log(
+            `Error in layouts/member.vue while making a POST call to Users model from method onSave context:-URL:-${url}\n OrgId:-${orgId}\n formData:-${this.formData} `,
+            e
+          )
         }
-        const routeMatched = i.allowedRoutes.reduce((accc, j) => {
-          return accc || this.currentPage.includes(j)
-        }, false)
-        return acc || routeMatched
-      }, false)
-        ? this.activeClass
-        : ''
+      }
     },
     async userPlan() {
       const url = `${this.$bitpod.getApiUrl()}OrganizationInfos/getSubscription`
@@ -508,7 +396,7 @@ export default {
         }
       } catch (e) {
         console.error(
-          `Error in layouts/event.vue in userPlan method while making get call to custom API to get users subscription, context: ${url} `,
+          `Error in layouts/member.vue in userPlan method while making get call to custom API to get users subscription, context: ${url} `,
           e
         )
       }
