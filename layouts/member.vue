@@ -8,8 +8,8 @@
       :width="240"
       :right="$vuetify.rtl"
     >
-      <div class="px-4 pt-3 pb-1">
-        <i18n path="Common.MembershipApp" class="app-title-text" />
+      <div class="px-4 pt-3 pb-3">
+        <i18n path="Common.CommunityApp" class="app-title-text" />
       </div>
       <v-list shaped>
         <template v-for="item in items">
@@ -312,7 +312,6 @@ export default {
       },
       email: '',
       items: [
-        { heading: 'Members' },
         {
           icon: 'fa fa-users',
           text: 'Members',
