@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@bitpod/auth-nuxt-custom": "^5.0.0-1613129613.5ff65ad",
+    "@bitpod/vuetify-datetime-picker": "^2.1.1-1619693518.01b7511",
     "@fullcalendar/core": "^5.3.1",
     "@fullcalendar/daygrid": "^5.3.0",
     "@fullcalendar/interaction": "^5.3.0",
@@ -53,8 +54,7 @@
     "vue-analytics": "^5.22.1",
     "vue-google-autocomplete": "^1.1.0",
     "vue-google-charts": "^0.3.3",
-    "vue-tag-manager": "^0.1.2",
-    "vuetify-datetime-picker": "^2.1.1"
+    "vue-tag-manager": "^0.1.2"
   },
   "devDependencies": {
     "@intlify/eslint-plugin-vue-i18n": "^0.9.0",

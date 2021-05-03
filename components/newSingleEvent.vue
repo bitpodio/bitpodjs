@@ -335,6 +335,7 @@
                     ><i18n path="Common.AddTickets"
                   /></v-btn>
                   <v-checkbox
+                    :disabled="isFormProcessing"
                     v-model="TicketToggle"
                     :label="$t('Common.TicketsNotRequiredToggle')"
                   ></v-checkbox>
@@ -416,6 +417,7 @@
                               :label="$t('Common.StartD')"
                               :field="ticketStartDateField"
                               :rules="ticketStartDateRule(k)"
+                              :has-error-tooltip="true"
                               :on-change="changeTicketStartDate"
                               type="datetime"
                             />
@@ -429,6 +431,7 @@
                               :label="$t('Common.EndD')"
                               :field="ticketEndDateField"
                               :rules="ticketEndDateRule(k)"
+                              :has-error-tooltip="true"
                               :on-change="changeTicketEndDate"
                               type="datetime"
                             />
@@ -575,7 +578,7 @@
           v-if="currentTab > 2 && !isEventCreate && !isEventPublish"
           color="primary"
           :disabled="
-            isSaveButtonDisabled || !valid || !datevalid || isInvalidEventLink
+            isFormProcessing || !valid || !datevalid || isInvalidEventLink
           "
           depressed
           :action="saveRecord"
@@ -638,7 +641,7 @@ export default {
       loading: false,
       isUniqLinkValid: false,
       currentTab: 1,
-      isSaveButtonDisabled: false,
+      isFormProcessing: false,
       addresslineMessage: '',
       isTicket: true,
       isEventCreate: false,
@@ -953,7 +956,7 @@ export default {
         this.loading = false
         this.isEventCreate = false
         this.isEventPublish = false
-        this.isSaveButtonDisabled = false
+        this.isFormProcessing = false
         this.isTicket = true
         this.isMap = false
         this.valid = false
@@ -1221,7 +1224,7 @@ export default {
       })
       this.$refs.form.validate()
       if (!isValidTicket.includes(false)) {
-        this.isSaveButtonDisabled = true
+        this.isFormProcessing = true
         this.setLoationType()
         const eventInfo = JSON.parse(JSON.stringify(this.eventData))
         eventInfo.StartDate = this.getUtcToZonedDateTime(
