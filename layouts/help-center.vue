@@ -2,12 +2,9 @@
   <v-app id="inspire">
     <v-navigation-drawer
       v-model="drawer"
+      :clipped="$vuetify.breakpoint.lgAndUp"
       app
-      disable-resize-watcher
       class="nav-bar greybg"
-      :class="{
-        'custom-nav-drawer': !$vuetify.breakpoint.smAndDown && drawer === null,
-      }"
       :width="240"
       :right="$vuetify.rtl"
     >
@@ -200,12 +197,7 @@
       </div>
     </v-app-bar>
 
-    <v-main
-      class="greybg help-center"
-      :class="{
-        'custom-nav-main': !$vuetify.breakpoint.smAndDown && drawer === null,
-      }"
-    >
+    <v-main class="greybg help-center">
       <v-container fluid class="pa-0">
         <v-row>
           <v-col class="pt-1 pb-0">

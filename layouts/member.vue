@@ -2,12 +2,10 @@
   <v-app id="inspire">
     <v-navigation-drawer
       v-model="drawer"
+      :clipped="$vuetify.breakpoint.lgAndUp"
       app
       class="nav-bar greybg"
       :width="240"
-      :class="{
-        'custom-nav-drawer': !$vuetify.breakpoint.smAndDown && drawer === null,
-      }"
       :right="$vuetify.rtl"
     >
       <div class="px-4 pt-3 pb-1">
@@ -252,6 +250,7 @@
         </v-row>
       </v-container>
     </v-main>
+
     <div v-if="logoutClicked">
       <iframe
         id="print"
