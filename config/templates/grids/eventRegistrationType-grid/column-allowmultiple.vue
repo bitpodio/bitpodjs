@@ -42,6 +42,12 @@ export default {
       checkbox: this.item.AllowMultiple,
     }
   },
+  watch: {
+    'item.AllowMultiple': function (newVal) {
+      debugger
+      this.checkbox = newVal
+    },
+  },
   methods: {
     async updateRegistrationType() {
       const url = this.$bitpod.getApiUrl()
