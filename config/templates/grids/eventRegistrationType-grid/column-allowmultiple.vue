@@ -44,7 +44,6 @@ export default {
   },
   watch: {
     'item.AllowMultiple': function (newVal) {
-      debugger
       this.checkbox = newVal
     },
   },
