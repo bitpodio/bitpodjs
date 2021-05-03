@@ -826,11 +826,6 @@ export default {
       const ticket = this.ticketDefaultData()
       this.tickets = [ticket]
     },
-    valid(newVal) {
-      if (newVal) {
-        postGaData('New', this.$t('Drawer.CreateEventAction'))
-      }
-    },
   },
 
   methods: {
