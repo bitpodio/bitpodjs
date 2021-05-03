@@ -800,7 +800,8 @@
     "NeverSignedForMails": "I never signed up for this mailing list",
     "TicketsNotRequiredToggle": "This event does not require tickets",
     "SessionsNotAvailable": "Sessions require events to be ticketed",
-    "Language": "Language"
+    "Language": "Language",
+    "SelectingJPYCurrency": "Decimal rounding off doesn't apply to {currency}"
   },
   "Drawer": {
     "UnSubscribeMsg": "Please select a reason to unsubscribe from newsletter. This will help us to improve our services.",
@@ -982,7 +983,7 @@
       "SetupConnection": "Please setup the connection to make it active."
     },
     "Success": {
-      "UnsubscribeSuccessMsg":"You have unsubscribed successfully",
+      "UnsubscribeSuccessMsg": "You have unsubscribed successfully",
       "CopiedClipboard": "Copied to clipboard",
       "CommentDeletedSuccessfully": "Comment deleted successfully.",
       "FailedDeleteComment": "Failed to delete comment.",
