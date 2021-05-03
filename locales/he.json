@@ -802,7 +802,8 @@
     "NeverSignedForMails": "מעולם לא נרשמתי לרשימת התפוצה הזו",
     "TicketsNotRequiredToggle": "לאירוע זה אין צורך בכרטיסים",
     "SessionsNotAvailable": "הפעלות דורשות כרטיסים לאירועים",
-    "Language": "שפה"
+    "Language": "שפה",
+    "SelectingJPYCurrency": "עיגול עשרוני אינו חל על {currency}"
   },
   "Drawer": {
     "UnSubscribeMsg": "אנא בחר סיבה לביטול הרישום לניוזלטר. זה יעזור לנו לשפר את השירותים שלנו.",
@@ -978,11 +979,11 @@
       "PaymentGatewayDefault": "ניתן לחבר רק חיבור תשלום אחד.",
       "SeatMapDefault": "אזהרת מפת מושב",
       "SeatMapWarning": "ישנם שינויים שלא נשמרו אשר יאבדו אם תסגור מבלי לשמור, האם אתה בטוח?",
-      "SetupWarning":"הגדרת אזהרת חיבור",
-      "SetupConnection":"אנא הגדר את החיבור כדי שיהיה פעיל."
+      "SetupWarning": "הגדרת אזהרת חיבור",
+      "SetupConnection": "אנא הגדר את החיבור כדי שיהיה פעיל."
     },
     "Success": {
-      "UnsubscribeSuccessMsg":"ביטלת את הרישום בהצלחה",
+      "UnsubscribeSuccessMsg": "ביטלת את הרישום בהצלחה",
       "CopiedClipboard": "הועתק ללוח",
       "CommentDeletedSuccessfully": "Comment deleted successfully.",
       "FailedDeleteComment": "Failed to delete comment.",
