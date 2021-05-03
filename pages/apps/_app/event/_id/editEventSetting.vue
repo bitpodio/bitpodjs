@@ -188,32 +188,19 @@ export default {
 
   methods: {
     changeCurrency(currency) {
-      const currencies = [
-        {
-          currencySym: 'XAF',
-          currencyLoc: 'ewo-CM',
-        },
-        {
-          currencySym: 'JPY',
-          currencyLoc: 'ja-JP',
-        },
-      ]
-      currencies.forEach((ele) => {
-        if (ele.currencySym === currency) {
-          this.isJpy = true
-          this.$refs.currencyField.focus()
-          this.ticketDetails.forEach((x) => {
-            if (x.Type === 'Paid') {
-              x.Amount = this.getPriceWithCurrency(x.Amount, currency)
-            }
-          })
-        } else {
-          this.isJpy = false
-          this.ticketDetails.forEach((x) => {
-            if (x.Type === 'Paid') {
-              x.Amount = this.getPriceWithCurrency(x.Amount, currency)
-            }
-          })
+      const currencies = {
+        XAF: 'ewo-CM',
+        JPY: 'ja-JP',
+      }
+      if (currency in currencies) {
+        this.isJpy = true
+        this.$refs.currencyField.focus()
+      } else {
+        this.isJpy = false
+      }
+      this.ticketDetails.forEach((x) => {
+        if (x.Type === 'Paid' || x.Type === 'Donation') {
+          x.Amount = this.getPriceWithCurrency(x.Amount, currency)
         }
       })
     },
