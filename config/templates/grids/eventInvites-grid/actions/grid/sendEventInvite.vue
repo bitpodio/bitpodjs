@@ -1166,6 +1166,7 @@ export default {
         postData.Status = type
       }
       if (type === 'Draft') {
+        postData.ParentId = this.priorInvite.id
         postData.Status = type
       }
       if (this.selectAll) {

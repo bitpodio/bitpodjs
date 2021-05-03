@@ -2,11 +2,9 @@
   <v-app id="inspire">
     <v-navigation-drawer
       v-model="drawer"
+      :clipped="$vuetify.breakpoint.lgAndUp"
       app
       class="nav-bar greybg"
-      :class="{
-        'custom-nav-drawer': !$vuetify.breakpoint.smAndDown && drawer === null,
-      }"
       :width="240"
       :right="$vuetify.rtl"
     >
@@ -328,12 +326,7 @@
       </div>
     </v-app-bar>
 
-    <v-main
-      class="greybg"
-      :class="{
-        'custom-nav-main': !$vuetify.breakpoint.smAndDown && drawer === null,
-      }"
-    >
+    <v-main class="greybg">
       <v-container fluid>
         <v-row>
           <v-col class="pt-0">
@@ -344,6 +337,7 @@
         </v-row>
       </v-container>
     </v-main>
+
     <div v-if="logoutClicked">
       <iframe
         id="print"
@@ -420,19 +414,6 @@ export default {
         to: '/apps/event/list/Registrations/Registrations',
         allowedRoutes: ['/apps/event/registration'],
       },
-      { heading: 'Promotions' },
-      {
-        icon: 'fa fa-building',
-        text: 'Discount Code',
-        to: '/apps/event/list/DiscountCodes/Discount-Codes',
-        allowedRoutes: ['/apps/event/discountcodes'],
-      },
-      { heading: 'Members' },
-      {
-        icon: 'fa fa-users',
-        text: 'Members',
-        to: '/apps/event/list/EventCustomers/Members',
-      },
       {
         icon: 'fa fa-address-book-o',
         text: 'Contacts',
@@ -441,6 +422,13 @@ export default {
           '/apps/event/contacts/',
           'apps/event/list/Contacts/Invites',
         ],
+      },
+      { heading: 'Promotions' },
+      {
+        icon: 'fa fa-building',
+        text: 'Discount Code',
+        to: '/apps/event/list/DiscountCodes/Discount-Codes',
+        allowedRoutes: ['/apps/event/discountcodes'],
       },
     ],
   }),

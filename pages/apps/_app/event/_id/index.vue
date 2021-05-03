@@ -1397,7 +1397,7 @@
               <div v-html="formatField(data.event.CancellationPolicy)"></div>
             </div>
           </v-flex>
-          <v-flex v-if="data.event.HasTickets" class="d-block text-truncate">
+          <v-flex class="d-block text-truncate">
             <v-checkbox
               v-model="data.event.isRefundable"
               dense
@@ -1421,7 +1421,7 @@
               @change="updateReg"
             ></v-checkbox>
           </v-flex>
-          <v-flex class="d-block text-truncate">
+          <v-flex v-if="data.event.HasTickets" class="d-block text-truncate">
             <v-checkbox
               v-model="data.event.SessionTimingConflict"
               dense
@@ -1445,7 +1445,7 @@
               @change="updateReg"
             ></v-checkbox>
           </v-flex>
-          <v-flex class="d-block text-truncate">
+          <v-flex v-if="data.event.HasTickets" class="d-block text-truncate">
             <v-checkbox
               v-model="data.event.ShowAttendeeForm"
               :label="$t('Common.ShowAttendeeForm')"
