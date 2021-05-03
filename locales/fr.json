@@ -5,7 +5,7 @@
     "Login": "Connexion",
     "EventApp": "Evénement",
     "AdminApp": "Administration",
-    "MembershipApp": "Membership",
+    "CommunityApp": "Communauté",
     "SeatMap": "Carte de siège",
     "SeatMapNo": "Carte de siège",
     "SurveyApp": "Enquête",
@@ -800,7 +800,8 @@
     "NeverSignedForMails": "Je ne me suis jamais inscrit à cette liste de diffusion",
     "TicketsNotRequiredToggle": "Cet événement ne nécessite pas de billets",
     "SessionsNotAvailable": "Les sessions nécessitent des billets pour les événements",
-    "Language": "Langue"
+    "Language": "Langue",
+    "SelectingJPYCurrency": "L'arrondi décimal ne s'applique pas aux {currency}"
   },
   "Drawer": {
     "UnSubscribeMsg": "Veuillez sélectionner une raison pour vous désinscrire de la newsletter. Cela nous aidera à améliorer nos services.",
@@ -976,11 +977,11 @@
       "PaymentGatewayDefault": "Une seule connexion de paiement peut être connectée.",
       "SeatMapDefault": "Avertissement de plan de siège",
       "SeatMapWarning": "Certaines modifications non enregistrées seront perdues si vous fermez sans enregistrer, êtes-vous sûr?",
-      "SetupWarning":"Avertissement de connexion de configuration",
-      "SetupConnection":"Veuillez configurer la connexion pour la rendre active."
+      "SetupWarning": "Avertissement de connexion de configuration",
+      "SetupConnection": "Veuillez configurer la connexion pour la rendre active."
     },
     "Success": {
-      "UnsubscribeSuccessMsg":"Vous vous êtes désabonné avec succès",
+      "UnsubscribeSuccessMsg": "Vous vous êtes désabonné avec succès",
       "CopiedClipboard": "Copié dans le presse-papiers",
       "CommentDeletedSuccessfully": "La suppression du commentaire a abouti.",
       "FailedDeleteComment": "Echec de la suppression du commentaire.",

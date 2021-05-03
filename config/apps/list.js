@@ -50,9 +50,9 @@ export const appList = (store) => [
     roles: ['$developer', '$orgowner', 'EventAdmin', 'Events', 'SFIntegration'],
   },
   {
-    name: 'membership',
-    label: 'Common.MembershipApp',
-    css: 'fa fa-users fs-36 red--text',
+    name: 'Community',
+    label: 'Common.CommunityApp',
+    css: 'fa fa-grow fs-36 red--text',
     type: 'route',
     route: '/apps/member/list/Member/Members',
     roles: ['$orguser', '$orgowner', 'EventAdmin', 'EventManager'],
