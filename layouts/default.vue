@@ -2,8 +2,8 @@
   <v-app id="inspire">
     <v-navigation-drawer
       v-model="drawer"
+      :clipped="$vuetify.breakpoint.lgAndUp"
       app
-      disable-resize-watcher
       class="nav-bar greybg"
       :width="240"
     >
@@ -297,6 +297,7 @@
         </v-row>
       </v-container>
     </v-main>
+
     <div v-if="logoutClicked">
       <iframe
         id="print"
