@@ -16,10 +16,10 @@
       </v-card-title>
       <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
         <v-form
+          id="new-xero-form"
           ref="form"
           v-model="valid"
           :lazy-validation="lazy"
-          id="new-xero-form"
           @submit.prevent="onSave(formData)"
         >
           <v-row>
@@ -32,7 +32,7 @@
                 dense
               ></v-text-field>
             </v-col>
-            <v-col cols="12">
+            <!-- <v-col cols="12">
               <v-text-field
                 v-model="formData.RefreshToken"
                 :label="$t('Common.RefreshToken')"
@@ -40,7 +40,7 @@
                 outlined
                 dense
               ></v-text-field>
-            </v-col>
+            </v-col> -->
           </v-row>
         </v-form>
       </v-card-text>
