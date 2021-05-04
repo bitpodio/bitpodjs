@@ -325,14 +325,22 @@
                 <p>
                   <i18n path="Common.SetupEventTickets" />
                 </p>
-                <v-btn
-                  class="ma-2 ml-0 mb-3"
-                  outlined
-                  color="indigo"
-                  @click="addTicketRow"
-                  ><i18n path="Common.AddTickets"
-                /></v-btn>
-                <div id="res-tables">
+                <div class="d-flex align-center flex-wrap">
+                  <v-btn
+                    :disabled="!eventData.HasTickets"
+                    class="ma-2 ml-0 mb-3 mr-8"
+                    outlined
+                    color="indigo"
+                    @click="addTicketRow"
+                    ><i18n path="Common.AddTickets"
+                  /></v-btn>
+                  <v-checkbox
+                    :disabled="isFormProcessing"
+                    v-model="TicketToggle"
+                    :label="$t('Common.TicketsNotRequiredToggle')"
+                  ></v-checkbox>
+                </div>
+                <div id="res-tables" v-if="eventData.HasTickets">
                   <v-simple-table class="event-table">
                     <template v-slot:default>
                       <thead class="e-thead">
@@ -409,6 +417,7 @@
                               :label="$t('Common.StartD')"
                               :field="ticketStartDateField"
                               :rules="ticketStartDateRule(k)"
+                              :has-error-tooltip="true"
                               :on-change="changeTicketStartDate"
                               type="datetime"
                             />
@@ -422,6 +431,7 @@
                               :label="$t('Common.EndD')"
                               :field="ticketEndDateField"
                               :rules="ticketEndDateRule(k)"
+                              :has-error-tooltip="true"
                               :on-change="changeTicketEndDate"
                               type="datetime"
                             />
@@ -435,7 +445,18 @@
                               min="0"
                               :rules="ticketCountRules()"
                               onkeydown="return event.keyCode !== 69 && event.keyCode !== 189"
-                            ></v-text-field>
+                            >
+                              <template v-slot:message="{ message, key }">
+                                <v-tooltip bottom>
+                                  <template v-slot:activator="{ on, attrs }">
+                                    <span v-bind="attrs" v-on="on" :key="key">{{
+                                      message
+                                    }}</span>
+                                  </template>
+                                  <span :key="key">{{ message }}</span>
+                                </v-tooltip>
+                              </template>
+                            </v-text-field>
                           </td>
                           <td class="pa-2 pt-0 e-td" data-title="">
                             <v-btn icon class="mt-1" @click="deleteTicket(k)">
@@ -550,13 +571,14 @@
               ? 'new-singleEvent-tab1-form'
               : 'new-singleEvent-tab2-form'
           "
+          t-id="new-single-event-next"
           ><i18n path="Drawer.Next"
         /></v-btn>
         <SaveBtn
           v-if="currentTab > 2 && !isEventCreate && !isEventPublish"
           color="primary"
           :disabled="
-            isSaveButtonDisabled || !valid || !datevalid || isInvalidEventLink
+            isFormProcessing || !valid || !datevalid || isInvalidEventLink
           "
           depressed
           :action="saveRecord"
@@ -620,7 +642,7 @@ export default {
       loading: false,
       isUniqLinkValid: false,
       currentTab: 1,
-      isSaveButtonDisabled: false,
+      isFormProcessing: false,
       addresslineMessage: '',
       isTicket: true,
       isEventCreate: false,
@@ -689,6 +711,7 @@ export default {
         LocationType: 'Venue',
         VenueName: '',
         _VenueAddress: {},
+        HasTickets: true,
       },
       venueAddress: {
         AddressLine: '',
@@ -813,6 +836,14 @@ export default {
       const errorMessage = this.isInvalidEventLink ? this.uniqueLinkMessage : ''
       return errorMessage
     },
+    TicketToggle: {
+      get() {
+        return !this.eventData.HasTickets
+      },
+      set(newVal) {
+        this.eventData.HasTickets = !newVal
+      },
+    },
   },
 
   watch: {
@@ -927,7 +958,7 @@ export default {
         this.loading = false
         this.isEventCreate = false
         this.isEventPublish = false
-        this.isSaveButtonDisabled = false
+        this.isFormProcessing = false
         this.isTicket = true
         this.isMap = false
         this.valid = false
@@ -1196,7 +1227,7 @@ export default {
       })
       this.$refs.form.validate()
       if (!isValidTicket.includes(false)) {
-        this.isSaveButtonDisabled = true
+        this.isFormProcessing = true
         this.setLoationType()
         const eventInfo = JSON.parse(JSON.stringify(this.eventData))
         eventInfo.StartDate = this.getUtcToZonedDateTime(
@@ -1229,32 +1260,36 @@ export default {
             )}`
           )
           this.eventId = res.id
-          const ticketList = []
-
-          this.tickets.forEach(function (ticket) {
-            ticket.Events = res.id
-            ticket.Amount = parseFloat(ticket.Amount)
-            ticket.TicketCount = parseInt(ticket.TicketCount)
-            ticket.AvailableCount = parseInt(ticket.TicketCount)
-            ticketList.push(ticket)
-          })
-
-          ticketRes = await this.$axios
-            .$post(`${baseUrl}Tickets`, ticketList)
-            .catch((e) => {
-              console.error(
-                `Error in Save function of new single event form, context: create ticket , eventId: ${this.eventId},  baseUrl: ${baseUrl} ticketList: ${this.ticketList} error: ${e}`
-              )
+          if (this.eventData.HasTickets) {
+            const ticketList = []
+            this.tickets.forEach(function (ticket) {
+              ticket.Events = res.id
+              ticket.Amount = parseFloat(ticket.Amount)
+              ticket.TicketCount = parseInt(ticket.TicketCount)
+              ticket.AvailableCount = parseInt(ticket.TicketCount)
+              ticketList.push(ticket)
             })
-          if (ticketRes) {
-            console.debug(
-              `POST call is made to ticket model with response as:-${JSON.stringify(
-                ticketRes
-              )}`
-            )
+
+            ticketRes = await this.$axios
+              .$post(`${baseUrl}Tickets`, ticketList)
+              .catch((e) => {
+                console.error(
+                  `Error in Save function of new single event form, context: create ticket , eventId: ${this.eventId},  baseUrl: ${baseUrl} ticketList: ${this.ticketList} error: ${e}`
+                )
+              })
+            if (ticketRes) {
+              console.debug(
+                `POST call is made to ticket model with response as:-${JSON.stringify(
+                  ticketRes
+                )}`
+              )
+              this.isTicket = false
+              this.isEventCreate = true
+              return ticketRes
+            }
+          } else {
             this.isTicket = false
             this.isEventCreate = true
-            return ticketRes
           }
         }
       }
@@ -1418,12 +1453,24 @@ export default {
         this.isBitpodVirtual = false
         this.eventData.WebinarLink = ''
         this.eventData.JoiningInstruction = ''
+        this.venueAddress.AddressLine = ''
+        this.eventData.VenueName = ''
+        this.venueAddress.City = ''
+        this.venueAddress.State = ''
+        this.venueAddress.Country = ''
+        this.venueAddress.PostalCode = ''
       }
       if (value === 'Bitpod Virtual') {
         this.isVenue = false
         this.isOnlineEvent = false
         this.isMap = false
         this.isBitpodVirtual = true
+        this.venueAddress.AddressLine = ''
+        this.eventData.VenueName = ''
+        this.venueAddress.City = ''
+        this.venueAddress.State = ''
+        this.venueAddress.Country = ''
+        this.venueAddress.PostalCode = ''
       }
     },
     addTicketRow() {

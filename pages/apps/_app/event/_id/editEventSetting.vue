@@ -34,13 +34,23 @@
             </v-col>
             <v-col cols="12" sm="6" md="6" class="pb-0">
               <v-select
+                ref="currencyField"
                 v-model="currency"
                 :items="currencyDropdown"
                 :label="$t('Common.CurrencyReq')"
+                :hint="
+                  isJpy === true
+                    ? $t('Common.SelectingJPYCurrency', {
+                        currency: currency,
+                      })
+                    : ''
+                "
                 required
                 outlined
                 dense
-              ></v-select>
+                @change="changeCurrency($event)"
+              >
+              </v-select>
             </v-col>
             <v-col cols="12" sm="6" md="6" class="pb-0">
               <v-text-field
@@ -105,6 +115,7 @@
 
 <script>
 import gql from 'graphql-tag'
+import currencyFormatter from 'currency-formatter'
 import { rules } from '~/utility/rules.js'
 import event from '~/config/apps/event/gql/event.gql'
 import eventCount from '~/config/apps/event/gql/eventCount.gql'
@@ -141,6 +152,8 @@ export default {
       formData: {},
       uniqueLinkMessage: '',
       rules: rules(this.$i18n),
+      isJpy: false,
+      ticketDetails: [],
     }
   },
   computed: {
@@ -178,8 +191,63 @@ export default {
         e
       )
     }
+    this.getTicketDetails()
   },
   methods: {
+    changeCurrency(currency) {
+      const currencies = {
+        XAF: 'ewo-CM',
+        JPY: 'ja-JP',
+      }
+      if (currency in currencies) {
+        this.isJpy = true
+        this.$refs.currencyField.focus()
+      } else {
+        this.isJpy = false
+      }
+      this.ticketDetails.forEach((x) => {
+        if (x.Type === 'Paid' || x.Type === 'Donation') {
+          x.Amount = this.getPriceWithCurrency(x.Amount, currency)
+        }
+      })
+    },
+    async postTicketData(id, ticketObj) {
+      try {
+        const url = this.$bitpod.getApiUrl()
+        const res = await this.$axios.$patch(`${url}Tickets/${id}`, ticketObj)
+        if (res) {
+          this.ticketDetails = res
+        }
+      } catch (err) {
+        console.log(
+          `Error in pages/apps/event/_id/editEventSettings while making a PATCH call to Ticket model from method postTicketData context:-TicketId:-${id}\nTicketObj:-${ticketObj}`,
+          err
+        )
+      }
+    },
+    getPriceWithCurrency(price, currency) {
+      const currencyPrice = currencyFormatter.format(price, { code: currency })
+      const totalPrice = currencyFormatter.unformat(currencyPrice, {
+        code: currency,
+      })
+      return totalPrice
+    },
+    async getTicketDetails() {
+      const url = this.$bitpod.getApiUrl()
+      try {
+        const res = await this.$axios.$get(
+          `${url}Events/${this.$route.params.id}/getTickets`
+        )
+        if (res) {
+          this.ticketDetails = res
+        }
+      } catch (err) {
+        console.log(
+          `Error in pages/apps/event/_id/editEventSettings while making a GET call to Event model from method getTicketDetails context:-EventId:-${this.$route.params.id}}`,
+          err
+        )
+      }
+    },
     eventLinkLabel() {
       return `${this.$bitpod.getApiUrl().replace('svc/api', 'e')}`
     },
@@ -218,6 +286,10 @@ export default {
             ...this.formData,
           }
         )
+        this.ticketDetails.forEach((ele) => {
+          this.postTicketData(ele.id, ele)
+        })
+
         if (res) {
           this.$eventBus.$emit('event-tickets-currency-updated')
           this.close()

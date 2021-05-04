@@ -1360,6 +1360,13 @@ export default {
           newForm: true,
           editForm: true,
           filterEnable: false,
+          visible(value, data) {
+            const hasTicket =
+              this.context &&
+              this.context.event &&
+              this.context.event.HasTickets
+            return hasTicket
+          },
           rules: [
             function (v) {
               return !!v || this.$t('Messages.Error.TicketSelected')
@@ -2114,9 +2121,16 @@ export default {
           hidden: true,
           inlineEdit: true,
           newForm: true,
-          editForm: true,
+          editForm: false,
           multiple: true,
           filterEnable: false,
+          visible(value, data) {
+            const hasTicket =
+              this.context &&
+              this.context.event &&
+              this.context.event.HasTickets
+            return hasTicket
+          },
           rules: [
             function (v) {
               return !!v || this.$t('Messages.Error.TicketRequired')
@@ -2173,7 +2187,7 @@ export default {
           hidden: false,
           inlineEdit: true,
           newForm: true,
-          editForm: true,
+          editForm: false,
           form: {
             caption: 'Common.StatusRequired',
             displayOrder: 7,
@@ -2268,7 +2282,7 @@ export default {
           sortEnable: true,
           columnWidth: '150px',
           type: 'string',
-          cssClasses: 'col-12 col-md-12',
+          cssClasses: 'col-12 col-md-6',
           hidden: true,
           inlineEdit: true,
           newForm: true,
@@ -2289,7 +2303,7 @@ export default {
           sortEnable: true,
           columnWidth: '150px',
           type: 'string',
-          cssClasses: 'col-12 col-md-12',
+          cssClasses: 'col-12 col-md-6',
           hidden: true,
           inlineEdit: true,
           newForm: true,
@@ -2305,7 +2319,7 @@ export default {
           sortEnable: true,
           columnWidth: '150px',
           type: 'string',
-          cssClasses: 'col-12 col-md-12',
+          cssClasses: 'col-12 col-md-6',
           hidden: true,
           inlineEdit: true,
           newForm: true,
@@ -2321,7 +2335,7 @@ export default {
           sortEnable: true,
           columnWidth: '150px',
           type: 'string',
-          cssClasses: 'col-12 col-md-12',
+          cssClasses: 'col-12 col-md-6',
           hidden: true,
           inlineEdit: true,
           newForm: true,
@@ -2337,7 +2351,7 @@ export default {
           sortEnable: true,
           columnWidth: '150px',
           type: 'string',
-          cssClasses: 'col-12 col-md-12',
+          cssClasses: 'col-12 col-md-6',
           hidden: true,
           inlineEdit: true,
           newForm: true,

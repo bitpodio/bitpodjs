@@ -5,6 +5,7 @@
     "Login": "Login",
     "EventApp": "Event",
     "AdminApp": "Administration",
+    "CommunityApp": "Community",
     "SeatMap": "Seat Map",
     "SeatMapNo": "Seatmap",
     "SurveyApp": "Survey",
@@ -218,6 +219,7 @@
     "IndicatesRequiredField": "*indicates required field",
     "Seatmaps": "Seatmaps",
     "JoinEvent": "Join Event",
+    "StartEvent": "Start Event",
     "NewSeatMap": "New Seat Map",
     "SelectExistingSeatMap": "Select Existing Seat Map",
     "DeleteLayout": "are you sure you want to delete layout",
@@ -318,6 +320,7 @@
     "ConfirmationEmailSent": "Confirmation Email Sent",
     "ResendRegistrationEmail": "Resend Registration Email",
     "JoinSession": "Join Session",
+    "StartSession": "Start Session",
     "NewSession": "New Session",
     "NewScheduleATask": "Schedule a Task",
     "EditScheduleATask": "Edit Schedule Task",
@@ -344,7 +347,7 @@
     "RegisteredOn": "Registered on {date}",
     "EnterEventName": "Enter event name and details to help your audience learn about your event, add details that highlights why someone should attend it.",
     "SetupEventTickets": "Setup event tickets and price, you can also set tickets validity so early birds can be offered better pricing.",
-    "AddTickets": "Add Tickets",
+    "AddTickets": "Add Ticket",
     "Title": "Title*",
     "Type": "Type*",
     "Price": "Price {currency}",
@@ -795,7 +798,11 @@
     "LoginRequired": "Login with your account to use the API Explorer.",
     "SendManyMails": "You have send me too many mails",
     "StopReceiveMails": "I no longer wanted to receive these mails",
-    "NeverSignedForMails": "I never signed up for this mailing list"
+    "NeverSignedForMails": "I never signed up for this mailing list",
+    "TicketsNotRequiredToggle": "This event does not require tickets",
+    "SessionsNotAvailable": "Sessions require events to be ticketed",
+    "Language": "Language",
+    "SelectingJPYCurrency": "Decimal rounding off doesn't apply to {currency}"
   },
   "Drawer": {
     "UnSubscribeMsg": "Please select a reason to unsubscribe from newsletter. This will help us to improve our services.",
@@ -977,7 +984,7 @@
       "SetupConnection": "Please setup the connection to make it active."
     },
     "Success": {
-      "UnsubscribeSuccessMsg":"You have unsubscribed successfully",
+      "UnsubscribeSuccessMsg": "You have unsubscribed successfully",
       "CopiedClipboard": "Copied to clipboard",
       "CommentDeletedSuccessfully": "Comment deleted successfully.",
       "FailedDeleteComment": "Failed to delete comment.",

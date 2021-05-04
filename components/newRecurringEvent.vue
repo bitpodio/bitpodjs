@@ -208,6 +208,7 @@
                   outlined
                   dense
                   :rules="phoneRules()"
+                  t-id="new-recurring-event-phone"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -266,6 +267,7 @@
                   :rules="[rules.onlineEventLink]"
                   outlined
                   dense
+                  t-id="new-recurring-event-online"
                 ></v-text-field>
               </v-col>
             </v-row>
@@ -877,6 +879,7 @@
                             <Select
                               v-model="session.StartTime"
                               :field="startTimeProps"
+                              :has-error-tooltip="true"
                               :rules="validStartTimeRule(k)"
                             />
                           </td>
@@ -887,6 +890,7 @@
                             <Select
                               v-model="session.EndTime"
                               :field="endTimeProps"
+                              :has-error-tooltip="true"
                               :rules="validEndTimeRule(k)"
                             />
                           </td>
@@ -1087,6 +1091,7 @@
               ? 'new-recurringEvent-tab1-form'
               : 'new-recurringEvent-tab2-form'
           "
+          t-id="new-recurring-event-next"
           ><i18n path="Drawer.Next"
         /></v-btn>
         <SaveBtn
@@ -1811,6 +1816,11 @@ export default {
           this.isZoom = false
           this.isLocationMessage = false
         }
+        if (this.sessions[index].LocationType === 'Bitpod Virtual') {
+          this.isGoogleMeet = false
+          this.isZoom = false
+          this.isLocationMessage = false
+        }
       }
     },
     changeDuration(index) {
@@ -2321,6 +2331,7 @@ export default {
           const res = await this.$axios
             .$post(`${baseUrl}Events`, {
               ...this.eventData,
+              HasTickets: true,
             })
             .catch((e) => {
               console.error(

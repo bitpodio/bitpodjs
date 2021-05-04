@@ -172,6 +172,9 @@
             ? ''
             : 'table'
         "
+        :class="{
+          'mt-16 mt-sm-14': this.hasCustomNoDataText && noAction,
+        }"
       >
         <v-data-table
           :key="componentRerenderKey"
@@ -611,6 +614,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    hasCustomNoDataText: {
+      type: String,
+      default: '',
+    },
   },
   data() {
     const headers = getTableHeader(this.content, this.viewName, this)
@@ -650,7 +657,7 @@ export default {
       footerObserver: null,
       winWidth: window.innerWidth,
       itemPerPage: 0,
-      componentRerenderKey: 0,
+      componentRerenderKey: `${this.viewName}-init`,
       noDataText: this.$t('Common.NoDataAvailable'),
     }
   },
@@ -764,6 +771,11 @@ export default {
       }
       return false
     },
+    eveId() {
+      return this.$route.params.app === 'event'
+        ? this.$route.params.id || ''
+        : ''
+    },
   },
   watch: {
     filters() {
@@ -778,6 +790,12 @@ export default {
     value() {
       this.selectedItems = this.value
     },
+    hasCustomNoDataText() {
+      this.noDataText = this.hasCustomNoDataText
+        ? this.hasCustomNoDataText
+        : this.$t('Common.NoDataAvailable')
+      this.componentRerenderKey = `${this.viewName}-${this.eveId}-nodatatextupdated-${this.hasCustomNoDataText}`
+    },
   },
   mounted() {
     setTimeout(() => {
@@ -787,6 +805,9 @@ export default {
     this.$eventBus.$on('eventInvites-grid-refresh', this.refreshGrid)
     this.$eventBus.$on('toggle-snackbar', this.toggleSnackbar)
     this.$eventBus.$on('toggle-confirm', this.toggleConfirm)
+    this.noDataText = this.hasCustomNoDataText
+      ? this.hasCustomNoDataText
+      : this.$t('Common.NoDataAvailable')
     if (this.loadRestData) {
       this.$eventBus.$on('user-created', this.loadRestData)
     }
@@ -807,8 +828,8 @@ export default {
         [`templates/grids/${this.templateFolderName}/${slot}.vue`],
         false
       )
-      this.componentRerenderKey += this.slotTemplates.body ? 1 : 0
     })
+    this.componentRerenderKey = `${this.viewName}-${this.eveId}-slotsfetched`
     const templateName = this.templateFolderName
     ACTION_TYPES.forEach(async (actionType) => {
       this.actionTemplates[actionType] = await this.loadTemplate([
@@ -1196,8 +1217,8 @@ export default {
       this.selectedItems = []
     },
     unselectAllRecord(viewName) {
-      if (viewName === this.viewName) {
-        this.selectedItems = []
+      if (viewName === 'inviteeEventTasks') {
+        this.refreshGrid(viewName)
       }
     },
     async loadRestData() {
@@ -1214,15 +1235,19 @@ export default {
         const getDataFunc = dataSource.getData.call(this, this)
         try {
           this.tableData = await getDataFunc.call(this, options)
-          this.noDataText = this.$t('Common.NoDataAvailable')
-          this.componentRerenderKey += this.slotTemplates.body ? 1 : 0
+          this.noDataText = this.hasCustomNoDataText
+            ? this.hasCustomNoDataText
+            : this.$t('Common.NoDataAvailable')
+          this.componentRerenderKey = `${this.viewName}-${this.eveId}-restfetched`
           this.loading = false
         } catch (e) {
           console.error(
             `Errors in components/common/grid/index.vue while calling method loadRestData`,
             e
           )
-          this.noDataText = this.$t('Common.ServiceUnavailable')
+          this.noDataText = this.hasCustomNoDataText
+            ? this.hasCustomNoDataText
+            : this.$t('Common.ServiceUnavailable')
           this.loading = false
         }
       }
@@ -1280,7 +1305,7 @@ export default {
               }
             : {}
         if (Object.keys(data).length > 0) this.error = ''
-        this.componentRerenderKey += this.slotTemplates.body ? 1 : 0
+        this.componentRerenderKey = `${this.viewName}-${this.eveId}-dataloaded`
         return tableData
       },
       result({ data, loading, networkStatus }) {

@@ -6,6 +6,7 @@
         v-model="date"
         :label="fieldCaption"
         :text-field-props="textFieldProps"
+        :has-error-tooltip="hasErrorTooltip"
         time-format="hh:mm a"
         date-format="MMMM dd, yyyy"
         @input="onCalendarChange"
@@ -43,6 +44,14 @@
               aria-hidden="true"
               @click="iconClick"
             ></i>
+            <template v-if="hasErrorTooltip" v-slot:message="{ message, key }">
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on, attrs }">
+                  <span v-bind="attrs" v-on="on" :key="key">{{ message }}</span>
+                </template>
+                <span :key="key">{{ message }}</span>
+              </v-tooltip>
+            </template>
           </v-text-field>
         </template>
         <v-date-picker v-model="date" scrollable @change="onCalendarChange">
@@ -68,6 +77,10 @@ export default {
     field: { type: String, default: '' },
     rules: { type: Array, default: () => [] },
     onChange: { type: Function, default: () => {} },
+    hasErrorTooltip: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     const dateTime = this.value

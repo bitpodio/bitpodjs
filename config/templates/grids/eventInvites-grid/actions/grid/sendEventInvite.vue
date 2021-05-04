@@ -421,11 +421,7 @@
                         class="ml-10"
                         text
                         small
-                        @click="
-                          registrationRadio = ''
-                          openRadio = ''
-                          priorInvite = {}
-                        "
+                        @click="onResetPriorInvitee"
                       >
                         <v-icon dark left>mdi-replay</v-icon>
                         <i18n path="Drawer.Reset" />
@@ -788,8 +784,10 @@
     </v-dialog>
     <v-dialog v-model="previousInviteDialog" width="600px">
       <v-card>
-        <v-card-title class="d-flex align-start px-2 pl-4 p-0">
-          <h2 class="black--text pt-0 pb-0 text-h5">
+        <v-card-title
+          class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
+        >
+          <h2 class="black--text pt-4 pb-2 ml-n1 text-h5">
             <i18n path="Common.SelectPriorInvite" />
           </h2>
           <v-spacer></v-spacer>
@@ -799,7 +797,7 @@
             </v-btn>
           </div>
         </v-card-title>
-        <v-container class="pt-0 px-4">
+        <v-container class="pt-0 px-4 pb-8 inviteeDialog">
           <Grid
             v-if="!editDraft"
             view-name="inviteeEventTasks"
@@ -909,6 +907,7 @@ export default {
       templateObject: '',
       isFrench: false,
       emailSubject: '',
+      cloneObj: [],
     }
   },
   computed: {
@@ -998,6 +997,12 @@ export default {
     this.$eventBus.$off('itemSelected')
   },
   methods: {
+    onResetPriorInvitee() {
+      this.registrationRadio = ''
+      this.openRadio = ''
+      this.priorInvite = {}
+      this.$eventBus.$emit('unselectAll-record', 'inviteeEventTasks')
+    },
     onPrev() {
       this.curentTab--
       document.getElementsByClassName('invite-inner')[0].scrollTop = 0
@@ -1007,7 +1012,10 @@ export default {
       document.getElementsByClassName('invite-inner')[0].scrollTop = 0
     },
     updateSelectedList(data) {
-      if (data.viewName === 'Contacts') {
+      if (
+        data.viewName === 'Contacts' ||
+        (data.viewName === 'InviteContacts' && !this.editDraft)
+      ) {
         this.selectedList = [...data.items]
       }
     },
@@ -1063,6 +1071,7 @@ export default {
         })
       )
       this.selectedList = data
+      this.cloneObj = data
     },
     content() {
       return this.contents ? this.contents.Contacts : null
@@ -1071,7 +1080,16 @@ export default {
       return this.contents ? this.contents.Event : null
     },
     updateList(data) {
-      if (!this.editDraft) {
+      if (this.editDraft) {
+        this.selectedList = data
+        if (this.cloneObj.length > 0) {
+          this.cloneObj.forEach((ele) => {
+            this.selectedList.push(ele)
+          })
+
+          this.cloneObj = []
+        }
+      } else {
         this.selectedList = data
       }
     },
@@ -1162,6 +1180,7 @@ export default {
         postData.Status = type
       }
       if (type === 'Draft') {
+        postData.ParentId = this.priorInvite.id
         postData.Status = type
       }
       if (this.selectAll) {

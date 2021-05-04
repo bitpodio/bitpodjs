@@ -67,6 +67,7 @@
               <v-col cols="12">
                 <v-text-field
                   v-model="formData.DisplayOrder"
+                  ref="questionField"
                   :rules="[rules.required]"
                   :label="$t('Common.DisplayOrder')"
                   type="number"
@@ -83,7 +84,7 @@
                   dense
                 ></v-checkbox>
               </v-col>
-              <v-col cols="12">
+              <v-col v-if="hasTicket" cols="12">
                 <span><i18n path="Common.OnlyAskWhen" /> </span>
                 <v-select
                   v-model="tickets"
@@ -145,6 +146,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    context: {
+      type: Object,
+      default: () => {},
+    },
   },
   data() {
     return {
@@ -170,7 +175,9 @@ export default {
       snackbar: false,
       timeout: 2000,
       snackbarText: '',
-      formName: 'new-eventRegistration-form',
+      formName: 'new-eventRegistrationQuestion-form',
+      hasTicket:
+        this.context && this.context.event && this.context.event.HasTickets,
     }
   },
   computed: {
@@ -258,13 +265,15 @@ export default {
         })
         .catch((e) => console.log('Error', e))
       if (res) {
-        this.dialog = false
-        this.onReset()
-        this.snackbarText = this.$t(
-          'Messages.Success.QuestionRecordCreatedSuccess'
-        )
-        this.snackbar = true
-        this.refresh()
+        this.onClose()
+        this.$refs.questionField.blur()
+        this.$nextTick(() => {
+          this.snackbarText = this.$t(
+            'Messages.Success.QuestionRecordCreatedSuccess'
+          )
+          this.snackbar = true
+          this.refresh()
+        })
       }
     },
 

@@ -76,30 +76,6 @@
                   outlined
                 ></v-text-field>
               </v-col>
-
-              <v-col cols="12" sm="6" md="6">
-                <v-text-field
-                  v-model="regData.CompanyName"
-                  :label="$t('Common.Organization')"
-                  dense
-                  outlined
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12" sm="6" md="6">
-                <Lookup
-                  v-model="regData.Status"
-                  :field="statusProps"
-                  class="v-tickettype"
-                />
-              </v-col>
-              <div class="col-md-12 pl-3">
-                <v-flex class="d-flex justify-center align-center pb-1">
-                  <h2 class="body-1 pb-1">
-                    <i18n path="Common.PhysicalAddress" />
-                  </h2>
-                  <v-spacer></v-spacer>
-                </v-flex>
-              </div>
               <v-col cols="12" sm="6" md="6">
                 <v-text-field
                   v-model="venueAddress.AddressLine"
@@ -140,50 +116,13 @@
                   outlined
                 ></v-text-field>
               </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="12" sm="6" md="6">
-                <Lookup
-                  v-model="regData.EventId"
-                  :field="eventsProps"
-                  :on-change="eventChange"
-                />
-              </v-col>
-              <v-col cols="12" sm="6" md="6">
-                <v-autocomplete
-                  v-model="regData.TicketId"
-                  :items="tickets"
-                  item-text="codeAmount"
-                  item-value="id"
-                  :label="$t('Common.Tickets')"
-                  multiple
-                  outlined
-                  dense
-                  @change="ticketChange"
-                ></v-autocomplete>
-              </v-col>
               <v-col cols="12" sm="6" md="6">
                 <v-text-field
-                  v-model="regData.TicketQuantity"
-                  :label="$t('Common.TicketQty')"
+                  v-model="regData.CompanyName"
+                  :label="$t('Common.Organization')"
                   dense
                   outlined
-                  min="1"
-                  type="Number"
                 ></v-text-field>
-              </v-col>
-              <v-col cols="12" sm="6" md="6">
-                <v-autocomplete
-                  v-model="regData.SessionId"
-                  :items="sessions"
-                  item-text="Name"
-                  item-value="id"
-                  :label="$t('Common.Sessions')"
-                  :loading="isSessionLoading"
-                  multiple
-                  outlined
-                  dense
-                ></v-autocomplete>
               </v-col>
             </v-row>
           </v-card-text>
@@ -253,6 +192,7 @@ export default {
       isSessionLoading: false,
       valid: false,
       lazy: false,
+      eventHasTickets: true,
       data: {
         event: {},
       },
@@ -336,6 +276,8 @@ export default {
           filters: { where },
         },
       })
+      const tempEvent = this.events.filter((event) => event.id === eventId)
+      this.eventHasTickets = tempEvent[0] && tempEvent[0].HasTickets
       let tickets = formatGQLResult(result.data, 'Ticket')
       tickets = tickets.length > 0 ? tickets : []
       this.tickets = tickets.map(({ id, ...rest }) => ({
@@ -343,7 +285,7 @@ export default {
         codeAmount: `${rest.Code} ${rest.Amount}`,
         ...rest,
       }))
-      if (isReg) {
+      if (isReg && this.eventHasTickets) {
         this.regData.TicketId && this.ticketChange(this.regData.TicketId)
       } else {
         this.regData.TicketId = []
