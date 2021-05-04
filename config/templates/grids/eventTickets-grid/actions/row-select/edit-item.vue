@@ -28,10 +28,10 @@
         </v-card-title>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-form
+            :id="formName"
             ref="form"
             v-model="valid"
             :lazy-validation="lazy"
-            :id="formName"
             @submit.prevent="submitForm"
           >
             <v-row>
@@ -213,6 +213,7 @@ import generalconfiguration from '~/config/apps/event/gql/registrationStatusOpti
 import registrationtype from '~/config/apps/event/gql/registrationType.gql'
 import SaveBtn from '~/components/common/saveButton'
 import { formatGQLResult } from '~/utility/gql.js'
+import { postGaData } from '~/utility/index.js'
 import { rules } from '~/utility/rules.js'
 export default {
   components: {
@@ -325,6 +326,7 @@ export default {
   watch: {
     async dialog(newVal) {
       if (newVal) {
+        postGaData('Edit', this.$t('Common.EditTicket'))
         try {
           const res = await this.getRegistrationType()
           if (res) {
@@ -417,6 +419,7 @@ export default {
     onClose() {
       this.onReset()
       this.dialog = false
+      postGaData('Close', this.$t('Common.EditTicket'))
     },
     getDateLabel(dateLabel) {
       if (this.context.event.BusinessType === 'Recurring') {
@@ -442,6 +445,7 @@ export default {
       this.valid = false
     },
     async onSave() {
+      postGaData(this.$t('Drawer.Save'), this.$t('Common.EditTicket'))
       const url = this.$bitpod.getApiUrl()
       this.getAttendeesId()
       this.formData.Amount = parseFloat(this.Amount)

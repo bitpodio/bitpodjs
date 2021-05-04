@@ -24,10 +24,10 @@
         </v-card-title>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-form
+            id="set-recurring-date-range-form"
             ref="form"
             v-model="validDateRange"
             :lazy-validation="lazy"
-            id="set-recurring-date-range-form"
             @submit.prevent="setSchedule"
           >
             <v-row>
@@ -134,10 +134,10 @@
         </v-card-title>
         <v-card-text class="v-location px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-form
+            id="set-recurring-duration-form"
             ref="durationform"
             v-model="validDuration"
             :lazy-validation="lazy"
-            id="set-recurring-duration-form"
             @submit.prevent="setDuration"
           >
             <v-row>
@@ -194,10 +194,10 @@
         </v-card-title>
         <v-card-text class="v-location px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-form
+            id="set-recurring-phone-form"
             ref="phoneform"
             v-model="validPhone"
             :lazy-validation="lazy"
-            id="set-recurring-phone-form"
             @submit.prevent="setPhone"
           >
             <v-row>
@@ -253,10 +253,10 @@
         </v-card-title>
         <v-card-text class="v-location px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-form
+            id="set-recurring-online-form"
             ref="meetingform"
             v-model="validOnlineMeeting"
             :lazy-validation="lazy"
-            id="set-recurring-online-form"
             @submit.prevent="setOnlineMeeting"
           >
             <v-row>
@@ -316,9 +316,9 @@
         </v-card-title>
         <v-card-text class="v-location px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-form
+            id="set-recurring-custom-form"
             v-model="validCustomAddress"
             :lazy-validation="lazy"
-            id="set-recurring-custom-form"
             @submit.prevent="setCustomLocation"
           >
             <v-row>
@@ -433,10 +433,10 @@
         </v-card-title>
         <v-card-text class="v-location px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-form
+            id="set-recurring-person-form"
             ref="personmeetingform"
             v-model="validPersonMeeting"
             :lazy-validation="lazy"
-            id="set-recurring-person-form"
             @submit.prevent="setPersonMeeting"
           >
             <v-row>
@@ -543,10 +543,10 @@
         </v-card-title>
         <v-card-text class="v-location px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-form
+            id="set-recurring-type-form"
             ref="typeform"
             v-model="validType"
             :lazy-validation="lazy"
-            id="set-recurring-type-form"
             @submit.prevent="setType"
           >
             <v-row>
@@ -633,10 +633,10 @@
                 <i18n path="Common.EnterEventName" />
               </p>
               <v-form
+                id="new-recurringEvent-tab1-form"
                 ref="validBasicInfoForm"
                 v-model="validBasicInfo"
                 :lazy-validation="lazy"
-                id="new-recurringEvent-tab1-form"
                 @submit.prevent="next()"
               >
                 <v-row>
@@ -685,10 +685,10 @@
           <v-tab-item :value="'2'">
             <v-card flat>
               <v-form
+                id="new-recurringEvent-tab2-form"
                 ref="validTicketsForm"
                 v-model="validTickets"
                 :lazy-validation="lazy"
-                id="new-recurringEvent-tab2-form"
                 @submit.prevent="next()"
               >
                 <p>
@@ -1123,6 +1123,7 @@ import { formatGQLResult } from '~/utility/gql.js'
 import { getIdFromAtob } from '~/utility'
 import CustomDate from '~/components/common/form/date.vue'
 import { rules } from '~/utility/rules.js'
+import { postGaData } from '~/utility/index.js'
 import SaveBtn from '~/components/common/saveButton'
 
 const ObjectID5 = (
@@ -1511,6 +1512,11 @@ export default {
       this.tickets = []
       const ticket = this.ticketDefaultData()
       this.tickets = [ticket]
+    },
+    valid(newVal) {
+      if (newVal) {
+        postGaData('New', this.$t('Common.NewRecurringEvent'))
+      }
     },
   },
   methods: {
@@ -2093,6 +2099,7 @@ export default {
       this.onFormClose()
       this.tabs = '1'
       this.resetForm()
+      postGaData('Close', this.$t('Common.NewRecurringEvent'))
     },
     closeForm() {
       this.onFormClose()
@@ -2245,6 +2252,7 @@ export default {
       return isEmpty.includes(true)
     },
     async saveRecord() {
+      postGaData(this.$t('Drawer.Save'), this.$t('Common.NewRecurringEvent'))
       const { Code, Type } = this.tickets
       this.$refs.validSessionsForm.validate()
       this.$refs.locationForm &&

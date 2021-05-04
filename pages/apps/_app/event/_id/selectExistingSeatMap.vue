@@ -7,9 +7,9 @@
       content-class="slide-form"
     >
       <v-form
+        id="select-existing-seatmap-form"
         ref="form"
         v-model="valid"
-        id="select-existing-seatmap-form"
         @submit.prevent="updateLayoutId(item.id)"
       >
         <v-card>
@@ -96,6 +96,7 @@
 </template>
 
 <script>
+import { postGaData } from '~/utility/index.js'
 export default {
   props: {
     selectExistingSeatMap: {
@@ -121,12 +122,20 @@ export default {
       snackbarText: '',
     }
   },
+  watch: {
+    valid(newVal) {
+      if (newVal) {
+        postGaData('Edit', this.$t('Common.SelectExistingSeatmapLayout'))
+      }
+    },
+  },
   mounted() {
     this.getSeatMaps()
   },
   methods: {
     close() {
       this.$emit('update:selectExistingSeatMap', false)
+      postGaData('Close', this.$t('Common.SelectExistingSeatmapLayout'))
     },
     async getSeatMaps() {
       const URL = `${this.$bitpod.getApiUrl()}SeatMaps`

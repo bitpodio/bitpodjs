@@ -36,10 +36,10 @@
         </v-card-title>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-form
+            id="new-orgTask-form"
             ref="form"
             v-model="valid"
             :lazy-validation="lazy"
-            id="new-orgTask-form"
             @submit.prevent="onSave"
           >
             <v-row>
@@ -150,6 +150,7 @@
 <script>
 import { getLookupData } from '~/config/apps/event/rest'
 import { rules } from '~/utility/rules.js'
+import { postGaData } from '~/utility/index.js'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
 export default {
   props: {
@@ -354,6 +355,17 @@ export default {
       }
     },
   },
+  watch: {
+    dialog(newVal) {
+      if (newVal) {
+        const label =
+          this.type === 'New'
+            ? this.$t('Common.NewScheduleATask')
+            : this.$t('Common.EditScheduleATask')
+        postGaData('New', label)
+      }
+    },
+  },
   mounted() {
     this.setDueDate()
   },
@@ -502,8 +514,18 @@ export default {
     closeForm() {
       this.dialog = false
       this.resetForm()
+      const label =
+        this.type === 'New'
+          ? this.$t('Common.NewScheduleATask')
+          : this.$t('Common.EditScheduleATask')
+      postGaData('Close', label)
     },
     async onSave() {
+      const label =
+        this.type === 'New'
+          ? this.$t('Common.NewScheduleATask')
+          : this.$t('Common.EditScheduleATask')
+      postGaData(this.$t('Drawer.Save'), label)
       this.isSaveButtonDisabled = true
       const baseUrl = this.$bitpod.getApiUrl()
       this.task.Day = parseInt(this.Day)

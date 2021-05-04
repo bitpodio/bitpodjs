@@ -165,6 +165,7 @@ import { getLookupData } from '~/config/apps/event/rest'
 import { rules } from '~/utility/rules.js'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import SaveBtn from '~/components/common/saveButton'
+import { postGaData } from '~/utility/index.js'
 export default {
   components: {
     SaveBtn,
@@ -363,6 +364,11 @@ export default {
     dialog(newValue, oldValue) {
       if (newValue) {
         this.task = { ...this.item } || {}
+        const label =
+          this.buttonLabel === 'Edit Activity'
+            ? this.$t('Common.EditScheduleATask')
+            : this.$t('Common.NewScheduleATask')
+        postGaData('New', label)
       }
       this.isAction = this.item && this.item.Status === 'Wait for an Action'
       if (this.item && this.item.Category === 'Survey Invite') {
@@ -523,8 +529,18 @@ export default {
       this.dialog = false
       this.$eventBus.$emit('dialogOpen')
       this.resetForm()
+      const label =
+        this.buttonLabel === 'Edit Activity'
+          ? this.$t('Common.EditScheduleATask')
+          : this.$t('Common.NewScheduleATask')
+      postGaData('Close', label)
     },
     async onSave() {
+      const label =
+        this.buttonLabel === 'Edit Activity'
+          ? this.$t('Common.EditScheduleATask')
+          : this.$t('Common.NewScheduleATask')
+      postGaData(this.$t('Drawer.Save'), label)
       this.isSaveButtonDisabled = true
       const eventId = this.$route.params.id
       const baseUrl = this.$bitpod.getApiUrl()

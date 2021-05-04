@@ -358,6 +358,7 @@ import OldSite from '~/components/common/oldsite'
 import Theme from '~/components/common/theme'
 import Upgrade from '~/components/common/upgrade'
 import userUtils from '~/utility/userApps'
+import { postGaData } from '~/utility/index.js'
 const murmurhash = require('murmurhash')
 export default {
   middleware: ['auth', 'authorization'],
@@ -435,6 +436,18 @@ export default {
   computed: {
     currentPage() {
       return this.$route.path
+    },
+  },
+  watch: {
+    dialog1(newVal) {
+      if (newVal) {
+        postGaData('New', this.$t('Drawer.CreateEventAction'))
+      }
+    },
+    dialog(newVal) {
+      if (newVal) {
+        postGaData('New', this.$t('Common.NewRecurringEvent'))
+      }
     },
   },
   async created() {

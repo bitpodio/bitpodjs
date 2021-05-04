@@ -133,6 +133,7 @@ import eventRegistrationTicketSlot from '~/config/apps/event/gql/eventRegistrati
 import { formatGQLResult } from '~/utility/gql.js'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import SaveBtn from '~/components/common/saveButton'
+import { postGaData } from '~/utility/index.js'
 export default {
   components: {
     SaveBtn,
@@ -213,6 +214,13 @@ export default {
       ]
     },
   },
+  watch: {
+    isRefund(newVal) {
+      if (newVal) {
+        postGaData('New', this.$t('Common.RefundRequest'))
+      }
+    },
+  },
   mounted() {
     this.isFullRefund()
   },
@@ -230,6 +238,7 @@ export default {
       }
     },
     close() {
+      postGaData('Close', this.$t('Common.RefundRequest'))
       this.$emit('update:isRefund', false)
       if (this.regData._Refund !== null) {
         this.refund = { ...this.regData._Refund }
@@ -246,6 +255,7 @@ export default {
       this.$apollo.queries.data.refresh()
     },
     async onSave() {
+      postGaData(this.$t('Drawer.Save'), this.$t('Common.RefundRequest'))
       const baseUrl = this.$bitpod.getApiUrl()
       this.refundData._Refund = this.refund
       const regId = this.$route.params.id
