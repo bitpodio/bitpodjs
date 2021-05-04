@@ -803,7 +803,9 @@
     "TicketsNotRequiredToggle": "इस घटना के लिए टिकट की आवश्यकता नहीं है",
     "SessionsNotAvailable": "सत्र के लिए टिकटों की घटनाओं की आवश्यकता होती है",
     "Language": "भाषा",
-    "SelectingJPYCurrency": "दशमलव राउंडिंग बंद लागू नहीं होता है {currency}"
+    "SelectingJPYCurrency": "दशमलव राउंडिंग बंद लागू नहीं होता है {currency}",
+    "Reconnect":"फिर से कनेक्ट",
+    "Expired": "समय सीमा समाप्त"
   },
   "Drawer": {
     "UnSubscribeMsg": "कृपया न्यूज़लेटर से सदस्यता समाप्त करने का कारण चुनें। इससे हमें अपनी सेवाओं को बेहतर बनाने में मदद मिलेगी।",

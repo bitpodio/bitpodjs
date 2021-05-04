@@ -16,10 +16,10 @@
       </v-card-title>
       <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
         <v-form
+          id="new-freshbooks-form"
           ref="form"
           v-model="valid"
           :lazy-validation="lazy"
-          id="new-freshbooks-form"
           @submit.prevent="onSave(formData)"
         >
           <v-row>
@@ -27,15 +27,6 @@
               <v-text-field
                 v-model="formData.AccountID"
                 :label="$t('Common.AccountId')"
-                :rules="[rules.required]"
-                outlined
-                dense
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                v-model="formData.RefreshToken"
-                :label="$t('Common.RefreshToken')"
                 :rules="[rules.required]"
                 outlined
                 dense
