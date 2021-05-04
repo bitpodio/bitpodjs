@@ -32,15 +32,6 @@
                 dense
               ></v-text-field>
             </v-col>
-            <!-- <v-col cols="12">
-              <v-text-field
-                v-model="formData.RefreshToken"
-                :label="$t('Common.RefreshToken')"
-                :rules="[rules.required]"
-                outlined
-                dense
-              ></v-text-field>
-            </v-col> -->
           </v-row>
         </v-form>
       </v-card-text>
