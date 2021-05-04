@@ -1118,7 +1118,6 @@ export default {
       }
     },
     previousInviteSelect(data) {
-      debugger
       if (data && data.length) {
         this.priorInvite = data[0]
       } else {
