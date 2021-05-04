@@ -64,8 +64,8 @@
                     color="grey"
                     @click="onSetup(item)"
                   >
-                    Re-Connect</v-btn
-                  >
+                    <i18n path="Common.Reconnect"
+                  /></v-btn>
                   <div
                     v-if="
                       item.Status &&
@@ -75,7 +75,7 @@
                     "
                     class="body-1 grey--text text--darken-1 d-block text-truncate mt-1"
                   >
-                    Expired
+                    <i18n path="Common.Expired" />
                   </div>
                   <div
                     v-if="!item.Status && !hover && item.MetaData.isActive"

@@ -801,7 +801,9 @@
     "TicketsNotRequiredToggle": "Cet événement ne nécessite pas de billets",
     "SessionsNotAvailable": "Les sessions nécessitent des billets pour les événements",
     "Language": "Langue",
-    "SelectingJPYCurrency": "L'arrondi décimal ne s'applique pas aux {currency}"
+    "SelectingJPYCurrency": "L'arrondi décimal ne s'applique pas aux {currency}",
+    "Reconnect":"Reconnecter",
+    "Expired": "Expiré"
   },
   "Drawer": {
     "UnSubscribeMsg": "Veuillez sélectionner une raison pour vous désinscrire de la newsletter. Cela nous aidera à améliorer nos services.",
