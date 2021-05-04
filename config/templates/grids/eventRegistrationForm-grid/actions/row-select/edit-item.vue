@@ -31,10 +31,10 @@
         </v-card-title>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-form
+            :id="formName"
             ref="form"
             v-model="valid"
             :lazy-validation="lazy"
-            :id="formName"
             @submit.prevent="onSave"
           >
             <v-row>
@@ -102,6 +102,7 @@
 import gql from 'graphql-tag'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import { formatGQLResult } from '~/utility/gql.js'
+import { postGaData } from '~/utility/index.js'
 import { rules } from '~/utility/rules.js'
 export default {
   props: {
@@ -158,6 +159,11 @@ export default {
         this.refresh()
       }
     },
+    valid(newVal) {
+      if (newVal) {
+        postGaData('Edit', this.$t('Common.EditRegistrationForm'))
+      }
+    },
   },
   async mounted() {
     try {
@@ -211,8 +217,10 @@ export default {
     onClose() {
       this.dialog = false
       this.onReset()
+      postGaData('Close', this.$t('Common.EditRegistrationForm'))
     },
     async onSave() {
+      postGaData(this.$t('Drawer.Save'), this.$t('Common.EditRegistrationForm'))
       this.formData.ControlType = this.controlType
       this.formData.DisplayOrder = parseInt(this.formData.DisplayOrder)
       if (

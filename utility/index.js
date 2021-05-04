@@ -341,7 +341,23 @@ export function getIdFromAtob(encodedId) {
   return encodedId ? atob(encodedId).split(':')[1] : ''
 }
 
-// export function postGaData(obj) {
-//   console.debug('postGaData', obj)
-//   window.ga('send', obj)
-// }
+export function postGaData(action, formTitle) {
+  const obj = {
+    hitType: 'event',
+    eventCategory: 'Form',
+    eventAction:
+      action.toLowerCase() === 'new' || action.toLowerCase() === 'edit'
+        ? 'Show'
+        : action.toLowerCase() === 'close'
+        ? 'Close'
+        : 'Button-Click',
+    eventLabel:
+      action.toLowerCase() === 'new' ||
+      action.toLowerCase() === 'edit' ||
+      action.toLowerCase() === 'close'
+        ? formTitle
+        : formTitle + ' > ' + action,
+  }
+  console.debug('Post Data', obj)
+  window.ga('send', obj)
+}

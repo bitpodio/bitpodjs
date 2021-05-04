@@ -9,18 +9,18 @@
         </h2>
         <v-spacer></v-spacer>
         <div>
-          <v-btn icon @click.native="onClose">
+          <v-btn icon @click.native="onClose($t('Common.GoogleDriveSetup'))">
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </div>
       </v-card-title>
       <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
         <v-form
+          id="new-gdrive-form"
           ref="form"
           v-model="valid"
           :lazy-validation="lazy"
-          id="new-gdrive-form"
-          @submit.prevent="onSave(formData)"
+          @submit.prevent="onSave(formData, $t('Common.GoogleDriveSetup'))"
         >
           <i18n path="Common.IntegrateWithGoogleDrive" />
           <v-row>
@@ -72,6 +72,7 @@
 
 <script>
 import { rules } from '~/utility/rules.js'
+import { postGaData } from '~/utility/index.js'
 export default {
   props: {
     item: {
@@ -101,6 +102,13 @@ export default {
       formData: { ...this.item },
       lazy: false,
     }
+  },
+  watch: {
+    valid(newVal) {
+      if (newVal) {
+        postGaData('New', this.$t('Common.GoogleDriveSetup'))
+      }
+    },
   },
 }
 </script>

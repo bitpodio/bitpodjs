@@ -28,11 +28,11 @@
         </v-card-title>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-form
+            id="assign-role-form"
             ref="form"
             v-model="valid"
             :lazy-validation="lazy"
             @submit.prevent="onSave"
-            id="assign-role-form"
           >
             <v-row>
               <v-col cols="12">
@@ -79,6 +79,7 @@
 
 <script>
 import { rules } from '~/utility/rules.js'
+import { postGaData } from '~/utility/index.js'
 export default {
   props: {
     refresh: {
@@ -99,6 +100,13 @@ export default {
       error: '',
     }
   },
+  watch: {
+    valid(newVal) {
+      if (newVal) {
+        postGaData('Edit', this.$t('Common.AssignRole'))
+      }
+    },
+  },
   mounted() {
     this.getRoles()
   },
@@ -111,8 +119,10 @@ export default {
       this.$refs.form.reset()
       this.dialog = false
       this.message = ''
+      postGaData('Close', this.$t('Common.AssignRole'))
     },
     async onSave() {
+      postGaData(this.$t('Drawer.Save'), this.$t('Common.AssignRole'))
       if (this.roles !== '') {
         this.message = ''
       }
