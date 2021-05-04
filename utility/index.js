@@ -337,11 +337,6 @@ export function getIdFromAtob(encodedId) {
   return encodedId ? atob(encodedId).split(':')[1] : ''
 }
 
-// export function postGaData(obj) {
-//   console.debug('postGaData', obj)
-//   window.ga('send', obj)
-// }
-
 export function postGaData(action, formTitle) {
   const obj = {
     hitType: 'event',
@@ -359,6 +354,6 @@ export function postGaData(action, formTitle) {
         ? formTitle
         : formTitle + ' > ' + action,
   }
-  console.log('Post Data', obj)
+  console.debug('Post Data', obj)
   window.ga('send', obj)
 }
