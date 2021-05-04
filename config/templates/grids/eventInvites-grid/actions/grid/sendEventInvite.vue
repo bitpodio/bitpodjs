@@ -1077,7 +1077,9 @@ export default {
       return this.contents ? this.contents.Contacts : null
     },
     CRMcontent() {
-      return this.contents ? this.contents.Event : null
+      return this.contents
+        ? this.contents.Event || this.contents.Contacts
+        : null
     },
     updateList(data) {
       if (this.editDraft) {
