@@ -353,28 +353,32 @@ export default {
         icon: 'fa fa-calendar',
         text: 'Events',
         to: '/apps/event/list/Event/live-and-draft-event',
+        allowedRoutes: [
+          '/apps/event/list/Event/eventInvitaionHistory',
+          '/apps/event/event/',
+        ],
       },
       {
         icon: 'fa fa-user-plus',
         text: 'Registrations',
         to: '/apps/event/list/Registrations/Registrations',
+        allowedRoutes: ['/apps/event/registration'],
+      },
+      {
+        icon: 'fa fa-address-book-o',
+        text: 'Contacts',
+        to: '/apps/event/list/Contacts/Contacts',
+        allowedRoutes: [
+          '/apps/event/contacts/',
+          'apps/event/list/Contacts/Invites',
+        ],
       },
       { heading: 'Promotions' },
       {
         icon: 'fa fa-building',
         text: 'Discount Code',
         to: '/apps/event/list/DiscountCodes/Discount-Codes',
-      },
-      { heading: 'Members' },
-      {
-        icon: 'fa fa-users',
-        text: 'Members',
-        to: '/apps/event/list/EventCustomers/Members',
-      },
-      {
-        icon: 'fa fa-address-book-o',
-        text: 'Contacts',
-        to: '/apps/event/list/Contacts/Contacts',
+        allowedRoutes: ['/apps/event/discountcodes'],
       },
     ],
   }),
