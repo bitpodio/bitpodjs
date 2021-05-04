@@ -326,6 +326,7 @@ export default {
           allowedRoutes: [
             '/apps/member/contacts/',
             'apps/member/list/Contacts/Invites',
+            'apps/member/event/invite/',
           ],
         },
       ],
