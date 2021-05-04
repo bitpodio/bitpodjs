@@ -43,7 +43,7 @@ export default {
     }
   },
   watch: {
-    'item.AllowMultiple': function (newVal) {
+    'item.AllowMultiple'(newVal) {
       this.checkbox = newVal
     },
   },
