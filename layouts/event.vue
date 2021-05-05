@@ -16,7 +16,6 @@
           <template v-slot:activator="{ on, attrs }">
             <v-btn
               v-bind="attrs"
-              outlined
               small
               color="primary"
               depressed
@@ -199,7 +198,6 @@
           <template v-slot:activator="{ on, attrs }">
             <v-btn
               v-bind="attrs"
-              outlined
               small
               color="primary"
               depressed
@@ -246,6 +244,7 @@
         </v-menu>
       </div>
       <Help class="d-none d-sm-inline" />
+      <LanguageSwitcher />
       <AppDrawer />
       <div v-if="$auth.$state.loggedIn" class="ml-3">
         <v-menu
