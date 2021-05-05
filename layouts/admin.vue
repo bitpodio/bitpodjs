@@ -16,7 +16,6 @@
           v-bind="attrs"
           color="blue darken-2"
           dark
-          outlined
           small
           depressed
           class="mx-3 wd-full"
@@ -143,13 +142,12 @@
         <v-spacer></v-spacer>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <div>
+      <div class="d-none d-sm-flex">
         <v-btn
           v-bind="attrs"
           color="blue darken-2"
           dark
           depressed
-          outlined
           small
           class="mx-3"
           v-on="on"
@@ -159,6 +157,7 @@
         </v-btn>
       </div>
       <Help class="d-none d-sm-inline" />
+      <LanguageSwitcher />
       <AppDrawer />
       <div v-if="$auth.$state.loggedIn" class="ml-3">
         <v-menu
