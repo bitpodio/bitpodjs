@@ -259,24 +259,6 @@
                 />
               </div>
             </div>
-
-            <div
-              class="align-center d-flex flex-row rounded event-tile mr-2 mb-2"
-            >
-              <div
-                class="pa-2 primary d-flex justify-center align-center event-tile-left"
-              >
-                <i class="fa fa-calendar2" aria-hidden="true"></i>
-              </div>
-              <div class="d-flex flex-column pa-2 event-tile-right greybg">
-                <i18n
-                  path="Common.29Days"
-                  class="event-tile-value text-truncate"
-                />
-
-                <i18n path="Common.OpensIn" class="caption text-truncate" />
-              </div>
-            </div>
           </v-flex>
 
           <v-stepper
@@ -1386,12 +1368,6 @@ export default {
       eventLocationType: '',
     }
   },
-  mounted() {
-    this.$eventBus.$on('update-event-details', this.refresh)
-  },
-  beforeDestroy() {
-    this.$eventBus.$off('update-event-details')
-  },
   computed: {
     content() {
       return this.contents ? this.contents.Event : null
@@ -1469,6 +1445,12 @@ export default {
       }
       return dataObj
     },
+  },
+  mounted() {
+    this.$eventBus.$on('update-event-details', this.refresh)
+  },
+  beforeDestroy() {
+    this.$eventBus.$off('update-event-details')
   },
   methods: {
     openOtherDialog(image) {
