@@ -15,7 +15,6 @@
           <template v-slot:activator="{ on, attrs }">
             <v-btn
               v-bind="attrs"
-              outlined
               small
               color="primary"
               depressed
@@ -162,7 +161,6 @@
           <template v-slot:activator="{ on, attrs }">
             <v-btn
               v-bind="attrs"
-              outlined
               small
               color="primary"
               depressed
