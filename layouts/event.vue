@@ -3,6 +3,9 @@
     <v-navigation-drawer
       v-model="drawer"
       :clipped="$vuetify.breakpoint.lgAndUp"
+      :class="{
+        'custom-nav-drawer': !$vuetify.breakpoint.smAndDown && drawer === null,
+      }"
       app
       class="nav-bar greybg"
       :width="240"
@@ -194,7 +197,7 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <div class="d-none d-sm-flex">
-        <v-menu>
+        <v-menu offset-y>
           <template v-slot:activator="{ on, attrs }">
             <v-btn
               v-bind="attrs"
@@ -325,7 +328,12 @@
       </div>
     </v-app-bar>
 
-    <v-main class="greybg">
+    <v-main
+      class="greybg"
+      :class="{
+        'custom-nav-main': !$vuetify.breakpoint.smAndDown && drawer === null,
+      }"
+    >
       <v-container fluid>
         <v-row>
           <v-col class="pt-0">
