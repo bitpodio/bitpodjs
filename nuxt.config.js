@@ -266,7 +266,7 @@ export default {
     },
     basePublicPath: process.env.PUBLIC_PATH || '',
     gaTrackingCode: process.env.GET_TRACKING_CODE || 'UA-194759007-1',
-    gaGtmCode: process.env.GET_GTM_CODE || 'GTM-54VGK22',
+    gaGtmCode: process.env.GET_GTM_CODE || 'GTM-MPVDV7X',
     seedValue:
       process.env.GET_SEED_VALUE || '4bd6319d-ff4e-4e73-bd9b-8c9d4dc5d4c0',
     cdnUri:
