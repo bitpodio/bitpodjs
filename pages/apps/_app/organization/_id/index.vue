@@ -96,7 +96,6 @@
           </v-row>
         </div>
         <div
-          v-if="content"
           class="xs12 sm4 md4 lg4 boxview pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
           <div class="sticky d-flex flex-column justify-center boxview">
@@ -109,14 +108,15 @@
             </div>
             <v-divider></v-divider>
           </div>
-          <Grid
-            view-name="organizationBusinessUnit"
-            :content="content"
-            class="mt-n12"
-          />
+          <div v-if="content">
+            <Grid
+              view-name="organizationBusinessUnit"
+              :content="content"
+              class="mt-n12"
+            />
+          </div>
         </div>
         <div
-          v-if="content"
           class="xs12 sm4 md4 lg4 boxview boxviewlarge pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
           <div class="sticky d-flex flex-column justify-center boxview">
@@ -129,14 +129,15 @@
             </div>
             <v-divider></v-divider>
           </div>
-          <Grid
-            view-name="organizationProductSubscription"
-            :content="content"
-            class="mt-n12"
-          />
+          <div v-if="content">
+            <Grid
+              view-name="organizationProductSubscription"
+              :content="content"
+              class="mt-n12"
+            />
+          </div>
         </div>
         <div
-          v-if="content"
           class="xs12 sm4 md4 lg4 boxview pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
           <div class="sticky d-flex flex-column justify-center boxview">
@@ -149,11 +150,13 @@
             </div>
             <v-divider></v-divider>
           </div>
-          <Grid
-            view-name="organizationTasks"
-            :content="content"
-            class="mt-n12"
-          />
+          <div v-if="content">
+            <Grid
+              view-name="organizationTasks"
+              :content="content"
+              class="mt-n12"
+            />
+          </div>
         </div>
         <div
           class="xs12 sm4 md4 lg4 boxview pa-3 pb-6 mr-2 mb-4 pb-0 elevation-1 rounded-lg"

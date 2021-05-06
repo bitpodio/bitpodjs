@@ -17,6 +17,7 @@ query($filters: JSON, $badgeFilter: JSON, $eventId: String) {
           chatChannel
           RegistrationSiteTemplate
           ShowAttendeeForm
+          HasTickets
           CapturePoint
           AutoUpdateSEOElements
           SEOTitle

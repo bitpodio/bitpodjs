@@ -1,8 +1,5 @@
 <template>
   <v-col class="px-0">
-    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
-      <div class="text-center">{{ snackbarText }}</div>
-    </v-snackbar>
     <v-dialog
       v-model="dialog"
       persistent
@@ -411,6 +408,7 @@ import { rules } from '~/utility/rules.js'
 import event from '~/config/apps/event/gql/event.gql'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import { formatGQLResult } from '~/utility/gql.js'
+import { postGaData } from '~/utility/index.js'
 import Timezone from '~/components/common/form/timezone'
 import SaveBtn from '~/components/common/saveButton'
 import File from '~/components/common/form/file.vue'
@@ -432,6 +430,10 @@ export default {
       type: Function,
       required: false,
       default: () => false,
+    },
+    viewName: {
+      type: String,
+      default: '',
     },
   },
   data() {
@@ -491,6 +493,9 @@ export default {
       status: '',
       privacy: '',
       currency: '',
+      snackbar: false,
+      snackbarText: this.$t('Messages.Success.EventDetailsUpdateSuccess'),
+      timeout: '3000',
     }
   },
   computed: {
@@ -605,6 +610,7 @@ export default {
     },
     getQuestions() {
       this.dialog = true
+      postGaData('Edit', this.$t('Common.EditEvent'))
     },
     outsideClicked() {
       this.$refs.dateTimeComponent.okHandler()
@@ -649,6 +655,7 @@ export default {
       //   this.$emit('update:eventForm', false)
       //   this.onReset()
       this.dialog = false
+      postGaData('Close', this.$t('Common.EditEvent'))
     },
     getAddressData(addressData, placeResultData, id) {
       this.addressClicked = true
@@ -679,6 +686,7 @@ export default {
       }
     },
     async onSave() {
+      postGaData(this.$t('Drawer.Save'), this.$t('Common.EditEvent'))
       const url = this.$bitpod.getApiUrl()
       this.formData.Tags = this.tags
       this.formData.StartDate = this.StartDate
@@ -723,7 +731,13 @@ export default {
           })
           if (res) {
             this.onClose()
-            this.refresh()
+
+            this.$eventBus.$emit(
+              'toggle-snackbar',
+              this.viewName,
+              this.snackbarText,
+              3000
+            )
             this.data.event = res
           }
         } catch (e) {
@@ -744,7 +758,12 @@ export default {
           })
           if (res) {
             this.onClose()
-            this.refresh()
+            this.$eventBus.$emit(
+              'toggle-snackbar',
+              this.viewName,
+              this.snackbarText,
+              3000
+            )
             return (this.data.event = res)
           }
         } catch (e) {

@@ -1,5 +1,10 @@
 <template>
   <v-flex class="greybg">
+    <div class="seatmap-inner">
+      <div class="fs-18 min-h36 mt-3">
+        <i18n path="Common.SeatMapNo" />
+      </div>
+    </div>
     <v-col class="d-flex flex-wrap greybg pa-0 pt-10 seatmap-inner">
       <v-hover v-slot:default="{ hover }" open-delay="200">
         <nuxt-link :to="seatmapRoute" class="text-decoration-none">

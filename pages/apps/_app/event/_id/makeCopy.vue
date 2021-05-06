@@ -354,6 +354,7 @@ import eventCount from '~/config/apps/event/gql/eventCount.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import CustomDate from '~/components/common/form/date.vue'
 import { getIdFromAtob } from '~/utility'
+import { postGaData } from '~/utility/index.js'
 import SaveBtn from '~/components/common/saveButton'
 
 export default {
@@ -517,6 +518,11 @@ export default {
     id() {
       this.$apollo.queries.data.refresh()
     },
+    valid(newVal) {
+      if (newVal) {
+        postGaData('Edit', this.$t('Common.CopyEvent'))
+      }
+    },
   },
   methods: {
     changeAddressData(value) {
@@ -628,6 +634,7 @@ export default {
     close() {
       this.$emit('update:isMakeCopy', false)
       this.$refs.form.reset()
+      postGaData('Close', this.$t('Common.CopyEvent'))
     },
     setObjects() {
       this.eventData.isOfferCode = this.isOfferCode
@@ -637,6 +644,7 @@ export default {
       this.eventData.isTickets = this.isTickets
     },
     async onSave() {
+      postGaData(this.$t('Drawer.Save'), this.$t('Common.CopyEvent'))
       this.saveBtnDisabled = true
       this.setObjects()
       if (

@@ -94,6 +94,7 @@ import { formatGQLResult } from '~/utility/gql.js'
 import organization from '~/config/apps/admin/gql/organization.gql'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import SaveButton from '~/components/common/saveButton'
+import { postGaData } from '~/utility/index.js'
 
 export default {
   components: {
@@ -160,6 +161,13 @@ export default {
       workingDay: [],
     }
   },
+  watch: {
+    valid(newVal) {
+      if (newVal) {
+        postGaData('Edit', this.$t('Common.EditOrganizationSetting'))
+      }
+    },
+  },
   async mounted() {
     try {
       const res = await this.getDropDownData('AvailableHour')
@@ -181,8 +189,13 @@ export default {
     onClose() {
       this.$emit('update:editWorkTiming', false)
       this.onReset()
+      postGaData('Close', this.$t('Common.EditOrganizationSetting'))
     },
     async onSave() {
+      postGaData(
+        this.$t('Drawer.Save'),
+        this.$t('Common.EditOrganizationSetting')
+      )
       const url = this.$bitpod.getApiUrl()
       this.formData.weekDay = this.selectedDays
         .filter((x) => x.selected)

@@ -604,7 +604,12 @@
               </v-list-item>
             </v-list>
           </div>
-          <div v-if="event.BusinessType === 'Single'">
+          <div
+            v-if="
+              event.BusinessType === 'Single' &&
+              registration.EventList.HasTickets
+            "
+          >
             <v-expansion-panels
               accordion
               flat
@@ -825,7 +830,7 @@
                   outlined
                   color="success"
                   :disabled="isPast"
-                  @click="startEvent(event.UniqLink)"
+                  @click="startEvent(event.UniqLink, true)"
                 >
                   <i18n path="Common.JoinEvent" /><v-icon right>
                     mdi-video

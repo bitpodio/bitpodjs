@@ -23,7 +23,7 @@
           :key="updateCount"
           :dialog.sync="dialog"
           :button-label="$t('Common.EditActivity')"
-          button-icon="fa fa-pencil-square-o"
+          button-icon="mdi-calendar-edit"
           :item="item"
           :refresh="refresh"
           @update-snackbar="updateSnackbar"

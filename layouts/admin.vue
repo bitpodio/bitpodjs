@@ -2,29 +2,26 @@
   <v-app id="inspire">
     <v-navigation-drawer
       v-model="drawer"
-      app
-      class="nav-bar greybg"
-      :width="240"
+      :clipped="$vuetify.breakpoint.lgAndUp"
       :class="{
         'custom-nav-drawer': !$vuetify.breakpoint.smAndDown && drawer === null,
       }"
+      app
+      class="nav-bar greybg"
+      :width="240"
       :right="$vuetify.rtl"
     >
-      <div class="d-flex d-sm-none pl-3">
-        <span class="bitpod-logo logo-ds">
-          <v-img
-            :src="$config.cdnUri + 'bitpod-logo-blk2.svg'"
-            class="logofull mr-2"
-          ></v-img>
-        </span>
+      <div class="px-4 pt-3 pb-1">
+        <i18n path="Common.AdminApp" class="app-title-text" />
       </div>
-      <div class="text-center mt-4 pl-1">
+      <div class="d-block d-sm-none my-3">
         <v-btn
           v-bind="attrs"
           color="blue darken-2"
           dark
+          small
           depressed
-          class="ma-3 block wd-full my-0 mb-1 ml-n4"
+          class="mx-3 wd-full"
           v-on="on"
           @click.native="dialog = true"
         >
@@ -136,29 +133,36 @@
           size="24"
           height="36px"
           width="36px"
-          class="ml-0 ml-md-2 mr-2 mr-md-3"
+          class="ml-0 mr-0 d-lg-none"
           @click.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
-        <span class="bitpod-logo logo-ds d-none d-sm-flex">
+        <span class="bitpod-logo logo-ds px-3">
           <v-img
             :src="$config.cdnUri + 'bitpod-logo-blk2.svg'"
             class="logofull mr-2"
           ></v-img>
         </span>
-        <i18n
-          path="Common.AdminApp"
-          class="d-inline-flex align-center mx-0 mx-md-2 ml-0 ml-md-1 text-h5"
-        />
         <v-spacer></v-spacer>
       </v-toolbar-title>
       <v-spacer></v-spacer>
+      <div class="d-none d-sm-flex">
+        <v-btn
+          v-bind="attrs"
+          color="blue darken-2"
+          dark
+          depressed
+          small
+          class="mx-3"
+          v-on="on"
+          @click.native="dialog = true"
+        >
+          <i18n path="Drawer.CreateUser" />
+        </v-btn>
+      </div>
       <Help class="d-none d-sm-inline" />
-      <AppDrawer />
       <LanguageSwitcher />
-      <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
-        <v-icon>mdi-invert-colors</v-icon>
-      </v-btn>
-      <div v-if="$auth.$state.loggedIn">
+      <AppDrawer />
+      <div v-if="$auth.$state.loggedIn" class="ml-3">
         <v-menu
           v-model="account"
           :close-on-content-click="false"
@@ -218,6 +222,7 @@
               <OrgnaizationList />
             </v-list-item>
             <OldSite />
+            <Theme />
             <v-list dense class="pt-0">
               <v-list-item>
                 <v-btn text small color="primary" @click="onLogout">
@@ -249,8 +254,8 @@
             </v-card-title>
             <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
               <v-form
-                ref="form"
                 id="new-user-form"
+                ref="form"
                 v-model="valid"
                 :lazy-validation="lazy"
                 @submit.prevent="onSave"
@@ -291,7 +296,12 @@
       </div>
     </v-app-bar>
 
-    <v-main class="greybg">
+    <v-main
+      class="greybg"
+      :class="{
+        'custom-nav-main': !$vuetify.breakpoint.smAndDown && drawer === null,
+      }"
+    >
       <v-container fluid>
         <v-row>
           <v-col class="pt-0">
@@ -302,6 +312,7 @@
         </v-row>
       </v-container>
     </v-main>
+
     <div v-if="logoutClicked">
       <iframe
         id="print"
@@ -321,6 +332,7 @@ import { rules } from '~/utility/rules.js'
 import Help from '~/components/common/help'
 import OldSite from '~/components/common/oldsite'
 import Upgrade from '~/components/common/upgrade'
+import Theme from '~/components/common/theme'
 import userUtils from '~/utility/userApps'
 export default {
   middleware: ['auth', 'authorization'],
@@ -330,6 +342,7 @@ export default {
     Help,
     OldSite,
     Upgrade,
+    Theme,
   },
   props: {
     refresh: {

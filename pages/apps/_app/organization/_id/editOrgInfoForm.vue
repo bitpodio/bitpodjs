@@ -129,6 +129,7 @@ import { rules } from '~/utility/rules.js'
 import { formatGQLResult } from '~/utility/gql.js'
 import organization from '~/config/apps/admin/gql/organization.gql'
 import SaveButton from '~/components/common/saveButton'
+import { postGaData } from '~/utility/index.js'
 
 export default {
   components: {
@@ -152,6 +153,13 @@ export default {
       },
     }
   },
+  watch: {
+    valid(newVal) {
+      if (newVal) {
+        postGaData('Edit', this.$t('Common.EditOrganizationInformation'))
+      }
+    },
+  },
   methods: {
     onReset() {
       this.formData.Name = ''
@@ -167,6 +175,7 @@ export default {
     onClose() {
       this.$emit('update:editOrgInfo', false)
       this.onReset()
+      postGaData('Close', this.$t('Common.EditOrganizationInformation'))
     },
     setAddress() {
       this.formData._CurrentAddress.AddressLine = this.venueAddress.AddressLine
@@ -177,6 +186,10 @@ export default {
       this.formData._CurrentAddress.id = this.venueAddress.id
     },
     async onSave() {
+      postGaData(
+        this.$t('Drawer.Save'),
+        this.$t('Common.EditOrganizationInformation')
+      )
       const url = this.$bitpod.getApiUrl()
       this.setAddress()
       delete this.formData._CurrentAddress.LatLng

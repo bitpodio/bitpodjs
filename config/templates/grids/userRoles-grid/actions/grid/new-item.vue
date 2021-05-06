@@ -10,7 +10,7 @@
       content-class="slide-form-default"
     >
       <template v-slot:activator="{ on, attrs }">
-        <v-btn text small v-bind="attrs" v-on="on" @click="dialog = true">
+        <v-btn text small v-bind="attrs" v-on="on" @click="onNew">
           <v-icon left>mdi-plus</v-icon> <i18n path="Drawer.CreateUser" />
         </v-btn>
       </template>
@@ -30,11 +30,11 @@
         </v-card-title>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-form
+            id="new-userRoles-item-form"
             ref="form"
             v-model="valid"
             :lazy-validation="lazy"
             @submit.prevent="onSave"
-            id="new-userRoles-item-form"
           >
             <v-row>
               <v-col cols="12" sm="10" md="8" class="pb-0">
@@ -70,6 +70,7 @@
 
 <script>
 import { rules } from '~/utility/rules.js'
+import { postGaData } from '~/utility/index.js'
 
 export default {
   props: {
@@ -113,12 +114,18 @@ export default {
     }
   },
   methods: {
+    onNew() {
+      this.dialog = true
+      postGaData('New', this.$t('Common.NewUser'))
+    },
     onClose() {
       this.formData.emailId = ''
       this.$refs.form.reset()
       this.dialog = false
+      postGaData('Close', this.$t('Common.NewUser'))
     },
     async onSave() {
+      postGaData(this.$t('Drawer.Save'), this.$t('Common.NewUser'))
       if (this.valid) {
         const url = this.$bitpod.getApiUrl()
         this.formData.emailId = this.email
