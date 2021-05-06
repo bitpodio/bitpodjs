@@ -92,6 +92,7 @@
             </template>
             <v-list-item
               v-for="(child, i) in item.children"
+              id="linkid"
               :key="i"
               link
               :to="localePath(item.to)"
@@ -358,7 +359,7 @@ import OldSite from '~/components/common/oldsite'
 import Theme from '~/components/common/theme'
 import Upgrade from '~/components/common/upgrade'
 import userUtils from '~/utility/userApps'
-const murmurhash = require('murmurhash')
+// const murmurhash = require('murmurhash')
 export default {
   middleware: ['auth', 'authorization'],
   components: {
@@ -450,17 +451,17 @@ export default {
     this.allowUser = userRoles.length === 1 && userRoles.includes('$orguser')
     this.allowUpgrade = userRoles.includes('$orgowner')
     window.addEventListener('message', this.messageReceived, false)
-    const checkId = murmurhash.v2(
-      this.$auth.user.data.email,
-      this.$config.seedValue
-    )
-    setTimeout(() => {
-      if (window && window.ga) {
-        window.ga('create', this.$config.gaTrackingCode, 'auto')
-        window.ga('set', 'userId', checkId)
-        window.ga('send', 'pageview')
-      }
-    }, 1500)
+    // const checkId = murmurhash.v2(
+    //   this.$auth.user.data.email,
+    //   this.$config.seedValue
+    // )
+    // setTimeout(() => {
+    //   if (window && window.ga) {
+    //     window.ga('create', this.$config.gaTrackingCode, 'auto')
+    //     window.ga('set', 'userId', checkId)
+    //     window.ga('send', 'pageview')
+    //   }
+    // }, 1500)
   },
   beforeDestroy() {
     window.removeEventListener('message', this.messageReceived)

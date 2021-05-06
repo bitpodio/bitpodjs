@@ -16,6 +16,7 @@
           <div v-for="app in userApps" :key="app.name">
             <nuxt-link
               v-if="app.route"
+              id="linkid"
               :to="localePath(app.route)"
               class="text-decoration-none"
               :target="app.name === 'HelpCenter' ? '_blank' : '_self'"

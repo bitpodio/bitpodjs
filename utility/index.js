@@ -297,6 +297,7 @@ function getDateAfterQuerybyDays(field, days) {
   return { and }
 }
 
+function postUrlTracking() {}
 export const configLoaderMixin = {
   layout(context) {
     console.debug('configLoaderMixin context:- ', context)
@@ -308,6 +309,7 @@ export const configLoaderMixin = {
     return context.app.router.currentRoute.params.app || 'default'
   },
   data() {
+    debugger
     return {
       token: this.$auth.$storage.getCookies()['auth._token.bitpod'],
       contents: null,
@@ -315,6 +317,7 @@ export const configLoaderMixin = {
   },
   async created() {
     console.debug('access token received from the cookie', this.token)
+    // postUrlTracking()
     const strategy = this.$auth.$storage.getCookies()['auth.strategy']
     if (strategy === 'bitpod') {
       if (
@@ -328,6 +331,20 @@ export const configLoaderMixin = {
         await this.$apolloHelpers.onLogin(token, undefined, { expires: 7 })
       }
     }
+    console.debug('URL tracking start for url', this.$route.path)
+    const murmurhash = require('murmurhash')
+    const checkId = murmurhash.v2(
+      this.$auth.user.data.email,
+      this.$config.seedValue
+    )
+    setTimeout(() => {
+      if (window && window.ga) {
+        window.ga('create', this.$config.gaTrackingCode, 'auto')
+        window.ga('set', 'userId', checkId)
+        window.ga('send', 'pageview', this.$route.path)
+      }
+    }, 1500)
+    console.debug('URL tracking end for url', this.$route.path)
   },
   async mounted() {
     const contentFactory = await import(
