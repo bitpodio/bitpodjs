@@ -265,10 +265,10 @@ export default {
       primeOrgId: '1',
     },
     basePublicPath: process.env.PUBLIC_PATH || '',
-    gaTrackingCode: process.env.GET_TRACKING_CODE || 'UA-192083281-1',
+    gaTrackingCode: process.env.GET_TRACKING_CODE || 'UA-194759007-1',
     gaGtmCode: process.env.GET_GTM_CODE || 'GTM-54VGK22',
     seedValue:
-      process.env.GET_SEED_VALUE || '2da90066-c9d9-43d0-bdce-5f6bb07e9dea',
+      process.env.GET_SEED_VALUE || '4bd6319d-ff4e-4e73-bd9b-8c9d4dc5d4c0',
     cdnUri:
       'https://res.cloudinary.com/mytestlogo/image/upload/bitpodjs/images/',
     cdnCsvUri: 'https://res.cloudinary.com/mytestlogo/raw/upload/',
