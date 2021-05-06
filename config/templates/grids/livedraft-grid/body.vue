@@ -357,7 +357,13 @@
       </v-row>
     </div>
     <div v-if="eventForm">
-      <editEventForm :id="id" :event-form.sync="eventForm" :refresh="refresh" />
+      <editEventForm
+        :id="id"
+        :event-form.sync="eventForm"
+        :refresh="refresh"
+        :snackbar.sync="snackbar"
+        :snackbar-text.sync="snackbarText"
+      />
     </div>
     <makeCopy :id="id" :key="count" :is-make-copy.sync="isMakeCopy" />
     <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
@@ -392,8 +398,8 @@ export default {
       id: '',
       count: 0,
       snackbar: false,
-      timeout: 2000,
-      snackbarText: '',
+      timeout: 3000,
+      snackbarText: this.$t('Messages.Success.EventDetailsUpdateSuccess'),
       searchBoxValue: '',
     }
   },

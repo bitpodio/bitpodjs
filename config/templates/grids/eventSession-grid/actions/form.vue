@@ -33,9 +33,9 @@
         </v-card-title>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-form
+            :id="formName"
             ref="form"
             v-model="valid"
-            :id="formName"
             @submit.prevent="submitForm"
           >
             <v-row v-if="dialog">
@@ -186,7 +186,7 @@
                     ref="venueAddress.AddressLine"
                     v-model="venueAddress.AddressLine"
                     class="form-control pa-3 d-block rounded"
-                    placeholder="Address*"
+                    :placeholder="!addressClicked && $t('Common.Address')"
                     :required="true"
                     @placechanged="getAddressData"
                     @change="changeAddressData($event)"
@@ -308,6 +308,7 @@ import location from '~/config/apps/event/gql/location.gql'
 import speaker from '~/config/apps/event/gql/eventSpeakers.gql'
 import event from '~/config/apps/event/gql/event.gql'
 import { getIdFromAtob } from '~/utility'
+import { postGaData } from '~/utility/index.js'
 import nuxtconfig from '~/nuxt.config'
 import CustomDate from '~/components/common/form/date.vue'
 import SaveBtn from '~/components/common/saveButton'
@@ -338,6 +339,7 @@ export default {
   },
   data() {
     return {
+      addressClicked: false,
       resetSave: false,
       commonKey: 0,
       customDuration: '50',
@@ -508,6 +510,11 @@ export default {
       }
     },
     openDialog() {
+      const action = this.isEdit ? 'Edit' : 'New'
+      const label = this.isEdit
+        ? this.$t('Common.EditSession')
+        : this.$t('Common.NewSession')
+      postGaData(action, label)
       if (this.isEdit) {
         const container = Object.keys(this.item[0]).length
           ? { ...this.item[0] }
@@ -611,6 +618,19 @@ export default {
         this.addresslineMessage = ''
       }
       this.venueAddress.AddressLine = value
+      this.removeSearchAddress(true)
+    },
+    removeSearchAddress(isAddressClicked) {
+      if (isAddressClicked) {
+        this.addressClicked = true
+      }
+      setTimeout(() => {
+        Object.values(
+          document.getElementsByClassName('pac-container pac-logo')
+        ).forEach((i) => {
+          i.remove()
+        })
+      }, 1000)
     },
     getAddressData(addressData, placeResultData, id) {
       this.venueAddress.AddressLine =
@@ -634,6 +654,10 @@ export default {
       this.isGroup = value === 'Group'
     },
     async onSave() {
+      const label = this.isEdit
+        ? this.$t('Common.EditSession')
+        : this.$t('Common.NewSession')
+      postGaData(this.$t('Drawer.Save'), label)
       const baseUrl = this.$bitpod.getApiUrl()
       this.session.EventId = this.$route.params.id
       if (this.session && this.session.SessionTicket) {
@@ -769,6 +793,10 @@ export default {
         PostalCode: '',
         LatLng: { lat: 0.0, lng: 0.0 },
       }
+      const label = this.isEdit
+        ? this.$t('Common.EditSession')
+        : this.$t('Common.NewSession')
+      postGaData('Close', label)
     },
     submitForm() {
       this.$eventBus.$emit('form-submitted', this.formName)

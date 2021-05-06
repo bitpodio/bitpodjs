@@ -2,7 +2,13 @@ FROM nikolaik/python-nodejs:python3.8-nodejs10-alpine
 #FROM node:current-alpine
 RUN apk --no-cache add git curl
 
-ENV app="/home/app"
+ARG PUBLIC_PATH
+
+ARG PUBLIC_DOMAIN
+
+ARG SITE_ID
+
+ENV app="/home/app" PUBLIC_PATH=$PUBLIC_PATH PUBLIC_DOMAIN=$PUBLIC_DOMAIN SITE_ID=$SITE_ID
 
 WORKDIR "$app"
 

@@ -39,7 +39,7 @@
                   class="rounded"
                   @click="goLive"
                 >
-                  <i18n path="Common.JoinEvent" />
+                  <i18n path="Common.StartEvent" />
 
                   <v-icon right class="fs-22"> mdi-video </v-icon>
                 </v-btn>
@@ -343,11 +343,9 @@
                 <i class="fa fa-calendar2" aria-hidden="true"></i>
               </div>
               <div class="d-flex flex-column pa-2 event-tile-right greybg">
-                <i18n
-                  path="Common.29Days"
-                  class="event-tile-value text-truncate"
-                />
-
+                <span v-if="data.event.StartDate">
+                  {{ getEventDaysDiff() }}
+                </span>
                 <i18n path="Common.OpensIn" class="caption text-truncate" />
               </div>
             </div>
@@ -864,7 +862,6 @@
           </div>
         </div>
         <div
-          v-if="content"
           class="xs12 sm4 md4 lg4 boxview pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
           <div class="sticky d-flex flex-column justify-center boxview">
@@ -877,16 +874,17 @@
             </v-flex>
             <v-divider></v-divider>
           </div>
-          <Grid
-            view-name="eventAttendees"
-            :content="content"
-            :context="data"
-            :has-mobile-custom-view="true"
-            class="mt-n12"
-          />
+          <div v-if="content">
+            <Grid
+              view-name="eventAttendees"
+              :content="content"
+              :context="data"
+              :has-mobile-custom-view="true"
+              class="mt-n12"
+            />
+          </div>
         </div>
         <div
-          v-if="content"
           class="xs12 sm4 md4 lg4 boxview boxviewlarge pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
           <div class="sticky d-flex flex-column justify-center boxview">
@@ -899,14 +897,16 @@
             </v-flex>
             <v-divider></v-divider>
           </div>
-          <Grid
-            view-name="eventRegistrations"
-            :content="content"
-            class="mt-n12"
-          />
+          <div v-if="content">
+            <Grid
+              view-name="eventRegistrations"
+              :content="content"
+              :context="data"
+              class="mt-n12"
+            />
+          </div>
         </div>
         <div
-          v-if="content"
           class="xs12 sm4 md4 lg4 boxview pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
           <div class="sticky d-flex flex-column justify-center boxview">
@@ -919,7 +919,9 @@
             </v-flex>
             <v-divider></v-divider>
           </div>
-          <Grid view-name="eventInvites" :content="content" class="mt-n12" />
+          <div v-if="content">
+            <Grid view-name="eventInvites" :content="content" class="mt-n12" />
+          </div>
         </div>
         <div
           v-if="content"
@@ -1016,6 +1018,12 @@
                 view-name="eventTickets"
                 :content="content"
                 :context="data"
+                :no-action="!data.event.HasTickets"
+                :has-custom-no-data-text="
+                  !data.event.HasTickets
+                    ? $t('Common.TicketsNotRequiredToggle')
+                    : ''
+                "
                 class="mt-n14"
               />
             </div>
@@ -1038,11 +1046,16 @@
           <Grid
             view-name="eventDiscountCodes"
             :content="content"
+            :no-action="!data.event.HasTickets"
+            :has-custom-no-data-text="
+              !data.event.HasTickets
+                ? $t('Common.TicketsNotRequiredToggle')
+                : ''
+            "
             class="mt-n12"
           />
         </div>
         <div
-          v-if="content"
           class="xs12 sm4 md4 lg4 boxview boxviewlarge pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
           <div class="sticky d-flex flex-column justify-center boxview">
@@ -1055,14 +1068,16 @@
             </v-flex>
             <v-divider></v-divider>
           </div>
-          <Grid
-            view-name="eventRegistrationQuestion"
-            :content="content"
-            class="mt-n12"
-          />
+          <div v-if="content">
+            <Grid
+              view-name="eventRegistrationQuestion"
+              :content="content"
+              :context="data"
+              class="mt-n12"
+            />
+          </div>
         </div>
         <div
-          v-if="content"
           class="xs12 sm4 md4 lg4 boxview boxviewlarge pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
           <div class="sticky d-flex flex-column justify-center boxview">
@@ -1075,10 +1090,19 @@
             </v-flex>
             <v-divider></v-divider>
           </div>
-          <Grid view-name="eventSession" :content="content" class="mt-n12" />
+          <div v-if="content">
+            <Grid
+              view-name="eventSession"
+              :content="content"
+              class="mt-n12"
+              :no-action="!data.event.HasTickets"
+              :has-custom-no-data-text="
+                !data.event.HasTickets ? $t('Common.SessionsNotAvailable') : ''
+              "
+            />
+          </div>
         </div>
         <div
-          v-if="content"
           class="xs12 sm4 md4 lg4 boxview boxviewlarge pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
           <div class="sticky d-flex flex-column justify-center boxview">
@@ -1091,10 +1115,11 @@
             </v-flex>
             <v-divider></v-divider>
           </div>
-          <Grid view-name="eventSpeakers" :content="content" class="mt-n12" />
+          <div v-if="content">
+            <Grid view-name="eventSpeakers" :content="content" class="mt-n12" />
+          </div>
         </div>
         <div
-          v-if="content"
           class="xs12 sm4 md4 lg4 boxview pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
           <div class="sticky d-flex flex-column justify-center boxview">
@@ -1107,15 +1132,16 @@
             </v-flex>
             <v-divider></v-divider>
           </div>
-          <Grid
-            view-name="eventTasks"
-            :content="content"
-            :context="data"
-            class="mt-n12"
-          />
+          <div v-if="content">
+            <Grid
+              view-name="eventTasks"
+              :content="content"
+              :context="data"
+              class="mt-n12"
+            />
+          </div>
         </div>
         <div
-          v-if="content"
           class="xs12 sm4 md4 lg4 boxview boxviewsmall pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
           <div class="sticky d-flex flex-column justify-center boxview">
@@ -1128,11 +1154,13 @@
             </v-flex>
             <v-divider></v-divider>
           </div>
-          <Grid
-            view-name="eventRegistrationForm"
-            :content="content"
-            class="mt-n12"
-          />
+          <div v-if="content">
+            <Grid
+              view-name="eventRegistrationForm"
+              :content="content"
+              class="mt-n12"
+            />
+          </div>
         </div>
         <div
           class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 mr-2 mb-4 elevation-1 rounded-lg"
@@ -1391,7 +1419,7 @@
               @change="updateReg"
             ></v-checkbox>
           </v-flex>
-          <v-flex class="d-block text-truncate">
+          <v-flex v-if="data.event.HasTickets" class="d-block text-truncate">
             <v-checkbox
               v-model="data.event.SessionTimingConflict"
               dense
@@ -1403,7 +1431,7 @@
               @change="updateReg"
             ></v-checkbox>
           </v-flex>
-          <v-flex class="d-block text-truncate">
+          <v-flex v-if="data.event.HasTickets" class="d-block text-truncate">
             <v-checkbox
               v-model="data.event.ShowRemainingTickets"
               dense
@@ -1415,7 +1443,7 @@
               @change="updateReg"
             ></v-checkbox>
           </v-flex>
-          <v-flex class="d-block text-truncate">
+          <v-flex v-if="data.event.HasTickets" class="d-block text-truncate">
             <v-checkbox
               v-model="data.event.ShowAttendeeForm"
               :label="$t('Common.ShowAttendeeForm')"
@@ -1543,6 +1571,7 @@
           :site-setting.sync="siteSetting"
           :snackbar.sync="snackbar"
           :snackbar-text.sync="snackbarText"
+          :has-tickets="data.event.HasTickets"
         />
       </div>
       <makeCopy :key="isMakeCopy" :is-make-copy.sync="isMakeCopy" />
@@ -1567,6 +1596,7 @@
 <script>
 import gql from 'graphql-tag'
 import format from 'date-fns/format'
+import differenceInCalendarDays from 'date-fns/differenceInCalendarDays'
 import { utcToZonedTime } from 'date-fns-tz'
 import _ from 'lodash'
 import editSeoForm from './editSeoForm.vue'
@@ -1648,7 +1678,9 @@ export default {
       otherFileId: '',
       isMakeCopy: false,
       data: {
-        event: {},
+        event: {
+          HasTickets: true,
+        },
         badge: {},
         eventSummary: {},
       },
@@ -1793,6 +1825,17 @@ export default {
         this.$i18n.locale
       )
     },
+    getEventDaysDiff() {
+      const result = differenceInCalendarDays(
+        new Date(this.eventData.StartDate),
+        new Date()
+      )
+      return result < 0
+        ? this.$t('Common.Closed')
+        : result > 1
+        ? `${result} ${this.$t('Common.Days')}`
+        : `${result} ${this.$t('Common.Day')}`
+    },
     goBack() {
       this.$router.push(
         this.localePath(`/apps/event/list/Event/live-and-draft-event`)
@@ -1822,7 +1865,7 @@ export default {
     },
     goLive() {
       window.open(
-        `apps/event/live/${this.$store.state.currentOrg.name}-${this.eventData.UniqLink}?e=${this.$route.params.id}&n=${this.eventData.Title}&o=${this.eventData.chatChannel}`
+        `apps/event/live/${this.$store.state.currentOrg.name}-${this.eventData.UniqLink}?e=${this.$route.params.id}&n=${this.eventData.Title}&o=${this.eventData.chatChannel}&p=${this.$config.rtmpURL}${this.eventData.UniqLink}`
       )
     },
     openPrintForm() {
@@ -2013,11 +2056,13 @@ export default {
         nuxtconfig.publicRuntimeConfig.cdnUri +
         'admin-default-template-logo.png'
       if (str) {
-        const strDom = parser.parseFromString(str, 'text/html')
-        strDom
-          .getElementsByClassName('badge-category')[0]
-          .style.setProperty('--defaultColor', `${ele.regType.ColorCode}`)
-        str = strDom.documentElement.innerHTML
+        if (ele.regType && ele.regType.ColorCode) {
+          const strDom = parser.parseFromString(str, 'text/html')
+          strDom
+            .getElementsByClassName('badge-category')[0]
+            .style.setProperty('--defaultColor', `${ele.regType.ColorCode}`)
+          str = strDom.documentElement.innerHTML
+        }
         str = str
           .replace('{{ FullName }}', `${ele.FullName}`)
           .replace(

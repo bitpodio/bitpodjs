@@ -280,6 +280,7 @@ import { rules } from '~/utility/rules.js'
 import event from '~/config/apps/event/gql/event.gql'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import { formatGQLResult } from '~/utility/gql.js'
+import { postGaData } from '~/utility/index.js'
 import Timezone from '~/components/common/form/timezone'
 import SaveButton from '~/components/common/saveButton'
 
@@ -409,6 +410,13 @@ export default {
       }
     },
   },
+  watch: {
+    valid(newVal) {
+      if (newVal) {
+        postGaData('Edit', this.$t('Common.EditEventInformation'))
+      }
+    },
+  },
   async mounted() {
     try {
       const res = await this.getDropDownData('EventTags')
@@ -422,7 +430,6 @@ export default {
       )
     }
   },
-
   methods: {
     focusOut() {
       this.addressClicked = false
@@ -474,8 +481,8 @@ export default {
     },
     close() {
       this.$emit('update:eventForm', false)
-
       this.onReset()
+      postGaData('Close', this.$t('Common.EditEventInformation'))
     },
     refreshGrid() {
       this.$refs.form.$parent.$parent.refresh()
@@ -514,6 +521,7 @@ export default {
       }
     },
     async onSave() {
+      postGaData(this.$t('Drawer.Save'), this.$t('Common.EditEventInformation'))
       const url = this.$bitpod.getApiUrl()
       this.formData.Tags = this.tags
       this.formData.StartDate = this.StartDate
@@ -548,17 +556,17 @@ export default {
             }
           )
           if (res) {
+            this.close()
             this.$eventBus.$emit('event-details-updated', res)
             this.$eventBus.$emit('on-event-update', res)
-            this.$eventBus.$emit('update-event-details')
-            this.refresh()
-            this.close()
             this.$emit(
               'update:snackbarText',
               this.$t('Messages.Success.EventDetailsUpdateSuccess')
             )
             this.$emit('update:snackbar', true)
-            this.data.event = res
+            this.refresh()
+            this.$eventBus.$emit('update-event-details')
+            return (this.data.event = res)
           }
         } catch (e) {
           console.log(
@@ -583,13 +591,13 @@ export default {
             this.close()
             this.$eventBus.$emit('event-details-updated', res)
             this.$eventBus.$emit('on-event-update', res)
-            this.$eventBus.$emit('update-event-details')
-            this.refresh()
             this.$emit(
               'update:snackbarText',
               this.$t('Messages.Success.EventDetailsUpdateSuccess')
             )
             this.$emit('update:snackbar', true)
+            this.refresh()
+            this.$eventBus.$emit('update-event-details')
             return (this.data.event = res)
           }
         } catch (e) {
@@ -680,7 +688,7 @@ export default {
             this.formData._VenueAddress.id
           ).split(':')[1]
           this.VenueAddress =
-            this.formData._VenueAddress != null
+            this.formData._VenueAddress && this.formData._VenueAddress != null
               ? { ...this.formData._VenueAddress }
               : {}
           delete this.VenueAddress.LatLng.__typename

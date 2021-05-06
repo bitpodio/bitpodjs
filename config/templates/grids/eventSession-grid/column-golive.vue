@@ -7,7 +7,8 @@
       </div>
     </div>
     <v-btn
-      v-if="allowSession()"
+      v-if="item.LocationType !== 'Venue'"
+      :disabled="allowSession()"
       tile
       depressed
       color="success"
@@ -15,7 +16,7 @@
       class="rounded"
       @click="goLive"
     >
-      <i18n path="Common.JoinSession" />
+      <i18n path="Common.StartSession" />
       <v-icon right> mdi-video </v-icon>
     </v-btn>
     <copy
@@ -62,7 +63,7 @@ export default {
           (this.item.BitpodVirtualLink &&
             this.item.BitpodVirtualLink.split('/')[3]) ||
           'undefined'
-        this.link = `apps/event/live/${roomName}?e=${this.$route.params.id}&n=${this.item.Name}`
+        this.link = `apps/event/live/${roomName}?e=${this.$route.params.id}&n=${this.item.Name}&p=${this.$config.rtmpURL}${roomName}`
         this.copyLink = `https://${this.$config.integrationLinks.BITOPD_VIRTUAL_LINK}/${roomName}`
       } else if (this.item.LocationType === 'Online event') {
         this.link = this.item.WebinarLink || ''
@@ -72,11 +73,11 @@ export default {
         this.copyLink = ''
       }
       const endDate = new Date(this.item.StartDate)
-      endDate.setMinutes(endDate.getMinutes() + this.item.Duration)
+      endDate.setMinutes(endDate.getMinutes() + this.item.Duration + 15)
       return (
         (this.item.LocationType === 'Bitpod Virtual' ||
           this.item.LocationType === 'Online event') &&
-        endDate.getTime() > new Date().getTime()
+        endDate.getTime() < new Date().getTime()
       )
     },
     goLive() {

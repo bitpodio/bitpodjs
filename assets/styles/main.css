@@ -147,7 +147,7 @@ body {
   display: none !important;
 }
 .nav-bar {
-  top: 55px !important;
+  top: 50px !important;
 }
 .nav-bar:hover .nav-drawer {
   display: block !important;
@@ -748,6 +748,10 @@ table > tbody > tr:last-child .key-align {
 .invitee-tooltip.v-tooltip__content {
   margin-top: -10px;
 }
+.app-title-text {
+  font-size: 20px;
+  color: rgba(0, 0, 0, 0.60)
+}
 @media (min-width: 1904px) {
   .boxviewlarge .v-data-table__wrapper {
     margin-bottom: 0 !important;
@@ -760,9 +764,6 @@ table > tbody > tr:last-child .key-align {
   }
 }
 @media (max-width: 800px) {
-  .nav-bar {
-    top: 50px !important;
-  }
   .participantButton {
     font-size: 16px !important;
     padding-top: 6px !important;

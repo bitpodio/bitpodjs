@@ -161,7 +161,7 @@
           </v-flex>
         </div>
         <div
-          v-if="content"
+          v-if="content && data.event && data.event.HasTickets"
           class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
         >
           <v-flex class="d-flex justify-center align-center pb-3">
@@ -262,6 +262,10 @@
               view-name="registrationSessions"
               :content="content"
               class="mt-n12"
+              :no-action="!data.event.HasTickets"
+              :has-custom-no-data-text="
+                !data.event.HasTickets ? $t('Common.SessionsNotAvailable') : ''
+              "
             />
           </div>
         </div>
@@ -727,10 +731,15 @@ export default {
           if (this.data.event.VenueName !== '') {
             this.VenueName = this.formatAddressField(this.data.event.VenueName)
           }
-          if (Object.keys(this.data.event._VenueAddress).length > 0) {
-            this.AddressLine = this.formatAddressField(
-              this.data.event._VenueAddress.AddressLine
-            )
+          if (
+            this.data.event._VenueAddress.AddressLine !== null &&
+            Object.keys(this.data.event._VenueAddress).length > 0
+          ) {
+            if (this.data.event._VenueAddress.AddressLine !== '') {
+              this.AddressLine = this.formatAddressField(
+                this.data.event._VenueAddress.AddressLine
+              )
+            }
             if (this.data.event._VenueAddress.City !== '') {
               this.AddressLine =
                 this.AddressLine + ',' + this.data.event._VenueAddress.City
