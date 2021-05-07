@@ -17,6 +17,13 @@ jobs:
           # Full git history is needed to get a proper list of changed files within `super-linter`
           fetch-depth: 0
 
+      - name: install dependencies
+        uses: actions/setup-node@v2
+        with:
+          node-version: '12.x'
+
+      - run: yarn install
+
       - name: Lint Code Base
         uses: github/super-linter@v3
         env:
