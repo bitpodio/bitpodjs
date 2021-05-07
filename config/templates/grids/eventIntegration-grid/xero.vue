@@ -9,7 +9,7 @@
         </h2>
         <v-spacer></v-spacer>
         <div>
-          <v-btn icon @click.native="onClose">
+          <v-btn icon @click.native="onClose($t('Common.EditSetting'))">
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </div>
@@ -20,7 +20,7 @@
           ref="form"
           v-model="valid"
           :lazy-validation="lazy"
-          @submit.prevent="onSave(formData)"
+          @submit.prevent="onSave(formData, $t('Common.EditSetting'))"
         >
           <v-row>
             <v-col cols="12">
@@ -54,6 +54,7 @@
 
 <script>
 import { rules } from '~/utility/rules.js'
+import { postGaData } from '~/utility/index.js'
 export default {
   props: {
     item: {
@@ -83,6 +84,13 @@ export default {
       formData: { ...this.item },
       lazy: false,
     }
+  },
+  watch: {
+    valid(newVal) {
+      if (newVal) {
+        postGaData('New', this.$t('Common.EditSetting'))
+      }
+    },
   },
 }
 </script>

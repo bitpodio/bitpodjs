@@ -59,6 +59,7 @@
             :to="localePath(item.to)"
             router
             exact
+            :class="matchRoute(item.to)"
           >
             <v-list-item-action class="nav-icon">
               <v-icon>{{ item.icon }}</v-icon>
@@ -104,6 +105,7 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <Help class="d-none d-sm-inline" />
+      <LanguageSwitcher />
       <AppDrawer />
       <div v-if="$auth.$state.loggedIn" class="ml-3">
         <v-menu
@@ -307,6 +309,7 @@ export default {
       logoutClicked: false,
       rules: rules(this.$i18n),
       userPlanData: '',
+      activeClass: ' v-list-item--active',
       formData: {
         emailId: '',
       },
@@ -324,10 +327,16 @@ export default {
           allowedRoutes: [
             '/apps/member/contacts/',
             'apps/member/list/Contacts/Invites',
+            'apps/member/event/invite/',
           ],
         },
       ],
     }
+  },
+  computed: {
+    currentPage() {
+      return this.$route.path
+    },
   },
   async created() {
     let token = this.$auth.strategy.token.get()
@@ -381,6 +390,19 @@ export default {
           )
         }
       }
+    },
+    matchRoute(toRoute) {
+      return this.items.reduce((acc, i) => {
+        if (!i.allowedRoutes || i.to !== toRoute) {
+          return acc
+        }
+        const routeMatched = i.allowedRoutes.reduce((accc, j) => {
+          return accc || this.currentPage.includes(j)
+        }, false)
+        return acc || routeMatched
+      }, false)
+        ? this.activeClass
+        : ''
     },
     async userPlan() {
       const url = `${this.$bitpod.getApiUrl()}OrganizationInfos/getSubscription`

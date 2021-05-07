@@ -3,6 +3,9 @@
     <v-navigation-drawer
       v-model="drawer"
       :clipped="$vuetify.breakpoint.lgAndUp"
+      :class="{
+        'custom-nav-drawer': !$vuetify.breakpoint.smAndDown && drawer === null,
+      }"
       app
       class="nav-bar greybg"
       :width="240"
@@ -16,7 +19,6 @@
           <template v-slot:activator="{ on, attrs }">
             <v-btn
               v-bind="attrs"
-              outlined
               small
               color="primary"
               depressed
@@ -195,11 +197,10 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <div class="d-none d-sm-flex">
-        <v-menu>
+        <v-menu offset-y>
           <template v-slot:activator="{ on, attrs }">
             <v-btn
               v-bind="attrs"
-              outlined
               small
               color="primary"
               depressed
@@ -246,6 +247,7 @@
         </v-menu>
       </div>
       <Help class="d-none d-sm-inline" />
+      <LanguageSwitcher />
       <AppDrawer />
       <div v-if="$auth.$state.loggedIn" class="ml-3">
         <v-menu
@@ -326,7 +328,12 @@
       </div>
     </v-app-bar>
 
-    <v-main class="greybg">
+    <v-main
+      class="greybg"
+      :class="{
+        'custom-nav-main': !$vuetify.breakpoint.smAndDown && drawer === null,
+      }"
+    >
       <v-container fluid>
         <v-row>
           <v-col class="pt-0">
@@ -358,6 +365,7 @@ import OldSite from '~/components/common/oldsite'
 import Theme from '~/components/common/theme'
 import Upgrade from '~/components/common/upgrade'
 import userUtils from '~/utility/userApps'
+import { postGaData } from '~/utility/index.js'
 const murmurhash = require('murmurhash')
 export default {
   middleware: ['auth', 'authorization'],
@@ -435,6 +443,18 @@ export default {
   computed: {
     currentPage() {
       return this.$route.path
+    },
+  },
+  watch: {
+    dialog1(newVal) {
+      if (newVal) {
+        postGaData('New', this.$t('Drawer.CreateEventAction'))
+      }
+    },
+    dialog(newVal) {
+      if (newVal) {
+        postGaData('New', this.$t('Common.NewRecurringEvent'))
+      }
     },
   },
   async created() {

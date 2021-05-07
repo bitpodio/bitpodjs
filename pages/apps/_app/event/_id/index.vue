@@ -343,11 +343,9 @@
                 <i class="fa fa-calendar2" aria-hidden="true"></i>
               </div>
               <div class="d-flex flex-column pa-2 event-tile-right greybg">
-                <i18n
-                  path="Common.29Days"
-                  class="event-tile-value text-truncate"
-                />
-
+                <span v-if="data.event.StartDate">
+                  {{ getEventDaysDiff() }}
+                </span>
                 <i18n path="Common.OpensIn" class="caption text-truncate" />
               </div>
             </div>
@@ -1598,6 +1596,7 @@
 <script>
 import gql from 'graphql-tag'
 import format from 'date-fns/format'
+import differenceInCalendarDays from 'date-fns/differenceInCalendarDays'
 import { utcToZonedTime } from 'date-fns-tz'
 import _ from 'lodash'
 import editSeoForm from './editSeoForm.vue'
@@ -1825,6 +1824,17 @@ export default {
         'long',
         this.$i18n.locale
       )
+    },
+    getEventDaysDiff() {
+      const result = differenceInCalendarDays(
+        new Date(this.eventData.StartDate),
+        new Date()
+      )
+      return result < 0
+        ? this.$t('Common.Closed')
+        : result > 1
+        ? `${result} ${this.$t('Common.Days')}`
+        : `${result} ${this.$t('Common.Day')}`
     },
     goBack() {
       this.$router.push(

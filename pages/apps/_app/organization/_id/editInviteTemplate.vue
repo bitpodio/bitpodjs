@@ -55,6 +55,8 @@
 
 <script>
 import SaveBtn from '~/components/common/saveButton'
+import { postGaData } from '~/utility/index.js'
+
 export default {
   components: {
     SaveBtn,
@@ -131,12 +133,21 @@ export default {
       }
     },
   },
+  watch: {
+    valid(newVal) {
+      if (newVal) {
+        postGaData('Edit', this.$t('Common.EditTemplate'))
+      }
+    },
+  },
   methods: {
     onClose() {
       this.body = this.selected.Body ? this.selected.Body : ''
       this.$emit('update:editTemplate', false)
+      postGaData('Close', this.$t('Common.EditTemplate'))
     },
     async onSave() {
+      postGaData(this.$t('Drawer.Save'), this.$t('Common.EditTemplate'))
       this.isSaveButtonDisabled = true
       const url = this.$bitpod.getApiUrl()
       this.selected.Documents = this.fileList

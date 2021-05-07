@@ -331,7 +331,9 @@ export default {
   },
   computed: {
     content() {
-      return this.contents ? this.contents.Event : null
+      return this.contents
+        ? this.contents.Event || this.contents.EventInvitees
+        : null
     },
   },
   async mounted() {

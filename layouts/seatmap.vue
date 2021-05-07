@@ -22,6 +22,7 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <Help class="d-none d-sm-inline" />
+      <LanguageSwitcher />
       <AppDrawer />
       <div v-if="$auth.$state.loggedIn" class="ml-3">
         <v-menu

@@ -2,7 +2,7 @@
   <div>
     <newItem
       :dialog.sync="dialog"
-      button-icon="fa fa-pencil-square-o"
+      button-icon="mdi-calendar-edit"
       :items="items"
       :refresh="refresh"
       type="Edit"

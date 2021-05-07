@@ -50,8 +50,8 @@
             class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0"
           >
             <v-form
-              ref="form"
               :id="formName"
+              ref="form"
               v-model="valid"
               :lazy-validation="lazy"
               @submit.prevent="submitForm"
@@ -566,6 +566,7 @@ import { rules } from '~/utility/rules.js'
 import registrationStatusOptions from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import location from '~/config/apps/event/gql/location.gql'
 import { getIdFromAtob } from '~/utility'
+import { postGaData } from '~/utility/index.js'
 import CustomDate from '~/components/common/form/date.vue'
 import SaveBtn from '~/components/common/saveButton'
 export default {
@@ -940,6 +941,16 @@ export default {
         this.refresh()
       }
     },
+    dialog(newVal) {
+      if (newVal) {
+        const action = this.actionType === 'New' ? 'New' : 'Edit'
+        const label =
+          this.actionType === 'New'
+            ? this.$t('Common.NewSession')
+            : this.$t('Common.EditSession')
+        postGaData(action, label)
+      }
+    },
   },
   methods: {
     focusOut() {
@@ -968,6 +979,11 @@ export default {
       this.addresslineMessage = ''
       this.resetForm()
       this.$eventBus.$emit('unselectAll-record', 'eventRecurringSession')
+      const label =
+        this.actionType === 'New'
+          ? this.$t('Common.NewSession')
+          : this.$t('Common.EditSession')
+      postGaData('Close', label)
     },
     resetForm() {
       this.dialog = false
@@ -1206,6 +1222,11 @@ export default {
       this.session.TicketName = TicketName
     },
     async onSave() {
+      const label =
+        this.actionType === 'New'
+          ? this.$t('Common.NewSession')
+          : this.$t('Common.EditSession')
+      postGaData(this.$t('Drawer.Save'), label)
       console.debug('New recurring session', this.session)
       if (this.session.StartTime > this.session.EndTime) {
         this.timeSlotMessage = this.$t('Messages.Error.StartEndTime')

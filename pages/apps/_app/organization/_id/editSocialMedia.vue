@@ -75,6 +75,7 @@ import gql from 'graphql-tag'
 import { formatGQLResult } from '~/utility/gql.js'
 import organization from '~/config/apps/admin/gql/organization.gql'
 import SaveButton from '~/components/common/saveButton'
+import { postGaData } from '~/utility/index.js'
 
 export default {
   components: {
@@ -100,6 +101,13 @@ export default {
       },
     }
   },
+  watch: {
+    valid(newVal) {
+      if (newVal) {
+        postGaData('Edit', this.$t('Common.EditOrganizationSocialSetting'))
+      }
+    },
+  },
   methods: {
     onReset() {
       this.formData.Facebook = ''
@@ -109,8 +117,13 @@ export default {
     onClose() {
       this.$emit('update:editSocialMedia', false)
       this.onReset()
+      postGaData('Close', this.$t('Common.EditOrganizationSocialSetting'))
     },
     async onSave() {
+      postGaData(
+        this.$t('Drawer.Save'),
+        this.$t('Common.EditOrganizationSocialSetting')
+      )
       const url = this.$bitpod.getApiUrl()
       this.formData.Currency = this.currency
       try {
