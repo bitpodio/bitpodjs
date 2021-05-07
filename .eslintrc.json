@@ -11,13 +11,19 @@
   },
   "extends": [
     "@nuxtjs",
-    "prettier",
-    "prettier/vue",
     "plugin:prettier/recommended",
     "plugin:nuxt/recommended",
     "plugin:promise/recommended",
     "plugin:vue/recommended",
-    "plugin:@intlify/vue-i18n/recommended"
+    "plugin:@intlify/vue-i18n/recommended",
+    "prettier",
+    "prettier/vue"
+  ],
+
+  "overrides": [
+    {
+      "files": ["*.vue", "**/*.vue"]
+    }
   ],
   "plugins": ["vue", "prettier", "promise"],
   // add your custom rules here
