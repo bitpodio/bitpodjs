@@ -297,7 +297,6 @@ function getDateAfterQuerybyDays(field, days) {
   return { and }
 }
 
-function postUrlTracking() {}
 export const configLoaderMixin = {
   layout(context) {
     console.debug('configLoaderMixin context:- ', context)
@@ -331,26 +330,33 @@ export const configLoaderMixin = {
         await this.$apolloHelpers.onLogin(token, undefined, { expires: 7 })
       }
     }
-    console.debug('URL tracking start for url', this.$route.path)
-    const murmurhash = require('murmurhash')
-    const checkId = murmurhash.v2(
-      this.$auth.user.data.email,
-      this.$config.seedValue
-    )
-    setTimeout(() => {
-      if (window && window.ga) {
-        window.ga('create', this.$config.gaTrackingCode, 'auto')
-        window.ga('set', 'userId', checkId)
-        window.ga('send', 'pageview', this.$route.path)
-      }
-    }, 1500)
-    console.debug('URL tracking end for url', this.$route.path)
+    this.postUrlTracking()
   },
   async mounted() {
     const contentFactory = await import(
       `~/config/apps/${this.$route.params.app}/content`
     )
     this.contents = contentFactory.default
+  },
+  methods: {
+    postUrlTracking() {
+      console.debug('URL tracking start for url', this.$route.path)
+      const murmurhash = require('murmurhash')
+      const checkId = murmurhash.v2(
+        this.$auth.user.data.email,
+        this.$config.seedValue
+      )
+      setTimeout(() => {
+        if (process.client) {
+          if (window && window.ga) {
+            window.ga('create', this.$config.gaTrackingCode, 'auto')
+            window.ga('set', 'userId', checkId)
+            window.ga('send', 'pageview', this.$route.path)
+          }
+        }
+      }, 1500)
+      console.debug('URL tracking end for url', this.$route.path)
+    },
   },
 }
 
