@@ -308,7 +308,6 @@ export const configLoaderMixin = {
     return context.app.router.currentRoute.params.app || 'default'
   },
   data() {
-    debugger
     return {
       token: this.$auth.$storage.getCookies()['auth._token.bitpod'],
       contents: null,
@@ -340,22 +339,24 @@ export const configLoaderMixin = {
   },
   methods: {
     postUrlTracking() {
-      console.debug('URL tracking start for url', this.$route.path)
-      const murmurhash = require('murmurhash')
-      const checkId = murmurhash.v2(
-        this.$auth.user.data.email,
-        this.$config.seedValue
-      )
-      setTimeout(() => {
-        if (process.client) {
-          if (window && window.ga) {
-            window.ga('create', this.$config.gaTrackingCode, 'auto')
-            window.ga('set', 'userId', checkId)
-            window.ga('send', 'pageview', this.$route.path)
+      if (this.$store.state.parseUrl !== this.$route.path) {
+        const murmurhash = require('murmurhash')
+        const checkId = murmurhash.v2(
+          this.$auth.user.data.email,
+          this.$config.seedValue
+        )
+        this.$store.commit('setTrackingPath', this.$route.path)
+        setTimeout(() => {
+          if (process.client) {
+            if (window && window.ga) {
+              console.debug('URL tracking start for url', this.$route.path)
+              window.ga('create', this.$config.gaTrackingCode, 'auto')
+              window.ga('set', 'userId', checkId)
+              window.ga('send', 'pageview', this.$route.path)
+            }
           }
-        }
-      }, 1500)
-      console.debug('URL tracking end for url', this.$route.path)
+        }, 1500)
+      }
     },
   },
 }
