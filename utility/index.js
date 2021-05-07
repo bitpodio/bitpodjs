@@ -315,7 +315,6 @@ export const configLoaderMixin = {
   },
   async created() {
     console.debug('access token received from the cookie', this.token)
-    // postUrlTracking()
     const strategy = this.$auth.$storage.getCookies()['auth.strategy']
     if (strategy === 'bitpod') {
       if (
