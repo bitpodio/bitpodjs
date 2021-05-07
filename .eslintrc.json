@@ -19,7 +19,7 @@
     "plugin:vue/recommended",
     "plugin:@intlify/vue-i18n/recommended"
   ],
-  "plugins": ["prettier", "promise"],
+  "plugins": ["vue", "prettier", "promise"],
   // add your custom rules here
   "rules": {
     "no-console": "off",
