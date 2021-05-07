@@ -92,7 +92,6 @@
             </template>
             <v-list-item
               v-for="(child, i) in item.children"
-              id="linkid"
               :key="i"
               link
               :to="localePath(item.to)"
