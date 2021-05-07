@@ -1591,8 +1591,7 @@
       />
       <confirm ref="confirm"></confirm>
     </v-flex>
-  </div>
-</template>
+  </div></template>
 <script>
 import gql from 'graphql-tag'
 import format from 'date-fns/format'
