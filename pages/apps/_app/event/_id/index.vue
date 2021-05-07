@@ -1620,8 +1620,7 @@ import { configLoaderMixin, getIdFromAtob } from '~/utility'
 
 export default {
   components: {
-    Grid,
-    editSeoForm,
+    Grid, editSeoForm,
     editEventForm,
     editEventSetting,
     editSiteSetting,
