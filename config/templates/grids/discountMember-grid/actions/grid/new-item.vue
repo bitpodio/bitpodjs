@@ -27,10 +27,10 @@
         </v-card-title>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0 small-form">
           <v-form
+            id="new-discount-member-form"
             ref="form"
             v-model="valid"
             :lazy-validation="lazy"
-            id="new-discount-member-form"
             @submit.prevent="onSave"
           >
             <v-row>
@@ -71,6 +71,7 @@
 <script>
 import member from '~/config/apps/event/gql/member.gql'
 import { rules } from '~/utility/rules.js'
+import { postGaData } from '~/utility/index.js'
 export default {
   props: {
     refresh: {
@@ -106,14 +107,23 @@ export default {
       },
     }
   },
+  watch: {
+    dialog(newVal) {
+      if (newVal) {
+        postGaData('New', this.$t('Common.AssociateMember'))
+      }
+    },
+  },
 
   methods: {
     closeForm() {
       this.dialog = false
       this.duplicateMessage = ''
       this.$refs.form && this.$refs.form.reset()
+      postGaData('Close', this.$t('Common.AssociateMember'))
     },
     async onSave() {
+      postGaData(this.$t('Drawer.Save'), this.$t('Common.AssociateMember'))
       if (this.valid) {
         this.duplicateMessage = ''
         this.isSaveButtonDisabled = true

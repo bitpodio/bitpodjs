@@ -9,17 +9,17 @@
         </h2>
         <v-spacer></v-spacer>
         <div>
-          <v-btn icon @click.native="onClose">
+          <v-btn icon @click.native="onClose($t('Common.ManageWebhook'))">
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </div>
       </v-card-title>
       <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
         <v-form
+          id="new-webhook-form"
           ref="form"
           v-model="valid"
           :lazy-validation="lazy"
-          id="new-webhook-form"
           @submit.prevent="onSaveButton"
         >
           <v-row>
@@ -96,6 +96,7 @@ import eventList from '~/config/apps/event/gql/eventlist.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { rules } from '~/utility/rules.js'
 import { getIdFromAtob } from '~/utility'
+import { postGaData } from '~/utility/index.js'
 export default {
   props: {
     item: {
@@ -130,6 +131,13 @@ export default {
       checkbox1: false,
       checkbox2: false,
     }
+  },
+  watch: {
+    valid(newVal) {
+      if (newVal) {
+        postGaData('New', this.$t('Common.ManageWebhook'))
+      }
+    },
   },
   async mounted() {
     try {
@@ -187,7 +195,7 @@ export default {
       if (this.checkbox2) {
         this.formData.Actions.push('registration.updated')
       }
-      this.onSave(this.formData)
+      this.onSave(this.formData, this.$t('Common.ManageWebhook'))
     },
   },
 }

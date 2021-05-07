@@ -77,6 +77,7 @@
 <script>
 import { rules } from '~/utility/rules.js'
 import SaveBtn from '~/components/common/saveButton'
+import { postGaData } from '~/utility/index.js'
 export default {
   components: {
     SaveBtn,
@@ -168,12 +169,21 @@ export default {
       }
     },
   },
+  watch: {
+    valid(newVal) {
+      if (newVal) {
+        postGaData('Edit', this.$t('Drawer.EditBadge'))
+      }
+    },
+  },
   methods: {
     onClose() {
       this.$emit('update:editTemplate', false)
+      postGaData('Close', this.$t('Drawer.EditBadge'))
     },
 
     async onSave() {
+      postGaData(this.$t('Drawer.Save'), this.$t('Drawer.EditBadge'))
       this.isSaveButtonDisabled = true
       const url = this.$bitpod.getApiUrl()
       this.badge.DisplayOrder = parseInt(this.badge.DisplayOrder)
