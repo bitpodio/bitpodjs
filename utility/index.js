@@ -299,29 +299,32 @@ function getDateAfterQuerybyDays(field, days) {
 
 export const configLoaderMixin = {
   layout(context) {
-    console.debug('configLoaderMixin context:- ', context)
-    console.debug('configLoaderMixin context route:- ', context.app.router)
-    console.debug(
-      'configLoaderMixin context.app.router.currentRoute.params.app :- ',
-      context.app.router.currentRoute.params.app
-    )
     return context.app.router.currentRoute.params.app || 'default'
   },
   data() {
     return {
-      token: this.$auth.$storage.getCookies()['auth._token.bitpod'],
+      token: '',
       contents: null,
     }
   },
   async created() {
-    console.debug('access token received from the cookie', this.token)
+    if (this.$auth.$storage.getCookies()['auth._token.bitpod']) {
+      this.token = this.$auth.$storage.getCookies()['auth._token.bitpod']
+    } else {
+      this.token = this.$auth.$storage.getCookies()['auth._token.google']
+    }
+    console.log('got the token', this.token)
     const strategy = this.$auth.$storage.getCookies()['auth.strategy']
-    if (strategy === 'bitpod') {
+    console.log('strategy used', strategy)
+    if (strategy === 'bitpod' || strategy === 'google') {
+      console.log('strategy matched===>')
       if (
         this.token.split(' ')[1] !==
         this.$auth.$storage.getCookies()['apollo-token']
       ) {
+        console.log('not similar setting new token ====>')
         let token = this.$auth.strategy.token.get()
+        console.log('not similar setting new token ====>', token)
         if (token) {
           token = token.split(' ')[1]
         }
