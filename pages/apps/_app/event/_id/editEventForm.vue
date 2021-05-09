@@ -281,6 +281,7 @@ import event from '~/config/apps/event/gql/event.gql'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { postGaData } from '~/utility/index.js'
+import { configLoaderMixin } from '~/utility'
 import Timezone from '~/components/common/form/timezone'
 import SaveButton from '~/components/common/saveButton'
 
@@ -292,6 +293,7 @@ export default {
     Timezone,
     SaveButton,
   },
+  mixins: [configLoaderMixin],
   props: {
     eventForm: {
       type: Boolean,

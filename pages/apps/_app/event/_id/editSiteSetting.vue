@@ -280,12 +280,14 @@ import generalconfiguration from '~/config/apps/event/gql/registrationStatusOpti
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 // import templateList from '~/config/apps/event/gql/templateList.gql'
+import { configLoaderMixin } from '~/utility'
 import SaveButton from '~/components/common/saveButton'
 
 export default {
   components: {
     SaveButton,
   },
+  mixins: [configLoaderMixin],
   props: {
     siteSetting: {
       type: Boolean,

@@ -85,6 +85,7 @@ import gql from 'graphql-tag'
 import { rules } from '~/utility/rules.js'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
+import { configLoaderMixin } from '~/utility'
 import { postGaData } from '~/utility/index.js'
 import SaveButton from '~/components/common/saveButton'
 
@@ -92,6 +93,7 @@ export default {
   components: {
     SaveButton,
   },
+  mixins: [configLoaderMixin],
   props: {
     seoForm: {
       type: Boolean,

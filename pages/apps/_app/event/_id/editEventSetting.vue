@@ -121,6 +121,7 @@ import event from '~/config/apps/event/gql/event.gql'
 import eventCount from '~/config/apps/event/gql/eventCount.gql'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import { formatGQLResult } from '~/utility/gql.js'
+import { configLoaderMixin } from '~/utility'
 import { postGaData } from '~/utility/index.js'
 import SaveButton from '~/components/common/saveButton'
 
@@ -130,6 +131,7 @@ export default {
       process.client ? import('~/components/common/form/richtext.vue') : false,
     SaveButton,
   },
+  mixins: [configLoaderMixin],
   props: {
     eventSetting: {
       type: Boolean,
