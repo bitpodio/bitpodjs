@@ -387,3 +387,30 @@ export function postGaData(action, formTitle) {
   console.debug('Post Data', obj)
   window.ga('send', obj)
 }
+
+export function setToken() { 
+  let token
+  if (this.$auth.$storage.getCookies()['auth._token.bitpod']) {
+      token = this.$auth.$storage.getCookies()['auth._token.bitpod']
+    } else {
+      token = this.$auth.$storage.getCookies()['auth._token.google']
+    }
+    console.log('got the token', token)
+    const strategy = this.$auth.$storage.getCookies()['auth.strategy']
+    console.log('strategy used', strategy)
+    if (strategy === 'bitpod' || strategy === 'google') {
+      console.log('strategy matched===>')
+      if (
+        token.split(' ')[1] !==
+        this.$auth.$storage.getCookies()['apollo-token']
+      ) {
+        console.log('not similar setting new token ====>')
+        let newToken = this.$auth.strategy.token.get()
+        console.log('not similar setting new token ====>', token)
+        if (newToken) {
+          newToken = newToken.split(' ')[1]
+        }
+        await this.$apolloHelpers.onLogin(newToken, undefined, { expires: 7 })
+      }
+    }
+}

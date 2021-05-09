@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import { VDialog } from 'vuetify/lib'
 import _ from 'lodash'
-import { postGaData } from '~/utility/index.js'
+import { postGaData, setToken } from '~/utility/index.js'
 
 export const customVDialog = {
   extends: VDialog,
@@ -75,6 +75,8 @@ export const customVDialog = {
       window.removeEventListener('focusin', this.onFocusin)
     },
     postData: _.debounce(function () {
+      console.log('setting the token')
+      setToken()
       postGaData(this.obj)
     }, 100),
     getFormLabel() {
