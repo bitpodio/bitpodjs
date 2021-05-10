@@ -324,7 +324,7 @@
     "StartSession": "Start Session",
     "NewSession": "New Session",
     "NewScheduleATask": "Schedule a Task",
-    "EditScheduleATask": "Edit Schedule Task",
+    "EditScheduleATask": "Edit Scheduled Task",
     "NewEmailConfirmationTemplate": "New Email Confirmation Template",
     "NewTicket": "New Ticket",
     "RegistrationType": "Registration Type",
@@ -803,7 +803,9 @@
     "TicketsNotRequiredToggle": "This event does not require tickets",
     "SessionsNotAvailable": "Sessions require events to be ticketed",
     "Language": "Language",
-    "SelectingJPYCurrency": "Decimal rounding off doesn't apply to {currency}"
+    "SelectingJPYCurrency": "Decimal rounding off doesn't apply to {currency}",
+    "Reconnect":"Re-Connect",
+    "Expired": "Expired"
   },
   "Drawer": {
     "UnSubscribeMsg": "Please select a reason to unsubscribe from newsletter. This will help us to improve our services.",
@@ -951,7 +953,11 @@
       "CreateOrgFailed": "Failed to create your organisation.",
       "CreateOrgCatch": "This organisation is in use or may be soft-deleted. Try with a new name.",
       "CreateOrgFull": "Failed to create your organisation.",
-      "MemberExists": "Member already exists!"
+      "MemberExists": "Member already exists!",
+      "ImportFailed": "Import execution failed",
+      "ImportFailedMessage": "Import execution failed due to row {index} in file",
+      "DuplicateErrorMessage": "Duplicate records in the file. Please use unique email id.",
+      "AttendeeImportFailed" : "Attendee Import Failed."
     },
     "Warn": {
       "UniqueLinkFormat": "Lower case alphanumeric letters only",
@@ -1040,6 +1046,7 @@
       "OrgNameSuccess": "https://{orgName}-{suffixRoute} is available",
       "ContactImported": "Contacts Imported Sucessfully",
       "ContactImportedFailed": "Contacts Import Failed"
+      
     },
     "Information": {
       "SetupInProgressTitle": "Setup in progress",

@@ -34,7 +34,7 @@
           >
             <h2 class="black--text pt-5 pb-4 text-h5">
               <i18n v-if="item && item.id" path="Common.EditScheduleATask" />
-              <i18n path="Common.NewScheduleATask" />
+              <i18n v-else path="Common.NewScheduleATask" />
             </h2>
             <v-spacer></v-spacer>
             <div>

@@ -324,7 +324,7 @@
     "StartSession": "सत्र प्रारंभ करें",
     "NewSession": "नया सत्र",
     "NewScheduleATask": "एक कार्य अनुसूची",
-    "EditScheduleATask": "शेड्यूल टास्क संपादित करें",
+    "EditScheduleATask": "अनुसूचित कार्य संपादित करें",
     "NewEmailConfirmationTemplate": "नई ईमेल पुष्टि टेम्प्लेट",
     "NewTicket": "नया टिकट",
     "RegistrationType": "पंजीकरण प्रकार",
@@ -804,7 +804,9 @@
     "TicketsNotRequiredToggle": "इस घटना के लिए टिकट की आवश्यकता नहीं है",
     "SessionsNotAvailable": "सत्र के लिए टिकटों की घटनाओं की आवश्यकता होती है",
     "Language": "भाषा",
-    "SelectingJPYCurrency": "दशमलव राउंडिंग बंद लागू नहीं होता है {currency}"
+    "SelectingJPYCurrency": "दशमलव राउंडिंग बंद लागू नहीं होता है {currency}",
+    "Reconnect":"फिर से कनेक्ट",
+    "Expired": "समय सीमा समाप्त"
   },
   "Drawer": {
     "UnSubscribeMsg": "कृपया न्यूज़लेटर से सदस्यता समाप्त करने का कारण चुनें। इससे हमें अपनी सेवाओं को बेहतर बनाने में मदद मिलेगी।",
@@ -951,7 +953,11 @@
       "CreateOrgFailed": "अपना संगठन बनाने में विफल।",
       "CreateOrgCatch": "यह संगठन उपयोग में है या सॉफ्ट-डिलीट हो सकता है। एक नए नाम के साथ प्रयास करें।",
       "CreateOrgFull": "अपना संगठन बनाने में विफल।",
-      "MemberExists": "सदस्य पहले से मौजूद है!"
+      "MemberExists": "सदस्य पहले से मौजूद है!",
+      "ImportFailed": "आयात निष्पादन विफल हुआ",
+      "ImportFailedMessage": "फ़ाइल में पंक्ति {index} के कारण आयात निष्पादन विफल हो गया",
+      "DuplicateErrorMessage": "फ़ाइल में डुप्लिकेट रिकॉर्ड। कृपया अद्वितीय ईमेल आईडी का उपयोग करें।",
+      "AttendeeImportFailed" : "सहभागी आयात विफल।"
     },
     "Warn": {
       "UniqueLinkFormat": "केवल लोअर केस अल्फ़ान्यूमेरिक अक्षर",

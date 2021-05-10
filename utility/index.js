@@ -328,12 +328,35 @@ export const configLoaderMixin = {
         await this.$apolloHelpers.onLogin(token, undefined, { expires: 7 })
       }
     }
+    this.postUrlTracking()
   },
   async mounted() {
     const contentFactory = await import(
       `~/config/apps/${this.$route.params.app}/content`
     )
     this.contents = contentFactory.default
+  },
+  methods: {
+    postUrlTracking() {
+      if (this.$store.state.parseUrl !== this.$route.path) {
+        const murmurhash = require('murmurhash')
+        const checkId = murmurhash.v2(
+          this.$auth.user.data.email,
+          this.$config.seedValue
+        )
+        this.$store.commit('setTrackingPath', this.$route.path)
+        setTimeout(() => {
+          if (process.client) {
+            if (window && window.ga) {
+              console.debug('URL tracking start for url', this.$route.path)
+              window.ga('create', this.$config.gaTrackingCode, 'auto')
+              window.ga('set', 'userId', checkId)
+              window.ga('send', 'pageview', this.$route.path)
+            }
+          }
+        }, 1500)
+      }
+    },
   },
 }
 

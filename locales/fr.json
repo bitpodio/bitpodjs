@@ -324,7 +324,7 @@
     "StartSession": "Démarrer la session",
     "NewSession": "Nouvelle session",
     "NewScheduleATask": "Planifier une tâche",
-    "EditScheduleATask": "Modifier la tâche de planification",
+    "EditScheduleATask": "Modifier la tâche planifiée",
     "NewEmailConfirmationTemplate": "Nouveau modèle de confirmation de courrier électronique",
     "NewTicket": "Nouveau ticket",
     "RegistrationType": "Type d'enregistrement",
@@ -802,7 +802,9 @@
     "TicketsNotRequiredToggle": "Cet événement ne nécessite pas de billets",
     "SessionsNotAvailable": "Les sessions nécessitent des billets pour les événements",
     "Language": "Langue",
-    "SelectingJPYCurrency": "L'arrondi décimal ne s'applique pas aux {currency}"
+    "SelectingJPYCurrency": "L'arrondi décimal ne s'applique pas aux {currency}",
+    "Reconnect":"Reconnecter",
+    "Expired": "Expiré"
   },
   "Drawer": {
     "UnSubscribeMsg": "Veuillez sélectionner une raison pour vous désinscrire de la newsletter. Cela nous aidera à améliorer nos services.",
@@ -949,7 +951,11 @@
       "CreateOrgFailed": "Échec de la création de votre organisation.",
       "CreateOrgCatch": "Cette organisation est utilisée ou peut être supprimée de manière réversible. Essayez avec un nouveau nom.",
       "CreateOrgFull": "Échec de la création de votre organisation.",
-      "MemberExists": "Le membre existe déjà"
+      "MemberExists": "Le membre existe déjà",
+      "ImportFailed": "L’exécution de l’importation a échoué",
+      "ImportFailedMessage": "L’exécution de l’importation a échoué en raison de la ligne {index} du fichier",
+      "DuplicateErrorMessage": "Dupliquer les enregistrements dans le fichier. Veuillez utiliser un identifiant de messagerie unique.",
+      "AttendeeImportFailed" : "L'importation des participants a échoué."
     },
     "Warn": {
       "UniqueLinkFormat": "Minuscules lettres alphanumériques uniquement",
