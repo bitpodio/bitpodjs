@@ -6,7 +6,7 @@
         :key="item.id"
         class="text-center mx-auto ma-sm-8 ml-sm-0 mt-sm-0 member-tile elevation-0 positionRelative"
       >
-        <v-card-text>
+        <v-card-text class="member-card">
           <div>
             <v-avatar
               size="62"
@@ -30,12 +30,14 @@
           </v-card-subtitle>
 
           <div
-            v-if="item._VenueAddress && item._VenueAddress.City"
+            v-if="item._BillingAddress && item._BillingAddress.City"
             class="text--secondary pa-2 pb-0 pt-0 body-2 text-truncate d-block pl-0"
           >
             <i class="fa fa-location" aria-hidden="true"></i>
             {{
-              formatAddressField(item._VenueAddress && item._VenueAddress.City)
+              formatAddressField(
+                item._BillingAddress && item._BillingAddress.City
+              )
             }}
           </div>
         </v-card-text>
@@ -92,8 +94,7 @@ export default {
   min-width: 230px;
   max-width: 230px;
 }
-.member-status {
-  top: 0;
-  left: 0;
+.member-card {
+  min-height: 185px !important;
 }
 </style>
