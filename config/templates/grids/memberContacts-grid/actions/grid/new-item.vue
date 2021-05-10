@@ -40,7 +40,7 @@
               <v-col cols="12" sm="4" md="4" class="pb-0">
                 <v-text-field
                   v-model="formData.FirstName"
-                  label="First Name*"
+                  "label="$t(Common.FirstName)"
                   :rules="[rules.required]"
                   outlined
                   dense
@@ -49,7 +49,7 @@
               <v-col cols="12" sm="4" md="4" class="pb-0">
                 <v-text-field
                   v-model="formData.LastName"
-                  label="Last Name*"
+                  :label="$t('Common.LastName')""
                   :rules="[rules.required]"
                   outlined
                   dense
@@ -62,7 +62,7 @@
                 <v-select
                   v-model="formData.Department"
                   :items="departmentItems"
-                  label="Department"
+                  :label="$t('Common.Department')"
                   outlined
                   dense
                 ></v-select>
@@ -70,7 +70,7 @@
               <v-col cols="12" sm="4" md="4" class="pb-0">
                 <v-text-field
                   v-model="formData.Phone"
-                  label="Mobile Phone*"
+                  :label="$t(Common.MobilePhone)"
                   :rules="[rules.required]"
                   number
                   outlined
@@ -80,7 +80,7 @@
               <v-col cols="12" sm="4" md="4" class="pb-0">
                 <v-text-field
                   v-model="formData.Email"
-                  label="Email*"
+                  :label="$t('Common.Email')"
                   :rules="[rules.email, rules.required]"
                   outlined
                   dense
