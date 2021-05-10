@@ -26,7 +26,7 @@ export default {
   computed: {
     route() {
       return this.localePath(
-        `/apps/event${this.context.basePath}/${this.item.id}`
+        `/apps/${this.$router.currentRoute.params.app}${this.context.basePath}/${this.item.id}`
       )
     },
   },

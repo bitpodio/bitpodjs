@@ -155,12 +155,18 @@
         >
           <v-flex class="d-flex justify-center align-center pb-3">
             <h2 class="body-1 pb-0">
-              <i class="fa fa-user-plus pr-1" aria-hidden="true"></i>
-              <i18n path="Common.Subscriptions" />
+              <i class="fa fa-mail pr-1" aria-hidden="true"></i>
+              <i18n path="Common.Tasks" />
             </h2>
             <v-spacer></v-spacer>
           </v-flex>
           <v-divider></v-divider>
+          <Grid
+            view-name="memberTasks"
+            :content="content"
+            class="mt-n12"
+            :context="data"
+          />
         </div>
         <div
           v-if="content"
@@ -169,11 +175,17 @@
           <v-flex class="d-flex justify-center align-center pb-3">
             <h2 class="body-1 pb-0">
               <i class="fa fa-mail pr-1" aria-hidden="true"></i>
-              <i18n path="Common.Invites" />
+              <i18n path="Common.Contacts" />
             </h2>
             <v-spacer></v-spacer>
           </v-flex>
           <v-divider></v-divider>
+          <Grid
+            view-name="memberContacts"
+            :content="content"
+            class="mt-n12"
+            :context="data"
+          />
         </div>
         <div
           v-if="content"
@@ -187,7 +199,50 @@
             <v-spacer></v-spacer>
           </v-flex>
           <v-divider></v-divider>
-          <Grid view-name="contactEmails" :content="content" class="mt-n12" />
+          <Grid
+            view-name="memberEmails"
+            :content="content"
+            class="mt-n12"
+            :context="data"
+          />
+        </div>
+        <div
+          v-if="content"
+          class="xs12 sm4 md4 lg4 boxview boxviewlarge pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+        >
+          <v-flex class="d-flex justify-center align-center pb-3">
+            <h2 class="body-1 pb-0">
+              <i class="fa fa-mail pr-1" aria-hidden="true"></i>
+              <i18n path="Common.AssociateMember" />
+            </h2>
+            <v-spacer></v-spacer>
+          </v-flex>
+          <v-divider></v-divider>
+          <Grid
+            view-name="associatedMember"
+            :content="content"
+            class="mt-n12"
+            :context="data"
+          />
+        </div>
+        <div
+          v-if="content"
+          class="xs12 sm4 md4 lg4 boxview boxviewlarge pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+        >
+          <v-flex class="d-flex justify-center align-center pb-3">
+            <h2 class="body-1 pb-0">
+              <i class="fa fa-user-plus pr-1" aria-hidden="true"></i>
+              <i18n path="Common.Subscriptions" />
+            </h2>
+            <v-spacer></v-spacer>
+          </v-flex>
+          <v-divider></v-divider>
+          <Grid
+            view-name="memberSubscription"
+            :content="content"
+            class="mt-n12"
+            :context="data"
+          />
         </div>
         <div
           class="xs12 sm8 md8 lg8 boxview boxviewsmall pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
@@ -210,6 +265,10 @@
               <h2 class="body-1 pb-0" v-bind="attrs" v-on="on">
                 <i class="fa fa-info-circle pr-1" aria-hidden="true"></i>
                 <i18n path="Common.MemberInformation" />
+                <v-btn text small @click="editMemberInfoForm = true">
+                  <v-icon left class="fs-16">fa-pencil</v-icon
+                  ><i18n path="Drawer.Edit" />
+                </v-btn>
               </h2>
             </template>
             <span><i18n path="Common.MemberInformation" /></span>
@@ -336,6 +395,10 @@
               <h2 class="body-1 pb-0" v-bind="attrs" v-on="on">
                 <i class="fa fa-tag pr-1" aria-hidden="true"></i>
                 <i18n path="Common.AddressInformation" />
+                <v-btn text small @click="editMemberInfoForm = true">
+                  <v-icon left class="fs-16">fa-pencil</v-icon
+                  ><i18n path="Drawer.Edit" />
+                </v-btn>
               </h2>
             </template>
             <span><i18n path="Common.AddressInformation" /></span>
@@ -344,61 +407,125 @@
           <v-row>
             <v-col class="col-md-6 col-12">
               <i18n
-                path="Common.MailingStreet"
+                path="Common.BillingStreet"
                 class="body-2 text--secondary"
               />
               <div class="body-1">
                 {{
                   formatField(
-                    data.memberData._CurrentAddress &&
-                      data.memberData._CurrentAddress.AddressLine
+                    data.memberData._BillingAddress &&
+                      data.memberData._BillingAddress.AddressLine
                   )
                 }}
               </div>
             </v-col>
             <v-col class="col-md-6 col-12">
-              <i18n path="Common.MailingCity" class="body-2 text--secondary" />
+              <i18n path="Common.BillingCity" class="body-2 text--secondary" />
               <div class="body-1">
                 {{
                   formatField(
-                    data.memberData._CurrentAddress &&
-                      data.memberData._CurrentAddress.City
+                    data.memberData._BillingAddress &&
+                      data.memberData._BillingAddress.City
                   )
                 }}
               </div>
             </v-col>
             <v-col class="col-md-6 col-12">
-              <i18n path="Common.MailingState" class="body-2 text--secondary" />
+              <i18n path="Common.BillingState" class="body-2 text--secondary" />
               <div class="body-1">
                 {{
                   formatField(
-                    data.memberData._CurrentAddress &&
-                      data.memberData._CurrentAddress.State
+                    data.memberData._BillingAddress &&
+                      data.memberData._BillingAddress.State
                   )
                 }}
               </div>
             </v-col>
             <v-col class="col-md-6 col-12">
-              <i18n path="Common.MailingZip" class="body-2 text--secondary" />
+              <i18n path="Common.BillingZip" class="body-2 text--secondary" />
               <div class="body-1">
                 {{
                   formatField(
-                    data.memberData._CurrentAddress &&
-                      data.memberData._CurrentAddress.PostalCode
+                    data.memberData._BillingAddress &&
+                      data.memberData._BillingAddress.PostalCode
                   )
                 }}
               </div>
             </v-col>
             <v-col class="col-md-12 col-12">
               <i18n
-                path="Common.MailingCountry"
+                path="Common.BillingCountry"
                 class="body-2 text--secondary"
               />
               <div class="body-1">
                 {{
                   formatField(
-                    data.memberData._CurrentAddress &&
-                      data.memberData._CurrentAddress.Country
+                    data.memberData._BillingAddress &&
+                      data.memberData._BillingAddress.Country
+                  )
+                }}
+              </div>
+            </v-col>
+            <v-col class="col-md-6 col-12">
+              <i18n
+                path="Common.ShippingStreet"
+                class="body-2 text--secondary"
+              />
+              <div class="body-1">
+                {{
+                  formatField(
+                    data.memberData._ShippingAddress &&
+                      data.memberData._ShippingAddress.AddressLine
+                  )
+                }}
+              </div>
+            </v-col>
+            <v-col class="col-md-6 col-12">
+              <i18n path="Common.ShippingCity" class="body-2 text--secondary" />
+              <div class="body-1">
+                {{
+                  formatField(
+                    data.memberData._ShippingAddress &&
+                      data.memberData._ShippingAddress.City
+                  )
+                }}
+              </div>
+            </v-col>
+            <v-col class="col-md-6 col-12">
+              <i18n
+                path="Common.ShippingState"
+                class="body-2 text--secondary"
+              />
+              <div class="body-1">
+                {{
+                  formatField(
+                    data.memberData._ShippingAddress &&
+                      data.memberData._ShippingAddress.State
+                  )
+                }}
+              </div>
+            </v-col>
+            <v-col class="col-md-6 col-12">
+              <i18n path="Common.ShippingZip" class="body-2 text--secondary" />
+              <div class="body-1">
+                {{
+                  formatField(
+                    data.memberData._ShippingAddress &&
+                      data.memberData._ShippingAddress.PostalCode
+                  )
+                }}
+              </div>
+            </v-col>
+            <v-col class="col-md-12 col-12">
+              <i18n
+                path="Common.ShippingCountry"
+                class="body-2 text--secondary"
+              />
+              <div class="body-1">
+                {{
+                  formatField(
+                    data.memberData._ShippingAddress &&
+                      data.memberData._ShippingAddress.Country
                   )
                 }}
               </div>
@@ -407,12 +534,19 @@
         </div>
       </v-flex>
     </v-flex>
+    <div v-if="editMemberInfoForm">
+      <editMemberInfoForm
+        :edit-member-info-form.sync="editMemberInfoForm"
+        :refresh="refresh"
+      />
+    </div>
   </div>
 </template>
 
 <script>
 import gql from 'graphql-tag'
 import format from 'date-fns/format'
+import editMemberInfoForm from './editMemberAccountInfo.vue'
 import Grid from '~/components/common/grid'
 import Notes from '~/components/common/notes'
 import File from '~/components/common/form/file.vue'
@@ -425,6 +559,7 @@ export default {
     Grid,
     Notes,
     File,
+    editMemberInfoForm,
   },
   mixins: [configLoaderMixin],
   data() {
@@ -443,11 +578,12 @@ export default {
       orgLogo: false,
       allow: true,
       lastPicId: '',
+      editMemberInfoForm: false,
     }
   },
   computed: {
     content() {
-      return this.contents ? this.contents.Contacts : null
+      return this.contents ? this.contents.Member : null
     },
     filter() {
       return {

@@ -14,6 +14,7 @@ query($filters: JSON) {
           CustomerId
           CustomerCode
           ContactNumber
+          ParentCustomer
           BusinessNumber
           Approved
           Website
@@ -24,11 +25,29 @@ query($filters: JSON) {
           NumberOfEmployees
           AnnualRevenue
           TickerSymbol
+          modifiedBy
+          modifiedDate
           Type
-          # Ownership
+          Ownership
           createdDate
           createdBy
           _BillingAddress {
+            id
+            State
+            PostalCode
+            LatLng {
+              lat
+              lng
+            }
+            Country
+            City
+            AddressLine
+            createdDate
+            createdBy
+            modifiedDate
+            modifiedBy
+          }
+          _ShippingAddress {
             id
             State
             PostalCode
