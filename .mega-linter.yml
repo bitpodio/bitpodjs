@@ -3,10 +3,7 @@
 
 APPLY_FIXES: none # all, none, or list of linter keys
 DEFAULT_BRANCH: development # Usually master or main
-ENABLE: # If you use ENABLE variable, all other languages/formats/tooling-formats will be disabled by default
-  - JAVASCRIPT
-  - CSS
-  - JSON
+# ENABLE: # If you use ENABLE variable, all other languages/formats/tooling-formats will be disabled by default
 ENABLE_LINTERS: # If you use ENABLE_LINTERS variable, all other linters will be disabled by default
   - JAVASCRIPT_ES
   - JSON_PRETTIER
