@@ -19,12 +19,6 @@
     "prettier",
     "prettier/vue"
   ],
-
-  "overrides": [
-    {
-      "files": ["*.vue", "**/*.vue"]
-    }
-  ],
   "plugins": ["vue", "prettier", "promise"],
   // add your custom rules here
   "rules": {
