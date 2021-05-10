@@ -1,4 +1,3 @@
-// import nuxtconfig from '~/nuxt.config'
 export default async (
   { graphQLErrors, networkError, operation, forward },
   nuxtContext
