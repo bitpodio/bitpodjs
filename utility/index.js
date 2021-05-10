@@ -309,14 +309,19 @@ export const configLoaderMixin = {
   },
   data() {
     return {
-      token: this.$auth.$storage.getCookies()['auth._token.bitpod'],
+      token: '',
       contents: null,
     }
   },
   async created() {
     console.debug('access token received from the cookie', this.token)
     const strategy = this.$auth.$storage.getCookies()['auth.strategy']
-    if (strategy === 'bitpod') {
+    if (this.$auth.$storage.getCookies()['auth._token.bitpod']) {
+      this.token = this.$auth.$storage.getCookies()['auth._token.bitpod']
+    } else {
+      this.token = this.$auth.$storage.getCookies()['auth._token.google']
+    }
+    if (strategy === 'bitpod' || strategy === 'google') {
       if (
         this.token.split(' ')[1] !==
         this.$auth.$storage.getCookies()['apollo-token']
