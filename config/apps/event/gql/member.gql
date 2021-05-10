@@ -14,7 +14,6 @@ query($filters: JSON) {
           CustomerId
           CustomerCode
           ContactNumber
-          ParentCustomer
           BusinessNumber
           Approved
           Website
