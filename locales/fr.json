@@ -814,7 +814,10 @@
     "SelectRecipient": "Sélectionnez le destinataire",
     "NewRecipient": "Nouveau destinataire",
     "CreatedOn": "Créé le {date}",
-    "YouMayReferRecipients": "Vous pouvez faire référence aux données des destinataires en utilisant des expressions d'espace réservé dans la ligne d'objet. Par exemple: {contactTemplateData}"
+    "YouMayReferRecipients": "Vous pouvez faire référence aux données des destinataires en utilisant des expressions d'espace réservé dans la ligne d'objet. Par exemple: {contactTemplateData}",
+    "SearchContacts": "Rechercher des contacts",
+    "Data": "Donnés",
+    "FillTemplateData": "Passez en revue le contenu du document et les espaces réservés, utilisez le formulaire pour modifier les valeurs des espaces réservés."
   },
   "Drawer": {
     "UnSubscribeMsg": "Veuillez sélectionner une raison pour vous désinscrire de la newsletter. Cela nous aidera à améliorer nos services.",

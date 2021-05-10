@@ -816,7 +816,10 @@
     "SelectRecipient": "בחר נמען",
     "NewRecipient": "מקבל חדש",
     "CreatedOn": "נוצר בתאריך {date}",
-    "YouMayReferRecipients": "אתה יכול להפנות את נתוני הנמענים באמצעות ביטויים של מציין מיקום בשורת הנושא. למשל: {contactTemplateData}"
+    "YouMayReferRecipients": "אתה יכול להפנות את נתוני הנמענים באמצעות ביטויים של מציין מיקום בשורת הנושא. למשל: {contactTemplateData}",
+    "SearchContacts": "חפש אנשי קשר",
+    "Data": "נתונים",
+    "FillTemplateData": "בדוק את תוכן המסמך ואת מצייני המיקום, השתמש בטופס לעריכת ערכי מציין המיקום."
   },
   "Drawer": {
     "UnSubscribeMsg": "אנא בחר סיבה לביטול הרישום לניוזלטר. זה יעזור לנו לשפר את השירותים שלנו.",

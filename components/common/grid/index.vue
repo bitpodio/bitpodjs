@@ -168,7 +168,8 @@
           viewName === 'template' ||
           viewName === 'seatmaps' ||
           viewName === 'badge' ||
-          viewName === 'integration'
+          viewName === 'integration' ||
+          viewName === 'eSign'
             ? ''
             : 'table'
         "
@@ -347,6 +348,22 @@
       </div>
       <div
         v-if="viewName === 'integration' && loading === true"
+        class="d-flex flex-wrap flex-row seat-skeleton-inner mt-16 pl-2"
+      >
+        <v-skeleton-loader
+          v-for="i in 10"
+          :key="i"
+          :loading="loading"
+          type="card"
+          width="150"
+          height="125"
+          class="pl-0 pt-0 eventtiles ma-3 ma-md-10 ml-0 mt-0 ml-md-0 mt-md-0"
+        >
+          <div></div>
+        </v-skeleton-loader>
+      </div>
+      <div
+        v-if="viewName === 'eSign' && loading === true"
         class="d-flex flex-wrap flex-row seat-skeleton-inner mt-16 pl-2"
       >
         <v-skeleton-loader

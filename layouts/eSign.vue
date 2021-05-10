@@ -9,30 +9,22 @@
           size="24"
           height="36px"
           width="36px"
-          class="ml-0 ml-md-2 mr-2 mr-md-3"
+          class="ml-0 mx-md-2 mr-0 d-inline d-sm-none"
           @click.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
-        <span class="bitpod-logo logo-ds d-none d-sm-flex">
+        <span class="bitpod-logo logo-ds px-3">
           <v-img
             :src="$config.cdnUri + 'bitpod-logo-new.png'"
             class="logofull mr-2"
           ></v-img>
         </span>
-        <!-- <i18n
-          path="Common.Integration"
-          class="d-inline-flex align-center mx-0 mx-md-2 ml-0 ml-md-1 text-h5"
-        /> -->
-        E-Sign
         <v-spacer></v-spacer>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <Help class="d-none d-sm-inline" />
-      <AppDrawer />
       <LanguageSwitcher />
-      <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
-        <v-icon>mdi-invert-colors</v-icon>
-      </v-btn>
-      <div v-if="$auth.$state.loggedIn">
+      <AppDrawer />
+      <div v-if="$auth.$state.loggedIn" class="ml-3">
         <v-menu
           v-model="account"
           :close-on-content-click="false"
@@ -92,6 +84,7 @@
               <OrgnaizationList />
             </v-list-item>
             <OldSite />
+            <Theme />
             <v-list dense class="pt-0">
               <v-list-item>
                 <v-btn text small color="primary" @click="onLogout">
@@ -155,7 +148,6 @@ export default {
       menu: false,
       modal: false,
       menu2: false,
-      drawer: null,
       dialog1: false,
       dialog: false,
       notifications: false,
@@ -202,7 +194,7 @@ export default {
         }
       } catch (e) {
         console.error(
-          `Error in layouts/integration.vue in userPlan method while making get call to custom API to get users subscription, context: ${url} `,
+          `Error in layouts/eSign.vue in userPlan method while making get call to custom API to get users subscription, context: ${url} `,
           e
         )
       }

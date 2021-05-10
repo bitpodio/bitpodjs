@@ -52,7 +52,7 @@ export const appList = (store) => [
   {
     name: 'E-Sign',
     label: 'Common.Esign',
-    css: 'fa fa-help-circle fs-36 success--text',
+    css: 'fa-file-contract fs-36 error--text',
     type: 'route',
     route: '/apps/eSign/list/eSignRequest/eSign',
     roles: [],

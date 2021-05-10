@@ -26,14 +26,27 @@
               <v-text-field
                 v-model="addNewTemplateFormName"
                 :label="$t('Common.Name')"
+                outlined
                 required
+                dense
               ></v-text-field>
             </v-col>
             <v-col cols="12" md="6" class="pb-0">
               <v-text-field
                 v-model="addNewTemplateFormURL"
                 label="Google Document URL*"
+                outlined
                 required
+                dense
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" md="6" class="pb-0">
+              <v-text-field
+                v-model="addNewTemplateFormCategory"
+                :label="$t('Common.Category')"
+                outlined
+                required
+                dense
               ></v-text-field>
             </v-col>
           </v-row>
@@ -140,17 +153,20 @@
                 <v-icon>mdi-close</v-icon>
               </v-btn>
             </div>
-            <v-tabs v-model="curentTab" left height="36">
+            <v-tabs v-model="currentTab" left height="36">
               <v-tab class="px-0 mr-4">
                 <i18n path="Common.Template" />
               </v-tab>
-              <v-tab :disabled="curentTab < 1" class="px-0 mr-4">
+              <v-tab :disabled="currentTab < 1" class="px-0 mr-4">
+                <i18n path="Common.Data" />
+              </v-tab>
+              <v-tab :disabled="currentTab < 2" class="px-0 mr-4">
                 <i18n path="Common.Recipients" />
               </v-tab>
-              <v-tab :disabled="curentTab < 2" class="px-0 mr-4">
+              <v-tab :disabled="currentTab < 3" class="px-0 mr-4">
                 <i18n path="Common.EmailInfo" />
               </v-tab>
-              <v-tab :disabled="curentTab < 3" class="px-0 mr-4">
+              <v-tab :disabled="currentTab < 4" class="px-0 mr-4">
                 <i18n path="Common.Verify" />
               </v-tab>
             </v-tabs>
@@ -158,132 +174,10 @@
           <v-card-text
             class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0 invite-inner"
           >
-            <v-tabs-items v-model="curentTab">
+            <v-tabs-items v-model="currentTab">
               <v-tab-item>
-                <v-card v-if="choosedTemplate === 0" flat>
-                  <p class="mt-4 mb-3">
-                    <i18n path="Common.SelectTemplateType" />
-                  </p>
-                  <div class="pr-3 pt-1 tabContent">
-                    <v-row>
-                      <v-col
-                        class="pl-4 templateTile col-12 col-sm-6 col-md-4"
-                        @click="chooseTemplate(1)"
-                      >
-                        <v-card
-                          height="230"
-                          align="center"
-                          justify="center"
-                          class="tileCard cursorPointer pa-2"
-                        >
-                          <v-icon class="py-5" size="48">fa-star2</v-icon>
-                          <h3
-                            class="text-h5 my-2"
-                            style="font-size: 18px !important;"
-                          >
-                            <i18n path="Common.CreateNewSignatureTemplate" />
-                          </h3>
-                          <i18n
-                            path="Common.CreateNewSignatureTemplateDescription"
-                            class="Caption mb-4"
-                          />
-                        </v-card>
-                      </v-col>
-
-                      <v-col
-                        class="pl-5 templateTile col-12 col-sm-6 col-md-4"
-                        @click="chooseTemplate(2)"
-                      >
-                        <v-card
-                          height="230"
-                          align="center"
-                          justify="center"
-                          class="tileCard cursorPointer pa-2"
-                        >
-                          <v-icon class="py-5" size="48">fa-document</v-icon>
-                          <h3
-                            class="text-h5 my-2"
-                            style="font-size: 18px !important;"
-                          >
-                            <i18n path="Common.ExistingSignatureTemplate" />
-                          </h3>
-                          <div class="Caption mb-4">
-                            <i18n
-                              path="Common.ExistingSignatureTemplateDescription"
-                            />
-                          </div>
-                        </v-card>
-                      </v-col>
-                    </v-row>
-                  </div>
-                </v-card>
                 <v-card
-                  v-else-if="choosedTemplate === 1 || choosedTemplate === 2"
-                  flat
-                  class="tabContent"
-                >
-                  <p class="mt-4 mb-4">
-                    <i18n path="Common.SelectTemplateToContinue" />
-                    <span
-                      class="blue--text cursorPointer"
-                      @click="choosedTemplate = 0"
-                    >
-                      <i18n path="Drawer.Back" />
-                    </span>
-                  </p>
-                  <v-flex
-                    class="d-flex flex-wrap pl-0 justify-center justify-md-start"
-                  >
-                    <v-hover
-                      v-for="item in templateItems"
-                      :key="item.id"
-                      v-slot:default="{ hover }"
-                    >
-                      <div style="position: relative;">
-                        <v-card
-                          :elevation="hover ? 4 : 2"
-                          class="ma-3 ml-0 mt-0 text-center"
-                          :class="{ 'on-hover': hover }"
-                          height="150"
-                          width="250"
-                        >
-                          <div class="pa-1">
-                            <v-icon class="py-5" color="secondary" size="48"
-                              >fa-document</v-icon
-                            >
-                          </div>
-                          <div
-                            class="text-truncate text-center text-capitalize text-h5 pb-5 px-2"
-                          >
-                            {{ item.Name }}
-                          </div>
-                        </v-card>
-                        <div
-                          v-if="hover"
-                          class="align-self-center templateButtons"
-                        >
-                          <v-btn
-                            class="my-2 mx-0"
-                            color="primary"
-                            outlined
-                            @click="selectSignTemplate(item)"
-                            ><i18n path="Common.Select"
-                          /></v-btn>
-                          <v-btn
-                            class="ma-2"
-                            color="primary"
-                            outlined
-                            :href="item.DocumentUrl"
-                            target="_blank"
-                            ><i18n path="Drawer.View"
-                          /></v-btn>
-                        </div>
-                      </div>
-                    </v-hover>
-                  </v-flex>
-                </v-card>
-                <v-card
-                  v-else-if="choosedTemplate == 4"
+                  v-if="templateLoading"
                   class="pa-10 tabContent"
                   flat
                   align="center"
@@ -296,22 +190,93 @@
                   ></v-progress-circular>
                 </v-card>
                 <v-card v-else flat class="tabContent">
-                  <v-flex class="flexInLargeScreen">
-                    <p class="mt-5 mb-4">
-                      <i18n path="Common.DefaultContent" />
-                    </p>
-                    <v-spacer></v-spacer>
+                  <div class="d-flex justify-start mt-4 pt-4 mr-8">
                     <v-btn
-                      class="ma-2"
-                      outlined
                       color="primary"
-                      @click="
-                        choosedTemplate = 0
-                        templateSelected = false
-                      "
-                      ><i18n path="Drawer.XDiscard"
+                      @click="addNewTemplateFormDialog = true"
+                      ><v-icon small>mdi-plus</v-icon><i18n path="Common.New"
                     /></v-btn>
+                  </div>
+                  <v-flex
+                    class="d-flex flex-wrap pl-0 justify-center justify-md-start mt-4 pt-4"
+                  >
+                    <v-hover
+                      v-for="item in templateItems"
+                      :key="item.id"
+                      v-slot:default="{ hover }"
+                    >
+                      <v-card
+                        :elevation="1"
+                        :class="[
+                          hover ? 'grey lighten-5' : '',
+                          'ma-3 ma-md-10 ml-0 mt-0 ml-md-0 mt-md-0 seat-maps',
+                        ]"
+                        @click="selectSignTemplate(item)"
+                      >
+                        <v-card-text
+                          class="font-weight-medium text-center positionRelative subtitle-1 seat-card pb-0"
+                        >
+                          <i class="fa fa-document fs-36 warning--text"></i>
+                          <v-tooltip bottom>
+                            <template v-slot:activator="{ on, attrs }">
+                              <span v-bind="attrs">
+                                <div
+                                  class="body-1 grey--text text--darken-1 text-truncate"
+                                  v-on="on"
+                                >
+                                  {{ item.Name }}
+                                </div>
+                              </span>
+                            </template>
+                            <span>{{ item.Name }}</span>
+                          </v-tooltip>
+                        </v-card-text>
+                      </v-card>
+                    </v-hover>
                   </v-flex>
+                </v-card>
+              </v-tab-item>
+              <v-tab-item class="tabContent">
+                <v-card
+                  v-if="documentTextLoading"
+                  class="pa-10 tabContent"
+                  flat
+                  align="center"
+                >
+                  <v-progress-circular
+                    :size="70"
+                    :width="3"
+                    color="grey"
+                    indeterminate
+                  ></v-progress-circular>
+                </v-card>
+                <v-card v-else flat>
+                  <p class="mt-5 mb-4">
+                    <i18n path="Common.FillTemplateData" />
+                  </p>
+                  <v-row>
+                    <v-col v-if="currentTab === 1" class="col-12 col-md-8">
+                      <div v-html="resolvedDocumentText"></div>
+                    </v-col>
+                    <v-col align="center" class="d-none d-md-block col-1">
+                      <v-divider vertical></v-divider>
+                    </v-col>
+                    <v-col
+                      class="col-12 col-md-3"
+                      :order="$vuetify.breakpoint.smAndDown ? 'first' : 'last'"
+                    >
+                      <v-text-field
+                        v-for="item in dataFields"
+                        :key="item.id"
+                        outlined
+                        dense
+                        :label="item.Name"
+                        :value="getHandlebarsObjectValue(item.Name)"
+                        @input="updateNestedObject(item.Name, $event, item.id)"
+                      >
+                      </v-text-field>
+                    </v-col>
+                  </v-row>
                 </v-card>
               </v-tab-item>
               <v-tab-item class="tabContent">
@@ -326,22 +291,22 @@
                       <template v-slot:default>
                         <thead>
                           <tr>
-                            <th class="text-left pl-2 pl-md-0">
+                            <th class="text-left pl-4">
                               Recipient Type*
                             </th>
-                            <th class="text-left pl-2 mxw-150">
+                            <th class="text-left pl-4 mxw-150">
                               Contact*
                             </th>
                             <th class="text-left"></th>
                           </tr>
                         </thead>
                         <tbody v-if="toggleRecipientLoading">
-                          <td width="20%" class="pa-2 pb-0 pl-2 pl-md-0">
+                          <td width="20%">
                             <v-skeleton-loader
                               type="list-item@4"
                             ></v-skeleton-loader>
                           </td>
-                          <td width="60%" class="pa-2 pb-0">
+                          <td width="60%">
                             <v-skeleton-loader
                               type="list-item@4"
                             ></v-skeleton-loader>
@@ -353,10 +318,10 @@
                             :key="index"
                             class="contactsRow"
                           >
-                            <td width="20%" class="pa-2 pb-0 pl-2 pl-md-0">
+                            <td width="20%" class="pa-2 pb-0 pl-4">
                               {{ item.type }}
                             </td>
-                            <td width="60%" class="pa-2 pb-0">
+                            <td width="60%" class="pa-2 pb-0 pl-4">
                               <!-- <v-autocomplete
                                 :items="contactList"
                                 :item-text="
@@ -370,11 +335,11 @@
                                 v-model="selectedListNewContacts[index]"
                                 :items="disabledContactList(index)"
                                 item-value="id"
-                                item-text="FullName"
+                                :filter="autocompleteFilter"
                                 return-object
                                 outlined
                                 :search-input.sync="contactListSearch[index]"
-                                :label="$t('Common.Select')"
+                                :label="$t('Common.SearchContacts')"
                                 dense
                                 hide-details
                                 :hide-no-data="!contactListResultsFound"
@@ -411,7 +376,7 @@
                               </v-autocomplete>
                             </td>
                             <td width="20%" class="pa-2 pt-3">
-                              <v-tooltip left>
+                              <v-tooltip bottom>
                                 <template v-slot:activator="{ on, attrs }">
                                   <v-btn
                                     class="mt-1"
@@ -508,7 +473,7 @@
                       <h5 class="body-2 mt-2 mr-2">
                         <i18n path="Common.NotAddedContact" />
                       </h5>
-                      <v-btn color="blue" outlined @click="curentTab = 1"
+                      <v-btn color="blue" outlined @click="currentTab = 1"
                         ><i18n path="Common.SelectContact"
                       /></v-btn>
                     </v-flex>
@@ -523,7 +488,7 @@
                       <h5 class="body-2 mt-2 mr-2">
                         <i18n path="Common.NotAddedContent" />
                       </h5>
-                      <v-btn color="blue" outlined @click="curentTab = 0"
+                      <v-btn color="blue" outlined @click="currentTab = 0"
                         ><i18n path="Common.SelectContent"
                       /></v-btn>
                     </v-flex>
@@ -569,7 +534,7 @@
                         <h4 class="body-1 mt-1">
                           <i18n path="Common.SubjectAndSender" />
                         </h4>
-                        <v-btn class="ml-10" text small @click="curentTab = 2">
+                        <v-btn class="ml-10" text small @click="currentTab = 2">
                           <v-icon dark left>fa-pencil</v-icon>
                           <i18n path="Drawer.Edit" />
                         </v-btn>
@@ -619,11 +584,11 @@
           <v-card-actions
             class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
           >
-            <v-btn v-if="curentTab > 0" depressed @click="onPrev"
+            <v-btn v-if="currentTab > 0" depressed @click="onPrev"
               ><i18n path="Drawer.Prev"
             /></v-btn>
             <v-btn
-              v-if="curentTab < 3"
+              v-if="currentTab < 4"
               color="primary"
               depressed
               :disabled="disableNext"
@@ -639,6 +604,7 @@
 
 <script>
 import _ from 'lodash'
+import handlebars from 'handlebars'
 import SaveBtn from '~/components/common/saveButton'
 import { configLoaderMixin } from '~/utility'
 export default {
@@ -656,65 +622,94 @@ export default {
       default: () => false,
       required: false,
     },
+    templateName: {
+      type: String,
+      default: '',
+      required: false,
+    },
+    templateCategory: {
+      type: String,
+      default: '',
+      required: false,
+    },
+    recipientList: {
+      type: Array,
+      default: () => [],
+      required: false,
+    },
+    templateData: {
+      type: Array,
+      default: () => {},
+      required: false,
+    },
   },
   data() {
     return {
-      snackbarText: '',
-      templateItems: [],
-      selectedList: [],
-      selectedListNewContacts: [],
-      curentTab: 0,
+      isFrench: false,
+      currentTab: 0,
+      disableButton: false,
+      toggleLoading: false,
       subject: '',
       senderName: (this.$auth && this.$auth.user.data.name) || '',
       sender: (this.$auth && this.$auth.user.data.email) || '',
       setReplyTo: (this.$auth && this.$auth.user.data.email) || '',
       message: '',
-      choosedTemplate: 0,
-      templateSelected: false,
       snackbar: false,
-      disableButton: false,
-      isFrench: false,
+      snackbarText: '',
+      templateItems: [],
+      templateLoading: true,
+      templateSelected: false,
       addNewTemplateFormDialog: false,
       addNewTemplateFormName: '',
       addNewTemplateFormURL: '',
+      addNewTemplateFormCategory: '',
+      newRecipientIndex: 0,
       addNewRecipientFormDialog: false,
       addNewRecipientFormFirstName: '',
       addNewRecipientFormLastName: '',
       addNewRecipientFormName: '',
       addNewRecipientFormEmail: '',
-      disableTab: true,
       postEsignRequestData: {},
-      contactLoaded: false,
+      parties: [],
       contactList: [],
       contactListSearch: [],
       contactListSearchText: '',
       disableSearch: false,
       loadingContactList: [],
       contactListResultsFound: false,
+      selectedList: [],
+      selectedListNewContacts: [],
       selectedRecipientList: [],
-      contactIsSet: [],
       selectedRecipient: {},
-      selectedParty: '',
-      documentText: '',
-      parties: [],
-      toggleLoading: false,
+      contactIsSet: [],
       toggleRecipientLoading: true,
-      newRecipientIndex: 0,
+      documentTextLoading: true,
+      documentText: '',
+      compiledDocumentText: '',
+      resolvedDocumentText: '',
+      dataFields: [],
+      handlebarsDataObject: {},
+      handlebarsDataIsSet: [],
     }
   },
   computed: {
     disableNext() {
       if (this.templateSelected === false) return true
-      else if (this.curentTab === 1) {
+      else if (this.currentTab === 1) {
+        if (
+          this.documentTextLoading ||
+          this.handlebarsDataIsSet.some((item) => item === false)
+        )
+          return true
+      } else if (this.currentTab === 2) {
         if (this.toggleRecipientLoading === true) return true
         if (this.contactIsSet.some((item) => item === false)) return true
-      } else if (this.curentTab === 2 && this.subject === '') return true
+      } else if (this.currentTab === 3 && this.subject === '') return true
       return false
     },
   },
   watch: {
     contactListSearch(val) {
-      console.log(val)
       for (const [index, item] of val.entries()) {
         if (item && item.length > 3 && item !== this.contactListSearchText) {
           this.contactListResultsFound = false
@@ -731,54 +726,48 @@ export default {
         }
       }
     },
-    selectedRecipientList(val) {
-      console.log(val)
-    },
   },
-  mounted() {
-    this.$eventBus.$on('itemSelected', this.updateSelectedList)
+  async mounted() {
     if (this.$i18n.locale === 'fr') {
       this.isFrench = true
     }
-    // const bitpodURL = `${this.$bitpod.getApiUrl()}Contacts`
-    // try {
-    //   const response = await this.$axios.$get(bitpodURL)
-    //   if (response) {
-    //     this.contactList = response
-    //   }
-    // } catch (err) {
-    //   this.snackbar = true
-    //   this.snackbarText = 'Failed to load contacts.'
-    //   console.error(err)
-    // }
-  },
-  beforeDestroy() {
-    this.$eventBus.$off('itemSelected')
+    if (this.templateName !== '') {
+      try {
+        const bitpodURL = `${this.$bitpod.getApiUrl()}ESIGNTEMPLATES/findOne?filter[where][Name]=${
+          this.templateName
+        }`
+        const response = await this.$axios.$get(bitpodURL)
+        console.log(response)
+        if (response) {
+          this.selectSignTemplate(response)
+        }
+        this.getExistingTemplate()
+      } catch (err) {
+        console.error(err)
+        this.getExistingTemplate()
+      }
+    } else {
+      this.getExistingTemplate()
+    }
   },
   methods: {
     onPrev() {
-      this.curentTab--
+      this.currentTab--
       document.getElementsByClassName('invite-inner')[0].scrollTop = 0
     },
     onNext() {
-      this.curentTab++
+      this.currentTab++
       document.getElementsByClassName('invite-inner')[0].scrollTop = 0
     },
-    updateSelectedList(data) {
-      if (data.viewName === 'Contacts') {
-        this.selectedList = [...data.items]
-      }
-    },
     updateSelectedListInput(index) {
-      console.log(this.selectedList[index], this.selectedListNewContacts[index])
       if (this.selectedListNewContacts[index]) {
-        this.selectedRecipientList.push(this.selectedListNewContacts[index])
         this.$set(this.selectedList, index, {
           ...this.selectedList[index],
           FullName: this.selectedListNewContacts[index].FullName,
           Email: this.selectedListNewContacts[index].Email,
         })
         this.$set(this.contactIsSet, index, true)
+        this.selectedRecipientList.push(this.selectedListNewContacts[index])
       } else {
         this.$set(this.selectedListNewContacts, index, {
           FullName: '',
@@ -794,28 +783,28 @@ export default {
     resetForm() {
       this.$emit('update:newTemplateDialog', false)
       this.selectedList = []
-      this.choosedTemplate = 0
-      this.curentTab = 0
+      this.currentTab = 0
       this.templateSelected = false
       this.disableButton = false
     },
     async sendNow() {
-      this.postEsignRequestData = {
-        ...this.postEsignRequestData,
-        selectedList: this.selectedList.map((item) => ({
-          FullName: item.FullName,
-          Email: item.Email,
-          type: item.type,
-        })),
-        subject: this.subject,
-        senderName: this.senderName,
-        senderEmail: this.sender,
-        setReplyTo: this.setReplyTo,
-        Message: this.message,
-      }
-      console.log(this.postEsignRequestData)
       const bitpodURL = `${this.$bitpod.getApiUrl()}ESIGNREQUESTS/createESignRequest`
       try {
+        this.postEsignRequestData = {
+          ...this.postEsignRequestData,
+          selectedList: this.selectedList.map((item) => ({
+            FullName: item.FullName,
+            Email: item.Email,
+            type: item.type,
+          })),
+          subject: this.subject,
+          senderName: this.senderName,
+          senderEmail: this.sender,
+          setReplyTo: this.setReplyTo,
+          Message: this.message,
+          TemplateData: JSON.stringify(this.handlebarsDataObject),
+        }
+        console.log(this.postEsignRequestData, bitpodURL)
         const response = await this.$axios.$post(
           bitpodURL,
           this.postEsignRequestData
@@ -829,22 +818,11 @@ export default {
         console.error(err)
       }
     },
-    chooseTemplate(index) {
-      switch (index) {
-        case 1:
-          this.choosedTemplate = 0
-          this.addNewTemplateFormDialog = true
-          break
-        case 2:
-          this.choosedTemplate = 4
-          this.getExistingTemplate()
-          break
-      }
-    },
     async handleAddNewTemplateForm() {
       if (
         this.addNewTemplateFormName.length < 2 ||
-        this.addNewTemplateFormURL.length < 5
+        this.addNewTemplateFormURL.length < 5 ||
+        this.addNewTemplateFormCategory.length < 2
       ) {
         this.snackbar = true
         this.snackbarText = 'Please enter valid input'
@@ -852,6 +830,7 @@ export default {
         const addNewTemplateFormObject = {
           Name: this.addNewTemplateFormName,
           DocumentUrl: this.addNewTemplateFormURL,
+          Category: this.addNewTemplateFormCategory,
         }
         this.toggleRecipientLoading = true
         const bitpodURL = `${this.$bitpod.getApiUrl()}ESIGNTEMPLATES`
@@ -867,8 +846,7 @@ export default {
               documentUrl: response.DocumentUrl,
             }
             this.getHTMLTemplate(this.addNewTemplateFormURL)
-            this.choosedTemplate = 0
-            this.curentTab = 1
+            this.currentTab = 1
             this.selectedList = []
           }
         } catch (err) {
@@ -881,6 +859,26 @@ export default {
         this.subject = `Signature requested for ${this.addNewTemplateFormName}`
         this.addNewTemplateFormDialog = false
       }
+    },
+    autocompleteFilter(item, query, itemText) {
+      console.log(item, query, itemText)
+      return item.Email.includes(query) || item.FullName.includes(query)
+    },
+    selectContact(recipientName, recipientEmail, index) {
+      const contactObject = {
+        ...this.selectedList[index],
+        FullName: recipientName,
+        Email: recipientEmail,
+      }
+      console.log(recipientName)
+      this.contactList.push(contactObject)
+      this.selectedRecipientList.push(contactObject)
+      this.$set(this.selectedListNewContacts, index, contactObject)
+      this.$set(this.selectedList, index, contactObject)
+      this.$set(this.contactIsSet, index, true)
+      this.addNewRecipientFormFirstName = ''
+      this.addNewRecipientFormLastName = ''
+      this.addNewRecipientFormEmail = ''
     },
     async handleAddNewRecipientForm() {
       if (
@@ -906,24 +904,11 @@ export default {
         )
         console.log(response)
         if (response) {
-          const signObject = {
-            ...this.selectedList[this.newRecipientIndex],
-            FullName: response.FullName,
-            Email: response.Email,
-          }
-          this.contactList.push(signObject)
-          this.$set(
-            this.selectedListNewContacts,
-            this.newRecipientIndex,
-            signObject
+          this.selectContact(
+            response.FullName,
+            response.Email,
+            this.newRecipientIndex
           )
-          this.$set(this.selectedList, this.newRecipientIndex, signObject)
-          this.$set(this.contactIsSet, this.newRecipientIndex, true)
-          this.selectedRecipientList.push(signObject)
-          this.addNewRecipientFormFirstName = ''
-          this.addNewRecipientFormLastName = ''
-          this.addNewRecipientFormEmail = ''
-          this.selectedParty = ''
         }
       } catch (err) {
         this.snackbar = true
@@ -931,7 +916,6 @@ export default {
         this.addNewRecipientFormFirstName = ''
         this.addNewRecipientFormLastName = ''
         this.addNewRecipientFormEmail = ''
-        this.selectedParty = ''
         console.error(err)
       }
       this.toggleLoading = !this.toggleLoading
@@ -942,12 +926,15 @@ export default {
       this.addNewRecipientFormDialog = true
     },
     async getExistingTemplate() {
-      const bitpodURL = `${this.$bitpod.getApiUrl()}ESIGNTEMPLATES`
+      let bitpodURL = `${this.$bitpod.getApiUrl()}ESIGNTEMPLATES`
+      if (this.templateCategory !== '')
+        bitpodURL =
+          bitpodURL + `?filter[where][Category]=${this.templateCategory}`
       try {
         const response = await this.$axios.$get(bitpodURL)
         if (response) {
           this.templateItems = response
-          this.choosedTemplate = 2
+          this.templateLoading = false
         }
       } catch (err) {
         console.error(err)
@@ -955,8 +942,7 @@ export default {
     },
     selectSignTemplate(item) {
       this.toggleRecipientLoading = true
-      this.curentTab = 1
-      this.choosedTemplate = 0
+      this.currentTab = 1
       this.templateSelected = true
       this.getHTMLTemplate(item.DocumentUrl)
       this.postEsignRequestData = {
@@ -966,55 +952,133 @@ export default {
       }
       this.subject = `Signature requested for ${item.Name}`
     },
+    prepareRecipientList(partyList) {
+      this.parties = [...new Set(partyList)]
+      this.selectedList = []
+      this.selectedListNewContacts = []
+      this.contactListSearch = []
+      this.loadingContactList = []
+      this.contactIsSet = []
+      this.parties.forEach((item) => {
+        this.selectedList.push({
+          FullName: '',
+          Email: '',
+          type: item,
+        })
+        this.selectedListNewContacts.push({ FullName: '', Email: '' })
+        this.contactListSearch.push('')
+        this.loadingContactList.push(false)
+        this.contactIsSet.push(false)
+      })
+      if (this.recipientList.length > 0) {
+        const filteredRecipientList = this.recipientList.filter((item) => {
+          item.index = this.parties.findIndex((party) => party === item.type)
+          return item.index !== -1
+        })
+        console.log(filteredRecipientList)
+        for (const item of filteredRecipientList) {
+          if (item.FullName && item.Email) {
+            console.log(item)
+            this.selectContact(item.FullName, item.Email, item.index)
+          }
+        }
+      }
+      if (this.parties.length <= 0) {
+        this.templateSelected = false
+        this.currentTab = 0
+        this.snackbarText =
+          'This template does not contain any signature fields. Kindly choose a different template.'
+        this.snackbar = true
+      }
+      console.log(this.selectedList)
+    },
     async getHTMLTemplate(documentUrl) {
       const regExp = /{{{ESign\.(\w+)[.[\w]+]?}}}/g
+      this.documentTextLoading = true
       try {
         const res = await this.$axios.get(documentUrl)
-        this.documentText = res.data
+        const regexFontUrl = /@import url\('[\S]+'\);/g
+        const filteredDocumentText = res.data.replace(regexFontUrl, '')
+        this.documentText = filteredDocumentText
+        this.compiledDocumentText = handlebars.compile(filteredDocumentText)
+        this.prepareHTMLResolutionFields()
+        this.documentTextLoading = false
         const matches = []
-        let tempMatch
-        while ((tempMatch = regExp.exec(this.documentText)) !== null) {
-          matches.push(tempMatch[1])
+        let regexMatch
+        while ((regexMatch = regExp.exec(this.documentText)) !== null) {
+          matches.push(regexMatch[1])
         }
-        this.parties = [...new Set(matches)]
-        this.selectedList = []
-        this.selectedListNewContacts = []
-        this.contactListSearch = []
-        this.loadingContactList = []
-        this.contactIsSet = []
-        this.parties.forEach((item) => {
-          this.selectedList.push({
-            FullName: '',
-            Email: '',
-            type: item,
-          })
-          this.selectedListNewContacts.push({ FullName: '', Email: '' })
-          this.contactListSearch.push('')
-          this.loadingContactList.push(false)
-          this.contactIsSet.push(false)
-        })
-        if (this.parties.length <= 0) {
-          this.templateSelected = false
-          this.curentTab = 0
-          this.snackbarText =
-            'This template does not contain any signature fields. Kindly choose a different template.'
-          this.snackbar = true
-        }
-        console.log(this.selectedList)
+        this.prepareRecipientList(matches)
         this.toggleRecipientLoading = false
       } catch (err) {
         console.error(err)
+        this.templateSelected = false
+        this.currentTab = 0
+        this.snackbarText =
+          'This template could not be loaded. Check the provided URL or try again.'
+        this.snackbar = true
       }
     },
+    compileHandlebarsData() {
+      this.resolvedDocumentText = this.compiledDocumentText(
+        this.handlebarsDataObject
+      )
+    },
+    updateNestedObject: _.debounce(function (path, value, index) {
+      const keys = path.split('.')
+      if (value === '') {
+        _.set(this.handlebarsDataObject, keys, `{{${path}}}`)
+        this.$set(this.handlebarsDataIsSet, index, false)
+      } else {
+        _.set(this.handlebarsDataObject, keys, value)
+        this.$set(this.handlebarsDataIsSet, index, true)
+      }
+      this.compileHandlebarsData()
+    }, 200),
+    getHandlebarsObjectValue(path) {
+      const value = _.get(this.handlebarsDataObject, path)
+      return value === `{{${path}}}` ? '' : value
+    },
+    prepareHTMLResolutionFields() {
+      const variablesRegex = /{{(\w[.\w]*)}}/g
+      let variableMatch
+      let variableMatches = []
+      const handlebarsDataIsSet = []
+      const handlebarsObject = {}
+      while (
+        (variableMatch = variablesRegex.exec(this.documentText)) !== null
+      ) {
+        if (variableMatch[1].includes('ESign') === false) {
+          variableMatches.push(variableMatch[1])
+        }
+      }
+      variableMatches = [...new Set(variableMatches)]
+      this.dataFields = variableMatches.map((item, index) => {
+        const dataFieldValue = {}
+        dataFieldValue.id = index
+        dataFieldValue.Name = item
+        const propDataValue = _.get(this.templateData, item, undefined)
+        if (propDataValue) {
+          _.set(handlebarsObject, item, propDataValue)
+          handlebarsDataIsSet.push(true)
+        } else {
+          _.set(handlebarsObject, item, `{{${item}}}`)
+          handlebarsDataIsSet.push(false)
+        }
+        return dataFieldValue
+      })
+      this.handlebarsDataIsSet = handlebarsDataIsSet
+      this.handlebarsDataObject = handlebarsObject
+      this.compileHandlebarsData()
+    },
     disabledContactList(index) {
-      console.log(this.selectedListNewContacts[index], this.selectedList[index])
       if (this.contactIsSet[index]) return this.selectedRecipientList
       else return this.contactList
     },
     getContacts: _.debounce(async function () {
       if (!this.disableSearch) {
         const filterText = this.contactListSearchText
-        const bitpodURL = `${this.$bitpod.getApiUrl()}Contacts?filter={"where":{"FullName":{"like":"${filterText}","options":"i"}}}`
+        const bitpodURL = `${this.$bitpod.getApiUrl()}Contacts?filter={"where": {"or": [{"FullName":{"like":"${filterText}","options":"i"}}, {"Email":{"like":"${filterText}","options":"i"}}]}}`
         try {
           const response = await this.$axios.$get(bitpodURL)
           if (response && filterText === this.contactListSearchText) {
@@ -1033,6 +1097,31 @@ export default {
 }
 </script>
 <style scoped>
+.seat-maps {
+  height: 125px;
+  width: 155px;
+  max-width: 155px;
+}
+.seat-card {
+  top: 12px;
+}
+.box-actions {
+  bottom: 5px;
+  right: 5px;
+  display: none;
+}
+.seat-maps:hover .box-actions {
+  display: block;
+}
+.seatmap-inner {
+  max-width: 65%;
+  margin: auto;
+}
+@media (max-width: 600px) {
+  .seatmap-inner {
+    max-width: 100%;
+  }
+}
 .contactsGrid {
   padding-right: 12px;
 }

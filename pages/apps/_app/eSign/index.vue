@@ -32,7 +32,7 @@ export default {
         const patchData = {
           recipientID: data.recipient.id,
           ESignStoreId: data.recipient.ESignStoreId,
-          recipientList: data.allRecipients.map((item) => item.id),
+          recipientList: data.request.Recipient.map((item) => item.id),
           recipientSignature: data.defaultSign,
           recipientInitials: data.defaultInitials,
           handlebarsData: data.handlebarsData,
@@ -60,13 +60,12 @@ export default {
     async sendData() {
       console.log('Loaded')
       const queryParams = this.$route.query
-      const bitpodURL = `${this.$bitpod.getApiUrl()}ESIGNRECIPIENTS/eSignDocumentForRecipient?requestID=${
+      const bitpodURL = `${this.$bitpod.getApiUrl()}ESIGNRECIPIENTS/eSignDocumentForRecipient?requestId=${
         queryParams.requestID
-      }&recipientID=${queryParams.recipientID}`
+      }&recipientId=${queryParams.recipientID}`
       try {
         const response = await this.$axios.$get(bitpodURL)
         if (response) {
-          console.log(response)
           response.type = 'signInfo'
           const signatureApp = document.querySelector('#signature-app')
           signatureApp.contentWindow.postMessage(response, '*')
