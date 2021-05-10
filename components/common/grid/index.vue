@@ -364,6 +364,22 @@
           <div></div>
         </v-skeleton-loader>
       </div>
+      <div
+        v-if="viewName === 'Member' && loading === true"
+        class="d-flex flex-sm-wrap flex-column flex-sm-row"
+      >
+        <v-skeleton-loader
+          v-for="i in 10"
+          :key="i"
+          :loading="!!loading"
+          type="card"
+          width="230"
+          height="230"
+          class="text-center mx-auto ma-sm-8 ml-sm-0 mt-sm-0 member-tile elevation-0"
+        >
+          <div></div>
+        </v-skeleton-loader>
+      </div>
     </div>
   </div>
 </template>
