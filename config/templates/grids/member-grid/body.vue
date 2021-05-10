@@ -43,18 +43,14 @@
           <div
             class="text--secondary mt-1 pa-2 pb-0 pt-0 body-2 text-truncate d-block pl-0"
           >
-            <i class="fa fa-clock" aria-hidden="true"></i>
-            {{ formatDate(item.createdDate) }}
+            <timeAgo :date="item.createdDate" />
           </div>
           <v-spacer></v-spacer>
           <v-chip
             v-if="item.Rating"
-            class="ma-2"
+            class="ma-2 mr-0 mb-0 white--text"
             small
-            outlined
-            :style="{
-              'background-color': getRandomColor(item.Rating),
-            }"
+            :color="getRandomColor(item.Rating)"
           >
             {{ item.Rating }}
           </v-chip>
@@ -64,7 +60,11 @@
   </div>
 </template>
 <script>
+import timeAgo from '~/components/common/timeAgo'
 export default {
+  components: {
+    timeAgo,
+  },
   props: {
     items: { type: Array, default: () => [] },
     offset: { type: Boolean, default: false },
