@@ -93,13 +93,13 @@ export default {
   data() {
     return {
       fieldNames: [
-        { Field: 'Salutation' },
-        { Field: 'FirstName' },
-        { Field: 'LastName' },
-        { Field: 'Email' },
-        { Field: 'Phone' },
-        { Field: 'CompanyName' },
-        { Field: 'Job Title' },
+        { Field: 'Salutation', Required: false },
+        { Field: 'FirstName', Required: true },
+        { Field: 'LastName', Required: true },
+        { Field: 'Email', Required: true },
+        { Field: 'Phone', Required: false },
+        { Field: 'CompanyName', Required: false },
+        { Field: 'Job Title', Required: false },
       ],
     }
   },
