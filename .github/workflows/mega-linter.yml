@@ -36,6 +36,14 @@ jobs:
           token: ${{ secrets.PAT || secrets.GITHUB_TOKEN }}
           fetch-depth: 0
 
+      - name: setup node env
+        uses: actions/setup-node@v2
+        with:
+          node-version: '12.x'
+
+      - name: install dependencies
+        run: yarn install
+
       # Mega-Linter
       - name: Mega-Linter
         id: ml
