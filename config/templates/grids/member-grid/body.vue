@@ -47,12 +47,18 @@
             {{ formatDate(item.createdDate) }}
           </div>
           <v-spacer></v-spacer>
-        </v-card-actions>
-        <div class="positionAbsolute member-status">
-          <v-chip class="ma-2" small outlined color="primary">
-            Active
+          <v-chip
+            v-if="item.Rating"
+            class="ma-2"
+            small
+            outlined
+            :style="{
+              'background-color': getRandomColor(item.Rating),
+            }"
+          >
+            {{ item.Rating }}
           </v-chip>
-        </div>
+        </v-card-actions>
       </v-card>
     </v-row>
   </div>

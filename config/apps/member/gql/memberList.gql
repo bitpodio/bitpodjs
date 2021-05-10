@@ -16,6 +16,7 @@ query($filters: JSON, $where: JSON) {
           ContactNumber
           BusinessNumber
           Approved
+          Rating
           createdDate
           createdBy
           _BillingAddress {
