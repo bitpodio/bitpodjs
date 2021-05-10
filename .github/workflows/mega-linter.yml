@@ -45,10 +45,10 @@ jobs:
         env:
           # All available variables are described in documentation
           # https://nvuillam.github.io/mega-linter/configuration/
-          VALIDATE_ALL_CODEBASE: ${{ github.event_name == &#39;push&#39; &amp;&amp; github.ref == &#39;refs/heads/development&#39; }} # Validates all source when push on master, else just the git diff with master. Set &#39;true&#39; if you always want to lint all sources
+          VALIDATE_ALL_CODEBASE: ${{ github.event_name == &#39;push&#39; &amp;&amp; github.ref == &#39;refs/heads/master&#39; }} # Validates all source when push on master, else just the git diff with master. Set &#39;true&#39; if you always want to lint all sources
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          LINTER_RULES_PATH: /
           # ADD YOUR CUSTOM ENV VARIABLES HERE TO OVERRIDE VALUES OF .mega-linter.yml AT THE ROOT OF YOUR REPOSITORY
+          LINTER_RULES_PATH: ./
 
       # Upload Mega-Linter artifacts
       - name: Archive production artifacts
