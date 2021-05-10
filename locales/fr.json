@@ -951,7 +951,11 @@
       "CreateOrgFailed": "Échec de la création de votre organisation.",
       "CreateOrgCatch": "Cette organisation est utilisée ou peut être supprimée de manière réversible. Essayez avec un nouveau nom.",
       "CreateOrgFull": "Échec de la création de votre organisation.",
-      "MemberExists": "Le membre existe déjà"
+      "MemberExists": "Le membre existe déjà",
+      "ImportFailed": "L’exécution de l’importation a échoué",
+      "ImportFailedMessage": "L’exécution de l’importation a échoué en raison de la ligne {index} du fichier",
+      "DuplicateErrorMessage": "Dupliquer les enregistrements dans le fichier. Veuillez utiliser un identifiant de messagerie unique.",
+      "AttendeeImportFailed" : "L'importation des participants a échoué."
     },
     "Warn": {
       "UniqueLinkFormat": "Minuscules lettres alphanumériques uniquement",
