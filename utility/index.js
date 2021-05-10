@@ -309,7 +309,28 @@ export const configLoaderMixin = {
   },
   data() {
     return {
+      token: '',
       contents: null,
+    }
+  },
+  created() {
+    const strategy = this.$auth.$storage.getCookies()['auth.strategy']
+    if (this.$auth.$storage.getCookies()['auth._token.bitpod']) {
+      this.token = this.$auth.$storage.getCookies()['auth._token.bitpod']
+    } else {
+      this.token = this.$auth.$storage.getCookies()['auth._token.google']
+    }
+    if (strategy === 'bitpod' || strategy === 'google') {
+      if (
+        this.token.split(' ')[1] !==
+        this.$auth.$storage.getCookies()['apollo-token']
+      ) {
+        let token = this.$auth.strategy.token.get()
+        if (token) {
+          token = token.split(' ')[1]
+        }
+        await this.$apolloHelpers.onLogin(token, undefined, { expires: 7 })
+      }
     }
   },
   async mounted() {
