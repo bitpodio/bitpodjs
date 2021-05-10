@@ -70,7 +70,7 @@
               <v-col cols="12" sm="4" md="4" class="pb-0">
                 <v-text-field
                   v-model="formData.Phone"
-                  :label="$t(Common.MobilePhone)"
+                  :label="$t('Common.MobilePhone')"
                   :rules="[rules.required]"
                   number
                   outlined
