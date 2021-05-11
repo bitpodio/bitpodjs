@@ -61,13 +61,11 @@ export default {
   },
   computed: {
     content() {
-      debugger
       return this.contents ? this.contents.Contacts : null
     },
   },
   methods: {
     setContent() {
-      debugger
       return this.contents ? this.contents.Contacts : null
     },
     onClose() {
