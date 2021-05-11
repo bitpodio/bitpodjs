@@ -339,6 +339,9 @@ export default {
           basePath: '/organization',
         },
         actions: {
+          new: {
+            hidden: true,
+          },
           edit: {
             hidden: true,
           },
@@ -825,7 +828,7 @@ export default {
         showExpand: false,
         singleExpand: false,
         showSelect: true,
-        hideFilter: true,
+        hideFilter: false,
         hideSearch: true,
       },
       fields: {
@@ -1120,7 +1123,7 @@ export default {
         singleExpand: false,
         showSelect: true,
         hideFilter: false,
-        hideSearch: false,
+        hideSearch: true,
       },
       itemTitle: 'Common.AssociateMember',
       fields: {

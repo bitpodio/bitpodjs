@@ -27,7 +27,11 @@
           </div>
         </v-card-title>
         <v-container v-if="setContent()" class="pt-0 px-4 pb-8 inviteeDialog">
-          <Grid view-name="allContacts" :content="setContent()" class="mt-n12" />
+          <Grid
+            view-name="allContacts"
+            :content="setContent()"
+            class="mt-n12"
+          />
         </v-container>
         <!-- <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
         </v-card-text> -->

@@ -254,7 +254,7 @@ export default {
         Industry: '',
         Website: '',
         NumberOfEmployees: '',
-        ParentCustomer:'',
+        ParentCustomer: '',
       },
       billingAddress: {
         AddressLine: '',
@@ -395,7 +395,7 @@ export default {
     },
     async onSave() {
       const url = this.$bitpod.getApiUrl()
-      this.customerData.ParentCustomer = this.$route.params.id
+      this.customerData.ParentCustomerId = this.$route.params.id
       this.customerData._BillingAddress = { ...this.billingAddress }
       this.customerData._ShippingAddress = { ...this.shippingAddress }
       try {

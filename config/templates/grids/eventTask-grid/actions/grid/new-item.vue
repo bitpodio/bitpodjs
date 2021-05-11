@@ -528,17 +528,17 @@ export default {
       debugger
       console.log('warhs', this)
       this.isSaveButtonDisabled = true
-
+      const baseUrl = this.$bitpod.getApiUrl()
+      let url
       if (this.$route.params.app === 'event') {
         const eventId = this.$route.params.id
-        const url = `${baseUrl}Events/${eventId}/crmactivity`
+        url = `${baseUrl}Events/${eventId}/crmactivity`
       }
 
       if (this.$route.params.app === 'member') {
         const customerId = this.$route.params.id
-        const url = `${baseUrl}Customers/${customerId}/customerCrmActivity`
+        url = `${baseUrl}Customers/${customerId}/customerCrmActivity`
       }
-      const baseUrl = this.$bitpod.getApiUrl()
       this.task.Day = parseInt(this.Day)
       this.task.Type = 'Scheduled'
       this.task.DueDate = this.dueDate

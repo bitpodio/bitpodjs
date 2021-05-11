@@ -3,9 +3,6 @@
     <v-list-item>
       <newItem :refresh="refresh" />
     </v-list-item>
-    <v-list-item>
-      <addExistingContact :refresh="refresh" />
-    </v-list-item>
   </div>
 </template>
 <script>
