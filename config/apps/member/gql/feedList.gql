@@ -1,0 +1,36 @@
+query($filters: JSON, $where: JSON) {
+  Feed {
+    FeedFind(filter: $filters) {
+      edges {
+        node {
+          orgId
+          Status
+          Body
+          Title
+          id
+        #   Attachments
+        #   Likes
+        #   _Comments {
+        #     Notes
+        #     CommitURL
+        #     id
+        #     createdDate
+        #     createdBy
+        #     modifiedDate
+        #     modifiedBy
+        #     __typename
+        #   }
+          createdDate
+          createdBy
+          modifiedDate
+          modifiedBy
+          __typename
+        }
+        __typename
+      }
+      __typename
+    }
+    FeedCount(where: $where)
+    __typename
+  }
+}
