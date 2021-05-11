@@ -529,7 +529,6 @@ export default {
         MetaData: `{"isActive":true}`,
       }
 
-      debugger
       openAuthPopups(options, (e) => {
         console.error('openAuthPopups response', e)
         this.refresh()
