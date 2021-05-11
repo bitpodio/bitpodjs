@@ -21,6 +21,7 @@ query($filters: JSON, $where: JSON) {
           Owner
           ReportsTo
           Assistant
+          Department
           AsstPhone
           orgId
           AttachmentId

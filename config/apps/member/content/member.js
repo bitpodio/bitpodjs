@@ -649,9 +649,9 @@ export default {
           editForm: false,
           cssClasses: 'col-6 col-md-6',
         },
-        Department: {
-          displayOrder: 4,
-          caption: 'Common.Department',
+        FullName: {
+          displayOrder: 2,
+          caption: 'Common.FullName',
           searchEnable: false,
           sortEnable: false,
           columnWidth: '180px',
@@ -660,24 +660,6 @@ export default {
           newForm: false,
           editForm: false,
           cssClasses: 'col-6 col-md-6',
-        },
-        CellPhone: {
-          caption: 'Common.Phone',
-          searchEnable: false,
-          sortEnable: false,
-          columnWidth: '150px',
-          type: 'string',
-          newForm: false,
-          editForm: false,
-          cssClasses: 'col-6 col-md-6',
-          rules: [
-            function (v) {
-              return !!v || this.$t('Messages.Error.PhoneRequired')
-            },
-            function (value, data) {
-              return /^[0-9]\d*$|^$/.test(value) || 'Number must be valid'
-            },
-          ],
         },
         Email: {
           displayOrder: 3,
@@ -699,9 +681,8 @@ export default {
             },
           ],
         },
-        FullName: {
-          displayOrder: 2,
-          caption: 'Common.FullName',
+        Department: {
+          caption: 'Common.Department',
           searchEnable: false,
           sortEnable: false,
           columnWidth: '180px',
@@ -709,6 +690,26 @@ export default {
           hidden: false,
           newForm: false,
           editForm: false,
+          cssClasses: 'col-6 col-md-6',
+        },
+        CellPhone: {
+          caption: 'Common.Phone',
+          searchEnable: false,
+          sortEnable: false,
+          columnWidth: '150px',
+          type: 'string',
+          newForm: false,
+          hidden: true,
+          editForm: false,
+          cssClasses: 'col-6 col-md-6',
+          rules: [
+            function (v) {
+              return !!v || this.$t('Messages.Error.PhoneRequired')
+            },
+            function (value, data) {
+              return /^[0-9]\d*$|^$/.test(value) || 'Number must be valid'
+            },
+          ],
         },
         createdDate: {
           caption: 'Common.CreatedDate',
@@ -733,7 +734,7 @@ export default {
         },
         '_CurrentAddress.City': {
           displayOrder: 5,
-          caption: 'Common.CurrentAddressCity',
+          caption: 'Common.City',
           searchEnable: false,
           sortEnable: false,
           columnWidth: '180px',
@@ -1395,7 +1396,7 @@ export default {
       template: {
         name: 'memberContacts-grid',
         context: {
-          basePath: '/members',
+          basePath: '/member',
         },
       },
       dataSource: {
