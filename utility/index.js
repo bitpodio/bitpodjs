@@ -313,7 +313,7 @@ export const configLoaderMixin = {
       contents: null,
     }
   },
-  created() {
+  async created() {
     const strategy = this.$auth.$storage.getCookies()['auth.strategy']
     if (this.$auth.$storage.getCookies()['auth._token.bitpod']) {
       this.token = this.$auth.$storage.getCookies()['auth._token.bitpod']
