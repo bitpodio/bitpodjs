@@ -25,7 +25,11 @@ export default {
   },
   methods: {
     routeToHistory(ctx) {
-      this.$router.push(this.localePath(`/apps/event/list/Contacts/Invites`))
+      this.$router.push(
+        this.localePath(
+          `/apps/${this.$router.currentRoute.params.app}/list/Contacts/Invites`
+        )
+      )
     },
   },
 }

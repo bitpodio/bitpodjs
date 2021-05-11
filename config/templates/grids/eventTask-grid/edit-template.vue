@@ -327,6 +327,7 @@
 import gql from 'graphql-tag'
 import { formatGQLResult } from '~/utility/gql.js'
 import marketingTemplates from '~/config/apps/admin/gql/marketingTemplates.gql'
+import { postGaData } from '~/utility/index.js'
 import SaveBtn from '~/components/common/saveButton'
 export default {
   components: {
@@ -447,6 +448,11 @@ export default {
         }
       }
     },
+    dialog(newVal) {
+      if (newVal) {
+        postGaData('New', this.$t('Common.NewEmailConfirmationTemplate'))
+      }
+    },
   },
   methods: {
     campaignFormDisplayed() {
@@ -464,12 +470,20 @@ export default {
       this.templateSubject = ''
       this.disableButton = false
       this.$eventBus.$emit('dialogOpen')
+      postGaData(
+        this.$t('Drawer.Save'),
+        this.$t('Common.NewEmailConfirmationTemplate')
+      )
     },
     setPreviewImage(url) {
       this.previewURL = url
       this.preview = true
     },
     async onSave() {
+      postGaData(
+        this.$t('Drawer.Save'),
+        this.$t('Common.NewEmailConfirmationTemplate')
+      )
       const baseUrl = this.$bitpod.getApiUrl()
       let res = null
       let activityRes = null

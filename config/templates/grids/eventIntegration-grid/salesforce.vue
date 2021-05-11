@@ -9,7 +9,10 @@
         </h2>
         <v-spacer></v-spacer>
         <div>
-          <v-btn icon @click.native="onClose">
+          <v-btn
+            icon
+            @click.native="onClose($t('Common.SalesforceIntegrationSetup'))"
+          >
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </div>
@@ -17,11 +20,13 @@
       <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
         <i18n path="Common.IntegrateWithSalesforce" />
         <v-form
+          id="new-salesforce-form"
           ref="form"
           v-model="valid"
           :lazy-validation="lazy"
-          id="new-salesforce-form"
-          @submit.prevent="onSave(formData)"
+          @submit.prevent="
+            onSave(formData, $t('Common.IntegrateWithSalesforce'))
+          "
         >
           <v-row>
             <v-col cols="12" class="pb-0">
@@ -55,6 +60,7 @@
 
 <script>
 import { rules } from '~/utility/rules.js'
+import { postGaData } from '~/utility/index.js'
 export default {
   props: {
     item: {
@@ -84,6 +90,13 @@ export default {
       formData: { ...this.item },
       lazy: false,
     }
+  },
+  watch: {
+    valid(newVal) {
+      if (newVal) {
+        postGaData('New', this.$t('Common.SalesforceIntegrationSetup'))
+      }
+    },
   },
 }
 </script>

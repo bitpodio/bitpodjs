@@ -9,33 +9,24 @@
         </h2>
         <v-spacer></v-spacer>
         <div>
-          <v-btn icon @click.native="onClose">
+          <v-btn icon @click.native="onClose($t('Common.EditSetting'))">
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </div>
       </v-card-title>
       <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
         <v-form
+          id="new-xero-form"
           ref="form"
           v-model="valid"
           :lazy-validation="lazy"
-          id="new-xero-form"
-          @submit.prevent="onSave(formData)"
+          @submit.prevent="onSave(formData, $t('Common.EditSetting'))"
         >
           <v-row>
             <v-col cols="12">
               <v-text-field
                 v-model="formData.TenantId"
                 :label="$t('Common.TenantId')"
-                :rules="[rules.required]"
-                outlined
-                dense
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-text-field
-                v-model="formData.RefreshToken"
-                :label="$t('Common.RefreshToken')"
                 :rules="[rules.required]"
                 outlined
                 dense
@@ -63,6 +54,7 @@
 
 <script>
 import { rules } from '~/utility/rules.js'
+import { postGaData } from '~/utility/index.js'
 export default {
   props: {
     item: {
@@ -92,6 +84,13 @@ export default {
       formData: { ...this.item },
       lazy: false,
     }
+  },
+  watch: {
+    valid(newVal) {
+      if (newVal) {
+        postGaData('New', this.$t('Common.EditSetting'))
+      }
+    },
   },
 }
 </script>

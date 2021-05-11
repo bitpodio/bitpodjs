@@ -39,6 +39,7 @@
 <script>
 import { templateLoaderMixin } from '~/utility'
 import { openAuthPopups } from '~/utility/oauth'
+import { postGaData } from '~/utility/index.js'
 export default {
   mixins: [templateLoaderMixin],
   props: {
@@ -102,11 +103,14 @@ export default {
   },
 
   methods: {
-    onClose() {
+    onClose(formLabel) {
       this.formEditData = {}
       this.dialog = false
+
+      postGaData('Close', formLabel)
     },
-    async onSave(formData) {
+    async onSave(formData, formLabel) {
+      postGaData(this.$t('Drawer.Save'), formLabel)
       formData.Category = this.category
       if (this.eventId) {
         formData.eventId = this.eventId

@@ -3,6 +3,9 @@
     <v-navigation-drawer
       v-model="drawer"
       :clipped="$vuetify.breakpoint.lgAndUp"
+      :class="{
+        'custom-nav-drawer': !$vuetify.breakpoint.smAndDown && drawer === null,
+      }"
       app
       class="nav-bar greybg"
       :width="240"
@@ -16,7 +19,6 @@
           v-bind="attrs"
           color="blue darken-2"
           dark
-          outlined
           small
           depressed
           class="mx-3 wd-full"
@@ -134,22 +136,27 @@
           class="ml-0 mr-0 d-lg-none"
           @click.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
-        <span class="bitpod-logo logo-ds px-3">
+        <span v-if="!$vuetify.theme.dark" class="bitpod-logo logo-ds px-3">
           <v-img
             :src="$config.cdnUri + 'bitpod-logo-blk2.svg'"
+            class="logofull mr-2"
+          ></v-img>
+        </span>
+        <span v-if="$vuetify.theme.dark" class="bitpod-logo logo-ds px-3">
+          <v-img
+            :src="$config.cdnUri + 'bitpod-logo-white.svg'"
             class="logofull mr-2"
           ></v-img>
         </span>
         <v-spacer></v-spacer>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <div>
+      <div class="d-none d-sm-flex">
         <v-btn
           v-bind="attrs"
           color="blue darken-2"
           dark
           depressed
-          outlined
           small
           class="mx-3"
           v-on="on"
@@ -159,6 +166,7 @@
         </v-btn>
       </div>
       <Help class="d-none d-sm-inline" />
+      <LanguageSwitcher />
       <AppDrawer />
       <div v-if="$auth.$state.loggedIn" class="ml-3">
         <v-menu
@@ -294,7 +302,12 @@
       </div>
     </v-app-bar>
 
-    <v-main class="greybg">
+    <v-main
+      class="greybg"
+      :class="{
+        'custom-nav-main': !$vuetify.breakpoint.smAndDown && drawer === null,
+      }"
+    >
       <v-container fluid>
         <v-row>
           <v-col class="pt-0">

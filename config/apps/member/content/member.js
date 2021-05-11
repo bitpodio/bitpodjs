@@ -18,6 +18,7 @@ export default {
         hideSearch: false,
       },
       itemTitle: 'Common.Members',
+      default: false,
       fields: {
         FirstName: {
           form: {

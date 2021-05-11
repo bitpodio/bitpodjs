@@ -4254,7 +4254,7 @@ export default {
           editForm: false,
         },
         createdDate: {
-          displayOrder: 8,
+          displayOrder: 9,
           caption: 'Common.CreatedDate',
           searchEnable: true,
           sortEnable: true,
@@ -4267,7 +4267,7 @@ export default {
           editForm: false,
         },
         createdBy: {
-          displayOrder: 9,
+          displayOrder: 10,
           caption: 'Common.CreatedBy',
           searchEnable: true,
           sortEnable: true,
@@ -4280,7 +4280,7 @@ export default {
           editForm: false,
         },
         TemplateName: {
-          displayOrder: 10,
+          displayOrder: 11,
           caption: 'Common.TemplateNameCaption',
           searchEnable: true,
           sortEnable: true,
@@ -4293,7 +4293,7 @@ export default {
           editForm: false,
         },
         templateAction: {
-          displayOrder: 11,
+          displayOrder: 6,
           caption: 'Drawer.Action',
           searchEnable: true,
           sortEnable: true,

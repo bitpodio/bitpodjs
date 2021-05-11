@@ -604,7 +604,12 @@
               </v-list-item>
             </v-list>
           </div>
-          <div v-if="event.BusinessType === 'Single'">
+          <div
+            v-if="
+              event.BusinessType === 'Single' &&
+              registration.EventList.HasTickets
+            "
+          >
             <v-expansion-panels
               accordion
               flat

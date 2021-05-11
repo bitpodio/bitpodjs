@@ -328,6 +328,7 @@ export const configLoaderMixin = {
         await this.$apolloHelpers.onLogin(token, undefined, { expires: 7 })
       }
     }
+    this.postUrlTracking()
   },
   async mounted() {
     const contentFactory = await import(
@@ -335,13 +336,51 @@ export const configLoaderMixin = {
     )
     this.contents = contentFactory.default
   },
+  methods: {
+    postUrlTracking() {
+      if (this.$store.state.parseUrl !== this.$route.path) {
+        const murmurhash = require('murmurhash')
+        const checkId = murmurhash.v2(
+          this.$auth.user.data.email,
+          this.$config.seedValue
+        )
+        this.$store.commit('setTrackingPath', this.$route.path)
+        setTimeout(() => {
+          if (process.client) {
+            if (window && window.ga) {
+              console.debug('URL tracking start for url', this.$route.path)
+              window.ga('create', this.$config.gaTrackingCode, 'auto')
+              window.ga('set', 'userId', checkId)
+              window.ga('send', 'pageview', this.$route.path)
+            }
+          }
+        }, 1500)
+      }
+    },
+  },
 }
 
 export function getIdFromAtob(encodedId) {
   return encodedId ? atob(encodedId).split(':')[1] : ''
 }
 
-// export function postGaData(obj) {
-//   console.debug('postGaData', obj)
-//   window.ga('send', obj)
-// }
+export function postGaData(action, formTitle) {
+  const obj = {
+    hitType: 'event',
+    eventCategory: 'Form',
+    eventAction:
+      action.toLowerCase() === 'new' || action.toLowerCase() === 'edit'
+        ? 'Show'
+        : action.toLowerCase() === 'close'
+        ? 'Close'
+        : 'Button-Click',
+    eventLabel:
+      action.toLowerCase() === 'new' ||
+      action.toLowerCase() === 'edit' ||
+      action.toLowerCase() === 'close'
+        ? formTitle
+        : formTitle + ' > ' + action,
+  }
+  console.debug('Post Data', obj)
+  window.ga('send', obj)
+}

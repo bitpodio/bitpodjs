@@ -77,6 +77,7 @@
 <script>
 import { rules } from '~/utility/rules.js'
 import SaveBtn from '~/components/common/saveButton'
+import { postGaData } from '~/utility/index.js'
 export default {
   components: {
     SaveBtn,
@@ -109,12 +110,21 @@ export default {
       return this.$t('Messages.Success.CancelRegistrationSuccess')
     },
   },
+  watch: {
+    valid(newVal) {
+      if (newVal) {
+        postGaData('Edit', this.$t('Common.Comment'))
+      }
+    },
+  },
   methods: {
     close() {
       this.$emit('update:isCancelReg', false)
       this.$refs.form.reset()
+      postGaData('Close', this.$t('Common.Comment'))
     },
     async onSave() {
+      postGaData(this.$t('Drawer.Save'), this.$t('Common.Comment'))
       const baseUrl = this.$bitpod.getApiUrl()
       const regId = this.$route.params.id
       let commentRes = null

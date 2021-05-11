@@ -104,6 +104,7 @@ import generalconfiguration from '~/config/apps/event/gql/registrationStatusOpti
 import File from '~/components/common/form/file.vue'
 import { rules } from '~/utility/rules.js'
 import SaveBtn from '~/components/common/saveButton'
+import { postGaData } from '~/utility/index.js'
 export default {
   components: {
     File,
@@ -173,14 +174,23 @@ export default {
       },
     }
   },
+  watch: {
+    valid(newVal) {
+      if (newVal) {
+        postGaData('Edit', this.$t('Common.EditTemplate'))
+      }
+    },
+  },
   methods: {
     getAttachmentId(data) {
       this.fileList = data
     },
     onClose() {
       this.$emit('update:editMetadata', false)
+      postGaData('Close', this.$t('Common.EditTemplate'))
     },
     async onSave() {
+      postGaData(this.$t('Drawer.Save'), this.$t('Common.EditTemplate'))
       this.isSaveButtonDisabled = true
       const url = this.$bitpod.getApiUrl()
       this.template.Documents = this.fileList

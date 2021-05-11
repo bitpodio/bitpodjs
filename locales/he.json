@@ -31,12 +31,13 @@
     "Revenue": "Revenue",
     "TotalSessions": "Total Sessions",
     "TotalSpeakers": "Total Speakers",
-    "29Days": "29 Days",
+    "Days": "ימים",
     "OpensIn": "Opens in",
     "NotReady": "Not Ready",
     "OpenForRegistration": "Open for registration",
     "SoldOut": "Sold out",
     "RegistrationClosed": "Registration closed",
+    "Closed": "Closed",
     "ImageGallery": "גלריית תמונות",
     "BadgeLogo": "לוגו של התג",
     "EventB": "מודעת אירועים (680x350)",
@@ -338,7 +339,7 @@
     "StartSession": "התחל מושב",
     "NewSession": "מושב חדש",
     "NewScheduleATask": "קבע משימה",
-    "EditScheduleATask": "ערוך משימת לוח זמנים",
+    "EditScheduleATask": "ערוך משימה מתוזמנת",
     "NewEmailConfirmationTemplate": "New Email Confirmation Template",
     "NewTicket": "כרטיס חדש",
     "RegistrationType": "סוג רישום",
@@ -819,7 +820,9 @@
     "TicketsNotRequiredToggle": "לאירוע זה אין צורך בכרטיסים",
     "SessionsNotAvailable": "הפעלות דורשות כרטיסים לאירועים",
     "Language": "שפה",
-    "SelectingJPYCurrency": "עיגול עשרוני אינו חל על {currency}"
+    "SelectingJPYCurrency": "עיגול עשרוני אינו חל על {currency}",
+    "Reconnect":"התחבר מחדש",
+    "Expired": "לא בתוקף"
   },
   "Drawer": {
     "UnSubscribeMsg": "אנא בחר סיבה לביטול הרישום לניוזלטר. זה יעזור לנו לשפר את השירותים שלנו.",
@@ -966,7 +969,11 @@
       "CreateOrgFailed": "יצירת הארגון שלך נכשלה",
       "CreateOrgCatch": "ארגון זה נמצא בשימוש או עלול להימחק באופן רך. נסה עם שם חדש",
       "CreateOrgFull": "יצירת הארגון שלך נכשלה",
-      "MemberExists": "חבר כבר קיים"
+      "MemberExists": "חבר כבר קיים",
+      "ImportFailed": "ביצוע הייבוא ​​נכשל",
+      "ImportFailedMessage": "ביצוע הייבוא ​​נכשל בגלל שורה {index} בקובץ",
+      "DuplicateErrorMessage": "שכפול רשומות בקובץ. אנא השתמש במזהה דואל ייחודי.",
+      "AttendeeImportFailed" : "ייבוא ​​המשתתף נכשל."
     },
     "Warn": {
       "UniqueLinkFormat": "אותיות אלפאנומריות באותיות קטנות בלבד",

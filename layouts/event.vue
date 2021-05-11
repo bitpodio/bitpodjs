@@ -3,6 +3,9 @@
     <v-navigation-drawer
       v-model="drawer"
       :clipped="$vuetify.breakpoint.lgAndUp"
+      :class="{
+        'custom-nav-drawer': !$vuetify.breakpoint.smAndDown && drawer === null,
+      }"
       app
       class="nav-bar greybg"
       :width="240"
@@ -16,7 +19,6 @@
           <template v-slot:activator="{ on, attrs }">
             <v-btn
               v-bind="attrs"
-              outlined
               small
               color="primary"
               depressed
@@ -185,9 +187,15 @@
           class="ml-0 mr-0 d-lg-none"
           @click.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
-        <span class="bitpod-logo logo-ds px-3">
+        <span v-if="!$vuetify.theme.dark" class="bitpod-logo logo-ds px-3">
           <v-img
             :src="$config.cdnUri + 'bitpod-logo-blk2.svg'"
+            class="logofull mr-2"
+          ></v-img>
+        </span>
+        <span v-if="$vuetify.theme.dark" class="bitpod-logo logo-ds px-3">
+          <v-img
+            :src="$config.cdnUri + 'bitpod-logo-white.svg'"
             class="logofull mr-2"
           ></v-img>
         </span>
@@ -195,11 +203,10 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <div class="d-none d-sm-flex">
-        <v-menu>
+        <v-menu offset-y>
           <template v-slot:activator="{ on, attrs }">
             <v-btn
               v-bind="attrs"
-              outlined
               small
               color="primary"
               depressed
@@ -246,6 +253,7 @@
         </v-menu>
       </div>
       <Help class="d-none d-sm-inline" />
+      <LanguageSwitcher />
       <AppDrawer />
       <div v-if="$auth.$state.loggedIn" class="ml-3">
         <v-menu
@@ -326,7 +334,12 @@
       </div>
     </v-app-bar>
 
-    <v-main class="greybg">
+    <v-main
+      class="greybg"
+      :class="{
+        'custom-nav-main': !$vuetify.breakpoint.smAndDown && drawer === null,
+      }"
+    >
       <v-container fluid>
         <v-row>
           <v-col class="pt-0">
@@ -358,7 +371,7 @@ import OldSite from '~/components/common/oldsite'
 import Theme from '~/components/common/theme'
 import Upgrade from '~/components/common/upgrade'
 import userUtils from '~/utility/userApps'
-const murmurhash = require('murmurhash')
+import { postGaData } from '~/utility/index.js'
 export default {
   middleware: ['auth', 'authorization'],
   components: {
@@ -437,6 +450,18 @@ export default {
       return this.$route.path
     },
   },
+  watch: {
+    dialog1(newVal) {
+      if (newVal) {
+        postGaData('New', this.$t('Drawer.CreateEventAction'))
+      }
+    },
+    dialog(newVal) {
+      if (newVal) {
+        postGaData('New', this.$t('Common.NewRecurringEvent'))
+      }
+    },
+  },
   async created() {
     let token = this.$auth.strategy.token.get()
     if (token) {
@@ -450,17 +475,6 @@ export default {
     this.allowUser = userRoles.length === 1 && userRoles.includes('$orguser')
     this.allowUpgrade = userRoles.includes('$orgowner')
     window.addEventListener('message', this.messageReceived, false)
-    const checkId = murmurhash.v2(
-      this.$auth.user.data.email,
-      this.$config.seedValue
-    )
-    setTimeout(() => {
-      if (window && window.ga) {
-        window.ga('create', this.$config.gaTrackingCode, 'auto')
-        window.ga('set', 'userId', checkId)
-        window.ga('send', 'pageview')
-      }
-    }, 1500)
   },
   beforeDestroy() {
     window.removeEventListener('message', this.messageReceived)

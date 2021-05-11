@@ -899,5 +899,93 @@ export default {
       title: 'Invites',
       type: 'list',
     },
+    inviteeEventTasks: {
+      ui: {
+        hideDefaultHeader: false,
+        hideDefaultFooter: false,
+        showExpand: false,
+        singleExpand: false,
+        showSelect: false,
+        hideFilter: false,
+        hideSearch: true,
+      },
+      hidden: true,
+      fields: {
+        Title: {
+          displayOrder: 2,
+          caption: 'Common.Title',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+        },
+        Status: {
+          displayOrder: 3,
+          caption: 'Common.Status',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+        },
+        DueDate: {
+          displayOrder: 7,
+          caption: 'Common.DueDate',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'datetime',
+        },
+        createdDate: {
+          displayOrder: 8,
+          caption: 'Common.CreatedDate',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'date',
+        },
+        createdBy: {
+          displayOrder: 9,
+          caption: 'Common.CreatedBy',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+        },
+      },
+      template: {
+        name: 'contactInvitee-grid',
+        context: {
+          basePath: `/contacts`,
+        },
+        actions: {
+          new: {
+            hidden: true,
+          },
+          edit: {
+            hidden: true,
+          },
+          exportCsv: {
+            hidden: true,
+          },
+        },
+      },
+      dataSource: {
+        singularEntity: 'Common.Task',
+        pluralEntity: 'Common.Tasks',
+        query: eventTasks,
+        defaultSort: 'createdDate DESC',
+        type: 'graphql',
+        model: 'CRMActivity',
+        filter(ctx) {
+          return {
+            where: {
+              and: [{ EventId: ctx.$route.params.id }, { Type: 'Mass Email' }],
+            },
+          }
+        },
+      },
+      title: 'eventTasks',
+      type: 'list',
+    },
   },
 }
