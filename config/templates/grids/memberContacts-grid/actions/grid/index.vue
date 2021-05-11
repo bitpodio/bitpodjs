@@ -7,11 +7,9 @@
 </template>
 <script>
 import newItem from './new-item.vue'
-import addExistingContact from './add-existing-contacts.vue'
 export default {
   components: {
     newItem,
-    addExistingContact,
   },
   props: {
     refresh: {

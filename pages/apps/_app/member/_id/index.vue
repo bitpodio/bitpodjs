@@ -156,8 +156,7 @@
           <v-flex class="d-flex justify-center align-center pb-3">
             <h2 class="body-1 pb-0">
               <i class="fa fa-mail pr-1" aria-hidden="true"></i>
-              <!-- <i18n path="Common.Tasks" /> -->
-              Open Activity
+              <i18n path="Common.OpenActivity" />
             </h2>
             <v-spacer></v-spacer>
           </v-flex>
@@ -177,8 +176,7 @@
           <v-flex class="d-flex justify-center align-center pb-3">
             <h2 class="body-1 pb-0">
               <i class="fa fa-mail pr-1" aria-hidden="true"></i>
-              <!-- <i18n path="Common.Tasks" /> -->
-              Activity History
+              <i18n path="Common.ActivityHistory" />
             </h2>
             <v-spacer></v-spacer>
           </v-flex>

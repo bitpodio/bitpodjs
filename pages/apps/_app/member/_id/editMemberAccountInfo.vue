@@ -25,9 +25,9 @@
             <v-row>
               <v-col cols="12" sm="4" md="4" class="pb-0">
                 <v-select
+                  :key="parentMemberIds.id"
                   v-model="customerData.ParentCustomerName"
                   :items="parentMemberIds"
-                  :key="parentMemberIds.id"
                   :value="customerData.ParentCustomerName"
                   item-text="name"
                   item-value="id"

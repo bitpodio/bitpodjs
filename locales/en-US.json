@@ -556,6 +556,8 @@
     "StartDateTime": "Start Date Time*",
     "CustomDuration": "Custom Duration*",
     "Activity": "Activity",
+    "OpenActivity": "Open Activity",
+    "ActivityHistory": "Activity History",
     "EditActivity": "Edit Activity",
     "DueDateRequired": "Due Date*",
     "TicketCount": "Ticket Count",
@@ -845,7 +847,7 @@
     "SessionsNotAvailable": "Sessions require events to be ticketed",
     "Language": "Language",
     "SelectingJPYCurrency": "Decimal rounding off doesn't apply to {currency}",
-    "Reconnect":"Re-Connect",
+    "Reconnect": "Re-Connect",
     "Expired": "Expired"
   },
   "Drawer": {
@@ -998,7 +1000,7 @@
       "ImportFailed": "Import execution failed",
       "ImportFailedMessage": "Import execution failed due to row {index} in file",
       "DuplicateErrorMessage": "Duplicate records in the file. Please use unique email id.",
-      "AttendeeImportFailed" : "Attendee Import Failed."
+      "AttendeeImportFailed": "Attendee Import Failed."
     },
     "Warn": {
       "UniqueLinkFormat": "Lower case alphanumeric letters only",
@@ -1087,7 +1089,6 @@
       "OrgNameSuccess": "https://{orgName}-{suffixRoute} is available",
       "ContactImported": "Contacts Imported Sucessfully",
       "ContactImportedFailed": "Contacts Import Failed"
-      
     },
     "Information": {
       "SetupInProgressTitle": "Setup in progress",
