@@ -156,7 +156,8 @@
           <v-flex class="d-flex justify-center align-center pb-3">
             <h2 class="body-1 pb-0">
               <i class="fa fa-mail pr-1" aria-hidden="true"></i>
-              <i18n path="Common.Tasks" />
+              <!-- <i18n path="Common.Tasks" /> -->
+              Open Activity
             </h2>
             <v-spacer></v-spacer>
           </v-flex>
@@ -166,6 +167,28 @@
             :content="content"
             class="mt-n12"
             :context="data"
+            :filter="filter"
+          />
+        </div>
+        <div
+          v-if="content"
+          class="xs12 sm4 md4 lg4 boxview boxviewlarge pa-3 pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+        >
+          <v-flex class="d-flex justify-center align-center pb-3">
+            <h2 class="body-1 pb-0">
+              <i class="fa fa-mail pr-1" aria-hidden="true"></i>
+              <!-- <i18n path="Common.Tasks" /> -->
+              Activity History
+            </h2>
+            <v-spacer></v-spacer>
+          </v-flex>
+          <v-divider></v-divider>
+          <Grid
+            view-name="memberTaskHistory"
+            :content="content"
+            class="mt-n12"
+            :context="data"
+            :filter="filter1"
           />
         </div>
         <div
@@ -579,6 +602,7 @@ export default {
       allow: true,
       lastPicId: '',
       editMemberInfoForm: false,
+      objTask: { scheduleTask: false },
     }
   },
   computed: {
@@ -588,7 +612,22 @@ export default {
     filter() {
       return {
         where: {
-          Email: this.data.memberData && this.data.memberData.Email,
+          and: [
+            { CustomerId: this.$route.params.id },
+            { Status: { neq: 'Completed' } },
+            { Type: { neq: 'Mass Email' } },
+          ],
+        },
+      }
+    },
+    filter1() {
+      return {
+        where: {
+          and: [
+            { CustomerId: this.$route.params.id },
+            { Status: 'Completed' },
+            { Type: { neq: 'Mass Email' } },
+          ],
         },
       }
     },

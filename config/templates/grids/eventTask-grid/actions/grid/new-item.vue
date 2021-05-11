@@ -525,8 +525,19 @@ export default {
       this.resetForm()
     },
     async onSave() {
+      debugger
+      console.log('warhs', this)
       this.isSaveButtonDisabled = true
-      const eventId = this.$route.params.id
+
+      if (this.$route.params.app === 'event') {
+        const eventId = this.$route.params.id
+        const url = `${baseUrl}Events/${eventId}/crmactivity`
+      }
+
+      if (this.$route.params.app === 'member') {
+        const customerId = this.$route.params.id
+        const url = `${baseUrl}Customers/${customerId}/customerCrmActivity`
+      }
       const baseUrl = this.$bitpod.getApiUrl()
       this.task.Day = parseInt(this.Day)
       this.task.Type = 'Scheduled'
@@ -541,16 +552,13 @@ export default {
             }
           )
         } else {
-          res = await this.$axios.$post(
-            `${baseUrl}Events/${eventId}/crmactivity`,
-            {
-              ...this.task,
-            }
-          )
+          res = await this.$axios.$post(`${url}`, {
+            ...this.task,
+          })
         }
       } catch (error) {
         console.log(
-          `Error in task grid schedule a task on Save function - context: eventId - ${eventId} `
+          `Error in task grid schedule a task on Save function - context: `
         )
       }
       if (res) {
