@@ -30,8 +30,8 @@ export default async (
           expires: 7,
         })
         console.debug('redirecting --->', newToken)
-        nuxtContext.redirect(301, `/apps/event/eventboard`)
       }
     }
+    nuxtContext.redirect(301, `/apps/event/eventboard`)
   }
 }
