@@ -1,5 +1,6 @@
 {
   "Common": {
+    "MemberList": "Liste des membres",
     "AppTitle": "Evénement",
     "Logout": "Déconnexion",
     "Login": "Connexion",
