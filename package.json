@@ -54,7 +54,8 @@
     "vue-analytics": "^5.22.1",
     "vue-google-autocomplete": "^1.1.0",
     "vue-google-charts": "^0.3.3",
-    "vue-tag-manager": "^0.1.2"
+    "vue-tag-manager": "^0.1.2",
+    "vue-tour": "^2.0.0"
   },
   "devDependencies": {
     "@intlify/eslint-plugin-vue-i18n": "^0.9.0",

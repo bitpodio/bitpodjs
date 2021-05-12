@@ -11,7 +11,7 @@
       :width="240"
       :right="$vuetify.rtl"
     >
-      <div class="px-4 pt-3 pb-1">
+      <div id="v-step-0" class="px-4 pt-3 pb-1">
         <i18n path="Common.AppTitle" class="app-title-text" />
       </div>
       <div class="d-block d-sm-none my-3">
@@ -128,17 +128,27 @@
                   v-if="item.text === 'Eventboard'"
                   path="Drawer.Eventboard"
                 />
-                <i18n v-if="item.text === 'Events'" path="Drawer.Events" />
+                <i18n
+                  v-if="item.text === 'Events'"
+                  id="v-step-2"
+                  path="Drawer.Events"
+                />
                 <i18n
                   v-if="item.text === 'Registrations'"
+                  id="v-step-3"
                   path="Drawer.Registrations"
                 />
                 <i18n
                   v-if="item.text === 'Discount Code'"
+                  id="v-step-5"
                   path="Drawer.DiscountCode"
                 />
                 <i18n v-if="item.text === 'Members'" path="Drawer.Members" />
-                <i18n v-if="item.text === 'Contacts'" path="Drawer.Contacts" />
+                <i18n
+                  v-if="item.text === 'Contacts'"
+                  id="v-step-4"
+                  path="Drawer.Contacts"
+                />
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -206,6 +216,7 @@
         <v-menu offset-y>
           <template v-slot:activator="{ on, attrs }">
             <v-btn
+              id="v-step-1"
               v-bind="attrs"
               small
               color="primary"
@@ -255,6 +266,28 @@
       <Help class="d-none d-sm-inline" />
       <LanguageSwitcher />
       <AppDrawer />
+      <v-menu
+        v-if="$route.path === '/apps/event/eventboard'"
+        v-model="menu"
+        left
+        :offset-y="offset"
+        transition="slide-y-transition"
+        content-class="overflowHidden"
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn icon small v-bind="attrs" v-on="on">
+            <v-icon>mdi-dots-vertical</v-icon>
+          </v-btn>
+        </template>
+
+        <v-list dense>
+          <v-list-item @click="startTour">
+            <v-list-item-content>
+              <v-list-item-title>Start Tour</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-menu>
       <div v-if="$auth.$state.loggedIn" class="ml-3">
         <v-menu
           v-model="account"
@@ -360,6 +393,9 @@
         @load="iframecookieDeleted"
       />
     </div>
+    <div>
+      <v-tour name="myTour" :steps="steps" :options="myOptions"></v-tour>
+    </div>
   </v-app>
 </template>
 
@@ -444,6 +480,66 @@ export default {
         allowedRoutes: ['/apps/event/discountcodes'],
       },
     ],
+    myOptions: {
+      useKeyboardNavigation: false,
+      labels: {
+        buttonSkip: 'Skip tour',
+        buttonPrevious: 'Previous',
+        buttonNext: 'Next',
+        buttonStop: 'Finish',
+      },
+    },
+    steps: [
+      {
+        target: '#v-step-0',
+        content: 'Step One',
+        params: {
+          placement: 'top', // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
+        },
+      },
+      {
+        target: '#v-step-1',
+        content: 'Step Two',
+        params: {
+          placement: 'top', // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
+        },
+      },
+      {
+        target: '#v-step-2',
+        content: 'Step Three',
+        params: {
+          placement: 'top', // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
+        },
+      },
+      {
+        target: '#v-step-3',
+        content: 'Step Four',
+        params: {
+          placement: 'top', // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
+        },
+      },
+      {
+        target: '#v-step-4',
+        content: 'Step Five',
+        params: {
+          placement: 'top', // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
+        },
+      },
+      {
+        target: '#v-step-5',
+        content: 'Step Six',
+        params: {
+          placement: 'top', // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
+        },
+      },
+      {
+        target: '#v-step-6',
+        content: 'Step Seven',
+        params: {
+          placement: 'top', // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
+        },
+      },
+    ],
   }),
   computed: {
     currentPage() {
@@ -470,6 +566,9 @@ export default {
     await this.$apolloHelpers.onLogin(token, undefined, { expires: 7 })
   },
   mounted() {
+    debugger
+    // this.$tours.myTour.start()
+    this.$tours.myTour.start()
     const userInfo = userUtils.userCurrentOrgInfo(this.$store) || {}
     const userRoles = userInfo.roles || []
     this.allowUser = userRoles.length === 1 && userRoles.includes('$orguser')
@@ -480,6 +579,9 @@ export default {
     window.removeEventListener('message', this.messageReceived)
   },
   methods: {
+    startTour() {
+      this.$tours.myTour.start()
+    },
     onLogout(context) {
       if (this.$store.state.auth.loggedIn) {
         this.logoutClicked = true
