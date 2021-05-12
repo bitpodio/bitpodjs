@@ -163,6 +163,10 @@ export default {
       type: String,
       required: true,
     },
+    feedId: {
+      type: String,
+      default: '',
+    },
   },
   data() {
     return {
@@ -217,9 +221,9 @@ export default {
     },
     getLink(id) {
       const url = this.$bitpod.getApiUrl()
-      return `${url}${this.modelName}/${this.$route.params.id}/${
-        this.modelName === 'Events' ? 'Comments' : 'Comment'
-      }/${id || ''}`
+      return `${url}${this.modelName}/${
+        this.modelName === 'Feeds' ? this.feedId : this.$route.params.id
+      }/${this.modelName === 'Events' ? 'Comments' : 'Comment'}/${id || ''}`
     },
     uploaded(data) {
       this.fileList = [...data]
