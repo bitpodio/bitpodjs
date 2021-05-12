@@ -17,25 +17,42 @@
           <v-list-item-content>
             <v-list-item-title>{{ item.createdBy }}</v-list-item-title>
 
-            <v-list-item-subtitle> {{ item.createdDate }}</v-list-item-subtitle>
+            <v-list-item-subtitle>
+              <timeAgo :date="item.createdDate"
+            /></v-list-item-subtitle>
           </v-list-item-content>
 
-          <v-list-item-action>
-            <v-btn icon>
-              <v-icon color="grey lighten-1">mdi-information</v-icon>
-            </v-btn>
-          </v-list-item-action>
+          <v-list-item-action> </v-list-item-action>
         </v-list-item>
       </v-list>
       <div class="mx-4 mb-2">
-        <div class="mt-n2 mb-2">{{ item.Title }}</div>
-        <div class="mb-2">{{ item.Body }}</div>
+        <div>
+          <div class="mt-n2 mb-2">{{ item.Title }}</div>
+          <div class="mb-2">{{ item.Body }}</div>
+        </div>
+        <div>
+          <v-btn :id="item.id" text>
+            <v-icon left>
+              mdi-thumb-up
+            </v-icon>
+            Like
+          </v-btn>
+        </div>
+        <div>
+          <Notes model-name="Feeds" :feed-id="item.id" />
+        </div>
       </div>
     </v-card>
   </div>
 </template>
 <script>
+import timeAgo from '~/components/common/timeAgo'
+import Notes from '~/components/common/notes'
 export default {
+  components: {
+    timeAgo,
+    Notes,
+  },
   props: {
     items: { type: Array, default: () => [] },
     offset: { type: Boolean, default: false },
@@ -45,9 +62,31 @@ export default {
       required: false,
     },
   },
+  data() {
+    return {
+      like: false,
+    }
+  },
   methods: {
     getRandomColor(createdBy) {
       return window.GeoPattern.generate(createdBy).color
+    },
+    // getLikes(item) {
+    //   debugger
+    //   const userId = this.$auth.user.data.email
+    //   return item.Likes.includes(userId) ? 'primary' : ''
+    // },
+    // feedLike(id) {
+    //   const url = `${this.$bitpod.getApiUrl()}`
+    // },
+    getLike(id) {
+      debugger
+      // return (this.like = !this.like)
+      if (this.like === true) {
+        this.like = false
+      } else {
+        this.like = true
+      }
     },
   },
 }
