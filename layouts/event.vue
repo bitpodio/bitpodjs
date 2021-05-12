@@ -187,9 +187,15 @@
           class="ml-0 mr-0 d-lg-none"
           @click.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
-        <span class="bitpod-logo logo-ds px-3">
+        <span v-if="!$vuetify.theme.dark" class="bitpod-logo logo-ds px-3">
           <v-img
             :src="$config.cdnUri + 'bitpod-logo-blk2.svg'"
+            class="logofull mr-2"
+          ></v-img>
+        </span>
+        <span v-if="$vuetify.theme.dark" class="bitpod-logo logo-ds px-3">
+          <v-img
+            :src="$config.cdnUri + 'bitpod-logo-white.svg'"
             class="logofull mr-2"
           ></v-img>
         </span>
@@ -366,7 +372,6 @@ import Theme from '~/components/common/theme'
 import Upgrade from '~/components/common/upgrade'
 import userUtils from '~/utility/userApps'
 import { postGaData } from '~/utility/index.js'
-const murmurhash = require('murmurhash')
 export default {
   middleware: ['auth', 'authorization'],
   components: {
@@ -470,17 +475,6 @@ export default {
     this.allowUser = userRoles.length === 1 && userRoles.includes('$orguser')
     this.allowUpgrade = userRoles.includes('$orgowner')
     window.addEventListener('message', this.messageReceived, false)
-    const checkId = murmurhash.v2(
-      this.$auth.user.data.email,
-      this.$config.seedValue
-    )
-    setTimeout(() => {
-      if (window && window.ga) {
-        window.ga('create', this.$config.gaTrackingCode, 'auto')
-        window.ga('set', 'userId', checkId)
-        window.ga('send', 'pageview')
-      }
-    }, 1500)
   },
   beforeDestroy() {
     window.removeEventListener('message', this.messageReceived)

@@ -366,8 +366,8 @@
         </v-skeleton-loader>
       </div>
       <div
-        v-if="viewName === 'eSign' && loading === true"
-        class="d-flex flex-wrap flex-row seat-skeleton-inner mt-16 pl-2"
+        v-if="viewName === 'Member' && loading === true"
+        class="d-flex flex-sm-wrap flex-column flex-sm-row"
       >
         <v-skeleton-loader
           v-for="i in 10"
@@ -377,6 +377,22 @@
           width="150"
           height="125"
           class="pl-0 pt-0 eventtiles ma-3 ma-md-10 ml-0 mt-0 ml-md-0 mt-md-0"
+        >
+          <div></div>
+        </v-skeleton-loader>
+      </div>
+      <div
+        v-if="viewName === 'eSign' && loading === true"
+        class="d-flex flex-wrap flex-row seat-skeleton-inner mt-16 pl-2"
+        >
+        <v-skeleton-loader
+          v-for="i in 10"
+          :key="i"
+          :loading="!!loading"
+          type="card"
+          width="230"
+          height="230"
+          class="text-center mx-auto ma-sm-8 ml-sm-0 mt-sm-0 member-tile elevation-0"
         >
           <div></div>
         </v-skeleton-loader>
