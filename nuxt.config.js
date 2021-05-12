@@ -36,7 +36,12 @@ export default {
       },
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '~/assets/logo.png' },
+      {
+        rel: 'icon',
+        type: 'image/png',
+        href:
+          'https://res.cloudinary.com/mytestlogo/image/upload/bitpodjs/images/favicon-bitpod.png',
+      },
       {
         rel: 'stylesheet',
         href:
@@ -268,6 +273,7 @@ export default {
       'https://res.cloudinary.com/mytestlogo/image/upload/bitpodjs/images/',
     cdnCsvUri: 'https://res.cloudinary.com/mytestlogo/raw/upload/',
     rtmpLink: process.env.GET_RTMP_URL || 'https://live.bitpod.io/hls/',
+    rtmpURL: process.env.GET_LIVE_RTMP_URL || 'rtmp://bitpod:1935/live/',
     setting: {
       domains: {
         defaultPublicDomain:

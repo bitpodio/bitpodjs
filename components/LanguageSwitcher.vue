@@ -2,7 +2,7 @@
   <v-menu offset-y transition="slide-y-transition" bottom>
     <template v-slot:activator="{ on, attrs }">
       <v-btn icon v-bind="attrs" v-on="on">
-        <v-icon>mdi-web</v-icon>
+        <v-icon>mdi-translate</v-icon>
       </v-btn>
     </template>
     <v-list>

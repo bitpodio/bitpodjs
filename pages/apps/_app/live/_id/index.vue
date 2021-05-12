@@ -55,6 +55,7 @@ export default {
           SHOW_CHROME_EXTENSION_BANNER: false,
           CHAT_TOKEN: this.authChatToken(),
           CHAT_CHANNEL: this.$route.query.o,
+          RTMP_URL: this.$route.query.p,
         },
         onload: this.onIFrameLoad,
       }
@@ -108,7 +109,8 @@ export default {
       }
       jitsi.addEventListener('participantRoleChanged', (e) => {
         if (e.role === 'moderator') {
-          jitsi.executeCommand('password', this.$route.params.id.split('-')[2])
+          // uncomment below line to protect meetings with password
+          // jitsi.executeCommand('password', this.$route.params.id.split('-')[2])
           jitsi.executeCommand('toggleLobby', true)
           jitsi.addEventListener('participantJoined', (e) => {
             this.participantsBackup = { ...jitsi.jitsiApi._participants }

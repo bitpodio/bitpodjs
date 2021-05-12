@@ -30,10 +30,10 @@
         </v-card-title>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-form
+            :id="formName"
             ref="form"
             v-model="valid"
             :lazy-validation="lazy"
-            :id="formName"
             @submit.prevent="submitForm"
           >
             <v-row>
@@ -67,6 +67,7 @@
               <v-col cols="12">
                 <v-text-field
                   v-model="formData.DisplayOrder"
+                  ref="questionField"
                   :rules="[rules.required]"
                   :label="$t('Common.DisplayOrder')"
                   type="number"
@@ -83,7 +84,7 @@
                   dense
                 ></v-checkbox>
               </v-col>
-              <v-col cols="12">
+              <v-col v-if="hasTicket" cols="12">
                 <span><i18n path="Common.OnlyAskWhen" /> </span>
                 <v-select
                   v-model="tickets"
@@ -129,6 +130,7 @@ import eventTicket from '~/config/apps/event/gql/eventTickets.gql'
 import SaveBtn from '~/components/common/saveButton'
 import { formatGQLResult } from '~/utility/gql.js'
 import { getIdFromAtob } from '~/utility'
+import { postGaData } from '~/utility/index.js'
 import { rules } from '~/utility/rules.js'
 export default {
   components: {
@@ -143,6 +145,10 @@ export default {
     lazy: {
       type: Boolean,
       default: false,
+    },
+    context: {
+      type: Object,
+      default: () => {},
     },
   },
   data() {
@@ -169,7 +175,9 @@ export default {
       snackbar: false,
       timeout: 2000,
       snackbarText: '',
-      formName: 'new-eventRegistration-form',
+      formName: 'new-eventRegistrationQuestion-form',
+      hasTicket:
+        this.context && this.context.event && this.context.event.HasTickets,
     }
   },
   computed: {
@@ -179,6 +187,13 @@ export default {
         this.controlType === 'radio' ||
         this.controlType === 'dropdown'
       )
+    },
+  },
+  watch: {
+    dialog(newVal) {
+      if (newVal) {
+        postGaData('New', this.$t('Common.NewQuestion'))
+      }
     },
   },
   mounted() {
@@ -222,8 +237,10 @@ export default {
     onClose() {
       this.dialog = false
       this.onReset()
+      postGaData('Close', this.$t('Common.NewQuestion'))
     },
     async onSave() {
+      postGaData(this.$t('Drawer.Save'), this.$t('Common.NewQuestion'))
       this.formData.ControlType = this.controlType
       this.formData.DisplayOrder = parseInt(this.formData.DisplayOrder)
       if (
@@ -248,13 +265,15 @@ export default {
         })
         .catch((e) => console.log('Error', e))
       if (res) {
-        this.dialog = false
-        this.onReset()
-        this.snackbarText = this.$t(
-          'Messages.Success.QuestionRecordCreatedSuccess'
-        )
-        this.snackbar = true
-        this.refresh()
+        this.onClose()
+        this.$refs.questionField.blur()
+        this.$nextTick(() => {
+          this.snackbarText = this.$t(
+            'Messages.Success.QuestionRecordCreatedSuccess'
+          )
+          this.snackbar = true
+          this.refresh()
+        })
       }
     },
 

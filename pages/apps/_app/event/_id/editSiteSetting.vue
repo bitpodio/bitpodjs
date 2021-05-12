@@ -141,7 +141,7 @@
                         dense
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="12">
+                    <v-col v-if="hasTickets" cols="12">
                       <v-text-field
                         v-model="sectionHeading.session"
                         :label="$t('Common.LabelForSessions')"
@@ -157,7 +157,7 @@
                         dense
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="12">
+                    <v-col v-if="hasTickets" cols="12">
                       <v-text-field
                         v-model="sectionHeading.ticketsectionlabel"
                         :label="$t('Common.LabelForTickets')"
@@ -165,7 +165,7 @@
                         dense
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="12">
+                    <v-col v-if="hasTickets" cols="12">
                       <v-text-field
                         v-model="sectionHeading.ticketlabel"
                         :label="$t('Common.LabelTickets')"
@@ -291,6 +291,10 @@ export default {
       type: Boolean,
       default: false,
     },
+    hasTickets: {
+      type: Boolean,
+      default: true,
+    },
   },
   data() {
     return {
@@ -334,6 +338,11 @@ export default {
           `${url}/Templates?filter={"where":{"Name": {"inq": ["event", "Rhine", "Limmat", "Dark"]}}}`
         )
         this.formData = template.data
+        this.formData.forEach((ele, index) => {
+          if (ele.Name === this.eventData.RegistrationSiteTemplate) {
+            this.selectedItem = index
+          }
+        })
       } catch (e) {
         console.error(
           `Error while fetching templates from Templates model while making a GET request from getRegistrationSiteTemplates method context: \n url:${url} \n primeOrgId:${primeOrgId}`
@@ -477,13 +486,14 @@ export default {
         this.animation = this.sectionHeading.animation
         this.eventData = event.length > 0 ? { ...event[0] } : {}
         this.eventData.id = this.$route.params.id
-        this.setDefaultSelected()
+        if (
+          this.eventData.RegistrationSiteTemplate === '' ||
+          this.eventData.RegistrationSiteTemplate === null
+        ) {
+          this.setDefaultSelected()
+        }
         this.getRegistrationSiteTemplates()
-        this.formData.forEach((ele, index) => {
-          if (ele.Name === this.eventData.RegistrationSiteTemplate) {
-            this.selectedItem = index
-          }
-        })
+
         return {
           event: event.length > 0 ? event : {},
         }

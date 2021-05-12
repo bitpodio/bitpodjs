@@ -21,7 +21,7 @@
           </h2>
           <v-spacer></v-spacer>
           <div>
-            <v-btn icon @click="dialog = false">
+            <v-btn icon @click="onClose">
               <v-icon>mdi-close</v-icon>
             </v-btn>
           </div>
@@ -32,10 +32,10 @@
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-container>
             <v-form
+              :id="formName"
               ref="form"
               v-model="valid"
               :lazy-validation="lazy"
-              :id="formName"
               @submit.prevent="submitForm"
             >
               <v-row>
@@ -49,7 +49,11 @@
                     :is="formControl(field) || null"
                     v-model="formData[field.fieldName]"
                     :field="translate(field)"
-                    :rules="rulesArray(field)"
+                    :rules="
+                      visible[field.fieldName] === false
+                        ? []
+                        : rulesArray(field)
+                    "
                     :readonly="readonly[field.fieldName]"
                     :filter="filter[field.fieldName]"
                     :field-name="field.fieldName"
@@ -85,6 +89,7 @@
 <script>
 import SaveBtn from '~/components/common/saveButton'
 import { formValidationMixin } from '~/utility'
+import { postGaData } from '~/utility/index.js'
 import {
   formatTimezoneDateFieldsData,
   getGridFields,
@@ -149,11 +154,26 @@ export default {
         this.updateCount = this.updateCount + 1
         this.formData = generateFormData(this.items[0])
         this.errorMessage = ''
+        const formLabel = this.$t('Common.EditDefaultForm', {
+          subTitle: this.subTitle,
+        })
+        postGaData('Edit', formLabel)
       }
     },
   },
   methods: {
+    onClose() {
+      this.dialog = false
+      const formLabel = this.$t('Common.EditDefaultForm', {
+        subTitle: this.subTitle,
+      })
+      postGaData('Close', formLabel)
+    },
     async onSave() {
+      const formLabel = this.$t('Common.EditDefaultForm', {
+        subTitle: this.subTitle,
+      })
+      postGaData(this.$t('Drawer.Save'), formLabel)
       this.$refs.form.validate()
       this.errorMessage = ''
       if (this.valid) {

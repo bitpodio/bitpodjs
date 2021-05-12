@@ -2,21 +2,14 @@
   <v-app id="inspire">
     <v-navigation-drawer
       v-model="drawer"
+      :clipped="$vuetify.breakpoint.lgAndUp"
       app
       class="nav-bar greybg"
-      :class="{
-        'custom-nav-drawer': !$vuetify.breakpoint.smAndDown && drawer === null,
-      }"
       :width="240"
       :right="$vuetify.rtl"
     >
-      <div class="d-flex d-sm-none pl-3">
-        <span class="bitpod-logo logo-ds">
-          <v-img
-            :src="$config.cdnUri + 'bitpod-logo-blk2.svg'"
-            class="logofull mr-2"
-          ></v-img>
-        </span>
+      <div class="px-4 pt-3 pb-1">
+        <i18n path="Common.HelpCenterMap" class="app-title-text" />
       </div>
       <v-list shaped>
         <template v-for="item in items">
@@ -98,30 +91,22 @@
           size="24"
           height="36px"
           width="36px"
-          class="ml-0 ml-md-2 mr-2 mr-md-3"
+          class="ml-0 mr-0 d-lg-none"
           @click.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
-        <span class="bitpod-logo logo-ds d-none d-sm-flex">
+        <span class="bitpod-logo logo-ds px-3">
           <v-img
             :src="$config.cdnUri + 'bitpod-logo-blk2.svg'"
             class="logofull mr-2"
           ></v-img>
         </span>
-        <i18n
-          path="Common.HelpCenterMap"
-          class="d-inline-flex align-center mx-0 mx-md-2 ml-0 ml-md-1"
-          :class="$device.isMobile ? 'text-h6' : 'text-h5'"
-        />
         <v-spacer></v-spacer>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <Help class="d-none d-sm-inline" />
-      <AppDrawer v-if="$auth.loggedIn" />
       <LanguageSwitcher />
-      <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
-        <v-icon>mdi-invert-colors</v-icon>
-      </v-btn>
-      <div v-if="$auth.$state.loggedIn">
+      <AppDrawer v-if="$auth.loggedIn" />
+      <div v-if="$auth.$state.loggedIn" class="ml-3">
         <v-menu
           v-model="account"
           :close-on-content-click="false"
@@ -182,6 +167,7 @@
               <OrgnaizationList />
             </v-list-item>
             <OldSite />
+            <Theme />
             <v-list dense class="pt-0">
               <v-list-item>
                 <v-btn text small color="primary" @click="onLogout">
@@ -199,12 +185,7 @@
       </div>
     </v-app-bar>
 
-    <v-main
-      class="greybg help-center"
-      :class="{
-        'custom-nav-main': !$vuetify.breakpoint.smAndDown && drawer === null,
-      }"
-    >
+    <v-main class="greybg help-center">
       <v-container fluid class="pa-0">
         <v-row>
           <v-col class="pt-1 pb-0">
@@ -225,19 +206,16 @@ import Help from '~/components/common/help'
 import OldSite from '~/components/common/oldsite'
 import Upgrade from '~/components/common/upgrade'
 import userUtils from '~/utility/userApps'
+import Theme from '~/components/common/theme'
 import HelpCenterFunc from '~/config/apps/help'
 export default {
-  head: {
-    bodyAttrs: {
-      class: 'help-center',
-    },
-  },
   components: {
     OrgnaizationList,
     AppDrawer,
     Help,
     OldSite,
     Upgrade,
+    Theme,
   },
   props: {
     source: { type: String, default: '' },
@@ -332,6 +310,11 @@ export default {
           e
         )
       }
+    },
+  },
+  head: {
+    bodyAttrs: {
+      class: 'help-center',
     },
   },
 }

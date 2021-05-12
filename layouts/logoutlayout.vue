@@ -1,8 +1,7 @@
 <template>
   <v-app id="inspire">
     <v-app-bar app flat color="white">
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-      <span class="bitpod-logo logo-ds">
+      <span class="bitpod-logo logo-ds px-3">
         <v-img
           :src="$config.cdnUri + 'bitpod-logo-blk2.svg'"
           class="logo-full"
