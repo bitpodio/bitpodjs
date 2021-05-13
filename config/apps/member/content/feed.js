@@ -113,6 +113,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
+      hidden: true,
       fields: {
         Title: {
           displayOrder: 1,
