@@ -7,7 +7,7 @@
     <v-card
       v-for="item in items"
       :key="item.id"
-      class="mb-4 mx-auto elevation-1 rounded-lg feed-section"
+      class="mb-4 mx-auto col-md-6 pa-0 elevation-1 rounded-lg feed-section"
     >
       <v-list subheader two-line>
         <v-list-item>
@@ -71,7 +71,7 @@
           <div class="mt-n2 mb-2">{{ item.Title }}</div>
           <div class="mb-1">
             <!-- eslint-disable-next-line vue/no-v-html -->
-            <div v-html="item.Body"></div>
+            <div class="feed-body" v-html="item.Body"></div>
           </div>
         </div>
         <div v-if="item.Likes.length > 0" class="mb-1">
@@ -225,17 +225,14 @@ export default {
 <style scoped>
 .feed-section {
   min-width: 600px;
-  max-width: 600px;
 }
 .feed-section:last-child {
   margin-bottom: -8px !important;
 }
-.feed-section
-  .v-application--is-ltr
-  .v-textarea.v-text-field--enclosed
-  .v-text-field__slot
-  textarea {
-  height: 30px !important;
+.feed-body img {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
 }
 @media (max-width: 600px) {
   .feed-section {
