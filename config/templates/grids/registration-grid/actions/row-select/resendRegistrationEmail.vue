@@ -32,7 +32,6 @@ export default {
   },
   methods: {
     confirmResendMail() {
-      debugger
       this.$eventBus.$emit(
         'toggle-confirm',
         this.viewName,

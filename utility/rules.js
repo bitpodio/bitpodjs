@@ -18,5 +18,11 @@ export function rules(i18n) {
         ? i18n.t('Messages.Error.HttpsUrl')
         : true
     },
+    phoneRules: (v) => {
+      if (v && !isNaN(v) && v.length === 10) {
+        return true
+      }
+      return i18n.t('Messages.Error.PleaseEnterValidPhone')
+    },
   })
 }
