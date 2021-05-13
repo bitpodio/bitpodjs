@@ -89,6 +89,12 @@
                 ><div>{{ i }}</div></span
               >
             </v-tooltip>
+            <v-spacer></v-spacer>
+            <div v-if="item._Comment.length > 0" class="body-2">
+              <span>{{ item._Comment.length }}</span>
+              <i18n v-if="item._Comment.length === 1" path="Common.Comment" />
+              <i18n v-if="item._Comment.length > 1" path="Common.Comments" />
+            </div>
           </div>
         </div>
         <div><v-divider></v-divider></div>
