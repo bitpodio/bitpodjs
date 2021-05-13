@@ -758,12 +758,8 @@ table > tbody > tr:last-child .key-align {
   font-size: 20px;
   color: rgba(0, 0, 0, 0.60)
 }
-.feed-section
-  .v-application--is-ltr
-  .v-textarea.v-text-field--enclosed
-  .v-text-field__slot
-  textarea {
-  height: 30px !important;
+.feed-section .theme--light.v-input textarea {
+    height: 30px !important;
 }
 @media (min-width: 1904px) {
   .boxviewlarge .v-data-table__wrapper {
