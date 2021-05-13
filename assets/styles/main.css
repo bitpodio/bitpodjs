@@ -761,6 +761,11 @@ table > tbody > tr:last-child .key-align {
 .feed-section .theme--light.v-input textarea {
     height: 30px !important;
 }
+.feed-body img {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+}
 @media (min-width: 1904px) {
   .boxviewlarge .v-data-table__wrapper {
     margin-bottom: 0 !important;
