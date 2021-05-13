@@ -16,11 +16,16 @@ export default {
       fields: {
         Title: {
           displayOrder: 1,
+          form: {
+            caption: 'Common.Title',
+            displayOrder: 1,
+          },
           caption: 'Common.Title',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '250px',
           type: 'string',
+          cssClasses: 'col-12 col-md-12',
         },
         Body: {
           form: {
