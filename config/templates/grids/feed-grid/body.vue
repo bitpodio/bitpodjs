@@ -40,7 +40,10 @@
                 </template>
 
                 <v-list dense>
-                  <v-list-item>
+                  <v-list-item
+                    :key="item.id"
+                    @click="openFeedForm(item.id, item)"
+                  >
                     <v-list-item-icon class="mr-2">
                       <i class="fa fa-pencil mt-1" aria-hidden="true"></i>
                     </v-list-item-icon>
@@ -133,15 +136,20 @@
         </div>
       </div>
     </v-card>
+    <div v-if="feedForm">
+      <editFeed :id="id" :selected="selected" :feed-form.sync="feedForm" />
+    </div>
   </div>
 </template>
 <script>
 import timeAgo from '~/components/common/timeAgo'
 import Notes from '~/components/common/notes'
+import editFeed from '~/pages/apps/_app/member/_id/editFeed.vue'
 export default {
   components: {
     timeAgo,
     Notes,
+    editFeed,
   },
   props: {
     items: { type: Array, default: () => [] },
@@ -154,10 +162,13 @@ export default {
   },
   data() {
     return {
+      id: '',
       like: false,
+      feedForm: false,
       snackbar: false,
       timeout: 3000,
       snackbarText: this.$t('Messages.Success.FeedDeletedSuccessfully'),
+      selected: {},
     }
   },
   methods: {
@@ -171,6 +182,11 @@ export default {
           : ''
       }
       return ''
+    },
+    openFeedForm(itemId, item) {
+      this.selected = item
+      this.id = itemId
+      this.feedForm = true
     },
     async feedLike(item) {
       const url = `${this.$bitpod.getApiUrl()}Feeds/${item.id}/hits/rel/${
