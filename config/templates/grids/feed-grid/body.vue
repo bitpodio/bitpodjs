@@ -1,5 +1,9 @@
 <template>
   <div class="greybg">
+    <confirm ref="confirm"></confirm>
+    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
+      <div class="text-center">{{ snackbarText }}</div>
+    </v-snackbar>
     <v-card
       v-for="item in items"
       :key="item.id"
@@ -123,10 +127,6 @@
         </div>
       </div>
     </v-card>
-    <confirm ref="confirm"></confirm>
-    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
-      <div class="text-center">{{ snackbarText }}</div>
-    </v-snackbar>
   </div>
 </template>
 <script>
