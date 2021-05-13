@@ -267,12 +267,12 @@
       <LanguageSwitcher />
       <AppDrawer />
       <v-menu
-        v-if="$route.path === '/apps/event/eventboard'"
+        v-if="$route.path === localePath('/apps/event/eventboard')"
         v-model="menu"
         left
         :offset-y="offset"
         transition="slide-y-transition"
-        content-class="overflowHidden"
+        content-class="overflowHidden mt-8"
       >
         <template v-slot:activator="{ on, attrs }">
           <v-btn icon small v-bind="attrs" v-on="on">
@@ -394,7 +394,12 @@
       />
     </div>
     <div>
-      <v-tour name="myTour" :steps="steps" :options="myOptions"></v-tour>
+      <v-tour
+        :id="$i18n.locale"
+        name="myTour"
+        :steps="steps"
+        :options="myOptions"
+      ></v-tour>
     </div>
   </v-app>
 </template>
@@ -421,129 +426,134 @@ export default {
   props: {
     source: { type: String, default: '' },
   },
-  data: () => ({
-    date: new Date().toISOString().substr(0, 10),
-    menu: false,
-    modal: false,
-    menu2: false,
-    drawer: null,
-    dialog1: false,
-    dialog: false,
-    notifications: false,
-    sound: true,
-    tabs: null,
-    account: false,
-    message: false,
-    triggerReset: false,
-    triggerRecEventReset: false,
-    allowUpgrade: false,
-    allowUser: false,
-    activeClass: ' v-list-item--active',
-    userPlanData: '',
-    logoutClicked: false,
-    items: [
-      {
-        icon: 'fa fa-grid',
-        text: 'Eventboard',
-        to: '/apps/event/eventboard',
-      },
-      { heading: 'Event' },
-      {
-        icon: 'fa fa-calendar',
-        text: 'Events',
-        to: '/apps/event/list/Event/live-and-draft-event',
-        allowedRoutes: [
-          '/apps/event/list/Event/eventInvitaionHistory',
-          '/apps/event/event/',
-        ],
-      },
-      {
-        icon: 'fa fa-user-plus',
-        text: 'Registrations',
-        to: '/apps/event/list/Registrations/Registrations',
-        allowedRoutes: ['/apps/event/registration'],
-      },
-      {
-        icon: 'fa fa-address-book-o',
-        text: 'Contacts',
-        to: '/apps/event/list/Contacts/Contacts',
-        allowedRoutes: [
-          '/apps/event/contacts/',
-          'apps/event/list/Contacts/Invites',
-        ],
-      },
-      { heading: 'Promotions' },
-      {
-        icon: 'fa fa-building',
-        text: 'Discount Code',
-        to: '/apps/event/list/DiscountCodes/Discount-Codes',
-        allowedRoutes: ['/apps/event/discountcodes'],
-      },
-    ],
-    myOptions: {
-      useKeyboardNavigation: false,
-      labels: {
-        buttonSkip: 'Skip tour',
-        buttonPrevious: 'Previous',
-        buttonNext: 'Next',
-        buttonStop: 'Finish',
-      },
-    },
-    steps: [
-      {
-        target: '#v-step-0',
-        content: 'Step One',
-        params: {
-          placement: 'top', // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
+  data() {
+    return {
+      currentLocale: this.$i18n.locale,
+      date: new Date().toISOString().substr(0, 10),
+      menu: false,
+      modal: false,
+      menu2: false,
+      drawer: null,
+      dialog1: false,
+      dialog: false,
+      notifications: false,
+      sound: true,
+      tabs: null,
+      account: false,
+      message: false,
+      triggerReset: false,
+      triggerRecEventReset: false,
+      allowUpgrade: false,
+      allowUser: false,
+      activeClass: ' v-list-item--active',
+      userPlanData: '',
+      logoutClicked: false,
+      items: [
+        {
+          icon: 'fa fa-grid',
+          text: 'Eventboard',
+          to: '/apps/event/eventboard',
+        },
+        { heading: 'Event' },
+        {
+          icon: 'fa fa-calendar',
+          text: 'Events',
+          to: '/apps/event/list/Event/live-and-draft-event',
+          allowedRoutes: [
+            '/apps/event/list/Event/eventInvitaionHistory',
+            '/apps/event/event/',
+          ],
+        },
+        {
+          icon: 'fa fa-user-plus',
+          text: 'Registrations',
+          to: '/apps/event/list/Registrations/Registrations',
+          allowedRoutes: ['/apps/event/registration'],
+        },
+        {
+          icon: 'fa fa-address-book-o',
+          text: 'Contacts',
+          to: '/apps/event/list/Contacts/Contacts',
+          allowedRoutes: [
+            '/apps/event/contacts/',
+            'apps/event/list/Contacts/Invites',
+          ],
+        },
+        { heading: 'Promotions' },
+        {
+          icon: 'fa fa-building',
+          text: 'Discount Code',
+          to: '/apps/event/list/DiscountCodes/Discount-Codes',
+          allowedRoutes: ['/apps/event/discountcodes'],
+        },
+      ],
+      myOptions: {
+        useKeyboardNavigation: false,
+        labels: {
+          buttonSkip: 'Skip tour',
+          buttonPrevious: 'Previous',
+          buttonNext: 'Next',
+          buttonStop: 'Finish',
         },
       },
-      {
-        target: '#v-step-1',
-        content: 'Step Two',
-        params: {
-          placement: 'top', // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
-        },
-      },
-      {
-        target: '#v-step-2',
-        content: 'Step Three',
-        params: {
-          placement: 'top', // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
-        },
-      },
-      {
-        target: '#v-step-3',
-        content: 'Step Four',
-        params: {
-          placement: 'top', // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
-        },
-      },
-      {
-        target: '#v-step-4',
-        content: 'Step Five',
-        params: {
-          placement: 'top', // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
-        },
-      },
-      {
-        target: '#v-step-5',
-        content: 'Step Six',
-        params: {
-          placement: 'top', // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
-        },
-      },
-      {
-        target: '#v-step-6',
-        content: 'Step Seven',
-        params: {
-          placement: 'top', // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
-        },
-      },
-    ],
-  }),
+    }
+  },
   computed: {
     currentPage() {
       return this.$route.path
+    },
+    steps() {
+      return [
+        {
+          target: '#v-step-0',
+          content: this.$t('Common.AppTitle'),
+          params: {
+            placement: 'top', // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
+          },
+        },
+        {
+          target: '#v-step-1',
+          content: 'Step Two',
+          params: {
+            placement: 'top', // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
+          },
+        },
+        {
+          target: '#v-step-2',
+          content: 'Step Three',
+          params: {
+            placement: 'top', // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
+          },
+        },
+        {
+          target: '#v-step-3',
+          content: 'Step Four',
+          params: {
+            placement: 'top', // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
+          },
+        },
+        {
+          target: '#v-step-4',
+          content: 'Step Five',
+          params: {
+            placement: 'top', // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
+          },
+        },
+        {
+          target: '#v-step-5',
+          content: 'Step Six',
+          params: {
+            placement: 'top', // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
+          },
+        },
+        {
+          target: '#v-step-6',
+          content: 'Step Seven',
+          params: {
+            placement: 'top', // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
+          },
+        },
+      ]
     },
   },
   watch: {
@@ -557,6 +567,9 @@ export default {
         postGaData('New', this.$t('Common.NewRecurringEvent'))
       }
     },
+    currentLocale(newVal) {
+      this.startTour()
+    },
   },
   async created() {
     let token = this.$auth.strategy.token.get()
@@ -566,14 +579,12 @@ export default {
     await this.$apolloHelpers.onLogin(token, undefined, { expires: 7 })
   },
   mounted() {
-    debugger
-    // this.$tours.myTour.start()
-    this.$tours.myTour.start()
     const userInfo = userUtils.userCurrentOrgInfo(this.$store) || {}
     const userRoles = userInfo.roles || []
     this.allowUser = userRoles.length === 1 && userRoles.includes('$orguser')
     this.allowUpgrade = userRoles.includes('$orgowner')
     window.addEventListener('message', this.messageReceived, false)
+    this.$tours.myTour.start()
   },
   beforeDestroy() {
     window.removeEventListener('message', this.messageReceived)
@@ -640,3 +651,8 @@ export default {
   },
 }
 </script>
+<style>
+.v-step__buttons {
+  color: blue;
+}
+</style>

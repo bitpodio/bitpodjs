@@ -60,7 +60,7 @@
       <v-row>
         <v-col class="col-12 col-sm-6 col-md-4 parentWidth">
           <h3 class="font-weight-regular pb-2">
-            <i18n path="Common.EventsonSale" />
+            <i18n id="v-step-6" path="Common.EventsonSale" />
           </h3>
           <div v-if="!eventOnSaleEmpty">
             <div
