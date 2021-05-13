@@ -10,16 +10,15 @@ query($filters: JSON, $where: JSON) {
           id
           Attachments
           Likes
-          # _Comments {
-          #   Notes
-          #   CommitURL
-          #   id
-          #   createdDate
-          #   createdBy
-          #   modifiedDate
-          #   modifiedBy
-          #   __typename
-          # }
+          _Comment {
+            Notes
+            id
+            createdDate
+            createdBy
+            modifiedDate
+            modifiedBy
+            __typename
+          }
           createdDate
           createdBy
           modifiedDate
