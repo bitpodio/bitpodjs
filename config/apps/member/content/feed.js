@@ -73,6 +73,7 @@ export default {
         actions: {
           new: {
             hidden: false,
+            caption: 'Common.NewFeed',
           },
           edit: {
             hidden: true,
