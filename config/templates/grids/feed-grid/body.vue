@@ -22,7 +22,7 @@
           </v-list-item-content>
 
           <v-list-item-action>
-            <div>
+            <div v-if="item.createdBy === $auth.user.data.email">
               <v-menu
                 left
                 bottom
@@ -46,7 +46,7 @@
                       /></v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
-                  <v-list-item>
+                  <v-list-item @click="deleteFeed(item.id)">
                     <v-list-item-icon class="mr-2">
                       <i class="fa fa-trash mt-1" aria-hidden="true"></i>
                     </v-list-item-icon>
@@ -71,13 +71,20 @@
           </div>
         </div>
         <div v-if="item.Likes.length > 0" class="mb-1">
-          <div class="d-flex">
-            <div>
-              <v-btn icon color="primary">
-                <v-icon class="fs-16">mdi-thumb-up</v-icon>
-              </v-btn>
-              <span>{{ item.Likes.length }}</span>
-            </div>
+          <div class="d-flex mb-2">
+            <v-tooltip bottom content-class="feed-tooltip">
+              <template v-slot:activator="{ on, attrs }">
+                <div v-bind="attrs" v-on="on">
+                  <v-icon class="fs-16 mr-1" color="primary"
+                    >mdi-thumb-up</v-icon
+                  >
+                  <span>{{ item.Likes.length }}</span>
+                </div>
+              </template>
+              <span v-for="i in item.Likes" :key="i"
+                ><div>{{ i }}</div></span
+              >
+            </v-tooltip>
           </div>
         </div>
         <div><v-divider></v-divider></div>
@@ -116,6 +123,10 @@
         </div>
       </div>
     </v-card>
+    <confirm ref="confirm"></confirm>
+    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
+      <div class="text-center">{{ snackbarText }}</div>
+    </v-snackbar>
   </div>
 </template>
 <script>
@@ -138,6 +149,9 @@ export default {
   data() {
     return {
       like: false,
+      snackbar: false,
+      timeout: 3000,
+      snackbarText: this.$t('Messages.Success.FeedDeletedSuccessfully'),
     }
   },
   methods: {
@@ -174,6 +188,31 @@ export default {
         )
       }
     },
+    async deleteFeed(id) {
+      const url = this.$bitpod.getApiUrl()
+      try {
+        const check = await this.$refs.confirm.open(
+          this.$t('Drawer.DeleteFeed'),
+          this.$t('Messages.Warn.DeleteFeed'),
+          { color: 'error lighten-1' }
+        )
+        if (check === true) {
+          const res = await this.$axios.$delete(`${url}Feeds/${id}`)
+          if (res) {
+            this.snackbarText = this.$t(
+              'Messages.Success.FeedDeletedSuccessfully'
+            )
+            this.snackbar = true
+            this.$eventBus.$emit('grid-refresh')
+          }
+        }
+      } catch (e) {
+        console.error(
+          `Error in config/templates/grids/feed-grid/body.vue while making a DELETE call to Event model in method deleteEvent context: EventId:-${id} \n URL:- ${url} `,
+          e
+        )
+      }
+    },
   },
 }
 </script>
@@ -191,5 +230,11 @@ export default {
   .v-text-field__slot
   textarea {
   height: 30px !important;
+}
+@media (max-width: 600px) {
+  .feed-section {
+    min-width: 100%;
+    max-width: 100%;
+  }
 }
 </style>
