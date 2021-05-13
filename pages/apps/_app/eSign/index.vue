@@ -29,6 +29,10 @@ export default {
         const data = event.data
         console.log(data)
         const bitpodURL = `${this.$bitpod.getApiUrl()}ESIGNRECIPIENTS/updateESignRecipientStatus`
+        const emailSubject = data.request.Subject.replace(
+          'Signature requested for ',
+          ''
+        )
         const patchData = {
           recipientID: data.recipient.id,
           ESignStoreId: data.recipient.ESignStoreId,
@@ -38,7 +42,7 @@ export default {
           handlebarsData: data.handlebarsData,
           declineSign: data.declineSign,
           requestID: data.request.id,
-          emailSubject: data.request.Subject,
+          emailSubject,
           senderEmail: data.request.SenderEmail,
           hostUrl: this.$bitpod.getApiUrl(),
         }

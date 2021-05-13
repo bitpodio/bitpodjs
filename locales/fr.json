@@ -869,7 +869,8 @@
     "YouMayReferRecipients": "Vous pouvez faire référence aux données des destinataires en utilisant des expressions d'espace réservé dans la ligne d'objet. Par exemple: {contactTemplateData}",
     "SearchContacts": "Rechercher des contacts",
     "Data": "Donnés",
-    "FillTemplateData": "Passez en revue le contenu du document et les espaces réservés, utilisez le formulaire pour modifier les valeurs des espaces réservés."
+    "FillTemplateData": "Passez en revue le contenu du document et les espaces réservés, utilisez le formulaire pour modifier les valeurs des espaces réservés.",
+    "NewTemplateInformation": "Pour démarrer le processus eSign, sélectionnez d'abord un modèle de document dans la liste ou créez-en un nouveau."
   },
   "Drawer": {
     "UnSubscribeMsg": "Veuillez sélectionner une raison pour vous désinscrire de la newsletter. Cela nous aidera à améliorer nos services.",

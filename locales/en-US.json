@@ -872,7 +872,8 @@
     "YouMayReferRecipients": "You may refer recipients data by using placeholder expressions in the subject line. e.g:{contactTemplateData}",
     "SearchContacts": "Search Contacts",
     "Data": "Data",
-    "FillTemplateData": "Review document content and placeholders, use the form to edit placeholder values."
+    "FillTemplateData": "Review document content and placeholders, use the form to edit placeholder values.",
+    "NewTemplateInformation": "To start eSign process, first select a document template from the list or create a new one."
   },
   "Drawer": {
     "UnSubscribeMsg": "Please select a reason to unsubscribe from newsletter. This will help us to improve our services.",

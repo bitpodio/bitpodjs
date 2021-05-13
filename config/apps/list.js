@@ -60,7 +60,7 @@ export const appList = (store) => [
   {
     name: 'E-Sign',
     label: 'Common.Esign',
-    css: 'fa-file-contract fs-36 error--text',
+    css: 'mdi mdi-file-document-edit-outline fs-36 warning--text',
     type: 'route',
     route: '/apps/eSign/list/eSignRequest/eSign',
     roles: [],

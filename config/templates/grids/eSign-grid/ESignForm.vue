@@ -5,7 +5,51 @@
         {{ snackbarText }}
       </div>
     </v-snackbar>
-    <v-dialog v-model="addNewTemplateFormDialog" persistent max-width="60%">
+    <v-dialog v-model="emptyDataFieldDialog" persistent max-width="600px">
+      <v-sheet>
+        <v-card-title
+          class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
+        >
+          <h2 class="black--text pt-5 pb-4 font-weight-regular text-h5">
+            Confirmation Message
+          </h2>
+          <v-spacer></v-spacer>
+          <div>
+            <v-btn icon @click="emptyDataFieldDialog = false">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </div>
+        </v-card-title>
+        <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
+          <v-row>
+            <v-col cols="12">
+              You have not filled one or more data fields. Are you sure you want
+              to continue?
+            </v-col>
+          </v-row>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions
+          class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
+        >
+          <v-btn
+            class="sendButtons"
+            @click="
+              emptyDataFieldDialog = false
+              currentTab++
+            "
+            ><i18n path="Common.Yes"
+          /></v-btn>
+          <v-btn
+            color="primary"
+            class="sendButtons"
+            @click="emptyDataFieldDialog = false"
+            ><i18n path="Common.No"
+          /></v-btn>
+        </v-card-actions>
+      </v-sheet>
+    </v-dialog>
+    <v-dialog v-model="addNewTemplateFormDialog" persistent max-width="600px">
       <v-sheet>
         <v-card-title
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
@@ -22,7 +66,7 @@
         </v-card-title>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-row>
-            <v-col cols="12" md="6" class="pb-0">
+            <v-col cols="12" class="pb-0">
               <v-text-field
                 v-model="addNewTemplateFormName"
                 :label="$t('Common.Name')"
@@ -31,7 +75,7 @@
                 dense
               ></v-text-field>
             </v-col>
-            <v-col cols="12" md="6" class="pb-0">
+            <v-col cols="12" class="pb-0">
               <v-text-field
                 v-model="addNewTemplateFormURL"
                 label="Google Document URL*"
@@ -40,7 +84,7 @@
                 dense
               ></v-text-field>
             </v-col>
-            <v-col cols="12" md="6" class="pb-0">
+            <v-col cols="12" class="pb-0">
               <v-text-field
                 v-model="addNewTemplateFormCategory"
                 :label="$t('Common.Category')"
@@ -65,7 +109,7 @@
         </v-card-actions>
       </v-sheet>
     </v-dialog>
-    <v-dialog v-model="addNewRecipientFormDialog" persistent width="60%">
+    <v-dialog v-model="addNewRecipientFormDialog" persistent width="600px">
       <v-sheet>
         <v-card-title
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
@@ -93,7 +137,7 @@
         </v-card-title>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-row>
-            <v-col cols="12" md="6" class="pb-0">
+            <v-col cols="12" class="pb-0">
               <v-text-field
                 v-model="addNewRecipientFormFirstName"
                 :label="$t('Common.FirstName')"
@@ -101,7 +145,7 @@
                 dense
               ></v-text-field>
             </v-col>
-            <v-col cols="12" md="6" class="pb-0">
+            <v-col cols="12" class="pb-0">
               <v-text-field
                 v-model="addNewRecipientFormLastName"
                 :label="$t('Common.LastName')"
@@ -109,7 +153,7 @@
                 dense
               ></v-text-field>
             </v-col>
-            <v-col cols="12" md="6" class="pb-0">
+            <v-col cols="12" class="pb-0">
               <v-text-field
                 v-model="addNewRecipientFormEmail"
                 :label="$t('Common.EnterEmail')"
@@ -172,9 +216,15 @@
             </v-tabs>
           </v-card-title>
           <v-card-text
-            class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0 invite-inner"
+            :class="{
+              'pt-0 invite-inner': true,
+              'px-xs-2 px-md-10 px-lg-10 px-xl-15 ':
+                currentTab !== 1 || $vuetify.breakpoint.smAndDown,
+              'pl-xs-2 pl-md-10 pl-lg-10 pl-xl-15 pr-3 overflow-y-hidden':
+                currentTab === 1 && !$vuetify.breakpoint.smAndDown,
+            }"
           >
-            <v-tabs-items v-model="currentTab">
+            <v-tabs-items v-model="currentTab" style="height: 100%;">
               <v-tab-item>
                 <v-card
                   v-if="templateLoading"
@@ -190,11 +240,13 @@
                   ></v-progress-circular>
                 </v-card>
                 <v-card v-else flat class="tabContent">
-                  <div class="d-flex justify-start mt-4 pt-4 mr-8">
-                    <v-btn
-                      color="primary"
-                      @click="addNewTemplateFormDialog = true"
-                      ><v-icon small>mdi-plus</v-icon><i18n path="Common.New"
+                  <div
+                    class="d-flex justify-space-between align-center mt-4 pt-4 mr-8"
+                  >
+                    <i18n path="Common.NewTemplateInformation" />
+                    <v-btn @click="addNewTemplateFormDialog = true"
+                      ><v-icon small>mdi-plus</v-icon
+                      ><i18n path="Common.NewTemplate"
                     /></v-btn>
                   </div>
                   <v-flex
@@ -236,7 +288,7 @@
                   </v-flex>
                 </v-card>
               </v-tab-item>
-              <v-tab-item class="tabContent">
+              <v-tab-item class="tabContent" style="height: inherit;">
                 <v-card
                   v-if="documentTextLoading"
                   class="pa-10 tabContent"
@@ -250,20 +302,26 @@
                     indeterminate
                   ></v-progress-circular>
                 </v-card>
-                <v-card v-else flat>
-                  <p class="mt-5 mb-4">
-                    <i18n path="Common.FillTemplateData" />
-                  </p>
-                  <v-row>
-                    <v-col v-if="currentTab === 1" class="col-12 col-md-8">
-                      <div v-html="resolvedDocumentText"></div>
-                    </v-col>
-                    <v-col align="center" class="d-none d-md-block col-1">
-                      <v-divider vertical></v-divider>
+                <v-card v-else flat style="height: inherit;">
+                  <v-row style="height: inherit;">
+                    <v-col
+                      v-if="currentTab === 1"
+                      id="html-scroll-container"
+                      class="col-12 col-md-8"
+                      style="height: inherit; overflow-y: auto;"
+                    >
+                      <p class="mt-5 mb-4">
+                        <i18n path="Common.FillTemplateData" />
+                      </p>
+                      <div
+                        class="html-preview-container"
+                        v-html="resolvedDocumentText"
+                      ></div>
                     </v-col>
                     <v-col
-                      class="col-12 col-md-3"
+                      class="col-12 col-md-4 greybg mx-0 px-8 pt-8"
                       :order="$vuetify.breakpoint.smAndDown ? 'first' : 'last'"
+                      style="height: inherit; overflow-y: auto;"
                     >
                       <v-text-field
                         v-for="item in dataFields"
@@ -272,6 +330,8 @@
                         dense
                         :label="item.Name"
                         :value="getHandlebarsObjectValue(item.Name)"
+                        @focus="handleDataFieldFocus(item.Name)"
+                        @blur="handleDataFieldBlur(item.Name)"
                         @input="updateNestedObject(item.Name, $event, item.id)"
                       >
                       </v-text-field>
@@ -638,7 +698,7 @@ export default {
       required: false,
     },
     templateData: {
-      type: Array,
+      type: Object,
       default: () => {},
       required: false,
     },
@@ -688,22 +748,23 @@ export default {
       compiledDocumentText: '',
       resolvedDocumentText: '',
       dataFields: [],
+      dataFieldFocused: false,
       handlebarsDataObject: {},
       handlebarsDataIsSet: [],
+      emptyDataFieldDialog: false,
     }
   },
   computed: {
     disableNext() {
       if (this.templateSelected === false) return true
       else if (this.currentTab === 1) {
+        if (this.documentTextLoading) return true
+      } else if (this.currentTab === 2) {
         if (
-          this.documentTextLoading ||
-          this.handlebarsDataIsSet.some((item) => item === false)
+          this.toggleRecipientLoading === true ||
+          this.contactIsSet.some((item) => item === false)
         )
           return true
-      } else if (this.currentTab === 2) {
-        if (this.toggleRecipientLoading === true) return true
-        if (this.contactIsSet.some((item) => item === false)) return true
       } else if (this.currentTab === 3 && this.subject === '') return true
       return false
     },
@@ -756,8 +817,16 @@ export default {
       document.getElementsByClassName('invite-inner')[0].scrollTop = 0
     },
     onNext() {
-      this.currentTab++
-      document.getElementsByClassName('invite-inner')[0].scrollTop = 0
+      if (
+        this.currentTab === 1 &&
+        this.handlebarsDataIsSet.some((item) => item === false)
+      ) {
+        console.log('test')
+        this.emptyDataFieldDialog = true
+      } else {
+        this.currentTab++
+        document.getElementsByClassName('invite-inner')[0].scrollTop = 0
+      }
     },
     updateSelectedListInput(index) {
       if (this.selectedListNewContacts[index]) {
@@ -802,7 +871,7 @@ export default {
           senderEmail: this.sender,
           setReplyTo: this.setReplyTo,
           Message: this.message,
-          TemplateData: JSON.stringify(this.handlebarsDataObject),
+          TemplateData: JSON.stringify(this.formatHandlebarsData()),
         }
         console.log(this.postEsignRequestData, bitpodURL)
         const response = await this.$axios.$post(
@@ -998,16 +1067,22 @@ export default {
       try {
         const res = await this.$axios.get(documentUrl)
         const regexFontUrl = /@import url\('[\S]+'\);/g
-        const filteredDocumentText = res.data.replace(regexFontUrl, '')
+        const matches = []
+        let filteredDocumentText = res.data.replace(regexFontUrl, '')
+        let regexMatch
+        while ((regexMatch = regExp.exec(filteredDocumentText)) !== null) {
+          matches.push(regexMatch[1])
+          filteredDocumentText = filteredDocumentText.replaceAll(
+            regexMatch[0],
+            ''
+          )
+        }
+        filteredDocumentText = filteredDocumentText.replaceAll('{{', '{{{')
+        filteredDocumentText = filteredDocumentText.replaceAll('}}', '}}}')
         this.documentText = filteredDocumentText
         this.compiledDocumentText = handlebars.compile(filteredDocumentText)
         this.prepareHTMLResolutionFields()
         this.documentTextLoading = false
-        const matches = []
-        let regexMatch
-        while ((regexMatch = regExp.exec(this.documentText)) !== null) {
-          matches.push(regexMatch[1])
-        }
         this.prepareRecipientList(matches)
         this.toggleRecipientLoading = false
       } catch (err) {
@@ -1024,20 +1099,103 @@ export default {
         this.handlebarsDataObject
       )
     },
+    prepareHTMLReplaceValue(path, value) {
+      const elementIdentifier = path.replaceAll('.', '-')
+      if (this.dataFieldFocused && value === '')
+        return `<span class="focus-empty-field ${elementIdentifier}">{{${path}}}</span>`
+      else if (this.dataFieldFocused)
+        return `<span class="focus-filled-field ${elementIdentifier}">${value}</span>`
+      else if (value === '')
+        return `<span class="empty-field ${elementIdentifier}">{{${path}}}</span>`
+      else
+        return `<span class="filled-field ${elementIdentifier}">${value}</span>`
+    },
+    updateHandlebarsValue(object, path, value) {
+      const replaceValue = this.prepareHTMLReplaceValue(path, value)
+      _.set(object, path, replaceValue)
+    },
     updateNestedObject: _.debounce(function (path, value, index) {
-      const keys = path.split('.')
+      value = value.trim()
+      this.updateHandlebarsValue(this.handlebarsDataObject, path, value)
       if (value === '') {
-        _.set(this.handlebarsDataObject, keys, `{{${path}}}`)
         this.$set(this.handlebarsDataIsSet, index, false)
       } else {
-        _.set(this.handlebarsDataObject, keys, value)
         this.$set(this.handlebarsDataIsSet, index, true)
       }
       this.compileHandlebarsData()
     }, 200),
+    handleDataFieldFocus(path) {
+      this.dataFieldFocused = true
+      const value = this.getHandlebarsObjectValue(path)
+      this.updateHandlebarsValue(this.handlebarsDataObject, path, value)
+      const elementIdentifier = path.replaceAll('.', '-')
+      const elementArray = document.getElementsByClassName(elementIdentifier)
+      const containerElement = document.getElementById('html-scroll-container')
+      if (elementArray.length > 0) {
+        try {
+          let element = elementArray[0]
+          let lastHeight = 0
+          if (element) {
+            let scrollDistance = element.offsetTop
+            if (!scrollDistance) {
+              while (
+                element &&
+                !element.parentNode.isEqualNode(containerElement)
+              ) {
+                console.log(scrollDistance, element)
+                if (lastHeight !== element.offsetTop) {
+                  lastHeight = element.offsetTop
+                  scrollDistance += lastHeight
+                }
+                element = element.parentElement
+              }
+            }
+            document.getElementById(
+              'html-scroll-container'
+            ).scrollTop = scrollDistance
+          }
+        } catch (err) {
+          console.error(err)
+        }
+      }
+      // const elementScrollTop = document.getElementsByClassName(
+      //   elementIdentifier
+      // )[0].offsetTop
+      // document.getElementById(
+      //   'html-scroll-container'
+      // )[0].scrollTop = elementScrollTop
+      this.compileHandlebarsData()
+    },
+    handleDataFieldBlur(path) {
+      this.dataFieldFocused = false
+      const value = this.getHandlebarsObjectValue(path)
+      this.updateHandlebarsValue(this.handlebarsDataObject, path, value)
+      this.compileHandlebarsData()
+    },
+    formatHandlebarsData() {
+      const updatedHandlebarsData = {}
+      for (const item of this.dataFields) {
+        console.log(item)
+        _.set(
+          updatedHandlebarsData,
+          item.Name,
+          this.getHandlebarsObjectValue(item.Name)
+        )
+      }
+      console.log(updatedHandlebarsData)
+      return updatedHandlebarsData
+    },
     getHandlebarsObjectValue(path) {
       const value = _.get(this.handlebarsDataObject, path)
-      return value === `{{${path}}}` ? '' : value
+      const regexEmpty = new RegExp(
+        `<span class="[\\w\\- ]+">{{${path}}}</span>`,
+        'g'
+      )
+      const regexValue = /<span class="[\w\- ]+">([\s\S]*)<\/span>/g
+      const match = regexValue.exec(value)
+      const isEmpty = regexEmpty.test(value)
+      if (match) return isEmpty ? '' : match[1]
+      else return isEmpty ? '' : value
     },
     prepareHTMLResolutionFields() {
       const variablesRegex = /{{(\w[.\w]*)}}/g
@@ -1057,12 +1215,11 @@ export default {
         const dataFieldValue = {}
         dataFieldValue.id = index
         dataFieldValue.Name = item
-        const propDataValue = _.get(this.templateData, item, undefined)
-        if (propDataValue) {
-          _.set(handlebarsObject, item, propDataValue)
+        const propDataValue = _.get(this.templateData, item, '')
+        this.updateHandlebarsValue(handlebarsObject, item, propDataValue)
+        if (propDataValue !== '') {
           handlebarsDataIsSet.push(true)
         } else {
-          _.set(handlebarsObject, item, `{{${item}}}`)
           handlebarsDataIsSet.push(false)
         }
         return dataFieldValue
@@ -1097,6 +1254,33 @@ export default {
 }
 </script>
 <style scoped>
+.html-preview-container >>> .empty-field {
+  color: red;
+  padding: 2px;
+  display: inline-block;
+}
+.html-preview-container >>> .filled-field {
+  color: blue;
+  padding: 2px;
+  display: inline-block;
+}
+.html-preview-container >>> .focus-empty-field {
+  color: darkred;
+  font-weight: 900;
+  padding: 2px;
+  display: inline-block;
+  min-height: 1em;
+}
+.html-preview-container >>> .focus-filled-field {
+  color: darkblue;
+  font-weight: 900;
+  padding: 2px;
+  display: inline-block;
+  min-height: 1em;
+}
+#html-scroll-container {
+  scroll-behavior: smooth;
+}
 .seat-maps {
   height: 125px;
   width: 155px;
