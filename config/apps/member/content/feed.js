@@ -87,8 +87,8 @@ export default {
         },
       },
       dataSource: {
-        singularEntity: 'Common.Members',
-        pluralEntity: 'Drawer.Members',
+        singularEntity: 'Common.NewFeed',
+        pluralEntity: 'Common.NewFeed',
         query: feedList,
         defaultSort: 'createdDate DESC',
         type: 'graphql',
