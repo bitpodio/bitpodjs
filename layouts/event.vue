@@ -342,7 +342,7 @@
     >
       <v-container fluid>
         <v-row>
-          <v-col class="pt-0">
+          <v-col class="pt-0 px-0 px-sm-3">
             <div>
               <nuxt />
             </div>
