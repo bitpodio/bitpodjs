@@ -12,8 +12,7 @@ export default {
          prettify: false
       }
     }
-
-  }
+  },
   router: {
     base: basePath || '/',
     middleware: ['helpRedirect'],
