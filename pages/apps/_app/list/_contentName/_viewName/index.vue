@@ -1,5 +1,5 @@
 <template>
-  <v-layout column>
+  <v-layout column :class="listLayoutClass">
     <v-flex
       v-if="content"
       class="d-flex align-center"
@@ -57,6 +57,10 @@ export default {
       return this.shouldGoBack.includes(
         `${this.$route.params.contentName}/${this.$route.params.viewName}`
       )
+    },
+    listLayoutClass() {
+      debugger
+      return `${this.$route.params.contentName}-${this.$route.params.viewName}`
     },
   },
   methods: {
