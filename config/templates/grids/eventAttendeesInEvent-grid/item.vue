@@ -1,40 +1,42 @@
 <template>
   <tr>
     <td>
-      <div>
-        <v-list subheader two-line class="px-0">
-          <v-list-item class="px-0">
-            <v-list-item-avatar size="48">
-              <v-avatar
-                size="48"
-                :style="{
-                  'background-color': getRandomColor(item.FullName),
-                }"
-              >
-                <span class="white--text Twitter">{{ item.FullName }}</span>
-              </v-avatar>
-            </v-list-item-avatar>
+      <div class="event-attendee-list">
+        <div>
+          <v-list subheader two-line class="px-0">
+            <v-list-item class="px-0">
+              <v-list-item-avatar size="48">
+                <v-avatar
+                  size="48"
+                  :style="{
+                    'background-color': getRandomColor(item.FullName),
+                  }"
+                >
+                  <span class="white--text Twitter">{{ item.FullName }}</span>
+                </v-avatar>
+              </v-list-item-avatar>
 
-            <v-list-item-content>
-              <v-list-item-title>{{ item.FullName }}</v-list-item-title>
+              <v-list-item-content>
+                <v-list-item-title>{{ item.FullName }}</v-list-item-title>
 
-              <v-list-item-subtitle>
-                {{ item.Email }}
-              </v-list-item-subtitle>
-            </v-list-item-content>
+                <v-list-item-subtitle>
+                  {{ item.Email }}
+                </v-list-item-subtitle>
+              </v-list-item-content>
 
-            <v-list-item-action>
-              <div class="min-w-checkin">
-                <ColumnCheckin
-                  :item="item"
-                  :context="context"
-                  :refresh="refresh"
-                  :is-custom-mobile="true"
-                />
-              </div>
-            </v-list-item-action>
-          </v-list-item>
-        </v-list>
+              <v-list-item-action>
+                <div class="min-w-checkin">
+                  <ColumnCheckin
+                    :item="item"
+                    :context="context"
+                    :refresh="refresh"
+                    :is-custom-mobile="true"
+                  />
+                </div>
+              </v-list-item-action>
+            </v-list-item>
+          </v-list>
+        </div>
       </div>
     </td>
   </tr>
