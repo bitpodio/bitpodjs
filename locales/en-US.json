@@ -1057,6 +1057,25 @@
       "VerifyingOrgNameAvail": "Checking availability"
     }
   },
+  "Tour":{
+    "Actions":{
+      "Previous":"Previous",
+      "Next":"Next",
+      "LearnMore":"Learn More"
+    },
+    "Steps":{
+      "Step-0-CreateEvent":"You can create single event and recurring event by clicking on the create button. Enter the proper details.",
+      "Step-1-Eventboard":"Eventboard displays the Event on sale, 10 days ticket sale, Total Registrations, Total Revenue, Recent Buyers, Ticket Sold, Email Conversions, etc",
+      "Step-2-Event":"There are 3 views on Event navigation Live and Draft Events, All events, Past Events.",
+      "Step-3-Registrations":"Registrations navigation has 2 views Registrations where you can see the all the pending and success registrations of all events and Abandoned Registrations displays failed registrations. From the registrations grid you can go to registration detail view where you can see the details of the registrant.",
+      "Step-4-Contacts":"Contacts navigation display the contact list for the organization from where you can run the campaign for any event and invite the contacts.",
+      "Step-5-DiscountCodes":"Discount code displays all the discount codes created for the event from where you can create, edit, delete the discount code and make it active or inactive.",
+      "Step-6-HelpCenter": "Here is the Help center from where you can learn more about the Bitpod Event App",
+      "Step-7-LanguageSwitcher":"Language Switcher helps to switch the language of you convinience. For now we support English, Hindi, Hebrew, French. If you want more support pls feel free to reach out us at support@bitpod.io",
+      "Step-8-AppDrawer": "App Drawer contains various apps like Events, Administration, Seat-map, Integrations, Survey, Help-center, Community",
+      "Step-9-ProfileDetails":"Profile Details contains users login details, plan, User can switch to another organization, Go to old site or Logout"
+    }
+  },
   "$vuetify": {
     "badge": "Badge",
     "close": "Close",

@@ -11,7 +11,7 @@
       :width="240"
       :right="$vuetify.rtl"
     >
-      <div id="v-step-0" class="px-4 pt-3 pb-1">
+      <div class="px-4 pt-3 pb-1">
         <i18n path="Common.AppTitle" class="app-title-text" />
       </div>
       <div class="d-block d-sm-none my-3">
@@ -123,33 +123,34 @@
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-action>
             <v-list-item-content>
-              <v-list-item-title class="nav-title">
-                <i18n
-                  v-if="item.text === 'Eventboard'"
-                  path="Drawer.Eventboard"
-                />
-                <i18n
-                  v-if="item.text === 'Events'"
-                  id="v-step-2"
-                  path="Drawer.Events"
-                />
-                <i18n
-                  v-if="item.text === 'Registrations'"
-                  id="v-step-3"
-                  path="Drawer.Registrations"
-                />
-                <i18n
-                  v-if="item.text === 'Discount Code'"
-                  id="v-step-5"
-                  path="Drawer.DiscountCode"
-                />
-                <i18n v-if="item.text === 'Members'" path="Drawer.Members" />
-                <i18n
-                  v-if="item.text === 'Contacts'"
-                  id="v-step-4"
-                  path="Drawer.Contacts"
-                />
+              <v-list-item-title
+                v-if="item.text === 'Eventboard'"
+                id="v-step-1"
+                class="nav-title"
+                ><i18n path="Drawer.Eventboard" />
               </v-list-item-title>
+              <v-list-item-title
+                v-if="item.text === 'Events'"
+                id="v-step-2"
+                class="nav-title"
+                ><i18n path="Drawer.Events" />
+              </v-list-item-title>
+              <v-list-item-title
+                v-if="item.text === 'Registrations'"
+                id="v-step-3"
+                ><i18n path="Drawer.Registrations"
+              /></v-list-item-title>
+              <v-list-item-title
+                v-if="item.text === 'Discount Code'"
+                id="v-step-5"
+                ><i18n path="Drawer.DiscountCode"
+              /></v-list-item-title>
+              <v-list-item-title v-if="item.text === 'Members'"
+                ><i18n path="Drawer.Members"
+              /></v-list-item-title>
+              <v-list-item-title v-if="item.text === 'Contacts'" id="v-step-4"
+                ><i18n path="Drawer.Contacts"
+              /></v-list-item-title>
             </v-list-item-content>
           </v-list-item>
         </template>
@@ -216,7 +217,7 @@
         <v-menu offset-y>
           <template v-slot:activator="{ on, attrs }">
             <v-btn
-              id="v-step-1"
+              id="v-step-0"
               v-bind="attrs"
               small
               color="primary"
@@ -263,9 +264,9 @@
           </v-list>
         </v-menu>
       </div>
-      <Help class="d-none d-sm-inline" />
-      <LanguageSwitcher />
-      <AppDrawer />
+      <Help id="v-step-6" class="d-none d-sm-inline" />
+      <LanguageSwitcher id="v-step-7" />
+      <AppDrawer id="v-step-8" />
       <v-menu
         v-if="$route.path === localePath('/apps/event/eventboard')"
         v-model="menu"
@@ -288,7 +289,7 @@
           </v-list-item>
         </v-list>
       </v-menu>
-      <div v-if="$auth.$state.loggedIn" class="ml-3">
+      <div v-if="$auth.$state.loggedIn" id="v-step-9" class="ml-3">
         <v-menu
           v-model="account"
           :close-on-content-click="false"
@@ -394,12 +395,73 @@
       />
     </div>
     <div>
-      <v-tour
-        :id="$i18n.locale"
-        name="myTour"
-        :steps="steps"
-        :options="myOptions"
-      ></v-tour>
+      <!-- <v-tour name="myTour" :steps="steps" :options="myOptions"></v-tour> -->
+      <v-tour name="myTour" :steps="steps" class="positionRelative">
+        <template slot-scope="tour">
+          <transition name="fade">
+            <v-step
+              v-if="tour.steps[tour.currentStep]"
+              :key="tour.currentStep"
+              :step="tour.steps[tour.currentStep]"
+              :previous-step="tour.previousStep"
+              :next-step="tour.nextStep"
+              :stop="tour.stop"
+              :skip="tour.skip"
+              :is-first="tour.isFirst"
+              :is-last="tour.isLast"
+              :labels="tour.labels"
+              class="primary pa-8 text-left tour-stepbox"
+            >
+              <template>
+                <div slot="actions">
+                  <div class="positionAbsolute" style="right: 0; top: 0;">
+                    <v-btn icon @click="onCloseTour(tour.currentStep)">
+                      <v-icon class="white--text">mdi-close</v-icon>
+                    </v-btn>
+                  </div>
+                  <div class="d-flex">
+                    <div class="d-flex" style="line-height: 36px;">
+                      <div>{{ tour.currentStep + 1 }}</div>
+                      /
+                      <div>{{ tour.steps.length }}</div>
+                    </div>
+                    <v-spacer></v-spacer>
+                    <div>
+                      <!-- <v-btn text @click="tour.previousStep">
+                        Normal
+                      </v-btn> -->
+                      <v-btn
+                        v-if="tour.currentStep !== 0"
+                        text
+                        class="grey--text text--lighten-5"
+                        @click="tour.previousStep"
+                      >
+                        <i18n path="Tour.Actions.Previous" />
+                      </v-btn>
+                      <v-btn
+                        v-if="tour.currentStep !== 9"
+                        text
+                        class="white--text"
+                        @click="tour.nextStep"
+                      >
+                        <i18n path="Tour.Actions.Next" />
+                      </v-btn>
+                      <v-btn
+                        v-if="tour.currentStep === 9"
+                        text
+                        class="white--text"
+                        @click="tour.skip"
+                      >
+                        <i18n path="Tour.Actions.LearnMore" />
+                      </v-btn>
+                    </div>
+                  </div>
+                </div>
+              </template>
+            </v-step>
+          </transition>
+        </template>
+      </v-tour>
     </div>
   </v-app>
 </template>
@@ -428,7 +490,7 @@ export default {
   },
   data() {
     return {
-      currentLocale: this.$i18n.locale,
+      currentUserStep: '',
       date: new Date().toISOString().substr(0, 10),
       menu: false,
       modal: false,
@@ -487,15 +549,6 @@ export default {
           allowedRoutes: ['/apps/event/discountcodes'],
         },
       ],
-      myOptions: {
-        useKeyboardNavigation: false,
-        labels: {
-          buttonSkip: 'Skip tour',
-          buttonPrevious: 'Previous',
-          buttonNext: 'Next',
-          buttonStop: 'Finish',
-        },
-      },
     }
   },
   computed: {
@@ -506,54 +559,86 @@ export default {
       return [
         {
           target: '#v-step-0',
-          content: this.$t('Common.AppTitle'),
+          content: this.$t('Tour.Steps.Step-0-CreateEvent'),
           params: {
-            placement: 'top', // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
+            placement: 'bottom',
           },
         },
         {
           target: '#v-step-1',
-          content: 'Step Two',
+          content: this.$t('Tour.Steps.Step-1-Eventboard'),
           params: {
-            placement: 'top', // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
+            placement: 'left',
           },
         },
         {
           target: '#v-step-2',
-          content: 'Step Three',
+          content: this.$t('Tour.Steps.Step-2-Event'),
           params: {
-            placement: 'top', // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
+            placement: 'left',
           },
         },
         {
           target: '#v-step-3',
-          content: 'Step Four',
+          content: this.$t('Tour.Steps.Step-3-Registrations'),
           params: {
-            placement: 'top', // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
+            placement: 'left',
           },
         },
         {
           target: '#v-step-4',
-          content: 'Step Five',
+          content: this.$t('Tour.Steps.Step-4-Contacts'),
           params: {
-            placement: 'top', // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
+            placement: 'left',
           },
         },
         {
           target: '#v-step-5',
-          content: 'Step Six',
+          content: this.$t('Tour.Steps.Step-5-DiscountCodes'),
           params: {
-            placement: 'top', // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
+            placement: 'left',
           },
         },
         {
           target: '#v-step-6',
-          content: 'Step Seven',
+          content: this.$t('Tour.Steps.Step-6-HelpCenter'),
           params: {
-            placement: 'top', // Any valid Popper.js placement. See https://popper.js.org/popper-documentation.html#Popper.placements
+            placement: 'top',
+          },
+        },
+        {
+          target: '#v-step-7',
+          content: this.$t('Tour.Steps.Step-7-LanguageSwitcher'),
+          params: {
+            placement: 'top',
+          },
+        },
+        {
+          target: '#v-step-8',
+          content: this.$t('Tour.Steps.Step-8-AppDrawer'),
+          params: {
+            placement: 'top',
+          },
+        },
+        {
+          target: '#v-step-9',
+          content: this.$t('Tour.Steps.Step-9-ProfileDetails'),
+          params: {
+            placement: 'top',
           },
         },
       ]
+    },
+    myOptions() {
+      return {
+        useKeyboardNavigation: false,
+        labels: {
+          buttonSkip: 'Skip tour',
+          buttonPrevious: 'Previous',
+          buttonNext: 'Next',
+          buttonStop: 'Finish',
+        },
+      }
     },
   },
   watch: {
@@ -584,14 +669,22 @@ export default {
     this.allowUser = userRoles.length === 1 && userRoles.includes('$orguser')
     this.allowUpgrade = userRoles.includes('$orgowner')
     window.addEventListener('message', this.messageReceived, false)
-    this.$tours.myTour.start()
+    // this.$tours.myTour.start()
   },
   beforeDestroy() {
     window.removeEventListener('message', this.messageReceived)
   },
   methods: {
+    onCloseTour(value) {
+      this.currentUserStep = value
+      this.$tours.myTour.stop()
+    },
     startTour() {
-      this.$tours.myTour.start()
+      if (this.currentUserStep) {
+        this.$tours.myTour.start(this.currentUserStep)
+      } else {
+        this.$tours.myTour.start()
+      }
     },
     onLogout(context) {
       if (this.$store.state.auth.loggedIn) {
@@ -652,7 +745,13 @@ export default {
 }
 </script>
 <style>
-.v-step__buttons {
-  color: blue;
+.tour-stepbox {
+  min-width: 300px !important;
+}
+.v-step__arrow::before {
+  margin-left: 0 !important;
+}
+.v-step {
+  max-width: 400px !important;
 }
 </style>

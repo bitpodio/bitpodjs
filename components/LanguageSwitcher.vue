@@ -1,28 +1,30 @@
 <template>
-  <v-menu offset-y transition="slide-y-transition" bottom>
-    <template v-slot:activator="{ on, attrs }">
-      <v-btn icon v-bind="attrs" v-on="on">
-        <v-icon>mdi-translate</v-icon>
-      </v-btn>
-    </template>
-    <v-list>
-      <v-list-item>
-        <v-list-item-title class="d-flex flex-wrap app-container">
-          {{ currentLocale.label }} ({{ currentLocale.iso }})
-        </v-list-item-title>
-      </v-list-item>
-      <v-list-item v-for="locale in availableLocales" :key="locale.code">
-        <v-list-item-title class="d-flex flex-wrap app-container">
-          <nuxt-link
-            class="text-decoration-none"
-            :to="switchLocalePath(locale.code)"
-          >
-            {{ locale.label }} ({{ locale.iso }})
-          </nuxt-link>
-        </v-list-item-title>
-      </v-list-item>
-    </v-list>
-  </v-menu>
+  <div>
+    <v-menu offset-y transition="slide-y-transition" bottom>
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn icon v-bind="attrs" v-on="on">
+          <v-icon>mdi-translate</v-icon>
+        </v-btn>
+      </template>
+      <v-list>
+        <v-list-item>
+          <v-list-item-title class="d-flex flex-wrap app-container">
+            {{ currentLocale.label }} ({{ currentLocale.iso }})
+          </v-list-item-title>
+        </v-list-item>
+        <v-list-item v-for="locale in availableLocales" :key="locale.code">
+          <v-list-item-title class="d-flex flex-wrap app-container">
+            <nuxt-link
+              class="text-decoration-none"
+              :to="switchLocalePath(locale.code)"
+            >
+              {{ locale.label }} ({{ locale.iso }})
+            </nuxt-link>
+          </v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu>
+  </div>
 </template>
 <script>
 export default {
