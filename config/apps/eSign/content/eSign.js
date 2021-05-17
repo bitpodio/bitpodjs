@@ -193,6 +193,13 @@ export default {
           sortEnable: true,
           type: 'string',
         },
+        SignedDate: {
+          displayOrder: 5,
+          caption: 'Common.SignedOn',
+          searchEnable: true,
+          sortEnable: true,
+          type: 'date',
+        },
       },
       template: {
         name: 'eRequestRecipients-grid',

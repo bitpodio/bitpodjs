@@ -85,7 +85,6 @@
                     data.requestData.SignedDocument.length > 0
                   "
                   left
-                  :offset-y="offset"
                   transition="slide-y-transition"
                 >
                   <template v-slot:activator="{ on, attrs }">
@@ -152,7 +151,7 @@
               <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
                 <h2 class="body-1 pb-0">
                   <i class="fa fa-black-board pr-1" aria-hidden="true"></i>
-                  Recipients
+                  <i18n path="Common.Recipients" />
                 </h2>
                 <v-spacer></v-spacer>
               </v-flex>

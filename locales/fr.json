@@ -850,7 +850,6 @@
     "Esign":"E-Sign",
     "NewEsignRequest": "Nouvelle demande de signature électronique",
     "SelectRecipients": "Dans la liste de contacts ci-dessous, sélectionnez les contacts qui doivent recevoir le document à signer.",
-    "CreateNewSignatureTemplate": "Nouveau modèle",
     "CreateNewSignatureTemplateDescription": "Un endroit où vous pouvez ajouter un nouveau modèle de document.",
     "ExistingSignatureTemplate": "Sélectionnez un modèle existant",
     "ExistingSignatureTemplateDescription": "Modèles prêts à l'emploi pour envoyer des documents rapidement.",
@@ -870,7 +869,8 @@
     "SearchContacts": "Rechercher des contacts",
     "Data": "Donnés",
     "FillTemplateData": "Passez en revue le contenu du document et les espaces réservés, utilisez le formulaire pour modifier les valeurs des espaces réservés.",
-    "NewTemplateInformation": "Pour démarrer le processus eSign, sélectionnez d'abord un modèle de document dans la liste ou créez-en un nouveau."
+    "NewTemplateInformation": "Pour démarrer le processus eSign, sélectionnez d'abord un modèle de document dans la liste ou créez-en un nouveau.",
+    "SignedOn": "Signé le"
   },
   "Drawer": {
     "UnSubscribeMsg": "Veuillez sélectionner une raison pour vous désinscrire de la newsletter. Cela nous aidera à améliorer nos services.",

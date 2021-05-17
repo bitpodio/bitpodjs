@@ -852,7 +852,6 @@
     "Esign":"סימן אלקטרוני",
     "NewEsignRequest": "בקשת סימן אלקטרוני חדשה",
     "SelectRecipients": "מרשימת אנשי הקשר למטה בחר באנשי הקשר שצריכים לקבל את המסמך שייחתם.",
-    "CreateNewSignatureTemplate": "תבנית חדשה",
     "CreateNewSignatureTemplateDescription": "מקום בו תוכלו להוסיף תבנית מסמך חדשה.",
     "ExistingSignatureTemplate": "בחר תבנית קיימת",
     "ExistingSignatureTemplateDescription": "תבניות מוכנות לשימוש לשליחת מסמכים במהירות.",
@@ -872,7 +871,8 @@
     "SearchContacts": "חפש אנשי קשר",
     "Data": "נתונים",
     "FillTemplateData": "בדוק את תוכן המסמך ואת מצייני המיקום, השתמש בטופס לעריכת ערכי מציין המיקום.",
-    "NewTemplateInformation": "כדי להתחיל בתהליך eSign, בחר תחילה תבנית מסמך מהרשימה או צור תבנית חדשה."
+    "NewTemplateInformation": "כדי להתחיל בתהליך eSign, בחר תחילה תבנית מסמך מהרשימה או צור תבנית חדשה.",
+    "SignedOn": "חתום בתאריך"
   },
   "Drawer": {
     "UnSubscribeMsg": "אנא בחר סיבה לביטול הרישום לניוזלטר. זה יעזור לנו לשפר את השירותים שלנו.",

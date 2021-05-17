@@ -34,6 +34,7 @@
         >
           <v-btn
             class="sendButtons"
+            depressed
             @click="
               emptyDataFieldDialog = false
               currentTab++
@@ -42,10 +43,116 @@
           /></v-btn>
           <v-btn
             color="primary"
+            depressed
             class="sendButtons"
             @click="emptyDataFieldDialog = false"
             ><i18n path="Common.No"
           /></v-btn>
+        </v-card-actions>
+      </v-sheet>
+    </v-dialog>
+    <v-dialog v-model="deleteTemplateDialog" persistent max-width="600px">
+      <v-sheet>
+        <v-card-title
+          class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
+        >
+          <h2 class="black--text pt-5 pb-4 font-weight-regular text-h5">
+            Confirmation Message
+          </h2>
+          <v-spacer></v-spacer>
+          <div>
+            <v-btn icon @click="deleteTemplateDialog = false">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </div>
+        </v-card-title>
+        <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
+          <v-row>
+            <v-col cols="12">
+              Are you sure you want to delete this template?
+            </v-col>
+          </v-row>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions
+          class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
+        >
+          <v-btn depressed class="sendButtons" @click="deleteTemplate">
+            <v-progress-circular
+              v-if="deleteTemplateLoading"
+              :size="24"
+              :width="2"
+              indeterminate
+            ></v-progress-circular>
+            <i18n v-else path="Common.Yes"
+          /></v-btn>
+          <v-btn
+            color="primary"
+            depressed
+            class="sendButtons ml-2"
+            @click="deleteTemplateDialog = false"
+            ><i18n path="Common.No"
+          /></v-btn>
+        </v-card-actions>
+      </v-sheet>
+    </v-dialog>
+    <v-dialog v-model="editTemplateDialog" persistent max-width="600px">
+      <v-sheet>
+        <v-card-title
+          class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
+        >
+          <h2 class="black--text pt-5 pb-4 font-weight-regular text-h5">
+            <i18n path="Common.EditTemplate" />
+          </h2>
+          <v-spacer></v-spacer>
+          <div>
+            <v-btn icon @click="editTemplateDialog = false">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </div>
+        </v-card-title>
+        <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
+          <v-row>
+            <v-col cols="12" class="pb-0">
+              <v-text-field
+                v-model="editTemplateFormName"
+                :label="$t('Common.Name')"
+                outlined
+                required
+                dense
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" class="pb-0">
+              <v-text-field
+                v-model="editTemplateFormURL"
+                label="Google Document URL*"
+                outlined
+                required
+                dense
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" class="pb-0">
+              <v-text-field
+                v-model="editTemplateFormCategory"
+                :label="$t('Common.Category')"
+                outlined
+                required
+                dense
+              ></v-text-field>
+            </v-col>
+          </v-row>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions
+          class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
+        >
+          <SaveBtn
+            color="primary"
+            class="sendButtons"
+            :reset="toggleLoading"
+            :label="this.$t('Drawer.Save')"
+            :action="editTemplate"
+          ></SaveBtn>
         </v-card-actions>
       </v-sheet>
     </v-dialog>
@@ -220,7 +327,7 @@
               'pt-0 invite-inner': true,
               'px-xs-2 px-md-10 px-lg-10 px-xl-15 ':
                 currentTab !== 1 || $vuetify.breakpoint.smAndDown,
-              'pl-xs-2 pl-md-10 pl-lg-10 pl-xl-15 pr-3 overflow-y-hidden':
+              'pl-xs-2 pl-md-10 pl-lg-10 pl-xl-15 pr-3 mt-5 mb-n5 ml-2 overflow-y-hidden':
                 currentTab === 1 && !$vuetify.breakpoint.smAndDown,
             }"
           >
@@ -240,11 +347,13 @@
                   ></v-progress-circular>
                 </v-card>
                 <v-card v-else flat class="tabContent">
-                  <div
-                    class="d-flex justify-space-between align-center mt-4 pt-4 mr-8"
-                  >
+                  <div class="d-flex align-center mt-4 pt-4 mr-8">
                     <i18n path="Common.NewTemplateInformation" />
-                    <v-btn @click="addNewTemplateFormDialog = true"
+                    <v-btn
+                      text
+                      color="primary"
+                      class="mx-4"
+                      @click="addNewTemplateFormDialog = true"
                       ><v-icon small>mdi-plus</v-icon
                       ><i18n path="Common.NewTemplate"
                     /></v-btn>
@@ -252,12 +361,12 @@
                   <v-flex
                     class="d-flex flex-wrap pl-0 justify-center justify-md-start mt-4 pt-4"
                   >
-                    <v-hover
+                    <!-- <v-hover
                       v-for="item in templateItems"
                       :key="item.id"
                       v-slot:default="{ hover }"
-                    >
-                      <v-card
+                    > -->
+                    <!-- <v-card
                         :elevation="1"
                         :class="[
                           hover ? 'grey lighten-5' : '',
@@ -283,8 +392,96 @@
                             <span>{{ item.Name }}</span>
                           </v-tooltip>
                         </v-card-text>
-                      </v-card>
-                    </v-hover>
+                      </v-card> -->
+                    <v-row class="ma-0">
+                      <v-col
+                        v-for="item in templateItems"
+                        :key="item.id"
+                        class="pa-4 pl-0 pt-0 eventtiles ma-sm-4 ml-sm-0 mt-sm-0 mx-auto my-2"
+                      >
+                        <v-card
+                          class="elevation-0 pa-0 greybg"
+                          @click="selectSignTemplate(item)"
+                        >
+                          <div class="positionRelative">
+                            <div class="overflow-h rounded-t">
+                              <v-flex
+                                class="tile-img tile-pattern rounded-0"
+                                :style="{
+                                  'background-image': getRandomImage(item.Name),
+                                }"
+                              ></v-flex>
+                            </div>
+                          </div>
+                          <v-flex class="tile-info pa-4 pb-0">
+                            <v-tooltip bottom>
+                              <template v-slot:activator="{ on, attrs }">
+                                <v-card-title
+                                  class="text-h5 grey--text text--darken-4 text-truncate d-block text-capitalize pa-2 pt-0 pb-1 pl-0"
+                                  v-bind="attrs"
+                                  v-on="on"
+                                >
+                                  {{ item.Name }}
+                                </v-card-title>
+                              </template>
+                              <span>{{ item.Name }}</span>
+                            </v-tooltip>
+                          </v-flex>
+                          <v-card-actions class="pt-0 pl-4 tiles-action">
+                            <v-spacer></v-spacer>
+                            <v-menu left bottom transition="slide-y-transition">
+                              <template v-slot:activator="{ on, attrs }">
+                                <v-btn icon small v-bind="attrs" v-on="on">
+                                  <v-icon>mdi-dots-vertical</v-icon>
+                                </v-btn>
+                              </template>
+
+                              <v-list dense>
+                                <v-list-item
+                                  @click="
+                                    editTemplateDialog = true
+                                    editTemplateId = item.id
+                                    editTemplateFormName = item.Name
+                                    editTemplateFormURL = item.DocumentUrl
+                                    editTemplateFormCategory = item.Category
+                                  "
+                                >
+                                  <v-list-item-icon class="mr-2">
+                                    <i
+                                      class="fa fa-pencil-square-o mt-1"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </v-list-item-icon>
+                                  <v-list-item-content>
+                                    <v-list-item-title
+                                      ><i18n path="Drawer.Edit"
+                                    /></v-list-item-title>
+                                  </v-list-item-content>
+                                </v-list-item>
+                                <v-list-item
+                                  @click="
+                                    deleteTemplateDialog = true
+                                    deleteTemplateId = item.id
+                                  "
+                                >
+                                  <v-list-item-icon class="mr-2">
+                                    <i
+                                      class="fa fa-trash mt-1"
+                                      aria-hidden="true"
+                                    ></i>
+                                  </v-list-item-icon>
+                                  <v-list-item-content>
+                                    <v-list-item-title
+                                      ><i18n path="Drawer.Delete"
+                                    /></v-list-item-title>
+                                  </v-list-item-content>
+                                </v-list-item>
+                              </v-list>
+                            </v-menu>
+                          </v-card-actions>
+                        </v-card>
+                      </v-col>
+                    </v-row>
                   </v-flex>
                 </v-card>
               </v-tab-item>
@@ -307,11 +504,14 @@
                     <v-col
                       v-if="currentTab === 1"
                       id="html-scroll-container"
-                      class="col-12 col-md-8"
+                      :class="{
+                        'col-12 col-md-8': true,
+                        'ml-n2': !$vuetify.breakpoint.smAndDown,
+                      }"
                       style="height: inherit; overflow-y: auto;"
                     >
                       <p class="mt-5 mb-4">
-                        <i18n path="Common.FillTemplateData" />
+                        <i18n class="body-2" path="Common.FillTemplateData" />
                       </p>
                       <div
                         class="html-preview-container"
@@ -319,7 +519,10 @@
                       ></div>
                     </v-col>
                     <v-col
-                      class="col-12 col-md-4 greybg mx-0 px-8 pt-8"
+                      :class="{
+                        'col-12 col-md-4 greybg mx-0 px-8 pt-8': true,
+                        'ml-2': !$vuetify.breakpoint.smAndDown,
+                      }"
                       :order="$vuetify.breakpoint.smAndDown ? 'first' : 'last'"
                       style="height: inherit; overflow-y: auto;"
                     >
@@ -752,6 +955,14 @@ export default {
       handlebarsDataObject: {},
       handlebarsDataIsSet: [],
       emptyDataFieldDialog: false,
+      editTemplateDialog: false,
+      editTemplateId: '',
+      editTemplateFormName: '',
+      editTemplateFormURL: '',
+      editTemplateFormCategory: '',
+      deleteTemplateDialog: false,
+      deleteTemplateId: '',
+      deleteTemplateLoading: false,
     }
   },
   computed: {
@@ -1124,6 +1335,17 @@ export default {
       }
       this.compileHandlebarsData()
     }, 200),
+    isElementInViewport(el) {
+      const rect = el.getBoundingClientRect()
+      return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <=
+          (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <=
+          (window.innerWidth || document.documentElement.clientWidth)
+      )
+    },
     handleDataFieldFocus(path) {
       this.dataFieldFocused = true
       const value = this.getHandlebarsObjectValue(path)
@@ -1135,7 +1357,7 @@ export default {
         try {
           let element = elementArray[0]
           let lastHeight = 0
-          if (element) {
+          if (!this.isElementInViewport(element)) {
             let scrollDistance = element.offsetTop
             if (!scrollDistance) {
               while (
@@ -1250,6 +1472,61 @@ export default {
         }
       }
     }, 500),
+    getRandomImage(name) {
+      return window.GeoPattern.generate(name).toDataUrl()
+    },
+    async editTemplate() {
+      const bitpodURL = `${this.$bitpod.getApiUrl()}ESIGNTEMPLATES/${
+        this.editTemplateId
+      }`
+      const updatedObject = {
+        Name: this.editTemplateFormName,
+        DocumentUrl: this.editTemplateFormURL,
+        Category: this.editTemplateFormCategory,
+      }
+      try {
+        const res = await this.$axios.$patch(bitpodURL, updatedObject)
+        if (res) {
+          const updatedTemplateItems = this.templateItems.map((item) => {
+            return item.id === this.editTemplateId
+              ? {
+                  ...item,
+                  ...updatedObject,
+                }
+              : item
+          })
+          this.templateItems = updatedTemplateItems
+        }
+      } catch (err) {
+        this.snackbar = true
+        this.snackbarText = 'Request Failed'
+        console.error(err)
+      } finally {
+        this.editTemplateDialog = false
+        this.toggleLoading = !this.toggleLoading
+      }
+    },
+    async deleteTemplate() {
+      const bitpodURL = `${this.$bitpod.getApiUrl()}ESIGNTEMPLATES/${
+        this.deleteTemplateId
+      }`
+      this.deleteTemplateLoading = true
+      try {
+        const res = await this.$axios.$delete(bitpodURL)
+        if (res) {
+          const updatedTemplateItems = this.templateItems.filter(
+            (item) => item.id !== this.deleteTemplateId
+          )
+          this.templateItems = updatedTemplateItems
+        }
+      } catch (err) {
+        console.log(err)
+      } finally {
+        this.toggleLoading = !this.toggleLoading
+        this.deleteTemplateDialog = false
+        this.deleteTemplateLoading = false
+      }
+    },
   },
 }
 </script>
@@ -1260,23 +1537,21 @@ export default {
   display: inline-block;
 }
 .html-preview-container >>> .filled-field {
-  color: blue;
+  color: rgb(0, 85, 4);
   padding: 2px;
   display: inline-block;
 }
 .html-preview-container >>> .focus-empty-field {
-  color: darkred;
-  font-weight: 900;
+  color: red;
   padding: 2px;
+  outline: solid 2px black;
   display: inline-block;
-  min-height: 1em;
 }
 .html-preview-container >>> .focus-filled-field {
-  color: darkblue;
-  font-weight: 900;
+  color: rgb(0, 85, 4);
   padding: 2px;
+  outline: solid 2px black;
   display: inline-block;
-  min-height: 1em;
 }
 #html-scroll-container {
   scroll-behavior: smooth;
@@ -1322,6 +1597,40 @@ export default {
 }
 .sendOptions {
   min-height: 40px !important;
+}
+.tile-pattern {
+  background-size: cover;
+  height: 140px;
+}
+.tile-img {
+  max-height: 140px;
+  min-height: 140px;
+  transition: transform 0.3s, opacity 0.3s ease-out;
+  -moz-transition: transform 0.3s, opacity 0.3s ease-out;
+  -webkit-transition: transform 0.3s, opacity 0.3s ease-out;
+  -o-transition: transform 0.3s, opacity 0.3s ease-out;
+}
+.tile-img:focus,
+.tile-img:hover {
+  transform: scale(1.1);
+  opacity: 1;
+  overflow: hidden;
+}
+.eventtiles {
+  max-width: 280px;
+  min-width: 280px;
+}
+.tile-info {
+  min-height: 92px;
+}
+.tiles-action {
+  min-height: 36px;
+}
+.overflow-h {
+  overflow: hidden;
+}
+.v-tooltip__content {
+  margin-left: -90px !important;
 }
 @media (min-width: 600px) {
   .flexInLargeScreen {

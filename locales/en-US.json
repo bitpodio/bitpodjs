@@ -853,7 +853,6 @@
     "Esign":"E-Sign",
     "NewEsignRequest": "New E-Sign Request",
     "SelectRecipients": "From the contact list below, select the contacts who should receive the document to be signed.",
-    "CreateNewSignatureTemplate": "New Template",
     "CreateNewSignatureTemplateDescription": "A place where you can add a new document template.",
     "ExistingSignatureTemplate": "Select Existing Template",
     "ExistingSignatureTemplateDescription": "Ready-to-use templates to send documents quickly.",
@@ -873,7 +872,8 @@
     "SearchContacts": "Search Contacts",
     "Data": "Data",
     "FillTemplateData": "Review document content and placeholders, use the form to edit placeholder values.",
-    "NewTemplateInformation": "To start eSign process, first select a document template from the list or create a new one."
+    "NewTemplateInformation": "To start eSign process, first select a document template from the list or create a new one.",
+    "SignedOn": "Signed On"
   },
   "Drawer": {
     "UnSubscribeMsg": "Please select a reason to unsubscribe from newsletter. This will help us to improve our services.",

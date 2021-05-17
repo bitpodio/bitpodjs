@@ -27,23 +27,16 @@ export default {
     async handleSubmitDocument(event) {
       if (event.data && event.data.type === 'signInfo') {
         const data = event.data
-        console.log(data)
+        console.log(data.handlebarsData)
         const bitpodURL = `${this.$bitpod.getApiUrl()}ESIGNRECIPIENTS/updateESignRecipientStatus`
-        const emailSubject = data.request.Subject.replace(
-          'Signature requested for ',
-          ''
-        )
         const patchData = {
           recipientID: data.recipient.id,
           ESignStoreId: data.recipient.ESignStoreId,
-          recipientList: data.request.Recipient.map((item) => item.id),
           recipientSignature: data.defaultSign,
           recipientInitials: data.defaultInitials,
           handlebarsData: data.handlebarsData,
           declineSign: data.declineSign,
           requestID: data.request.id,
-          emailSubject,
-          senderEmail: data.request.SenderEmail,
           hostUrl: this.$bitpod.getApiUrl(),
         }
         try {
@@ -54,12 +47,18 @@ export default {
             patchData
           )
           if (signRecipientResponse) {
+            this.sendResponseData(signRecipientResponse)
             console.log(signRecipientResponse)
           }
         } catch (err) {
           console.error(err)
         }
       }
+    },
+    sendResponseData(data) {
+      data.type = 'responseInfo'
+      const signatureApp = document.querySelector('#signature-app')
+      signatureApp.contentWindow.postMessage(data, '*')
     },
     async sendData() {
       console.log('Loaded')
