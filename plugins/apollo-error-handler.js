@@ -1,12 +1,8 @@
-// const get = (o, p) => p.reduce((xs, x) => (xs && xs[x] ? xs[x] : null), o)
 export default async (
   { graphQLErrors, networkError, operation, forward },
   nuxtContext
 ) => {
-  // const msg = getGQLAPIErrorMsg(graphQLErrors)
-  // console.log('message', msg)
-  if (networkError && networkError.length > 0 && networkError.includes('401')) {
-    debugger
+  if (networkError && JSON.stringify(networkError).includes('401')) {
     let token = ''
     if (nuxtContext.$auth.$storage.getCookies()['auth._token.bitpod']) {
       token = nuxtContext.$auth.$storage.getCookies()['auth._token.bitpod']
@@ -40,40 +36,3 @@ export default async (
     }
   }
 }
-
-// function onError(error) {
-//   debugger
-//   console.log('err', error)
-// }
-// function getGQLAPIErrorMsg(err) {
-//   debugger
-//   const networkError = get(err, ['networkError'])
-//   let statusCode =
-//     get(networkError, ['result', 'error', 'statusCode']) ||
-//     get(networkError, ['statusCode'])
-//   let msg =
-//     get(networkError, ['result', 'error', 'message']) ||
-//     get(networkError, ['message'])
-//   const graphQLErrors = get(err, ['graphQLErrors'])
-//   if (graphQLErrors && graphQLErrors.length > 0) {
-//     msg = get(graphQLErrors, ['0', 'message'])
-//     switch (msg) {
-//       case 'Access denied':
-//         statusCode = 401
-//         break
-//     }
-//   }
-//   return getAPIErrorMessage(statusCode, msg)
-// }
-
-// function getAPIErrorMessage(statusCode, msg) {
-//   debugger
-//   let userErrorMsg = ' '
-//   switch (statusCode) {
-//     case 401:
-//       if (msg === 'jwt expired')
-//         userErrorMsg = 'Session Expired. please refresh page.'
-//       break
-//   }
-//   return userErrorMsg
-// }
