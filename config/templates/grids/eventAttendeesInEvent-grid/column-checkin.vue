@@ -27,14 +27,11 @@
       class="text-center"
     >
       <div class="d-flex justify-center">
-        <v-icon x-large color="success"> fa-check-circle </v-icon>
-      </div>
-      <div>
         <timeAgo
           :date="item.CheckIn"
           :small-font-size="true"
           :is-success="true"
-        />
+        /><v-icon color="success" class="ml-2"> fa-check </v-icon>
       </div>
     </div>
     <div
