@@ -109,6 +109,16 @@
                       /></v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
+                  <v-list-item @click="eventCheckIn">
+                    <v-list-item-icon class="mr-2">
+                      <i class="fa fa-check mt-1" aria-hidden="true"></i>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                      <v-list-item-title
+                        ><i18n path="Common.CheckIn"
+                      /></v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
                 </v-list>
               </v-menu>
             </div>
@@ -1839,6 +1849,13 @@ export default {
     goBack() {
       this.$router.push(
         this.localePath(`/apps/event/list/Event/live-and-draft-event`)
+      )
+    },
+    eventCheckIn() {
+      this.$router.push(
+        this.localePath(
+          `/apps/event/event-attendees?eventId=${this.$route.params.id}`
+        )
       )
     },
     getEventEndDate() {
