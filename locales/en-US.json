@@ -365,6 +365,7 @@
     "ResendRegistrationEmail": "Resend Registration Email",
     "JoinSession": "Join Session",
     "StartSession": "Start Session",
+    "GotoStage": "Go to Stage",
     "NewSession": "New Session",
     "NewScheduleATask": "Schedule a Task",
     "EditScheduleATask": "Edit Scheduled Task",

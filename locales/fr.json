@@ -368,6 +368,7 @@
     "ResendRegistrationEmail": "renvoyer l'e-mail d'inscription",
     "JoinSession": "Session de jointure",
     "StartSession": "Démarrer la session",
+    "GotoStage": "Aller à la scène",
     "NewSession": "Nouvelle session",
     "NewScheduleATask": "Planifier une tâche",
     "EditScheduleATask": "Modifier la tâche planifiée",
