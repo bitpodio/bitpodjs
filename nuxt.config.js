@@ -6,6 +6,14 @@ export default {
    ** See https://nuxtjs.org/api/configuration-mode
    */
   mode: 'universal',
+  build: {
+    loaders:  {
+      vue: {
+         prettify: false
+      }
+    }
+
+  }
   router: {
     base: basePath || '/',
     middleware: ['helpRedirect'],
