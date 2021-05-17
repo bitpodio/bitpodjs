@@ -59,7 +59,6 @@ export default {
       )
     },
     listLayoutClass() {
-      debugger
       return `${this.$route.params.contentName}-${this.$route.params.viewName}`
     },
   },
