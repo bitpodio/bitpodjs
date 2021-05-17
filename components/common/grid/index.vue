@@ -1302,7 +1302,7 @@ export default {
         })
         const page = this.options.page || 1
         const itemsPerPage = this.options.itemsPerPage || 10
-        const skip = (page - 1) * (itemsPerPage || 10)
+        const skip = search ? 0 : (page - 1) * (itemsPerPage || 10)
         const limit = itemsPerPage === -1 ? 0 : itemsPerPage
         return {
           filters: { limit, skip, order, where },
