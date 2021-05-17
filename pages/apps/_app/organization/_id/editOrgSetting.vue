@@ -152,11 +152,20 @@ export default {
         this.$t('Common.EditOrganizationSetting')
       )
       const url = this.$bitpod.getApiUrl()
-      this.formData.Currency = this.currency
+      this.formData.Currency = this.currency || ''
+      console.log('Form Data', this.formData)
+      console.log('Currency', this.currency)
+      debugger
+      const obj = {
+        Currency: this.formData.Currency,
+        EventRegistrationURL: this.formData.EventRegistrationURL,
+        PrivacyPolicy: this.formData.PrivacyPolicy,
+        successTemplateCaption: this.formData.successTemplateCaption,
+      }
       try {
         const res = await this.$axios.$patch(
           `${url}OrganizationInfos/${this.$route.params.id}`,
-          this.formData
+          obj
         )
         if (res) {
           this.onClose()
