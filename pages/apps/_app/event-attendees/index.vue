@@ -1,13 +1,9 @@
 <template>
   <div>
     <div class="col-sm-6">
-      <Lookup
-        v-model="eventTitle"
-        :field="eventProps"
-        :on-change="changeEvent"
-      />
+      <Lookup v-model="eventTitle" :field="eventProps" />
     </div>
-    <div v-if="isGrid">
+    <div>
       <div v-if="content">
         <Grid
           view-name="eventAttendeesInEvent"
@@ -34,7 +30,7 @@ export default {
   mixins: [configLoaderMixin],
   data() {
     return {
-      eventTitle: '',
+      eventTitle: this.$route.query.eventId,
       eventId: '',
       isGrid: false,
       eventProps: {
@@ -63,9 +59,9 @@ export default {
     },
   },
   methods: {
-    changeEvent(value) {
-      this.isGrid = true
-    },
+    // changeEvent(value) {
+    //   this.isGrid = true
+    // },
   },
 }
 </script>
