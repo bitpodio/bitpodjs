@@ -953,4 +953,7 @@ table > tbody > tr:last-child .key-align {
   .parentWidth {
     max-width: 100% !important;
   }
+  #eventAttendeesInEvent .sticky.grid-actions-container {
+    margin-top: 0 !important;
+  }
 }
