@@ -16,7 +16,7 @@
       class="rounded"
       @click="goLive"
     >
-      <i18n path="Common.StartSession" />
+      <i18n path="Common.GotoStage" />
       <v-icon right> mdi-video </v-icon>
     </v-btn>
     <copy
