@@ -49,7 +49,7 @@
               </v-col>
               <v-col cols="12" sm="6" md="6" class="pb-0">
                 <v-select
-                  v-model="currency"
+                  v-model="formData.Currency"
                   :items="currencyDropdown"
                   :label="$t('Common.CurrencyReq')"
                   required
@@ -152,9 +152,8 @@ export default {
         this.$t('Common.EditOrganizationSetting')
       )
       const url = this.$bitpod.getApiUrl()
-      this.formData.Currency = this.currency || ''
+      // this.formData.Currency = this.currency || ''
       console.log('Form Data', this.formData)
-      console.log('Currency', this.currency)
       debugger
       const obj = {
         Currency: this.formData.Currency,
@@ -162,6 +161,7 @@ export default {
         PrivacyPolicy: this.formData.PrivacyPolicy,
         successTemplateCaption: this.formData.successTemplateCaption,
       }
+      console.log('Obj', obj)
       try {
         const res = await this.$axios.$patch(
           `${url}OrganizationInfos/${this.$route.params.id}`,
@@ -239,7 +239,7 @@ export default {
         this.formData._CurrentAddress.id = this.formData._CurrentAddress.id
           ? atob(this.formData._CurrentAddress.id).split(':')[1]
           : ''
-        this.currency = this.formData.Currency
+        // this.currency = this.currency.push(this.formData.Currency)
         this.venueAddress = { ...organization[0]._CurrentAddress }
         return {
           organization: organization.length > 0 ? organization[0] : {},
