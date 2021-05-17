@@ -111,7 +111,6 @@ export default {
         organization: {},
       },
       currencyDropdown: [],
-      currency: [],
     }
   },
   watch: {
@@ -139,7 +138,7 @@ export default {
       this.formData.PrivacyPolicy = ''
       this.formData.EventRegistrationURL = ''
       this.formData.successTemplateCaption = ''
-      this.currency = []
+      this.formData.Currency = ''
     },
     onClose() {
       this.$emit('update:editOrgSetting', false)
@@ -152,16 +151,12 @@ export default {
         this.$t('Common.EditOrganizationSetting')
       )
       const url = this.$bitpod.getApiUrl()
-      // this.formData.Currency = this.currency || ''
-      console.log('Form Data', this.formData)
-      debugger
       const obj = {
         Currency: this.formData.Currency,
         EventRegistrationURL: this.formData.EventRegistrationURL,
         PrivacyPolicy: this.formData.PrivacyPolicy,
         successTemplateCaption: this.formData.successTemplateCaption,
       }
-      console.log('Obj', obj)
       try {
         const res = await this.$axios.$patch(
           `${url}OrganizationInfos/${this.$route.params.id}`,
@@ -239,7 +234,6 @@ export default {
         this.formData._CurrentAddress.id = this.formData._CurrentAddress.id
           ? atob(this.formData._CurrentAddress.id).split(':')[1]
           : ''
-        // this.currency = this.currency.push(this.formData.Currency)
         this.venueAddress = { ...organization[0]._CurrentAddress }
         return {
           organization: organization.length > 0 ? organization[0] : {},
