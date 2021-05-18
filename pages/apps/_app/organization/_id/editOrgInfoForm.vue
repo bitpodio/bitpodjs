@@ -192,11 +192,25 @@ export default {
       )
       const url = this.$bitpod.getApiUrl()
       this.setAddress()
+      const Obj = {
+        Name: this.formData.Name || '',
+        About: this.formData.About || '',
+        Email: this.formData.Email || '',
+        Mobile: this.formData.Mobile || '',
+        _CurrentAddress: {
+          id: this.formData._CurrentAddress.id,
+          AddressLine: this.formData._CurrentAddress.AddressLine || '',
+          City: this.formData._CurrentAddress.City || '',
+          State: this.formData._CurrentAddress.State || '',
+          PostalCode: this.formData._CurrentAddress.PostalCode || '',
+          Country: this.formData._CurrentAddress.Country || '',
+        },
+      }
       delete this.formData._CurrentAddress.LatLng
       try {
         const res = await this.$axios.$patch(
           `${url}OrganizationInfos/${this.$route.params.id}`,
-          this.formData
+          Obj
         )
         if (res) {
           this.onClose()
