@@ -182,21 +182,12 @@ export default {
       this.onReset()
       postGaData('Close', this.$t('Common.EditOrganizationInformation'))
     },
-    // setAddress() {
-    //   this.formData._CurrentAddress.AddressLine = this.venueAddress.AddressLine
-    //   this.formData._CurrentAddress.City = this.venueAddress.City
-    //   this.formData._CurrentAddress.State = this.venueAddress.State
-    //   this.formData._CurrentAddress.PostalCode = this.venueAddress.PostalCode
-    //   this.formData._CurrentAddress.Country = this.venueAddress.Country
-    //   this.formData._CurrentAddress.id = this.venueAddress.id
-    // },
     async onSave() {
       postGaData(
         this.$t('Drawer.Save'),
         this.$t('Common.EditOrganizationInformation')
       )
       const url = this.$bitpod.getApiUrl()
-      // this.setAddress()
       const Obj = {
         Name: this.formData.Name || '',
         About: this.formData.About || '',
