@@ -252,16 +252,13 @@ export default {
               id: this.$route.params.id,
             },
           },
+          fetchPolicy: 'no-cache',
         }
       },
       update(data) {
         const organization = formatGQLResult(data, 'OrganizationInfo')
         this.formData = { ...organization[0] }
         this.formData.id = this.$route.params.id
-        this.formData._PaymentGatewaySetting.id = this.formData
-          ._PaymentGatewaySetting.id
-          ? atob(this.formData._PaymentGatewaySetting.id).split(':')[1]
-          : ''
         if (this.formData._CurrentAddress) {
           this.AddressLine = this.formData._CurrentAddress.AddressLine || ''
           this.City = this.formData._CurrentAddress.City || ''
