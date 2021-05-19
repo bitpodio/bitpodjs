@@ -1583,7 +1583,7 @@ export default {
         CheckIn: {
           displayOrder: 10,
           caption: 'Common.CheckIn',
-          searchEnable: true,
+          searchEnable: false,
           sortEnable: true,
           columnWidth: '250px',
           type: 'string',
@@ -1595,7 +1595,7 @@ export default {
         createdDate: {
           displayOrder: 11,
           caption: 'Common.CreatedDate',
-          searchEnable: true,
+          searchEnable: false,
           sortEnable: true,
           columnWidth: '150px',
           type: 'date',
