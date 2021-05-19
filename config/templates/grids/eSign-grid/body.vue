@@ -1,98 +1,77 @@
 <template>
   <div>
     <v-flex class="greybg">
+      <v-col class="d-flex greybg pt-10 flex-row seatmap-inner align-center">
+        <v-text class="text-h5"
+          ><i18n path="Common.SignOrGetSignatures"
+        /></v-text>
+        <v-spacer></v-spacer>
+        <v-btn
+          color="primary"
+          max-width="64px"
+          text
+          depressed
+          @click="handleNewTemplate"
+          ><v-icon>mdi-plus</v-icon><i18n path="Common.New"
+        /></v-btn>
+      </v-col>
       <v-col class="d-flex flex-wrap greybg pa-0 pt-10 seatmap-inner">
-        <v-hover v-slot:default="{ hover }" open-delay="200">
-          <v-card
-            :elevation="hover ? 1 : 0"
-            class="ma-3 ma-md-10 ml-0 mt-0 ml-md-0 mt-md-0 d-flex justify-center align-center"
-            height="125"
-            max-width="155"
-            width="155"
-            @click.native="handleNewTemplate"
-          >
-            <v-card-text class="font-weight-medium text-center subtitle-1 pt-2">
-              <i class="fa fa-plus fs-36 warning--text"></i>
-              <div><i18n path="Common.NewEsignRequest" class="body-1" /></div>
-            </v-card-text>
-          </v-card>
-        </v-hover>
-        <v-hover
+        <v-col
           v-for="item in items"
           :key="item.id"
-          v-slot:default="{ hover }"
-          open-delay="200"
+          class="pa-4 pl-0 pt-0 eventtiles ma-sm-4 ml-sm-0 mt-sm-0 mx-auto my-2"
         >
-          <v-card
-            :elevation="hover ? 1 : 0"
-            class="ma-3 ma-md-10 ml-0 mt-0 ml-md-0 mt-md-0 seat-maps"
-          >
-            <nuxt-link :to="eSignRoutes(item.id)" class="text-decoration-none">
-              <v-card-text
-                class="font-weight-medium text-center positionRelative subtitle-1 seat-card pb-0"
-              >
-                <i class="fa fa-document fs-36 warning--text"></i>
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on, attrs }">
-                    <span v-bind="attrs">
-                      <div
-                        class="body-1 grey--text text--darken-1 text-truncate"
-                        v-on="on"
-                      >
-                        {{ item.Subject }}
-                      </div>
-                    </span>
-                  </template>
-                  <span>{{ item.Name }}</span>
-                </v-tooltip>
-              </v-card-text>
-            </nuxt-link>
-            <v-card-actions class="pa-0 ma-0 pb-1">
-              <div></div>
-              <v-spacer></v-spacer>
-              <div class="box-actions pa-1 pb-0">
-                <v-menu
-                  left
-                  bottom
-                  :offset-y="offset"
-                  transition="slide-y-transition"
-                >
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-btn icon small v-bind="attrs" v-on="on">
-                      <v-icon>mdi-dots-vertical</v-icon>
-                    </v-btn>
-                  </template>
-
-                  <v-list dense>
-                    <v-list-item>
-                      <v-list-item-icon class="mr-2">
-                        <i class="fa fa-eye mt-1" aria-hidden="true"></i>
-                      </v-list-item-icon>
-                      <v-list-item-content>
-                        <v-list-item-title
-                          ><i18n path="Common.MoreInfo"
-                        /></v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                    <v-list-item>
-                      <v-list-item-icon class="mr-2">
-                        <i
-                          class="fa fa-pencil-square-o mt-1"
-                          aria-hidden="true"
-                        ></i>
-                      </v-list-item-icon>
-                      <v-list-item-content>
-                        <v-list-item-title
-                          ><i18n path="Drawer.Edit"
-                        /></v-list-item-title>
-                      </v-list-item-content>
-                    </v-list-item>
-                  </v-list>
-                </v-menu>
+          <nuxt-link :to="eSignRoutes(item.id)" class="text-decoration-none">
+            <v-card class="elevation-0 pa-0">
+              <div class="positionRelative">
+                <div class="overflow-h rounded-t">
+                  <v-flex
+                    class="tile-img tile-pattern rounded-0"
+                    :style="{
+                      'background-image': getRandomImage(item.Subject),
+                    }"
+                  ></v-flex>
+                </div>
               </div>
-            </v-card-actions>
-          </v-card>
-        </v-hover>
+              <v-flex class="tile-info pa-4 pb-0">
+                <div class="text--secondary pa-2 pb-0 body-2 pl-0 pt-0">
+                  {{ $d(new Date(item.createdDate), 'long', $i18n.locale) }}
+                </div>
+                <v-card-title
+                  class="text-h5 grey--text text--darken-4 text-truncate d-block text-capitalize pa-2 pt-0 pb-1 pl-0"
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                  {{ item.Subject }}
+                </v-card-title>
+                <v-chip
+                  :class="{
+                    'mb-2 mt-n2': true,
+                    warning: item.Status === 'Inprogress',
+                    success: item.Status === 'Completed',
+                    error: item.Status === 'Declined',
+                  }"
+                  small
+                >
+                  {{ item.Status }}</v-chip
+                >
+              </v-flex>
+              <v-card-actions class="pt-0 pl-4 tiles-action">
+                <div class="text-truncate d-block">
+                  <v-chip>
+                    <v-avatar left color="warning" size="24">
+                      <span class="white--text name-initial">{{
+                        item.createdBy
+                      }}</span>
+                    </v-avatar>
+                    <span>{{ item.createdBy }}</span>
+                  </v-chip>
+                </div>
+                <v-spacer></v-spacer>
+              </v-card-actions>
+            </v-card>
+          </nuxt-link>
+        </v-col>
       </v-col>
     </v-flex>
     <div v-if="dialog">
@@ -174,6 +153,9 @@ export default {
     eSignRoutes(id) {
       return this.localePath(`/apps/eSign/eSign/${id}`)
     },
+    getRandomImage(name) {
+      return window.GeoPattern.generate(name).toDataUrl()
+    },
   },
 }
 </script>
@@ -198,6 +180,37 @@ export default {
 .seatmap-inner {
   max-width: 65%;
   margin: auto;
+}
+.tile-pattern {
+  background-size: cover;
+  height: 140px;
+}
+.tile-img {
+  max-height: 140px;
+  min-height: 140px;
+  transition: transform 0.3s, opacity 0.3s ease-out;
+  -moz-transition: transform 0.3s, opacity 0.3s ease-out;
+  -webkit-transition: transform 0.3s, opacity 0.3s ease-out;
+  -o-transition: transform 0.3s, opacity 0.3s ease-out;
+}
+.tile-img:focus,
+.tile-img:hover {
+  transform: scale(1.1);
+  opacity: 1;
+  overflow: hidden;
+}
+.eventtiles {
+  max-width: 280px;
+  min-width: 280px;
+}
+.tile-info {
+  min-height: 92px;
+}
+.tiles-action {
+  min-height: 36px;
+}
+.overflow-h {
+  overflow: hidden;
 }
 @media (max-width: 600px) {
   .seatmap-inner {

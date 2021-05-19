@@ -11,7 +11,7 @@
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
           <h2 class="black--text pt-5 pb-4 font-weight-regular text-h5">
-            Confirmation Message
+            <i18n path="Common.DataFieldEmpty" />
           </h2>
           <v-spacer></v-spacer>
           <div>
@@ -23,8 +23,7 @@
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-row>
             <v-col cols="12">
-              You have not filled one or more data fields. Are you sure you want
-              to continue?
+              <i18n path="Common.DataFieldEmptyMessage" />
             </v-col>
           </v-row>
         </v-card-text>
@@ -57,7 +56,7 @@
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
           <h2 class="black--text pt-5 pb-4 font-weight-regular text-h5">
-            Confirmation Message
+            <i18n path="Common.DeleteTemplate" />
           </h2>
           <v-spacer></v-spacer>
           <div>
@@ -69,7 +68,7 @@
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
           <v-row>
             <v-col cols="12">
-              Are you sure you want to delete this template?
+              <i18n path="Messages.Warn.DeleteTemplate" />
             </v-col>
           </v-row>
         </v-card-text>
@@ -162,7 +161,7 @@
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
           <h2 class="black--text pt-5 pb-4 font-weight-regular text-h5">
-            <i18n path="Common.CreateNewSignatureTemplate" />
+            <i18n path="Common.NewTemplate" />
           </h2>
           <v-spacer></v-spacer>
           <div>
@@ -222,7 +221,7 @@
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
           <h2 class="black--text pt-5 pb-4 font-weight-regular text-h5">
-            New Contact
+            <i18n path="Common.NewContact" />
           </h2>
           <v-spacer></v-spacer>
           <div>
@@ -321,13 +320,42 @@
                 <i18n path="Common.Verify" />
               </v-tab>
             </v-tabs>
+            <div class="body-1 px-2 py-4">
+              <div
+                v-if="!templateLoading && currentTab === 0"
+                class="d-flex align-center"
+              >
+                <i18n
+                  class="body-2 mr-2"
+                  path="Common.NewTemplateInformation"
+                />
+                <v-btn
+                  text
+                  small
+                  color="primary"
+                  class="py-0"
+                  @click="addNewTemplateFormDialog = true"
+                  ><v-icon small>mdi-plus</v-icon
+                  ><i18n path="Common.NewTemplate"
+                /></v-btn>
+              </div>
+              <div v-else-if="currentTab === 1">
+                <i18n class="body-2" path="Common.FillTemplateData" />
+              </div>
+              <div v-else-if="currentTab === 2">
+                <i18n class="body-2" path="Common.SelectRecipients" />
+              </div>
+              <div v-else-if="currentTab === 3">
+                <i18n class="body-2" path="Common.SignatureBasicInformation" />
+              </div>
+            </div>
           </v-card-title>
           <v-card-text
             :class="{
               'pt-0 invite-inner': true,
               'px-xs-2 px-md-10 px-lg-10 px-xl-15 ':
                 currentTab !== 1 || $vuetify.breakpoint.smAndDown,
-              'pl-xs-2 pl-md-10 pl-lg-10 pl-xl-15 pr-3 mt-5 mb-n5 ml-2 overflow-y-hidden':
+              'pl-xs-2 pl-md-10 pl-lg-10 pl-xl-15 pr-3 mt-5 mb-n5 overflow-y-hidden':
                 currentTab === 1 && !$vuetify.breakpoint.smAndDown,
             }"
           >
@@ -347,52 +375,9 @@
                   ></v-progress-circular>
                 </v-card>
                 <v-card v-else flat class="tabContent">
-                  <div class="d-flex align-center mt-4 pt-4 mr-8">
-                    <i18n path="Common.NewTemplateInformation" />
-                    <v-btn
-                      text
-                      color="primary"
-                      class="mx-4"
-                      @click="addNewTemplateFormDialog = true"
-                      ><v-icon small>mdi-plus</v-icon
-                      ><i18n path="Common.NewTemplate"
-                    /></v-btn>
-                  </div>
                   <v-flex
                     class="d-flex flex-wrap pl-0 justify-center justify-md-start mt-4 pt-4"
                   >
-                    <!-- <v-hover
-                      v-for="item in templateItems"
-                      :key="item.id"
-                      v-slot:default="{ hover }"
-                    > -->
-                    <!-- <v-card
-                        :elevation="1"
-                        :class="[
-                          hover ? 'grey lighten-5' : '',
-                          'ma-3 ma-md-10 ml-0 mt-0 ml-md-0 mt-md-0 seat-maps',
-                        ]"
-                        @click="selectSignTemplate(item)"
-                      >
-                        <v-card-text
-                          class="font-weight-medium text-center positionRelative subtitle-1 seat-card pb-0"
-                        >
-                          <i class="fa fa-document fs-36 warning--text"></i>
-                          <v-tooltip bottom>
-                            <template v-slot:activator="{ on, attrs }">
-                              <span v-bind="attrs">
-                                <div
-                                  class="body-1 grey--text text--darken-1 text-truncate"
-                                  v-on="on"
-                                >
-                                  {{ item.Name }}
-                                </div>
-                              </span>
-                            </template>
-                            <span>{{ item.Name }}</span>
-                          </v-tooltip>
-                        </v-card-text>
-                      </v-card> -->
                     <v-row class="ma-0">
                       <v-col
                         v-for="item in templateItems"
@@ -414,6 +399,17 @@
                             </div>
                           </div>
                           <v-flex class="tile-info pa-4 pb-0">
+                            <div
+                              class="text--secondary pa-2 pb-0 body-2 pl-0 pt-0"
+                            >
+                              {{
+                                $d(
+                                  new Date(item.createdDate),
+                                  'long',
+                                  $i18n.locale
+                                )
+                              }}
+                            </div>
                             <v-tooltip bottom>
                               <template v-slot:activator="{ on, attrs }">
                                 <v-card-title
@@ -428,8 +424,23 @@
                             </v-tooltip>
                           </v-flex>
                           <v-card-actions class="pt-0 pl-4 tiles-action">
+                            <div class="text-truncate d-block">
+                              <v-chip>
+                                <v-avatar left color="warning" size="24">
+                                  <span class="white--text name-initial">{{
+                                    item.createdBy
+                                  }}</span>
+                                </v-avatar>
+                                <span>{{ item.createdBy }}</span>
+                              </v-chip>
+                            </div>
                             <v-spacer></v-spacer>
-                            <v-menu left bottom transition="slide-y-transition">
+                            <v-menu
+                              offset-y
+                              left
+                              bottom
+                              transition="slide-y-transition"
+                            >
                               <template v-slot:activator="{ on, attrs }">
                                 <v-btn icon small v-bind="attrs" v-on="on">
                                   <v-icon>mdi-dots-vertical</v-icon>
@@ -505,14 +516,11 @@
                       v-if="currentTab === 1"
                       id="html-scroll-container"
                       :class="{
-                        'col-12 col-md-8': true,
+                        'col-12 col-md-8 overflow-hover': true,
                         'ml-n2': !$vuetify.breakpoint.smAndDown,
                       }"
-                      style="height: inherit; overflow-y: auto;"
+                      style="height: inherit;"
                     >
-                      <p class="mt-5 mb-4">
-                        <i18n class="body-2" path="Common.FillTemplateData" />
-                      </p>
                       <div
                         class="html-preview-container"
                         v-html="resolvedDocumentText"
@@ -520,11 +528,11 @@
                     </v-col>
                     <v-col
                       :class="{
-                        'col-12 col-md-4 greybg mx-0 px-8 pt-8': true,
+                        'col-12 col-md-4 greybg mx-0 px-8 pt-8 overflow-hover': true,
                         'ml-2': !$vuetify.breakpoint.smAndDown,
                       }"
                       :order="$vuetify.breakpoint.smAndDown ? 'first' : 'last'"
-                      style="height: inherit; overflow-y: auto;"
+                      style="height: inherit;"
                     >
                       <v-text-field
                         v-for="item in dataFields"
@@ -543,11 +551,6 @@
                 </v-card>
               </v-tab-item>
               <v-tab-item class="tabContent">
-                <v-card flat>
-                  <p class="mt-5 mb-4">
-                    <i18n path="Common.SelectRecipients" />
-                  </p>
-                </v-card>
                 <v-row>
                   <v-col class="contactsGrid col-12">
                     <v-simple-table>
@@ -555,10 +558,10 @@
                         <thead>
                           <tr>
                             <th class="text-left pl-4">
-                              Recipient Type*
+                              <i18n path="Common.RecipientType" />
                             </th>
                             <th class="text-left pl-4 mxw-150">
-                              Contact*
+                              <i18n path="Common.Contact" />
                             </th>
                             <th class="text-left"></th>
                           </tr>
@@ -585,15 +588,6 @@
                               {{ item.type }}
                             </td>
                             <td width="60%" class="pa-2 pb-0 pl-4">
-                              <!-- <v-autocomplete
-                                :items="contactList"
-                                :item-text="
-                                  (item) => `${item.FullName} (${item.Email})`
-                                "
-                                :search-input.sync="contactListSearch"
-                                outlined
-                              >
-                              </v-autocomplete> -->
                               <v-autocomplete
                                 v-model="selectedListNewContacts[index]"
                                 :items="disabledContactList(index)"
@@ -651,7 +645,7 @@
                                     <v-icon color="primary">fa-plus</v-icon>
                                   </v-btn>
                                 </template>
-                                <span>New Contact</span>
+                                <span><i18n path="Common.NewContact" /></span>
                               </v-tooltip>
                             </td>
                           </tr>
@@ -663,16 +657,23 @@
               </v-tab-item>
               <v-tab-item>
                 <v-card flat class="tabContent">
-                  <p class="mt-4 mb-2">
-                    <i18n path="Common.SignatureBasicInformation" />
-                  </p>
                   <div class="pr-3 pt-1">
                     <v-form ref="form">
                       <v-row>
                         <v-col cols="12" class="pb-0">
                           <v-text-field
                             v-model="subject"
+                            :label="$t('Common.Title')"
+                            required
+                            outlined
+                            dense
+                          ></v-text-field>
+                        </v-col>
+                        <v-col cols="12" class="pb-0">
+                          <v-text-field
+                            :value="'Signature requested - ' + subject"
                             :label="$t('Common.SubjectRequired')"
+                            disabled
                             required
                             outlined
                             dense
@@ -703,23 +704,15 @@
                           ></v-text-field>
                         </v-col>
                         <v-col cols="12" class="pb-0">
-                          <v-textarea
-                            v-model="message"
-                            :label="$t('Common.Message')"
+                          <v-text-field
+                            v-model="subject"
+                            :label="$t('Common.Title')"
+                            prefix="Signature requested - "
+                            required
                             outlined
                             dense
-                          ></v-textarea>
-                        </v-col>
-                        <v-col cols="12" class="pb-0">
-                          <v-icon class="amber--text">fa-bulb</v-icon>
-                          <v-card-text class="d-inline pa-0">
-                            {{
-                              $t('Common.YouMayReferRecipients', {
-                                contactTemplateData:
-                                  ' ${Recipient.FullName} ${OrganizationInfo.Name}',
-                              })
-                            }}</v-card-text
                           >
+                          </v-text-field>
                         </v-col>
                       </v-row>
                     </v-form>
@@ -809,10 +802,8 @@
                     <div class="blue--text pt-1 pb-4 body-1">
                       {{ senderName }}
                     </div>
-                    <div><i18n path="Common.Subject" /></div>
+                    <div><i18n path="Common.TitleCaption" /></div>
                     <div class="blue--text pt-1 body-1">{{ subject }}</div>
-                    <div><i18n path="Common.Message" /></div>
-                    <div class="blue--text pt-1 body-1">{{ message }}</div>
                   </v-col>
                   <v-col cols="6" class="pl-0">
                     <div><i18n path="Common.SenderAddress" /></div>
@@ -916,7 +907,6 @@ export default {
       senderName: (this.$auth && this.$auth.user.data.name) || '',
       sender: (this.$auth && this.$auth.user.data.email) || '',
       setReplyTo: (this.$auth && this.$auth.user.data.email) || '',
-      message: '',
       snackbar: false,
       snackbarText: '',
       templateItems: [],
@@ -1081,7 +1071,6 @@ export default {
           senderName: this.senderName,
           senderEmail: this.sender,
           setReplyTo: this.setReplyTo,
-          Message: this.message,
           TemplateData: JSON.stringify(this.formatHandlebarsData()),
         }
         console.log(this.postEsignRequestData, bitpodURL)
@@ -1136,7 +1125,7 @@ export default {
         }
         this.templateSelected = true
         this.toggleLoading = !this.toggleLoading
-        this.subject = `Signature requested for ${this.addNewTemplateFormName}`
+        this.subject = this.addNewTemplateFormName
         this.addNewTemplateFormDialog = false
       }
     },
@@ -1230,7 +1219,7 @@ export default {
         documentId: item.id,
         documentUrl: item.DocumentUrl,
       }
-      this.subject = `Signature requested for ${item.Name}`
+      this.subject = item.Name
     },
     prepareRecipientList(partyList) {
       this.parties = [...new Set(partyList)]
@@ -1534,23 +1523,27 @@ export default {
 .html-preview-container >>> .empty-field {
   color: red;
   padding: 2px;
+  font-weight: bold;
   display: inline-block;
 }
 .html-preview-container >>> .filled-field {
   color: rgb(0, 85, 4);
   padding: 2px;
+  font-weight: bold;
   display: inline-block;
 }
 .html-preview-container >>> .focus-empty-field {
   color: red;
   padding: 2px;
   outline: solid 2px black;
+  font-weight: bold;
   display: inline-block;
 }
 .html-preview-container >>> .focus-filled-field {
   color: rgb(0, 85, 4);
   padding: 2px;
   outline: solid 2px black;
+  font-weight: bold;
   display: inline-block;
 }
 #html-scroll-container {
@@ -1628,6 +1621,14 @@ export default {
 }
 .overflow-h {
   overflow: hidden;
+}
+.overflow-hover {
+  overflow: hidden;
+  padding-right: 32px !important;
+}
+.overflow-hover:hover {
+  overflow: auto;
+  padding-right: 26px !important;
 }
 .v-tooltip__content {
   margin-left: -90px !important;

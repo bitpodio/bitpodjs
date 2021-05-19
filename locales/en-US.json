@@ -850,7 +850,7 @@
     "SelectingJPYCurrency": "Decimal rounding off doesn't apply to {currency}",
     "Reconnect": "Re-Connect",
     "Expired": "Expired",
-    "Esign":"E-Sign",
+    "Esign": "ESign",
     "NewEsignRequest": "New E-Sign Request",
     "SelectRecipients": "From the contact list below, select the contacts who should receive the document to be signed.",
     "CreateNewSignatureTemplateDescription": "A place where you can add a new document template.",
@@ -873,7 +873,15 @@
     "Data": "Data",
     "FillTemplateData": "Review document content and placeholders, use the form to edit placeholder values.",
     "NewTemplateInformation": "To start eSign process, first select a document template from the list or create a new one.",
-    "SignedOn": "Signed On"
+    "SignedOn": "Signed On",
+    "RecipientType": "Recipient Type",
+    "DataFieldEmpty": "Data Field Empty",
+    "DataFieldEmptyMessage": "You have not filled one or more data fields. Are you sure you want to continue?",
+    "EsignRequest": "ESign Request",
+    "RequestInformation": "Request Information",
+    "SignedDoc": "Signed Doc",
+    "CopyDownloadLink": "Copy Download Link",
+    "SignOrGetSignatures": "Sign or get signatures"
   },
   "Drawer": {
     "UnSubscribeMsg": "Please select a reason to unsubscribe from newsletter. This will help us to improve our services.",

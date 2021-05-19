@@ -847,7 +847,7 @@
     "SelectingJPYCurrency": "L'arrondi décimal ne s'applique pas aux {currency}",
     "Reconnect": "Reconnecter",
     "Expired": "Expiré",
-    "Esign":"E-Sign",
+    "Esign":"ESign",
     "NewEsignRequest": "Nouvelle demande de signature électronique",
     "SelectRecipients": "Dans la liste de contacts ci-dessous, sélectionnez les contacts qui doivent recevoir le document à signer.",
     "CreateNewSignatureTemplateDescription": "Un endroit où vous pouvez ajouter un nouveau modèle de document.",
@@ -870,7 +870,15 @@
     "Data": "Donnés",
     "FillTemplateData": "Passez en revue le contenu du document et les espaces réservés, utilisez le formulaire pour modifier les valeurs des espaces réservés.",
     "NewTemplateInformation": "Pour démarrer le processus eSign, sélectionnez d'abord un modèle de document dans la liste ou créez-en un nouveau.",
-    "SignedOn": "Signé le"
+    "SignedOn": "Signé le",
+    "RecipientType": "Type de destinataire",
+    "DataFieldEmpty": "Champ de données vide",
+    "DataFieldEmptyMessage": "Vous n'avez pas rempli un ou plusieurs champs de données. Es-tu sur de vouloir continuer?",
+    "EsignRequest": "Demande de signature électronique",
+    "RequestInformation": "Informations requises",
+    "SignedDoc": "Doc signé",
+    "CopyDownloadLink": "Copier le lien de téléchargement",
+    "SignOrGetSignatures": "Signez ou obtenez des signatures"
   },
   "Drawer": {
     "UnSubscribeMsg": "Veuillez sélectionner une raison pour vous désinscrire de la newsletter. Cela nous aidera à améliorer nos services.",

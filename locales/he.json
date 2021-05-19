@@ -849,7 +849,7 @@
     "SelectingJPYCurrency": "עיגול עשרוני אינו חל על {currency}",
     "Reconnect": "התחבר מחדש",
     "Expired": "לא בתוקף",
-    "Esign":"סימן אלקטרוני",
+    "Esign":"סימןאלקטרוני",
     "NewEsignRequest": "בקשת סימן אלקטרוני חדשה",
     "SelectRecipients": "מרשימת אנשי הקשר למטה בחר באנשי הקשר שצריכים לקבל את המסמך שייחתם.",
     "CreateNewSignatureTemplateDescription": "מקום בו תוכלו להוסיף תבנית מסמך חדשה.",
@@ -872,7 +872,15 @@
     "Data": "נתונים",
     "FillTemplateData": "בדוק את תוכן המסמך ואת מצייני המיקום, השתמש בטופס לעריכת ערכי מציין המיקום.",
     "NewTemplateInformation": "כדי להתחיל בתהליך eSign, בחר תחילה תבנית מסמך מהרשימה או צור תבנית חדשה.",
-    "SignedOn": "חתום בתאריך"
+    "SignedOn": "חתום בתאריך",
+    "RecipientType": "סוג הנמען",
+    "DataFieldEmpty": "שדה הנתונים ריק",
+    "DataFieldEmptyMessage": "לא מילאת שדה נתונים אחד או יותר. האם אתה בטוח שברצונך להמשיך?",
+    "EsignRequest": "בקשת סימן אלקטרוני",
+    "RequestInformation": "בקשת מידע",
+    "SignedDoc": "דוק חתום",
+    "CopyDownloadLink": "העתק קישור להורדה",
+    "SignOrGetSignatures": "חתום או קבל חתימות"
   },
   "Drawer": {
     "UnSubscribeMsg": "אנא בחר סיבה לביטול הרישום לניוזלטר. זה יעזור לנו לשפר את השירותים שלנו.",

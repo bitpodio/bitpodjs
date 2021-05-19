@@ -3,8 +3,8 @@
     <v-flex class="detailview-head mb-3 pl-8 my-8"
       ><v-btn class="ml-n3 back-icon" icon @click="goBack"
         ><v-icon class="fs-30">mdi-chevron-left</v-icon> </v-btn
-      ><v-text class="fs-18 min-h36">ESign Request</v-text></v-flex
-    >
+      ><v-text class="fs-18 min-h36"><i18n path="Common.EsignRequest" /></v-text
+    ></v-flex>
     <v-flex d-flex flex-md-row flex-lg-row flex-column>
       <v-flex column class="mxw-w70 pl-8">
         <div
@@ -66,7 +66,7 @@
                       )
                     "
                   >
-                    Signed Doc
+                    <i18n path="Common.SignedDoc" />
                     <v-icon right class="fs-22"> mdi-download </v-icon>
                   </v-btn>
                 </div>
@@ -75,7 +75,7 @@
                     depressed
                     color="primary"
                     @click="openLink(data.requestData.DocumentTemplate)"
-                    >Template
+                    ><i18n path="Common.Template" />
                     <v-icon right class="fs-22"> fa-document </v-icon>
                   </v-btn>
                 </div>
@@ -107,8 +107,8 @@
                       </v-list-item-icon>
                       <v-list-item-content>
                         <v-list-item-title
-                          >Copy Download Link</v-list-item-title
-                        >
+                          ><i18n path="Common.CopyDownloadLink"
+                        /></v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
                   </v-list>
@@ -206,38 +206,40 @@
               <template v-slot:activator="{ on, attrs }">
                 <h2 class="body-1 pb-0" v-bind="attrs" v-on="on">
                   <i class="fa fa-tag pr-1" aria-hidden="true"></i>
-                  Request Information
+                  <i18n path="Common.RequestInformation" />
                 </h2>
               </template>
-              <span>Request Information</span>
+              <span><i18n path="Common.RequestInformation" /></span>
             </v-tooltip>
             <v-spacer></v-spacer>
           </v-flex>
           <v-divider></v-divider>
           <v-flex my-3>
-            <span class="body-2 text--secondary">Subject</span>
+            <span class="body-2 text--secondary"
+              ><i18n path="Common.Subject"
+            /></span>
 
             <div class="body-1">
               {{ data.requestData.Subject }}
             </div>
           </v-flex>
           <v-flex my-3>
-            <span class="body-2 text--secondary">Sender Name</span>
+            <span class="body-2 text--secondary"
+              ><i18n path="Common.SenderName"
+            /></span>
 
             <div class="body-1 text--primary">
               {{ data.requestData.SenderName }}
             </div>
           </v-flex>
           <v-flex my-3>
-            <span class="body-2 text--secondary">Reply to</span>
+            <span class="body-2 text--secondary"
+              ><i18n path="Common.ReplyAddress"
+            /></span>
 
             <div class="body-1">
               {{ data.requestData.ReplyTo }}
             </div>
-          </v-flex>
-          <v-flex my-3>
-            <span class="body-2 text--secondary">Message</span>
-            <div class="body-1">{{ data.requestData.EmailText }}</div>
           </v-flex>
         </div>
       </v-flex>
