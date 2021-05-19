@@ -8,6 +8,7 @@ import endOfYesterday from 'date-fns/endOfYesterday'
 import startOfDay from 'date-fns/startOfDay'
 import endOfDay from 'date-fns/endOfDay'
 import MissingComponent from './missing-component.vue'
+import eventTours from '~/config/apps/tours'
 
 export function importTemplate(templatePath) {
   return () => import(`~/config/${templatePath}`)
@@ -383,4 +384,13 @@ export function postGaData(action, formTitle) {
   }
   console.debug('Post Data', obj)
   window.ga('send', obj)
+}
+
+export const tourLoaderMixin = {
+  computed: {
+    steps() {
+      debugger
+      return eventTours(this)
+    },
+  },
 }

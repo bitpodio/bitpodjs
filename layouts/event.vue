@@ -475,6 +475,7 @@ import Theme from '~/components/common/theme'
 import Upgrade from '~/components/common/upgrade'
 import userUtils from '~/utility/userApps'
 import { postGaData } from '~/utility/index.js'
+import { tourLoaderMixin } from '~/utility'
 export default {
   middleware: ['auth', 'authorization'],
   components: {
@@ -485,6 +486,7 @@ export default {
     Upgrade,
     Theme,
   },
+  mixins: [tourLoaderMixin],
   props: {
     source: { type: String, default: '' },
   },
@@ -555,91 +557,91 @@ export default {
     currentPage() {
       return this.$route.path
     },
-    steps() {
-      return [
-        {
-          target: '#v-step-0',
-          content: this.$t('Tour.Steps.Step-0-CreateEvent'),
-          params: {
-            placement: 'bottom',
-          },
-        },
-        {
-          target: '#v-step-1',
-          content: this.$t('Tour.Steps.Step-1-Eventboard'),
-          params: {
-            placement: 'left',
-          },
-        },
-        {
-          target: '#v-step-2',
-          content: this.$t('Tour.Steps.Step-2-Event'),
-          params: {
-            placement: 'left',
-          },
-        },
-        {
-          target: '#v-step-3',
-          content: this.$t('Tour.Steps.Step-3-Registrations'),
-          params: {
-            placement: 'left',
-          },
-        },
-        {
-          target: '#v-step-4',
-          content: this.$t('Tour.Steps.Step-4-Contacts'),
-          params: {
-            placement: 'left',
-          },
-        },
-        {
-          target: '#v-step-5',
-          content: this.$t('Tour.Steps.Step-5-DiscountCodes'),
-          params: {
-            placement: 'left',
-          },
-        },
-        {
-          target: '#v-step-6',
-          content: this.$t('Tour.Steps.Step-6-HelpCenter'),
-          params: {
-            placement: 'top',
-          },
-        },
-        {
-          target: '#v-step-7',
-          content: this.$t('Tour.Steps.Step-7-LanguageSwitcher'),
-          params: {
-            placement: 'top',
-          },
-        },
-        {
-          target: '#v-step-8',
-          content: this.$t('Tour.Steps.Step-8-AppDrawer'),
-          params: {
-            placement: 'top',
-          },
-        },
-        {
-          target: '#v-step-9',
-          content: this.$t('Tour.Steps.Step-9-ProfileDetails'),
-          params: {
-            placement: 'top',
-          },
-        },
-      ]
-    },
-    myOptions() {
-      return {
-        useKeyboardNavigation: false,
-        labels: {
-          buttonSkip: 'Skip tour',
-          buttonPrevious: 'Previous',
-          buttonNext: 'Next',
-          buttonStop: 'Finish',
-        },
-      }
-    },
+    // steps() {
+    //   return [
+    //     {
+    //       target: '#v-step-0',
+    //       content: this.$t('Tour.Steps.Step-0-CreateEvent'),
+    //       params: {
+    //         placement: 'bottom',
+    //       },
+    //     },
+    //     {
+    //       target: '#v-step-1',
+    //       content: this.$t('Tour.Steps.Step-1-Eventboard'),
+    //       params: {
+    //         placement: 'left',
+    //       },
+    //     },
+    //     {
+    //       target: '#v-step-2',
+    //       content: this.$t('Tour.Steps.Step-2-Event'),
+    //       params: {
+    //         placement: 'left',
+    //       },
+    //     },
+    //     {
+    //       target: '#v-step-3',
+    //       content: this.$t('Tour.Steps.Step-3-Registrations'),
+    //       params: {
+    //         placement: 'left',
+    //       },
+    //     },
+    //     {
+    //       target: '#v-step-4',
+    //       content: this.$t('Tour.Steps.Step-4-Contacts'),
+    //       params: {
+    //         placement: 'left',
+    //       },
+    //     },
+    //     {
+    //       target: '#v-step-5',
+    //       content: this.$t('Tour.Steps.Step-5-DiscountCodes'),
+    //       params: {
+    //         placement: 'left',
+    //       },
+    //     },
+    //     {
+    //       target: '#v-step-6',
+    //       content: this.$t('Tour.Steps.Step-6-HelpCenter'),
+    //       params: {
+    //         placement: 'top',
+    //       },
+    //     },
+    //     {
+    //       target: '#v-step-7',
+    //       content: this.$t('Tour.Steps.Step-7-LanguageSwitcher'),
+    //       params: {
+    //         placement: 'top',
+    //       },
+    //     },
+    //     {
+    //       target: '#v-step-8',
+    //       content: this.$t('Tour.Steps.Step-8-AppDrawer'),
+    //       params: {
+    //         placement: 'top',
+    //       },
+    //     },
+    //     {
+    //       target: '#v-step-9',
+    //       content: this.$t('Tour.Steps.Step-9-ProfileDetails'),
+    //       params: {
+    //         placement: 'top',
+    //       },
+    //     },
+    //   ]
+    // },
+    // myOptions() {
+    //   return {
+    //     useKeyboardNavigation: false,
+    //     labels: {
+    //       buttonSkip: 'Skip tour',
+    //       buttonPrevious: 'Previous',
+    //       buttonNext: 'Next',
+    //       buttonStop: 'Finish',
+    //     },
+    //   }
+    // },
   },
   watch: {
     dialog1(newVal) {
@@ -683,6 +685,7 @@ export default {
       if (this.currentUserStep) {
         this.$tours.myTour.start(this.currentUserStep)
       } else {
+        debugger
         this.$tours.myTour.start()
       }
     },
