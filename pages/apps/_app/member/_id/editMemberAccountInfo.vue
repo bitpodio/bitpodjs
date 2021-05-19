@@ -427,16 +427,12 @@ export default {
       try {
         const res = await this.$axios.$get(`${url}Customers`)
         if (res) {
-          this.parentMember = res.map((i) => {
-            if (i.id !== this.$route.params.id) {
-              this.parentMemberIds.push({
-                name: i.CustomerName,
-                id: i.id,
-              })
-            }
-            return i.CustomerName
-          })
-          return res
+          this.parentMemberIds = res
+            .filter((i) => i.id !== this.$route.params.id)
+            .map((k) => ({
+              name: k.CustomerName,
+              id: k.id,
+            }))
         }
       } catch (err) {
         console.error(
@@ -477,13 +473,12 @@ export default {
       const url = this.$bitpod.getApiUrl()
       this.customerData._BillingAddress = { ...this.billingAddress }
       this.customerData._ShippingAddress = { ...this.shippingAddress }
-      this.parentMemberData = this.customerData.ParentCustomerId
-        ? this.parentMemberIds.forEach((ele) => {
-            if (ele.id === this.customerData.ParentCustomerId) {
-              return (this.customerData.ParentCustomerName = ele.name)
-            }
-          })
-        : ''
+      this.parentMemberIds.forEach((ele) => {
+        if (ele.id === this.customerData.ParentCustomerId) {
+          this.customerData.ParentCustomerName = ele.name
+        }
+      })
+
       try {
         const res = await this.$axios.patch(
           `${url}Customers/${this.$route.params.id}`,

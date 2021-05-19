@@ -58,6 +58,7 @@
 import Grid from '~/components/common/grid'
 import { configLoaderMixin } from '~/utility'
 import SaveBtn from '~/components/common/saveButton'
+import columnStartdateVue from '../../../allEvents-grid/column-startdate.vue'
 export default {
   components: {
     Grid,
@@ -102,32 +103,28 @@ export default {
           this.itemId.map((ele) => {
             contactId.includes(ele) ? '' : contactId.push(ele)
           })
-          try {
-            const res1 = this.$axios.$patch(
-              `${url}Customers/${this.$route.params.id}`,
-              {
-                ContactId: contactId,
-              }
-            )
-            if (res1) {
-              this.dialog = false
-              this.$eventBus.$emit(
-                'eventInvites-grid-refresh',
-                'memberContacts'
-              )
-            }
-          } catch (err) {
-            console.error(
-              `Error in templates/grids/memberContacts-grid/actions/grid/add-existing-contacts.vue while making a PATCH call to Customers model from method onSave context:- URL:-${url}`,
-              err
-            )
-          }
+          this.setCustomers(contactId)
         }
       } catch (e) {
-        console.error(
-          `Error in templates/grids/memberContacts-grid/actions/grid/add-existing-contacts.vue while making a GET call to Customers model from method onSave context:- URL:-${url}\n `,
-          e
+        console.error('err', e)
+      }
+    },
+
+    async setCustomers(contactId) {
+      const url = this.$bitpod.getApiUrl()
+      try {
+        const res1 = await this.$axios.$patch(
+          `${url}Customers/${this.$route.params.id}`,
+          {
+            ContactId: contactId,
+          }
         )
+        if (res1) {
+          this.dialog = false
+          this.$eventBus.$emit('eventInvites-grid-refresh', 'memberContacts')
+        }
+      } catch (e) {
+        console.error('err', e)
       }
     },
     updateList(data) {
