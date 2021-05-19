@@ -61,7 +61,7 @@
               <i18n path="Common.Address" class="ml-3" />
               <v-col cols="12" class="pb-0">
                 <v-text-field
-                  v-model="venueAddress.AddressLine"
+                  v-model="AddressLine"
                   :label="$t('Common.Address')"
                   outlined
                   dense
@@ -69,7 +69,7 @@
               </v-col>
               <v-col cols="12" class="pb-0">
                 <v-text-field
-                  v-model="venueAddress.City"
+                  v-model="City"
                   :label="$t('Common.City')"
                   outlined
                   dense
@@ -77,7 +77,7 @@
               </v-col>
               <v-col cols="12" class="pb-0">
                 <v-text-field
-                  v-model="venueAddress.State"
+                  v-model="State"
                   :label="$t('Common.State')"
                   outlined
                   dense
@@ -85,7 +85,7 @@
               </v-col>
               <v-col cols="12" class="pb-0">
                 <v-text-field
-                  v-model="venueAddress.PostalCode"
+                  v-model="PostalCode"
                   :label="$t('Common.Zip')"
                   outlined
                   dense
@@ -93,7 +93,7 @@
               </v-col>
               <v-col cols="12" class="pb-0">
                 <v-text-field
-                  v-model="venueAddress.Country"
+                  v-model="Country"
                   :label="$t('Common.Country')"
                   outlined
                   dense
@@ -148,6 +148,11 @@ export default {
       rules: rules(this.$i18n),
       formData: {},
       venueAddress: {},
+      AddressLine: '',
+      City: '',
+      State: '',
+      PostalCode: '',
+      Country: '',
       data: {
         organization: {},
       },
@@ -166,24 +171,16 @@ export default {
       this.formData.About = ''
       this.formData.Email = ''
       this.formData.Mobile = ''
-      this.venueAddress.AddressLine = ''
-      this.venueAddress.City = ''
-      this.venueAddress.State = ''
-      this.venueAddress.PostalCode = ''
-      this.venueAddress.Country = ''
+      this.AddressLine = ''
+      this.City = ''
+      this.State = ''
+      this.PostalCode = ''
+      this.Country = ''
     },
     onClose() {
       this.$emit('update:editOrgInfo', false)
       this.onReset()
       postGaData('Close', this.$t('Common.EditOrganizationInformation'))
-    },
-    setAddress() {
-      this.formData._CurrentAddress.AddressLine = this.venueAddress.AddressLine
-      this.formData._CurrentAddress.City = this.venueAddress.City
-      this.formData._CurrentAddress.State = this.venueAddress.State
-      this.formData._CurrentAddress.PostalCode = this.venueAddress.PostalCode
-      this.formData._CurrentAddress.Country = this.venueAddress.Country
-      this.formData._CurrentAddress.id = this.venueAddress.id
     },
     async onSave() {
       postGaData(
@@ -191,18 +188,35 @@ export default {
         this.$t('Common.EditOrganizationInformation')
       )
       const url = this.$bitpod.getApiUrl()
-      this.setAddress()
-      delete this.formData._CurrentAddress.LatLng
+      const Obj = {
+        Name: this.formData.Name || '',
+        About: this.formData.About || '',
+        Email: this.formData.Email || '',
+        Mobile: this.formData.Mobile || '',
+      }
       try {
         const res = await this.$axios.$patch(
           `${url}OrganizationInfos/${this.$route.params.id}`,
-          this.formData
+          Obj
         )
         if (res) {
-          this.onClose()
-          this.$emit('update:snackbar', true)
-          this.$store.commit('setCurrentOrgInfo', this.formData)
-          this.$eventBus.$emit('org-details-updated')
+          const addressObj = {
+            AddressLine: this.AddressLine || '',
+            City: this.City || '',
+            State: this.State || '',
+            PostalCode: this.PostalCode || '',
+            Country: this.Country || '',
+          }
+          const AddressRes = await this.$axios.$put(
+            `${url}OrganizationInfos/${this.$route.params.id}/CurrentAddress`,
+            addressObj
+          )
+          if (AddressRes) {
+            this.onClose()
+            this.$emit('update:snackbar', true)
+            this.$store.commit('setCurrentOrgInfo', this.formData)
+            this.$eventBus.$emit('org-details-updated')
+          }
         }
       } catch (e) {
         console.log(
@@ -229,20 +243,21 @@ export default {
               id: this.$route.params.id,
             },
           },
+          fetchPolicy: 'no-cache',
         }
       },
       update(data) {
         const organization = formatGQLResult(data, 'OrganizationInfo')
         this.formData = { ...organization[0] }
         this.formData.id = this.$route.params.id
-        this.formData._PaymentGatewaySetting.id = this.formData
-          ._PaymentGatewaySetting.id
-          ? atob(this.formData._PaymentGatewaySetting.id).split(':')[1]
-          : ''
-        this.venueAddress = { ...organization[0]._CurrentAddress }
-        this.venueAddress.id = this.venueAddress.id
-          ? atob(this.venueAddress.id).split(':')[1]
-          : ''
+        if (this.formData._CurrentAddress) {
+          this.AddressLine = this.formData._CurrentAddress.AddressLine || ''
+          this.City = this.formData._CurrentAddress.City || ''
+          this.State = this.formData._CurrentAddress.State || ''
+          this.PostalCode = this.formData._CurrentAddress.PostalCode || ''
+          this.Country = this.formData._CurrentAddress.Country || ''
+        }
+
         return {
           organization: organization.length > 0 ? organization[0] : {},
         }

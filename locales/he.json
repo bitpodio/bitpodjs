@@ -1005,7 +1005,7 @@
       "CreateOrgFull": "יצירת הארגון שלך נכשלה",
       "MemberExists": "חבר כבר קיים",
       "ImportFailed": "ביצוע הייבוא ​​נכשל",
-      "ImportFailedMessage": "ביצוע הייבוא ​​נכשל בגלל שורה {index} בקובץ",
+      "ImportFailedMessage": "קובץ ה- csv אינו תואם לפורמט המקובל. אנא עיין בקובץ לדוגמה המופיע למעלה.",
       "DuplicateErrorMessage": "שכפול רשומות בקובץ. אנא השתמש במזהה דואל ייחודי.",
       "AttendeeImportFailed": "ייבוא ​​המשתתף נכשל."
     },
