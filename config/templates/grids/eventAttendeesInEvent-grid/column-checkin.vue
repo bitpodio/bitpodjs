@@ -2,9 +2,9 @@
   <div :class="{ 'positionRelative position': !isCustomMobile }">
     <div v-if="item.CheckIn === null && item.Status !== 'Failed'" class="pt-1">
       <div v-if="isCustomMobile" class="text-center">
-        <div class="d-flex justify-center">
+        <div class="d-flex justify-end">
           <v-btn icon color="gray" @click="updateDate(item.id)">
-            <v-icon x-large>fa-minus-circle</v-icon>
+            <v-icon class="fs-14">fa-minus-circle</v-icon>
           </v-btn>
         </div>
         <p class="text-caption mb-0"><i18n path="Common.TapToCheckIn" /></p>
@@ -26,12 +26,17 @@
       v-if="item.CheckIn !== null && item.Status !== 'Failed' && isCustomMobile"
       class="text-center"
     >
-      <div class="d-flex justify-center">
-        <timeAgo
-          :date="item.CheckIn"
-          :small-font-size="true"
-          :is-success="true"
-        /><v-icon color="success" class="ml-2"> fa-check </v-icon>
+      <div class="d-flex justify-center flex-column-reverse">
+        <div class="d-flex justify-end">
+          <timeAgo
+            :date="item.CheckIn"
+            :small-font-size="true"
+            :is-success="true"
+          />
+        </div>
+        <div class="d-flex justify-end">
+          <v-icon color="success"> fa-check </v-icon>
+        </div>
       </div>
     </div>
     <div
