@@ -5,19 +5,25 @@
         <div>
           <v-list subheader two-line class="px-0">
             <v-list-item class="px-0">
-              <v-list-item-avatar size="48">
+              <v-list-item-avatar size="36">
                 <v-avatar
-                  size="48"
+                  size="36"
                   :style="{
                     'background-color': getRandomColor(item.FullName),
                   }"
                 >
-                  <span class="white--text Twitter">{{ item.FullName }}</span>
+                  <span class="white--text Twitter-18">{{
+                    item.FullName
+                  }}</span>
                 </v-avatar>
               </v-list-item-avatar>
 
               <v-list-item-content>
-                <v-list-item-title>{{ item.FullName }}</v-list-item-title>
+                <v-list-item-title
+                  :class="item.CheckIn ? 'green--text' : ''"
+                  class="text-capitalize"
+                  >{{ item.FullName }}</v-list-item-title
+                >
 
                 <v-list-item-subtitle>
                   {{ item.Email }}
