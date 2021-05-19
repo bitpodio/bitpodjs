@@ -189,8 +189,8 @@ export default {
         this.currencyDropdown = res.map((i) => i.value)
       }
     } catch (e) {
-      console.log(
-        `Error in pages/apps/event/_id/editEventSettings while making a GQL call to GeneralConfiguration model from method getDropDownData`,
+      console.error(
+        `Error in templates/grids/memberSubscription-grid/actions/grid/new-item.vue while making a GQL call to GeneralConfiguration model from method getDropDownData`,
         e
       )
     }
@@ -200,8 +200,8 @@ export default {
         this.subscriptionPlanDropDown = res.map((i) => i.DisplayName)
       }
     } catch (e) {
-      console.log(
-        `Error in templates/grids/eventTickets/actions/grid/new-item.vue while making a GQL call to Ticket model from method getRegistrationType`,
+      console.error(
+        `Error in templates/grids/memberSubscription-grid/actions/grid/new-item.vue while making a GQL call to Ticket model from method getRegistrationType`,
         e
       )
     }
@@ -268,7 +268,6 @@ export default {
     getProductId(productName) {
       this.productObj.map((ele) => {
         if (ele.DisplayName === productName) {
-          console.log('same ', ele.id)
           this.productId = ele.id
         }
       })
