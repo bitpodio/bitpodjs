@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="d-flex flex-column flex-sm-row flex-md-row flex-lg-row">
-      <div class="mxw-w70 d-flex flex-column">
+    <v-flex d-flex flex-md-row flex-lg-row flex-column>
+      <v-flex column class="mxw-w70">
         <div
           class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
         >
@@ -247,8 +247,8 @@
             </v-card>
           </div>
         </div>
-      </div>
-      <div class="mxw-w30 d-flex flex-column">
+      </v-flex>
+      <v-flex column class="mxw-w30">
         <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-2 box-grey">
           <div class="d-flex justify-center align-center pb-2">
             <v-tooltip bottom>
@@ -267,69 +267,67 @@
             </v-btn>
           </div>
           <v-divider></v-divider>
-          <v-row>
-            <v-col class="col-md-12 col-12 pb-0">
-              <i18n path="Common.Address" class="body-2 text--secondary" />
+          <v-flex my-3>
+            <i18n path="Common.Address" class="body-2 text--secondary" />
 
-              <div class="body-1">
-                {{
-                  formatField(
-                    data.organization._CurrentAddress &&
-                      data.organization._CurrentAddress.AddressLine
-                  )
-                }}
-              </div>
-            </v-col>
-            <v-col class="col-md-6 col-12 pb-0">
-              <i18n path="Common.City" class="body-2 text--secondary" />
+            <div class="body-1">
+              {{
+                formatField(
+                  data.organization._CurrentAddress &&
+                    data.organization._CurrentAddress.AddressLine
+                )
+              }}
+            </div>
+          </v-flex>
+          <v-flex my-3>
+            <i18n path="Common.City" class="body-2 text--secondary" />
 
-              <div class="body-1">
-                {{
-                  formatField(
-                    data.organization._CurrentAddress &&
-                      data.organization._CurrentAddress.City
-                  )
-                }}
-              </div>
-            </v-col>
-            <v-col class="col-md-6 col-12 pb-0">
-              <i18n path="Common.State" class="body-2 text--secondary" />
+            <div class="body-1">
+              {{
+                formatField(
+                  data.organization._CurrentAddress &&
+                    data.organization._CurrentAddress.City
+                )
+              }}
+            </div>
+          </v-flex>
+          <v-flex my-3>
+            <i18n path="Common.State" class="body-2 text--secondary" />
 
-              <div class="body-1">
-                {{
-                  formatField(
-                    data.organization._CurrentAddress &&
-                      data.organization._CurrentAddress.State
-                  )
-                }}
-              </div>
-            </v-col>
-            <v-col class="col-md-6 col-12 pb-0">
-              <div class="body-2 text--secondary">
-                <i18n path="Common.Zip" />
-              </div>
-              <div class="body-1">
-                {{
-                  formatField(
-                    data.organization._CurrentAddress &&
-                      data.organization._CurrentAddress.PostalCode
-                  )
-                }}
-              </div>
-            </v-col>
-            <v-col class="col-md-12 col-12 pb-0">
-              <i18n path="Common.Country" class="body-2 text--secondary" />
+            <div class="body-1">
+              {{
+                formatField(
+                  data.organization._CurrentAddress &&
+                    data.organization._CurrentAddress.State
+                )
+              }}
+            </div>
+          </v-flex>
+          <v-flex my-3>
+            <div class="body-2 text--secondary">
+              <i18n path="Common.Zip" />
+            </div>
+            <div class="body-1">
+              {{
+                formatField(
+                  data.organization._CurrentAddress &&
+                    data.organization._CurrentAddress.PostalCode
+                )
+              }}
+            </div>
+          </v-flex>
+          <v-flex my-3>
+            <i18n path="Common.Country" class="body-2 text--secondary" />
 
-              <div class="body-1">
-                {{
-                  formatField(
-                    data.organization._CurrentAddress &&
-                      data.organization._CurrentAddress.Country
-                  )
-                }}
-              </div>
-            </v-col>
-          </v-row>
+            <div class="body-1">
+              {{
+                formatField(
+                  data.organization._CurrentAddress &&
+                    data.organization._CurrentAddress.Country
+                )
+              }}
+            </div>
+          </v-flex>
         </div>
 
         <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-2 box-grey">
@@ -350,7 +348,7 @@
             </v-btn>
           </div>
           <v-divider></v-divider>
-          <div my-3>
+          <v-flex my-3>
             <i18n
               path="Common.EventRegistrationURL"
               class="body-2 text--secondary"
@@ -359,8 +357,8 @@
             <div class="body-1">
               {{ formatField(data.organization.EventRegistrationURL) }}
             </div>
-          </div>
-          <div my-3>
+          </v-flex>
+          <v-flex my-3>
             <i18n
               path="Common.SuccessTemplateCaption"
               class="body-2 text--secondary"
@@ -369,21 +367,21 @@
             <div class="body-1">
               {{ formatField(data.organization.successTemplateCaption) }}
             </div>
-          </div>
-          <div my-3>
+          </v-flex>
+          <v-flex my-3>
             <i18n path="Common.Currency" class="body-2 text--secondary" />
 
             <div class="body-1">
               {{ formatField(data.organization.Currency) }}
             </div>
-          </div>
-          <div my-3>
+          </v-flex>
+          <v-flex my-3>
             <i18n path="Common.PrivacyPolicy" class="body-2 text--secondary" />
 
             <div class="body-1">
               {{ formatField(data.organization.PrivacyPolicy) }}
             </div>
-          </div>
+          </v-flex>
         </div>
 
         <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-2 box-grey">
@@ -404,27 +402,27 @@
             </v-btn>
           </div>
           <v-divider></v-divider>
-          <div my-3>
+          <v-flex my-3>
             <i18n path="Common.Facebook" class="body-2 text--secondary" />
 
             <div class="body-1 text-truncate d-block">
               {{ formatField(data.organization.Facebook) }}
             </div>
-          </div>
-          <div my-3>
+          </v-flex>
+          <v-flex my-3>
             <i18n path="Common.Twitter" class="body-2 text--secondary" />
 
             <div class="body-1 text-truncate d-block">
               {{ formatField(data.organization.Twitter) }}
             </div>
-          </div>
-          <div my-3>
+          </v-flex>
+          <v-flex my-3>
             <i18n path="Common.LinkedIn" class="body-2 text--secondary" />
 
             <div class="body-1 text-truncate d-block">
               {{ formatField(data.organization.LinkedIn) }}
             </div>
-          </div>
+          </v-flex>
         </div>
 
         <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-2 box-grey">
@@ -445,21 +443,21 @@
             </v-btn>
           </div>
           <v-divider></v-divider>
-          <div my-3>
+          <v-flex my-3>
             <i18n path="Common.StartTime" class="body-2 text--secondary" />
 
             <div class="body-1">
               {{ formatField(data.organization.AvailableStartHour) }}
             </div>
-          </div>
-          <div my-3>
+          </v-flex>
+          <v-flex my-3>
             <i18n path="Common.EndTime" class="body-2 text--secondary" />
 
             <div class="body-1">
               {{ formatField(data.organization.AvailableEndHour) }}
             </div>
-          </div>
-          <div my-3>
+          </v-flex>
+          <v-flex my-3>
             <i18n path="Common.WorkingDays" class="body-2 text--secondary" />
 
             <div class="body-1">
@@ -472,10 +470,10 @@
                 {{ weekDay }}
               </v-chip>
             </div>
-          </div>
+          </v-flex>
         </div>
-      </div>
-    </div>
+      </v-flex>
+    </v-flex>
     <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
       <div class="fs-16 text-center">
         {{ snackbarText }}

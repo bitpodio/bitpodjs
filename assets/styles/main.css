@@ -748,9 +748,29 @@ table > tbody > tr:last-child .key-align {
 .invitee-tooltip.v-tooltip__content {
   margin-top: -10px;
 }
+.feed-tooltip.v-tooltip__content {
+  margin-top: 0px;
+  font-size: 13px !important;
+  line-height: 18px !important;
+  padding: 5px 8px !important;
+}
 .app-title-text {
   font-size: 20px;
   color: rgba(0, 0, 0, 0.60)
+}
+.feed-section .theme--light.v-input textarea {
+    height: 30px !important;
+}
+.feed-body img {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+}
+.Feed-feeds .d-flex.view-name,
+.Feed-feeds .grid-actions-container {
+  min-width: 600px !important;
+  margin: 0 auto !important;
+  width: 50% !important;
 }
 @media (min-width: 1904px) {
   .boxviewlarge .v-data-table__wrapper {
@@ -932,5 +952,8 @@ table > tbody > tr:last-child .key-align {
   }
   .parentWidth {
     max-width: 100% !important;
+  }
+  #eventAttendeesInEvent .sticky.grid-actions-container {
+    margin-top: 0 !important;
   }
 }
