@@ -1456,7 +1456,7 @@ export default {
         singleExpand: false,
         showSelect: true,
         hideFilter: false,
-        hideSearch: true,
+        hideSearch: false,
       },
       itemTitle: 'Common.Attendee',
       hidden: true,
