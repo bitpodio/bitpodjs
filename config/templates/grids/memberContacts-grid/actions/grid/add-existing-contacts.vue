@@ -105,8 +105,11 @@ export default {
           })
           this.setCustomers(contactId)
         }
-      } catch (e) {
-        console.error('err', e)
+      } catch (err) {
+        console.error(
+          `Error in templates/grids/memberContacts-grid/actions/grid/add-existing-contacts.vue while making a PATCH call to Customers model from method onSave context:- URL:-${url}`,
+          err
+        )
       }
     },
 
@@ -123,8 +126,11 @@ export default {
           this.dialog = false
           this.$eventBus.$emit('eventInvites-grid-refresh', 'memberContacts')
         }
-      } catch (e) {
-        console.error('err', e)
+      } catch (err) {
+        console.error(
+          `Error in templates/grids/memberContacts-grid/actions/grid/add-existing-contacts.vue while making a PATCH call to Customers model from method onSave context:- URL:-${url}`,
+          err
+        )
       }
     },
     updateList(data) {
