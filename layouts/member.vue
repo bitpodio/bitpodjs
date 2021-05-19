@@ -326,6 +326,10 @@ export default {
           icon: 'fa fa-users',
           text: 'Members',
           to: '/apps/member/list/Member/Members',
+          allowedRoutes: [
+            'apps/member/list/Member/Member',
+            'apps/member/member/',
+          ],
         },
         {
           icon: 'fa fa-address-book-o',
