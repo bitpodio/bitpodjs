@@ -50,7 +50,10 @@ export default {
             this.refresh()
           }
         } catch (e) {
-          console.log('Error', e)
+          console.error(
+            `Error in config/templates/grids/eventAttendeesInEvent-grid.vue while making a PUT call to Attendee model from method updateDate context:-URL:-${url}\n id:-${this.item.id}`,
+            e
+          )
         }
       }
     },
