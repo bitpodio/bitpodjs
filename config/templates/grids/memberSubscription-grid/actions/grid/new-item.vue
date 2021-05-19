@@ -139,7 +139,6 @@ import gql from 'graphql-tag'
 import { rules } from '~/utility/rules.js'
 import { formatGQLResult } from '~/utility/gql.js'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
-import products from '~/config/apps/member/gql/product.gql'
 import SaveButton from '~/components/common/saveButton'
 export default {
   components: {
@@ -180,30 +179,6 @@ export default {
         isActive: true,
       },
       productId: '',
-    }
-  },
-  async mounted() {
-    try {
-      const res = await this.getDropDownData('Currency')
-      if (res) {
-        this.currencyDropdown = res.map((i) => i.value)
-      }
-    } catch (e) {
-      console.error(
-        `Error in templates/grids/memberSubscription-grid/actions/grid/new-item.vue while making a GQL call to GeneralConfiguration model from method getDropDownData`,
-        e
-      )
-    }
-    try {
-      const res = await this.getProductsList()
-      if (res) {
-        this.subscriptionPlanDropDown = res.map((i) => i.DisplayName)
-      }
-    } catch (e) {
-      console.error(
-        `Error in templates/grids/memberSubscription-grid/actions/grid/new-item.vue while making a GQL call to Ticket model from method getRegistrationType`,
-        e
-      )
     }
   },
   computed: {
@@ -247,6 +222,30 @@ export default {
         ],
       }
     },
+  },
+  async mounted() {
+    try {
+      const res = await this.getDropDownData('Currency')
+      if (res) {
+        this.currencyDropdown = res.map((i) => i.value)
+      }
+    } catch (e) {
+      console.error(
+        `Error in templates/grids/memberSubscription-grid/actions/grid/new-item.vue while making a GQL call to GeneralConfiguration model from method getDropDownData`,
+        e
+      )
+    }
+    try {
+      const res = await this.getProductsList()
+      if (res) {
+        this.subscriptionPlanDropDown = res.map((i) => i.DisplayName)
+      }
+    } catch (e) {
+      console.error(
+        `Error in templates/grids/memberSubscription-grid/actions/grid/new-item.vue while making a GQL call to Ticket model from method getRegistrationType`,
+        e
+      )
+    }
   },
   methods: {
     onReset() {
@@ -356,7 +355,7 @@ export default {
       } catch (e) {
         console.error(
           `Error in templates/grids/memberSubscription-grid/actions/grid/new-item.vue while making a GQL call to General Configuration model from method getDropDownData context:-filterType:${filterType}`,
-          err
+          e
         )
       }
     },

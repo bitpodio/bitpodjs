@@ -121,8 +121,8 @@
                       >
                         <v-list-item-subtitle class="mb-1">
                           <v-chip
-                            small
                             v-if="data.memberData.Rating"
+                            small
                             :class="{
                               orange: data.memberData.Rating === 'Suspended',
                               red: data.memberData.Rating === 'Expired',

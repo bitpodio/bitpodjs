@@ -186,30 +186,6 @@ export default {
       productId: '',
     }
   },
-  async mounted() {
-    try {
-      const res = await this.getDropDownData('Currency')
-      if (res) {
-        this.currencyDropdown = res.map((i) => i.value)
-      }
-    } catch (e) {
-      console.error(
-        `Error in pages/apps/event/_id/editEventSettings while making a GQL call to GeneralConfiguration model from method getDropDownData`,
-        e
-      )
-    }
-    try {
-      const res = await this.getProductsList()
-      if (res) {
-        this.subscriptionPlanDropDown = res.map((i) => i.DisplayName)
-      }
-    } catch (e) {
-      console.log(
-        `Error in templates/grids/eventTickets/actions/grid/new-item.vue while making a GQL call to Ticket model from method getRegistrationType`,
-        e
-      )
-    }
-  },
   computed: {
     eventStartDateProps() {
       return {
@@ -251,6 +227,30 @@ export default {
         ],
       }
     },
+  },
+  async mounted() {
+    try {
+      const res = await this.getDropDownData('Currency')
+      if (res) {
+        this.currencyDropdown = res.map((i) => i.value)
+      }
+    } catch (e) {
+      console.error(
+        `Error in pages/apps/event/_id/editEventSettings while making a GQL call to GeneralConfiguration model from method getDropDownData`,
+        e
+      )
+    }
+    try {
+      const res = await this.getProductsList()
+      if (res) {
+        this.subscriptionPlanDropDown = res.map((i) => i.DisplayName)
+      }
+    } catch (e) {
+      console.log(
+        `Error in templates/grids/eventTickets/actions/grid/new-item.vue while making a GQL call to Ticket model from method getRegistrationType`,
+        e
+      )
+    }
   },
   methods: {
     onReset() {

@@ -99,7 +99,7 @@ export default {
         )
         if (res) {
           const contactId = res.ContactId
-          const contactArray = this.itemId.map((ele) => {
+          this.itemId.map((ele) => {
             contactId.includes(ele) ? '' : contactId.push(ele)
           })
           try {
@@ -119,7 +119,6 @@ export default {
           } catch (err) {
             console.error(
               `Error in templates/grids/memberContacts-grid/actions/grid/add-existing-contacts.vue while making a PATCH call to Customers model from method onSave context:- URL:-${url}`,
-              e,
               err
             )
           }
