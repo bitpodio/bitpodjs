@@ -85,6 +85,9 @@ export default {
   text-transform: capitalize !important;
   white-space: nowrap !important;
   text-overflow: ellipsis !important;
+  display: block !important;
+  overflow: hidden !important;
+  max-width: 100%;
 }
 .event-list-checkin .mdi-menu-down::before {
   content: '\F0140' !important;
