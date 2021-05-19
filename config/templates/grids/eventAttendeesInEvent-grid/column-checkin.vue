@@ -2,12 +2,19 @@
   <div :class="{ 'positionRelative position': !isCustomMobile }">
     <div v-if="item.CheckIn === null && item.Status !== 'Failed'" class="pt-1">
       <div v-if="isCustomMobile" class="text-center">
-        <div class="d-flex justify-center">
-          <v-btn icon color="gray" @click="updateDate(item.id)">
-            <v-icon x-large>fa-minus-circle</v-icon>
+        <div class="d-flex justify-end">
+          <v-btn
+            icon
+            color="gray"
+            style="height: auto; justify-content: flex-end;"
+            @click="updateDate(item.id)"
+          >
+            <v-icon class="fs-18 mr-3">fa-minus-circle</v-icon>
           </v-btn>
         </div>
-        <p class="text-caption mb-0"><i18n path="Common.TapToCheckIn" /></p>
+        <p class="text-caption mb-0 text-right">
+          <i18n path="Common.CheckIn" />
+        </p>
       </div>
       <v-chip
         v-else
@@ -26,15 +33,17 @@
       v-if="item.CheckIn !== null && item.Status !== 'Failed' && isCustomMobile"
       class="text-center"
     >
-      <div class="d-flex justify-center">
-        <v-icon x-large color="success"> fa-check-circle </v-icon>
-      </div>
-      <div>
-        <timeAgo
-          :date="item.CheckIn"
-          :small-font-size="true"
-          :is-success="true"
-        />
+      <div class="d-flex justify-center flex-column-reverse">
+        <div class="d-flex justify-end">
+          <timeAgo
+            :date="item.CheckIn"
+            :small-font-size="true"
+            :is-success="true"
+          />
+        </div>
+        <div class="d-flex justify-end mr-3">
+          <v-icon color="success mr-3"> fa-check </v-icon>
+        </div>
       </div>
     </div>
     <div
