@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="d-flex flex-column flex-sm-row flex-md-row flex-lg-row">
-      <div class="mxw-w70 d-flex flex-column">
+    <v-flex d-flex flex-md-row flex-lg-row flex-column>
+      <v-flex column class="mxw-w70">
         <div
           class="xs12 sm8 md8 lg8 boxview pa-3 mr-2 mb-4 pb-2 elevation-1 rounded-lg"
         >
@@ -247,8 +247,8 @@
             </v-card>
           </div>
         </div>
-      </div>
-      <div class="mxw-w30 d-flex flex-column">
+      </v-flex>
+      <v-flex column class="mxw-w30">
         <div class="xs12 sm4 md4 lg4 greybg pa-4 mb-2 pt-0 pr-2 pb-2 box-grey">
           <div class="d-flex justify-center align-center pb-2">
             <v-tooltip bottom>
@@ -472,8 +472,8 @@
             </div>
           </v-flex>
         </div>
-      </div>
-    </div>
+      </v-flex>
+    </v-flex>
     <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
       <div class="fs-16 text-center">
         {{ snackbarText }}
@@ -583,7 +583,6 @@ export default {
     },
   },
   mounted() {
-    debugger
     this.$eventBus.$on('org-details-updated', this.refresh)
   },
   beforeDestroy() {
