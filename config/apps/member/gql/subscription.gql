@@ -9,7 +9,27 @@ query($filters: JSON, $where: JSON) {
           PayCycle
           SystemOrgName
           Customer
+          ProductId
           isActive
+          Product{
+            Active
+            AttachmentId
+            Code
+            DisplayName
+            DisplayOrder
+            EndDate
+            Family
+            Name
+            StartDate
+            Tags
+            Type
+            createdBy
+            createdDate
+            id
+            modifiedBy
+            modifiedDate
+            orgId
+          }
           Cost
           Unit
           DiscountCode

@@ -9,7 +9,7 @@
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on" @click="dialog = true">
           <v-icon left>mdi-plus</v-icon>
-          <i18n path="Common.AddExistingContact" />
+          <i18n path="Common.AssociatedMember" />
         </v-btn>
       </template>
       <v-card>
@@ -17,7 +17,7 @@
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
           <h2 class="black--text pt-5 pb-4 font-weight-regular text-h5">
-            <i18n path="Common.AddExistingContact" />
+            <i18n path="Common.AssociatedMember" />
           </h2>
           <v-spacer></v-spacer>
           <div>
@@ -30,7 +30,7 @@
           <v-container v-if="content" class="pt-0 px-4 pb-8 inviteeDialog">
             <Grid
               :value="selectedList"
-              view-name="allContacts"
+              view-name="addExistingMembers"
               :content="content"
               class="mt-n12"
               @onSelectedListChange="updateList"
@@ -75,8 +75,8 @@ export default {
     return {
       dialog: false,
       selectedList: [],
-      itemId: [],
       ParentCustomerId: '',
+      itemId: [],
     }
   },
   computed: {
@@ -92,41 +92,21 @@ export default {
       this.selectedList.map((ele) => {
         this.itemId.push(ele.id)
       })
+      const where = { id: { inq: [...this.itemId] } }
       const url = this.$bitpod.getApiUrl()
+      this.ParentCustomerId = this.$route.params.id
       try {
-        const res = await this.$axios.$get(
-          `${url}Customers/${this.$route.params.id}`
+        const res = await this.$axios.$post(
+          `${url}Customers/update?where=${JSON.stringify(where)}`,
+          { ParentCustomerId: this.ParentCustomerId }
         )
         if (res) {
-          const contactId = res.ContactId
-          const contactArray = this.itemId.map((ele) => {
-            contactId.includes(ele) ? '' : contactId.push(ele)
-          })
-          try {
-            const res1 = this.$axios.$patch(
-              `${url}Customers/${this.$route.params.id}`,
-              {
-                ContactId: contactId,
-              }
-            )
-            if (res1) {
-              this.dialog = false
-              this.$eventBus.$emit(
-                'eventInvites-grid-refresh',
-                'memberContacts'
-              )
-            }
-          } catch (err) {
-            console.error(
-              `Error in templates/grids/memberContacts-grid/actions/grid/add-existing-contacts.vue while making a PATCH call to Customers model from method onSave context:- URL:-${url}`,
-              e,
-              err
-            )
-          }
+          this.dialog = false
+          this.$eventBus.$emit('eventInvites-grid-refresh', 'associatedMember')
         }
       } catch (e) {
         console.error(
-          `Error in templates/grids/memberContacts-grid/actions/grid/add-existing-contacts.vue while making a GET call to Customers model from method onSave context:- URL:-${url}\n `,
+          `Error in templates/grids/associatedMember-grid/actions/grid/edit-item.vue while making a POST call to Customers model from method onSave context:- URL:-${url}\n `,
           e
         )
       }

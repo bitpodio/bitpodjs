@@ -1,0 +1,14 @@
+query($filters: JSON, $where: JSON) {
+  Product {
+    ProductFind(filter: $filters) {
+      edges {
+        node {
+          id
+          Name
+          DisplayName
+        }
+      }
+    }
+    ProductCount(where: $where)
+  }
+}
