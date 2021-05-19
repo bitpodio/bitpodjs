@@ -626,7 +626,7 @@
                 ></v-expansion-panel-header>
                 <v-expansion-panel-content class="pa-0">
                   <v-divider></v-divider>
-                  <v-simple-table dense>
+                  <v-simple-table dense class="ticket-view-table">
                     <template v-slot:default>
                       <thead>
                         <tr>
@@ -1271,6 +1271,9 @@ export default {
 }
 .total-align {
   margin-left: 34px;
+}
+.ticket-view-table {
+  width: 100%;
 }
 @media screen and (max-width: 600px) {
   .background-event-img {
