@@ -140,7 +140,6 @@ import gql from 'graphql-tag'
 import { rules } from '~/utility/rules.js'
 import { formatGQLResult } from '~/utility/gql.js'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
-import products from '~/config/apps/member/gql/product.gql'
 import SaveButton from '~/components/common/saveButton'
 export default {
   components: {
