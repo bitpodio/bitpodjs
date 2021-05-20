@@ -556,6 +556,7 @@
         <v-btn
           v-if="currentTab > 1 && !isEventCreate && !isEventPublish"
           depressed
+          :disabled="isSaveClicked"
           color="grey lighten-2"
           @click="prev()"
           ><i18n path="Drawer.Prev"
@@ -648,6 +649,7 @@ export default {
       isEventCreate: false,
       isEventPublish: false,
       isMap: false,
+      isSaveClicked: false,
       locationTypeOptions: [],
       currentLocation: {},
       locationsVisibleOnMap: '',
@@ -961,6 +963,7 @@ export default {
         this.isFormProcessing = false
         this.isTicket = true
         this.isMap = false
+        this.isSaveClicked = false
         this.valid = false
         this.currentTab = 1
       }, 3000)
@@ -1226,6 +1229,7 @@ export default {
         )
       })
       this.$refs.form.validate()
+      this.isSaveClicked = true
       if (!isValidTicket.includes(false)) {
         this.isFormProcessing = true
         this.setLoationType()

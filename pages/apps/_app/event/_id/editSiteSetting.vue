@@ -385,6 +385,7 @@ export default {
           showeventreviews: this.sectionHeading.showeventreviews,
           animation: this.sectionHeading.animation || '',
           datetimelabel: this.sectionHeading.datetimelabel || '',
+          venuelabel: this.sectionHeading.venuelabel || '',
           gallery: this.sectionHeading.gallery || '',
           registrationTypes: this.sectionHeading.registrationTypes || '',
           registrationbtn: this.sectionHeading.registrationbtn || '',
