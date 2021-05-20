@@ -34,6 +34,7 @@
                   v-model="formData.Title"
                   :label="$t('Common.Title')"
                   outlined
+                  required
                   dense
                 >
                 </v-text-field>
