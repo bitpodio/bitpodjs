@@ -58,7 +58,6 @@
 import Grid from '~/components/common/grid'
 import { configLoaderMixin } from '~/utility'
 import SaveBtn from '~/components/common/saveButton'
-import columnStartdateVue from '../../../allEvents-grid/column-startdate.vue'
 export default {
   components: {
     Grid,

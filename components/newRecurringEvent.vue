@@ -1075,6 +1075,7 @@
       >
         <v-btn
           v-if="currentTab > 1 && !isEventCreate && !isEventPublish"
+          :disabled="isSaveClicked"
           depressed
           color="grey lighten-2"
           @click="prev()"
@@ -1224,6 +1225,7 @@ export default {
       AvailableStartHour: '',
       AvailableEndHour: '',
       isMap: false,
+      isSaveClicked: false,
       ticketTypeProps: {
         type: 'lookup',
         dataSource: {
@@ -2048,7 +2050,9 @@ export default {
       ) {
         this.isDateRange = false
         this.sessions[this.selectedSession].ScheduledType = this.ScheduledType
-        this.sessions[this.selectedSession].RollingDays = this.RollingDays
+        this.sessions[this.selectedSession].RollingDays = parseInt(
+          this.RollingDays
+        )
         this.sessions[this.selectedSession].StartDate = this.StartDate
         this.sessions[this.selectedSession].EndDate = this.EndDate
 
@@ -2118,6 +2122,7 @@ export default {
         this.loading = false
         this.isEventCreate = false
         this.isEventPublish = false
+        this.isSaveClicked = false
         this.isSaveButtonDisabled = false
         this.valid = false
         this.currentTab = 1
@@ -2324,6 +2329,7 @@ export default {
               { color: 'warning' }
             )))
         ) {
+          this.isSaveClicked = true
           this.isSaveButtonDisabled = true
           this.eventData.EventManager = this.$auth.$state.user.data.email
           this.eventData.Organizer = this.$auth.$state.user.data.name
