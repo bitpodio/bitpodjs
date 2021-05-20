@@ -1,5 +1,7 @@
 {
   "Common": {
+    "NewDiscountCode":"קוד הנחה חדש",
+    "EditDiscountCode":"ערוך את קוד ההנחה",
     "MemberList": "רשימת חברים",
     "AppTitle": "אירועים",
     "Logout": "להתנתק",
@@ -1094,7 +1096,9 @@
       "ContactImportSuccess": "ביצוע הייבוא ​​החל",
       "OrgNameSuccess": "https://{orgName}-{suffixRoute} זמין",
       "ContactImported": "צור קשר מיובא בהצלחה",
-      "ContactImportedFailed": "ייבוא ​​אנשי הקשר נכשל"
+      "ContactImportedFailed": "ייבוא ​​אנשי הקשר נכשל",
+      "DiscountCodeSuccessfully": "קוד ההנחה נוצר בהצלחה",
+      "DiscountCodeUpdateSuccessfully": "קוד ההנחה עודכן בהצלחה"
     },
     "Information": {
       "SetupInProgressTitle": "ההתקנה בעיצומה",
