@@ -11,6 +11,8 @@ query($filters: JSON, $where: JSON) {
           Organization
           LastName
           Job
+          Department
+          Type
           Gender
           FullName
           FirstName

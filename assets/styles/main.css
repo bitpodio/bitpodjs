@@ -766,6 +766,12 @@ table > tbody > tr:last-child .key-align {
   max-width: 100% !important;
   height: auto !important;
 }
+.Feed-feeds .d-flex.view-name,
+.Feed-feeds .grid-actions-container {
+  min-width: 600px !important;
+  margin: 0 auto !important;
+  width: 50% !important;
+}
 @media (min-width: 1904px) {
   .boxviewlarge .v-data-table__wrapper {
     margin-bottom: 0 !important;
@@ -946,5 +952,8 @@ table > tbody > tr:last-child .key-align {
   }
   .parentWidth {
     max-width: 100% !important;
+  }
+  #eventAttendeesInEvent .sticky.grid-actions-container {
+    margin-top: 0 !important;
   }
 }

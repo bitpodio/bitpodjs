@@ -26,6 +26,11 @@ export default {
           columnWidth: '250px',
           type: 'string',
           cssClasses: 'col-12 col-md-12',
+          rules: [
+            function (v) {
+              return !!v || this.$t('Messages.Error.PleaseField')
+            },
+          ],
         },
         Body: {
           form: {
