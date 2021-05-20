@@ -344,7 +344,7 @@
               width="180"
               height="30"
             >
-              <div class="mx-auto mt-22"></div>
+              <div class="mx-auto mt-18"></div>
             </v-skeleton-loader>
             <v-skeleton-loader
               :loading="loading"
