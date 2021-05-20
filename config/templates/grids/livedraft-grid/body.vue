@@ -247,17 +247,17 @@
               </nuxt-link>
               <v-card-actions class="pt-0 pl-4 tiles-action">
                 <div class="text-truncate d-block">
-                  <span v-if="item.LocationType === 'Bitpod Virtual'">
-                    <v-text class="ma-0 mr-1 event-tags body-2"
+                  <span>
+                    <v-text
+                      v-if="item.LocationType === 'Bitpod Virtual'"
+                      class="ma-0 mr-1 event-tags body-2"
                       ><i18n path="Common.BitpodVirtual"
                     /></v-text>
-                  </span>
-                  <span v-else-if="item.LocationType === 'Online event'">
-                    <v-text class="ma-0 mr-1 event-tags body-2"
+                    <v-text
+                      v-if="item.LocationType === 'Online event'"
+                      class="ma-0 mr-1 event-tags body-2"
                       ><i18n path="Common.OnlineEventText"
                     /></v-text>
-                  </span>
-                  <span v-else>
                     <v-text
                       v-for="Tags in item.Tags"
                       :key="Tags"
