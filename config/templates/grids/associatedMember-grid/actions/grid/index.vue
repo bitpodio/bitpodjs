@@ -1,15 +1,15 @@
 <template>
   <div>
     <v-list-item>
-      <newItem :refresh="refresh" />
+      <addAssociatedMember :refresh="refresh" />
     </v-list-item>
   </div>
 </template>
 <script>
-import newItem from './new-item.vue'
+import addAssociatedMember from './add-associated-member.vue'
 export default {
   components: {
-    newItem,
+    addAssociatedMember,
   },
   props: {
     refresh: {
