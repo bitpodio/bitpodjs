@@ -136,6 +136,11 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
+      <div class="fs-16 text-center">
+        {{ snackbarText }}
+      </div>
+    </v-snackbar>
   </v-col>
 </template>
 
@@ -164,6 +169,9 @@ export default {
   },
   data() {
     return {
+      snackbar: false,
+      timeout: '3000',
+      snackbarText: '',
       dialog: false,
       formName: 'new-event-discount-form',
       valid: false,
@@ -198,7 +206,9 @@ export default {
           this.formData.minApplicableOrderAmount
         ),
         offerValue: parseInt(this.formData.offerValue),
-        validTill: this.formData.validTill.toISOString(),
+        validTill: this.formData.validTill
+          ? this.formData.validTill.toISOString()
+          : '',
       }
 
       try {
@@ -210,6 +220,11 @@ export default {
         if (res) {
           this.closeForm()
           this.refresh()
+          this.snackbarText = this.$t(
+            'Messages.Success.DiscountCodeUpdateSuccessfully'
+          )
+
+          this.snackbar = true
         }
       } catch (error) {
         console.error(

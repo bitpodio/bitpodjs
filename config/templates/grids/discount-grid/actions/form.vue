@@ -370,11 +370,11 @@ export default {
         }
         if (res) {
           this.closeForm()
+          this.refresh()
           this.snackbarText = this.isEdit
             ? this.$t('Messages.Success.DiscountCodeUpdateSuccessfully')
             : this.$t('Messages.Success.DiscountCodeSuccessfully')
           this.snackbar = true
-          this.refresh()
         }
       } catch (error) {
         console.error(
