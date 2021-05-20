@@ -320,17 +320,44 @@
         v-if="viewName === 'badge' && loading === true"
         class="d-flex flex-sm-wrap flex-column flex-sm-row"
       >
-        <v-skeleton-loader
-          v-for="i in 10"
-          :key="i"
-          :loading="loading"
-          type="card"
-          width="226"
-          height="300"
-          class="pa-0 eventtiles ma-3 ml-0 mt-0"
-        >
-          <div></div>
-        </v-skeleton-loader>
+        <div class="public-page-main d-flex flex-wrap flex-row">
+          <div
+            v-for="i in 10"
+            :key="i"
+            class="pa-0 eventtiles badge-tile boxview ma-3 ml-0 mt-0 v-card elevation-0"
+          >
+            <v-skeleton-loader
+              :loading="loading"
+              :tile="true"
+              type="avatar"
+              class="ml-3 mt-2"
+              width="150"
+              height="30"
+            >
+              <div class="ml-3 mt-2"></div>
+            </v-skeleton-loader>
+            <v-skeleton-loader
+              :loading="loading"
+              :tile="true"
+              type="avatar"
+              class="mx-auto mt-18"
+              width="180"
+              height="30"
+            >
+              <div class="mx-auto mt-22"></div>
+            </v-skeleton-loader>
+            <v-skeleton-loader
+              :loading="loading"
+              :tile="true"
+              type="avatar"
+              class="ml-4"
+              width="200"
+              height="20"
+            >
+              <div class="ml-4"></div>
+            </v-skeleton-loader>
+          </div>
+        </div>
       </div>
       <div
         v-if="viewName === 'seatmaps' && loading === true"
@@ -371,7 +398,7 @@
         <v-skeleton-loader
           v-for="i in 10"
           :key="i"
-          :loading="!!loading"
+          :loading="loading"
           type="card"
           width="230"
           height="230"
@@ -814,6 +841,7 @@ export default {
     },
   },
   mounted() {
+    debugger
     setTimeout(() => {
       this.selectedItems = []
     }, 2000)
@@ -1369,6 +1397,11 @@ export default {
   font-size: 11px !important;
   margin-top: -19px;
   padding: 0 8px !important;
+}
+.badge-tile {
+  width: 229px;
+  height: 300px;
+  border-radius: 4px;
 }
 @media (min-width: 601px) {
   .grid-actions-menu {
