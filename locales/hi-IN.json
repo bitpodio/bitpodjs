@@ -1,5 +1,7 @@
 {
   "Common": {
+    "NewDiscountCode":"नया डिस्काउंट कोड",
+    "EditDiscountCode":"डिस्काउंट कोड संपादित करें",
     "MemberList": "सदस्य सूची",
     "AppTitle": "इवेंट्स",
     "Logout": "लॉग आउट",
@@ -1105,7 +1107,9 @@
       "ContactImportSuccess": "आयात निष्पादन शुरू हुआ",
       "OrgNameSuccess": "https://{orgName}-{suffixRoute} उपलब्ध है",
       "ContactImported": "आयातित आयात से संपर्क करें",
-      "ContactImportedFailed": "संपर्क विफल हुआ"
+      "ContactImportedFailed": "संपर्क विफल हुआ",
+      "DiscountCodeSuccessfully": "डिस्काउंट कोड सफलतापूर्वक बनाया गया",
+      "DiscountCodeUpdateSuccessfully": "डिस्काउंट कोड सफलतापूर्वक अपडेट किया गया"
     },
     "Information": {
       "SetupInProgressTitle": "सेटअप प्रगति पर है",
