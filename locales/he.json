@@ -940,6 +940,7 @@
   },
   "Messages": {
     "Error": {
+      "NumberCannotBeNegative": "המספר השלילי לא התקבל",
       "EventNameEmpty": "Event name cannot be empty",
       "SizeRequired": "Size is required",
       "ThisFieldRequired": "זהו שדה חובה",

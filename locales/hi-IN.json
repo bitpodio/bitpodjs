@@ -941,6 +941,7 @@
   },
   "Messages": {
     "Error": {
+      "NumberCannotBeNegative": "ऋणात्मक संख्या स्वीकार नहीं की गई",
       "EventNameEmpty": "Event name cannot be empty",
       "SizeRequired": "Size is required",
       "ThisFieldRequired": "यह फ़ील्ड आवश्यक है",

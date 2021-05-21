@@ -941,6 +941,7 @@
   },
   "Messages": {
     "Error": {
+      "NumberCannotBeNegative": "Negative number not accepted",
       "EventNameEmpty": "Event name cannot be empty",
       "SizeRequired": "Size is required",
       "ThisFieldRequired": "This field is required",
