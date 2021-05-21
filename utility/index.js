@@ -5,6 +5,7 @@ import startOfTomorrow from 'date-fns/startOfTomorrow'
 import endOfTomorrow from 'date-fns/endOfTomorrow'
 import startOfYesterday from 'date-fns/startOfYesterday'
 import endOfYesterday from 'date-fns/endOfYesterday'
+import currencyFormatter from 'currency-formatter'
 import startOfDay from 'date-fns/startOfDay'
 import endOfDay from 'date-fns/endOfDay'
 import MissingComponent from './missing-component.vue'
@@ -383,4 +384,12 @@ export function postGaData(action, formTitle) {
   }
   console.debug('Post Data', obj)
   window.ga('send', obj)
+}
+
+export function getPriceWithCurrency(price, currency) {
+  const currencyPrice = currencyFormatter.format(price, { code: currency })
+  const totalPrice = currencyFormatter.unformat(currencyPrice, {
+    code: currency,
+  })
+  return totalPrice
 }
