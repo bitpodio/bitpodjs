@@ -209,7 +209,7 @@ import generalconfiguration from '~/config/apps/event/gql/registrationStatusOpti
 import registrationtype from '~/config/apps/event/gql/registrationType.gql'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
-import { postGaData } from '~/utility/index.js'
+import { postGaData, getPriceWithCurrency } from '~/utility/index.js'
 import { rules } from '~/utility/rules.js'
 export default {
   components: {
@@ -477,7 +477,9 @@ export default {
       postGaData(this.$t('Drawer.Save'), this.$t('Common.NewTicket'))
       const url = this.$bitpod.getApiUrl()
       this.getAttendeesId()
-      this.formData.Amount = parseFloat(this.formData.Amount)
+      this.formData.Amount = parseFloat(
+        getPriceWithCurrency(this.formData.Amount, this.eventData.Currency)
+      )
       this.formData.DisplayOrder = parseInt(this.formData.DisplayOrder)
       this.formData.TicketCount = parseInt(this.formData.TicketCount)
       this.formData.AvailableCount = parseInt(this.formData.TicketCount)

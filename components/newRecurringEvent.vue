@@ -2157,8 +2157,10 @@ export default {
       return () => {
         if (this.tickets[index].Type === 'Free') {
           this.tickets[index].Amount = 0
+          this.changeTicketCode(index)
         } else {
           this.tickets[index].Amount = 1
+          this.changeTicketCode(index)
         }
       }
     },
