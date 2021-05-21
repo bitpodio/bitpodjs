@@ -1,5 +1,7 @@
 {
   "Common": {
+    "NewDiscountCode":"קוד הנחה חדש",
+    "EditDiscountCode":"ערוך את קוד ההנחה",
     "MemberList": "רשימת חברים",
     "AppTitle": "אירועים",
     "Logout": "להתנתק",
@@ -938,6 +940,7 @@
   },
   "Messages": {
     "Error": {
+      "NumberCannotBeNegative": "המספר השלילי לא התקבל",
       "EventNameEmpty": "Event name cannot be empty",
       "SizeRequired": "Size is required",
       "ThisFieldRequired": "זהו שדה חובה",
@@ -1104,7 +1107,9 @@
       "ContactImportSuccess": "ביצוע הייבוא ​​החל",
       "OrgNameSuccess": "https://{orgName}-{suffixRoute} זמין",
       "ContactImported": "צור קשר מיובא בהצלחה",
-      "ContactImportedFailed": "ייבוא ​​אנשי הקשר נכשל"
+      "ContactImportedFailed": "ייבוא ​​אנשי הקשר נכשל",
+      "DiscountCodeSuccessfully": "קוד ההנחה נוצר בהצלחה",
+      "DiscountCodeUpdateSuccessfully": "קוד ההנחה עודכן בהצלחה"
     },
     "Information": {
       "SetupInProgressTitle": "ההתקנה בעיצומה",

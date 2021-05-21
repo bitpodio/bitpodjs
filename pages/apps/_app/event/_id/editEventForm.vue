@@ -121,6 +121,7 @@
                 v-model="formData.MaxNoRegistrations"
                 type="number"
                 :label="$t('Common.MaxRegistrationsPerDay')"
+                :rules="[rules.negativeNumberRules]"
                 min="0"
                 outlined
                 dense
@@ -257,9 +258,11 @@
             v-if="eventForm"
             color="primary"
             :disabled="
-              formData.LocationType === 'Venue'
+              (formData.LocationType === 'Venue'
                 ? VenueAddress.AddressLine === ''
-                : false || !valid || !datevalid
+                : false) ||
+              !valid ||
+              !datevalid
             "
             depressed
             :action="onSave"

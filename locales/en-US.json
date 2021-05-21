@@ -1,5 +1,7 @@
 {
   "Common": {
+    "NewDiscountCode":"New Discount Code",
+    "EditDiscountCode":"Edit Discount Code",
     "MemberList": "Member List",
     "AppTitle": "Event",
     "Logout": "Logout",
@@ -939,6 +941,7 @@
   },
   "Messages": {
     "Error": {
+      "NumberCannotBeNegative": "Negative number not accepted",
       "EventNameEmpty": "Event name cannot be empty",
       "SizeRequired": "Size is required",
       "ThisFieldRequired": "This field is required",
@@ -1107,7 +1110,9 @@
       "ContactImportSuccess": "Import execution started",
       "OrgNameSuccess": "https://{orgName}-{suffixRoute} is available",
       "ContactImported": "Contacts Imported Sucessfully",
-      "ContactImportedFailed": "Contacts Import Failed"
+      "ContactImportedFailed": "Contacts Import Failed",
+      "DiscountCodeSuccessfully": "Discount Code created successfully",
+      "DiscountCodeUpdateSuccessfully": "Discount Code updated successfully"
     },
     "Information": {
       "SetupInProgressTitle": "Setup in progress",

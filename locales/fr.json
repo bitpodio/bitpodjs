@@ -1,5 +1,7 @@
 {
   "Common": {
+    "NewDiscountCode":"Nouveau code de réduction",
+    "EditDiscountCode":"Modifier le code de réduction",
     "MemberList": "Liste des membres",
     "AppTitle": "Evénement",
     "Logout": "Déconnexion",
@@ -936,6 +938,7 @@
   },
   "Messages": {
     "Error": {
+      "NumberCannotBeNegative": "Nombre négatif non accepté",
       "EventNameEmpty": "Event name cannot be empty",
       "SizeRequired": "La taille est requise",
       "ThisFieldRequired": "Ce champ est requis",
@@ -1102,7 +1105,9 @@
       "ContactImportSuccess": "L'exécution de l'importation a commencé",
       "OrgNameSuccess": "https://{orgName}-{suffixRoute} est disponible",
       "ContactImported": "Contacts importé avec succès",
-      "ContactImportedFailed": "L'importation des contacts a échoué"
+      "ContactImportedFailed": "L'importation des contacts a échoué",
+      "DiscountCodeSuccessfully": "Code de réduction créé avec succès",
+      "DiscountCodeUpdateSuccessfully": "Code de réduction mis à jour avec succès"
     },
     "Information": {
       "SetupInProgressTitle": "configuration en cours",

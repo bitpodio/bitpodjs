@@ -113,7 +113,11 @@
                 </div>
               </v-card-text>
               <v-card-actions
-                v-if="item.Status && item.MetaData.isActive"
+                v-if="
+                  item.MetaData.oauthType === 'Oauth'
+                    ? item.Status && item.MetaData.isActive
+                    : item.Status
+                "
                 class="pa-0 ma-0 pb-1"
               >
                 <div></div>
