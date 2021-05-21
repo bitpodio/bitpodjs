@@ -1,4 +1,5 @@
 export function rules(i18n) {
+  const regex = RegExp(/^\d*[0-9]\d*$/)
   return Object.freeze({
     required: (v) =>
       !!(v && v.length) ||
@@ -25,7 +26,6 @@ export function rules(i18n) {
       return i18n.t('Messages.Error.PleaseEnterValidPhone')
     },
     negativeNumberRules: (v) => {
-      const regex = RegExp(/^\d*[0-9]\d*$/)
       if (!v || regex.test(v)) {
         return true
       }
