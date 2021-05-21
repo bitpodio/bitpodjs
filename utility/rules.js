@@ -24,5 +24,12 @@ export function rules(i18n) {
       }
       return i18n.t('Messages.Error.PleaseEnterValidPhone')
     },
+    negativeNumberRules: (v) => {
+      const regex = RegExp(/^\d*[0-9]\d*$/)
+      if (!v || regex.test(v)) {
+        return true
+      }
+      return i18n.t('Messages.Error.NumberCannotBeNegative')
+    },
   })
 }

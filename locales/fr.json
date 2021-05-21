@@ -938,6 +938,7 @@
   },
   "Messages": {
     "Error": {
+      "NumberCannotBeNegative": "Nombre négatif non accepté",
       "EventNameEmpty": "Event name cannot be empty",
       "SizeRequired": "La taille est requise",
       "ThisFieldRequired": "Ce champ est requis",

@@ -2464,7 +2464,7 @@ export default {
         hideFilter: true,
         hideSearch: true,
       },
-      itemTitle: 'Drawer.Registrations',
+      itemTitle: 'Common.Registration',
       hidden: true,
       fields: {
         FullName: {
