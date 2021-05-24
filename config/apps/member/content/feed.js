@@ -26,6 +26,9 @@ export default {
           columnWidth: '250px',
           type: 'string',
           cssClasses: 'col-12 col-md-12',
+          inlineEdit: false,
+          newForm: true,
+          editForm: true,
           rules: [
             function (v) {
               return !!v || this.$t('Messages.Error.PleaseField')
