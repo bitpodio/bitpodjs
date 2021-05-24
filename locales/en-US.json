@@ -865,15 +865,17 @@
     "TicketsNotRequiredToggle": "This event does not require tickets",
     "SessionsNotAvailable": "Sessions require events to be ticketed",
     "Language": "Language",
-    "SelectingJPYCurrency": "Decimal rounding off doesn't apply to {currency}",
-    "Reconnect": "Re-Connect",
-    "Expired": "Expired"
+    "Expired": "Expired",
+    "PrintTicketManagement": "Assign Template",
+    "NewTicketTemplate": "New Ticket Template",
+    "PrintedTicketTemplate": "Assign a Ticket Template",
+    "TicketTemplate": "Ticket Template",
+    "TicketTemplates": "Ticket Templates",
+    "ThumbnailUrl": "Thumbnail Url"
   },
   "Drawer": {
-    "UnSubscribeMsg": "Please select a reason to unsubscribe from newsletter. This will help us to improve our services.",
     "UnSubscribeAction": "Unsubscribe",
     "CreateEventAction": "Create Event",
-    "SingleEventAction": "Single Event",
     "RecurringEventAction": "Recurring Event",
     "CreateUser": "Create User",
     "EditBadge": "Edit Badge",
@@ -916,7 +918,9 @@
     "Members": "Members",
     "Contacts": "Contacts",
     "SessionOverlaps": "Session Overlap Warning",
-    "ExportToCSV": "Export to CSV"
+    "ExportToCSV": "Export to CSV",
+    "EditPrintedTicketTemplate": "ערוך תבנית כרטיסים",
+    "NewPrintedTicketTemplate": "תבנית כרטיסים חדשה"
   },
   "FilterOptions": {
     "Is": "Is",
@@ -1054,7 +1058,9 @@
       "SeatMapDefault": "Seatmap Warning",
       "SeatMapWarning": "There are unsaved changes which will be lost if you close without saving, are you sure?",
       "SetupWarning": "Setup Connection Warning",
-      "SetupConnection": "Please setup the connection to make it active."
+      "SetupConnection": "Please setup the connection to make it active.",
+      "DeletePrintTicketTemplate": "Do you want to delete this ticket template?",
+      "ReplaceTicketTemplate": "The new ticket template will replace your existing ticket template"
     },
     "Success": {
       "UnsubscribeSuccessMsg": "You have unsubscribed successfully",

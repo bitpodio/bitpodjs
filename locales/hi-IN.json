@@ -867,7 +867,15 @@
     "Language": "भाषा",
     "SelectingJPYCurrency": "दशमलव राउंडिंग बंद लागू नहीं होता है {currency}",
     "Reconnect": "फिर से कनेक्ट",
-    "Expired": "समय सीमा समाप्त"
+    "Expired": "समय सीमा समाप्त",
+    "PrintTicketManagement": "टेम्पलेट असाइन करें",
+    "DeletePrintTicketTemplate": "टिकट टेम्पलेट हटाएं",
+    "NewTicketTemplate": "नया टिकट टेम्पलेट",
+    "EditTicketTemplate": "टिकट टेम्पलेट संपादित करें",
+    "PrintedTicketTemplate": "टिकट टेम्पलेट असाइन करें",
+    "TicketTemplate": "टिकट टेम्पलेट",
+    "TicketTemplates": "टिकट टेम्पलेट्स",
+    "ThumbnailUrl": "थंबनेल Url"
   },
   "Drawer": {
     "UnSubscribeMsg": "कृपया न्यूज़लेटर से सदस्यता समाप्त करने का कारण चुनें। इससे हमें अपनी सेवाओं को बेहतर बनाने में मदद मिलेगी।",
@@ -916,7 +924,9 @@
     "Members": "सदस्य",
     "Contacts": "संपर्क",
     "SessionOverlaps": "अधिवेशन ओवरलैप चेतावनी",
-    "ExportToCSV": "सीएसवी को निर्यात"
+    "ExportToCSV": "सीएसवी को निर्यात",
+    "EditPrintedTicketTemplate": "टिकट टेम्पलेट संपादित करें",
+    "NewPrintedTicketTemplate": "नया टिकट टेम्पलेट"
   },
   "FilterOptions": {
     "Is": "है",
@@ -1052,7 +1062,9 @@
       "SeatMapDefault": "सीटमैप चेतावनी",
       "SeatMapWarning": "बिना सहेजे हुए परिवर्तन हैं जो बिना बचत के बंद होने पर खो जाएंगे, क्या आप सुनिश्चित हैं?",
       "SetupWarning": "कनेक्शन चेतावनी",
-      "SetupConnection": "कृपया इसे सक्रिय करने के लिए कनेक्शन सेटअप करें।"
+      "SetupConnection": "कृपया इसे सक्रिय करने के लिए कनेक्शन सेटअप करें।",
+      "DeletePrintTicketTemplate": "क्या आप इस टिकट टेम्पलेट को हटाना चाहते हैं?",
+      "ReplaceTicketTemplate": "नया टिकट टेम्प्लेट आपके मौजूदा टिकट टेम्प्लेट को बदल देगा"
     },
     "Success": {
       "UnsubscribeSuccessMsg": "आपने सफलतापूर्वक सदस्यता समाप्त कर ली है",

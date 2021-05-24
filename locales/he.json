@@ -866,7 +866,15 @@
     "Language": "שפה",
     "SelectingJPYCurrency": "עיגול עשרוני אינו חל על {currency}",
     "Reconnect": "התחבר מחדש",
-    "Expired": "לא בתוקף"
+    "Expired": "לא בתוקף",
+    "PrintTicketManagement": "הקצה תבנית",
+    "DeletePrintTicketTemplate": "מחק את תבנית הכרטיסים",
+    "NewTicketTemplate": "תבנית כרטיסים חדשה",
+    "EditTicketTemplate": "ערוך תבנית כרטיסים",
+    "PrintedTicketTemplate": "הקצה תבנית כרטיסים",
+    "TicketTemplate": "תבנית כרטיסים",
+    "TicketTemplates": "תבניות כרטיסים",
+    "ThumbnailUrl": "כתובת אתר של תמונה ממוזערת"
   },
   "Drawer": {
     "UnSubscribeMsg": "אנא בחר סיבה לביטול הרישום לניוזלטר. זה יעזור לנו לשפר את השירותים שלנו.",
@@ -915,7 +923,9 @@
     "Members": "Members",
     "Contacts": "Contacts",
     "SessionOverlaps": "אזהרת חפיפה של מושב",
-    "ExportToCSV": "ייצא ל- CSV"
+    "ExportToCSV": "ייצא ל- CSV",
+    "EditPrintedTicketTemplate": "Modifier le modèle de ticket",
+    "NewPrintedTicketTemplate": "Nouveau modèle de ticket"
   },
   "FilterOptions": {
     "Is": "Is",
@@ -1051,7 +1061,9 @@
       "SeatMapDefault": "אזהרת מפת מושב",
       "SeatMapWarning": "ישנם שינויים שלא נשמרו אשר יאבדו אם תסגור מבלי לשמור, האם אתה בטוח?",
       "SetupWarning": "הגדרת אזהרת חיבור",
-      "SetupConnection": "אנא הגדר את החיבור כדי שיהיה פעיל."
+      "SetupConnection": "אנא הגדר את החיבור כדי שיהיה פעיל.",
+      "DeletePrintTicketTemplate": "האם ברצונך למחוק תבנית כרטיס זה?",
+      "ReplaceTicketTemplate": "תבנית הכרטיסים החדשה תחליף את תבנית הכרטיסים הקיימת שלך"
     },
     "Success": {
       "UnsubscribeSuccessMsg": "ביטלת את הרישום בהצלחה",

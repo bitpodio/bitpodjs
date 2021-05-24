@@ -944,16 +944,39 @@
                 <i18n path="Common.TicketsNotRequired" />
               </h2>
               <v-spacer></v-spacer>
-              <v-switch
-                v-if="
-                  data.event.LocationType === 'Venue' && switchSeat === true
-                "
-                v-model="switchSeat"
-                :label="$t('Common.SeatmapTickets')"
-                class="mt-0 ml-0 max-h24 positionAbsolute pad-top pad-right seatmap-btn"
-                height="20"
-                @change="updateSeatReservation"
-              ></v-switch>
+              <v-menu right :offset-y="offset" transition="slide-y-transition">
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn icon small v-bind="attrs" v-on="on">
+                    <v-icon>mdi-dots-vertical</v-icon>
+                  </v-btn>
+                </template>
+                <v-list dense>
+                  <v-list-item>
+                    <v-switch
+                      v-if="
+                        data.event.LocationType === 'Venue' &&
+                        switchSeat === true
+                      "
+                      v-model="switchSeat"
+                      :label="$t('Common.SeatmapTickets')"
+                      height="20"
+                      @change="updateSeatReservation"
+                    ></v-switch>
+                  </v-list-item>
+                  <v-list-item v-if="showPrintManagement">
+                    <v-btn
+                      text
+                      small
+                      append
+                      :class="{ 'mr-3': !$device.isMobile }"
+                      :to="{ path: 'print-ticket-management' }"
+                    >
+                      <v-icon left>mdi-ticket</v-icon>
+                      {{ $t('Common.PrintTicketManagement') }}
+                    </v-btn>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
             </v-flex>
             <v-divider></v-divider>
           </div>
@@ -1035,7 +1058,25 @@
                     : ''
                 "
                 class="mt-n14"
-              />
+              >
+                <template #gridthreedot>
+                  <v-list-item-group>
+                    <seatmap-tickets />
+                    <v-list-item v-if="showPrintManagement">
+                      <v-btn
+                        text
+                        small
+                        append
+                        :class="{ 'mr-3': !$device.isMobile }"
+                        :to="{ path: 'print-ticket-management' }"
+                      >
+                        <v-icon left>mdi-ticket</v-icon>
+                        {{ $t('Common.PrintTicketManagement') }}
+                      </v-btn>
+                    </v-list-item>
+                  </v-list-item-group>
+                </template>
+              </Grid>
             </div>
           </div>
         </div>
@@ -1628,6 +1669,7 @@ import copy from '~/components/common/copy'
 import Notes from '~/components/common/notes'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin, getIdFromAtob } from '~/utility'
+import SeatmapTickets from '~/config/templates/grids/eventTickets-grid/actions/grid/seatmapTickets.vue'
 
 export default {
   components: {
@@ -1643,6 +1685,7 @@ export default {
     copy,
     makeCopy,
     Notes,
+    SeatmapTickets,
   },
   mixins: [configLoaderMixin],
   props: {
@@ -1808,6 +1851,15 @@ export default {
         },
       }
       return dataObj
+    },
+    showPrintManagement() {
+      return (
+        this.data &&
+        this.data.event &&
+        this.data.event.HasTickets &&
+        this.data.event.LocationType === 'Venue' &&
+        this.data.event.BusinessType === 'Single'
+      )
     },
   },
   mounted() {
