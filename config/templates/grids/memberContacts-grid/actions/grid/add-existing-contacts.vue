@@ -26,17 +26,19 @@
             </v-btn>
           </div>
         </v-card-title>
-        <div v-if="dialog">
+        <v-card-text>
           <v-container v-if="content" class="pt-0 px-4 pb-8 inviteeDialog">
-            <Grid
-              :value="selectedList"
-              view-name="allContacts"
-              :content="content"
-              class="mt-n12"
-              @onSelectedListChange="updateList"
-            />
+            <div v-if="dialog">
+              <Grid
+                :value="selectedList"
+                view-name="allContacts"
+                :content="content"
+                class="mt-n12"
+                @onSelectedListChange="updateList"
+              />
+            </div>
           </v-container>
-        </div>
+        </v-card-text>
         <v-divider></v-divider>
         <v-card-actions
           class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
@@ -99,7 +101,7 @@ export default {
         )
         if (res) {
           const contactId = res.ContactId
-          this.itemId.map((ele) => {
+          this.itemId.forEach((ele) => {
             contactId.includes(ele) ? '' : contactId.push(ele)
           })
           this.setCustomers(contactId)

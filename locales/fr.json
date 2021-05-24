@@ -1,7 +1,7 @@
 {
   "Common": {
-    "NewDiscountCode":"Nouveau code de réduction",
-    "EditDiscountCode":"Modifier le code de réduction",
+    "NewDiscountCode": "Nouveau code de réduction",
+    "EditDiscountCode": "Modifier le code de réduction",
     "MemberList": "Liste des membres",
     "AppTitle": "Evénement",
     "Logout": "Déconnexion",
@@ -1014,6 +1014,7 @@
       "CreateOrgCatch": "Cette organisation est utilisée ou peut être supprimée de manière réversible. Essayez avec un nouveau nom.",
       "CreateOrgFull": "Échec de la création de votre organisation.",
       "MemberExists": "Le membre existe déjà",
+      "ContactExists": "Le contact existe déjà!",
       "ImportFailed": "L’exécution de l’importation a échoué",
       "ImportFailedMessage": "Le fichier csv n'est pas conforme au format accepté. Veuillez consulter l'exemple de fichier fourni ci-dessus.",
       "DuplicateErrorMessage": "Dupliquer les enregistrements dans le fichier. Veuillez utiliser un identifiant de messagerie unique.",
