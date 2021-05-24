@@ -1,7 +1,7 @@
 {
   "Common": {
-    "NewDiscountCode":"New Discount Code",
-    "EditDiscountCode":"Edit Discount Code",
+    "NewDiscountCode": "New Discount Code",
+    "EditDiscountCode": "Edit Discount Code",
     "MemberList": "Member List",
     "AppTitle": "Event",
     "Logout": "Logout",
@@ -287,7 +287,7 @@
     "CreateAccessKey": "Create Access Key",
     "InvitationHistory": "Invitation History",
     "NewRegistration": "New Registration",
-    "DisplayName":"Display Name",
+    "DisplayName": "Display Name",
     "AddMember": "Add Member",
     "AssociateMember": "Associate Member",
     "AssociatedMember": "Add Existing Members",
@@ -1017,6 +1017,7 @@
       "CreateOrgCatch": "This organisation is in use or may be soft-deleted. Try with a new name.",
       "CreateOrgFull": "Failed to create your organisation.",
       "MemberExists": "Member already exists!",
+      "ContactExits": "Contact already exists!",
       "ImportFailed": "Import execution failed",
       "ImportFailedMessage": "The csv file is not conforming to the accepted format. Please refer to the sample file provided above.",
       "DuplicateErrorMessage": "Duplicate records in the file. Please use unique email id.",

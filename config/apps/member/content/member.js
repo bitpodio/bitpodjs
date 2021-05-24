@@ -1430,6 +1430,9 @@ export default {
           edit: {
             hidden: true,
           },
+          delete: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
@@ -1874,6 +1877,14 @@ export default {
         name: 'associatedMember-grid',
         context: {
           basePath: '/member',
+        },
+        actions: {
+          edit: {
+            hidden: true,
+          },
+          delete: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
