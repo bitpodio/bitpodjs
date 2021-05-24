@@ -65,7 +65,7 @@
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
                       <v-card-title
-                        class="text-h5 grey--text text--darken-4 text-truncate d-block text-capitalize pa-2 pt-0 pb-1 pl-0"
+                        class="text-h5 text--primary text-truncate d-block text-capitalize pa-2 pt-0 pb-1 pl-0"
                         v-bind="attrs"
                         v-on="on"
                       >
@@ -214,7 +214,7 @@
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
                       <v-card-title
-                        class="text-h5 grey--text text--darken-4 text-truncate d-block text-capitalize pa-2 pt-0 pb-1 pl-0"
+                        class="text-h5 text--primary text-truncate d-block text-capitalize pa-2 pt-0 pb-1 pl-0"
                         v-bind="attrs"
                         v-on="on"
                       >
