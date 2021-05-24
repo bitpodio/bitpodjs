@@ -219,7 +219,7 @@ export default {
         }
       } catch (error) {
         if (error.response.status === 406) {
-          this.duplicateMessage = this.$t('Messages.Error.MemberExists')
+          this.duplicateMessage = this.$t('Messages.Error.ContactExists')
         }
         console.error(
           `Error in templates/grids/memberContacts-grid/actions/grid/new-item.vue while making a POST call to CustomerContact model from method onSave context:-URL:${url}`,
