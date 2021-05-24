@@ -1577,11 +1577,6 @@ export default {
           inlineEdit: true,
           newForm: false,
           editForm: false,
-          rules: [
-            function (v) {
-              return !!v || this.$t('Messages.Error.CustomerNameRequired')
-            },
-          ],
         },
         Email: {
           displayOrder: 4,
@@ -1615,11 +1610,6 @@ export default {
           inlineEdit: true,
           newForm: false,
           editForm: false,
-          rules: [
-            function (v) {
-              return !!v || this.$t('Messages.Error.CustomerNameRequired')
-            },
-          ],
           dataSource: {
             query: registrationStatusOptions,
             itemText: 'value',
@@ -1643,11 +1633,6 @@ export default {
           inlineEdit: false,
           newForm: false,
           editForm: false,
-          rules: [
-            function (v) {
-              return !!v || this.$t('Messages.Error.BusinessNameRequired')
-            },
-          ],
         },
         Type: {
           displayOrder: 4,
@@ -2177,11 +2162,6 @@ export default {
           inlineEdit: true,
           newForm: false,
           editForm: false,
-          rules: [
-            function (v) {
-              return !!v || this.$t('Messages.Error.CustomerNameRequired')
-            },
-          ],
         },
         Email: {
           displayOrder: 4,
@@ -2229,11 +2209,6 @@ export default {
           inlineEdit: false,
           newForm: false,
           editForm: false,
-          rules: [
-            function (v) {
-              return !!v || this.$t('Messages.Error.BusinessNameRequired')
-            },
-          ],
         },
         Type: {
           displayOrder: 6,
