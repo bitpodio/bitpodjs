@@ -43,7 +43,7 @@
                       :class="data.icon"
                     ></v-icon>
                   </div>
-                  <div class="pl-2 pt-1">
+                  <div class="pl-2 pt-1 boxview">
                     <h3 class="font-weight-regular text-truncate summaryTile">
                       {{ data.data }}{{ data.isConversion ? '%' : '' }}
                     </h3>
@@ -66,7 +66,7 @@
             <div
               v-for="(data, index) in eventOnSaleData"
               :key="index"
-              class="white elevation-2 rounded mb-3 cursorPointer dataTile"
+              class="white elevation-2 rounded mb-3 cursorPointer dataTile boxview"
               @click="routeToEvent(data)"
             >
               <v-skeleton-loader
@@ -106,7 +106,7 @@
                     >
                     </v-img>
                   </div>
-                  <div class="pl-2 pt-1">
+                  <div class="pl-2 pt-1 boxview">
                     <h3
                       class="font-weight-regular text-truncate pl-1 text-capitalize tileCaption"
                     >
@@ -161,7 +161,7 @@
           <h3 class="font-weight-regular pb-2">
             <i18n path="Common.10DaysTicketsSale" />
           </h3>
-          <div class="rounded white elevation-2 chartHeight">
+          <div class="rounded white elevation-2 chartHeight boxview">
             <div
               v-if="!ticketSoldLoaded || !ticketSoldReady"
               class="rounded chartHeight positionRelative"
@@ -184,6 +184,7 @@
                 :options="ticketSalechartOptions"
                 :resize-debounce="100"
                 :events="lineChartEvents"
+                class="boxview"
               />
             </div>
           </div>
@@ -196,7 +197,7 @@
             <div
               v-for="(data, index) in recentBuyersData"
               :key="index"
-              class="white elevation-2 rounded mb-3 cursorPointer dataTile"
+              class="white elevation-2 rounded mb-3 cursorPointer dataTile boxview"
               @click="routeToRegistration(data.id)"
             >
               <v-skeleton-loader
