@@ -137,7 +137,7 @@ export default {
         } catch (error) {
           this.isSaveButtonDisabled = false
           if (error.response.status === 422) {
-            this.duplicateMessage = this.$t('Messages.Error.ContactExits')
+            this.duplicateMessage = this.$t('Messages.Error.MemberExists')
           }
           console.log(
             `Error in Discountcode grid add member on Save function - context: offercodeid - ${offerCodeId} , customerId - ${this.customerId}`
