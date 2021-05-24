@@ -168,6 +168,8 @@
           viewName === 'template' ||
           viewName === 'seatmaps' ||
           viewName === 'badge' ||
+          viewName === 'feeds' ||
+          viewName === 'Members' ||
           viewName === 'integration'
             ? ''
             : 'table'
@@ -340,21 +342,31 @@
               :loading="loading"
               :tile="true"
               type="avatar"
-              class="mx-auto mt-18"
+              class="mt-10 ml-4"
               width="180"
               height="30"
             >
-              <div class="mx-auto mt-18"></div>
+              <div class="mt-10 ml-4"></div>
             </v-skeleton-loader>
             <v-skeleton-loader
               :loading="loading"
               :tile="true"
               type="avatar"
-              class="ml-4"
+              class="mt-10 ml-4"
+              width="180"
+              height="40"
+            >
+              <div class="mt-10 ml-4"></div>
+            </v-skeleton-loader>
+            <v-skeleton-loader
+              :loading="loading"
+              :tile="true"
+              type="avatar"
+              class="ml-4 mt-10"
               width="200"
               height="20"
             >
-              <div class="ml-4"></div>
+              <div class="ml-4 mt-10"></div>
             </v-skeleton-loader>
           </div>
         </div>
@@ -392,13 +404,13 @@
         </v-skeleton-loader>
       </div>
       <div
-        v-if="viewName === 'Member' && loading === true"
+        v-if="viewName === 'Members' && loading === true"
         class="d-flex flex-sm-wrap flex-column flex-sm-row"
       >
         <v-skeleton-loader
           v-for="i in 10"
           :key="i"
-          :loading="loading"
+          :loading="!!loading"
           type="card"
           width="230"
           height="230"
@@ -406,6 +418,24 @@
         >
           <div></div>
         </v-skeleton-loader>
+      </div>
+      <div v-if="viewName === 'feeds' && loading === true" class="d-flex">
+        <v-row class="flex-column">
+          <v-col
+            v-for="i in 3"
+            :key="i"
+            cols="12"
+            md="6"
+            class="col-md-6 feed-section-load mx-auto px-0"
+          >
+            <v-skeleton-loader
+              v-bind="attrs"
+              :loading="!!loading"
+              type="list-item-avatar-three-line, image, article"
+              ><div></div
+            ></v-skeleton-loader>
+          </v-col>
+        </v-row>
       </div>
     </div>
   </div>
@@ -671,6 +701,11 @@ export default {
       tableData: {
         items: [],
         total: 0,
+      },
+      attrs: {
+        class: 'mb-2',
+        boilerplate: true,
+        elevation: 1,
       },
       loading: true,
       totalCount: 0,
@@ -1402,6 +1437,9 @@ export default {
   width: 229px;
   height: 300px;
   border-radius: 4px;
+}
+.feed-section-load {
+  min-width: 600px;
 }
 @media (min-width: 601px) {
   .grid-actions-menu {
