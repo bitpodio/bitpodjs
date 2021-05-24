@@ -156,7 +156,7 @@ export default {
   watch: {
     customValidCheck(newVal) {
       if (!newVal) {
-        this.uniqueNameError = 'Template already exists.'
+        this.uniqueNameError = this.$t('Messages.Error.TicketTemplateExists')
       } else {
         this.uniqueNameError = ''
       }

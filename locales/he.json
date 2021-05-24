@@ -1,7 +1,7 @@
 {
   "Common": {
-    "NewDiscountCode":"קוד הנחה חדש",
-    "EditDiscountCode":"ערוך את קוד ההנחה",
+    "NewDiscountCode": "קוד הנחה חדש",
+    "EditDiscountCode": "ערוך את קוד ההנחה",
     "MemberList": "רשימת חברים",
     "AppTitle": "אירועים",
     "Logout": "להתנתק",
@@ -1030,7 +1030,8 @@
       "ImportFailed": "ביצוע הייבוא ​​נכשל",
       "ImportFailedMessage": "קובץ ה- csv אינו תואם לפורמט המקובל. אנא עיין בקובץ לדוגמה המופיע למעלה.",
       "DuplicateErrorMessage": "שכפול רשומות בקובץ. אנא השתמש במזהה דואל ייחודי.",
-      "AttendeeImportFailed": "ייבוא ​​המשתתף נכשל."
+      "AttendeeImportFailed": "ייבוא ​​המשתתף נכשל.",
+      "TicketTemplateExists": "התבנית כבר קיימת"
     },
     "Warn": {
       "UniqueLinkFormat": "אותיות אלפאנומריות באותיות קטנות בלבד",

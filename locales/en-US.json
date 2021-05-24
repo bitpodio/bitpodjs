@@ -1026,7 +1026,8 @@
       "ImportFailed": "Import execution failed",
       "ImportFailedMessage": "The csv file is not conforming to the accepted format. Please refer to the sample file provided above.",
       "DuplicateErrorMessage": "Duplicate records in the file. Please use unique email id.",
-      "AttendeeImportFailed": "Attendee Import Failed."
+      "AttendeeImportFailed": "Attendee Import Failed.",
+      "TicketTemplateExists": "Template already exists"
     },
     "Warn": {
       "UniqueLinkFormat": "Lower case alphanumeric letters only",
