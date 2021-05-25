@@ -921,7 +921,9 @@
     "SessionOverlaps": "Session Overlap Warning",
     "ExportToCSV": "Export to CSV",
     "EditPrintedTicketTemplate": "Edit Ticket Template",
-    "NewPrintedTicketTemplate": "New Ticket Template"
+    "NewPrintedTicketTemplate": "New Ticket Template",
+    "SingleEventAction": "Single Event",
+    "UnSubscribeMsg": "Please select a reason to unsubscribe from newsletter. This will help us to improve our services."
   },
   "FilterOptions": {
     "Is": "Is",
