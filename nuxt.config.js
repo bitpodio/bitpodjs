@@ -346,6 +346,7 @@ export default {
         fetchPolicy: 'no-cache',
       },
     },
+    errorHandler: '~/plugins/apollo-error-handler.js',
   },
   serverMiddleware: ['~/api/index.js', '~/server-middleware/no-cache'],
   auth: {
