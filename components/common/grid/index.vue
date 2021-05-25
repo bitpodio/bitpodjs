@@ -878,7 +878,6 @@ export default {
         : ''
     },
     hasGrid3DotSlot() {
-      debugger
       return !!this.$slots.gridthreedot
     },
   },
@@ -903,7 +902,6 @@ export default {
     },
   },
   mounted() {
-    debugger
     setTimeout(() => {
       this.selectedItems = []
     }, 2000)

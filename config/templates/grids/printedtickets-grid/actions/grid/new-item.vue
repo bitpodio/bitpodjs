@@ -162,11 +162,7 @@ export default {
       }
     },
     printedTicketTemplateTemplate(newVal) {
-      if (newVal.length) {
-        this.checkTemplate = true
-      } else {
-        this.checkTemplate = false
-      }
+      this.checkTemplate = newVal.length
     },
   },
   methods: {
