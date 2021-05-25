@@ -190,24 +190,27 @@ export default {
     },
   },
   watch: {
-    dialog(newVal) {
+    async dialog(newVal) {
       if (newVal) {
         postGaData('New', this.$t('Common.NewQuestion'))
-        this.getTicketDetails()
-          .then((res) => {
+        try {
+          const ticketRes = await this.getTicketDetails()
+          if (ticketRes) {
             this.ticketIds = []
-            this.ticketsDropDown = res.map((i) => {
+            this.ticketsDropDown = ticketRes.map((i) => {
               this.ticketIds.push({
                 name: i.Code,
                 id: getIdFromAtob(i.id),
               })
               return i.Code
             })
-            return res
-          })
-          .catch((e) => {
-            console.log('Error', e)
-          })
+          }
+        } catch (e) {
+          console.error(
+            'Error while fetching tickets for new registration question',
+            e
+          )
+        }
       }
     },
   },
