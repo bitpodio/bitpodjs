@@ -999,7 +999,7 @@
       "StartEndTime": "L'heure de début ne doit pas être supérieure à l'heure de fin",
       "EndStartTime": "L'heure de fin ne doit pas être inférieure à l'heure de début",
       "StartEndTimeEqlMsg": "L'heure de début ne doit pas être égale à l'heure de fin.",
-      "SessionStartDate": "La date de début de la session doit être comprise entre la date de l'événement",
+      "SessionStartDate": "La date et l'heure de début de la session doivent être comprises entre la date de l'événement",
       "RefundPaidAmount": "Le montant remboursé ne peut être supérieur ou égal au montant total payé",
       "RefundAmountMsg": "Le montant ne doit pas être inférieur ou égal à 0",
       "InvalidDisplayOrder": "L'ordre d'affichage ne doit pas être vide et inférieur à 1",

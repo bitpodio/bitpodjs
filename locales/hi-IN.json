@@ -1002,7 +1002,7 @@
       "StartEndTime": "प्रारंभ समय समाप्ति समय से अधिक नहीं होना चाहिए",
       "EndStartTime": "एंड टाइम स्टार्ट टाइम से कम नहीं होना चाहिए",
       "StartEndTimeEqlMsg": "प्रारंभ समय समाप्ति समय के बराबर नहीं होना चाहिए।",
-      "SessionStartDate": "सत्र प्रारंभ दिनांक घटना दिनांक के बीच होनी चाहिए",
+      "SessionStartDate": "सत्र शुरू होने की तारीख और समय इवेंट की तारीख के बीच का होना चाहिए",
       "RefundPaidAmount": "रिफंड की गई राशि कुल भुगतान राशि से अधिक या बराबर नहीं हो सकती है",
       "RefundAmountMsg": "राशि 0 से कम या उसके बराबर नहीं होनी चाहिए",
       "InvalidDisplayOrder": "Display order should not be blank and less than 1",
