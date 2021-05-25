@@ -841,7 +841,6 @@ export default {
     },
   },
   mounted() {
-    debugger
     setTimeout(() => {
       this.selectedItems = []
     }, 2000)

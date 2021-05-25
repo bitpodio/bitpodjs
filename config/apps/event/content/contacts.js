@@ -905,7 +905,7 @@ export default {
         hideDefaultFooter: false,
         showExpand: false,
         singleExpand: false,
-        showSelect: false,
+        showSelect: true,
         hideFilter: false,
         hideSearch: true,
       },
@@ -962,6 +962,9 @@ export default {
             hidden: true,
           },
           edit: {
+            hidden: true,
+          },
+          delete: {
             hidden: true,
           },
           exportCsv: {
