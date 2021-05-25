@@ -6,7 +6,33 @@
         inset
         label="Dark Mode"
         persistent-hint
+        @change="setTheme"
       ></v-switch>
     </v-list-item>
   </v-list>
 </template>
+<script>
+export default {
+  props: {
+    attrs: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
+  mounted() {
+    const theme = localStorage.getItem('darkTheme')
+    if (theme) {
+      if (theme === 'true') {
+        this.$vuetify.theme.dark = true
+      } else {
+        this.$vuetify.theme.dark = false
+      }
+    }
+  },
+  methods: {
+    setTheme() {
+      localStorage.setItem('darkTheme', this.$vuetify.theme.dark.toString())
+    },
+  },
+}
+</script>
