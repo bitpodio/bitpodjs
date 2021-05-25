@@ -876,6 +876,7 @@
   "Drawer": {
     "UnSubscribeAction": "Unsubscribe",
     "CreateEventAction": "Create Event",
+    "SingleEventAction": "Single Event",
     "RecurringEventAction": "Recurring Event",
     "CreateUser": "Create User",
     "EditBadge": "Edit Badge",
