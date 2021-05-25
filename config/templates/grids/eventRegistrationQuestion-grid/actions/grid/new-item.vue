@@ -193,6 +193,21 @@ export default {
     dialog(newVal) {
       if (newVal) {
         postGaData('New', this.$t('Common.NewQuestion'))
+        this.getTicketDetails()
+          .then((res) => {
+            this.ticketIds = []
+            this.ticketsDropDown = res.map((i) => {
+              this.ticketIds.push({
+                name: i.Code,
+                id: getIdFromAtob(i.id),
+              })
+              return i.Code
+            })
+            return res
+          })
+          .catch((e) => {
+            console.log('Error', e)
+          })
       }
     },
   },
@@ -315,6 +330,7 @@ export default {
               },
             },
           },
+          fetchPolicy: 'no-cache',
         })
         .then((result) => {
           const ticketDetails = formatGQLResult(result.data, 'Ticket')
