@@ -1,0 +1,22 @@
+query($filters: JSON, $where: JSON) {
+  PrintedTicketTemplate {
+    PrintedTicketTemplateFind(filter: $filters) {
+      edges {
+        node {
+          id
+          Size
+          Name
+          ThumbnailUrl
+          isDefault
+          Template
+          createdDate
+          createdBy
+          modifiedDate
+          modifiedBy
+          eventId
+        }
+      }
+    }
+    PrintedTicketTemplateCount(where: $where)
+  }
+}

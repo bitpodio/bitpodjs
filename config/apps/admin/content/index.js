@@ -7,6 +7,7 @@ import userroles from './userroles'
 import users from './users'
 import accesskey from './accesskey'
 import lookup from './lookup'
+import printedtickets from './printedtickets'
 
 export default {
   organization,
@@ -18,4 +19,5 @@ export default {
   userroles,
   users,
   accesskey,
+  printedtickets,
 }
