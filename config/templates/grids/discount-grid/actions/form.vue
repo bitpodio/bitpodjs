@@ -331,10 +331,10 @@ export default {
           this.uniqueCodeMessage = ''
         }
       } catch (error) {
-        // console.error(
-        //   `Error in config/templates/grids/discount-grid/actions/form.vue while checking unique code context: OfferCode GQL, filter:${where}`,
-        //   error
-        // )
+         console.error(
+           `Error in config/templates/grids/discount-grid/actions/form.vue while checking unique code context: OfferCode GQL, filter:${where}`,
+           error
+         )
       }
     },
     async onSave() {
