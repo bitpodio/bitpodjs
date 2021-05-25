@@ -864,7 +864,15 @@
     "Language": "Langue",
     "SelectingJPYCurrency": "L'arrondi décimal ne s'applique pas aux {currency}",
     "Reconnect": "Reconnecter",
-    "Expired": "Expiré"
+    "Expired": "Expiré",
+    "PrintTicketManagement": "Attribuer un modèle",
+    "DeletePrintTicketTemplate": "Supprimer le modèle de ticket",
+    "NewTicketTemplate": "Nouveau modèle de ticket",
+    "EditTicketTemplate": "Modifier le modèle de ticket",
+    "PrintedTicketTemplate": "Attribuer un modèle de ticket",
+    "TicketTemplate": "Modèle de ticket",
+    "TicketTemplates": "Modèles de billets",
+    "ThumbnailUrl": "URL de la miniature"
   },
   "Drawer": {
     "UnSubscribeMsg": "Veuillez sélectionner une raison pour vous désinscrire de la newsletter. Cela nous aidera à améliorer nos services.",
@@ -913,7 +921,9 @@
     "Members": "Membres",
     "Contacts": "Contacts",
     "SessionOverlaps": "Avertissement de chevauchement de session",
-    "ExportToCSV": "Exporter au format CSV"
+    "ExportToCSV": "Exporter au format CSV",
+    "EditPrintedTicketTemplate": "Modifier le modèle de ticket",
+    "NewPrintedTicketTemplate": "Nouveau modèle de ticket"
   },
   "FilterOptions": {
     "Is": "Est",
@@ -1018,7 +1028,8 @@
       "ImportFailed": "L’exécution de l’importation a échoué",
       "ImportFailedMessage": "Le fichier csv n'est pas conforme au format accepté. Veuillez consulter l'exemple de fichier fourni ci-dessus.",
       "DuplicateErrorMessage": "Dupliquer les enregistrements dans le fichier. Veuillez utiliser un identifiant de messagerie unique.",
-      "AttendeeImportFailed": "L'importation des participants a échoué."
+      "AttendeeImportFailed": "L'importation des participants a échoué.",
+      "TicketTemplateExists": "Le modèle existe déjà"
     },
     "Warn": {
       "UniqueLinkFormat": "Minuscules lettres alphanumériques uniquement",
@@ -1049,7 +1060,9 @@
       "SeatMapDefault": "Avertissement de plan de siège",
       "SeatMapWarning": "Certaines modifications non enregistrées seront perdues si vous fermez sans enregistrer, êtes-vous sûr?",
       "SetupWarning": "Avertissement de connexion de configuration",
-      "SetupConnection": "Veuillez configurer la connexion pour la rendre active."
+      "SetupConnection": "Veuillez configurer la connexion pour la rendre active.",
+      "DeletePrintTicketTemplate": "Voulez-vous supprimer ce modèle de ticket?",
+      "ReplaceTicketTemplate": "Le nouveau modèle de ticket remplacera votre modèle de ticket existant"
     },
     "Success": {
       "UnsubscribeSuccessMsg": "Vous vous êtes désabonné avec succès",
