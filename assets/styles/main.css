@@ -472,6 +472,9 @@ body {
   max-width: 65% !important;
   margin: 0 auto !important;
 }
+.theme--dark .istemplate .v-data-footer {
+    background: #000000 !important;
+}
 .vs-hidden {
   visibility: hidden;
 }
