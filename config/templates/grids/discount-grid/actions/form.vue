@@ -377,10 +377,10 @@ export default {
           this.snackbar = true
         }
       } catch (error) {
-        console.error(
-          `Error in config/templates/grids/discount-grid/actions/form.vue on onSave method`,
-          error
-        )
+       console.error(
+         `Error in config/templates/grids/discount-grid/actions/form.vue on onSave method`,
+         error
+       )
       }
     },
   },
