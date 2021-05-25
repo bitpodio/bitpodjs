@@ -588,6 +588,9 @@ body {
 .elevation-0.v-grid .v-data-table-header-mobile {
     display: none !important;
 }
+.theme--dark .parentWidth text {
+    fill: #ccc !important;
+}
 .st-date {
   max-width: 125px !important;
   min-width: 125px !important;
@@ -771,6 +774,26 @@ table > tbody > tr:last-child .key-align {
   min-width: 600px !important;
   margin: 0 auto !important;
   width: 50% !important;
+}
+.theme--dark .jodit-container:not(.jodit_inline) {
+  border: 1px solid #505050 !important;
+  background-color: #1e1e1e !important;
+}
+.theme--dark .jodit-toolbar__box:not(:empty) {
+  background-color: #1e1e1e !important;
+  border-bottom: 1px solid #585858 !important;
+}
+.theme--dark .jodit-workplace+.jodit-status-bar:not(:empty) {
+  border-top: 1px solid #6a6a6a !important;
+}
+.theme--dark .jodit-status-bar {
+  background-color: #383838 !important;
+}
+.theme--dark .jodit-toolbar-button__button:hover:not([disabled]) {
+  background-color: #414141 !important;
+}
+.theme--dark .slide-form-default h2, .theme--dark .slide-form h2 {
+  color: #fff !important;
 }
 @media (min-width: 1904px) {
   .boxviewlarge .v-data-table__wrapper {
