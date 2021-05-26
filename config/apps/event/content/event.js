@@ -2831,7 +2831,7 @@ export default {
           }
         },
       },
-      title: 'eventRegistrations',
+      title: 'Common.Registrations',
       type: 'list',
     },
     recurringEventRegistrations: {
@@ -2844,7 +2844,7 @@ export default {
         hideFilter: true,
         hideSearch: true,
       },
-      itemTitle: 'Drawer.Registrations',
+      itemTitle: 'Common.Registration',
       hidden: true,
       fields: {
         GoLive: {
@@ -3207,7 +3207,7 @@ export default {
           }
         },
       },
-      title: 'eventRegistrations',
+      title: 'Common.Registrations',
       type: 'list',
     },
     eventInvites: {
@@ -3632,7 +3632,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'Drawer.DiscountCode',
+      itemTitle: 'Common.DiscountCodes',
       hidden: true,
       fields: {
         codeTitle: {

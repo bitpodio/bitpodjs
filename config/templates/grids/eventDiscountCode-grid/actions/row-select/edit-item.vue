@@ -49,6 +49,7 @@
                 <v-text-field
                   v-model="formData.maxUsageCount"
                   :label="$t('Common.MaxUsageCount')"
+                  :rules="[rules.negativeNumberRules]"
                   type="number"
                   min="1"
                   outlined
@@ -59,6 +60,7 @@
                 <v-text-field
                   v-model="formData.minApplicableOrderAmount"
                   :label="$t('Common.MinApplicableOrderAmount')"
+                  :rules="[rules.negativeNumberRules]"
                   type="number"
                   min="1"
                   outlined
@@ -70,7 +72,7 @@
                   v-model="formData.offerValue"
                   :label="$t('Common.OfferValueRequired')"
                   type="number"
-                  :rules="[rules.required]"
+                  :rules="[rules.offerCountRules]"
                   min="1"
                   outlined
                   dense
@@ -104,6 +106,7 @@
                 <v-text-field
                   v-model="formData.maxApplicableAmount"
                   :label="$t('Common.MaxApplicableAmount')"
+                  :rules="[rules.negativeNumberRules]"
                   type="number"
                   min="1"
                   outlined
