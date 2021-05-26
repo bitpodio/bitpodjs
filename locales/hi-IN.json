@@ -1036,7 +1036,8 @@
       "ImportFailedMessage": "सीएसवी फ़ाइल स्वीकृत प्रारूप के अनुरूप नहीं है। कृपया ऊपर प्रदान की गई नमूना फ़ाइल देखें।",
       "DuplicateErrorMessage": "फ़ाइल में डुप्लिकेट रिकॉर्ड। कृपया अद्वितीय ईमेल आईडी का उपयोग करें।",
       "AttendeeImportFailed": "सहभागी आयात विफल।",
-      "TicketTemplateExists": "टेम्प्लेट पहले से मौजूद है"
+      "TicketTemplateExists": "टेम्प्लेट पहले से मौजूद है",
+      "DurationGreaterSessionMsg": "स्लॉट का आकार सत्र के कुल समय से कम या उसके बराबर होना चाहिए।"
     },
     "Warn": {
       "UniqueLinkFormat": "केवल लोअर केस अल्फ़ान्यूमेरिक अक्षर",

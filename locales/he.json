@@ -1035,7 +1035,8 @@
       "ImportFailedMessage": "קובץ ה- csv אינו תואם לפורמט המקובל. אנא עיין בקובץ לדוגמה המופיע למעלה.",
       "DuplicateErrorMessage": "שכפול רשומות בקובץ. אנא השתמש במזהה דואל ייחודי.",
       "AttendeeImportFailed": "ייבוא ​​המשתתף נכשל.",
-      "TicketTemplateExists": "התבנית כבר קיימת"
+      "TicketTemplateExists": "התבנית כבר קיימת",
+      "DurationGreaterSessionMsg": "גודל החריצים צריך להיות קטן או שווה לזמן הכולל של ההפעלה."
     },
     "Warn": {
       "UniqueLinkFormat": "אותיות אלפאנומריות באותיות קטנות בלבד",

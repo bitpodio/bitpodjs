@@ -119,6 +119,7 @@
             depressed
             :has-submit-action="true"
             :has-external-submit="true"
+            :reset="isReset"
             :form-name="formName"
             class="ml-2"
             ><i18n path="Drawer.Save"
@@ -152,6 +153,7 @@ export default {
       dialog: false,
       valid: false,
       snackbar: false,
+      isReset: false,
       snackbarText: '',
       timeout: 3000,
       departmentItems: [],
@@ -213,12 +215,15 @@ export default {
         if (res) {
           this.dialog = false
           this.onReset()
-          this.snackbarText = this.$t('Messages.Success.RecordCreateSuccess')
+          this.snackbarText = this.$t('Messages.Success.UpdatedSuccessfully', {
+            modelName: 'Contact',
+          })
           this.snackbar = true
           this.refresh()
         }
       } catch (error) {
         if (error.response.status === 406) {
+          this.isReset = !this.isReset
           this.duplicateMessage = this.$t('Messages.Error.ContactExists')
         }
         console.error(

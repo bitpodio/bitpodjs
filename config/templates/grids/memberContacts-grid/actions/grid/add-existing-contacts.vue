@@ -27,7 +27,7 @@
           </div>
         </v-card-title>
         <v-card-text>
-          <v-container v-if="content" class="pt-0 px-4 pb-8 inviteeDialog">
+          <v-container v-if="content" class="pa-0 inviteeDialog">
             <div v-if="dialog">
               <Grid
                 :value="selectedList"
@@ -102,7 +102,7 @@ export default {
         if (res) {
           const contactId = res.ContactId
           this.itemId.forEach((ele) => {
-            contactId.includes(ele) ? '' : contactId.push(ele)
+            contactId.push(contactId.includes(ele) ? '' : ele)
           })
           this.setCustomers(contactId)
         }

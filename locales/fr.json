@@ -1033,7 +1033,8 @@
       "ImportFailedMessage": "Le fichier csv n'est pas conforme au format accepté. Veuillez consulter l'exemple de fichier fourni ci-dessus.",
       "DuplicateErrorMessage": "Dupliquer les enregistrements dans le fichier. Veuillez utiliser un identifiant de messagerie unique.",
       "AttendeeImportFailed": "L'importation des participants a échoué.",
-      "TicketTemplateExists": "Le modèle existe déjà"
+      "TicketTemplateExists": "Le modèle existe déjà",
+      "DurationGreaterSessionMsg": "La taille des emplacements doit être inférieure ou égale à la durée totale de la session."
     },
     "Warn": {
       "UniqueLinkFormat": "Minuscules lettres alphanumériques uniquement",
