@@ -908,13 +908,27 @@
                             <v-autocomplete
                               v-model="session.Duration"
                               :items="slotLookupOptions"
+                              :rules="sessionValidationRules(k)"
+                              :has-error-tooltip="true"
                               item-text="value"
                               item-value="key"
                               outlined
                               dense
                               :attach="`#duration-select-${k}`"
+                              :error-messages="uniqueLinkValidationMsg"
                               @change="changeDuration(k)"
-                            ></v-autocomplete>
+                            >
+                              <template v-slot:message="{ message, key }">
+                                <v-tooltip bottom>
+                                  <template v-slot:activator="{ on, attrs }">
+                                    <span v-bind="attrs" v-on="on" :key="key">{{
+                                      message
+                                    }}</span>
+                                  </template>
+                                  <span :key="key">{{ message }}</span>
+                                </v-tooltip>
+                              </template>
+                            </v-autocomplete>
                           </td>
                           <td
                             class="pa-2 pb-0 event-timezone e-td"
@@ -1668,6 +1682,20 @@ export default {
           return startTime >= endTime
             ? this.$t('Messages.Error.StartEndTime')
             : true
+        },
+      ]
+    },
+    sessionValidationRules(index) {
+      return [
+        (v) => {
+          const startTime = parseInt(this.sessions[index].StartTime)
+          const endTime = parseInt(this.sessions[index].EndTime)
+          const diff = (endTime - startTime) * 60
+          if (diff >= parseInt(v)) {
+            return true
+          } else {
+            return this.$t('Messages.Error.DurationGreaterSessionMsg')
+          }
         },
       ]
     },
