@@ -19,6 +19,7 @@
     "Live": "लाइव",
     "Scan": "स्कैन",
     "Feeds": "फीड",
+    "Feed": "फीड",
     "NewFeed": "नए फीड",
     "EditFeed": "फ़ीड संपादित करें",
     "Like": "पसंद",
@@ -866,7 +867,16 @@
     "Language": "भाषा",
     "SelectingJPYCurrency": "दशमलव राउंडिंग बंद लागू नहीं होता है {currency}",
     "Reconnect": "फिर से कनेक्ट",
-    "Expired": "समय सीमा समाप्त"
+    "Expired": "समय सीमा समाप्त",
+    "PrintTicketManagement": "टेम्पलेट असाइन करें",
+    "DeletePrintTicketTemplate": "टिकट टेम्पलेट हटाएं",
+    "NewTicketTemplate": "नया टिकट टेम्पलेट",
+    "EditTicketTemplate": "टिकट टेम्पलेट संपादित करें",
+    "PrintedTicketTemplate": "टिकट टेम्पलेट असाइन करें",
+    "TicketTemplate": "टिकट टेम्पलेट",
+    "TicketTemplates": "टिकट टेम्पलेट्स",
+    "ThumbnailUrl": "थंबनेल Url",
+    "DeleteTicketTemplate": "टिकट टेम्पलेट हटाएं"
   },
   "Drawer": {
     "UnSubscribeMsg": "कृपया न्यूज़लेटर से सदस्यता समाप्त करने का कारण चुनें। इससे हमें अपनी सेवाओं को बेहतर बनाने में मदद मिलेगी।",
@@ -915,7 +925,9 @@
     "Members": "सदस्य",
     "Contacts": "संपर्क",
     "SessionOverlaps": "अधिवेशन ओवरलैप चेतावनी",
-    "ExportToCSV": "सीएसवी को निर्यात"
+    "ExportToCSV": "सीएसवी को निर्यात",
+    "EditPrintedTicketTemplate": "टिकट टेम्पलेट संपादित करें",
+    "NewPrintedTicketTemplate": "नया टिकट टेम्पलेट"
   },
   "FilterOptions": {
     "Is": "है",
@@ -991,7 +1003,7 @@
       "StartEndTime": "प्रारंभ समय समाप्ति समय से अधिक नहीं होना चाहिए",
       "EndStartTime": "एंड टाइम स्टार्ट टाइम से कम नहीं होना चाहिए",
       "StartEndTimeEqlMsg": "प्रारंभ समय समाप्ति समय के बराबर नहीं होना चाहिए।",
-      "SessionStartDate": "सत्र प्रारंभ दिनांक घटना दिनांक के बीच होनी चाहिए",
+      "SessionStartDate": "सत्र शुरू होने की तारीख और समय इवेंट की तारीख के बीच का होना चाहिए",
       "RefundPaidAmount": "रिफंड की गई राशि कुल भुगतान राशि से अधिक या बराबर नहीं हो सकती है",
       "RefundAmountMsg": "राशि 0 से कम या उसके बराबर नहीं होनी चाहिए",
       "InvalidDisplayOrder": "Display order should not be blank and less than 1",
@@ -1020,7 +1032,8 @@
       "ImportFailed": "आयात निष्पादन विफल हुआ",
       "ImportFailedMessage": "सीएसवी फ़ाइल स्वीकृत प्रारूप के अनुरूप नहीं है। कृपया ऊपर प्रदान की गई नमूना फ़ाइल देखें।",
       "DuplicateErrorMessage": "फ़ाइल में डुप्लिकेट रिकॉर्ड। कृपया अद्वितीय ईमेल आईडी का उपयोग करें।",
-      "AttendeeImportFailed": "सहभागी आयात विफल।"
+      "AttendeeImportFailed": "सहभागी आयात विफल।",
+      "TicketTemplateExists": "टेम्प्लेट पहले से मौजूद है"
     },
     "Warn": {
       "UniqueLinkFormat": "केवल लोअर केस अल्फ़ान्यूमेरिक अक्षर",
@@ -1051,7 +1064,9 @@
       "SeatMapDefault": "सीटमैप चेतावनी",
       "SeatMapWarning": "बिना सहेजे हुए परिवर्तन हैं जो बिना बचत के बंद होने पर खो जाएंगे, क्या आप सुनिश्चित हैं?",
       "SetupWarning": "कनेक्शन चेतावनी",
-      "SetupConnection": "कृपया इसे सक्रिय करने के लिए कनेक्शन सेटअप करें।"
+      "SetupConnection": "कृपया इसे सक्रिय करने के लिए कनेक्शन सेटअप करें।",
+      "DeletePrintTicketTemplate": "क्या आप इस टिकट टेम्पलेट को हटाना चाहते हैं?",
+      "ReplaceTicketTemplate": "नया टिकट टेम्प्लेट आपके मौजूदा टिकट टेम्प्लेट को बदल देगा"
     },
     "Success": {
       "UnsubscribeSuccessMsg": "आपने सफलतापूर्वक सदस्यता समाप्त कर ली है",

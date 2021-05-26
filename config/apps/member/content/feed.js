@@ -12,6 +12,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
+      itemTitle: 'Common.Feed',
       default: true,
       fields: {
         Title: {

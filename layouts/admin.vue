@@ -103,6 +103,10 @@
                   v-if="item.text === 'Registration Form'"
                   path="Common.RegistrationForm"
                 />
+                <i18n
+                  v-if="item.text === 'Ticket Templates'"
+                  path="Common.TicketTemplates"
+                />
                 <i18n v-if="item.text === 'Roles'" path="Common.Roles" />
                 <i18n v-if="item.text === 'Users'" path="Common.Users" />
                 <i18n
@@ -405,6 +409,11 @@ export default {
           icon: 'fa fa-file-text-o',
           text: 'Registration Form',
           to: '/apps/admin/list/registrationformdetails/registration form',
+        },
+        {
+          icon: 'fa fa-ticket',
+          text: 'Ticket Templates',
+          to: '/apps/admin/list/printedtickets/printed-tickets',
         },
         { heading: 'Security' },
         {

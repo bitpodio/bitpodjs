@@ -47,7 +47,7 @@ function getGQLAPIErrorMsg(err) {
 }
 
 function getAPIErrorMessage(statusCode, msg) {
-  let userErrorMsg = 'Something went wrong'
+  let userErrorMsg = ''
   switch (statusCode) {
     case 401:
       if (msg === 'jwt expired')
