@@ -135,7 +135,7 @@
                 />
                 <i18n
                   v-if="item.text === 'Discount Code'"
-                  path="Drawer.DiscountCode"
+                  path="Common.DiscountCodes"
                 />
                 <i18n v-if="item.text === 'Members'" path="Drawer.Members" />
                 <i18n v-if="item.text === 'Contacts'" path="Drawer.Contacts" />
