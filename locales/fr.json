@@ -878,7 +878,11 @@
     "RequestInformation": "Informations requises",
     "SignedDoc": "Doc signé",
     "CopyDownloadLink": "Copier le lien de téléchargement",
-    "SignOrGetSignatures": "Signez ou obtenez des signatures"
+    "SignOrGetSignatures": "Signez ou obtenez des signatures",
+    "Completed": "Complété",
+    "InProgress": "En cours",
+    "Declined": "Diminué",
+    "SignatureRequestedSubject": "Signature demandée -"
   },
   "Drawer": {
     "UnSubscribeMsg": "Veuillez sélectionner une raison pour vous désinscrire de la newsletter. Cela nous aidera à améliorer nos services.",

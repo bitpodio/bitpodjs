@@ -881,7 +881,11 @@
     "RequestInformation": "Request Information",
     "SignedDoc": "Signed Doc",
     "CopyDownloadLink": "Copy Download Link",
-    "SignOrGetSignatures": "Sign or get signatures"
+    "SignOrGetSignatures": "Sign or Get Signatures",
+    "Completed": "Completed",
+    "InProgress": "In Progress",
+    "Declined": "Declined",
+    "SignatureRequestedSubject": "Signature Requested -"
   },
   "Drawer": {
     "UnSubscribeMsg": "Please select a reason to unsubscribe from newsletter. This will help us to improve our services.",

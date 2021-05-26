@@ -880,7 +880,11 @@
     "RequestInformation": "בקשת מידע",
     "SignedDoc": "דוק חתום",
     "CopyDownloadLink": "העתק קישור להורדה",
-    "SignOrGetSignatures": "חתום או קבל חתימות"
+    "SignOrGetSignatures": "חתום או קבל חתימות",
+    "Completed": "הושלם",
+    "InProgress": "בתהליך",
+    "Declined": "נדחה",
+    "SignatureRequestedSubject": "בקשה לחתימה -"
   },
   "Drawer": {
     "UnSubscribeMsg": "אנא בחר סיבה לביטול הרישום לניוזלטר. זה יעזור לנו לשפר את השירותים שלנו.",

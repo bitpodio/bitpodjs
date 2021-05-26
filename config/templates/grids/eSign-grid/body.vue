@@ -5,15 +5,104 @@
         <v-text class="text-h5"
           ><i18n path="Common.SignOrGetSignatures"
         /></v-text>
-        <v-spacer></v-spacer>
         <v-btn
           color="primary"
           max-width="64px"
           text
           depressed
+          class="ml-4"
           @click="handleNewTemplate"
           ><v-icon>mdi-plus</v-icon><i18n path="Common.New"
         /></v-btn>
+      </v-col>
+      <v-col cols="12" class="overflowHidden px-0 seatmap-inner">
+        <div
+          style="width: 100%;"
+          :class="{
+            'd-flex flex-nowrap': true,
+            'summary-block': $vuetify.breakpoint.smAndDown,
+          }"
+        >
+          <div
+            v-for="(data, index) in requestSummaryData"
+            :key="index"
+            class="white d-inline-block elevation-2 rounded flex-grow-0 flex-shrink-0"
+            :class="{ 'mr-5': index < 4 }"
+            style="width: 200px; height: 60px;"
+          >
+            <nuxt-link
+              :to="eSignViews(data.view)"
+              class="text-decoration-none black--text"
+            >
+              <v-skeleton-loader
+                :loading="false"
+                :tile="true"
+                type="avatar"
+                height="60"
+                width="60"
+              >
+                <div class="d-flex">
+                  <div
+                    style="width: 60px; height: 60px;"
+                    :class="data.class"
+                    class="rounded-l"
+                  >
+                    <v-icon
+                      style="font-size: 28px;"
+                      class="pl-4 pt-4 white--text"
+                      >{{ data.icon }}</v-icon
+                    >
+                  </div>
+                  <div class="pl-2 pt-1">
+                    <h3 class="font-weight-regular text-truncate summaryTile">
+                      {{ data.value }}
+                    </h3>
+                    <h5 class="font-weight-regular text-truncate summaryTile">
+                      {{ data.caption }}
+                    </h5>
+                  </div>
+                </div>
+              </v-skeleton-loader>
+            </nuxt-link>
+          </div>
+        </div>
+      </v-col>
+      <v-col cols="12" class="px-0 seatmap-inner">
+        <div class="d-flex">
+          <div v-if="$route.params.viewName === 'eSign'" class="fs-18 min-h36">
+            <i18n path="Common.Total" />
+          </div>
+          <div
+            v-else-if="$route.params.viewName === 'eSignCompleted'"
+            class="fs-18 min-h36"
+          >
+            <i18n path="Common.Completed" />
+          </div>
+          <div
+            v-else-if="$route.params.viewName === 'eSignInprogress'"
+            class="fs-18 min-h36"
+          >
+            <i18n path="Common.InProgress" />
+          </div>
+          <div v-else class="fs-18 min-h36">
+            <i18n path="Common.Declined" />
+          </div>
+          <v-menu offset-y transition="slide-y-transition" bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn icon v-bind="attrs" v-on="on">
+                <v-icon class="fs-30">mdi-chevron-down</v-icon>
+              </v-btn>
+            </template>
+
+            <v-list>
+              <div v-for="(item, index) in requestSummaryData" :key="index">
+                <v-list-item :to="eSignViews(item.view)">
+                  {{ item.caption }}
+                </v-list-item>
+              </div>
+            </v-list>
+          </v-menu>
+        </div>
       </v-col>
       <v-col class="d-flex flex-wrap greybg pa-0 pt-10 seatmap-inner">
         <v-col
@@ -24,6 +113,67 @@
           <nuxt-link :to="eSignRoutes(item.id)" class="text-decoration-none">
             <v-card class="elevation-0 pa-0">
               <div class="positionRelative">
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                      :class="{
+                        'ma-2 positionAbsolute request-status text-darken-4': true,
+                        'success--text':
+                          item.Status === 'Completed' &&
+                          !(
+                            new Date(item.ExpirationDate).getTime() &&
+                            new Date(item.ExpirationDate).getTime() <
+                              new Date().setHours(0, 0, 0, 0)
+                          ),
+                        'info--text':
+                          item.Status === 'Inprogress' &&
+                          !(
+                            new Date(item.ExpirationDate).getTime() &&
+                            new Date(item.ExpirationDate).getTime() <
+                              new Date().setHours(0, 0, 0, 0)
+                          ),
+                        'warning--text':
+                          item.Status === 'Pending' &&
+                          !(
+                            new Date(item.ExpirationDate).getTime() &&
+                            new Date(item.ExpirationDate).getTime() <
+                              new Date().setHours(0, 0, 0, 0)
+                          ),
+                        'error--text':
+                          item.Status === 'Declined' ||
+                          (new Date(item.ExpirationDate).getTime() &&
+                            new Date(item.ExpirationDate).getTime() <
+                              new Date().setHours(0, 0, 0, 0)),
+                      }"
+                      depressed
+                      small
+                      color="white"
+                      v-bind="attrs"
+                      v-on="on"
+                    >
+                      {{
+                        new Date(item.ExpirationDate).getTime() &&
+                        new Date().setHours(0, 0, 0, 0) >
+                          new Date(item.ExpirationDate).getTime()
+                          ? $t('Common.Expired')
+                          : item.Status
+                      }}
+                    </v-btn>
+                  </template>
+                  <div v-if="item.Recipient && item.Recipient.edges">
+                    <div
+                      v-for="(recipient, index) in item.Recipient.edges"
+                      :key="index"
+                      class="h1 recipient-status-info"
+                    >
+                      {{
+                        recipient.node.Status
+                          ? `${recipient.node.FullName} [${recipient.node.type}]: ${recipient.node.Status}`
+                          : `${recipient.node.FullName} [${recipient.node.type}]: Pending`
+                      }}
+                    </div>
+                  </div>
+                </v-tooltip>
                 <div class="overflow-h rounded-t">
                   <v-flex
                     class="tile-img tile-pattern rounded-0"
@@ -44,28 +194,10 @@
                 >
                   {{ item.Subject }}
                 </v-card-title>
-                <v-chip
-                  :class="{
-                    'mb-2 mt-n2': true,
-                    warning: item.Status === 'Inprogress',
-                    success: item.Status === 'Completed',
-                    error: item.Status === 'Declined',
-                  }"
-                  small
-                >
-                  {{ item.Status }}</v-chip
-                >
               </v-flex>
               <v-card-actions class="pt-0 pl-4 tiles-action">
                 <div class="text-truncate d-block">
-                  <v-chip>
-                    <v-avatar left color="warning" size="24">
-                      <span class="white--text name-initial">{{
-                        item.createdBy
-                      }}</span>
-                    </v-avatar>
-                    <span>{{ item.createdBy }}</span>
-                  </v-chip>
+                  {{ item.createdBy }}
                 </div>
                 <v-spacer></v-spacer>
               </v-card-actions>
@@ -87,7 +219,9 @@
 </template>
 
 <script>
+import gql from 'graphql-tag'
 import ESignForm from './ESignForm.vue'
+import requestSummary from '~/config/apps/eSign/gql/eSignRequestSummary.gql'
 
 export default {
   components: {
@@ -105,6 +239,36 @@ export default {
   data() {
     return {
       dialog: false,
+      requestSummaryData: [
+        {
+          caption: this.$t('Common.Total'),
+          value: 0,
+          icon: 'mdi-file-document-outline',
+          class: 'light-blue darken-1',
+          view: 'eSign',
+        },
+        {
+          caption: this.$t('Common.Completed'),
+          value: 0,
+          icon: 'mdi-file-check-outline',
+          class: 'green accent-4',
+          view: 'eSignCompleted',
+        },
+        {
+          caption: this.$t('Common.InProgress'),
+          value: 0,
+          icon: 'mdi-file-move-outline',
+          class: 'yellow darken-2',
+          view: 'eSignInprogress',
+        },
+        {
+          caption: this.$t('Common.Declined'),
+          value: 0,
+          icon: 'mdi-file-remove-outline',
+          class: 'red lighten-1',
+          view: 'eSignDeclined',
+        },
+      ],
       testRecipientList: [
         { FullName: 'Test', Email: 'test@test.com', type: 'HR' },
         { FullName: 'Sample', Email: 'sample@sample.com', type: 'Candidate' },
@@ -146,12 +310,45 @@ export default {
       },
     }
   },
+  async created() {
+    console.log()
+    if (this.items && this.items.length > 0) {
+      try {
+        const result = await this.$apollo.query({
+          query: gql`
+            ${requestSummary}
+          `,
+          variables: {
+            where: {},
+          },
+          fetchPolicy: 'no-cache',
+        })
+        if (result.data && result.data.ESignRequest) {
+          console.log(result.data)
+          this.requestSummaryData[0].value =
+            result.data.ESignRequest.ESignRequestCount
+          this.requestSummaryData[1].value =
+            result.data.ESignRequest.ESignRequestCompleted
+          this.requestSummaryData[2].value =
+            result.data.ESignRequest.ESignRequestInprogress
+          this.requestSummaryData[3].value =
+            result.data.ESignRequest.ESignRequestDeclined
+        }
+        console.log(result)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+  },
   methods: {
     handleNewTemplate() {
       this.dialog = true
     },
     eSignRoutes(id) {
       return this.localePath(`/apps/eSign/eSign/${id}`)
+    },
+    eSignViews(path) {
+      return this.localePath(`/apps/eSign/list/eSignRequest/${path}`)
     },
     getRandomImage(name) {
       return window.GeoPattern.generate(name).toDataUrl()
@@ -178,7 +375,7 @@ export default {
   display: block;
 }
 .seatmap-inner {
-  max-width: 65%;
+  max-width: 70%;
   margin: auto;
 }
 .tile-pattern {
@@ -209,8 +406,30 @@ export default {
 .tiles-action {
   min-height: 36px;
 }
+.summary-block {
+  border-bottom: 6px solid transparent;
+}
+.summary-block:hover {
+  border-bottom: none;
+  overflow: auto hidden;
+}
+.request-status {
+  right: -15px;
+  top: 5px;
+  z-index: 4;
+}
+.min-h36 {
+  min-height: 36px;
+  line-height: 36px;
+}
 .overflow-h {
   overflow: hidden;
+}
+.v-tooltip__content {
+  color: black !important;
+  font-size: 14px !important;
+  padding: 0.5em !important;
+  background-color: white !important;
 }
 @media (max-width: 600px) {
   .seatmap-inner {

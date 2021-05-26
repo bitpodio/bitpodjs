@@ -423,16 +423,9 @@
                               <span>{{ item.Name }}</span>
                             </v-tooltip>
                           </v-flex>
-                          <v-card-actions class="pt-0 pl-4 tiles-action">
+                          <v-card-actions class="pt-0 pl-6 tiles-action">
                             <div class="text-truncate d-block">
-                              <v-chip>
-                                <v-avatar left color="warning" size="24">
-                                  <span class="white--text name-initial">{{
-                                    item.createdBy
-                                  }}</span>
-                                </v-avatar>
-                                <span>{{ item.createdBy }}</span>
-                              </v-chip>
+                              {{ item.createdBy }}
                             </div>
                             <v-spacer></v-spacer>
                             <v-menu
@@ -517,7 +510,7 @@
                       id="html-scroll-container"
                       :class="{
                         'col-12 col-md-8 overflow-hover': true,
-                        'ml-n2': !$vuetify.breakpoint.smAndDown,
+                        'ml-n4': !$vuetify.breakpoint.smAndDown,
                       }"
                       style="height: inherit;"
                     >
@@ -528,11 +521,11 @@
                     </v-col>
                     <v-col
                       :class="{
-                        'col-12 col-md-4 greybg mx-0 px-8 pt-8 overflow-hover': true,
-                        'ml-2': !$vuetify.breakpoint.smAndDown,
+                        'col-12 col-md-4 mx-0 px-8 pt-8 overflow-hover': true,
+                        'ml-2 mr-2': !$vuetify.breakpoint.smAndDown,
                       }"
                       :order="$vuetify.breakpoint.smAndDown ? 'first' : 'last'"
-                      style="height: inherit;"
+                      style="height: inherit; border: 1px dotted black;"
                     >
                       <v-text-field
                         v-for="item in dataFields"
@@ -663,21 +656,18 @@
                         <v-col cols="12" class="pb-0">
                           <v-text-field
                             v-model="subject"
-                            :label="$t('Common.Title')"
+                            :label="$t('Common.Subject')"
                             required
                             outlined
                             dense
-                          ></v-text-field>
-                        </v-col>
-                        <v-col cols="12" class="pb-0">
-                          <v-text-field
-                            :value="'Signature requested - ' + subject"
-                            :label="$t('Common.SubjectRequired')"
-                            disabled
-                            required
-                            outlined
-                            dense
-                          ></v-text-field>
+                          >
+                            <template v-slot:prepend-inner>
+                              <i18n
+                                class="signature-requested-subject"
+                                path="Common.SignatureRequestedSubject"
+                              />
+                            </template>
+                          </v-text-field>
                         </v-col>
                         <v-col cols="12" class="pb-0">
                           <v-text-field
@@ -702,17 +692,6 @@
                             outlined
                             dense
                           ></v-text-field>
-                        </v-col>
-                        <v-col cols="12" class="pb-0">
-                          <v-text-field
-                            v-model="subject"
-                            :label="$t('Common.Title')"
-                            prefix="Signature requested - "
-                            required
-                            outlined
-                            dense
-                          >
-                          </v-text-field>
                         </v-col>
                       </v-row>
                     </v-form>
@@ -830,6 +809,41 @@
                       {{ item.FullName }} ({{ item.Email }})
                     </div>
                   </v-col>
+                  <v-col cols="12" class="pl-0">
+                    <div class="borderBottomGrey pb-1">
+                      <v-flex class="d-flex">
+                        <v-icon size="18" class="mr-1"
+                          >mdi-application-cog</v-icon
+                        >
+                        <h4 class="mt-1 body-1">
+                          <i18n path="Common.OptionsCaption" />
+                        </h4>
+                      </v-flex>
+                    </div>
+                    <div class="my-2 py-2 pl-2">
+                      <v-row>
+                        <v-col cols="8" class="pl-0">
+                          <CustomDate
+                            v-model="requestExpiryDate"
+                            :field="expiryDateField"
+                            :label="$t('Common.StartD')"
+                            :rules="expiryDateFieldRule()"
+                            type="date"
+                          />
+                        </v-col>
+                        <v-col cols="4" class="pl-0">
+                          <v-text-field
+                            v-model="daysLeftForRequest"
+                            outlined
+                            required
+                            dense
+                            label="Days Left"
+                            >Test</v-text-field
+                          >
+                        </v-col>
+                      </v-row>
+                    </div>
+                  </v-col>
                 </v-row>
               </v-tab-item>
             </v-tabs-items>
@@ -859,11 +873,14 @@
 <script>
 import _ from 'lodash'
 import handlebars from 'handlebars'
+import { addDays, differenceInDays } from 'date-fns'
+import CustomDate from '~/components/common/form/date.vue'
 import SaveBtn from '~/components/common/saveButton'
 import { configLoaderMixin } from '~/utility'
 export default {
   components: {
     SaveBtn,
+    CustomDate,
   },
   mixins: [configLoaderMixin],
   props: {
@@ -953,6 +970,8 @@ export default {
       deleteTemplateDialog: false,
       deleteTemplateId: '',
       deleteTemplateLoading: false,
+      requestExpiryDate: addDays(new Date(), 30),
+      daysLeftForRequest: 30,
     }
   },
   computed: {
@@ -968,6 +987,14 @@ export default {
           return true
       } else if (this.currentTab === 3 && this.subject === '') return true
       return false
+    },
+    expiryDateField() {
+      return {
+        appendIcon: 'fa-calendar',
+        outlined: true,
+        caption: this.$t('Common.ExpiresOn'),
+        type: 'date',
+      }
     },
   },
   watch: {
@@ -987,6 +1014,19 @@ export default {
           this.contactListSearchText = item
         }
       }
+    },
+    daysLeftForRequest(val) {
+      console.log(addDays(new Date(), val).toISOString().substr(0, 10))
+      this.requestExpiryDate = addDays(new Date(), val)
+        .toISOString()
+        .substr(0, 10)
+    },
+    requestExpiryDate(val) {
+      const dateToday = new Date().toISOString().substr(0, 10)
+      this.daysLeftForRequest = differenceInDays(
+        new Date(val),
+        new Date(dateToday)
+      )
     },
   },
   async mounted() {
@@ -1071,6 +1111,7 @@ export default {
           senderName: this.senderName,
           senderEmail: this.sender,
           setReplyTo: this.setReplyTo,
+          ExpirationDate: this.requestExpiryDate,
           TemplateData: JSON.stringify(this.formatHandlebarsData()),
         }
         console.log(this.postEsignRequestData, bitpodURL)
@@ -1516,6 +1557,20 @@ export default {
         this.deleteTemplateLoading = false
       }
     },
+    expiryDateFieldRule() {
+      return [
+        (v) => {
+          const ExpiryDate = v && new Date(v)
+          let expiryDateMessage = ''
+          if (!ExpiryDate)
+            expiryDateMessage = this.$t('Messages.Error.ThisFieldRequired')
+          else if (ExpiryDate < new Date())
+            expiryDateMessage = this.$t('Messages.Error.EventStartDate')
+          else expiryDateMessage = ''
+          return expiryDateMessage || true
+        },
+      ]
+    },
   },
 }
 </script>
@@ -1632,6 +1687,10 @@ export default {
 }
 .v-tooltip__content {
   margin-left: -90px !important;
+}
+.signature-requested-subject {
+  margin-top: 4px;
+  color: gray;
 }
 @media (min-width: 600px) {
   .flexInLargeScreen {
