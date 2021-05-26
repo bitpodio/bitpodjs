@@ -871,7 +871,8 @@
     "PrintedTicketTemplate": "Assign a Ticket Template",
     "TicketTemplate": "Ticket Template",
     "TicketTemplates": "Ticket Templates",
-    "ThumbnailUrl": "Thumbnail Url"
+    "ThumbnailUrl": "Thumbnail Url",
+    "DeleteTicketTemplate": "Delete Ticket Template"
   },
   "Drawer": {
     "UnSubscribeAction": "Unsubscribe",
@@ -920,8 +921,10 @@
     "Contacts": "Contacts",
     "SessionOverlaps": "Session Overlap Warning",
     "ExportToCSV": "Export to CSV",
-    "EditPrintedTicketTemplate": "ערוך תבנית כרטיסים",
-    "NewPrintedTicketTemplate": "תבנית כרטיסים חדשה"
+    "EditPrintedTicketTemplate": "Edit Ticket Template",
+    "NewPrintedTicketTemplate": "New Ticket Template",
+    "SingleEventAction": "Single Event",
+    "UnSubscribeMsg": "Please select a reason to unsubscribe from newsletter. This will help us to improve our services."
   },
   "FilterOptions": {
     "Is": "Is",

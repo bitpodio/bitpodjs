@@ -872,7 +872,8 @@
     "PrintedTicketTemplate": "Attribuer un modèle de ticket",
     "TicketTemplate": "Modèle de ticket",
     "TicketTemplates": "Modèles de billets",
-    "ThumbnailUrl": "URL de la miniature"
+    "ThumbnailUrl": "URL de la miniature",
+    "DeleteTicketTemplate": "Supprimer le modèle de ticket"
   },
   "Drawer": {
     "UnSubscribeMsg": "Veuillez sélectionner une raison pour vous désinscrire de la newsletter. Cela nous aidera à améliorer nos services.",
