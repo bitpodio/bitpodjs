@@ -2,7 +2,7 @@ export function rules(i18n) {
   const regex = RegExp(/^\d*[0-9]\d*$/)
   return Object.freeze({
     required: (v) =>
-      !!(v && v.length) ||
+      (/^[^-\s][\w\s-]+$/.test(v) && !!(v && v.length)) ||
       typeof v === 'number' ||
       i18n.t('Messages.Error.FieldRequired'),
     email: (v) =>
@@ -30,6 +30,17 @@ export function rules(i18n) {
         return true
       }
       return i18n.t('Messages.Error.NumberCannotBeNegative')
+    },
+    offerCountRules: (v) => {
+      return [
+        (v) => {
+          return v !== ''
+            ? /^\d*[0-9]\d*$/.test(v)
+              ? true
+              : this.$t('Messages.Error.NumberCannotBeNegative')
+            : this.$t('Messages.Error.FieldRequired')
+        },
+      ]
     },
   })
 }
