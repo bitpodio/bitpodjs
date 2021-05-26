@@ -162,6 +162,23 @@
         @update-snackbar="updateSnackbar"
       />
     </div>
+    <v-dialog v-if="!!viewTemplate" v-model="showDialog" width="600px">
+      <v-card>
+        <v-card-title class="pa-1">
+          <v-spacer></v-spacer>
+          <v-btn
+            icon
+            @click="
+              viewTemplate = false
+              showDialog = false
+            "
+          >
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </v-card-title>
+        <v-img :src="viewTemplate"></v-img>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -186,6 +203,8 @@ export default {
       loading: 0,
       loadingChanges: 0,
       templateCheckboxes: [],
+      viewTemplate: false,
+      showDialog: false,
     }
   },
   computed: {
