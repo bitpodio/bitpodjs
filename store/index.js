@@ -40,6 +40,7 @@ export const state = () => ({
   exportInProgress: { value: false, key: '' },
   scrollPosition: '',
   parseUrl: '',
+  gaId: '',
 })
 
 export const mutations = {
@@ -57,6 +58,9 @@ export const mutations = {
   },
   setTrackingPath(state, path) {
     state.parseUrl = path
+  },
+  googleTrackingId(state, value) {
+    state.gaId = value
   },
 }
 
