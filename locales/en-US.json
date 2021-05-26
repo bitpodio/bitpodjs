@@ -1,7 +1,7 @@
 {
   "Common": {
-    "NewDiscountCode":"New Discount Code",
-    "EditDiscountCode":"Edit Discount Code",
+    "NewDiscountCode": "New Discount Code",
+    "EditDiscountCode": "Edit Discount Code",
     "MemberList": "Member List",
     "AppTitle": "Event",
     "Logout": "Logout",
@@ -288,7 +288,7 @@
     "CreateAccessKey": "Create Access Key",
     "InvitationHistory": "Invitation History",
     "NewRegistration": "New Registration",
-    "DisplayName":"Display Name",
+    "DisplayName": "Display Name",
     "AddMember": "Add Member",
     "AssociateMember": "Associate Member",
     "AssociatedMember": "Add Existing Members",
@@ -865,15 +865,18 @@
     "TicketsNotRequiredToggle": "This event does not require tickets",
     "SessionsNotAvailable": "Sessions require events to be ticketed",
     "Language": "Language",
-    "SelectingJPYCurrency": "Decimal rounding off doesn't apply to {currency}",
-    "Reconnect": "Re-Connect",
-    "Expired": "Expired"
+    "Expired": "Expired",
+    "PrintTicketManagement": "Assign Template",
+    "NewTicketTemplate": "New Ticket Template",
+    "PrintedTicketTemplate": "Assign a Ticket Template",
+    "TicketTemplate": "Ticket Template",
+    "TicketTemplates": "Ticket Templates",
+    "ThumbnailUrl": "Thumbnail Url",
+    "DeleteTicketTemplate": "Delete Ticket Template"
   },
   "Drawer": {
-    "UnSubscribeMsg": "Please select a reason to unsubscribe from newsletter. This will help us to improve our services.",
     "UnSubscribeAction": "Unsubscribe",
     "CreateEventAction": "Create Event",
-    "SingleEventAction": "Single Event",
     "RecurringEventAction": "Recurring Event",
     "CreateUser": "Create User",
     "EditBadge": "Edit Badge",
@@ -916,7 +919,11 @@
     "Members": "Members",
     "Contacts": "Contacts",
     "SessionOverlaps": "Session Overlap Warning",
-    "ExportToCSV": "Export to CSV"
+    "ExportToCSV": "Export to CSV",
+    "EditPrintedTicketTemplate": "Edit Ticket Template",
+    "NewPrintedTicketTemplate": "New Ticket Template",
+    "SingleEventAction": "Single Event",
+    "UnSubscribeMsg": "Please select a reason to unsubscribe from newsletter. This will help us to improve our services."
   },
   "FilterOptions": {
     "Is": "Is",
@@ -993,7 +1000,7 @@
       "StartEndTime": "Start Time should not be greater than End Time",
       "EndStartTime": "End Time should not be less than Start Time",
       "StartEndTimeEqlMsg": "Start time should not be equal to end time.",
-      "SessionStartDate": "Session start date should be in between event date",
+      "SessionStartDate": "Session start Date & Time should be in between event date",
       "RefundPaidAmount": "Refunded Amount can not be greater or equal than total paid amount",
       "RefundAmountMsg": "Amount should not be less than or equal to  0",
       "InvalidDisplayOrder": "Display order should not be blank and less than 1",
@@ -1018,10 +1025,12 @@
       "CreateOrgCatch": "This organisation is in use or may be soft-deleted. Try with a new name.",
       "CreateOrgFull": "Failed to create your organisation.",
       "MemberExists": "Member already exists!",
+      "ContactExists": "Contact already exists!",
       "ImportFailed": "Import execution failed",
       "ImportFailedMessage": "The csv file is not conforming to the accepted format. Please refer to the sample file provided above.",
       "DuplicateErrorMessage": "Duplicate records in the file. Please use unique email id.",
-      "AttendeeImportFailed": "Attendee Import Failed."
+      "AttendeeImportFailed": "Attendee Import Failed.",
+      "TicketTemplateExists": "Template already exists"
     },
     "Warn": {
       "UniqueLinkFormat": "Lower case alphanumeric letters only",
@@ -1053,7 +1062,9 @@
       "SeatMapDefault": "Seatmap Warning",
       "SeatMapWarning": "There are unsaved changes which will be lost if you close without saving, are you sure?",
       "SetupWarning": "Setup Connection Warning",
-      "SetupConnection": "Please setup the connection to make it active."
+      "SetupConnection": "Please setup the connection to make it active.",
+      "DeletePrintTicketTemplate": "Do you want to delete this ticket template?",
+      "ReplaceTicketTemplate": "The new ticket template will replace your existing ticket template"
     },
     "Success": {
       "UnsubscribeSuccessMsg": "You have unsubscribed successfully",

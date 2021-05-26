@@ -44,7 +44,31 @@ export default {
           itemText: 'Title',
           itemValue: 'id',
           filter(data) {
-            return {}
+            return {
+              or: [
+                {
+                  EndDate: {
+                    gte: new Date(),
+                  },
+                },
+                {
+                  EndDate: {
+                    exists: false,
+                  },
+                },
+                {
+                  EndDate: null,
+                },
+                {
+                  StartDate: {
+                    gte: new Date(),
+                  },
+                },
+                {
+                  StartDate: null,
+                },
+              ],
+            }
           },
         },
       },

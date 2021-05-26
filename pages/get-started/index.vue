@@ -471,25 +471,34 @@ export default {
           return false
         }
       } catch (err) {
-        const { statusCode } = err.response.data.error.data
-        if (statusCode === 422) {
-          this.statusMessage = ''
-          this.snackbarText = this.$t('Messages.Error.CreateOrgCatch')
-          this.snackbar = true
-          this.resetBtn = !this.resetBtn
-          this.tab = 1
-        } else if (statusCode === 405) {
-          this.statusMessage = ''
-          this.resetBtn = !this.resetBtn
-          this.errorMessage = this.$t('Messages.Error.SetupExitCode', {
-            code: statusCode,
-          })
-          this.snackbarText = this.$t('Messages.Error.CreateOrgFull')
-          this.snackbar = true
-          this.tab = 3
+        if (err && err.response) {
+          const { statusCode } =
+            err.response.data.error.data || err.response.data.error
+          if (statusCode === 422) {
+            this.statusMessage = ''
+            this.snackbarText = this.$t('Messages.Error.CreateOrgCatch')
+            this.snackbar = true
+            this.resetBtn = !this.resetBtn
+            this.tab = 1
+          } else if (statusCode === 405) {
+            this.statusMessage = ''
+            this.resetBtn = !this.resetBtn
+            this.errorMessage = this.$t('Messages.Error.SetupExitCode', {
+              code: statusCode,
+            })
+            this.snackbarText = this.$t('Messages.Error.CreateOrgFull')
+            this.snackbar = true
+            this.tab = 3
+          } else {
+            this.statusMessage = ''
+            this.snackbarText = this.$t('Messages.Error.CreateOrgFailed')
+            this.snackbar = true
+            this.resetBtn = !this.resetBtn
+            this.tab = 1
+          }
         } else {
           this.statusMessage = ''
-          this.snackbarText = this.$t('Messages.Error.CreateOrgFailed')
+          this.snackbarText = this.$t('Messages.Error.CreateOrgCatch')
           this.snackbar = true
           this.resetBtn = !this.resetBtn
           this.tab = 1

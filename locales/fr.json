@@ -1,7 +1,7 @@
 {
   "Common": {
-    "NewDiscountCode":"Nouveau code de réduction",
-    "EditDiscountCode":"Modifier le code de réduction",
+    "NewDiscountCode": "Nouveau code de réduction",
+    "EditDiscountCode": "Modifier le code de réduction",
     "MemberList": "Liste des membres",
     "AppTitle": "Evénement",
     "Logout": "Déconnexion",
@@ -864,7 +864,16 @@
     "Language": "Langue",
     "SelectingJPYCurrency": "L'arrondi décimal ne s'applique pas aux {currency}",
     "Reconnect": "Reconnecter",
-    "Expired": "Expiré"
+    "Expired": "Expiré",
+    "PrintTicketManagement": "Attribuer un modèle",
+    "DeletePrintTicketTemplate": "Supprimer le modèle de ticket",
+    "NewTicketTemplate": "Nouveau modèle de ticket",
+    "EditTicketTemplate": "Modifier le modèle de ticket",
+    "PrintedTicketTemplate": "Attribuer un modèle de ticket",
+    "TicketTemplate": "Modèle de ticket",
+    "TicketTemplates": "Modèles de billets",
+    "ThumbnailUrl": "URL de la miniature",
+    "DeleteTicketTemplate": "Supprimer le modèle de ticket"
   },
   "Drawer": {
     "UnSubscribeMsg": "Veuillez sélectionner une raison pour vous désinscrire de la newsletter. Cela nous aidera à améliorer nos services.",
@@ -913,7 +922,9 @@
     "Members": "Membres",
     "Contacts": "Contacts",
     "SessionOverlaps": "Avertissement de chevauchement de session",
-    "ExportToCSV": "Exporter au format CSV"
+    "ExportToCSV": "Exporter au format CSV",
+    "EditPrintedTicketTemplate": "Modifier le modèle de ticket",
+    "NewPrintedTicketTemplate": "Nouveau modèle de ticket"
   },
   "FilterOptions": {
     "Is": "Est",
@@ -989,7 +1000,7 @@
       "StartEndTime": "L'heure de début ne doit pas être supérieure à l'heure de fin",
       "EndStartTime": "L'heure de fin ne doit pas être inférieure à l'heure de début",
       "StartEndTimeEqlMsg": "L'heure de début ne doit pas être égale à l'heure de fin.",
-      "SessionStartDate": "La date de début de la session doit être comprise entre la date de l'événement",
+      "SessionStartDate": "La date et l'heure de début de la session doivent être comprises entre la date de l'événement",
       "RefundPaidAmount": "Le montant remboursé ne peut être supérieur ou égal au montant total payé",
       "RefundAmountMsg": "Le montant ne doit pas être inférieur ou égal à 0",
       "InvalidDisplayOrder": "L'ordre d'affichage ne doit pas être vide et inférieur à 1",
@@ -1014,10 +1025,12 @@
       "CreateOrgCatch": "Cette organisation est utilisée ou peut être supprimée de manière réversible. Essayez avec un nouveau nom.",
       "CreateOrgFull": "Échec de la création de votre organisation.",
       "MemberExists": "Le membre existe déjà",
+      "ContactExists": "Le contact existe déjà!",
       "ImportFailed": "L’exécution de l’importation a échoué",
       "ImportFailedMessage": "Le fichier csv n'est pas conforme au format accepté. Veuillez consulter l'exemple de fichier fourni ci-dessus.",
       "DuplicateErrorMessage": "Dupliquer les enregistrements dans le fichier. Veuillez utiliser un identifiant de messagerie unique.",
-      "AttendeeImportFailed": "L'importation des participants a échoué."
+      "AttendeeImportFailed": "L'importation des participants a échoué.",
+      "TicketTemplateExists": "Le modèle existe déjà"
     },
     "Warn": {
       "UniqueLinkFormat": "Minuscules lettres alphanumériques uniquement",
@@ -1048,7 +1061,9 @@
       "SeatMapDefault": "Avertissement de plan de siège",
       "SeatMapWarning": "Certaines modifications non enregistrées seront perdues si vous fermez sans enregistrer, êtes-vous sûr?",
       "SetupWarning": "Avertissement de connexion de configuration",
-      "SetupConnection": "Veuillez configurer la connexion pour la rendre active."
+      "SetupConnection": "Veuillez configurer la connexion pour la rendre active.",
+      "DeletePrintTicketTemplate": "Voulez-vous supprimer ce modèle de ticket?",
+      "ReplaceTicketTemplate": "Le nouveau modèle de ticket remplacera votre modèle de ticket existant"
     },
     "Success": {
       "UnsubscribeSuccessMsg": "Vous vous êtes désabonné avec succès",

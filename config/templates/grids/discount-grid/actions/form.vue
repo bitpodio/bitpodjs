@@ -230,7 +230,7 @@ export default {
           itemText: 'Title',
           itemValue: 'id',
           filter(data) {
-            return {}
+            return { HasTickets: true }
           },
         },
       },

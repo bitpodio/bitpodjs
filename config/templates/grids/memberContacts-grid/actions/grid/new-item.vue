@@ -71,6 +71,12 @@
                   outlined
                   dense
                 ></v-text-field>
+                <div
+                  v-if="duplicateMessage !== ''"
+                  class="red--text pa-3 pt-0 body-1 mt-n5"
+                >
+                  {{ duplicateMessage }}
+                </div>
               </v-col>
               <v-col cols="12" sm="6" md="6" class="pb-0">
                 <v-text-field
@@ -113,6 +119,7 @@
             depressed
             :has-submit-action="true"
             :has-external-submit="true"
+            :reset="isReset"
             :form-name="formName"
             class="ml-2"
             ><i18n path="Drawer.Save"
@@ -146,6 +153,7 @@ export default {
       dialog: false,
       valid: false,
       snackbar: false,
+      isReset: false,
       snackbarText: '',
       timeout: 3000,
       departmentItems: [],
@@ -160,6 +168,7 @@ export default {
       },
       formName: 'new-memberContact-form',
       contactTypeItems: '',
+      duplicateMessage: '',
     }
   },
   async mounted() {
@@ -189,9 +198,11 @@ export default {
   methods: {
     onReset() {
       this.$refs.form.reset()
+      this.duplicateMessage = ''
     },
     onClose() {
       this.$refs.form.reset()
+      this.duplicateMessage = ''
       this.dialog = false
     },
     async onSave() {
@@ -204,14 +215,20 @@ export default {
         if (res) {
           this.dialog = false
           this.onReset()
-          this.snackbarText = this.$t('Messages.Success.RecordCreateSuccess')
+          this.snackbarText = this.$t('Messages.Success.UpdatedSuccessfully', {
+            modelName: 'Contact',
+          })
           this.snackbar = true
           this.refresh()
         }
-      } catch (e) {
+      } catch (error) {
+        if (error.response.status === 406) {
+          this.isReset = !this.isReset
+          this.duplicateMessage = this.$t('Messages.Error.ContactExists')
+        }
         console.error(
           `Error in templates/grids/memberContacts-grid/actions/grid/new-item.vue while making a POST call to CustomerContact model from method onSave context:-URL:${url}`,
-          e
+          error
         )
       }
     },

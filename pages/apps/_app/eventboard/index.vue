@@ -43,7 +43,7 @@
                       :class="data.icon"
                     ></v-icon>
                   </div>
-                  <div class="pl-2 pt-1">
+                  <div class="pl-2 pt-1 boxview">
                     <h3 class="font-weight-regular text-truncate summaryTile">
                       {{ data.data }}{{ data.isConversion ? '%' : '' }}
                     </h3>
@@ -66,7 +66,7 @@
             <div
               v-for="(data, index) in eventOnSaleData"
               :key="index"
-              class="white elevation-2 rounded mb-3 cursorPointer dataTile"
+              class="white elevation-2 rounded mb-3 cursorPointer dataTile boxview"
               @click="routeToEvent(data)"
             >
               <v-skeleton-loader
@@ -106,7 +106,7 @@
                     >
                     </v-img>
                   </div>
-                  <div class="pl-2 pt-1">
+                  <div class="pl-2 pt-1 boxview">
                     <h3
                       class="font-weight-regular text-truncate pl-1 text-capitalize tileCaption"
                     >
@@ -161,7 +161,7 @@
           <h3 class="font-weight-regular pb-2">
             <i18n path="Common.10DaysTicketsSale" />
           </h3>
-          <div class="rounded white elevation-2 chartHeight">
+          <div class="rounded white elevation-2 chartHeight boxview">
             <div
               v-if="!ticketSoldLoaded || !ticketSoldReady"
               class="rounded chartHeight positionRelative"
@@ -196,7 +196,7 @@
             <div
               v-for="(data, index) in recentBuyersData"
               :key="index"
-              class="white elevation-2 rounded mb-3 cursorPointer dataTile"
+              class="white elevation-2 rounded mb-3 cursorPointer dataTile boxview"
               @click="routeToRegistration(data.id)"
             >
               <v-skeleton-loader
@@ -284,7 +284,7 @@
           <h3 class="font-weight-regular pb-2">
             <i18n path="Common.InvitationsConversionByEvent" />
           </h3>
-          <div class="rounded white elevation-2 chartHeight">
+          <div class="rounded white elevation-2 chartHeight boxview">
             <div
               v-if="!conversionLoaded || !conversionReady"
               class="rounded chartHeight"
@@ -315,7 +315,7 @@
           <h3 class="font-weight-regular pb-2">
             <i18n path="Common.SaleByGeoLocation" />
           </h3>
-          <div class="rounded white elevation-2 chartHeight">
+          <div class="rounded white elevation-2 chartHeight boxview">
             <div
               v-if="!geoLocationLoaded || !geoLocationReady"
               class="rounded chartHeight"
@@ -351,7 +351,7 @@
           <h3 class="font-weight-regular pb-2">
             <i18n path="Common.TicketsSold" />
           </h3>
-          <div class="rounded white elevation-2 chartHeight">
+          <div class="rounded white elevation-2 chartHeight boxview">
             <div v-if="!pieLoaded || !pieReady" class="rounded chartHeight">
               <div class="pt-11 positionRelative text-center">
                 <div class="pt-15 holeWrapper">
@@ -384,7 +384,7 @@
           <h3 class="font-weight-regular pb-2">
             <i18n path="Common.InvitationsConversionTrend" />
           </h3>
-          <div class="rounded white elevation-2 chartHeight">
+          <div class="rounded white elevation-2 chartHeight boxview">
             <div
               v-if="!conversionTrendLoaded || !conversionTrendReady"
               class="rounded chartHeight"
@@ -415,7 +415,7 @@
           <h3 class="font-weight-regular pb-2">
             <i18n path="Common.SessionsSold" />
           </h3>
-          <div class="rounded white elevation-2 chartHeight">
+          <div class="rounded white elevation-2 chartHeight boxview">
             <div
               v-if="!sessionLoaded || !sessionReady"
               class="rounded chartHeight"
@@ -446,10 +446,10 @@
           <h3 class="font-weight-regular pb-2">
             <i18n path="Common.EventsTimeline" />
           </h3>
-          <div class="rounded white elevation-2 chartHeight">
+          <div class="rounded elevation-2 chartHeight boxview">
             <div
               v-if="!eventTimelineLoaded || !eventTimelineReady"
-              class="rounded chartHeight"
+              class="rounded chartHeight boxview"
             >
               <div
                 v-for="i in 5"
@@ -458,7 +458,7 @@
               ></div>
             </div>
             <div
-              class="rounded overflowHidden white pa-6"
+              class="rounded overflowHidden pa-6 boxview"
               :class="{
                 visiblityNone: !(eventTimelineLoaded && eventTimelineReady),
               }"
@@ -540,6 +540,7 @@ export default {
       ticketSaleData: [['Date', 'Ticket Sold']],
       ticketSalechartOptions: {
         curveType: 'function',
+        backgroundColor: { fill: 'transparent' },
         height: '316',
         width: '350',
         reverseCategories: this.$vuetify.rtl,
@@ -568,6 +569,7 @@ export default {
         legend: 'none',
         height: '316',
         width: '350',
+        backgroundColor: { fill: 'transparent' },
         vAxis: {
           viewWindow: {
             min: 0,
@@ -591,6 +593,7 @@ export default {
         height: '316',
         width: '350',
         displayMode: 'markers',
+        backgroundColor: { fill: 'transparent' },
         chartArea: { width: '80%', height: '70%' },
         colorAxis: { colors: ['green', 'yellow'] },
         animation: {
@@ -604,6 +607,7 @@ export default {
         legend: 'none',
         height: '316',
         width: '350',
+        backgroundColor: { fill: 'transparent' },
         pieHole: 0.4,
         chartArea: { width: '80%', height: '70%' },
         colorAxis: { colors: ['green', 'yellow'] },
@@ -618,6 +622,7 @@ export default {
         legend: 'none',
         height: '316',
         width: '350',
+        backgroundColor: { fill: 'transparent' },
         reverseCategories: this.$vuetify.rtl,
         chartArea: { width: '80%', height: '70%' },
         animation: {
@@ -632,6 +637,7 @@ export default {
         legend: 'none',
         height: '316',
         width: '350',
+        backgroundColor: { fill: 'transparent' },
         reverseCategories: this.$vuetify.rtl,
         hAxis: { logscale: true },
         vAxis: {
@@ -651,6 +657,7 @@ export default {
         legend: 'none',
         height: '268',
         width: '300',
+        backgroundColor: { fill: 'transparent' },
         animation: {
           startup: true,
           duration: 1000,

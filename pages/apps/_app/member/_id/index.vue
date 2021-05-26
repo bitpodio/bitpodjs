@@ -180,13 +180,21 @@
                 <div class="text-truncate my-3">
                   <v-icon class="mr-2 fs-16">mdi-map-marker-outline</v-icon>
                   {{
-                    formatField(
+                    formatAddressField(
                       data.memberData._BillingAddress &&
-                        data.memberData._BillingAddress.City
+                        data.memberData._BillingAddress.City &&
+                        data.memberData._BillingAddress.Country &&
+                        data.memberData._BillingAddress.City !== '' &&
+                        data.memberData._BillingAddress.Country !== ''
+                        ? data.memberData._BillingAddress.City + ','
+                        : data.memberData &&
+                            data.memberData._BillingAddress &&
+                            data.memberData._BillingAddress.City &&
+                            data.memberData._BillingAddress.City
                     )
-                  }},
+                  }}
                   {{
-                    formatField(
+                    formatAddressField(
                       data.memberData._BillingAddress &&
                         data.memberData._BillingAddress.Country
                     )
@@ -802,6 +810,9 @@ export default {
     },
   },
   methods: {
+    formatAddressField(fieldValue) {
+      return fieldValue || ' '
+    },
     async getImageName() {
       const url = this.$bitpod.getApiUrl()
       try {

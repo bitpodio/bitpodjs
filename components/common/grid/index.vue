@@ -131,9 +131,10 @@
           </div>
           <v-menu
             v-if="
-              selectedItems.length > 0 &&
-              actionsCount > baseActionCount &&
-              !hasHiddenRowAction
+              (selectedItems.length > 0 &&
+                actionsCount > baseActionCount &&
+                !hasHiddenRowAction) ||
+              hasGrid3DotSlot
             "
             right
             :offset-y="offset"
@@ -145,8 +146,14 @@
               </v-btn>
             </template>
             <v-list dense>
+              <slot name="gridthreedot"></slot>
               <component
                 :is="actionTemplates['row-select'] || null"
+                v-if="
+                  selectedItems.length > 0 &&
+                  actionsCount > baseActionCount &&
+                  !hasHiddenRowAction
+                "
                 :content="content"
                 :view-name="viewName"
                 :on-update-item="onUpdateItem"
@@ -170,7 +177,8 @@
           viewName === 'badge' ||
           viewName === 'feeds' ||
           viewName === 'Members' ||
-          viewName === 'integration'
+          viewName === 'integration' ||
+          viewName === 'printed-tickets'
             ? ''
             : 'table'
         "
@@ -273,6 +281,7 @@
               :props="props.props"
               :on="props.on"
               :headers="props.headers"
+              class="boxview"
             />
           </template>
           <template
@@ -313,6 +322,21 @@
           :loading="!!loading"
           type="card"
           width="236"
+          class="pa-4 pl-0 pt-0 eventtiles ma-4 ml-0 mt-0"
+        >
+          <div></div>
+        </v-skeleton-loader>
+      </div>
+      <div
+        v-if="viewName === 'printed-tickets' && loading === true"
+        class="d-flex flex-sm-wrap flex-column flex-sm-row mt-12"
+      >
+        <v-skeleton-loader
+          v-for="i in 6"
+          :key="i"
+          :loading="!!loading"
+          type="card"
+          width="425"
           class="pa-4 pl-0 pt-0 eventtiles ma-4 ml-0 mt-0"
         >
           <div></div>
@@ -854,6 +878,9 @@ export default {
         ? this.$route.params.id || ''
         : ''
     },
+    hasGrid3DotSlot() {
+      return !!this.$slots.gridthreedot
+    },
   },
   watch: {
     filters() {
@@ -876,7 +903,6 @@ export default {
     },
   },
   mounted() {
-    debugger
     setTimeout(() => {
       this.selectedItems = []
     }, 2000)

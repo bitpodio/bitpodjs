@@ -34,7 +34,7 @@
                   v-model="formData.Title"
                   :label="$t('Common.Title')"
                   outlined
-                  required
+                  :rules="[rules.required]"
                   dense
                 >
                 </v-text-field>
@@ -101,6 +101,7 @@ export default {
       formName: 'editFeed',
       rules: rules(this.$i18n),
       formData: this.selected || {},
+      valid: true,
       feedData: {
         Title: '',
         Body: '',

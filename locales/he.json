@@ -1,7 +1,7 @@
 {
   "Common": {
-    "NewDiscountCode":"קוד הנחה חדש",
-    "EditDiscountCode":"ערוך את קוד ההנחה",
+    "NewDiscountCode": "קוד הנחה חדש",
+    "EditDiscountCode": "ערוך את קוד ההנחה",
     "MemberList": "רשימת חברים",
     "AppTitle": "אירועים",
     "Logout": "להתנתק",
@@ -866,7 +866,16 @@
     "Language": "שפה",
     "SelectingJPYCurrency": "עיגול עשרוני אינו חל על {currency}",
     "Reconnect": "התחבר מחדש",
-    "Expired": "לא בתוקף"
+    "Expired": "לא בתוקף",
+    "PrintTicketManagement": "הקצה תבנית",
+    "DeletePrintTicketTemplate": "מחק את תבנית הכרטיסים",
+    "NewTicketTemplate": "תבנית כרטיסים חדשה",
+    "EditTicketTemplate": "ערוך תבנית כרטיסים",
+    "PrintedTicketTemplate": "הקצה תבנית כרטיסים",
+    "TicketTemplate": "תבנית כרטיסים",
+    "TicketTemplates": "תבניות כרטיסים",
+    "ThumbnailUrl": "כתובת אתר של תמונה ממוזערת",
+    "DeleteTicketTemplate": "מחק את תבנית הכרטיסים"
   },
   "Drawer": {
     "UnSubscribeMsg": "אנא בחר סיבה לביטול הרישום לניוזלטר. זה יעזור לנו לשפר את השירותים שלנו.",
@@ -915,7 +924,9 @@
     "Members": "Members",
     "Contacts": "Contacts",
     "SessionOverlaps": "אזהרת חפיפה של מושב",
-    "ExportToCSV": "ייצא ל- CSV"
+    "ExportToCSV": "ייצא ל- CSV",
+    "EditPrintedTicketTemplate": "ערוך תבנית כרטיסים",
+    "NewPrintedTicketTemplate": "תבנית כרטיסים חדשה"
   },
   "FilterOptions": {
     "Is": "Is",
@@ -991,7 +1002,7 @@
       "StartEndTime": "זמן ההתחלה לא אמור להיות גדול משעת הסיום",
       "EndStartTime": "זמן הסיום לא אמור להיות פחות משעת ההתחלה",
       "StartEndTimeEqlMsg": "זמן ההתחלה לא אמור להיות שווה לזמן הסיום.",
-      "SessionStartDate": "תאריך תחילת ההפעלה צריך להיות בין תאריך האירוע",
+      "SessionStartDate": "תאריך ושעה של תחילת ההפעלה צריכים להיות בין תאריך האירוע",
       "RefundPaidAmount": "Refunded Amount can not be greater or equal than total paid amount",
       "RefundAmountMsg": "Amount should not be less than or equal to  0",
       "InvalidDisplayOrder": "Display order should not be blank and less than 1",
@@ -1016,10 +1027,12 @@
       "CreateOrgCatch": "ארגון זה נמצא בשימוש או עלול להימחק באופן רך. נסה עם שם חדש",
       "CreateOrgFull": "יצירת הארגון שלך נכשלה",
       "MemberExists": "חבר כבר קיים",
+      "ContactExists": "איש קשר כבר קיים!",
       "ImportFailed": "ביצוע הייבוא ​​נכשל",
       "ImportFailedMessage": "קובץ ה- csv אינו תואם לפורמט המקובל. אנא עיין בקובץ לדוגמה המופיע למעלה.",
       "DuplicateErrorMessage": "שכפול רשומות בקובץ. אנא השתמש במזהה דואל ייחודי.",
-      "AttendeeImportFailed": "ייבוא ​​המשתתף נכשל."
+      "AttendeeImportFailed": "ייבוא ​​המשתתף נכשל.",
+      "TicketTemplateExists": "התבנית כבר קיימת"
     },
     "Warn": {
       "UniqueLinkFormat": "אותיות אלפאנומריות באותיות קטנות בלבד",
@@ -1050,7 +1063,9 @@
       "SeatMapDefault": "אזהרת מפת מושב",
       "SeatMapWarning": "ישנם שינויים שלא נשמרו אשר יאבדו אם תסגור מבלי לשמור, האם אתה בטוח?",
       "SetupWarning": "הגדרת אזהרת חיבור",
-      "SetupConnection": "אנא הגדר את החיבור כדי שיהיה פעיל."
+      "SetupConnection": "אנא הגדר את החיבור כדי שיהיה פעיל.",
+      "DeletePrintTicketTemplate": "האם ברצונך למחוק תבנית כרטיס זה?",
+      "ReplaceTicketTemplate": "תבנית הכרטיסים החדשה תחליף את תבנית הכרטיסים הקיימת שלך"
     },
     "Success": {
       "UnsubscribeSuccessMsg": "ביטלת את הרישום בהצלחה",
