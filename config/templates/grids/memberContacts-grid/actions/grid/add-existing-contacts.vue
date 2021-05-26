@@ -102,7 +102,7 @@ export default {
         if (res) {
           const contactId = res.ContactId
           this.itemId.forEach((ele) => {
-            contactId.includes(ele) ? '' : contactId.push(ele)
+            contactId.push(contactId.includes(ele) ? '' : ele)
           })
           this.setCustomers(contactId)
         }
