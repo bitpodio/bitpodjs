@@ -449,8 +449,10 @@ export default {
       },
       update(data) {
         const contact = formatGQLResult(data, 'Contact')
-        this.lastPicId =
-          contact[0].contactPic[contact[0].contactPic.length - 1] || ''
+        if (contact.length > 0) {
+          this.lastPicId =
+            contact[0].contactPic[contact[0].contactPic.length - 1] || ''
+        }
         return {
           contact: contact.length > 0 ? contact[0] : {},
         }
