@@ -20,9 +20,11 @@ export default {
     },
   },
   mounted() {
-    const theme = localStorage.getItem('darkTheme')
-    if (theme) {
-      if (theme === 'true') {
+    const userTheme = localStorage.getItem(
+      this.$store.state.gaId + '-darkTheme'
+    )
+    if (userTheme) {
+      if (userTheme === 'true') {
         this.$vuetify.theme.dark = true
       } else {
         this.$vuetify.theme.dark = false
@@ -31,7 +33,8 @@ export default {
   },
   methods: {
     setTheme() {
-      localStorage.setItem('darkTheme', this.$vuetify.theme.dark.toString())
+      const userTheme = this.$store.state.gaId + '-darkTheme'
+      localStorage.setItem(userTheme, this.$vuetify.theme.dark.toString())
     },
   },
 }
