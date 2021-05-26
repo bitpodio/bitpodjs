@@ -991,6 +991,7 @@
       "TicketStartCurrentDate": "Ticket start date should not be less than current date",
       "TicketEndCurrentDate": "Ticket end date should not be less than current date",
       "MaxAllowMsg": "Max Allow should be greater than zero",
+      "DurationGreaterSessionMsg":"Slots Size should be less than or equal to the total time of the session",
       "DurationGreaterMsg": "Duration should be greater than zero",
       "RollingDaysMsg": "Rolling days should be greater than zero",
       "PleaseEnterValidPhone": "Please enter valid phone number!",
