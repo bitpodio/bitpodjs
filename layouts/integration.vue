@@ -12,9 +12,15 @@
           class="ml-0 mx-md-2 mr-0 d-inline d-sm-none"
           @click.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
-        <span class="bitpod-logo logo-ds px-3">
+        <span v-if="!$vuetify.theme.dark" class="bitpod-logo logo-ds px-3">
           <v-img
-            :src="$config.cdnUri + 'bitpod-logo-new.png'"
+            :src="$config.cdnUri + 'bitpod-logo-blk2.svg'"
+            class="logofull mr-2"
+          ></v-img>
+        </span>
+        <span v-if="$vuetify.theme.dark" class="bitpod-logo logo-ds px-3">
+          <v-img
+            :src="$config.cdnUri + 'bitpod-logo-white.svg'"
             class="logofull mr-2"
           ></v-img>
         </span>

@@ -125,53 +125,6 @@
                   dense
                 ></v-text-field>
               </v-col>
-              <v-col class="col-12 col-md-6">
-                <v-text-field
-                  v-model="formData.Group"
-                  :label="$t('Common.GroupName')"
-                  outlined
-                  dense
-                ></v-text-field>
-              </v-col>
-              <v-col class="col-12 col-md-6">
-                <v-select
-                  v-model="Attendees"
-                  :items="registrationTypeDropdown"
-                  :label="$t('Common.RegistrationType')"
-                  multiple
-                  chips
-                  outlined
-                  small-chips
-                  dense
-                  persistent-hint
-                ></v-select>
-              </v-col>
-              <v-col class="col-12 col-md-6">
-                <v-text-field
-                  v-model="formData.DisplayOrder"
-                  :label="$t('Common.DisplayOrd')"
-                  type="number"
-                  min="1"
-                  outlined
-                  dense
-                ></v-text-field>
-              </v-col>
-              <v-col class="col-12 col-md-6">
-                <v-checkbox
-                  v-model="formData.ValidateQty"
-                  :label="$t('Common.ValidateQuantity')"
-                  class="ma-0"
-                  dense
-                ></v-checkbox>
-              </v-col>
-              <v-col class="col-12 col-md-6">
-                <v-checkbox
-                  v-model="formData.CheckGroupDiscount"
-                  :label="$t('Common.CheckGroupDiscount')"
-                  class="ma-0"
-                  dense
-                ></v-checkbox>
-              </v-col>
             </v-row>
           </v-form>
         </v-card-text>
@@ -206,7 +159,6 @@ import gql from 'graphql-tag'
 import { utcToZonedTime } from 'date-fns-tz'
 import SaveBtn from '~/components/common/saveButton'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
-import registrationtype from '~/config/apps/event/gql/registrationType.gql'
 import event from '~/config/apps/event/gql/event.gql'
 import { formatGQLResult } from '~/utility/gql.js'
 import { postGaData, getPriceWithCurrency } from '~/utility/index.js'
@@ -240,25 +192,18 @@ export default {
       snackbarText: '',
       typeDropDown: [],
       type: [],
-      registrationTypeDropdown: [],
-      registrationType: [],
       rules: rules(this.$i18n),
       ticketIds: [],
       Amount: 0,
       Attendees: [],
       formData: {
-        Attendee: [],
         Amount: 0,
-        CheckGroupDiscount: false,
         Code: 'General admission',
-        DisplayOrder: null,
         StartDate: '',
         EndDate: '',
         Events: '',
-        Group: '',
         TicketCount: 100,
         Type: 'Free',
-        ValidateQty: false,
         Status: '',
       },
       eventData: {},
@@ -331,20 +276,9 @@ export default {
     },
   },
   watch: {
-    async dialog(newVal) {
+    dialog(newVal) {
       if (newVal) {
         postGaData('New', this.$t('Common.NewTicket'))
-        try {
-          const res = await this.getRegistrationType()
-          if (res) {
-            this.registrationTypeDropdown = res.map((i) => i.Name)
-          }
-        } catch (e) {
-          console.log(
-            `Error in templates/grids/eventTickets/actions/grid/new-item.vue while making a GQL call to Ticket model from method getRegistrationType`,
-            e
-          )
-        }
       }
     },
   },
@@ -361,18 +295,6 @@ export default {
         e
       )
     }
-    try {
-      const res = await this.getRegistrationType()
-      if (res) {
-        this.registrationTypeDropdown = res.map((i) => i.Name)
-      }
-    } catch (e) {
-      console.log(
-        `Error in templates/grids/eventTickets/actions/grid/new-item.vue while making a GQL call to Ticket model from method getRegistrationType`,
-        e
-      )
-    }
-    this.getAttendeeType()
   },
   beforeDestroy() {
     this.$eventBus.$off('on-event-update')
@@ -457,11 +379,6 @@ export default {
       this.valid = true
       this.setDefaultDate()
     },
-    getAttendeesId() {
-      this.formData.Attendee = this.setAttendeeType
-        .filter((i) => this.Attendees.some((j) => j === i.Name))
-        .map((k) => k.id)
-    },
     onClose() {
       this.valid = true
       this.dialog = false
@@ -476,11 +393,9 @@ export default {
     async onSave() {
       postGaData(this.$t('Drawer.Save'), this.$t('Common.NewTicket'))
       const url = this.$bitpod.getApiUrl()
-      this.getAttendeesId()
       this.formData.Amount = parseFloat(
         getPriceWithCurrency(this.formData.Amount, this.eventData.Currency)
       )
-      this.formData.DisplayOrder = parseInt(this.formData.DisplayOrder)
       this.formData.TicketCount = parseInt(this.formData.TicketCount)
       this.formData.AvailableCount = parseInt(this.formData.TicketCount)
       this.formData.Events = this.$route.params.id
@@ -567,32 +482,6 @@ export default {
       } catch (e) {
         console.log(
           `Error in templates/grids/eventTickets/actions/grid/new-item.vue while making a GQL call to GeneralConfiguration model from method getDropDownData Inputs:-filterType:-${filterType} `,
-          e
-        )
-      }
-    },
-    async getRegistrationType() {
-      try {
-        const result = await this.$apollo.query({
-          query: gql`
-            ${registrationtype}
-          `,
-          variables: {
-            filters: {
-              where: {
-                EventId: this.$route.params.id,
-              },
-            },
-          },
-          fetchPolicy: 'no-cache',
-        })
-        if (result) {
-          const generalConfig = formatGQLResult(result.data, 'RegistrationType')
-          return generalConfig
-        }
-      } catch (e) {
-        console.log(
-          `Error in templates/grids/eventTickets/actions/grid/new-item.vue while making a GQL call to RegistrationType model from method getRegistrationType context:-\n EventId:-${this.$route.params.id}\n `,
           e
         )
       }

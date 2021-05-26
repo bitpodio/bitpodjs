@@ -148,12 +148,12 @@
             <v-list dense>
               <slot name="gridthreedot"></slot>
               <component
+                :is="actionTemplates['row-select'] || null"
                 v-if="
                   selectedItems.length > 0 &&
                   actionsCount > baseActionCount &&
                   !hasHiddenRowAction
                 "
-                :is="actionTemplates['row-select'] || null"
                 :content="content"
                 :view-name="viewName"
                 :on-update-item="onUpdateItem"
@@ -281,6 +281,7 @@
               :props="props.props"
               :on="props.on"
               :headers="props.headers"
+              class="boxview"
             />
           </template>
           <template

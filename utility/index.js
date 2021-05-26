@@ -349,6 +349,7 @@ export const configLoaderMixin = {
           this.$auth.user.data.email,
           this.$config.seedValue
         )
+        this.$store.commit('googleTrackingId', checkId)
         this.$store.commit('setTrackingPath', this.$route.path)
         setTimeout(() => {
           if (process.client) {
