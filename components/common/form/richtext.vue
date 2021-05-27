@@ -174,7 +174,7 @@ export default {
                     nuxtConfig.publicRuntimeConfig.cdnUri +
                     'admin-default-template-logo.png'
                   editor.selection.insertHTML(
-                    `<img src="${logoURL}" "style"="max-width:200px;height:auto" class="img-responsive"/>`
+                    `<img src="${logoURL}" height="30px" "style"="max-width:200px;height:auto" class="img-responsive"/>`
                   )
                 } else if (key === 'Register') {
                   editor.selection.insertHTML(
