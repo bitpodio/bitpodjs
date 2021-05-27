@@ -1064,7 +1064,8 @@
       "SetupWarning": "Avertissement de connexion de configuration",
       "SetupConnection": "Veuillez configurer la connexion pour la rendre active.",
       "DeletePrintTicketTemplate": "Voulez-vous supprimer ce modèle de ticket?",
-      "ReplaceTicketTemplate": "Le nouveau modèle de ticket remplacera votre modèle de ticket existant"
+      "ReplaceTicketTemplate": "Le nouveau modèle de ticket remplacera votre modèle de ticket existant",
+      "UnassignPrintTicketTemplate": "Les modifications apportées au modèle seront perdues, êtes-vous sûr de vouloir supprimer le modèle?"
     },
     "Success": {
       "UnsubscribeSuccessMsg": "Vous vous êtes désabonné avec succès",

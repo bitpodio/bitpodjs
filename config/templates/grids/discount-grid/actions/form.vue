@@ -298,8 +298,9 @@ export default {
       }
     },
     async checkUniqueCode() {
+      let where = ''
       try {
-        const where = this.eventChanged
+        where = this.eventChanged
           ? {
               and: [
                 { EventId: this.formData.EventId },

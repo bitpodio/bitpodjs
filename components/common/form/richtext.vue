@@ -130,6 +130,17 @@ export default {
                   title: 'Twitter',
                 },
               }
+              const ticketTemplateFields = {
+                'Ticket Full Name': 'this.fullName',
+                'Ticket Event Name': 'this.eventName',
+                'Ticket Event Date': 'this.eventDatetime',
+                'Ticket Price': 'this.price',
+                'Ticket Logo': 'this.orgLogo',
+                'Ticket QRCode': 'this.qrCode',
+                'Ticket Seat Number': 'this.seatNumber',
+                'Ticket Number': 'this.ticketNumber',
+                'Ticket Color': 'this.color',
+              }
               if (currentOption.control.args) {
                 const key = currentOption.control.args[1]
                 if (modelFields[key]) {
@@ -148,6 +159,10 @@ export default {
                       '" width="44" height="44" src="' +
                       icon +
                       '"></a>'
+                  )
+                } else if (ticketTemplateFields[key]) {
+                  editor.selection.insertHTML(
+                    '{{' + ticketTemplateFields[key] + '}}'
                   )
                 } else if (key === 'Privacy Policy') {
                   editor.selection.insertHTML(
