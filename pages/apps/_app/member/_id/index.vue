@@ -459,9 +459,9 @@
                 </template>
               </v-img>
               <div class="mt-1 d-flex">
-                <v-card-text class="pa-0 pb-1">
+                <v-card-text class="pa-0 pb-1 text-truncate">
                   <a
-                    class="d-inline-block text-truncate anchorTag file-name"
+                    class="d-inline-block text-truncate anchorTag linkWidth"
                     :href="getAttachmentLink(image, true)"
                     >{{
                       OtherImageName[index] && OtherImageName[index].fileName
@@ -730,6 +730,7 @@
           :refresh="refresh"
         />
       </div>
+      <confirm ref="confirm"></confirm>
     </v-flex>
   </div>
 </template>
@@ -992,3 +993,9 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.linkWidth {
+  max-width: 142px;
+}
+</style>

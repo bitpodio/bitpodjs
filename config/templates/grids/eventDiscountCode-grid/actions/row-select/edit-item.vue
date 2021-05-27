@@ -225,8 +225,8 @@ export default {
           : '',
       }
 
+      const url = this.$bitpod.getApiUrl()
       try {
-        const url = this.$bitpod.getApiUrl()
         const res = await this.$axios.$patch(
           `${url}OfferCodes/${this.items[0].id}`,
           obj

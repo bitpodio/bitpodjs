@@ -1067,7 +1067,8 @@
       "SetupWarning": "הגדרת אזהרת חיבור",
       "SetupConnection": "אנא הגדר את החיבור כדי שיהיה פעיל.",
       "DeletePrintTicketTemplate": "האם ברצונך למחוק תבנית כרטיס זה?",
-      "ReplaceTicketTemplate": "תבנית הכרטיסים החדשה תחליף את תבנית הכרטיסים הקיימת שלך"
+      "ReplaceTicketTemplate": "תבנית הכרטיסים החדשה תחליף את תבנית הכרטיסים הקיימת שלך",
+      "UnassignPrintTicketTemplate": "שינויים שבוצעו בתבנית יאבדו, האם אתה בטוח להסיר את התבנית?"
     },
     "Success": {
       "UnsubscribeSuccessMsg": "ביטלת את הרישום בהצלחה",
