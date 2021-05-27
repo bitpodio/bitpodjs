@@ -37,7 +37,14 @@ export default {
       eventTitle: this.$route.query.eventId,
       eventId: '',
       isGrid: false,
-      eventProps: {
+    }
+  },
+  computed: {
+    content() {
+      return this.contents ? this.contents.Event : null
+    },
+    eventProps() {
+      return {
         type: 'lookup',
         dataSource: {
           query: eventQuery,
@@ -71,12 +78,7 @@ export default {
             }
           },
         },
-      },
-    }
-  },
-  computed: {
-    content() {
-      return this.contents ? this.contents.Event : null
+      }
     },
     filter() {
       return {
