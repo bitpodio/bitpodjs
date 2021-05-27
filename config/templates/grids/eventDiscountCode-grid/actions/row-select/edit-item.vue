@@ -233,13 +233,11 @@ export default {
         )
         if (res) {
           this.closeForm()
-
           this.$nextTick(() => {
             this.snackbarText = this.$t(
               'Messages.Success.DiscountCodeUpdateSuccessfully'
             )
             this.snackbar = true
-            // this.refresh()
           })
         }
       } catch (error) {
