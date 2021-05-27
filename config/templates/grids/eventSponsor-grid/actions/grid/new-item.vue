@@ -38,7 +38,16 @@
             @submit.prevent="submitForm"
           >
             <v-row>
-              <v-col cols="12" sm="6" md="6" class="pb-0">
+              <v-col cols="12" sm="12" md="12" class="pb-0">
+                <v-text-field
+                  v-model="formData.Organization"
+                  :label="$t('Common.OrganizationName')"
+                  :rules="[rules.required]"
+                  outlined
+                  dense
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="12" md="6" class="pb-0">
                 <v-text-field
                   v-model="formData.FirstName"
                   :label="$t('Common.FirstName')"
@@ -47,7 +56,7 @@
                   dense
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" sm="6" md="6" class="pb-0">
+              <v-col cols="12" sm="12" md="6" class="pb-0">
                 <v-text-field
                   v-model="formData.LastName"
                   :label="$t('Common.LastName')"
@@ -56,43 +65,7 @@
                   dense
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" sm="6" md="6" class="pb-0">
-                <v-select
-                  v-model="Type"
-                  :items="contactTypeItems"
-                  :label="$t('Common.TypeCaption')"
-                  outlined
-                  disabled
-                  dense
-                ></v-select>
-              </v-col>
-              <v-col cols="12" sm="6" md="6" class="pb-0">
-                <v-text-field
-                  v-model="formData.Job"
-                  :label="$t('Common.JobTitle')"
-                  outlined
-                  dense
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12" sm="6" md="6" class="pb-0">
-                <v-select
-                  v-model="formData.Department"
-                  :items="departmentItems"
-                  :label="$t('Common.Department')"
-                  outlined
-                  dense
-                ></v-select>
-              </v-col>
-              <v-col cols="12" sm="6" md="6" class="pb-0">
-                <v-text-field
-                  v-model="formData.CellPhone"
-                  :label="$t('Common.Phone')"
-                  number
-                  outlined
-                  dense
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12" sm="6" md="6" class="pb-0">
+              <v-col cols="12" sm="12" md="6" class="pb-0">
                 <v-text-field
                   v-model="formData.Email"
                   :label="$t('Common.EmailCaption')"
@@ -105,6 +78,40 @@
                 >
                   {{ duplicateMessage }}
                 </div>
+              </v-col>
+              <v-col cols="12" sm="12" md="6" class="pb-0">
+                <v-text-field
+                  v-model="formData.CellPhone"
+                  :label="$t('Common.Phone')"
+                  number
+                  outlined
+                  dense
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="12" md="12" class="pb-0">
+                <v-text-field
+                  v-model="formData.Website"
+                  :label="$t('Common.Website')"
+                  outlined
+                  dense
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="12" md="12" class="pb-0">
+                <v-text-field
+                  v-model="formData.ImageURL"
+                  :label="$t('Common.LogoURL')"
+                  outlined
+                  dense
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="12" md="12" class="pb-0">
+                <v-select
+                  v-model="Tags"
+                  :items="tagsItems"
+                  :label="$t('Common.Tags')"
+                  outlined
+                  dense
+                ></v-select>
               </v-col>
             </v-row>
           </v-form>
@@ -157,6 +164,8 @@ export default {
       snackbarText: '',
       timeout: 3000,
       departmentItems: [],
+      tagsItems: [],
+      Tags: [],
       Type: 'Sponsor',
       formData: {
         FirstName: '',
@@ -166,6 +175,10 @@ export default {
         Job: '',
         CellPhone: '',
         Type: '',
+        Organization: '',
+        Website: '',
+        ImageURL: '',
+        Tags: [],
       },
       formName: 'new-memberContact-form',
       contactTypeItems: '',
@@ -174,9 +187,9 @@ export default {
   },
   async mounted() {
     try {
-      const res = await this.getDropDownData('CRMDepartment')
+      const res = await this.getDropDownData('ContactTags')
       if (res) {
-        this.departmentItems = res.map((i) => i.value)
+        this.tagsItems = res.map((i) => i.value)
       }
     } catch (e) {
       console.error(
@@ -208,7 +221,8 @@ export default {
     },
     async onSave() {
       const url = this.$bitpod.getApiUrl()
-      this.formData.Type = this.Type
+      this.formData.Type = 'Sponsor'
+      this.formData.Tags.push(this.Tags)
       try {
         const res = await this.$axios.$post(
           `${url}Events/${this.$route.params.id}/contacts`,
