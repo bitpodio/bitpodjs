@@ -56,6 +56,15 @@
                   class="pl-0"
                   :dropdown-options="dropdownOptions"
                 />
+                <div
+                  v-if="
+                    !printedTicketTemplate.Template.length &&
+                    Object.keys(selected).length
+                  "
+                  class="v-messages v-messages__message error--text"
+                >
+                  <i18n path="Messages.Error.FieldRequired" />
+                </div>
               </v-col>
             </v-row>
           </v-form>

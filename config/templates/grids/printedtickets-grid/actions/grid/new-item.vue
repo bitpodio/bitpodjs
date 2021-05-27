@@ -69,6 +69,12 @@
                   class="pl-0"
                   :dropdown-options="dropdownOptions"
                 />
+                <div
+                  v-if="!checkTemplate && requiredError"
+                  class="v-messages v-messages__message error--text"
+                >
+                  <i18n path="Messages.Error.FieldRequired" />
+                </div>
               </v-col>
             </v-row>
           </v-form>
@@ -140,6 +146,7 @@ export default {
       uniqueNameError: '',
       customValidCheck: false,
       checkTemplate: false,
+      requiredError: false,
     }
   },
   computed: {
@@ -159,6 +166,7 @@ export default {
   },
   watch: {
     printedTicketTemplateTemplate(newVal) {
+      this.requiredError = true
       this.checkTemplate = !!newVal.length
     },
     dialog() {
@@ -177,6 +185,7 @@ export default {
       this.printedTicketTemplateThumbnailUrl = ''
       this.printedTicketTemplateTemplate = ''
       this.isSaveButtonDisabled = false
+      this.requiredError = false
       this.valid = false
       this.$refs.validTicketTemplateForm &&
         this.$refs.validTicketTemplateForm.reset()
