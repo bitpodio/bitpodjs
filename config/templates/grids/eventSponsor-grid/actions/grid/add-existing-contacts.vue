@@ -110,11 +110,35 @@ export default {
         if (res) {
           console.log('check', this)
           debugger
-          // const contactId = res.ContactId
-          // this.itemId.forEach((ele) => {
-          //   contactId.push(contactId.includes(ele) ? '' : ele)
-          // })
-          // this.setCustomers(contactId)
+          const contactListArray = res.contactlist
+          const newContactList = this.itemId.map((e) => {
+            if (contactListArray.includes(e)) {
+              return contactListArray
+            } else {
+              contactListArray.push(e)
+              return contactListArray
+            }
+          })
+          debugger
+          console.log('contactlist', newContactList)
+          this.patchEvent(contactListArray)
+        }
+      } catch (err) {
+        console.error(
+          `Error in /templates/grids/eventSponsor-grid/actions/grid/add-existing-contacts.vue while making a PATCH call to event model from method onSave context:- URL:-${url}`,
+          err
+        )
+      }
+    },
+
+    async patchEvent(newContactList) {
+      const url = `${this.$bitpod.getApiUrl()}Events/${this.$route.params.id}`
+      const obj = { contactlist: newContactList }
+      try {
+        const res = await this.$axios.$patch(`${url}`, obj)
+        if (res) {
+          debugger
+          this.onClose()
         }
       } catch (err) {
         console.error(
