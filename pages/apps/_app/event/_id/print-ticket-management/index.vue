@@ -278,7 +278,7 @@ export default {
         if (ticketTemplateId) {
           const check = await this.$refs.confirm.open(
             this.$t('Common.DeleteTicketTemplate'),
-            this.$t('Messages.Warn.DeletePrintTicketTemplate'),
+            this.$t('Messages.Warn.UnassignPrintTicketTemplate'),
             { color: 'error lighten-1' }
           )
           if (check) {

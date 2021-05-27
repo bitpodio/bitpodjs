@@ -219,8 +219,8 @@ export default {
         offerValue: parseInt(this.OfferValue),
         validTill: this.ValidTill ? this.ValidTill.toISOString() : '',
       }
+      const url = this.$bitpod.getApiUrl()
       try {
-        const url = this.$bitpod.getApiUrl()
         const res = await this.$axios.$post(`${url}OfferCodes`, obj)
         if (res) {
           this.closeForm()
@@ -239,13 +239,13 @@ export default {
     },
     async checkUniqueCode() {
       if (this.codeTitle) {
+        const where = {
+          and: [
+            { EventId: this.$route.params.id },
+            { codeTitle: this.codeTitle },
+          ],
+        }
         try {
-          const where = {
-            and: [
-              { EventId: this.$route.params.id },
-              { codeTitle: this.codeTitle },
-            ],
-          }
           const res = await this.$apollo.query({
             query: gql`
               ${dicountCode}

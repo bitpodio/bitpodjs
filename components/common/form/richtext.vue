@@ -130,6 +130,17 @@ export default {
                   title: 'Twitter',
                 },
               }
+              const ticketTemplateFields = {
+                'Ticket Full Name': 'this.fullName',
+                'Ticket Event Name': 'this.eventName',
+                'Ticket Event Date': 'this.eventDatetime',
+                'Ticket Price': 'this.price',
+                'Ticket Logo': 'this.orgLogo',
+                'Ticket QRCode': 'this.qrCode',
+                'Ticket Seat Number': 'this.seatNumber',
+                'Ticket Number': 'this.ticketNumber',
+                'Ticket Color': 'this.color',
+              }
               if (currentOption.control.args) {
                 const key = currentOption.control.args[1]
                 if (modelFields[key]) {
@@ -149,6 +160,10 @@ export default {
                       icon +
                       '"></a>'
                   )
+                } else if (ticketTemplateFields[key]) {
+                  editor.selection.insertHTML(
+                    '{{' + ticketTemplateFields[key] + '}}'
+                  )
                 } else if (key === 'Privacy Policy') {
                   editor.selection.insertHTML(
                     '<a href="${' +
@@ -159,7 +174,7 @@ export default {
                     nuxtConfig.publicRuntimeConfig.cdnUri +
                     'admin-default-template-logo.png'
                   editor.selection.insertHTML(
-                    `<img src="${logoURL}" "style"="max-width:200px;height:auto" class="img-responsive"/>`
+                    `<img src="${logoURL}" height="30px" "style"="max-width:200px;height:auto" class="img-responsive"/>`
                   )
                 } else if (key === 'Register') {
                   editor.selection.insertHTML(
