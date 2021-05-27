@@ -13,26 +13,30 @@
         </v-btn>
       </template>
       <v-card>
-        <v-form ref="form" v-model="valid" @submit.prevent="submitForm">
-          <v-card-title
-            class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
+        <v-card-title
+          class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
+        >
+          <h2 class="black--text pt-5 pb-2 text-h5">
+            <i18n path="Drawer.NewPrintedTicketTemplate" />
+          </h2>
+          <v-spacer></v-spacer>
+          <div>
+            <v-btn icon @click="onClose">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </div>
+        </v-card-title>
+        <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
+          <v-form
+            ref="validTicketTemplateForm"
+            v-model="valid"
+            @submit.prevent="submitForm"
           >
-            <h2 class="black--text pt-5 pb-2 text-h5">
-              <i18n path="Drawer.NewPrintedTicketTemplate" />
-            </h2>
-            <v-spacer></v-spacer>
-            <div>
-              <v-btn icon @click="onClose">
-                <v-icon>mdi-close</v-icon>
-              </v-btn>
-            </div>
-          </v-card-title>
-          <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
             <v-row>
               <v-col cols="12" sm="6" md="6">
                 <v-text-field
                   v-model="printedTicketTemplateName"
-                  :label="$t('Common.Name')"
+                  :label="markRequired($t('Common.Name'))"
                   :rules="[rules.required]"
                   :error-messages="uniqueNameError"
                   @input="checkUniqueName"
@@ -61,35 +65,35 @@
               <v-col cols="12" class="pb-0">
                 <RichText
                   v-model="printedTicketTemplateTemplate"
-                  :label="$t('Common.Template')"
+                  :label="markRequired($t('Common.Template'))"
                   class="pl-0"
                   :dropdown-options="dropdownOptions"
                 />
               </v-col>
             </v-row>
-          </v-card-text>
-          <v-divider></v-divider>
-          <v-card-actions
-            class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
-          >
-            <SaveBtn
-              v-if="dialog"
-              color="primary"
-              depressed
-              :disabled="
-                !valid ||
-                isSaveButtonDisabled ||
-                !customValidCheck ||
-                !checkTemplate
-              "
-              :action="onSave"
-              :has-submit-action="true"
-              form-name="new-printedTicketTemplate-form"
-              class="ml-2"
-              ><i18n path="Drawer.Save"
-            /></SaveBtn>
-          </v-card-actions>
-        </v-form>
+          </v-form>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions
+          class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
+        >
+          <SaveBtn
+            v-if="dialog"
+            color="primary"
+            depressed
+            :disabled="
+              !valid ||
+              isSaveButtonDisabled ||
+              !customValidCheck ||
+              !checkTemplate
+            "
+            :action="onSave"
+            :has-submit-action="true"
+            form-name="new-printedTicketTemplate-form"
+            class="ml-2"
+            ><i18n path="Drawer.Save"
+          /></SaveBtn>
+        </v-card-actions>
       </v-card>
     </v-dialog>
   </v-col>
@@ -141,46 +145,50 @@ export default {
   computed: {
     dropdownOptions() {
       return {
-        'Full Name': 'this.fullName',
-        'Event Name': 'this.eventName',
-        'Event Date': 'this.eventDatetime',
-        Price: 'this.price',
-        Logo: 'this.orgLogo',
-        QRCode: 'this.qrCode',
-        'Seat Number': 'this.seatNumber',
-        'Ticket Number': 'this.ticketNumber',
-        Color: 'this.color',
+        'Full Name': 'Ticket Full Name',
+        'Event Name': 'Ticket Event Name',
+        'Event Date': 'Ticket Event Date',
+        Price: 'Ticket Price',
+        Logo: 'Ticket Logo',
+        QRCode: 'Ticket QRCode',
+        'Seat Number': 'Ticket Seat Number',
+        'Ticket Number': 'Ticket Number',
+        Color: 'Ticket Color',
       }
     },
   },
   watch: {
-    customValidCheck(newVal) {
-      if (!newVal) {
-        this.uniqueNameError = this.$t('Messages.Error.TicketTemplateExists')
-      } else {
-        this.uniqueNameError = ''
-      }
-    },
     printedTicketTemplateTemplate(newVal) {
-      this.checkTemplate = newVal.length
+      this.checkTemplate = !!newVal.length
+    },
+    dialog() {
+      this.uniqueNameError = ''
     },
   },
   methods: {
+    markRequired(stringValue) {
+      return `${stringValue}*`
+    },
     onClose() {
-      this.dialog = false
+      this.uniqueNameError = ''
+      this.customValidCheck = false
       this.printedTicketTemplateName = ''
       this.printedTicketTemplateSize = ''
       this.printedTicketTemplateThumbnailUrl = ''
       this.printedTicketTemplateTemplate = ''
       this.isSaveButtonDisabled = false
       this.valid = false
-      this.uniqueNameError = ''
-      this.customValidCheck = false
+      this.$refs.validTicketTemplateForm &&
+        this.$refs.validTicketTemplateForm.reset()
+      this.$nextTick(() => {
+        this.dialog = false
+      })
     },
     async checkUniqueName() {
       const where = {
         and: [{ isDefault: true }, { Name: this.printedTicketTemplateName }],
       }
+      this.uniqueNameError = ''
       try {
         const res = await this.$apollo.query({
           query: gql`
@@ -197,8 +205,10 @@ export default {
           res.data.PrintedTicketTemplate.PrintedTicketTemplateCount
         ) {
           this.customValidCheck = false
+          this.uniqueNameError = this.$t('Messages.Error.TicketTemplateExists')
         } else {
           this.customValidCheck = true
+          this.uniqueNameError = ''
         }
       } catch (error) {
         console.error(

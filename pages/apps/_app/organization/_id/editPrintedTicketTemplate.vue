@@ -6,22 +6,22 @@
       scrollable
       content-class="limit-form-width"
     >
-      <v-form ref="form" v-model="valid" @submit.prevent="submitForm">
-        <v-card>
-          <v-card-title
-            class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
-          >
-            <h2 class="black--text pt-5 pb-2 text-h5">
-              <i18n path="Drawer.EditPrintedTicketTemplate" />
-            </h2>
-            <v-spacer></v-spacer>
-            <div>
-              <v-btn icon @click="onClose">
-                <v-icon>mdi-close</v-icon>
-              </v-btn>
-            </div>
-          </v-card-title>
-          <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
+      <v-card>
+        <v-card-title
+          class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
+        >
+          <h2 class="black--text pt-5 pb-2 text-h5">
+            <i18n path="Drawer.EditPrintedTicketTemplate" />
+          </h2>
+          <v-spacer></v-spacer>
+          <div>
+            <v-btn icon @click="onClose">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </div>
+        </v-card-title>
+        <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
+          <v-form ref="form" v-model="valid" @submit.prevent="submitForm">
             <v-row>
               <v-col cols="12" sm="6" md="6">
                 <v-text-field
@@ -52,30 +52,31 @@
               <v-col cols="12" class="pb-0">
                 <RichText
                   v-model="printedTicketTemplate.Template"
+                  :label="markRequired($t('Common.Template'))"
                   class="pl-0"
                   :dropdown-options="dropdownOptions"
                 />
               </v-col>
             </v-row>
-          </v-card-text>
-          <v-divider></v-divider>
-          <v-card-actions
-            class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
-          >
-            <SaveBtn
-              v-if="editTemplate"
-              color="primary"
-              depressed
-              :disabled="!valid || isSaveButtonDisabled"
-              :action="onSave"
-              :has-submit-action="true"
-              form-name="edit-printedTicketTemplate-form"
-              class="ml-2"
-              ><i18n path="Drawer.Save"
-            /></SaveBtn>
-          </v-card-actions>
-        </v-card>
-      </v-form>
+          </v-form>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions
+          class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
+        >
+          <SaveBtn
+            v-if="editTemplate"
+            color="primary"
+            depressed
+            :disabled="!valid || isSaveButtonDisabled || !checkTemplate"
+            :action="onSave"
+            :has-submit-action="true"
+            form-name="edit-printedTicketTemplate-form"
+            class="ml-2"
+            ><i18n path="Drawer.Save"
+          /></SaveBtn>
+        </v-card-actions>
+      </v-card>
     </v-dialog>
   </v-layout>
 </template>
@@ -118,28 +119,36 @@ export default {
       printedTicketTemplate,
       isSaveButtonDisabled: false,
       valid: false,
+      checkTemplate: false,
     }
   },
   computed: {
     dropdownOptions() {
       return {
-        'Full Name': 'this.fullName',
-        'Event Name': 'this.eventName',
-        'Event Date': 'this.eventDatetime',
-        Price: 'this.price',
-        Logo: 'this.orgLogo',
-        QRCode: 'this.qrCode',
-        'Seat Number': 'this.seatNumber',
-        'Ticket Number': 'this.ticketNumber',
-        Color: 'this.color',
+        'Full Name': 'Ticket Full Name',
+        'Event Name': 'Ticket Event Name',
+        'Event Date': 'Ticket Event Date',
+        Price: 'Ticket Price',
+        Logo: 'Ticket Logo',
+        QRCode: 'Ticket QRCode',
+        'Seat Number': 'Ticket Seat Number',
+        'Ticket Number': 'Ticket Number',
+        Color: 'Ticket Color',
       }
+    },
+  },
+  watch: {
+    'printedTicketTemplate.Template'(newVal) {
+      this.checkTemplate = !!newVal.length
     },
   },
   methods: {
     onClose() {
       this.$emit('update:editTemplate', false)
     },
-
+    markRequired(stringValue) {
+      return `${stringValue}*`
+    },
     async onSave() {
       this.isSaveButtonDisabled = true
       const url = this.$bitpod.getApiUrl()
