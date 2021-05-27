@@ -2,7 +2,7 @@ export function rules(i18n) {
   const regex = RegExp(/^\d*[0-9]\d*$/)
   return Object.freeze({
     required: (v) =>
-      (/^[^-\s][\w\s-]+$/.test(v) && !!(v && v.length)) ||
+      !!(v && v.length) ||
       typeof v === 'number' ||
       i18n.t('Messages.Error.FieldRequired'),
     email: (v) =>
