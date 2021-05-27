@@ -952,6 +952,7 @@
   },
   "Messages": {
     "Error": {
+      "SpaceNotAllowed":"שטח לא מורשה בהתחלה",
       "NumberCannotBeNegative": "המספר השלילי לא התקבל",
       "EventNameEmpty": "Event name cannot be empty",
       "SizeRequired": "Size is required",

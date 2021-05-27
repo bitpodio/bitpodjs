@@ -950,6 +950,7 @@
   },
   "Messages": {
     "Error": {
+      "SpaceNotAllowed":"Espace non autorisé au départ",
       "NumberCannotBeNegative": "Nombre négatif non accepté",
       "EventNameEmpty": "Event name cannot be empty",
       "SizeRequired": "La taille est requise",

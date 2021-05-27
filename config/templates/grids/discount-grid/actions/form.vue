@@ -374,11 +374,15 @@ export default {
         }
         if (res) {
           this.closeForm()
-          this.refresh()
           this.snackbarText = this.isEdit
             ? this.$t('Messages.Success.DiscountCodeUpdateSuccessfully')
             : this.$t('Messages.Success.DiscountCodeSuccessfully')
-          this.snackbar = true
+          this.$eventBus.$emit(
+            'toggle-snackbar',
+            'Discount-Codes',
+            this.snackbarText,
+            this.timeout
+          )
         }
       } catch (error) {
         console.error(
