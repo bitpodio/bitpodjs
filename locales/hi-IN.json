@@ -953,6 +953,7 @@
   },
   "Messages": {
     "Error": {
+      "SpaceNotAllowed":"शुरुआत में जगह की अनुमति नहीं है",
       "NumberCannotBeNegative": "ऋणात्मक संख्या स्वीकार नहीं की गई",
       "EventNameEmpty": "Event name cannot be empty",
       "SizeRequired": "Size is required",

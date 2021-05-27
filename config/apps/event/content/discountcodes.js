@@ -22,7 +22,7 @@ export default {
         hideFilter: true,
         hideSearch: false,
       },
-      itemTitle: 'Common.DiscountCodes',
+      itemTitle: 'Drawer.DiscountCode',
       defaultSort: 'createdDate DESC',
       fields: {
         currentUsageCount: {

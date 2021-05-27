@@ -3632,7 +3632,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'Common.DiscountCodes',
+      itemTitle: 'Drawer.DiscountCode',
       hidden: true,
       fields: {
         codeTitle: {
@@ -3836,7 +3836,7 @@ export default {
           }
         },
       },
-      title: 'eventDiscountCodes',
+      title: 'Drawer.DiscountCode',
       type: 'list',
     },
     eventRegistrationQuestion: {

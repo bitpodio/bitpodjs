@@ -1,150 +1,154 @@
 <template>
-  <v-col class="px-0">
-    <v-dialog
-      v-model="dialog"
-      persistent
-      scrollable
-      content-class="slide-form-default"
-    >
-      <template v-slot:activator="{ attrs }">
-        <v-btn text small v-bind="attrs" @click="openDialog()">
-          <v-icon left>fa-pencil</v-icon> {{ $t('Drawer.Edit') }}
-        </v-btn>
-      </template>
-      <v-card>
-        <v-card-title
-          class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
-        >
-          <h2 class="black--text pt-5 pb-4 text-h5">
-            <i18n path="Common.EditDiscountCode" />
-          </h2>
-          <v-spacer></v-spacer>
-          <div>
-            <v-btn icon @click.native="closeForm">
-              <v-icon>mdi-close</v-icon>
-            </v-btn>
-          </div>
-        </v-card-title>
-        <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0 small-form">
-          <v-form
-            :id="formName"
-            ref="form"
-            v-model="valid"
-            :lazy-validation="lazy"
-            @submit.prevent="onSave"
-          >
-            <v-row>
-              <v-col cols="12">
-                <v-text-field
-                  v-model="formData.codeTitle"
-                  :label="$t('Common.CodeRequired')"
-                  :rules="[rules.required]"
-                  outlined
-                  dense
-                  :error-messages="uniqueCodeMessage"
-                  @input="checkUniqueCode"
-                ></v-text-field>
-              </v-col>
-              <v-col class="col-12 col-md-6">
-                <v-text-field
-                  v-model="formData.maxUsageCount"
-                  :label="$t('Common.MaxUsageCount')"
-                  :rules="[rules.negativeNumberRules]"
-                  type="number"
-                  min="1"
-                  outlined
-                  dense
-                ></v-text-field>
-              </v-col>
-              <v-col class="col-12 col-md-6">
-                <v-text-field
-                  v-model="formData.minApplicableOrderAmount"
-                  :label="$t('Common.MinApplicableOrderAmount')"
-                  :rules="[rules.negativeNumberRules]"
-                  type="number"
-                  min="1"
-                  outlined
-                  dense
-                ></v-text-field>
-              </v-col>
-              <v-col class="col-12 col-md-6">
-                <v-text-field
-                  v-model="formData.offerValue"
-                  :label="$t('Common.OfferValueRequired')"
-                  type="number"
-                  :rules="[rules.offerCountRules]"
-                  min="1"
-                  outlined
-                  dense
-                ></v-text-field>
-              </v-col>
-              <v-col class="col-12 col-md-6">
-                <v-datetime-picker
-                  v-model="formData.validTill"
-                  :label="$t('Common.ValidTill')"
-                  :text-field-props="discountValidTillProps"
-                  time-format="hh:mm a"
-                  date-format="MMMM dd, yyyy"
-                >
-                  <template slot="dateIcon">
-                    <v-icon>fas fa-calendar</v-icon>
-                  </template>
-                  <template slot="timeIcon">
-                    <v-icon>fas fa-clock</v-icon>
-                  </template>
-                </v-datetime-picker>
-              </v-col>
-              <v-col class="col-12 col-md-6">
-                <v-checkbox
-                  v-model="formData.isPercent"
-                  :label="$t('Common.IsPercentCaption')"
-                  class="mt-0"
-                  height="20"
-                ></v-checkbox>
-              </v-col>
-              <v-col class="col-12 col-md-6">
-                <v-text-field
-                  v-model="formData.maxApplicableAmount"
-                  :label="$t('Common.MaxApplicableAmount')"
-                  :rules="[rules.negativeNumberRules]"
-                  type="number"
-                  min="1"
-                  outlined
-                  dense
-                ></v-text-field>
-              </v-col>
-              <v-col class="col-12 col-md-12">
-                <RichText
-                  v-model="formData.description"
-                  class="mb-3"
-                  :label="$t('Common.Description')"
-                ></RichText>
-              </v-col>
-            </v-row>
-          </v-form>
-        </v-card-text>
-        <v-divider></v-divider>
-        <v-card-actions
-          class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
-        >
-          <SaveBtn
-            v-if="dialog"
-            color="primary"
-            :label="this.$t('Drawer.Save')"
-            :disabled="!valid || !isUniqueCode"
-            depressed
-            :action="onSave"
-            :form-name="formName"
-          ></SaveBtn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+  <div>
     <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
-      <div class="fs-16 text-center">
+      <div class="text-center">
         {{ snackbarText }}
       </div>
     </v-snackbar>
-  </v-col>
+    <v-col class="px-0">
+      <v-dialog
+        v-model="dialog"
+        persistent
+        scrollable
+        content-class="slide-form-default"
+      >
+        <template v-slot:activator="{ attrs }">
+          <v-btn text small v-bind="attrs" @click="openDialog()">
+            <v-icon left>fa-pencil</v-icon> {{ $t('Drawer.Edit') }}
+          </v-btn>
+        </template>
+        <v-card>
+          <v-card-title
+            class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
+          >
+            <h2 class="black--text pt-5 pb-4 text-h5">
+              <i18n path="Common.EditDiscountCode" />
+            </h2>
+            <v-spacer></v-spacer>
+            <div>
+              <v-btn icon @click.native="closeForm">
+                <v-icon>mdi-close</v-icon>
+              </v-btn>
+            </div>
+          </v-card-title>
+          <v-card-text
+            class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0 small-form"
+          >
+            <v-form
+              :id="formName"
+              ref="form"
+              v-model="valid"
+              :lazy-validation="lazy"
+              @submit.prevent="onSave"
+            >
+              <v-row>
+                <v-col cols="12">
+                  <v-text-field
+                    v-model="formData.codeTitle"
+                    :label="$t('Common.CodeRequired')"
+                    :rules="[rules.required]"
+                    outlined
+                    dense
+                    :error-messages="uniqueCodeMessage"
+                    @input="checkUniqueCode"
+                  ></v-text-field>
+                </v-col>
+                <v-col class="col-12 col-md-6">
+                  <v-text-field
+                    v-model="formData.maxUsageCount"
+                    :label="$t('Common.MaxUsageCount')"
+                    :rules="[rules.negativeNumberRules]"
+                    type="number"
+                    min="1"
+                    outlined
+                    dense
+                  ></v-text-field>
+                </v-col>
+                <v-col class="col-12 col-md-6">
+                  <v-text-field
+                    v-model="formData.minApplicableOrderAmount"
+                    :label="$t('Common.MinApplicableOrderAmount')"
+                    :rules="[rules.negativeNumberRules]"
+                    type="number"
+                    min="1"
+                    outlined
+                    dense
+                  ></v-text-field>
+                </v-col>
+                <v-col class="col-12 col-md-6">
+                  <v-text-field
+                    v-model="formData.offerValue"
+                    :label="$t('Common.OfferValueRequired')"
+                    type="number"
+                    :rules="[rules.offerCountRules]"
+                    min="1"
+                    outlined
+                    dense
+                  ></v-text-field>
+                </v-col>
+                <v-col class="col-12 col-md-6">
+                  <v-datetime-picker
+                    v-model="formData.validTill"
+                    :label="$t('Common.ValidTill')"
+                    :text-field-props="discountValidTillProps"
+                    time-format="hh:mm a"
+                    date-format="MMMM dd, yyyy"
+                  >
+                    <template slot="dateIcon">
+                      <v-icon>fas fa-calendar</v-icon>
+                    </template>
+                    <template slot="timeIcon">
+                      <v-icon>fas fa-clock</v-icon>
+                    </template>
+                  </v-datetime-picker>
+                </v-col>
+                <v-col class="col-12 col-md-6">
+                  <v-checkbox
+                    v-model="formData.isPercent"
+                    :label="$t('Common.IsPercentCaption')"
+                    class="mt-0"
+                    height="20"
+                  ></v-checkbox>
+                </v-col>
+                <v-col class="col-12 col-md-6">
+                  <v-text-field
+                    v-model="formData.maxApplicableAmount"
+                    :label="$t('Common.MaxApplicableAmount')"
+                    :rules="[rules.negativeNumberRules]"
+                    type="number"
+                    min="1"
+                    outlined
+                    dense
+                  ></v-text-field>
+                </v-col>
+                <v-col class="col-12 col-md-12">
+                  <RichText
+                    v-model="formData.description"
+                    class="mb-3"
+                    :label="$t('Common.Description')"
+                  ></RichText>
+                </v-col>
+              </v-row>
+            </v-form>
+          </v-card-text>
+          <v-divider></v-divider>
+          <v-card-actions
+            class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
+          >
+            <SaveBtn
+              v-if="dialog"
+              color="primary"
+              :label="this.$t('Drawer.Save')"
+              :disabled="!valid || !isUniqueCode"
+              depressed
+              :action="onSave"
+              :form-name="formName"
+            ></SaveBtn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-col>
+  </div>
 </template>
 
 <script>
@@ -172,9 +176,9 @@ export default {
   },
   data() {
     return {
+      snackbarText: '',
       snackbar: false,
       timeout: '3000',
-      snackbarText: '',
       dialog: false,
       formName: 'new-event-discount-form',
       valid: false,
@@ -190,6 +194,13 @@ export default {
         appendIcon: 'fa-calendar',
         outlined: true,
         dense: true,
+      }
+    },
+  },
+  watch: {
+    snackbar(newVal) {
+      if (!newVal) {
+        this.refresh()
       }
     },
   },
@@ -222,12 +233,14 @@ export default {
         )
         if (res) {
           this.closeForm()
-          this.refresh()
-          this.snackbarText = this.$t(
-            'Messages.Success.DiscountCodeUpdateSuccessfully'
-          )
 
-          this.snackbar = true
+          this.$nextTick(() => {
+            this.snackbarText = this.$t(
+              'Messages.Success.DiscountCodeUpdateSuccessfully'
+            )
+            this.snackbar = true
+            // this.refresh()
+          })
         }
       } catch (error) {
         console.error(
