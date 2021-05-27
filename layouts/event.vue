@@ -12,7 +12,7 @@
       :right="$vuetify.rtl"
     >
       <div class="px-4 pt-3 pb-1">
-        <i18n path="Common.AppTitle" class="app-title-text" />
+        <i18n path="Common.AppTitle" class="app-title-text text--primary" />
       </div>
       <div class="d-block d-sm-none my-3">
         <v-menu>

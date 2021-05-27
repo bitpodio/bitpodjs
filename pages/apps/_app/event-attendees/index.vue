@@ -1,6 +1,9 @@
 <template>
   <div class="mx-n3 mx-sm-0">
-    <div class="col-sm-5 px-5 pl-sm-0 event-list-checkin">
+    <div class="col-sm-5 px-5 pl-sm-0 event-list-checkin d-flex">
+      <v-btn class="mr-2 mt-1 back-icon" icon @click="goBack"
+        ><v-icon class="fs-30">mdi-chevron-left</v-icon>
+      </v-btn>
       <Lookup v-model="eventTitle" :field="eventProps" />
     </div>
     <div>
@@ -37,7 +40,14 @@ export default {
       eventTitle: this.$route.query.eventId,
       eventId: '',
       isGrid: false,
-      eventProps: {
+    }
+  },
+  computed: {
+    content() {
+      return this.contents ? this.contents.Event : null
+    },
+    eventProps() {
+      return {
         type: 'lookup',
         dataSource: {
           query: eventQuery,
@@ -71,12 +81,7 @@ export default {
             }
           },
         },
-      },
-    }
-  },
-  computed: {
-    content() {
-      return this.contents ? this.contents.Event : null
+      }
     },
     filter() {
       return {
@@ -84,6 +89,11 @@ export default {
           EventId: this.eventTitle,
         },
       }
+    },
+  },
+  methods: {
+    goBack() {
+      this.$router.back()
     },
   },
 }
