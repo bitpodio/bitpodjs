@@ -238,7 +238,11 @@ export default {
       const url = this.$bitpod.getApiUrl()
       return `${url}${this.modelName}/${
         this.modelName === 'Feeds' ? this.feedId : this.$route.params.id
-      }/${this.modelName === 'Events' ? 'Comments' : 'Comment'}/${id || ''}`
+      }/${
+        this.modelName === 'Events' || this.modelName === 'ESIGNREQUESTS'
+          ? 'Comments'
+          : 'Comment'
+      }/${id || ''}`
     },
     uploaded(data) {
       this.fileList = [...data]

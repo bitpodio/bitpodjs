@@ -175,6 +175,11 @@
           viewName === 'template' ||
           viewName === 'seatmaps' ||
           viewName === 'badge' ||
+          viewName === 'integration' ||
+          viewName === 'eSign' ||
+          viewName === 'eSignCompleted' ||
+          viewName === 'eSignInprogress' ||
+          viewName === 'eSignDeclined' ||
           viewName === 'feeds' ||
           viewName === 'Members' ||
           viewName === 'integration' ||
@@ -443,23 +448,51 @@
           <div></div>
         </v-skeleton-loader>
       </div>
-      <div v-if="viewName === 'feeds' && loading === true" class="d-flex">
-        <v-row class="flex-column">
-          <v-col
-            v-for="i in 3"
+      <div
+        v-if="
+          (viewName === 'eSign' ||
+            viewName === 'eSignCompleted' ||
+            viewName === 'eSignInprogress' ||
+            viewName === 'eSignDeclined') &&
+          loading === true
+        "
+        style="max-width: 65%;"
+        class="d-flex flex-sm-wrap flex-column mx-auto"
+      >
+        <div class="pt-10 pb-10">
+          <v-skeleton-loader type="heading"></v-skeleton-loader>
+        </div>
+        <div class="d-flex flex-wrap">
+          <v-skeleton-loader type="heading" class="pb-10"></v-skeleton-loader>
+          <v-skeleton-loader
+            v-for="i in 10"
             :key="i"
-            cols="12"
-            md="6"
-            class="col-md-6 feed-section-load mx-auto px-0"
+            :loading="!!loading"
+            type="card"
+            width="230"
+            class="text-center mx-auto ma-sm-8 ml-sm-0 mt-sm-0 member-tile elevation-0"
           >
-            <v-skeleton-loader
-              v-bind="attrs"
-              :loading="!!loading"
-              type="list-item-avatar-three-line, image, article"
-              ><div></div
-            ></v-skeleton-loader>
-          </v-col>
-        </v-row>
+            <div></div>
+          </v-skeleton-loader>
+        </div>
+        <div v-if="viewName === 'feeds' && loading === true" class="d-flex">
+          <v-row class="flex-column">
+            <v-col
+              v-for="i in 3"
+              :key="i"
+              cols="12"
+              md="6"
+              class="col-md-6 feed-section-load mx-auto px-0"
+            >
+              <v-skeleton-loader
+                v-bind="attrs"
+                :loading="!!loading"
+                type="list-item-avatar-three-line, image, article"
+                ><div></div
+              ></v-skeleton-loader>
+            </v-col>
+          </v-row>
+        </div>
       </div>
     </div>
   </div>
