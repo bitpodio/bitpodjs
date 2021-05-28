@@ -475,6 +475,13 @@ body {
 .theme--dark .istemplate .v-data-footer {
     background: #000000 !important;
 }
+.theme--dark .address-legend {
+  background: #1e1e1e !important;
+  color: #fff !important;
+}
+.theme--dark .slide-form .form-control {
+  color: #fff !important;
+}
 .vs-hidden {
   visibility: hidden;
 }

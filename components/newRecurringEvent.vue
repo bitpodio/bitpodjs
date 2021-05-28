@@ -1721,7 +1721,9 @@ export default {
       })
       return arr[0].end
     },
-
+    checkOverlappingDays(array) {
+      return new Set(array).size !== array.length
+    },
     partitionIntoOverlappingRanges(array) {
       array.sort(function (a, b) {
         if (a.start < b.start) return -1
@@ -2340,19 +2342,23 @@ export default {
           this.locationMessage = 'Selected location should not be blank'
         }
         const tempData = []
+        const setDays = []
         this.sessions.forEach((row) => {
           let startTime = row.StartTime.replace(':', '.')
           let endTime = row.EndTime.replace(':', '.')
           startTime = parseInt(startTime)
           endTime = parseInt(endTime)
           const newsObject = { start: startTime, end: endTime }
+          row.Days.forEach((x) => setDays.push(x))
           tempData.push(newsObject)
         })
+        const isOverlappingDays = this.checkOverlappingDays(setDays)
         const isInvalidSlot = this.partitionIntoOverlappingRanges(tempData)
         if (
           !isLocationTypeEmpty.includes(true) &&
           !isInvalidSessionMap.includes(true) &&
           (isInvalidSlot === false ||
+            isOverlappingDays === false ||
             (await this.$refs.confirm.open(
               this.$t('Drawer.SessionOverlaps'),
               this.$t('Messages.Warn.OverLapSessionMsg'),

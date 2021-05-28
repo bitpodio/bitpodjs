@@ -944,7 +944,17 @@
                 <i18n path="Common.TicketsNotRequired" />
               </h2>
               <v-spacer></v-spacer>
-              <v-menu right :offset-y="offset" transition="slide-y-transition">
+              <v-menu
+                v-if="
+                  showPrintManagement ||
+                  (data.event.LocationType === 'Venue' &&
+                    switchSeat === true &&
+                    data.event.HasTickets)
+                "
+                right
+                :offset-y="offset"
+                transition="slide-y-transition"
+              >
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn icon small v-bind="attrs" v-on="on">
                     <v-icon>mdi-dots-vertical</v-icon>

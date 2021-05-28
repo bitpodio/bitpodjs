@@ -955,6 +955,7 @@
   },
   "Messages": {
     "Error": {
+      "SpaceNotAllowed":"Space not allowed at the start",
       "NumberCannotBeNegative": "Negative number not accepted",
       "EventNameEmpty": "Event name cannot be empty",
       "SizeRequired": "Size is required",
@@ -997,7 +998,7 @@
       "TicketStartCurrentDate": "Ticket start date should not be less than current date",
       "TicketEndCurrentDate": "Ticket end date should not be less than current date",
       "MaxAllowMsg": "Max Allow should be greater than zero",
-      "DurationGreaterSessionMsg":"Slots Size should be less than or equal to the total time of the session",
+      "DurationGreaterSessionMsg": "Slots Size should be less than or equal to the total time of the session",
       "DurationGreaterMsg": "Duration should be greater than zero",
       "RollingDaysMsg": "Rolling days should be greater than zero",
       "PleaseEnterValidPhone": "Please enter valid phone number!",
@@ -1071,7 +1072,8 @@
       "SetupWarning": "Setup Connection Warning",
       "SetupConnection": "Please setup the connection to make it active.",
       "DeletePrintTicketTemplate": "Do you want to delete this ticket template?",
-      "ReplaceTicketTemplate": "The new ticket template will replace your existing ticket template"
+      "ReplaceTicketTemplate": "The new ticket template will replace your existing ticket template",
+      "UnassignPrintTicketTemplate": "Changes made to the template will be lost, are you sure to remove the template?"
     },
     "Success": {
       "UnsubscribeSuccessMsg": "You have unsubscribed successfully",
