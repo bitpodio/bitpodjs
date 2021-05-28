@@ -1,5 +1,7 @@
 {
   "Common": {
+    "NewDiscountCode": "קוד הנחה חדש",
+    "EditDiscountCode": "ערוך את קוד ההנחה",
     "MemberList": "רשימת חברים",
     "AppTitle": "אירועים",
     "Logout": "להתנתק",
@@ -15,6 +17,12 @@
     "HomePage": "Home page",
     "SignIn": "Sign in",
     "Live": "לחיות",
+    "Scan": "לִסְרוֹק",
+    "Feeds": "הזנה",
+    "Feed": "הזנה",
+    "Like": "כמו",
+    "NewFeed": "פיד חדש",
+    "EditFeed": "ערוך עדכון",
     "Watching": "צופה",
     "EditEventInformation": "ערוך מידע על האירוע",
     "Description": "תיאור",
@@ -63,11 +71,13 @@
     "Task": "מְשִׁימָה",
     "RegistrationForm": "טופס הרשמה",
     "EventInformation": "מידע על האירוע",
+    "MemberFullName": "שם מלא של חבר",
+    "MemberStatus": "סטטוס חבר",
     "MemberInformation": "מידע על חברים",
     "MemberOwner": "בעל חבר",
     "MemberName": "שם חבר",
     "MemberType": "סוג חבר",
-    "MemberNumber": "מספר חבר",
+    "MemberId": "תעודת חבר",
     "MemberSite": "אתר חבר",
     "Rating": "דֵרוּג",
     "ParentAccount": "חשבון הורים",
@@ -196,7 +206,11 @@
     "AvailableHours": "שעות פנויות",
     "WorkingDays": "ימי עבודה",
     "BusinessUnits": "Business Units",
-    "Subscriptions": "Subscriptions",
+    "Subscriptions": "מנויים",
+    "SubscriptionPlan": "תוכנית מנוי",
+    "SubscriptionPlanRequired": "תוכנית מנוי *",
+    "NewSubscription": "מנוי חדש",
+    "EditSubscription": "ערוך מנוי",
     "OrganizationInformation": "מידע על הארגון",
     "City": "עִיר",
     "State": "מדינה",
@@ -229,6 +243,7 @@
     "Refund": "Refund",
     "General": "General",
     "Comment": "Comment",
+    "WriteaComment": "כתוב הערה...",
     "EditRegistration": "Edit Registration",
     "PhysicalAddress": "Physical Address",
     "Name": "שֵׁם",
@@ -277,6 +292,8 @@
     "New": "חָדָשׁ",
     "CreateAccessKey": "Create Access Key",
     "InvitationHistory": "היסטוריית הזמנות",
+    "DisplayName": "הצג שם",
+    "AssociatedMembers": "הרשמה חדשה",
     "NewRegistration": "New Registration",
     "AddMember": "תוסיף חבר",
     "AssociateMember": "חבר חבר",
@@ -363,6 +380,7 @@
     "ResendRegistrationEmail": "Resend Registration Email",
     "JoinSession": "Join Session",
     "StartSession": "התחל מושב",
+    "GotoStage": "לך לבמה",
     "NewSession": "מושב חדש",
     "NewScheduleATask": "קבע משימה",
     "EditScheduleATask": "ערוך משימה מתוזמנת",
@@ -889,7 +907,16 @@
     "All": "את כל",
     "OutForSignature": "לצאת לחתימה",
     "SignatureRequestedSubject": "בקשה לחתימה -",
-    "Fields": "שדות"
+    "Fields": "שדות",
+    "PrintTicketManagement": "הקצה תבנית",
+    "DeletePrintTicketTemplate": "מחק את תבנית הכרטיסים",
+    "NewTicketTemplate": "תבנית כרטיסים חדשה",
+    "EditTicketTemplate": "ערוך תבנית כרטיסים",
+    "PrintedTicketTemplate": "הקצה תבנית כרטיסים",
+    "TicketTemplate": "תבנית כרטיסים",
+    "TicketTemplates": "תבניות כרטיסים",
+    "ThumbnailUrl": "כתובת אתר של תמונה ממוזערת",
+    "DeleteTicketTemplate": "מחק את תבנית הכרטיסים"
   },
   "Drawer": {
     "UnSubscribeMsg": "אנא בחר סיבה לביטול הרישום לניוזלטר. זה יעזור לנו לשפר את השירותים שלנו.",
@@ -900,6 +927,7 @@
     "CreateUser": "צור משתמש",
     "EditBadge": "ערוך את התג",
     "DeleteEvent": "מחק אירוע",
+    "DeleteFeed": "מחק אירוע",
     "DeleteUser": "מחק משתמש",
     "DeleteEventQuestion": "מחק שאלה",
     "Save": "להציל",
@@ -937,7 +965,9 @@
     "Members": "Members",
     "Contacts": "Contacts",
     "SessionOverlaps": "אזהרת חפיפה של מושב",
-    "ExportToCSV": "ייצא ל- CSV"
+    "ExportToCSV": "ייצא ל- CSV",
+    "EditPrintedTicketTemplate": "ערוך תבנית כרטיסים",
+    "NewPrintedTicketTemplate": "תבנית כרטיסים חדשה"
   },
   "FilterOptions": {
     "Is": "Is",
@@ -963,6 +993,8 @@
   },
   "Messages": {
     "Error": {
+      "SpaceNotAllowed":"שטח לא מורשה בהתחלה",
+      "NumberCannotBeNegative": "המספר השלילי לא התקבל",
       "EventNameEmpty": "Event name cannot be empty",
       "SizeRequired": "Size is required",
       "ThisFieldRequired": "זהו שדה חובה",
@@ -1012,7 +1044,7 @@
       "StartEndTime": "זמן ההתחלה לא אמור להיות גדול משעת הסיום",
       "EndStartTime": "זמן הסיום לא אמור להיות פחות משעת ההתחלה",
       "StartEndTimeEqlMsg": "זמן ההתחלה לא אמור להיות שווה לזמן הסיום.",
-      "SessionStartDate": "תאריך תחילת ההפעלה צריך להיות בין תאריך האירוע",
+      "SessionStartDate": "תאריך ושעה של תחילת ההפעלה צריכים להיות בין תאריך האירוע",
       "RefundPaidAmount": "Refunded Amount can not be greater or equal than total paid amount",
       "RefundAmountMsg": "Amount should not be less than or equal to  0",
       "InvalidDisplayOrder": "Display order should not be blank and less than 1",
@@ -1037,10 +1069,13 @@
       "CreateOrgCatch": "ארגון זה נמצא בשימוש או עלול להימחק באופן רך. נסה עם שם חדש",
       "CreateOrgFull": "יצירת הארגון שלך נכשלה",
       "MemberExists": "חבר כבר קיים",
+      "ContactExists": "איש קשר כבר קיים!",
       "ImportFailed": "ביצוע הייבוא ​​נכשל",
-      "ImportFailedMessage": "ביצוע הייבוא ​​נכשל בגלל שורה {index} בקובץ",
+      "ImportFailedMessage": "קובץ ה- csv אינו תואם לפורמט המקובל. אנא עיין בקובץ לדוגמה המופיע למעלה.",
       "DuplicateErrorMessage": "שכפול רשומות בקובץ. אנא השתמש במזהה דואל ייחודי.",
-      "AttendeeImportFailed": "ייבוא ​​המשתתף נכשל."
+      "AttendeeImportFailed": "ייבוא ​​המשתתף נכשל.",
+      "TicketTemplateExists": "התבנית כבר קיימת",
+      "DurationGreaterSessionMsg": "גודל החריצים צריך להיות קטן או שווה לזמן הכולל של ההפעלה."
     },
     "Warn": {
       "UniqueLinkFormat": "אותיות אלפאנומריות באותיות קטנות בלבד",
@@ -1057,6 +1092,7 @@
       "DeleteImage": "האם אתה רוצה למחוק את התמונה הזו?",
       "NoEvents": "אין אירועים חיים וטיוטה, כדי להתחיל בהגדרת האירוע שלך השתמש בקישור צור אירוע",
       "DeleteEvent": "האם אתה רוצה למחוק אירוע זה?",
+      "DeleteFeed": "האם אתה רוצה למחוק אירוע זה?",
       "DeleteUser": "האם ברצונך למחוק משתמש זה?",
       "NoEventsFound": "לא נמצאו אירועים עם שם {searchKey}",
       "ConfirmResendRegistrationEmail": "האם אתה בטוח שברצונך לשלוח שוב הודעות אישור?",
@@ -1070,7 +1106,10 @@
       "SeatMapDefault": "אזהרת מפת מושב",
       "SeatMapWarning": "ישנם שינויים שלא נשמרו אשר יאבדו אם תסגור מבלי לשמור, האם אתה בטוח?",
       "SetupWarning": "הגדרת אזהרת חיבור",
-      "SetupConnection": "אנא הגדר את החיבור כדי שיהיה פעיל."
+      "SetupConnection": "אנא הגדר את החיבור כדי שיהיה פעיל.",
+      "DeletePrintTicketTemplate": "האם ברצונך למחוק תבנית כרטיס זה?",
+      "ReplaceTicketTemplate": "תבנית הכרטיסים החדשה תחליף את תבנית הכרטיסים הקיימת שלך",
+      "UnassignPrintTicketTemplate": "שינויים שבוצעו בתבנית יאבדו, האם אתה בטוח להסיר את התבנית?"
     },
     "Success": {
       "UnsubscribeSuccessMsg": "ביטלת את הרישום בהצלחה",
@@ -1079,6 +1118,7 @@
       "FailedDeleteComment": "Failed to delete comment.",
       "AccessKeySecretCopied": "מפתח מפתח וסוד הועתק ללוח",
       "DeletedSuccessfully": "הפריט נמחק בהצלחה",
+      "FeedDeletedSuccessfully": "הפריט נמחק בהצלחה",
       "UserDeletedSuccessfully": "המשתמש נמחק בהצלחה",
       "UserCreatedSuccessfully": "המשתמש נוצר בהצלחה",
       "EventDetailsUpdateSuccess": "פרטי האירוע עודכנו בהצלחה",
@@ -1127,7 +1167,9 @@
       "ContactImportSuccess": "ביצוע הייבוא ​​החל",
       "OrgNameSuccess": "https://{orgName}-{suffixRoute} זמין",
       "ContactImported": "צור קשר מיובא בהצלחה",
-      "ContactImportedFailed": "ייבוא ​​אנשי הקשר נכשל"
+      "ContactImportedFailed": "ייבוא ​​אנשי הקשר נכשל",
+      "DiscountCodeSuccessfully": "קוד ההנחה נוצר בהצלחה",
+      "DiscountCodeUpdateSuccessfully": "קוד ההנחה עודכן בהצלחה"
     },
     "Information": {
       "SetupInProgressTitle": "ההתקנה בעיצומה",

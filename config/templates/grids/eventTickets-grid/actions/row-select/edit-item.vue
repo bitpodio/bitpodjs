@@ -113,7 +113,7 @@
               </v-col>
               <v-col class="col-12 col-md-6">
                 <v-text-field
-                  v-model="formData.AvailableCount"
+                  v-model="formData.TicketCount"
                   :label="$t('Common.TicketCountRequired')"
                   :rules="ticketCountRules()"
                   type="number"
@@ -213,7 +213,7 @@ import generalconfiguration from '~/config/apps/event/gql/registrationStatusOpti
 import registrationtype from '~/config/apps/event/gql/registrationType.gql'
 import SaveBtn from '~/components/common/saveButton'
 import { formatGQLResult } from '~/utility/gql.js'
-import { postGaData } from '~/utility/index.js'
+import { postGaData, getPriceWithCurrency } from '~/utility/index.js'
 import { rules } from '~/utility/rules.js'
 export default {
   components: {
@@ -448,10 +448,11 @@ export default {
       postGaData(this.$t('Drawer.Save'), this.$t('Common.EditTicket'))
       const url = this.$bitpod.getApiUrl()
       this.getAttendeesId()
-      this.formData.Amount = parseFloat(this.Amount)
+      this.formData.Amount = parseFloat(
+        getPriceWithCurrency(this.Amount, this.eventData.Currency)
+      )
       this.formData.DisplayOrder = parseInt(this.formData.DisplayOrder)
       this.formData.TicketCount = parseInt(this.formData.TicketCount)
-      this.formData.AvailableCount = parseInt(this.formData.AvailableCount)
       this.formData.Events = this.$route.params.id
       this.formData.Status = this.eventStatus
       try {

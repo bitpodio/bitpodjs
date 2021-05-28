@@ -68,6 +68,7 @@
               <v-list-item-title class="nav-title">
                 <i18n v-if="item.text === 'Members'" path="Drawer.Members" />
                 <i18n v-if="item.text === 'Contacts'" path="Drawer.Contacts" />
+                <i18n v-if="item.text === 'Feeds'" path="Common.Feeds" />
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -250,7 +251,7 @@
     <v-main class="greybg">
       <v-container fluid>
         <v-row>
-          <v-col class="pt-0">
+          <v-col class="pt-0 px-0 px-sm-3">
             <div>
               <nuxt />
             </div>
@@ -325,6 +326,10 @@ export default {
           icon: 'fa fa-users',
           text: 'Members',
           to: '/apps/member/list/Member/Members',
+          allowedRoutes: [
+            'apps/member/list/Member/Member',
+            'apps/member/member/',
+          ],
         },
         {
           icon: 'fa fa-address-book-o',
@@ -335,6 +340,11 @@ export default {
             'apps/member/list/Contacts/Invites',
             'apps/member/event/invite/',
           ],
+        },
+        {
+          icon: 'fa fa-message-square',
+          text: 'Feeds',
+          to: '/apps/member/list/Feed/feeds',
         },
       ],
     }

@@ -30,6 +30,8 @@ query($filters: JSON) {
           Ownership
           createdDate
           createdBy
+          AttachmentId
+          CustomerPic
           _BillingAddress {
             id
             State

@@ -12,7 +12,7 @@
       :right="$vuetify.rtl"
     >
       <div class="px-4 pt-3 pb-1">
-        <i18n path="Common.AppTitle" class="app-title-text" />
+        <i18n path="Common.AppTitle" class="app-title-text text--primary" />
       </div>
       <div class="d-block d-sm-none my-3">
         <v-menu>
@@ -135,7 +135,7 @@
                 />
                 <i18n
                   v-if="item.text === 'Discount Code'"
-                  path="Drawer.DiscountCode"
+                  path="Common.DiscountCodes"
                 />
                 <i18n v-if="item.text === 'Members'" path="Drawer.Members" />
                 <i18n v-if="item.text === 'Contacts'" path="Drawer.Contacts" />
@@ -342,7 +342,7 @@
     >
       <v-container fluid>
         <v-row>
-          <v-col class="pt-0">
+          <v-col>
             <div>
               <nuxt />
             </div>

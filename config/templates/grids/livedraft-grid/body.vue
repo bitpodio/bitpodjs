@@ -65,7 +65,7 @@
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
                       <v-card-title
-                        class="text-h5 grey--text text--darken-4 text-truncate d-block text-capitalize pa-2 pt-0 pb-1 pl-0"
+                        class="text-h5 text--primary text-truncate d-block text-capitalize pa-2 pt-0 pb-1 pl-0"
                         v-bind="attrs"
                         v-on="on"
                       >
@@ -214,7 +214,7 @@
                   <v-tooltip bottom>
                     <template v-slot:activator="{ on, attrs }">
                       <v-card-title
-                        class="text-h5 grey--text text--darken-4 text-truncate d-block text-capitalize pa-2 pt-0 pb-1 pl-0"
+                        class="text-h5 text--primary text-truncate d-block text-capitalize pa-2 pt-0 pb-1 pl-0"
                         v-bind="attrs"
                         v-on="on"
                       >
@@ -247,17 +247,17 @@
               </nuxt-link>
               <v-card-actions class="pt-0 pl-4 tiles-action">
                 <div class="text-truncate d-block">
-                  <span v-if="item.LocationType === 'Bitpod Virtual'">
-                    <v-text class="ma-0 mr-1 event-tags body-2"
+                  <span>
+                    <v-text
+                      v-if="item.LocationType === 'Bitpod Virtual'"
+                      class="ma-0 mr-1 event-tags body-2"
                       ><i18n path="Common.BitpodVirtual"
                     /></v-text>
-                  </span>
-                  <span v-else-if="item.LocationType === 'Online event'">
-                    <v-text class="ma-0 mr-1 event-tags body-2"
+                    <v-text
+                      v-if="item.LocationType === 'Online event'"
+                      class="ma-0 mr-1 event-tags body-2"
                       ><i18n path="Common.OnlineEventText"
                     /></v-text>
-                  </span>
-                  <span v-else>
                     <v-text
                       v-for="Tags in item.Tags"
                       :key="Tags"

@@ -242,19 +242,9 @@ export default {
                   this.fileList = []
                   this.keyPressed = false
                 } else if (response.data.processStatus === 'Failure') {
-                  if (
-                    response.data.processSummary.errorDetails &&
-                    response.data.processSummary.errorDetails[0] &&
-                    response.data.processSummary.errorDetails[0].failedIndexes
-                      .length
-                  ) {
+                  if (response.data.processSummary.errorDetails) {
                     this.errorMessage = this.$t(
-                      'Messages.Error.ImportFailedMessage',
-                      {
-                        index:
-                          response.data.processSummary.errorDetails[0]
-                            .failedIndexes[0],
-                      }
+                      'Messages.Error.ImportFailedMessage'
                     )
                   } else if (response.data.errorCode) {
                     this.errorMessage = this.$t(
@@ -285,19 +275,9 @@ export default {
                 this.fileList = []
                 this.keyPressed = false
               } else if (response.data.processStatus === 'Failure') {
-                if (
-                  response.data.processSummary.errorDetails &&
-                  response.data.processSummary.errorDetails[0] &&
-                  response.data.processSummary.errorDetails[0].failedIndexes
-                    .length
-                ) {
+                if (response.data.processSummary.errorDetails) {
                   this.errorMessage = this.$t(
-                    'Messages.Error.ImportFailedMessage',
-                    {
-                      index:
-                        response.data.processSummary.errorDetails[0]
-                          .failedIndexes[0],
-                    }
+                    'Messages.Error.ImportFailedMessage'
                   )
                 } else if (response.data.errorCode) {
                   this.errorMessage = this.$t(

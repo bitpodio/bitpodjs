@@ -39,7 +39,7 @@
                   class="rounded"
                   @click="goLive"
                 >
-                  <i18n path="Common.StartEvent" />
+                  <i18n path="Common.GotoStage" />
 
                   <v-icon right class="fs-22"> mdi-video </v-icon>
                 </v-btn>
@@ -106,6 +106,16 @@
                     <v-list-item-content>
                       <v-list-item-title
                         ><i18n path="Drawer.Integrations"
+                      /></v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <v-list-item @click="eventCheckIn">
+                    <v-list-item-icon class="mr-2">
+                      <i class="fa fa-check mt-1" aria-hidden="true"></i>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                      <v-list-item-title
+                        ><i18n path="Common.CheckIn"
                       /></v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
@@ -934,16 +944,49 @@
                 <i18n path="Common.TicketsNotRequired" />
               </h2>
               <v-spacer></v-spacer>
-              <v-switch
+              <v-menu
                 v-if="
-                  data.event.LocationType === 'Venue' && switchSeat === true
+                  showPrintManagement ||
+                  (data.event.LocationType === 'Venue' &&
+                    switchSeat === true &&
+                    data.event.HasTickets)
                 "
-                v-model="switchSeat"
-                :label="$t('Common.SeatmapTickets')"
-                class="mt-0 ml-0 max-h24 positionAbsolute pad-top pad-right seatmap-btn"
-                height="20"
-                @change="updateSeatReservation"
-              ></v-switch>
+                right
+                :offset-y="offset"
+                transition="slide-y-transition"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn icon small v-bind="attrs" v-on="on">
+                    <v-icon>mdi-dots-vertical</v-icon>
+                  </v-btn>
+                </template>
+                <v-list dense>
+                  <v-list-item>
+                    <v-switch
+                      v-if="
+                        data.event.LocationType === 'Venue' &&
+                        switchSeat === true
+                      "
+                      v-model="switchSeat"
+                      :label="$t('Common.SeatmapTickets')"
+                      height="20"
+                      @change="updateSeatReservation"
+                    ></v-switch>
+                  </v-list-item>
+                  <v-list-item v-if="showPrintManagement">
+                    <v-btn
+                      text
+                      small
+                      append
+                      :class="{ 'mr-3': !$device.isMobile }"
+                      :to="{ path: 'print-ticket-management' }"
+                    >
+                      <v-icon left>mdi-ticket</v-icon>
+                      {{ $t('Common.PrintTicketManagement') }}
+                    </v-btn>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
             </v-flex>
             <v-divider></v-divider>
           </div>
@@ -1025,7 +1068,25 @@
                     : ''
                 "
                 class="mt-n14"
-              />
+              >
+                <template #gridthreedot>
+                  <v-list-item-group>
+                    <seatmap-tickets />
+                    <v-list-item v-if="showPrintManagement">
+                      <v-btn
+                        text
+                        small
+                        append
+                        :class="{ 'mr-3': !$device.isMobile }"
+                        :to="{ path: 'print-ticket-management' }"
+                      >
+                        <v-icon left>mdi-ticket</v-icon>
+                        {{ $t('Common.PrintTicketManagement') }}
+                      </v-btn>
+                    </v-list-item>
+                  </v-list-item-group>
+                </template>
+              </Grid>
             </div>
           </div>
         </div>
@@ -1618,6 +1679,7 @@ import copy from '~/components/common/copy'
 import Notes from '~/components/common/notes'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin, getIdFromAtob } from '~/utility'
+import SeatmapTickets from '~/config/templates/grids/eventTickets-grid/actions/grid/seatmapTickets.vue'
 
 export default {
   components: {
@@ -1633,6 +1695,7 @@ export default {
     copy,
     makeCopy,
     Notes,
+    SeatmapTickets,
   },
   mixins: [configLoaderMixin],
   props: {
@@ -1799,6 +1862,15 @@ export default {
       }
       return dataObj
     },
+    showPrintManagement() {
+      return (
+        this.data &&
+        this.data.event &&
+        this.data.event.HasTickets &&
+        this.data.event.LocationType === 'Venue' &&
+        this.data.event.BusinessType === 'Single'
+      )
+    },
   },
   mounted() {
     setTimeout(this.openPrint, 3000)
@@ -1839,6 +1911,13 @@ export default {
     goBack() {
       this.$router.push(
         this.localePath(`/apps/event/list/Event/live-and-draft-event`)
+      )
+    },
+    eventCheckIn() {
+      this.$router.push(
+        this.localePath(
+          `/apps/event/event-attendees?eventId=${this.$route.params.id}`
+        )
       )
     },
     getEventEndDate() {

@@ -448,6 +448,7 @@ export default {
     async getPrior(id) {
       if (!id) {
         this.prevReady = true
+        this.priorData = {}
       } else {
         const prev = await this.$axios.$get(
           `${this.$bitpod.getApiUrl()}CRMACTIVITIES/${id}`
@@ -475,6 +476,7 @@ export default {
           },
         }
       },
+      fetchPolicy: 'no-cache',
       update(data) {
         const invites = formatGQLResult(data, 'CRMActivity')
         if (invites && invites.length) {

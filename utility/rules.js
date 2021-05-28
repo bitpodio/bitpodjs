@@ -1,9 +1,17 @@
 export function rules(i18n) {
+  const regex = RegExp(/^\d*[0-9]\d*$/)
   return Object.freeze({
-    required: (v) =>
-      !!(v && v.length) ||
-      typeof v === 'number' ||
-      i18n.t('Messages.Error.FieldRequired'),
+    required: (v) => {
+      if (v && v.length && /^\s+/.test(v)) {
+        return i18n.t('Messages.Error.SpaceNotAllowed')
+      } else {
+        return (
+          !!(v && v.length) ||
+          typeof v === 'number' ||
+          i18n.t('Messages.Error.FieldRequired')
+        )
+      }
+    },
     email: (v) =>
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
         v
@@ -23,6 +31,19 @@ export function rules(i18n) {
         return true
       }
       return i18n.t('Messages.Error.PleaseEnterValidPhone')
+    },
+    negativeNumberRules: (v) => {
+      if (!v || regex.test(v)) {
+        return true
+      }
+      return i18n.t('Messages.Error.NumberCannotBeNegative')
+    },
+    offerCountRules: (v) => {
+      return v !== ''
+        ? /^\d*[0-9]\d*$/.test(v)
+          ? true
+          : i18n.t('Messages.Error.NumberCannotBeNegative')
+        : i18n.t('Messages.Error.FieldRequired')
     },
   })
 }

@@ -26,14 +26,31 @@
             </v-btn>
           </div>
         </v-card-title>
-        <v-container v-if="setContent()" class="pt-0 px-4 pb-8 inviteeDialog">
-          <Grid
-            view-name="allContacts"
-            :content="setContent()"
-            class="mt-n12"
-          />
-        </v-container>
+        <v-card-text>
+          <v-container v-if="content" class="pa-0 inviteeDialog">
+            <div v-if="dialog">
+              <Grid
+                :value="selectedList"
+                view-name="allContacts"
+                :content="content"
+                class="mt-n12"
+                @onSelectedListChange="updateList"
+              />
+            </div>
+          </v-container>
+        </v-card-text>
         <v-divider></v-divider>
+        <v-card-actions
+          class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
+        >
+          <SaveBtn
+            v-if="dialog"
+            color="primary"
+            :label="this.$t('Drawer.Save')"
+            depressed
+            :action="onSave"
+          ></SaveBtn>
+        </v-card-actions>
       </v-card>
     </v-dialog>
   </v-col>
@@ -41,10 +58,14 @@
 
 <script>
 import Grid from '~/components/common/grid'
+import { configLoaderMixin } from '~/utility'
+import SaveBtn from '~/components/common/saveButton'
 export default {
   components: {
     Grid,
+    SaveBtn,
   },
+  mixins: [configLoaderMixin],
   props: {
     refresh: {
       type: Function,
@@ -55,19 +76,66 @@ export default {
   data() {
     return {
       dialog: false,
+      selectedList: [],
+      itemId: [],
+      ParentCustomerId: '',
     }
   },
   computed: {
     content() {
-      return this.contents ? this.contents.Contacts : null
+      return this.contents ? this.contents.Member : null
     },
   },
   methods: {
-    setContent() {
-      return this.contents ? this.contents.Contacts : null
-    },
     onClose() {
       this.dialog = false
+    },
+    async onSave() {
+      this.selectedList.map((ele) => {
+        this.itemId.push(ele.id)
+      })
+      const url = this.$bitpod.getApiUrl()
+      try {
+        const res = await this.$axios.$get(
+          `${url}Customers/${this.$route.params.id}`
+        )
+        if (res) {
+          const contactId = res.ContactId
+          this.itemId.forEach((ele) => {
+            contactId.push(contactId.includes(ele) ? '' : ele)
+          })
+          this.setCustomers(contactId)
+        }
+      } catch (err) {
+        console.error(
+          `Error in templates/grids/memberContacts-grid/actions/grid/add-existing-contacts.vue while making a PATCH call to Customers model from method onSave context:- URL:-${url}`,
+          err
+        )
+      }
+    },
+
+    async setCustomers(contactId) {
+      const url = this.$bitpod.getApiUrl()
+      try {
+        const res1 = await this.$axios.$patch(
+          `${url}Customers/${this.$route.params.id}`,
+          {
+            ContactId: contactId,
+          }
+        )
+        if (res1) {
+          this.dialog = false
+          this.$eventBus.$emit('eventInvites-grid-refresh', 'memberContacts')
+        }
+      } catch (err) {
+        console.error(
+          `Error in templates/grids/memberContacts-grid/actions/grid/add-existing-contacts.vue while making a PATCH call to Customers model from method onSave context:- URL:-${url}`,
+          err
+        )
+      }
+    },
+    updateList(data) {
+      this.selectedList = data
     },
   },
 }

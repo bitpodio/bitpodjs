@@ -1448,6 +1448,463 @@ export default {
       title: 'eventAttendees',
       type: 'list',
     },
+    eventAttendeesInEvent: {
+      ui: {
+        hideDefaultHeader: false,
+        hideDefaultFooter: false,
+        showExpand: false,
+        singleExpand: false,
+        showSelect: true,
+        hideFilter: false,
+        hideSearch: false,
+      },
+      itemTitle: 'Common.Attendee',
+      hidden: true,
+      fields: {
+        FullName: {
+          displayOrder: 2,
+          caption: 'Common.FullName',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+          hidden: false,
+          inlineEdit: true,
+          newForm: false,
+          editForm: false,
+        },
+        Email: {
+          displayOrder: 3,
+          caption: 'Common.EmailCaption',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+          form: {
+            caption: 'Common.Email',
+            displayOrder: 4,
+          },
+          cssClasses: 'col-12 col-md-6',
+          hidden: false,
+          inlineEdit: true,
+          newForm: true,
+          editForm: true,
+          rules: [
+            function (v) {
+              return !!v || this.$t('Messages.Error.EmailRequired')
+            },
+            function (value, data) {
+              return (
+                /.+@.+\..+/.test(value) ||
+                this.$t('Messages.Error.EmailRequired')
+              )
+            },
+          ],
+        },
+        'registration.FullName': {
+          displayOrder: 4,
+          caption: 'Common.RegisteredBy',
+          cssClasses: 'col-12 col-md-6',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '170px',
+          type: 'string',
+          hidden: false,
+          inlineEdit: true,
+          newForm: false,
+          editForm: false,
+        },
+        TicketAmount: {
+          displayOrder: 5,
+          caption: 'Common.TicketAmount',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '170px',
+          type: 'number',
+          hidden: false,
+          inlineEdit: true,
+          newForm: false,
+          editForm: false,
+        },
+        CompanyName: {
+          displayOrder: 6,
+          caption: 'Common.Organization',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '160px',
+          type: 'string',
+          form: {
+            caption: 'Common.Organization',
+            displayOrder: 5,
+          },
+          cssClasses: 'col-12 col-md-6',
+          hidden: false,
+          inlineEdit: true,
+          newForm: true,
+          editForm: true,
+        },
+        TicketName: {
+          displayOrder: 7,
+          caption: 'Common.Ticket',
+          cssClasses: 'col-12 col-md-6',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+          hidden: false,
+          inlineEdit: true,
+          newForm: false,
+          editForm: false,
+        },
+        SeatNumber: {
+          displayOrder: 8,
+          caption: 'Common.SeatNumber',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '160px',
+          type: 'string',
+          hidden: false,
+          inlineEdit: true,
+          newForm: false,
+          editForm: false,
+        },
+        'regType.Name': {
+          displayOrder: 9,
+          caption: 'Common.Category',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '130px',
+          type: 'string',
+          hidden: false,
+          inlineEdit: true,
+          newForm: false,
+          editForm: false,
+        },
+        CheckIn: {
+          displayOrder: 10,
+          caption: 'Common.CheckIn',
+          searchEnable: false,
+          sortEnable: true,
+          columnWidth: '250px',
+          type: 'string',
+          hidden: false,
+          inlineEdit: true,
+          newForm: false,
+          editForm: false,
+        },
+        createdDate: {
+          displayOrder: 11,
+          caption: 'Common.CreatedDate',
+          searchEnable: false,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'date',
+          hidden: false,
+          inlineEdit: true,
+          newForm: false,
+          editForm: false,
+          customExport: (startDate) => {
+            if (startDate) {
+              const tempDate = new Date(startDate)
+              return (
+                tempDate.toLocaleDateString() +
+                ' ' +
+                tempDate.toLocaleTimeString()
+              )
+            }
+            return ''
+          },
+        },
+        Status: {
+          displayOrder: 12,
+          caption: 'Common.Status',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '130px',
+          type: 'string',
+          hidden: false,
+          inlineEdit: true,
+          newForm: false,
+          editForm: false,
+        },
+        Action: {
+          displayOrder: 13,
+          caption: 'Drawer.Action',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+          hidden: false,
+          inlineEdit: true,
+          newForm: false,
+          editForm: false,
+        },
+        FirstName: {
+          form: {
+            caption: 'Common.FirstName',
+            displayOrder: 1,
+          },
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+          cssClasses: 'col-12 col-md-6',
+          hidden: true,
+          inlineEdit: true,
+          newForm: true,
+          editForm: true,
+          filterEnable: false,
+          rules: [
+            function (v) {
+              return !!v || this.$t('Messages.Error.FirstNameRequired')
+            },
+          ],
+        },
+        LastName: {
+          form: {
+            caption: 'Common.LastName',
+            displayOrder: 2,
+          },
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+          cssClasses: 'col-12 col-md-6',
+          hidden: true,
+          inlineEdit: true,
+          newForm: true,
+          editForm: true,
+          filterEnable: false,
+          rules: [
+            function (v) {
+              return !!v || this.$t('Messages.Error.LastNameRequired')
+            },
+          ],
+        },
+        Phone: {
+          form: {
+            caption: 'Common.PhoneRequired',
+            displayOrder: 3,
+          },
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+          cssClasses: 'col-12 col-md-6',
+          hidden: true,
+          inlineEdit: true,
+          newForm: true,
+          editForm: true,
+          filterEnable: false,
+          rules: [
+            function (v) {
+              return !!v || this.$t('Messages.Error.PhoneRequired')
+            },
+            function (value, data) {
+              return (
+                /^[0-9]\d*$|^$/.test(value) ||
+                this.$t('Messages.Error.NumberValid')
+              )
+            },
+          ],
+        },
+        '_CurrentAddress.AddressLine': {
+          form: {
+            caption: 'Common.Address',
+            displayOrder: 6,
+          },
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+          cssClasses: 'col-12 col-md-6',
+          hidden: true,
+          inlineEdit: true,
+          newForm: true,
+          editForm: true,
+          filterEnable: false,
+        },
+        '_CurrentAddress.City': {
+          form: {
+            caption: 'Common.City',
+            displayOrder: 7,
+          },
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+          cssClasses: 'col-12 col-md-6',
+          hidden: true,
+          inlineEdit: true,
+          newForm: true,
+          editForm: true,
+          filterEnable: false,
+        },
+        '_CurrentAddress.State': {
+          form: {
+            caption: 'Common.State',
+            displayOrder: 8,
+          },
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+          cssClasses: 'col-12 col-md-6',
+          hidden: true,
+          inlineEdit: true,
+          newForm: true,
+          editForm: true,
+          filterEnable: false,
+        },
+        '_CurrentAddress.PostalCode': {
+          form: {
+            caption: 'Common.Zip',
+            displayOrder: 9,
+          },
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+          cssClasses: 'col-12 col-md-6',
+          hidden: true,
+          inlineEdit: true,
+          newForm: true,
+          editForm: true,
+          filterEnable: false,
+        },
+        '_CurrentAddress.Country': {
+          form: {
+            caption: 'Common.Country',
+            displayOrder: 10,
+          },
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+          cssClasses: 'col-12 col-md-6',
+          hidden: true,
+          inlineEdit: true,
+          newForm: true,
+          editForm: true,
+          filterEnable: false,
+        },
+        TicketId: {
+          form: {
+            caption: 'Common.TicketsRequired',
+            displayOrder: 11,
+          },
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'lookup',
+          cssClasses: 'col-12 col-md-6',
+          hidden: true,
+          inlineEdit: true,
+          newForm: true,
+          editForm: true,
+          filterEnable: false,
+          visible(value, data) {
+            const hasTicket =
+              this.context &&
+              this.context.event &&
+              this.context.event.HasTickets
+            return hasTicket
+          },
+          rules: [
+            function (v) {
+              return !!v || this.$t('Messages.Error.TicketSelected')
+            },
+          ],
+          dataSource: {
+            query: eventTickets,
+            itemText: 'customField',
+            itemValue: 'id',
+            filter(data) {
+              return {
+                Events: this.$route.params.id,
+              }
+            },
+            computed(data) {
+              return {
+                customField: `${data.Code} ${data.Amount}`,
+              }
+            },
+          },
+        },
+        categoryId: {
+          form: {
+            caption: 'Common.RegistrationType',
+            displayOrder: 12,
+          },
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'lookup',
+          cssClasses: 'col-12 col-md-6',
+          hidden: true,
+          inlineEdit: true,
+          newForm: true,
+          editForm: true,
+          filterEnable: false,
+          dataSource: {
+            query: registrationType,
+            itemText: 'Name',
+            itemValue: 'id',
+            filter(data) {
+              return {
+                EventId: this.$route.params.id,
+              }
+            },
+          },
+        },
+      },
+      template: {
+        name: 'eventAttendeesInEvent-grid',
+        context: {
+          basePath: '/registration',
+        },
+        actions: {
+          new: {
+            hidden: true,
+          },
+          edit: {
+            hidden: true,
+          },
+          delete: {
+            hidden: true,
+          },
+          exportCsv: {
+            hidden: true,
+          },
+        },
+      },
+      dataSource: {
+        singularEntity: 'Common.Attendee',
+        pluralEntity: 'Common.Attendees',
+        query: eventAttendees,
+        defaultSort: 'createdDate DESC',
+        type: 'graphql',
+        model: 'Attendee',
+        filter(ctx) {
+          return {
+            where: {
+              EventId: ctx.$route.params.id,
+            },
+          }
+        },
+        mutation(ctx, data) {
+          return {
+            new: {
+              EventId: ctx.$route.params.id,
+              Status: 'Success',
+            },
+            edit: {},
+          }
+        },
+      },
+      title: 'eventAttendees',
+      type: 'list',
+    },
     eventAttendeePerDay: {
       ui: {
         hideDefaultHeader: false,
@@ -2021,7 +2478,7 @@ export default {
         hideFilter: true,
         hideSearch: true,
       },
-      itemTitle: 'Drawer.Registrations',
+      itemTitle: 'Common.Registration',
       hidden: true,
       fields: {
         FullName: {
@@ -2388,7 +2845,7 @@ export default {
           }
         },
       },
-      title: 'eventRegistrations',
+      title: 'Common.Registrations',
       type: 'list',
     },
     recurringEventRegistrations: {
@@ -2401,7 +2858,7 @@ export default {
         hideFilter: true,
         hideSearch: true,
       },
-      itemTitle: 'Drawer.Registrations',
+      itemTitle: 'Common.Registration',
       hidden: true,
       fields: {
         GoLive: {
@@ -2764,7 +3221,7 @@ export default {
           }
         },
       },
-      title: 'eventRegistrations',
+      title: 'Common.Registrations',
       type: 'list',
     },
     eventInvites: {
@@ -2988,10 +3445,10 @@ export default {
             displayOrder: 6,
           },
           displayOrder: 5,
-          caption: 'Common.MaxQty',
+          caption: 'Common.TicketCount',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '120px',
+          columnWidth: '160px',
           type: 'number',
           cssClasses: 'col-12 col-md-6',
           hidden: false,
@@ -3393,7 +3850,7 @@ export default {
           }
         },
       },
-      title: 'eventDiscountCodes',
+      title: 'Drawer.DiscountCode',
       type: 'list',
     },
     eventRegistrationQuestion: {
@@ -4983,7 +5440,7 @@ export default {
         hideDefaultFooter: false,
         showExpand: false,
         singleExpand: false,
-        showSelect: false,
+        showSelect: true,
         hideFilter: false,
         hideSearch: true,
       },
@@ -5040,6 +5497,9 @@ export default {
             hidden: true,
           },
           edit: {
+            hidden: true,
+          },
+          delete: {
             hidden: true,
           },
           exportCsv: {

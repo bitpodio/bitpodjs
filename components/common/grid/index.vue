@@ -131,9 +131,10 @@
           </div>
           <v-menu
             v-if="
-              selectedItems.length > 0 &&
-              actionsCount > baseActionCount &&
-              !hasHiddenRowAction
+              (selectedItems.length > 0 &&
+                actionsCount > baseActionCount &&
+                !hasHiddenRowAction) ||
+              hasGrid3DotSlot
             "
             right
             :offset-y="offset"
@@ -145,8 +146,14 @@
               </v-btn>
             </template>
             <v-list dense>
+              <slot name="gridthreedot"></slot>
               <component
                 :is="actionTemplates['row-select'] || null"
+                v-if="
+                  selectedItems.length > 0 &&
+                  actionsCount > baseActionCount &&
+                  !hasHiddenRowAction
+                "
                 :content="content"
                 :view-name="viewName"
                 :on-update-item="onUpdateItem"
@@ -172,7 +179,11 @@
           viewName === 'eSign' ||
           viewName === 'eSignCompleted' ||
           viewName === 'eSignInprogress' ||
-          viewName === 'eSignDeclined'
+          viewName === 'eSignDeclined' ||
+          viewName === 'feeds' ||
+          viewName === 'Members' ||
+          viewName === 'integration' ||
+          viewName === 'printed-tickets'
             ? ''
             : 'table'
         "
@@ -275,6 +286,7 @@
               :props="props.props"
               :on="props.on"
               :headers="props.headers"
+              class="boxview"
             />
           </template>
           <template
@@ -321,20 +333,72 @@
         </v-skeleton-loader>
       </div>
       <div
-        v-if="viewName === 'badge' && loading === true"
-        class="d-flex flex-sm-wrap flex-column flex-sm-row"
+        v-if="viewName === 'printed-tickets' && loading === true"
+        class="d-flex flex-sm-wrap flex-column flex-sm-row mt-12"
       >
         <v-skeleton-loader
-          v-for="i in 10"
+          v-for="i in 6"
           :key="i"
-          :loading="loading"
+          :loading="!!loading"
           type="card"
-          width="226"
-          height="300"
-          class="pa-0 eventtiles ma-3 ml-0 mt-0"
+          width="425"
+          class="pa-4 pl-0 pt-0 eventtiles ma-4 ml-0 mt-0"
         >
           <div></div>
         </v-skeleton-loader>
+      </div>
+      <div
+        v-if="viewName === 'badge' && loading === true"
+        class="d-flex flex-sm-wrap flex-column flex-sm-row"
+      >
+        <div class="public-page-main d-flex flex-wrap flex-row">
+          <div
+            v-for="i in 10"
+            :key="i"
+            class="pa-0 eventtiles badge-tile boxview ma-3 ml-0 mt-0 v-card elevation-0"
+          >
+            <v-skeleton-loader
+              :loading="loading"
+              :tile="true"
+              type="avatar"
+              class="ml-3 mt-2"
+              width="150"
+              height="30"
+            >
+              <div class="ml-3 mt-2"></div>
+            </v-skeleton-loader>
+            <v-skeleton-loader
+              :loading="loading"
+              :tile="true"
+              type="avatar"
+              class="mt-10 ml-4"
+              width="180"
+              height="30"
+            >
+              <div class="mt-10 ml-4"></div>
+            </v-skeleton-loader>
+            <v-skeleton-loader
+              :loading="loading"
+              :tile="true"
+              type="avatar"
+              class="mt-10 ml-4"
+              width="180"
+              height="40"
+            >
+              <div class="mt-10 ml-4"></div>
+            </v-skeleton-loader>
+            <v-skeleton-loader
+              :loading="loading"
+              :tile="true"
+              type="avatar"
+              class="ml-4 mt-10"
+              width="200"
+              height="20"
+            >
+              <div class="ml-4 mt-10"></div>
+            </v-skeleton-loader>
+          </div>
+        </div>
       </div>
       <div
         v-if="viewName === 'seatmaps' && loading === true"
@@ -369,7 +433,7 @@
         </v-skeleton-loader>
       </div>
       <div
-        v-if="viewName === 'Member' && loading === true"
+        v-if="viewName === 'Members' && loading === true"
         class="d-flex flex-sm-wrap flex-column flex-sm-row"
       >
         <v-skeleton-loader
@@ -410,6 +474,24 @@
           >
             <div></div>
           </v-skeleton-loader>
+        </div>
+        <div v-if="viewName === 'feeds' && loading === true" class="d-flex">
+          <v-row class="flex-column">
+            <v-col
+              v-for="i in 3"
+              :key="i"
+              cols="12"
+              md="6"
+              class="col-md-6 feed-section-load mx-auto px-0"
+            >
+              <v-skeleton-loader
+                v-bind="attrs"
+                :loading="!!loading"
+                type="list-item-avatar-three-line, image, article"
+                ><div></div
+              ></v-skeleton-loader>
+            </v-col>
+          </v-row>
         </div>
       </div>
     </div>
@@ -677,6 +759,11 @@ export default {
         items: [],
         total: 0,
       },
+      attrs: {
+        class: 'mb-2',
+        boilerplate: true,
+        elevation: 1,
+      },
       loading: true,
       totalCount: 0,
       options: {},
@@ -823,6 +910,9 @@ export default {
       return this.$route.params.app === 'event'
         ? this.$route.params.id || ''
         : ''
+    },
+    hasGrid3DotSlot() {
+      return !!this.$slots.gridthreedot
     },
   },
   watch: {
@@ -1334,7 +1424,7 @@ export default {
         })
         const page = this.options.page || 1
         const itemsPerPage = this.options.itemsPerPage || 10
-        const skip = (page - 1) * (itemsPerPage || 10)
+        const skip = search ? 0 : (page - 1) * (itemsPerPage || 10)
         const limit = itemsPerPage === -1 ? 0 : itemsPerPage
         return {
           filters: { limit, skip, order, where },
@@ -1401,6 +1491,14 @@ export default {
   font-size: 11px !important;
   margin-top: -19px;
   padding: 0 8px !important;
+}
+.badge-tile {
+  width: 229px;
+  height: 300px;
+  border-radius: 4px;
+}
+.feed-section-load {
+  min-width: 600px;
 }
 @media (min-width: 601px) {
   .grid-actions-menu {

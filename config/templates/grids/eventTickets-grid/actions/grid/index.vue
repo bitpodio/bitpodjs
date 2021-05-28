@@ -6,21 +6,16 @@
     <v-list-item>
       <registrationType />
     </v-list-item>
-    <seatmap-tickets />
   </div>
 </template>
 
 <script>
 import registrationType from './registrationType'
 import newItem from './new-item.vue'
-import seatmapTickets from './seatmapTickets'
-import SeatmapTickets from './seatmapTickets.vue'
 export default {
   components: {
     registrationType,
     newItem,
-    seatmapTickets,
-    SeatmapTickets,
   },
   props: {
     viewName: {

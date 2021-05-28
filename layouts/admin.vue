@@ -12,7 +12,7 @@
       :right="$vuetify.rtl"
     >
       <div class="px-4 pt-3 pb-1">
-        <i18n path="Common.AdminApp" class="app-title-text" />
+        <i18n path="Common.AdminApp" class="app-title-text text--primary" />
       </div>
       <div class="d-block d-sm-none my-3">
         <v-btn
@@ -102,6 +102,10 @@
                 <i18n
                   v-if="item.text === 'Registration Form'"
                   path="Common.RegistrationForm"
+                />
+                <i18n
+                  v-if="item.text === 'Ticket Templates'"
+                  path="Common.TicketTemplates"
                 />
                 <i18n v-if="item.text === 'Roles'" path="Common.Roles" />
                 <i18n v-if="item.text === 'Users'" path="Common.Users" />
@@ -405,6 +409,11 @@ export default {
           icon: 'fa fa-file-text-o',
           text: 'Registration Form',
           to: '/apps/admin/list/registrationformdetails/registration form',
+        },
+        {
+          icon: 'fa fa-ticket',
+          text: 'Ticket Templates',
+          to: '/apps/admin/list/printedtickets/printed-tickets',
         },
         { heading: 'Security' },
         {

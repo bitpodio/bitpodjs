@@ -10,7 +10,9 @@
       <v-col class="col-12 col-sm-8">
         <v-textarea
           v-model="message"
-          :label="$t('Common.AddNote')"
+          :label="
+            commnetLabel ? $t('Common.WriteaComment') : $t('Common.AddNote')
+          "
           outlined
           dense
           row-height="18"
@@ -24,7 +26,9 @@
             color="primary"
             :disabled="!message"
             @click="uploadNote"
-            ><i18n path="Drawer.Save"
+            ><i18n v-if="commnetAction === false" path="Drawer.Save" /><i18n
+              v-if="commnetAction"
+              path="Common.Comment"
           /></v-btn>
           <div
             class="grey--text cursorPointer d-flex tile"
@@ -49,7 +53,10 @@
           color="primary"
           :disabled="!message"
           @click="uploadNote"
-          ><i18n path="Drawer.Save"
+        >
+          <i18n v-if="commnetAction === false" path="Drawer.Save" /><i18n
+            v-if="commnetAction"
+            path="Common.Comment"
         /></v-btn>
         <div :class="{ 'mt-16': fileList && fileList.length }">
           <div v-for="(comment, index) in existingComments" :key="comment.id">
@@ -163,6 +170,18 @@ export default {
       type: String,
       required: true,
     },
+    feedId: {
+      type: String,
+      default: '',
+    },
+    commnetLabel: {
+      type: Boolean,
+      default: false,
+    },
+    commnetAction: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -217,7 +236,9 @@ export default {
     },
     getLink(id) {
       const url = this.$bitpod.getApiUrl()
-      return `${url}${this.modelName}/${this.$route.params.id}/${
+      return `${url}${this.modelName}/${
+        this.modelName === 'Feeds' ? this.feedId : this.$route.params.id
+      }/${
         this.modelName === 'Events' || this.modelName === 'ESIGNREQUESTS'
           ? 'Comments'
           : 'Comment'

@@ -37,7 +37,7 @@
             @submit.prevent="submitForm"
           >
             <v-row>
-              <v-col cols="12" sm="4" md="4" class="pb-0">
+              <v-col cols="12" sm="6" md="6" class="pb-0">
                 <v-text-field
                   v-model="formData.FirstName"
                   :label="$t('Common.FirstName')"
@@ -46,7 +46,7 @@
                   dense
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" sm="4" md="4" class="pb-0">
+              <v-col cols="12" sm="6" md="6" class="pb-0">
                 <v-text-field
                   v-model="formData.LastName"
                   :label="$t('Common.LastName')"
@@ -55,15 +55,38 @@
                   dense
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" sm="4" md="4" class="pb-0">
+              <v-col cols="12" sm="6" md="6" class="pb-0">
                 <v-text-field
-                  v-model="formData.JobTitle"
+                  v-model="formData.CellPhone"
+                  :label="$t('Common.Phone')"
+                  number
+                  outlined
+                  dense
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="6" md="6" class="pb-0">
+                <v-text-field
+                  v-model="formData.Email"
+                  :label="$t('Common.EmailCaption')"
+                  outlined
+                  dense
+                ></v-text-field>
+                <div
+                  v-if="duplicateMessage !== ''"
+                  class="red--text pa-3 pt-0 body-1 mt-n5"
+                >
+                  {{ duplicateMessage }}
+                </div>
+              </v-col>
+              <v-col cols="12" sm="6" md="6" class="pb-0">
+                <v-text-field
+                  v-model="formData.Job"
                   :label="$t('Common.JobTitle')"
                   outlined
                   dense
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" sm="4" md="4" class="pb-0">
+              <v-col cols="12" sm="6" md="6" class="pb-0">
                 <v-select
                   v-model="formData.Department"
                   :items="departmentItems"
@@ -72,24 +95,14 @@
                   dense
                 ></v-select>
               </v-col>
-              <v-col cols="12" sm="4" md="4" class="pb-0">
-                <v-text-field
-                  v-model="formData.Phone"
-                  :label="$t('Common.MobilePhone')"
-                  :rules="[rules.required]"
-                  number
+              <v-col cols="12" sm="6" md="6" class="pb-0">
+                <v-select
+                  v-model="formData.Type"
+                  :items="contactTypeItems"
+                  :label="$t('Common.TypeCaption')"
                   outlined
                   dense
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12" sm="4" md="4" class="pb-0">
-                <v-text-field
-                  v-model="formData.Email"
-                  :label="$t('Common.Email')"
-                  :rules="[rules.email, rules.required]"
-                  outlined
-                  dense
-                ></v-text-field>
+                ></v-select>
               </v-col>
             </v-row>
           </v-form>
@@ -106,6 +119,7 @@
             depressed
             :has-submit-action="true"
             :has-external-submit="true"
+            :reset="isReset"
             :form-name="formName"
             class="ml-2"
             ><i18n path="Drawer.Save"
@@ -139,6 +153,7 @@ export default {
       dialog: false,
       valid: false,
       snackbar: false,
+      isReset: false,
       snackbarText: '',
       timeout: 3000,
       departmentItems: [],
@@ -147,10 +162,13 @@ export default {
         LastName: '',
         Department: '',
         Email: '',
-        JobTitle: '',
-        Phone: '',
+        Job: '',
+        CellPhone: '',
+        Type: '',
       },
       formName: 'new-memberContact-form',
+      contactTypeItems: '',
+      duplicateMessage: '',
     }
   },
   async mounted() {
@@ -160,8 +178,19 @@ export default {
         this.departmentItems = res.map((i) => i.value)
       }
     } catch (e) {
-      console.log(
-        `Error in pages/apps/event/_id/editEventSettings while making a GQL call to GeneralConfiguration model from method getDropDownData`,
+      console.error(
+        `Error in templates/grids/memberContacts-grid/actions/grid/new-item.vue while making a GQL call to GeneralConfiguration model from method getDropDownData`,
+        e
+      )
+    }
+    try {
+      const res = await this.getDropDownData('CRMContactType')
+      if (res) {
+        this.contactTypeItems = res.map((i) => i.value)
+      }
+    } catch (e) {
+      console.error(
+        `Error intemplates/grids/memberContacts-grid/actions/grid/new-item.vue while making a GQL call to GeneralConfiguration model from method getDropDownData`,
         e
       )
     }
@@ -169,9 +198,11 @@ export default {
   methods: {
     onReset() {
       this.$refs.form.reset()
+      this.duplicateMessage = ''
     },
     onClose() {
       this.$refs.form.reset()
+      this.duplicateMessage = ''
       this.dialog = false
     },
     async onSave() {
@@ -184,14 +215,20 @@ export default {
         if (res) {
           this.dialog = false
           this.onReset()
-          this.snackbarText = this.$t('Messages.Success.RecordCreateSuccess')
+          this.snackbarText = this.$t('Messages.Success.UpdatedSuccessfully', {
+            modelName: 'Contact',
+          })
           this.snackbar = true
           this.refresh()
         }
-      } catch (e) {
-        console.log(
-          `Error in templates/grids/accessKey-grid/actions/grid/new-item.vue while making a POST call to Users model from method onSave context:-URL:-${url}\nformData:-${this.formData} `,
-          e
+      } catch (error) {
+        if (error.response.status === 406) {
+          this.isReset = !this.isReset
+          this.duplicateMessage = this.$t('Messages.Error.ContactExists')
+        }
+        console.error(
+          `Error in templates/grids/memberContacts-grid/actions/grid/new-item.vue while making a POST call to CustomerContact model from method onSave context:-URL:${url}`,
+          error
         )
       }
     },
@@ -220,8 +257,8 @@ export default {
           return generalConfig
         }
       } catch (e) {
-        console.log(
-          `Error in pages/apps/event/_id/editEventSettings while making a GQL call to GeneralConfiguration model from method getDropDownData`,
+        console.error(
+          `Error in templates/grids/memberContacts-grid/actions/grid/new-item.vue while making a GQL call to GeneralConfiguration model from method getDropDownData`,
           e
         )
       }

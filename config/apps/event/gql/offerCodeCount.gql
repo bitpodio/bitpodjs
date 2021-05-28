@@ -1,0 +1,5 @@
+query($where: JSON) {
+  OfferCode {
+    OfferCodeCount(where: $where)
+  }
+}

@@ -10,7 +10,7 @@ export default {
     Members: {
       ui: {
         hideDefaultHeader: true,
-        hideDefaultFooter: true,
+        hideDefaultFooter: false,
         showExpand: false,
         singleExpand: false,
         showSelect: true,
@@ -88,6 +88,60 @@ export default {
               return /.+@.+\..+/.test(value) || 'E-mail must be valid'
             },
           ],
+        },
+        Rating: {
+          form: {
+            caption: 'Common.MemberStatus',
+            displayOrder: 3,
+          },
+          displayOrder: 5,
+          caption: 'Common.MemberStatus',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '130px',
+          type: 'lookup',
+          cssClasses: 'col-12 col-md-6',
+          hidden: false,
+          inlineEdit: true,
+          newForm: true,
+          editForm: true,
+          dataSource: {
+            query: registrationStatusOptions,
+            itemText: 'value',
+            itemValue: 'key',
+            filter(data) {
+              return {
+                type: 'CustomerRating',
+              }
+            },
+          },
+        },
+        Type: {
+          form: {
+            caption: 'Common.Type',
+            displayOrder: 4,
+          },
+          displayOrder: 5,
+          caption: 'Common.Type',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '130px',
+          type: 'lookup',
+          cssClasses: 'col-12 col-md-6',
+          hidden: false,
+          inlineEdit: true,
+          newForm: true,
+          editForm: true,
+          dataSource: {
+            query: registrationStatusOptions,
+            itemText: 'value',
+            itemValue: 'key',
+            filter(data) {
+              return {
+                type: 'CustomerType',
+              }
+            },
+          },
         },
         BusinessNumber: {
           form: {
@@ -350,12 +404,66 @@ export default {
             },
           ],
         },
+        Rating: {
+          form: {
+            caption: 'Common.MemberStatus',
+            displayOrder: 3,
+          },
+          displayOrder: 5,
+          caption: 'Common.MemberStatus',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '130px',
+          type: 'lookup',
+          cssClasses: 'col-12 col-md-6',
+          hidden: false,
+          inlineEdit: true,
+          newForm: true,
+          editForm: true,
+          dataSource: {
+            query: registrationStatusOptions,
+            itemText: 'value',
+            itemValue: 'key',
+            filter(data) {
+              return {
+                type: 'CustomerRating',
+              }
+            },
+          },
+        },
+        Type: {
+          form: {
+            caption: 'Common.TypeCaption',
+            displayOrder: 4,
+          },
+          displayOrder: 6,
+          caption: 'Common.Type',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '130px',
+          type: 'lookup',
+          cssClasses: 'col-12 col-md-6',
+          hidden: false,
+          inlineEdit: true,
+          newForm: true,
+          editForm: true,
+          dataSource: {
+            query: registrationStatusOptions,
+            itemText: 'value',
+            itemValue: 'key',
+            filter(data) {
+              return {
+                type: 'CustomerType',
+              }
+            },
+          },
+        },
         BusinessNumber: {
           form: {
             caption: 'Common.PhoneRequired',
             displayOrder: 4,
           },
-          displayOrder: 5,
+          displayOrder: 7,
           caption: 'Common.BusinessNumber',
           searchEnable: true,
           sortEnable: true,
@@ -376,7 +484,7 @@ export default {
           ],
         },
         createdDate: {
-          displayOrder: 6,
+          displayOrder: 8,
           caption: 'Common.CreatedDate',
           searchEnable: true,
           sortEnable: true,
@@ -397,7 +505,7 @@ export default {
           },
         },
         createdBy: {
-          displayOrder: 7,
+          displayOrder: 9,
           caption: 'Common.CreatedBy',
           searchEnable: true,
           sortEnable: true,
@@ -529,83 +637,104 @@ export default {
       title: 'Common.MemberList',
       defaultSort: 'createdDate DESC',
     },
-    memberSubscription: {
+    memberProductSubscription: {
       ui: {
         hideDefaultHeader: false,
         hideDefaultFooter: false,
         showExpand: false,
         singleExpand: false,
-        showSelect: false,
+        showSelect: true,
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'Subscription',
+      default: false,
       hidden: true,
       fields: {
-        SystemOrgName: {
+        'Product.DisplayName': {
           displayOrder: 2,
-          caption: 'Subscription',
+          caption: 'Common.SubscriptionPlan',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '200px',
           type: 'string',
           cssClasses: 'col-12 col-md-12',
-          hidden: false,
-          inlineEdit: true,
-          newForm: true,
-          editForm: true,
         },
-        Unit: {
-          displayOrder: 5,
-          caption: 'Unit',
+        StartDate: {
+          displayOrder: 3,
+          caption: 'Common.StartDate',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
-          type: 'number',
-          cssClasses: 'col-6 col-md-6',
-          hidden: false,
-          inlineEdit: true,
-          newForm: true,
-          editForm: true,
+          columnWidth: '180px',
+          type: 'datetime',
+          cssClasses: 'col-12 col-md-6',
         },
         EndDate: {
-          displayOrder: 3,
-          caption: 'EndDate',
-          searchEnable: true,
-          sortEnable: true,
-          columnWidth: '150px',
-          type: 'date',
-          cssClasses: 'col-6 col-md-6',
-          hidden: false,
-          inlineEdit: true,
-          newForm: true,
-          editForm: true,
-        },
-        BankTransactionNumber: {
           displayOrder: 4,
-          caption: 'BankTransactionNumber',
+          caption: 'Common.EndDate',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '180px',
+          type: 'datetime',
+          cssClasses: 'col-12 col-md-6',
+        },
+        Cost: {
+          displayOrder: 5,
+          caption: 'Common.HeaderPrice',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '130px',
+          type: 'string',
+          csClasses: 'col-12 col-md-6',
+        },
+        Unit: {
+          displayOrder: 6,
+          caption: 'Common.Unit',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '120px',
+          cssClasses: 'col-12 col-md-6',
+          hidden: true,
+          type: 'string',
+          newForm: false,
+          editForm: false,
+        },
+        isActive: {
+          displayOrder: 7,
+          caption: 'Common.Active',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '120px',
+          type: 'checkbox',
+          inlineEdit: true,
+          newForm: false,
+          editForm: false,
+        },
+        AutoRenew: {
+          displayOrder: 8,
+          caption: 'Common.AutoRenew',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
-          type: 'string',
-          cssClasses: 'col-6 col-md-6',
-          hidden: false,
+          type: 'checkbox',
           inlineEdit: true,
-          newForm: true,
-          editForm: true,
+          newForm: false,
+          editForm: false,
         },
       },
       template: {
-        name: 'organizationSubscription-grid',
+        name: 'memberSubscription-grid',
         context: {
-          basePath: '/organization',
+          basePath: '/member',
         },
         actions: {
           new: {
             hidden: true,
           },
           edit: {
-            hidden: true,
+            hidden: false,
+          },
+          delete: {
+            hidden: false,
           },
           exportCsv: {
             hidden: true,
@@ -1126,17 +1255,6 @@ export default {
             },
           ],
         },
-        Job: {
-          caption: 'Common.JobTitle',
-          searchEnable: false,
-          sortEnable: false,
-          columnWidth: '170px',
-          type: 'string',
-          hidden: true,
-          newForm: false,
-          editForm: false,
-          cssClasses: 'col-6 col-md-6',
-        },
         FullName: {
           displayOrder: 2,
           caption: 'Common.FullName',
@@ -1169,25 +1287,37 @@ export default {
             },
           ],
         },
-        Department: {
-          caption: 'Common.Department',
-          searchEnable: false,
-          sortEnable: false,
-          columnWidth: '180px',
-          type: 'string',
+        Type: {
+          displayOrder: 4,
+          caption: 'Common.TypeCaption',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'lookup',
           hidden: false,
           newForm: false,
           editForm: false,
           cssClasses: 'col-6 col-md-6',
+          dataSource: {
+            query: registrationStatusOptions,
+            itemText: 'value',
+            itemValue: 'key',
+            filter(data) {
+              return {
+                type: 'CRMContactType',
+              }
+            },
+          },
         },
         CellPhone: {
+          displayOrder: 5,
           caption: 'Common.Phone',
           searchEnable: false,
           sortEnable: false,
           columnWidth: '150px',
           type: 'string',
           newForm: false,
-          hidden: true,
+          hidden: false,
           editForm: false,
           cssClasses: 'col-6 col-md-6',
           rules: [
@@ -1198,6 +1328,30 @@ export default {
               return /^[0-9]\d*$|^$/.test(value) || 'Number must be valid'
             },
           ],
+        },
+        Department: {
+          displayOrder: 6,
+          caption: 'Common.Department',
+          searchEnable: false,
+          sortEnable: false,
+          columnWidth: '180px',
+          type: 'string',
+          hidden: false,
+          newForm: false,
+          editForm: false,
+          cssClasses: 'col-6 col-md-6',
+        },
+        Job: {
+          displayOrder: 7,
+          caption: 'Common.JobTitle',
+          searchEnable: false,
+          sortEnable: false,
+          columnWidth: '170px',
+          type: 'string',
+          hidden: false,
+          newForm: false,
+          editForm: false,
+          cssClasses: 'col-6 col-md-6',
         },
         createdDate: {
           caption: 'Common.CreatedDate',
@@ -1221,7 +1375,7 @@ export default {
           cssClasses: 'col-6 col-md-6',
         },
         '_CurrentAddress.City': {
-          displayOrder: 5,
+          displayOrder: 8,
           caption: 'Common.City',
           searchEnable: false,
           sortEnable: false,
@@ -1255,7 +1409,7 @@ export default {
           cssClasses: 'col-6 col-md-6',
         },
         '_CurrentAddress.Country': {
-          displayOrder: 6,
+          displayOrder: 9,
           caption: 'Common.Country',
           searchEnable: false,
           sortEnable: false,
@@ -1272,14 +1426,22 @@ export default {
         context: {
           basePath: '/members',
         },
+        actions: {
+          edit: {
+            hidden: true,
+          },
+          delete: {
+            hidden: true,
+          },
+        },
       },
       dataSource: {
-        singularEntity: 'Common.Contact',
-        pluralEntity: 'Common.Contacts',
         type: 'rest',
-        getData: (ctx) =>
-          getData(`Customers/${ctx.$route.params.id}/CutomerContact`),
-        defaultSort: 'createdDate DESC',
+        getData: (ctx, isExporting = false) =>
+          getData(
+            `Customers/${ctx.$route.params.id}/CutomerContact`,
+            isExporting
+          ),
       },
       itemTitle: 'Common.Contact',
       hidden: true,
@@ -1327,8 +1489,8 @@ export default {
           caption: 'Common.CreatedDate',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '160px',
-          type: 'date',
+          columnWidth: '180px',
+          type: 'datetime',
         },
         DueDate: {
           displayOrder: 6,
@@ -1384,7 +1546,7 @@ export default {
         hideDefaultFooter: false,
         showExpand: false,
         singleExpand: false,
-        showSelect: true,
+        showSelect: false,
         hideFilter: false,
         hideSearch: true,
       },
@@ -1392,7 +1554,7 @@ export default {
       fields: {
         CustomerId: {
           displayOrder: 2,
-          caption: 'Common.CustomerId',
+          caption: 'Common.MemberId',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -1404,12 +1566,8 @@ export default {
           editForm: false,
         },
         CustomerName: {
-          form: {
-            caption: 'Common.CustomerName',
-            displayOrder: 1,
-          },
           displayOrder: 3,
-          caption: 'Common.CustomerName',
+          caption: 'Common.MemberFullName',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -1419,33 +1577,39 @@ export default {
           inlineEdit: true,
           newForm: false,
           editForm: false,
+        },
+        Email: {
+          displayOrder: 4,
+          caption: 'Common.EmailCaption',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '130px',
+          type: 'string',
+          cssClasses: 'col-12 col-md-6',
+          hidden: false,
+          inlineEdit: true,
+          newForm: true,
+          editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.CustomerNameRequired')
+              return !!v || this.$t('Messages.Error.EmailRequired')
+            },
+            function (value, data) {
+              return /.+@.+\..+/.test(value) || 'E-mail must be valid'
             },
           ],
         },
         NumberOfEmployees: {
-          form: {
-            caption: 'Common.NumberOfEmployees',
-            displayOrder: 1,
-          },
-          displayOrder: 4,
           caption: 'Common.NumberOfEmployees',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
           type: 'lookup',
           cssClasses: 'col-12 col-md-6',
-          hidden: false,
+          hidden: true,
           inlineEdit: true,
           newForm: false,
           editForm: false,
-          rules: [
-            function (v) {
-              return !!v || this.$t('Messages.Error.CustomerNameRequired')
-            },
-          ],
           dataSource: {
             query: registrationStatusOptions,
             itemText: 'value',
@@ -1458,8 +1622,8 @@ export default {
           },
         },
         BusinessNumber: {
-          displayOrder: 5,
-          caption: 'Common.BusinessNumber',
+          displayOrder: 6,
+          caption: 'Common.Phone',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -1469,19 +1633,10 @@ export default {
           inlineEdit: false,
           newForm: false,
           editForm: false,
-          rules: [
-            function (v) {
-              return !!v || this.$t('Messages.Error.BusinessNameRequired')
-            },
-          ],
         },
         Type: {
-          form: {
-            caption: 'Common.Type',
-            displayOrder: 3,
-          },
-          displayOrder: 6,
-          caption: 'Common.Type',
+          displayOrder: 4,
+          caption: 'Common.TypeCaption',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '130px',
@@ -1502,12 +1657,31 @@ export default {
             },
           },
         },
-        Industry: {
-          form: {
-            caption: 'Common.Industry',
-            displayOrder: 3,
+        Rating: {
+          displayOrder: 5,
+          caption: 'Common.Status',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '130px',
+          type: 'lookup',
+          cssClasses: 'col-12 col-md-6',
+          hidden: false,
+          inlineEdit: true,
+          newForm: false,
+          editForm: false,
+          dataSource: {
+            query: registrationStatusOptions,
+            itemText: 'value',
+            itemValue: 'key',
+            filter(data) {
+              return {
+                type: 'CustomerRating',
+              }
+            },
           },
-          displayOrder: 6,
+        },
+        Industry: {
+          displayOrder: 7,
           caption: 'Common.Industry',
           searchEnable: true,
           sortEnable: true,
@@ -1530,11 +1704,8 @@ export default {
           },
         },
         Website: {
-          form: {
-            caption: 'Common.Website',
-            displayOrder: 3,
-          },
-          displayOrder: 7,
+          hidden: true,
+
           caption: 'Common.Website',
           searchEnable: true,
           sortEnable: true,
@@ -1564,10 +1735,6 @@ export default {
           editForm: false,
         },
         '_BillingAddress.AddressLine': {
-          form: {
-            caption: 'Common.Address',
-            displayOrder: 7,
-          },
           caption: 'Common.Address',
           searchEnable: true,
           sortEnable: true,
@@ -1579,25 +1746,18 @@ export default {
           cssClasses: 'col-12 col-md-12',
         },
         '_BillingAddress.City': {
-          form: {
-            caption: 'Common.City',
-            displayOrder: 8,
-          },
+          displayOrder: 8,
           caption: 'Common.City',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '130px',
           type: 'string',
-          hidden: true,
+          hidden: false,
           newForm: false,
           editForm: false,
           cssClasses: 'col-12 col-md-6',
         },
         '_BillingAddress.State': {
-          form: {
-            caption: 'Common.State',
-            displayOrder: 9,
-          },
           caption: 'Common.State',
           searchEnable: true,
           sortEnable: true,
@@ -1609,10 +1769,6 @@ export default {
           cssClasses: 'col-12 col-md-6',
         },
         '_BillingAddress.PostalCode': {
-          form: {
-            caption: 'Common.Zip',
-            displayOrder: 10,
-          },
           caption: 'Common.Zip',
           searchEnable: true,
           sortEnable: true,
@@ -1624,25 +1780,18 @@ export default {
           cssClasses: 'col-12 col-md-6',
         },
         '_BillingAddress.Country': {
-          form: {
-            caption: 'Common.Country',
-            displayOrder: 11,
-          },
+          displayOrder: 9,
           caption: 'Common.Country',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '130px',
           type: 'string',
-          hidden: true,
+          hidden: false,
           newForm: false,
           editForm: false,
           cssClasses: 'col-12 col-md-6',
         },
         '_ShippingAddress.AddressLine': {
-          form: {
-            caption: 'Common.Address',
-            displayOrder: 12,
-          },
           caption: 'Common.Address',
           searchEnable: true,
           sortEnable: true,
@@ -1654,10 +1803,6 @@ export default {
           cssClasses: 'col-12 col-md-12',
         },
         '_ShippingAddress.City': {
-          form: {
-            caption: 'Common.City',
-            displayOrder: 12,
-          },
           caption: 'Common.City',
           searchEnable: true,
           sortEnable: true,
@@ -1669,10 +1814,6 @@ export default {
           cssClasses: 'col-12 col-md-6',
         },
         '_ShippingAddress.State': {
-          form: {
-            caption: 'Common.State',
-            displayOrder: 13,
-          },
           caption: 'Common.State',
           searchEnable: true,
           sortEnable: true,
@@ -1684,10 +1825,6 @@ export default {
           cssClasses: 'col-12 col-md-6',
         },
         '_ShippingAddress.PostalCode': {
-          form: {
-            caption: 'Common.Zip',
-            displayOrder: 14,
-          },
           caption: 'Common.Zip',
           searchEnable: true,
           sortEnable: true,
@@ -1699,10 +1836,6 @@ export default {
           cssClasses: 'col-12 col-md-6',
         },
         '_ShippingAddress.Country': {
-          form: {
-            caption: 'Common.Country',
-            displayOrder: 15,
-          },
           caption: 'Common.Country',
           searchEnable: true,
           sortEnable: true,
@@ -1714,10 +1847,6 @@ export default {
           cssClasses: 'col-12 col-md-6',
         },
         Description: {
-          form: {
-            caption: 'Common.Description',
-            displayOrder: 16,
-          },
           caption: 'Common.Description',
           searchEnable: true,
           sortEnable: true,
@@ -1733,6 +1862,14 @@ export default {
         name: 'associatedMember-grid',
         context: {
           basePath: '/member',
+        },
+        actions: {
+          edit: {
+            hidden: true,
+          },
+          delete: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
@@ -1759,7 +1896,7 @@ export default {
         showExpand: false,
         singleExpand: false,
         showSelect: true,
-        hideFilter: true,
+        hideFilter: false,
         hideSearch: true,
       },
       fields: {
@@ -1795,20 +1932,9 @@ export default {
             },
           ],
         },
-        Job: {
-          caption: 'Common.JobTitle',
-          searchEnable: false,
-          sortEnable: false,
-          columnWidth: '170px',
-          type: 'string',
-          hidden: true,
-          newForm: false,
-          editForm: false,
-          cssClasses: 'col-6 col-md-6',
-        },
-        Department: {
-          displayOrder: 4,
-          caption: 'Common.Department',
+        FullName: {
+          displayOrder: 2,
+          caption: 'Common.FullName',
           searchEnable: false,
           sortEnable: false,
           columnWidth: '180px',
@@ -1817,24 +1943,6 @@ export default {
           newForm: false,
           editForm: false,
           cssClasses: 'col-6 col-md-6',
-        },
-        CellPhone: {
-          caption: 'Common.Phone',
-          searchEnable: false,
-          sortEnable: false,
-          columnWidth: '150px',
-          type: 'string',
-          newForm: false,
-          editForm: false,
-          cssClasses: 'col-6 col-md-6',
-          rules: [
-            function (v) {
-              return !!v || this.$t('Messages.Error.PhoneRequired')
-            },
-            function (value, data) {
-              return /^[0-9]\d*$|^$/.test(value) || 'Number must be valid'
-            },
-          ],
         },
         Email: {
           displayOrder: 3,
@@ -1856,9 +1964,29 @@ export default {
             },
           ],
         },
-        '_CurrentAddress.City': {
+        CellPhone: {
           displayOrder: 5,
-          caption: 'Common.CurrentAddressCity',
+          caption: 'Common.Phone',
+          searchEnable: false,
+          sortEnable: false,
+          columnWidth: '150px',
+          type: 'string',
+          newForm: false,
+          hidden: false,
+          editForm: false,
+          cssClasses: 'col-6 col-md-6',
+          rules: [
+            function (v) {
+              return !!v || this.$t('Messages.Error.PhoneRequired')
+            },
+            function (value, data) {
+              return /^[0-9]\d*$|^$/.test(value) || 'Number must be valid'
+            },
+          ],
+        },
+        Type: {
+          displayOrder: 4,
+          caption: 'Common.TypeCaption',
           searchEnable: false,
           sortEnable: false,
           columnWidth: '180px',
@@ -1868,8 +1996,87 @@ export default {
           editForm: false,
           cssClasses: 'col-6 col-md-6',
         },
-        '_CurrentAddress.Country': {
+        Department: {
           displayOrder: 6,
+          caption: 'Common.Department',
+          searchEnable: false,
+          sortEnable: false,
+          columnWidth: '180px',
+          type: 'string',
+          hidden: false,
+          newForm: false,
+          editForm: false,
+          cssClasses: 'col-6 col-md-6',
+        },
+        Job: {
+          displayOrder: 7,
+          caption: 'Common.JobTitle',
+          searchEnable: false,
+          sortEnable: false,
+          columnWidth: '170px',
+          type: 'string',
+          hidden: false,
+          newForm: false,
+          editForm: false,
+          cssClasses: 'col-6 col-md-6',
+        },
+        createdDate: {
+          caption: 'Common.CreatedDate',
+          searchEnable: false,
+          sortEnable: false,
+          columnWidth: '180px',
+          type: 'date',
+          hidden: true,
+          newForm: false,
+          editForm: false,
+        },
+        createdBy: {
+          caption: 'Common.CreatedBy',
+          searchEnable: false,
+          sortEnable: false,
+          columnWidth: '180px',
+          type: 'string',
+          hidden: true,
+          newForm: false,
+          editForm: false,
+          cssClasses: 'col-6 col-md-6',
+        },
+        '_CurrentAddress.City': {
+          displayOrder: 8,
+          caption: 'Common.City',
+          searchEnable: false,
+          sortEnable: false,
+          columnWidth: '180px',
+          type: 'string',
+          hidden: false,
+          newForm: false,
+          editForm: false,
+          cssClasses: 'col-6 col-md-6',
+        },
+        '_CurrentAddress.State': {
+          caption: 'Common.CurrentAddressState',
+          searchEnable: false,
+          sortEnable: false,
+          columnWidth: '180px',
+          type: 'string',
+          hidden: true,
+          newForm: false,
+          editForm: false,
+          cssClasses: 'col-6 col-md-6',
+        },
+        '_CurrentAddress.PostalCode': {
+          caption: 'Common.CurrentAddressPostalCode',
+          searchEnable: false,
+          sortEnable: false,
+          columnWidth: '180px',
+          type: 'string',
+          hidden: true,
+          newForm: false,
+          editForm: false,
+          cssClasses: 'col-6 col-md-6',
+        },
+        '_CurrentAddress.Country': {
+          displayOrder: 9,
           caption: 'Common.Country',
           searchEnable: false,
           sortEnable: false,
@@ -1882,9 +2089,23 @@ export default {
         },
       },
       template: {
-        name: 'memberContacts-grid',
+        name: '',
         context: {
           basePath: '/member',
+        },
+        actions: {
+          new: {
+            hidden: true,
+          },
+          edit: {
+            hidden: true,
+          },
+          delete: {
+            hidden: true,
+          },
+          exportCsv: {
+            hidden: true,
+          },
         },
       },
       dataSource: {
@@ -1903,6 +2124,199 @@ export default {
       hidden: true,
       itemTitle: 'Common.Contact',
       title: 'Common.Contacts',
+      defaultSort: 'createdDate DESC',
+    },
+    addExistingMembers: {
+      ui: {
+        hideDefaultHeader: false,
+        hideDefaultFooter: false,
+        showExpand: false,
+        singleExpand: false,
+        showSelect: true,
+        hideFilter: false,
+        hideSearch: true,
+      },
+      fields: {
+        CustomerId: {
+          displayOrder: 2,
+          caption: 'Common.MemberId',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+          cssClasses: 'col-12 col-md-6',
+          hidden: false,
+          inlineEdit: true,
+          newForm: false,
+          editForm: false,
+        },
+        CustomerName: {
+          displayOrder: 3,
+          caption: 'Common.MemberFullName',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+          cssClasses: 'col-12 col-md-6',
+          hidden: false,
+          inlineEdit: true,
+          newForm: false,
+          editForm: false,
+        },
+        Email: {
+          displayOrder: 4,
+          caption: 'Common.EmailCaption',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '130px',
+          type: 'string',
+          cssClasses: 'col-12 col-md-6',
+          hidden: false,
+          inlineEdit: true,
+          newForm: true,
+          editForm: true,
+          rules: [
+            function (v) {
+              return !!v || this.$t('Messages.Error.EmailRequired')
+            },
+            function (value, data) {
+              return /.+@.+\..+/.test(value) || 'E-mail must be valid'
+            },
+          ],
+        },
+        Rating: {
+          displayOrder: 5,
+          caption: 'Common.Status',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+          cssClasses: 'col-12 col-md-6',
+          hidden: false,
+          inlineEdit: true,
+          newForm: false,
+          editForm: false,
+        },
+        BusinessNumber: {
+          displayOrder: 7,
+          caption: 'Common.Phone',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+          cssClasses: 'col-12 col-md-6',
+          hidden: false,
+          inlineEdit: false,
+          newForm: false,
+          editForm: false,
+        },
+        Type: {
+          displayOrder: 6,
+          caption: 'Common.TypeCaption',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '130px',
+          type: 'lookup',
+          cssClasses: 'col-12 col-md-6',
+          hidden: false,
+          inlineEdit: true,
+          newForm: false,
+          editForm: false,
+          dataSource: {
+            query: registrationStatusOptions,
+            itemText: 'value',
+            itemValue: 'key',
+            filter(data) {
+              return {
+                type: 'CustomerType',
+              }
+            },
+          },
+        },
+        Industry: {
+          displayOrder: 8,
+          caption: 'Common.Industry',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '130px',
+          type: 'lookup',
+          cssClasses: 'col-12 col-md-6',
+          hidden: false,
+          inlineEdit: true,
+          newForm: false,
+          editForm: false,
+          dataSource: {
+            query: registrationStatusOptions,
+            itemText: 'value',
+            itemValue: 'key',
+            filter(data) {
+              return {
+                type: 'Industry',
+              }
+            },
+          },
+        },
+        '_BillingAddress.City': {
+          displayOrder: 9,
+          caption: 'Common.City',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '130px',
+          type: 'string',
+          hidden: false,
+          newForm: false,
+          editForm: false,
+          cssClasses: 'col-12 col-md-6',
+        },
+        '_BillingAddress.Country': {
+          displayOrder: 10,
+          caption: 'Common.Country',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '130px',
+          type: 'string',
+          hidden: false,
+          newForm: false,
+          editForm: false,
+          cssClasses: 'col-12 col-md-6',
+        },
+      },
+      template: {
+        name: '',
+        context: {
+          basePath: '/member',
+        },
+        actions: {
+          new: {
+            hidden: true,
+          },
+          edit: {
+            hidden: true,
+          },
+          delete: {
+            hidden: true,
+          },
+          exportCsv: {
+            hidden: true,
+          },
+        },
+      },
+      dataSource: {
+        singularEntity: 'Common.Member',
+        pluralEntity: 'Common.Members',
+        query: memberList,
+        type: 'graphql',
+        model: 'Customer',
+        filter(ctx) {
+          return {
+            where: { id: { neq: [this.$route.params.id] } },
+          }
+        },
+        defaultSort: 'createdDate DESC',
+      },
+      hidden: true,
+      itemTitle: 'Common.Member',
+      title: 'Common.Members',
       defaultSort: 'createdDate DESC',
     },
   },
