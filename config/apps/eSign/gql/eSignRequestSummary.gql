@@ -1,0 +1,9 @@
+query($where: JSON) {
+  ESignRequest {
+    ESignRequestCount(where: $where)
+    ESignRequestCompleted: ESignRequestCount(where: {Status: "Completed" })
+    ESignRequestInprogress: ESignRequestCount(where: {Status: "Inprogress" })
+    ESignRequestDeclined: ESignRequestCount(where: {Status: "Declined" })
+    __typename
+  }
+}
