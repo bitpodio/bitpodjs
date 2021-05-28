@@ -344,7 +344,6 @@ export default {
     }
   },
   async created() {
-    console.log()
     if (this.items && this.items.length > 0) {
       try {
         const result = await this.$apollo.query({
@@ -357,7 +356,6 @@ export default {
           fetchPolicy: 'no-cache',
         })
         if (result.data && result.data.ESignRequest) {
-          console.log(result.data)
           this.requestSummaryData[0].value =
             result.data.ESignRequest.ESignRequestCount
           this.requestSummaryData[1].value =
@@ -367,9 +365,11 @@ export default {
           this.requestSummaryData[3].value =
             result.data.ESignRequest.ESignRequestDeclined
         }
-        console.log(result)
       } catch (err) {
-        console.log(err)
+        console.error(
+          'Error in eSign-grid/body.vue in created while making an apollo query to get request summary data',
+          err
+        )
       }
     }
   },

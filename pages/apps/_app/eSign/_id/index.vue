@@ -390,7 +390,10 @@ export default {
       try {
         await navigator.clipboard.writeText(value)
       } catch (e) {
-        console.error('Something went wrong', e)
+        console.error(
+          'Error in eSign/index.vue in copyDownloadLink while copying the dowload link to thes clipboard',
+          e
+        )
       }
     },
   },
