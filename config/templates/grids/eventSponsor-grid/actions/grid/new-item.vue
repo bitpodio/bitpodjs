@@ -165,8 +165,7 @@ export default {
       timeout: 3000,
       departmentItems: [],
       tagsItems: [],
-      Tags: [],
-      Type: 'Sponsor',
+      Tags: '',
       formData: {
         FirstName: '',
         LastName: '',
@@ -223,6 +222,7 @@ export default {
       const url = this.$bitpod.getApiUrl()
       this.formData.Type = 'Sponsor'
       this.formData.Tags.push(this.Tags)
+      console.log('data', this.formData)
       try {
         const res = await this.$axios.$post(
           `${url}Events/${this.$route.params.id}/contacts`,
