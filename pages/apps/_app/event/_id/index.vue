@@ -1903,13 +1903,11 @@ export default {
       )
     },
     checkLiveEvent() {
-      debugger
       const liveStart = new Date() > new Date(this.eventData.StartDate)
       const liveEnd = new Date() < new Date(this.eventData.EndDate)
       return liveStart && liveEnd
     },
     getEventDaysDiff() {
-      debugger
       const result = differenceInCalendarDays(
         new Date(this.eventData.StartDate),
         new Date()
