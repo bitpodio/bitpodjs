@@ -2,7 +2,45 @@
   <div>
     <v-flex class="greybg">
       <v-col class="d-flex greybg pt-10 flex-row seatmap-inner align-center">
-        <v-text class="text-h5"
+        <v-text class="text-h5"><i18n path="Common.ESignature" /></v-text>
+      </v-col>
+      <v-col class="d-flex greybg pt-4 flex-row seatmap-inner align-center">
+        <div class="d-flex">
+          <div v-if="$route.params.viewName === 'eSign'" class="fs-18 min-h36">
+            <i18n path="Common.All" />
+          </div>
+          <div
+            v-else-if="$route.params.viewName === 'eSignCompleted'"
+            class="fs-18 min-h36"
+          >
+            <i18n path="Common.Completed" />
+          </div>
+          <div
+            v-else-if="$route.params.viewName === 'eSignInprogress'"
+            class="fs-18 min-h36"
+          >
+            <i18n path="Common.OutForSignature" />
+          </div>
+          <div v-else class="fs-18 min-h36">
+            <i18n path="Common.Declined" />
+          </div>
+          <v-menu offset-y transition="slide-y-transition" bottom>
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn icon v-bind="attrs" v-on="on">
+                <v-icon class="fs-30">mdi-chevron-down</v-icon>
+              </v-btn>
+            </template>
+
+            <v-list>
+              <div v-for="(item, index) in requestSummaryData" :key="index">
+                <v-list-item :to="eSignViews(item.view)">
+                  {{ item.caption }}
+                </v-list-item>
+              </div>
+            </v-list>
+          </v-menu>
+        </div>
+        <v-text class="pl-2 fs-18 min-h36"
           ><i18n path="Common.SignOrGetSignatures"
         /></v-text>
         <v-btn
@@ -67,43 +105,6 @@
           </div>
         </div>
       </v-col>
-      <v-col cols="12" class="px-0 seatmap-inner">
-        <div class="d-flex">
-          <div v-if="$route.params.viewName === 'eSign'" class="fs-18 min-h36">
-            <i18n path="Common.Total" />
-          </div>
-          <div
-            v-else-if="$route.params.viewName === 'eSignCompleted'"
-            class="fs-18 min-h36"
-          >
-            <i18n path="Common.Completed" />
-          </div>
-          <div
-            v-else-if="$route.params.viewName === 'eSignInprogress'"
-            class="fs-18 min-h36"
-          >
-            <i18n path="Common.InProgress" />
-          </div>
-          <div v-else class="fs-18 min-h36">
-            <i18n path="Common.Declined" />
-          </div>
-          <v-menu offset-y transition="slide-y-transition" bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn icon v-bind="attrs" v-on="on">
-                <v-icon class="fs-30">mdi-chevron-down</v-icon>
-              </v-btn>
-            </template>
-
-            <v-list>
-              <div v-for="(item, index) in requestSummaryData" :key="index">
-                <v-list-item :to="eSignViews(item.view)">
-                  {{ item.caption }}
-                </v-list-item>
-              </div>
-            </v-list>
-          </v-menu>
-        </div>
-      </v-col>
       <v-col class="d-flex flex-wrap greybg pa-0 pt-10 seatmap-inner">
         <v-col
           v-for="item in items"
@@ -118,32 +119,30 @@
                     <v-btn
                       :class="{
                         'ma-2 positionAbsolute request-status text-darken-4': true,
-                        'success--text':
-                          item.Status === 'Completed' &&
-                          !(
-                            new Date(item.ExpirationDate).getTime() &&
-                            new Date(item.ExpirationDate).getTime() <
-                              new Date().setHours(0, 0, 0, 0)
-                          ),
-                        'info--text':
-                          item.Status === 'Inprogress' &&
-                          !(
-                            new Date(item.ExpirationDate).getTime() &&
-                            new Date(item.ExpirationDate).getTime() <
-                              new Date().setHours(0, 0, 0, 0)
-                          ),
-                        'warning--text':
-                          item.Status === 'Pending' &&
-                          !(
-                            new Date(item.ExpirationDate).getTime() &&
-                            new Date(item.ExpirationDate).getTime() <
-                              new Date().setHours(0, 0, 0, 0)
-                          ),
-                        'error--text':
-                          item.Status === 'Declined' ||
-                          (new Date(item.ExpirationDate).getTime() &&
-                            new Date(item.ExpirationDate).getTime() <
-                              new Date().setHours(0, 0, 0, 0)),
+                        'success--text': checkStatus(
+                          item.Status,
+                          'Completed',
+                          item.ExpirationDate
+                        ),
+                        'info--text': checkStatus(
+                          item.Status,
+                          'Inprogress',
+                          item.ExpirationDate
+                        ),
+                        'warning--text': checkStatus(
+                          item.Status,
+                          'Pending',
+                          item.ExpirationDate
+                        ),
+                        'error--text': checkStatus(
+                          item.Status,
+                          'Declined',
+                          item.ExpirationDate
+                        ),
+                        'grey--text': checkIfExpired(
+                          item.Status,
+                          item.ExpirationDate
+                        ),
                       }"
                       depressed
                       small
@@ -151,13 +150,47 @@
                       v-bind="attrs"
                       v-on="on"
                     >
-                      {{
-                        new Date(item.ExpirationDate).getTime() &&
-                        new Date().setHours(0, 0, 0, 0) >
-                          new Date(item.ExpirationDate).getTime()
-                          ? $t('Common.Expired')
-                          : item.Status
-                      }}
+                      <i18n
+                        v-if="
+                          checkStatus(
+                            item.Status,
+                            'Completed',
+                            item.ExpirationDate
+                          )
+                        "
+                        path="Common.Completed"
+                      />
+                      <i18n
+                        v-else-if="
+                          checkStatus(
+                            item.Status,
+                            'Inprogress',
+                            item.ExpirationDate
+                          )
+                        "
+                        path="Common.OutForSignature"
+                      />
+                      <i18n
+                        v-else-if="
+                          checkStatus(
+                            item.Status,
+                            'Pending',
+                            item.ExpirationDate
+                          )
+                        "
+                        path="Common.Pending"
+                      />
+                      <i18n
+                        v-else-if="
+                          checkStatus(
+                            item.Status,
+                            'Declined',
+                            item.ExpirationDate
+                          )
+                        "
+                        path="Common.Declined"
+                      />
+                      <i18n v-else path="Common.Expired" />
                     </v-btn>
                   </template>
                   <div v-if="item.Recipient && item.Recipient.edges">
@@ -178,7 +211,7 @@
                   <v-flex
                     class="tile-img tile-pattern rounded-0"
                     :style="{
-                      'background-image': getRandomImage(item.Subject),
+                      'background-image': getRandomImage(item.id),
                     }"
                   ></v-flex>
                 </div>
@@ -241,7 +274,7 @@ export default {
       dialog: false,
       requestSummaryData: [
         {
-          caption: this.$t('Common.Total'),
+          caption: this.$t('Common.All'),
           value: 0,
           icon: 'mdi-file-document-outline',
           class: 'light-blue darken-1',
@@ -255,7 +288,7 @@ export default {
           view: 'eSignCompleted',
         },
         {
-          caption: this.$t('Common.InProgress'),
+          caption: this.$t('Common.OutForSignature'),
           value: 0,
           icon: 'mdi-file-move-outline',
           class: 'yellow darken-2',
@@ -352,6 +385,19 @@ export default {
     },
     getRandomImage(name) {
       return window.GeoPattern.generate(name).toDataUrl()
+    },
+    checkStatus(itemStatus, status, expirationDate) {
+      return (
+        itemStatus === status &&
+        !this.checkIfExpired(itemStatus, expirationDate)
+      )
+    },
+    checkIfExpired(status, expirationDate) {
+      if (status === 'Completed' || status === 'Declined') return false
+      return (
+        new Date(expirationDate).getTime() &&
+        new Date(expirationDate).getTime() < new Date().setHours(0, 0, 0, 0)
+      )
     },
   },
 }

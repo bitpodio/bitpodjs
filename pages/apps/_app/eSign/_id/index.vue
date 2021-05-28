@@ -32,14 +32,69 @@
                       <v-list-item-subtitle class="pt-2">
                         <v-chip
                           :class="{
-                            warning: data.requestData.Status === 'Inprogress',
-                            success: data.requestData.Status === 'Completed',
-                            error: data.requestData.Status === 'Declined',
+                            success: checkStatus(
+                              data.requestData.Status,
+                              'Completed',
+                              data.requestData.ExpirationDate
+                            ),
+                            warning: checkStatus(
+                              data.requestData.Status,
+                              'Inprogress',
+                              data.requestData.ExpirationDate
+                            ),
+                            error: checkStatus(
+                              data.requestData.Status,
+                              'Declined',
+                              data.requestData.ExpirationDate
+                            ),
+                            'text--grey': checkIfExpired(
+                              data.requestData.Status,
+                              data.requestData.ExpirationDate
+                            ),
                           }"
                         >
-                          {{ data.requestData.Status }}</v-chip
-                        ></v-list-item-subtitle
-                      >
+                          <i18n
+                            v-if="
+                              checkStatus(
+                                data.requestData.Status,
+                                'Completed',
+                                data.requestData.ExpirationDate
+                              )
+                            "
+                            path="Common.Completed"
+                          />
+                          <i18n
+                            v-else-if="
+                              checkStatus(
+                                data.requestData.Status,
+                                'Inprogress',
+                                data.requestData.ExpirationDate
+                              )
+                            "
+                            path="Common.OutForSignature"
+                          />
+                          <i18n
+                            v-else-if="
+                              checkStatus(
+                                data.requestData.Status,
+                                'Declined',
+                                data.requestData.ExpirationDate
+                              )
+                            "
+                            path="Common.Declined"
+                          />
+                          <i18n
+                            v-else-if="
+                              checkStatus(
+                                data.requestData.Status,
+                                'Pending',
+                                data.requestData.ExpirationDate
+                              )
+                            "
+                            path="Common.Pending"
+                          />
+                          <i18n v-else path="Common.Expired" /> </v-chip
+                      ></v-list-item-subtitle>
                     </v-list-item-content>
                   </v-list-item>
                 </v-list>
@@ -317,6 +372,19 @@ export default {
     },
     openLink(link) {
       window.open(link)
+    },
+    checkStatus(itemStatus, status, expirationDate) {
+      return (
+        itemStatus === status &&
+        !this.checkIfExpired(itemStatus, expirationDate)
+      )
+    },
+    checkIfExpired(status, expirationDate) {
+      if (status === 'Completed' || status === 'Declined') return false
+      return (
+        new Date(expirationDate).getTime() &&
+        new Date(expirationDate).getTime() < new Date().setHours(0, 0, 0, 0)
+      )
     },
     async copyDownloadLink(value) {
       try {

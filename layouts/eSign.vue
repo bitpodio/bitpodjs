@@ -102,7 +102,7 @@
       </div>
     </v-app-bar>
 
-    <v-main class="greybg seatmap">
+    <v-main class="greybg seatmap esign-layout">
       <v-container fluid>
         <v-row>
           <v-col class="pt-0">
@@ -216,3 +216,10 @@ export default {
   },
 }
 </script>
+
+<style>
+.esign-layout {
+  padding-bottom: 24px !important;
+  margin-top: 24px !important;
+}
+</style>

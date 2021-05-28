@@ -850,7 +850,7 @@
     "Reconnect": "התחבר מחדש",
     "Expired": "לא בתוקף",
     "Esign":"סימןאלקטרוני",
-    "NewEsignRequest": "בקשת סימן אלקטרוני חדשה",
+    "NewESignatureDocument": "מסמך eSignature חדש",
     "SelectRecipients": "מרשימת אנשי הקשר למטה בחר באנשי הקשר שצריכים לקבל את המסמך שייחתם.",
     "CreateNewSignatureTemplateDescription": "מקום בו תוכלו להוסיף תבנית מסמך חדשה.",
     "ExistingSignatureTemplate": "בחר תבנית קיימת",
@@ -870,7 +870,8 @@
     "YouMayReferRecipients": "אתה יכול להפנות את נתוני הנמענים באמצעות ביטויים של מציין מיקום בשורת הנושא. למשל: {contactTemplateData}",
     "SearchContacts": "חפש אנשי קשר",
     "Data": "נתונים",
-    "FillTemplateData": "בדוק את תוכן המסמך ואת מצייני המיקום, השתמש בטופס לעריכת ערכי מציין המיקום.",
+    "FillTemplateData": "בדוק את תוכן המסמך ואת מצייני המיקום.",
+    "FillTemplateFields": "השתמש בטופס לעריכת ערכי מציין מיקום.",
     "NewTemplateInformation": "כדי להתחיל בתהליך eSign, בחר תחילה תבנית מסמך מהרשימה או צור תבנית חדשה.",
     "SignedOn": "חתום בתאריך",
     "RecipientType": "סוג הנמען",
@@ -884,7 +885,11 @@
     "Completed": "הושלם",
     "InProgress": "בתהליך",
     "Declined": "נדחה",
-    "SignatureRequestedSubject": "בקשה לחתימה -"
+    "ESignature": "חתימה אלקטרונית",
+    "All": "את כל",
+    "OutForSignature": "לצאת לחתימה",
+    "SignatureRequestedSubject": "בקשה לחתימה -",
+    "Fields": "שדות"
   },
   "Drawer": {
     "UnSubscribeMsg": "אנא בחר סיבה לביטול הרישום לניוזלטר. זה יעזור לנו לשפר את השירותים שלנו.",

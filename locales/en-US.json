@@ -851,7 +851,7 @@
     "Reconnect": "Re-Connect",
     "Expired": "Expired",
     "Esign": "ESign",
-    "NewEsignRequest": "New E-Sign Request",
+    "NewESignatureDocument": "New eSignature Document",
     "SelectRecipients": "From the contact list below, select the contacts who should receive the document to be signed.",
     "CreateNewSignatureTemplateDescription": "A place where you can add a new document template.",
     "ExistingSignatureTemplate": "Select Existing Template",
@@ -871,7 +871,8 @@
     "YouMayReferRecipients": "You may refer recipients data by using placeholder expressions in the subject line. e.g:{contactTemplateData}",
     "SearchContacts": "Search Contacts",
     "Data": "Data",
-    "FillTemplateData": "Review document content and placeholders, use the form to edit placeholder values.",
+    "FillTemplateData": "Review document content and placeholders.",
+    "FillTemplateFields": "Use the form to edit placeholder values.",
     "NewTemplateInformation": "To start eSign process, first select a document template from the list or create a new one.",
     "SignedOn": "Signed On",
     "RecipientType": "Recipient Type",
@@ -885,7 +886,11 @@
     "Completed": "Completed",
     "InProgress": "In Progress",
     "Declined": "Declined",
-    "SignatureRequestedSubject": "Signature Requested -"
+    "ESignature": "eSignature",
+    "All": "All",
+    "OutForSignature": "Out for Signature",
+    "SignatureRequestedSubject": "Signature Requested -",
+    "Fields": "Fields"
   },
   "Drawer": {
     "UnSubscribeMsg": "Please select a reason to unsubscribe from newsletter. This will help us to improve our services.",

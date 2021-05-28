@@ -848,7 +848,7 @@
     "Reconnect": "Reconnecter",
     "Expired": "Expiré",
     "Esign":"ESign",
-    "NewEsignRequest": "Nouvelle demande de signature électronique",
+    "NewESignatureDocument": "Nouveau document de signature électronique",
     "SelectRecipients": "Dans la liste de contacts ci-dessous, sélectionnez les contacts qui doivent recevoir le document à signer.",
     "CreateNewSignatureTemplateDescription": "Un endroit où vous pouvez ajouter un nouveau modèle de document.",
     "ExistingSignatureTemplate": "Sélectionnez un modèle existant",
@@ -868,7 +868,8 @@
     "YouMayReferRecipients": "Vous pouvez faire référence aux données des destinataires en utilisant des expressions d'espace réservé dans la ligne d'objet. Par exemple: {contactTemplateData}",
     "SearchContacts": "Rechercher des contacts",
     "Data": "Donnés",
-    "FillTemplateData": "Passez en revue le contenu du document et les espaces réservés, utilisez le formulaire pour modifier les valeurs des espaces réservés.",
+    "FillTemplateData": "Passez en revue le contenu du document et les espaces réservés.",
+    "FillTemplateFields": "Utilisez le formulaire pour modifier les valeurs d'espace réservé.",
     "NewTemplateInformation": "Pour démarrer le processus eSign, sélectionnez d'abord un modèle de document dans la liste ou créez-en un nouveau.",
     "SignedOn": "Signé le",
     "RecipientType": "Type de destinataire",
@@ -882,7 +883,11 @@
     "Completed": "Complété",
     "InProgress": "En cours",
     "Declined": "Diminué",
-    "SignatureRequestedSubject": "Signature demandée -"
+    "ESignature": "Signature électronique",
+    "All": "Tout",
+    "OutForSignature": "Sortie pour la signature",
+    "SignatureRequestedSubject": "Signature demandée -",
+    "Fields": "Des champs"
   },
   "Drawer": {
     "UnSubscribeMsg": "Veuillez sélectionner une raison pour vous désinscrire de la newsletter. Cela nous aidera à améliorer nos services.",

@@ -290,12 +290,12 @@
       content-class="slide-form"
     >
       <template>
-        <v-card class="invite-form">
+        <v-card class="invite-form overflow-x-hidden">
           <v-card-title
-            class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
+            class="pl-md-10 pl-lg-10 pl-xl-15 pr-0 pb-0 pt-1 d-flex align-start"
           >
             <h2 class="black--text pt-4 pb-2 text-h5">
-              <i18n path="Common.NewEsignRequest" />
+              <i18n path="Common.NewESignatureDocument" />
             </h2>
             <v-spacer></v-spacer>
             <div>
@@ -303,24 +303,53 @@
                 <v-icon>mdi-close</v-icon>
               </v-btn>
             </div>
-            <v-tabs v-model="currentTab" left height="36">
-              <v-tab class="px-0 mr-4">
-                <i18n path="Common.Template" />
-              </v-tab>
-              <v-tab :disabled="currentTab < 1" class="px-0 mr-4">
-                <i18n path="Common.Data" />
-              </v-tab>
-              <v-tab :disabled="currentTab < 2" class="px-0 mr-4">
-                <i18n path="Common.Recipients" />
-              </v-tab>
-              <v-tab :disabled="currentTab < 3" class="px-0 mr-4">
-                <i18n path="Common.EmailInfo" />
-              </v-tab>
-              <v-tab :disabled="currentTab < 4" class="px-0 mr-4">
-                <i18n path="Common.Verify" />
-              </v-tab>
-            </v-tabs>
-            <div class="body-1 px-2 py-4">
+            <v-row
+              :class="{
+                'ml-0 justify-space-between max-width-full':
+                  currentTab === 1 && !$vuetify.breakpoint.smAndDown,
+              }"
+            >
+              <v-col
+                :class="{
+                  'col-7': currentTab === 1 && !$vuetify.breakpoint.smAndDown,
+                }"
+              >
+                <v-tabs v-model="currentTab" left height="36">
+                  <v-tab class="px-0 mr-4">
+                    <i18n path="Common.Template" />
+                  </v-tab>
+                  <v-tab :disabled="currentTab < 1" class="px-0 mr-4">
+                    <i18n path="Common.Data" />
+                  </v-tab>
+                  <v-tab :disabled="currentTab < 2" class="px-0 mr-4">
+                    <i18n path="Common.Recipients" />
+                  </v-tab>
+                  <v-tab :disabled="currentTab < 3" class="px-0 mr-4">
+                    <i18n path="Common.EmailInfo" />
+                  </v-tab>
+                  <v-tab :disabled="currentTab < 4" class="px-0 mr-4">
+                    <i18n path="Common.Verify" />
+                  </v-tab>
+                </v-tabs>
+              </v-col>
+              <v-col
+                v-if="currentTab === 1 && !$vuetify.breakpoint.smAndDown"
+                class="greybg col-4 data-tab-subheading max-width-400"
+              >
+                <v-tabs height="36" class="greybg ml-8">
+                  <v-tab class="px-0 mr-4 greybg">
+                    <i18n path="Common.Fields" />
+                  </v-tab>
+                </v-tabs>
+              </v-col>
+            </v-row>
+            <div
+              :class="{
+                'body-1 px-2 py-0': true,
+                'pr-0': currentTab === 1 && !$vuetify.breakpoint.smAndDown,
+              }"
+              style="width: 100%;"
+            >
               <div
                 v-if="!templateLoading && currentTab === 0"
                 class="d-flex align-center"
@@ -340,7 +369,25 @@
                 /></v-btn>
               </div>
               <div v-else-if="currentTab === 1">
-                <i18n class="body-2" path="Common.FillTemplateData" />
+                <v-row
+                  :class="{
+                    'ml-0 justify-space-between max-width-full':
+                      currentTab === 1 && !$vuetify.breakpoint.smAndDown,
+                  }"
+                >
+                  <v-col class="col-12 col-md-8">
+                    <i18n class="body-2" path="Common.FillTemplateData" />
+                  </v-col>
+                  <v-col
+                    v-if="!$vuetify.breakpoint.smAndDown"
+                    class="col-12 col-md-4 greybg mx-0 max-width-400"
+                  >
+                    <i18n
+                      class="body-2 pl-8"
+                      path="Common.FillTemplateFields"
+                    />
+                  </v-col>
+                </v-row>
               </div>
               <div v-else-if="currentTab === 2">
                 <i18n class="body-2" path="Common.SelectRecipients" />
@@ -355,7 +402,7 @@
               'pt-0 invite-inner': true,
               'px-xs-2 px-md-10 px-lg-10 px-xl-15 ':
                 currentTab !== 1 || $vuetify.breakpoint.smAndDown,
-              'pl-xs-2 pl-md-10 pl-lg-10 pl-xl-15 pr-3 mt-5 mb-n5 overflow-y-hidden':
+              'pl-xs-2 pl-md-10 pl-lg-10 pl-xl-15 pr-3 mb-n5 overflow-y-hidden':
                 currentTab === 1 && !$vuetify.breakpoint.smAndDown,
             }"
           >
@@ -504,13 +551,17 @@
                   ></v-progress-circular>
                 </v-card>
                 <v-card v-else flat style="height: inherit;">
-                  <v-row style="height: inherit;">
+                  <v-row
+                    :class="{
+                      'justify-space-between': !$vuetify.breakpoint.smAndDown,
+                    }"
+                    style="height: inherit;"
+                  >
                     <v-col
                       v-if="currentTab === 1"
                       id="html-scroll-container"
                       :class="{
                         'col-12 col-md-8 overflow-hover': true,
-                        'ml-n4': !$vuetify.breakpoint.smAndDown,
                       }"
                       style="height: inherit;"
                     >
@@ -521,11 +572,11 @@
                     </v-col>
                     <v-col
                       :class="{
-                        'col-12 col-md-4 mx-0 px-8 pt-8 overflow-hover': true,
-                        'ml-2 mr-2': !$vuetify.breakpoint.smAndDown,
+                        'col-12 col-md-4 mx-0 px-8 pt-8 overflow-hover greybg': true,
+                        'max-width-400': !$vuetify.breakpoint.smAndDown,
                       }"
                       :order="$vuetify.breakpoint.smAndDown ? 'first' : 'last'"
-                      style="height: inherit; border: 1px dotted black;"
+                      style="height: inherit;"
                     >
                       <v-text-field
                         v-for="item in dataFields"
@@ -769,7 +820,7 @@
                         <h4 class="body-1 mt-1">
                           <i18n path="Common.SubjectAndSender" />
                         </h4>
-                        <v-btn class="ml-10" text small @click="currentTab = 2">
+                        <v-btn class="ml-10" text small @click="currentTab = 3">
                           <v-icon dark left>fa-pencil</v-icon>
                           <i18n path="Drawer.Edit" />
                         </v-btn>
@@ -822,7 +873,7 @@
                     </div>
                     <div class="my-2 py-2 pl-2">
                       <v-row>
-                        <v-col cols="8" class="pl-0">
+                        <v-col class="col-6 col-sm-4 col-lg-3 pl-0">
                           <CustomDate
                             v-model="requestExpiryDate"
                             :field="expiryDateField"
@@ -831,15 +882,14 @@
                             type="date"
                           />
                         </v-col>
-                        <v-col cols="4" class="pl-0">
+                        <v-col class="col-4 col-sm-3 col-lg-2 pl-0">
                           <v-text-field
                             v-model="daysLeftForRequest"
                             outlined
                             required
                             dense
                             label="Days Left"
-                            >Test</v-text-field
-                          >
+                          ></v-text-field>
                         </v-col>
                       </v-row>
                     </div>
@@ -1688,9 +1738,18 @@ export default {
 .v-tooltip__content {
   margin-left: -90px !important;
 }
+.max-width-400 {
+  max-width: 400px;
+}
+.max-width-full {
+  max-width: 100%;
+}
+.greybg >>> .v-tabs-bar {
+  background-color: var(--v-greybg);
+}
 .signature-requested-subject {
   margin-top: 4px;
-  color: gray;
+  color: grey;
 }
 @media (min-width: 600px) {
   .flexInLargeScreen {
