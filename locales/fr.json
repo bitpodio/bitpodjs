@@ -991,6 +991,7 @@
   },
   "Messages": {
     "Error": {
+      "DiscountCodeError":"Code de réduction en double, veuillez saisir un nouveau code de réduction",
       "SpaceNotAllowed":"Espace non autorisé au départ",
       "NumberCannotBeNegative": "Nombre négatif non accepté",
       "EventNameEmpty": "Event name cannot be empty",

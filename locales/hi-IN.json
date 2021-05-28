@@ -994,6 +994,7 @@
   },
   "Messages": {
     "Error": {
+      "DiscountCodeError":"डुप्लिकेट डिस्काउंट कोड, कृपया नया डिस्काउंट कोड दर्ज करें",
       "SpaceNotAllowed":"शुरुआत में जगह की अनुमति नहीं है",
       "NumberCannotBeNegative": "ऋणात्मक संख्या स्वीकार नहीं की गई",
       "EventNameEmpty": "Event name cannot be empty",
