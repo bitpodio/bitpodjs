@@ -99,29 +99,13 @@ export default {
       this.dialog = false
     },
     async onSave() {
-      this.selectedList.map((ele) => {
-        this.itemId.push(ele.id)
-      })
       const url = this.$bitpod.getApiUrl()
       try {
         const res = await this.$axios.$get(
           `${url}Events/${this.$route.params.id}`
         )
         if (res) {
-          console.log('check', this)
-          debugger
-          const contactListArray = res.contactlist
-          const newContactList = this.itemId.map((e) => {
-            if (contactListArray.includes(e)) {
-              return contactListArray
-            } else {
-              contactListArray.push(e)
-              return contactListArray
-            }
-          })
-          debugger
-          console.log('contactlist', newContactList)
-          this.patchEvent(contactListArray)
+          this.patchEvent(res)
         }
       } catch (err) {
         console.error(
@@ -130,15 +114,23 @@ export default {
         )
       }
     },
-
-    async patchEvent(newContactList) {
+    async patchEvent(response) {
+      this.selectedList.map((ele) => {
+        this.itemId.push(ele.id)
+      })
+      this.itemId.map((e) => {
+        if (!response.contactlist.includes(e)) {
+          response.contactlist.push(e)
+        }
+      })
+      console.log('sadsada', response.contactlist)
       const url = `${this.$bitpod.getApiUrl()}Events/${this.$route.params.id}`
-      const obj = { contactlist: newContactList }
+      const obj = { contactlist: response.contactlist }
       try {
-        const res = await this.$axios.$patch(`${url}`, obj)
+        const res = await this.$axios.$patch(url, obj)
         if (res) {
-          debugger
           this.onClose()
+          this.refresh()
         }
       } catch (err) {
         console.error(
@@ -147,7 +139,6 @@ export default {
         )
       }
     },
-
     async setCustomers(contactId) {
       const url = this.$bitpod.getApiUrl()
       try {
