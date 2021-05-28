@@ -993,6 +993,7 @@
   },
   "Messages": {
     "Error": {
+      "DiscountCodeError":"Duplicate Discount Code, Please enter new Discount code",
       "SpaceNotAllowed":"Space not allowed at the start",
       "NumberCannotBeNegative": "Negative number not accepted",
       "EventNameEmpty": "Event name cannot be empty",

@@ -120,7 +120,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'Common.Timezone',
+      itemTitle: 'Common.TimezoneCaption',
       default: false,
       fields: {
         type: {

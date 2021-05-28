@@ -329,7 +329,7 @@ export default {
           res.data.OfferCode.OfferCodeCount
         ) {
           this.isUniqueCode = false
-          this.uniqueCodeMessage = 'Code is invalid'
+          this.uniqueCodeMessage = this.$t('Messages.Error.DiscountCodeError')
         } else {
           this.isUniqueCode = true
           this.uniqueCodeMessage = ''
