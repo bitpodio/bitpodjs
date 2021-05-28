@@ -1053,7 +1053,6 @@ export default {
         if (item && item.length > 3 && item !== this.contactListSearchText) {
           this.contactListResultsFound = false
           this.contactListSearchText = item
-          console.log(this.contactListSearchText)
           this.loadingContactList[index] = true
           this.disableSearch = false
           this.getContacts()
@@ -1066,7 +1065,6 @@ export default {
       }
     },
     daysLeftForRequest(val) {
-      console.log(addDays(new Date(), val).toISOString().substr(0, 10))
       this.requestExpiryDate = addDays(new Date(), val)
         .toISOString()
         .substr(0, 10)
@@ -1084,18 +1082,20 @@ export default {
       this.isFrench = true
     }
     if (this.templateName !== '') {
+      const bitpodURL = `${this.$bitpod.getApiUrl()}ESIGNTEMPLATES/findOne?filter[where][Name]=${
+        this.templateName
+      }`
       try {
-        const bitpodURL = `${this.$bitpod.getApiUrl()}ESIGNTEMPLATES/findOne?filter[where][Name]=${
-          this.templateName
-        }`
         const response = await this.$axios.$get(bitpodURL)
-        console.log(response)
         if (response) {
           this.selectSignTemplate(response)
         }
         this.getExistingTemplate()
       } catch (err) {
-        console.error(err)
+        console.error(
+          `Error in eSign-grid/ESignForm.vue in mounted while making a GET call to a built in API to get one template, context: ${bitpodURL}`,
+          err
+        )
         this.getExistingTemplate()
       }
     } else {
@@ -1112,7 +1112,6 @@ export default {
         this.currentTab === 1 &&
         this.handlebarsDataIsSet.some((item) => item === false)
       ) {
-        console.log('test')
         this.emptyDataFieldDialog = true
       } else {
         this.currentTab++
@@ -1164,18 +1163,19 @@ export default {
           ExpirationDate: this.requestExpiryDate,
           TemplateData: JSON.stringify(this.formatHandlebarsData()),
         }
-        console.log(this.postEsignRequestData, bitpodURL)
         const response = await this.$axios.$post(
           bitpodURL,
           this.postEsignRequestData
         )
         if (response) {
-          console.log(response)
           this.$emit('update:newTemplateDialog', false)
           this.refresh()
         }
       } catch (err) {
-        console.error(err)
+        console.error(
+          `Error in eSign-grid/ESignForm.vue in sendNow while making a POST call to a custom API to create a new eSignature request, context: ${bitpodURL}`,
+          err
+        )
       }
     },
     async handleAddNewTemplateForm() {
@@ -1212,7 +1212,10 @@ export default {
         } catch (err) {
           this.snackbar = true
           this.snackbarText = 'Request Failed'
-          console.error(err)
+          console.error(
+            `Error in eSign-grid/ESignForm.vue in addNewForm while making a POST call to a built in API to create a new eSignature template, context: ${bitpodURL}`,
+            err
+          )
         }
         this.templateSelected = true
         this.toggleLoading = !this.toggleLoading
@@ -1221,7 +1224,6 @@ export default {
       }
     },
     autocompleteFilter(item, query, itemText) {
-      console.log(item, query, itemText)
       return item.Email.includes(query) || item.FullName.includes(query)
     },
     selectContact(recipientName, recipientEmail, index) {
@@ -1230,7 +1232,6 @@ export default {
         FullName: recipientName,
         Email: recipientEmail,
       }
-      console.log(recipientName)
       this.contactList.push(contactObject)
       this.selectedRecipientList.push(contactObject)
       this.$set(this.selectedListNewContacts, index, contactObject)
@@ -1262,7 +1263,6 @@ export default {
           bitpodURL,
           addNewRecipientFormObject
         )
-        console.log(response)
         if (response) {
           this.selectContact(
             response.FullName,
@@ -1276,7 +1276,10 @@ export default {
         this.addNewRecipientFormFirstName = ''
         this.addNewRecipientFormLastName = ''
         this.addNewRecipientFormEmail = ''
-        console.error(err)
+        console.error(
+          `Error in eSign-grid/ESignForm.vue in addNewRecipient while making a POST call to a built in API to create a new contact, context: ${bitpodURL}`,
+          err
+        )
       }
       this.toggleLoading = !this.toggleLoading
       this.addNewRecipientFormDialog = false
@@ -1297,7 +1300,10 @@ export default {
           this.templateLoading = false
         }
       } catch (err) {
-        console.error(err)
+        console.error(
+          `Error in eSign-grid/ESignForm.vue in getExistingTemplate while making a GET call to a built in API to get all templates, context: ${bitpodURL}`,
+          err
+        )
       }
     },
     selectSignTemplate(item) {
@@ -1335,10 +1341,8 @@ export default {
           item.index = this.parties.findIndex((party) => party === item.type)
           return item.index !== -1
         })
-        console.log(filteredRecipientList)
         for (const item of filteredRecipientList) {
           if (item.FullName && item.Email) {
-            console.log(item)
             this.selectContact(item.FullName, item.Email, item.index)
           }
         }
@@ -1350,7 +1354,6 @@ export default {
           'This template does not contain any signature fields. Kindly choose a different template.'
         this.snackbar = true
       }
-      console.log(this.selectedList)
     },
     async getHTMLTemplate(documentUrl) {
       const regExp = /{{{ESign\.(\w+)[.[\w]+]?}}}/g
@@ -1377,7 +1380,10 @@ export default {
         this.prepareRecipientList(matches)
         this.toggleRecipientLoading = false
       } catch (err) {
-        console.error(err)
+        console.error(
+          `Error in eSign-grid/ESignForm.vue in getHTMLTemplate while making a GET call to get the HTML code of the URL, context: ${documentUrl}`,
+          err
+        )
         this.templateSelected = false
         this.currentTab = 0
         this.snackbarText =
@@ -1444,7 +1450,6 @@ export default {
                 element &&
                 !element.parentNode.isEqualNode(containerElement)
               ) {
-                console.log(scrollDistance, element)
                 if (lastHeight !== element.offsetTop) {
                   lastHeight = element.offsetTop
                   scrollDistance += lastHeight
@@ -1457,15 +1462,12 @@ export default {
             ).scrollTop = scrollDistance
           }
         } catch (err) {
-          console.error(err)
+          console.error(
+            `Error in eSign-grid/ESignForm.vue in handleDataFieldFocus while scrolling to the next field`,
+            err
+          )
         }
       }
-      // const elementScrollTop = document.getElementsByClassName(
-      //   elementIdentifier
-      // )[0].offsetTop
-      // document.getElementById(
-      //   'html-scroll-container'
-      // )[0].scrollTop = elementScrollTop
       this.compileHandlebarsData()
     },
     handleDataFieldBlur(path) {
@@ -1477,14 +1479,12 @@ export default {
     formatHandlebarsData() {
       const updatedHandlebarsData = {}
       for (const item of this.dataFields) {
-        console.log(item)
         _.set(
           updatedHandlebarsData,
           item.Name,
           this.getHandlebarsObjectValue(item.Name)
         )
       }
-      console.log(updatedHandlebarsData)
       return updatedHandlebarsData
     },
     getHandlebarsObjectValue(path) {
@@ -1548,7 +1548,10 @@ export default {
         } catch (err) {
           this.snackbar = true
           this.snackbarText = 'Failed to load contacts.'
-          console.error(err)
+          console.error(
+            `Error in eSign-grid/ESignForm.vue in getContacts while making a GET call to get the contacts with specified name, context: ${bitpodURL}`,
+            err
+          )
         }
       }
     }, 500),
@@ -1580,7 +1583,10 @@ export default {
       } catch (err) {
         this.snackbar = true
         this.snackbarText = 'Request Failed'
-        console.error(err)
+        console.error(
+          `Error in eSign-grid/ESignForm.vue in editTemplate while making a PATCH call to update an eSignature template, context: ${bitpodURL}`,
+          err
+        )
       } finally {
         this.editTemplateDialog = false
         this.toggleLoading = !this.toggleLoading
@@ -1600,7 +1606,6 @@ export default {
           this.templateItems = updatedTemplateItems
         }
       } catch (err) {
-        console.log(err)
       } finally {
         this.toggleLoading = !this.toggleLoading
         this.deleteTemplateDialog = false

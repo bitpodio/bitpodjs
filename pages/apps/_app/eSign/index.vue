@@ -27,7 +27,6 @@ export default {
     async handleSubmitDocument(event) {
       if (event.data && event.data.type === 'signInfo') {
         const data = event.data
-        console.log(data.handlebarsData)
         const bitpodURL = `${this.$bitpod.getApiUrl()}ESIGNRECIPIENTS/updateESignRecipientStatus`
         const patchData = {
           recipientID: data.recipient.id,
@@ -40,18 +39,18 @@ export default {
           hostUrl: this.$bitpod.getApiUrl(),
         }
         try {
-          console.log(bitpodURL)
-          console.log({ patchData }, bitpodURL)
           const signRecipientResponse = await this.$axios.$patch(
             bitpodURL,
             patchData
           )
           if (signRecipientResponse) {
             this.sendResponseData(signRecipientResponse)
-            console.log(signRecipientResponse)
           }
         } catch (err) {
-          console.error(err)
+          console.error(
+            `Error in eSign/index.vue in handleSubmitDocument method while making a POST call to a custom API to update the user's signature, context: ${bitpodURL}`,
+            err
+          )
         }
       }
     },
@@ -61,7 +60,6 @@ export default {
       signatureApp.contentWindow.postMessage(data, '*')
     },
     async sendData() {
-      console.log('Loaded')
       const queryParams = this.$route.query
       const bitpodURL = `${this.$bitpod.getApiUrl()}ESIGNRECIPIENTS/eSignDocumentForRecipient?requestId=${
         queryParams.requestID
@@ -74,7 +72,10 @@ export default {
           signatureApp.contentWindow.postMessage(response, '*')
         }
       } catch (err) {
-        console.error(err)
+        console.error(
+          `Error in eSign/index.vue in sendData method while making a GET call to a custom API to retrieve data regarding the request, context: ${bitpodURL}`,
+          err
+        )
       }
     },
   },
