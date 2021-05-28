@@ -354,7 +354,12 @@
               </div>
               <div class="d-flex flex-column pa-2 event-tile-right greybg">
                 <span v-if="data.event.StartDate">
-                  {{ getEventDaysDiff() }}
+                  <span v-if="checkLiveEvent()">
+                    <i18n path="Common.LiveNow" />
+                  </span>
+                  <span v-else>
+                    {{ getEventDaysDiff() }}
+                  </span>
                 </span>
                 <i18n path="Common.OpensIn" class="caption text-truncate" />
               </div>
@@ -1897,7 +1902,14 @@ export default {
         this.$i18n.locale
       )
     },
+    checkLiveEvent() {
+      debugger
+      const liveStart = new Date() > new Date(this.eventData.StartDate)
+      const liveEnd = new Date() < new Date(this.eventData.EndDate)
+      return liveStart && liveEnd
+    },
     getEventDaysDiff() {
+      debugger
       const result = differenceInCalendarDays(
         new Date(this.eventData.StartDate),
         new Date()
