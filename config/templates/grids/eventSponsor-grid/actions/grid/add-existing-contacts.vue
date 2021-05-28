@@ -115,6 +115,7 @@ export default {
       }
     },
     async patchEvent(response) {
+      debugger
       this.selectedList.map((ele) => {
         this.itemId.push(ele.id)
       })
@@ -123,7 +124,6 @@ export default {
           response.contactlist.push(e)
         }
       })
-      console.log('sadsada', response.contactlist)
       const url = `${this.$bitpod.getApiUrl()}Events/${this.$route.params.id}`
       const obj = { contactlist: response.contactlist }
       try {
