@@ -5,6 +5,7 @@
     "MemberList": "Member List",
     "AppTitle": "Event",
     "Logout": "Logout",
+    "Logo": "Logo",
     "Login": "Login",
     "EventApp": "Event",
     "AdminApp": "Administration",
@@ -55,6 +56,7 @@
     "LiveStreamBanner": "Live Stream Banner",
     "EventBanner": "Event Banner",
     "LogoImage": "Logo Image",
+    "LogoURL": "Logo URL",
     "Attendees": "Attendees",
     "ManageSchedule": "Manage Schedule",
     "Registrations": "Registrations",
@@ -68,6 +70,8 @@
     "RegistrationQuestions": "Registration Questions",
     "Sessions": "Sessions",
     "Speakers": "Speakers",
+    "SponsorContacts": "Sponsor Contacts",
+    "NewSponsor": "New Sponsor",
     "Tasks": "Tasks",
     "Task": "Task",
     "RegistrationForm": "Registration Form",
@@ -117,6 +121,8 @@
     "ShowEventReviews": "Show Event Reviews",
     "ContactInformation": "Contact Information",
     "NewContact": "New Contact",
+    "NewSponsorContact": "New Sponsor Contact",
+    "AddExistingSponsorContact": "Add Existing Sponsor Contact",
     "CustomerId": "CustomerId",
     "CustomerName": "CustomerName",
     "Industry": "Industry",
@@ -1077,7 +1083,8 @@
       "ImportFailedMessage": "The csv file is not conforming to the accepted format. Please refer to the sample file provided above.",
       "DuplicateErrorMessage": "Duplicate records in the file. Please use unique email id.",
       "AttendeeImportFailed": "Attendee Import Failed.",
-      "TicketTemplateExists": "Template already exists"
+      "TicketTemplateExists": "Template already exists",
+      "RequestStartDate": "Request start date should not be less than current date"
     },
     "Warn": {
       "UniqueLinkFormat": "Lower case alphanumeric letters only",

@@ -452,5 +452,8 @@ export default {
       }
     },
   },
+  head: {
+    title: 'Community',
+  },
 }
 </script>

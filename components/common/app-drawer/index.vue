@@ -18,7 +18,7 @@
               v-if="app.route"
               :to="localePath(app.route)"
               class="text-decoration-none"
-              :target="app.name === 'HelpCenter' ? '_blank' : '_self'"
+              target="_blank"
             >
               <v-flex
                 class="d-flex justify-center align-center flex-column app-view"

@@ -5,6 +5,7 @@
     "MemberList": "Liste des membres",
     "AppTitle": "Evénement",
     "Logout": "Déconnexion",
+    "Logo": "Logo",
     "Login": "Connexion",
     "EventApp": "Evénement",
     "AdminApp": "Administration",
@@ -55,6 +56,7 @@
     "LiveStreamBanner": "Bannière de diffusion en direct",
     "EventBanner": "Bannière d'événement",
     "LogoImage": "Image du logo",
+    "LogoURL": "URL du logo",
     "Attendees": "Participants",
     "ManageSchedule": "Gérer le calendrier",
     "Registrations": "Enregistrements",
@@ -68,6 +70,8 @@
     "RegistrationQuestions": "Questions d'inscription",
     "Sessions": "Sessions",
     "Speakers": "Orateurs",
+    "SponsorContacts": "Contacts sponsors",
+    "NewSponsor": "Nouveau sponsor",
     "Tasks": "Tâches",
     "Task": "Tâche",
     "RegistrationForm": "Formulaire d'inscription",
@@ -116,6 +120,8 @@
     "ShowEventReviews": "Afficher les révisions d'événements",
     "ContactInformation": "Informations de contact",
     "NewContact": "Nouveau contact",
+    "NewSponsorContact": "Nouveau contact sponsor",
+    "AddExistingSponsorContact": "Ajouter un contact de sponsor existant",
     "CustomerId": "N ° de client",
     "CustomerName": "CustomerName",
     "Industry": "Industrie",
@@ -1075,7 +1081,8 @@
       "DuplicateErrorMessage": "Dupliquer les enregistrements dans le fichier. Veuillez utiliser un identifiant de messagerie unique.",
       "AttendeeImportFailed": "L'importation des participants a échoué.",
       "TicketTemplateExists": "Le modèle existe déjà",
-      "DurationGreaterSessionMsg": "La taille des emplacements doit être inférieure ou égale à la durée totale de la session."
+      "DurationGreaterSessionMsg": "La taille des emplacements doit être inférieure ou égale à la durée totale de la session.",
+      "RequestStartDate": "La date de début de la demande ne doit pas être inférieure à la date actuelle"
     },
     "Warn": {
       "UniqueLinkFormat": "Minuscules lettres alphanumériques uniquement",

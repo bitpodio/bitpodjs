@@ -219,5 +219,8 @@ export default {
       }
     },
   },
+  head: {
+    title: 'Seatmap',
+  },
 }
 </script>

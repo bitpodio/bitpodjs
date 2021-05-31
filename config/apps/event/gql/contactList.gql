@@ -28,6 +28,9 @@ query($filters: JSON, $where: JSON) {
           AttachmentId
           contactPic
           accesskeyId
+          Website
+          ImageURL
+          Tags
           accesskey {
             id
             accesskey
