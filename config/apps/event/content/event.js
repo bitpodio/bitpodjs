@@ -5878,5 +5878,252 @@ export default {
       title: 'eventInvites',
       type: 'list',
     },
+    sponsorContacts: {
+      ui: {
+        hideDefaultHeader: false,
+        hideDefaultFooter: false,
+        showExpand: false,
+        singleExpand: false,
+        showSelect: true,
+        hideFilter: false,
+        hideSearch: true,
+      },
+      fields: {
+        Organization: {
+          form: {
+            caption: 'Common.Organization',
+            displayOrder: 1,
+          },
+          displayOrder: 2,
+          caption: 'Common.Organization',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '160px',
+          type: 'string',
+          hidden: false,
+          newForm: false,
+          editForm: true,
+          cssClasses: 'col-12 col-md-12',
+        },
+        FullName: {
+          displayOrder: 3,
+          caption: 'Common.FullName',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '180px',
+          type: 'string',
+          hidden: false,
+          newForm: false,
+          editForm: false,
+        },
+        FirstName: {
+          form: {
+            caption: 'Common.FirstName',
+            displayOrder: 2,
+          },
+          caption: 'Common.FirstNameCaption',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '180px',
+          type: 'string',
+          hidden: true,
+          newForm: true,
+          editForm: true,
+          cssClasses: 'col-6 col-md-6',
+          rules: [
+            function (v) {
+              return !!v || this.$t('Messages.Error.FirstNameRequired')
+            },
+          ],
+        },
+        LastName: {
+          form: {
+            caption: 'Common.LastName',
+            displayOrder: 3,
+          },
+          caption: 'Common.LastNameCaption',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '180px',
+          type: 'string',
+          hidden: true,
+          newForm: true,
+          editForm: true,
+          cssClasses: 'col-6 col-md-6',
+          rules: [
+            function (v) {
+              return !!v || this.$t('Messages.Error.LastNameRequired')
+            },
+          ],
+        },
+        Email: {
+          form: {
+            caption: 'Common.Email',
+            displayOrder: 4,
+          },
+          displayOrder: 4,
+          caption: 'Common.EmailCaption',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '180px',
+          type: 'string',
+          newForm: true,
+          editForm: true,
+          cssClasses: 'col-6 col-md-6',
+          rules: [
+            function (v) {
+              return !!v || this.$t('Messages.Error.EmailRequired')
+            },
+            function (value, data) {
+              return /.+@.+\..+/.test(value) || 'E-mail must be valid'
+            },
+          ],
+        },
+        CellPhone: {
+          form: {
+            caption: 'Common.MobilePhone',
+            displayOrder: 5,
+          },
+          displayOrder: 5,
+          caption: 'Common.Phone',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+          newForm: true,
+          editForm: true,
+          cssClasses: 'col-6 col-md-6',
+          rules: [
+            function (v) {
+              return !!v || this.$t('Messages.Error.PhoneRequired')
+            },
+            function (value, data) {
+              return /^[0-9]\d*$|^$/.test(value) || 'Number must be valid'
+            },
+          ],
+        },
+        Website: {
+          form: {
+            caption: 'Common.Website',
+            displayOrder: 6,
+          },
+          displayOrder: 6,
+          caption: 'Common.Website',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '170px',
+          type: 'string',
+          newForm: true,
+          editForm: true,
+          cssClasses: 'col-12 col-md-12',
+        },
+        ImageURL: {
+          form: {
+            caption: 'Common.LogoURL',
+            displayOrder: 7,
+          },
+          displayOrder: 7,
+          caption: 'Common.Logo',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '170px',
+          type: 'string',
+          newForm: true,
+          editForm: true,
+          cssClasses: 'col-12 col-md-12',
+        },
+        Tags: {
+          form: {
+            caption: 'Common.Tags',
+            displayOrder: 8,
+          },
+          displayOrder: 8,
+          hidden: true,
+          caption: 'Common.TypeCaption',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'lookup',
+          newForm: false,
+          editForm: true,
+          cssClasses: 'col-12 col-md-12',
+          dataSource: {
+            query: registrationStatusOptions,
+            itemText: 'value',
+            itemValue: 'key',
+            filter(data) {
+              return {
+                type: 'ContactTags',
+              }
+            },
+          },
+        },
+        Type: {
+          form: {
+            caption: 'Common.TypeCaption',
+            displayOrder: 10,
+          },
+          displayOrder: 10,
+          hidden: true,
+          caption: 'Common.TypeCaption',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'lookup',
+          newForm: true,
+          editForm: false,
+          cssClasses: 'col-6 col-md-6',
+          dataSource: {
+            query: registrationStatusOptions,
+            itemText: 'value',
+            itemValue: 'key',
+            filter(data) {
+              return {
+                type: 'CRMContactType',
+              }
+            },
+          },
+        },
+        createdDate: {
+          displayOrder: 9,
+          caption: 'Common.CreatedDate',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '180px',
+          type: 'date',
+          newForm: false,
+          editForm: false,
+          hidden: true,
+        },
+      },
+      template: {
+        name: 'eventSponsor-grid',
+        context: {
+          basePath: '/contacts',
+        },
+        actions: {
+          delete: {
+            hidden: true,
+          },
+          exportCsv: {
+            hidden: true,
+          },
+          edit: {
+            hidden: true,
+          },
+        },
+      },
+      dataSource: {
+        type: 'rest',
+        getData: (ctx) =>
+          getCustomData(
+            `Events/${ctx.$route.params.id}/contacts?filter=
+          ${JSON.stringify({ where: { Type: 'Sponsor' } })}`
+          ),
+      },
+      itemTitle: 'Common.Contact',
+      title: 'Common.Contacts',
+      defaultSort: 'createdDate DESC',
+    },
   },
 }
