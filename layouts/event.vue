@@ -536,5 +536,8 @@ export default {
       }
     },
   },
+  head: {
+    title: 'Event',
+  },
 }
 </script>

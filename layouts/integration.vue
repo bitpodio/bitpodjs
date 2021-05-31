@@ -221,5 +221,8 @@ export default {
       }
     },
   },
+  head: {
+    title: 'Integration',
+  },
 }
 </script>

@@ -519,5 +519,8 @@ export default {
       }
     },
   },
+  head: {
+    title: 'Administration',
+  },
 }
 </script>
