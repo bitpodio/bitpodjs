@@ -215,7 +215,7 @@ export default {
         if (res) {
           this.dialog = false
           this.onReset()
-          this.snackbarText = this.$t('Messages.Success.UpdatedSuccessfully', {
+          this.snackbarText = this.$t('Messages.Success.CreatedSuccessfully', {
             modelName: 'Contact',
           })
           this.snackbar = true
