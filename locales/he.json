@@ -1075,7 +1075,8 @@
       "DuplicateErrorMessage": "שכפול רשומות בקובץ. אנא השתמש במזהה דואל ייחודי.",
       "AttendeeImportFailed": "ייבוא ​​המשתתף נכשל.",
       "TicketTemplateExists": "התבנית כבר קיימת",
-      "DurationGreaterSessionMsg": "גודל החריצים צריך להיות קטן או שווה לזמן הכולל של ההפעלה."
+      "DurationGreaterSessionMsg": "גודל החריצים צריך להיות קטן או שווה לזמן הכולל של ההפעלה.",
+      "RequestStartDate": "תאריך ההתחלה של הבקשה לא צריך להיות פחות מהתאריך הנוכחי"
     },
     "Warn": {
       "UniqueLinkFormat": "אותיות אלפאנומריות באותיות קטנות בלבד",
