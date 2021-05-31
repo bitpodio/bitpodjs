@@ -6109,7 +6109,7 @@ export default {
             hidden: true,
           },
           edit: {
-            hidden: false,
+            hidden: true,
           },
         },
       },
