@@ -1649,7 +1649,7 @@ export default {
           if (!ExpiryDate)
             expiryDateMessage = this.$t('Messages.Error.ThisFieldRequired')
           else if (ExpiryDate < new Date())
-            expiryDateMessage = this.$t('Messages.Error.EventStartDate')
+            expiryDateMessage = this.$t('Messages.Error.RequestStartDate')
           else expiryDateMessage = ''
           return expiryDateMessage || true
         },
