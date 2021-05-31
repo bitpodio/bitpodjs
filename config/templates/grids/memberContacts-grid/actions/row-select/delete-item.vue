@@ -67,7 +67,7 @@ export default {
         })
         this.snackbar = true
       } catch (e) {
-        console.log(
+        console.error(
           `Error in templates/grids/eventTickets/actions/grid/row-select/delete-item.vue while making a DELETE call to Tickets model from method onDeleteItem \ncontext:-URL:-${url}\n DeletedItemId:-${this.items[0].id} `,
           e
         )
