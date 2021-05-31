@@ -115,11 +115,10 @@ export default {
       }
     },
     async patchEvent(response) {
-      debugger
-      this.selectedList.map((ele) => {
+      this.selectedList.forEach((ele) => {
         this.itemId.push(ele.id)
       })
-      this.itemId.map((e) => {
+      this.itemId.forEach((e) => {
         if (!response.contactlist.includes(e)) {
           response.contactlist.push(e)
         }
