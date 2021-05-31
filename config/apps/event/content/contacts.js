@@ -153,6 +153,22 @@ export default {
             },
           ],
         },
+        WorkPhone: {
+          form: {
+            caption: 'Common.OtherPhone',
+            displayOrder: 7,
+          },
+          displayOrder: 7,
+          caption: 'Common.Phone',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+          hidden: true,
+          newForm: false,
+          editForm: true,
+          cssClasses: 'col-6 col-md-6',
+        },
         Email: {
           form: {
             caption: 'Common.Email',
@@ -175,22 +191,6 @@ export default {
               return /.+@.+\..+/.test(value) || 'E-mail must be valid'
             },
           ],
-        },
-        WorkPhone: {
-          form: {
-            caption: 'Common.OtherPhone',
-            displayOrder: 7,
-          },
-          displayOrder: 7,
-          caption: 'Common.Phone',
-          searchEnable: true,
-          sortEnable: true,
-          columnWidth: '150px',
-          type: 'string',
-          hidden: true,
-          newForm: false,
-          editForm: true,
-          cssClasses: 'col-6 col-md-6',
         },
         BirthDate: {
           form: {
