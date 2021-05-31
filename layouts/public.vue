@@ -17,5 +17,8 @@
 <script>
 export default {
   layout: 'public',
+  head: {
+    title: 'Event',
+  },
 }
 </script>
