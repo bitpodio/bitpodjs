@@ -13,10 +13,12 @@
           @click.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
         <span class="bitpod-logo logo-ds px-3">
-          <v-img
-            :src="$config.cdnUri + 'bitpod-logo-new.png'"
-            class="logofull mr-2"
-          ></v-img>
+          <a href="/apps/event/eventboard">
+            <v-img
+              :src="$config.cdnUri + 'bitpod-logo-new.png'"
+              class="logofull mr-2"
+            ></v-img>
+          </a>
         </span>
         <v-spacer></v-spacer>
       </v-toolbar-title>
