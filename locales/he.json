@@ -52,6 +52,7 @@
     "BadgeLogo": "לוגו של התג",
     "EventB": "מודעת אירועים (680x350)",
     "Other": "אַחֵר",
+    "LiveNow": "לחיות",
     "LiveStreamBanner": "באנר סטרימינג בשידור חי",
     "EventBanner": "מודעת אירועים",
     "LogoImage": "תמונת לוגו",
@@ -999,6 +1000,7 @@
   },
   "Messages": {
     "Error": {
+      "DiscountCodeError":"כפל קוד הנחה, אנא הזן קוד הנחה חדש",
       "SpaceNotAllowed":"שטח לא מורשה בהתחלה",
       "NumberCannotBeNegative": "המספר השלילי לא התקבל",
       "EventNameEmpty": "Event name cannot be empty",

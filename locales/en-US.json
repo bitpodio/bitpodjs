@@ -52,6 +52,7 @@
     "BadgeLogo": "Badge Logo",
     "EventB": "Event Banner(680x350)",
     "Other": "Other",
+    "LiveNow": "Live Now",
     "LiveStreamBanner": "Live Stream Banner",
     "EventBanner": "Event Banner",
     "LogoImage": "Logo Image",
@@ -998,6 +999,7 @@
   },
   "Messages": {
     "Error": {
+      "DiscountCodeError":"Duplicate Discount Code, Please enter new Discount code",
       "SpaceNotAllowed":"Space not allowed at the start",
       "NumberCannotBeNegative": "Negative number not accepted",
       "EventNameEmpty": "Event name cannot be empty",

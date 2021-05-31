@@ -111,35 +111,37 @@
           </div>
         </v-card-title>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
-          <v-row>
-            <v-col cols="12" class="pb-0">
-              <v-text-field
-                v-model="editTemplateFormName"
-                :label="$t('Common.Name')"
-                outlined
-                required
-                dense
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" class="pb-0">
-              <v-text-field
-                v-model="editTemplateFormURL"
-                label="Google Document URL*"
-                outlined
-                required
-                dense
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" class="pb-0">
-              <v-text-field
-                v-model="editTemplateFormCategory"
-                :label="$t('Common.Category')"
-                outlined
-                required
-                dense
-              ></v-text-field>
-            </v-col>
-          </v-row>
+          <v-form v-model="editTemplateFormValid">
+            <v-row>
+              <v-col cols="12" class="pb-0">
+                <v-text-field
+                  v-model="editTemplateFormName"
+                  :label="$t('Common.Name')"
+                  outlined
+                  :rules="[rules.required]"
+                  dense
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" class="pb-0">
+                <v-text-field
+                  v-model="editTemplateFormURL"
+                  label="Google Document URL*"
+                  outlined
+                  :rules="[rules.required]"
+                  dense
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" class="pb-0">
+                <v-text-field
+                  v-model="editTemplateFormCategory"
+                  :label="$t('Common.Category')"
+                  outlined
+                  :rules="[rules.required]"
+                  dense
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-form>
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions
@@ -171,35 +173,40 @@
           </div>
         </v-card-title>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
-          <v-row>
-            <v-col cols="12" class="pb-0">
-              <v-text-field
-                v-model="addNewTemplateFormName"
-                :label="$t('Common.Name')"
-                outlined
-                required
-                dense
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" class="pb-0">
-              <v-text-field
-                v-model="addNewTemplateFormURL"
-                label="Google Document URL*"
-                outlined
-                required
-                dense
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" class="pb-0">
-              <v-text-field
-                v-model="addNewTemplateFormCategory"
-                :label="$t('Common.Category')"
-                outlined
-                required
-                dense
-              ></v-text-field>
-            </v-col>
-          </v-row>
+          <v-form v-model="addNewTemplateFormValid">
+            <v-row>
+              <v-col cols="12" class="pb-0">
+                <v-text-field
+                  v-model="addNewTemplateFormName"
+                  :label="$t('Common.Name')"
+                  :rules="[rules.required]"
+                  outlined
+                  required
+                  dense
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" class="pb-0">
+                <v-text-field
+                  v-model="addNewTemplateFormURL"
+                  label="Google Document URL*"
+                  :rules="[rules.required]"
+                  outlined
+                  required
+                  dense
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" class="pb-0">
+                <v-text-field
+                  v-model="addNewTemplateFormCategory"
+                  :label="$t('Common.Category')"
+                  :rules="[rules.required]"
+                  outlined
+                  required
+                  dense
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-form>
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions
@@ -242,32 +249,37 @@
           </div>
         </v-card-title>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
-          <v-row>
-            <v-col cols="12" class="pb-0">
-              <v-text-field
-                v-model="addNewRecipientFormFirstName"
-                :label="$t('Common.FirstName')"
-                outlined
-                dense
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" class="pb-0">
-              <v-text-field
-                v-model="addNewRecipientFormLastName"
-                :label="$t('Common.LastName')"
-                outlined
-                dense
-              ></v-text-field>
-            </v-col>
-            <v-col cols="12" class="pb-0">
-              <v-text-field
-                v-model="addNewRecipientFormEmail"
-                :label="$t('Common.EnterEmail')"
-                outlined
-                dense
-              ></v-text-field>
-            </v-col>
-          </v-row>
+          <v-form v-model="addNewRecipientFormValid">
+            <v-row>
+              <v-col cols="12" class="pb-0">
+                <v-text-field
+                  v-model="addNewRecipientFormFirstName"
+                  :rules="[rules.required]"
+                  :label="$t('Common.FirstName')"
+                  outlined
+                  dense
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" class="pb-0">
+                <v-text-field
+                  v-model="addNewRecipientFormLastName"
+                  :rules="[rules.required]"
+                  :label="$t('Common.LastName')"
+                  outlined
+                  dense
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" class="pb-0">
+                <v-text-field
+                  v-model="addNewRecipientFormEmail"
+                  :rules="[rules.required, rules.email]"
+                  :label="$t('Common.EnterEmail')"
+                  outlined
+                  dense
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-form>
         </v-card-text>
         <v-divider></v-divider>
         <v-card-actions
@@ -702,12 +714,13 @@
               <v-tab-item>
                 <v-card flat class="tabContent">
                   <div class="pr-3 pt-1">
-                    <v-form ref="form">
+                    <v-form v-model="emailInfoValid">
                       <v-row>
                         <v-col cols="12" class="pb-0">
                           <v-text-field
                             v-model="subject"
                             :label="$t('Common.Subject')"
+                            :rules="[rules.required]"
                             required
                             outlined
                             dense
@@ -724,6 +737,7 @@
                           <v-text-field
                             v-model="senderName"
                             :label="$t('Common.SenderName')"
+                            :rules="[rules.required]"
                             outlined
                             dense
                           ></v-text-field>
@@ -732,6 +746,7 @@
                           <v-text-field
                             v-model="sender"
                             :label="$t('Common.SenderRequired')"
+                            :rules="[rules.required, rules.email]"
                             outlined
                             dense
                           ></v-text-field>
@@ -740,6 +755,7 @@
                           <v-text-field
                             v-model="setReplyTo"
                             :label="$t('Common.SetReply')"
+                            :rules="[rules.required, rules.email]"
                             outlined
                             dense
                           ></v-text-field>
@@ -803,7 +819,7 @@
                         v-if="newTemplateDialog"
                         color="primary"
                         class="sendButtons"
-                        :disabled="disableButton"
+                        :disabled="!expirationDateFormValid"
                         :label="this.$t('Drawer.Send')"
                         :action="sendNow"
                       ></SaveBtn>
@@ -872,26 +888,32 @@
                       </v-flex>
                     </div>
                     <div class="my-2 py-2 pl-2">
-                      <v-row>
-                        <v-col class="col-6 col-sm-4 col-lg-3 pl-0">
-                          <CustomDate
-                            v-model="requestExpiryDate"
-                            :field="expiryDateField"
-                            :label="$t('Common.StartD')"
-                            :rules="expiryDateFieldRule()"
-                            type="date"
-                          />
-                        </v-col>
-                        <v-col class="col-4 col-sm-3 col-lg-2 pl-0">
-                          <v-text-field
-                            v-model="daysLeftForRequest"
-                            outlined
-                            required
-                            dense
-                            label="Days Left"
-                          ></v-text-field>
-                        </v-col>
-                      </v-row>
+                      <v-form v-model="expirationDateFormValid">
+                        <v-row>
+                          <v-col class="col-6 col-sm-4 col-lg-3 pl-0">
+                            <CustomDate
+                              v-model="requestExpiryDate"
+                              :field="expiryDateField"
+                              :label="$t('Common.StartD')"
+                              :rules="expiryDateFieldRule()"
+                              type="date"
+                            />
+                          </v-col>
+                          <v-col class="col-4 col-sm-3 col-lg-2 pl-0">
+                            <v-text-field
+                              v-model="daysLeftForRequest"
+                              :rules="[
+                                rules.negativeNumberRules,
+                                rules.required,
+                              ]"
+                              outlined
+                              required
+                              dense
+                              label="Days Left"
+                            ></v-text-field>
+                          </v-col>
+                        </v-row>
+                      </v-form>
                     </div>
                   </v-col>
                 </v-row>
@@ -927,6 +949,8 @@ import { addDays, differenceInDays } from 'date-fns'
 import CustomDate from '~/components/common/form/date.vue'
 import SaveBtn from '~/components/common/saveButton'
 import { configLoaderMixin } from '~/utility'
+import { rules } from '~/utility/rules.js'
+
 export default {
   components: {
     SaveBtn,
@@ -968,7 +992,6 @@ export default {
     return {
       isFrench: false,
       currentTab: 0,
-      disableButton: false,
       toggleLoading: false,
       subject: '',
       senderName: (this.$auth && this.$auth.user.data.name) || '',
@@ -1022,6 +1045,12 @@ export default {
       deleteTemplateLoading: false,
       requestExpiryDate: addDays(new Date(), 30),
       daysLeftForRequest: 30,
+      rules: rules(this.$i18n),
+      emailInfoValid: false,
+      editTemplateFormValid: false,
+      addNewTemplateFormValid: false,
+      addNewRecipientFormValid: false,
+      expirationDateFormValid: false,
     }
   },
   computed: {
@@ -1035,7 +1064,7 @@ export default {
           this.contactIsSet.some((item) => item === false)
         )
           return true
-      } else if (this.currentTab === 3 && this.subject === '') return true
+      } else if (this.currentTab === 3 && !this.emailInfoValid) return true
       return false
     },
     expiryDateField() {
@@ -1065,9 +1094,11 @@ export default {
       }
     },
     daysLeftForRequest(val) {
-      this.requestExpiryDate = addDays(new Date(), val)
-        .toISOString()
-        .substr(0, 10)
+      if (/^\d*[0-9]\d*$/.test(val)) {
+        this.requestExpiryDate = addDays(new Date(), val)
+          .toISOString()
+          .substr(0, 10)
+      }
     },
     requestExpiryDate(val) {
       const dateToday = new Date().toISOString().substr(0, 10)
@@ -1144,7 +1175,6 @@ export default {
       this.selectedList = []
       this.currentTab = 0
       this.templateSelected = false
-      this.disableButton = false
     },
     async sendNow() {
       const bitpodURL = `${this.$bitpod.getApiUrl()}ESIGNREQUESTS/createESignRequest`
@@ -1179,49 +1209,46 @@ export default {
       }
     },
     async handleAddNewTemplateForm() {
-      if (
-        this.addNewTemplateFormName.length < 2 ||
-        this.addNewTemplateFormURL.length < 5 ||
-        this.addNewTemplateFormCategory.length < 2
-      ) {
+      if (!this.addNewTemplateFormValid) {
         this.snackbar = true
         this.snackbarText = 'Please enter valid input'
-      } else {
-        const addNewTemplateFormObject = {
-          Name: this.addNewTemplateFormName,
-          DocumentUrl: this.addNewTemplateFormURL,
-          Category: this.addNewTemplateFormCategory,
-        }
-        this.toggleRecipientLoading = true
-        const bitpodURL = `${this.$bitpod.getApiUrl()}ESIGNTEMPLATES`
-        try {
-          const response = await this.$axios.$post(
-            bitpodURL,
-            addNewTemplateFormObject
-          )
-          if (response) {
-            this.postEsignRequestData = {
-              ...this.postEsignRequestData,
-              documentId: response.id,
-              documentUrl: response.DocumentUrl,
-            }
-            this.getHTMLTemplate(this.addNewTemplateFormURL)
-            this.currentTab = 1
-            this.selectedList = []
-          }
-        } catch (err) {
-          this.snackbar = true
-          this.snackbarText = 'Request Failed'
-          console.error(
-            `Error in eSign-grid/ESignForm.vue in addNewForm while making a POST call to a built in API to create a new eSignature template, context: ${bitpodURL}`,
-            err
-          )
-        }
-        this.templateSelected = true
         this.toggleLoading = !this.toggleLoading
-        this.subject = this.addNewTemplateFormName
-        this.addNewTemplateFormDialog = false
+        return
       }
+      const addNewTemplateFormObject = {
+        Name: this.addNewTemplateFormName,
+        DocumentUrl: this.addNewTemplateFormURL,
+        Category: this.addNewTemplateFormCategory,
+      }
+      this.toggleRecipientLoading = true
+      const bitpodURL = `${this.$bitpod.getApiUrl()}ESIGNTEMPLATES`
+      try {
+        const response = await this.$axios.$post(
+          bitpodURL,
+          addNewTemplateFormObject
+        )
+        if (response) {
+          this.postEsignRequestData = {
+            ...this.postEsignRequestData,
+            documentId: response.id,
+            documentUrl: response.DocumentUrl,
+          }
+          this.getHTMLTemplate(this.addNewTemplateFormURL)
+          this.currentTab = 1
+          this.selectedList = []
+        }
+      } catch (err) {
+        this.snackbar = true
+        this.snackbarText = 'Request Failed'
+        console.error(
+          `Error in eSign-grid/ESignForm.vue in addNewForm while making a POST call to a built in API to create a new eSignature template, context: ${bitpodURL}`,
+          err
+        )
+      }
+      this.templateSelected = true
+      this.toggleLoading = !this.toggleLoading
+      this.subject = this.addNewTemplateFormName
+      this.addNewTemplateFormDialog = false
     },
     autocompleteFilter(item, query, itemText) {
       return item.Email.includes(query) || item.FullName.includes(query)
@@ -1242,11 +1269,7 @@ export default {
       this.addNewRecipientFormEmail = ''
     },
     async handleAddNewRecipientForm() {
-      if (
-        (this.addNewRecipientFormFirstName.length < 2 &&
-          this.addNewRecipientFormLastName.length < 2) ||
-        this.addNewRecipientFormEmail.length < 5
-      ) {
+      if (!this.addNewRecipientFormValid) {
         this.snackbar = true
         this.snackbarText = 'Please fill out all fields'
         this.toggleLoading = !this.toggleLoading
@@ -1559,6 +1582,12 @@ export default {
       return window.GeoPattern.generate(name).toDataUrl()
     },
     async editTemplate() {
+      if (!this.editTemplateFormValid) {
+        this.snackbar = true
+        this.snackbarText = 'Please enter valid input'
+        this.toggleLoading = !this.toggleLoading
+        return
+      }
       const bitpodURL = `${this.$bitpod.getApiUrl()}ESIGNTEMPLATES/${
         this.editTemplateId
       }`

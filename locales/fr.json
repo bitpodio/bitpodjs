@@ -52,6 +52,7 @@
     "BadgeLogo": "Logo de l'insigne",
     "EventB": "Bannière d'événement (680x350)",
     "Other": "Autres",
+    "LiveNow": "Vivre",
     "LiveStreamBanner": "Bannière de diffusion en direct",
     "EventBanner": "Bannière d'événement",
     "LogoImage": "Image du logo",
@@ -997,6 +998,7 @@
   },
   "Messages": {
     "Error": {
+      "DiscountCodeError":"Code de réduction en double, veuillez saisir un nouveau code de réduction",
       "SpaceNotAllowed":"Espace non autorisé au départ",
       "NumberCannotBeNegative": "Nombre négatif non accepté",
       "EventNameEmpty": "Event name cannot be empty",
