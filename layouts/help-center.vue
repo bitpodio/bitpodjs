@@ -322,6 +322,7 @@ export default {
     bodyAttrs: {
       class: 'help-center',
     },
+    title: 'Help Center',
   },
 }
 </script>
