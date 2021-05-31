@@ -20,7 +20,7 @@ export default {
         DocumentText: {
           displayOrder: 1,
           caption: 'Common.Name',
-          searchEnable: true,
+          searchEnable: false,
           sortEnable: true,
           columnWidth: '250px',
           type: 'string',
@@ -28,7 +28,7 @@ export default {
         DocumentTemplate: {
           displayOrder: 2,
           caption: 'Common.ImageUrl',
-          searchEnable: true,
+          searchEnable: false,
           sortEnable: true,
           columnWidth: '250px',
           type: 'string',
@@ -36,7 +36,7 @@ export default {
         createdDate: {
           displayOrder: 3,
           caption: 'Common.Date',
-          searchEnable: true,
+          searchEnable: false,
           sortEnable: true,
           columnWidth: '150px',
           type: 'date',
@@ -44,6 +44,14 @@ export default {
         createdBy: {
           displayOrder: 4,
           caption: 'Common.CreatedBy',
+          searchEnable: false,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+        },
+        Subject: {
+          displayOrder: 5,
+          caption: 'Common.Subject',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -97,7 +105,7 @@ export default {
         DocumentText: {
           displayOrder: 1,
           caption: 'Common.Name',
-          searchEnable: true,
+          searchEnable: false,
           sortEnable: true,
           columnWidth: '250px',
           type: 'string',
@@ -105,7 +113,7 @@ export default {
         DocumentTemplate: {
           displayOrder: 2,
           caption: 'Common.ImageUrl',
-          searchEnable: true,
+          searchEnable: false,
           sortEnable: true,
           columnWidth: '250px',
           type: 'string',
@@ -113,7 +121,7 @@ export default {
         createdDate: {
           displayOrder: 3,
           caption: 'Common.Date',
-          searchEnable: true,
+          searchEnable: false,
           sortEnable: true,
           columnWidth: '150px',
           type: 'date',
@@ -121,6 +129,14 @@ export default {
         createdBy: {
           displayOrder: 4,
           caption: 'Common.CreatedBy',
+          searchEnable: false,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+        },
+        Subject: {
+          displayOrder: 5,
+          caption: 'Common.Subject',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -176,7 +192,7 @@ export default {
         DocumentText: {
           displayOrder: 1,
           caption: 'Common.Name',
-          searchEnable: true,
+          searchEnable: false,
           sortEnable: true,
           columnWidth: '250px',
           type: 'string',
@@ -184,7 +200,7 @@ export default {
         DocumentTemplate: {
           displayOrder: 2,
           caption: 'Common.ImageUrl',
-          searchEnable: true,
+          searchEnable: false,
           sortEnable: true,
           columnWidth: '250px',
           type: 'string',
@@ -192,7 +208,7 @@ export default {
         createdDate: {
           displayOrder: 3,
           caption: 'Common.Date',
-          searchEnable: true,
+          searchEnable: false,
           sortEnable: true,
           columnWidth: '150px',
           type: 'date',
@@ -200,6 +216,14 @@ export default {
         createdBy: {
           displayOrder: 4,
           caption: 'Common.CreatedBy',
+          searchEnable: false,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+        },
+        Subject: {
+          displayOrder: 5,
+          caption: 'Common.Subject',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
@@ -255,7 +279,7 @@ export default {
         DocumentText: {
           displayOrder: 1,
           caption: 'Common.Name',
-          searchEnable: true,
+          searchEnable: false,
           sortEnable: true,
           columnWidth: '250px',
           type: 'string',
@@ -263,7 +287,7 @@ export default {
         DocumentTemplate: {
           displayOrder: 2,
           caption: 'Common.ImageUrl',
-          searchEnable: true,
+          searchEnable: false,
           sortEnable: true,
           columnWidth: '250px',
           type: 'string',
@@ -271,7 +295,7 @@ export default {
         createdDate: {
           displayOrder: 3,
           caption: 'Common.Date',
-          searchEnable: true,
+          searchEnable: false,
           sortEnable: true,
           columnWidth: '150px',
           type: 'date',
@@ -279,6 +303,14 @@ export default {
         createdBy: {
           displayOrder: 4,
           caption: 'Common.CreatedBy',
+          searchEnable: false,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+        },
+        Subject: {
+          displayOrder: 5,
+          caption: 'Common.Subject',
           searchEnable: true,
           sortEnable: true,
           columnWidth: '150px',
