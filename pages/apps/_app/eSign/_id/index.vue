@@ -93,7 +93,15 @@
                             "
                             path="Common.Pending"
                           />
-                          <i18n v-else path="Common.Expired" /> </v-chip
+                          <i18n
+                            v-else-if="
+                              checkIfExpired(
+                                data.requestData.Status,
+                                data.requestData.ExpirationDate
+                              )
+                            "
+                            path="Common.Expired"
+                          /> </v-chip
                       ></v-list-item-subtitle>
                     </v-list-item-content>
                   </v-list-item>
