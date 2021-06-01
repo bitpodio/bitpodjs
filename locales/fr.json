@@ -1086,6 +1086,8 @@
       "RequestStartDate": "La date de début de la demande ne doit pas être inférieure à la date actuelle"
     },
     "Warn": {
+      "DeleteConnection":"Supprimer la connexion",
+      "DeleteConnectionMessage":"Voulez-vous supprimer cette connexion ?",
       "UniqueLinkFormat": "Minuscules lettres alphanumériques uniquement",
       "OverLapSessionMsg": "Cette session chevauche une autre session, êtes-vous sûr?  Cliquez sur Oui pour créer et annuler pour l'annuler.",
       "DeleteActivity": "Voulez-vous vraiment supprimer cette activité?",
