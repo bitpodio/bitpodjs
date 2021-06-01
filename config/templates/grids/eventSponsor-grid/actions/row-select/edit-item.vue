@@ -82,7 +82,7 @@
                 <v-text-field
                   v-model="formData.CellPhone"
                   :label="$t('Common.Phone')"
-                  number
+                  :rules="phoneRules()"
                   outlined
                   dense
                 ></v-text-field>
@@ -127,6 +127,7 @@
             depressed
             :has-submit-action="true"
             :has-external-submit="true"
+            :reset="isReset"
             :form-name="formName"
             class="ml-2"
             ><i18n path="Drawer.Save"
@@ -216,6 +217,7 @@ export default {
     onReset() {
       this.$refs.form.reset()
       this.duplicateMessage = ''
+      this.formData.Tags = []
     },
     onClose() {
       this.$refs.form.reset()
@@ -240,6 +242,7 @@ export default {
         }
       } catch (error) {
         if (error.response.status === 406) {
+          this.isReset = !this.isReset
           this.duplicateMessage = this.$t('Messages.Error.ContactExists')
         }
         console.error(
@@ -282,6 +285,16 @@ export default {
     openDialog() {
       this.formData = { ...this.items[0] }
       this.dialog = true
+    },
+    phoneRules() {
+      return [
+        (v) => {
+          if (v && !isNaN(v)) {
+            return true
+          }
+          return this.$t('Messages.Error.PleaseEnterValidPhone')
+        },
+      ]
     },
   },
 }

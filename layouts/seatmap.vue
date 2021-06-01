@@ -221,8 +221,10 @@ export default {
       }
     },
   },
-  head: {
-    title: 'Seatmap',
+  head() {
+    return {
+      title: this.$t('Common.SeatMapNo') + ' ' + this.$t('Common.Bitpod'),
+    }
   },
 }
 </script>
