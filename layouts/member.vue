@@ -456,8 +456,10 @@ export default {
       }
     },
   },
-  head: {
-    title: 'Community',
+  head() {
+    return {
+      title: this.$t('Common.CommunityApp') + ' ' + this.$t('Common.Bitpod'),
+    }
   },
 }
 </script>

@@ -20,7 +20,7 @@ export default {
    ** See https://nuxtjs.org/api/configuration-head
    */
   head: {
-    titleTemplate: '%s ' + (process.env.BITPOD_TITLE || 'Bitpod'),
+    titleTemplate: '%s ',
     title: process.env.BITPOD_TITLE || 'Bitpod',
     meta: [
       { charset: 'utf-8' },
@@ -153,6 +153,8 @@ export default {
      * https://kazupon.github.io/vue-i18n/api/#constructor-options
      */
     vueI18n: {
+      silentTranslationWarn: true,
+      silentFallbackWarn: true,
       fallbackLocale: 'en',
       dateTimeFormats: {
         en: {
@@ -252,7 +254,7 @@ export default {
   axios: {
     googleMapUrl: `https://www.google.com/maps`,
     apiEndpoint: '/svc/api/',
-    baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
+    // baseURL: `https://${process.env.PUBLIC_DOMAIN}${basePath}`,
   },
 
   publicRuntimeConfig: {
@@ -336,7 +338,7 @@ export default {
         httpEndpoint: `https://${
           process.env.PUBLIC_DOMAIN || 'event.test.bitpod.io'
         }/svc/graphql`,
-        browserHttpEndpoint: '/svc/graphql',
+        // browserHttpEndpoint: '/svc/graphql',
       },
     },
     defaultOptions: {
