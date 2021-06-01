@@ -5888,6 +5888,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
+      hidden: true,
       fields: {
         Organization: {
           form: {
