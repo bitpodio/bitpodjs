@@ -1087,6 +1087,8 @@
       "RequestStartDate": "תאריך ההתחלה של הבקשה לא צריך להיות פחות מהתאריך הנוכחי"
     },
     "Warn": {
+      "DeleteConnection":"מחק את החיבור",
+      "DeleteConnectionMessage":"האם אתה רוצה למחוק את החיבור הזה?",
       "UniqueLinkFormat": "אותיות אלפאנומריות באותיות קטנות בלבד",
       "OverLapSessionMsg": "This session overlaps with another session, are you sure? click Yes to create and cancel to cancel it.",
       "DeleteActivity": "האם ברצונך למחוק פעילות זו?",
