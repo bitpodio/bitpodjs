@@ -139,7 +139,7 @@
                   <Lookup
                     v-model="Duration1"
                     :field="durationProps"
-                    :rules="[rules.required]"
+                    :rules="[rules.required, sessionValidationRules]"
                     @change="changeDuration"
                   />
                 </v-col>
@@ -152,7 +152,7 @@
                     outlined
                     type="number"
                     min="1"
-                    :rules="durationRules"
+                    :rules="(durationRules, sessionValidationRules)"
                     dense
                   ></v-text-field>
                 </v-col>
@@ -660,6 +660,7 @@ export default {
       sessionResult: [],
       session,
       venueAddress,
+      allSessionDays: [],
       selectedDays: ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'],
       phoneRules: [
         (v) => {
@@ -793,6 +794,20 @@ export default {
     }
   },
   computed: {
+    sessionValidationRules() {
+      return [
+        (v) => {
+          const startTime = parseInt(this.session.StartTime)
+          const endTime = parseInt(this.session.EndTime)
+          const diff = (endTime - startTime) * 60
+          if (diff >= parseInt(v)) {
+            return true
+          } else {
+            return this.$t('Messages.Error.DurationGreaterSessionMsg')
+          }
+        },
+      ]
+    },
     snackbarText() {
       return this.actionType === 'New'
         ? this.$t('Messages.Success.RecurringSessionCreatedSuccess')
@@ -952,7 +967,29 @@ export default {
       }
     },
   },
+  mounted() {
+    this.getEventSessions()
+  },
   methods: {
+    async getEventSessions() {
+      const url = this.$bitpod.getApiUrl()
+      try {
+        const res = await this.$axios.get(
+          `${url}Events/${this.$route.params.id}/getSession`
+        )
+        if (res) {
+          res.data.forEach((ele) => {
+            ele._Exceptions.forEach((x) => {
+              this.allSessionDays.push(x.wday)
+            })
+          })
+        }
+      } catch (e) {
+        console.error(
+          `Error in templates/grid/eventRecurringSession-grid/actions/grid/new-item while making a GET call to Event model from getEventSessions method context:-URL:${url}\n e:${e}\n routeId:${this.$route.params.id}`
+        )
+      }
+    },
     focusOut() {
       this.addressClicked = false
     },
@@ -1253,6 +1290,7 @@ export default {
         delete this.session._CurrentAddress
       }
       const tempData = []
+      const setDays = []
       this.sessionResult.push({
         StartTime: this.session.StartTime,
         EndTime: this.session.EndTime,
@@ -1265,10 +1303,16 @@ export default {
         const newsObject = { start: startTime, end: endTime }
         tempData.push(newsObject)
       })
+      this.selectedDays.forEach((x) => setDays.push(x))
+      this.allSessionDays.forEach((y) => {
+        setDays.push(y)
+      })
+      const isOverlappingDays = this.checkOverlappingDays(setDays)
       const isInvalidSlot = this.partitionIntoOverlappingRanges(tempData)
       if (
         this.actionType === 'Edit' ||
         isInvalidSlot === false ||
+        isOverlappingDays === false ||
         (await this.$refs.confirm.open(
           this.$t('Drawer.SessionOverlaps'),
           this.$t('Messages.Warn.OverLapSessionMsg'),
@@ -1378,6 +1422,9 @@ export default {
           }
         }
       }
+    },
+    checkOverlappingDays(array) {
+      return new Set(array).size !== array.length
     },
     submitForm() {
       this.$eventBus.$emit('form-submitted', this.formName)

@@ -427,7 +427,7 @@ export default {
         this.tagsDropdown = res.map((i) => i.value)
       }
     } catch (e) {
-      console.log(
+      console.error(
         `Error in pages/apps/event/_id/editEventForm while making a GQL call to GeneralConfiguration model from method getDropDownData`,
         e
       )
@@ -572,7 +572,7 @@ export default {
             return (this.data.event = res)
           }
         } catch (e) {
-          console.log(
+          console.error(
             `Error in pages/apps/event/_id/editEventForm while making a PATCH call to Event model from method onSave context:-Url:-${url},FormData:-${this.formData}`,
             e
           )
@@ -604,7 +604,7 @@ export default {
             return (this.data.event = res)
           }
         } catch (e) {
-          console.log(
+          console.error(
             `Error in pages/apps/event/_id/editEventForm while making a PATCH call to Event model from method onSave context:-Url:-${url},FormData:-${this.formData}`,
             e
           )

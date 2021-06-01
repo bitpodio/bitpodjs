@@ -1431,7 +1431,7 @@ export default {
             hidden: true,
           },
           delete: {
-            hidden: true,
+            hidden: false,
           },
         },
       },

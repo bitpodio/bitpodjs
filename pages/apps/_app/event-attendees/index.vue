@@ -4,7 +4,16 @@
       <v-btn class="mr-2 mt-1 back-icon" icon @click="goBack"
         ><v-icon class="fs-30">mdi-chevron-left</v-icon>
       </v-btn>
-      <Lookup v-model="eventTitle" :field="eventProps" />
+      <v-autocomplete
+        v-model="eventTitle"
+        :items="items"
+        :item-text="itemText"
+        :item-value="itemValue"
+        single-line
+        outlined
+        dense
+        @change="onChange"
+      ></v-autocomplete>
     </div>
     <div>
       <div v-if="content">
@@ -24,13 +33,10 @@
 import Grid from '~/components/common/grid'
 import Scanner from '~/components/common/scanner'
 import { configLoaderMixin } from '~/utility'
-import Lookup from '~/components/common/form/lookup.vue'
-import eventQuery from '~/config/apps/event/gql/eventNames.gql'
 export default {
   layout: 'event',
   components: {
     Grid,
-    Lookup,
     Scanner,
   },
   mixins: [configLoaderMixin],
@@ -39,49 +45,15 @@ export default {
       eventList: [],
       eventTitle: this.$route.query.eventId,
       eventId: '',
+      items: [],
       isGrid: false,
+      itemText: 'Title',
+      itemValue: 'id',
     }
   },
   computed: {
     content() {
       return this.contents ? this.contents.Event : null
-    },
-    eventProps() {
-      return {
-        type: 'lookup',
-        dataSource: {
-          query: eventQuery,
-          itemText: 'Title',
-          itemValue: 'id',
-          filter(data) {
-            return {
-              or: [
-                {
-                  EndDate: {
-                    gte: new Date(),
-                  },
-                },
-                {
-                  EndDate: {
-                    exists: false,
-                  },
-                },
-                {
-                  EndDate: null,
-                },
-                {
-                  StartDate: {
-                    gte: new Date(),
-                  },
-                },
-                {
-                  StartDate: null,
-                },
-              ],
-            }
-          },
-        },
-      }
     },
     filter() {
       return {
@@ -91,9 +63,42 @@ export default {
       }
     },
   },
+  mounted() {
+    this.eventProps()
+  },
   methods: {
+    async eventProps() {
+      const filter = {
+        where: {
+          or: [
+            { EndDate: { exists: false } },
+            { EndDate: { gte: new Date() } },
+            { EndDate: null },
+            { StartDate: { gte: new Date() } },
+            { StartDate: null },
+          ],
+        },
+      }
+      const url = `${this.$bitpod.getApiUrl()}Events?filter=${JSON.stringify(
+        filter
+      )}`
+      try {
+        const result = await this.$axios.$get(url)
+        if (result) {
+          this.items = result
+        }
+      } catch (e) {
+        console.error(
+          `Error in pages/apps/_app/event-attendee/index.vue while getting lookup items for live events context:${url}`,
+          e
+        )
+      }
+    },
     goBack() {
       this.$router.back()
+    },
+    onChange() {
+      this.$emit('change', this.eventTitle)
     },
   },
 }
