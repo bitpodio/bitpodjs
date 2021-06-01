@@ -124,7 +124,12 @@ export default {
           }
         )
         if (res1) {
+          this.itemId = []
           this.dialog = false
+          this.snackbarText = this.$t('Messages.Success.CreatedSuccessfully', {
+            modelName: 'Contact',
+          })
+          this.snackbar = true
           this.$eventBus.$emit('eventInvites-grid-refresh', 'memberContacts')
         }
       } catch (err) {

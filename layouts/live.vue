@@ -10,5 +10,8 @@ export default {
   components: {
     jitsi,
   },
+  head: {
+    title: 'Event',
+  },
 }
 </script>

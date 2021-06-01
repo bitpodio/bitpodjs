@@ -209,6 +209,9 @@ export default {
       }
     },
   },
+  head: {
+    title: 'eSignature',
+  },
 }
 </script>
 
