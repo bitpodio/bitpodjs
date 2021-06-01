@@ -4,7 +4,7 @@
       v-model="dialog"
       persistent
       scrollable
-      content-class="slide-form-default"
+      content-class="slide-form-default add-sponsor-form"
     >
       <template v-slot:activator="{ on, attrs }">
         <v-btn text small v-bind="attrs" v-on="on" @click="dialog = true">
@@ -27,14 +27,14 @@
           </div>
         </v-card-title>
         <v-card-text>
-          <v-container v-if="content" class="pa-0 inviteeDialog">
-            <div v-if="dialog">
+          <v-container class="pa-0">
+            <div v-if="content">
               <Grid
+                v-if="content"
                 :value="selectedList"
                 view-name="Contacts"
                 :content="content"
                 :filter="filter"
-                class="mt-n12"
                 @onSelectedListChange="updateList"
               />
             </div>
@@ -164,3 +164,8 @@ export default {
   },
 }
 </script>
+<style>
+.add-sponsor-form .grid-actions-container {
+  display: none !important;
+}
+</style>
