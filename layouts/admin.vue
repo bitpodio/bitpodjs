@@ -523,8 +523,10 @@ export default {
       }
     },
   },
-  head: {
-    title: 'Administration',
+  head() {
+    return {
+      title: this.$t('Common.AdminApp') + ' ' + this.$t('Common.Bitpod'),
+    }
   },
 }
 </script>

@@ -540,8 +540,10 @@ export default {
       }
     },
   },
-  head: {
-    title: 'Event',
+  head() {
+    return {
+      title: this.$t('Common.AppTitle') + ' ' + this.$t('Common.Bitpod'),
+    }
   },
 }
 </script>

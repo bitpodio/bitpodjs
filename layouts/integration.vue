@@ -225,8 +225,10 @@ export default {
       }
     },
   },
-  head: {
-    title: 'Integration',
+  head() {
+    return {
+      title: this.$t('Common.Integration') + ' ' + this.$t('Common.Bitpod'),
+    }
   },
 }
 </script>

@@ -20,7 +20,7 @@ export default {
    ** See https://nuxtjs.org/api/configuration-head
    */
   head: {
-    titleTemplate: '%s ' + (process.env.BITPOD_TITLE || 'Bitpod'),
+    titleTemplate: '%s ',
     title: process.env.BITPOD_TITLE || 'Bitpod',
     meta: [
       { charset: 'utf-8' },
