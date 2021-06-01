@@ -30,6 +30,7 @@
           <v-form
             ref="validTicketTemplateForm"
             v-model="valid"
+            id="new-printedTicketTemplate-form"
             @submit.prevent="submitForm"
           >
             <v-row>
@@ -93,8 +94,10 @@
               !customValidCheck ||
               !checkTemplate
             "
+            :reset="isReset"
             :action="onSave"
             :has-submit-action="true"
+            :has-external-submit="true"
             form-name="new-printedTicketTemplate-form"
             class="ml-2"
             ><i18n path="Drawer.Save"
@@ -147,6 +150,7 @@ export default {
       customValidCheck: false,
       checkTemplate: false,
       requiredError: false,
+      isReset: false,
     }
   },
   computed: {
@@ -178,8 +182,6 @@ export default {
       return `${stringValue}*`
     },
     onClose() {
-      this.uniqueNameError = ''
-      this.customValidCheck = false
       this.printedTicketTemplateName = ''
       this.printedTicketTemplateSize = ''
       this.printedTicketTemplateThumbnailUrl = ''
@@ -187,6 +189,9 @@ export default {
       this.isSaveButtonDisabled = false
       this.requiredError = false
       this.valid = false
+      this.uniqueNameError = ''
+      this.customValidCheck = false
+      this.isReset = !this.isReset
       this.$refs.validTicketTemplateForm &&
         this.$refs.validTicketTemplateForm.reset()
       this.$nextTick(() => {
