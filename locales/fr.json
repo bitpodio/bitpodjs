@@ -865,7 +865,7 @@
     "SelectingJPYCurrency": "L'arrondi décimal ne s'applique pas aux {currency}",
     "Reconnect": "Reconnecter",
     "Expired": "Expiré",
-    "Esign":"ESign",
+    "Esign": "ESign",
     "NewESignatureDocument": "Nouveau document de signature électronique",
     "SelectRecipients": "Dans la liste de contacts ci-dessous, sélectionnez les contacts qui doivent recevoir le document à signer.",
     "CreateNewSignatureTemplateDescription": "Un endroit où vous pouvez ajouter un nouveau modèle de document.",
@@ -991,7 +991,7 @@
   },
   "Messages": {
     "Error": {
-      "SpaceNotAllowed":"Espace non autorisé au départ",
+      "SpaceNotAllowed": "Espace non autorisé au départ",
       "NumberCannotBeNegative": "Nombre négatif non accepté",
       "EventNameEmpty": "Event name cannot be empty",
       "SizeRequired": "La taille est requise",
@@ -1067,6 +1067,7 @@
       "CreateOrgCatch": "Cette organisation est utilisée ou peut être supprimée de manière réversible. Essayez avec un nouveau nom.",
       "CreateOrgFull": "Échec de la création de votre organisation.",
       "MemberExists": "Le membre existe déjà",
+      "UserExists": "L'utilisateur existe déjà!",
       "ContactExists": "Le contact existe déjà!",
       "ImportFailed": "L’exécution de l’importation a échoué",
       "ImportFailedMessage": "Le fichier csv n'est pas conforme au format accepté. Veuillez consulter l'exemple de fichier fourni ci-dessus.",
