@@ -335,12 +335,12 @@
                     ><i18n path="Common.AddTickets"
                   /></v-btn>
                   <v-checkbox
-                    :disabled="isFormProcessing"
                     v-model="TicketToggle"
+                    :disabled="isFormProcessing"
                     :label="$t('Common.TicketsNotRequiredToggle')"
                   ></v-checkbox>
                 </div>
-                <div id="res-tables" v-if="eventData.HasTickets">
+                <div v-if="eventData.HasTickets" id="res-tables">
                   <v-simple-table class="event-table">
                     <template v-slot:default>
                       <thead class="e-thead">
@@ -402,6 +402,7 @@
                               outlined
                               dense
                               value
+                              :rules="[rules.required]"
                               type="Number"
                               min="0"
                               onkeydown="return event.keyCode !== 69 && event.keyCode !== 189"
@@ -449,7 +450,7 @@
                               <template v-slot:message="{ message, key }">
                                 <v-tooltip bottom>
                                   <template v-slot:activator="{ on, attrs }">
-                                    <span v-bind="attrs" v-on="on" :key="key">{{
+                                    <span :key="key" v-bind="attrs" v-on="on">{{
                                       message
                                     }}</span>
                                   </template>

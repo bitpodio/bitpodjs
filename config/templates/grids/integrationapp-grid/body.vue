@@ -343,7 +343,16 @@ export default {
           e
         )
       }
-
+      const currConnection = this.items.filter((e) => {
+        if (e.ServiceId === itemObj.ServiceId) {
+          return e
+        }
+      })
+      if (currConnection[0].MetaData.Category !== 'Payment') {
+        connobj.Status = currConnection[0].Status
+          ? currConnection[0].Status
+          : 'Disconnected'
+      }
       connobj.ProfileId = itemObj.ProfileId
       connobj.ProfileName = itemObj.ProfileName
       connobj.MetaData = formData
