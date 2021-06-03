@@ -1884,6 +1884,30 @@ export default {
     this.$eventBus.$off('update-event-details')
   },
   methods: {
+    async checkEventStatus() {
+      const eventEndDate = this.eventData && this.eventData.EndDate
+      if (
+        eventEndDate < new Date().toISOString() &&
+        this.eventData.Status !== 'Registration closed'
+      ) {
+        const url = this.$bitpod.getApiUrl()
+        try {
+          const res = await this.$axios.$patch(
+            `${url}Events/${this.$route.params.id}`,
+            {
+              Status: 'Registration closed',
+            }
+          )
+          console.log('res2', res)
+          if (res) {
+            this.snackbarText = this.$t('Common.PastEventMessage')
+            this.snackbar = true
+          }
+        } catch (err) {
+          console.error('err', err)
+        }
+      }
+    },
     getScrollPosition() {
       const scrollPosition = this.$store.state.scrollPosition
       document.documentElement.scrollTo(0, scrollPosition)
@@ -2669,6 +2693,13 @@ export default {
           this.eventData._sectionHeading !== null
             ? this.eventData._sectionHeading
             : {}
+        if (
+          this.eventData.EndDate < new Date().toISOString() &&
+          this.eventData.Status !== 'Registration closed'
+        ) {
+          this.eventData.Status = 'Registration closed'
+          this.checkEventStatus()
+        }
         this.getOrgInfo()
         this.updateRegistrationSetting(this.eventData)
         this.getSeatMap(this.eventData)

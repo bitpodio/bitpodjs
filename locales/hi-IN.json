@@ -868,7 +868,7 @@
     "SelectingJPYCurrency": "दशमलव राउंडिंग बंद लागू नहीं होता है {currency}",
     "Reconnect": "फिर से कनेक्ट",
     "Expired": "समय सीमा समाप्त",
-    "Esign":"ईसाइन",
+    "Esign": "ईसाइन",
     "NewESignatureDocument": "नया ई-हस्ताक्षर दस्तावेज़",
     "SelectRecipients": "नीचे दी गई संपर्क सूची से, उन संपर्कों का चयन करें जिन्हें हस्ताक्षर किए जाने वाले दस्तावेज़ को प्राप्त करना चाहिए।",
     "CreateNewSignatureTemplateDescription": "वह स्थान जहाँ आप एक नया दस्तावेज़ टेम्पलेट जोड़ सकते हैं।",
@@ -994,7 +994,7 @@
   },
   "Messages": {
     "Error": {
-      "SpaceNotAllowed":"शुरुआत में जगह की अनुमति नहीं है",
+      "SpaceNotAllowed": "शुरुआत में जगह की अनुमति नहीं है",
       "NumberCannotBeNegative": "ऋणात्मक संख्या स्वीकार नहीं की गई",
       "EventNameEmpty": "Event name cannot be empty",
       "SizeRequired": "Size is required",
@@ -1070,6 +1070,7 @@
       "CreateOrgCatch": "यह संगठन उपयोग में है या सॉफ्ट-डिलीट हो सकता है। एक नए नाम के साथ प्रयास करें।",
       "CreateOrgFull": "अपना संगठन बनाने में विफल।",
       "MemberExists": "सदस्य पहले से मौजूद है!",
+      "UserExists": "उपयोगकर्ता पहले से मौजूद है!",
       "ContactExists": "संपर्क पहले से मौजूद है!",
       "ImportFailed": "आयात निष्पादन विफल हुआ",
       "ImportFailedMessage": "सीएसवी फ़ाइल स्वीकृत प्रारूप के अनुरूप नहीं है। कृपया ऊपर प्रदान की गई नमूना फ़ाइल देखें।",

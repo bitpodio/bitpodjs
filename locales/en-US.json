@@ -992,7 +992,7 @@
   },
   "Messages": {
     "Error": {
-      "SpaceNotAllowed":"Space not allowed at the start",
+      "SpaceNotAllowed": "Space not allowed at the start",
       "NumberCannotBeNegative": "Negative number not accepted",
       "EventNameEmpty": "Event name cannot be empty",
       "SizeRequired": "Size is required",
@@ -1071,6 +1071,7 @@
       "CreateOrgFull": "Failed to create your organisation.",
       "MemberExists": "Member already exists!",
       "ContactExists": "Contact already exists!",
+      "UserExists": "User already exists!",
       "ImportFailed": "Import execution failed",
       "ImportFailedMessage": "The csv file is not conforming to the accepted format. Please refer to the sample file provided above.",
       "DuplicateErrorMessage": "Duplicate records in the file. Please use unique email id.",
