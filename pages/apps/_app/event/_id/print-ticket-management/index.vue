@@ -340,6 +340,7 @@ export default {
       error(err) {
         this.error = err
       },
+      fetchPolicy: 'no-cache',
       prefetch: false,
       loadingKey: 'loading',
     },
@@ -373,6 +374,7 @@ export default {
       error(err) {
         this.error = err
       },
+      fetchPolicy: 'no-cache',
       prefetch: false,
       loadingKey: 'loading',
     },
