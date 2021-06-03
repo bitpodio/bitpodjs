@@ -227,7 +227,9 @@ export default {
     async onSave() {
       const url = this.$bitpod.getApiUrl()
       this.formData.Type = 'Sponsor'
-      this.formData.Tags.push(this.Tags)
+      if (this.formData.Tags && this.formData.Tags.length > 0) {
+        this.formData.Tags.push(this.Tags)
+      }
       try {
         const res = await this.$axios.$put(
           `${url}Events/${this.$route.params.id}/contacts/${this.formData.id}`,
