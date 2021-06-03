@@ -1089,6 +1089,8 @@
       "RequestStartDate": "अनुरोध प्रारंभ तिथि वर्तमान तिथि से कम नहीं होनी चाहिए"
     },
     "Warn": {
+      "DeleteConnection":"कनेक्शन हटाएं",
+      "DeleteConnectionMessage":"क्या आप इस कनेक्शन को हटाना चाहते हैं?",
       "UniqueLinkFormat": "केवल लोअर केस अल्फ़ान्यूमेरिक अक्षर",
       "OverLapSessionMsg": "This session overlaps with another session, are you sure? click Yes to create and cancel to cancel it.",
       "DeleteActivity": "क्या आप इस गतिविधि को हटाना चाहते हैं?",

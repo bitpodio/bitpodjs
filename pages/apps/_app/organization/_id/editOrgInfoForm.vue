@@ -53,7 +53,7 @@
                 <v-text-field
                   v-model="formData.Mobile"
                   :label="$t('Common.PhoneRequired')"
-                  :rules="[rules.required]"
+                  :rules="[rules.required, rules.phoneRules]"
                   outlined
                   dense
                 ></v-text-field>

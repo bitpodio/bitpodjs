@@ -2780,7 +2780,7 @@ export default {
         },
         '_CurrentAddress.AddressLine': {
           form: {
-            caption: 'Common.AddressRequired',
+            caption: 'Common.Address',
             displayOrder: 8,
           },
           searchEnable: true,
@@ -2793,19 +2793,6 @@ export default {
           newForm: true,
           editForm: true,
           filterEnable: false,
-          rules: [
-            function (v) {
-              if (v && v.length && /^\s+/.test(v)) {
-                return this.$t('Messages.Error.SpaceNotAllowed')
-              } else {
-                return (
-                  !!(v && v.length) ||
-                  typeof v === 'number' ||
-                  this.$t('Messages.Error.FieldRequired')
-                )
-              }
-            },
-          ],
         },
         '_CurrentAddress.City': {
           form: {
@@ -3169,7 +3156,7 @@ export default {
         },
         '_CurrentAddress.AddressLine': {
           form: {
-            caption: 'Common.AddressRequired',
+            caption: 'Common.Address',
             displayOrder: 8,
           },
           searchEnable: true,
@@ -3181,11 +3168,6 @@ export default {
           inlineEdit: true,
           newForm: true,
           editForm: true,
-          rules: [
-            function (v) {
-              return !!v || this.$t('Messages.Error.AddressRequired')
-            },
-          ],
         },
         '_CurrentAddress.City': {
           form: {
