@@ -82,8 +82,9 @@
               <v-col cols="12" sm="12" md="6" class="pb-0">
                 <v-text-field
                   v-model="formData.CellPhone"
-                  :label="$t('Common.Phone')"
-                  :rules="phoneRules()"
+                  :label="$t('Common.PhoneRequired')"
+                  type="number"
+                  :rules="[rules.required, rules.phoneRules]"
                   outlined
                   dense
                 ></v-text-field>
