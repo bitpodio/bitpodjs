@@ -68,7 +68,8 @@
               <v-col cols="12" sm="12" md="6" class="pb-0">
                 <v-text-field
                   v-model="formData.Email"
-                  :label="$t('Common.EmailCaption')"
+                  :label="$t('Common.Email')"
+                  :rules="[rules.required]"
                   outlined
                   dense
                 ></v-text-field>
