@@ -11,6 +11,7 @@
         {{ snackbarText }}
       </div>
     </v-snackbar>
+    <confirm ref="confirm"></confirm>
   </div>
 </template>
 
@@ -51,16 +52,23 @@ export default {
     },
   },
   methods: {
-    onDeleteItem() {
-      this.items.forEach((ele) => {
-        this.deleteItems(ele.id)
-      })
+    async onDeleteItem() {
+      const res = await this.$refs.confirm.open(
+        this.$t('Messages.Warn.DeleteSponsor'),
+        this.$t('Messages.Warn.DeleteSponsorMessage'),
+        { color: 'error lighten-1' }
+      )
+      if (res) {
+        this.items.forEach((ele) => {
+          this.deleteItems(ele.id)
+        })
+      }
     },
     async deleteItems(id) {
       const url = this.$bitpod.getApiUrl()
       try {
         await this.$axios.$delete(
-          `${url}Events/${this.$route.params.id}/contacts/${id}`
+          `${url}Events/${this.$route.params.id}/contacts/rel/${id}`
         )
         this.snackbarText = this.$t('Messages.Success.DeletedSuccessfully', {
           modelName: 'Contact',
