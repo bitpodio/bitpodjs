@@ -6086,7 +6086,7 @@ export default {
         },
         actions: {
           delete: {
-            hidden: true,
+            hidden: false,
           },
           exportCsv: {
             hidden: true,
