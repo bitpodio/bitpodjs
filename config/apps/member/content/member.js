@@ -38,7 +38,15 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.FirstNameRequired')
+              if (v && v.length && /^\s+/.test(v)) {
+                return this.$t('Messages.Error.SpaceNotAllowed')
+              } else {
+                return (
+                  !!(v && v.length) ||
+                  typeof v === 'number' ||
+                  this.$t('Messages.Error.FieldRequired')
+                )
+              }
             },
           ],
         },
@@ -60,7 +68,15 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.LastNameRequired')
+              if (v && v.length && /^\s+/.test(v)) {
+                return this.$t('Messages.Error.SpaceNotAllowed')
+              } else {
+                return (
+                  !!(v && v.length) ||
+                  typeof v === 'number' ||
+                  this.$t('Messages.Error.FieldRequired')
+                )
+              }
             },
           ],
         },
@@ -910,7 +926,7 @@ export default {
           caption: 'Common.CreatedDate',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '185px',
           type: 'datetime',
           cssClasses: 'col-12 col-md-12',
           hidden: false,
@@ -1128,7 +1144,7 @@ export default {
           caption: 'Common.CreatedDate',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '185px',
           type: 'datetime',
           cssClasses: 'col-12 col-md-12',
           hidden: false,
@@ -1424,7 +1440,7 @@ export default {
       template: {
         name: 'memberContacts-grid',
         context: {
-          basePath: '/members',
+          basePath: '/contacts',
         },
         actions: {
           edit: {
@@ -1553,7 +1569,7 @@ export default {
       itemTitle: 'Common.AssociateMember',
       fields: {
         CustomerId: {
-          displayOrder: 2,
+          displayOrder: 3,
           caption: 'Common.MemberId',
           searchEnable: true,
           sortEnable: true,
@@ -1566,11 +1582,11 @@ export default {
           editForm: false,
         },
         CustomerName: {
-          displayOrder: 3,
+          displayOrder: 2,
           caption: 'Common.MemberFullName',
           searchEnable: true,
           sortEnable: true,
-          columnWidth: '150px',
+          columnWidth: '185px',
           type: 'string',
           cssClasses: 'col-12 col-md-6',
           hidden: false,

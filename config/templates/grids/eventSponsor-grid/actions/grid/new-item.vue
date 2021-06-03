@@ -68,7 +68,8 @@
               <v-col cols="12" sm="12" md="6" class="pb-0">
                 <v-text-field
                   v-model="formData.Email"
-                  :label="$t('Common.EmailCaption')"
+                  :label="$t('Common.Email')"
+                  :rules="[rules.email]"
                   outlined
                   dense
                 ></v-text-field>
@@ -82,8 +83,9 @@
               <v-col cols="12" sm="12" md="6" class="pb-0">
                 <v-text-field
                   v-model="formData.CellPhone"
-                  :label="$t('Common.Phone')"
-                  :rules="phoneRules()"
+                  :label="$t('Common.PhoneRequired')"
+                  type="number"
+                  :rules="[rules.required, rules.phoneRules]"
                   outlined
                   dense
                 ></v-text-field>
@@ -225,7 +227,9 @@ export default {
     async onSave() {
       const url = this.$bitpod.getApiUrl()
       this.formData.Type = 'Sponsor'
-      this.formData.Tags.push(this.Tags)
+      if (this.formData.Tags && this.formData.Tags.length > 0) {
+        this.formData.Tags.push(this.Tags)
+      }
       console.log('data', this.formData)
       try {
         const res = await this.$axios.$post(
