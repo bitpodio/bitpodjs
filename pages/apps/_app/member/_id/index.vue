@@ -999,4 +999,20 @@ export default {
 .linkWidth {
   max-width: 142px;
 }
+.cardImg {
+  position: relative;
+  margin: 16px !important;
+  padding: 0 !important;
+  margin-left: 0 !important;
+}
+.cardDelete {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 9;
+  display: none;
+}
+.cardImg:hover .cardDelete {
+  display: inline-block;
+}
 </style>
