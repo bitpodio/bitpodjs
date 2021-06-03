@@ -65,7 +65,7 @@
                 <v-text-field
                   v-model="formData.Email"
                   :label="$t('Common.Email')"
-                  :rules="[rules.required]"
+                  :rules="[rules.email]"
                   outlined
                   dense
                 ></v-text-field>
