@@ -107,6 +107,7 @@
                 <v-text-field
                   v-model="formData.Amount"
                   :label="getCurrencyLabel()"
+                  :rules="[rules.required]"
                   type="number"
                   :disabled="formData.Type === 'Free'"
                   min="formData.Type === 'Free'? 0 : 1"
