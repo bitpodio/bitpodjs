@@ -1925,13 +1925,17 @@ export default {
               Status: 'Registration closed',
             }
           )
-          console.log('res2', res)
           if (res) {
             this.snackbarText = this.$t('Common.PastEventMessage')
             this.snackbar = true
           }
         } catch (err) {
-          console.error('err', err)
+          console.error(
+            `Error in apps/event/_id/index.vue while making a PATCH call to Event model in method checkEventStatus context: EventId:-${
+              this.$route && this.$route.params && this.$route.params.id
+            }\n URL:-${url}`,
+            err
+          )
         }
       }
     },
