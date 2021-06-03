@@ -6,12 +6,6 @@
         ><i18n path="Drawer.Delete" />
       </v-btn>
     </v-col>
-    <v-snackbar v-model="snackbar" timeout="3000" top="true">
-      <div class="text-center">
-        {{ snackbarText }}
-      </div>
-    </v-snackbar>
-    <confirm ref="confirm"></confirm>
   </div>
 </template>
 
@@ -40,7 +34,6 @@ export default {
     return {
       timeout: 3000,
       modelName: 'Contact',
-      snackbar: false,
       snackbarText: '',
     }
   },
@@ -51,18 +44,24 @@ export default {
       }
     },
   },
+  mounted() {
+    this.$eventBus.$on('delete-sponsor', this.onDeleteItem)
+  },
+  beforeDestroy() {
+    this.$eventBus.$off('delete-sponsor')
+  },
   methods: {
-    async onDeleteItem() {
-      const res = await this.$refs.confirm.open(
-        this.$t('Messages.Warn.DeleteSponsor'),
-        this.$t('Messages.Warn.DeleteSponsorMessage'),
-        { color: 'error lighten-1' }
-      )
-      if (res) {
-        this.items.forEach((ele) => {
-          this.deleteItems(ele.id)
-        })
-      }
+    confirmDelete() {
+      this.$eventBus.$emit('toggle-confirm', this.viewName, 'delete-sponsor', {
+        title: this.$t('Messages.Warn.DeleteSponsor'),
+        message: this.$t('Messages.Warn.DeleteSponsorMessage'),
+        options: { color: 'error lighten-1' },
+      })
+    },
+    onDeleteItem() {
+      this.items.forEach((ele) => {
+        this.deleteItems(ele.id)
+      })
     },
     async deleteItems(id) {
       const url = this.$bitpod.getApiUrl()
@@ -70,10 +69,14 @@ export default {
         await this.$axios.$delete(
           `${url}Events/${this.$route.params.id}/contacts/rel/${id}`
         )
-        this.snackbarText = this.$t('Messages.Success.DeletedSuccessfully', {
-          modelName: 'Contact',
-        })
-        this.snackbar = true
+        this.$eventBus.$emit(
+          'toggle-snackbar',
+          this.viewName,
+          this.$t('Messages.Success.DeletedSuccessfully', {
+            modelName: 'Contact',
+          }),
+          3000
+        )
       } catch (e) {
         console.error(
           `Error in templates/grids/eventSponsor-grid/actions/grid/row-select/delete-item.vue while making a DELETE call to Tickets model from method onDeleteItem \ncontext:-URL:-${url}\n DeletedItemId:-${this.items[0].id} `,
