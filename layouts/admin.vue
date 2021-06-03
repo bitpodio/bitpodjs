@@ -283,6 +283,12 @@
                       outlined
                       dense
                     ></v-text-field>
+                    <div
+                      v-if="duplicateMessage !== ''"
+                      class="red--text pa-3 pt-0 body-1 mt-n5"
+                    >
+                      {{ duplicateMessage }}
+                    </div>
                   </v-col>
                 </v-row>
               </v-form>
@@ -383,6 +389,7 @@ export default {
       logoutClicked: false,
       rules: rules(this.$i18n),
       userPlanData: '',
+      duplicateMessage: '',
       formData: {
         emailId: '',
       },
@@ -484,6 +491,9 @@ export default {
             this.$eventBus.$emit('user-created')
           }
         } catch (e) {
+          if (e.response.status === 400) {
+            this.duplicateMessage = this.$t('Messages.Error.UserExists')
+          }
           console.log(
             `Error in layouts/admin.vue while making a POST call to Users model from method onSave context:-URL:-${url}\n OrgId:-${orgId}\n formData:-${this.formData} `,
             e
