@@ -2604,6 +2604,7 @@ export default {
 
         this.eventData.Currency = OrganizationInfo[0].Currency
         if (
+          OrganizationInfo &&
           OrganizationInfo[0].weekDay !== null &&
           OrganizationInfo[0].weekDay.length > 0
         ) {
