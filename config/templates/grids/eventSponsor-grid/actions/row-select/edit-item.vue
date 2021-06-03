@@ -1,8 +1,5 @@
 <template>
   <v-col class="px-0">
-    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
-      <div class="text-center">{{ snackbarText }}</div>
-    </v-snackbar>
     <v-dialog
       v-model="dialog"
       persistent
@@ -154,6 +151,10 @@ export default {
       required: false,
       default: () => [],
     },
+    viewName: {
+      type: String,
+      required: true,
+    },
     refresh: {
       type: Function,
       default: () => false,
@@ -165,8 +166,6 @@ export default {
       rules: rules(this.$i18n),
       dialog: false,
       valid: false,
-      snackbar: false,
-      snackbarText: '',
       timeout: 3000,
       departmentItems: [],
       tagsItems: [],
@@ -238,8 +237,12 @@ export default {
         if (res) {
           this.dialog = false
           this.onReset()
-          this.snackbarText = this.$t('Messages.Success.RecordUpdatedSuccess')
-          this.snackbar = true
+          this.$eventBus.$emit(
+            'toggle-snackbar',
+            this.viewName,
+            this.$t('Messages.Success.RecordUpdatedSuccess'),
+            3000
+          )
           this.refresh()
         }
       } catch (error) {
