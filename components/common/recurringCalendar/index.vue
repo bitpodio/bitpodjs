@@ -426,9 +426,6 @@ export default {
       },
     }
   },
-  mounted() {
-    this.getTimeSlots()
-  },
   methods: {
     goBack() {
       this.$router.back()
@@ -821,6 +818,7 @@ export default {
         this.calendarOptions.events = this.formattedEvents(
           data && data.Session && data.Session.SessionFullcalendarEvents
         )
+        this.getTimeSlots()
       },
       error(error) {
         this.error = error

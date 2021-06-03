@@ -1467,7 +1467,11 @@ export default {
           id: getIdFromAtob(id),
           ...rest,
         }))
-        if (OrganizationInfo[0].weekDay.length > 0) {
+        if (
+          OrganizationInfo &&
+          OrganizationInfo[0].weekDay &&
+          OrganizationInfo[0].weekDay.length > 0
+        ) {
           this.setSelectedDays(OrganizationInfo[0].weekDay)
         } else {
           this.setSelectedDays(this.selectedDays)

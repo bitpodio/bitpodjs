@@ -1306,7 +1306,13 @@ export default {
         }
       },
       update(data) {
-        if (data.Event.EventFind.edges && data.Event.EventFind.edges.length) {
+        if (
+          data &&
+          data.Event &&
+          data.EventFind.edges &&
+          data.Event.EventFind.edges &&
+          data.Event.EventFind.edges.length
+        ) {
           this.subject = `Join us for ${
             data.Event.EventFind.edges[0].node.Title
           } | ${new Date().toDateString()}`
