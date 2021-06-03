@@ -318,10 +318,13 @@ export default {
       }
     },
   },
-  head: {
-    bodyAttrs: {
-      class: 'help-center',
-    },
+  head() {
+    return {
+      bodyAttrs: {
+        class: 'help-center',
+      },
+      title: this.$t('Common.HelpCenterMap') + ' ' + this.$t('Common.Bitpod'),
+    }
   },
 }
 </script>

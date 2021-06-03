@@ -209,6 +209,11 @@ export default {
       }
     },
   },
+  head() {
+    return {
+      title: this.$t('Common.ESignature') + ' ' + this.$t('Common.Bitpod'),
+    }
+  },
 }
 </script>
 

@@ -240,13 +240,7 @@
       </v-col>
     </v-flex>
     <div v-if="dialog">
-      <ESignForm
-        :new-template-dialog.sync="dialog"
-        :refresh="refresh"
-        template-name="ESign Offer Letter"
-        :recipient-list="testRecipientList"
-        :template-data="testTemplateData"
-      />
+      <ESignForm :new-template-dialog.sync="dialog" :refresh="refresh" />
     </div>
   </div>
 </template>
@@ -302,45 +296,6 @@ export default {
           view: 'eSignDeclined',
         },
       ],
-      testRecipientList: [
-        { FullName: 'Test', Email: 'test@test.com', type: 'HR' },
-        { FullName: 'Sample', Email: 'sample@sample.com', type: 'Candidate' },
-      ],
-      testTemplateData: {
-        today: 'date',
-        Employee: {
-          FirstName: 'first',
-          LastName: 'last',
-          _CurrentAddress: { AddressLine: 'address' },
-          Designation: 'new',
-          Location: 'Pune',
-        },
-        ctc: '1000',
-        joiningDate: '04/02/2000',
-        acceptByDate: '09/04/2023',
-        HR: { FirstName: 'HR', LastName: 'Last', Designation: 'HR' },
-        basic_annual: '2000',
-        basic: '200',
-        hra_annual: '53798',
-        hra: '8998',
-        lta_annual: '42342',
-        lta: '4232',
-        ca_annual: '534543',
-        ca: '534',
-        mr_annual: '534',
-        mr: '53434',
-        sa_annual: '543534',
-        sa: '534',
-        total_annual: '534543',
-        total: '435543',
-        bonus: '3453',
-        performanceBonus: '3534',
-        pt_annual: '53453',
-        pt: '534534',
-        ctc_monthly: '45334',
-        workaddress: 'Pune',
-        organizationPhone: '432423',
-      },
     }
   },
   async created() {

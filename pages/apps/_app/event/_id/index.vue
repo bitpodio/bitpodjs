@@ -354,7 +354,12 @@
               </div>
               <div class="d-flex flex-column pa-2 event-tile-right greybg">
                 <span v-if="data.event.StartDate">
-                  {{ getEventDaysDiff() }}
+                  <span v-if="checkLiveEvent()">
+                    <i18n path="Common.LiveNow" />
+                  </span>
+                  <span v-else>
+                    {{ getEventDaysDiff() }}
+                  </span>
                 </span>
                 <i18n path="Common.OpensIn" class="caption text-truncate" />
               </div>
@@ -1181,6 +1186,28 @@
           </div>
         </div>
         <div
+          class="xs12 sm4 md4 lg4 boxview boxviewlarge pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+        >
+          <div class="sticky d-flex flex-column justify-center boxview">
+            <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
+              <h2 class="body-1 pb-0">
+                <i class="fa fa-handshake pr-1" aria-hidden="true"></i>
+                <i18n path="Common.SponsorContacts" />
+              </h2>
+              <v-spacer></v-spacer>
+            </v-flex>
+            <v-divider></v-divider>
+          </div>
+          <div v-if="content">
+            <Grid
+              view-name="sponsorContacts"
+              :content="content"
+              :custom-base-action-count="1"
+              class="mt-n12"
+            />
+          </div>
+        </div>
+        <div
           class="xs12 sm4 md4 lg4 boxview pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
         >
           <div class="sticky d-flex flex-column justify-center boxview">
@@ -1920,6 +1947,11 @@ export default {
         'long',
         this.$i18n.locale
       )
+    },
+    checkLiveEvent() {
+      const liveStart = new Date() > new Date(this.eventData.StartDate)
+      const liveEnd = new Date() < new Date(this.eventData.EndDate)
+      return liveStart && liveEnd
     },
     getEventDaysDiff() {
       const result = differenceInCalendarDays(

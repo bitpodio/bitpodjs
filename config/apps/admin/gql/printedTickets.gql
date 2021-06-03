@@ -1,4 +1,4 @@
-query($filters: JSON, $where: JSON) {
+query($filters: JSON) {
   PrintedTicketTemplate {
     PrintedTicketTemplateFind(filter: $filters) {
       edges {
@@ -17,6 +17,5 @@ query($filters: JSON, $where: JSON) {
         }
       }
     }
-    PrintedTicketTemplateCount(where: $where)
   }
 }
