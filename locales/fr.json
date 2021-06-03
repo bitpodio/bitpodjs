@@ -1096,6 +1096,8 @@
       "CancelCheckin": "Voulez-vous annuler cet enregistrement?",
       "DeleteTicket": "Voulez-vous supprimer ce ticket?",
       "DeleteTemplate": "Voulez-vous supprimer ce modèle?",
+      "DeleteSponsor": "Supprimer le parrain?",
+      "DeleteSponsorMessage": "Voulez-vous supprimer ce parrain?",
       "DeleteBadge": "Voulez-vous supprimer ce badge?",
       "DeleteAccessKey": "Voulez-vous supprimer cette clé d'accès?",
       "DeleteEvent": "Voulez-vous supprimer cet événement?",

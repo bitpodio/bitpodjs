@@ -1202,6 +1202,7 @@
             <Grid
               view-name="sponsorContacts"
               :content="content"
+              :custom-base-action-count="1"
               class="mt-n12"
             />
           </div>
