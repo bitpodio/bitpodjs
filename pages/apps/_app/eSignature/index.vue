@@ -50,7 +50,7 @@
           @todo: Update label to use localization
         -->
           <SaveBtn
-            class="sendButtons"
+            class="sendButtons mr-2"
             :reset="toggleLoading"
             label="Yes, Send it"
             :action="createNewRequest"
@@ -67,19 +67,25 @@
     </v-dialog>
     <v-row justify="center" align="center">
       <v-col cols="12">
-        <v-row justify="center">
-          <span class="text-h2 px-2 grey--text text--darken-2 esignature-logo">
+        <v-row justify="center" align="center">
+          <v-img
+            max-width="35"
+            max-height="35"
+            class="mb-n4"
+            :src="$config.cdnUri + 'otter-solid'"
+          ></v-img>
+          <span class="text-h2 px-2 black--text text--darken-2 esignature-logo">
             docxy
           </span>
         </v-row>
         <v-row justify="center">
-          <span class="text-body-2 px-2 grey--text text--darken-2">
+          <span class="text-body-2 px-2 black--text text--darken-2">
             eSignature for google docs
           </span>
         </v-row>
         <v-row justify="center" class="py-4">
           <span
-            class="text-h4 px-2 indigo--text text--accent-3"
+            class="text-h5 px-2 indigo--text text--accent-3"
             v-text="'<signature:trump@obama.com/>'"
           >
           </span>
@@ -90,11 +96,12 @@
           Add docxy tag
           <span
             class="esignature-tag-bg"
-            v-text="'<Signature:john@gmail.com/>'"
+            v-text="'<signature:john@xyz.com/>'"
           ></span>
           at all signature spots in your google doc, now use “File - Publish to
           the web” option to get the link. Paste link
-          <v-icon>fa-hand-o-down</v-icon> to send for signatures. Bingo!!
+          <v-icon>mdi-hand-pointing-down</v-icon> to send for signatures.
+          Bingo!! <v-icon>fa-smile1</v-icon>
         </div>
       </v-col>
       <v-col cols="12">
@@ -102,10 +109,20 @@
           <!--
         @todo: Update label to use localization
         -->
+          <v-col cols="12" class="py-0">
+            <span>Google Doc publish to web link</span>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-icon class="mt-n1" v-bind="attrs" v-on="on"
+                  >mdi-information-outline</v-icon
+                >
+              </template>
+              <span>Sample Text Value</span>
+            </v-tooltip>
+          </v-col>
           <v-col cols="12">
             <v-text-field
               v-model="templateUrl"
-              label="Document URL (Google Doc publish to web link)"
               large
               :rules="[validUrlRule]"
               :error-messages="addressFieldErrorMessage"
@@ -118,12 +135,19 @@
           <v-col cols="12">
             <v-btn
               color="#feffc8"
-              class="white--text text-capitalize py-2"
+              class="black--text text-capitalize py-2 esignature-submit-button"
               large
               :disabled="!eSignatureRequestForm || disableSubmit"
               block
               @click="verifyTemplateUrl"
-              >Send for Signatures</v-btn
+            >
+              <v-img
+                max-width="20"
+                max-height="20"
+                class="mx-2 mt-n1"
+                :src="$config.cdnUri + 'signature-solid'"
+              ></v-img>
+              Send for Signatures</v-btn
             >
           </v-col>
         </v-form>
@@ -133,27 +157,48 @@
           Recently Used
         </div>
       </v-col>
-      <v-col cols="12">
-        <a
-          v-for="request in previousRequests"
-          :key="request.id"
-          :href="request.url"
-          class="text-body-2 pl-2 py-1 d-block text-decoration-none"
-          >{{ request.url }}</a
-        >
-      </v-col>
+      <template v-for="(request, index) in previousRequests">
+        <v-col :key="index" cols="11">
+          <span
+            style="word-wrap: break-word; color: #5d5fef; cursor: pointer;"
+            class="text-body-2 px-2 py-1 d-block text-decoration-none"
+            @click="
+              templateUrl = request.url
+              handleUrlChange(request.url)
+            "
+            >{{ request.url }}</span
+          >
+        </v-col>
+        <v-col :key="index + previousRequests.length" cols="1">
+          <copy
+            :text-to-copy="request.url"
+            icon-size="20"
+            tooltip="Copy document link"
+          />
+        </v-col>
+      </template>
     </v-row>
+    <v-footer absolute class=".esignature-container text-center">
+      <v-row class="esignature-container mx-auto px-4">
+        <span class="px-2">Privacy Policy</span>
+        <span class="px-2">Terms of Use</span>
+        <v-spacer></v-spacer>
+        <v-icon class="mt-n1">mdi-help-circle-outline</v-icon>
+      </v-row>
+    </v-footer>
   </v-container>
 </template>
 <script>
 import _ from 'lodash'
 import { addDays } from 'date-fns'
 import SaveBtn from '~/components/common/saveButton'
+import copy from '~/components/common/copy'
 
 export default {
   layout: 'public',
   components: {
     SaveBtn,
+    copy,
   },
   data() {
     return {
@@ -173,7 +218,10 @@ export default {
   mounted() {
     try {
       const prevRequests = localStorage.getItem('previousRequests')
-      this.previousRequests = JSON.parse(prevRequests)
+      const parsedPrevRequests = JSON.parse(prevRequests)
+      if (parsedPrevRequests && parsedPrevRequests.length > 0) {
+        this.previousRequests = parsedPrevRequests
+      }
     } catch (err) {
       console.error(
         'Error in pages/eSignature.vue in mounted while reading from the localstorage',
@@ -222,8 +270,10 @@ export default {
       if (
         documentUrl.includes('https://docs.google.com/document/') &&
         !documentUrl.includes(googleDocumentEmbeddedSuffix)
-      )
+      ) {
         documentUrl += googleDocumentEmbeddedSuffix
+        this.templateUrl = documentUrl
+      }
       if (this.eSignatureRequestForm) {
         const regExp = new RegExp(
           /&lt;(Signature|Initials):([\S]*)\/&gt;/,
@@ -316,6 +366,9 @@ export default {
             'previousRequests',
             JSON.stringify(this.previousRequests)
           )
+          this.$router.push(
+            this.localePath('/apps/eSignature/requestSuccessPage')
+          )
         }
       } catch (err) {
         console.error(
@@ -343,15 +396,20 @@ export default {
 }
 </script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Risque&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Handlee&family=Risque&display=swap');
 .esignature-container {
   width: 90%;
   max-width: 600px;
 }
 .esignature-tag-bg {
-  background-color: rgba(169, 169, 170, 0.4);
+  background-color: rgba(255, 253, 234, 0.4);
 }
 .esignature-logo.text-h2 {
   font-family: 'Risque', cursive !important;
+  font-size: 48px !important;
+}
+.esignature-submit-button.black--text {
+  font-family: 'Handlee', cursive !important;
+  font-size: 18px;
 }
 </style>

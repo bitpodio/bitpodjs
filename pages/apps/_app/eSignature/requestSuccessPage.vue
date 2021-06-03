@@ -2,8 +2,14 @@
   <v-container class="esignature-container my-12">
     <v-row justify="center" align="center">
       <v-col cols="12">
-        <v-row justify="center">
-          <span class="text-h2 px-2 grey--text text--darken-2 esignature-logo">
+        <v-row justify="center" align="center">
+          <v-img
+            max-width="35"
+            max-height="35"
+            class="mb-n4"
+            :src="$config.cdnUri + 'otter-solid'"
+          ></v-img>
+          <span class="text-h2 px-2 black--text text--darken-2 esignature-logo">
             docxy
           </span>
         </v-row>
