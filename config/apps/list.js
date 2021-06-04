@@ -54,7 +54,15 @@ export const appList = (store) => [
     label: 'Common.CommunityApp',
     css: 'fa fa-grow fs-36 red--text',
     type: 'route',
-    route: '/apps/member/list/Member/Member',
+    route: '/apps/member/list/Member/Members',
     roles: ['$orguser', '$orgowner', 'EventAdmin', 'EventManager'],
+  },
+  {
+    name: 'E-Sign',
+    label: 'Common.ESignature',
+    css: 'mdi mdi-file-document-edit-outline fs-36 warning--text',
+    type: 'route',
+    route: '/apps/eSign/list/eSignRequest/eSign',
+    roles: [],
   },
 ]

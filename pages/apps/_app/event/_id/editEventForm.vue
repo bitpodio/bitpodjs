@@ -121,6 +121,7 @@
                 v-model="formData.MaxNoRegistrations"
                 type="number"
                 :label="$t('Common.MaxRegistrationsPerDay')"
+                :rules="[rules.negativeNumberRules]"
                 min="0"
                 outlined
                 dense
@@ -257,9 +258,11 @@
             v-if="eventForm"
             color="primary"
             :disabled="
-              formData.LocationType === 'Venue'
+              (formData.LocationType === 'Venue'
                 ? VenueAddress.AddressLine === ''
-                : false || !valid || !datevalid
+                : false) ||
+              !valid ||
+              !datevalid
             "
             depressed
             :action="onSave"
@@ -383,6 +386,8 @@ export default {
               startDateMessage = this.$t('Messages.Error.ThisFieldRequired')
             else if (StartDate > EndDate)
               startDateMessage = this.$t('Messages.Error.StartEndDate')
+            else if (StartDate < new Date())
+              startDateMessage = this.$t('Messages.Error.EventStartDate')
             else startDateMessage = ''
             return startDateMessage || true
           },
@@ -403,6 +408,8 @@ export default {
               endDateMessage = this.$t('Messages.Error.ThisFieldRequired')
             else if (EndDate < StartDate)
               endDateMessage = this.$t('Messages.Error.EndStartDate')
+            else if (EndDate < new Date())
+              endDateMessage = this.$t('Messages.Error.EventEndDate')
             else endDateMessage = ''
             return endDateMessage || true
           },
@@ -424,7 +431,7 @@ export default {
         this.tagsDropdown = res.map((i) => i.value)
       }
     } catch (e) {
-      console.log(
+      console.error(
         `Error in pages/apps/event/_id/editEventForm while making a GQL call to GeneralConfiguration model from method getDropDownData`,
         e
       )
@@ -569,7 +576,7 @@ export default {
             return (this.data.event = res)
           }
         } catch (e) {
-          console.log(
+          console.error(
             `Error in pages/apps/event/_id/editEventForm while making a PATCH call to Event model from method onSave context:-Url:-${url},FormData:-${this.formData}`,
             e
           )
@@ -601,7 +608,7 @@ export default {
             return (this.data.event = res)
           }
         } catch (e) {
-          console.log(
+          console.error(
             `Error in pages/apps/event/_id/editEventForm while making a PATCH call to Event model from method onSave context:-Url:-${url},FormData:-${this.formData}`,
             e
           )

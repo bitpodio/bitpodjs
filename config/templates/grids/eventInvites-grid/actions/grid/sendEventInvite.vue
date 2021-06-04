@@ -912,10 +912,19 @@ export default {
   },
   computed: {
     filter() {
-      return {
-        where: {
-          EventId: this.draftData.EventId,
-        },
+      if (this.draftData.EventId) {
+        return {
+          where: {
+            EventId: this.draftData.EventId,
+            Type: 'Mass Email',
+          },
+        }
+      } else {
+        return {
+          where: {
+            and: [{ Type: 'Mass Email' }],
+          },
+        }
       }
     },
     dropdownOptions() {
@@ -998,6 +1007,9 @@ export default {
   },
   methods: {
     onResetPriorInvitee() {
+      if (this.editDraft) {
+        this.priorSelectedData = {}
+      }
       this.registrationRadio = ''
       this.openRadio = ''
       this.priorInvite = {}
@@ -1156,7 +1168,7 @@ export default {
       const postData = {
         ContactId: this.selectedList.map((i) => i.id),
         DueDate: null,
-        EventId: this.$route.params.id,
+        EventId: !this.editDraft ? this.$route.params.id : null,
         IncludeRegister: true,
         Name: '',
         Owner: this.sender,
@@ -1182,7 +1194,7 @@ export default {
         postData.Status = type
       }
       if (type === 'Draft') {
-        postData.ParentId = this.priorInvite.id
+        postData.ParentId = this.priorInvite.id ? this.priorInvite.id : ''
         postData.Status = type
       }
       if (this.selectAll) {
@@ -1294,7 +1306,13 @@ export default {
         }
       },
       update(data) {
-        if (data.Event.EventFind.edges && data.Event.EventFind.edges.length) {
+        if (
+          data &&
+          data.Event &&
+          data.EventFind.edges &&
+          data.Event.EventFind.edges &&
+          data.Event.EventFind.edges.length
+        ) {
           this.subject = `Join us for ${
             data.Event.EventFind.edges[0].node.Title
           } | ${new Date().toDateString()}`

@@ -1,0 +1,41 @@
+query($filters: JSON, $where: JSON) {
+  Customer {
+    CustomerFind(filter: $filters) {
+      edges {
+        node {
+          id
+          ParentCustomerName
+          TickerSymbol
+          AnnualRevenue
+          Rating
+          CustomerSite
+          Ownership
+          Approved
+          BusinessNumber
+          ContactNumber
+          CustomerCode
+          CustomerId
+          CustomerName
+          CustomerOwner
+          Description
+          Department
+          Email
+          FirstName
+          FullName
+          Industry
+          LastName
+          NumberOfEmployees
+          Tags
+          Type
+          Website
+          orgId
+          createdDate
+          createdBy
+          modifiedDate
+          modifiedBy
+        }
+      }
+    }
+    CustomerCount(where: $where)
+  }
+}

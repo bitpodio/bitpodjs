@@ -20,8 +20,8 @@ export default {
    ** See https://nuxtjs.org/api/configuration-head
    */
   head: {
-    titleTemplate: '%s - ' + process.env.npm_package_name,
-    title: process.env.npm_package_name || '',
+    titleTemplate: '%s ',
+    title: process.env.BITPOD_TITLE || 'Bitpod',
     meta: [
       { charset: 'utf-8' },
       {
@@ -347,6 +347,7 @@ export default {
         fetchPolicy: 'no-cache',
       },
     },
+    errorHandler: '~/plugins/apollo-error-handler.js',
   },
   serverMiddleware: ['~/api/index.js', '~/server-middleware/no-cache'],
   auth: {

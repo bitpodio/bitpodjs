@@ -474,17 +474,35 @@
                     >{{ item.firstName }}</v-text
                   >
                   <v-card-actions class="pa-1 pt-0 d-flex justify-center">
-                    <v-btn icon :to="item.socialMedia.facebook" target="_blank">
-                      <v-icon class="fs-18">mdi-facebook</v-icon>
-                    </v-btn>
+                    <a
+                      :href="item.socialMedia.facebook"
+                      target="_blank"
+                      class="text-decoration-none"
+                    >
+                      <v-btn icon>
+                        <v-icon class="fs-18">mdi-facebook</v-icon>
+                      </v-btn>
+                    </a>
 
-                    <v-btn icon :to="item.socialMedia.twitter" target="_blank">
-                      <v-icon class="fs-18">mdi-twitter</v-icon>
-                    </v-btn>
+                    <a
+                      :href="item.socialMedia.twitter"
+                      target="_blank"
+                      class="text-decoration-none"
+                    >
+                      <v-btn icon>
+                        <v-icon class="fs-18">mdi-twitter</v-icon>
+                      </v-btn>
+                    </a>
 
-                    <v-btn icon :to="item.socialMedia.linkdin" target="_blank">
-                      <v-icon class="fs-18">mdi-linkedin</v-icon>
-                    </v-btn>
+                    <a
+                      :href="item.socialMedia.linkdin"
+                      target="_blank"
+                      class="text-decoration-none"
+                    >
+                      <v-btn icon>
+                        <v-icon class="fs-18">mdi-linkedin</v-icon>
+                      </v-btn>
+                    </a>
                   </v-card-actions>
                 </v-card>
               </div>
@@ -626,7 +644,7 @@
                 ></v-expansion-panel-header>
                 <v-expansion-panel-content class="pa-0">
                   <v-divider></v-divider>
-                  <v-simple-table dense>
+                  <v-simple-table dense class="ticket-view-table">
                     <template v-slot:default>
                       <thead>
                         <tr>
@@ -1271,6 +1289,9 @@ export default {
 }
 .total-align {
   margin-left: 34px;
+}
+.ticket-view-table {
+  width: 100%;
 }
 @media screen and (max-width: 600px) {
   .background-event-img {

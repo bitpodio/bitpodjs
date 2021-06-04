@@ -190,9 +190,27 @@ export default {
     },
   },
   watch: {
-    dialog(newVal) {
+    async dialog(newVal) {
       if (newVal) {
         postGaData('New', this.$t('Common.NewQuestion'))
+        try {
+          const ticketRes = await this.getTicketDetails()
+          if (ticketRes) {
+            this.ticketIds = []
+            this.ticketsDropDown = ticketRes.map((i) => {
+              this.ticketIds.push({
+                name: i.Code,
+                id: getIdFromAtob(i.id),
+              })
+              return i.Code
+            })
+          }
+        } catch (e) {
+          console.error(
+            'Error while fetching tickets for new registration question',
+            e
+          )
+        }
       }
     },
   },
@@ -315,6 +333,7 @@ export default {
               },
             },
           },
+          fetchPolicy: 'no-cache',
         })
         .then((result) => {
           const ticketDetails = formatGQLResult(result.data, 'Ticket')

@@ -113,7 +113,11 @@
                 </div>
               </v-card-text>
               <v-card-actions
-                v-if="item.Status && item.MetaData.isActive"
+                v-if="
+                  item.MetaData.oauthType === 'Oauth'
+                    ? item.Status && item.MetaData.isActive
+                    : item.Status
+                "
                 class="pa-0 ma-0 pb-1"
               >
                 <div></div>
@@ -253,25 +257,28 @@ export default {
     }
   },
   mounted() {
-    this.items.forEach(async (e) => {
-      if (!this.Category.includes(e.MetaData.Category)) {
-        this.Category.push(e.MetaData.Category)
-      }
-      const serviceFormName = e.ServiceId && e.ServiceId.toLowerCase()
-      this.component[serviceFormName] = await this.loadTemplate([
-        `templates/grids/eventIntegration-grid/${serviceFormName}.vue`,
-        `templates/grids/eventIntegration-grid/index.vue`,
-      ])
-      this.editformData[serviceFormName] = e.MetaData
-      this.connectionData[serviceFormName] = e
-      if (e.Status === 'Connected') {
-        this.connectionStatus[serviceFormName] = true
-      } else {
-        this.connectionStatus[serviceFormName] = false
-      }
-    })
+    this.initialData()
   },
   methods: {
+    initialData() {
+      this.items.forEach(async (e) => {
+        if (!this.Category.includes(e.MetaData.Category)) {
+          this.Category.push(e.MetaData.Category)
+        }
+        const serviceFormName = e.ServiceId && e.ServiceId.toLowerCase()
+        this.component[serviceFormName] = await this.loadTemplate([
+          `templates/grids/eventIntegration-grid/${serviceFormName}.vue`,
+          `templates/grids/eventIntegration-grid/index.vue`,
+        ])
+        this.editformData[serviceFormName] = e.MetaData
+        this.connectionData[serviceFormName] = e
+        if (e.Status === 'Connected') {
+          this.connectionStatus[serviceFormName] = true
+        } else {
+          this.connectionStatus[serviceFormName] = false
+        }
+      })
+    },
     showEdit(item) {
       if (item.Status) {
         if (this.hideEditForm.includes(item.ServiceId)) {
@@ -336,7 +343,16 @@ export default {
           e
         )
       }
-
+      const currConnection = this.items.filter((e) => {
+        if (e.ServiceId === itemObj.ServiceId) {
+          return e
+        }
+      })
+      if (currConnection[0].MetaData.Category !== 'Payment') {
+        connobj.Status = currConnection[0].Status
+          ? currConnection[0].Status
+          : 'Disconnected'
+      }
       connobj.ProfileId = itemObj.ProfileId
       connobj.ProfileName = itemObj.ProfileName
       connobj.MetaData = formData
@@ -345,12 +361,20 @@ export default {
       }
       try {
         const url = this.$bitpod.getApiUrl()
-        const res = await this.$axios.$patch(`${url}Connections`, connobj)
+        let res
+        if (itemObj.id) {
+          res = await this.$axios.$patch(`${url}Connections`, connobj)
+        } else {
+          res = await this.$axios.$post(`${url}Connections`, connobj)
+        }
         if (res) {
           this.connectionStatus[this.selectedServiceId] = true
           this.refresh()
           this.snackbarText = this.$t('Messages.Success.ConnectionSuccessfully')
           this.snackbar = true
+          const serviceFormName = res.ServiceId && res.ServiceId.toLowerCase()
+          this.editformData[serviceFormName] = res.MetaData
+          this.connectionStatus[serviceFormName] = res.Status === 'Connected'
         }
       } catch (e) {
         console.error(
@@ -374,23 +398,30 @@ export default {
       }
     },
     async onDelete(item) {
-      const id = item.id
-      if (id) {
-        try {
-          const url = this.$bitpod.getApiUrl()
-          const res = await this.$axios.$delete(`${url}Connections/${id}`)
-          if (res) {
-            this.snackbarText = this.$t(
-              'Messages.Success.ConnectionDeletedSuccessfully'
+      const res = await this.$refs.confirm.open(
+        this.$t('Messages.Warn.DeleteConnection'),
+        this.$t('Messages.Warn.DeleteConnectionMessage'),
+        { color: 'error lighten-1' }
+      )
+      if (res) {
+        const id = item.id
+        if (id) {
+          try {
+            const url = this.$bitpod.getApiUrl()
+            const res = await this.$axios.$delete(`${url}Connections/${id}`)
+            if (res) {
+              this.snackbarText = this.$t(
+                'Messages.Success.ConnectionDeletedSuccessfully'
+              )
+              this.snackbar = true
+              this.refresh()
+            }
+          } catch (e) {
+            console.error(
+              'Error in config/templates/grid/eventIntegration-grid/column-integrate.vue while making a axios call to Connection model from method onDelete',
+              e
             )
-            this.snackbar = true
-            this.refresh()
           }
-        } catch (e) {
-          console.error(
-            'Error in config/templates/grid/eventIntegration-grid/column-integrate.vue while making a axios call to Connection model from method onDelete',
-            e
-          )
         }
       }
     },
@@ -529,7 +560,6 @@ export default {
         MetaData: `{"isActive":true}`,
       }
 
-      debugger
       openAuthPopups(options, (e) => {
         console.error('openAuthPopups response', e)
         this.refresh()

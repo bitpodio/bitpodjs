@@ -12,7 +12,7 @@
       :right="$vuetify.rtl"
     >
       <div class="px-4 pt-3 pb-1">
-        <i18n path="Common.AppTitle" class="app-title-text" />
+        <i18n path="Common.AppTitle" class="app-title-text text--primary" />
       </div>
       <div class="d-block d-sm-none my-3">
         <v-menu>
@@ -199,16 +199,20 @@
           @click.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
         <span v-if="!$vuetify.theme.dark" class="bitpod-logo logo-ds px-3">
-          <v-img
-            :src="$config.cdnUri + 'bitpod-logo-blk2.svg'"
-            class="logofull mr-2"
-          ></v-img>
+          <a href="/admin/apps/event/eventboard">
+            <v-img
+              :src="$config.cdnUri + 'bitpod-logo-blk2.svg'"
+              class="logofull mr-2"
+            ></v-img
+          ></a>
         </span>
         <span v-if="$vuetify.theme.dark" class="bitpod-logo logo-ds px-3">
-          <v-img
-            :src="$config.cdnUri + 'bitpod-logo-white.svg'"
-            class="logofull mr-2"
-          ></v-img>
+          <a href="/admin/apps/event/eventboard">
+            <v-img
+              :src="$config.cdnUri + 'bitpod-logo-white.svg'"
+              class="logofull mr-2"
+            ></v-img>
+          </a>
         </span>
         <v-spacer></v-spacer>
       </v-toolbar-title>
@@ -376,7 +380,7 @@
     >
       <v-container fluid>
         <v-row>
-          <v-col class="pt-0">
+          <v-col>
             <div>
               <nuxt />
             </div>
@@ -744,6 +748,11 @@ export default {
         this.$apolloHelpers.onLogout()
       }
     },
+  },
+  head() {
+    return {
+      title: this.$t('Common.AppTitle') + ' ' + this.$t('Common.Bitpod'),
+    }
   },
 }
 </script>

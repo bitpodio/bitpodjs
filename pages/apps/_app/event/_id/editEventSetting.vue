@@ -115,13 +115,12 @@
 
 <script>
 import gql from 'graphql-tag'
-import currencyFormatter from 'currency-formatter'
 import { rules } from '~/utility/rules.js'
 import event from '~/config/apps/event/gql/event.gql'
 import eventCount from '~/config/apps/event/gql/eventCount.gql'
 import generalconfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
 import { formatGQLResult } from '~/utility/gql.js'
-import { postGaData } from '~/utility/index.js'
+import { postGaData, getPriceWithCurrency } from '~/utility/index.js'
 import SaveButton from '~/components/common/saveButton'
 
 export default {
@@ -207,7 +206,7 @@ export default {
       }
       this.ticketDetails.forEach((x) => {
         if (x.Type === 'Paid' || x.Type === 'Donation') {
-          x.Amount = this.getPriceWithCurrency(x.Amount, currency)
+          x.Amount = getPriceWithCurrency(x.Amount, currency)
         }
       })
     },
@@ -224,13 +223,6 @@ export default {
           err
         )
       }
-    },
-    getPriceWithCurrency(price, currency) {
-      const currencyPrice = currencyFormatter.format(price, { code: currency })
-      const totalPrice = currencyFormatter.unformat(currencyPrice, {
-        code: currency,
-      })
-      return totalPrice
     },
     async getTicketDetails() {
       const url = this.$bitpod.getApiUrl()
