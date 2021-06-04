@@ -1,116 +1,67 @@
 <template>
-  <v-container class="esignature-container my-12">
-    <v-dialog
-      v-model="confirmationDialog"
-      persistent
-      scrollable
-      max-width="900px"
-    >
-      <v-card>
-        <v-card-title class="px-xs-2 px-md-10 px-lg-10 px-xl-15">
-          <h2 class="black--text pt-5 pb-4 font-weight-regular text-h5">
-            Create Request
-          </h2>
-          <v-spacer></v-spacer>
-          <v-row>
-            <v-col cols="12">
-              <span class="body-2"
-                >Can you confirm you would like to send this document to
-                <template v-for="(recipient, index) in recipients">
-                  <span :key="index" class="green--text text--darken-3">{{
-                    recipient.Email
-                  }}</span>
-                  <span
-                    v-if="index < recipients.length - 1"
-                    :key="recipients.length + index"
-                  >
-                    and
-                  </span>
-                </template>
-                to get their signatures</span
-              >
-            </v-col>
-          </v-row>
-        </v-card-title>
-        <v-card-text
-          class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0 overflow-y-auto"
-          style="height: 900px;"
-        >
-          <v-row>
-            <v-col cols="12">
-              <div class="html-preview-container" v-html="htmlTemplate"></div>
-            </v-col>
-          </v-row>
-        </v-card-text>
-        <v-divider></v-divider>
-        <v-card-actions
-          class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
-        >
-          <!--
-          @todo: Update label to use localization
-        -->
-          <SaveBtn
-            class="sendButtons mr-2"
-            :reset="toggleLoading"
-            label="Yes, Send it"
-            :action="createNewRequest"
-          ></SaveBtn>
-          <v-btn
-            color="green darken-3"
-            class="white--text"
-            depressed
-            @click="confirmationDialog = false"
-            >Cancel</v-btn
-          >
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+  <v-container class="esignature-container">
     <v-row justify="center" align="center">
       <v-col cols="12">
         <v-row justify="center" align="center">
           <v-img
-            max-width="35"
-            max-height="35"
+            max-width="55"
+            max-height="55"
             class="mb-n4"
             :src="$config.cdnUri + 'otter-solid'"
           ></v-img>
-          <span class="text-h2 px-2 black--text text--darken-2 esignature-logo">
+          <span class="text-h2 px-2 black--text esignature-logo">
             docxy
           </span>
         </v-row>
         <v-row justify="center">
-          <span class="text-body-2 px-2 black--text text--darken-2">
+          <span class="text-body-2 px-2 grey--text text--darken-2 fs-22">
             eSignature for google docs
           </span>
         </v-row>
-        <v-row justify="center" class="py-4">
+        <v-row justify="center" class="mt-6">
           <span
-            class="text-h5 px-2 indigo--text text--accent-3"
+            class="text-h4 black--text px-2 text-center esignature-subheading"
+          >
+            Ready to send docs for eSignature?
+          </span>
+        </v-row>
+        <v-row justify="center">
+          <span class="text-body-1 px-2 grey--text text--darken-2 text-center">
+            Start by adding signature tag in your google doc at all signature
+            spots.
+          </span>
+        </v-row>
+        <v-row justify="center" class="pt-4 mt-6">
+          <span
+            class="text-h4 px-2 fs-22 indigo--text text--accent-3"
             v-text="'<signature:trump@obama.com/>'"
           >
           </span>
         </v-row>
+        <v-row justify="center">
+          <span class="text-body-1 px-2 grey--text text--darken-2 text-center">
+            a signature tag looks like this but with signee's email
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-icon class="mt-n1" v-bind="attrs" v-on="on"
+                  >mdi-information-outline</v-icon
+                >
+              </template>
+              <span>Sample Text Value</span>
+            </v-tooltip>
+          </span></v-row
+        >
       </v-col>
-      <v-col cols="12">
-        <div class="body-1 px-2 grey--text text--darken-2">
-          Add docxy tag
-          <span
-            class="esignature-tag-bg"
-            v-text="'<signature:john@xyz.com/>'"
-          ></span>
-          at all signature spots in your google doc, now use “File - Publish to
-          the web” option to get the link. Paste link
-          <v-icon>mdi-hand-pointing-down</v-icon> to send for signatures.
-          Bingo!! <v-icon>fa-smile1</v-icon>
-        </div>
-      </v-col>
-      <v-col cols="12">
+      <v-col cols="12" class="mt-6">
         <v-form v-model="eSignatureRequestForm">
           <!--
         @todo: Update label to use localization
         -->
           <v-col cols="12" class="py-0">
-            <span>Google Doc publish to web link</span>
+            <span class="text-body-1 grey--text text--darken-2"
+              >After adding tags, use google docs “Publish to the web” option to
+              get the publish link and drop it here
+            </span>
             <v-tooltip bottom>
               <template v-slot:activator="{ on, attrs }">
                 <v-icon class="mt-n1" v-bind="attrs" v-on="on"
@@ -132,9 +83,9 @@
               @input="handleUrlChange"
             ></v-text-field>
           </v-col>
-          <v-col cols="12">
+          <v-col cols="12" class="pt-0">
             <v-btn
-              color="#feffc8"
+              color="cream"
               class="black--text text-capitalize py-2 esignature-submit-button"
               large
               :disabled="!eSignatureRequestForm || disableSubmit"
@@ -144,7 +95,10 @@
               <v-img
                 max-width="20"
                 max-height="20"
-                class="mx-2 mt-n1"
+                :class="{
+                  'mx-2 mt-n1': true,
+                  'disabled-sign-logo': !eSignatureRequestForm || disableSubmit,
+                }"
                 :src="$config.cdnUri + 'signature-solid'"
               ></v-img>
               Send for Signatures</v-btn
@@ -152,7 +106,7 @@
           </v-col>
         </v-form>
       </v-col>
-      <v-col cols="12">
+      <v-col v-if="previousRequests && previousRequests.length > 0" cols="12">
         <div class="body-1 px-2 grey--text text--darken-2">
           Recently Used
         </div>
@@ -170,11 +124,9 @@
           >
         </v-col>
         <v-col :key="index + previousRequests.length" cols="1">
-          <copy
-            :text-to-copy="request.url"
-            icon-size="20"
-            tooltip="Copy document link"
-          />
+          <a :href="request.url" target="_blank" class="text-decoration-none">
+            <v-icon>mdi-open-in-new</v-icon>
+          </a>
         </v-col>
       </template>
     </v-row>
@@ -190,29 +142,20 @@
 </template>
 <script>
 import _ from 'lodash'
-import { addDays } from 'date-fns'
-import SaveBtn from '~/components/common/saveButton'
-import copy from '~/components/common/copy'
 
 export default {
-  layout: 'public',
-  components: {
-    SaveBtn,
-    copy,
-  },
+  layout: 'eSignature',
   data() {
     return {
       eSignatureRequestForm: false,
       templateUrl: '',
       templateUrlLoading: false,
       confirmationDialog: false,
-      recipients: [],
       addressFieldErrorMessage: [],
       htmlTemplate: '',
       cancelTemplateLoading: false,
-      disableSubmit: true,
       previousRequests: [],
-      toggleLoading: false,
+      disableSubmit: true,
     }
   },
   mounted() {
@@ -231,7 +174,12 @@ export default {
   },
   methods: {
     verifyTemplateUrl() {
-      this.confirmationDialog = true
+      this.$router.push({
+        path: this.localePath('/apps/eSignature/preview'),
+        query: {
+          url: this.templateUrl,
+        },
+      })
     },
     formatDocument(documentText) {
       const matches = []
@@ -303,16 +251,6 @@ export default {
               return
             }
           }
-          this.recipients = []
-          for (const value of parties) {
-            const recipientObj = {
-              FullName: '',
-              Email: value,
-              type: this.generateType(8),
-            }
-            this.recipients.push(recipientObj)
-          }
-          this.htmlTemplate = this.formatDocument(documentText)
           this.disableSubmit = false
         } catch (err) {
           console.error(
@@ -335,52 +273,6 @@ export default {
       }
       return result.join('')
     },
-    async createNewRequest() {
-      const bitpodURL = `${this.$bitpod.getApiUrl()}ESIGNREQUESTS/createQuickESignRequest`
-      try {
-        const postEsignRequestData = {
-          selectedList: this.recipients,
-          Message: 'Sample Message',
-          documentUrl: this.templateUrl,
-          subject: 'Document',
-          senderName: 'Sample Name',
-          senderEmail: 'digital@bitpod.io',
-          setReplyTo: 'digital@bitpod.io',
-          ExpirationDate: addDays(new Date(), 30),
-          TemplateData: JSON.stringify({}),
-        }
-        console.log(postEsignRequestData)
-        const response = await this.$axios.$post(
-          bitpodURL,
-          postEsignRequestData
-        )
-        if (response) {
-          console.log(response)
-          const requestObject = {
-            url: this.templateUrl,
-            createdOn: new Date(),
-            requestId: response.id,
-          }
-          this.previousRequests.push(requestObject)
-          localStorage.setItem(
-            'previousRequests',
-            JSON.stringify(this.previousRequests)
-          )
-          this.$router.push(
-            this.localePath('/apps/eSignature/requestSuccessPage')
-          )
-        }
-      } catch (err) {
-        console.error(
-          `Error in pages/eSignature.vue in sendNow while making a POST call to a custom API to create a new eSignature request, context: ${bitpodURL}`,
-          err
-        )
-      } finally {
-        this.templateUrl = ''
-        this.confirmationDialog = false
-        this.toggleLoading = !this.toggleLoading
-      }
-    },
     /**
      * @todo add localization to variables.
      */
@@ -396,7 +288,6 @@ export default {
 }
 </script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Handlee&family=Risque&display=swap');
 .esignature-container {
   width: 90%;
   max-width: 600px;
@@ -406,10 +297,16 @@ export default {
 }
 .esignature-logo.text-h2 {
   font-family: 'Risque', cursive !important;
-  font-size: 48px !important;
+  font-size: 60px !important;
+}
+.esignature-subheading.text-h4 {
+  font-size: 36px !important;
 }
 .esignature-submit-button.black--text {
   font-family: 'Handlee', cursive !important;
   font-size: 18px;
+}
+.disabled-sign-logo {
+  opacity: 0.3;
 }
 </style>

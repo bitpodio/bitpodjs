@@ -41,7 +41,7 @@
 
 <script>
 export default {
-  layout: 'public',
+  layout: 'eSignature',
 }
 </script>
 
