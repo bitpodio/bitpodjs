@@ -317,7 +317,7 @@ export default {
   position: absolute;
   top: -58px;
   display: inline-flex !important;
-  left: 62%;
+  right: 170px;
 }
 .seat-maps {
   height: 125px;
