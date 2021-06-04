@@ -141,7 +141,7 @@
           @click.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
         <span v-if="!$vuetify.theme.dark" class="bitpod-logo logo-ds px-3">
-          <a href="/apps/event/eventboard">
+          <a href="/admin/apps/event/eventboard">
             <v-img
               :src="$config.cdnUri + 'bitpod-logo-blk2.svg'"
               class="logofull mr-2"
@@ -149,7 +149,7 @@
           </a>
         </span>
         <span v-if="$vuetify.theme.dark" class="bitpod-logo logo-ds px-3">
-          <a href="/apps/event/eventboard">
+          <a href="/admin/apps/event/eventboard">
             <v-img
               :src="$config.cdnUri + 'bitpod-logo-white.svg'"
               class="logofull mr-2"

@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-col class="px-0">
-      <v-btn text small v-bind="attrs" v-on="on" @click="onDeleteItem">
+      <v-btn text small v-bind="attrs" v-on="on" @click.stop="confirmDelete">
         <v-icon left class="fs-16">fa-trash</v-icon
         ><i18n path="Drawer.Delete" />
       </v-btn>
