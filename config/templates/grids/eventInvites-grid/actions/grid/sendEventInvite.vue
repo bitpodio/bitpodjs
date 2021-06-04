@@ -1309,7 +1309,7 @@ export default {
         if (
           data &&
           data.Event &&
-          data.EventFind.edges &&
+          data.Event.EventFind &&
           data.Event.EventFind.edges &&
           data.Event.EventFind.edges.length
         ) {
