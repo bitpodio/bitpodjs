@@ -1,10 +1,7 @@
 <template>
   <div>
     <v-flex class="greybg">
-      <v-col class="d-flex greybg pt-10 flex-row seatmap-inner align-center">
-        <v-text class="text-h5"><i18n path="Common.ESignature" /></v-text>
-      </v-col>
-      <v-col class="d-flex greybg pt-4 flex-row seatmap-inner align-center">
+      <v-col class="d-flex greybg pt-4 flex-row align-center d-none">
         <div class="d-flex">
           <div v-if="$route.params.viewName === 'eSign'" class="fs-18 min-h36">
             <i18n path="Common.All" />
@@ -53,7 +50,7 @@
           ><v-icon>mdi-plus</v-icon><i18n path="Common.New"
         /></v-btn>
       </v-col>
-      <v-col cols="12" class="overflowHidden px-0 seatmap-inner">
+      <v-col cols="12" class="overflowHidden px-0">
         <div
           style="width: 100%;"
           :class="{
@@ -105,7 +102,7 @@
           </div>
         </div>
       </v-col>
-      <v-col class="d-flex flex-wrap greybg pa-0 pt-10 seatmap-inner">
+      <v-col class="d-flex flex-wrap greybg pa-0 pt-10">
         <v-col
           v-for="item in items"
           :key="item.id"
@@ -375,10 +372,6 @@ export default {
 .seat-maps:hover .box-actions {
   display: block;
 }
-.seatmap-inner {
-  max-width: 70%;
-  margin: auto;
-}
 .tile-pattern {
   background-size: cover;
   height: 140px;
@@ -431,10 +424,5 @@ export default {
   font-size: 14px !important;
   padding: 0.5em !important;
   background-color: white !important;
-}
-@media (max-width: 600px) {
-  .seatmap-inner {
-    max-width: 100%;
-  }
 }
 </style>
