@@ -23,7 +23,7 @@
         <v-spacer></v-spacer>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <div class="d-none d-sm-flex">
+      <div class="d-none">
         <v-btn
           v-bind="attrs"
           color="blue darken-2"
@@ -124,7 +124,7 @@
           <v-col class="pt-0">
             <div class="esign-app-title">
               <v-col
-                class="d-flex greybg px-0 flex-row seatmap-inner align-center"
+                class="d-flex greybg px-0 mb-3 flex-row seatmap-inner align-center"
               >
                 <v-text class="text-h5"
                   ><i18n path="Common.ESignature"
@@ -259,5 +259,10 @@ export default {
 .esign-app-title {
   width: 70% !important;
   margin: 0 auto;
+}
+@media (max-width: 600px) {
+  .esign-app-title {
+    width: 100% !important;
+  }
 }
 </style>

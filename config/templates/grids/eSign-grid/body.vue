@@ -1,55 +1,12 @@
 <template>
   <div>
     <v-flex class="greybg">
-      <v-col class="d-flex greybg pt-4 flex-row align-center d-none">
-        <div class="d-flex">
-          <div v-if="$route.params.viewName === 'eSign'" class="fs-18 min-h36">
-            <i18n path="Common.All" />
-          </div>
-          <div
-            v-else-if="$route.params.viewName === 'eSignCompleted'"
-            class="fs-18 min-h36"
-          >
-            <i18n path="Common.Completed" />
-          </div>
-          <div
-            v-else-if="$route.params.viewName === 'eSignInprogress'"
-            class="fs-18 min-h36"
-          >
-            <i18n path="Common.OutForSignature" />
-          </div>
-          <div v-else class="fs-18 min-h36">
-            <i18n path="Common.Declined" />
-          </div>
-          <v-menu offset-y transition="slide-y-transition" bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn icon v-bind="attrs" v-on="on">
-                <v-icon class="fs-30">mdi-chevron-down</v-icon>
-              </v-btn>
-            </template>
-
-            <v-list>
-              <div v-for="(item, index) in requestSummaryData" :key="index">
-                <v-list-item :to="eSignViews(item.view)">
-                  {{ item.caption }}
-                </v-list-item>
-              </div>
-            </v-list>
-          </v-menu>
-        </div>
-        <v-text class="pl-2 fs-18 min-h36"
-          ><i18n path="Common.SignOrGetSignatures"
-        /></v-text>
-        <v-btn
-          color="primary"
-          max-width="64px"
-          text
-          depressed
-          class="ml-4"
-          @click="handleNewTemplate"
-          ><v-icon>mdi-plus</v-icon><i18n path="Common.New"
-        /></v-btn>
-      </v-col>
+      <div class="esign-action">
+        <v-btn text small @click="handleNewTemplate">
+          <v-icon left class="fs-16">mdi-plus</v-icon
+          ><i18n path="Common.SendDocforeSign" />
+        </v-btn>
+      </div>
       <v-col cols="12" class="overflowHidden px-0">
         <div
           style="width: 100%;"
@@ -356,6 +313,12 @@ export default {
 </script>
 
 <style scoped>
+.esign-action {
+  position: absolute;
+  top: -58px;
+  display: inline-flex !important;
+  left: 62%;
+}
 .seat-maps {
   height: 125px;
   width: 155px;
