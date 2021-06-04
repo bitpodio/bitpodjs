@@ -330,7 +330,12 @@ export const configLoaderMixin = {
         if (token) {
           token = token.split(' ')[1]
         }
-        await this.$apolloHelpers.onLogin(token, undefined, { expires: 7 })
+        await this.$apolloHelpers.onLogin(
+          token,
+          undefined,
+          { expires: 7 },
+          true
+        )
       }
     }
     this.postUrlTracking()
