@@ -753,7 +753,7 @@ export default {
           data.Session.SessionFind &&
           data.Session.SessionFind.edges[0] &&
           data.Session.SessionFind.edges[0].node &&
-          data.Session.SessionFind.edges[0].node._intervals
+          data.Session.SessionFind.edges[0].node._Exceptions
       },
       error(error) {
         this.error = error
