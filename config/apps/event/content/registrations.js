@@ -37,7 +37,15 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.FirstNameRequired')
+              if (v && v.length && /^\s+/.test(v)) {
+                return this.$t('Messages.Error.SpaceNotAllowed')
+              } else {
+                return (
+                  !!(v && v.length) ||
+                  typeof v === 'number' ||
+                  this.$t('Messages.Error.FieldRequired')
+                )
+              }
             },
           ],
         },
@@ -58,7 +66,15 @@ export default {
           editForm: true,
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.LastNameRequired')
+              if (v && v.length && /^\s+/.test(v)) {
+                return this.$t('Messages.Error.SpaceNotAllowed')
+              } else {
+                return (
+                  !!(v && v.length) ||
+                  typeof v === 'number' ||
+                  this.$t('Messages.Error.FieldRequired')
+                )
+              }
             },
           ],
         },

@@ -46,6 +46,12 @@
                   outlined
                   dense
                 ></v-text-field>
+                <div
+                  v-if="duplicateMessage !== ''"
+                  class="red--text pa-3 pt-0 body-1 mt-n5"
+                >
+                  {{ duplicateMessage }}
+                </div>
               </v-col>
             </v-row>
           </v-form>
@@ -111,6 +117,7 @@ export default {
       snackbar: false,
       snackbarText: '',
       timeout: 3000,
+      duplicateMessage: '',
     }
   },
   methods: {
@@ -147,10 +154,13 @@ export default {
               this.refresh()
             })
           }
-        } catch (e) {
+        } catch (error) {
+          if (error.response.status === 400) {
+            this.duplicateMessage = this.$t('Messages.Error.UserExists')
+          }
           console.log(
             `Error in templates/grids/userRoles-grid/actions/grid/new-item.vue while making a POST call to Users model from method onSave context:-URL:-${url}\n OrgId:-${orgId}\n formData:-${this.formData} `,
-            e
+            error
           )
         }
       }

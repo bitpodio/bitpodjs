@@ -39,7 +39,7 @@
                   class="rounded"
                   @click="goLive"
                 >
-                  <i18n path="Common.StartEvent" />
+                  <i18n path="Common.GotoStage" />
 
                   <v-icon right class="fs-22"> mdi-video </v-icon>
                 </v-btn>
@@ -106,6 +106,16 @@
                     <v-list-item-content>
                       <v-list-item-title
                         ><i18n path="Drawer.Integrations"
+                      /></v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <v-list-item @click="eventCheckIn">
+                    <v-list-item-icon class="mr-2">
+                      <i class="fa fa-check mt-1" aria-hidden="true"></i>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                      <v-list-item-title
+                        ><i18n path="Common.CheckIn"
                       /></v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
@@ -344,7 +354,12 @@
               </div>
               <div class="d-flex flex-column pa-2 event-tile-right greybg">
                 <span v-if="data.event.StartDate">
-                  {{ getEventDaysDiff() }}
+                  <span v-if="checkLiveEvent()">
+                    <i18n path="Common.LiveNow" />
+                  </span>
+                  <span v-else>
+                    {{ getEventDaysDiff() }}
+                  </span>
                 </span>
                 <i18n path="Common.OpensIn" class="caption text-truncate" />
               </div>
@@ -934,16 +949,49 @@
                 <i18n path="Common.TicketsNotRequired" />
               </h2>
               <v-spacer></v-spacer>
-              <v-switch
+              <v-menu
                 v-if="
-                  data.event.LocationType === 'Venue' && switchSeat === true
+                  showPrintManagement ||
+                  (data.event.LocationType === 'Venue' &&
+                    switchSeat === true &&
+                    data.event.HasTickets)
                 "
-                v-model="switchSeat"
-                :label="$t('Common.SeatmapTickets')"
-                class="mt-0 ml-0 max-h24 positionAbsolute pad-top pad-right seatmap-btn"
-                height="20"
-                @change="updateSeatReservation"
-              ></v-switch>
+                right
+                :offset-y="offset"
+                transition="slide-y-transition"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn icon small v-bind="attrs" v-on="on">
+                    <v-icon>mdi-dots-vertical</v-icon>
+                  </v-btn>
+                </template>
+                <v-list dense>
+                  <v-list-item>
+                    <v-switch
+                      v-if="
+                        data.event.LocationType === 'Venue' &&
+                        switchSeat === true
+                      "
+                      v-model="switchSeat"
+                      :label="$t('Common.SeatmapTickets')"
+                      height="20"
+                      @change="updateSeatReservation"
+                    ></v-switch>
+                  </v-list-item>
+                  <v-list-item v-if="showPrintManagement">
+                    <v-btn
+                      text
+                      small
+                      append
+                      :class="{ 'mr-3': !$device.isMobile }"
+                      :to="{ path: 'print-ticket-management' }"
+                    >
+                      <v-icon left>mdi-ticket</v-icon>
+                      {{ $t('Common.PrintTicketManagement') }}
+                    </v-btn>
+                  </v-list-item>
+                </v-list>
+              </v-menu>
             </v-flex>
             <v-divider></v-divider>
           </div>
@@ -1025,7 +1073,25 @@
                     : ''
                 "
                 class="mt-n14"
-              />
+              >
+                <template #gridthreedot>
+                  <v-list-item-group>
+                    <seatmap-tickets />
+                    <v-list-item v-if="showPrintManagement">
+                      <v-btn
+                        text
+                        small
+                        append
+                        :class="{ 'mr-3': !$device.isMobile }"
+                        :to="{ path: 'print-ticket-management' }"
+                      >
+                        <v-icon left>mdi-ticket</v-icon>
+                        {{ $t('Common.PrintTicketManagement') }}
+                      </v-btn>
+                    </v-list-item>
+                  </v-list-item-group>
+                </template>
+              </Grid>
             </div>
           </div>
         </div>
@@ -1117,6 +1183,28 @@
           </div>
           <div v-if="content">
             <Grid view-name="eventSpeakers" :content="content" class="mt-n12" />
+          </div>
+        </div>
+        <div
+          class="xs12 sm4 md4 lg4 boxview boxviewlarge pad-card pb-6 mr-2 mb-4 elevation-1 rounded-lg"
+        >
+          <div class="sticky d-flex flex-column justify-center boxview">
+            <v-flex class="d-flex justify-center align-center pb-md-2 pt-1">
+              <h2 class="body-1 pb-0">
+                <i class="fa fa-handshake pr-1" aria-hidden="true"></i>
+                <i18n path="Common.SponsorContacts" />
+              </h2>
+              <v-spacer></v-spacer>
+            </v-flex>
+            <v-divider></v-divider>
+          </div>
+          <div v-if="content">
+            <Grid
+              view-name="sponsorContacts"
+              :content="content"
+              :custom-base-action-count="1"
+              class="mt-n12"
+            />
           </div>
         </div>
         <div
@@ -1618,6 +1706,7 @@ import copy from '~/components/common/copy'
 import Notes from '~/components/common/notes'
 import { formatGQLResult } from '~/utility/gql.js'
 import { configLoaderMixin, getIdFromAtob } from '~/utility'
+import SeatmapTickets from '~/config/templates/grids/eventTickets-grid/actions/grid/seatmapTickets.vue'
 
 export default {
   components: {
@@ -1633,6 +1722,7 @@ export default {
     copy,
     makeCopy,
     Notes,
+    SeatmapTickets,
   },
   mixins: [configLoaderMixin],
   props: {
@@ -1799,6 +1889,15 @@ export default {
       }
       return dataObj
     },
+    showPrintManagement() {
+      return (
+        this.data &&
+        this.data.event &&
+        this.data.event.HasTickets &&
+        this.data.event.LocationType === 'Venue' &&
+        this.data.event.BusinessType === 'Single'
+      )
+    },
   },
   mounted() {
     setTimeout(this.openPrint, 3000)
@@ -1812,6 +1911,34 @@ export default {
     this.$eventBus.$off('update-event-details')
   },
   methods: {
+    async checkEventStatus() {
+      const eventEndDate = this.eventData && this.eventData.EndDate
+      if (
+        eventEndDate < new Date().toISOString() &&
+        this.eventData.Status !== 'Registration closed'
+      ) {
+        const url = this.$bitpod.getApiUrl()
+        try {
+          const res = await this.$axios.$patch(
+            `${url}Events/${this.$route.params.id}`,
+            {
+              Status: 'Registration closed',
+            }
+          )
+          if (res) {
+            this.snackbarText = this.$t('Common.PastEventMessage')
+            this.snackbar = true
+          }
+        } catch (err) {
+          console.error(
+            `Error in apps/event/_id/index.vue while making a PATCH call to Event model in method checkEventStatus context: EventId:-${
+              this.$route && this.$route.params && this.$route.params.id
+            }\n URL:-${url}`,
+            err
+          )
+        }
+      }
+    },
     getScrollPosition() {
       const scrollPosition = this.$store.state.scrollPosition
       document.documentElement.scrollTo(0, scrollPosition)
@@ -1824,6 +1951,11 @@ export default {
         'long',
         this.$i18n.locale
       )
+    },
+    checkLiveEvent() {
+      const liveStart = new Date() > new Date(this.eventData.StartDate)
+      const liveEnd = new Date() < new Date(this.eventData.EndDate)
+      return liveStart && liveEnd
     },
     getEventDaysDiff() {
       const result = differenceInCalendarDays(
@@ -1839,6 +1971,13 @@ export default {
     goBack() {
       this.$router.push(
         this.localePath(`/apps/event/list/Event/live-and-draft-event`)
+      )
+    },
+    eventCheckIn() {
+      this.$router.push(
+        this.localePath(
+          `/apps/event/event-attendees?eventId=${this.$route.params.id}`
+        )
       )
     },
     getEventEndDate() {
@@ -2590,6 +2729,13 @@ export default {
           this.eventData._sectionHeading !== null
             ? this.eventData._sectionHeading
             : {}
+        if (
+          this.eventData.EndDate < new Date().toISOString() &&
+          this.eventData.Status !== 'Registration closed'
+        ) {
+          this.eventData.Status = 'Registration closed'
+          this.checkEventStatus()
+        }
         this.getOrgInfo()
         this.updateRegistrationSetting(this.eventData)
         this.getSeatMap(this.eventData)

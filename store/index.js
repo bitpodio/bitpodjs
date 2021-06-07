@@ -39,6 +39,8 @@ export const state = () => ({
   currentOrgInfo: {},
   exportInProgress: { value: false, key: '' },
   scrollPosition: '',
+  parseUrl: '',
+  gaId: '',
 })
 
 export const mutations = {
@@ -53,6 +55,12 @@ export const mutations = {
   },
   setScrollPosition(state, value) {
     state.scrollPosition = value
+  },
+  setTrackingPath(state, path) {
+    state.parseUrl = path
+  },
+  googleTrackingId(state, value) {
+    state.gaId = value
   },
 }
 

@@ -183,7 +183,7 @@
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
           <h2 class="black--text pt-4 pb-0 text-h5">
-            <i18n path="Common.Location" />
+            <i18n path="Common.Phone" />
           </h2>
           <v-spacer></v-spacer>
           <div>
@@ -242,7 +242,7 @@
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
           <h2 class="black--text pt-4 pb-0 text-h5">
-            <i18n path="Common.Location" />
+            <i18n path="Common.OnlineEvent" />
           </h2>
           <v-spacer></v-spacer>
           <div>
@@ -908,13 +908,27 @@
                             <v-autocomplete
                               v-model="session.Duration"
                               :items="slotLookupOptions"
+                              :rules="sessionValidationRules(k)"
+                              :has-error-tooltip="true"
                               item-text="value"
                               item-value="key"
                               outlined
                               dense
                               :attach="`#duration-select-${k}`"
+                              :error-messages="uniqueLinkValidationMsg"
                               @change="changeDuration(k)"
-                            ></v-autocomplete>
+                            >
+                              <template v-slot:message="{ message, key }">
+                                <v-tooltip bottom>
+                                  <template v-slot:activator="{ on, attrs }">
+                                    <span v-bind="attrs" v-on="on" :key="key">{{
+                                      message
+                                    }}</span>
+                                  </template>
+                                  <span :key="key">{{ message }}</span>
+                                </v-tooltip>
+                              </template>
+                            </v-autocomplete>
                           </td>
                           <td
                             class="pa-2 pb-0 event-timezone e-td"
@@ -1075,6 +1089,7 @@
       >
         <v-btn
           v-if="currentTab > 1 && !isEventCreate && !isEventPublish"
+          :disabled="isSaveClicked"
           depressed
           color="grey lighten-2"
           @click="prev()"
@@ -1224,6 +1239,7 @@ export default {
       AvailableStartHour: '',
       AvailableEndHour: '',
       isMap: false,
+      isSaveClicked: false,
       ticketTypeProps: {
         type: 'lookup',
         dataSource: {
@@ -1669,6 +1685,20 @@ export default {
         },
       ]
     },
+    sessionValidationRules(index) {
+      return [
+        (v) => {
+          const startTime = parseInt(this.sessions[index].StartTime)
+          const endTime = parseInt(this.sessions[index].EndTime)
+          const diff = (endTime - startTime) * 60
+          if (diff >= parseInt(v)) {
+            return true
+          } else {
+            return this.$t('Messages.Error.DurationGreaterSessionMsg')
+          }
+        },
+      ]
+    },
     validEndTimeRule(index) {
       return [
         (v) => {
@@ -1691,7 +1721,9 @@ export default {
       })
       return arr[0].end
     },
-
+    checkOverlappingDays(array) {
+      return new Set(array).size !== array.length
+    },
     partitionIntoOverlappingRanges(array) {
       array.sort(function (a, b) {
         if (a.start < b.start) return -1
@@ -2048,7 +2080,9 @@ export default {
       ) {
         this.isDateRange = false
         this.sessions[this.selectedSession].ScheduledType = this.ScheduledType
-        this.sessions[this.selectedSession].RollingDays = this.RollingDays
+        this.sessions[this.selectedSession].RollingDays = parseInt(
+          this.RollingDays
+        )
         this.sessions[this.selectedSession].StartDate = this.StartDate
         this.sessions[this.selectedSession].EndDate = this.EndDate
 
@@ -2118,6 +2152,7 @@ export default {
         this.loading = false
         this.isEventCreate = false
         this.isEventPublish = false
+        this.isSaveClicked = false
         this.isSaveButtonDisabled = false
         this.valid = false
         this.currentTab = 1
@@ -2152,8 +2187,10 @@ export default {
       return () => {
         if (this.tickets[index].Type === 'Free') {
           this.tickets[index].Amount = 0
+          this.changeTicketCode(index)
         } else {
           this.tickets[index].Amount = 1
+          this.changeTicketCode(index)
         }
       }
     },
@@ -2305,25 +2342,30 @@ export default {
           this.locationMessage = 'Selected location should not be blank'
         }
         const tempData = []
+        const setDays = []
         this.sessions.forEach((row) => {
           let startTime = row.StartTime.replace(':', '.')
           let endTime = row.EndTime.replace(':', '.')
           startTime = parseInt(startTime)
           endTime = parseInt(endTime)
           const newsObject = { start: startTime, end: endTime }
+          row.Days.forEach((x) => setDays.push(x))
           tempData.push(newsObject)
         })
+        const isOverlappingDays = this.checkOverlappingDays(setDays)
         const isInvalidSlot = this.partitionIntoOverlappingRanges(tempData)
         if (
           !isLocationTypeEmpty.includes(true) &&
           !isInvalidSessionMap.includes(true) &&
           (isInvalidSlot === false ||
+            isOverlappingDays === false ||
             (await this.$refs.confirm.open(
               this.$t('Drawer.SessionOverlaps'),
               this.$t('Messages.Warn.OverLapSessionMsg'),
               { color: 'warning' }
             )))
         ) {
+          this.isSaveClicked = true
           this.isSaveButtonDisabled = true
           this.eventData.EventManager = this.$auth.$state.user.data.email
           this.eventData.Organizer = this.$auth.$state.user.data.name
@@ -2562,6 +2604,7 @@ export default {
 
         this.eventData.Currency = OrganizationInfo[0].Currency
         if (
+          OrganizationInfo &&
           OrganizationInfo[0].weekDay !== null &&
           OrganizationInfo[0].weekDay.length > 0
         ) {

@@ -20,8 +20,8 @@ export default {
    ** See https://nuxtjs.org/api/configuration-head
    */
   head: {
-    titleTemplate: '%s - ' + process.env.npm_package_name,
-    title: process.env.npm_package_name || '',
+    titleTemplate: '%s ',
+    title: process.env.BITPOD_TITLE || 'Bitpod',
     meta: [
       { charset: 'utf-8' },
       {
@@ -261,6 +261,7 @@ export default {
       //* refer getApiUrl() in /api/index.js for possible changes on changing the following line
       backendBaseUrl: process.env.PUBLIC_DOMAIN || 'event.test.bitpod.io',
       eventUrl: process.env.GET_EVENT_URL || 'event.test.bitpod.io',
+      signatureUrl: process.env.GET_SIGNATURE_URL || 'signature.test.bitpod.io',
       crmUrl: process.env.GET_CRM_URL || 'crmivijd.test.bitpod.io',
       primeOrgId: '1',
     },

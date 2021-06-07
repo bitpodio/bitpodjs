@@ -14,8 +14,12 @@ query($filters: JSON, $where: JSON) {
           CustomerId
           CustomerCode
           ContactNumber
+          NumberOfEmployees
+          Industry
+          Type
           BusinessNumber
           Approved
+          Rating
           createdDate
           createdBy
           _BillingAddress {

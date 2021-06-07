@@ -239,7 +239,7 @@ export default {
     },
     setTemplates() {
       this.getOrgInfo()
-      if (Object.keys(this.context.badge).length > 0) {
+      if (this.context.badge && Object.keys(this.context.badge).length > 0) {
         const template = this.context.badge.Template
         const str = this.getBadge(template, this.item)
         return str
@@ -302,7 +302,7 @@ export default {
         })
         if (result) {
           const orgInfo = formatGQLResult(result.data, 'OrganizationInfo')
-          if (this.context.event.Logo.length > 0) {
+          if (this.context.event.Logo && this.context.event.Logo.length > 0) {
             this.logoId = this.context.event.Logo[0]
           } else if (
             this.context.event.Logo.length === 0 &&

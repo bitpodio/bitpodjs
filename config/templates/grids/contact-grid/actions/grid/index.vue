@@ -32,7 +32,7 @@
     </v-list-item>
     <v-list-item>
       <importContact
-        sample-file-name="v1573631144/Contact.csv"
+        sample-file-name="v1620646772/Contact.csv"
         :template-data="fieldNames"
         model-name="Contact"
       />
