@@ -68,7 +68,8 @@
               <v-col cols="12" sm="12" md="6" class="pb-0">
                 <v-text-field
                   v-model="formData.Email"
-                  :label="$t('Common.EmailCaption')"
+                  :label="$t('Common.Email')"
+                  :rules="[rules.email]"
                   outlined
                   dense
                 ></v-text-field>
@@ -82,8 +83,9 @@
               <v-col cols="12" sm="12" md="6" class="pb-0">
                 <v-text-field
                   v-model="formData.CellPhone"
-                  :label="$t('Common.Phone')"
-                  number
+                  :label="$t('Common.PhoneRequired')"
+                  type="number"
+                  :rules="[rules.required, rules.phoneRules]"
                   outlined
                   dense
                 ></v-text-field>
@@ -128,6 +130,7 @@
             depressed
             :has-submit-action="true"
             :has-external-submit="true"
+            :reset="isReset"
             :form-name="formName"
             class="ml-2"
             ><i18n path="Drawer.Save"
@@ -160,12 +163,14 @@ export default {
       rules: rules(this.$i18n),
       dialog: false,
       valid: false,
+      isReset: false,
       snackbar: false,
       snackbarText: '',
       timeout: 3000,
       departmentItems: [],
       tagsItems: [],
       Tags: '',
+      CellPhone: '',
       formData: {
         FirstName: '',
         LastName: '',
@@ -212,6 +217,7 @@ export default {
     onReset() {
       this.$refs.form.reset()
       this.duplicateMessage = ''
+      this.formData.Tags = []
     },
     onClose() {
       this.$refs.form.reset()
@@ -221,7 +227,9 @@ export default {
     async onSave() {
       const url = this.$bitpod.getApiUrl()
       this.formData.Type = 'Sponsor'
-      this.formData.Tags.push(this.Tags)
+      if (this.formData.Tags && this.formData.Tags.length > 0) {
+        this.formData.Tags.push(this.Tags)
+      }
       console.log('data', this.formData)
       try {
         const res = await this.$axios.$post(
@@ -237,6 +245,7 @@ export default {
         }
       } catch (error) {
         if (error.response.status === 406) {
+          this.isReset = !this.isReset
           this.duplicateMessage = this.$t('Messages.Error.ContactExists')
         }
         console.error(
@@ -275,6 +284,16 @@ export default {
           e
         )
       }
+    },
+    phoneRules() {
+      return [
+        (v) => {
+          if (v && !isNaN(v)) {
+            return true
+          }
+          return this.$t('Messages.Error.PleaseEnterValidPhone')
+        },
+      ]
     },
   },
 }

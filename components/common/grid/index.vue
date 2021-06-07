@@ -456,7 +456,6 @@
             viewName === 'eSignDeclined') &&
           loading === true
         "
-        style="max-width: 65%;"
         class="d-flex flex-sm-wrap flex-column mx-auto"
       >
         <div class="pt-10 pb-10">
@@ -748,6 +747,10 @@ export default {
       type: String,
       default: '',
     },
+    customBaseActionCount: {
+      type: Number,
+      default: 0,
+    },
   },
   data() {
     const headers = getTableHeader(this.content, this.viewName, this)
@@ -889,7 +892,9 @@ export default {
       return 0
     },
     baseActionCount() {
-      if (this.winWidth <= 1600 && this.winWidth >= 600) {
+      if (this.customBaseActionCount) {
+        return this.customBaseActionCount
+      } else if (this.winWidth <= 1600 && this.winWidth >= 600) {
         return 2
       } else if (this.winWidth >= 1600) {
         return 3

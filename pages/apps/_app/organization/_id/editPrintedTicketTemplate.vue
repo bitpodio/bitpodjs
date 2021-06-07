@@ -21,7 +21,12 @@
           </div>
         </v-card-title>
         <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
-          <v-form ref="form" v-model="valid" @submit.prevent="submitForm">
+          <v-form
+            ref="form"
+            id="edit-printedTicketTemplate-form"
+            v-model="valid"
+            @submit.prevent="submitForm"
+          >
             <v-row>
               <v-col cols="12" sm="6" md="6">
                 <v-text-field
@@ -80,6 +85,8 @@
             :disabled="!valid || isSaveButtonDisabled || !checkTemplate"
             :action="onSave"
             :has-submit-action="true"
+            :has-external-submit="true"
+            :reset="isReset"
             form-name="edit-printedTicketTemplate-form"
             class="ml-2"
             ><i18n path="Drawer.Save"
@@ -129,6 +136,7 @@ export default {
       isSaveButtonDisabled: false,
       valid: false,
       checkTemplate: false,
+      isReset: false,
     }
   },
   computed: {
@@ -153,6 +161,7 @@ export default {
   },
   methods: {
     onClose() {
+      this.isReset = !this.isReset
       this.$emit('update:editTemplate', false)
     },
     markRequired(stringValue) {

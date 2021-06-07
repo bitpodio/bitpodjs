@@ -183,7 +183,7 @@
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
           <h2 class="black--text pt-4 pb-0 text-h5">
-            <i18n path="Common.Location" />
+            <i18n path="Common.Phone" />
           </h2>
           <v-spacer></v-spacer>
           <div>
@@ -242,7 +242,7 @@
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
           <h2 class="black--text pt-4 pb-0 text-h5">
-            <i18n path="Common.Location" />
+            <i18n path="Common.OnlineEvent" />
           </h2>
           <v-spacer></v-spacer>
           <div>
@@ -2604,6 +2604,7 @@ export default {
 
         this.eventData.Currency = OrganizationInfo[0].Currency
         if (
+          OrganizationInfo &&
           OrganizationInfo[0].weekDay !== null &&
           OrganizationInfo[0].weekDay.length > 0
         ) {

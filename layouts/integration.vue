@@ -13,16 +13,20 @@
           @click.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
         <span v-if="!$vuetify.theme.dark" class="bitpod-logo logo-ds px-3">
-          <v-img
-            :src="$config.cdnUri + 'bitpod-logo-blk2.svg'"
-            class="logofull mr-2"
-          ></v-img>
+          <a href="/admin/apps/event/eventboard">
+            <v-img
+              :src="$config.cdnUri + 'bitpod-logo-blk2.svg'"
+              class="logofull mr-2"
+            ></v-img>
+          </a>
         </span>
         <span v-if="$vuetify.theme.dark" class="bitpod-logo logo-ds px-3">
-          <v-img
-            :src="$config.cdnUri + 'bitpod-logo-white.svg'"
-            class="logofull mr-2"
-          ></v-img>
+          <a href="/admin/apps/event/eventboard">
+            <v-img
+              :src="$config.cdnUri + 'bitpod-logo-white.svg'"
+              class="logofull mr-2"
+            ></v-img>
+          </a>
         </span>
         <v-spacer></v-spacer>
       </v-toolbar-title>
@@ -221,8 +225,10 @@ export default {
       }
     },
   },
-  head: {
-    title: 'Integration',
+  head() {
+    return {
+      title: this.$t('Common.Integration') + ' ' + this.$t('Common.Bitpod'),
+    }
   },
 }
 </script>

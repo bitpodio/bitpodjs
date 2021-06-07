@@ -18,9 +18,14 @@ export default async (
         let newToken = nuxtContext.$auth.strategy.token.get()
         if (newToken) {
           newToken = newToken.split(' ')[1]
-          await nuxtContext.$apolloHelpers.onLogin(newToken, undefined, {
-            expires: 7,
-          })
+          await nuxtContext.$apolloHelpers.onLogin(
+            newToken,
+            undefined,
+            {
+              expires: 7,
+            },
+            true
+          )
         }
       }
       nuxtContext.redirect(301, `/apps/event/eventboard`)

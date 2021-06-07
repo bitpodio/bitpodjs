@@ -17,5 +17,10 @@
 <script>
 export default {
   layout: 'public',
+  head() {
+    return {
+      title: this.$t('Common.AppTitle') + ' ' + this.$t('Common.Bitpod'),
+    }
+  },
 }
 </script>

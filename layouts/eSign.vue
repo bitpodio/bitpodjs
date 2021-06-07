@@ -13,14 +13,30 @@
           @click.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
         <span class="bitpod-logo logo-ds px-3">
-          <v-img
-            :src="$config.cdnUri + 'bitpod-logo-new.png'"
-            class="logofull mr-2"
-          ></v-img>
+          <a href="/admin/apps/event/eventboard">
+            <v-img
+              :src="$config.cdnUri + 'bitpod-logo-new.png'"
+              class="logofull mr-2"
+            ></v-img>
+          </a>
         </span>
         <v-spacer></v-spacer>
       </v-toolbar-title>
       <v-spacer></v-spacer>
+      <div class="d-none">
+        <v-btn
+          v-bind="attrs"
+          color="blue darken-2"
+          dark
+          depressed
+          small
+          class="mx-3"
+          v-on="on"
+          @click="handleNewTemplate"
+        >
+          <i18n path="Common.SendDocforeSign" />
+        </v-btn>
+      </div>
       <Help class="d-none d-sm-inline" />
       <LanguageSwitcher />
       <AppDrawer />
@@ -102,11 +118,18 @@
       </div>
     </v-app-bar>
 
-    <v-main class="greybg seatmap esign-layout">
+    <v-main class="greybg">
       <v-container fluid>
         <v-row>
           <v-col class="pt-0">
-            <div>
+            <div class="esign-app-title">
+              <v-col
+                class="d-flex greybg px-0 mb-3 flex-row seatmap-inner align-center"
+              >
+                <v-text class="text-h5"
+                  ><i18n path="Common.ESignature"
+                /></v-text>
+              </v-col>
               <nuxt />
             </div>
           </v-col>
@@ -122,10 +145,14 @@
         @load="iframecookieDeleted"
       />
     </div>
+    <div v-if="dialog">
+      <ESignForm :new-template-dialog.sync="dialog" :refresh="refresh" />
+    </div>
   </v-app>
 </template>
 
 <script>
+import ESignForm from '~/config/templates/grids/eSign-grid/ESignForm.vue'
 import OrgnaizationList from '~/components/common/organization-list'
 import AppDrawer from '~/components/common/app-drawer'
 import Help from '~/components/common/help'
@@ -141,6 +168,14 @@ export default {
     Help,
     OldSite,
     Upgrade,
+    ESignForm,
+  },
+  props: {
+    refresh: {
+      type: Function,
+      default: () => false,
+      required: false,
+    },
   },
   data() {
     return {
@@ -209,12 +244,25 @@ export default {
       }
     },
   },
+  head() {
+    return {
+      title: this.$t('Common.ESignature') + ' ' + this.$t('Common.Bitpod'),
+    }
+  },
+  handleNewTemplate() {
+    this.dialog = true
+  },
 }
 </script>
 
 <style>
-.esign-layout {
-  padding-bottom: 24px !important;
-  margin-top: 24px !important;
+.esign-app-title {
+  width: 70% !important;
+  margin: 0 auto;
+}
+@media (max-width: 600px) {
+  .esign-app-title {
+    width: 100% !important;
+  }
 }
 </style>

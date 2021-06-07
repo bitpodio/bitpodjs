@@ -21,7 +21,7 @@ export default {
         showExpand: false,
         singleExpand: false,
         showSelect: true,
-        hideFilter: false,
+        hideFilter: true,
         hideSearch: false,
       },
       fields: {

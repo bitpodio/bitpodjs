@@ -141,16 +141,20 @@
           @click.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
         <span v-if="!$vuetify.theme.dark" class="bitpod-logo logo-ds px-3">
-          <v-img
-            :src="$config.cdnUri + 'bitpod-logo-blk2.svg'"
-            class="logofull mr-2"
-          ></v-img>
+          <a href="/admin/apps/event/eventboard">
+            <v-img
+              :src="$config.cdnUri + 'bitpod-logo-blk2.svg'"
+              class="logofull mr-2"
+            ></v-img>
+          </a>
         </span>
         <span v-if="$vuetify.theme.dark" class="bitpod-logo logo-ds px-3">
-          <v-img
-            :src="$config.cdnUri + 'bitpod-logo-white.svg'"
-            class="logofull mr-2"
-          ></v-img>
+          <a href="/admin/apps/event/eventboard">
+            <v-img
+              :src="$config.cdnUri + 'bitpod-logo-white.svg'"
+              class="logofull mr-2"
+            ></v-img>
+          </a>
         </span>
         <v-spacer></v-spacer>
       </v-toolbar-title>
@@ -279,6 +283,12 @@
                       outlined
                       dense
                     ></v-text-field>
+                    <div
+                      v-if="duplicateMessage !== ''"
+                      class="red--text pa-3 pt-0 body-1 mt-n5"
+                    >
+                      {{ duplicateMessage }}
+                    </div>
                   </v-col>
                 </v-row>
               </v-form>
@@ -379,6 +389,7 @@ export default {
       logoutClicked: false,
       rules: rules(this.$i18n),
       userPlanData: '',
+      duplicateMessage: '',
       formData: {
         emailId: '',
       },
@@ -480,6 +491,9 @@ export default {
             this.$eventBus.$emit('user-created')
           }
         } catch (e) {
+          if (e.response.status === 400) {
+            this.duplicateMessage = this.$t('Messages.Error.UserExists')
+          }
           console.log(
             `Error in layouts/admin.vue while making a POST call to Users model from method onSave context:-URL:-${url}\n OrgId:-${orgId}\n formData:-${this.formData} `,
             e
@@ -519,8 +533,10 @@ export default {
       }
     },
   },
-  head: {
-    title: 'Administration',
+  head() {
+    return {
+      title: this.$t('Common.AdminApp') + ' ' + this.$t('Common.Bitpod'),
+    }
   },
 }
 </script>

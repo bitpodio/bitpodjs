@@ -1,8 +1,5 @@
 <template>
   <v-col class="px-0">
-    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
-      <div class="text-center">{{ snackbarText }}</div>
-    </v-snackbar>
     <v-dialog
       v-model="dialog"
       persistent
@@ -10,8 +7,8 @@
       content-class="slide-form-default"
     >
       <template v-slot:activator="{ on, attrs }">
-        <v-btn text small v-bind="attrs" v-on="on" @click="dialog = true">
-          <v-icon left>mdi-plus</v-icon> <i18n path="Common.NewContact" />
+        <v-btn text small v-bind="attrs" v-on="on" @click="openDialog()">
+          <v-icon left>fa-pencil</v-icon> {{ $t('Drawer.Edit') }}
         </v-btn>
       </template>
       <v-card>
@@ -19,7 +16,7 @@
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
           <h2 class="black--text pt-5 pb-4 font-weight-regular text-h5">
-            <i18n path="Common.NewContact" />
+            <i18n path="Common.NewSponsor" />
           </h2>
           <v-spacer></v-spacer>
           <div>
@@ -37,7 +34,16 @@
             @submit.prevent="submitForm"
           >
             <v-row>
-              <v-col cols="12" sm="6" md="6" class="pb-0">
+              <v-col cols="12" sm="12" md="12" class="pb-0">
+                <v-text-field
+                  v-model="formData.Organization"
+                  :label="$t('Common.OrganizationName')"
+                  :rules="[rules.required]"
+                  outlined
+                  dense
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="12" md="6" class="pb-0">
                 <v-text-field
                   v-model="formData.FirstName"
                   :label="$t('Common.FirstName')"
@@ -46,7 +52,7 @@
                   dense
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" sm="6" md="6" class="pb-0">
+              <v-col cols="12" sm="12" md="6" class="pb-0">
                 <v-text-field
                   v-model="formData.LastName"
                   :label="$t('Common.LastName')"
@@ -55,19 +61,11 @@
                   dense
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" sm="6" md="6" class="pb-0">
-                <v-text-field
-                  v-model="formData.CellPhone"
-                  :label="$t('Common.Phone')"
-                  number
-                  outlined
-                  dense
-                ></v-text-field>
-              </v-col>
-              <v-col cols="12" sm="6" md="6" class="pb-0">
+              <v-col cols="12" sm="12" md="6" class="pb-0">
                 <v-text-field
                   v-model="formData.Email"
-                  :label="$t('Common.EmailCaption')"
+                  :label="$t('Common.Email')"
+                  :rules="[rules.email]"
                   outlined
                   dense
                 ></v-text-field>
@@ -78,28 +76,37 @@
                   {{ duplicateMessage }}
                 </div>
               </v-col>
-              <v-col cols="12" sm="6" md="6" class="pb-0">
+              <v-col cols="12" sm="12" md="6" class="pb-0">
                 <v-text-field
-                  v-model="formData.Job"
-                  :label="$t('Common.JobTitle')"
+                  v-model="formData.CellPhone"
+                  :label="$t('Common.PhoneRequired')"
+                  type="number"
+                  :rules="[rules.required, rules.phoneRules]"
                   outlined
                   dense
                 ></v-text-field>
               </v-col>
-              <v-col cols="12" sm="6" md="6" class="pb-0">
-                <v-select
-                  v-model="formData.Department"
-                  :items="departmentItems"
-                  :label="$t('Common.Department')"
+              <v-col cols="12" sm="12" md="12" class="pb-0">
+                <v-text-field
+                  v-model="formData.Website"
+                  :label="$t('Common.Website')"
                   outlined
                   dense
-                ></v-select>
+                ></v-text-field>
               </v-col>
-              <v-col cols="12" sm="6" md="6" class="pb-0">
+              <v-col cols="12" sm="12" md="12" class="pb-0">
+                <v-text-field
+                  v-model="formData.ImageURL"
+                  :label="$t('Common.LogoURL')"
+                  outlined
+                  dense
+                ></v-text-field>
+              </v-col>
+              <v-col cols="12" sm="12" md="12" class="pb-0">
                 <v-select
-                  v-model="formData.Type"
-                  :items="contactTypeItems"
-                  :label="$t('Common.TypeCaption')"
+                  v-model="Tags"
+                  :items="tagsItems"
+                  :label="$t('Common.Tags')"
                   outlined
                   dense
                 ></v-select>
@@ -141,6 +148,15 @@ export default {
     SaveButton,
   },
   props: {
+    items: {
+      type: Array,
+      required: false,
+      default: () => [],
+    },
+    viewName: {
+      type: String,
+      required: true,
+    },
     refresh: {
       type: Function,
       default: () => false,
@@ -152,11 +168,10 @@ export default {
       rules: rules(this.$i18n),
       dialog: false,
       valid: false,
-      snackbar: false,
-      isReset: false,
-      snackbarText: '',
       timeout: 3000,
       departmentItems: [],
+      tagsItems: [],
+      Tags: '',
       formData: {
         FirstName: '',
         LastName: '',
@@ -165,6 +180,10 @@ export default {
         Job: '',
         CellPhone: '',
         Type: '',
+        Organization: '',
+        Website: '',
+        ImageURL: '',
+        Tags: [],
       },
       formName: 'new-memberContact-form',
       contactTypeItems: '',
@@ -173,13 +192,13 @@ export default {
   },
   async mounted() {
     try {
-      const res = await this.getDropDownData('CRMDepartment')
+      const res = await this.getDropDownData('ContactTags')
       if (res) {
-        this.departmentItems = res.map((i) => i.value)
+        this.tagsItems = res.map((i) => i.value)
       }
     } catch (e) {
       console.error(
-        `Error in templates/grids/memberContacts-grid/actions/grid/new-item.vue while making a GQL call to GeneralConfiguration model from method getDropDownData`,
+        `Error in /templates/grids/eventSponsor-grid/actions/grid/new-item.vue while making a GQL call to GeneralConfiguration model from method getDropDownData`,
         e
       )
     }
@@ -190,7 +209,7 @@ export default {
       }
     } catch (e) {
       console.error(
-        `Error intemplates/grids/memberContacts-grid/actions/grid/new-item.vue while making a GQL call to GeneralConfiguration model from method getDropDownData`,
+        `Error in /templates/grids/eventSponsor-grid/actions/grid/new-item.vue while making a GQL call to GeneralConfiguration model from method getDropDownData`,
         e
       )
     }
@@ -199,6 +218,7 @@ export default {
     onReset() {
       this.$refs.form.reset()
       this.duplicateMessage = ''
+      this.formData.Tags = []
     },
     onClose() {
       this.$refs.form.reset()
@@ -207,18 +227,24 @@ export default {
     },
     async onSave() {
       const url = this.$bitpod.getApiUrl()
+      this.formData.Type = 'Sponsor'
+      if (this.formData.Tags && this.formData.Tags.length > 0) {
+        this.formData.Tags.push(this.Tags)
+      }
       try {
-        const res = await this.$axios.$post(
-          `${url}Customers/${this.$route.params.id}/CutomerContact`,
+        const res = await this.$axios.$put(
+          `${url}Events/${this.$route.params.id}/contacts/${this.formData.id}`,
           this.formData
         )
         if (res) {
           this.dialog = false
           this.onReset()
-          this.snackbarText = this.$t('Messages.Success.CreatedSuccessfully', {
-            modelName: 'Contact',
-          })
-          this.snackbar = true
+          this.$eventBus.$emit(
+            'toggle-snackbar',
+            this.viewName,
+            this.$t('Messages.Success.RecordUpdatedSuccess'),
+            3000
+          )
           this.refresh()
         }
       } catch (error) {
@@ -227,7 +253,7 @@ export default {
           this.duplicateMessage = this.$t('Messages.Error.ContactExists')
         }
         console.error(
-          `Error in templates/grids/memberContacts-grid/actions/grid/new-item.vue while making a POST call to CustomerContact model from method onSave context:-URL:${url}`,
+          `Error in /templates/grids/eventSponsor-grid/actions/grid/new-item.vue while making a POST call to contact model from method onSave context:-URL:${url}`,
           error
         )
       }
@@ -258,10 +284,24 @@ export default {
         }
       } catch (e) {
         console.error(
-          `Error in templates/grids/memberContacts-grid/actions/grid/new-item.vue while making a GQL call to GeneralConfiguration model from method getDropDownData`,
+          `Error in /templates/grids/eventSponsor-grid/actions/grid/new-item.vue while making a GQL call to GeneralConfiguration model from method getDropDownData`,
           e
         )
       }
+    },
+    openDialog() {
+      this.formData = { ...this.items[0] }
+      this.dialog = true
+    },
+    phoneRules() {
+      return [
+        (v) => {
+          if (v && !isNaN(v)) {
+            return true
+          }
+          return this.$t('Messages.Error.PleaseEnterValidPhone')
+        },
+      ]
     },
   },
 }

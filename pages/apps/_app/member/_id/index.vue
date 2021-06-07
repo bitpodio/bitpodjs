@@ -13,9 +13,9 @@
           <v-row class="public-page-main">
             <v-col class="col-md-6 col-12 pt-0 pb-0">
               <v-card class="elevation-0 pt-0">
-                <v-list>
+                <v-list class="pt-0">
                   <v-list-item class="pl-0">
-                    <div class="mt-n4">
+                    <div>
                       <div>
                         <v-list-item-avatar
                           v-if="
@@ -24,12 +24,12 @@
                               ? copyMemberData.CustomerPic.length === 0
                               : false)
                           "
-                          size="62"
+                          size="72"
                           style="margin: auto;"
                         >
                           <v-avatar
                             color="primary"
-                            size="62"
+                            size="72"
                             v-bind="attrs"
                             v-on="on"
                           >
@@ -43,11 +43,12 @@
                           :src="getAttachmentLink(lastPicId, true)"
                           :lazy-src="getAttachmentLink(lastPicId, true)"
                           aspect-ratio="1"
-                          class="mr-1"
-                          max-width="139"
-                          max-height="60"
-                          width="120"
-                          contain
+                          class="rounded-circle mr-1"
+                          max-width="100"
+                          max-height="100"
+                          min-height="100"
+                          width="150"
+                          cover
                         >
                           <template v-slot:placeholder>
                             <v-row
@@ -997,5 +998,21 @@ export default {
 <style scoped>
 .linkWidth {
   max-width: 142px;
+}
+.cardImg {
+  position: relative;
+  margin: 16px !important;
+  padding: 0 !important;
+  margin-left: 0 !important;
+}
+.cardDelete {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 9;
+  display: none;
+}
+.cardImg:hover .cardDelete {
+  display: inline-block;
 }
 </style>

@@ -111,7 +111,7 @@
                       </v-list-item-icon>
                       <v-list-item-content>
                         <v-list-item-title
-                          ><i18n path="Drawer.Preview"
+                          ><i18n path="Drawer.View"
                         /></v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
@@ -289,7 +289,7 @@
                       </v-list-item-icon>
                       <v-list-item-content>
                         <v-list-item-title
-                          ><i18n path="Drawer.Preview"
+                          ><i18n path="Drawer.View"
                         /></v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
