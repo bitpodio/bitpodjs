@@ -12,7 +12,7 @@
       :right="$vuetify.rtl"
     >
       <div class="px-4 pt-3 pb-1">
-        <i18n path="Common.AppTitle" class="app-title-text" />
+        <i18n path="Common.AppTitle" class="app-title-text text--primary" />
       </div>
       <div class="d-block d-sm-none my-3">
         <v-menu>
@@ -135,7 +135,7 @@
                 />
                 <i18n
                   v-if="item.text === 'Discount Code'"
-                  path="Drawer.DiscountCode"
+                  path="Common.DiscountCodes"
                 />
                 <i18n v-if="item.text === 'Members'" path="Drawer.Members" />
                 <i18n v-if="item.text === 'Contacts'" path="Drawer.Contacts" />
@@ -187,11 +187,21 @@
           class="ml-0 mr-0 d-lg-none"
           @click.stop="drawer = !drawer"
         ></v-app-bar-nav-icon>
-        <span class="bitpod-logo logo-ds px-3">
-          <v-img
-            :src="$config.cdnUri + 'bitpod-logo-blk2.svg'"
-            class="logofull mr-2"
-          ></v-img>
+        <span v-if="!$vuetify.theme.dark" class="bitpod-logo logo-ds px-3">
+          <a href="/admin/apps/event/eventboard">
+            <v-img
+              :src="$config.cdnUri + 'bitpod-logo-blk2.svg'"
+              class="logofull mr-2"
+            ></v-img
+          ></a>
+        </span>
+        <span v-if="$vuetify.theme.dark" class="bitpod-logo logo-ds px-3">
+          <a href="/admin/apps/event/eventboard">
+            <v-img
+              :src="$config.cdnUri + 'bitpod-logo-white.svg'"
+              class="logofull mr-2"
+            ></v-img>
+          </a>
         </span>
         <v-spacer></v-spacer>
       </v-toolbar-title>
@@ -336,7 +346,7 @@
     >
       <v-container fluid>
         <v-row>
-          <v-col class="pt-0">
+          <v-col>
             <div>
               <nuxt />
             </div>
@@ -366,7 +376,6 @@ import Theme from '~/components/common/theme'
 import Upgrade from '~/components/common/upgrade'
 import userUtils from '~/utility/userApps'
 import { postGaData } from '~/utility/index.js'
-const murmurhash = require('murmurhash')
 export default {
   middleware: ['auth', 'authorization'],
   components: {
@@ -470,17 +479,6 @@ export default {
     this.allowUser = userRoles.length === 1 && userRoles.includes('$orguser')
     this.allowUpgrade = userRoles.includes('$orgowner')
     window.addEventListener('message', this.messageReceived, false)
-    const checkId = murmurhash.v2(
-      this.$auth.user.data.email,
-      this.$config.seedValue
-    )
-    setTimeout(() => {
-      if (window && window.ga) {
-        window.ga('create', this.$config.gaTrackingCode, 'auto')
-        window.ga('set', 'userId', checkId)
-        window.ga('send', 'pageview')
-      }
-    }, 1500)
   },
   beforeDestroy() {
     window.removeEventListener('message', this.messageReceived)
@@ -541,6 +539,11 @@ export default {
         this.$apolloHelpers.onLogout()
       }
     },
+  },
+  head() {
+    return {
+      title: this.$t('Common.AppTitle') + ' ' + this.$t('Common.Bitpod'),
+    }
   },
 }
 </script>

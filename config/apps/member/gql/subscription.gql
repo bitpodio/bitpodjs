@@ -1,0 +1,46 @@
+query($filters: JSON, $where: JSON) {
+  ProductSubscription {
+    ProductSubscriptionFind(filter: $filters) {
+      edges {
+        node {
+          id
+          Currency
+          AutoRenew
+          PayCycle
+          SystemOrgName
+          Customer
+          ProductId
+          isActive
+          Product{
+            Active
+            AttachmentId
+            Code
+            DisplayName
+            DisplayOrder
+            EndDate
+            Family
+            Name
+            StartDate
+            Tags
+            Type
+            createdBy
+            createdDate
+            id
+            modifiedBy
+            modifiedDate
+            orgId
+          }
+          Cost
+          Unit
+          DiscountCode
+          NumberOfUser
+          BankTransactionNumber
+          EndDate
+          StartDate
+          orgId
+        }
+      }
+    }
+    ProductSubscriptionCount(where: $where)
+  }
+}

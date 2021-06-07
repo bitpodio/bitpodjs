@@ -1,4 +1,5 @@
 import generalConfiguration from '~/config/apps/event/gql/registrationStatusOptions.gql'
+import product from '~/config/apps/member/gql/product.gql'
 
 export default {
   views: {
@@ -119,7 +120,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
-      itemTitle: 'Common.Timezone',
+      itemTitle: 'Common.TimezoneCaption',
       default: false,
       fields: {
         type: {
@@ -1318,6 +1319,523 @@ export default {
         },
       },
       title: 'Common.Departments',
+      type: 'list',
+    },
+    memberType: {
+      ui: {
+        hideDefaultHeader: false,
+        hideDefaultFooter: false,
+        showExpand: false,
+        singleExpand: false,
+        showSelect: false,
+        hideFilter: false,
+        hideSearch: true,
+      },
+      itemTitle: 'Common.MemberType',
+      default: false,
+      fields: {
+        type: {
+          form: {
+            caption: 'Common.Type',
+            displayOrder: 1,
+          },
+          displayOrder: 2,
+          caption: 'Common.TypeCaption',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '180px',
+          type: 'string',
+          hidden: true,
+          cssClasses: 'col-12 col-md-12',
+          newForm: false,
+          editForm: false,
+          readonly() {
+            return true
+          },
+        },
+        key: {
+          form: {
+            caption: 'Common.Key',
+            displayOrder: 2,
+          },
+          displayOrder: 2,
+          caption: 'Common.KeyCaption',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '180px',
+          type: 'string',
+          cssClasses: 'col-12 col-md-12',
+          newForm: true,
+          editForm: true,
+          rules: [
+            function (v) {
+              return !!v || this.$t('Messages.Error.KeyRequired')
+            },
+          ],
+        },
+        value: {
+          form: {
+            caption: 'Common.ValueRequired',
+            displayOrder: 3,
+          },
+          displayOrder: 3,
+          caption: 'Common.Value',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '180px',
+          type: 'string',
+          cssClasses: 'col-12 col-md-12',
+          newForm: true,
+          editForm: true,
+          rules: [
+            function (v) {
+              return !!v || this.$t('Messages.Error.ValueRequired')
+            },
+          ],
+        },
+      },
+      template: {
+        name: '',
+        context: {
+          basePath: '/organization',
+        },
+        actions: {
+          exportCsv: {
+            hidden: true,
+          },
+        },
+      },
+      dataSource: {
+        singularEntity: 'Common.Department',
+        pluralEntity: 'Common.Departments',
+        query: generalConfiguration,
+        defaultSort: 'createdDate DESC',
+        type: 'graphql',
+        model: 'GeneralConfiguration',
+        filter(ctx) {
+          return {
+            where: {
+              type: 'CustomerType',
+            },
+          }
+        },
+        mutation(ctx) {
+          return {
+            new: {
+              type: 'CustomerType',
+            },
+          }
+        },
+      },
+      title: 'Common.MemberType',
+      type: 'list',
+    },
+    memberStatus: {
+      ui: {
+        hideDefaultHeader: false,
+        hideDefaultFooter: false,
+        showExpand: false,
+        singleExpand: false,
+        showSelect: false,
+        hideFilter: false,
+        hideSearch: true,
+      },
+      itemTitle: 'Common.MemberStatus',
+      default: false,
+      fields: {
+        type: {
+          form: {
+            caption: 'Common.Type',
+            displayOrder: 1,
+          },
+          displayOrder: 2,
+          caption: 'Common.TypeCaption',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '180px',
+          type: 'string',
+          hidden: true,
+          cssClasses: 'col-12 col-md-12',
+          newForm: false,
+          editForm: false,
+          readonly() {
+            return true
+          },
+        },
+        key: {
+          form: {
+            caption: 'Common.Key',
+            displayOrder: 2,
+          },
+          displayOrder: 2,
+          caption: 'Common.KeyCaption',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '180px',
+          type: 'string',
+          cssClasses: 'col-12 col-md-12',
+          newForm: true,
+          editForm: true,
+          rules: [
+            function (v) {
+              return !!v || this.$t('Messages.Error.KeyRequired')
+            },
+          ],
+        },
+        value: {
+          form: {
+            caption: 'Common.ValueRequired',
+            displayOrder: 3,
+          },
+          displayOrder: 3,
+          caption: 'Common.Value',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '180px',
+          type: 'string',
+          cssClasses: 'col-12 col-md-12',
+          newForm: true,
+          editForm: true,
+          rules: [
+            function (v) {
+              return !!v || this.$t('Messages.Error.ValueRequired')
+            },
+          ],
+        },
+      },
+      template: {
+        name: '',
+        context: {
+          basePath: '/organization',
+        },
+        actions: {
+          exportCsv: {
+            hidden: true,
+          },
+        },
+      },
+      dataSource: {
+        singularEntity: 'Common.MemberStatus',
+        pluralEntity: 'Common.MemberStatus',
+        query: generalConfiguration,
+        defaultSort: 'createdDate DESC',
+        type: 'graphql',
+        model: 'GeneralConfiguration',
+        filter(ctx) {
+          return {
+            where: {
+              type: 'CustomerRating',
+            },
+          }
+        },
+        mutation(ctx) {
+          return {
+            new: {
+              type: 'CustomerRating',
+            },
+          }
+        },
+      },
+      title: 'Common.MemberStatus',
+      type: 'list',
+    },
+    memberIndustry: {
+      ui: {
+        hideDefaultHeader: false,
+        hideDefaultFooter: false,
+        showExpand: false,
+        singleExpand: false,
+        showSelect: false,
+        hideFilter: false,
+        hideSearch: true,
+      },
+      itemTitle: 'Common.Industry',
+      default: false,
+      fields: {
+        type: {
+          form: {
+            caption: 'Common.Type',
+            displayOrder: 1,
+          },
+          displayOrder: 2,
+          caption: 'Common.TypeCaption',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '180px',
+          type: 'string',
+          hidden: true,
+          cssClasses: 'col-12 col-md-12',
+          newForm: false,
+          editForm: false,
+          readonly() {
+            return true
+          },
+        },
+        key: {
+          form: {
+            caption: 'Common.Key',
+            displayOrder: 2,
+          },
+          displayOrder: 2,
+          caption: 'Common.KeyCaption',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '180px',
+          type: 'string',
+          cssClasses: 'col-12 col-md-12',
+          newForm: true,
+          editForm: true,
+          rules: [
+            function (v) {
+              return !!v || this.$t('Messages.Error.KeyRequired')
+            },
+          ],
+        },
+        value: {
+          form: {
+            caption: 'Common.ValueRequired',
+            displayOrder: 3,
+          },
+          displayOrder: 3,
+          caption: 'Common.Value',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '180px',
+          type: 'string',
+          cssClasses: 'col-12 col-md-12',
+          newForm: true,
+          editForm: true,
+          rules: [
+            function (v) {
+              return !!v || this.$t('Messages.Error.ValueRequired')
+            },
+          ],
+        },
+      },
+      template: {
+        name: '',
+        context: {
+          basePath: '/organization',
+        },
+        actions: {
+          exportCsv: {
+            hidden: true,
+          },
+        },
+      },
+      dataSource: {
+        singularEntity: 'Common.Industry',
+        pluralEntity: 'Common.Industry',
+        query: generalConfiguration,
+        defaultSort: 'createdDate DESC',
+        type: 'graphql',
+        model: 'GeneralConfiguration',
+        filter(ctx) {
+          return {
+            where: {
+              type: 'Industry',
+            },
+          }
+        },
+        mutation(ctx) {
+          return {
+            new: {
+              type: 'Industry',
+            },
+          }
+        },
+      },
+      title: 'Common.Industry',
+      type: 'list',
+    },
+    memberOwnership: {
+      ui: {
+        hideDefaultHeader: false,
+        hideDefaultFooter: false,
+        showExpand: false,
+        singleExpand: false,
+        showSelect: false,
+        hideFilter: false,
+        hideSearch: true,
+      },
+      itemTitle: 'Common.Ownership',
+      default: false,
+      fields: {
+        type: {
+          form: {
+            caption: 'Common.Type',
+            displayOrder: 1,
+          },
+          displayOrder: 2,
+          caption: 'Common.TypeCaption',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '180px',
+          type: 'string',
+          hidden: true,
+          cssClasses: 'col-12 col-md-12',
+          newForm: false,
+          editForm: false,
+          readonly() {
+            return true
+          },
+        },
+        key: {
+          form: {
+            caption: 'Common.Key',
+            displayOrder: 2,
+          },
+          displayOrder: 2,
+          caption: 'Common.KeyCaption',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '180px',
+          type: 'string',
+          cssClasses: 'col-12 col-md-12',
+          newForm: true,
+          editForm: true,
+          rules: [
+            function (v) {
+              return !!v || this.$t('Messages.Error.KeyRequired')
+            },
+          ],
+        },
+        value: {
+          form: {
+            caption: 'Common.ValueRequired',
+            displayOrder: 3,
+          },
+          displayOrder: 3,
+          caption: 'Common.Value',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '180px',
+          type: 'string',
+          cssClasses: 'col-12 col-md-12',
+          newForm: true,
+          editForm: true,
+          rules: [
+            function (v) {
+              return !!v || this.$t('Messages.Error.ValueRequired')
+            },
+          ],
+        },
+      },
+      template: {
+        name: '',
+        context: {
+          basePath: '/organization',
+        },
+        actions: {
+          exportCsv: {
+            hidden: true,
+          },
+        },
+      },
+      dataSource: {
+        singularEntity: 'Common.Ownership',
+        pluralEntity: 'Common.Ownership',
+        query: generalConfiguration,
+        defaultSort: 'createdDate DESC',
+        type: 'graphql',
+        model: 'GeneralConfiguration',
+        filter(ctx) {
+          return {
+            where: {
+              type: 'CustomerOwnership',
+            },
+          }
+        },
+        mutation(ctx) {
+          return {
+            new: {
+              type: 'CustomerOwnership',
+            },
+          }
+        },
+      },
+      title: 'Common.Ownership',
+      type: 'list',
+    },
+    memberSubscriptionPlan: {
+      ui: {
+        hideDefaultHeader: false,
+        hideDefaultFooter: false,
+        showExpand: false,
+        singleExpand: false,
+        showSelect: false,
+        hideFilter: false,
+        hideSearch: true,
+      },
+      itemTitle: 'Common.SubscriptionPlan',
+      default: false,
+      fields: {
+        Name: {
+          form: {
+            caption: 'Common.Name',
+            displayOrder: 2,
+          },
+          displayOrder: 3,
+          caption: 'Common.Name',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '180px',
+          type: 'string',
+          cssClasses: 'col-12 col-md-12',
+          newForm: true,
+          editForm: true,
+        },
+        DisplayName: {
+          form: {
+            caption: 'Common.DisplayName',
+            displayOrder: 3,
+          },
+          displayOrder: 4,
+          caption: 'Common.DisplayName',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '180px',
+          type: 'string',
+          cssClasses: 'col-12 col-md-12',
+          newForm: true,
+          editForm: true,
+          rules: [
+            function (v) {
+              return !!v || this.$t('Messages.Error.ValueRequired')
+            },
+          ],
+        },
+      },
+      template: {
+        name: '',
+        context: {
+          basePath: '/organization',
+        },
+        actions: {
+          exportCsv: {
+            hidden: true,
+          },
+        },
+      },
+      dataSource: {
+        singularEntity: 'Common.SubscriptionPlan',
+        pluralEntity: 'Common.SubscriptionPlan',
+        query: product,
+        defaultSort: 'createdDate DESC',
+        type: 'graphql',
+        model: 'Product',
+        filter(ctx) {
+          return {
+            where: {},
+          }
+        },
+        mutation(ctx) {
+          return {
+            new: {},
+          }
+        },
+      },
+      title: 'Common.SubscriptionPlan',
       type: 'list',
     },
   },

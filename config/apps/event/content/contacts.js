@@ -21,7 +21,7 @@ export default {
         showExpand: false,
         singleExpand: false,
         showSelect: true,
-        hideFilter: false,
+        hideFilter: true,
         hideSearch: false,
       },
       fields: {
@@ -41,7 +41,15 @@ export default {
           cssClasses: 'col-6 col-md-6',
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.FirstNameRequired')
+              if (v && v.length && /^\s+/.test(v)) {
+                return this.$t('Messages.Error.SpaceNotAllowed')
+              } else {
+                return (
+                  !!(v && v.length) ||
+                  typeof v === 'number' ||
+                  this.$t('Messages.Error.FieldRequired')
+                )
+              }
             },
           ],
         },
@@ -61,7 +69,15 @@ export default {
           cssClasses: 'col-6 col-md-6',
           rules: [
             function (v) {
-              return !!v || this.$t('Messages.Error.LastNameRequired')
+              if (v && v.length && /^\s+/.test(v)) {
+                return this.$t('Messages.Error.SpaceNotAllowed')
+              } else {
+                return (
+                  !!(v && v.length) ||
+                  typeof v === 'number' ||
+                  this.$t('Messages.Error.FieldRequired')
+                )
+              }
             },
           ],
         },
@@ -153,6 +169,22 @@ export default {
             },
           ],
         },
+        WorkPhone: {
+          form: {
+            caption: 'Common.OtherPhone',
+            displayOrder: 7,
+          },
+          displayOrder: 7,
+          caption: 'Common.Phone',
+          searchEnable: true,
+          sortEnable: true,
+          columnWidth: '150px',
+          type: 'string',
+          hidden: true,
+          newForm: false,
+          editForm: true,
+          cssClasses: 'col-6 col-md-6',
+        },
         Email: {
           form: {
             caption: 'Common.Email',
@@ -175,22 +207,6 @@ export default {
               return /.+@.+\..+/.test(value) || 'E-mail must be valid'
             },
           ],
-        },
-        WorkPhone: {
-          form: {
-            caption: 'Common.OtherPhone',
-            displayOrder: 7,
-          },
-          displayOrder: 7,
-          caption: 'Common.Phone',
-          searchEnable: true,
-          sortEnable: true,
-          columnWidth: '150px',
-          type: 'string',
-          hidden: true,
-          newForm: false,
-          editForm: true,
-          cssClasses: 'col-6 col-md-6',
         },
         BirthDate: {
           form: {
@@ -905,7 +921,7 @@ export default {
         hideDefaultFooter: false,
         showExpand: false,
         singleExpand: false,
-        showSelect: false,
+        showSelect: true,
         hideFilter: false,
         hideSearch: true,
       },
@@ -962,6 +978,9 @@ export default {
             hidden: true,
           },
           edit: {
+            hidden: true,
+          },
+          delete: {
             hidden: true,
           },
           exportCsv: {

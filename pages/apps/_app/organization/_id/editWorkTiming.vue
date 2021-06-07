@@ -200,10 +200,15 @@ export default {
       this.formData.weekDay = this.selectedDays
         .filter((x) => x.selected)
         .map((y) => y.dayName)
+      const obj = {
+        weekDay: this.formData.weekDay,
+        AvailableStartHour: this.formData.AvailableStartHour,
+        AvailableEndHour: this.formData.AvailableEndHour,
+      }
       try {
         const res = await this.$axios.$patch(
           `${url}OrganizationInfos/${this.$route.params.id}`,
-          this.formData
+          obj
         )
         if (res) {
           this.onClose()
@@ -270,15 +275,6 @@ export default {
         const organization = formatGQLResult(data, 'OrganizationInfo')
         this.formData = { ...organization[0] }
         this.formData.id = this.$route.params.id
-        this.formData._PaymentGatewaySetting.id = this.formData
-          ._PaymentGatewaySetting.id
-          ? atob(this.formData._PaymentGatewaySetting.id).split(':')[1]
-          : ''
-        this.formData._CurrentAddress.id = this.formData._CurrentAddress.id
-          ? atob(this.formData._CurrentAddress.id).split(':')[1]
-          : ''
-        this.currency = this.formData.Currency
-        this.venueAddress = { ...organization[0]._CurrentAddress }
         this.formData.weekDay.map((x) => {
           this.selectedDays.map((y) => {
             if (x === y.dayName) {

@@ -335,12 +335,12 @@
                     ><i18n path="Common.AddTickets"
                   /></v-btn>
                   <v-checkbox
-                    :disabled="isFormProcessing"
                     v-model="TicketToggle"
+                    :disabled="isFormProcessing"
                     :label="$t('Common.TicketsNotRequiredToggle')"
                   ></v-checkbox>
                 </div>
-                <div id="res-tables" v-if="eventData.HasTickets">
+                <div v-if="eventData.HasTickets" id="res-tables">
                   <v-simple-table class="event-table">
                     <template v-slot:default>
                       <thead class="e-thead">
@@ -402,6 +402,7 @@
                               outlined
                               dense
                               value
+                              :rules="[rules.required]"
                               type="Number"
                               min="0"
                               onkeydown="return event.keyCode !== 69 && event.keyCode !== 189"
@@ -449,7 +450,7 @@
                               <template v-slot:message="{ message, key }">
                                 <v-tooltip bottom>
                                   <template v-slot:activator="{ on, attrs }">
-                                    <span v-bind="attrs" v-on="on" :key="key">{{
+                                    <span :key="key" v-bind="attrs" v-on="on">{{
                                       message
                                     }}</span>
                                   </template>
@@ -556,6 +557,7 @@
         <v-btn
           v-if="currentTab > 1 && !isEventCreate && !isEventPublish"
           depressed
+          :disabled="isSaveClicked"
           color="grey lighten-2"
           @click="prev()"
           ><i18n path="Drawer.Prev"
@@ -648,6 +650,7 @@ export default {
       isEventCreate: false,
       isEventPublish: false,
       isMap: false,
+      isSaveClicked: false,
       locationTypeOptions: [],
       currentLocation: {},
       locationsVisibleOnMap: '',
@@ -961,6 +964,7 @@ export default {
         this.isFormProcessing = false
         this.isTicket = true
         this.isMap = false
+        this.isSaveClicked = false
         this.valid = false
         this.currentTab = 1
       }, 3000)
@@ -1226,6 +1230,7 @@ export default {
         )
       })
       this.$refs.form.validate()
+      this.isSaveClicked = true
       if (!isValidTicket.includes(false)) {
         this.isFormProcessing = true
         this.setLoationType()

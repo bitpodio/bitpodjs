@@ -192,6 +192,27 @@
           <v-divider></v-divider>
           <v-row>
             <v-col class="col-md-12 col-12">
+              <i18n path="Common.Website" class="body-2 text--secondary" />
+              <div class="body-1">{{ formatField(data.contact.Website) }}</div>
+            </v-col>
+            <v-col class="col-md-12 col-12">
+              <i18n path="Common.LogoURL" class="body-2 text--secondary" />
+              <div class="body-1">{{ formatField(data.contact.ImageURL) }}</div>
+            </v-col>
+            <v-col class="col-md-12 col-12">
+              <i18n path="Common.Tags" class="body-2 text--secondary" />
+              <div class="body-1">
+                <v-chip
+                  v-for="Tags in data.contact.Tags"
+                  :key="Tags"
+                  small
+                  class="ma-1"
+                >
+                  {{ Tags }}
+                </v-chip>
+              </div>
+            </v-col>
+            <v-col class="col-md-12 col-12">
               <i18n path="Common.DateOfBirth" class="body-2 text--secondary" />
               <div class="body-1">{{ formatDate(data.contact.BirthDate) }}</div>
             </v-col>
@@ -449,8 +470,10 @@ export default {
       },
       update(data) {
         const contact = formatGQLResult(data, 'Contact')
-        this.lastPicId =
-          contact[0].contactPic[contact[0].contactPic.length - 1] || ''
+        if (contact.length > 0) {
+          this.lastPicId =
+            contact[0].contactPic[contact[0].contactPic.length - 1] || ''
+        }
         return {
           contact: contact.length > 0 ? contact[0] : {},
         }

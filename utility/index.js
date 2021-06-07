@@ -5,6 +5,7 @@ import startOfTomorrow from 'date-fns/startOfTomorrow'
 import endOfTomorrow from 'date-fns/endOfTomorrow'
 import startOfYesterday from 'date-fns/startOfYesterday'
 import endOfYesterday from 'date-fns/endOfYesterday'
+import currencyFormatter from 'currency-formatter'
 import startOfDay from 'date-fns/startOfDay'
 import endOfDay from 'date-fns/endOfDay'
 import MissingComponent from './missing-component.vue'
@@ -309,14 +310,18 @@ export const configLoaderMixin = {
   },
   data() {
     return {
-      token: this.$auth.$storage.getCookies()['auth._token.bitpod'],
+      token: '',
       contents: null,
     }
   },
   async created() {
-    console.debug('access token received from the cookie', this.token)
     const strategy = this.$auth.$storage.getCookies()['auth.strategy']
-    if (strategy === 'bitpod') {
+    if (this.$auth.$storage.getCookies()['auth._token.bitpod']) {
+      this.token = this.$auth.$storage.getCookies()['auth._token.bitpod']
+    } else {
+      this.token = this.$auth.$storage.getCookies()['auth._token.google']
+    }
+    if (strategy === 'bitpod' || strategy === 'google') {
       if (
         this.token.split(' ')[1] !==
         this.$auth.$storage.getCookies()['apollo-token']
@@ -325,15 +330,44 @@ export const configLoaderMixin = {
         if (token) {
           token = token.split(' ')[1]
         }
-        await this.$apolloHelpers.onLogin(token, undefined, { expires: 7 })
+        await this.$apolloHelpers.onLogin(
+          token,
+          undefined,
+          { expires: 7 },
+          true
+        )
       }
     }
+    this.postUrlTracking()
   },
   async mounted() {
     const contentFactory = await import(
       `~/config/apps/${this.$route.params.app}/content`
     )
     this.contents = contentFactory.default
+  },
+  methods: {
+    postUrlTracking() {
+      if (this.$store.state.parseUrl !== this.$route.path) {
+        const murmurhash = require('murmurhash')
+        const checkId = murmurhash.v2(
+          this.$auth.user.data.email,
+          this.$config.seedValue
+        )
+        this.$store.commit('googleTrackingId', checkId)
+        this.$store.commit('setTrackingPath', this.$route.path)
+        setTimeout(() => {
+          if (process.client) {
+            if (window && window.ga) {
+              console.debug('URL tracking start for url', this.$route.path)
+              window.ga('create', this.$config.gaTrackingCode, 'auto')
+              window.ga('set', 'userId', checkId)
+              window.ga('send', 'pageview', this.$route.path)
+            }
+          }
+        }, 1500)
+      }
+    },
   },
 }
 
@@ -360,4 +394,12 @@ export function postGaData(action, formTitle) {
   }
   console.debug('Post Data', obj)
   window.ga('send', obj)
+}
+
+export function getPriceWithCurrency(price, currency) {
+  const currencyPrice = currencyFormatter.format(price, { code: currency })
+  const totalPrice = currencyFormatter.unformat(currencyPrice, {
+    code: currency,
+  })
+  return totalPrice
 }

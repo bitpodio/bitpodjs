@@ -17,7 +17,9 @@
               :elevation="hover ? 1 : 0"
               class="ma-3 ma-md-10 ml-0 mt-0 ml-md-0 mt-md-0 seat-maps"
               :class="
-                !item.Status && !hover
+                item.MetaData.isActive === false && !hover
+                  ? 'on-hover'
+                  : !item.Status && !hover
                   ? 'on-hover'
                   : !item.Status && hover
                   ? ''
@@ -52,7 +54,35 @@
                   >
                     {{ $t('Drawer.Setup') }}</v-btn
                   >
-
+                  <v-btn
+                    v-if="
+                      item.Status && hover && item.MetaData.isActive === false
+                    "
+                    text
+                    depressed
+                    small
+                    color="grey"
+                    @click="onSetup(item)"
+                  >
+                    <i18n path="Common.Reconnect"
+                  /></v-btn>
+                  <div
+                    v-if="
+                      item.Status &&
+                      !hover &&
+                      !item.MetaData.isActive &&
+                      item.MetaData.oauthType === 'Oauth'
+                    "
+                    class="body-1 grey--text text--darken-1 d-block text-truncate mt-1"
+                  >
+                    <i18n path="Common.Expired" />
+                  </div>
+                  <div
+                    v-if="!item.Status && !hover && item.MetaData.isActive"
+                    class="body-1 grey--text text--darken-1 d-block text-truncate mt-1"
+                  >
+                    {{ item.ProfileName }}
+                  </div>
                   <div
                     v-if="!item.Status && !hover"
                     class="body-1 grey--text text--darken-1 d-block text-truncate mt-1"
@@ -63,7 +93,7 @@
                     <template v-slot:activator="{ on, attrs }">
                       <span v-bind="attrs" v-on="on"
                         ><div
-                          v-if="item.Status"
+                          v-if="displayProfileName(item)"
                           class="body-1 grey--text text--darken-1 d-block text-truncate service-text mt-1"
                         >
                           {{
@@ -82,7 +112,14 @@
                   </v-tooltip>
                 </div>
               </v-card-text>
-              <v-card-actions v-if="item.Status" class="pa-0 ma-0 pb-1">
+              <v-card-actions
+                v-if="
+                  item.MetaData.oauthType === 'Oauth'
+                    ? item.Status && item.MetaData.isActive
+                    : item.Status
+                "
+                class="pa-0 ma-0 pb-1"
+              >
                 <div></div>
                 <v-spacer></v-spacer>
                 <div class="box-actions pa-1 pb-0 mt-n14">
@@ -106,10 +143,7 @@
 
                     <v-list dense>
                       <v-list-item
-                        v-if="
-                          item.Status === 'Connected' ||
-                          item.Status === 'Disconnected'
-                        "
+                        v-if="showEdit(item)"
                         @click="editForm(item.ServiceId)"
                       >
                         <v-list-item-icon class="mr-2">
@@ -219,28 +253,54 @@ export default {
       dialogBox: false,
       dialogText: '',
       isRefreshed: false,
+      hideEditForm: ['sage300', 'hubspot', 'gmail', 'zoom'],
     }
   },
   mounted() {
-    this.items.forEach(async (e) => {
-      if (!this.Category.includes(e.MetaData.Category)) {
-        this.Category.push(e.MetaData.Category)
-      }
-      const serviceFormName = e.ServiceId && e.ServiceId.toLowerCase()
-      this.component[serviceFormName] = await this.loadTemplate([
-        `templates/grids/eventIntegration-grid/${serviceFormName}.vue`,
-        `templates/grids/eventIntegration-grid/index.vue`,
-      ])
-      this.editformData[serviceFormName] = e.MetaData
-      this.connectionData[serviceFormName] = e
-      if (e.Status === 'Connected') {
-        this.connectionStatus[serviceFormName] = true
-      } else {
-        this.connectionStatus[serviceFormName] = false
-      }
-    })
+    this.initialData()
   },
   methods: {
+    initialData() {
+      this.items.forEach(async (e) => {
+        if (!this.Category.includes(e.MetaData.Category)) {
+          this.Category.push(e.MetaData.Category)
+        }
+        const serviceFormName = e.ServiceId && e.ServiceId.toLowerCase()
+        this.component[serviceFormName] = await this.loadTemplate([
+          `templates/grids/eventIntegration-grid/${serviceFormName}.vue`,
+          `templates/grids/eventIntegration-grid/index.vue`,
+        ])
+        this.editformData[serviceFormName] = e.MetaData
+        this.connectionData[serviceFormName] = e
+        if (e.Status === 'Connected') {
+          this.connectionStatus[serviceFormName] = true
+        } else {
+          this.connectionStatus[serviceFormName] = false
+        }
+      })
+    },
+    showEdit(item) {
+      if (item.Status) {
+        if (this.hideEditForm.includes(item.ServiceId)) {
+          return false
+        } else {
+          return true
+        }
+      }
+    },
+    displayProfileName(item) {
+      if (item.MetaData.oauthType) {
+        if (item.Status && item.MetaData.isActive) {
+          return true
+        } else {
+          return false
+        }
+      } else if (item.Status) {
+        return true
+      } else {
+        return false
+      }
+    },
     editForm(serviceId) {
       this.selectedServiceId = serviceId && serviceId.toLowerCase()
       this.formEditData = this.editformData[this.selectedServiceId]
@@ -283,7 +343,16 @@ export default {
           e
         )
       }
-
+      const currConnection = this.items.filter((e) => {
+        if (e.ServiceId === itemObj.ServiceId) {
+          return e
+        }
+      })
+      if (currConnection[0].MetaData.Category !== 'Payment') {
+        connobj.Status = currConnection[0].Status
+          ? currConnection[0].Status
+          : 'Disconnected'
+      }
       connobj.ProfileId = itemObj.ProfileId
       connobj.ProfileName = itemObj.ProfileName
       connobj.MetaData = formData
@@ -292,12 +361,20 @@ export default {
       }
       try {
         const url = this.$bitpod.getApiUrl()
-        const res = await this.$axios.$patch(`${url}Connections`, connobj)
+        let res
+        if (itemObj.id) {
+          res = await this.$axios.$patch(`${url}Connections`, connobj)
+        } else {
+          res = await this.$axios.$post(`${url}Connections`, connobj)
+        }
         if (res) {
           this.connectionStatus[this.selectedServiceId] = true
           this.refresh()
           this.snackbarText = this.$t('Messages.Success.ConnectionSuccessfully')
           this.snackbar = true
+          const serviceFormName = res.ServiceId && res.ServiceId.toLowerCase()
+          this.editformData[serviceFormName] = res.MetaData
+          this.connectionStatus[serviceFormName] = res.Status === 'Connected'
         }
       } catch (e) {
         console.error(
@@ -309,27 +386,11 @@ export default {
     },
     onSetup(item) {
       if (item.MetaData.oauthType === 'Oauth') {
-        const options = {
-          AccessType: 'private',
-          isConnectionModelStore: true,
-          Name: item.ServiceId,
-          ServiceId: item.ServiceId,
-          TenantId: 'event',
-          bpmnServerURL: `https://${this.$config.axios.backendBaseUrl}/bpmn/`,
-          OwnerId: this.$auth.$state.user.data.email,
-          loginUser: this.$auth.$state.user.data.email,
-          OrgId: this.$store.state.currentOrg.id,
-          accessToken: this.$apolloHelpers.getToken(),
-          MetaData: `{"eventId":"${this.$route.query.event || ''}"}`,
+        if (item.id) {
+          this.deleteOauthConnection(item)
+        } else {
+          this.setupOauthConnection(item)
         }
-        openAuthPopups(options, (e) => {
-          console.error('openAuthPopups response', e)
-          this.refresh()
-          this.snackbarText = this.$t(
-            'Messages.Success.ConnectionSetupSuccessfully'
-          )
-          this.snackbar = true
-        })
       } else {
         this.selectedServiceId = item.ServiceId && item.ServiceId.toLowerCase()
         this.item = {}
@@ -337,23 +398,30 @@ export default {
       }
     },
     async onDelete(item) {
-      const id = item.id
-      if (id) {
-        try {
-          const url = this.$bitpod.getApiUrl()
-          const res = await this.$axios.$delete(`${url}Connections/${id}`)
-          if (res) {
-            this.snackbarText = this.$t(
-              'Messages.Success.ConnectionDeletedSuccessfully'
+      const res = await this.$refs.confirm.open(
+        this.$t('Messages.Warn.DeleteConnection'),
+        this.$t('Messages.Warn.DeleteConnectionMessage'),
+        { color: 'error lighten-1' }
+      )
+      if (res) {
+        const id = item.id
+        if (id) {
+          try {
+            const url = this.$bitpod.getApiUrl()
+            const res = await this.$axios.$delete(`${url}Connections/${id}`)
+            if (res) {
+              this.snackbarText = this.$t(
+                'Messages.Success.ConnectionDeletedSuccessfully'
+              )
+              this.snackbar = true
+              this.refresh()
+            }
+          } catch (e) {
+            console.error(
+              'Error in config/templates/grid/eventIntegration-grid/column-integrate.vue while making a axios call to Connection model from method onDelete',
+              e
             )
-            this.snackbar = true
-            this.refresh()
           }
-        } catch (e) {
-          console.error(
-            'Error in config/templates/grid/eventIntegration-grid/column-integrate.vue while making a axios call to Connection model from method onDelete',
-            e
-          )
         }
       }
     },
@@ -462,6 +530,44 @@ export default {
           }
         }
       }
+    },
+    async deleteOauthConnection(item) {
+      const url = `${this.$bitpod.getApiUrl()}Connections/${item.id}`
+      try {
+        const res = await this.$axios.$delete(url)
+        if (res) {
+          this.setupOauthConnection(item)
+        }
+      } catch (e) {
+        console.error(
+          'Error in config/templates/grid/eventIntegration-grid/column-integrate.vue while making a axios call to Connection model from method onDelete',
+          e
+        )
+      }
+    },
+    setupOauthConnection(item) {
+      const options = {
+        AccessType: 'private',
+        isConnectionModelStore: true,
+        Name: item.ServiceId,
+        ServiceId: item.ServiceId,
+        TenantId: 'event',
+        bpmnServerURL: `https://${this.$config.axios.backendBaseUrl}/bpmn/`,
+        OwnerId: this.$auth.$state.user.data.email,
+        loginUser: this.$auth.$state.user.data.email,
+        OrgId: this.$store.state.currentOrg.id,
+        accessToken: this.$apolloHelpers.getToken(),
+        MetaData: `{"isActive":true}`,
+      }
+
+      openAuthPopups(options, (e) => {
+        console.error('openAuthPopups response', e)
+        this.refresh()
+        this.snackbarText = this.$t(
+          'Messages.Success.ConnectionSetupSuccessfully'
+        )
+        this.snackbar = true
+      })
     },
   },
 }

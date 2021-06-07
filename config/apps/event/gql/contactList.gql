@@ -11,6 +11,8 @@ query($filters: JSON, $where: JSON) {
           Organization
           LastName
           Job
+          Department
+          Type
           Gender
           FullName
           FirstName
@@ -26,6 +28,9 @@ query($filters: JSON, $where: JSON) {
           AttachmentId
           contactPic
           accesskeyId
+          Website
+          ImageURL
+          Tags
           accesskey {
             id
             accesskey

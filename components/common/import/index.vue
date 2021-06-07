@@ -22,7 +22,10 @@
             </h2>
             <v-spacer></v-spacer>
             <div>
-              <v-btn icon @click=";(dialog = false), (fileList = [])">
+              <v-btn
+                icon
+                @click=";(dialog = false), (fileList = []), (errorMessage = '')"
+              >
                 <v-icon>mdi-close</v-icon>
               </v-btn>
             </div>
@@ -37,13 +40,7 @@
               <a :href="getDownloadLink()"
                 ><i18n path="Common.DownloadSampleFile"
               /></a>
-              <div
-                :class="
-                  modelName === 'Contact'
-                    ? fieldTableContact
-                    : fieldTableAttendee
-                "
-              >
+              <div :class="fieldTableContact">
                 <v-simple-table dense class="wrapper">
                   <template v-slot:default>
                     <thead>
@@ -54,11 +51,8 @@
                         <th class="text-left element">
                           <i18n path="Common.DataType" />
                         </th>
-                        <th
-                          v-if="modelName === 'Contact'"
-                          class="text-left element"
-                        >
-                          Required
+                        <th class="text-left element">
+                          <i18n path="Common.Required" />
                         </th>
                       </tr>
                     </thead>
@@ -66,7 +60,7 @@
                       <tr v-for="(item, index) in templateData" :key="index">
                         <td>{{ item.Field }}</td>
                         <td class="element"><i18n path="Common.String" /></td>
-                        <td v-if="modelName === 'Contact'" class="element">
+                        <td class="element">
                           <v-checkbox
                             v-model="item.Required"
                             :success="item.Required"
@@ -106,6 +100,9 @@
                     fileList.length ? fileList[0].name : $t('Common.FileChosen')
                   }}
                 </div>
+              </div>
+              <div v-if="errorMessage !== ''" class="error--text">
+                {{ errorMessage }}
               </div>
             </div>
           </v-card-text>
@@ -176,6 +173,7 @@ export default {
       fieldTableContact: 'fieldTableContact my-2',
       fieldTableAttendee: 'fieldTable my-2',
       statusMessage: '',
+      errorMessage: '',
     }
   },
   watch: {
@@ -196,6 +194,7 @@ export default {
       this.selectedFile = data
     },
     async importContacts() {
+      this.errorMessage = ''
       this.keyPressed = true
       this.statusMessage = this.$t('Messages.Success.ContactImportSuccess')
       this.fileList = []
@@ -231,19 +230,30 @@ export default {
             )
             if (importJobResponse) {
               let success = 0
-              const importJobId = importJobResponse.data.id
               while (success !== 1) {
                 const response = await this.$axios.get(
-                  `${url}ImportJobs/${importJobId}`
+                  `${url}jobDetails/${obj.jobId}`
                 )
-                if (response.data.Status === 'Success') {
+                if (response.data.processStatus === 'Success') {
                   this.dialog = false
                   success = 1
                   this.snackbarText = this.$t('Common.AttendeeImportSuccess')
                   this.snackbar = true
-                } else if (response.data.Status === 'Failure') {
-                  this.snackbarText = this.$t('Common.AttendeeImportFailed')
-                  this.snackbar = true
+                  this.fileList = []
+                  this.keyPressed = false
+                } else if (response.data.processStatus === 'Failure') {
+                  if (response.data.processSummary.errorDetails) {
+                    this.errorMessage = this.$t(
+                      'Messages.Error.ImportFailedMessage'
+                    )
+                  } else if (response.data.errorCode) {
+                    this.errorMessage = this.$t(
+                      'Messages.Error.AttendeeImportFailed'
+                    )
+                  }
+                  this.statusMessage = this.$t('Messages.Error.ImportFailed')
+                  this.keyPressed = false
+                  this.fileList = []
                   break
                 }
               }
@@ -262,11 +272,25 @@ export default {
                 success = 1
                 this.snackbarText = this.$t('Messages.Success.ContactImported')
                 this.snackbar = true
+                this.fileList = []
+                this.keyPressed = false
               } else if (response.data.processStatus === 'Failure') {
+                if (response.data.processSummary.errorDetails) {
+                  this.errorMessage = this.$t(
+                    'Messages.Error.ImportFailedMessage'
+                  )
+                } else if (response.data.errorCode) {
+                  this.errorMessage = this.$t(
+                    'Messages.Error.DuplicateErrorMessage'
+                  )
+                }
+                this.statusMessage = this.$t('Messages.Error.ImportFailed')
                 this.snackbarText = this.$t(
                   'Messages.Success.ContactImportedFailed'
                 )
                 this.snackbar = true
+                this.keyPressed = false
+                this.fileList = []
                 break
               }
             }
@@ -279,9 +303,6 @@ export default {
           e
         )
       }
-      this.dialog = false
-      this.fileList = []
-      this.keyPressed = false
     },
   },
 }
@@ -294,7 +315,7 @@ export default {
   width: 220px;
 }
 .fieldTableContact {
-  width: 290px;
+  width: 310px;
 }
 .required {
   position: relative;

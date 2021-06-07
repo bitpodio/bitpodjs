@@ -542,8 +542,17 @@ export default {
           : this.$t('Common.NewScheduleATask')
       postGaData(this.$t('Drawer.Save'), label)
       this.isSaveButtonDisabled = true
-      const eventId = this.$route.params.id
       const baseUrl = this.$bitpod.getApiUrl()
+      let url
+      if (this.$route.params.app === 'event') {
+        const eventId = this.$route.params.id
+        url = `${baseUrl}Events/${eventId}/crmactivity`
+      }
+
+      if (this.$route.params.app === 'member') {
+        const customerId = this.$route.params.id
+        url = `${baseUrl}Customers/${customerId}/customerCrmActivity`
+      }
       this.task.Day = parseInt(this.Day)
       this.task.Type = 'Scheduled'
       this.task.DueDate = this.dueDate
@@ -557,16 +566,13 @@ export default {
             }
           )
         } else {
-          res = await this.$axios.$post(
-            `${baseUrl}Events/${eventId}/crmactivity`,
-            {
-              ...this.task,
-            }
-          )
+          res = await this.$axios.$post(`${url}`, {
+            ...this.task,
+          })
         }
       } catch (error) {
         console.log(
-          `Error in task grid schedule a task on Save function - context: eventId - ${eventId} `
+          `Error in task grid schedule a task on Save function - context: `
         )
       }
       if (res) {
