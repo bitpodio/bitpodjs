@@ -876,6 +876,8 @@
     "Reconnect": "התחבר מחדש",
     "Expired": "לא בתוקף",
     "Esign": "סימןאלקטרוני",
+    "Document": "מסמך",
+    "EsignTemplate": "תבנית eSignature",
     "SendDocforeSign": "מסמך חדש ל- signture",
     "NewESignatureDocument": "מסמך eSignature חדש",
     "SelectRecipients": "מרשימת אנשי הקשר למטה בחר באנשי הקשר שצריכים לקבל את המסמך שייחתם.",

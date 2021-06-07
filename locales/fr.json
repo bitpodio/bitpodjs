@@ -874,6 +874,8 @@
     "Reconnect": "Reconnecter",
     "Expired": "Expiré",
     "Esign": "ESign",
+    "Document": "Document",
+    "EsignTemplate": "modèle de eSignature",
     "SendDocforeSign": "Nouveau document pour la signature",
     "NewESignatureDocument": "Nouveau document de signature électronique",
     "SelectRecipients": "Dans la liste de contacts ci-dessous, sélectionnez les contacts qui doivent recevoir le document à signer.",
