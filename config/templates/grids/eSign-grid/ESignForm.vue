@@ -1200,6 +1200,7 @@ export default {
         if (response) {
           this.$emit('update:newTemplateDialog', false)
           this.refresh()
+          this.$eventBus.$emit('eventInvites-grid-refresh', 'eSign')
         }
       } catch (err) {
         console.error(
