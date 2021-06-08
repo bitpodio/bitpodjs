@@ -381,7 +381,6 @@ export default {
       dialog: false,
       notifications: false,
       sound: true,
-      tabs: null,
       account: false,
       message: false,
       valid: false,
@@ -412,19 +411,9 @@ export default {
           to: '/apps/admin/list/marketingtemplates/template',
         },
         {
-          icon: 'fa fa-id-badge',
-          text: 'Badges Templates',
-          to: '/apps/admin/list/badge/badge',
-        },
-        {
           icon: 'fa fa-file-text-o',
           text: 'Registration Form',
           to: '/apps/admin/list/registrationformdetails/registration form',
-        },
-        {
-          icon: 'fa fa-ticket',
-          text: 'Ticket Templates',
-          to: '/apps/admin/list/printedtickets/printed-tickets',
         },
         { heading: 'Security' },
         {
