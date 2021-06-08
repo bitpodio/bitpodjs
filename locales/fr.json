@@ -873,7 +873,8 @@
     "SelectingJPYCurrency": "L'arrondi décimal ne s'applique pas aux {currency}",
     "Reconnect": "Reconnecter",
     "Expired": "Expiré",
-    "Esign":"ESign",
+    "Esign": "ESign",
+    "SendDocforeSign": "Nouveau document pour la signature",
     "NewESignatureDocument": "Nouveau document de signature électronique",
     "SelectRecipients": "Dans la liste de contacts ci-dessous, sélectionnez les contacts qui doivent recevoir le document à signer.",
     "CreateNewSignatureTemplateDescription": "Un endroit où vous pouvez ajouter un nouveau modèle de document.",
@@ -999,8 +1000,8 @@
   },
   "Messages": {
     "Error": {
-      "DiscountCodeError":"Code de réduction en double, veuillez saisir un nouveau code de réduction",
-      "SpaceNotAllowed":"Espace non autorisé au départ",
+      "DiscountCodeError": "Code de réduction en double, veuillez saisir un nouveau code de réduction",
+      "SpaceNotAllowed": "Espace non autorisé au départ",
       "NumberCannotBeNegative": "Nombre négatif non accepté",
       "EventNameEmpty": "Event name cannot be empty",
       "SizeRequired": "La taille est requise",
@@ -1076,6 +1077,7 @@
       "CreateOrgCatch": "Cette organisation est utilisée ou peut être supprimée de manière réversible. Essayez avec un nouveau nom.",
       "CreateOrgFull": "Échec de la création de votre organisation.",
       "MemberExists": "Le membre existe déjà",
+      "UserExists": "L'utilisateur existe déjà!",
       "ContactExists": "Le contact existe déjà!",
       "ImportFailed": "L’exécution de l’importation a échoué",
       "ImportFailedMessage": "Le fichier csv n'est pas conforme au format accepté. Veuillez consulter l'exemple de fichier fourni ci-dessus.",
@@ -1086,8 +1088,8 @@
       "RequestStartDate": "La date de début de la demande ne doit pas être inférieure à la date actuelle"
     },
     "Warn": {
-      "DeleteConnection":"Supprimer la connexion",
-      "DeleteConnectionMessage":"Voulez-vous supprimer cette connexion ?",
+      "DeleteConnection": "Supprimer la connexion",
+      "DeleteConnectionMessage": "Voulez-vous supprimer cette connexion ?",
       "UniqueLinkFormat": "Minuscules lettres alphanumériques uniquement",
       "OverLapSessionMsg": "Cette session chevauche une autre session, êtes-vous sûr?  Cliquez sur Oui pour créer et annuler pour l'annuler.",
       "DeleteActivity": "Voulez-vous vraiment supprimer cette activité?",
@@ -1096,6 +1098,8 @@
       "CancelCheckin": "Voulez-vous annuler cet enregistrement?",
       "DeleteTicket": "Voulez-vous supprimer ce ticket?",
       "DeleteTemplate": "Voulez-vous supprimer ce modèle?",
+      "DeleteSponsor": "Supprimer le parrain?",
+      "DeleteSponsorMessage": "Voulez-vous supprimer ce parrain?",
       "DeleteBadge": "Voulez-vous supprimer ce badge?",
       "DeleteAccessKey": "Voulez-vous supprimer cette clé d'accès?",
       "DeleteEvent": "Voulez-vous supprimer cet événement?",

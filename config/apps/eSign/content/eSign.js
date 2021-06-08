@@ -87,7 +87,7 @@ export default {
           where: {},
         },
       },
-      title: 'E-Sign-Request',
+      title: 'All',
       type: 'list',
     },
     eSignCompleted: {
@@ -174,7 +174,7 @@ export default {
           },
         },
       },
-      title: 'E-Sign-Request',
+      title: 'Completed',
       type: 'list',
     },
     eSignInprogress: {
@@ -261,7 +261,7 @@ export default {
           },
         },
       },
-      title: 'E-Sign-Request',
+      title: 'Out for Signature',
       type: 'list',
     },
     eSignDeclined: {
@@ -348,7 +348,7 @@ export default {
           },
         },
       },
-      title: 'E-Sign-Request',
+      title: 'Declined',
       type: 'list',
     },
     InviteContacts: {
@@ -432,6 +432,7 @@ export default {
         hideFilter: false,
         hideSearch: true,
       },
+      hidden: true,
       default: true,
       fields: {
         FullName: {

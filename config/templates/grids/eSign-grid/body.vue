@@ -1,59 +1,13 @@
 <template>
   <div>
     <v-flex class="greybg">
-      <v-col class="d-flex greybg pt-10 flex-row seatmap-inner align-center">
-        <v-text class="text-h5"><i18n path="Common.ESignature" /></v-text>
-      </v-col>
-      <v-col class="d-flex greybg pt-4 flex-row seatmap-inner align-center">
-        <div class="d-flex">
-          <div v-if="$route.params.viewName === 'eSign'" class="fs-18 min-h36">
-            <i18n path="Common.All" />
-          </div>
-          <div
-            v-else-if="$route.params.viewName === 'eSignCompleted'"
-            class="fs-18 min-h36"
-          >
-            <i18n path="Common.Completed" />
-          </div>
-          <div
-            v-else-if="$route.params.viewName === 'eSignInprogress'"
-            class="fs-18 min-h36"
-          >
-            <i18n path="Common.OutForSignature" />
-          </div>
-          <div v-else class="fs-18 min-h36">
-            <i18n path="Common.Declined" />
-          </div>
-          <v-menu offset-y transition="slide-y-transition" bottom>
-            <template v-slot:activator="{ on, attrs }">
-              <v-btn icon v-bind="attrs" v-on="on">
-                <v-icon class="fs-30">mdi-chevron-down</v-icon>
-              </v-btn>
-            </template>
-
-            <v-list>
-              <div v-for="(item, index) in requestSummaryData" :key="index">
-                <v-list-item :to="eSignViews(item.view)">
-                  {{ item.caption }}
-                </v-list-item>
-              </div>
-            </v-list>
-          </v-menu>
-        </div>
-        <v-text class="pl-2 fs-18 min-h36"
-          ><i18n path="Common.SignOrGetSignatures"
-        /></v-text>
-        <v-btn
-          color="primary"
-          max-width="64px"
-          text
-          depressed
-          class="ml-4"
-          @click="handleNewTemplate"
-          ><v-icon>mdi-plus</v-icon><i18n path="Common.New"
-        /></v-btn>
-      </v-col>
-      <v-col cols="12" class="overflowHidden px-0 seatmap-inner">
+      <div class="esign-action">
+        <v-btn text small @click="handleNewTemplate">
+          <v-icon left class="fs-16">mdi-plus</v-icon
+          ><i18n path="Common.SendDocforeSign" />
+        </v-btn>
+      </div>
+      <v-col cols="12" class="overflowHidden px-0">
         <div
           style="width: 100%;"
           :class="{
@@ -105,7 +59,7 @@
           </div>
         </div>
       </v-col>
-      <v-col class="d-flex flex-wrap greybg pa-0 pt-10 seatmap-inner">
+      <v-col class="d-flex flex-wrap greybg pa-0 pt-10">
         <v-col
           v-for="item in items"
           :key="item.id"
@@ -240,13 +194,7 @@
       </v-col>
     </v-flex>
     <div v-if="dialog">
-      <ESignForm
-        :new-template-dialog.sync="dialog"
-        :refresh="refresh"
-        template-name="ESign Offer Letter"
-        :recipient-list="testRecipientList"
-        :template-data="testTemplateData"
-      />
+      <ESignForm :new-template-dialog.sync="dialog" :refresh="refresh" />
     </div>
   </div>
 </template>
@@ -302,45 +250,6 @@ export default {
           view: 'eSignDeclined',
         },
       ],
-      testRecipientList: [
-        { FullName: 'Test', Email: 'test@test.com', type: 'HR' },
-        { FullName: 'Sample', Email: 'sample@sample.com', type: 'Candidate' },
-      ],
-      testTemplateData: {
-        today: 'date',
-        Employee: {
-          FirstName: 'first',
-          LastName: 'last',
-          _CurrentAddress: { AddressLine: 'address' },
-          Designation: 'new',
-          Location: 'Pune',
-        },
-        ctc: '1000',
-        joiningDate: '04/02/2000',
-        acceptByDate: '09/04/2023',
-        HR: { FirstName: 'HR', LastName: 'Last', Designation: 'HR' },
-        basic_annual: '2000',
-        basic: '200',
-        hra_annual: '53798',
-        hra: '8998',
-        lta_annual: '42342',
-        lta: '4232',
-        ca_annual: '534543',
-        ca: '534',
-        mr_annual: '534',
-        mr: '53434',
-        sa_annual: '543534',
-        sa: '534',
-        total_annual: '534543',
-        total: '435543',
-        bonus: '3453',
-        performanceBonus: '3534',
-        pt_annual: '53453',
-        pt: '534534',
-        ctc_monthly: '45334',
-        workaddress: 'Pune',
-        organizationPhone: '432423',
-      },
     }
   },
   async created() {
@@ -404,6 +313,12 @@ export default {
 </script>
 
 <style scoped>
+.esign-action {
+  position: absolute;
+  top: -58px;
+  display: inline-flex !important;
+  right: 170px;
+}
 .seat-maps {
   height: 125px;
   width: 155px;
@@ -419,10 +334,6 @@ export default {
 }
 .seat-maps:hover .box-actions {
   display: block;
-}
-.seatmap-inner {
-  max-width: 70%;
-  margin: auto;
 }
 .tile-pattern {
   background-size: cover;
@@ -476,10 +387,5 @@ export default {
   font-size: 14px !important;
   padding: 0.5em !important;
   background-color: white !important;
-}
-@media (max-width: 600px) {
-  .seatmap-inner {
-    max-width: 100%;
-  }
 }
 </style>

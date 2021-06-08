@@ -426,9 +426,6 @@ export default {
       },
     }
   },
-  mounted() {
-    this.getTimeSlots()
-  },
   methods: {
     goBack() {
       this.$router.back()
@@ -756,7 +753,7 @@ export default {
           data.Session.SessionFind &&
           data.Session.SessionFind.edges[0] &&
           data.Session.SessionFind.edges[0].node &&
-          data.Session.SessionFind.edges[0].node._intervals
+          data.Session.SessionFind.edges[0].node._Exceptions
       },
       error(error) {
         this.error = error
@@ -821,6 +818,7 @@ export default {
         this.calendarOptions.events = this.formattedEvents(
           data && data.Session && data.Session.SessionFullcalendarEvents
         )
+        this.getTimeSlots()
       },
       error(error) {
         this.error = error

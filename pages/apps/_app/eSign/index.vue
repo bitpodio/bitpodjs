@@ -2,7 +2,7 @@
   <div>
     <iframe
       id="signature-app"
-      src="https://signature.zapto.org"
+      :src="signatureUrl"
       width="100%"
       @load="sendData"
     />
@@ -17,6 +17,11 @@
 <script>
 export default {
   layout: 'public',
+  computed: {
+    signatureUrl() {
+      return `https://${this.$config.axios.signatureUrl}`
+    },
+  },
   beforeMount() {
     window.addEventListener('message', this.handleSubmitDocument)
   },
