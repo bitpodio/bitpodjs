@@ -1,23 +1,91 @@
 <template>
   <v-container fluid class="pa-0">
+    <v-dialog v-model="updateRequestDataDialog" persistent max-width="600px">
+      <v-sheet>
+        <v-card-title
+          class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
+        >
+          <h2 class="black--text pt-5 pb-4 font-weight-regular text-h5">
+            Options
+          </h2>
+          <v-spacer></v-spacer>
+          <div>
+            <v-btn icon @click="updateRequestDataDialog = false">
+              <v-icon>mdi-close</v-icon>
+            </v-btn>
+          </div>
+        </v-card-title>
+        <v-card-text class="px-xs-2 px-md-10 px-lg-10 px-xl-15 pt-0">
+          <v-form v-model="updateRequestDataForm">
+            <v-row>
+              <v-col cols="12" class="pb-0">
+                <v-text-field
+                  v-model="requestDataSubject"
+                  :label="$t('Common.Subject')"
+                  :rules="[rules.required]"
+                  required
+                  outlined
+                  dense
+                >
+                  <template v-slot:prepend-inner>
+                    <i18n
+                      class="esignature-requested-subject"
+                      path="Common.SignatureRequestedSubject"
+                    />
+                  </template>
+                </v-text-field>
+              </v-col>
+              <v-col class="col-6">
+                <CustomDate
+                  v-model="requestDataExpiryDate"
+                  :field="expiryDateField"
+                  :label="$t('Common.StartD')"
+                  :rules="expiryDateFieldRule()"
+                  type="date"
+                />
+              </v-col>
+              <v-col class="col-6">
+                <v-text-field
+                  v-model="requestDataDaysLeft"
+                  :rules="[rules.negativeNumberRules, rules.required]"
+                  outlined
+                  required
+                  dense
+                  label="Days Left"
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-form>
+        </v-card-text>
+        <v-divider></v-divider>
+        <v-card-actions
+          class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
+        >
+          <v-btn color="primary" @click="updateRequestData"
+            ><i18n path="Drawer.Save"
+          /></v-btn>
+        </v-card-actions>
+      </v-sheet>
+    </v-dialog>
     <v-app-bar flat fixed color="#e5e5e5" height="100">
-      <v-row>
+      <v-col class="mt-2">
         <v-col cols="12" class="d-flex justify-space-around py-0">
           <v-toolbar-title class="black--text text-h5"
             >Verify content and emails</v-toolbar-title
           >
         </v-col>
-        <v-col cols="12" class="d-flex justify-center py-0 text-body-1 mt-1">
-          <template v-for="(recipient, index) in recipients">
-            <span :key="index">{{ recipient.Email }}</span>
-            <span
-              v-if="index < recipients.length - 1"
-              :key="index + recipients.length"
-              >, &nbsp;</span
+        <v-col
+          cols="12"
+          class="d-flex flex-wrap justify-center py-0 text-body-1 mt-1 text-wrap"
+        >
+          <div v-for="(recipient, index) in recipients" :key="index">
+            <span v-if="index < recipients.length - 1"
+              >{{ recipient.Email }}, &nbsp;</span
             >
-          </template>
+            <span v-else>{{ recipient.Email }}</span>
+          </div>
         </v-col>
-      </v-row>
+      </v-col>
     </v-app-bar>
     <div
       v-if="templateLoading"
@@ -68,7 +136,16 @@
           "
           >back</v-btn
         >
-        <v-btn text small>options</v-btn>
+        <v-btn
+          text
+          small
+          @click="
+            updateRequestDataDialog = true
+            requestDataSubject = requestSubject
+            requestDataDaysLeft = requestDaysLeft
+          "
+          >options</v-btn
+        >
       </v-col>
     </v-footer>
   </v-container>
@@ -76,10 +153,15 @@
 
 <script>
 import _ from 'lodash'
-import { addDays } from 'date-fns'
+import { addDays, differenceInDays } from 'date-fns'
+import CustomDate from '~/components/common/form/date.vue'
+import { rules } from '~/utility/rules.js'
 
 export default {
   layout: 'eSignature',
+  components: {
+    CustomDate,
+  },
   data() {
     return {
       templateLoading: true,
@@ -87,7 +169,42 @@ export default {
       recipients: [],
       errorMessage: '',
       templateUrl: '',
+      rules: rules(this.$i18n),
+      requestSubject: 'Agreement',
+      requestExpiryDate: addDays(new Date(), 30),
+      requestDaysLeft: 30,
+      updateRequestDataDialog: false,
+      updateRequestDataForm: false,
+      requestDataSubject: '',
+      requestDataExpiryDate: addDays(new Date(), 30),
+      requestDataDaysLeft: 30,
     }
+  },
+  computed: {
+    expiryDateField() {
+      return {
+        appendIcon: 'fa-calendar',
+        outlined: true,
+        caption: this.$t('Common.ExpiresOn'),
+        type: 'date',
+      }
+    },
+  },
+  watch: {
+    requestDataDaysLeft(val) {
+      if (/^\d*[0-9]\d*$/.test(val)) {
+        this.requestDataExpiryDate = addDays(new Date(), val)
+          .toISOString()
+          .substr(0, 10)
+      }
+    },
+    requestDataExpiryDate(val) {
+      const dateToday = new Date().toISOString().substr(0, 10)
+      this.requestDataDaysLeft = differenceInDays(
+        new Date(val),
+        new Date(dateToday)
+      )
+    },
   },
   async created() {
     let documentUrl = this.$route.query.url
@@ -163,11 +280,11 @@ export default {
           selectedList: this.recipients,
           Message: 'Sample Message',
           documentUrl: this.templateUrl,
-          subject: 'Agreement',
+          subject: this.requestSubject,
           senderName: 'Docxy eSignature',
           senderEmail: 'digital@bitpod.io',
           setReplyTo: 'digital@bitpod.io',
-          ExpirationDate: addDays(new Date(), 30),
+          ExpirationDate: this.requestExpiryDate,
           TemplateData: JSON.stringify({}),
         }
         console.log(postEsignRequestData)
@@ -176,6 +293,7 @@ export default {
           postEsignRequestData
         )
         if (response) {
+          console.log(response)
           const requestObject = {
             url: this.templateUrl,
             createdOn: new Date(),
@@ -195,7 +313,7 @@ export default {
           )
         }
         this.$router.push(
-          this.localePath('/apps/eSignature/requestSuccessPage')
+          this.localePath(`/apps/eSignature/success/${response[1].id}`)
         )
       } catch (err) {
         console.error(
@@ -208,12 +326,31 @@ export default {
     hasHistory() {
       return window.history.length > 1
     },
+    updateRequestData() {
+      this.requestSubject = this.requestDataSubject
+      this.requestExpiryDate = this.requestDataExpiryDate
+      this.requestDaysLeft = this.requestDataDaysLeft
+      this.updateRequestDataDialog = false
+    },
+    expiryDateFieldRule() {
+      return [
+        (v) => {
+          const ExpiryDate = v && new Date(v)
+          let expiryDateMessage = ''
+          if (!ExpiryDate)
+            expiryDateMessage = this.$t('Messages.Error.ThisFieldRequired')
+          else if (ExpiryDate < new Date())
+            expiryDateMessage = this.$t('Messages.Error.RequestStartDate')
+          else expiryDateMessage = ''
+          return expiryDateMessage || true
+        },
+      ]
+    },
   },
 }
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Handlee&family=Risque&display=swap');
 .html-preview-container {
   max-width: 600px;
   margin-top: 100px;
@@ -222,5 +359,9 @@ export default {
 }
 .esignature-submit-button {
   font-family: 'Handlee', cursive !important;
+}
+.esignature-requested-subject {
+  margin-top: 4px;
+  color: grey;
 }
 </style>

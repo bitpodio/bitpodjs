@@ -31,12 +31,13 @@
             spots.
           </span>
         </v-row>
-        <v-row justify="center" class="pt-4 mt-6">
+        <v-row justify="center" align="center" class="pt-4 mt-6">
           <span
             class="text-h4 px-2 fs-22 indigo--text text--accent-3"
             v-text="'<signature:trump@obama.com/>'"
           >
           </span>
+          <copy class="mb-n1" text-to-copy="<signature:trump@obama.com/>" />
         </v-row>
         <v-row justify="center">
           <span class="text-body-1 px-2 grey--text text--darken-2 text-center">
@@ -130,8 +131,11 @@
         </v-col>
       </template>
     </v-row>
-    <v-footer absolute class=".esignature-container text-center">
-      <v-row class="esignature-container mx-auto px-4">
+    <v-footer
+      absolute
+      class="esignature-container text-center esignature-footer mx-auto pa-0"
+    >
+      <v-row class="esignature-footer pa-4">
         <span class="px-2">Privacy Policy</span>
         <span class="px-2">Terms of Use</span>
         <v-spacer></v-spacer>
@@ -142,9 +146,13 @@
 </template>
 <script>
 import _ from 'lodash'
+import copy from '~/components/common/copy'
 
 export default {
   layout: 'eSignature',
+  components: {
+    copy,
+  },
   data() {
     return {
       eSignatureRequestForm: false,
@@ -305,6 +313,9 @@ export default {
 .esignature-submit-button.black--text {
   font-family: 'Handlee', cursive !important;
   font-size: 18px;
+}
+.esignature-footer {
+  background-color: #e5e5e5;
 }
 .disabled-sign-logo {
   opacity: 0.3;
