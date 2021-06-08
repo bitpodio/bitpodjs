@@ -805,9 +805,6 @@ table > tbody > tr:last-child .key-align {
 .theme--dark .slide-form-default h2, .theme--dark .slide-form h2 {
   color: #fff !important;
 }
-.eSignRequest-eSign .grid-actions-container {
-  max-width: 870px !important;
-}
 @media (min-width: 1904px) {
   .boxviewlarge .v-data-table__wrapper {
     margin-bottom: 0 !important;
