@@ -138,7 +138,9 @@ export default {
         scanString.indexOf('AttendeeId:') + 11,
         scanString.indexOf(',')
       )
-      const attendeeName = scanString.substring(scanString.indexOf(','))
+      const attendeeName = scanString.substring(
+        scanString.indexOf(',AttendeeName:') + 14
+      )
       const url = this.$bitpod.getApiUrl()
       try {
         const res = await this.$axios.$put(`${url}Attes/${attendeeId}`, {
