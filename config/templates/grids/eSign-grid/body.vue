@@ -320,7 +320,7 @@ export default {
 .esign-action {
   position: absolute;
   top: -58px;
-  display: inline-flex !important;
+  display: none !important;
   right: 170px;
 }
 .seat-maps {
