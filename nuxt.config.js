@@ -54,6 +54,11 @@ export default {
       },
       {
         rel: 'stylesheet',
+        href:
+          'https://fonts.googleapis.com/css2?family=Handlee&family=Risque&display=swap',
+      },
+      {
+        rel: 'stylesheet',
         href: 'https://unpkg.com/video.js/dist/video-js.css',
       },
     ],
