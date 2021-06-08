@@ -6,6 +6,7 @@
       </div>
     </v-snackbar>
     <confirm ref="confirm"></confirm>
+    <TemplateTabs />
     <div>
       <div
         v-if="checkItemtype('Invitation Template')"
@@ -457,11 +458,13 @@
 <script>
 import editInviteTemplate from '~/pages/apps/_app/organization/_id/editInviteTemplate.vue'
 import editInviteMetadata from '~/pages/apps/_app/organization/_id/editInviteMetadata.vue'
+import TemplateTabs from '~/components/common/template-tabs'
 
 export default {
   components: {
     editInviteTemplate,
     editInviteMetadata,
+    TemplateTabs,
   },
   props: {
     items: { type: Array, default: () => [] },
