@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="esign-section">
     <div class="greybg">
       <div class="esign-action">
         <v-btn text small @click="handleNewTemplate">
@@ -316,82 +316,90 @@ export default {
 }
 </script>
 
-<style scoped>
-.esign-action {
-  position: absolute;
-  top: -58px;
-  display: none !important;
-  right: 170px;
+<style lang="scss">
+.eSignRequest-eSign {
+  --esign-tile-width: 280px;
+  .eventtiles {
+    max-width: var(--esign-tile-width);
+    min-width: var(--esign-tile-width);
+    box-sizing: border-box;
+  }
+  .grid-actions-container {
+    max-width: calc(calc(var(--esign-tile-width) * 3) + 24px);
+  }
+  .esign-action {
+    position: absolute;
+    top: -58px;
+    display: none !important;
+    right: 170px;
+  }
+  .seat-maps {
+    height: 125px;
+    width: 155px;
+    max-width: 155px;
+  }
+  .seat-card {
+    top: 12px;
+  }
+  .box-actions {
+    bottom: 5px;
+    right: 5px;
+    display: none;
+  }
+  .seat-maps:hover .box-actions {
+    display: block;
+  }
+  .tile-pattern {
+    background-size: cover;
+    height: 140px;
+  }
+  .tile-img {
+    max-height: 140px;
+    min-height: 140px;
+    transition: transform 0.3s, opacity 0.3s ease-out;
+    -moz-transition: transform 0.3s, opacity 0.3s ease-out;
+    -webkit-transition: transform 0.3s, opacity 0.3s ease-out;
+    -o-transition: transform 0.3s, opacity 0.3s ease-out;
+  }
+  .tile-img:focus,
+  .tile-img:hover {
+    transform: scale(1.1);
+    opacity: 1;
+    overflow: hidden;
+  }
+  .tile-info {
+    min-height: 92px;
+  }
+  .tiles-action {
+    min-height: 36px;
+  }
+  .summary-block {
+    border-bottom: 6px solid transparent;
+  }
+  .summary-block:hover {
+    border-bottom: none;
+    overflow: auto hidden;
+  }
+  .request-status {
+    right: -15px;
+    top: 5px;
+    z-index: 4;
+  }
+  .min-h36 {
+    min-height: 36px;
+    line-height: 36px;
+  }
+  .overflow-h {
+    overflow: hidden;
+  }
+  .v-tooltip__content {
+    color: black !important;
+    font-size: 14px !important;
+    padding: 0.5em !important;
+    background-color: white !important;
+  }
 }
-.seat-maps {
-  height: 125px;
-  width: 155px;
-  max-width: 155px;
-}
-.seat-card {
-  top: 12px;
-}
-.box-actions {
-  bottom: 5px;
-  right: 5px;
-  display: none;
-}
-.seat-maps:hover .box-actions {
-  display: block;
-}
-.tile-pattern {
-  background-size: cover;
-  height: 140px;
-}
-.tile-img {
-  max-height: 140px;
-  min-height: 140px;
-  transition: transform 0.3s, opacity 0.3s ease-out;
-  -moz-transition: transform 0.3s, opacity 0.3s ease-out;
-  -webkit-transition: transform 0.3s, opacity 0.3s ease-out;
-  -o-transition: transform 0.3s, opacity 0.3s ease-out;
-}
-.tile-img:focus,
-.tile-img:hover {
-  transform: scale(1.1);
-  opacity: 1;
-  overflow: hidden;
-}
-.eventtiles {
-  max-width: 280px;
-  min-width: 280px;
-}
-.tile-info {
-  min-height: 92px;
-}
-.tiles-action {
-  min-height: 36px;
-}
-.summary-block {
-  border-bottom: 6px solid transparent;
-}
-.summary-block:hover {
-  border-bottom: none;
-  overflow: auto hidden;
-}
-.request-status {
-  right: -15px;
-  top: 5px;
-  z-index: 4;
-}
-.min-h36 {
-  min-height: 36px;
-  line-height: 36px;
-}
-.overflow-h {
-  overflow: hidden;
-}
-.v-tooltip__content {
-  color: black !important;
-  font-size: 14px !important;
-  padding: 0.5em !important;
-  background-color: white !important;
-}
+
 @media (max-width: 600px) {
   .summary-block {
     max-width: 94vw;
