@@ -52,4 +52,7 @@ export default {
 .template-tabs .theme--light.v-tabs > .v-tabs-bar {
   background-color: transparent !important;
 }
+.template-tabs .v-tab {
+  min-width: 74px !important;
+}
 </style>
