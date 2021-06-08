@@ -26,7 +26,7 @@
         />
       </div>
     </div>
-    <Scanner class="scan-btn pt-2" />
+    <Scanner view-name="eventAttendeesInEvent" class="scan-btn py-2" />
   </div>
 </template>
 <script>
@@ -171,7 +171,7 @@ export default {
     border: none !important;
   }
   #eventAttendeesInEvent .v-skeleton-loader {
-    max-height: calc(100vh - 250px);
+    max-height: calc(100vh - 260px);
     overflow-y: auto;
   }
 }
