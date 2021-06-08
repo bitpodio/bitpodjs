@@ -320,7 +320,7 @@
       <div class="mt-12">
         <div
           v-if="viewName === 'template' && loading === true"
-          class="d-flex flex-sm-wrap flex-column flex-sm-row mt-12"
+          class="d-flex flex-sm-wrap flex-column flex-sm-row mt-12 pt-12"
         >
           <v-skeleton-loader
             v-for="i in 10"
