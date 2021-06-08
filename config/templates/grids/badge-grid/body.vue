@@ -6,6 +6,7 @@
       </div>
     </v-snackbar>
     <confirm ref="confirm"></confirm>
+    <TemplateTabs />
     <v-flex
       class="d-flex flex-wrap greybg pa-0 justify-center justify-md-start"
     >
@@ -54,9 +55,11 @@
 
 <script>
 import editBadgeTemplate from '~/pages/apps/_app/organization/_id/editBadgeTemplate.vue'
+import TemplateTabs from '~/components/common/template-tabs'
 export default {
   components: {
     editBadgeTemplate,
+    TemplateTabs,
   },
   props: {
     items: { type: Array, default: () => [] },
