@@ -523,9 +523,21 @@ export default {
 }
 </script>
 
-<style scoped>
-.invite-card {
-  width: 220px;
-  max-width: 220px;
+<style lang="scss">
+.marketingtemplates-template {
+  --invitee-tile-width: 220px;
+  .invite-card {
+    max-width: var(--invitee-tile-width);
+    min-width: var(--invitee-tile-width);
+    box-sizing: border-box;
+  }
+  .grid-actions-container {
+    max-width: calc(calc(var(--invitee-tile-width) * 4) + 96px);
+  }
+  @media (min-width: 1904px) {
+    .grid-actions-container {
+      max-width: calc(calc(var(--esign-tile-width) * 5) + 128px);
+    }
+  }
 }
 </style>

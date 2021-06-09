@@ -129,4 +129,17 @@ export default {
 .positionRelative:hover .box-actions {
   display: block !important;
 }
+.badge-badge .grid-actions-container {
+  max-width: 950px;
+}
+@media (min-width: 1904px) {
+  .badge-badge .grid-actions-container {
+    max-width: 1150px;
+  }
+}
+@media (min-width: 600px) {
+  .badge-badge .grid-actions-container {
+    max-width: 100%;
+  }
+}
 </style>

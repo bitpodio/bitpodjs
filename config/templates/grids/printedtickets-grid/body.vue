@@ -196,3 +196,18 @@ export default {
   },
 }
 </script>
+<style>
+.printedtickets-printed-tickets .grid-actions-container {
+  max-width: 900px;
+}
+@media (min-width: 1904px) {
+  .printedtickets-printed-tickets .grid-actions-container {
+    max-width: 1100px;
+  }
+}
+@media (min-width: 600px) {
+  .printedtickets-printed-tickets .grid-actions-container {
+    max-width: 100%;
+  }
+}
+</style>

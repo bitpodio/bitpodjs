@@ -781,9 +781,11 @@ table > tbody > tr:last-child .key-align {
 }
 .Feed-feeds .d-flex.view-name,
 .Feed-feeds .grid-actions-container {
-  min-width: 600px !important;
-  margin: 0 auto !important;
-  width: 50% !important;
+  flex: 0 0 75%;
+  max-width: 75%;
+  margin-bottom: 0 !important;
+  min-height: 40px !important;
+  max-height: 40px;
 }
 .theme--dark .jodit-container:not(.jodit_inline) {
   border: 1px solid #505050 !important;
