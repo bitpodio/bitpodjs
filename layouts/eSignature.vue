@@ -22,6 +22,6 @@ export default {
 
 <style>
 .esign-background {
-  background-color: #e5e5e5;
+  background-color: #fffffe;
 }
 </style>

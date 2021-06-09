@@ -33,8 +33,12 @@
         </v-row>
         <v-row justify="center" align="center" class="pt-4 mt-6">
           <span
-            class="text-h4 px-2 fs-22 indigo--text text--accent-3"
-            v-text="'<signature:trump@obama.com/>'"
+            :class="{
+              'px-2 indigo--text text--accent-3': true,
+              'text-h5': $vuetify.breakpoint.smAndDown,
+              'text-h4': !$vuetify.breakpoint.smAndDown,
+            }"
+            v-text="'<signature:john@xyz.com/>'"
           >
           </span>
           <copy class="mb-n1" text-to-copy="<signature:trump@obama.com/>" />
@@ -86,8 +90,8 @@
           </v-col>
           <v-col cols="12" class="pt-0">
             <v-btn
-              color="cream"
-              class="black--text text-capitalize py-2 esignature-submit-button"
+              color="blue darken-2"
+              class="white--text text-capitalize py-2 esignature-submit-button"
               large
               :disabled="!eSignatureRequestForm || disableSubmit"
               block
@@ -97,8 +101,12 @@
                 max-width="20"
                 max-height="20"
                 :class="{
-                  'mx-2 mt-n1': true,
-                  'disabled-sign-logo': !eSignatureRequestForm || disableSubmit,
+                  'mx-2 mt-n1 ': true,
+                  'signature-svg-img': !(
+                    !eSignatureRequestForm || disableSubmit
+                  ),
+                  'signature-svg-img-disabled':
+                    !eSignatureRequestForm || disableSubmit,
                 }"
                 :src="$config.cdnUri + 'signature-solid'"
               ></v-img>
@@ -112,7 +120,7 @@
           Recently Used
         </div>
       </v-col>
-      <template v-for="(request, index) in previousRequests">
+      <template v-for="(request, index) in orderedRequests">
         <v-col :key="index" cols="11">
           <span
             style="word-wrap: break-word; color: #5d5fef; cursor: pointer;"
@@ -166,12 +174,18 @@ export default {
       disableSubmit: true,
     }
   },
+  computed: {
+    orderedRequests() {
+      return _.orderBy(this.previousRequests, 'createdOn', 'desc')
+    },
+  },
   mounted() {
     try {
       const prevRequests = localStorage.getItem('previousRequests')
       const parsedPrevRequests = JSON.parse(prevRequests)
       if (parsedPrevRequests && parsedPrevRequests.length > 0) {
         this.previousRequests = parsedPrevRequests
+        console.log(this.orderedRequests)
       }
     } catch (err) {
       console.error(
@@ -296,6 +310,9 @@ export default {
 }
 </script>
 <style>
+.signature-svg-img {
+  filter: invert(1);
+}
 .esignature-container {
   width: 90%;
   max-width: 600px;
@@ -310,14 +327,14 @@ export default {
 .esignature-subheading.text-h4 {
   font-size: 36px !important;
 }
-.esignature-submit-button.black--text {
-  font-family: 'Handlee', cursive !important;
+.esignature-submit-button.white--text {
   font-size: 18px;
 }
 .esignature-footer {
-  background-color: #e5e5e5;
+  background-color: #fffffe;
 }
-.disabled-sign-logo {
-  opacity: 0.3;
+.signature-svg-img-disabled {
+  filter: invert(0);
+  opacity: 0.4;
 }
 </style>

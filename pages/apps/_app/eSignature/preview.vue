@@ -61,22 +61,25 @@
         <v-card-actions
           class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
         >
-          <v-btn color="primary" @click="updateRequestData"
+          <v-btn
+            class="white--text"
+            color="blue darken-2"
+            @click="updateRequestData"
             ><i18n path="Drawer.Save"
           /></v-btn>
         </v-card-actions>
       </v-sheet>
     </v-dialog>
-    <v-app-bar flat fixed color="#e5e5e5" height="100">
+    <v-app-bar flat fixed color="blue darken-2" height="100">
       <v-col class="mt-2">
         <v-col cols="12" class="d-flex justify-space-around py-0">
-          <v-toolbar-title class="black--text text-h5"
+          <v-toolbar-title class="white--text text-h5"
             >Verify content and emails</v-toolbar-title
           >
         </v-col>
         <v-col
           cols="12"
-          class="d-flex flex-wrap justify-center py-0 text-body-1 mt-1 text-wrap"
+          class="d-flex white--text flex-wrap justify-center py-0 text-body-1 mt-1 text-wrap"
         >
           <div v-for="(recipient, index) in recipients" :key="index">
             <span v-if="index < recipients.length - 1"
@@ -109,18 +112,18 @@
     </div>
     <div
       v-else
-      class="html-preview-container mx-auto px-2"
+      class="html-preview-container mx-auto"
       v-html="htmlTemplate"
     ></div>
-    <v-footer class="esignature-preview-footer" fixed color="#e5e5e5">
+    <v-footer class="esignature-preview-footer" fixed color="#f5f5f5">
       <v-col cols="12" class="d-flex justify-space-around py-0">
         <v-btn
-          class="esignature-submit-button my-2 text-capitalize fs-18"
+          class="esignature-submit-button white--text my-2 text-capitalize fs-18"
           large
           :disabled="templateLoading || errorMessage !== ''"
           max-width="400px"
           width="90%"
-          color="cream"
+          color="blue darken-2"
           @click="createNewRequest"
           >Send</v-btn
         >
@@ -206,7 +209,7 @@ export default {
       )
     },
   },
-  async created() {
+  created() {
     let documentUrl = this.$route.query.url
     const googleDocumentEmbeddedSuffix = '?embedded=true'
     if (
@@ -216,49 +219,8 @@ export default {
       documentUrl += googleDocumentEmbeddedSuffix
     }
     this.templateUrl = documentUrl
-    const regExp = new RegExp(/&lt;(Signature|Initials):([\S]*)\/&gt;/, 'gi')
-    try {
-      const res = await this.$axios.get(documentUrl)
-      const matches = []
-      const documentText = res.data
-      let regexMatch
-      while ((regexMatch = regExp.exec(documentText)) !== null) {
-        matches.push(regexMatch[2])
-      }
-      if (matches.length === 0) {
-        this.errorMessage = 'No signature tag found'
-        return
-      }
-      const parties = _.uniq(matches)
-      for (const email of parties) {
-        if (
-          !/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-            email
-          )
-        ) {
-          this.errorMessage = `Email ${email} is not valid`
-          return
-        }
-      }
-      this.recipients = []
-      for (const value of parties) {
-        const recipientObj = {
-          FullName: '',
-          Email: value,
-          type: this.generateType(8),
-        }
-        this.recipients.push(recipientObj)
-      }
-      this.htmlTemplate = documentText
-    } catch (err) {
-      this.errorMessage = 'Invalid URL'
-      console.error(
-        `Error in pages/eSignature/preview.vue in getHTMLTemplate while making a GET call to get the HTML code of the URL, context: ${documentUrl}`,
-        err
-      )
-    } finally {
-      this.templateLoading = false
-    }
+    this.loadRequestTemplate()
+    this.loadRequestSubject()
   },
   methods: {
     generateType(length) {
@@ -346,19 +308,84 @@ export default {
         },
       ]
     },
+    async loadRequestTemplate() {
+      const documentUrl = this.templateUrl
+      const regExp = new RegExp(/&lt;(Signature|Initials):([\S]*)\/&gt;/, 'gi')
+      try {
+        const res = await this.$axios.get(documentUrl)
+        const matches = []
+        const documentText = res.data
+        let regexMatch
+        while ((regexMatch = regExp.exec(documentText)) !== null) {
+          matches.push(regexMatch[2])
+        }
+        if (matches.length === 0) {
+          this.errorMessage = 'No signature tag found'
+          return
+        }
+        const parties = _.uniq(matches)
+        for (const email of parties) {
+          if (
+            !/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+              email
+            )
+          ) {
+            this.errorMessage = `Email ${email} is not valid`
+            return
+          }
+        }
+        this.recipients = []
+        for (const value of parties) {
+          const recipientObj = {
+            FullName: '',
+            Email: value,
+            type: this.generateType(8),
+          }
+          this.recipients.push(recipientObj)
+        }
+        this.htmlTemplate = documentText
+      } catch (err) {
+        this.errorMessage = 'Invalid URL'
+        console.error(
+          `Error in pages/eSignature/preview.vue in getHTMLTemplate while making a GET call to get the HTML code of the URL, context: ${documentUrl}`,
+          err
+        )
+      } finally {
+        this.templateLoading = false
+      }
+    },
+    async loadRequestSubject() {
+      const googleDocumentEmbeddedSuffix = '?embedded=true'
+      let documentUrl = this.templateUrl
+      if (documentUrl.includes('https://docs.google.com/document/')) {
+        documentUrl = documentUrl.replace(googleDocumentEmbeddedSuffix, '')
+        try {
+          const result = await this.$axios.get(documentUrl)
+          const documentText = result.data
+          const regexTitle = /<title>([\S\s]*)<\/title>/
+          const subject = regexTitle.exec(documentText)
+          this.requestSubject = subject[1] || 'Agreement'
+        } catch (err) {
+          console.error(
+            `Error in pages/eSignature/preview.vue in getHTMLTemplate while making a GET call to get the HTML code of the URL, context: ${documentUrl}`,
+            err
+          )
+        }
+      }
+    },
   },
 }
 </script>
 
 <style>
 .html-preview-container {
-  max-width: 600px;
-  margin-top: 100px;
-  margin-bottom: 100px;
   background-color: #fff;
-}
-.esignature-submit-button {
-  font-family: 'Handlee', cursive !important;
+  max-width: 816px;
+  box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
+  display: block;
+  margin: 2em auto;
+  padding: 100px 50px;
 }
 .esignature-requested-subject {
   margin-top: 4px;

@@ -1,5 +1,5 @@
 <template>
-  <v-container class="esignature-container pt-0">
+  <v-container class="esignature-container">
     <v-snackbar v-model="snackbar" :top="true" :timeout="3000">
       <div class="toast py-2 pr-1 pl-3 fs-16">
         {{ snackbarText }}
@@ -9,8 +9,8 @@
       <v-col cols="12">
         <v-row justify="center" align="center">
           <v-img
-            max-width="35"
-            max-height="35"
+            max-width="55"
+            max-height="55"
             class="mb-n4"
             :src="$config.cdnUri + 'otter-solid'"
           ></v-img>
@@ -26,8 +26,8 @@
         <v-row justify="center" class="py-4">
           <v-col cols="12">
             <v-row justify="center">
-              <v-icon :size="72" color="black" class="mt-6"
-                >mdi-check-bold</v-icon
+              <v-icon :size="72" color="green" class="mt-6"
+                >mdi-checkbox-marked-circle-outline</v-icon
               >
             </v-row>
           </v-col>
@@ -87,8 +87,8 @@
           <v-col cols="12" class="pt-0">
             <v-row justify="center" align="center">
               <v-btn
-                color="cream"
-                class="black--text text-capitalize esignature-submit-button"
+                color="blue darken-2"
+                class="white--text text-capitalize esignature-submit-button"
                 :disabled="!updateSenderForm || updateSenderLoading"
                 large
                 block
@@ -194,7 +194,6 @@ export default {
   font-family: 'Risque', cursive !important;
 }
 .esignature-submit-button.black--text {
-  font-family: 'Handlee', cursive !important;
   font-size: 18px;
 }
 </style>
