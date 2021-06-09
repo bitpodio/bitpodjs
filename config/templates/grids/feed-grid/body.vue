@@ -4,138 +4,155 @@
     <v-snackbar v-model="snackbar" :timeout="timeout" :top="true">
       <div class="text-center">{{ snackbarText }}</div>
     </v-snackbar>
-    <v-card
-      v-for="item in items"
-      :key="item.id"
-      class="mb-4 mx-auto col-md-6 pa-0 elevation-1 rounded-lg feed-section"
-    >
-      <v-list subheader two-line>
-        <v-list-item>
-          <v-list-item-avatar>
-            <v-avatar size="48" color="primary">
-              <span class="white--text Twitter">{{ item.createdBy }}</span>
-            </v-avatar>
-          </v-list-item-avatar>
-
-          <v-list-item-content>
-            <v-list-item-title>{{ item.createdBy }}</v-list-item-title>
-
-            <v-list-item-subtitle>
-              <timeAgo :date="item.createdDate"
-            /></v-list-item-subtitle>
-          </v-list-item-content>
-
-          <v-list-item-action>
-            <div v-if="item.createdBy === $auth.user.data.email">
-              <v-menu
-                left
-                bottom
-                :offset-y="offset"
-                transition="slide-y-transition"
-              >
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn icon small v-bind="attrs" v-on="on">
-                    <v-icon>mdi-dots-vertical</v-icon>
-                  </v-btn>
-                </template>
-
-                <v-list dense>
-                  <v-list-item
-                    :key="item.id"
-                    @click="openFeedForm(item.id, item)"
-                  >
-                    <v-list-item-icon class="mr-2">
-                      <i class="fa fa-pencil mt-1" aria-hidden="true"></i>
-                    </v-list-item-icon>
-                    <v-list-item-content>
-                      <v-list-item-title
-                        ><i18n path="Drawer.Edit"
-                      /></v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                  <v-list-item @click="deleteFeed(item.id)">
-                    <v-list-item-icon class="mr-2">
-                      <i class="fa fa-trash mt-1" aria-hidden="true"></i>
-                    </v-list-item-icon>
-                    <v-list-item-content>
-                      <v-list-item-title
-                        ><i18n path="Drawer.Delete"
-                      /></v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                </v-list>
-              </v-menu>
-            </div>
-          </v-list-item-action>
-        </v-list-item>
-      </v-list>
-      <div class="mx-4 mb-2">
-        <div>
-          <div class="mt-n2 mb-2">{{ item.Title }}</div>
-          <div class="mb-1">
-            <!-- eslint-disable-next-line vue/no-v-html -->
-            <div class="feed-body" v-html="item.Body"></div>
-          </div>
-        </div>
-        <div v-if="item.Likes.length > 0" class="mb-1">
-          <div class="d-flex mb-2">
-            <v-tooltip bottom content-class="feed-tooltip">
-              <template v-slot:activator="{ on, attrs }">
-                <div v-bind="attrs" v-on="on">
-                  <v-icon class="fs-16 mr-1" color="primary"
-                    >mdi-thumb-up</v-icon
-                  >
-                  <span>{{ item.Likes.length }}</span>
-                </div>
-              </template>
-              <span v-for="i in item.Likes" :key="i"
-                ><div>{{ i }}</div></span
-              >
-            </v-tooltip>
-            <v-spacer></v-spacer>
-            <div v-if="item._Comment.length > 0" class="body-2">
-              <span>{{ item._Comment.length }}</span>
-              <i18n v-if="item._Comment.length === 1" path="Common.Comment" />
-              <i18n v-if="item._Comment.length > 1" path="Common.Comments" />
-            </div>
-          </div>
-        </div>
-        <div><v-divider></v-divider></div>
-        <div class="d-flex py-1">
-          <div>
-            <v-btn
-              :id="item.id"
-              text
-              small
-              :class="getLikeActive(item)"
-              @click="feedLike(item)"
-            >
-              <v-icon left>
-                mdi-thumb-up
-              </v-icon>
-              <i18n path="Common.Like" />
-            </v-btn>
-          </div>
-          <div>
-            <v-btn text small class="ml-4">
-              <v-icon left>
-                fa-message-square
-              </v-icon>
-              <i18n path="Common.Comment" />
-            </v-btn>
-          </div>
-        </div>
-        <div class="mb-2"><v-divider></v-divider></div>
-        <div>
-          <Notes
-            model-name="Feeds"
-            :feed-id="item.id"
-            :commnet-label="true"
-            :commnet-action="true"
-          />
-        </div>
+    <div v-if="items.length">
+      <div class="col-md-9 mb-8 pa-0">
+        <v-text class="body-1 font-weight-light"
+          ><i18n path="Messages.Warn.FeedsSubline"
+        /></v-text>
       </div>
-    </v-card>
+      <v-card
+        v-for="item in items"
+        :key="item.id"
+        class="mb-4 col-md-9 pa-0 elevation-1 rounded-lg feed-section"
+      >
+        <v-list subheader two-line>
+          <v-list-item>
+            <v-list-item-avatar>
+              <v-avatar size="48" color="primary">
+                <span class="white--text Twitter">{{ item.createdBy }}</span>
+              </v-avatar>
+            </v-list-item-avatar>
+
+            <v-list-item-content>
+              <v-list-item-title>{{ item.createdBy }}</v-list-item-title>
+
+              <v-list-item-subtitle>
+                <timeAgo :date="item.createdDate"
+              /></v-list-item-subtitle>
+            </v-list-item-content>
+
+            <v-list-item-action>
+              <div v-if="item.createdBy === $auth.user.data.email">
+                <v-menu
+                  left
+                  bottom
+                  :offset-y="offset"
+                  transition="slide-y-transition"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn icon small v-bind="attrs" v-on="on">
+                      <v-icon>mdi-dots-vertical</v-icon>
+                    </v-btn>
+                  </template>
+
+                  <v-list dense>
+                    <v-list-item
+                      :key="item.id"
+                      @click="openFeedForm(item.id, item)"
+                    >
+                      <v-list-item-icon class="mr-2">
+                        <i class="fa fa-pencil mt-1" aria-hidden="true"></i>
+                      </v-list-item-icon>
+                      <v-list-item-content>
+                        <v-list-item-title
+                          ><i18n path="Drawer.Edit"
+                        /></v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+                    <v-list-item @click="deleteFeed(item.id)">
+                      <v-list-item-icon class="mr-2">
+                        <i class="fa fa-trash mt-1" aria-hidden="true"></i>
+                      </v-list-item-icon>
+                      <v-list-item-content>
+                        <v-list-item-title
+                          ><i18n path="Drawer.Delete"
+                        /></v-list-item-title>
+                      </v-list-item-content>
+                    </v-list-item>
+                  </v-list>
+                </v-menu>
+              </div>
+            </v-list-item-action>
+          </v-list-item>
+        </v-list>
+        <div class="mx-4 mb-2">
+          <div>
+            <div class="mt-n2 mb-2">{{ item.Title }}</div>
+            <div class="mb-1">
+              <!-- eslint-disable-next-line vue/no-v-html -->
+              <div class="feed-body" v-html="item.Body"></div>
+            </div>
+          </div>
+          <div v-if="item.Likes.length > 0" class="mb-1">
+            <div class="d-flex mb-2">
+              <v-tooltip bottom content-class="feed-tooltip">
+                <template v-slot:activator="{ on, attrs }">
+                  <div v-bind="attrs" v-on="on">
+                    <v-icon class="fs-16 mr-1" color="primary"
+                      >mdi-thumb-up</v-icon
+                    >
+                    <span>{{ item.Likes.length }}</span>
+                  </div>
+                </template>
+                <span v-for="i in item.Likes" :key="i"
+                  ><div>{{ i }}</div></span
+                >
+              </v-tooltip>
+              <v-spacer></v-spacer>
+              <div v-if="item._Comment.length > 0" class="body-2">
+                <span>{{ item._Comment.length }}</span>
+                <i18n v-if="item._Comment.length === 1" path="Common.Comment" />
+                <i18n v-if="item._Comment.length > 1" path="Common.Comments" />
+              </div>
+            </div>
+          </div>
+          <div><v-divider></v-divider></div>
+          <div class="d-flex py-1">
+            <div>
+              <v-btn
+                :id="item.id"
+                text
+                small
+                :class="getLikeActive(item)"
+                @click="feedLike(item)"
+              >
+                <v-icon left>
+                  mdi-thumb-up
+                </v-icon>
+                <i18n path="Common.Like" />
+              </v-btn>
+            </div>
+            <div>
+              <v-btn text small class="ml-4">
+                <v-icon left>
+                  fa-message-square
+                </v-icon>
+                <i18n path="Common.Comment" />
+              </v-btn>
+            </div>
+          </div>
+          <div class="mb-2"><v-divider></v-divider></div>
+          <div>
+            <Notes
+              model-name="Feeds"
+              :feed-id="item.id"
+              :commnet-label="true"
+              :commnet-action="true"
+            />
+          </div>
+        </div>
+      </v-card>
+    </div>
+    <div v-else>
+      <v-row class="ma-0">
+        <div class="col-md-9">
+          <v-card class="mb-4 pa-0 py-4 elevation-1 rounded-lg feed-section"
+            ><v-text class="body-1"
+              ><i18n path="Messages.Warn.NoFeeds" /></v-text
+          ></v-card>
+        </div>
+      </v-row>
+    </div>
     <div v-if="feedForm">
       <editFeed :id="id" :selected="selected" :feed-form.sync="feedForm" />
     </div>
@@ -238,9 +255,13 @@ export default {
   },
 }
 </script>
-<style scoped>
+<style>
 .feed-section {
   min-width: 600px;
+}
+.Feed-feeds .view-name .fs-18 {
+  font-size: 1.5rem !important;
+  font-weight: 400;
 }
 .feed-section:last-child {
   margin-bottom: -8px !important;
