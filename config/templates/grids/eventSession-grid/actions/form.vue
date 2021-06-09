@@ -186,7 +186,9 @@
                     ref="venueAddress.AddressLine"
                     v-model="venueAddress.AddressLine"
                     class="form-control pa-3 d-block rounded"
-                    :placeholder="!addressClicked && $t('Common.Address')"
+                    :placeholder="
+                      !addressClicked && $t('Common.AddressRequired')
+                    "
                     :required="true"
                     @placechanged="getAddressData"
                     @change="changeAddressData($event)"
@@ -869,7 +871,7 @@ export default {
       update(data) {
         const EventResult = formatGQLResult(data, 'Event')[0]
         EventResult.EventSpeakers = {
-          EventSpeakersFind: EventResult.EventSpeakers,
+          EventSpeakersFind: EventResult && EventResult.EventSpeakers,
         }
         const speakerResult = formatGQLResult(EventResult, 'EventSpeakers')
         if (speakerResult) {

@@ -254,7 +254,11 @@ export default {
           return {
             where: {
               Type: {
-                inq: ['Invitation Template', 'Registration Email Template'],
+                inq: [
+                  'Invitation Template',
+                  'Registration Email Template',
+                  'ESign Template',
+                ],
               },
             },
           }

@@ -27,7 +27,7 @@ export function rules(i18n) {
         : true
     },
     phoneRules: (v) => {
-      if (v && !isNaN(v) && v.length === 10) {
+      if (v && !isNaN(v) && v.length <= 15) {
         return true
       }
       return i18n.t('Messages.Error.PleaseEnterValidPhone')
