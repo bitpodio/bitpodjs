@@ -1,5 +1,5 @@
 // import nuxtconfig from '~/nuxt.config'
-import { getOrderQuery, buildQueryVariables } from '~/utility'
+import { getOrderQuery, buildQueryVariables, getID4ServerUrl } from '~/utility'
 
 export function getData(modelName, isExporting = false) {
   return async function query(options) {
@@ -120,5 +120,24 @@ export function getCustomData(modelName) {
     } else {
       return { items: res, total: res.length }
     }
+  }
+}
+
+export function getLoginData(modelName) {
+  return async function query(options) {
+    // pagination
+    const page = options.page || 1
+    const itemsPerPage = options.itemsPerPage || 10
+    const skip = (page - 1) * (itemsPerPage || 10)
+    const limit = itemsPerPage === -1 ? 0 : itemsPerPage
+
+    const apiUrl = getID4ServerUrl()
+    const resPromise = this.$axios.$get(`${apiUrl}${modelName}`)
+    // to execute parallel call
+    const [res] = await Promise.all([resPromise])
+
+    const skipRes = res.slice(skip)
+    const finalRes = skipRes.slice(0, limit)
+    return { items: finalRes, total: res.length }
   }
 }

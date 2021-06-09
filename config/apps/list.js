@@ -25,6 +25,7 @@ export const appList = (store) => [
     route: '/apps/help-center',
     roles: ['$authenticated'],
   },
+
   {
     name: 'Survey',
     label: 'Common.SurveyApp',
@@ -64,5 +65,13 @@ export const appList = (store) => [
     type: 'route',
     route: '/apps/eSign/list/eSignRequest/eSign',
     roles: [],
+  },
+  {
+    name: 'UserProfile',
+    label: 'Common.UserProfileApp',
+    css: 'fa fa-user fs-36 success--text',
+    type: 'route',
+    route: '/apps/userprofile/user-profile',
+    roles: ['$authenticated'],
   },
 ]
