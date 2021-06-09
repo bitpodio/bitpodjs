@@ -85,34 +85,67 @@
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-action>
             <v-list-item-content>
-              <v-list-item-title class="nav-title">
-                <i18n
-                  v-if="item.text === 'Organization'"
-                  path="Common.Organization"
-                />
-                <i18n v-if="item.text === 'Lookups'" path="Common.Lookups" />
-                <i18n
-                  v-if="item.text === 'Templates'"
-                  path="Common.Templates"
-                />
-                <i18n
-                  v-if="item.text === 'Badges Templates'"
-                  path="Common.BadgesTemplates"
-                />
-                <i18n
-                  v-if="item.text === 'Registration Form'"
-                  path="Common.RegistrationForm"
-                />
-                <i18n
-                  v-if="item.text === 'Ticket Templates'"
-                  path="Common.TicketTemplates"
-                />
-                <i18n v-if="item.text === 'Roles'" path="Common.Roles" />
-                <i18n v-if="item.text === 'Users'" path="Common.Users" />
-                <i18n
-                  v-if="item.text === 'Access Keys'"
-                  path="Common.AccessKeys"
-                />
+              <v-list-item-title
+                v-if="item.text === 'Organization'"
+                data-tourTwo-step="1"
+                class="nav-title"
+              >
+                <i18n path="Common.Organization"
+              /></v-list-item-title>
+              <v-list-item-title
+                v-if="item.text === 'Lookups'"
+                data-tourTwo-step="2"
+                class="nav-title"
+              >
+                <i18n path="Common.Lookups"
+              /></v-list-item-title>
+              <v-list-item-title
+                v-if="item.text === 'Templates'"
+                data-tourTwo-step="3"
+                class="nav-title"
+              >
+                <i18n path="Common.Templates"
+              /></v-list-item-title>
+              <v-list-item-title
+                v-if="item.text === 'Badges Templates'"
+                data-tourTwo-step="4"
+                class="nav-title"
+              >
+                <i18n path="Common.BadgesTemplates"
+              /></v-list-item-title>
+              <v-list-item-title
+                v-if="item.text === 'Registration Form'"
+                data-tourTwo-step="5"
+                class="nav-title"
+              >
+                <i18n path="Common.RegistrationForm"
+              /></v-list-item-title>
+              <v-list-item-title
+                v-if="item.text === 'Ticket Templates'"
+                data-tourTwo-step="6"
+                class="nav-title"
+              >
+                <i18n path="Common.TicketTemplates"
+              /></v-list-item-title>
+              <v-list-item-title
+                v-if="item.text === 'Roles'"
+                data-tourTwo-step="7"
+                class="nav-title"
+              >
+                <i18n path="Common.Roles"
+              /></v-list-item-title>
+              <v-list-item-title
+                v-if="item.text === 'Users'"
+                data-tourTwo-step="8"
+                class="nav-title"
+                ><i18n path="Common.Users"
+              /></v-list-item-title>
+              <v-list-item-title
+                v-if="item.text === 'Access Keys'"
+                data-tourTwo-step="9"
+                class="nav-title"
+              >
+                <i18n path="Common.AccessKeys" />
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -161,6 +194,7 @@
       <v-spacer></v-spacer>
       <div class="d-none d-sm-flex">
         <v-btn
+          data-tourTwo-step="0"
           v-bind="attrs"
           color="blue darken-2"
           dark
@@ -176,6 +210,27 @@
       <Help class="d-none d-sm-inline" />
       <LanguageSwitcher />
       <AppDrawer />
+      <v-menu
+        v-model="menu"
+        left
+        :offset-y="offset"
+        transition="slide-y-transition"
+        content-class="overflowHidden mt-8"
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn icon small v-bind="attrs" v-on="on">
+            <v-icon>mdi-dots-vertical</v-icon>
+          </v-btn>
+        </template>
+
+        <v-list dense>
+          <v-list-item @click="startTour">
+            <v-list-item-content>
+              <v-list-item-title>Start Tour</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list>
+      </v-menu>
       <div v-if="$auth.$state.loggedIn" class="ml-3">
         <v-menu
           v-model="account"
@@ -342,6 +397,9 @@
         @load="iframecookieDeleted"
       />
     </div>
+    <div>
+      <tour name="tourTwo" :final-steps="steps.tourTwo" />
+    </div>
   </v-app>
 </template>
 
@@ -354,6 +412,8 @@ import OldSite from '~/components/common/oldsite'
 import Upgrade from '~/components/common/upgrade'
 import Theme from '~/components/common/theme'
 import userUtils from '~/utility/userApps'
+import { tourLoaderMixin } from '~/utility'
+import tour from '~/components/common/tour'
 export default {
   middleware: ['auth', 'authorization'],
   components: {
@@ -363,7 +423,9 @@ export default {
     OldSite,
     Upgrade,
     Theme,
+    tour,
   },
+  mixins: [tourLoaderMixin],
   props: {
     refresh: {
       type: Function,
@@ -462,6 +524,15 @@ export default {
     window.removeEventListener('message', this.messageReceived)
   },
   methods: {
+    startTour() {
+      if (parseInt(this.$auth.$storage.getCookies()['tour.tourTwo'])) {
+        this.$tours.tourTwo.start(
+          parseInt(this.$auth.$storage.getCookies()['tour.tourTwo'])
+        )
+      } else {
+        this.$tours.tourTwo.start()
+      }
+    },
     onLogout(context) {
       if (this.$store.state.auth.loggedIn) {
         this.logoutClicked = true
@@ -540,3 +611,14 @@ export default {
   },
 }
 </script>
+<style>
+.tour-stepbox {
+  min-width: 300px !important;
+}
+.v-step__arrow::before {
+  margin-left: 0 !important;
+}
+.v-step {
+  max-width: 400px !important;
+}
+</style>

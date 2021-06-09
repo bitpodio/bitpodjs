@@ -395,7 +395,6 @@ export function postGaData(action, formTitle) {
 export const tourLoaderMixin = {
   computed: {
     steps() {
-      debugger
       return eventTours(this)
     },
   },

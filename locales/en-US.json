@@ -1202,7 +1202,7 @@
       "Next":"Next",
       "LearnMore":"Learn More"
     },
-    "Steps":{
+    "tourOne-Steps":{
       "Step-0-CreateEvent":"You can create single event and recurring event by clicking on the create button. Enter the proper details.",
       "Step-1-Eventboard":"Eventboard displays the Event on sale, 10 days ticket sale, Total Registrations, Total Revenue, Recent Buyers, Ticket Sold, Email Conversions, etc",
       "Step-2-Event":"There are 3 views on Event navigation Live and Draft Events, All events, Past Events.",
@@ -1213,6 +1213,18 @@
       "Step-7-LanguageSwitcher":"Language Switcher helps to switch the language of you convinience. For now we support English, Hindi, Hebrew, French. If you want more support pls feel free to reach out us at support@bitpod.io",
       "Step-8-AppDrawer": "App Drawer contains various apps like Events, Administration, Seat-map, Integrations, Survey, Help-center, Community",
       "Step-9-ProfileDetails":"Profile Details contains users login details, plan, User can switch to another organization, Go to old site or Logout"
+    },
+    "tourTwo-Steps":{
+      "Step-0-CreateUser":"You can create user for your organization and allow him to access different apps base on roles.",
+      "Step-1-Organization":"From the organization navigation you can see the organization details, subscription plans and changed the organization settings.",
+      "Step-2-Lookups":"Looks are the data you get in the forms in lookup type of fields. You can create, edit and delete lookup base on the category.",
+      "Step-3-Templates":"Templates navigations displays the Default Invite templates,Default Registration Email template also you can aad new template and edit the existing template.",
+      "Step-4-BadgeTemplates":"Displays the default badge templates.",
+      "Step-5-RegistrationForm":"Displays the grid where you find the field that you want to display while registering for the event.",
+      "Step-6-TicketTemplates": "Here is the ticket templates from where you can create new or edit the existing to send ticket in registration email.",
+      "Step-7-Roles":"Allow admin to give access to the user for different apps",
+      "Step-8-Users": "Allow admin to create user and find the user with roles.",
+      "Step-9-AccessKey":"Allow you to create the access key to authenticate the apis."
     }
   },
   "$vuetify": {
