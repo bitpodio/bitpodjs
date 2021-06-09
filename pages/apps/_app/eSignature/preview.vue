@@ -6,7 +6,7 @@
           class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
         >
           <h2 class="black--text pt-5 pb-4 font-weight-regular text-h5">
-            Options
+            <i18n path="Common.OptionsCaption" />
           </h2>
           <v-spacer></v-spacer>
           <div>
@@ -35,7 +35,7 @@
                   </template>
                 </v-text-field>
               </v-col>
-              <v-col class="col-6">
+              <v-col class="col-8">
                 <CustomDate
                   v-model="requestDataExpiryDate"
                   :field="expiryDateField"
@@ -44,7 +44,7 @@
                   type="date"
                 />
               </v-col>
-              <v-col class="col-6">
+              <v-col class="col-4">
                 <v-text-field
                   v-model="requestDataDaysLeft"
                   :rules="[rules.negativeNumberRules, rules.required]"
@@ -57,12 +57,11 @@
             </v-row>
           </v-form>
         </v-card-text>
-        <v-divider></v-divider>
         <v-card-actions
-          class="px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
+          class="justify-center px-xs-3 px-md-10 px-lg-10 px-xl-15 px-xs-10 pl-xs-10"
         >
           <v-btn
-            class="white--text"
+            class="white--text mb-5"
             color="blue darken-2"
             @click="updateRequestData"
             ><i18n path="Drawer.Save"
@@ -74,8 +73,8 @@
       <v-col class="mt-2">
         <v-col cols="12" class="d-flex justify-space-around py-0">
           <v-toolbar-title class="white--text text-h5"
-            >Verify content and emails</v-toolbar-title
-          >
+            ><i18n path="Common.VerifyContentAndEmail"
+          /></v-toolbar-title>
         </v-col>
         <v-col
           cols="12"
@@ -113,20 +112,24 @@
     <div
       v-else
       class="html-preview-container mx-auto"
+      style="word-break: break-word;"
       v-html="htmlTemplate"
     ></div>
     <v-footer class="esignature-preview-footer" fixed color="#f5f5f5">
       <v-col cols="12" class="d-flex justify-space-around py-0">
         <v-btn
-          class="esignature-submit-button white--text my-2 text-capitalize fs-18"
+          :class="{
+            'esignature-submit-button white--text my-2 text-capitalize fs-18': true,
+            'white--text': !(templateLoading || errorMessage !== ''),
+          }"
           large
           :disabled="templateLoading || errorMessage !== ''"
           max-width="400px"
           width="90%"
           color="blue darken-2"
           @click="createNewRequest"
-          >Send</v-btn
-        >
+          ><i18n path="Drawer.Send"
+        /></v-btn>
       </v-col>
       <v-col cols="12" class="d-flex justify-center py-0">
         <v-btn
@@ -137,8 +140,8 @@
               ? $router.go(-1)
               : $router.push(localePath('/apps/eSignature'))
           "
-          >back</v-btn
-        >
+          ><i18n path="Drawer.Back"
+        /></v-btn>
         <v-btn
           text
           small
@@ -147,8 +150,8 @@
             requestDataSubject = requestSubject
             requestDataDaysLeft = requestDaysLeft
           "
-          >options</v-btn
-        >
+          ><i18n path="Common.OptionsCaption"
+        /></v-btn>
       </v-col>
     </v-footer>
   </v-container>
@@ -249,13 +252,11 @@ export default {
           ExpirationDate: this.requestExpiryDate,
           TemplateData: JSON.stringify({}),
         }
-        console.log(postEsignRequestData)
         const response = await this.$axios.$post(
           bitpodURL,
           postEsignRequestData
         )
         if (response) {
-          console.log(response)
           const requestObject = {
             url: this.templateUrl,
             createdOn: new Date(),
@@ -268,7 +269,6 @@ export default {
             previousRequests = parsedPrevRequests
           }
           previousRequests.push(requestObject)
-          console.log(previousRequests)
           localStorage.setItem(
             'previousRequests',
             JSON.stringify(previousRequests)
@@ -390,5 +390,6 @@ export default {
 .esignature-requested-subject {
   margin-top: 4px;
   color: grey;
+  min-width: 160px;
 }
 </style>

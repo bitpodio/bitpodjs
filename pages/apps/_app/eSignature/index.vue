@@ -10,25 +10,24 @@
             :src="$config.cdnUri + 'otter-solid'"
           ></v-img>
           <span class="text-h2 px-2 black--text esignature-logo">
-            docxy
+            <i18n path="Common.Docxy" />
           </span>
         </v-row>
         <v-row justify="center">
           <span class="text-body-2 px-2 grey--text text--darken-2 fs-22">
-            eSignature for google docs
+            <i18n path="Common.ESignatureForGoogleDocs" />
           </span>
         </v-row>
         <v-row justify="center" class="mt-6">
           <span
             class="text-h4 black--text px-2 text-center esignature-subheading"
           >
-            Ready to send docs for eSignature?
+            <i18n path="Common.ReadyToSendDoc" />
           </span>
         </v-row>
         <v-row justify="center">
           <span class="text-body-1 px-2 grey--text text--darken-2 text-center">
-            Start by adding signature tag in your google doc at all signature
-            spots.
+            <i18n path="Common.StartByAddingSignatureTag" />
           </span>
         </v-row>
         <v-row justify="center" align="center" class="pt-4 mt-6">
@@ -38,34 +37,29 @@
               'text-h5': $vuetify.breakpoint.smAndDown,
               'text-h4': !$vuetify.breakpoint.smAndDown,
             }"
-            v-text="'<signature:john@xyz.com/>'"
+            v-text="$t('Common.SignatureTagExample')"
           >
           </span>
-          <copy class="mb-n1" text-to-copy="<signature:trump@obama.com/>" />
+          <copy class="mb-n1" text-to-copy="<signature:john@xyz.com/>" />
         </v-row>
         <v-row justify="center">
           <span class="text-body-1 px-2 grey--text text--darken-2 text-center">
-            a signature tag looks like this but with signee's email
+            <i18n path="Common.SignatureTagLooksLike" />
             <v-tooltip bottom>
               <template v-slot:activator="{ on, attrs }">
                 <v-icon class="mt-n1" v-bind="attrs" v-on="on"
                   >mdi-information-outline</v-icon
                 >
               </template>
-              <span>Sample Text Value</span>
             </v-tooltip>
           </span></v-row
         >
       </v-col>
       <v-col cols="12" class="mt-6">
         <v-form v-model="eSignatureRequestForm">
-          <!--
-        @todo: Update label to use localization
-        -->
           <v-col cols="12" class="py-0">
             <span class="text-body-1 grey--text text--darken-2"
-              >After adding tags, use google docs “Publish to the web” option to
-              get the publish link and drop it here
+              ><i18n path="Common.AfterAddingTagsPublish" />
             </span>
             <v-tooltip bottom>
               <template v-slot:activator="{ on, attrs }">
@@ -73,7 +67,6 @@
                   >mdi-information-outline</v-icon
                 >
               </template>
-              <span>Sample Text Value</span>
             </v-tooltip>
           </v-col>
           <v-col cols="12">
@@ -91,7 +84,10 @@
           <v-col cols="12" class="pt-0">
             <v-btn
               color="blue darken-2"
-              class="white--text text-capitalize py-2 esignature-submit-button"
+              :class="{
+                'white--text text-capitalize py-2 esignature-submit-button': true,
+                'white--text': !(!eSignatureRequestForm || disableSubmit),
+              }"
               large
               :disabled="!eSignatureRequestForm || disableSubmit"
               block
@@ -110,14 +106,14 @@
                 }"
                 :src="$config.cdnUri + 'signature-solid'"
               ></v-img>
-              Send for Signatures</v-btn
-            >
+              <i18n path="Common.SendForSignatures" />
+            </v-btn>
           </v-col>
         </v-form>
       </v-col>
       <v-col v-if="previousRequests && previousRequests.length > 0" cols="12">
         <div class="body-1 px-2 grey--text text--darken-2">
-          Recently Used
+          <i18n path="Common.RecentlyUsed" />
         </div>
       </v-col>
       <template v-for="(request, index) in orderedRequests">
@@ -144,8 +140,14 @@
       class="esignature-container text-center esignature-footer mx-auto pa-0"
     >
       <v-row class="esignature-footer pa-4">
-        <span class="px-2">Privacy Policy</span>
-        <span class="px-2">Terms of Use</span>
+        <a
+          href="https://bitpod.io/privacy-policy"
+          class="text-decoration-none px-2"
+          ><i18n path="Common.PrivacyPolicy"
+        /></a>
+        <a href="https://bitpod.io/terms" class="text-decoration-none px-2"
+          ><i18n path="Common.TermsOfUse"
+        /></a>
         <v-spacer></v-spacer>
         <v-icon class="mt-n1">mdi-help-circle-outline</v-icon>
       </v-row>
@@ -185,7 +187,6 @@ export default {
       const parsedPrevRequests = JSON.parse(prevRequests)
       if (parsedPrevRequests && parsedPrevRequests.length > 0) {
         this.previousRequests = parsedPrevRequests
-        console.log(this.orderedRequests)
       }
     } catch (err) {
       console.error(
@@ -227,14 +228,10 @@ export default {
       return documentText
     },
     handleUrlChange(value) {
-      console.log(value, this.eSignatureRequestForm)
       this.addressFieldErrorMessage = []
       this.disableSubmit = true
       if (value.length > 0) this.getHTMLTemplate(value)
     },
-    /**
-     * @todo update error messages to use localization
-     */
     getHTMLTemplate: _.debounce(async function (documentUrl) {
       const googleDocumentEmbeddedSuffix = '?embedded=true'
       if (
@@ -295,9 +292,6 @@ export default {
       }
       return result.join('')
     },
-    /**
-     * @todo add localization to variables.
-     */
     validUrlRule(v) {
       const valuePrefix = ['https://docs.google.com/document/', 'test']
       if (v === '') return true

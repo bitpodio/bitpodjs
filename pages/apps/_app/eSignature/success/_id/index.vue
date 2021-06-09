@@ -15,12 +15,12 @@
             :src="$config.cdnUri + 'otter-solid'"
           ></v-img>
           <span class="text-h2 px-2 black--text text--darken-2 esignature-logo">
-            docxy
+            <i18n path="Common.Docxy" />
           </span>
         </v-row>
         <v-row justify="center">
           <span class="text-body-2 px-2 grey--text text--darken-2">
-            eSignature for google docs
+            <i18n path="Common.ESignatureForGoogleDocs" />
           </span>
         </v-row>
         <v-row justify="center" class="py-4">
@@ -33,17 +33,15 @@
           </v-col>
           <v-col cols="12">
             <v-row justify="center">
-              <span class="text-h4 px-2 black--text text-center"
-                >Document has been sent for eSignature.
+              <span class="text-h4 px-2 black--text text-center">
+                <i18n path="Common.DocumentHasBeenSent" />
               </span>
             </v-row>
           </v-col>
           <v-col cols="12">
             <v-row justify="center">
-              <span class="text-body-1 px-2 black--text text-center"
-                >Email has been sent to signees, if you would also like to share
-                link yourself, click icon next to email to get respective
-                eSignature link.
+              <span class="text-body-1 px-2 black--text text-center">
+                <i18n path="Common.EmailHasBeenSent" />
               </span>
             </v-row>
           </v-col>
@@ -66,8 +64,7 @@
           <v-col cols="12" class="mt-8 pb-0">
             <v-row justify="center" align="center">
               <span class="text-body-1 px-2 black--text text-center">
-                if you would like to be notified when document is signed,
-                provide your email here
+                <i18n path="Common.DocumentSignedNotify" />
               </span>
             </v-row>
           </v-col>
@@ -88,14 +85,17 @@
             <v-row justify="center" align="center">
               <v-btn
                 color="blue darken-2"
-                class="white--text text-capitalize esignature-submit-button"
+                :class="{
+                  'white--text text-capitalize esignature-submit-button': true,
+                  'white--text': !(!updateSenderForm || updateSenderLoading),
+                }"
                 :disabled="!updateSenderForm || updateSenderLoading"
                 large
                 block
                 @click="addSenderEmail"
               >
-                Register for email alerts</v-btn
-              >
+                <i18n path="Common.RegisterForEmailAlerts" />
+              </v-btn>
             </v-row>
           </v-col>
           <v-col cols="12" class="pt-4">
@@ -104,7 +104,9 @@
                 :to="localePath('/apps/eSignature')"
                 class="text-decoration-none"
               >
-                <span class="text-h6 px-2 black--text text-center">Home </span>
+                <span class="text-h6 px-2 black--text text-center">
+                  <i18n path="Common.Home" />
+                </span>
               </nuxt-link>
             </v-row>
           </v-col>
@@ -162,10 +164,11 @@ export default {
           requestId: this.$route.params.id,
           senderEmail: this.senderEmail,
         })
-        console.log(result)
-        this.$refs.form.reset()
-        this.snackbarText = 'Successfully updated email'
-        this.snackbar = true
+        if (result) {
+          this.$refs.form.reset()
+          this.snackbarText = 'Successfully updated email'
+          this.snackbar = true
+        }
       } catch (err) {
         console.error(
           'Error in pages/eSignature/success.vue in addSenderEmail while calling a custom API updateESignRequestSender to url:',
