@@ -15,6 +15,7 @@ export default function ({ app }) {
           success: colors.green.accent3,
           boxview: '#1e1e1e',
           greybg: '#000000',
+          cream: '#feffc8',
         },
         light: {
           primary: '#1a73e8',
@@ -23,6 +24,7 @@ export default function ({ app }) {
           error: colors.red.accent3,
           greybg: '#f5f5f5',
           boxview: '#ffffff',
+          cream: '#feffc8',
         },
       },
     },
