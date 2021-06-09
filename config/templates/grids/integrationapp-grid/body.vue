@@ -1,7 +1,14 @@
 <template>
   <v-flex class="greybg seatmap-inner">
-    <div class="fs-18 min-h36 mt-3 ml-2">
-      <i18n path="Common.Integration" />
+    <div>
+      <div>
+        <v-text class="text-h5 mt-4"><i18n path="Common.Integration" /></v-text>
+      </div>
+      <div>
+        <v-text class="body-1 font-weight-light"
+          ><i18n path="Messages.Warn.IntegrationSubline"
+        /></v-text>
+      </div>
     </div>
     <div v-for="c in Category" :key="c">
       <div class="mx-2 my-5">{{ c }}</div>
