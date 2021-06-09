@@ -317,22 +317,20 @@
           <div></div>
         </v-skeleton-loader>
       </div>
-      <div class="mt-12">
-        <div
-          v-if="viewName === 'template' && loading === true"
-          class="d-flex flex-sm-wrap flex-column flex-sm-row mt-12 pt-12"
+      <div
+        v-if="viewName === 'template' && loading === true"
+        class="d-flex flex-sm-wrap flex-column flex-sm-row mt-12 pt-12"
+      >
+        <v-skeleton-loader
+          v-for="i in 10"
+          :key="i"
+          :loading="!!loading"
+          type="card"
+          width="236"
+          class="pa-4 pl-0 pt-0 eventtiles ma-4 ml-0 mt-0"
         >
-          <v-skeleton-loader
-            v-for="i in 10"
-            :key="i"
-            :loading="!!loading"
-            type="card"
-            width="236"
-            class="pa-4 pl-0 pt-0 eventtiles ma-4 ml-0 mt-0"
-          >
-            <div></div>
-          </v-skeleton-loader>
-        </div>
+          <div></div>
+        </v-skeleton-loader>
       </div>
       <div
         v-if="viewName === 'printed-tickets' && loading === true"
