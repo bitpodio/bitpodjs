@@ -158,6 +158,13 @@
 import _ from 'lodash'
 import copy from '~/components/common/copy'
 
+const signatureTagRegExp = new RegExp(
+  /&lt;(Signature|Initials):([\S]*)\/&gt;/,
+  'gi'
+)
+
+const emailRegExp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+
 export default {
   layout: 'eSignature',
   components: {
@@ -204,29 +211,6 @@ export default {
         },
       })
     },
-    formatDocument(documentText) {
-      const matches = []
-      let regexMatch
-      const regExp = /{{{(Signature|Initials):([\S]*)}}}/gi
-      while ((regexMatch = regExp.exec(documentText)) !== null) {
-        matches.push(regexMatch[2])
-      }
-      const parties = [...new Set(matches)]
-      for (const item of parties) {
-        const replaceRegEx = new RegExp(`Signature:${item}`, 'gi')
-        const type = this.generateType(8)
-        documentText = documentText.replaceAll(
-          replaceRegEx,
-          `ESign.${type}.Signature`
-        )
-        const replaceRegExInitials = new RegExp(`Initials:${item}`, 'gi')
-        documentText = documentText.replaceAll(
-          replaceRegExInitials,
-          `ESign.${type}.Initials`
-        )
-      }
-      return documentText
-    },
     handleUrlChange(value) {
       this.addressFieldErrorMessage = []
       this.disableSubmit = true
@@ -242,17 +226,15 @@ export default {
         this.templateUrl = documentUrl
       }
       if (this.eSignatureRequestForm) {
-        const regExp = new RegExp(
-          /&lt;(Signature|Initials):([\S]*)\/&gt;/,
-          'gi'
-        )
         this.templateUrlLoading = true
         try {
           const res = await this.$axios.get(documentUrl)
           const matches = []
           const documentText = res.data
           let regexMatch
-          while ((regexMatch = regExp.exec(documentText)) !== null) {
+          while (
+            (regexMatch = signatureTagRegExp.exec(documentText)) !== null
+          ) {
             matches.push(regexMatch[2])
           }
           if (matches.length === 0) {
@@ -261,11 +243,7 @@ export default {
           }
           const parties = _.uniq(matches)
           for (const email of parties) {
-            if (
-              !/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-                email
-              )
-            ) {
+            if (!emailRegExp.test(email)) {
               this.addressFieldErrorMessage.push(`Email ${email} is not valid`)
               return
             }

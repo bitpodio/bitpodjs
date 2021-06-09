@@ -163,6 +163,15 @@ import { addDays, differenceInDays } from 'date-fns'
 import CustomDate from '~/components/common/form/date.vue'
 import { rules } from '~/utility/rules.js'
 
+const signatureTagRegExp = new RegExp(
+  /&lt;(Signature|Initials):([\S]*)\/&gt;/,
+  'gi'
+)
+
+const emailRegExp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+
+const regexTitle = /<title>([\S\s]*)<\/title>/
+
 export default {
   layout: 'eSignature',
   components: {
@@ -310,13 +319,12 @@ export default {
     },
     async loadRequestTemplate() {
       const documentUrl = this.templateUrl
-      const regExp = new RegExp(/&lt;(Signature|Initials):([\S]*)\/&gt;/, 'gi')
       try {
         const res = await this.$axios.get(documentUrl)
         const matches = []
         const documentText = res.data
         let regexMatch
-        while ((regexMatch = regExp.exec(documentText)) !== null) {
+        while ((regexMatch = signatureTagRegExp.exec(documentText)) !== null) {
           matches.push(regexMatch[2])
         }
         if (matches.length === 0) {
@@ -325,11 +333,7 @@ export default {
         }
         const parties = _.uniq(matches)
         for (const email of parties) {
-          if (
-            !/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-              email
-            )
-          ) {
+          if (!emailRegExp.test(email)) {
             this.errorMessage = `Email ${email} is not valid`
             return
           }
@@ -362,7 +366,6 @@ export default {
         try {
           const result = await this.$axios.get(documentUrl)
           const documentText = result.data
-          const regexTitle = /<title>([\S\s]*)<\/title>/
           const subject = regexTitle.exec(documentText)
           this.requestSubject = subject[1] || 'Agreement'
         } catch (err) {
