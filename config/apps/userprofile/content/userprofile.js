@@ -91,7 +91,7 @@ export default {
         type: 'rest',
         getData: (ctx) =>
           getLoginData(
-            `api/tiers/${ctx.$auth.state.user.data.TierHierarchy[0].Id}/users/${ctx.$auth.state.user.data.sub}/activity/2000`
+            `api/tiers/${ctx.$auth.state.user.data.TierHierarchy[0].Id}/users/${ctx.$auth.state.user.data.sub}/activity/${ctx.$config.axios.activityId}`
           ),
       },
       title: 'Common.Contacts',
