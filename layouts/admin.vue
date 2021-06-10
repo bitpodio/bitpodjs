@@ -519,16 +519,22 @@ export default {
     const userRoles = userInfo.roles || []
     this.allowUpgrade = userRoles.includes('$orgowner')
     window.addEventListener('message', this.messageReceived, false)
+    this.openTour()
   },
   beforeDestroy() {
     window.removeEventListener('message', this.messageReceived)
   },
   methods: {
+    openTour() {
+      const userTour = localStorage.getItem(this.$store.state.gaId + '-tourTwo')
+      if (!userTour) {
+        this.$tours.tourTwo.start()
+      }
+    },
     startTour() {
-      if (parseInt(this.$auth.$storage.getCookies()['tour.tourTwo'])) {
-        this.$tours.tourTwo.start(
-          parseInt(this.$auth.$storage.getCookies()['tour.tourTwo'])
-        )
+      const userTour = localStorage.getItem(this.$store.state.gaId + 'tourTwo')
+      if (userTour > 0) {
+        this.$tours.tourTwo.start(parseInt(userTour))
       } else {
         this.$tours.tourTwo.start()
       }

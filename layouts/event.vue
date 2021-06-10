@@ -525,17 +525,22 @@ export default {
     this.allowUser = userRoles.length === 1 && userRoles.includes('$orguser')
     this.allowUpgrade = userRoles.includes('$orgowner')
     window.addEventListener('message', this.messageReceived, false)
-    // this.$tours.myTour.start()
+    this.openTour()
   },
   beforeDestroy() {
     window.removeEventListener('message', this.messageReceived)
   },
   methods: {
+    openTour() {
+      const userTour = localStorage.getItem(this.$store.state.gaId + '-tourOne')
+      if (!userTour) {
+        this.$tours.tourOne.start()
+      }
+    },
     startTour() {
-      if (parseInt(this.$auth.$storage.getCookies()['tour.tourOne'])) {
-        this.$tours.tourOne.start(
-          parseInt(this.$auth.$storage.getCookies()['tour.tourOne'])
-        )
+      const userTour = localStorage.getItem(this.$store.state.gaId + '-tourOne')
+      if (userTour > 0) {
+        this.$tours.tourOne.start(parseInt(userTour))
       } else {
         this.$tours.tourOne.start()
       }

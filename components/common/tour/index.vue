@@ -77,8 +77,8 @@ export default {
   },
   methods: {
     onCloseTour(value) {
-      document.cookie = `tour.${this.name}=${value}`
-      // this.$tours.tourOne.stop()
+      const userTour = this.$store.state.gaId + `-${this.name}`
+      localStorage.setItem(userTour, value)
       this.$tours[this.name].stop()
     },
   },
