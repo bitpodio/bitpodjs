@@ -87,8 +87,8 @@
 </template>
 
 <script>
-import nuxtconfig from '~/nuxt.config'
 import { rules } from '~/utility/rules.js'
+import { getID4ServerUrl } from '~/utility'
 export default {
   props: {
     updatePasswordDialog: {
@@ -135,13 +135,8 @@ export default {
     submitForm() {
       this.$eventBus.$emit('form-submitted', this.formName)
     },
-    getID4ServerUrl() {
-      const url = nuxtconfig.auth.strategies.bitpod.userInfoEndPointUrl
-      console.log('url', url)
-      return url.split('auth/')[0]
-    },
     async onSave() {
-      const url = `${this.getID4ServerUrl()}api/tiers/${
+      const url = `${getID4ServerUrl()}api/tiers/${
         this.$auth.state.user.data.TierHierarchy[0].Id
       }/users/${this.$auth.state.user.data.id}/UpdateCredentials`
       try {
@@ -159,7 +154,9 @@ export default {
         this.$emit('update:snackbar', true)
         this.$eventBus.$emit('refresh-page')
       } catch (err) {
-        console.error('error', err)
+        console.error(
+          `Error in apps/userprofile/updateUserPasswordForm.vue in onSave method context:-\nURl:${url} \nerror:${err}`
+        )
       }
     },
   },

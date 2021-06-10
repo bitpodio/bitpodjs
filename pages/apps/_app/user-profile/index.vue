@@ -402,7 +402,6 @@ export default {
       }
     },
     async getUserData() {
-      console.log('id', this.$auth.state.user.data.TierHierarchy[0].Id)
       const url = `${getID4ServerUrl()}api/tiers/${
         this.$auth.state.user.data.TierHierarchy[0].Id
       }/users/${this.$auth.state.user.data.sub}`
