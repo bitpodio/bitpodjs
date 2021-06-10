@@ -132,9 +132,7 @@ export function getLoginData(modelName) {
     const limit = itemsPerPage === -1 ? 0 : itemsPerPage
 
     const apiUrl = getID4ServerUrl()
-    const resPromise = this.$axios.$get(`${apiUrl}${modelName}`)
-    // to execute parallel call
-    const [res] = await Promise.all([resPromise])
+    const res = await this.$axios.$get(`${apiUrl}${modelName}`)
 
     const skipRes = res.slice(skip)
     const finalRes = skipRes.slice(0, limit)
