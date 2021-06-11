@@ -23,7 +23,7 @@
         <v-spacer></v-spacer>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <div class="d-none">
+      <div>
         <v-btn
           v-bind="attrs"
           color="blue darken-2"
@@ -243,14 +243,14 @@ export default {
         this.$apolloHelpers.onLogout()
       }
     },
+    handleNewTemplate() {
+      this.dialog = true
+    },
   },
   head() {
     return {
       title: this.$t('Common.ESignature') + ' ' + this.$t('Common.Bitpod'),
     }
-  },
-  handleNewTemplate() {
-    this.dialog = true
   },
 }
 </script>
@@ -260,9 +260,20 @@ export default {
   width: 70% !important;
   margin: 0 auto;
 }
+@media (min-width: 1900px) {
+  .esign-app-title {
+    padding-left: 80px;
+  }
+}
+@media (max-width: 1400px) {
+  .esign-app-title {
+    padding-left: 40px;
+  }
+}
 @media (max-width: 600px) {
   .esign-app-title {
     width: 100% !important;
+    padding-left: 0;
   }
 }
 </style>

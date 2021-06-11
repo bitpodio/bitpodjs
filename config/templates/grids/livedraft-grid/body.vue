@@ -496,45 +496,61 @@ export default {
 }
 </script>
 
-<style scoped>
-.tile-pattern {
-  background-size: cover;
-  height: 140px;
-}
-.tile-img {
-  max-height: 140px;
-  min-height: 140px;
-  transition: transform 0.3s, opacity 0.3s ease-out;
-  -moz-transition: transform 0.3s, opacity 0.3s ease-out;
-  -webkit-transition: transform 0.3s, opacity 0.3s ease-out;
-  -o-transition: transform 0.3s, opacity 0.3s ease-out;
-}
-.tile-img:focus,
-.tile-img:hover {
-  transform: scale(1.1);
-  opacity: 1;
-  overflow: hidden;
-}
-.eventtiles {
-  max-width: 280px;
-  min-width: 280px;
-}
-.tile-info {
-  min-height: 92px;
-}
-.overflow-h {
-  overflow: hidden;
-}
-.tiles-action {
-  min-height: 36px;
-}
-.draft-event {
-  right: -15px;
-  top: 5px;
-  z-index: 4;
-  pointer-events: none;
-}
-.v-tooltip__content {
-  margin-left: -90px !important;
+<style lang="scss">
+.Event-live-and-draft-event {
+  --esign-tile-width: 280px;
+  .eventtiles {
+    max-width: 280px;
+    min-width: 280px;
+  }
+  .eventtiles {
+    max-width: var(--esign-tile-width);
+    min-width: var(--esign-tile-width);
+    box-sizing: border-box;
+  }
+  .grid-actions-container {
+    max-width: calc(calc(var(--esign-tile-width) * 3) + 24px);
+  }
+  .tile-pattern {
+    background-size: cover;
+    height: 140px;
+  }
+  .tile-img {
+    max-height: 140px;
+    min-height: 140px;
+    transition: transform 0.3s, opacity 0.3s ease-out;
+    -moz-transition: transform 0.3s, opacity 0.3s ease-out;
+    -webkit-transition: transform 0.3s, opacity 0.3s ease-out;
+    -o-transition: transform 0.3s, opacity 0.3s ease-out;
+  }
+  .tile-img:focus,
+  .tile-img:hover {
+    transform: scale(1.1);
+    opacity: 1;
+    overflow: hidden;
+  }
+  .tile-info {
+    min-height: 92px;
+  }
+  .overflow-h {
+    overflow: hidden;
+  }
+  .tiles-action {
+    min-height: 36px;
+  }
+  .draft-event {
+    right: -15px;
+    top: 5px;
+    z-index: 4;
+    pointer-events: none;
+  }
+  .v-tooltip__content {
+    margin-left: -90px !important;
+  }
+  @media (min-width: 1904px) {
+    .grid-actions-container {
+      max-width: calc(calc(var(--esign-tile-width) * 5) + 52px);
+    }
+  }
 }
 </style>

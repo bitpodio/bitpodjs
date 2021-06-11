@@ -325,7 +325,7 @@
       </div>
       <div
         v-if="viewName === 'template' && loading === true"
-        class="d-flex flex-sm-wrap flex-column flex-sm-row mt-12"
+        class="d-flex flex-sm-wrap flex-column flex-sm-row mt-12 pt-12"
       >
         <v-skeleton-loader
           v-for="i in 10"
@@ -357,7 +357,7 @@
         v-if="viewName === 'badge' && loading === true"
         class="d-flex flex-sm-wrap flex-column flex-sm-row"
       >
-        <div class="public-page-main d-flex flex-wrap flex-row">
+        <div class="public-page-main d-flex flex-wrap flex-row mt-11">
           <div
             v-for="i in 10"
             :key="i"
