@@ -9,6 +9,7 @@
         :items="items"
         :item-text="itemText"
         :item-value="itemValue"
+        :placeholder="pastEventName"
         single-line
         outlined
         dense
@@ -56,6 +57,7 @@ export default {
       itemText: 'Title',
       itemValue: 'id',
       isPastEventEnd: false,
+      pastEventName: '',
       eventData: {},
     }
   },
@@ -130,6 +132,9 @@ export default {
               )
             )
             this.isPastEventEnd = today > eventEndDate
+            if (this.isPastEventEnd) {
+              this.pastEventName = res.Title
+            }
           }
         }
       } catch (e) {

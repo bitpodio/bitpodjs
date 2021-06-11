@@ -4,6 +4,7 @@
       <div v-if="isCustomMobile" class="text-center">
         <div class="d-flex justify-end">
           <v-btn
+            :disabled="!!!mayEnableClick"
             icon
             color="gray"
             style="height: auto; justify-content: flex-end;"
@@ -24,7 +25,8 @@
         text-color="white"
         label
         small
-        @click="updateDate(item.id)"
+        :disabled="!!!mayEnableClick"
+        @[mayEnableClick]="updateDate(item.id)"
       >
         <i18n path="Common.CheckIn" />
       </v-chip>
@@ -171,6 +173,30 @@ export default {
       timeout: 2000,
       noBadgeFound: true,
     }
+  },
+  computed: {
+    mayEnableClick() {
+      if (this.context && this.context.event) {
+        const eventEnd = new Date(this.context.event.EndDate)
+        const eventEndDate = new Date(
+          Date.UTC(
+            eventEnd.getFullYear(),
+            eventEnd.getMonth(),
+            eventEnd.getDate()
+          )
+        )
+        const todayDate = new Date()
+        const today = new Date(
+          Date.UTC(
+            todayDate.getFullYear(),
+            todayDate.getMonth(),
+            todayDate.getDate()
+          )
+        )
+        return today > eventEndDate ? null : 'click'
+      }
+      return null
+    },
   },
   mounted() {
     this.getOrgInfo()

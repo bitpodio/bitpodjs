@@ -28,7 +28,7 @@
             class="pl-md-10 pl-lg-10 pl-xl-15 pr-1 pb-0 pt-1 d-flex align-start"
           >
             <h2 class="black--text pt-5 pb-4 text-h5">
-              Scan QR Code
+              <i18n path="Common.ScanQR" />
             </h2>
             <v-spacer></v-spacer>
             <div>
@@ -59,7 +59,6 @@
               v-show="!loadingFeed && !!!feedError"
               id="qr-scanner-feed"
             ></video>
-
             <div
               class="d-flex flex-column justify-center align-center add-min-height"
             >
@@ -77,7 +76,7 @@
       </v-dialog>
     </div>
     <p v-if="hasEventEnded" class="text-center mb-2">
-      The event has ended
+      <i18n path="Messages.Warn.EventEnded" />
     </p>
     <v-dialog
       v-model="isCheckedIn"
@@ -123,7 +122,7 @@
             v-on="on"
             @click.native="openPrintForm"
           >
-            <v-icon left>mdi-printer</v-icon><i18n path="Common.PrintBadges" />
+            <v-icon left>mdi-printer</v-icon><i18n path="Common.PrintBadge" />
           </v-btn>
           <v-btn text small v-bind="attrs" v-on="on" @click="onClose">
             <i18n path="Drawer.Close" />
@@ -276,12 +275,13 @@ export default {
               this.$eventBus.$emit(
                 'toggle-snackbar',
                 this.viewName,
-                `${attendeeName} checked in`,
+                this.$t('Messages.Success.AttendeeCheckedIn', {
+                  attendee: attendeeName,
+                }),
                 7000,
                 true
               )
             }
-            this.closeForm()
           } else {
             this.invalidQrCode(checkInResult ? checkInResult.status : 500)
           }
@@ -292,7 +292,9 @@ export default {
       } else {
         this.invalidQrCode()
       }
-      this.isAvailableForScan = true
+      setTimeout(() => {
+        this.isAvailableForScan = true
+      }, 700)
     },
     resetScanner() {
       this.loadingFeed = true
@@ -305,19 +307,19 @@ export default {
       }
     },
     invalidQrCode(errorCode = 500) {
-      let errorMessage = 'An error occured.'
+      let errorMessage = this.$t('Messages.Error.GenericError')
       switch (errorCode) {
         case 500.1:
-          errorMessage = 'Failed to check in attendee'
+          errorMessage = this.$t('Messages.Error.FailedCheckIn')
           break
         case 500.2:
-          errorMessage = 'Attendee already checked in'
+          errorMessage = this.$t('Messages.Error.AlreadyCheckedIn')
           break
         case 404:
-          errorMessage = 'Attendee not found'
+          errorMessage = this.$t('Messages.Error.AttendeeNotFound')
           break
         default:
-          errorMessage = 'Invalid QR Code'
+          errorMessage = this.$t('Messages.Error.InvalidQR')
           break
       }
       this.$eventBus.$emit(
