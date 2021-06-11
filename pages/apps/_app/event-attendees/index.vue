@@ -26,7 +26,13 @@
         />
       </div>
     </div>
-    <Scanner view-name="eventAttendeesInEvent" class="scan-btn py-2" />
+    <Scanner
+      view-name="eventAttendeesInEvent"
+      :has-event-ended="isPastEventEnd"
+      :event-info="eventData"
+      :event-id="eventTitle"
+      class="scan-btn py-2"
+    />
   </div>
 </template>
 <script>
@@ -49,6 +55,8 @@ export default {
       isGrid: false,
       itemText: 'Title',
       itemValue: 'id',
+      isPastEventEnd: false,
+      eventData: {},
     }
   },
   computed: {
@@ -65,6 +73,7 @@ export default {
   },
   mounted() {
     this.eventProps()
+    this.fetchEventData()
   },
   methods: {
     async eventProps() {
@@ -94,10 +103,47 @@ export default {
         )
       }
     },
+    async fetchEventData() {
+      const filter = { where: { id: this.eventTitle } }
+      const url = `${this.$bitpod.getApiUrl()}Events/findOne?filter=${JSON.stringify(
+        filter
+      )}`
+      try {
+        const res = await this.$axios.$get(url)
+        if (res) {
+          this.eventData = res
+          if (res.EndDate) {
+            const eventEnd = new Date(res.EndDate)
+            const eventEndDate = new Date(
+              Date.UTC(
+                eventEnd.getFullYear(),
+                eventEnd.getMonth(),
+                eventEnd.getDate()
+              )
+            )
+            const todayDate = new Date()
+            const today = new Date(
+              Date.UTC(
+                todayDate.getFullYear(),
+                todayDate.getMonth(),
+                todayDate.getDate()
+              )
+            )
+            this.isPastEventEnd = today > eventEndDate
+          }
+        }
+      } catch (e) {
+        console.error(
+          `Error in pages/apps/_app/event-attendee/index.vue while getting event context:${url}`,
+          e
+        )
+      }
+    },
     goBack() {
       this.$router.back()
     },
     onChange() {
+      this.fetchEventData()
       this.$emit('change', this.eventTitle)
     },
   },
