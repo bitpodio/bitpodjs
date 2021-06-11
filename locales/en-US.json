@@ -302,11 +302,12 @@
     "AssociatedMember": "Add Existing Members",
     "AssociatedMembers": "Associated Members",
     "PrintBadges": "Print Badges",
+    "PrintBadge": "Print Badge",
     "CancelCheckin": "Cancel Check In",
     "CheckIn": "Check In",
     "TapToCheckIn": "Tap to check in",
     "CheckedInJustnow": "Checked in ",
-    "SuccessfulCheckedin": "You have successfully checked in. Enjoy the event!",
+    "SuccessfulCheckedin": "Successfully checked in. Enjoy the event!",
     "EditSetting": "Edit Setting",
     "AdditionalSetting": "Additional Setting",
     "DeleteTicket": "Delete ticket",
@@ -927,6 +928,7 @@
     "TicketTemplates": "Ticket Templates",
     "ThumbnailUrl": "Thumbnail Url",
     "DeleteTicketTemplate": "Delete Ticket Template",
+    "ScanQR": "Scan QR Code",
     "Docxy": "docxy",
     "ESignatureForGoogleDocs": "eSignature for google docs",
     "ReadyToSendDoc": "Ready to send docs for eSignature?",
@@ -1105,7 +1107,12 @@
       "DuplicateErrorMessage": "Duplicate records in the file. Please use unique email id.",
       "AttendeeImportFailed": "Attendee Import Failed.",
       "TicketTemplateExists": "Template already exists",
-      "RequestStartDate": "Request start date should not be less than current date"
+      "RequestStartDate": "Request start date should not be less than current date",
+      "GenericError": "An error occured",
+      "FailedCheckIn": "Failed to check in attendee",
+      "AlreadyCheckedIn": "Attendee already checked in",
+      "AttendeeNotFound": "Attendee not found",
+      "InvalidQR": "Invalid QR Code"
     },
     "Warn": {
       "DeleteConnection": "Delete connection",
@@ -1150,7 +1157,8 @@
       "SetupConnection": "Please setup the connection to make it active.",
       "DeletePrintTicketTemplate": "Do you want to delete this ticket template?",
       "ReplaceTicketTemplate": "The new ticket template will replace your existing ticket template",
-      "UnassignPrintTicketTemplate": "Changes made to the template will be lost, are you sure to remove the template?"
+      "UnassignPrintTicketTemplate": "Changes made to the template will be lost, are you sure to remove the template?",
+      "EventEnded": "The event has ended"
     },
     "Success": {
       "UnsubscribeSuccessMsg": "You have unsubscribed successfully",
@@ -1210,7 +1218,8 @@
       "ContactImported": "Contacts Imported Sucessfully",
       "ContactImportedFailed": "Contacts Import Failed",
       "DiscountCodeSuccessfully": "Discount Code created successfully",
-      "DiscountCodeUpdateSuccessfully": "Discount Code updated successfully"
+      "DiscountCodeUpdateSuccessfully": "Discount Code updated successfully",
+      "AttendeeCheckedIn": "{attendee} checked in"
     },
     "Information": {
       "SetupInProgressTitle": "Setup in progress",

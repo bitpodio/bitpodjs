@@ -19,7 +19,13 @@
         <component :is="errorTemplate || null" :error="error" />
       </div>
     </template>
-    <v-snackbar v-model="snackbar" :timeout="timeout" :top="true" width="2px">
+    <v-snackbar
+      v-model="snackbar"
+      :timeout="timeout"
+      :top="!centerSnackbar"
+      :centered="centerSnackbar"
+      width="2px"
+    >
       <div class="fs-16 text-center">{{ snackbarText }}</div>
     </v-snackbar>
     <div v-if="!error" :key="error">
@@ -789,6 +795,7 @@ export default {
       snackbar: false,
       timeout: 3000,
       snackbarText: '',
+      centerSnackbar: false,
       hasGridOption: false,
       hasRowOption: false,
       headerObserver: null,
@@ -1089,12 +1096,15 @@ export default {
         ? this.isHideDefaultFooter
         : true
     },
-    toggleSnackbar(toggleViewName, message, timeout = 3000) {
+    toggleSnackbar(toggleViewName, message, timeout = 3000, centered = false) {
       if (this.viewName === toggleViewName) {
         this.snackbarText = message
+        this.centerSnackbar = centered
         this.timeout = timeout
-        this.snackbar = true
-        this.refresh()
+        this.$nextTick(() => {
+          this.snackbar = true
+          this.refresh()
+        })
       }
     },
     async toggleConfirm(
